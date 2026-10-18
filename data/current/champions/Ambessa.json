@@ -1,0 +1,720 @@
+{
+  "allytips": [],
+  "blurb": "Todo el que conoce el apellido Medarda respeta y teme a partes iguales a la matriarca de la familia, Ambessa. Esta general noxiana encarna una mortífera combinación de fuerza implacable e inquebrantable determinación en la batalla. En cuanto a su rol...",
+  "enemytips": [],
+  "id": "Ambessa",
+  "image": {
+    "full": "Ambessa.png",
+    "group": "champion",
+    "h": 48,
+    "sprite": "champion0.png",
+    "w": 48,
+    "x": 240,
+    "y": 0
+  },
+  "info": {
+    "attack": 9,
+    "defense": 2,
+    "difficulty": 10,
+    "magic": 0
+  },
+  "key": "799",
+  "lore": "Todo el que conoce el apellido Medarda respeta y teme a partes iguales a la matriarca de la familia, Ambessa. Esta general noxiana encarna una mortífera combinación de fuerza implacable e inquebrantable determinación en la batalla. En cuanto a su rol como matriarca, no hay diferencia alguna, pues dotar de poder a los Medarda requiere de una gran astucia y no hay cabida para el fracaso ni la compasión. Aceptando como suya la despiadada senda del Lobo, Ambessa hará todo lo que esté en su mano para proteger el legado de su familia, aunque le cueste el amor de sus propios hijos.",
+  "name": "Ambessa",
+  "partype": "Energía",
+  "passive": {
+    "description": "Utilizar un comando de ataque o de movimiento mientras se lanza una habilidad hará que Ambessa se deslice una corta distancia tras lanzar la habilidad, lo que otorga a su próximo ataque alcance, daño y velocidad de ataque adicionales. Además, restaurará energía.",
+    "image": {
+      "full": "Icon_Ambessa_Passive.png",
+      "group": "passive",
+      "h": 48,
+      "sprite": "passive0.png",
+      "w": 48,
+      "x": 240,
+      "y": 0
+    },
+    "name": "Caza del perrodraco"
+  },
+  "recommended": [],
+  "skins": [
+    {
+      "chromas": false,
+      "id": "799000",
+      "name": "default",
+      "num": 0
+    },
+    {
+      "chromas": true,
+      "id": "799001",
+      "name": "Ambessa elegida del lobo",
+      "num": 1
+    },
+    {
+      "chromas": false,
+      "id": "799002",
+      "name": "Ambessa elegida del lobo (rubí)",
+      "num": 2,
+      "parentSkin": 1
+    },
+    {
+      "chromas": false,
+      "id": "799003",
+      "name": "Ambessa elegida del lobo (esmeralda)",
+      "num": 3,
+      "parentSkin": 1
+    },
+    {
+      "chromas": false,
+      "id": "799004",
+      "name": "Ambessa elegida del lobo (zafiro)",
+      "num": 4,
+      "parentSkin": 1
+    },
+    {
+      "chromas": false,
+      "id": "799005",
+      "name": "Ambessa elegida del lobo (cuarzo rosa)",
+      "num": 5,
+      "parentSkin": 1
+    },
+    {
+      "chromas": false,
+      "id": "799006",
+      "name": "Ambessa elegida del lobo (obsidiana)",
+      "num": 6,
+      "parentSkin": 1
+    },
+    {
+      "chromas": false,
+      "id": "799007",
+      "name": "Ambessa elegida del lobo (perla)",
+      "num": 7,
+      "parentSkin": 1
+    },
+    {
+      "chromas": true,
+      "id": "799008",
+      "name": "Ambessa T1",
+      "num": 8
+    },
+    {
+      "chromas": false,
+      "id": "799009",
+      "name": "Ambessa T1 (élite)",
+      "num": 9,
+      "parentSkin": 8
+    },
+    {
+      "chromas": false,
+      "id": "799010",
+      "name": "Ambessa T1 (perla)",
+      "num": 10,
+      "parentSkin": 8
+    },
+    {
+      "chromas": false,
+      "id": "799011",
+      "name": "Ambessa T1 (rubí)",
+      "num": 11,
+      "parentSkin": 8
+    },
+    {
+      "chromas": false,
+      "id": "799012",
+      "name": "Ambessa T1 (cuarzo rosa)",
+      "num": 12,
+      "parentSkin": 8
+    },
+    {
+      "chromas": false,
+      "id": "799013",
+      "name": "Ambessa T1 (ojo de gato)",
+      "num": 13,
+      "parentSkin": 8
+    },
+    {
+      "chromas": false,
+      "id": "799014",
+      "name": "Ambessa T1 (zafiro)",
+      "num": 14,
+      "parentSkin": 8
+    }
+  ],
+  "spells": [
+    {
+      "cooldown": [
+        14,
+        13,
+        12,
+        11,
+        10
+      ],
+      "cooldownBurn": "14/13/12/11/10",
+      "cost": [
+        70,
+        70,
+        70,
+        70,
+        70
+      ],
+      "costBurn": "70",
+      "costType": " {{ abilityresourcename }}",
+      "datavalues": {},
+      "description": "Ambessa hace girar a sus perrodracos gemelos en un semicírculo frente a ella, lo que inflige daño adicional a los enemigos golpeados por las hojas. Golpear a un enemigo transforma el siguiente uso de esta habilidad durante un breve periodo, lo que provoca que golpee con sus perrodracos gemelos en una línea recta frente a ella e inflija daño adicional al primer enemigo golpeado.",
+      "effect": [
+        null,
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ]
+      ],
+      "effectBurn": [
+        null,
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0"
+      ],
+      "id": "AmbessaQ",
+      "image": {
+        "full": "AmbessaQ.png",
+        "group": "spell",
+        "h": 48,
+        "sprite": "spell1.png",
+        "w": 48,
+        "x": 192,
+        "y": 48
+      },
+      "leveltip": {
+        "effect": [
+          "{{ cooldown }} -> {{ cooldownNL }}",
+          "{{ damage_1_base }} -> {{ damage_1_baseNL }}",
+          "{{ damage_1_percent*100.000000 }}% -> {{ damage_1_percentnl*100.000000 }}%",
+          "{{ damage_2_base }} -> {{ damage_2_baseNL }}",
+          "{{ damage_1_percent*100.000000 }}% -> {{ damage_1_percentnl*100.000000 }}%"
+        ],
+        "label": [
+          "Enfriamiento",
+          "Barrido artero | Daño",
+          "Barrido artero | Daño por vida máxima",
+          "Impacto desgarrador | Daño",
+          "Impacto desgarrador | Daño por vida máxima"
+        ]
+      },
+      "maxammo": "-1",
+      "maxrank": 5,
+      "name": "Barrido artero / Impacto desgarrador",
+      "range": [
+        650,
+        650,
+        650,
+        650,
+        650
+      ],
+      "rangeBurn": "650",
+      "resource": "{{ cost }} {{ abilityresourcename }}",
+      "tooltip": "<spellActive>Barrido artero</spellActive>: Ambessa gira sus armas frente a ella, lo que inflige <physicalDamage>{{ calc_damage_1_max }} + {{ calc_damage_1_percent_max }} de daño físico según la vida máxima</physicalDamage> a los enemigos al borde del golpe. Los demás enemigos reciben un {{ calc_damage_1_min_ratio }} de daño. Al golpear a un enemigo, Ambessa prepara <spellActive>Impacto desgarrador</spellActive>.<br /><br /><spellActive>Impacto desgarrador</spellActive>: Ambessa golpea el suelo con las armas, lo que inflige <physicalDamage>{{ calc_damage_2_max }}&nbsp;+&nbsp;{{ calc_damage_2_percent_max }} de daño físico según la vida máxima</physicalDamage> al primer enemigo alcanzado. Los demás enemigos reciben un {{ calc_damage_2_min_ratio }} de daño.{{ spellmodifierdescriptionappend }}",
+      "vars": []
+    },
+    {
+      "cooldown": [
+        18,
+        17,
+        16,
+        15,
+        14
+      ],
+      "cooldownBurn": "18/17/16/15/14",
+      "cost": [
+        70,
+        70,
+        70,
+        70,
+        70
+      ],
+      "costBurn": "70",
+      "costType": " {{ abilityresourcename }}",
+      "datavalues": {},
+      "description": "Ambessa obtiene un escudo, se protege brevemente y, después, golpea el suelo para infligir daño a los enemigos cercanos. Mientras se protege, si bloquea daño que no provenga de súbditos, esta habilidad inflige daño adicional.",
+      "effect": [
+        null,
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ]
+      ],
+      "effectBurn": [
+        null,
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0"
+      ],
+      "id": "AmbessaW",
+      "image": {
+        "full": "AmbessaW.png",
+        "group": "spell",
+        "h": 48,
+        "sprite": "spell1.png",
+        "w": 48,
+        "x": 240,
+        "y": 48
+      },
+      "leveltip": {
+        "effect": [
+          "{{ cooldown }} -> {{ cooldownNL }}",
+          "{{ basedamage }} -> {{ basedamageNL }}"
+        ],
+        "label": [
+          "Enfriamiento",
+          "Daño"
+        ]
+      },
+      "maxammo": "-1",
+      "maxrank": 5,
+      "name": "Vituperio",
+      "range": [
+        325,
+        325,
+        325,
+        325,
+        325
+      ],
+      "rangeBurn": "325",
+      "resource": "{{ cost }} {{ abilityresourcename }}",
+      "tooltip": "Ambessa obtiene un <shield>escudo de {{ calc_shield }}</shield> durante {{ shield_duration }} s y se protege durante {{ buff_duration }} s. Luego golpea el suelo e inflige <physicalDamage>{{ calc_damage_low }} de daño físico</physicalDamage> a los enemigos cercanos, que aumenta hasta <physicalDamage>{{ calc_damage_high }} de daño físico</physicalDamage> si bloquea daño que proviene de un campeón enemigo, un monstruo gigante o una estructura.{{ spellmodifierdescriptionappend }}",
+      "vars": []
+    },
+    {
+      "cooldown": [
+        13,
+        12,
+        11,
+        10,
+        9
+      ],
+      "cooldownBurn": "13/12/11/10/9",
+      "cost": [
+        70,
+        70,
+        70,
+        70,
+        70
+      ],
+      "costBurn": "70",
+      "costType": " {{ abilityresourcename }}",
+      "datavalues": {},
+      "description": "Ambessa agita sus perrodracos gemelos a su alrededor, lo que inflige daño y ralentiza a los enemigos cercanos. Si utiliza Caza del perrodraco durante esta habilidad, ataca una segunda vez al final del deslizamiento.",
+      "effect": [
+        null,
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ]
+      ],
+      "effectBurn": [
+        null,
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0"
+      ],
+      "id": "AmbessaE",
+      "image": {
+        "full": "AmbessaE.png",
+        "group": "spell",
+        "h": 48,
+        "sprite": "spell1.png",
+        "w": 48,
+        "x": 288,
+        "y": 48
+      },
+      "leveltip": {
+        "effect": [
+          "{{ cooldown }} -> {{ cooldownNL }}",
+          "{{ damage_flat_base }} -> {{ damage_flat_baseNL }}"
+        ],
+        "label": [
+          "Enfriamiento",
+          "Daño"
+        ]
+      },
+      "maxammo": "-1",
+      "maxrank": 5,
+      "name": "Laceración",
+      "range": [
+        325,
+        325,
+        325,
+        325,
+        325
+      ],
+      "rangeBurn": "325",
+      "resource": "{{ cost }} {{ abilityresourcename }}",
+      "tooltip": "Ambessa hace girar las cadenas a su alrededor, lo que inflige <physicalDamage>{{ calc_damage_flat }} de daño físico</physicalDamage> y <status>ralentiza</status> a los enemigos un <status>{{ slow_amount*100 }}%</status>, que disminuye a lo largo de {{ slow_duration }} s. Si utiliza <spellName>Caza del perrodraco</spellName> durante esta habilidad, asesta un golpe adicional.{{ spellmodifierdescriptionappend }}",
+      "vars": []
+    },
+    {
+      "cooldown": [
+        130,
+        115,
+        100
+      ],
+      "cooldownBurn": "130/115/100",
+      "cost": [
+        0,
+        0,
+        0
+      ],
+      "costBurn": "0",
+      "costType": "Sin coste",
+      "datavalues": {},
+      "description": "Ambessa se teleporta hasta el campeón enemigo más lejano en una línea recta y lo suprime al llegar. Entonces, estrella al enemigo contra el suelo para infligirle daño y aturdirlo.",
+      "effect": [
+        null,
+        [
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0
+        ]
+      ],
+      "effectBurn": [
+        null,
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0"
+      ],
+      "id": "AmbessaR",
+      "image": {
+        "full": "AmbessaR.png",
+        "group": "spell",
+        "h": 48,
+        "sprite": "spell1.png",
+        "w": 48,
+        "x": 336,
+        "y": 48
+      },
+      "leveltip": {
+        "effect": [
+          "{{ cooldown }} -> {{ cooldownNL }}",
+          "{{ armor_penetration*100.000000 }}% -> {{ armor_penetrationnl*100.000000 }}%",
+          "{{ omnivamp*100.000000 }}% -> {{ omnivampnl*100.000000 }}%",
+          "{{ damage }} -> {{ damageNL }}"
+        ],
+        "label": [
+          "Enfriamiento",
+          "Penetración de armadura",
+          "Curación",
+          "Daño"
+        ]
+      },
+      "maxammo": "-1",
+      "maxrank": 3,
+      "name": "Ajusticiar",
+      "range": [
+        1250,
+        1250,
+        1250
+      ],
+      "rangeBurn": "1250",
+      "resource": "Sin coste",
+      "tooltip": "<spellPassive>Pasiva</spellPassive>: Ambessa obtiene un <armorPen>{{ armor_penetration*100 }}% %i:scaleAPen% de penetración de armadura</armorPen> y sus habilidades <healing>la curan un {{ calc_omnivamp }} del daño que haya infligido</healing>.<br /><br /><spellActive>Activa</spellActive>: Ambessa se vuelve <attention>imparable</attention> y se teleporta hasta el campeón enemigo más lejano en una línea recta, <status>suprime</status> al objetivo durante {{ suppress_duration }} s y luego lo lanza contra el suelo, lo que le inflige <physicalDamage>{{ calc_damage }} de daño físico</physicalDamage> y lo <status>aturde</status> durante {{ stun_duration }} s.{{ spellmodifierdescriptionappend }}",
+      "vars": []
+    }
+  ],
+  "stats": {
+    "armor": 35,
+    "armorperlevel": 4.9,
+    "attackdamage": 63,
+    "attackdamageperlevel": 0,
+    "attackrange": 125,
+    "attackspeed": 0.625,
+    "attackspeedperlevel": 2.5,
+    "crit": 0,
+    "critperlevel": 0,
+    "hp": 630,
+    "hpperlevel": 110,
+    "hpregen": 8.5,
+    "hpregenperlevel": 0.75,
+    "movespeed": 335,
+    "mp": 200,
+    "mpperlevel": 0,
+    "mpregen": 50,
+    "mpregenperlevel": 0,
+    "spellblock": 32,
+    "spellblockperlevel": 2.05
+  },
+  "tags": [
+    "Fighter",
+    "Assassin"
+  ],
+  "title": "La Matriarca de la Guerra"
+}

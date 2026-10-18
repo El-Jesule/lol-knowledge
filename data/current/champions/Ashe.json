@@ -1,0 +1,1254 @@
+{
+  "allytips": [
+    "Para obtener mayores probabilidades de impacto, intenta disparar Flecha de cristal encantada en la misma dirección en la que se mueven los enemigos.",
+    "El primer enemigo al que golpean las flechas de Descarga las bloquea, así que mantén la distancia para evitar que las absorban los tanques de la vanguardia enemiga.",
+    "Disparo de halcón revela las unidades que estén en la maleza. Si se está produciendo un combate en equipo en la jungla, puede darte una gran ventaja."
+  ],
+  "blurb": "Ashe, comandante hija del hielo de la tribu de Avarosa, lidera las hordas más numerosas del norte. Impasible, inteligente e idealista, aunque incómoda en su papel de líder, utiliza los poderes mágicos ancestrales de su linaje para empuñar un arco de...",
+  "enemytips": [
+    "Ashe dispone de muy pocas opciones defensivas y es un buen objetivo al que emboscar.",
+    "Cuidado al moverte solo por el mapa si Ashe no ha lanzado su Flecha de cristal encantada."
+  ],
+  "id": "Ashe",
+  "image": {
+    "full": "Ashe.png",
+    "group": "champion",
+    "h": 48,
+    "sprite": "champion0.png",
+    "w": 48,
+    "x": 0,
+    "y": 48
+  },
+  "info": {
+    "attack": 7,
+    "defense": 3,
+    "difficulty": 4,
+    "magic": 2
+  },
+  "key": "22",
+  "lore": "Ashe, comandante hija del hielo de la tribu de Avarosa, lidera las hordas más numerosas del norte. Impasible, inteligente e idealista, aunque incómoda en su papel de líder, utiliza los poderes mágicos ancestrales de su linaje para empuñar un arco de Hielo Puro. Su gente cree que Ashe es la heroína mitológica Avarosa reencarnada, y ella espera unificar Freljord una vez más al recuperar sus antiguas tierras tribales.",
+  "name": "Ashe",
+  "partype": "Maná",
+  "passive": {
+    "description": "Los ataques de Ashe ralentizan a sus objetivos, aumentando el subsiguiente daño que les inflija.<br><br>Los golpes críticos de Ashe no infligen daño adicional al objetivo pero le aplican una ralentización más potente.",
+    "image": {
+      "full": "Ashe_P.png",
+      "group": "passive",
+      "h": 48,
+      "sprite": "passive0.png",
+      "w": 48,
+      "x": 0,
+      "y": 48
+    },
+    "name": "Tiro congelador"
+  },
+  "recommended": [],
+  "skins": [
+    {
+      "chromas": false,
+      "id": "22000",
+      "name": "default",
+      "num": 0
+    },
+    {
+      "chromas": false,
+      "id": "22001",
+      "name": "Ashe Freljord",
+      "num": 1
+    },
+    {
+      "chromas": false,
+      "id": "22002",
+      "name": "Ashe bosque de Sherwood",
+      "num": 2
+    },
+    {
+      "chromas": false,
+      "id": "22003",
+      "name": "Ashe tribal",
+      "num": 3
+    },
+    {
+      "chromas": false,
+      "id": "22004",
+      "name": "Reina Ashe",
+      "num": 4
+    },
+    {
+      "chromas": false,
+      "id": "22005",
+      "name": "Ashe amatista",
+      "num": 5
+    },
+    {
+      "chromas": false,
+      "id": "22006",
+      "name": "Ashe buscacorazones",
+      "num": 6
+    },
+    {
+      "chromas": false,
+      "id": "22007",
+      "name": "Ashe yelmo sombrío",
+      "num": 7
+    },
+    {
+      "chromas": true,
+      "id": "22008",
+      "name": "PROYECTO: Ashe",
+      "num": 8
+    },
+    {
+      "chromas": true,
+      "id": "22009",
+      "name": "Ashe del Mundial 2017",
+      "num": 9
+    },
+    {
+      "chromas": false,
+      "id": "22010",
+      "name": "Chroma de Ashe del Mundial 2017",
+      "num": 10,
+      "parentSkin": 9
+    },
+    {
+      "chromas": true,
+      "id": "22011",
+      "name": "Ashe reina cósmica",
+      "num": 11
+    },
+    {
+      "chromas": false,
+      "id": "22012",
+      "name": "Ashe reina cósmica (obsidiana)",
+      "num": 12,
+      "parentSkin": 11
+    },
+    {
+      "chromas": false,
+      "id": "22013",
+      "name": "Ashe reina cósmica (cuarzo rosa)",
+      "num": 13,
+      "parentSkin": 11
+    },
+    {
+      "chromas": false,
+      "id": "22014",
+      "name": "Ashe reina cósmica (esmeralda)",
+      "num": 14,
+      "parentSkin": 11
+    },
+    {
+      "chromas": false,
+      "id": "22015",
+      "name": "Ashe reina cósmica (zafiro)",
+      "num": 15,
+      "parentSkin": 11
+    },
+    {
+      "chromas": false,
+      "id": "22016",
+      "name": "Ashe reina cósmica (rubí)",
+      "num": 16,
+      "parentSkin": 11
+    },
+    {
+      "chromas": true,
+      "id": "22017",
+      "name": "Ashe sola ante el peligro",
+      "num": 17
+    },
+    {
+      "chromas": false,
+      "id": "22018",
+      "name": "Ashe sola ante el peligro (rubí)",
+      "num": 18,
+      "parentSkin": 17
+    },
+    {
+      "chromas": false,
+      "id": "22019",
+      "name": "Ashe sola ante el peligro (aguamarina)",
+      "num": 19,
+      "parentSkin": 17
+    },
+    {
+      "chromas": false,
+      "id": "22020",
+      "name": "Ashe sola ante el peligro (obsidiana)",
+      "num": 20,
+      "parentSkin": 17
+    },
+    {
+      "chromas": false,
+      "id": "22021",
+      "name": "Ashe sola ante el peligro (nómada)",
+      "num": 21,
+      "parentSkin": 17
+    },
+    {
+      "chromas": false,
+      "id": "22022",
+      "name": "Ashe sola ante el peligro (amatista)",
+      "num": 22,
+      "parentSkin": 17
+    },
+    {
+      "chromas": true,
+      "id": "22023",
+      "name": "Ashe dragona feérica",
+      "num": 23
+    },
+    {
+      "chromas": false,
+      "id": "22024",
+      "name": "Ashe dragona feérica (rubí)",
+      "num": 24,
+      "parentSkin": 23
+    },
+    {
+      "chromas": false,
+      "id": "22025",
+      "name": "Ashe dragona feérica (cuarzo rosa)",
+      "num": 25,
+      "parentSkin": 23
+    },
+    {
+      "chromas": false,
+      "id": "22026",
+      "name": "Ashe dragona feérica (zafiro)",
+      "num": 26,
+      "parentSkin": 23
+    },
+    {
+      "chromas": false,
+      "id": "22027",
+      "name": "Ashe dragona feérica (tanzanita)",
+      "num": 27,
+      "parentSkin": 23
+    },
+    {
+      "chromas": false,
+      "id": "22028",
+      "name": "Ashe dragona feérica (perla)",
+      "num": 28,
+      "parentSkin": 23
+    },
+    {
+      "chromas": false,
+      "id": "22029",
+      "name": "Ashe dragona feérica (obsidiana)",
+      "num": 29,
+      "parentSkin": 23
+    },
+    {
+      "chromas": false,
+      "id": "22030",
+      "name": "Ashe dragona feérica (garra de jade)",
+      "num": 30,
+      "parentSkin": 23
+    },
+    {
+      "chromas": false,
+      "id": "22031",
+      "name": "Ashe dragona feérica (arcoíris)",
+      "num": 31,
+      "parentSkin": 23
+    },
+    {
+      "chromas": true,
+      "id": "22032",
+      "name": "Ashe aquelarre",
+      "num": 32
+    },
+    {
+      "chromas": false,
+      "id": "22033",
+      "name": "Ashe aquelarre (rubí)",
+      "num": 33,
+      "parentSkin": 32
+    },
+    {
+      "chromas": false,
+      "id": "22034",
+      "name": "Ashe aquelarre (esmeralda)",
+      "num": 34,
+      "parentSkin": 32
+    },
+    {
+      "chromas": false,
+      "id": "22035",
+      "name": "Ashe aquelarre (cuarzo rosa)",
+      "num": 35,
+      "parentSkin": 32
+    },
+    {
+      "chromas": false,
+      "id": "22036",
+      "name": "Ashe aquelarre (aguamarina)",
+      "num": 36,
+      "parentSkin": 32
+    },
+    {
+      "chromas": false,
+      "id": "22037",
+      "name": "Ashe aquelarre (ojo de gato)",
+      "num": 37,
+      "parentSkin": 32
+    },
+    {
+      "chromas": false,
+      "id": "22038",
+      "name": "Ashe aquelarre (tanzanita)",
+      "num": 38,
+      "parentSkin": 32
+    },
+    {
+      "chromas": false,
+      "id": "22039",
+      "name": "Ashe aquelarre (obsidiana)",
+      "num": 39,
+      "parentSkin": 32
+    },
+    {
+      "chromas": false,
+      "id": "22040",
+      "name": "Ashe aquelarre (perla)",
+      "num": 40,
+      "parentSkin": 32
+    },
+    {
+      "chromas": false,
+      "id": "22041",
+      "name": "Ashe aquelarre (ritual oscuro)",
+      "num": 41,
+      "parentSkin": 32
+    },
+    {
+      "chromas": false,
+      "id": "22042",
+      "name": "Ashe dragona feérica (garra de ascuas)",
+      "num": 42,
+      "parentSkin": 23
+    },
+    {
+      "chromas": true,
+      "id": "22043",
+      "name": "Ashe canción del océano",
+      "num": 43
+    },
+    {
+      "chromas": false,
+      "id": "22044",
+      "name": "Ashe canción del océano (rubí)",
+      "num": 44,
+      "parentSkin": 43
+    },
+    {
+      "chromas": false,
+      "id": "22045",
+      "name": "Ashe canción del océano (ojo de gato)",
+      "num": 45,
+      "parentSkin": 43
+    },
+    {
+      "chromas": false,
+      "id": "22046",
+      "name": "Ashe canción del océano (esmeralda)",
+      "num": 46,
+      "parentSkin": 43
+    },
+    {
+      "chromas": false,
+      "id": "22047",
+      "name": "Ashe canción del océano (tanzanita)",
+      "num": 47,
+      "parentSkin": 43
+    },
+    {
+      "chromas": false,
+      "id": "22048",
+      "name": "Ashe canción del océano (cuarzo rosa)",
+      "num": 48,
+      "parentSkin": 43
+    },
+    {
+      "chromas": false,
+      "id": "22049",
+      "name": "Ashe canción del océano (zafiro)",
+      "num": 49,
+      "parentSkin": 43
+    },
+    {
+      "chromas": false,
+      "id": "22050",
+      "name": "Ashe canción del océano (perla)",
+      "num": 50,
+      "parentSkin": 43
+    },
+    {
+      "chromas": false,
+      "id": "22051",
+      "name": "Ashe canción del océano (obsidiana)",
+      "num": 51,
+      "parentSkin": 43
+    },
+    {
+      "chromas": true,
+      "id": "22052",
+      "name": "Ashe emperatriz lunar",
+      "num": 52
+    },
+    {
+      "chromas": false,
+      "id": "22053",
+      "name": "Ashe emperatriz lunar (rubí)",
+      "num": 53,
+      "parentSkin": 52
+    },
+    {
+      "chromas": false,
+      "id": "22054",
+      "name": "Ashe emperatriz lunar (zafiro)",
+      "num": 54,
+      "parentSkin": 52
+    },
+    {
+      "chromas": false,
+      "id": "22055",
+      "name": "Ashe emperatriz lunar (esmeralda)",
+      "num": 55,
+      "parentSkin": 52
+    },
+    {
+      "chromas": false,
+      "id": "22056",
+      "name": "Ashe emperatriz lunar (cuarzo rosa)",
+      "num": 56,
+      "parentSkin": 52
+    },
+    {
+      "chromas": false,
+      "id": "22057",
+      "name": "Ashe emperatriz lunar (turquesa)",
+      "num": 57,
+      "parentSkin": 52
+    },
+    {
+      "chromas": false,
+      "id": "22058",
+      "name": "Ashe emperatriz lunar (tanzanita)",
+      "num": 58,
+      "parentSkin": 52
+    },
+    {
+      "chromas": false,
+      "id": "22059",
+      "name": "Ashe emperatriz lunar (perla)",
+      "num": 59,
+      "parentSkin": 52
+    },
+    {
+      "chromas": false,
+      "id": "22060",
+      "name": "Ashe emperatriz lunar (obsidiana)",
+      "num": 60,
+      "parentSkin": 52
+    },
+    {
+      "chromas": false,
+      "id": "22061",
+      "name": "Ashe emperatriz lunar (resplandeciente)",
+      "num": 61,
+      "parentSkin": 52
+    },
+    {
+      "chromas": false,
+      "id": "22062",
+      "name": "PROYECTO: Ashe (mítico)",
+      "num": 62,
+      "parentSkin": 8
+    },
+    {
+      "chromas": true,
+      "id": "22063",
+      "name": "Ashe DRX",
+      "num": 63
+    },
+    {
+      "chromas": false,
+      "id": "22064",
+      "name": "Ashe DRX (élite)",
+      "num": 64,
+      "parentSkin": 63
+    },
+    {
+      "chromas": true,
+      "id": "22065",
+      "name": "Ashe crystalis motus",
+      "num": 65
+    },
+    {
+      "chromas": false,
+      "id": "22066",
+      "name": "Ashe crystalis motus (reclamado)",
+      "num": 66,
+      "parentSkin": 65
+    },
+    {
+      "chromas": true,
+      "id": "22067",
+      "name": "Ashe infernal",
+      "num": 67
+    },
+    {
+      "chromas": false,
+      "id": "22068",
+      "name": "Ashe infernal (rubí)",
+      "num": 68,
+      "parentSkin": 67
+    },
+    {
+      "chromas": false,
+      "id": "22069",
+      "name": "Ashe infernal (ojo de gato)",
+      "num": 69,
+      "parentSkin": 67
+    },
+    {
+      "chromas": false,
+      "id": "22070",
+      "name": "Ashe infernal (aguamarina)",
+      "num": 70,
+      "parentSkin": 67
+    },
+    {
+      "chromas": false,
+      "id": "22071",
+      "name": "Ashe infernal (esmeralda)",
+      "num": 71,
+      "parentSkin": 67
+    },
+    {
+      "chromas": false,
+      "id": "22072",
+      "name": "Ashe infernal (amatista)",
+      "num": 72,
+      "parentSkin": 67
+    },
+    {
+      "chromas": false,
+      "id": "22073",
+      "name": "Ashe infernal (cuarzo rosa)",
+      "num": 73,
+      "parentSkin": 67
+    },
+    {
+      "chromas": false,
+      "id": "22074",
+      "name": "Ashe infernal (turquesa)",
+      "num": 74,
+      "parentSkin": 67
+    },
+    {
+      "chromas": false,
+      "id": "22075",
+      "name": "Ashe infernal (perla)",
+      "num": 75,
+      "parentSkin": 67
+    },
+    {
+      "chromas": true,
+      "id": "22076",
+      "name": "Ashe florecer espiritual",
+      "num": 76
+    },
+    {
+      "chromas": false,
+      "id": "22077",
+      "name": "Ashe florecer espiritual (rubí)",
+      "num": 77,
+      "parentSkin": 76
+    },
+    {
+      "chromas": false,
+      "id": "22078",
+      "name": "Ashe florecer espiritual (turquesa)",
+      "num": 78,
+      "parentSkin": 76
+    },
+    {
+      "chromas": false,
+      "id": "22079",
+      "name": "Ashe florecer espiritual (ojo de gato)",
+      "num": 79,
+      "parentSkin": 76
+    },
+    {
+      "chromas": false,
+      "id": "22080",
+      "name": "Ashe florecer espiritual (zafiro)",
+      "num": 80,
+      "parentSkin": 76
+    },
+    {
+      "chromas": false,
+      "id": "22081",
+      "name": "Ashe florecer espiritual (obsidiana)",
+      "num": 81,
+      "parentSkin": 76
+    },
+    {
+      "chromas": false,
+      "id": "22082",
+      "name": "Ashe florecer espiritual (perla)",
+      "num": 82,
+      "parentSkin": 76
+    },
+    {
+      "chromas": false,
+      "id": "22083",
+      "name": "Ashe dragona feérica (ejemplar)",
+      "num": 83,
+      "parentSkin": 23
+    },
+    {
+      "chromas": true,
+      "id": "22084",
+      "name": "Ashe artificiera",
+      "num": 84
+    },
+    {
+      "chromas": false,
+      "id": "22085",
+      "name": "Ashe artificiera (rubí)",
+      "num": 85,
+      "parentSkin": 84
+    },
+    {
+      "chromas": false,
+      "id": "22086",
+      "name": "Ashe artificiera (turquesa)",
+      "num": 86,
+      "parentSkin": 84
+    },
+    {
+      "chromas": false,
+      "id": "22087",
+      "name": "Ashe artificiera (esmeralda)",
+      "num": 87,
+      "parentSkin": 84
+    },
+    {
+      "chromas": false,
+      "id": "22088",
+      "name": "Ashe artificiera (zafiro)",
+      "num": 88,
+      "parentSkin": 84
+    },
+    {
+      "chromas": false,
+      "id": "22089",
+      "name": "Ashe artificiera (amatista)",
+      "num": 89,
+      "parentSkin": 84
+    },
+    {
+      "chromas": false,
+      "id": "22090",
+      "name": "Ashe artificiera (cuarzo rosa)",
+      "num": 90,
+      "parentSkin": 84
+    },
+    {
+      "chromas": false,
+      "id": "22091",
+      "name": "Ashe artificiera (obsidiana)",
+      "num": 91,
+      "parentSkin": 84
+    },
+    {
+      "chromas": false,
+      "id": "22092",
+      "name": "Ashe artificiera (perla)",
+      "num": 92,
+      "parentSkin": 84
+    },
+    {
+      "chromas": false,
+      "id": "22093",
+      "name": "Ashe aquelarre (prístino)",
+      "num": 93,
+      "parentSkin": 32
+    }
+  ],
+  "spells": [
+    {
+      "cooldown": [
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "cooldownBurn": "0",
+      "cost": [
+        30,
+        30,
+        30,
+        30,
+        30
+      ],
+      "costBurn": "30",
+      "costType": " {{ abilityresourcename }}",
+      "datavalues": {},
+      "description": "Ashe acumula Concentración al atacar. Al alcanzar el nivel máximo, Ashe puede lanzar Concentración máxima para consumir todas las acumulaciones, aumentar temporalmente su velocidad de ataque y transformar su ataque básico en un poderoso ataque de ráfaga durante unos instantes.",
+      "effect": [
+        null,
+        [
+          4,
+          4,
+          4,
+          4,
+          4
+        ],
+        [
+          4,
+          4,
+          4,
+          4,
+          4
+        ],
+        [
+          6,
+          6,
+          6,
+          6,
+          6
+        ],
+        [
+          20,
+          30,
+          40,
+          50,
+          60
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          1,
+          1,
+          1,
+          1,
+          1
+        ],
+        [
+          1,
+          1,
+          1,
+          1,
+          1
+        ],
+        [
+          1,
+          1,
+          1,
+          1,
+          1
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ]
+      ],
+      "effectBurn": [
+        null,
+        "4",
+        "4",
+        "6",
+        "20/30/40/50/60",
+        "0",
+        "0",
+        "1",
+        "1",
+        "1",
+        "0"
+      ],
+      "id": "AsheQ",
+      "image": {
+        "full": "AsheQ.png",
+        "group": "spell",
+        "h": 48,
+        "sprite": "spell1.png",
+        "w": 48,
+        "x": 192,
+        "y": 144
+      },
+      "leveltip": {
+        "effect": [
+          "{{ bonusas }}% -> {{ bonusasNL }}%",
+          "{{ damageperstrike*100.000000 }}% -> {{ damageperstrikenl*100.000000 }}%"
+        ],
+        "label": [
+          "Velocidad de ataque",
+          "Índice de daño de ataque de ráfaga"
+        ]
+      },
+      "maxammo": "-1",
+      "maxrank": 5,
+      "name": "Concentración máxima",
+      "range": [
+        400,
+        400,
+        400,
+        400,
+        400
+      ],
+      "rangeBurn": "400",
+      "resource": "{{ cost }} {{ abilityresourcename }}",
+      "tooltip": "<spellPassive>Pasiva</spellPassive>: Los ataques de Ashe le otorgan una acumulación durante {{ stackduration }} s. Con {{ maxstacks }} acumulaciones, puede activar esta habilidad.<br /><br /><spellPassive>Activa:</spellPassive> Ashe obtiene un <attackSpeed>{{ bonusas }}% de velocidad de ataque</attackSpeed> y sus ataques infligen <physicalDamage>{{ empowereddamage }} de daño</physicalDamage> durante {{ buffduration }} s.{{ spellmodifierdescriptionappend }}",
+      "vars": []
+    },
+    {
+      "cooldown": [
+        18,
+        14.5,
+        11,
+        7.5,
+        4
+      ],
+      "cooldownBurn": "18/14.5/11/7.5/4",
+      "cost": [
+        75,
+        70,
+        65,
+        60,
+        55
+      ],
+      "costBurn": "75/70/65/60/55",
+      "costType": " {{ abilityresourcename }}",
+      "datavalues": {},
+      "description": "Ashe dispara flechas en un cono para causar más daño. También aplica Tiro congelador.",
+      "effect": [
+        null,
+        [
+          5,
+          7,
+          9,
+          11,
+          13
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ]
+      ],
+      "effectBurn": [
+        null,
+        "5/7/9/11/13",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0"
+      ],
+      "id": "Volley",
+      "image": {
+        "full": "Volley.png",
+        "group": "spell",
+        "h": 48,
+        "sprite": "spell1.png",
+        "w": 48,
+        "x": 240,
+        "y": 144
+      },
+      "leveltip": {
+        "effect": [
+          "{{ numberofarrowstooltip }} -> {{ numberofarrowstooltipNL }}",
+          "{{ basedamage }} -> {{ basedamageNL }}",
+          "{{ cooldown }} -> {{ cooldownNL }}",
+          "{{ cost }} -> {{ costNL }}"
+        ],
+        "label": [
+          "Flechas lanzadas",
+          "Daño",
+          "Enfriamiento",
+          "Coste de @AbilityResourceName@"
+        ]
+      },
+      "maxammo": "-1",
+      "maxrank": 5,
+      "name": "Descarga",
+      "range": [
+        1200,
+        1200,
+        1200,
+        1200,
+        1200
+      ],
+      "rangeBurn": "1200",
+      "resource": "{{ cost }} {{ abilityresourcename }}",
+      "tooltip": "Ashe dispara una salva de {{ numberofarrowstooltip }} flechas. Cada flecha inflige <physicalDamage>{{ totaldamage }} de daño físico</physicalDamage>. Los enemigos pueden recibir golpes de múltiples flechas, pero solo reciben daño de la primera.{{ spellmodifierdescriptionappend }}",
+      "vars": []
+    },
+    {
+      "cooldown": [
+        5,
+        5,
+        5,
+        5,
+        5
+      ],
+      "cooldownBurn": "5",
+      "cost": [
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "costBurn": "0",
+      "costType": "Sin coste",
+      "datavalues": {},
+      "description": "Ashe puede enviar su Espíritu Halcón en misión de exploración para reconocer el terreno.",
+      "effect": [
+        null,
+        [
+          3,
+          3,
+          3,
+          3,
+          3
+        ],
+        [
+          50,
+          90,
+          130,
+          170,
+          210
+        ],
+        [
+          25000,
+          25000,
+          25000,
+          25000,
+          25000
+        ],
+        [
+          5,
+          5,
+          5,
+          5,
+          5
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ]
+      ],
+      "effectBurn": [
+        null,
+        "3",
+        "50/90/130/170/210",
+        "25000",
+        "5",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0"
+      ],
+      "id": "AsheSpiritOfTheHawk",
+      "image": {
+        "full": "AsheSpiritOfTheHawk.png",
+        "group": "spell",
+        "h": 48,
+        "sprite": "spell1.png",
+        "w": 48,
+        "x": 288,
+        "y": 144
+      },
+      "leveltip": {
+        "effect": [
+          "{{ ammorechargetime }} -> {{ ammorechargetimeNL }}"
+        ],
+        "label": [
+          "Tiempo de recarga"
+        ]
+      },
+      "maxammo": "2",
+      "maxrank": 5,
+      "name": "Disparo de halcón",
+      "range": [
+        25000,
+        25000,
+        25000,
+        25000,
+        25000
+      ],
+      "rangeBurn": "25000",
+      "resource": "Sin coste",
+      "tooltip": "Ashe lanza un halcón para que otorgue visión durante 5 s en cualquier lugar del mapa. También revela el área que sobrevuela.<br /><br />Esta habilidad tiene 2 cargas ({{ chargecooldown }} s de recarga).{{ spellmodifierdescriptionappend }}",
+      "vars": []
+    },
+    {
+      "cooldown": [
+        100,
+        80,
+        60
+      ],
+      "cooldownBurn": "100/80/60",
+      "cost": [
+        100,
+        100,
+        100
+      ],
+      "costBurn": "100",
+      "costType": " {{ abilityresourcename }}",
+      "datavalues": {},
+      "description": "Ashe dispara un proyectil de hielo en línea recta. Si la flecha impacta contra un campeón enemigo, le inflige daño y aturde según la distancia que haya recorrido la flecha. Además, las unidades enemigas circundantes reciben daño y se ralentizan.",
+      "effect": [
+        null,
+        [
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0
+        ]
+      ],
+      "effectBurn": [
+        null,
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0"
+      ],
+      "id": "EnchantedCrystalArrow",
+      "image": {
+        "full": "EnchantedCrystalArrow.png",
+        "group": "spell",
+        "h": 48,
+        "sprite": "spell1.png",
+        "w": 48,
+        "x": 336,
+        "y": 144
+      },
+      "leveltip": {
+        "effect": [
+          "{{ rbasedamage }} -> {{ rbasedamageNL }}",
+          "{{ cooldown }} -> {{ cooldownNL }}"
+        ],
+        "label": [
+          "Daño",
+          "Enfriamiento"
+        ]
+      },
+      "maxammo": "-1",
+      "maxrank": 3,
+      "name": "Flecha de cristal encantada",
+      "range": [
+        25000,
+        25000,
+        25000
+      ],
+      "rangeBurn": "25000",
+      "resource": "{{ cost }} {{ abilityresourcename }}",
+      "tooltip": "Ashe dispara una flecha cristalina de hielo que <status>aturde</status> al primer campeón enemigo al que alcanza y le inflige <magicDamage>{{ rmaindamage }} de daño mágico</magicDamage>. La duración del <status>aturdimiento</status> aumenta con la distancia recorrida, hasta {{ maxstunduration }} s. <spellName>Tiro congelador</spellName> provoca que los enemigos de alrededor queden <status>ralentizados</status>.{{ spellmodifierdescriptionappend }}",
+      "vars": []
+    }
+  ],
+  "stats": {
+    "armor": 26,
+    "armorperlevel": 4.6,
+    "attackdamage": 59,
+    "attackdamageperlevel": 0,
+    "attackrange": 600,
+    "attackspeed": 0.658,
+    "attackspeedperlevel": 3,
+    "crit": 0,
+    "critperlevel": 0,
+    "hp": 610,
+    "hpperlevel": 101,
+    "hpregen": 3.5,
+    "hpregenperlevel": 0.55,
+    "movespeed": 325,
+    "mp": 280,
+    "mpperlevel": 35,
+    "mpregen": 7,
+    "mpregenperlevel": 0.65,
+    "spellblock": 33,
+    "spellblockperlevel": 1.1
+  },
+  "tags": [
+    "Marksman",
+    "Support"
+  ],
+  "title": "La Arquera de Hielo"
+}

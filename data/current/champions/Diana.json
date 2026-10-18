@@ -1,0 +1,1188 @@
+{
+  "allytips": [
+    "Golpear con Impacto creciente es muy importante, pero no temas errar. El enfriamiento es corto y el coste de maná es bajo.",
+    "Prevé cuándo lanzar Torrente lunar sin Luz lunar y cuándo esperar a golpear de nuevo con Impacto creciente.",
+    "Utiliza Lluvia de luna y Torrente lunar para permanecer cerca de los objetivos y activar Hoja lunaplata para infligir daño adicional."
+  ],
+  "blurb": "Portadora de una espada en forma de media luna, Diana es una guerrera de los Lunari, una fe rechazada en casi todas las tierras a los pies del Monte Targon. Ataviada con una armadura reluciente del color de la nieve en una noche de invierno, es la...",
+  "enemytips": [
+    "Esquiva Impacto creciente o muévete a un lugar seguro si estás afectado por Luz lunar.",
+    "Cascada pálida sólo dura unos segundos. Evita a Diana y enfréntate a ella después de que desaparezca el escudo.",
+    "Diana puede ser muy agresiva si utiliza Torrente lunar sin Luz lunar, pero puedes castigarla ralentizándola o aturdiéndola cuando no tenga ocasión de retroceder."
+  ],
+  "id": "Diana",
+  "image": {
+    "full": "Diana.png",
+    "group": "champion",
+    "h": 48,
+    "sprite": "champion0.png",
+    "w": 48,
+    "x": 288,
+    "y": 96
+  },
+  "info": {
+    "attack": 7,
+    "defense": 6,
+    "difficulty": 4,
+    "magic": 8
+  },
+  "key": "131",
+  "lore": "Portadora de una espada en forma de media luna, Diana es una guerrera de los Lunari, una fe rechazada en casi todas las tierras a los pies del Monte Targon. Ataviada con una armadura reluciente del color de la nieve en una noche de invierno, es la personificación del poder de la luna plateada. Imbuida de la esencia de una presencia de más allá de la elevada cima de Targon, Diana ya no es humana en su totalidad y lucha por entender su poder y propósito en este mundo.",
+  "name": "Diana",
+  "partype": "Maná",
+  "passive": {
+    "description": "Cada tres golpes, inflige daño mágico adicional a los enemigos cercanos. Después de lanzar un hechizo, Diana obtiene velocidad de ataque durante 5 segundos.",
+    "image": {
+      "full": "Diana_Passive_LunarBlade.png",
+      "group": "passive",
+      "h": 48,
+      "sprite": "passive0.png",
+      "w": 48,
+      "x": 288,
+      "y": 96
+    },
+    "name": "Hoja lunaplata"
+  },
+  "recommended": [],
+  "skins": [
+    {
+      "chromas": false,
+      "id": "131000",
+      "name": "default",
+      "num": 0
+    },
+    {
+      "chromas": false,
+      "id": "131001",
+      "name": "Diana valquiria oscura",
+      "num": 1
+    },
+    {
+      "chromas": true,
+      "id": "131002",
+      "name": "Diana diosa lunar",
+      "num": 2
+    },
+    {
+      "chromas": false,
+      "id": "131003",
+      "name": "Diana infernal",
+      "num": 3
+    },
+    {
+      "chromas": false,
+      "id": "131004",
+      "name": "Diana diosa lunar (rubí)",
+      "num": 4,
+      "parentSkin": 2
+    },
+    {
+      "chromas": false,
+      "id": "131005",
+      "name": "Diana diosa lunar (perla)",
+      "num": 5,
+      "parentSkin": 2
+    },
+    {
+      "chromas": false,
+      "id": "131006",
+      "name": "Diana diosa lunar (aguamarina)",
+      "num": 6,
+      "parentSkin": 2
+    },
+    {
+      "chromas": false,
+      "id": "131007",
+      "name": "Diana diosa lunar (turquesa)",
+      "num": 7,
+      "parentSkin": 2
+    },
+    {
+      "chromas": false,
+      "id": "131008",
+      "name": "Diana diosa lunar (amatista)",
+      "num": 8,
+      "parentSkin": 2
+    },
+    {
+      "chromas": false,
+      "id": "131009",
+      "name": "Diana diosa lunar (peridoto)",
+      "num": 9,
+      "parentSkin": 2
+    },
+    {
+      "chromas": false,
+      "id": "131010",
+      "name": "Diana diosa lunar (obsidiana)",
+      "num": 10,
+      "parentSkin": 2
+    },
+    {
+      "chromas": false,
+      "id": "131011",
+      "name": "Diana luna sangrienta",
+      "num": 11
+    },
+    {
+      "chromas": true,
+      "id": "131012",
+      "name": "Diana aguas oscuras",
+      "num": 12
+    },
+    {
+      "chromas": false,
+      "id": "131013",
+      "name": "Diana aguas oscuras (perla)",
+      "num": 13,
+      "parentSkin": 12
+    },
+    {
+      "chromas": false,
+      "id": "131014",
+      "name": "Diana aguas oscuras (rubí)",
+      "num": 14,
+      "parentSkin": 12
+    },
+    {
+      "chromas": false,
+      "id": "131015",
+      "name": "Diana aguas oscuras (obsidiana)",
+      "num": 15,
+      "parentSkin": 12
+    },
+    {
+      "chromas": false,
+      "id": "131016",
+      "name": "Diana aguas oscuras (turquesa)",
+      "num": 16,
+      "parentSkin": 12
+    },
+    {
+      "chromas": false,
+      "id": "131017",
+      "name": "Diana aguas oscuras (zafiro)",
+      "num": 17,
+      "parentSkin": 12
+    },
+    {
+      "chromas": true,
+      "id": "131018",
+      "name": "Diana matadragones",
+      "num": 18
+    },
+    {
+      "chromas": false,
+      "id": "131019",
+      "name": "Diana matadragones (rubí)",
+      "num": 19,
+      "parentSkin": 18
+    },
+    {
+      "chromas": false,
+      "id": "131020",
+      "name": "Diana matadragones (citrino)",
+      "num": 20,
+      "parentSkin": 18
+    },
+    {
+      "chromas": false,
+      "id": "131021",
+      "name": "Diana matadragones (esmeralda)",
+      "num": 21,
+      "parentSkin": 18
+    },
+    {
+      "chromas": false,
+      "id": "131022",
+      "name": "Diana matadragones (zafiro)",
+      "num": 22,
+      "parentSkin": 18
+    },
+    {
+      "chromas": false,
+      "id": "131023",
+      "name": "Diana matadragones (perla)",
+      "num": 23,
+      "parentSkin": 18
+    },
+    {
+      "chromas": false,
+      "id": "131024",
+      "name": "Diana matadragones (obsidiana)",
+      "num": 24,
+      "parentSkin": 18
+    },
+    {
+      "chromas": false,
+      "id": "131025",
+      "name": "Diana reina guerrera",
+      "num": 25
+    },
+    {
+      "chromas": false,
+      "id": "131026",
+      "name": "Diana reina guerrera de prestigio",
+      "num": 26
+    },
+    {
+      "chromas": true,
+      "id": "131027",
+      "name": "Diana centinela",
+      "num": 27
+    },
+    {
+      "chromas": false,
+      "id": "131028",
+      "name": "Diana centinela (rubí)",
+      "num": 28,
+      "parentSkin": 27
+    },
+    {
+      "chromas": false,
+      "id": "131029",
+      "name": "Diana centinela (citrino)",
+      "num": 29,
+      "parentSkin": 27
+    },
+    {
+      "chromas": false,
+      "id": "131030",
+      "name": "Diana centinela (esmeralda)",
+      "num": 30,
+      "parentSkin": 27
+    },
+    {
+      "chromas": false,
+      "id": "131031",
+      "name": "Diana centinela (tanzanita)",
+      "num": 31,
+      "parentSkin": 27
+    },
+    {
+      "chromas": false,
+      "id": "131032",
+      "name": "Diana centinela (zafiro)",
+      "num": 32,
+      "parentSkin": 27
+    },
+    {
+      "chromas": false,
+      "id": "131033",
+      "name": "Diana centinela (perla)",
+      "num": 33,
+      "parentSkin": 27
+    },
+    {
+      "chromas": false,
+      "id": "131034",
+      "name": "Diana centinela (turquesa)",
+      "num": 34,
+      "parentSkin": 27
+    },
+    {
+      "chromas": false,
+      "id": "131035",
+      "name": "Diana centinela (cuarzo rosa)",
+      "num": 35,
+      "parentSkin": 27
+    },
+    {
+      "chromas": false,
+      "id": "131036",
+      "name": "Diana centinela (resuelto)",
+      "num": 36,
+      "parentSkin": 27
+    },
+    {
+      "chromas": true,
+      "id": "131037",
+      "name": "Diana artificiera",
+      "num": 37
+    },
+    {
+      "chromas": false,
+      "id": "131038",
+      "name": "Diana artificiera (rubí)",
+      "num": 38,
+      "parentSkin": 37
+    },
+    {
+      "chromas": false,
+      "id": "131039",
+      "name": "Diana artificiera (zafiro)",
+      "num": 39,
+      "parentSkin": 37
+    },
+    {
+      "chromas": false,
+      "id": "131040",
+      "name": "Diana artificiera (esmeralda)",
+      "num": 40,
+      "parentSkin": 37
+    },
+    {
+      "chromas": false,
+      "id": "131041",
+      "name": "Diana artificiera (tanzanita)",
+      "num": 41,
+      "parentSkin": 37
+    },
+    {
+      "chromas": false,
+      "id": "131042",
+      "name": "Diana artificiera (cuarzo rosa)",
+      "num": 42,
+      "parentSkin": 37
+    },
+    {
+      "chromas": false,
+      "id": "131043",
+      "name": "Diana artificiera (ojo de gato)",
+      "num": 43,
+      "parentSkin": 37
+    },
+    {
+      "chromas": false,
+      "id": "131044",
+      "name": "Diana artificiera (perla)",
+      "num": 44,
+      "parentSkin": 37
+    },
+    {
+      "chromas": false,
+      "id": "131045",
+      "name": "Diana artificiera (obsidiana)",
+      "num": 45,
+      "parentSkin": 37
+    },
+    {
+      "chromas": false,
+      "id": "131046",
+      "name": "Diana artificiera (tigre dorado)",
+      "num": 46,
+      "parentSkin": 37
+    },
+    {
+      "chromas": true,
+      "id": "131047",
+      "name": "Diana bendición invernal",
+      "num": 47
+    },
+    {
+      "chromas": false,
+      "id": "131048",
+      "name": "Diana bendición invernal (rubí)",
+      "num": 48,
+      "parentSkin": 47
+    },
+    {
+      "chromas": false,
+      "id": "131049",
+      "name": "Diana bendición invernal (cuarzo rosa)",
+      "num": 49,
+      "parentSkin": 47
+    },
+    {
+      "chromas": false,
+      "id": "131050",
+      "name": "Diana bendición invernal (esmeralda)",
+      "num": 50,
+      "parentSkin": 47
+    },
+    {
+      "chromas": false,
+      "id": "131051",
+      "name": "Diana bendición invernal (turquesa)",
+      "num": 51,
+      "parentSkin": 47
+    },
+    {
+      "chromas": false,
+      "id": "131052",
+      "name": "Diana bendición invernal (perla)",
+      "num": 52,
+      "parentSkin": 47
+    },
+    {
+      "chromas": false,
+      "id": "131053",
+      "name": "Diana bendición invernal (guirnalda)",
+      "num": 53,
+      "parentSkin": 47
+    },
+    {
+      "chromas": true,
+      "id": "131054",
+      "name": "Diana poder celestial",
+      "num": 54
+    },
+    {
+      "chromas": false,
+      "id": "131055",
+      "name": "Diana poder celestial (rubí)",
+      "num": 55,
+      "parentSkin": 54
+    },
+    {
+      "chromas": false,
+      "id": "131056",
+      "name": "Diana poder celestial (cuarzo rosa)",
+      "num": 56,
+      "parentSkin": 54
+    },
+    {
+      "chromas": false,
+      "id": "131057",
+      "name": "Diana poder celestial (citrino)",
+      "num": 57,
+      "parentSkin": 54
+    },
+    {
+      "chromas": false,
+      "id": "131058",
+      "name": "Diana poder celestial (esmeralda)",
+      "num": 58,
+      "parentSkin": 54
+    },
+    {
+      "chromas": false,
+      "id": "131059",
+      "name": "Diana poder celestial (aguamarina)",
+      "num": 59,
+      "parentSkin": 54
+    },
+    {
+      "chromas": false,
+      "id": "131060",
+      "name": "Diana poder celestial (tanzanita)",
+      "num": 60,
+      "parentSkin": 54
+    },
+    {
+      "chromas": false,
+      "id": "131061",
+      "name": "Diana poder celestial (perla)",
+      "num": 61,
+      "parentSkin": 54
+    },
+    {
+      "chromas": false,
+      "id": "131062",
+      "name": "Diana poder celestial (obsidiana)",
+      "num": 62,
+      "parentSkin": 54
+    },
+    {
+      "chromas": false,
+      "id": "131063",
+      "name": "Diana poder celestial (lustre)",
+      "num": 63,
+      "parentSkin": 54
+    },
+    {
+      "chromas": true,
+      "id": "131064",
+      "name": "Diana oscuridad cósmica",
+      "num": 64
+    },
+    {
+      "chromas": false,
+      "id": "131065",
+      "name": "Diana oscuridad cósmica de prestigio",
+      "num": 65
+    },
+    {
+      "chromas": false,
+      "id": "131066",
+      "name": "Diana oscuridad cósmica (rubí)",
+      "num": 66,
+      "parentSkin": 64
+    },
+    {
+      "chromas": false,
+      "id": "131067",
+      "name": "Diana oscuridad cósmica (ojo de gato)",
+      "num": 67,
+      "parentSkin": 64
+    },
+    {
+      "chromas": false,
+      "id": "131068",
+      "name": "Diana oscuridad cósmica (zafiro)",
+      "num": 68,
+      "parentSkin": 64
+    },
+    {
+      "chromas": false,
+      "id": "131069",
+      "name": "Diana oscuridad cósmica (cuarzo rosa)",
+      "num": 69,
+      "parentSkin": 64
+    },
+    {
+      "chromas": false,
+      "id": "131070",
+      "name": "Diana oscuridad cósmica (esmeralda)",
+      "num": 70,
+      "parentSkin": 64
+    },
+    {
+      "chromas": false,
+      "id": "131071",
+      "name": "Diana oscuridad cósmica (turquesa)",
+      "num": 71,
+      "parentSkin": 64
+    },
+    {
+      "chromas": false,
+      "id": "131072",
+      "name": "Diana oscuridad cósmica (arcoíris)",
+      "num": 72,
+      "parentSkin": 64
+    },
+    {
+      "chromas": false,
+      "id": "131073",
+      "name": "Diana oscuridad cósmica (perla)",
+      "num": 73,
+      "parentSkin": 64
+    },
+    {
+      "chromas": false,
+      "id": "131074",
+      "name": "Diana oscuridad cósmica (cuásar)",
+      "num": 74,
+      "parentSkin": 64
+    },
+    {
+      "chromas": false,
+      "id": "131076",
+      "name": "Diana aspecto de la eternidad",
+      "num": 76
+    },
+    {
+      "chromas": true,
+      "id": "131077",
+      "name": "Diana eclipse del aspecto de la eternidad",
+      "num": 77
+    },
+    {
+      "chromas": false,
+      "id": "131078",
+      "name": "Diana aspecto de la eternidad (rubí)",
+      "num": 78,
+      "parentSkin": 76
+    },
+    {
+      "chromas": false,
+      "id": "131079",
+      "name": "Diana aspecto de la eternidad (cuarzo rosa)",
+      "num": 79,
+      "parentSkin": 76
+    },
+    {
+      "chromas": false,
+      "id": "131080",
+      "name": "Diana aspecto de la eternidad (ojo de gato)",
+      "num": 80,
+      "parentSkin": 76
+    },
+    {
+      "chromas": false,
+      "id": "131081",
+      "name": "Diana aspecto de la eternidad (esmeralda)",
+      "num": 81,
+      "parentSkin": 76
+    },
+    {
+      "chromas": false,
+      "id": "131082",
+      "name": "Diana aspecto de la eternidad (tanzanita)",
+      "num": 82,
+      "parentSkin": 76
+    },
+    {
+      "chromas": false,
+      "id": "131083",
+      "name": "Diana aspecto de la eternidad (perla)",
+      "num": 83,
+      "parentSkin": 76
+    }
+  ],
+  "spells": [
+    {
+      "cooldown": [
+        8,
+        7.5,
+        7,
+        6.5,
+        6
+      ],
+      "cooldownBurn": "8/7.5/7/6.5/6",
+      "cost": [
+        50,
+        50,
+        50,
+        50,
+        50
+      ],
+      "costBurn": "50",
+      "costType": " {{ abilityresourcename }}",
+      "datavalues": {},
+      "description": "Libera un rayo de energía lunar en un arco que inflige daño mágico.<br><br>Los enemigos golpeados se verán afectados por Luz lunar, que revela durante 3 s a los objetivos que no estén en sigilo.",
+      "effect": [
+        null,
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          1,
+          1,
+          1,
+          1,
+          1
+        ],
+        [
+          1.5,
+          1.5,
+          1.5,
+          1.5,
+          1.5
+        ],
+        [
+          3,
+          3,
+          3,
+          3,
+          3
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ]
+      ],
+      "effectBurn": [
+        null,
+        "0",
+        "1",
+        "1.5",
+        "3",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0"
+      ],
+      "id": "DianaQ",
+      "image": {
+        "full": "DianaQ.png",
+        "group": "spell",
+        "h": 48,
+        "sprite": "spell3.png",
+        "w": 48,
+        "x": 384,
+        "y": 48
+      },
+      "leveltip": {
+        "effect": [
+          "{{ cooldown }} -> {{ cooldownNL }}",
+          "{{ basedamage }} -> {{ basedamageNL }}"
+        ],
+        "label": [
+          "Enfriamiento",
+          "Daño"
+        ]
+      },
+      "maxammo": "-1",
+      "maxrank": 5,
+      "name": "Impacto creciente",
+      "range": [
+        900,
+        900,
+        900,
+        900,
+        900
+      ],
+      "rangeBurn": "900",
+      "resource": "{{ cost }} {{ abilityresourcename }}",
+      "tooltip": "Diana libera un arco de energía lunar que inflige <magicDamage>{{ totaldamage }} de daño mágico</magicDamage> y marca con <keywordMajor>Luz lunar</keywordMajor> durante {{ moonlightduration }} s. <br /><br />La <keywordMajor>Luz lunar</keywordMajor> revela a los enemigos que no estén en <keywordStealth>sigilo</keywordStealth>.{{ spellmodifierdescriptionappend }}",
+      "vars": []
+    },
+    {
+      "cooldown": [
+        15,
+        13.5,
+        12,
+        10.5,
+        9
+      ],
+      "cooldownBurn": "15/13.5/12/10.5/9",
+      "cost": [
+        40,
+        45,
+        50,
+        55,
+        60
+      ],
+      "costBurn": "40/45/50/55/60",
+      "costType": " {{ abilityresourcename }}",
+      "datavalues": {},
+      "description": "Diana crea tres esferas que orbitan a su alrededor y explotan al entrar en contacto con enemigos, lo que inflige daño en una zona. También obtiene un escudo temporal que absorbe daño. Si la tercera esfera explota, el escudo absorbe más daño.",
+      "effect": [
+        null,
+        [
+          5,
+          5,
+          5,
+          5,
+          5
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          1,
+          1,
+          1,
+          1,
+          1
+        ],
+        [
+          4,
+          4,
+          4,
+          4,
+          4
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ]
+      ],
+      "effectBurn": [
+        null,
+        "5",
+        "0",
+        "0",
+        "1",
+        "4",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0"
+      ],
+      "id": "DianaOrbs",
+      "image": {
+        "full": "DianaOrbs.png",
+        "group": "spell",
+        "h": 48,
+        "sprite": "spell3.png",
+        "w": 48,
+        "x": 432,
+        "y": 48
+      },
+      "leveltip": {
+        "effect": [
+          "{{ orbdamage }} -> {{ orbdamageNL }}",
+          "{{ shieldbase }} -> {{ shieldbaseNL }}",
+          "{{ cost }} -> {{ costNL }}",
+          "{{ cooldown }} -> {{ cooldownNL }}"
+        ],
+        "label": [
+          "Daño",
+          "Cantidad de escudo",
+          "Coste de @AbilityResourceName@",
+          "Enfriamiento"
+        ]
+      },
+      "maxammo": "-1",
+      "maxrank": 5,
+      "name": "Cascada pálida",
+      "range": [
+        800,
+        800,
+        800,
+        800,
+        800
+      ],
+      "rangeBurn": "800",
+      "resource": "{{ cost }} {{ abilityresourcename }}",
+      "tooltip": "Diana crea tres esferas que orbitan durante {{ shieldduration }} s y explotan al entrar en contacto. Cada una inflige <magicDamage>{{ totaldamage }} de daño mágico</magicDamage>, hasta un máximo de <magicDamage>{{ totalmaxdamage }} de daño</magicDamage>.<br /><br />Diana también obtiene un <shield>escudo de {{ shieldvalue }}</shield> mientras dura el efecto. Cuando la última esfera explota, obtiene un <shield>escudo adicional de {{ shieldvalue }}</shield> y la duración se reinicia.{{ spellmodifierdescriptionappend }}",
+      "vars": []
+    },
+    {
+      "cooldown": [
+        22,
+        20,
+        18,
+        16,
+        14
+      ],
+      "cooldownBurn": "22/20/18/16/14",
+      "cost": [
+        40,
+        45,
+        50,
+        55,
+        60
+      ],
+      "costBurn": "40/45/50/55/60",
+      "costType": " {{ abilityresourcename }}",
+      "datavalues": {},
+      "description": "Diana se transforma en la encarnación de la luna más vengativa, se desliza hacia un enemigo y le inflige daño mágico.<br><br>Torrente lunar no tiene enfriamiento cuando se usa para deslizarse hacia un objetivo afectado por Luz lunar. El efecto de Luz lunar desaparecerá del resto de enemigos, independientemente de haber sido atacados con Torrente lunar o no.",
+      "effect": [
+        null,
+        [
+          4,
+          4,
+          4,
+          0,
+          0
+        ],
+        [
+          40,
+          60,
+          80,
+          100,
+          120
+        ],
+        [
+          50,
+          75,
+          100,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ]
+      ],
+      "effectBurn": [
+        null,
+        "4/4/4/0/0",
+        "40/60/80/100/120",
+        "50/75/100/0/0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0"
+      ],
+      "id": "DianaTeleport",
+      "image": {
+        "full": "DianaTeleport.png",
+        "group": "spell",
+        "h": 48,
+        "sprite": "spell3.png",
+        "w": 48,
+        "x": 0,
+        "y": 96
+      },
+      "leveltip": {
+        "effect": [
+          "{{ cooldown }} -> {{ cooldownNL }}",
+          "{{ cost }} -> {{ costNL }}",
+          "{{ basedamage }} -> {{ basedamageNL }}"
+        ],
+        "label": [
+          "Enfriamiento",
+          "Coste de @AbilityResourceName@",
+          "Daño"
+        ]
+      },
+      "maxammo": "-1",
+      "maxrank": 5,
+      "name": "Torrente lunar",
+      "range": [
+        825,
+        825,
+        825,
+        825,
+        825
+      ],
+      "rangeBurn": "825",
+      "resource": "{{ cost }} {{ abilityresourcename }}",
+      "tooltip": "Diana se convierte en la luna vengadora, se desliza hacia un enemigo e inflige <magicDamage>{{ totaldamage }} de daño mágico</magicDamage>. Si el objetivo está afectado por <keywordMajor>Luz lunar</keywordMajor>, el enfriamiento de esta habilidad se reinicia.{{ spellmodifierdescriptionappend }}",
+      "vars": []
+    },
+    {
+      "cooldown": [
+        100,
+        90,
+        80
+      ],
+      "cooldownBurn": "100/90/80",
+      "cost": [
+        100,
+        100,
+        100
+      ],
+      "costBurn": "100",
+      "costType": " {{ abilityresourcename }}",
+      "datavalues": {},
+      "description": "Diana revela y atrae a todos los enemigos cercanos, y los ralentiza.<br><br>Si Diana atrae a un campeón enemigo o más, un torrente de luz lunar se precipita hacia ella tras unos instantes e inflige daño mágico en una zona a su alrededor, que aumenta por cada objetivo adicional atraído con la habilidad.",
+      "effect": [
+        null,
+        [
+          -0.35,
+          -0.4,
+          -0.45
+        ],
+        [
+          2,
+          2,
+          2
+        ],
+        [
+          0.5,
+          0.5,
+          0.5
+        ],
+        [
+          3,
+          3,
+          3
+        ],
+        [
+          4,
+          4,
+          4
+        ],
+        [
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0
+        ]
+      ],
+      "effectBurn": [
+        null,
+        "-0.35/-0.4/-0.45",
+        "2",
+        "0.5",
+        "3",
+        "4",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0"
+      ],
+      "id": "DianaR",
+      "image": {
+        "full": "DianaR.png",
+        "group": "spell",
+        "h": 48,
+        "sprite": "spell3.png",
+        "w": 48,
+        "x": 48,
+        "y": 96
+      },
+      "leveltip": {
+        "effect": [
+          "{{ cooldown }} -> {{ cooldownNL }}",
+          "{{ damage }} -> {{ damageNL }}",
+          "{{ slowtooltip }}% -> {{ slowtooltipNL }}%"
+        ],
+        "label": [
+          "Enfriamiento",
+          "Daño",
+          "Ralentización"
+        ]
+      },
+      "maxammo": "-1",
+      "maxrank": 3,
+      "name": "Lluvia de luna",
+      "range": [
+        475,
+        475,
+        475
+      ],
+      "rangeBurn": "475",
+      "resource": "{{ cost }} {{ abilityresourcename }}",
+      "tooltip": "Diana <status>atrae</status>, <status>ralentiza</status> un {{ slowtooltip }}% y revela a los enemigos cercanos durante {{ slowduration }} s.<br /><br />Si Diana golpea al menos a un campeón enemigo, invoca a la luna e inflige <magicDamage>{{ rexplosiondamage }} de daño mágico</magicDamage> más <magicDamage>{{ rmultihitamplification }}</magicDamage> por cada campeón que haya atraído después del primero, hasta un máximo de <magicDamage>{{ maxdamage }} de daño</magicDamage> adicional.{{ spellmodifierdescriptionappend }}",
+      "vars": []
+    }
+  ],
+  "stats": {
+    "armor": 31,
+    "armorperlevel": 4.3,
+    "attackdamage": 57,
+    "attackdamageperlevel": 0,
+    "attackrange": 150,
+    "attackspeed": 0.625,
+    "attackspeedperlevel": 2,
+    "crit": 0,
+    "critperlevel": 0,
+    "hp": 640,
+    "hpperlevel": 109,
+    "hpregen": 6.5,
+    "hpregenperlevel": 0.85,
+    "movespeed": 345,
+    "mp": 375,
+    "mpperlevel": 25,
+    "mpregen": 8,
+    "mpregenperlevel": 0.8,
+    "spellblock": 32,
+    "spellblockperlevel": 2.05
+  },
+  "tags": [
+    "Fighter",
+    "Assassin"
+  ],
+  "title": "El Desdén de la Luna"
+}

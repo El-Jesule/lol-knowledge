@@ -1,0 +1,935 @@
+{
+  "allytips": [
+    "Voluntad mortal se activa tras 5 hechizos o ataques básicos. Tenlo en cuenta para planear los combates de forma en que puedas activarla varias veces.",
+    "Desgasta al enemigo con Lanza cometa antes de entrar a por todas.",
+    "Si ves que un enemigo va a salir del alcance de Asalto protector, vuelve a lanzarla de inmediato para asestar el golpe final con el escudo."
+  ],
+  "blurb": "Tiempo atrás, Atreus había albergado al Aspecto de la Guerra en su interior contra su voluntad, pero sobrevivió al golpe que acabó con el poder divino y arrancó estrellas del firmamento. Con el paso de los años, aprendió a aceptar el poder de su propia...",
+  "enemytips": [
+    "Asalto protector vuelve invulnerable a Pantheon ante los ataques frontales. Posiciónate detrás de él o espera a que termine.",
+    "Lanza cometa ejecuta a los enemigos con poca vida, así que ten cuidado con acercarte a Pantheon.",
+    "Dispones de varios segundos para reaccionar a Gran descarga estelar antes de que llegue Pantheon. Aprovecha ese tiempo para apartarte de su trayectoria o idear un plan para lidiar con él."
+  ],
+  "id": "Pantheon",
+  "image": {
+    "full": "Pantheon.png",
+    "group": "champion",
+    "h": 48,
+    "sprite": "champion3.png",
+    "w": 48,
+    "x": 0,
+    "y": 48
+  },
+  "info": {
+    "attack": 9,
+    "defense": 4,
+    "difficulty": 4,
+    "magic": 3
+  },
+  "key": "80",
+  "lore": "Tiempo atrás, Atreus había albergado al Aspecto de la Guerra en su interior contra su voluntad, pero sobrevivió al golpe que acabó con el poder divino y arrancó estrellas del firmamento. Con el paso de los años, aprendió a aceptar el poder de su propia mortalidad y el testarudo aguante que la acompaña. Ahora Atreus se opone a las fuerzas divinas en la piel de un nuevo Pantheon y su voluntad de hierro espolea en el campo de batalla las armas del Aspecto caído.",
+  "name": "Pantheon",
+  "partype": "Maná",
+  "passive": {
+    "description": "Cada pocos hechizos o ataques, la siguiente habilidad de Pantheon estará potenciada.",
+    "image": {
+      "full": "Pantheon_Passive.png",
+      "group": "passive",
+      "h": 48,
+      "sprite": "passive3.png",
+      "w": 48,
+      "x": 0,
+      "y": 48
+    },
+    "name": "Voluntad mortal"
+  },
+  "recommended": [],
+  "skins": [
+    {
+      "chromas": false,
+      "id": "80000",
+      "name": "default",
+      "num": 0
+    },
+    {
+      "chromas": false,
+      "id": "80001",
+      "name": "Pantheon mirmidón",
+      "num": 1
+    },
+    {
+      "chromas": false,
+      "id": "80002",
+      "name": "Pantheon implacable",
+      "num": 2
+    },
+    {
+      "chromas": false,
+      "id": "80003",
+      "name": "Pantheon Perseo",
+      "num": 3
+    },
+    {
+      "chromas": false,
+      "id": "80004",
+      "name": "Pantheon armadura completa",
+      "num": 4
+    },
+    {
+      "chromas": false,
+      "id": "80005",
+      "name": "Pantheon guerrero despiadado",
+      "num": 5
+    },
+    {
+      "chromas": true,
+      "id": "80006",
+      "name": "Pantheon matadragones",
+      "num": 6
+    },
+    {
+      "chromas": false,
+      "id": "80007",
+      "name": "Pantheon exterminador",
+      "num": 7
+    },
+    {
+      "chromas": false,
+      "id": "80008",
+      "name": "Pantheon panadero",
+      "num": 8
+    },
+    {
+      "chromas": false,
+      "id": "80009",
+      "name": "Pantheon matadragones (perla)",
+      "num": 9,
+      "parentSkin": 6
+    },
+    {
+      "chromas": false,
+      "id": "80010",
+      "name": "Pantheon matadragones (amatista)",
+      "num": 10,
+      "parentSkin": 6
+    },
+    {
+      "chromas": false,
+      "id": "80011",
+      "name": "Pantheon matadragones (arenisca)",
+      "num": 11,
+      "parentSkin": 6
+    },
+    {
+      "chromas": false,
+      "id": "80012",
+      "name": "Pantheon matadragones (obsidiana)",
+      "num": 12,
+      "parentSkin": 6
+    },
+    {
+      "chromas": false,
+      "id": "80013",
+      "name": "Pantheon matadragones (ojo de gato)",
+      "num": 13,
+      "parentSkin": 6
+    },
+    {
+      "chromas": false,
+      "id": "80014",
+      "name": "Pantheon matadragones (esmeralda)",
+      "num": 14,
+      "parentSkin": 6
+    },
+    {
+      "chromas": false,
+      "id": "80015",
+      "name": "Pantheon matadragones (rubí)",
+      "num": 15,
+      "parentSkin": 6
+    },
+    {
+      "chromas": true,
+      "id": "80016",
+      "name": "Pantheon pulso de fuego",
+      "num": 16
+    },
+    {
+      "chromas": false,
+      "id": "80017",
+      "name": "Pantheon pulso de fuego (rubí)",
+      "num": 17,
+      "parentSkin": 16
+    },
+    {
+      "chromas": false,
+      "id": "80018",
+      "name": "Pantheon pulso de fuego (citrino)",
+      "num": 18,
+      "parentSkin": 16
+    },
+    {
+      "chromas": false,
+      "id": "80019",
+      "name": "Pantheon pulso de fuego (aguamarina)",
+      "num": 19,
+      "parentSkin": 16
+    },
+    {
+      "chromas": false,
+      "id": "80020",
+      "name": "Pantheon pulso de fuego (perla)",
+      "num": 20,
+      "parentSkin": 16
+    },
+    {
+      "chromas": false,
+      "id": "80021",
+      "name": "Pantheon pulso de fuego (amatista)",
+      "num": 21,
+      "parentSkin": 16
+    },
+    {
+      "chromas": false,
+      "id": "80022",
+      "name": "Pantheon pulso de fuego (crono)",
+      "num": 22,
+      "parentSkin": 16
+    },
+    {
+      "chromas": false,
+      "id": "80023",
+      "name": "Pantheon pulso de fuego (obsidiana)",
+      "num": 23,
+      "parentSkin": 16
+    },
+    {
+      "chromas": false,
+      "id": "80024",
+      "name": "Pantheon pulso de fuego (esmeralda)",
+      "num": 24,
+      "parentSkin": 16
+    },
+    {
+      "chromas": true,
+      "id": "80025",
+      "name": "Pantheon arruinado",
+      "num": 25
+    },
+    {
+      "chromas": false,
+      "id": "80026",
+      "name": "Pantheon ascendido de prestigio",
+      "num": 26
+    },
+    {
+      "chromas": false,
+      "id": "80027",
+      "name": "Pantheon arruinado (rubí)",
+      "num": 27,
+      "parentSkin": 25
+    },
+    {
+      "chromas": false,
+      "id": "80028",
+      "name": "Pantheon arruinado (citrino)",
+      "num": 28,
+      "parentSkin": 25
+    },
+    {
+      "chromas": false,
+      "id": "80029",
+      "name": "Pantheon arruinado (amatista)",
+      "num": 29,
+      "parentSkin": 25
+    },
+    {
+      "chromas": false,
+      "id": "80030",
+      "name": "Pantheon arruinado (zafiro)",
+      "num": 30,
+      "parentSkin": 25
+    },
+    {
+      "chromas": false,
+      "id": "80031",
+      "name": "Pantheon arruinado (esmeralda)",
+      "num": 31,
+      "parentSkin": 25
+    },
+    {
+      "chromas": false,
+      "id": "80032",
+      "name": "Pantheon arruinado (cuarzo rosa)",
+      "num": 32,
+      "parentSkin": 25
+    },
+    {
+      "chromas": false,
+      "id": "80033",
+      "name": "Pantheon arruinado (tanzanita)",
+      "num": 33,
+      "parentSkin": 25
+    },
+    {
+      "chromas": false,
+      "id": "80034",
+      "name": "Pantheon arruinado (perla)",
+      "num": 34,
+      "parentSkin": 25
+    },
+    {
+      "chromas": false,
+      "id": "80035",
+      "name": "Pantheon arruinado (maldito)",
+      "num": 35,
+      "parentSkin": 25
+    },
+    {
+      "chromas": true,
+      "id": "80036",
+      "name": "Pantheon conquistador de la ceniza",
+      "num": 36
+    },
+    {
+      "chromas": false,
+      "id": "80037",
+      "name": "Pantheon conquistador de la ceniza (ascua ardiente)",
+      "num": 37,
+      "parentSkin": 36
+    },
+    {
+      "chromas": true,
+      "id": "80038",
+      "name": "Pantheon elegido del lobo",
+      "num": 38
+    },
+    {
+      "chromas": false,
+      "id": "80039",
+      "name": "Pantheon elegido del lobo (rubí)",
+      "num": 39,
+      "parentSkin": 38
+    },
+    {
+      "chromas": false,
+      "id": "80040",
+      "name": "Pantheon elegido del lobo (esmeralda)",
+      "num": 40,
+      "parentSkin": 38
+    },
+    {
+      "chromas": false,
+      "id": "80041",
+      "name": "Pantheon elegido del lobo (tanzanita)",
+      "num": 41,
+      "parentSkin": 38
+    },
+    {
+      "chromas": false,
+      "id": "80042",
+      "name": "Pantheon elegido del lobo (zafiro)",
+      "num": 42,
+      "parentSkin": 38
+    },
+    {
+      "chromas": false,
+      "id": "80043",
+      "name": "Pantheon elegido del lobo (cuarzo rosa)",
+      "num": 43,
+      "parentSkin": 38
+    },
+    {
+      "chromas": false,
+      "id": "80044",
+      "name": "Pantheon elegido del lobo (obsidiana)",
+      "num": 44,
+      "parentSkin": 38
+    },
+    {
+      "chromas": false,
+      "id": "80045",
+      "name": "Pantheon elegido del lobo (turquesa)",
+      "num": 45,
+      "parentSkin": 38
+    },
+    {
+      "chromas": false,
+      "id": "80046",
+      "name": "Pantheon elegido del lobo (citrino)",
+      "num": 46,
+      "parentSkin": 38
+    }
+  ],
+  "spells": [
+    {
+      "cooldown": [
+        11,
+        10.25,
+        9.5,
+        8.75,
+        8
+      ],
+      "cooldownBurn": "11/10.25/9.5/8.75/8",
+      "cost": [
+        25,
+        25,
+        25,
+        25,
+        25
+      ],
+      "costBurn": "25",
+      "costType": " {{ abilityresourcename }}",
+      "datavalues": {},
+      "description": "Pantheon embiste con su lanza o la arroja en la dirección objetivo.",
+      "effect": [
+        null,
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ]
+      ],
+      "effectBurn": [
+        null,
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0"
+      ],
+      "id": "PantheonQ",
+      "image": {
+        "full": "PantheonQ.png",
+        "group": "spell",
+        "h": 48,
+        "sprite": "spell10.png",
+        "w": 48,
+        "x": 192,
+        "y": 144
+      },
+      "leveltip": {
+        "effect": [
+          "{{ tapdamage }} -> {{ tapdamageNL }}",
+          "{{ executebasedamage }} -> {{ executebasedamageNL }}",
+          "{{ cooldown }} -> {{ cooldownNL }}"
+        ],
+        "label": [
+          "Daño básico",
+          "Daño básico de la ejecución",
+          "Enfriamiento"
+        ]
+      },
+      "maxammo": "-1",
+      "maxrank": 5,
+      "name": "Lanza cometa",
+      "range": [
+        575,
+        575,
+        575,
+        575,
+        575
+      ],
+      "rangeBurn": "575",
+      "resource": "{{ cost }} {{ abilityresourcename }}",
+      "tooltip": "<span class=\"colorFF8C00\">Pulsar:</span> Pantheon embiste con su lanza, lo que inflige <physicalDamage>{{ tapdamagecalc }} de daño físico</physicalDamage> a los enemigos golpeados. Restaura un {{ tapcooldownrefund*100 }}% del enfriamiento de esta habilidad.<br /><br /><span class=\"colorFF8C00\">Mantener pulsado:</span> Pantheon arroja su lanza, lo que inflige <physicalDamage>{{ holddamagecalc }} de daño físico</physicalDamage> al primer enemigo al que golpea y un {{ damagefalloff*100 }}% menos al resto de objetivos.<br /><br />Esta habilidad mejora contra enemigos con menos del {{ crithealththreshold*100 }}% de vida e inflige <physicalDamage>{{ executedamagecalcmodified }} de daño físico</physicalDamage>.<br /><br /><span class=\"colorEDDA74\">Bonificación de Voluntad mortal:</span> Inflige <physicalDamage>{{ empowereddamagecalc }} de daño físico</physicalDamage> adicional.{{ spellmodifierdescriptionappend }}",
+      "vars": []
+    },
+    {
+      "cooldown": [
+        13,
+        12,
+        11,
+        10,
+        9
+      ],
+      "cooldownBurn": "13/12/11/10/9",
+      "cost": [
+        55,
+        55,
+        55,
+        55,
+        55
+      ],
+      "costBurn": "55",
+      "costType": " {{ abilityresourcename }}",
+      "datavalues": {},
+      "description": "Pantheon se desliza hasta un objetivo, le inflige daño y lo aturde.",
+      "effect": [
+        null,
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ]
+      ],
+      "effectBurn": [
+        null,
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0"
+      ],
+      "id": "PantheonW",
+      "image": {
+        "full": "PantheonW.png",
+        "group": "spell",
+        "h": 48,
+        "sprite": "spell10.png",
+        "w": 48,
+        "x": 240,
+        "y": 144
+      },
+      "leveltip": {
+        "effect": [
+          "{{ maxhealthdamage*100.000000 }}% -> {{ maxhealthdamagenl*100.000000 }}%",
+          "{{ cooldown }} -> {{ cooldownNL }}"
+        ],
+        "label": [
+          "% vida máxima",
+          "Enfriamiento"
+        ]
+      },
+      "maxammo": "-1",
+      "maxrank": 5,
+      "name": "Salto con escudo",
+      "range": [
+        600,
+        600,
+        600,
+        600,
+        600
+      ],
+      "rangeBurn": "600",
+      "resource": "{{ cost }} {{ abilityresourcename }}",
+      "tooltip": "Pantheon salta sobre su objetivo, lo <status>aturde</status> durante {{ stunduration }} s e inflige un <physicalDamage>{{ maxhealthdamagecalc }} de daño físico según la vida máxima.</physicalDamage><br /><br /><keywordMajor>Bonificación de Voluntad mortal:</keywordMajor> El siguiente ataque de Pantheon golpea {{ empowerednumhits }} veces e inflige un total de <physicalDamage>{{ empowereddamagemultcalcmodified }} de daño físico</physicalDamage>.{{ spellmodifierdescriptionappend }}",
+      "vars": []
+    },
+    {
+      "cooldown": [
+        22,
+        21,
+        20,
+        19,
+        18
+      ],
+      "cooldownBurn": "22/21/20/19/18",
+      "cost": [
+        80,
+        80,
+        80,
+        80,
+        80
+      ],
+      "costBurn": "80",
+      "costType": " {{ abilityresourcename }}",
+      "datavalues": {},
+      "description": "Pantheon alza su escudo, se vuelve invulnerable a los ataques frontales y golpea repetidamente con su lanza.",
+      "effect": [
+        null,
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ]
+      ],
+      "effectBurn": [
+        null,
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0"
+      ],
+      "id": "PantheonE",
+      "image": {
+        "full": "PantheonE.png",
+        "group": "spell",
+        "h": 48,
+        "sprite": "spell10.png",
+        "w": 48,
+        "x": 288,
+        "y": 144
+      },
+      "leveltip": {
+        "effect": [
+          "{{ cooldown }} -> {{ cooldownNL }}",
+          "{{ shieldbasedamage }} -> {{ shieldbasedamageNL }}"
+        ],
+        "label": [
+          "Enfriamiento",
+          "Daño del golpe de escudo"
+        ]
+      },
+      "maxammo": "-1",
+      "maxrank": 5,
+      "name": "Asalto protector",
+      "range": [
+        400,
+        400,
+        400,
+        400,
+        400
+      ],
+      "rangeBurn": "400",
+      "resource": "{{ cost }} {{ abilityresourcename }}",
+      "tooltip": "Pantheon alza su escudo y entra en combate con los enemigos en la dirección elegida durante {{ shieldduration }} s, se vuelve invulnerable al daño que no sea de torretas que provenga de esa dirección e inflige <physicalDamage>{{ damagecalc }} de daño físico</physicalDamage> durante la duración del efecto. Tras canalizar, Pantheon golpea con su escudo e inflige <physicalDamage>{{ shielddamagecalc }} de daño físico</physicalDamage>.<br /><br /><span class=\"colorEDDA74\">Bonificación de Voluntad mortal:</span> Cuando Pantheon golpea con su escudo, obtiene <scaleArmor>{{ resistscalc }} de armadura</scaleArmor> y <scaleMR>{{ resistscalc }} de resistencia mágica</scaleMR> durante {{ resistsduration }} s, y un <speed>{{ speedamount*100 }}% de velocidad de movimiento</speed> durante {{ speedduration }} s.<br />{{ spellmodifierdescriptionappend }}",
+      "vars": []
+    },
+    {
+      "cooldown": [
+        180,
+        165,
+        150
+      ],
+      "cooldownBurn": "180/165/150",
+      "cost": [
+        100,
+        100,
+        100
+      ],
+      "costBurn": "100",
+      "costType": " {{ abilityresourcename }}",
+      "datavalues": {},
+      "description": "Pantheon se prepara para saltar por los aires y aterriza en una ubicación objetivo como un cometa.",
+      "effect": [
+        null,
+        [
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0
+        ]
+      ],
+      "effectBurn": [
+        null,
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0"
+      ],
+      "id": "PantheonR",
+      "image": {
+        "full": "PantheonR.png",
+        "group": "spell",
+        "h": 48,
+        "sprite": "spell10.png",
+        "w": 48,
+        "x": 336,
+        "y": 144
+      },
+      "leveltip": {
+        "effect": [
+          "{{ basedamage }} -> {{ basedamageNL }}",
+          "{{ cooldown }} -> {{ cooldownNL }}",
+          "{{ armorpenetration*100.000000 }}% -> {{ armorpenetrationnl*100.000000 }}%"
+        ],
+        "label": [
+          "Daño",
+          "Enfriamiento",
+          "Penetración de armadura"
+        ]
+      },
+      "maxammo": "-1",
+      "maxrank": 3,
+      "name": "Gran descarga estelar",
+      "range": [
+        5500,
+        5500,
+        5500
+      ],
+      "rangeBurn": "5500",
+      "resource": "{{ cost }} {{ abilityresourcename }}",
+      "tooltip": "<spellPassive>Pasiva:</spellPassive> Pantheon obtiene un {{ armorpenetration*100 }}% de penetración de armadura.<br /><br /><spellActive>Activa:</spellActive> Pantheon reúne sus fuerzas para saltar por los aires. Arroja su lanza desde arriba, lo que inflige <physicalDamage>{{ spell.pantheonq:holddamagecalc }} de daño físico</physicalDamage> en una pequeña zona, además de <status>ralentizar</status> un {{ spearslow*100 }}% durante {{ spearslowduration }} s. <br /><br />Después, Pantheon impacta contra la zona objetivo como un meteorito. Inflige hasta <magicDamage>{{ damagecalc }} de daño mágico</magicDamage> a los enemigos en una línea (que se reduce hasta un {{ edgedamagereduction*100 }}% en los bordes del área).<br /><br />Esta habilidad devuelve el enfriamiento de <span class=\"colorEDDA74\">Voluntad mortal</span> al instante.{{ spellmodifierdescriptionappend }}",
+      "vars": []
+    }
+  ],
+  "stats": {
+    "armor": 40,
+    "armorperlevel": 4.95,
+    "attackdamage": 64,
+    "attackdamageperlevel": 0,
+    "attackrange": 175,
+    "attackspeed": 0.658,
+    "attackspeedperlevel": 2.95,
+    "crit": 0,
+    "critperlevel": 0,
+    "hp": 650,
+    "hpperlevel": 109,
+    "hpregen": 6,
+    "hpregenperlevel": 0.65,
+    "movespeed": 345,
+    "mp": 317,
+    "mpperlevel": 31,
+    "mpregen": 7.35,
+    "mpregenperlevel": 0.45,
+    "spellblock": 28,
+    "spellblockperlevel": 2.05
+  },
+  "tags": [
+    "Fighter",
+    "Assassin"
+  ],
+  "title": "la Lanza Inquebrantable"
+}

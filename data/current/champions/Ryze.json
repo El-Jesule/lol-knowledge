@@ -1,0 +1,879 @@
+{
+  "allytips": [
+    "Usa la pasiva de Descarga eléctrica para optimizar al máximo el daño o la velocidad.",
+    "El corto enfriamiento de Tormenta eléctrica permite usarla para propagar el flujo a muchos enemigos.",
+    "Ryze puede moverse y lanzar otros hechizos mientras Distorsión de reinos se carga sin cancelar el portal."
+  ],
+  "blurb": "Ryze es considerado uno de los hechiceros con más experiencia de Runaterra. El archimago ancestral y gruñón lleva sobre sus hombros una pesada carga. Con su constitución sin límites y su inmenso poder arcano, Ryze se pasa la vida buscando...",
+  "enemytips": [
+    "Ryze es especialmente peligroso para los rivales que estén marcados con flujo.",
+    "Usa el tiempo que tarda Distorsión de reinos en abrirse para decidir cómo enfrentarte a lo que sea que vaya a salir del portal.",
+    "Utilizar hechizos de control de adversario en Ryze durante el tiempo de carga de Distorsión de reinos cancelará el portal."
+  ],
+  "id": "Ryze",
+  "image": {
+    "full": "Ryze.png",
+    "group": "champion",
+    "h": 48,
+    "sprite": "champion3.png",
+    "w": 48,
+    "x": 192,
+    "y": 96
+  },
+  "info": {
+    "attack": 2,
+    "defense": 2,
+    "difficulty": 7,
+    "magic": 10
+  },
+  "key": "13",
+  "lore": "Ryze es considerado uno de los hechiceros con más experiencia de Runaterra. El archimago ancestral y gruñón lleva sobre sus hombros una pesada carga. Con su constitución sin límites y su inmenso poder arcano, Ryze se pasa la vida buscando incansablemente Runas Geogénicas por el mundo, fragmentos de magia pura que antaño crearon el mundo de la nada. Ryze debe encontrar esos artefactos antes de que caigan en las manos equivocadas, porque sabe que, si fueron usados para crear Runaterra, también tienen el potencial de destruirla.",
+  "name": "Ryze",
+  "partype": "Maná",
+  "passive": {
+    "description": "<mainText>Los hechizos de Ryze infligen daño adicional según su maná adicional. Además, obtiene un porcentaje que se añade a su maná máximo según su poder de habilidad.</mainText>",
+    "image": {
+      "full": "Ryze_P.png",
+      "group": "passive",
+      "h": 48,
+      "sprite": "passive3.png",
+      "w": 48,
+      "x": 192,
+      "y": 96
+    },
+    "name": "Maestría arcana"
+  },
+  "recommended": [],
+  "skins": [
+    {
+      "chromas": false,
+      "id": "13000",
+      "name": "default",
+      "num": 0
+    },
+    {
+      "chromas": false,
+      "id": "13001",
+      "name": "Ryze joven",
+      "num": 1
+    },
+    {
+      "chromas": false,
+      "id": "13002",
+      "name": "Ryze tribal",
+      "num": 2
+    },
+    {
+      "chromas": false,
+      "id": "13003",
+      "name": "Tío Ryze",
+      "num": 3
+    },
+    {
+      "chromas": false,
+      "id": "13004",
+      "name": "Ryze victorioso",
+      "num": 4
+    },
+    {
+      "chromas": false,
+      "id": "13005",
+      "name": "Profesor Ryze",
+      "num": 5
+    },
+    {
+      "chromas": false,
+      "id": "13006",
+      "name": "Ryze zombi",
+      "num": 6
+    },
+    {
+      "chromas": false,
+      "id": "13007",
+      "name": "Ryze cristal oscuro",
+      "num": 7
+    },
+    {
+      "chromas": false,
+      "id": "13008",
+      "name": "Ryze pirata",
+      "num": 8
+    },
+    {
+      "chromas": false,
+      "id": "13009",
+      "name": "Ryze barbablanca",
+      "num": 9
+    },
+    {
+      "chromas": true,
+      "id": "13010",
+      "name": "Ryze SKT T1",
+      "num": 10
+    },
+    {
+      "chromas": true,
+      "id": "13011",
+      "name": "Ryze (Mundial 2019)",
+      "num": 11
+    },
+    {
+      "chromas": false,
+      "id": "13012",
+      "name": "Ryze del Mundial 2019 (dorado)",
+      "num": 12,
+      "parentSkin": 11
+    },
+    {
+      "chromas": true,
+      "id": "13013",
+      "name": "Ryze guardián de las arenas",
+      "num": 13
+    },
+    {
+      "chromas": false,
+      "id": "13014",
+      "name": "Ryze guardián de las arenas (obsidiana)",
+      "num": 14,
+      "parentSkin": 13
+    },
+    {
+      "chromas": false,
+      "id": "13015",
+      "name": "Ryze guardián de las arenas (aguamarina)",
+      "num": 15,
+      "parentSkin": 13
+    },
+    {
+      "chromas": false,
+      "id": "13016",
+      "name": "Ryze guardián de las arenas (rubí)",
+      "num": 16,
+      "parentSkin": 13
+    },
+    {
+      "chromas": false,
+      "id": "13017",
+      "name": "Ryze guardián de las arenas (esmeralda)",
+      "num": 17,
+      "parentSkin": 13
+    },
+    {
+      "chromas": false,
+      "id": "13018",
+      "name": "Ryze guardián de las arenas (amatista)",
+      "num": 18,
+      "parentSkin": 13
+    },
+    {
+      "chromas": false,
+      "id": "13019",
+      "name": "Ryze guardián de las arenas (citrino)",
+      "num": 19,
+      "parentSkin": 13
+    },
+    {
+      "chromas": true,
+      "id": "13020",
+      "name": "Ryze arcano",
+      "num": 20
+    },
+    {
+      "chromas": false,
+      "id": "13021",
+      "name": "Ryze arcano (rubí)",
+      "num": 21,
+      "parentSkin": 20
+    },
+    {
+      "chromas": false,
+      "id": "13022",
+      "name": "Ryze arcano (ojo de gato)",
+      "num": 22,
+      "parentSkin": 20
+    },
+    {
+      "chromas": false,
+      "id": "13023",
+      "name": "Ryze arcano (amatista)",
+      "num": 23,
+      "parentSkin": 20
+    },
+    {
+      "chromas": false,
+      "id": "13024",
+      "name": "Ryze arcano (turquesa)",
+      "num": 24,
+      "parentSkin": 20
+    },
+    {
+      "chromas": false,
+      "id": "13025",
+      "name": "Ryze arcano (cuarzo rosa)",
+      "num": 25,
+      "parentSkin": 20
+    },
+    {
+      "chromas": false,
+      "id": "13026",
+      "name": "Ryze arcano (esmeralda)",
+      "num": 26,
+      "parentSkin": 20
+    },
+    {
+      "chromas": false,
+      "id": "13027",
+      "name": "Ryze arcano (obsidiana)",
+      "num": 27,
+      "parentSkin": 20
+    },
+    {
+      "chromas": false,
+      "id": "13028",
+      "name": "Ryze arcano (perla)",
+      "num": 28,
+      "parentSkin": 20
+    },
+    {
+      "chromas": true,
+      "id": "13029",
+      "name": "Ryze luna sangrienta",
+      "num": 29
+    },
+    {
+      "chromas": false,
+      "id": "13030",
+      "name": "Ryze SKT T1 (ejemplar)",
+      "num": 30,
+      "parentSkin": 10
+    },
+    {
+      "chromas": false,
+      "id": "13031",
+      "name": "Ryze luna sangrienta (rubí)",
+      "num": 31,
+      "parentSkin": 29
+    },
+    {
+      "chromas": false,
+      "id": "13032",
+      "name": "Ryze luna sangrienta (esmeralda)",
+      "num": 32,
+      "parentSkin": 29
+    },
+    {
+      "chromas": false,
+      "id": "13033",
+      "name": "Ryze luna sangrienta (zafiro)",
+      "num": 33,
+      "parentSkin": 29
+    },
+    {
+      "chromas": false,
+      "id": "13034",
+      "name": "Ryze luna sangrienta (ojo de gato)",
+      "num": 34,
+      "parentSkin": 29
+    },
+    {
+      "chromas": false,
+      "id": "13035",
+      "name": "Ryze luna sangrienta (cuarzo rosa)",
+      "num": 35,
+      "parentSkin": 29
+    },
+    {
+      "chromas": false,
+      "id": "13036",
+      "name": "Ryze luna sangrienta (turquesa)",
+      "num": 36,
+      "parentSkin": 29
+    },
+    {
+      "chromas": false,
+      "id": "13037",
+      "name": "Ryze luna sangrienta (obsidiana)",
+      "num": 37,
+      "parentSkin": 29
+    },
+    {
+      "chromas": false,
+      "id": "13038",
+      "name": "Ryze luna sangrienta (perla)",
+      "num": 38,
+      "parentSkin": 29
+    }
+  ],
+  "spells": [
+    {
+      "cooldown": [
+        5,
+        5,
+        5,
+        5,
+        5
+      ],
+      "cooldownBurn": "5",
+      "cost": [
+        40,
+        38,
+        36,
+        34,
+        32
+      ],
+      "costBurn": "40/38/36/34/32",
+      "costType": " {{ abilityresourcename }}",
+      "datavalues": {},
+      "description": "De forma pasiva, las demás habilidades básicas de Ryze reinician el enfriamiento de Descarga eléctrica y cargan una runa. Si Ryze lanza Descarga eléctrica con dos runas cargadas, obtiene un aumento de velocidad de movimiento durante un breve periodo.<br><br>Con el lanzamiento, Ryze libera una carga de energía pura en línea recta que daña al primer enemigo al que alcanza. Si el objetivo está marcado con Flujo, Descarga eléctrica infligirá daño adicional y rebotará en los enemigos cercanos que también tengan una marca de Flujo.",
+      "effect": [
+        null,
+        [
+          70,
+          110,
+          150,
+          190,
+          230
+        ],
+        [
+          25,
+          40,
+          55,
+          70,
+          85
+        ],
+        [
+          50,
+          75,
+          100,
+          125,
+          150
+        ],
+        [
+          25,
+          28,
+          31,
+          24,
+          37
+        ],
+        [
+          2,
+          2,
+          2,
+          2,
+          2
+        ],
+        [
+          2,
+          2,
+          2,
+          2,
+          2
+        ],
+        [
+          3,
+          3,
+          3,
+          3,
+          3
+        ],
+        [
+          0.015,
+          0.015,
+          0.015,
+          0.015,
+          0.015
+        ],
+        [
+          2,
+          2,
+          2,
+          2,
+          2
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ]
+      ],
+      "effectBurn": [
+        null,
+        "70/110/150/190/230",
+        "25/40/55/70/85",
+        "50/75/100/125/150",
+        "25/28/31/24/37",
+        "2",
+        "2",
+        "3",
+        "0.01",
+        "2",
+        "0"
+      ],
+      "id": "RyzeQWrapper",
+      "image": {
+        "full": "RyzeQWrapper.png",
+        "group": "spell",
+        "h": 48,
+        "sprite": "spell12.png",
+        "w": 48,
+        "x": 0,
+        "y": 48
+      },
+      "leveltip": {
+        "effect": [
+          "{{ basedamage }} -> {{ basedamageNL }}",
+          "{{ movementspeedamount }}% -> {{ movementspeedamountNL }}%",
+          "{{ cost }} -> {{ costNL }}"
+        ],
+        "label": [
+          "Daño",
+          "Velocidad de movimiento",
+          "Coste de maná"
+        ]
+      },
+      "maxammo": "-1",
+      "maxrank": 5,
+      "name": "Descarga eléctrica",
+      "range": [
+        1000,
+        1000,
+        1000,
+        1000,
+        1000
+      ],
+      "rangeBurn": "1000",
+      "resource": "{{ cost }} {{ abilityresourcename }}",
+      "tooltip": "<spellPassive>Pasiva:</spellPassive> <spellName>Prisión rúnica</spellName> y <spellName>Tormenta eléctrica</spellName> reinician el enfriamiento de esta habilidad y cargan una runa durante {{ runeduration }} s (runas máximas: {{ maximumrunes }}).<br /><br /><spellActive>Activa:</spellActive> Ryze libera una explosión que inflige <magicDamage>{{ qdamagecalc }} de daño mágico</magicDamage> al primer enemigo alcanzado. Si el objetivo está marcado con <keywordMajor>flujo</keywordMajor>, se consume y la habilidad inflige un {{ spell.ryzer:overloaddamagebonus }}% de daño adicional, además de rebotar en los enemigos cercanos que también tengan una marca de <keywordMajor>flujo</keywordMajor>.<br /><br />Ryze también consume todas las runas y consigue un <speed>{{ movementspeedamount }}% de velocidad de movimiento</speed> durante {{ movementspeedduration }} s si tenía {{ maximumrunes }} runas cargadas.<br />{{ spellmodifierdescriptionappend }}",
+      "vars": []
+    },
+    {
+      "cooldown": [
+        11,
+        10.5,
+        10,
+        9.5,
+        9
+      ],
+      "cooldownBurn": "11/10.5/10/9.5/9",
+      "cost": [
+        50,
+        60,
+        70,
+        80,
+        90
+      ],
+      "costBurn": "50/60/70/80/90",
+      "costType": " {{ abilityresourcename }}",
+      "datavalues": {},
+      "description": "Ryze atrapa a una unidad enemiga objetivo en una prisión de runas que le inflige daño y lo ralentiza. Si el objetivo está marcado con Flujo, quedará enraizado.",
+      "effect": [
+        null,
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ]
+      ],
+      "effectBurn": [
+        null,
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0"
+      ],
+      "id": "RyzeW",
+      "image": {
+        "full": "RyzeW.png",
+        "group": "spell",
+        "h": 48,
+        "sprite": "spell12.png",
+        "w": 48,
+        "x": 48,
+        "y": 48
+      },
+      "leveltip": {
+        "effect": [
+          "{{ basedamage }} -> {{ basedamageNL }}",
+          "{{ cooldown }} -> {{ cooldownNL }}",
+          "{{ cost }} -> {{ costNL }}"
+        ],
+        "label": [
+          "Daño",
+          "Enfriamiento",
+          "Coste de maná"
+        ]
+      },
+      "maxammo": "-1",
+      "maxrank": 5,
+      "name": "Prisión rúnica",
+      "range": [
+        615,
+        615,
+        615,
+        615,
+        615
+      ],
+      "rangeBurn": "615",
+      "resource": "{{ cost }} {{ abilityresourcename }}",
+      "tooltip": "Ryze inflige <magicDamage>{{ wdamagecalc }} de daño mágico</magicDamage> y <status>ralentiza</status> un {{ slowamount*100 }}% durante {{ ccduration }} s. Si el objetivo tiene <keywordMajor>flujo</keywordMajor>, se consume y esta habilidad <status>enraíza</status> en lugar de <status>ralentizar</status>.{{ spellmodifierdescriptionappend }}",
+      "vars": []
+    },
+    {
+      "cooldown": [
+        3.5,
+        3.25,
+        3,
+        2.75,
+        2.5
+      ],
+      "cooldownBurn": "3.5/3.25/3/2.75/2.5",
+      "cost": [
+        40,
+        50,
+        60,
+        70,
+        80
+      ],
+      "costBurn": "40/50/60/70/80",
+      "costType": " {{ abilityresourcename }}",
+      "datavalues": {},
+      "description": "Ryze lanza un orbe de poder mágico puro que daña a un enemigo y debilita a los demás que estén cerca. Los hechizos de Ryze tienen efectos adicionales contra enemigos debilitados.",
+      "effect": [
+        null,
+        [
+          80,
+          90,
+          100,
+          110,
+          120
+        ],
+        [
+          40,
+          50,
+          60,
+          70,
+          80
+        ],
+        [
+          100,
+          100,
+          100,
+          100,
+          100
+        ],
+        [
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1
+        ],
+        [
+          1.5,
+          1.5,
+          1.5,
+          1.5,
+          1.5
+        ],
+        [
+          1.5,
+          1.5,
+          1.5,
+          1.5,
+          1.5
+        ],
+        [
+          4,
+          4,
+          4,
+          4,
+          4
+        ],
+        [
+          1,
+          1,
+          1,
+          1,
+          1
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ]
+      ],
+      "effectBurn": [
+        null,
+        "80/90/100/110/120",
+        "40/50/60/70/80",
+        "100",
+        "0.1",
+        "1.5",
+        "1.5",
+        "4",
+        "1",
+        "0",
+        "0"
+      ],
+      "id": "RyzeE",
+      "image": {
+        "full": "RyzeE.png",
+        "group": "spell",
+        "h": 48,
+        "sprite": "spell12.png",
+        "w": 48,
+        "x": 96,
+        "y": 48
+      },
+      "leveltip": {
+        "effect": [
+          "{{ basedamage }} -> {{ basedamageNL }}",
+          "{{ cooldown }} -> {{ cooldownNL }}",
+          "{{ cost }} -> {{ costNL }}"
+        ],
+        "label": [
+          "Daño",
+          "Enfriamiento",
+          "Coste de maná"
+        ]
+      },
+      "maxammo": "-1",
+      "maxrank": 5,
+      "name": "Tormenta eléctrica",
+      "range": [
+        615,
+        615,
+        615,
+        615,
+        615
+      ],
+      "rangeBurn": "615",
+      "resource": "{{ cost }} {{ abilityresourcename }}",
+      "tooltip": "Ryze lanza un orbe que inflige <magicDamage>{{ edamagecalc }} de daño mágico</magicDamage> y aplica <keywordMajor>flujo</keywordMajor> durante {{ debuffduration }} s al objetivo y a los enemigos cercanos. Los enemigos que ya estén afectados con <keywordMajor>flujo</keywordMajor> provocarán que se expanda más.{{ spellmodifierdescriptionappend }}",
+      "vars": []
+    },
+    {
+      "cooldown": [
+        180,
+        160,
+        140
+      ],
+      "cooldownBurn": "180/160/140",
+      "cost": [
+        100,
+        100,
+        100
+      ],
+      "costBurn": "100",
+      "costType": " {{ abilityresourcename }}",
+      "datavalues": {},
+      "description": "De forma pasiva, Descarga eléctrica inflige más daño a los objetivos marcados con Flujo.<br><br>Con el lanzamiento, Ryze crea un portal a una ubicación cercana. Tras unos segundos, los aliados que estén dentro del portal se teleportan a la ubicación objetivo.",
+      "effect": [
+        null,
+        [
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0
+        ],
+        [
+          6,
+          6,
+          6
+        ],
+        [
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0
+        ]
+      ],
+      "effectBurn": [
+        null,
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "6",
+        "0",
+        "0",
+        "0",
+        "0"
+      ],
+      "id": "RyzeR",
+      "image": {
+        "full": "RyzeR.png",
+        "group": "spell",
+        "h": 48,
+        "sprite": "spell12.png",
+        "w": 48,
+        "x": 144,
+        "y": 48
+      },
+      "leveltip": {
+        "effect": [
+          "{{ cooldown }} -> {{ cooldownNL }}",
+          "{{ overloaddamagebonus }}% -> {{ overloaddamagebonusNL }}%"
+        ],
+        "label": [
+          "Enfriamiento",
+          "Aumento del daño por Descarga eléctrica"
+        ]
+      },
+      "maxammo": "-1",
+      "maxrank": 3,
+      "name": "Distorsión de reinos",
+      "range": [
+        3000,
+        3000,
+        3000
+      ],
+      "rangeBurn": "3000",
+      "resource": "{{ cost }} {{ abilityresourcename }}",
+      "tooltip": "<spellPassive>Pasiva:</spellPassive> <spellName>Descarga eléctrica</spellName> aumenta el daño adicional contra objetivos marcados con <keywordMajor>flujo</keywordMajor> a un {{ overloaddamagebonus }}%.<br /><br /><spellActive>Activa:</spellActive> Ryze abre un portal a otra ubicación. Después de {{ chargetimetooltip }} s, todos los aliados que estén dentro del portal se teleportan a dicha ubicación.{{ spellmodifierdescriptionappend }}",
+      "vars": []
+    }
+  ],
+  "stats": {
+    "armor": 22,
+    "armorperlevel": 4.7,
+    "attackdamage": 55,
+    "attackdamageperlevel": 0,
+    "attackrange": 550,
+    "attackspeed": 0.658,
+    "attackspeedperlevel": 2.11,
+    "crit": 0,
+    "critperlevel": 0,
+    "hp": 620,
+    "hpperlevel": 124,
+    "hpregen": 8,
+    "hpregenperlevel": 0.8,
+    "movespeed": 340,
+    "mp": 300,
+    "mpperlevel": 70,
+    "mpregen": 8,
+    "mpregenperlevel": 1,
+    "spellblock": 32,
+    "spellblockperlevel": 1.3
+  },
+  "tags": [
+    "Mage"
+  ],
+  "title": "El Hechicero Rúnico"
+}

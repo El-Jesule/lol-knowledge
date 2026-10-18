@@ -1,0 +1,988 @@
+{
+  "allytips": [
+    "Puedes usar al instante tu definitiva sobre ti mismo pulsando a la vez la tecla de ''sobre sí mismo'' y la tecla de definitiva (Alt+R por defecto).",
+    "Lanzar Camino glacial y luego huir en dirección contraria confundirá a los enemigos, que no sabrán hacia dónde has ido en realidad.",
+    "Las habilidades de Lissandra tienen menos alcance que las de muchos magos. Por lo tanto, a modo de ayuda para sobrevivir e infligir daño, es recomendable comprar objetos que ofrezcan tanto poder de habilidad como defensa, como Reloj de arena de Zhonya y Velo del hada de la muerte."
+  ],
+  "blurb": "La magia de Lissandra convierte el poder del hielo en algo oscuro y terrible. Con la fuerza de su hielo negro, además de congelar a aquellos que se le oponen, los empala y los destruye sin mostrar piedad. Se la conoce como ''la Bruja de Hielo'' entre...",
+  "enemytips": [
+    "La mejor forma de evitar que Lissandra se mueva usando su Camino glacial es inmovilizándola antes de que vuelva a activarla.",
+    "El Anillo de escarcha de Lissandra tiene mucho enfriamiento en los primeros niveles; enfréntate a ella mientras está en enfriamiento.",
+    "El Fragmento de hielo de Lissandra solo ralentiza a la primera unidad sobre la que impacta. Acércate a Lissandra por detrás de los súbditos de tu equipo para evitar que te ralentice."
+  ],
+  "id": "Lissandra",
+  "image": {
+    "full": "Lissandra.png",
+    "group": "champion",
+    "h": 48,
+    "sprite": "champion2.png",
+    "w": 48,
+    "x": 144,
+    "y": 48
+  },
+  "info": {
+    "attack": 2,
+    "defense": 5,
+    "difficulty": 6,
+    "magic": 8
+  },
+  "key": "127",
+  "lore": "La magia de Lissandra convierte el poder del hielo en algo oscuro y terrible. Con la fuerza de su hielo negro, además de congelar a aquellos que se le oponen, los empala y los destruye sin mostrar piedad. Se la conoce como ''la Bruja de Hielo'' entre los aterrados habitantes del norte. Pero la verdad es mucho más siniestra: Lissandra corrompe la naturaleza con el fin de desatar una era helada sobre el mundo.",
+  "name": "Lissandra",
+  "partype": "Maná",
+  "passive": {
+    "description": "Cuando un campeón enemigo muere cerca de Lissandra, se convierte en un esclavo congelado. Los esclavos congelados ralentizan a los enemigos cercanos y, tras unos instantes, se hacen trizas por el intenso frío, lo que inflige daño mágico a objetivos cercanos.",
+    "image": {
+      "full": "Lissandra_Passive.png",
+      "group": "passive",
+      "h": 48,
+      "sprite": "passive2.png",
+      "w": 48,
+      "x": 144,
+      "y": 48
+    },
+    "name": "Yugo de la Hija del Hielo"
+  },
+  "recommended": [],
+  "skins": [
+    {
+      "chromas": false,
+      "id": "127000",
+      "name": "default",
+      "num": 0
+    },
+    {
+      "chromas": false,
+      "id": "127001",
+      "name": "Lissandra piedra carmesí",
+      "num": 1
+    },
+    {
+      "chromas": false,
+      "id": "127002",
+      "name": "Lissandra reina de espadas",
+      "num": 2
+    },
+    {
+      "chromas": false,
+      "id": "127003",
+      "name": "Programa Lissandra",
+      "num": 3
+    },
+    {
+      "chromas": true,
+      "id": "127004",
+      "name": "Lissandra aquelarre",
+      "num": 4
+    },
+    {
+      "chromas": false,
+      "id": "127005",
+      "name": "Lissandra aquelarre (rubí)",
+      "num": 5,
+      "parentSkin": 4
+    },
+    {
+      "chromas": false,
+      "id": "127006",
+      "name": "Lissandra aquelarre (cuarzo rosa)",
+      "num": 6,
+      "parentSkin": 4
+    },
+    {
+      "chromas": false,
+      "id": "127007",
+      "name": "Lissandra aquelarre (aguamarina)",
+      "num": 7,
+      "parentSkin": 4
+    },
+    {
+      "chromas": false,
+      "id": "127008",
+      "name": "Lissandra aquelarre (tanzanita)",
+      "num": 8,
+      "parentSkin": 4
+    },
+    {
+      "chromas": false,
+      "id": "127009",
+      "name": "Lissandra aquelarre (obsidiana)",
+      "num": 9,
+      "parentSkin": 4
+    },
+    {
+      "chromas": false,
+      "id": "127010",
+      "name": "Lissandra aquelarre (meteorito)",
+      "num": 10,
+      "parentSkin": 4
+    },
+    {
+      "chromas": false,
+      "id": "127011",
+      "name": "Lissandra aquelarre (arenisca)",
+      "num": 11,
+      "parentSkin": 4
+    },
+    {
+      "chromas": true,
+      "id": "127012",
+      "name": "Lissandra oscuridad cósmica",
+      "num": 12
+    },
+    {
+      "chromas": false,
+      "id": "127013",
+      "name": "Lissandra oscuridad cósmica (rubí)",
+      "num": 13,
+      "parentSkin": 12
+    },
+    {
+      "chromas": false,
+      "id": "127014",
+      "name": "Lissandra oscuridad cósmica (citrino)",
+      "num": 14,
+      "parentSkin": 12
+    },
+    {
+      "chromas": false,
+      "id": "127015",
+      "name": "Lissandra oscuridad cósmica (zafiro)",
+      "num": 15,
+      "parentSkin": 12
+    },
+    {
+      "chromas": false,
+      "id": "127016",
+      "name": "Lissandra oscuridad cósmica (esmeralda)",
+      "num": 16,
+      "parentSkin": 12
+    },
+    {
+      "chromas": false,
+      "id": "127017",
+      "name": "Lissandra oscuridad cósmica (perla)",
+      "num": 17,
+      "parentSkin": 12
+    },
+    {
+      "chromas": false,
+      "id": "127018",
+      "name": "Lissandra oscuridad cósmica (cuarzo rosa)",
+      "num": 18,
+      "parentSkin": 12
+    },
+    {
+      "chromas": false,
+      "id": "127019",
+      "name": "Lissandra oscuridad cósmica (obsidiana)",
+      "num": 19,
+      "parentSkin": 12
+    },
+    {
+      "chromas": false,
+      "id": "127020",
+      "name": "Lissandra oscuridad cósmica (turquesa)",
+      "num": 20,
+      "parentSkin": 12
+    },
+    {
+      "chromas": false,
+      "id": "127021",
+      "name": "Lissandra oscuridad cósmica (arcoíris)",
+      "num": 21,
+      "parentSkin": 12
+    },
+    {
+      "chromas": false,
+      "id": "127022",
+      "name": "Lissandra aquelarre (ritual oscuro)",
+      "num": 22,
+      "parentSkin": 4
+    },
+    {
+      "chromas": true,
+      "id": "127023",
+      "name": "Lissandra de porcelana",
+      "num": 23
+    },
+    {
+      "chromas": false,
+      "id": "127024",
+      "name": "Lissandra de porcelana (rubí)",
+      "num": 24,
+      "parentSkin": 23
+    },
+    {
+      "chromas": false,
+      "id": "127025",
+      "name": "Lissandra de porcelana (aguamarina)",
+      "num": 25,
+      "parentSkin": 23
+    },
+    {
+      "chromas": false,
+      "id": "127026",
+      "name": "Lissandra de porcelana (esmeralda)",
+      "num": 26,
+      "parentSkin": 23
+    },
+    {
+      "chromas": false,
+      "id": "127027",
+      "name": "Lissandra de porcelana (ojo de gato)",
+      "num": 27,
+      "parentSkin": 23
+    },
+    {
+      "chromas": false,
+      "id": "127028",
+      "name": "Lissandra de porcelana (cuarzo rosa)",
+      "num": 28,
+      "parentSkin": 23
+    },
+    {
+      "chromas": false,
+      "id": "127029",
+      "name": "Lissandra de porcelana (amatista)",
+      "num": 29,
+      "parentSkin": 23
+    },
+    {
+      "chromas": false,
+      "id": "127030",
+      "name": "Lissandra de porcelana (perla)",
+      "num": 30,
+      "parentSkin": 23
+    },
+    {
+      "chromas": false,
+      "id": "127031",
+      "name": "Lissandra de porcelana (obsidiana)",
+      "num": 31,
+      "parentSkin": 23
+    },
+    {
+      "chromas": false,
+      "id": "127032",
+      "name": "Lissandra de porcelana (tigre dorado)",
+      "num": 32,
+      "parentSkin": 23
+    },
+    {
+      "chromas": false,
+      "id": "127033",
+      "name": "Lissandra de porcelana de prestigio",
+      "num": 33
+    },
+    {
+      "chromas": true,
+      "id": "127034",
+      "name": "Lissandra onda espacial",
+      "num": 34
+    },
+    {
+      "chromas": false,
+      "id": "127035",
+      "name": "Lissandra onda espacial (rubí)",
+      "num": 35,
+      "parentSkin": 34
+    },
+    {
+      "chromas": false,
+      "id": "127036",
+      "name": "Lissandra onda espacial (ojo de gato)",
+      "num": 36,
+      "parentSkin": 34
+    },
+    {
+      "chromas": false,
+      "id": "127037",
+      "name": "Lissandra onda espacial (zafiro)",
+      "num": 37,
+      "parentSkin": 34
+    },
+    {
+      "chromas": false,
+      "id": "127038",
+      "name": "Lissandra onda espacial (esmeralda)",
+      "num": 38,
+      "parentSkin": 34
+    },
+    {
+      "chromas": false,
+      "id": "127039",
+      "name": "Lissandra onda espacial (cuarzo rosa)",
+      "num": 39,
+      "parentSkin": 34
+    },
+    {
+      "chromas": false,
+      "id": "127040",
+      "name": "Lissandra onda espacial (obsidiana)",
+      "num": 40,
+      "parentSkin": 34
+    },
+    {
+      "chromas": false,
+      "id": "127041",
+      "name": "Lissandra onda espacial (perla)",
+      "num": 41,
+      "parentSkin": 34
+    },
+    {
+      "chromas": false,
+      "id": "127042",
+      "name": "Lissandra onda espacial (arcoíris)",
+      "num": 42,
+      "parentSkin": 34
+    },
+    {
+      "chromas": true,
+      "id": "127043",
+      "name": "Lissandra flora fatalis",
+      "num": 43
+    },
+    {
+      "chromas": false,
+      "id": "127044",
+      "name": "Lissandra flora fatalis (rubí)",
+      "num": 44,
+      "parentSkin": 43
+    },
+    {
+      "chromas": false,
+      "id": "127045",
+      "name": "Lissandra flora fatalis (ojo de gato)",
+      "num": 45,
+      "parentSkin": 43
+    },
+    {
+      "chromas": false,
+      "id": "127046",
+      "name": "Lissandra flora fatalis (esmeralda)",
+      "num": 46,
+      "parentSkin": 43
+    },
+    {
+      "chromas": false,
+      "id": "127047",
+      "name": "Lissandra flora fatalis (zafiro)",
+      "num": 47,
+      "parentSkin": 43
+    },
+    {
+      "chromas": false,
+      "id": "127048",
+      "name": "Lissandra flora fatalis (cuarzo rosa)",
+      "num": 48,
+      "parentSkin": 43
+    },
+    {
+      "chromas": false,
+      "id": "127049",
+      "name": "Lissandra flora fatalis (turquesa)",
+      "num": 49,
+      "parentSkin": 43
+    },
+    {
+      "chromas": false,
+      "id": "127050",
+      "name": "Lissandra flora fatalis (perla)",
+      "num": 50,
+      "parentSkin": 43
+    },
+    {
+      "chromas": false,
+      "id": "127051",
+      "name": "Lissandra flora fatalis (obsidiana)",
+      "num": 51,
+      "parentSkin": 43
+    },
+    {
+      "chromas": false,
+      "id": "127052",
+      "name": "Lissandra de porcelana (prometedora)",
+      "num": 52,
+      "parentSkin": 23
+    }
+  ],
+  "spells": [
+    {
+      "cooldown": [
+        7,
+        6,
+        5,
+        4,
+        3
+      ],
+      "cooldownBurn": "7/6/5/4/3",
+      "cost": [
+        55,
+        60,
+        65,
+        70,
+        75
+      ],
+      "costBurn": "55/60/65/70/75",
+      "costType": " {{ abilityresourcename }}",
+      "datavalues": {},
+      "description": "Dispara una lanza de hielo que se divide cuando impacta en un enemigo, infligiendo daño mágico y reduciendo la velocidad de movimiento. Los fragmentos atraviesan al objetivo, infligiendo el mismo daño a los demás enemigos impactados.",
+      "effect": [
+        null,
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          1.5,
+          1.5,
+          1.5,
+          1.5,
+          1.5
+        ],
+        [
+          -0.2,
+          -0.24,
+          -0.28,
+          -0.32,
+          -0.36
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ]
+      ],
+      "effectBurn": [
+        null,
+        "0",
+        "1.5",
+        "-0.2/-0.24/-0.28/-0.32/-0.36",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0"
+      ],
+      "id": "LissandraQ",
+      "image": {
+        "full": "LissandraQ.png",
+        "group": "spell",
+        "h": 48,
+        "sprite": "spell8.png",
+        "w": 48,
+        "x": 288,
+        "y": 0
+      },
+      "leveltip": {
+        "effect": [
+          "{{ damage }} -> {{ damageNL }}",
+          "{{ slowpercentage*-100.000000 }}% -> {{ slowpercentagenl*-100.000000 }}%",
+          "{{ cooldown }} -> {{ cooldownNL }}",
+          "{{ cost }} -> {{ costNL }}"
+        ],
+        "label": [
+          "Daño",
+          "Ralentización",
+          "Enfriamiento",
+          "Coste de @AbilityResourceName@"
+        ]
+      },
+      "maxammo": "-1",
+      "maxrank": 5,
+      "name": "Fragmento de hielo",
+      "range": [
+        725,
+        725,
+        725,
+        725,
+        725
+      ],
+      "rangeBurn": "725",
+      "resource": "{{ cost }} {{ abilityresourcename }}",
+      "tooltip": "Lissandra dispara una lanza de hielo que se fragmenta tras golpear al primer enemigo, lo que inflige <magicDamage>{{ totaldamage }} de daño mágico</magicDamage>, <status>ralentiza</status> un {{ slowpercentage*-100 }}% durante {{ slowduration }} s y también inflige el daño y la ralentización a los enemigos detrás de él.{{ spellmodifierdescriptionappend }}",
+      "vars": []
+    },
+    {
+      "cooldown": [
+        10,
+        9.5,
+        9,
+        8.5,
+        8
+      ],
+      "cooldownBurn": "10/9.5/9/8.5/8",
+      "cost": [
+        40,
+        40,
+        40,
+        40,
+        40
+      ],
+      "costBurn": "40",
+      "costType": " {{ abilityresourcename }}",
+      "datavalues": {},
+      "description": "Congela a los enemigos cercanos, infligiendo daño mágico e inmovilizándolos.",
+      "effect": [
+        null,
+        [
+          70,
+          105,
+          140,
+          175,
+          210
+        ],
+        [
+          1.25,
+          1.35,
+          1.45,
+          1.55,
+          1.65
+        ],
+        [
+          3,
+          3,
+          3,
+          3,
+          3
+        ],
+        [
+          8,
+          8,
+          8,
+          8,
+          8
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ]
+      ],
+      "effectBurn": [
+        null,
+        "70/105/140/175/210",
+        "1.25/1.35/1.45/1.55/1.65",
+        "3",
+        "8",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0"
+      ],
+      "id": "LissandraW",
+      "image": {
+        "full": "LissandraW.png",
+        "group": "spell",
+        "h": 48,
+        "sprite": "spell8.png",
+        "w": 48,
+        "x": 336,
+        "y": 0
+      },
+      "leveltip": {
+        "effect": [
+          "{{ basedamage }} -> {{ basedamageNL }}",
+          "{{ snareduration }} -> {{ snaredurationNL }}",
+          "{{ cooldown }} -> {{ cooldownNL }}"
+        ],
+        "label": [
+          "Daño",
+          "Duración del enraizamiento",
+          "Enfriamiento"
+        ]
+      },
+      "maxammo": "-1",
+      "maxrank": 5,
+      "name": "Anillo de escarcha",
+      "range": [
+        450,
+        450,
+        450,
+        450,
+        450
+      ],
+      "rangeBurn": "450",
+      "resource": "{{ cost }} {{ abilityresourcename }}",
+      "tooltip": "Lissandra crea un campo de hielo que <status>enraíza</status> a los enemigos cercanos durante {{ snareduration }} s e inflige <magicDamage>{{ totaldamage }} de daño mágico</magicDamage>.{{ spellmodifierdescriptionappend }}",
+      "vars": []
+    },
+    {
+      "cooldown": [
+        24,
+        21,
+        18,
+        15,
+        12
+      ],
+      "cooldownBurn": "24/21/18/15/12",
+      "cost": [
+        80,
+        85,
+        90,
+        95,
+        100
+      ],
+      "costBurn": "80/85/90/95/100",
+      "costType": " {{ abilityresourcename }}",
+      "datavalues": {},
+      "description": "Lissandra crea una garra de hielo que inflige daño mágico. Volver a usar esta habilidad transporta a Lissandra a la posición de la garra.",
+      "effect": [
+        null,
+        [
+          70,
+          105,
+          140,
+          175,
+          210
+        ],
+        [
+          14,
+          13,
+          12,
+          11,
+          10
+        ],
+        [
+          20,
+          20,
+          20,
+          20,
+          20
+        ],
+        [
+          1,
+          1,
+          1,
+          1,
+          1
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ]
+      ],
+      "effectBurn": [
+        null,
+        "70/105/140/175/210",
+        "14/13/12/11/10",
+        "20",
+        "1",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0"
+      ],
+      "id": "LissandraE",
+      "image": {
+        "full": "LissandraE.png",
+        "group": "spell",
+        "h": 48,
+        "sprite": "spell8.png",
+        "w": 48,
+        "x": 384,
+        "y": 0
+      },
+      "leveltip": {
+        "effect": [
+          "{{ basedamage }} -> {{ basedamageNL }}",
+          "{{ cooldown }} -> {{ cooldownNL }}",
+          "{{ cost }} -> {{ costNL }}"
+        ],
+        "label": [
+          "Daño",
+          "Enfriamiento",
+          "Coste de @AbilityResourceName@"
+        ]
+      },
+      "maxammo": "-1",
+      "maxrank": 5,
+      "name": "Camino glacial",
+      "range": [
+        1050,
+        1050,
+        1050,
+        1050,
+        1050
+      ],
+      "rangeBurn": "1050",
+      "resource": "{{ cost }} {{ abilityresourcename }}",
+      "tooltip": "Lissandra lanza hacia delante una garra de hielo que inflige <magicDamage>{{ totaldamage }} de daño mágico</magicDamage>. Lissandra puede <recast>volver a lanzar</recast> la habilidad mientras la garra viaja para teleportarse a su ubicación.{{ spellmodifierdescriptionappend }}",
+      "vars": []
+    },
+    {
+      "cooldown": [
+        120,
+        100,
+        80
+      ],
+      "cooldownBurn": "120/100/80",
+      "cost": [
+        100,
+        100,
+        100
+      ],
+      "costBurn": "100",
+      "costType": " {{ abilityresourcename }}",
+      "datavalues": {},
+      "description": "Si se lanza sobre un campeón enemigo, lo congela, dejándolo aturdido. Si se lanza sobre Lissandra, se encierra en Hielo Oscuro, de forma que se cura, pasa a ser invulnerable e imposibilita cualquier acción enemiga sobre ella. Del objetivo emana Hielo Oscuro, que inflige daño mágico y reduce la velocidad de movimiento de los enemigos.",
+      "effect": [
+        null,
+        [
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0
+        ]
+      ],
+      "effectBurn": [
+        null,
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0"
+      ],
+      "id": "LissandraR",
+      "image": {
+        "full": "LissandraR.png",
+        "group": "spell",
+        "h": 48,
+        "sprite": "spell8.png",
+        "w": 48,
+        "x": 432,
+        "y": 0
+      },
+      "leveltip": {
+        "effect": [
+          "{{ basedamage }} -> {{ basedamageNL }}",
+          "{{ slowamount*-100.000000 }}% -> {{ slowamountnl*-100.000000 }}%",
+          "{{ selfcastflatheal }} -> {{ selfcastflathealNL }}",
+          "{{ cooldown }} -> {{ cooldownNL }}"
+        ],
+        "label": [
+          "Daño",
+          "Ralentización",
+          "Curación",
+          "Enfriamiento"
+        ]
+      },
+      "maxammo": "-1",
+      "maxrank": 3,
+      "name": "Tumba helada",
+      "range": [
+        550,
+        550,
+        550
+      ],
+      "rangeBurn": "550",
+      "resource": "{{ cost }} {{ abilityresourcename }}",
+      "tooltip": "Lissandra se envuelve a sí misma o a un campeón enemigo en hielo. Los enemigos quedan <status>aturdidos</status> durante {{ enemycastduration }} s. Cuando lanza la habilidad sobre sí misma, Lissandra entra en estasis durante {{ selfcastduration }} s y recupera <healing>{{ healamount }} de vida</healing>, que aumenta un {{ selfcastmissinghpratio }}% por cada {{ selfcastmissinghpperabove }}% de vida que le falte.<br /><br />En cualquier caso, del objetivo emana Hielo Oscuro que inflige <magicDamage>{{ calculateddamage }} de daño mágico</magicDamage>. El Hielo Oscuro dura {{ slowduration }} s y <status>ralentiza</status> a los enemigos un {{ slowamount*-100 }}%.{{ spellmodifierdescriptionappend }}",
+      "vars": []
+    }
+  ],
+  "stats": {
+    "armor": 22,
+    "armorperlevel": 4.2,
+    "attackdamage": 55,
+    "attackdamageperlevel": 0,
+    "attackrange": 550,
+    "attackspeed": 0.656,
+    "attackspeedperlevel": 1.5,
+    "crit": 0,
+    "critperlevel": 0,
+    "hp": 620,
+    "hpperlevel": 110,
+    "hpregen": 7,
+    "hpregenperlevel": 0.55,
+    "movespeed": 325,
+    "mp": 475,
+    "mpperlevel": 30,
+    "mpregen": 8,
+    "mpregenperlevel": 0.4,
+    "spellblock": 30,
+    "spellblockperlevel": 1.3
+  },
+  "tags": [
+    "Mage"
+  ],
+  "title": "La Bruja de Hielo"
+}

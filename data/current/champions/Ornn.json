@@ -1,0 +1,884 @@
+{
+  "allytips": [
+    "Conocer las recetas de los objetos puede ayudarte a seleccionar rápidamente las mejoras en la calle.",
+    "Ruptura volcánica puede usarse para controlar zonas y amenazar a los enemigos.",
+    "¡El orden de tus habilidades es importante! Intenta optimizar el uso de quebradizo."
+  ],
+  "blurb": "Ornn es el espíritu de Freljord de la forja y la artesanía. Trabaja en la soledad de una enorme forja esculpida en las cavernas de lava bajo el volcán de Dulcehogar. En ella modela objetos de calidad sin igual y depura menas en burbujeantes calderos de...",
+  "enemytips": [
+    "Aléjate de los muros. Ornn es mucho menos fuerte si no puede aturdirte.",
+    "Atácale para impedir que cree objetos en la calle."
+  ],
+  "id": "Ornn",
+  "image": {
+    "full": "Ornn.png",
+    "group": "champion",
+    "h": 48,
+    "sprite": "champion3.png",
+    "w": 48,
+    "x": 432,
+    "y": 0
+  },
+  "info": {
+    "attack": 5,
+    "defense": 9,
+    "difficulty": 5,
+    "magic": 3
+  },
+  "key": "516",
+  "lore": "Ornn es el espíritu de Freljord de la forja y la artesanía. Trabaja en la soledad de una enorme forja esculpida en las cavernas de lava bajo el volcán de Dulcehogar. En ella modela objetos de calidad sin igual y depura menas en burbujeantes calderos de roca fundida. Cuando otras deidades (sobre todo Volibear) merodean por la tierra y se entrometen en asuntos de mortales, Ornn se ofrece para poner a estos seres impetuosos en su sitio, ya sea con su fiel martillo o con la furia de las mismísimas montañas.",
+  "name": "Ornn",
+  "partype": "Maná",
+  "passive": {
+    "description": "Ornn obtiene armadura y resistencia mágica adicionales de todas las fuentes.<br><br>Ornn puede gastar oro para forjar objetos no consumibles en cualquier lugar.<br><br>Además, puede crear objetos selectos para él y sus aliados.",
+    "image": {
+      "full": "OrnnP.png",
+      "group": "passive",
+      "h": 48,
+      "sprite": "passive3.png",
+      "w": 48,
+      "x": 432,
+      "y": 0
+    },
+    "name": "Forja viviente"
+  },
+  "recommended": [],
+  "skins": [
+    {
+      "chromas": false,
+      "id": "516000",
+      "name": "default",
+      "num": 0
+    },
+    {
+      "chromas": false,
+      "id": "516001",
+      "name": "Ornn señor del trueno",
+      "num": 1
+    },
+    {
+      "chromas": true,
+      "id": "516002",
+      "name": "Ornn bosque ancestral",
+      "num": 2
+    },
+    {
+      "chromas": false,
+      "id": "516003",
+      "name": "Ornn bosque ancestral (zafiro)",
+      "num": 3,
+      "parentSkin": 2
+    },
+    {
+      "chromas": false,
+      "id": "516004",
+      "name": "Ornn bosque ancestral (citrino)",
+      "num": 4,
+      "parentSkin": 2
+    },
+    {
+      "chromas": false,
+      "id": "516005",
+      "name": "Ornn bosque ancestral (rubí)",
+      "num": 5,
+      "parentSkin": 2
+    },
+    {
+      "chromas": false,
+      "id": "516006",
+      "name": "Ornn bosque ancestral (esmeralda)",
+      "num": 6,
+      "parentSkin": 2
+    },
+    {
+      "chromas": false,
+      "id": "516007",
+      "name": "Ornn bosque ancestral (perla)",
+      "num": 7,
+      "parentSkin": 2
+    },
+    {
+      "chromas": false,
+      "id": "516008",
+      "name": "Ornn bosque ancestral (obsidiana)",
+      "num": 8,
+      "parentSkin": 2
+    },
+    {
+      "chromas": false,
+      "id": "516009",
+      "name": "Ornn bosque ancestral (cuarzo rosa)",
+      "num": 9,
+      "parentSkin": 2
+    },
+    {
+      "chromas": false,
+      "id": "516010",
+      "name": "Ornn bosque ancestral (maderascuas)",
+      "num": 10,
+      "parentSkin": 2
+    },
+    {
+      "chromas": true,
+      "id": "516011",
+      "name": "Ornn onda espacial",
+      "num": 11
+    },
+    {
+      "chromas": false,
+      "id": "516012",
+      "name": "Ornn onda espacial (rubí)",
+      "num": 12,
+      "parentSkin": 11
+    },
+    {
+      "chromas": false,
+      "id": "516013",
+      "name": "Ornn onda espacial (ojo de gato)",
+      "num": 13,
+      "parentSkin": 11
+    },
+    {
+      "chromas": false,
+      "id": "516014",
+      "name": "Ornn onda espacial (cuarzo rosa)",
+      "num": 14,
+      "parentSkin": 11
+    },
+    {
+      "chromas": false,
+      "id": "516015",
+      "name": "Ornn onda espacial (zafiro)",
+      "num": 15,
+      "parentSkin": 11
+    },
+    {
+      "chromas": false,
+      "id": "516016",
+      "name": "Ornn onda espacial (perla)",
+      "num": 16,
+      "parentSkin": 11
+    },
+    {
+      "chromas": false,
+      "id": "516017",
+      "name": "Ornn onda espacial (esmeralda)",
+      "num": 17,
+      "parentSkin": 11
+    },
+    {
+      "chromas": false,
+      "id": "516018",
+      "name": "Ornn onda espacial (obsidiana)",
+      "num": 18,
+      "parentSkin": 11
+    },
+    {
+      "chromas": false,
+      "id": "516019",
+      "name": "Ornn onda espacial (arcoíris)",
+      "num": 19,
+      "parentSkin": 11
+    },
+    {
+      "chromas": true,
+      "id": "516020",
+      "name": "FerroviariOrnn",
+      "num": 20
+    },
+    {
+      "chromas": false,
+      "id": "516021",
+      "name": "FerroviariOrnn (rubí)",
+      "num": 21,
+      "parentSkin": 20
+    },
+    {
+      "chromas": false,
+      "id": "516022",
+      "name": "FerroviariOrnn (cuarzo rosa)",
+      "num": 22,
+      "parentSkin": 20
+    },
+    {
+      "chromas": false,
+      "id": "516023",
+      "name": "FerroviariOrnn (ojo de gato)",
+      "num": 23,
+      "parentSkin": 20
+    },
+    {
+      "chromas": false,
+      "id": "516024",
+      "name": "FerroviariOrnn (esmeralda)",
+      "num": 24,
+      "parentSkin": 20
+    },
+    {
+      "chromas": false,
+      "id": "516025",
+      "name": "FerroviariOrnn (citrino)",
+      "num": 25,
+      "parentSkin": 20
+    },
+    {
+      "chromas": false,
+      "id": "516026",
+      "name": "FerroviariOrnn (perla)",
+      "num": 26,
+      "parentSkin": 20
+    },
+    {
+      "chromas": false,
+      "id": "516027",
+      "name": "FerroviariOrnn (amatista)",
+      "num": 27,
+      "parentSkin": 20
+    },
+    {
+      "chromas": false,
+      "id": "516028",
+      "name": "FerroviariOrnn (aguamarina)",
+      "num": 28,
+      "parentSkin": 20
+    },
+    {
+      "chromas": true,
+      "id": "516029",
+      "name": "Ornn égida acorazada",
+      "num": 29
+    },
+    {
+      "chromas": false,
+      "id": "516030",
+      "name": "Ornn égida acorazada (rubí)",
+      "num": 30,
+      "parentSkin": 29
+    },
+    {
+      "chromas": false,
+      "id": "516031",
+      "name": "Ornn égida acorazada (zafiro)",
+      "num": 31,
+      "parentSkin": 29
+    },
+    {
+      "chromas": false,
+      "id": "516032",
+      "name": "Ornn égida acorazada (amatista)",
+      "num": 32,
+      "parentSkin": 29
+    },
+    {
+      "chromas": false,
+      "id": "516033",
+      "name": "Ornn égida acorazada (esmeralda)",
+      "num": 33,
+      "parentSkin": 29
+    },
+    {
+      "chromas": false,
+      "id": "516034",
+      "name": "Ornn égida acorazada (cuarzo rosa)",
+      "num": 34,
+      "parentSkin": 29
+    },
+    {
+      "chromas": false,
+      "id": "516035",
+      "name": "Ornn égida acorazada (turquesa)",
+      "num": 35,
+      "parentSkin": 29
+    },
+    {
+      "chromas": false,
+      "id": "516036",
+      "name": "Ornn égida acorazada (perla)",
+      "num": 36,
+      "parentSkin": 29
+    },
+    {
+      "chromas": false,
+      "id": "516037",
+      "name": "Ornn égida acorazada (obsidiana)",
+      "num": 37,
+      "parentSkin": 29
+    }
+  ],
+  "spells": [
+    {
+      "cooldown": [
+        9,
+        8.5,
+        8,
+        7.5,
+        7
+      ],
+      "cooldownBurn": "9/8.5/8/7.5/7",
+      "cost": [
+        45,
+        45,
+        45,
+        45,
+        45
+      ],
+      "costBurn": "45",
+      "costType": " {{ abilityresourcename }}",
+      "datavalues": {},
+      "description": "Ornn golpea el suelo y crea una fisura que inflige daño y ralentiza a los enemigos golpeados. Tras unos breves instantes, se forma un pilar de magma en la ubicación final.",
+      "effect": [
+        null,
+        [
+          20,
+          45,
+          70,
+          95,
+          120
+        ],
+        [
+          1,
+          1,
+          1,
+          1,
+          1
+        ],
+        [
+          4,
+          4,
+          4,
+          4,
+          4
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          40,
+          40,
+          40,
+          40,
+          40
+        ],
+        [
+          2,
+          2,
+          2,
+          2,
+          2
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ]
+      ],
+      "effectBurn": [
+        null,
+        "20/45/70/95/120",
+        "1",
+        "4",
+        "0",
+        "40",
+        "2",
+        "0",
+        "0",
+        "0",
+        "0"
+      ],
+      "id": "OrnnQ",
+      "image": {
+        "full": "OrnnQ.png",
+        "group": "spell",
+        "h": 48,
+        "sprite": "spell10.png",
+        "w": 48,
+        "x": 0,
+        "y": 144
+      },
+      "leveltip": {
+        "effect": [
+          "{{ basedamage }} -> {{ basedamageNL }}",
+          "{{ cooldown }} -> {{ cooldownNL }}"
+        ],
+        "label": [
+          "Daño",
+          "Enfriamiento"
+        ]
+      },
+      "maxammo": "-1",
+      "maxrank": 5,
+      "name": "Ruptura volcánica",
+      "range": [
+        800,
+        800,
+        800,
+        800,
+        800
+      ],
+      "rangeBurn": "800",
+      "resource": "{{ cost }} {{ abilityresourcename }}",
+      "tooltip": "Ornn golpea el suelo y crea una fisura que inflige <physicalDamage>{{ totaldamage }} de daño físico</physicalDamage> y <status>ralentiza</status> un {{ slowamount }}% durante {{ slowduration }} s. Al final de la fisura se formará un pilar de piedra durante {{ pillarduration }}&nbsp;s. {{ spellmodifierdescriptionappend }}",
+      "vars": []
+    },
+    {
+      "cooldown": [
+        12,
+        11.5,
+        11,
+        10.5,
+        10
+      ],
+      "cooldownBurn": "12/11.5/11/10.5/10",
+      "cost": [
+        45,
+        50,
+        55,
+        60,
+        65
+      ],
+      "costBurn": "45/50/55/60/65",
+      "costType": " {{ abilityresourcename }}",
+      "datavalues": {},
+      "description": "Ornn avanza mientras escupe fuego. A los enemigos a los que alcance la última llamarada se les aplicará el efecto quebradizo.",
+      "effect": [
+        null,
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ]
+      ],
+      "effectBurn": [
+        null,
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0"
+      ],
+      "id": "OrnnW",
+      "image": {
+        "full": "OrnnW.png",
+        "group": "spell",
+        "h": 48,
+        "sprite": "spell10.png",
+        "w": 48,
+        "x": 48,
+        "y": 144
+      },
+      "leveltip": {
+        "effect": [
+          "{{ maxpercenthpperticktooltip }}% -> {{ maxpercenthpperticktooltipNL }}%",
+          "{{ minimumdamagepertick*5.000000 }} -> {{ minimumdamageperticknl*5.000000 }}",
+          "{{ monsterdamagepertickcap*5.000000 }} -> {{ monsterdamagepertickcapnl*5.000000 }}",
+          "{{ cost }} -> {{ costNL }}",
+          "{{ cooldown }} -> {{ cooldownNL }}"
+        ],
+        "label": [
+          "% de vida como daño",
+          "Daño mínimo",
+          "Daño máximo",
+          "Coste de @AbilityResourceName@",
+          "Enfriamiento"
+        ]
+      },
+      "maxammo": "-1",
+      "maxrank": 5,
+      "name": "Aliento de fuelle",
+      "range": [
+        25000,
+        25000,
+        25000,
+        25000,
+        25000
+      ],
+      "rangeBurn": "25000",
+      "resource": "{{ cost }} {{ abilityresourcename }}",
+      "tooltip": "Ornn avanza imparable mientras escupe fuego, lo que inflige un <magicDamage>{{ maxpercenthpperticktooltip }}% de la vida máxima del objetivo como daño mágico</magicDamage> a lo largo de {{ breathduration }} s. Los enemigos alcanzados por la última llamarada se vuelven <keywordMajor>quebradizos</keywordMajor> durante {{ brittleduration }} s.<br /><br />Los efectos de <status>inmovilización</status> en objetivos <keywordMajor>quebradizos</keywordMajor> aumentan su duración un 30% e infligen un <magicDamage>{{ brittlepercentmaxhpcalc }} de la vida máxima del objetivo como daño mágico</magicDamage> adicional. Los ataques de Ornn contra objetivos <keywordMajor>quebradizos</keywordMajor> los <status>empujan hacia atrás</status>, lo que inflige daño adicional.{{ spellmodifierdescriptionappend }}",
+      "vars": []
+    },
+    {
+      "cooldown": [
+        14,
+        13.5,
+        13,
+        12.5,
+        12
+      ],
+      "cooldownBurn": "14/13.5/13/12.5/12",
+      "cost": [
+        35,
+        40,
+        45,
+        50,
+        55
+      ],
+      "costBurn": "35/40/45/50/55",
+      "costType": " {{ abilityresourcename }}",
+      "datavalues": {},
+      "description": "Ornn carga e inflige daño a los enemigos sobre los que pasa. Si Ornn choca contra algún obstáculo del terreno mientras carga, el impacto crea una onda expansiva a su alrededor que inflige daño y lanza por los aires a los enemigos.",
+      "effect": [
+        null,
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ]
+      ],
+      "effectBurn": [
+        null,
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0"
+      ],
+      "id": "OrnnE",
+      "image": {
+        "full": "OrnnE.png",
+        "group": "spell",
+        "h": 48,
+        "sprite": "spell10.png",
+        "w": 48,
+        "x": 96,
+        "y": 144
+      },
+      "leveltip": {
+        "effect": [
+          "{{ basedamage }} -> {{ basedamageNL }}",
+          "{{ cooldown }} -> {{ cooldownNL }}",
+          "{{ cost }} -> {{ costNL }}"
+        ],
+        "label": [
+          "Daño del deslizamiento",
+          "Enfriamiento",
+          "Coste de @AbilityResourceName@"
+        ]
+      },
+      "maxammo": "-1",
+      "maxrank": 5,
+      "name": "Carga candente",
+      "range": [
+        450,
+        450,
+        450,
+        450,
+        450
+      ],
+      "rangeBurn": "450",
+      "resource": "{{ cost }} {{ abilityresourcename }}",
+      "tooltip": "Ornn carga, lo que inflige <physicalDamage>{{ totaldamage }} de daño físico</physicalDamage>. Si Ornn embiste contra un obstáculo del terreno, el impacto crea una onda expansiva que <status>lanza por los aires</status> a los enemigos durante {{ knockupduration }} s y aplica el mismo daño a los enemigos que no golpee con la carga.<br /><br />La carga de Ornn destruirá los pilares de magma y los obstáculos del terreno creados por campeones enemigos.{{ spellmodifierdescriptionappend }}",
+      "vars": []
+    },
+    {
+      "cooldown": [
+        140,
+        120,
+        100
+      ],
+      "cooldownBurn": "140/120/100",
+      "cost": [
+        100,
+        100,
+        100
+      ],
+      "costBurn": "100",
+      "costType": " {{ abilityresourcename }}",
+      "datavalues": {},
+      "description": "Ornn invoca un gólem de fuego enorme en una ubicación que se dirige hacia él con una velocidad creciente. El gólem ralentiza, daña y aplica el efecto quebradizo a los enemigos sobre los que pasa. Ornn puede volver a lanzar la habilidad para cargar hacia el gólem de fuego y redirigirlo en la dirección en la que lo golpea. El gólem derriba a los enemigos golpeados, les inflige el mismo daño y les vuelve a aplicar el efecto quebradizo.",
+      "effect": [
+        null,
+        [
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0
+        ]
+      ],
+      "effectBurn": [
+        null,
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0"
+      ],
+      "id": "OrnnR",
+      "image": {
+        "full": "OrnnR.png",
+        "group": "spell",
+        "h": 48,
+        "sprite": "spell10.png",
+        "w": 48,
+        "x": 144,
+        "y": 144
+      },
+      "leveltip": {
+        "effect": [
+          "{{ rbasedamage }} -> {{ rbasedamageNL }}",
+          "{{ rslowpercentbasepremath }} -> {{ rslowpercentbasepremathNL }}",
+          "{{ cooldown }} -> {{ cooldownNL }}"
+        ],
+        "label": [
+          "Daño",
+          "Ralentización",
+          "Enfriamiento"
+        ]
+      },
+      "maxammo": "-1",
+      "maxrank": 3,
+      "name": "Llamada del dios de la forja",
+      "range": [
+        2500,
+        2500,
+        2500
+      ],
+      "rangeBurn": "2500",
+      "resource": "{{ cost }} {{ abilityresourcename }}",
+      "tooltip": "Ornn invoca un gólem de lava enorme que sale en estampida hacia él, lo que inflige <magicDamage>{{ rdamagecalc }} de daño mágico</magicDamage>, aplica <keywordMajor>quebradizo</keywordMajor> y <status>ralentiza</status> un {{ rslowpercentbasepremath }}% a los enemigos alcanzados durante {{ brittledurationtooltiponly }} s.<br /><br />Ornn puede <recast>volver a lanzar</recast> la habilidad para deslizarse y dar un testarazo. Si se desliza contra el gólem, lo redirige y lo potencia, lo que provoca que <status>levante por los aires</status> al primer campeón durante {{ rstunduration }} s y a los siguientes campeones durante {{ minstun }} s. El gólem también inflige <magicDamage>{{ rdamagecalc }} de daño mágico</magicDamage> y vuelve a aplicar el efecto <keywordMajor>quebradizo</keywordMajor>.{{ spellmodifierdescriptionappend }}",
+      "vars": []
+    }
+  ],
+  "stats": {
+    "armor": 33,
+    "armorperlevel": 5.2,
+    "attackdamage": 69,
+    "attackdamageperlevel": 0,
+    "attackrange": 175,
+    "attackspeed": 0.625,
+    "attackspeedperlevel": 2,
+    "crit": 0,
+    "critperlevel": 0,
+    "hp": 660,
+    "hpperlevel": 109,
+    "hpregen": 9,
+    "hpregenperlevel": 0.9,
+    "movespeed": 335,
+    "mp": 341,
+    "mpperlevel": 65,
+    "mpregen": 8,
+    "mpregenperlevel": 0.6,
+    "spellblock": 32,
+    "spellblockperlevel": 2.05
+  },
+  "tags": [
+    "Tank"
+  ],
+  "title": "Las Llamas de la Forja"
+}

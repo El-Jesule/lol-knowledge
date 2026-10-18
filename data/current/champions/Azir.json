@@ -1,0 +1,817 @@
+{
+  "allytips": [
+    "Tened cuidado para no quedaros sin los dos soldados de ¡Alzaos! Salvo que sea el momento de atacar con todo, guardaos siempre un soldado en la recámara, por si tenéis que escapar sobre un muro o habéis posicionado mal el otro y necesitáis disponer de capacidad ofensiva de manera urgente.",
+    "En la calle, procurad colocar a los soldados entre los súbditos y el campeón del enemigo. De este modo podréis usarlos tanto para dar el golpe final como para amenazar la calle enemiga.",
+    "Falange imperial es, sobre todo, una habilidad defensiva. Usadla cuando el enemigo ataque a vuestros aliados. Recordad que vuestros compañeros pueden atravesar a los soldados de arena y aprovechaos de ello cuando los campeones de cuerpo a cuerpo enemigos ataquen.",
+    "¡Estad siempre muy atentos!"
+  ],
+  "blurb": "Azir, emperador de Shurima en un pasado remoto, fue un hombre orgulloso que estuvo a punto de alcanzar la inmortalidad. Dominado por la arrogancia, fue traicionado y asesinado en la hora de su mayor triunfo, pero ahora, milenios después, ha renacido...",
+  "enemytips": [
+    "Azir depende de sus soldados para infligir daño y no puede moverlos constantemente. Intentad aprovechar los momentos en los que estén estacionarios.",
+    "Azir puede infligir muchísimo daño a lo largo de un periodo prolongado, pero, a diferencia de otros magos, carece de una elevada explosividad en sus ataques. Intentad utilizar esta desventaja para acabar con él antes de que decante en su favor los combates.",
+    "Pensad que los soldados de arena son como el fuego. Nadie se queda sobre el fuego."
+  ],
+  "id": "Azir",
+  "image": {
+    "full": "Azir.png",
+    "group": "champion",
+    "h": 48,
+    "sprite": "champion0.png",
+    "w": 48,
+    "x": 144,
+    "y": 48
+  },
+  "info": {
+    "attack": 6,
+    "defense": 3,
+    "difficulty": 9,
+    "magic": 8
+  },
+  "key": "268",
+  "lore": "Azir, emperador de Shurima en un pasado remoto, fue un hombre orgulloso que estuvo a punto de alcanzar la inmortalidad. Dominado por la arrogancia, fue traicionado y asesinado en la hora de su mayor triunfo, pero ahora, milenios después, ha renacido como un ser Ascendido de inmenso poder. Su enterrada ciudad ha resurgido en medio de las arenas y Azir está decidido a restaurar la antigua gloria de Shurima.",
+  "name": "Azir",
+  "partype": "Maná",
+  "passive": {
+    "description": "Azir puede invocar el Disco solar sobre las ruinas de una torreta aliada o enemiga.",
+    "image": {
+      "full": "Azir_Passive.png",
+      "group": "passive",
+      "h": 48,
+      "sprite": "passive0.png",
+      "w": 48,
+      "x": 144,
+      "y": 48
+    },
+    "name": "Legado de Shurima"
+  },
+  "recommended": [],
+  "skins": [
+    {
+      "chromas": false,
+      "id": "268000",
+      "name": "default",
+      "num": 0
+    },
+    {
+      "chromas": false,
+      "id": "268001",
+      "name": "Azir galáctico",
+      "num": 1
+    },
+    {
+      "chromas": false,
+      "id": "268002",
+      "name": "Azir señor de los muertos",
+      "num": 2
+    },
+    {
+      "chromas": false,
+      "id": "268003",
+      "name": "Azir SKT T1",
+      "num": 3
+    },
+    {
+      "chromas": false,
+      "id": "268004",
+      "name": "Azir Reinos Combatientes",
+      "num": 4
+    },
+    {
+      "chromas": true,
+      "id": "268005",
+      "name": "Azir bosque ancestral",
+      "num": 5
+    },
+    {
+      "chromas": false,
+      "id": "268006",
+      "name": "Azir bosque ancestral (rubí)",
+      "num": 6,
+      "parentSkin": 5
+    },
+    {
+      "chromas": false,
+      "id": "268007",
+      "name": "Azir bosque ancestral (zafiro)",
+      "num": 7,
+      "parentSkin": 5
+    },
+    {
+      "chromas": false,
+      "id": "268008",
+      "name": "Azir bosque ancestral (turquesa)",
+      "num": 8,
+      "parentSkin": 5
+    },
+    {
+      "chromas": false,
+      "id": "268009",
+      "name": "Azir bosque ancestral (ojo de gato)",
+      "num": 9,
+      "parentSkin": 5
+    },
+    {
+      "chromas": false,
+      "id": "268010",
+      "name": "Azir bosque ancestral (esmeralda)",
+      "num": 10,
+      "parentSkin": 5
+    },
+    {
+      "chromas": false,
+      "id": "268011",
+      "name": "Azir bosque ancestral (perla)",
+      "num": 11,
+      "parentSkin": 5
+    },
+    {
+      "chromas": false,
+      "id": "268012",
+      "name": "Azir bosque ancestral (maderascuas)",
+      "num": 12,
+      "parentSkin": 5
+    },
+    {
+      "chromas": false,
+      "id": "268013",
+      "name": "Azir bosque ancestral (cuarzo rosa)",
+      "num": 13,
+      "parentSkin": 5
+    },
+    {
+      "chromas": true,
+      "id": "268014",
+      "name": "Azir del Mundial 2022",
+      "num": 14
+    },
+    {
+      "chromas": false,
+      "id": "268015",
+      "name": "Azir del Mundial 2022 (tanzanita)",
+      "num": 15,
+      "parentSkin": 14
+    },
+    {
+      "chromas": false,
+      "id": "268016",
+      "name": "Azir del Mundial 2022 (turquesa)",
+      "num": 16,
+      "parentSkin": 14
+    },
+    {
+      "chromas": false,
+      "id": "268017",
+      "name": "Azir del Mundial 2022 (obsidiana)",
+      "num": 17,
+      "parentSkin": 14
+    },
+    {
+      "chromas": false,
+      "id": "268018",
+      "name": "Azir del Mundial 2022 (inimitable)",
+      "num": 18,
+      "parentSkin": 14
+    },
+    {
+      "chromas": true,
+      "id": "268019",
+      "name": "Azir picapleitos",
+      "num": 19
+    },
+    {
+      "chromas": false,
+      "id": "268020",
+      "name": "Azir picapleitos (rubí)",
+      "num": 20,
+      "parentSkin": 19
+    },
+    {
+      "chromas": false,
+      "id": "268021",
+      "name": "Azir picapleitos (cuarzo rosa)",
+      "num": 21,
+      "parentSkin": 19
+    },
+    {
+      "chromas": false,
+      "id": "268022",
+      "name": "Azir picapleitos (citrino)",
+      "num": 22,
+      "parentSkin": 19
+    },
+    {
+      "chromas": false,
+      "id": "268023",
+      "name": "Azir picapleitos (esmeralda)",
+      "num": 23,
+      "parentSkin": 19
+    },
+    {
+      "chromas": false,
+      "id": "268024",
+      "name": "Azir picapleitos (jaspe)",
+      "num": 24,
+      "parentSkin": 19
+    },
+    {
+      "chromas": false,
+      "id": "268025",
+      "name": "Azir picapleitos (perla)",
+      "num": 25,
+      "parentSkin": 19
+    },
+    {
+      "chromas": false,
+      "id": "268026",
+      "name": "Azir picapleitos (zafiro)",
+      "num": 26,
+      "parentSkin": 19
+    },
+    {
+      "chromas": false,
+      "id": "268027",
+      "name": "Azir picapleitos (obsidiana)",
+      "num": 27,
+      "parentSkin": 19
+    }
+  ],
+  "spells": [
+    {
+      "cooldown": [
+        14,
+        12,
+        10,
+        8,
+        6
+      ],
+      "cooldownBurn": "14/12/10/8/6",
+      "cost": [
+        70,
+        80,
+        90,
+        100,
+        110
+      ],
+      "costBurn": "70/80/90/100/110",
+      "costType": " {{ abilityresourcename }}",
+      "datavalues": {},
+      "description": "Azir envía a todos los soldados de arena hacia un punto. Los soldados de arena infligen daño mágico a los enemigos que atraviesan y además aplican un efecto de ralentización durante 1 s.",
+      "effect": [
+        null,
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          70,
+          70,
+          70,
+          70,
+          70
+        ],
+        [
+          1600,
+          1600,
+          1600,
+          1600,
+          1600
+        ],
+        [
+          200,
+          200,
+          200,
+          200,
+          200
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ]
+      ],
+      "effectBurn": [
+        null,
+        "0",
+        "0",
+        "0",
+        "70",
+        "1600",
+        "200",
+        "0",
+        "0",
+        "0",
+        "0"
+      ],
+      "id": "AzirQWrapper",
+      "image": {
+        "full": "AzirQWrapper.png",
+        "group": "spell",
+        "h": 48,
+        "sprite": "spell2.png",
+        "w": 48,
+        "x": 288,
+        "y": 0
+      },
+      "leveltip": {
+        "effect": [
+          "{{ basedamage }} -> {{ basedamageNL }}",
+          "{{ apratio*100.000000 }}% -> {{ aprationl*100.000000 }}%",
+          "{{ cooldown }} -> {{ cooldownNL }}",
+          "{{ cost }} -> {{ costNL }}"
+        ],
+        "label": [
+          "Daño",
+          "Relación de PH total",
+          "Enfriamiento",
+          "Coste de @AbilityResourceName@"
+        ]
+      },
+      "maxammo": "-1",
+      "maxrank": 5,
+      "name": "Arenas conquistadoras",
+      "range": [
+        740,
+        740,
+        740,
+        740,
+        740
+      ],
+      "rangeBurn": "740",
+      "resource": "{{ cost }} {{ abilityresourcename }}",
+      "tooltip": "Azir ordena a todos los <keywordMajor>soldados de arena</keywordMajor> que se lancen hacia un área, lo que inflige <magicDamage>{{ totaldamage }} de daño mágico</magicDamage> a los enemigos que atraviesan y los <status>ralentiza</status> un {{ slowamount*-100 }}% durante 1 s.{{ spellmodifierdescriptionappend }}",
+      "vars": []
+    },
+    {
+      "cooldown": [
+        1.5,
+        1.5,
+        1.5,
+        1.5,
+        1.5
+      ],
+      "cooldownBurn": "1.5",
+      "cost": [
+        40,
+        35,
+        30,
+        25,
+        20
+      ],
+      "costBurn": "40/35/30/25/20",
+      "costType": " {{ abilityresourcename }}",
+      "datavalues": {},
+      "description": "Azir invoca a un soldado de arena para que ataque a los objetivos cercanos por él. El ataque básico de estos soldados reemplaza el suyo contra todos los enemigos que estén a su alcance. Su ataque inflige daño mágico a todos los enemigos situados en una línea.",
+      "effect": [
+        null,
+        [
+          10,
+          10,
+          10,
+          10,
+          10
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          3,
+          3,
+          3,
+          3,
+          3
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          5,
+          5,
+          5,
+          5,
+          5
+        ],
+        [
+          25,
+          25,
+          25,
+          25,
+          25
+        ],
+        [
+          0.5,
+          0.5,
+          0.5,
+          0.5,
+          0.5
+        ]
+      ],
+      "effectBurn": [
+        null,
+        "10",
+        "0",
+        "0",
+        "0",
+        "0",
+        "3",
+        "0",
+        "5",
+        "25",
+        "0.5"
+      ],
+      "id": "AzirW",
+      "image": {
+        "full": "AzirW.png",
+        "group": "spell",
+        "h": 48,
+        "sprite": "spell2.png",
+        "w": 48,
+        "x": 336,
+        "y": 0
+      },
+      "leveltip": {
+        "effect": [
+          "{{ basedamage }} -> {{ basedamageNL }}",
+          "{{ apratio }} -> {{ apratioNL }}",
+          "{{ ammorechargetime }} -> {{ ammorechargetimeNL }}",
+          "{{ cost }} -> {{ costNL }}"
+        ],
+        "label": [
+          "Daño de ataque del soldado",
+          "Relación de PH total",
+          "Tiempo de recarga",
+          "Coste de @AbilityResourceName@"
+        ]
+      },
+      "maxammo": "2",
+      "maxrank": 5,
+      "name": "¡Alzaos!",
+      "range": [
+        525,
+        525,
+        525,
+        525,
+        525
+      ],
+      "rangeBurn": "525",
+      "resource": "{{ cost }} {{ abilityresourcename }}",
+      "tooltip": "Azir invoca un <keywordMajor>soldado de arena</keywordMajor> durante {{ soldierduration }} s. Cuando Azir ataca a un enemigo que se encuentra cerca de un <keywordMajor>soldado de arena</keywordMajor>, ordena al soldado que ataque en su lugar, lo que inflige <magicDamage>{{ totaldamage }} de daño mágico</magicDamage> en la dirección del enemigo.<br /><br />Esta habilidad tiene {{ maxammo }} cargas.{{ spellmodifierdescriptionappend }}",
+      "vars": []
+    },
+    {
+      "cooldown": [
+        22,
+        20.5,
+        19,
+        17.5,
+        16
+      ],
+      "cooldownBurn": "22/20.5/19/17.5/16",
+      "cost": [
+        60,
+        60,
+        60,
+        60,
+        60
+      ],
+      "costBurn": "60",
+      "costType": " {{ abilityresourcename }}",
+      "datavalues": {},
+      "description": "Azir se protege con un escudo durante unos instantes, se desliza hacia uno de sus soldados de arena y daña a los enemigos en su movimiento. Si golpea a un campeón enemigo, prepara inmediatamente un nuevo soldado de arena y detiene su deslizamiento.",
+      "effect": [
+        null,
+        [
+          1700,
+          1700,
+          1700,
+          1700,
+          1700
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0.3,
+          0.5,
+          0.7,
+          0.9,
+          1.1
+        ],
+        [
+          1.5,
+          1.5,
+          1.5,
+          1.5,
+          1.5
+        ],
+        [
+          1100,
+          1100,
+          1100,
+          1100,
+          1100
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          5,
+          5,
+          5,
+          5,
+          5
+        ],
+        [
+          25,
+          25,
+          25,
+          25,
+          25
+        ]
+      ],
+      "effectBurn": [
+        null,
+        "1700",
+        "0",
+        "0",
+        "0",
+        "0.3/0.5/0.7/0.9/1.1",
+        "1.5",
+        "1100",
+        "0",
+        "5",
+        "25"
+      ],
+      "id": "AzirEWrapper",
+      "image": {
+        "full": "AzirEWrapper.png",
+        "group": "spell",
+        "h": 48,
+        "sprite": "spell2.png",
+        "w": 48,
+        "x": 384,
+        "y": 0
+      },
+      "leveltip": {
+        "effect": [
+          "{{ baseshield }} -> {{ baseshieldNL }}",
+          "{{ basedamage }} -> {{ basedamageNL }}",
+          "{{ cooldown }} -> {{ cooldownNL }}"
+        ],
+        "label": [
+          "Cantidad de escudo",
+          "Daño",
+          "Enfriamiento"
+        ]
+      },
+      "maxammo": "-1",
+      "maxrank": 5,
+      "name": "Arenas movedizas",
+      "range": [
+        1100,
+        1100,
+        1100,
+        1100,
+        1100
+      ],
+      "rangeBurn": "1100",
+      "resource": "{{ cost }} {{ abilityresourcename }}",
+      "tooltip": "Azir se otorga un <shield>escudo de {{ totalshield }}</shield> durante {{ shieldduration }} s y se desliza hasta uno de sus <keywordMajor>soldados de arena</keywordMajor>, lo que inflige <magicDamage>{{ totaldamage }} de daño mágico</magicDamage> a los enemigos a los que atraviesa.<br /><br />Si Azir golpea a un campeón enemigo, se detiene y obtiene una carga de <keywordMajor>soldado de arena</keywordMajor>.{{ spellmodifierdescriptionappend }}",
+      "vars": []
+    },
+    {
+      "cooldown": [
+        120,
+        105,
+        90
+      ],
+      "cooldownBurn": "120/105/90",
+      "cost": [
+        100,
+        100,
+        100
+      ],
+      "costBurn": "100",
+      "costType": " {{ abilityresourcename }}",
+      "datavalues": {},
+      "description": "Azir invoca un muro de soldados que, con una carga hacia delante, infligen daño y derriban al enemigo.",
+      "effect": [
+        null,
+        [
+          200,
+          400,
+          600
+        ],
+        [
+          0,
+          0,
+          0
+        ],
+        [
+          6,
+          7,
+          8
+        ],
+        [
+          5,
+          5,
+          5
+        ],
+        [
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0
+        ]
+      ],
+      "effectBurn": [
+        null,
+        "200/400/600",
+        "0",
+        "6/7/8",
+        "5",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0"
+      ],
+      "id": "AzirR",
+      "image": {
+        "full": "AzirR.png",
+        "group": "spell",
+        "h": 48,
+        "sprite": "spell2.png",
+        "w": 48,
+        "x": 432,
+        "y": 0
+      },
+      "leveltip": {
+        "effect": [
+          "{{ basedamage }} -> {{ basedamageNL }}",
+          "{{ numberofsoldiers }} -> {{ numberofsoldiersNL }}",
+          "{{ cooldown }} -> {{ cooldownNL }}"
+        ],
+        "label": [
+          "Daño",
+          "Número de soldados",
+          "Enfriamiento"
+        ]
+      },
+      "maxammo": "-1",
+      "maxrank": 3,
+      "name": "Falange imperial",
+      "range": [
+        250,
+        250,
+        250
+      ],
+      "rangeBurn": "250",
+      "resource": "{{ cost }} {{ abilityresourcename }}",
+      "tooltip": "Azir invoca un muro de soldados que se lanzan a la carga y <status>empujan hacia atrás</status> a los enemigos, además de infligirles <magicDamage>{{ totaldamage }} de daño mágico</magicDamage>. Los soldados bloquean el paso de los enemigos durante {{ wallduration }} s.{{ spellmodifierdescriptionappend }}",
+      "vars": []
+    }
+  ],
+  "stats": {
+    "armor": 25,
+    "armorperlevel": 5,
+    "attackdamage": 56,
+    "attackdamageperlevel": 0,
+    "attackrange": 525,
+    "attackspeed": 0.625,
+    "attackspeedperlevel": 5,
+    "crit": 0,
+    "critperlevel": 0,
+    "hp": 575,
+    "hpperlevel": 108,
+    "hpregen": 7,
+    "hpregenperlevel": 0.75,
+    "movespeed": 330,
+    "mp": 320,
+    "mpperlevel": 40,
+    "mpregen": 8,
+    "mpregenperlevel": 0.8,
+    "spellblock": 30,
+    "spellblockperlevel": 1.3
+  },
+  "tags": [
+    "Mage",
+    "Marksman"
+  ],
+  "title": "El Emperador de las Arenas"
+}

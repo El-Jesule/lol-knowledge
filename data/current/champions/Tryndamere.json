@@ -1,0 +1,935 @@
+{
+  "allytips": [
+    "Retrasar la activación de Furia inmortal sirve para hacer que un campeón enemigo decida intentar matarte.",
+    "Sed de sangre resulta excelente para curar a Tryndamere. Intenta que no desaparezca antes de activarla.",
+    "Si el enemigo acumula armadura, intenta construir objetos como Últimas palabras o Filo fantasmal de Youmuu."
+  ],
+  "blurb": "Impulsado por una furia y una rabia desenfrenadas, Tryndamere solía abrirse paso por Freljord desafiando abiertamente a los mejores guerreros del norte con el objetivo de prepararse para días aún más oscuros. El furioso bárbaro lleva una eternidad...",
+  "enemytips": [
+    "Intenta atacar pronto a Tryndamere para que no pueda matar súbditos y curarse mediante Sed de sangre.",
+    "Recuerda que Tryndamere sólo puede ralentizarte cuando no le estás dando la cara.",
+    "La mayor parte del daño de Tryndamere es físico. Si se vuelve demasiado fuerte, considera la posibilidad de comprar una Malla de espinas."
+  ],
+  "id": "Tryndamere",
+  "image": {
+    "full": "Tryndamere.png",
+    "group": "champion",
+    "h": 48,
+    "sprite": "champion4.png",
+    "w": 48,
+    "x": 48,
+    "y": 96
+  },
+  "info": {
+    "attack": 10,
+    "defense": 5,
+    "difficulty": 5,
+    "magic": 2
+  },
+  "key": "23",
+  "lore": "Impulsado por una furia y una rabia desenfrenadas, Tryndamere solía abrirse paso por Freljord desafiando abiertamente a los mejores guerreros del norte con el objetivo de prepararse para días aún más oscuros. El furioso bárbaro lleva una eternidad clamando venganza, desde que aniquilaron a su clan al completo. No obstante, ha encontrado recientemente una compañera en Ashe, la comandante avarosana, y un nuevo hogar con su pueblo. Su poder y fortaleza casi inhumanos son legendarios, lo que les ha supuesto a él y a sus nuevos aliados incontables victorias cuando peor pintaban las cosas.",
+  "name": "Tryndamere",
+  "partype": "Furia",
+  "passive": {
+    "description": "Tryndamere gana furia por cada ataque, impacto crítico y golpe mortal que realiza. La furia aumenta pasivamente su probabilidad de impacto crítico y se puede consumir con su hechizo Sed de sangre.",
+    "image": {
+      "full": "Tryndamere_Passive.png",
+      "group": "passive",
+      "h": 48,
+      "sprite": "passive4.png",
+      "w": 48,
+      "x": 48,
+      "y": 96
+    },
+    "name": "Furia de batalla"
+  },
+  "recommended": [],
+  "skins": [
+    {
+      "chromas": false,
+      "id": "23000",
+      "name": "default",
+      "num": 0
+    },
+    {
+      "chromas": false,
+      "id": "23001",
+      "name": "Tryndamere de las tierras altas",
+      "num": 1
+    },
+    {
+      "chromas": false,
+      "id": "23002",
+      "name": "Rey Tryndamere",
+      "num": 2
+    },
+    {
+      "chromas": false,
+      "id": "23003",
+      "name": "Tryndamere vikingo",
+      "num": 3
+    },
+    {
+      "chromas": false,
+      "id": "23004",
+      "name": "Tryndamere hoja demoníaca",
+      "num": 4
+    },
+    {
+      "chromas": false,
+      "id": "23005",
+      "name": "Tryndamere sultán",
+      "num": 5
+    },
+    {
+      "chromas": false,
+      "id": "23006",
+      "name": "Tryndamere Reinos Combatientes",
+      "num": 6
+    },
+    {
+      "chromas": false,
+      "id": "23007",
+      "name": "Tryndamere pesadilla",
+      "num": 7
+    },
+    {
+      "chromas": false,
+      "id": "23008",
+      "name": "Tryndamere cazador de bestias",
+      "num": 8
+    },
+    {
+      "chromas": false,
+      "id": "23009",
+      "name": "Tryndamere tecnoquímico",
+      "num": 9
+    },
+    {
+      "chromas": true,
+      "id": "23010",
+      "name": "Tryndamere luna sangrienta",
+      "num": 10
+    },
+    {
+      "chromas": false,
+      "id": "23011",
+      "name": "Tryndamere luna sangrienta (zafiro)",
+      "num": 11,
+      "parentSkin": 10
+    },
+    {
+      "chromas": false,
+      "id": "23012",
+      "name": "Tryndamere luna sangrienta (amatista)",
+      "num": 12,
+      "parentSkin": 10
+    },
+    {
+      "chromas": false,
+      "id": "23013",
+      "name": "Tryndamere luna sangrienta (esmeralda)",
+      "num": 13,
+      "parentSkin": 10
+    },
+    {
+      "chromas": false,
+      "id": "23014",
+      "name": "Tryndamere luna sangrienta (citrino)",
+      "num": 14,
+      "parentSkin": 10
+    },
+    {
+      "chromas": false,
+      "id": "23015",
+      "name": "Tryndamere luna sangrienta (obsidiana)",
+      "num": 15,
+      "parentSkin": 10
+    },
+    {
+      "chromas": false,
+      "id": "23016",
+      "name": "Tryndamere luna sangrienta (perla)",
+      "num": 16,
+      "parentSkin": 10
+    },
+    {
+      "chromas": false,
+      "id": "23017",
+      "name": "Tryndamere luna sangrienta (rubí)",
+      "num": 17,
+      "parentSkin": 10
+    },
+    {
+      "chromas": true,
+      "id": "23018",
+      "name": "Tryndamere heraldo del caos",
+      "num": 18
+    },
+    {
+      "chromas": false,
+      "id": "23019",
+      "name": "Tryndamere heraldo del caos (rubí)",
+      "num": 19,
+      "parentSkin": 18
+    },
+    {
+      "chromas": false,
+      "id": "23020",
+      "name": "Tryndamere heraldo del caos (ojo de gato)",
+      "num": 20,
+      "parentSkin": 18
+    },
+    {
+      "chromas": false,
+      "id": "23021",
+      "name": "Tryndamere heraldo del caos (zafiro)",
+      "num": 21,
+      "parentSkin": 18
+    },
+    {
+      "chromas": false,
+      "id": "23022",
+      "name": "Tryndamere heraldo del caos (esmeralda)",
+      "num": 22,
+      "parentSkin": 18
+    },
+    {
+      "chromas": false,
+      "id": "23023",
+      "name": "Tryndamere heraldo del caos (amatista)",
+      "num": 23,
+      "parentSkin": 18
+    },
+    {
+      "chromas": false,
+      "id": "23024",
+      "name": "Tryndamere heraldo del caos (turquesa)",
+      "num": 24,
+      "parentSkin": 18
+    },
+    {
+      "chromas": false,
+      "id": "23025",
+      "name": "Tryndamere heraldo del caos (obsidiana)",
+      "num": 25,
+      "parentSkin": 18
+    },
+    {
+      "chromas": false,
+      "id": "23026",
+      "name": "Tryndamere heraldo del caos (portador de muerte)",
+      "num": 26,
+      "parentSkin": 18
+    },
+    {
+      "chromas": true,
+      "id": "23027",
+      "name": "Tryndamere victorioso",
+      "num": 27
+    },
+    {
+      "chromas": false,
+      "id": "23028",
+      "name": "Tryndamere victorioso (Bronce)",
+      "num": 28,
+      "parentSkin": 27
+    },
+    {
+      "chromas": false,
+      "id": "23029",
+      "name": "Tryndamere victorioso (Plata)",
+      "num": 29,
+      "parentSkin": 27
+    },
+    {
+      "chromas": false,
+      "id": "23030",
+      "name": "Tryndamere victorioso (Oro)",
+      "num": 30,
+      "parentSkin": 27
+    },
+    {
+      "chromas": false,
+      "id": "23031",
+      "name": "Tryndamere victorioso (Platino)",
+      "num": 31,
+      "parentSkin": 27
+    },
+    {
+      "chromas": false,
+      "id": "23032",
+      "name": "Tryndamere victorioso (Esmeralda)",
+      "num": 32,
+      "parentSkin": 27
+    },
+    {
+      "chromas": false,
+      "id": "23033",
+      "name": "Tryndamere victorioso (Diamante)",
+      "num": 33,
+      "parentSkin": 27
+    },
+    {
+      "chromas": false,
+      "id": "23034",
+      "name": "Tryndamere victorioso (Maestro)",
+      "num": 34,
+      "parentSkin": 27
+    },
+    {
+      "chromas": false,
+      "id": "23035",
+      "name": "Tryndamere victorioso (Gran Maestro)",
+      "num": 35,
+      "parentSkin": 27
+    },
+    {
+      "chromas": false,
+      "id": "23036",
+      "name": "Tryndamere victorioso (Aspirante)",
+      "num": 36,
+      "parentSkin": 27
+    },
+    {
+      "chromas": true,
+      "id": "23037",
+      "name": "Tryndamere visión de los caídos",
+      "num": 37
+    },
+    {
+      "chromas": false,
+      "id": "23038",
+      "name": "Tryndamere visión de los caídos (rubí)",
+      "num": 38,
+      "parentSkin": 37
+    },
+    {
+      "chromas": false,
+      "id": "23039",
+      "name": "Tryndamere visión de los caídos (ojo de gato)",
+      "num": 39,
+      "parentSkin": 37
+    },
+    {
+      "chromas": false,
+      "id": "23040",
+      "name": "Tryndamere visión de los caídos (esmeralda)",
+      "num": 40,
+      "parentSkin": 37
+    },
+    {
+      "chromas": false,
+      "id": "23041",
+      "name": "Tryndamere visión de los caídos (tanzanita)",
+      "num": 41,
+      "parentSkin": 37
+    },
+    {
+      "chromas": false,
+      "id": "23042",
+      "name": "Tryndamere visión de los caídos (zafiro)",
+      "num": 42,
+      "parentSkin": 37
+    },
+    {
+      "chromas": false,
+      "id": "23043",
+      "name": "Tryndamere visión de los caídos (cuarzo rosa)",
+      "num": 43,
+      "parentSkin": 37
+    },
+    {
+      "chromas": false,
+      "id": "23044",
+      "name": "Tryndamere visión de los caídos (perla)",
+      "num": 44,
+      "parentSkin": 37
+    },
+    {
+      "chromas": false,
+      "id": "23045",
+      "name": "Tryndamere visión de los caídos (obsidiana)",
+      "num": 45,
+      "parentSkin": 37
+    },
+    {
+      "chromas": false,
+      "id": "23046",
+      "name": "Tryndamere heraldo del caos (ejemplar)",
+      "num": 46,
+      "parentSkin": 18
+    }
+  ],
+  "spells": [
+    {
+      "cooldown": [
+        12,
+        12,
+        12,
+        12,
+        12
+      ],
+      "cooldownBurn": "12",
+      "cost": [
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "costBurn": "0",
+      "costType": "Sin coste",
+      "datavalues": {},
+      "description": "A Tryndamere le encanta la emoción del combate y, cuanto más herido está, más aumenta su daño de ataque. Puede lanzar Sed de sangre para consumir su furia y curarse.",
+      "effect": [
+        null,
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ]
+      ],
+      "effectBurn": [
+        null,
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0"
+      ],
+      "id": "TryndamereQ",
+      "image": {
+        "full": "TryndamereQ.png",
+        "group": "spell",
+        "h": 48,
+        "sprite": "spell14.png",
+        "w": 48,
+        "x": 384,
+        "y": 144
+      },
+      "leveltip": {
+        "effect": [
+          "{{ maximumbonusad }} -> {{ maximumbonusadNL }}",
+          "{{ basehealing }} -> {{ basehealingNL }}",
+          "{{ bonushealperfury }} -> {{ bonushealperfuryNL }}"
+        ],
+        "label": [
+          "Daño máximo",
+          "Curación",
+          "Curación por furia"
+        ]
+      },
+      "maxammo": "-1",
+      "maxrank": 5,
+      "name": "Sed de sangre",
+      "range": [
+        400,
+        400,
+        400,
+        400,
+        400
+      ],
+      "rangeBurn": "400",
+      "resource": "Sin coste",
+      "tooltip": "<spellPassive>Pasiva</spellPassive>: Tryndamere, sediento de sangre, obtiene <scaleAD>{{ maximumbonusad }} de daño de ataque</scaleAD> según la vida que le falte.<br /><br /><spellActive>Activa:</spellActive> Tryndamere consume su <keywordMajor>Furia</keywordMajor> para restaurar <healing>{{ baseheal }} + {{ healperfury }} de vida por Furia (máximo: {{ maximumheal }}).</healing> {{ spellmodifierdescriptionappend }}",
+      "vars": []
+    },
+    {
+      "cooldown": [
+        14,
+        14,
+        14,
+        14,
+        14
+      ],
+      "cooldownBurn": "14",
+      "cost": [
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "costBurn": "0",
+      "costType": "Sin coste",
+      "datavalues": {},
+      "description": "Tryndamere profiere un grito insultante que reduce el daño de ataque de los campeones circundantes. Además, los enemigos de espaldas a Tryndamere ven reducida su velocidad de movimiento.",
+      "effect": [
+        null,
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ]
+      ],
+      "effectBurn": [
+        null,
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0"
+      ],
+      "id": "TryndamereW",
+      "image": {
+        "full": "TryndamereW.png",
+        "group": "spell",
+        "h": 48,
+        "sprite": "spell14.png",
+        "w": 48,
+        "x": 432,
+        "y": 144
+      },
+      "leveltip": {
+        "effect": [
+          "{{ adreduction*-1.000000 }} -> {{ adreductionnl*-1.000000 }}",
+          "{{ slowpotency*-100.000000 }}% -> {{ slowpotencynl*-100.000000 }}%"
+        ],
+        "label": [
+          "Reducción de daño físico",
+          "Ralentización"
+        ]
+      },
+      "maxammo": "-1",
+      "maxrank": 5,
+      "name": "Grito de mofa",
+      "range": [
+        850,
+        850,
+        850,
+        850,
+        850
+      ],
+      "rangeBurn": "850",
+      "resource": "Sin coste",
+      "tooltip": "Tryndamere pronuncia insultos que reducen el daño de ataque de los campeones en {{ adreduction*-1 }} durante {{ reductionduration }} s y los <status>ralentiza</status> un {{ slowpotency*-100 }}% mientras se acobardan ante él durante {{ slowduration }} s.{{ spellmodifierdescriptionappend }}",
+      "vars": []
+    },
+    {
+      "cooldown": [
+        12,
+        11,
+        10,
+        9,
+        8
+      ],
+      "cooldownBurn": "12/11/10/9/8",
+      "cost": [
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "costBurn": "0",
+      "costType": "Sin coste",
+      "datavalues": {},
+      "description": "Tryndamere se abre paso hacia una unidad e inflige daño a todos los enemigos en su camino.",
+      "effect": [
+        null,
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ]
+      ],
+      "effectBurn": [
+        null,
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0"
+      ],
+      "id": "TryndamereE",
+      "image": {
+        "full": "TryndamereE.png",
+        "group": "spell",
+        "h": 48,
+        "sprite": "spell15.png",
+        "w": 48,
+        "x": 0,
+        "y": 0
+      },
+      "leveltip": {
+        "effect": [
+          "{{ damage }} -> {{ damageNL }}",
+          "{{ cooldown }} -> {{ cooldownNL }}"
+        ],
+        "label": [
+          "Daño",
+          "Enfriamiento"
+        ]
+      },
+      "maxammo": "-1",
+      "maxrank": 5,
+      "name": "Cuchillada giratoria",
+      "range": [
+        650,
+        650,
+        650,
+        650,
+        650
+      ],
+      "rangeBurn": "650",
+      "resource": "Sin coste",
+      "tooltip": "Tryndamere gira a través de sus enemigos, lo que inflige <physicalDamage>{{ totaldamage }} de daño físico</physicalDamage> y genera <keywordMajor>{{ nonchampfurygain }} de Furia</keywordMajor> por cada enemigo golpeado, que aumenta hasta <keywordMajor>{{ champfurygain }} de Furia</keywordMajor> contra campeones enemigos.<br /><br />El enfriamiento de la habilidad se reduce en {{ nonchampcdrefund }} s cuando Tryndamere asesta un impacto crítico y se reduce en {{ champcdrefund }} s cuando lo hace contra un campeón.{{ spellmodifierdescriptionappend }}",
+      "vars": []
+    },
+    {
+      "cooldown": [
+        120,
+        100,
+        80
+      ],
+      "cooldownBurn": "120/100/80",
+      "cost": [
+        0,
+        0,
+        0
+      ],
+      "costBurn": "0",
+      "costType": "Sin coste",
+      "datavalues": {},
+      "description": "La pasión por la batalla de Tryndamere aumenta tanto que no puede morir, no importa las heridas que sufra.",
+      "effect": [
+        null,
+        [
+          50,
+          75,
+          100
+        ],
+        [
+          30,
+          50,
+          70
+        ],
+        [
+          5,
+          5,
+          5
+        ],
+        [
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0
+        ]
+      ],
+      "effectBurn": [
+        null,
+        "50/75/100",
+        "30/50/70",
+        "5",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0"
+      ],
+      "id": "UndyingRage",
+      "image": {
+        "full": "UndyingRage.png",
+        "group": "spell",
+        "h": 48,
+        "sprite": "spell15.png",
+        "w": 48,
+        "x": 48,
+        "y": 0
+      },
+      "leveltip": {
+        "effect": [
+          "{{ cooldown }} -> {{ cooldownNL }}",
+          "{{ tryndrminhealth }} -> {{ tryndrminhealthNL }}",
+          "{{ tryndrfurygain }} -> {{ tryndrfurygainNL }}"
+        ],
+        "label": [
+          "Enfriamiento",
+          "Vida mínima",
+          "Furia ganada"
+        ]
+      },
+      "maxammo": "-1",
+      "maxrank": 3,
+      "name": "Furia inmortal",
+      "range": [
+        400,
+        400,
+        400
+      ],
+      "rangeBurn": "400",
+      "resource": "Sin coste",
+      "tooltip": "Tryndamere se vuelve completamente inmune a la muerte durante {{ tryndrduration }} s, lo que impide que su vida baje de {{ tryndrminhealth }} y le otorga al instante <keywordMajor>{{ tryndrfurygain }} de Furia</keywordMajor>.{{ spellmodifierdescriptionappend }}",
+      "vars": []
+    }
+  ],
+  "stats": {
+    "armor": 33,
+    "armorperlevel": 4.8,
+    "attackdamage": 66,
+    "attackdamageperlevel": 0,
+    "attackrange": 175,
+    "attackspeed": 0.67,
+    "attackspeedperlevel": 3.4,
+    "crit": 0,
+    "critperlevel": 0,
+    "hp": 696,
+    "hpperlevel": 108,
+    "hpregen": 8.5,
+    "hpregenperlevel": 0.9,
+    "movespeed": 345,
+    "mp": 100,
+    "mpperlevel": 0,
+    "mpregen": 0,
+    "mpregenperlevel": 0,
+    "spellblock": 32,
+    "spellblockperlevel": 2.05
+  },
+  "tags": [
+    "Fighter",
+    "Assassin"
+  ],
+  "title": "El Rey Bárbaro"
+}

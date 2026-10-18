@@ -1,0 +1,1044 @@
+{
+  "allytips": [
+    "Distorsión te permite ser agresivo con tus otros hechizos sin quitarte la capacidad de ponerte a salvo.",
+    "Al usar Distorsión puedes ayudar a tu posicionamiento para lanzar Cadenas etéreas.",
+    "Puedes encadenar Cadenas etéreas y Mímica para evitar el movimiento del enemigo durante bastante tiempo."
+  ],
+  "blurb": "Misteriosa incluso para el resto de miembros de la camarilla de la Rosa Negra, LeBlanc es uno de los muchos nombres que usa una mujer pálida que ha manipulado a la gente y a los sucesos desde los primeros días de Noxus. Con el uso de la magia para...",
+  "enemytips": [
+    "La definitiva de LeBlanc puede crear falsas imágenes de sí misma durante el lanzamiento de hechizos, algunas veces en una posición lejana. ",
+    "La LeBlanc falsa creada a distancia siempre correrá hacia el campeón más cercano, lanzará un hechizo inofensivo y desaparecerá inmediatamente después.",
+    "Atacar directamente a LeBlanc evita la mayoría de sus trucos, sobre todo si ha usado recientemente su deslizamiento, Distorsión.",
+    "Al aturdir o silenciar a LeBlanc, se evita que active la parte de retorno de Distorsión."
+  ],
+  "id": "Leblanc",
+  "image": {
+    "full": "Leblanc.png",
+    "group": "champion",
+    "h": 48,
+    "sprite": "champion2.png",
+    "w": 48,
+    "x": 432,
+    "y": 0
+  },
+  "info": {
+    "attack": 1,
+    "defense": 4,
+    "difficulty": 9,
+    "magic": 10
+  },
+  "key": "7",
+  "lore": "Misteriosa incluso para el resto de miembros de la camarilla de la Rosa Negra, LeBlanc es uno de los muchos nombres que usa una mujer pálida que ha manipulado a la gente y a los sucesos desde los primeros días de Noxus. Con el uso de la magia para reflejarse, la hechicera puede aparecérsele a cualquiera, donde sea e, incluso, en varios sitios a la vez. Siempre está conspirando donde nadie la ve y sus verdaderos motivos son tan inescrutables como su identidad cambiante.",
+  "name": "LeBlanc",
+  "partype": "Maná",
+  "passive": {
+    "description": "Cuando LeBlanc baja del 40% de vida, se hace invisible durante 1 s y crea una imagen de sí misma que no inflige daño y dura hasta 8 s.",
+    "image": {
+      "full": "LeblancP.png",
+      "group": "passive",
+      "h": 48,
+      "sprite": "passive2.png",
+      "w": 48,
+      "x": 432,
+      "y": 0
+    },
+    "name": "Imagen especular"
+  },
+  "recommended": [],
+  "skins": [
+    {
+      "chromas": false,
+      "id": "7000",
+      "name": "default",
+      "num": 0
+    },
+    {
+      "chromas": false,
+      "id": "7001",
+      "name": "LeBlanc maligna",
+      "num": 1
+    },
+    {
+      "chromas": true,
+      "id": "7002",
+      "name": "LeBlanc prestigiosa",
+      "num": 2
+    },
+    {
+      "chromas": false,
+      "id": "7003",
+      "name": "LeBlanc muérdago",
+      "num": 3
+    },
+    {
+      "chromas": false,
+      "id": "7004",
+      "name": "LeBlanc hija de los cuervos",
+      "num": 4
+    },
+    {
+      "chromas": true,
+      "id": "7005",
+      "name": "LeBlanc bosque ancestral",
+      "num": 5
+    },
+    {
+      "chromas": false,
+      "id": "7006",
+      "name": "LeBlanc prestigiosa (amatista)",
+      "num": 6,
+      "parentSkin": 2
+    },
+    {
+      "chromas": false,
+      "id": "7007",
+      "name": "LeBlanc prestigiosa (tanzanita)",
+      "num": 7,
+      "parentSkin": 2
+    },
+    {
+      "chromas": false,
+      "id": "7008",
+      "name": "LeBlanc prestigiosa (cuarzo rosa)",
+      "num": 8,
+      "parentSkin": 2
+    },
+    {
+      "chromas": false,
+      "id": "7009",
+      "name": "LeBlanc prestigiosa (ojo de gato)",
+      "num": 9,
+      "parentSkin": 2
+    },
+    {
+      "chromas": false,
+      "id": "7010",
+      "name": "LeBlanc prestigiosa (perla)",
+      "num": 10,
+      "parentSkin": 2
+    },
+    {
+      "chromas": false,
+      "id": "7011",
+      "name": "LeBlanc prestigiosa (turquesa)",
+      "num": 11,
+      "parentSkin": 2
+    },
+    {
+      "chromas": true,
+      "id": "7012",
+      "name": "Programa LeBlanc",
+      "num": 12
+    },
+    {
+      "chromas": false,
+      "id": "7013",
+      "name": "Programa LeBlanc (rubí)",
+      "num": 13,
+      "parentSkin": 12
+    },
+    {
+      "chromas": false,
+      "id": "7014",
+      "name": "Programa LeBlanc (zafiro)",
+      "num": 14,
+      "parentSkin": 12
+    },
+    {
+      "chromas": false,
+      "id": "7015",
+      "name": "Programa LeBlanc (cuarzo rosa)",
+      "num": 15,
+      "parentSkin": 12
+    },
+    {
+      "chromas": false,
+      "id": "7016",
+      "name": "Programa LeBlanc (obsidiana)",
+      "num": 16,
+      "parentSkin": 12
+    },
+    {
+      "chromas": false,
+      "id": "7017",
+      "name": "Programa LeBlanc (arcoíris)",
+      "num": 17,
+      "parentSkin": 12
+    },
+    {
+      "chromas": false,
+      "id": "7018",
+      "name": "Programa LeBlanc (esmeralda)",
+      "num": 18,
+      "parentSkin": 12
+    },
+    {
+      "chromas": true,
+      "id": "7019",
+      "name": "LeBlanc iG",
+      "num": 19
+    },
+    {
+      "chromas": true,
+      "id": "7020",
+      "name": "LeBlanc aquelarre",
+      "num": 20
+    },
+    {
+      "chromas": false,
+      "id": "7021",
+      "name": "LeBlanc aquelarre (amatista)",
+      "num": 21,
+      "parentSkin": 20
+    },
+    {
+      "chromas": false,
+      "id": "7022",
+      "name": "LeBlanc aquelarre (obsidiana)",
+      "num": 22,
+      "parentSkin": 20
+    },
+    {
+      "chromas": false,
+      "id": "7023",
+      "name": "LeBlanc aquelarre (aguamarina)",
+      "num": 23,
+      "parentSkin": 20
+    },
+    {
+      "chromas": false,
+      "id": "7024",
+      "name": "LeBlanc aquelarre (cuarzo rosa)",
+      "num": 24,
+      "parentSkin": 20
+    },
+    {
+      "chromas": false,
+      "id": "7025",
+      "name": "LeBlanc aquelarre (perla)",
+      "num": 25,
+      "parentSkin": 20
+    },
+    {
+      "chromas": false,
+      "id": "7026",
+      "name": "LeBlanc aquelarre (rubí)",
+      "num": 26,
+      "parentSkin": 20
+    },
+    {
+      "chromas": false,
+      "id": "7027",
+      "name": "LeBlanc aquelarre (esmeralda)",
+      "num": 27,
+      "parentSkin": 20
+    },
+    {
+      "chromas": false,
+      "id": "7028",
+      "name": "LeBlanc aquelarre (zafiro)",
+      "num": 28,
+      "parentSkin": 20
+    },
+    {
+      "chromas": true,
+      "id": "7029",
+      "name": "LeBlanc (Mundial 2020)",
+      "num": 29
+    },
+    {
+      "chromas": false,
+      "id": "7030",
+      "name": "LeBlanc del Mundial 2020 (cuarzo rosa)",
+      "num": 30,
+      "parentSkin": 29
+    },
+    {
+      "chromas": false,
+      "id": "7031",
+      "name": "LeBlanc del Mundial 2020 (rubí)",
+      "num": 31,
+      "parentSkin": 29
+    },
+    {
+      "chromas": false,
+      "id": "7032",
+      "name": "LeBlanc del Mundial 2020 (turquesa)",
+      "num": 32,
+      "parentSkin": 29
+    },
+    {
+      "chromas": false,
+      "id": "7033",
+      "name": "LeBlanc aquelarre de prestigio",
+      "num": 33
+    },
+    {
+      "chromas": false,
+      "id": "7034",
+      "name": "LeBlanc aquelarre (ritual oscuro)",
+      "num": 34,
+      "parentSkin": 20
+    },
+    {
+      "chromas": true,
+      "id": "7035",
+      "name": "LeBlanc galante",
+      "num": 35
+    },
+    {
+      "chromas": false,
+      "id": "7036",
+      "name": "LeBlanc galante (rubí)",
+      "num": 36,
+      "parentSkin": 35
+    },
+    {
+      "chromas": false,
+      "id": "7037",
+      "name": "LeBlanc galante (zafiro)",
+      "num": 37,
+      "parentSkin": 35
+    },
+    {
+      "chromas": false,
+      "id": "7038",
+      "name": "LeBlanc galante (cuarzo rosa)",
+      "num": 38,
+      "parentSkin": 35
+    },
+    {
+      "chromas": false,
+      "id": "7039",
+      "name": "LeBlanc galante (ojo de gato)",
+      "num": 39,
+      "parentSkin": 35
+    },
+    {
+      "chromas": false,
+      "id": "7040",
+      "name": "LeBlanc galante (tanzanita)",
+      "num": 40,
+      "parentSkin": 35
+    },
+    {
+      "chromas": false,
+      "id": "7041",
+      "name": "LeBlanc galante (obsidiana)",
+      "num": 41,
+      "parentSkin": 35
+    },
+    {
+      "chromas": false,
+      "id": "7042",
+      "name": "LeBlanc galante (perla)",
+      "num": 42,
+      "parentSkin": 35
+    },
+    {
+      "chromas": false,
+      "id": "7043",
+      "name": "LeBlanc galante (esmeralda)",
+      "num": 43,
+      "parentSkin": 35
+    },
+    {
+      "chromas": false,
+      "id": "7044",
+      "name": "LeBlanc galante (Club cerúleo)",
+      "num": 44,
+      "parentSkin": 35
+    },
+    {
+      "chromas": true,
+      "id": "7045",
+      "name": "LeBlanc embrujada",
+      "num": 45
+    },
+    {
+      "chromas": false,
+      "id": "7046",
+      "name": "LeBlanc embrujada (rubí)",
+      "num": 46,
+      "parentSkin": 45
+    },
+    {
+      "chromas": false,
+      "id": "7047",
+      "name": "LeBlanc embrujada (ojo de gato)",
+      "num": 47,
+      "parentSkin": 45
+    },
+    {
+      "chromas": false,
+      "id": "7048",
+      "name": "LeBlanc embrujada (esmeralda)",
+      "num": 48,
+      "parentSkin": 45
+    },
+    {
+      "chromas": false,
+      "id": "7049",
+      "name": "LeBlanc embrujada (turquesa)",
+      "num": 49,
+      "parentSkin": 45
+    },
+    {
+      "chromas": false,
+      "id": "7050",
+      "name": "LeBlanc embrujada (cuarzo rosa)",
+      "num": 50,
+      "parentSkin": 45
+    },
+    {
+      "chromas": false,
+      "id": "7051",
+      "name": "LeBlanc embrujada (zafiro)",
+      "num": 51,
+      "parentSkin": 45
+    },
+    {
+      "chromas": false,
+      "id": "7052",
+      "name": "LeBlanc embrujada (obsidiana)",
+      "num": 52,
+      "parentSkin": 45
+    },
+    {
+      "chromas": false,
+      "id": "7053",
+      "name": "LeBlanc embrujada (perla)",
+      "num": 53,
+      "parentSkin": 45
+    },
+    {
+      "chromas": false,
+      "id": "7054",
+      "name": "LeBlanc iG (triunfo décuplo)",
+      "num": 54,
+      "parentSkin": 19
+    },
+    {
+      "chromas": true,
+      "id": "7055",
+      "name": "LeBlanc leyenda alzada",
+      "num": 55
+    },
+    {
+      "chromas": false,
+      "id": "7056",
+      "name": "LeBlanc leyenda alzada (ascenso mítico)",
+      "num": 56,
+      "parentSkin": 55
+    },
+    {
+      "chromas": false,
+      "id": "7057",
+      "name": "LeBlanc leyenda alzada (ejemplar)",
+      "num": 57,
+      "parentSkin": 55
+    },
+    {
+      "chromas": false,
+      "id": "7058",
+      "name": "LeBlanc iG (élite)",
+      "num": 58,
+      "parentSkin": 19
+    },
+    {
+      "chromas": true,
+      "id": "7059",
+      "name": "LeBlanc costas impías de prestigio",
+      "num": 59
+    },
+    {
+      "chromas": false,
+      "id": "7060",
+      "name": "LeBlanc costas impías de prestigio (vívido)",
+      "num": 60,
+      "parentSkin": 59
+    },
+    {
+      "chromas": false,
+      "id": "7061",
+      "name": "LeBlanc bosque ancestral (ejemplar)",
+      "num": 61,
+      "parentSkin": 5
+    }
+  ],
+  "spells": [
+    {
+      "cooldown": [
+        6,
+        6,
+        6,
+        6,
+        6
+      ],
+      "cooldownBurn": "6",
+      "cost": [
+        50,
+        50,
+        50,
+        50,
+        50
+      ],
+      "costBurn": "50",
+      "costType": " {{ abilityresourcename }}",
+      "datavalues": {},
+      "description": "LeBlanc proyecta un sello que inflige daño y marca al objetivo durante 3,5 s. El sello explota al dañar al objetivo marcado con una habilidad e inflige daño adicional. Si el enemigo muere en algún momento, LeBlanc recupera el coste de maná y parte del enfriamiento restante de este hechizo.",
+      "effect": [
+        null,
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ]
+      ],
+      "effectBurn": [
+        null,
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0"
+      ],
+      "id": "LeblancQ",
+      "image": {
+        "full": "LeblancQ.png",
+        "group": "spell",
+        "h": 48,
+        "sprite": "spell7.png",
+        "w": 48,
+        "x": 0,
+        "y": 144
+      },
+      "leveltip": {
+        "effect": [
+          "{{ basedamage }} -> {{ basedamageNL }}",
+          "{{ basemarkdamage }} -> {{ basemarkdamageNL }}"
+        ],
+        "label": [
+          "Daño del sello",
+          "Daño de la explosión"
+        ]
+      },
+      "maxammo": "-1",
+      "maxrank": 5,
+      "name": "Sello de malicia",
+      "range": [
+        700,
+        700,
+        700,
+        700,
+        700
+      ],
+      "rangeBurn": "700",
+      "resource": "{{ cost }} {{ abilityresourcename }}",
+      "tooltip": "LeBlanc proyecta un sello sobre un enemigo, lo que inflige <magicDamage>{{ damage }} de daño mágico</magicDamage> y lo marca durante {{ markduration }} s.<br /><br />El sello explota al dañar al enemigo marcado con una habilidad e inflige <magicDamage>{{ markdamage }} de daño mágico</magicDamage>.<br /><br />Si el enemigo muere en algún momento, LeBlanc recupera un {{ manarefund*100 }}% del coste de maná y un {{ cooldownrefund*100 }}% del enfriamiento restante del hechizo.<br /><br /><rules>El sello inicial inflige {{ bonusminiondamage }} de daño adicional a los súbditos.</rules>{{ spellmodifierdescriptionappend }}",
+      "vars": []
+    },
+    {
+      "cooldown": [
+        15,
+        13.75,
+        12.5,
+        11.25,
+        10
+      ],
+      "cooldownBurn": "15/13.75/12.5/11.25/10",
+      "cost": [
+        60,
+        70,
+        80,
+        90,
+        100
+      ],
+      "costBurn": "60/70/80/90/100",
+      "costType": " {{ abilityresourcename }}",
+      "datavalues": {},
+      "description": "LeBlanc se desliza hacia una ubicación e inflige daño a los enemigos cercanos a su destino. Durante los siguientes 4 s, LeBlanc puede activar Distorsión de nuevo para volver al lugar de origen.",
+      "effect": [
+        null,
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          2,
+          2,
+          2,
+          2,
+          2
+        ],
+        [
+          4,
+          4,
+          4,
+          4,
+          4
+        ],
+        [
+          600,
+          600,
+          600,
+          600,
+          600
+        ],
+        [
+          0.2,
+          0.2,
+          0.2,
+          0.2,
+          0.2
+        ],
+        [
+          0.2,
+          0.2,
+          0.2,
+          0.2,
+          0.2
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ]
+      ],
+      "effectBurn": [
+        null,
+        "0",
+        "2",
+        "4",
+        "600",
+        "0.2",
+        "0.2",
+        "0",
+        "0",
+        "0",
+        "0"
+      ],
+      "id": "LeblancW",
+      "image": {
+        "full": "LeblancW.png",
+        "group": "spell",
+        "h": 48,
+        "sprite": "spell7.png",
+        "w": 48,
+        "x": 48,
+        "y": 144
+      },
+      "leveltip": {
+        "effect": [
+          "{{ basedamage }} -> {{ basedamageNL }}",
+          "{{ cooldown }} -> {{ cooldownNL }}",
+          "{{ cost }} -> {{ costNL }}"
+        ],
+        "label": [
+          "Daño",
+          "Enfriamiento",
+          "Coste de @AbilityResourceName@"
+        ]
+      },
+      "maxammo": "-1",
+      "maxrank": 5,
+      "name": "Distorsión",
+      "range": [
+        600,
+        600,
+        600,
+        600,
+        600
+      ],
+      "rangeBurn": "600",
+      "resource": "{{ cost }} {{ abilityresourcename }}",
+      "tooltip": "LeBlanc se desliza e inflige <magicDamage>{{ totaldamage }} de daño mágico</magicDamage> a los enemigos cercanos. Durante {{ snapbacktimeallowed }} s después de deslizarse, LeBlanc puede <recast>reactivar</recast> la habilidad.<br /><br /><recast>Reactivación:</recast> LeBlanc vuelve a la ubicación original.{{ spellmodifierdescriptionappend }}",
+      "vars": []
+    },
+    {
+      "cooldown": [
+        14,
+        13.25,
+        12.5,
+        11.75,
+        11
+      ],
+      "cooldownBurn": "14/13.25/12.5/11.75/11",
+      "cost": [
+        50,
+        50,
+        50,
+        50,
+        50
+      ],
+      "costBurn": "50",
+      "costType": " {{ abilityresourcename }}",
+      "datavalues": {},
+      "description": "LeBlanc lanza una cadena que ata al primer enemigo alcanzado. Si el objetivo permanece encadenado durante 1,5 s, LeBlanc lo enraíza y le inflige daño adicional.",
+      "effect": [
+        null,
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          1.5,
+          1.5,
+          1.5,
+          1.5,
+          1.5
+        ],
+        [
+          1.5,
+          1.5,
+          1.5,
+          1.5,
+          1.5
+        ],
+        [
+          865,
+          865,
+          865,
+          865,
+          865
+        ],
+        [
+          14,
+          13.25,
+          12.5,
+          11.75,
+          11
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ]
+      ],
+      "effectBurn": [
+        null,
+        "0",
+        "0",
+        "1.5",
+        "1.5",
+        "865",
+        "14/13.25/12.5/11.75/11",
+        "0",
+        "0",
+        "0",
+        "0"
+      ],
+      "id": "LeblancE",
+      "image": {
+        "full": "LeblancE.png",
+        "group": "spell",
+        "h": 48,
+        "sprite": "spell7.png",
+        "w": 48,
+        "x": 96,
+        "y": 144
+      },
+      "leveltip": {
+        "effect": [
+          "{{ baseinitialdamage }} -> {{ baseinitialdamageNL }}",
+          "{{ basedelayeddamage }} -> {{ basedelayeddamageNL }}",
+          "{{ cooldown }} -> {{ cooldownNL }}"
+        ],
+        "label": [
+          "Daño de la cadena",
+          "Daño del enraizamiento",
+          "Enfriamiento"
+        ]
+      },
+      "maxammo": "-1",
+      "maxrank": 5,
+      "name": "Cadenas etéreas",
+      "range": [
+        925,
+        925,
+        925,
+        925,
+        925
+      ],
+      "rangeBurn": "925",
+      "resource": "{{ cost }} {{ abilityresourcename }}",
+      "tooltip": "LeBlanc lanza una cadena que ata al primer enemigo alcanzado, lo que inflige <magicDamage>{{ initialdamage }} de daño mágico</magicDamage> y otorga <keywordStealth>visión verdadera</keywordStealth>.<br /><br />Si el enemigo permanece encadenado durante {{ tetherduration }} s, LeBlanc lo <status>enraíza</status> durante {{ rootduration }} s y le inflige <magicDamage>{{ delayeddamage }} de daño mágico</magicDamage> adicional.{{ spellmodifierdescriptionappend }}",
+      "vars": []
+    },
+    {
+      "cooldown": [
+        45,
+        35,
+        25
+      ],
+      "cooldownBurn": "45/35/25",
+      "cost": [
+        0,
+        0,
+        0
+      ],
+      "costBurn": "0",
+      "costType": "Sin coste",
+      "datavalues": {},
+      "description": "LeBlanc lanza una imitación de uno de sus hechizos básicos.",
+      "effect": [
+        null,
+        [
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0
+        ]
+      ],
+      "effectBurn": [
+        null,
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0"
+      ],
+      "id": "LeblancR",
+      "image": {
+        "full": "LeblancR.png",
+        "group": "spell",
+        "h": 48,
+        "sprite": "spell7.png",
+        "w": 48,
+        "x": 144,
+        "y": 144
+      },
+      "leveltip": {
+        "effect": [
+          "{{ rq1base }} -> {{ rq1baseNL }}",
+          "{{ rq2base }} -> {{ rq2baseNL }}",
+          "{{ rwbase }} -> {{ rwbaseNL }}",
+          "{{ cooldown }} -> {{ cooldownNL }}"
+        ],
+        "label": [
+          "Daño de la imitación de Sello de malicia y Cadenas etéreas",
+          "Daño de la imitación de la marca y el enraizamiento",
+          "Daño de la imitación de Distorsión",
+          "Enfriamiento"
+        ]
+      },
+      "maxammo": "2",
+      "maxrank": 3,
+      "name": "Mímica",
+      "range": [
+        25000,
+        25000,
+        25000
+      ],
+      "rangeBurn": "25000",
+      "resource": "Sin coste",
+      "tooltip": "LeBlanc replica su última habilidad y la vuelve a utilizar. La habilidad replicada inflige daño adicional.<br /><br />La <spellName>réplica de Sello de malicia</spellName> inflige <magicDamage>{{ rq1damage }} de daño mágico</magicDamage> al aplicarla y <magicDamage>{{ rq2damage }} de daño mágico</magicDamage> al consumirla.<br />La <spellName>réplica de Distorsión</spellName> inflige <magicDamage>{{ rwdamage }} de daño mágico</magicDamage>.<br />La <spellName>réplica de Cadenas etéreas</spellName> inflige <magicDamage>{{ re1damage }} de daño mágico</magicDamage> al atar al enemigo y <magicDamage>{{ re2damage }} de daño mágico</magicDamage> al <status>enraizarlo</status>.{{ spellmodifierdescriptionappend }}",
+      "vars": []
+    }
+  ],
+  "stats": {
+    "armor": 22,
+    "armorperlevel": 4.2,
+    "attackdamage": 55,
+    "attackdamageperlevel": 0,
+    "attackrange": 525,
+    "attackspeed": 0.658,
+    "attackspeedperlevel": 1.5,
+    "crit": 0,
+    "critperlevel": 0,
+    "hp": 598,
+    "hpperlevel": 108,
+    "hpregen": 7.5,
+    "hpregenperlevel": 0.55,
+    "movespeed": 340,
+    "mp": 400,
+    "mpperlevel": 25,
+    "mpregen": 8,
+    "mpregenperlevel": 0.8,
+    "spellblock": 30,
+    "spellblockperlevel": 1.3
+  },
+  "tags": [
+    "Assassin",
+    "Mage"
+  ],
+  "title": "La Embaucadora"
+}

@@ -1,0 +1,1011 @@
+{
+  "allytips": [
+    "Se considera que los enemigos están aislados cuando no tienen a ningún aliado cerca. El daño de Saborea su miedo aumenta en gran medida contra este tipo de objetivos.",
+    "Amenaza invisible se activa cuando Kha'Zix se vuelve invisible ante los ojos del equipo rival. Se reactiva usando la maleza o Asalto del Vacío. No olvides aplicar Amenaza invisible al realizar un autoataque a los campeones enemigos.",
+    "Kha'Zix tiene una gran libertad de elección a la hora de escoger dónde y cuándo luchar. Escoge bien tus combates si quieres ganar."
+  ],
+  "blurb": "El Vacío crece y el Vacío se adapta; verdades que son más evidentes en Kha'Zix que en ningún otro de sus innumerables engendros. La evolución impulsa el núcleo de este horror mutante, nacido para sobrevivir y matar a los fuertes. Cuando se esfuerza por...",
+  "enemytips": [
+    "Saborea su miedo inflige daño adicional a objetivos aislados. Obtén ventaja luchando cerca de súbditos aliados, campeones o torretas.",
+    "Salto y Asalto del Vacío tienen enfriamientos largos y, sin ellos, Kha'Zix es extremadamente vulnerable."
+  ],
+  "id": "Khazix",
+  "image": {
+    "full": "Khazix.png",
+    "group": "champion",
+    "h": 48,
+    "sprite": "champion2.png",
+    "w": 48,
+    "x": 192,
+    "y": 0
+  },
+  "info": {
+    "attack": 9,
+    "defense": 4,
+    "difficulty": 6,
+    "magic": 3
+  },
+  "key": "121",
+  "lore": "El Vacío crece y el Vacío se adapta; verdades que son más evidentes en Kha'Zix que en ningún otro de sus innumerables engendros. La evolución impulsa el núcleo de este horror mutante, nacido para sobrevivir y matar a los fuertes. Cuando se esfuerza por hacerlo, crea formas nuevas y más efectivas de contrarrestar y matar a su presa. Una bestia descerebrada en sus comienzos, la inteligencia de Kha'Zix se ha desarrollado tanto como su forma. Ahora, la criatura planea sus cazas e incluso se aprovecha del terror visceral que engendra en sus víctimas.",
+  "name": "Kha'Zix",
+  "partype": "Maná",
+  "passive": {
+    "description": "Los enemigos cercanos que estén <font color='#FFF673'>aislados</font> de sus aliados quedan marcados. Las habilidades de Kha'Zix interactúan con los objetivos <font color='#FFF673'>aislados</font>.<br><br>Cuando Kha'Zix se vuelve invisible para el equipo enemigo, obtiene Amenaza invisible, que provoca que su siguiente ataque básico contra un campeón enemigo inflija daño mágico adicional y ralentice al enemigo durante unos segundos.",
+    "image": {
+      "full": "Khazix_P.png",
+      "group": "passive",
+      "h": 48,
+      "sprite": "passive2.png",
+      "w": 48,
+      "x": 192,
+      "y": 0
+    },
+    "name": "Amenaza invisible"
+  },
+  "recommended": [],
+  "skins": [
+    {
+      "chromas": false,
+      "id": "121000",
+      "name": "default",
+      "num": 0
+    },
+    {
+      "chromas": true,
+      "id": "121001",
+      "name": "Kha'Zix mecha",
+      "num": 1
+    },
+    {
+      "chromas": false,
+      "id": "121002",
+      "name": "Kha'Zix guardián de las arenas",
+      "num": 2
+    },
+    {
+      "chromas": false,
+      "id": "121003",
+      "name": "Kha'Zix pétalo de la muerte",
+      "num": 3
+    },
+    {
+      "chromas": false,
+      "id": "121004",
+      "name": "Kha'Zix estrella oscura",
+      "num": 4
+    },
+    {
+      "chromas": false,
+      "id": "121005",
+      "name": "Kha'Zix mecha (perla)",
+      "num": 5,
+      "parentSkin": 1
+    },
+    {
+      "chromas": false,
+      "id": "121006",
+      "name": "Kha'Zix mecha (ojo de gato)",
+      "num": 6,
+      "parentSkin": 1
+    },
+    {
+      "chromas": false,
+      "id": "121007",
+      "name": "Kha'Zix mecha (zafiro)",
+      "num": 7,
+      "parentSkin": 1
+    },
+    {
+      "chromas": false,
+      "id": "121008",
+      "name": "Kha'Zix mecha (esmeralda)",
+      "num": 8,
+      "parentSkin": 1
+    },
+    {
+      "chromas": false,
+      "id": "121009",
+      "name": "Kha'Zix mecha (tanzanita)",
+      "num": 9,
+      "parentSkin": 1
+    },
+    {
+      "chromas": false,
+      "id": "121010",
+      "name": "Kha'Zix mecha (cuarzo rosa)",
+      "num": 10,
+      "parentSkin": 1
+    },
+    {
+      "chromas": true,
+      "id": "121011",
+      "name": "Kha'Zix del Mundial 2018",
+      "num": 11
+    },
+    {
+      "chromas": false,
+      "id": "121012",
+      "name": "Kha'Zix del Mundial 2018 (dorado)",
+      "num": 12,
+      "parentSkin": 11
+    },
+    {
+      "chromas": false,
+      "id": "121013",
+      "name": "Kha'Zix del Mundial 2018 (Flash Wolves)",
+      "num": 13,
+      "parentSkin": 11
+    },
+    {
+      "chromas": false,
+      "id": "121014",
+      "name": "Kha'Zix del Mundial 2018 (KT Rolster)",
+      "num": 14,
+      "parentSkin": 11
+    },
+    {
+      "chromas": false,
+      "id": "121015",
+      "name": "Kha'Zix del Mundial 2018 (Fnatic)",
+      "num": 15,
+      "parentSkin": 11
+    },
+    {
+      "chromas": false,
+      "id": "121017",
+      "name": "Kha'Zix del Mundial 2018 (Kaos Latin Gamers)",
+      "num": 17,
+      "parentSkin": 11
+    },
+    {
+      "chromas": false,
+      "id": "121018",
+      "name": "Kha'Zix del Mundial 2018 (G2 Esports)",
+      "num": 18,
+      "parentSkin": 11
+    },
+    {
+      "chromas": false,
+      "id": "121022",
+      "name": "Kha'Zix del Mundial 2018 (Team Vitality)",
+      "num": 22,
+      "parentSkin": 11
+    },
+    {
+      "chromas": false,
+      "id": "121023",
+      "name": "Kha'Zix del Mundial 2018 (Ascension Gaming)",
+      "num": 23,
+      "parentSkin": 11
+    },
+    {
+      "chromas": false,
+      "id": "121024",
+      "name": "Kha'Zix del Mundial 2018 (Afreeca Freecs)",
+      "num": 24,
+      "parentSkin": 11
+    },
+    {
+      "chromas": false,
+      "id": "121025",
+      "name": "Kha'Zix del Mundial 2018 (Gen.G)",
+      "num": 25,
+      "parentSkin": 11
+    },
+    {
+      "chromas": false,
+      "id": "121028",
+      "name": "Kha'Zix del Mundial 2018 (KaBuM! e-Sports)",
+      "num": 28,
+      "parentSkin": 11
+    },
+    {
+      "chromas": false,
+      "id": "121030",
+      "name": "Kha'Zix del Mundial 2018 (Gambit Esports)",
+      "num": 30,
+      "parentSkin": 11
+    },
+    {
+      "chromas": false,
+      "id": "121031",
+      "name": "Kha'Zix del Mundial 2018 (DetonatioN FocusMe)",
+      "num": 31,
+      "parentSkin": 11
+    },
+    {
+      "chromas": false,
+      "id": "121035",
+      "name": "Kha'Zix del Mundial 2018 (Infinity eSports)",
+      "num": 35,
+      "parentSkin": 11
+    },
+    {
+      "chromas": false,
+      "id": "121037",
+      "name": "Kha'Zix del Mundial 2018 (G-Rex)",
+      "num": 37,
+      "parentSkin": 11
+    },
+    {
+      "chromas": false,
+      "id": "121041",
+      "name": "Kha'Zix del Mundial 2018 (MAD Team)",
+      "num": 41,
+      "parentSkin": 11
+    },
+    {
+      "chromas": false,
+      "id": "121042",
+      "name": "Kha'Zix del Mundial 2018 (Edward Gaming)",
+      "num": 42,
+      "parentSkin": 11
+    },
+    {
+      "chromas": false,
+      "id": "121043",
+      "name": "Kha'Zix del Mundial 2018 (Invictus Gaming)",
+      "num": 43,
+      "parentSkin": 11
+    },
+    {
+      "chromas": false,
+      "id": "121046",
+      "name": "Kha'Zix del Mundial 2018 (Royal Never Give Up)",
+      "num": 46,
+      "parentSkin": 11
+    },
+    {
+      "chromas": false,
+      "id": "121047",
+      "name": "Kha'Zix del Mundial 2018 (100 Thieves)",
+      "num": 47,
+      "parentSkin": 11
+    },
+    {
+      "chromas": false,
+      "id": "121048",
+      "name": "Kha'Zix del Mundial 2018 (Cloud9)",
+      "num": 48,
+      "parentSkin": 11
+    },
+    {
+      "chromas": false,
+      "id": "121051",
+      "name": "Kha'Zix del Mundial 2018 (Team Liquid)",
+      "num": 51,
+      "parentSkin": 11
+    },
+    {
+      "chromas": false,
+      "id": "121053",
+      "name": "Kha'Zix del Mundial 2018 (Dire Wolves)",
+      "num": 53,
+      "parentSkin": 11
+    },
+    {
+      "chromas": false,
+      "id": "121054",
+      "name": "Kha'Zix del Mundial 2018 (BAHÇEŞEHİR SUPERMASSIVE eSports)",
+      "num": 54,
+      "parentSkin": 11
+    },
+    {
+      "chromas": false,
+      "id": "121059",
+      "name": "Kha'Zix del Mundial 2018 (Phong Vu Buffalo)",
+      "num": 59,
+      "parentSkin": 11
+    },
+    {
+      "chromas": false,
+      "id": "121060",
+      "name": "Kha'Zix de Odisea",
+      "num": 60
+    },
+    {
+      "chromas": false,
+      "id": "121061",
+      "name": "Kha'Zix de Odisea (rubí)",
+      "num": 61,
+      "parentSkin": 60
+    },
+    {
+      "chromas": false,
+      "id": "121062",
+      "name": "Kha'Zix de Odisea (citrino)",
+      "num": 62,
+      "parentSkin": 60
+    },
+    {
+      "chromas": false,
+      "id": "121063",
+      "name": "Kha'Zix de Odisea (mercenario)",
+      "num": 63,
+      "parentSkin": 60
+    },
+    {
+      "chromas": false,
+      "id": "121064",
+      "name": "Kha'Zix de Odisea (zafiro)",
+      "num": 64,
+      "parentSkin": 60
+    },
+    {
+      "chromas": false,
+      "id": "121065",
+      "name": "Kha'Zix de Odisea (cuarzo rosa)",
+      "num": 65,
+      "parentSkin": 60
+    },
+    {
+      "chromas": false,
+      "id": "121066",
+      "name": "Kha'Zix de Odisea (esmeralda)",
+      "num": 66,
+      "parentSkin": 60
+    },
+    {
+      "chromas": false,
+      "id": "121067",
+      "name": "Kha'Zix de Odisea (perla)",
+      "num": 67,
+      "parentSkin": 60
+    },
+    {
+      "chromas": false,
+      "id": "121068",
+      "name": "Kha'Zix de Odisea (obsidiana)",
+      "num": 68,
+      "parentSkin": 60
+    },
+    {
+      "chromas": false,
+      "id": "121069",
+      "name": "Kha'Zix guardián lunar",
+      "num": 69
+    },
+    {
+      "chromas": false,
+      "id": "121070",
+      "name": "Kha'Zix guardián lunar (rubí)",
+      "num": 70,
+      "parentSkin": 69
+    },
+    {
+      "chromas": false,
+      "id": "121071",
+      "name": "Kha'Zix guardián lunar (esmeralda)",
+      "num": 71,
+      "parentSkin": 69
+    },
+    {
+      "chromas": false,
+      "id": "121072",
+      "name": "Kha'Zix guardián lunar (cuarzo rosa)",
+      "num": 72,
+      "parentSkin": 69
+    },
+    {
+      "chromas": false,
+      "id": "121073",
+      "name": "Kha'Zix guardián lunar (turquesa)",
+      "num": 73,
+      "parentSkin": 69
+    },
+    {
+      "chromas": false,
+      "id": "121074",
+      "name": "Kha'Zix guardián lunar (amatista)",
+      "num": 74,
+      "parentSkin": 69
+    },
+    {
+      "chromas": false,
+      "id": "121075",
+      "name": "Kha'Zix guardián lunar (citrino)",
+      "num": 75,
+      "parentSkin": 69
+    },
+    {
+      "chromas": false,
+      "id": "121076",
+      "name": "Kha'Zix guardián lunar (perla)",
+      "num": 76,
+      "parentSkin": 69
+    },
+    {
+      "chromas": false,
+      "id": "121077",
+      "name": "Kha'Zix guardián lunar (obsidiana)",
+      "num": 77,
+      "parentSkin": 69
+    },
+    {
+      "chromas": false,
+      "id": "121078",
+      "name": "Kha'Zix guardián lunar (resplandeciente)",
+      "num": 78,
+      "parentSkin": 69
+    },
+    {
+      "chromas": false,
+      "id": "121079",
+      "name": "Kha'Zix crystalis indomitus",
+      "num": 79
+    },
+    {
+      "chromas": false,
+      "id": "121080",
+      "name": "Kha'Zix crystalis indomitus (fractura)",
+      "num": 80,
+      "parentSkin": 79
+    }
+  ],
+  "spells": [
+    {
+      "cooldown": [
+        4,
+        4,
+        4,
+        4,
+        4
+      ],
+      "cooldownBurn": "4",
+      "cost": [
+        20,
+        20,
+        20,
+        20,
+        20
+      ],
+      "costBurn": "20",
+      "costType": " {{ abilityresourcename }}",
+      "datavalues": {},
+      "description": "Inflige daño físico al objetivo. El daño es mayor en objetivos <font color='#FFF673'>aislados</font>. Si decide <font color='#00DD33'>evolucionar Garras desgarradoras</font>, recupera parte del enfriamiento contra objetivos <font color='#FFF673'>aislados</font>. Kha'Zix también obtiene más alcance, tanto en Saborea su miedo como en sus ataques básicos.",
+      "effect": [
+        null,
+        [
+          80,
+          105,
+          130,
+          155,
+          180
+        ],
+        [
+          110,
+          110,
+          110,
+          110,
+          110
+        ],
+        [
+          50,
+          50,
+          50,
+          50,
+          50
+        ],
+        [
+          45,
+          45,
+          45,
+          45,
+          45
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ]
+      ],
+      "effectBurn": [
+        null,
+        "80/105/130/155/180",
+        "110",
+        "50",
+        "45",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0"
+      ],
+      "id": "KhazixQ",
+      "image": {
+        "full": "KhazixQ.png",
+        "group": "spell",
+        "h": 48,
+        "sprite": "spell7.png",
+        "w": 48,
+        "x": 0,
+        "y": 48
+      },
+      "leveltip": {
+        "effect": [
+          "{{ e1 }} -> {{ e1NL }}"
+        ],
+        "label": [
+          "Daño"
+        ]
+      },
+      "maxammo": "-1",
+      "maxrank": 5,
+      "name": "Saborea su miedo",
+      "range": [
+        325,
+        325,
+        325,
+        325,
+        325
+      ],
+      "rangeBurn": "325",
+      "resource": "{{ cost }} {{ abilityresourcename }}",
+      "tooltip": "Kha'Zix golpea a un enemigo cercano e inflige <physicalDamage>{{ spell.khazixq:basedamage }} de daño físico</physicalDamage>. Inflige <physicalDamage>{{ spell.khazixq:isodamage }} de daño</physicalDamage> a los enemigos <keywordMajor>aislados</keywordMajor> de sus aliados. {{ spellmodifierdescriptionappend }}",
+      "vars": []
+    },
+    {
+      "cooldown": [
+        9,
+        9,
+        9,
+        9,
+        9
+      ],
+      "cooldownBurn": "9",
+      "cost": [
+        55,
+        60,
+        65,
+        70,
+        75
+      ],
+      "costBurn": "55/60/65/70/75",
+      "costType": " {{ abilityresourcename }}",
+      "datavalues": {},
+      "description": "Kha'Zix lanza pinchos explosivos que infligen daño físico a los enemigos golpeados. Kha'Zix se cura si también está dentro del radio de la explosión. Si decide <font color='#00DD33'>evolucionar Pinchos</font>, entonces Pincho del Vacío lanza tres pinchos en un cono, ralentiza a los enemigos golpeados y revela a los campeones enemigos golpeados durante 2 s. Los objetivos <font color='#FFF673'>aislados</font> sufren ralentización adicional.",
+      "effect": [
+        null,
+        [
+          75,
+          105,
+          135,
+          165,
+          195
+        ],
+        [
+          55,
+          75,
+          95,
+          115,
+          135
+        ],
+        [
+          40,
+          40,
+          40,
+          40,
+          40
+        ],
+        [
+          2.25,
+          2.25,
+          2.25,
+          2.25,
+          2.25
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          2.25,
+          2.25,
+          2.25,
+          2.25,
+          2.25
+        ],
+        [
+          60,
+          60,
+          60,
+          60,
+          60
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ]
+      ],
+      "effectBurn": [
+        null,
+        "75/105/135/165/195",
+        "55/75/95/115/135",
+        "40",
+        "2.25",
+        "0",
+        "2.25",
+        "60",
+        "0",
+        "0",
+        "0"
+      ],
+      "id": "KhazixW",
+      "image": {
+        "full": "KhazixW.png",
+        "group": "spell",
+        "h": 48,
+        "sprite": "spell7.png",
+        "w": 48,
+        "x": 48,
+        "y": 48
+      },
+      "leveltip": {
+        "effect": [
+          "{{ e1 }} -> {{ e1NL }}",
+          "{{ baseheal }} -> {{ basehealNL }}",
+          "{{ cost }} -> {{ costNL }}"
+        ],
+        "label": [
+          "Daño",
+          "Curación",
+          "Coste de @AbilityResourceName@"
+        ]
+      },
+      "maxammo": "-1",
+      "maxrank": 5,
+      "name": "Pincho del Vacío",
+      "range": [
+        1000,
+        1000,
+        1000,
+        1000,
+        1000
+      ],
+      "rangeBurn": "1000",
+      "resource": "{{ cost }} {{ abilityresourcename }}",
+      "tooltip": "Kha'Zix lanza un pincho que inflige <physicalDamage>{{ basedamage }} de daño físico</physicalDamage> al primer enemigo alcanzado en una zona pequeña. Si Kha'Zix está dentro del área, recupera <healing>{{ healamount }} de vida</healing>.{{ spellmodifierdescriptionappend }}",
+      "vars": []
+    },
+    {
+      "cooldown": [
+        20,
+        18,
+        16,
+        14,
+        12
+      ],
+      "cooldownBurn": "20/18/16/14/12",
+      "cost": [
+        50,
+        50,
+        50,
+        50,
+        50
+      ],
+      "costBurn": "50",
+      "costType": " {{ abilityresourcename }}",
+      "datavalues": {},
+      "description": "Kha'Zix salta hacia una zona e inflige daño físico al aterrizar. Si decide <font color='#00DD33'>evolucionar Alas</font>, el alcance de Salto aumenta. Además, los asesinatos de campeones y asistencias reinician el enfriamiento de Salto.",
+      "effect": [
+        null,
+        [
+          65,
+          100,
+          135,
+          170,
+          205
+        ],
+        [
+          30,
+          35,
+          40,
+          45,
+          50
+        ],
+        [
+          10,
+          10,
+          10,
+          10,
+          10
+        ],
+        [
+          2.5,
+          2.5,
+          2.5,
+          2.5,
+          2.5
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ]
+      ],
+      "effectBurn": [
+        null,
+        "65/100/135/170/205",
+        "30/35/40/45/50",
+        "10",
+        "2.5",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0"
+      ],
+      "id": "KhazixE",
+      "image": {
+        "full": "KhazixE.png",
+        "group": "spell",
+        "h": 48,
+        "sprite": "spell7.png",
+        "w": 48,
+        "x": 96,
+        "y": 48
+      },
+      "leveltip": {
+        "effect": [
+          "{{ basedamage }} -> {{ basedamageNL }}",
+          "{{ cooldown }} -> {{ cooldownNL }}"
+        ],
+        "label": [
+          "Daño",
+          "Enfriamiento"
+        ]
+      },
+      "maxammo": "-1",
+      "maxrank": 5,
+      "name": "Salto",
+      "range": [
+        700,
+        700,
+        700,
+        700,
+        700
+      ],
+      "rangeBurn": "700",
+      "resource": "{{ cost }} {{ abilityresourcename }}",
+      "tooltip": "Kha'Zix salta e inflige <physicalDamage>{{ totaldamage }} de daño físico</physicalDamage> al aterrizar.{{ spellmodifierdescriptionappend }}",
+      "vars": []
+    },
+    {
+      "cooldown": [
+        100,
+        85,
+        70
+      ],
+      "cooldownBurn": "100/85/70",
+      "cost": [
+        100,
+        100,
+        100
+      ],
+      "costBurn": "100",
+      "costType": " {{ abilityresourcename }}",
+      "datavalues": {},
+      "description": "Cada rango permite que Kha'Zix evolucione una de sus habilidades, lo que les proporciona un efecto adicional único. Al activarse, Kha'Zix se vuelve <font color='#91d7ee'>invisible</font>, lo que activa Amenaza invisible y aumenta su velocidad de movimiento. Si decide <font color='#00DD33'>evolucionar Ocultamiento adaptable</font>, Asalto del Vacío aumenta la duración de su <font color='#91d7ee'>invisibilidad</font> y obtiene un uso adicional.",
+      "effect": [
+        null,
+        [
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0
+        ]
+      ],
+      "effectBurn": [
+        null,
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0"
+      ],
+      "id": "KhazixR",
+      "image": {
+        "full": "KhazixR.png",
+        "group": "spell",
+        "h": 48,
+        "sprite": "spell7.png",
+        "w": 48,
+        "x": 144,
+        "y": 48
+      },
+      "leveltip": {
+        "effect": [
+          "{{ evolutionsavailable }} -> {{ evolutionsavailableNL }}",
+          "{{ cooldown }} -> {{ cooldownNL }}"
+        ],
+        "label": [
+          "Evoluciones disponibles",
+          "Enfriamiento"
+        ]
+      },
+      "maxammo": "-1",
+      "maxrank": 3,
+      "name": "Asalto del Vacío",
+      "range": [
+        25000,
+        25000,
+        25000
+      ],
+      "rangeBurn": "25000",
+      "resource": "{{ cost }} {{ abilityresourcename }}",
+      "tooltip": "<spellActive>Activa:</spellActive> Kha'Zix se vuelve <keywordStealth>invisible</keywordStealth> durante {{ stealthduration }} s y obtiene un <speed>{{ bonusmovementspeedpercent*100 }}% de velocidad de movimiento</speed>. Kha'Zix puede <recast>volver a lanzar</recast> esta habilidad una vez en {{ recastwindow }} s.<br /><br /><spellPassive>Pasiva:</spellPassive> Subir de nivel esta habilidad permite que Kha'Zix <evolve>evolucione</evolve> una de sus habilidades, lo que le otorga efectos adicionales.<li><spellName>Saborea su miedo:</spellName> Obtiene alcance de habilidad y de ataque y se reduce el enfriamiento un {{ spell.khazixq:effect4amount }}% contra objetivos <keywordMajor>aislados</keywordMajor>.<li><spellName>Pincho del Vacío:</spellName> Lanza 3 pinchos y <status>ralentiza</status> un {{ spell.khazixw:effect3amount }}%, que aumenta contra objetivos <keywordMajor>aislados</keywordMajor>.<li><spellName>Salto:</spellName> Aumenta el alcance y se reinicia el enfriamiento con asesinatos o asistencias contra campeones.<li><spellName>Asalto del Vacío:</spellName> La <keywordStealth>invisibilidad</keywordStealth> dura {{ evolvedstealthduration }} s, y puede <recast>volver a lanzar</recast> la habilidad una segunda vez.{{ spellmodifierdescriptionappend }}",
+      "vars": []
+    }
+  ],
+  "stats": {
+    "armor": 32,
+    "armorperlevel": 4.2,
+    "attackdamage": 60,
+    "attackdamageperlevel": 0,
+    "attackrange": 125,
+    "attackspeed": 0.668,
+    "attackspeedperlevel": 2.7,
+    "crit": 0,
+    "critperlevel": 0,
+    "hp": 643,
+    "hpperlevel": 99,
+    "hpregen": 7.5,
+    "hpregenperlevel": 0.75,
+    "movespeed": 345,
+    "mp": 327,
+    "mpperlevel": 40,
+    "mpregen": 7.59,
+    "mpregenperlevel": 0.5,
+    "spellblock": 32,
+    "spellblockperlevel": 2.05
+  },
+  "tags": [
+    "Assassin"
+  ],
+  "title": "El Saqueador del Vacío"
+}

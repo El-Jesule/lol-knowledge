@@ -2,7 +2,7 @@
 
 Base de conocimiento verificable de League of Legends: datos oficiales de Riot (Data Dragon), análisis con fuente declarada y una CLI en Python que ingesta, valida y calcula de forma reproducible.
 
-Estado actual: **fase 0**. Existe el esqueleto del proyecto, las reglas y la CLI mínima. La ingesta de datos, el validador y el análisis de campeones llegan en las fases siguientes.
+Estado actual: **fase 1**. Existe la ingesta del snapshot oficial de Data Dragon; el validador de integridad y el análisis de campeones llegan en las fases siguientes.
 
 ## Requisitos
 
@@ -44,13 +44,24 @@ La suite incluye pruebas de integración que ejecutan `python -m lol_knowledge` 
 | Comando | Estado |
 |---|---|
 | `python -m lol_knowledge version` | Disponible |
-| `python -m lol_knowledge update` | Fase 1 |
+| `python -m lol_knowledge update` | Disponible |
 | `python -m lol_knowledge validate` | Fase 2 |
 | `python -m lol_knowledge damage` | Fase 4 |
 
 ## Actualización de datos
 
-Bajo demanda, sin tareas programadas. El procedimiento se documentará en `lol-knowledge/maintenance/update-procedure.md` cuando exista el comando `update`.
+Bajo demanda, sin tareas programadas:
+
+```powershell
+.\.venv\Scripts\python.exe -m lol_knowledge update
+.\.venv\Scripts\python.exe -m lol_knowledge update --patch 16.20.1
+```
+
+Escribe `data/current/` con `manifest.json`, `champion-index.json`, `champions/<Id>.json` por campeón, `items.json` y `runes.json`. El manifiesto registra parche, locale, origen, fecha UTC y el `sha256` de cada archivo. Con el mismo parche ya aplicado informa «sin cambios» y no reescribe nada.
+
+La descarga se valida antes de publicarse y se escribe primero en un directorio de staging; el snapshot anterior solo se sustituye cuando el nuevo está completo, y se restaura si el renombrado falla.
+
+Códigos de salida: `0` éxito (con o sin cambios), `1` datos de origen inválidos, `2` problema de red, entorno o escritura. Sin claves de API y sin Riot API.
 
 ## Limitaciones conocidas
 

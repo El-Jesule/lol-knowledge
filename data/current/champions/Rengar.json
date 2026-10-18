@@ -1,0 +1,1025 @@
+{
+  "allytips": [
+    "Usa la habilidad definitiva de Rengar para encontrar y asesinar a los objetivos prioritarios en las peleas de equipo y en las escaramuzas.",
+    "Gran parte del poder de Rengar proviene de habilidades potenciadas que usa en el momento adecuado. ¡Elige bien!",
+    "Asegúrate de moverte entre la maleza al perseguir a tus oponentes para aprovechar la habilidad pasiva de Rengar."
+  ],
+  "blurb": "Rengar es un feroz cazador de trofeos vastaya que vive por el placer de perseguir y asesinar criaturas peligrosas. Explora el mundo en busca de las bestias más aterradoras, pero, ante todo, quiere encontrar alguna pista que lo lleve hasta Kha'Zix, la...",
+  "enemytips": [
+    "Rengar obtiene una habilidad potenciada cuando su barra de recurso está llena. Enfréntate a él cuando esté vacía.",
+    "La habilidad pasiva de Rengar le permite salir de la maleza con un salto. Intenta evitar enfrentarte a él cerca de la maleza.",
+    "Rengar coloca un indicador sobre el campeón enemigo más cercano cuando su definitiva le concede camuflaje."
+  ],
+  "id": "Rengar",
+  "image": {
+    "full": "Rengar.png",
+    "group": "champion",
+    "h": 48,
+    "sprite": "champion3.png",
+    "w": 48,
+    "x": 48,
+    "y": 96
+  },
+  "info": {
+    "attack": 7,
+    "defense": 4,
+    "difficulty": 8,
+    "magic": 2
+  },
+  "key": "107",
+  "lore": "Rengar es un feroz cazador de trofeos vastaya que vive por el placer de perseguir y asesinar criaturas peligrosas. Explora el mundo en busca de las bestias más aterradoras, pero, ante todo, quiere encontrar alguna pista que lo lleve hasta Kha'Zix, la criatura del Vacío que le arrebató un ojo. Rengar no acosa a su presa por comida ni por gloria, sino únicamente por la belleza de la persecución.",
+  "name": "Rengar",
+  "partype": "Ferocidad",
+  "passive": {
+    "description": "Cuando está en la maleza, Rengar se abalanza sobre su objetivo con su ataque básico.<br><br>Rengar genera ferocidad cuando lanza una habilidad. Al llegar al máximo de ferocidad, su siguiente habilidad está potenciada.<br><br>Al asesinar campeones enemigos, el <font color='#BBFFFF'>Collar dientehueso</font> de Rengar obtiene trofeos que otorgan daño de ataque adicional.",
+    "image": {
+      "full": "Rengar_P.png",
+      "group": "passive",
+      "h": 48,
+      "sprite": "passive3.png",
+      "w": 48,
+      "x": 48,
+      "y": 96
+    },
+    "name": "Depredador invisible"
+  },
+  "recommended": [],
+  "skins": [
+    {
+      "chromas": false,
+      "id": "107000",
+      "name": "default",
+      "num": 0
+    },
+    {
+      "chromas": true,
+      "id": "107001",
+      "name": "Rengar cazador de cabezas",
+      "num": 1
+    },
+    {
+      "chromas": false,
+      "id": "107002",
+      "name": "Rengar cazador nocturno",
+      "num": 2
+    },
+    {
+      "chromas": false,
+      "id": "107003",
+      "name": "Rengar SSW",
+      "num": 3
+    },
+    {
+      "chromas": false,
+      "id": "107004",
+      "name": "Rengar cazador de cabezas (aguamarina)",
+      "num": 4,
+      "parentSkin": 1
+    },
+    {
+      "chromas": false,
+      "id": "107005",
+      "name": "Rengar cazador de cabezas (rubí)",
+      "num": 5,
+      "parentSkin": 1
+    },
+    {
+      "chromas": false,
+      "id": "107006",
+      "name": "Rengar cazador de cabezas (esmeralda)",
+      "num": 6,
+      "parentSkin": 1
+    },
+    {
+      "chromas": false,
+      "id": "107007",
+      "name": "Rengar cazador de cabezas (tanzanita)",
+      "num": 7,
+      "parentSkin": 1
+    },
+    {
+      "chromas": true,
+      "id": "107008",
+      "name": "Rengar mecha",
+      "num": 8
+    },
+    {
+      "chromas": false,
+      "id": "107009",
+      "name": "Rengar mecha (rubí)",
+      "num": 9,
+      "parentSkin": 8
+    },
+    {
+      "chromas": false,
+      "id": "107010",
+      "name": "Rengar mecha (obsidiana)",
+      "num": 10,
+      "parentSkin": 8
+    },
+    {
+      "chromas": false,
+      "id": "107011",
+      "name": "Rengar mecha (perla)",
+      "num": 11,
+      "parentSkin": 8
+    },
+    {
+      "chromas": false,
+      "id": "107012",
+      "name": "Rengar mecha (tanzanita)",
+      "num": 12,
+      "parentSkin": 8
+    },
+    {
+      "chromas": false,
+      "id": "107013",
+      "name": "Rengar mecha (aguamarina)",
+      "num": 13,
+      "parentSkin": 8
+    },
+    {
+      "chromas": false,
+      "id": "107014",
+      "name": "Rengar mecha (citrino)",
+      "num": 14,
+      "parentSkin": 8
+    },
+    {
+      "chromas": true,
+      "id": "107015",
+      "name": "Rengar lindo gatito",
+      "num": 15
+    },
+    {
+      "chromas": false,
+      "id": "107016",
+      "name": "Rengar lindo gatito (rubí)",
+      "num": 16,
+      "parentSkin": 15
+    },
+    {
+      "chromas": false,
+      "id": "107017",
+      "name": "Rengar lindo gatito (aguamarina)",
+      "num": 17,
+      "parentSkin": 15
+    },
+    {
+      "chromas": false,
+      "id": "107018",
+      "name": "Rengar lindo gatito (citrino)",
+      "num": 18,
+      "parentSkin": 15
+    },
+    {
+      "chromas": false,
+      "id": "107019",
+      "name": "Rengar lindo gatito (perla)",
+      "num": 19,
+      "parentSkin": 15
+    },
+    {
+      "chromas": false,
+      "id": "107020",
+      "name": "Rengar lindo gatito (esmeralda)",
+      "num": 20,
+      "parentSkin": 15
+    },
+    {
+      "chromas": false,
+      "id": "107021",
+      "name": "Rengar lindo gatito (cuarzo rosa)",
+      "num": 21,
+      "parentSkin": 15
+    },
+    {
+      "chromas": false,
+      "id": "107022",
+      "name": "Rengar lindo gatito (obsidiana)",
+      "num": 22,
+      "parentSkin": 15
+    },
+    {
+      "chromas": true,
+      "id": "107023",
+      "name": "Rengar guardián de las arenas",
+      "num": 23
+    },
+    {
+      "chromas": false,
+      "id": "107024",
+      "name": "Rengar guardián de las arenas (obsidiana)",
+      "num": 24,
+      "parentSkin": 23
+    },
+    {
+      "chromas": false,
+      "id": "107025",
+      "name": "Rengar guardián de las arenas (zafiro)",
+      "num": 25,
+      "parentSkin": 23
+    },
+    {
+      "chromas": false,
+      "id": "107026",
+      "name": "Rengar guardián de las arenas (rubí)",
+      "num": 26,
+      "parentSkin": 23
+    },
+    {
+      "chromas": false,
+      "id": "107027",
+      "name": "Rengar guardián de las arenas (esmeralda)",
+      "num": 27,
+      "parentSkin": 23
+    },
+    {
+      "chromas": false,
+      "id": "107028",
+      "name": "Rengar guardián de las arenas (amatista)",
+      "num": 28,
+      "parentSkin": 23
+    },
+    {
+      "chromas": false,
+      "id": "107029",
+      "name": "Rengar guardián de las arenas (cuarzo rosa)",
+      "num": 29,
+      "parentSkin": 23
+    },
+    {
+      "chromas": true,
+      "id": "107030",
+      "name": "Rengar centinela",
+      "num": 30
+    },
+    {
+      "chromas": false,
+      "id": "107031",
+      "name": "Rengar centinela (rubí)",
+      "num": 31,
+      "parentSkin": 30
+    },
+    {
+      "chromas": false,
+      "id": "107032",
+      "name": "Rengar centinela (citrino)",
+      "num": 32,
+      "parentSkin": 30
+    },
+    {
+      "chromas": false,
+      "id": "107033",
+      "name": "Rengar centinela (cuarzo rosa)",
+      "num": 33,
+      "parentSkin": 30
+    },
+    {
+      "chromas": false,
+      "id": "107034",
+      "name": "Rengar centinela (tanzanita)",
+      "num": 34,
+      "parentSkin": 30
+    },
+    {
+      "chromas": false,
+      "id": "107035",
+      "name": "Rengar centinela (zafiro)",
+      "num": 35,
+      "parentSkin": 30
+    },
+    {
+      "chromas": false,
+      "id": "107036",
+      "name": "Rengar centinela (perla)",
+      "num": 36,
+      "parentSkin": 30
+    },
+    {
+      "chromas": false,
+      "id": "107037",
+      "name": "Rengar centinela (esmeralda)",
+      "num": 37,
+      "parentSkin": 30
+    },
+    {
+      "chromas": false,
+      "id": "107038",
+      "name": "Rengar centinela (aguamarina)",
+      "num": 38,
+      "parentSkin": 30
+    },
+    {
+      "chromas": false,
+      "id": "107039",
+      "name": "Rengar centinela (resuelto)",
+      "num": 39,
+      "parentSkin": 30
+    },
+    {
+      "chromas": true,
+      "id": "107040",
+      "name": "Rengar diablo callejero",
+      "num": 40
+    },
+    {
+      "chromas": false,
+      "id": "107041",
+      "name": "Rengar diablo callejero (rubí)",
+      "num": 41,
+      "parentSkin": 40
+    },
+    {
+      "chromas": false,
+      "id": "107042",
+      "name": "Rengar diablo callejero (esmeralda)",
+      "num": 42,
+      "parentSkin": 40
+    },
+    {
+      "chromas": false,
+      "id": "107043",
+      "name": "Rengar diablo callejero (cuarzo rosa)",
+      "num": 43,
+      "parentSkin": 40
+    },
+    {
+      "chromas": false,
+      "id": "107044",
+      "name": "Rengar diablo callejero (amatista)",
+      "num": 44,
+      "parentSkin": 40
+    },
+    {
+      "chromas": false,
+      "id": "107045",
+      "name": "Rengar diablo callejero (perla)",
+      "num": 45,
+      "parentSkin": 40
+    },
+    {
+      "chromas": false,
+      "id": "107046",
+      "name": "Rengar diablo callejero (turquesa)",
+      "num": 46,
+      "parentSkin": 40
+    },
+    {
+      "chromas": false,
+      "id": "107047",
+      "name": "Rengar diablo callejero (obsidiana)",
+      "num": 47,
+      "parentSkin": 40
+    },
+    {
+      "chromas": false,
+      "id": "107048",
+      "name": "Rengar diablo callejero (zafiro)",
+      "num": 48,
+      "parentSkin": 40
+    },
+    {
+      "chromas": true,
+      "id": "107049",
+      "name": "Rengar victorioso",
+      "num": 49
+    },
+    {
+      "chromas": false,
+      "id": "107050",
+      "name": "Rengar victorioso (Bronce)",
+      "num": 50,
+      "parentSkin": 49
+    },
+    {
+      "chromas": false,
+      "id": "107051",
+      "name": "Rengar victorioso (Plata)",
+      "num": 51,
+      "parentSkin": 49
+    },
+    {
+      "chromas": false,
+      "id": "107052",
+      "name": "Rengar victorioso (Oro)",
+      "num": 52,
+      "parentSkin": 49
+    },
+    {
+      "chromas": false,
+      "id": "107053",
+      "name": "Rengar victorioso (Platino)",
+      "num": 53,
+      "parentSkin": 49
+    },
+    {
+      "chromas": false,
+      "id": "107054",
+      "name": "Rengar victorioso (Esmeralda)",
+      "num": 54,
+      "parentSkin": 49
+    },
+    {
+      "chromas": false,
+      "id": "107055",
+      "name": "Rengar victorioso (Diamante)",
+      "num": 55,
+      "parentSkin": 49
+    },
+    {
+      "chromas": false,
+      "id": "107056",
+      "name": "Rengar victorioso (Maestro)",
+      "num": 56,
+      "parentSkin": 49
+    },
+    {
+      "chromas": false,
+      "id": "107057",
+      "name": "Rengar victorioso (Gran Maestro)",
+      "num": 57,
+      "parentSkin": 49
+    },
+    {
+      "chromas": false,
+      "id": "107058",
+      "name": "Rengar victorioso (Aspirante)",
+      "num": 58,
+      "parentSkin": 49
+    }
+  ],
+  "spells": [
+    {
+      "cooldown": [
+        0.25,
+        0.25,
+        0.25,
+        0.25,
+        0.25
+      ],
+      "cooldownBurn": "0.25",
+      "cost": [
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "costBurn": "0",
+      "costType": "Genera 1 de Ferocidad",
+      "datavalues": {},
+      "description": "El siguiente ataque de Rengar apuñala brutalmente a su objetivo y le inflige daño adicional.<br><br>Efecto de ferocidad: inflige daño aumentado y otorga velocidad de ataque.",
+      "effect": [
+        null,
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ]
+      ],
+      "effectBurn": [
+        null,
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0"
+      ],
+      "id": "RengarQ",
+      "image": {
+        "full": "RengarQ.png",
+        "group": "spell",
+        "h": 48,
+        "sprite": "spell11.png",
+        "w": 48,
+        "x": 384,
+        "y": 144
+      },
+      "leveltip": {
+        "effect": [
+          "{{ basedamage }} -> {{ basedamageNL }}",
+          "{{ ammorechargetime }} -> {{ ammorechargetimeNL }}"
+        ],
+        "label": [
+          "Daño",
+          "Enfriamiento"
+        ]
+      },
+      "maxammo": "1",
+      "maxrank": 5,
+      "name": "Fiereza",
+      "range": [
+        450,
+        450,
+        450,
+        450,
+        450
+      ],
+      "rangeBurn": "450",
+      "resource": "Genera 1 de Ferocidad",
+      "tooltip": "Los siguientes 2 ataques de Rengar obtienen un <attackSpeed>{{ asbonus }}% de velocidad de ataque</attackSpeed>. El primer ataque inflige <physicalDamage>{{ qtotaldamage }} de daño físico</physicalDamage>.<br /><br /><keywordMajor>Ferocidad máxima:</keywordMajor> El primer ataque inflige <physicalDamage>{{ empoweredqtotaldamage }} de daño físico</physicalDamage> y otorga a Rengar un <attackSpeed>{{ empoweredqas }} de velocidad de ataque</attackSpeed> durante {{ asduration }} s.{{ spellmodifierdescriptionappend }}",
+      "vars": []
+    },
+    {
+      "cooldown": [
+        0.25,
+        0.25,
+        0.25,
+        0.25,
+        0.25
+      ],
+      "cooldownBurn": "0.25",
+      "cost": [
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "costBurn": "0",
+      "costType": "Genera 1 de Ferocidad",
+      "datavalues": {},
+      "description": "Rengar profiere un rugido de batalla que daña a los enemigos y le cura parte del daño que ha recibido recientemente.<br><br>Efecto de Ferocidad: además, elimina los efectos de control de adversario.",
+      "effect": [
+        null,
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ]
+      ],
+      "effectBurn": [
+        null,
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0"
+      ],
+      "id": "RengarW",
+      "image": {
+        "full": "RengarW.png",
+        "group": "spell",
+        "h": 48,
+        "sprite": "spell11.png",
+        "w": 48,
+        "x": 432,
+        "y": 144
+      },
+      "leveltip": {
+        "effect": [
+          "{{ basedamage }} -> {{ basedamageNL }}",
+          "{{ ammorechargetime }} -> {{ ammorechargetimeNL }}"
+        ],
+        "label": [
+          "Daño",
+          "Enfriamiento"
+        ]
+      },
+      "maxammo": "1",
+      "maxrank": 5,
+      "name": "Rugido de batalla",
+      "range": [
+        450,
+        450,
+        450,
+        450,
+        450
+      ],
+      "rangeBurn": "450",
+      "resource": "Genera 1 de Ferocidad",
+      "tooltip": "Rengar ruge, lo que inflige <magicDamage>{{ totaldamage }} de daño mágico</magicDamage> a los enemigos cercanos y restaura un <healing>{{ damagepercentagehealed }}%</healing> del daño recibido durante los últimos {{ healingwindow }} s como vida.<br /><br /><keywordMajor>Ferocidad máxima:</keywordMajor> Inflige <magicDamage>{{ totaldamageempowered }} de daño mágico</magicDamage> y elimina los efectos de control de adversario que afecten a Rengar.{{ spellmodifierdescriptionappend }}",
+      "vars": []
+    },
+    {
+      "cooldown": [
+        0.25,
+        0.25,
+        0.25,
+        0.25,
+        0.25
+      ],
+      "cooldownBurn": "0.25",
+      "cost": [
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "costBurn": "0",
+      "costType": "Genera 1 de Ferocidad",
+      "datavalues": {},
+      "description": "Rengar lanza una boleadora que ralentiza durante unos momentos al primer objetivo al que alcanza.<br><br>Efecto de Ferocidad: Enraíza al objetivo.",
+      "effect": [
+        null,
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ]
+      ],
+      "effectBurn": [
+        null,
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0"
+      ],
+      "id": "RengarE",
+      "image": {
+        "full": "RengarE.png",
+        "group": "spell",
+        "h": 48,
+        "sprite": "spell12.png",
+        "w": 48,
+        "x": 0,
+        "y": 0
+      },
+      "leveltip": {
+        "effect": [
+          "{{ basedamage }} -> {{ basedamageNL }}",
+          "{{ slowamount }}% -> {{ slowamountNL }}%"
+        ],
+        "label": [
+          "Daño",
+          "Ralentización"
+        ]
+      },
+      "maxammo": "1",
+      "maxrank": 5,
+      "name": "Golpe bola",
+      "range": [
+        1000,
+        1000,
+        1000,
+        1000,
+        1000
+      ],
+      "rangeBurn": "1000",
+      "resource": "Genera 1 de Ferocidad",
+      "tooltip": "Rengar lanza una boleadora que inflige <physicalDamage>{{ totaldamage }} de daño físico</physicalDamage> al primer enemigo golpeado, lo revela y lo <status>ralentiza</status> un {{ slowamount }}% durante {{ ccduration }} s.<br /><br /><keywordMajor>Ferocidad máxima:</keywordMajor> Inflige <physicalDamage>{{ totalempowereddamage }} de daño físico</physicalDamage> y <status>enraíza</status> al objetivo durante {{ ccduration }} s.{{ spellmodifierdescriptionappend }}",
+      "vars": []
+    },
+    {
+      "cooldown": [
+        100,
+        90,
+        80
+      ],
+      "cooldownBurn": "100/90/80",
+      "cost": [
+        0,
+        0,
+        0
+      ],
+      "costBurn": "0",
+      "costType": "Sin coste",
+      "datavalues": {},
+      "description": "Los instintos de depredador de Rengar toman el control y, además de <font color='#cd90ee'>camuflarlo</font>, le revelan la presencia del campeón más próximo en una zona de amplio radio. Durante Emoción por la cacería, Rengar aumenta su velocidad de movimiento y puede abalanzarse sobre los enemigos aunque no esté en la maleza y reducir su armadura cuando lo hace.",
+      "effect": [
+        null,
+        [
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0
+        ]
+      ],
+      "effectBurn": [
+        null,
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0"
+      ],
+      "id": "RengarR",
+      "image": {
+        "full": "RengarR.png",
+        "group": "spell",
+        "h": 48,
+        "sprite": "spell12.png",
+        "w": 48,
+        "x": 48,
+        "y": 0
+      },
+      "leveltip": {
+        "effect": [
+          "{{ armorshred }} -> {{ armorshredNL }}",
+          "{{ stealthduration }} -> {{ stealthdurationNL }}",
+          "{{ stealthms }}% -> {{ stealthmsNL }}%",
+          "{{ selfvisionrange }} -> {{ selfvisionrangeNL }}",
+          "{{ cooldown }} -> {{ cooldownNL }}"
+        ],
+        "label": [
+          "Reducción de armadura",
+          "Duración",
+          "Velocidad de movimiento",
+          "Alcance de seguimiento",
+          "Enfriamiento"
+        ]
+      },
+      "maxammo": "-1",
+      "maxrank": 3,
+      "name": "Emoción por la cacería",
+      "range": [
+        2500,
+        3000,
+        3500
+      ],
+      "rangeBurn": "2500/3000/3500",
+      "resource": "Sin coste",
+      "tooltip": "<spellPassive>Pasiva</spellPassive>: Rengar también se abalanzará para atacar cuando esté <keywordStealth>camuflado</keywordStealth>.<br /><br /><spellActive>Activa</spellActive>: Rengar obtiene un <speed>{{ stealthms }}% de velocidad de movimiento</speed> y <keywordStealth>visión verdadera</keywordStealth> en una pequeña zona alrededor del campeón enemigo más cercano durante {{ stealthduration }} s.<br /><br />Tras {{ fadetime }} s, Rengar se <keywordStealth>camufla</keywordStealth> y puede abalanzarse sobre un enemigo sin estar en la maleza. Saltar hasta el campeón más cercano inflige <physicalDamage>{{ bonusdamage }} de daño físico</physicalDamage> adicional, reduce <scaleArmor>{{ armorshred }} de armadura</scaleArmor> durante {{ armorshredduration }} s y pone fin a esta habilidad.{{ spellmodifierdescriptionappend }}",
+      "vars": []
+    }
+  ],
+  "stats": {
+    "armor": 34,
+    "armorperlevel": 4.2,
+    "attackdamage": 68,
+    "attackdamageperlevel": 0,
+    "attackrange": 125,
+    "attackspeed": 0.667,
+    "attackspeedperlevel": 3,
+    "crit": 0,
+    "critperlevel": 0,
+    "hp": 590,
+    "hpperlevel": 104,
+    "hpregen": 6,
+    "hpregenperlevel": 0.5,
+    "movespeed": 345,
+    "mp": 4,
+    "mpperlevel": 0,
+    "mpregen": 0,
+    "mpregenperlevel": 0,
+    "spellblock": 32,
+    "spellblockperlevel": 2.05
+  },
+  "tags": [
+    "Assassin",
+    "Fighter"
+  ],
+  "title": "El Acechador Orgulloso"
+}

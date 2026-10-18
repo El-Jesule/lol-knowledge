@@ -1,0 +1,973 @@
+{
+  "allytips": [
+    "Si te cuesta enraizar a un enemigo con Paralizar, intenta lanzarla cuando esté cerca de sus súbditos para que la explosión lo coja por sorpresa.",
+    "Durante la fase de calles, intenta utilizar La mano de la muerte para infligir daño desde una distancia segura.",
+    "Visión del imperio es difícil de acertar de por sí. Intenta lanzarla donde haya un combate en el mapa con el que los enemigos estén distraídos o bajo los efectos de control de adversario para que sea más fácil acertarla.",
+    "Ascensión demoníaca hace que sea más difícil acabar con Swain pero es bastante fácil escapar de él. Intenta comprar objetos que ralenticen para poder atacar desde lejos si el rival cuenta con mucha movilidad."
+  ],
+  "blurb": "Jericho Swain es el visionario líder de Noxus, una nación expansionista que solo venera la fuerza. Pese a haber sido relegado y a haber perdido el brazo izquierdo en las guerras de Jonia, se hizo con el control del imperio con una despiadada...",
+  "enemytips": [
+    "La pasiva de Swain es muy potente si estás inmovilizado. Ten cuidado cuando haya enemigos con efectos de inmovilización.",
+    "Todas las habilidades básicas de Swain pueden contrarrestarse con mucha movilidad: La mano de la muerte inflige más daño cuanto más cerca esté Swain. Visión del imperio tiene un largo retraso y Paralizar es más peligrosa cuando vuelve hacia él.",
+    "Comprar un objeto con heridas graves hará que sea más fácil acabar con Swain durante su Ascensión demoníaca."
+  ],
+  "id": "Swain",
+  "image": {
+    "full": "Swain.png",
+    "group": "champion",
+    "h": 48,
+    "sprite": "champion4.png",
+    "w": 48,
+    "x": 0,
+    "y": 48
+  },
+  "info": {
+    "attack": 2,
+    "defense": 6,
+    "difficulty": 8,
+    "magic": 9
+  },
+  "key": "50",
+  "lore": "Jericho Swain es el visionario líder de Noxus, una nación expansionista que solo venera la fuerza. Pese a haber sido relegado y a haber perdido el brazo izquierdo en las guerras de Jonia, se hizo con el control del imperio con una despiadada determinación... y una nueva mano demoníaca. En la actualidad, Swain lidera el frente y carga contra la oscuridad que se avecina, una oscuridad que solo él puede ver en los destellos que recogen los cuervos sombríos de los cadáveres a su alrededor. En medio de una espiral de sacrificio y misterio, el mayor de los secretos es que el verdadero enemigo reside en su interior.",
+  "name": "Swain",
+  "partype": "Maná",
+  "passive": {
+    "description": "Los cuervos de Swain recogen <i>fragmentos de alma</i> que lo curan y aumentan su vida máxima de forma permanente.",
+    "image": {
+      "full": "Swain_P.png",
+      "group": "passive",
+      "h": 48,
+      "sprite": "passive4.png",
+      "w": 48,
+      "x": 0,
+      "y": 48
+    },
+    "name": "Bandada de cuervos"
+  },
+  "recommended": [],
+  "skins": [
+    {
+      "chromas": false,
+      "id": "50000",
+      "name": "default",
+      "num": 0
+    },
+    {
+      "chromas": false,
+      "id": "50001",
+      "name": "Swain frente norte",
+      "num": 1
+    },
+    {
+      "chromas": false,
+      "id": "50002",
+      "name": "Swain Aguas Estancadas",
+      "num": 2
+    },
+    {
+      "chromas": false,
+      "id": "50003",
+      "name": "Swain tirano",
+      "num": 3
+    },
+    {
+      "chromas": true,
+      "id": "50004",
+      "name": "Swain maestro de dragones",
+      "num": 4
+    },
+    {
+      "chromas": false,
+      "id": "50005",
+      "name": "Swain maestro de dragones (perla)",
+      "num": 5,
+      "parentSkin": 4
+    },
+    {
+      "chromas": false,
+      "id": "50006",
+      "name": "Swain maestro de dragones (tanzanita)",
+      "num": 6,
+      "parentSkin": 4
+    },
+    {
+      "chromas": false,
+      "id": "50007",
+      "name": "Swain maestro de dragones (rubí)",
+      "num": 7,
+      "parentSkin": 4
+    },
+    {
+      "chromas": false,
+      "id": "50008",
+      "name": "Swain maestro de dragones (esmeralda)",
+      "num": 8,
+      "parentSkin": 4
+    },
+    {
+      "chromas": false,
+      "id": "50009",
+      "name": "Swain maestro de dragones (zafiro)",
+      "num": 9,
+      "parentSkin": 4
+    },
+    {
+      "chromas": false,
+      "id": "50010",
+      "name": "Swain maestro de dragones (obsidiana)",
+      "num": 10,
+      "parentSkin": 4
+    },
+    {
+      "chromas": false,
+      "id": "50011",
+      "name": "Swain hextech",
+      "num": 11
+    },
+    {
+      "chromas": true,
+      "id": "50012",
+      "name": "Swain rosa de cristal",
+      "num": 12
+    },
+    {
+      "chromas": false,
+      "id": "50013",
+      "name": "Swain rosa de cristal (rubí)",
+      "num": 13,
+      "parentSkin": 12
+    },
+    {
+      "chromas": false,
+      "id": "50014",
+      "name": "Swain rosa de cristal (zafiro)",
+      "num": 14,
+      "parentSkin": 12
+    },
+    {
+      "chromas": false,
+      "id": "50015",
+      "name": "Swain rosa de cristal (peridoto)",
+      "num": 15,
+      "parentSkin": 12
+    },
+    {
+      "chromas": false,
+      "id": "50016",
+      "name": "Swain rosa de cristal (cuarzo rosa)",
+      "num": 16,
+      "parentSkin": 12
+    },
+    {
+      "chromas": false,
+      "id": "50017",
+      "name": "Swain rosa de cristal (ojo de gato)",
+      "num": 17,
+      "parentSkin": 12
+    },
+    {
+      "chromas": false,
+      "id": "50018",
+      "name": "Swain rosa de cristal (amatista)",
+      "num": 18,
+      "parentSkin": 12
+    },
+    {
+      "chromas": false,
+      "id": "50019",
+      "name": "Swain rosa de cristal (obsidiana)",
+      "num": 19,
+      "parentSkin": 12
+    },
+    {
+      "chromas": false,
+      "id": "50020",
+      "name": "Swain rosa de cristal (perla)",
+      "num": 20,
+      "parentSkin": 12
+    },
+    {
+      "chromas": true,
+      "id": "50021",
+      "name": "Swain bendición invernal",
+      "num": 21
+    },
+    {
+      "chromas": false,
+      "id": "50022",
+      "name": "Swain rosa de cristal (Tiffany & Co.)",
+      "num": 22,
+      "parentSkin": 12
+    },
+    {
+      "chromas": false,
+      "id": "50023",
+      "name": "Swain bendición invernal (rubí)",
+      "num": 23,
+      "parentSkin": 21
+    },
+    {
+      "chromas": false,
+      "id": "50024",
+      "name": "Swain bendición invernal (ojo de gato)",
+      "num": 24,
+      "parentSkin": 21
+    },
+    {
+      "chromas": false,
+      "id": "50025",
+      "name": "Swain bendición invernal (zafiro)",
+      "num": 25,
+      "parentSkin": 21
+    },
+    {
+      "chromas": false,
+      "id": "50026",
+      "name": "Swain bendición invernal (esmeralda)",
+      "num": 26,
+      "parentSkin": 21
+    },
+    {
+      "chromas": false,
+      "id": "50027",
+      "name": "Swain bendición invernal (perla)",
+      "num": 27,
+      "parentSkin": 21
+    },
+    {
+      "chromas": false,
+      "id": "50028",
+      "name": "Swain bendición invernal (obsidiana)",
+      "num": 28,
+      "parentSkin": 21
+    },
+    {
+      "chromas": false,
+      "id": "50029",
+      "name": "Swain bendición invernal (turquesa)",
+      "num": 29,
+      "parentSkin": 21
+    },
+    {
+      "chromas": false,
+      "id": "50030",
+      "name": "Swain bendición invernal (cuarzo rosa)",
+      "num": 30,
+      "parentSkin": 21
+    },
+    {
+      "chromas": false,
+      "id": "50031",
+      "name": "Swain bendición invernal (guirnalda)",
+      "num": 31,
+      "parentSkin": 21
+    },
+    {
+      "chromas": true,
+      "id": "50032",
+      "name": "Swain elegido del lobo",
+      "num": 32
+    },
+    {
+      "chromas": false,
+      "id": "50033",
+      "name": "Swain elegido del lobo de prestigio",
+      "num": 33
+    },
+    {
+      "chromas": false,
+      "id": "50034",
+      "name": "Swain elegido del lobo (rubí)",
+      "num": 34,
+      "parentSkin": 32
+    },
+    {
+      "chromas": false,
+      "id": "50035",
+      "name": "Swain elegido del lobo (ojo de gato)",
+      "num": 35,
+      "parentSkin": 32
+    },
+    {
+      "chromas": false,
+      "id": "50036",
+      "name": "Swain elegido del lobo (zafiro)",
+      "num": 36,
+      "parentSkin": 32
+    },
+    {
+      "chromas": false,
+      "id": "50037",
+      "name": "Swain elegido del lobo (esmeralda)",
+      "num": 37,
+      "parentSkin": 32
+    },
+    {
+      "chromas": false,
+      "id": "50038",
+      "name": "Swain elegido del lobo (turquesa)",
+      "num": 38,
+      "parentSkin": 32
+    },
+    {
+      "chromas": false,
+      "id": "50039",
+      "name": "Swain elegido del lobo (amatista)",
+      "num": 39,
+      "parentSkin": 32
+    },
+    {
+      "chromas": false,
+      "id": "50040",
+      "name": "Swain elegido del lobo (obsidiana)",
+      "num": 40,
+      "parentSkin": 32
+    },
+    {
+      "chromas": false,
+      "id": "50041",
+      "name": "Swain elegido del lobo (perla)",
+      "num": 41,
+      "parentSkin": 32
+    },
+    {
+      "chromas": true,
+      "id": "50042",
+      "name": "Swain rey del pollo frito",
+      "num": 42
+    },
+    {
+      "chromas": false,
+      "id": "50043",
+      "name": "Swain rey del pollo frito (rubí)",
+      "num": 43,
+      "parentSkin": 42
+    },
+    {
+      "chromas": false,
+      "id": "50044",
+      "name": "Swain rey del pollo frito (ojo de gato)",
+      "num": 44,
+      "parentSkin": 42
+    },
+    {
+      "chromas": false,
+      "id": "50045",
+      "name": "Swain rey del pollo frito (tanzanita)",
+      "num": 45,
+      "parentSkin": 42
+    },
+    {
+      "chromas": false,
+      "id": "50046",
+      "name": "Swain rey del pollo frito (esmeralda)",
+      "num": 46,
+      "parentSkin": 42
+    },
+    {
+      "chromas": false,
+      "id": "50047",
+      "name": "Swain rey del pollo frito (cuarzo rosa)",
+      "num": 47,
+      "parentSkin": 42
+    },
+    {
+      "chromas": false,
+      "id": "50048",
+      "name": "Swain rey del pollo frito (zafiro)",
+      "num": 48,
+      "parentSkin": 42
+    },
+    {
+      "chromas": false,
+      "id": "50049",
+      "name": "Swain rey del pollo frito (obsidiana)",
+      "num": 49,
+      "parentSkin": 42
+    },
+    {
+      "chromas": false,
+      "id": "50050",
+      "name": "Swain rey del pollo frito (turquesa)",
+      "num": 50,
+      "parentSkin": 42
+    }
+  ],
+  "spells": [
+    {
+      "cooldown": [
+        7,
+        6,
+        5,
+        4,
+        3
+      ],
+      "cooldownBurn": "7/6/5/4/3",
+      "cost": [
+        40,
+        45,
+        50,
+        55,
+        60
+      ],
+      "costBurn": "40/45/50/55/60",
+      "costType": " {{ abilityresourcename }}",
+      "datavalues": {},
+      "description": "Swain libera varios rayos de poder sobrenatural que atraviesan a los enemigos. Los enemigos alcanzados reciben más daño por cada rayo que los alcanza.",
+      "effect": [
+        null,
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ]
+      ],
+      "effectBurn": [
+        null,
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0"
+      ],
+      "id": "SwainQ",
+      "image": {
+        "full": "SwainQ.png",
+        "group": "spell",
+        "h": 48,
+        "sprite": "spell13.png",
+        "w": 48,
+        "x": 192,
+        "y": 144
+      },
+      "leveltip": {
+        "effect": [
+          "{{ basedamage }} -> {{ basedamageNL }}",
+          "{{ cooldown }} -> {{ cooldownNL }}",
+          "{{ cost }} -> {{ costNL }}"
+        ],
+        "label": [
+          "Daño del rayo",
+          "Enfriamiento",
+          "Coste de @AbilityResourceName@"
+        ]
+      },
+      "maxammo": "-1",
+      "maxrank": 5,
+      "name": "La mano de la muerte",
+      "range": [
+        750,
+        750,
+        750,
+        750,
+        750
+      ],
+      "rangeBurn": "750",
+      "resource": "{{ cost }} {{ abilityresourcename }}",
+      "tooltip": "Swain lanza 5 rayos sobrenaturales, lo que inflige <magicDamage>{{ initialdamage }} de daño mágico</magicDamage> más <magicDamage>{{ extraboltdamage }} de daño mágico</magicDamage> por rayo a partir del primero (máximo de <magicDamage>{{ maxdamage }} de daño mágico</magicDamage>).{{ spellmodifierdescriptionappend }}",
+      "vars": []
+    },
+    {
+      "cooldown": [
+        20,
+        19,
+        18,
+        17,
+        16
+      ],
+      "cooldownBurn": "20/19/18/17/16",
+      "cost": [
+        60,
+        65,
+        70,
+        75,
+        80
+      ],
+      "costBurn": "60/65/70/75/80",
+      "costType": " {{ abilityresourcename }}",
+      "datavalues": {},
+      "description": "Swain abre el ojo del demonio, que inflige daño y ralentiza a los enemigos. Los campeones golpeados quedan revelados y otorgan un fragmento de alma a Swain.",
+      "effect": [
+        null,
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ]
+      ],
+      "effectBurn": [
+        null,
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0"
+      ],
+      "id": "SwainW",
+      "image": {
+        "full": "SwainW.png",
+        "group": "spell",
+        "h": 48,
+        "sprite": "spell13.png",
+        "w": 48,
+        "x": 240,
+        "y": 144
+      },
+      "leveltip": {
+        "effect": [
+          "{{ basedamage }} -> {{ basedamageNL }}",
+          "{{ castrange }} -> {{ castrangeNL }}",
+          "{{ cooldown }} -> {{ cooldownNL }}",
+          "{{ cost }} -> {{ costNL }}"
+        ],
+        "label": [
+          "Daño",
+          "Alcance",
+          "Enfriamiento",
+          "Coste de @AbilityResourceName@"
+        ]
+      },
+      "maxammo": "-1",
+      "maxrank": 5,
+      "name": "Visión del imperio",
+      "range": [
+        5500,
+        6000,
+        6500,
+        7000,
+        7500
+      ],
+      "rangeBurn": "5500/6000/6500/7000/7500",
+      "resource": "{{ cost }} {{ abilityresourcename }}",
+      "tooltip": "Swain abre un ojo demoníaco, revela una ubicación durante 1,5 s y, a continuación, inflige <magicDamage>{{ totaldamage }} de daño mágico</magicDamage> y <status>ralentiza</status> un {{ slow*-100 }}% durante {{ slowduration }} s.<br /><br />Los campeones golpeados otorgan a Swain un <span class=\"size18 colorFF3F3F\">fragmento de alma</span> y quedan revelados durante {{ revealduration }} s.{{ spellmodifierdescriptionappend }}",
+      "vars": []
+    },
+    {
+      "cooldown": [
+        12,
+        11.5,
+        11,
+        10.5,
+        10
+      ],
+      "cooldownBurn": "12/11.5/11/10.5/10",
+      "cost": [
+        50,
+        55,
+        60,
+        65,
+        70
+      ],
+      "costBurn": "50/55/60/65/70",
+      "costType": " {{ abilityresourcename }}",
+      "datavalues": {},
+      "description": "Swain libera una onda de poder demoníaco hacia delante. La onda vuelve hacia él y enraíza a los enemigos que alcanza. Swain puede atraer a todos los campeones enraizados. Esta habilidad tiene un enfriamiento más corto durante Ascensión demoníaca.",
+      "effect": [
+        null,
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ]
+      ],
+      "effectBurn": [
+        null,
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0"
+      ],
+      "id": "SwainE",
+      "image": {
+        "full": "SwainE.png",
+        "group": "spell",
+        "h": 48,
+        "sprite": "spell13.png",
+        "w": 48,
+        "x": 288,
+        "y": 144
+      },
+      "leveltip": {
+        "effect": [
+          "{{ e2damage }} -> {{ e2damageNL }}",
+          "{{ cooldown }} -> {{ cooldownNL }}",
+          "{{ cost }} -> {{ costNL }}"
+        ],
+        "label": [
+          "Daño",
+          "Enfriamiento",
+          "Coste de @AbilityResourceName@"
+        ]
+      },
+      "maxammo": "-1",
+      "maxrank": 5,
+      "name": "Paralizar",
+      "range": [
+        850,
+        850,
+        850,
+        850,
+        850
+      ],
+      "rangeBurn": "850",
+      "resource": "{{ cost }} {{ abilityresourcename }}",
+      "tooltip": "Swain libera una onda de poder demoníaco que regresa a él, la cual explota al alcanzar al primer enemigo para infligirle <magicDamage>{{ secondarydamage }} de daño mágico</magicDamage> y <status>enraíza</status> a los enemigos en el área durante {{ rootduration }} s.<br /><br />Al <status>enraizar</status> a campeones, Swain puede volver a activar la habilidad para atraer a todos los enemigos <status>enraizados</status> por <spellName>Paralizar</spellName>. Obtiene un <span class=\"size18 colorFF3F3F\">fragmento de alma</span> por cada uno.{{ spellmodifierdescriptionappend }}",
+      "vars": []
+    },
+    {
+      "cooldown": [
+        120,
+        120,
+        120
+      ],
+      "cooldownBurn": "120",
+      "cost": [
+        100,
+        100,
+        100
+      ],
+      "costBurn": "100",
+      "costType": " {{ abilityresourcename }}",
+      "datavalues": {},
+      "description": "Swain se transforma en demonio y drena vida de los campeones enemigos, súbditos y monstruos neutrales cercanos. Swain puede lanzar Alma ígnea para diezmar y ralentizar a sus enemigos con una nova de fuego de alma. Esta forma tiene una duración indefinida siempre y cuando Swain drene a campeones enemigos.",
+      "effect": [
+        null,
+        [
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0
+        ]
+      ],
+      "effectBurn": [
+        null,
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0"
+      ],
+      "id": "SwainR",
+      "image": {
+        "full": "SwainR.png",
+        "group": "spell",
+        "h": 48,
+        "sprite": "spell13.png",
+        "w": 48,
+        "x": 336,
+        "y": 144
+      },
+      "leveltip": {
+        "effect": [
+          "{{ damagepersecond }} -> {{ damagepersecondNL }}",
+          "{{ healpersecond }} -> {{ healpersecondNL }}",
+          "{{ demonflaredamagebase }} -> {{ demonflaredamagebaseNL }}"
+        ],
+        "label": [
+          "Daño del drenaje",
+          "Curación del drenaje",
+          "Daño de Alma ígnea"
+        ]
+      },
+      "maxammo": "-1",
+      "maxrank": 3,
+      "name": "Ascensión demoníaca",
+      "range": [
+        650,
+        650,
+        650
+      ],
+      "rangeBurn": "650",
+      "resource": "{{ cost }} {{ abilityresourcename }}",
+      "tooltip": "Swain libera al demonio, que inflige <magicDamage>{{ damagecalc }} de daño mágico</magicDamage> y drena <healing>{{ healingcalc }} de vida</healing> por segundo a los enemigos cercanos. Su energía demoníaca disminuye a lo largo del tiempo, aunque puede recargarla de forma ilimitada drenando a los campeones enemigos y la recupera por completo con asesinatos o asistencias.<br /><br />Después de {{ demonflarecastdelay }} s y cada {{ demonflarecooldowntooltip }} s tras esto, Swain puede lanzar <spellName>Alma ígnea</spellName> mientras está transformado, que inflige <magicDamage>{{ demonflaredamagetotal }} de daño mágico</magicDamage> y <status>ralentiza</status> a los enemigos un {{ demonflareslowamount*100 }}% que disminuye a lo largo de {{ demonflareslowduration }} s.{{ spellmodifierdescriptionappend }}",
+      "vars": []
+    }
+  ],
+  "stats": {
+    "armor": 23,
+    "armorperlevel": 4.7,
+    "attackdamage": 58,
+    "attackdamageperlevel": 0,
+    "attackrange": 525,
+    "attackspeed": 0.625,
+    "attackspeedperlevel": 2.11,
+    "crit": 0,
+    "critperlevel": 0,
+    "hp": 595,
+    "hpperlevel": 99,
+    "hpregen": 3,
+    "hpregenperlevel": 0.5,
+    "movespeed": 330,
+    "mp": 400,
+    "mpperlevel": 29,
+    "mpregen": 10,
+    "mpregenperlevel": 0.8,
+    "spellblock": 34,
+    "spellblockperlevel": 1.55
+  },
+  "tags": [
+    "Mage",
+    "Support"
+  ],
+  "title": "el Gran General de Noxus"
+}

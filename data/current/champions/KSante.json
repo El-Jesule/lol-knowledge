@@ -1,0 +1,806 @@
+{
+  "allytips": [
+    "Usa Onda sónica antes de Ira del dragón para poder perseguir al objetivo con Golpe resonante.",
+    "Aprovecha Ráfaga usando ataques básicos entre los lanzamientos de habilidades. De esta forma mejorarás el daño infligido y reducirás la pérdida de energía.",
+    "Usar Salvaguarda y Voluntad de hierro sobre sí mismo viene muy bien para matar monstruos neutrales (en la jungla)."
+  ],
+  "blurb": "K'Sante, un guerrero desafiante y valiente, lucha contra gigantescas bestias y despiadados Ascendidos para proteger su hogar, Nazumah, un codiciado oasis ubicado entre las dunas shurimanas. Tras cortar lazos con su pareja, K'Sante se percata de que...",
+  "enemytips": [
+    "Que el equipo se mantenga separado para minimizar el impacto de la habilidad definitiva de Lee Sin, Ira del dragón.",
+    "Lee Sin es frágil contra daño físico y mágico, pero tiene en Voluntad de hierro e Incapacitar armas poderosas para combatir.",
+    "Lee Sin depende mucho de encadenar sus habilidades. Usa inhabilitaciones para evitar que encadene sus habilidades y ataques."
+  ],
+  "id": "KSante",
+  "image": {
+    "full": "KSante.png",
+    "group": "champion",
+    "h": 48,
+    "sprite": "champion2.png",
+    "w": 48,
+    "x": 384,
+    "y": 0
+  },
+  "info": {
+    "attack": 8,
+    "defense": 8,
+    "difficulty": 9,
+    "magic": 7
+  },
+  "key": "897",
+  "lore": "K'Sante, un guerrero desafiante y valiente, lucha contra gigantescas bestias y despiadados Ascendidos para proteger su hogar, Nazumah, un codiciado oasis ubicado entre las dunas shurimanas. Tras cortar lazos con su pareja, K'Sante se percata de que, para convertirse en un guerrero digno de liderar su ciudad, debe calmar su tesón y apaciguar su egoísta búsqueda del éxito. Solo entonces podrá evitar ser presa de su propio orgullo y encontrar la sabiduría que necesita para derrotar a los viles monstruos que amenazan a su pueblo.",
+  "name": "K'Sante",
+  "partype": "Maná",
+  "passive": {
+    "description": "Las habilidades de K'Sante marcan a los objetivos para que reciban más daño de su siguiente ataque.<br><br>En forma de Órdago, K'Sante inflige más daño con todos los ataques y habilidades.",
+    "image": {
+      "full": "Icons_KSante_P.png",
+      "group": "passive",
+      "h": 48,
+      "sprite": "passive2.png",
+      "w": 48,
+      "x": 384,
+      "y": 0
+    },
+    "name": "Instinto intrépido"
+  },
+  "recommended": [],
+  "skins": [
+    {
+      "chromas": false,
+      "id": "897000",
+      "name": "default",
+      "num": 0
+    },
+    {
+      "chromas": true,
+      "id": "897001",
+      "name": "K'Sante empíreo",
+      "num": 1
+    },
+    {
+      "chromas": false,
+      "id": "897002",
+      "name": "K'Sante empíreo de prestigio",
+      "num": 2
+    },
+    {
+      "chromas": false,
+      "id": "897003",
+      "name": "K'Sante empíreo (rubí)",
+      "num": 3,
+      "parentSkin": 1
+    },
+    {
+      "chromas": false,
+      "id": "897004",
+      "name": "K'Sante empíreo (esmeralda)",
+      "num": 4,
+      "parentSkin": 1
+    },
+    {
+      "chromas": false,
+      "id": "897005",
+      "name": "K'Sante empíreo (turquesa)",
+      "num": 5,
+      "parentSkin": 1
+    },
+    {
+      "chromas": false,
+      "id": "897006",
+      "name": "K'Sante empíreo (perla)",
+      "num": 6,
+      "parentSkin": 1
+    },
+    {
+      "chromas": false,
+      "id": "897007",
+      "name": "K'Sante empíreo (fulgor de neón)",
+      "num": 7,
+      "parentSkin": 1
+    },
+    {
+      "chromas": true,
+      "id": "897008",
+      "name": "K'Sante HEARTSTEEL",
+      "num": 8
+    },
+    {
+      "chromas": false,
+      "id": "897009",
+      "name": "K'Sante HEARTSTEEL (rubí)",
+      "num": 9,
+      "parentSkin": 8
+    },
+    {
+      "chromas": false,
+      "id": "897010",
+      "name": "K'Sante HEARTSTEEL (turquesa)",
+      "num": 10,
+      "parentSkin": 8
+    },
+    {
+      "chromas": false,
+      "id": "897011",
+      "name": "K'Sante HEARTSTEEL (cuarzo rosa)",
+      "num": 11,
+      "parentSkin": 8
+    },
+    {
+      "chromas": false,
+      "id": "897012",
+      "name": "K'Sante HEARTSTEEL (zafiro)",
+      "num": 12,
+      "parentSkin": 8
+    },
+    {
+      "chromas": false,
+      "id": "897013",
+      "name": "K'Sante HEARTSTEEL (esmeralda)",
+      "num": 13,
+      "parentSkin": 8
+    },
+    {
+      "chromas": false,
+      "id": "897014",
+      "name": "K'Sante HEARTSTEEL (perla)",
+      "num": 14,
+      "parentSkin": 8
+    },
+    {
+      "chromas": false,
+      "id": "897015",
+      "name": "K'Sante HEARTSTEEL (tanzanita)",
+      "num": 15,
+      "parentSkin": 8
+    },
+    {
+      "chromas": false,
+      "id": "897016",
+      "name": "K'Sante HEARTSTEEL (citrino)",
+      "num": 16,
+      "parentSkin": 8
+    },
+    {
+      "chromas": false,
+      "id": "897017",
+      "name": "K'Sante HEARTSTEEL (estrella del rock)",
+      "num": 17,
+      "parentSkin": 8
+    },
+    {
+      "chromas": true,
+      "id": "897018",
+      "name": "K'Sante HEARTSTEEL - Live My Life",
+      "num": 18
+    },
+    {
+      "chromas": false,
+      "id": "897019",
+      "name": "K'Sante HEARTSTEEL - Live My Life (rubí)",
+      "num": 19,
+      "parentSkin": 18
+    },
+    {
+      "chromas": false,
+      "id": "897020",
+      "name": "K'Sante HEARTSTEEL - Live My Life (zafiro)",
+      "num": 20,
+      "parentSkin": 18
+    },
+    {
+      "chromas": false,
+      "id": "897021",
+      "name": "K'Sante HEARTSTEEL - Live My Life (turquesa)",
+      "num": 21,
+      "parentSkin": 18
+    },
+    {
+      "chromas": false,
+      "id": "897022",
+      "name": "K'Sante HEARTSTEEL - Live My Life (tanzanita)",
+      "num": 22,
+      "parentSkin": 18
+    },
+    {
+      "chromas": false,
+      "id": "897023",
+      "name": "K'Sante HEARTSTEEL - Live My Life (cuarzo rosa)",
+      "num": 23,
+      "parentSkin": 18
+    },
+    {
+      "chromas": false,
+      "id": "897024",
+      "name": "K'Sante HEARTSTEEL - Live My Life (obsidiana)",
+      "num": 24,
+      "parentSkin": 18
+    },
+    {
+      "chromas": false,
+      "id": "897025",
+      "name": "K'Sante HEARTSTEEL - Live My Life (perla)",
+      "num": 25,
+      "parentSkin": 18
+    },
+    {
+      "chromas": false,
+      "id": "897026",
+      "name": "K'Sante HEARTSTEEL - Live My Life (ojo de gato)",
+      "num": 26,
+      "parentSkin": 18
+    }
+  ],
+  "spells": [
+    {
+      "cooldown": [
+        3.5,
+        3.5,
+        3.5,
+        3.5,
+        3.5
+      ],
+      "cooldownBurn": "3.5",
+      "cost": [
+        20,
+        20,
+        20,
+        20,
+        20
+      ],
+      "costBurn": "20",
+      "costType": " {{ abilityresourcename }}",
+      "datavalues": {},
+      "description": "K'Sante ataca, infligiendo daño y ralentizando a los enemigos en una línea corta.<br><br>Al impactar, obtiene una acumulación de Golpes de ntofo. Con 2 acumulaciones, K'Sante emite una onda de choque que atrae a los enemigos.<br><br>En forma de Órdago, se reduce el enfriamiento.",
+      "effect": [
+        null,
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ]
+      ],
+      "effectBurn": [
+        null,
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0"
+      ],
+      "id": "KSanteQ",
+      "image": {
+        "full": "KSanteQ.png",
+        "group": "spell",
+        "h": 48,
+        "sprite": "spell7.png",
+        "w": 48,
+        "x": 288,
+        "y": 96
+      },
+      "leveltip": {
+        "effect": [
+          "{{ flatdamage }} -> {{ flatdamageNL }}"
+        ],
+        "label": [
+          "Daño"
+        ]
+      },
+      "maxammo": "-1",
+      "maxrank": 5,
+      "name": "Golpes de ntofo",
+      "range": [
+        450,
+        450,
+        450,
+        450,
+        450
+      ],
+      "rangeBurn": "450",
+      "resource": "{{ cost }} {{ abilityresourcename }}",
+      "tooltip": "K'Sante golpea con su arma, lo que inflige <physicalDamage>{{ basedamage }} de daño físico</physicalDamage> y <status>ralentiza</status> al objetivo un {{ slowpercent*100 }}% durante {{ slowduration }} s. Si golpea a un enemigo, obtiene una acumulación de Golpes de ntofo durante {{ recastwindow }} s. Al conseguir dos acumulaciones, K'Sante emite una onda de choque que <status>aturde</status> y <status>atrae</status> a los enemigos durante {{ stunduration }} s.<br /><br /><keywordMajor>Órdago</keywordMajor>: El enfriamiento se reduce en {{ rcooldownreduction.0*100 }} s.{{ spellmodifierdescriptionappend }}",
+      "vars": []
+    },
+    {
+      "cooldown": [
+        14,
+        13,
+        12,
+        11,
+        10
+      ],
+      "cooldownBurn": "14/13/12/11/10",
+      "cost": [
+        45,
+        50,
+        55,
+        60,
+        65
+      ],
+      "costBurn": "45/50/55/60/65",
+      "costType": " {{ abilityresourcename }}",
+      "datavalues": {},
+      "description": "K'Sante carga y recibe daño reducido. Luego, se desliza, empujando y aturdiendo a los enemigos.<br><br>En forma Órdago, inflige daño adicional, pero no empuja ni aturde.",
+      "effect": [
+        null,
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ]
+      ],
+      "effectBurn": [
+        null,
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0"
+      ],
+      "id": "KSanteW",
+      "image": {
+        "full": "KSanteW.png",
+        "group": "spell",
+        "h": 48,
+        "sprite": "spell7.png",
+        "w": 48,
+        "x": 336,
+        "y": 96
+      },
+      "leveltip": {
+        "effect": [
+          "{{ basedamage }} -> {{ basedamageNL }}",
+          "{{ cooldown }} -> {{ cooldownNL }}",
+          "{{ cost }} -> {{ costNL }}"
+        ],
+        "label": [
+          "Daño",
+          "Enfriamiento",
+          "Coste de @AbilityResourceName@"
+        ]
+      },
+      "maxammo": "-1",
+      "maxrank": 5,
+      "name": "Pionero",
+      "range": [
+        600,
+        600,
+        600,
+        600,
+        600
+      ],
+      "rangeBurn": "600",
+      "resource": "{{ cost }} {{ abilityresourcename }}",
+      "tooltip": "K'Sante alza sus armas de forma defensiva durante {{ mindurationtooltip }}-{{ maxduration.1 }} s, se vuelve imparable y reduce el daño recibido en un {{ damagereduction*100 }}%. Luego, K'Sante embiste hacia delante e inflige hasta <physicalDamage>{{ basedamage }} + {{ totalmaxhealthdamage }} de daño físico según la vida máxima</physicalDamage>, <status>empuja</status> y <status>aturde</status> a los enemigos a los que golpea durante {{ minknockbackduration }}-{{ maxknockbackduration }}&nbsp;s (según el tiempo de carga).<br /><br /><keywordMajor>Órdago:</keywordMajor> Se restablece el enfriamiento. Inflige un {{ rdamageincreasemin*100 }}-{{ rdamageincreasemax*100 }}% de daño adicional como <trueDamage>daño verdadero</trueDamage> (según el tiempo de carga), la reducción de daño aumenta hasta un {{ rdamagereduction*100 }}% y aumenta la velocidad del deslizamiento, pero ya no <status>empuja</status> ni <status>aturde</status>.{{ spellmodifierdescriptionappend }}",
+      "vars": []
+    },
+    {
+      "cooldown": [
+        10,
+        9.5,
+        9,
+        8.5,
+        8
+      ],
+      "cooldownBurn": "10/9.5/9/8.5/8",
+      "cost": [
+        45,
+        50,
+        55,
+        60,
+        65
+      ],
+      "costBurn": "45/50/55/60/65",
+      "costType": " {{ abilityresourcename }}",
+      "datavalues": {},
+      "description": "K'Sante se desliza y obtiene un escudo. Si apunta como objetivo a un aliado, K'Sante obtiene alcance adicional, se desliza hasta él y otorga un escudo a ambos.<br><br>En forma de Órdago, se reduce el enfriamiento y aumenta la velocidad.",
+      "effect": [
+        null,
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ]
+      ],
+      "effectBurn": [
+        null,
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0"
+      ],
+      "id": "KSanteE",
+      "image": {
+        "full": "KSanteE.png",
+        "group": "spell",
+        "h": 48,
+        "sprite": "spell7.png",
+        "w": 48,
+        "x": 384,
+        "y": 96
+      },
+      "leveltip": {
+        "effect": [
+          "{{ shieldbaseamountfast }} -> {{ shieldbaseamountfastNL }}",
+          "{{ cooldown }} -> {{ cooldownNL }}",
+          "{{ cost }} -> {{ costNL }}"
+        ],
+        "label": [
+          "Escudo",
+          "Enfriamiento",
+          "Coste de @AbilityResourceName@"
+        ]
+      },
+      "maxammo": "-1",
+      "maxrank": 5,
+      "name": "Juego de pies",
+      "range": [
+        525,
+        525,
+        525,
+        525,
+        525
+      ],
+      "rangeBurn": "525",
+      "resource": "{{ cost }} {{ abilityresourcename }}",
+      "tooltip": "K'Sante se desliza y obtiene un <shield>escudo de {{ totalshield }}</shield> durante {{ shieldduration }} s. Si se desliza hasta un aliado, la distancia del deslizamiento aumenta significativamente y el aliado también recibe un <shield>escudo</shield>.<br /><br /><keywordMajor>Órdago</keywordMajor>: Se reduce un {{ cooldownmodao*100 }}% el enfriamiento y aumenta la velocidad del deslizamiento.{{ spellmodifierdescriptionappend }}",
+      "vars": []
+    },
+    {
+      "cooldown": [
+        120,
+        100,
+        80
+      ],
+      "cooldownBurn": "120/100/80",
+      "cost": [
+        100,
+        100,
+        100
+      ],
+      "costBurn": "100",
+      "costType": " {{ abilityresourcename }}",
+      "datavalues": {},
+      "description": "K'Sante empuja a un enemigo y lo lanza contra cualquier muro que haya en su camino. Luego, K'Sante entra en forma de Órdago y se desliza hasta él, lo que le otorga daño y curación. Además, transforma las habilidades, pero reduce su defensa.",
+      "effect": [
+        null,
+        [
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0
+        ]
+      ],
+      "effectBurn": [
+        null,
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0"
+      ],
+      "id": "KSanteR",
+      "image": {
+        "full": "KSanteR.png",
+        "group": "spell",
+        "h": 48,
+        "sprite": "spell7.png",
+        "w": 48,
+        "x": 432,
+        "y": 96
+      },
+      "leveltip": {
+        "effect": [
+          "{{ basedamage }} -> {{ basedamageNL }}",
+          "{{ slamdownstrikedamage }} -> {{ slamdownstrikedamageNL }}",
+          "{{ cooldown }} -> {{ cooldownNL }}",
+          "{{ attackspeed*100.000000 }}% -> {{ attackspeednl*100.000000 }}%"
+        ],
+        "label": [
+          "Daño",
+          "Daño por combo",
+          "Enfriamiento",
+          "Velocidad de ataque"
+        ]
+      },
+      "maxammo": "-1",
+      "maxrank": 3,
+      "name": "Órdago",
+      "range": [
+        250,
+        250,
+        250
+      ],
+      "rangeBurn": "250",
+      "resource": "{{ cost }} {{ abilityresourcename }}",
+      "tooltip": "K'Sante quiebra sus ntofos para <status>empujar</status> a un campeón enemigo, lo que inflige <physicalDamage>{{ basedamage }} de daño físico</physicalDamage>, y luego se desliza tras él y entra en forma de <keywordMajor>Órdago</keywordMajor> durante {{ alloutduration }} s. Si el enemigo choca contra un muro, lo <status>atraviesa</status> y K'Sante le vuelve a infligir <physicalDamage>{{ totaldamageslamdown }} de daño físico</physicalDamage>.<br /><br />En forma <keywordMajor>Órdago</keywordMajor>, se mejoran sus habilidades y obtiene un <attackSpeed>{{ attackspeed*100 }}% de velocidad de ataque</attackSpeed>, un {{ armorpenpercent*100 }}% de penetración de armadura adicional y un <omnivamp>{{ omnivamp*100 }}% de omnisucción</omnivamp>, pero pierde un <healing>{{ healthlost*100 }}% de vida máxima</healing>, un <scaleArmor>{{ defenseslost*100 }}% de armadura adicional</scaleArmor> y un <scaleMR>{{ defenseslost*100 }}% de resistencia mágica adicional</scaleMR>.{{ spellmodifierdescriptionappend }}",
+      "vars": []
+    }
+  ],
+  "stats": {
+    "armor": 36,
+    "armorperlevel": 5.2,
+    "attackdamage": 64,
+    "attackdamageperlevel": 0,
+    "attackrange": 150,
+    "attackspeed": 0.688,
+    "attackspeedperlevel": 2.5,
+    "crit": 0,
+    "critperlevel": 0,
+    "hp": 625,
+    "hpperlevel": 120,
+    "hpregen": 9.5,
+    "hpregenperlevel": 1,
+    "movespeed": 330,
+    "mp": 320,
+    "mpperlevel": 60,
+    "mpregen": 7,
+    "mpregenperlevel": 1,
+    "spellblock": 30,
+    "spellblockperlevel": 2.1
+  },
+  "tags": [
+    "Tank",
+    "Fighter"
+  ],
+  "title": "el Orgullo de Nazumah"
+}

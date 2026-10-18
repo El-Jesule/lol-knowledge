@@ -1,0 +1,802 @@
+{
+  "allytips": [
+    "El posicionamiento de las torretas puede resultar decisivo en una batalla. Lo mejor suele ser colocarlas de manera que unas puedan apoyar a las otras, pero si el enemigo dispone de mucho daño de área, tus torretas no durarán mucho. Colocar torretas en la maleza puede otorgarte la ventaja del ataque sorpresa.",
+    "La supervivencia de Heimerdinger radica en gran medida en su Granada de Tormenta de Electrones. La ralentización y el aturdimiento mantienen a raya a sus enemigos el tiempo suficiente para poder dañarlos, pero también es su primera línea de defensa contra ataques sorpresa.",
+    "Dispersar los Microcohetes hextech suele ser de gran ayuda para aumentar el daño y la eficacia contra varios objetivos, pero concentrarlos en el mismo objetivo es lo que realmente desnivela el combate."
+  ],
+  "blurb": "El excéntrico profesor Cecil B. Heimerdinger es considerado una de las mentes más innovadoras y uno de los inventores más admirados de la historia. Como miembro distinguido más antiguo del Consejo de Piltover, ha sido testigo de lo mejor y lo peor de la...",
+  "enemytips": [
+    "Es más recomendable destruir todas las torretas de Heimerdinger a la vez con la ayuda de súbditos que luchar contra ellas de una en una.",
+    "Presta mucha atención a la ¡Mejora! de Heimerdinger, gracias a la que se suele ir de rositas. En cuanto se termine su definitiva, ¡a por él!"
+  ],
+  "id": "Heimerdinger",
+  "image": {
+    "full": "Heimerdinger.png",
+    "group": "champion",
+    "h": 48,
+    "sprite": "champion1.png",
+    "w": 48,
+    "x": 192,
+    "y": 48
+  },
+  "info": {
+    "attack": 2,
+    "defense": 6,
+    "difficulty": 8,
+    "magic": 8
+  },
+  "key": "74",
+  "lore": "El excéntrico profesor Cecil B. Heimerdinger es considerado una de las mentes más innovadoras y uno de los inventores más admirados de la historia. Como miembro distinguido más antiguo del Consejo de Piltover, ha sido testigo de lo mejor y lo peor de la ciudad en su eterna pugna por el progreso. Aun así, este brillante científico y profesor no desiste en seguir mejorando las vidas de los ciudadanos con sus originales inventos.",
+  "name": "Heimerdinger",
+  "partype": "Maná",
+  "passive": {
+    "description": "Obtén velocidad de movimiento al estar cerca de torres aliadas y de torretas desplegadas por Heimerdinger.",
+    "image": {
+      "full": "Heimerdinger_Passive.png",
+      "group": "passive",
+      "h": 48,
+      "sprite": "passive1.png",
+      "w": 48,
+      "x": 192,
+      "y": 48
+    },
+    "name": "Afinidad hextech"
+  },
+  "recommended": [],
+  "skins": [
+    {
+      "chromas": false,
+      "id": "74000",
+      "name": "default",
+      "num": 0
+    },
+    {
+      "chromas": false,
+      "id": "74001",
+      "name": "Heimerdinger invasor alienígena",
+      "num": 1
+    },
+    {
+      "chromas": false,
+      "id": "74002",
+      "name": "Heimerdinger zona explosiva",
+      "num": 2
+    },
+    {
+      "chromas": false,
+      "id": "74003",
+      "name": "Heimerdinger taller de Piltover",
+      "num": 3
+    },
+    {
+      "chromas": false,
+      "id": "74004",
+      "name": "Nievemerdinger",
+      "num": 4
+    },
+    {
+      "chromas": false,
+      "id": "74005",
+      "name": "Heimerdinger materiales peligrosos",
+      "num": 5
+    },
+    {
+      "chromas": false,
+      "id": "74006",
+      "name": "Heimerdinger domador de dragones",
+      "num": 6
+    },
+    {
+      "chromas": false,
+      "id": "74015",
+      "name": "Heimerdinger fiesta en la piscina",
+      "num": 15
+    },
+    {
+      "chromas": false,
+      "id": "74016",
+      "name": "Heimerdinger fiesta en la piscina (rubí)",
+      "num": 16,
+      "parentSkin": 15
+    },
+    {
+      "chromas": false,
+      "id": "74017",
+      "name": "Heimerdinger fiesta en la piscina (amatista)",
+      "num": 17,
+      "parentSkin": 15
+    },
+    {
+      "chromas": false,
+      "id": "74018",
+      "name": "Heimerdinger fiesta en la piscina (citrino)",
+      "num": 18,
+      "parentSkin": 15
+    },
+    {
+      "chromas": false,
+      "id": "74019",
+      "name": "Heimerdinger fiesta en la piscina (aguamarina)",
+      "num": 19,
+      "parentSkin": 15
+    },
+    {
+      "chromas": false,
+      "id": "74020",
+      "name": "Heimerdinger fiesta en la piscina (esmeralda)",
+      "num": 20,
+      "parentSkin": 15
+    },
+    {
+      "chromas": false,
+      "id": "74021",
+      "name": "Heimerdinger fiesta en la piscina (obsidiana)",
+      "num": 21,
+      "parentSkin": 15
+    },
+    {
+      "chromas": false,
+      "id": "74022",
+      "name": "Heimerdinger fiesta en la piscina (cuarzo rosa)",
+      "num": 22,
+      "parentSkin": 15
+    },
+    {
+      "chromas": true,
+      "id": "74023",
+      "name": "Heimerdinger fiesta en la piscina (arcoíris)",
+      "num": 23,
+      "parentSkin": 15
+    },
+    {
+      "chromas": false,
+      "id": "74024",
+      "name": "Heimieldinger",
+      "num": 24
+    },
+    {
+      "chromas": false,
+      "id": "74025",
+      "name": "Heimieldinger (rubí)",
+      "num": 25,
+      "parentSkin": 24
+    },
+    {
+      "chromas": false,
+      "id": "74026",
+      "name": "Heimieldinger (zafiro)",
+      "num": 26,
+      "parentSkin": 24
+    },
+    {
+      "chromas": false,
+      "id": "74027",
+      "name": "Heimieldinger (tanzanita)",
+      "num": 27,
+      "parentSkin": 24
+    },
+    {
+      "chromas": false,
+      "id": "74028",
+      "name": "Heimieldinger (esmeralda)",
+      "num": 28,
+      "parentSkin": 24
+    },
+    {
+      "chromas": false,
+      "id": "74029",
+      "name": "Heimieldinger (cuarzo rosa)",
+      "num": 29,
+      "parentSkin": 24
+    },
+    {
+      "chromas": false,
+      "id": "74030",
+      "name": "Heimieldinger (perla)",
+      "num": 30,
+      "parentSkin": 24
+    },
+    {
+      "chromas": false,
+      "id": "74031",
+      "name": "Heimieldinger (obsidiana)",
+      "num": 31,
+      "parentSkin": 24
+    },
+    {
+      "chromas": true,
+      "id": "74032",
+      "name": "Heimieldinger (arcoíris)",
+      "num": 32,
+      "parentSkin": 24
+    },
+    {
+      "chromas": false,
+      "id": "74033",
+      "name": "Heimerdinger profesor de Arcane",
+      "num": 33
+    },
+    {
+      "chromas": false,
+      "id": "74034",
+      "name": "Heimerdinger profesor de Arcane (ejemplar)",
+      "num": 34,
+      "parentSkin": 33
+    }
+  ],
+  "spells": [
+    {
+      "cooldown": [
+        1,
+        1,
+        1,
+        1,
+        1
+      ],
+      "cooldownBurn": "1",
+      "cost": [
+        20,
+        20,
+        20,
+        20,
+        20
+      ],
+      "costBurn": "20",
+      "costType": " kit de torreta y {{ cost }} de maná",
+      "datavalues": {},
+      "description": "Heimerdinger despliega una torreta de fuego rápido equipada con un segundo cañón de ataque (las torretas infligen la mitad de daño a las torres).",
+      "effect": [
+        null,
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          900,
+          900,
+          900,
+          900,
+          900
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ]
+      ],
+      "effectBurn": [
+        null,
+        "0",
+        "0",
+        "0",
+        "0",
+        "900",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0"
+      ],
+      "id": "HeimerdingerQ",
+      "image": {
+        "full": "HeimerdingerQ.png",
+        "group": "spell",
+        "h": 48,
+        "sprite": "spell5.png",
+        "w": 48,
+        "x": 0,
+        "y": 48
+      },
+      "leveltip": {
+        "effect": [
+          "{{ basedamage }} -> {{ basedamageNL }}",
+          "{{ basedamagebeam }} -> {{ basedamagebeamNL }}"
+        ],
+        "label": [
+          "Daño del cañón",
+          "Daño del rayo"
+        ]
+      },
+      "maxammo": "3",
+      "maxrank": 5,
+      "name": "Torreta evolucionada H-28 G",
+      "range": [
+        350,
+        350,
+        350,
+        350,
+        350
+      ],
+      "rangeBurn": "350",
+      "resource": "{{ kitcost }} kit de torreta y {{ cost }} de maná",
+      "tooltip": "Heimerdinger construye una <keywordMajor>torreta</keywordMajor> que ataca a los enemigos cercanos. Heimerdinger puede tener {{ maxturrets }} torretas activas al mismo tiempo. Las <keywordMajor>torretas</keywordMajor> se cargan gradualmente. Cuando se cargan al máximo, disparan un ataque más poderoso.<br /><br />Si Heimerdinger se aleja demasiado, sus <keywordMajor>torretas</keywordMajor> se desactivarán tras 8 s.<br /><br />Esta habilidad tiene {{ maxkits }} cargas.{{ spellmodifierdescriptionappend }}",
+      "vars": []
+    },
+    {
+      "cooldown": [
+        11,
+        10,
+        9,
+        8,
+        7
+      ],
+      "cooldownBurn": "11/10/9/8/7",
+      "cost": [
+        50,
+        60,
+        70,
+        80,
+        90
+      ],
+      "costBurn": "50/60/70/80/90",
+      "costType": " {{ abilityresourcename }}",
+      "datavalues": {},
+      "description": "Heimerdinger dispara proyectiles de largo alcance que convergen en su cursor.",
+      "effect": [
+        null,
+        [
+          60,
+          90,
+          120,
+          150,
+          180
+        ],
+        [
+          12,
+          18,
+          24,
+          30,
+          36
+        ],
+        [
+          25,
+          25,
+          25,
+          25,
+          25
+        ],
+        [
+          20,
+          20,
+          20,
+          20,
+          20
+        ],
+        [
+          30,
+          30,
+          30,
+          30,
+          30
+        ],
+        [
+          108,
+          162,
+          216,
+          270,
+          324
+        ],
+        [
+          5,
+          5,
+          5,
+          5,
+          5
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ]
+      ],
+      "effectBurn": [
+        null,
+        "60/90/120/150/180",
+        "12/18/24/30/36",
+        "25",
+        "20",
+        "30",
+        "108/162/216/270/324",
+        "5",
+        "0",
+        "0",
+        "0"
+      ],
+      "id": "HeimerdingerW",
+      "image": {
+        "full": "HeimerdingerW.png",
+        "group": "spell",
+        "h": 48,
+        "sprite": "spell5.png",
+        "w": 48,
+        "x": 48,
+        "y": 48
+      },
+      "leveltip": {
+        "effect": [
+          "{{ cooldown }} -> {{ cooldownNL }}",
+          "{{ basedamage }} -> {{ basedamageNL }}",
+          "{{ cost }} -> {{ costNL }}"
+        ],
+        "label": [
+          "Enfriamiento",
+          "Daño",
+          "Coste de @AbilityResourceName@"
+        ]
+      },
+      "maxammo": "-1",
+      "maxrank": 5,
+      "name": "Microcohetes hextech",
+      "range": [
+        1325,
+        1325,
+        1325,
+        1325,
+        1325
+      ],
+      "rangeBurn": "1325",
+      "resource": "{{ cost }} {{ abilityresourcename }}",
+      "tooltip": "Heimerdinger dispara una andanada de {{ rockets }} cohetes que infligen <magicDamage>{{ damage }} de daño mágico</magicDamage> al primer enemigo golpeado. Los golpes de cohetes adicionales infligen menos daño.<br /><br />Daño máximo: <magicDamage>{{ totaldamage }} de daño mágico</magicDamage>.<br /><br />Las <keywordMajor>torretas</keywordMajor> cercanas aumentan su carga un 20% por cada cohete que golpee a un campeón.{{ spellmodifierdescriptionappend }}",
+      "vars": []
+    },
+    {
+      "cooldown": [
+        11,
+        11,
+        11,
+        11,
+        11
+      ],
+      "cooldownBurn": "11",
+      "cost": [
+        85,
+        85,
+        85,
+        85,
+        85
+      ],
+      "costBurn": "85",
+      "costType": " {{ abilityresourcename }}",
+      "datavalues": {},
+      "description": "Heimerdinger lanza una granada que causa daño, aturde a las unidades que reciben el impacto de forma directa y ralentiza a las unidades cercanas.",
+      "effect": [
+        null,
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ]
+      ],
+      "effectBurn": [
+        null,
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0"
+      ],
+      "id": "HeimerdingerE",
+      "image": {
+        "full": "HeimerdingerE.png",
+        "group": "spell",
+        "h": 48,
+        "sprite": "spell5.png",
+        "w": 48,
+        "x": 96,
+        "y": 48
+      },
+      "leveltip": {
+        "effect": [
+          "{{ basedamage }} -> {{ basedamageNL }}"
+        ],
+        "label": [
+          "Daño"
+        ]
+      },
+      "maxammo": "-1",
+      "maxrank": 5,
+      "name": "Granada de tormenta de electrones CH-2",
+      "range": [
+        970,
+        970,
+        970,
+        970,
+        970
+      ],
+      "rangeBurn": "970",
+      "resource": "{{ cost }} {{ abilityresourcename }}",
+      "tooltip": "Heimerdinger lanza una granada que inflige <magicDamage>{{ damage }} de daño mágico</magicDamage> en un área y <status>ralentiza</status> un {{ slowpercent.0*100 }}% durante {{ slowduration }} s. Los enemigos que estén en el centro se ven <status>aturdidos</status> durante {{ stunduration }} s.<br /><br />Al golpear a un campeón, las <keywordMajor>torretas</keywordMajor> cercanas se cargan por completo.{{ spellmodifierdescriptionappend }}",
+      "vars": []
+    },
+    {
+      "cooldown": [
+        100,
+        85,
+        70
+      ],
+      "cooldownBurn": "100/85/70",
+      "cost": [
+        100,
+        100,
+        100
+      ],
+      "costBurn": "100",
+      "costType": " {{ abilityresourcename }}",
+      "datavalues": {},
+      "description": "Heimerdinger inventa una mejora con la que aumenta los efectos de su próxima habilidad. ",
+      "effect": [
+        null,
+        [
+          100,
+          140,
+          180
+        ],
+        [
+          80,
+          80,
+          80
+        ],
+        [
+          1.5,
+          1.5,
+          1.5
+        ],
+        [
+          0.12,
+          0.12,
+          0.12
+        ],
+        [
+          500,
+          690,
+          865
+        ],
+        [
+          0.45,
+          0.45,
+          0.45
+        ],
+        [
+          80,
+          100,
+          120
+        ],
+        [
+          135,
+          180,
+          225
+        ],
+        [
+          28,
+          39,
+          49
+        ],
+        [
+          150,
+          250,
+          350
+        ]
+      ],
+      "effectBurn": [
+        null,
+        "100/140/180",
+        "80",
+        "1.5",
+        "0.12",
+        "500/690/865",
+        "0.45",
+        "80/100/120",
+        "135/180/225",
+        "28/39/49",
+        "150/250/350"
+      ],
+      "id": "HeimerdingerR",
+      "image": {
+        "full": "HeimerdingerR.png",
+        "group": "spell",
+        "h": 48,
+        "sprite": "spell5.png",
+        "w": 48,
+        "x": 144,
+        "y": 48
+      },
+      "leveltip": {
+        "effect": [
+          "{{ cooldown }} -> {{ cooldownNL }}",
+          "{{ qultbasedamage }} -> {{ qultbasedamageNL }}",
+          "{{ qultbasedamagebeam }} -> {{ qultbasedamagebeamNL }}",
+          "{{ wultbasedamage }} -> {{ wultbasedamageNL }}",
+          "{{ wulttotalbasedamage }} -> {{ wulttotalbasedamageNL }}",
+          "{{ eultbasedamage }} -> {{ eultbasedamageNL }}"
+        ],
+        "label": [
+          "Enfriamiento",
+          "Daño del cañón de Torreta de élite",
+          "Daño del rayo de la torreta",
+          "Daño de rayo de torreta",
+          "Daño máximo de Enjambre de cohetes",
+          "Daño de Granada de relámpagos"
+        ]
+      },
+      "maxammo": "-1",
+      "maxrank": 3,
+      "name": "¡MEJORA!",
+      "range": [
+        1,
+        1,
+        1
+      ],
+      "rangeBurn": "1",
+      "resource": "{{ cost }} {{ abilityresourcename }}",
+      "tooltip": "Heimerdinger mejora su siguiente habilidad básica.<br /><br /><spellName>Torreta de élite H-28Q:</spellName> Coloca una <keywordMajor>torreta</keywordMajor> mejorada durante 8 s. Esta torreta no cuenta para el máximo de torretas de Heimerdinger, e inflige <magicDamage>{{ qultdamage }} de daño mágico</magicDamage> por disparo y <magicDamage>{{ qultdamagebeam }} de daño mágico</magicDamage> por disparo cargado. Sus ataques infligen daño en un área y <status>ralentizan</status> un 25% durante 2 s. Además, la torreta es inmune al control de adversario.<br /><br /><spellName>Enjambre de cohetes hextech:</spellName> Dispara 4 andanadas de cohetes, cada uno de los cuales inflige <magicDamage>{{ wultdamage }} de daño mágico</magicDamage>. Los campeones y monstruos de la jungla golpeados por múltiples cohetes reciben daño reducido, mientras que los súbditos reciben más daño. Daño máximo: <magicDamage>{{ wulttotaldamage }} de daño mágico</magicDamage>. <br /><br /><spellName>Granada de relámpagos CH-3X</spellName>: Lanza una granada que rebota y suelta tres descargas que infligen <magicDamage>{{ eultdamage }} de daño mágico</magicDamage>. Las áreas de <status>aturdimiento</status> y <status>ralentización</status> son más grandes.<br /><br /><recast>Reactivar la habilidad:</recast> Cancela esta habilidad.{{ spellmodifierdescriptionappend }}",
+      "vars": []
+    }
+  ],
+  "stats": {
+    "armor": 19,
+    "armorperlevel": 4.2,
+    "attackdamage": 56,
+    "attackdamageperlevel": 0,
+    "attackrange": 550,
+    "attackspeed": 0.658,
+    "attackspeedperlevel": 1.36,
+    "crit": 0,
+    "critperlevel": 0,
+    "hp": 558,
+    "hpperlevel": 105,
+    "hpregen": 7,
+    "hpregenperlevel": 0.55,
+    "movespeed": 340,
+    "mp": 385,
+    "mpperlevel": 20,
+    "mpregen": 8,
+    "mpregenperlevel": 0.8,
+    "spellblock": 30,
+    "spellblockperlevel": 1.3
+  },
+  "tags": [
+    "Mage",
+    "Support"
+  ],
+  "title": "El Inventor Venerado"
+}

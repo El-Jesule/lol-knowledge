@@ -1,0 +1,965 @@
+{
+  "allytips": [
+    "Un Rompemuros completamente cargado infligirá el doble de daño. Es ideal para atrapar y rematar a enemigos que huyen.",
+    "Fuerza implacable inflige daño completo a todos los afectados por la onda de choque. Usadlo en súbditos en la calle para golpear a los enemigos que se ocultan detrás de ellos.",
+    "Cese y desistimiento es una poderosa herramienta de iniciación, pero recordad no separaros mucho del resto de vuestro equipo."
+  ],
+  "blurb": "Vi, criada en las perversas calles de Zaun, es una mujer impulsiva y temeraria con muy poco respeto por la autoridad. Siempre ha sido una superviviente nata, gracias a su problemática juventud en Piltover y su injustamente larga reclusión en la...",
+  "enemytips": [
+    "Un Acoso y derribo completamente cargado inflige el doble de daño. Si ves que Vi empieza a cargar, aléjate o intenta evitarlo.",
+    "Destrozará tu armadura y ganará velocidad de ataque si consigue golpearte en tres ocasiones consecutivas. Intenta evitar los intercambios largos de golpes contra ella.",
+    "No se puede detener a Vi mientras usa su definitiva. Recuerda que debes reservar tus efectos de control de adversario para cuando haya acabado de cargar."
+  ],
+  "id": "Vi",
+  "image": {
+    "full": "Vi.png",
+    "group": "champion",
+    "h": 48,
+    "sprite": "champion5.png",
+    "w": 48,
+    "x": 48,
+    "y": 0
+  },
+  "info": {
+    "attack": 8,
+    "defense": 5,
+    "difficulty": 4,
+    "magic": 3
+  },
+  "key": "254",
+  "lore": "Vi, criada en las perversas calles de Zaun, es una mujer impulsiva y temeraria con muy poco respeto por la autoridad. Siempre ha sido una superviviente nata, gracias a su problemática juventud en Piltover y su injustamente larga reclusión en la Penitenciaría Aguaserena. Ahora trabaja con los agentes de Piltover para mantener la paz en vez de acabar con ella. Se vale de sus poderosos guanteletes hextech, que pueden atravesar tanto paredes como a criminales con la misma facilidad.",
+  "name": "Vi",
+  "partype": "Maná",
+  "passive": {
+    "description": "Vi carga un escudo con el paso del tiempo. El escudo se puede activar alcanzando al enemigo con una habilidad.",
+    "image": {
+      "full": "ViPassive.png",
+      "group": "passive",
+      "h": 48,
+      "sprite": "passive5.png",
+      "w": 48,
+      "x": 48,
+      "y": 0
+    },
+    "name": "Escudo de rayo"
+  },
+  "recommended": [],
+  "skins": [
+    {
+      "chromas": false,
+      "id": "254000",
+      "name": "default",
+      "num": 0
+    },
+    {
+      "chromas": false,
+      "id": "254001",
+      "name": "Vi golpe de neón",
+      "num": 1
+    },
+    {
+      "chromas": true,
+      "id": "254002",
+      "name": "Oficial Vi",
+      "num": 2
+    },
+    {
+      "chromas": false,
+      "id": "254003",
+      "name": "Vi galante",
+      "num": 3
+    },
+    {
+      "chromas": false,
+      "id": "254004",
+      "name": "Vi demoníaca",
+      "num": 4
+    },
+    {
+      "chromas": false,
+      "id": "254005",
+      "name": "Vi Reinos Combatientes",
+      "num": 5
+    },
+    {
+      "chromas": false,
+      "id": "254006",
+      "name": "Oficial Vi (perla)",
+      "num": 6,
+      "parentSkin": 2
+    },
+    {
+      "chromas": false,
+      "id": "254007",
+      "name": "Oficial Vi (aguamarina)",
+      "num": 7,
+      "parentSkin": 2
+    },
+    {
+      "chromas": false,
+      "id": "254008",
+      "name": "Oficial Vi (rubí)",
+      "num": 8,
+      "parentSkin": 2
+    },
+    {
+      "chromas": false,
+      "id": "254009",
+      "name": "Oficial Vi (esmeralda)",
+      "num": 9,
+      "parentSkin": 2
+    },
+    {
+      "chromas": false,
+      "id": "254010",
+      "name": "Oficial Vi (obsidiana)",
+      "num": 10,
+      "parentSkin": 2
+    },
+    {
+      "chromas": false,
+      "id": "254011",
+      "name": "PROYECTO: Vi",
+      "num": 11
+    },
+    {
+      "chromas": true,
+      "id": "254012",
+      "name": "Vi rompecorazones",
+      "num": 12
+    },
+    {
+      "chromas": false,
+      "id": "254013",
+      "name": "Vi rompecorazones (rubí)",
+      "num": 13,
+      "parentSkin": 12
+    },
+    {
+      "chromas": false,
+      "id": "254014",
+      "name": "Vi rompecorazones (cuarzo rosa)",
+      "num": 14,
+      "parentSkin": 12
+    },
+    {
+      "chromas": false,
+      "id": "254015",
+      "name": "Vi rompecorazones (ojo de gato)",
+      "num": 15,
+      "parentSkin": 12
+    },
+    {
+      "chromas": false,
+      "id": "254016",
+      "name": "Vi rompecorazones (turquesa)",
+      "num": 16,
+      "parentSkin": 12
+    },
+    {
+      "chromas": false,
+      "id": "254017",
+      "name": "Vi rompecorazones (amatista)",
+      "num": 17,
+      "parentSkin": 12
+    },
+    {
+      "chromas": false,
+      "id": "254018",
+      "name": "Vi rompecorazones (obsidiana)",
+      "num": 18,
+      "parentSkin": 12
+    },
+    {
+      "chromas": false,
+      "id": "254019",
+      "name": "Vi rompecorazones (perla)",
+      "num": 19,
+      "parentSkin": 12
+    },
+    {
+      "chromas": true,
+      "id": "254020",
+      "name": "Vi PsyOps",
+      "num": 20
+    },
+    {
+      "chromas": false,
+      "id": "254021",
+      "name": "Vi PsyOps (rubí)",
+      "num": 21,
+      "parentSkin": 20
+    },
+    {
+      "chromas": false,
+      "id": "254022",
+      "name": "Vi PsyOps (arenisca)",
+      "num": 22,
+      "parentSkin": 20
+    },
+    {
+      "chromas": false,
+      "id": "254023",
+      "name": "Vi PsyOps (obsidiana)",
+      "num": 23,
+      "parentSkin": 20
+    },
+    {
+      "chromas": false,
+      "id": "254024",
+      "name": "Vi PsyOps (cuarzo rosa)",
+      "num": 24,
+      "parentSkin": 20
+    },
+    {
+      "chromas": false,
+      "id": "254025",
+      "name": "Vi PsyOps (turquesa)",
+      "num": 25,
+      "parentSkin": 20
+    },
+    {
+      "chromas": false,
+      "id": "254026",
+      "name": "Vi PsyOps (caza)",
+      "num": 26,
+      "parentSkin": 20
+    },
+    {
+      "chromas": false,
+      "id": "254027",
+      "name": "Vi PsyOps (granito)",
+      "num": 27,
+      "parentSkin": 20
+    },
+    {
+      "chromas": false,
+      "id": "254028",
+      "name": "Vi PsyOps (tanzanita)",
+      "num": 28,
+      "parentSkin": 20
+    },
+    {
+      "chromas": false,
+      "id": "254029",
+      "name": "Vi de la Ciudad Subterránea de Arcane",
+      "num": 29
+    },
+    {
+      "chromas": true,
+      "id": "254030",
+      "name": "Vi afligida",
+      "num": 30
+    },
+    {
+      "chromas": false,
+      "id": "254031",
+      "name": "Vi afligida (rubí)",
+      "num": 31,
+      "parentSkin": 30
+    },
+    {
+      "chromas": false,
+      "id": "254032",
+      "name": "Vi afligida (ojo de gato)",
+      "num": 32,
+      "parentSkin": 30
+    },
+    {
+      "chromas": false,
+      "id": "254033",
+      "name": "Vi afligida (peridoto)",
+      "num": 33,
+      "parentSkin": 30
+    },
+    {
+      "chromas": false,
+      "id": "254034",
+      "name": "Vi afligida (turquesa)",
+      "num": 34,
+      "parentSkin": 30
+    },
+    {
+      "chromas": false,
+      "id": "254035",
+      "name": "Vi afligida (aguamarina)",
+      "num": 35,
+      "parentSkin": 30
+    },
+    {
+      "chromas": false,
+      "id": "254036",
+      "name": "Vi afligida (cuarzo rosa)",
+      "num": 36,
+      "parentSkin": 30
+    },
+    {
+      "chromas": false,
+      "id": "254037",
+      "name": "Vi afligida (obsidiana)",
+      "num": 37,
+      "parentSkin": 30
+    },
+    {
+      "chromas": false,
+      "id": "254038",
+      "name": "Vi afligida (perla)",
+      "num": 38,
+      "parentSkin": 30
+    },
+    {
+      "chromas": true,
+      "id": "254039",
+      "name": "Vi emboscada primigenia",
+      "num": 39
+    },
+    {
+      "chromas": false,
+      "id": "254040",
+      "name": "Vi emboscada primigenia (rubí)",
+      "num": 40,
+      "parentSkin": 39
+    },
+    {
+      "chromas": false,
+      "id": "254041",
+      "name": "Vi emboscada primigenia (amatista)",
+      "num": 41,
+      "parentSkin": 39
+    },
+    {
+      "chromas": false,
+      "id": "254042",
+      "name": "Vi emboscada primigenia (peridoto)",
+      "num": 42,
+      "parentSkin": 39
+    },
+    {
+      "chromas": false,
+      "id": "254043",
+      "name": "Vi emboscada primigenia (zafiro)",
+      "num": 43,
+      "parentSkin": 39
+    },
+    {
+      "chromas": false,
+      "id": "254044",
+      "name": "Vi emboscada primigenia (cuarzo rosa)",
+      "num": 44,
+      "parentSkin": 39
+    },
+    {
+      "chromas": false,
+      "id": "254045",
+      "name": "Vi emboscada primigenia (turquesa)",
+      "num": 45,
+      "parentSkin": 39
+    },
+    {
+      "chromas": false,
+      "id": "254046",
+      "name": "Vi emboscada primigenia (obsidiana)",
+      "num": 46,
+      "parentSkin": 39
+    },
+    {
+      "chromas": false,
+      "id": "254047",
+      "name": "Vi emboscada primigenia (perla)",
+      "num": 47,
+      "parentSkin": 39
+    },
+    {
+      "chromas": false,
+      "id": "254048",
+      "name": "Vi camorrista de Arcane",
+      "num": 48
+    },
+    {
+      "chromas": true,
+      "id": "254049",
+      "name": "Vi T1",
+      "num": 49
+    },
+    {
+      "chromas": false,
+      "id": "254050",
+      "name": "Vi T1 (élite)",
+      "num": 50,
+      "parentSkin": 49
+    }
+  ],
+  "spells": [
+    {
+      "cooldown": [
+        12,
+        10.5,
+        9,
+        7.5,
+        6
+      ],
+      "cooldownBurn": "12/10.5/9/7.5/6",
+      "cost": [
+        50,
+        60,
+        70,
+        80,
+        90
+      ],
+      "costBurn": "50/60/70/80/90",
+      "costType": " {{ abilityresourcename }}",
+      "datavalues": {},
+      "description": "Vi carga sus guanteletes y lanza un puñetazo despedazador cuyo impulso la arrastra hacia delante. Los enemigos a los que golpee se ven desplazados hacia atrás y reciben una acumulación de Abolladuras.",
+      "effect": [
+        null,
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          15,
+          15,
+          15,
+          15,
+          15
+        ],
+        [
+          6,
+          6,
+          6,
+          6,
+          6
+        ],
+        [
+          5,
+          5,
+          5,
+          5,
+          5
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ]
+      ],
+      "effectBurn": [
+        null,
+        "0",
+        "0",
+        "0",
+        "15",
+        "6",
+        "5",
+        "0",
+        "0",
+        "0",
+        "0"
+      ],
+      "id": "ViQ",
+      "image": {
+        "full": "ViQ.png",
+        "group": "spell",
+        "h": 48,
+        "sprite": "spell15.png",
+        "w": 48,
+        "x": 384,
+        "y": 144
+      },
+      "leveltip": {
+        "effect": [
+          "{{ mindamage }} -> {{ mindamageNL }}",
+          "{{ mindamage*2.500000 }} -> {{ mindamagenl*2.500000 }}",
+          "{{ cooldown }} -> {{ cooldownNL }}",
+          "{{ cost }} -> {{ costNL }}"
+        ],
+        "label": [
+          "Daño mínimo",
+          "Daño máximo",
+          "Enfriamiento",
+          "Coste de @AbilityResourceName@"
+        ]
+      },
+      "maxammo": "-1",
+      "maxrank": 5,
+      "name": "Rompemuros",
+      "range": [
+        250,
+        250,
+        250,
+        250,
+        250
+      ],
+      "rangeBurn": "250",
+      "resource": "{{ cost }} {{ abilityresourcename }}",
+      "tooltip": "<charge>Comenzar a cargar:</charge> Vi comienza a cargar un puñetazo poderoso y se <status>ralentiza</status> a sí misma un {{ selfslow }}%.<br /><br /><release>Lanzamiento:</release> Vi se desliza hacia delante, inflige entre <physicalDamage>{{ totaldamage }} y {{ maxdamagetooltip }} de daño físico</physicalDamage> según el tiempo de carga y aplica <spellName>Abolladuras</spellName> a todos los enemigos golpeados. Vi se detiene al chocar contra un campeón enemigo y lo <status>empuja</status> hacia <status>atrás</status>.{{ spellmodifierdescriptionappend }}",
+      "vars": []
+    },
+    {
+      "cooldown": [
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "cooldownBurn": "0",
+      "cost": [
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "costBurn": "0",
+      "costType": "Pasiva",
+      "datavalues": {},
+      "description": "Vi rompe a puñetazos la armadura de su rival, lo que le inflige daño adicional y le otorga a ella velocidad de ataque.",
+      "effect": [
+        null,
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ]
+      ],
+      "effectBurn": [
+        null,
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0"
+      ],
+      "id": "ViW",
+      "image": {
+        "full": "ViW.png",
+        "group": "spell",
+        "h": 48,
+        "sprite": "spell15.png",
+        "w": 48,
+        "x": 432,
+        "y": 144
+      },
+      "leveltip": {
+        "effect": [
+          "{{ maxhealthdamage }}% -> {{ maxhealthdamageNL }}%",
+          "{{ attackspeed }}% -> {{ attackspeedNL }}%"
+        ],
+        "label": [
+          "Daño por vida máxima",
+          "Velocidad de ataque"
+        ]
+      },
+      "maxammo": "-1",
+      "maxrank": 5,
+      "name": "Abolladuras",
+      "range": [
+        750,
+        750,
+        750,
+        750,
+        750
+      ],
+      "rangeBurn": "750",
+      "resource": "Pasiva",
+      "tooltip": "<spellPassive>Pasiva:</spellPassive> Cada tercer ataque contra el mismo objetivo inflige un <physicalDamage>{{ totaldamagetooltip }} de daño físico según la vida máxima</physicalDamage>, reduce un <scaleArmor>{{ shredamount }}% su armadura</scaleArmor> y otorga a Vi un <attackSpeed>{{ attackspeed }}% de velocidad de ataque</attackSpeed> durante {{ sharedbuffsduration }} s. También reduce el enfriamiento restante de <spellName>Escudo de rayo</spellName> en {{ spell.vipassive:cdreductionon3hit }} s.{{ spellmodifierdescriptionappend }}",
+      "vars": []
+    },
+    {
+      "cooldown": [
+        1,
+        1,
+        1,
+        1,
+        1
+      ],
+      "cooldownBurn": "1",
+      "cost": [
+        26,
+        32,
+        38,
+        44,
+        50
+      ],
+      "costBurn": "26/32/38/44/50",
+      "costType": " {{ abilityresourcename }}",
+      "datavalues": {},
+      "description": "El siguiente ataque de Vi atraviesa a su objetivo e inflige daño a los enemigos que tiene detrás.",
+      "effect": [
+        null,
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          50,
+          50,
+          50,
+          50,
+          50
+        ],
+        [
+          1.5,
+          1.5,
+          1.5,
+          1.5,
+          1.5
+        ],
+        [
+          6,
+          6,
+          6,
+          6,
+          6
+        ],
+        [
+          1,
+          1,
+          1,
+          1,
+          1
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ]
+      ],
+      "effectBurn": [
+        null,
+        "0",
+        "0",
+        "50",
+        "1.5",
+        "6",
+        "1",
+        "0",
+        "0",
+        "0",
+        "0"
+      ],
+      "id": "ViE",
+      "image": {
+        "full": "ViE.png",
+        "group": "spell",
+        "h": 48,
+        "sprite": "spell16.png",
+        "w": 48,
+        "x": 0,
+        "y": 0
+      },
+      "leveltip": {
+        "effect": [
+          "{{ basedamage }} -> {{ basedamageNL }}",
+          "{{ ammorechargetime }} -> {{ ammorechargetimeNL }}",
+          "{{ cost }} -> {{ costNL }}"
+        ],
+        "label": [
+          "Daño básico",
+          "Tiempo de carga",
+          "Coste de @AbilityResourceName@"
+        ]
+      },
+      "maxammo": "2",
+      "maxrank": 5,
+      "name": "Fuerza implacable",
+      "range": [
+        400,
+        400,
+        400,
+        400,
+        400
+      ],
+      "rangeBurn": "400",
+      "resource": "{{ cost }} {{ abilityresourcename }}",
+      "tooltip": "El siguiente ataque de Vi inflige <physicalDamage>{{ totaldamagetooltip }} de daño físico</physicalDamage> al objetivo y a los enemigos detrás de él.<br /><br />Esta habilidad tiene 2 cargas ({{ ammorechargetime }} s de recarga).{{ spellmodifierdescriptionappend }}",
+      "vars": []
+    },
+    {
+      "cooldown": [
+        140,
+        115,
+        90
+      ],
+      "cooldownBurn": "140/115/90",
+      "cost": [
+        100,
+        100,
+        100
+      ],
+      "costBurn": "100",
+      "costType": " {{ abilityresourcename }}",
+      "datavalues": {},
+      "description": "Vi se lanza hasta un enemigo, apartando a un lado a todo el que se cruza en su camino. Cuando alcanza al objetivo, lo lanza por los aires, salta a por él y lo derriba de un golpe.",
+      "effect": [
+        null,
+        [
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0
+        ]
+      ],
+      "effectBurn": [
+        null,
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0"
+      ],
+      "id": "ViR",
+      "image": {
+        "full": "ViR.png",
+        "group": "spell",
+        "h": 48,
+        "sprite": "spell16.png",
+        "w": 48,
+        "x": 48,
+        "y": 0
+      },
+      "leveltip": {
+        "effect": [
+          "{{ rbasedamage }} -> {{ rbasedamageNL }}",
+          "{{ cooldown }} -> {{ cooldownNL }}"
+        ],
+        "label": [
+          "Daño básico",
+          "Enfriamiento"
+        ]
+      },
+      "maxammo": "-1",
+      "maxrank": 3,
+      "name": "Cese y desistimiento",
+      "range": [
+        800,
+        800,
+        800
+      ],
+      "rangeBurn": "800",
+      "resource": "{{ cost }} {{ abilityresourcename }}",
+      "tooltip": "Vi marca a un campeón enemigo, lo revela y se desliza de forma imparable hacia él. Al llegar, Vi lo <status>levanta</status> por los <status>aires</status> durante {{ rstunduration }} s e inflige <physicalDamage>{{ damage }} de daño físico</physicalDamage>.<br /><br />Inflige daño a cualquier otro enemigo contra el que Vi impacte, lo empuja a un lado y lo <status>aturde</status> durante {{ secondarytargetstunduration }} s.{{ spellmodifierdescriptionappend }}",
+      "vars": []
+    }
+  ],
+  "stats": {
+    "armor": 30,
+    "armorperlevel": 4.7,
+    "attackdamage": 61,
+    "attackdamageperlevel": 0,
+    "attackrange": 125,
+    "attackspeed": 0.644,
+    "attackspeedperlevel": 2,
+    "crit": 0,
+    "critperlevel": 0,
+    "hp": 655,
+    "hpperlevel": 105,
+    "hpregen": 10,
+    "hpregenperlevel": 1,
+    "movespeed": 340,
+    "mp": 295,
+    "mpperlevel": 65,
+    "mpregen": 8,
+    "mpregenperlevel": 0.65,
+    "spellblock": 32,
+    "spellblockperlevel": 2.05
+  },
+  "tags": [
+    "Fighter",
+    "Assassin"
+  ],
+  "title": "La Agente de Piltover"
+}

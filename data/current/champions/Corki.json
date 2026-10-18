@@ -1,0 +1,922 @@
+{
+  "allytips": [
+    "Bomba de fósforo se puede usar para revelar a las unidades enemigas que puedan estar ocultas en la maleza cercana.",
+    "Valquiria se puede usar también de forma defensiva: prueba a usarla para escapar rápidamente.",
+    "Corki puede seguir atacando mientras usa el Cañón de Repetición. Mejorar el Cañón de repetición es fundamental para dominar a Corki."
+  ],
+  "blurb": "El piloto yordle Corki adora dos cosas por encima de todas las demás: volar y su glamuroso bigote. Aunque no necesariamente en ese orden. Tras abandonar la Ciudad de Bandle, se estableció en Piltover y se enamoró de las máquinas maravillosas que allí...",
+  "enemytips": [
+    "Cuidado con la Andanada de proyectiles de Corki. Inflige daño como salpicadura, por lo que podría darte incluso si te ocultas detrás de tus súbditos.",
+    "Corki es vulnerable después de usar su Valquiria o su Entrega especial, así que si las utiliza para entrar en combate, procura centrarte en él."
+  ],
+  "id": "Corki",
+  "image": {
+    "full": "Corki.png",
+    "group": "champion",
+    "h": 48,
+    "sprite": "champion0.png",
+    "w": 48,
+    "x": 192,
+    "y": 96
+  },
+  "info": {
+    "attack": 8,
+    "defense": 3,
+    "difficulty": 6,
+    "magic": 6
+  },
+  "key": "42",
+  "lore": "El piloto yordle Corki adora dos cosas por encima de todas las demás: volar y su glamuroso bigote. Aunque no necesariamente en ese orden. Tras abandonar la Ciudad de Bandle, se estableció en Piltover y se enamoró de las máquinas maravillosas que allí encontró. Se dedicó al desarrollo de artilugios voladores, liderando una fuerza de defensa aérea de veteranos experimentados conocidos como las Serpientes Aulladoras. Manteniendo la calma bajo presión, Corki patrulla los cielos de su hogar adoptivo, y nunca ha encontrado un problema que una buena andanada de proyectiles no pudiese resolver.",
+  "name": "Corki",
+  "partype": "Maná",
+  "passive": {
+    "description": "Un porcentaje del daño de ataque básico de Corki se inflige como <trueDamage>daño verdadero</trueDamage> adicional.",
+    "image": {
+      "full": "Corki_RapidReload.png",
+      "group": "passive",
+      "h": 48,
+      "sprite": "passive0.png",
+      "w": 48,
+      "x": 192,
+      "y": 96
+    },
+    "name": "Municiones hextech"
+  },
+  "recommended": [],
+  "skins": [
+    {
+      "chromas": false,
+      "id": "42000",
+      "name": "default",
+      "num": 0
+    },
+    {
+      "chromas": false,
+      "id": "42001",
+      "name": "Corki ovni",
+      "num": 1
+    },
+    {
+      "chromas": false,
+      "id": "42002",
+      "name": "Corki trineo",
+      "num": 2
+    },
+    {
+      "chromas": false,
+      "id": "42003",
+      "name": "Corki barón rojo",
+      "num": 3
+    },
+    {
+      "chromas": false,
+      "id": "42004",
+      "name": "Corki tuneado",
+      "num": 4
+    },
+    {
+      "chromas": false,
+      "id": "42005",
+      "name": "Corki a lomos de Urf",
+      "num": 5
+    },
+    {
+      "chromas": true,
+      "id": "42006",
+      "name": "Corki ala de dragón",
+      "num": 6
+    },
+    {
+      "chromas": false,
+      "id": "42007",
+      "name": "Corki Fnatic",
+      "num": 7
+    },
+    {
+      "chromas": true,
+      "id": "42008",
+      "name": "Corki de recreativa",
+      "num": 8
+    },
+    {
+      "chromas": false,
+      "id": "42009",
+      "name": "Corki de recreativa (perla)",
+      "num": 9,
+      "parentSkin": 8
+    },
+    {
+      "chromas": false,
+      "id": "42010",
+      "name": "Corki de recreativa (rubí)",
+      "num": 10,
+      "parentSkin": 8
+    },
+    {
+      "chromas": false,
+      "id": "42011",
+      "name": "Corki de recreativa (turquesa)",
+      "num": 11,
+      "parentSkin": 8
+    },
+    {
+      "chromas": false,
+      "id": "42012",
+      "name": "Corki de recreativa (citrino)",
+      "num": 12,
+      "parentSkin": 8
+    },
+    {
+      "chromas": false,
+      "id": "42013",
+      "name": "Corki de recreativa (zafiro)",
+      "num": 13,
+      "parentSkin": 8
+    },
+    {
+      "chromas": false,
+      "id": "42014",
+      "name": "Corki de recreativa (obsidiana)",
+      "num": 14,
+      "parentSkin": 8
+    },
+    {
+      "chromas": false,
+      "id": "42015",
+      "name": "Corki de recreativa (ojo de gato)",
+      "num": 15,
+      "parentSkin": 8
+    },
+    {
+      "chromas": false,
+      "id": "42016",
+      "name": "Corki de recreativa (cuarzo rosa)",
+      "num": 16,
+      "parentSkin": 8
+    },
+    {
+      "chromas": false,
+      "id": "42017",
+      "name": "Corki ala de dragón (dorado)",
+      "num": 17,
+      "parentSkin": 6
+    },
+    {
+      "chromas": true,
+      "id": "42018",
+      "name": "Corki corgi",
+      "num": 18
+    },
+    {
+      "chromas": false,
+      "id": "42019",
+      "name": "Corki corgi (obsidiana)",
+      "num": 19,
+      "parentSkin": 18
+    },
+    {
+      "chromas": false,
+      "id": "42020",
+      "name": "Corki corgi (perla)",
+      "num": 20,
+      "parentSkin": 18
+    },
+    {
+      "chromas": false,
+      "id": "42021",
+      "name": "Corki corgi (rubí)",
+      "num": 21,
+      "parentSkin": 18
+    },
+    {
+      "chromas": false,
+      "id": "42022",
+      "name": "Corki corgi (amatista)",
+      "num": 22,
+      "parentSkin": 18
+    },
+    {
+      "chromas": false,
+      "id": "42023",
+      "name": "Corki corgi (arcoíris)",
+      "num": 23,
+      "parentSkin": 18
+    },
+    {
+      "chromas": false,
+      "id": "42024",
+      "name": "Corki corgi (cuarzo rosa)",
+      "num": 24,
+      "parentSkin": 18
+    },
+    {
+      "chromas": false,
+      "id": "42025",
+      "name": "Corki corgi (aguamarina)",
+      "num": 25,
+      "parentSkin": 18
+    },
+    {
+      "chromas": true,
+      "id": "42026",
+      "name": "Corki astronauta",
+      "num": 26
+    },
+    {
+      "chromas": false,
+      "id": "42027",
+      "name": "Corki astronauta (rubí)",
+      "num": 27,
+      "parentSkin": 26
+    },
+    {
+      "chromas": false,
+      "id": "42028",
+      "name": "Corki astronauta (zafiro)",
+      "num": 28,
+      "parentSkin": 26
+    },
+    {
+      "chromas": false,
+      "id": "42029",
+      "name": "Corki astronauta (ojo de gato)",
+      "num": 29,
+      "parentSkin": 26
+    },
+    {
+      "chromas": false,
+      "id": "42030",
+      "name": "Corki astronauta (cuarzo rosa)",
+      "num": 30,
+      "parentSkin": 26
+    },
+    {
+      "chromas": false,
+      "id": "42031",
+      "name": "Corki astronauta (esmeralda)",
+      "num": 31,
+      "parentSkin": 26
+    },
+    {
+      "chromas": false,
+      "id": "42032",
+      "name": "Corki astronauta (tanzanita)",
+      "num": 32,
+      "parentSkin": 26
+    },
+    {
+      "chromas": false,
+      "id": "42033",
+      "name": "Corki astronauta (turquesa)",
+      "num": 33,
+      "parentSkin": 26
+    },
+    {
+      "chromas": false,
+      "id": "42034",
+      "name": "Corki astronauta (citrino)",
+      "num": 34,
+      "parentSkin": 26
+    },
+    {
+      "chromas": false,
+      "id": "42035",
+      "name": "Corki ala de dragón (meteorito)",
+      "num": 35,
+      "parentSkin": 6
+    },
+    {
+      "chromas": true,
+      "id": "42036",
+      "name": "Corki de juguete",
+      "num": 36
+    },
+    {
+      "chromas": false,
+      "id": "42037",
+      "name": "Corki de juguete (rubí)",
+      "num": 37,
+      "parentSkin": 36
+    },
+    {
+      "chromas": false,
+      "id": "42038",
+      "name": "Corki de juguete (esmeralda)",
+      "num": 38,
+      "parentSkin": 36
+    },
+    {
+      "chromas": false,
+      "id": "42039",
+      "name": "Corki de juguete (cuarzo rosa)",
+      "num": 39,
+      "parentSkin": 36
+    },
+    {
+      "chromas": false,
+      "id": "42040",
+      "name": "Corki de juguete (zafiro)",
+      "num": 40,
+      "parentSkin": 36
+    },
+    {
+      "chromas": false,
+      "id": "42041",
+      "name": "Corki de juguete (turquesa)",
+      "num": 41,
+      "parentSkin": 36
+    },
+    {
+      "chromas": false,
+      "id": "42042",
+      "name": "Corki de juguete (amatista)",
+      "num": 42,
+      "parentSkin": 36
+    },
+    {
+      "chromas": false,
+      "id": "42043",
+      "name": "Corki de juguete (perla)",
+      "num": 43,
+      "parentSkin": 36
+    },
+    {
+      "chromas": false,
+      "id": "42044",
+      "name": "Corki de juguete (obsidiana)",
+      "num": 44,
+      "parentSkin": 36
+    }
+  ],
+  "spells": [
+    {
+      "cooldown": [
+        9,
+        8.5,
+        8,
+        7.5,
+        7
+      ],
+      "cooldownBurn": "9/8.5/8/7.5/7",
+      "cost": [
+        60,
+        65,
+        70,
+        75,
+        80
+      ],
+      "costBurn": "60/65/70/75/80",
+      "costType": " {{ abilityresourcename }}",
+      "datavalues": {},
+      "description": "Corki lanza una bomba luminosa a la ubicación seleccionada e inflige daño mágico a los enemigos cercanos. Además, este ataque revela a las unidades de la zona durante un tiempo.",
+      "effect": [
+        null,
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ]
+      ],
+      "effectBurn": [
+        null,
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0"
+      ],
+      "id": "PhosphorusBomb",
+      "image": {
+        "full": "PhosphorusBomb.png",
+        "group": "spell",
+        "h": 48,
+        "sprite": "spell3.png",
+        "w": 48,
+        "x": 0,
+        "y": 48
+      },
+      "leveltip": {
+        "effect": [
+          "{{ basedamage }} -> {{ basedamageNL }}",
+          "{{ cooldown }} -> {{ cooldownNL }}",
+          "{{ cost }} -> {{ costNL }}"
+        ],
+        "label": [
+          "Daño",
+          "Enfriamiento",
+          "Coste de @AbilityResourceName@"
+        ]
+      },
+      "maxammo": "-1",
+      "maxrank": 5,
+      "name": "Bomba de fósforo",
+      "range": [
+        825,
+        825,
+        825,
+        825,
+        825
+      ],
+      "rangeBurn": "825",
+      "resource": "{{ cost }} {{ abilityresourcename }}",
+      "tooltip": "Corki lanza una bomba que inflige <magicDamage>{{ totaldamage }} de daño mágico</magicDamage>. Revela durante {{ revealduration }} s el área y a los campeones golpeados.{{ spellmodifierdescriptionappend }}",
+      "vars": []
+    },
+    {
+      "cooldown": [
+        20,
+        18,
+        16,
+        14,
+        12
+      ],
+      "cooldownBurn": "20/18/16/14/12",
+      "cost": [
+        80,
+        85,
+        90,
+        95,
+        100
+      ],
+      "costBurn": "80/85/90/95/100",
+      "costType": " {{ abilityresourcename }}",
+      "datavalues": {},
+      "description": "Corki vuela una corta distancia lanzando bombas y dejando tras de sí una estela de fuego, la cual inflige daño a los enemigos que permanezcan dentro.",
+      "effect": [
+        null,
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ]
+      ],
+      "effectBurn": [
+        null,
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0"
+      ],
+      "id": "CarpetBomb",
+      "image": {
+        "full": "CarpetBomb.png",
+        "group": "spell",
+        "h": 48,
+        "sprite": "spell3.png",
+        "w": 48,
+        "x": 48,
+        "y": 48
+      },
+      "leveltip": {
+        "effect": [
+          "{{ basedamage }} -> {{ basedamageNL }}",
+          "{{ cooldown }} -> {{ cooldownNL }}",
+          "{{ cost }} -> {{ costNL }}"
+        ],
+        "label": [
+          "Daño prolongado",
+          "Enfriamiento",
+          "Coste de @AbilityResourceName@"
+        ]
+      },
+      "maxammo": "-1",
+      "maxrank": 5,
+      "name": "Valquiria",
+      "range": [
+        600,
+        600,
+        600,
+        600,
+        600
+      ],
+      "rangeBurn": "600",
+      "resource": "{{ cost }} {{ abilityresourcename }}",
+      "tooltip": "Corki vuela y deja tras de sí una estela de fuego que arde durante {{ trailduration }} s. Los enemigos que estén en el fuego reciben hasta <magicDamage>{{ maximumdamage }} de daño mágico</magicDamage> a lo largo de su duración.{{ spellmodifierdescriptionappend }}",
+      "vars": []
+    },
+    {
+      "cooldown": [
+        12,
+        12,
+        12,
+        12,
+        12
+      ],
+      "cooldownBurn": "12",
+      "cost": [
+        50,
+        55,
+        60,
+        65,
+        70
+      ],
+      "costBurn": "50/55/60/65/70",
+      "costType": " {{ abilityresourcename }}",
+      "datavalues": {},
+      "description": "El cañón de repetición de Corki abre fuego sobre un área cónica. Los enemigos alcanzados sufren daño y pierden armadura y resistencia mágica.",
+      "effect": [
+        null,
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ]
+      ],
+      "effectBurn": [
+        null,
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0"
+      ],
+      "id": "GGun",
+      "image": {
+        "full": "GGun.png",
+        "group": "spell",
+        "h": 48,
+        "sprite": "spell3.png",
+        "w": 48,
+        "x": 96,
+        "y": 48
+      },
+      "leveltip": {
+        "effect": [
+          "{{ basedamage }} -> {{ basedamageNL }}",
+          "{{ shredmax*-1.000000 }} -> {{ shredmaxnl*-1.000000 }}",
+          "{{ cost }} -> {{ costNL }}"
+        ],
+        "label": [
+          "Daño",
+          "Reducción de la defensa",
+          "Coste de @AbilityResourceName@"
+        ]
+      },
+      "maxammo": "-1",
+      "maxrank": 5,
+      "name": "Cañón de repetición",
+      "range": [
+        600,
+        600,
+        600,
+        600,
+        600
+      ],
+      "rangeBurn": "600",
+      "resource": "{{ cost }} {{ abilityresourcename }}",
+      "tooltip": "Corki dispara hacia delante con su cañón de repetición, lo que inflige <physicalDamage>{{ totaldamage }} de daño físico</physicalDamage> a lo largo de {{ sprayduration }} s y reduce hasta <scaleArmor>{{ shredmax*-1 }} de armadura</scaleArmor> y <scaleMR>resistencia mágica</scaleMR>.{{ spellmodifierdescriptionappend }}",
+      "vars": []
+    },
+    {
+      "cooldown": [
+        2,
+        2,
+        2
+      ],
+      "cooldownBurn": "2",
+      "cost": [
+        35,
+        35,
+        35
+      ],
+      "costBurn": "35",
+      "costType": " {{ abilityresourcename }}",
+      "datavalues": {},
+      "description": "Corki dispara hacia la zona objetivo un proyectil que explota al impactar e inflige daño a los enemigos cercanos. Corki acumula misiles según pasa el tiempo, hasta un máximo determinado. Cada 3 proyectiles sale uno enorme que inflige daño adicional.",
+      "effect": [
+        null,
+        [
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0
+        ]
+      ],
+      "effectBurn": [
+        null,
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0"
+      ],
+      "id": "MissileBarrage",
+      "image": {
+        "full": "MissileBarrage.png",
+        "group": "spell",
+        "h": 48,
+        "sprite": "spell3.png",
+        "w": 48,
+        "x": 144,
+        "y": 48
+      },
+      "leveltip": {
+        "effect": [
+          "{{ basedamage }} -> {{ basedamageNL }}"
+        ],
+        "label": [
+          "Daño"
+        ]
+      },
+      "maxammo": "4",
+      "maxrank": 3,
+      "name": "Andanada de Proyectiles",
+      "range": [
+        1225,
+        1225,
+        1225
+      ],
+      "rangeBurn": "1225",
+      "resource": "{{ cost }} {{ abilityresourcename }}",
+      "tooltip": "Corki dispara un misil que explota al alcanzar a un enemigo, lo que inflige <physicalDamage>{{ rsmallmissiledamage }} de daño físico</physicalDamage> a los enemigos cercanos. Cada tercer misil inflige <physicalDamage>{{ rbigmissiledamage }} de daño físico</physicalDamage>.<br /><br />Esta habilidad tiene hasta {{ maxammotooltip }} cargas. Los ataques básicos contra campeones reducen el tiempo entre cargas en <attention>{{ attackrefund }}</attention> s al impactar.{{ spellmodifierdescriptionappend }}",
+      "vars": []
+    }
+  ],
+  "stats": {
+    "armor": 27,
+    "armorperlevel": 4.5,
+    "attackdamage": 52,
+    "attackdamageperlevel": 0,
+    "attackrange": 550,
+    "attackspeed": 0.644,
+    "attackspeedperlevel": 2.8,
+    "crit": 0,
+    "critperlevel": 0,
+    "hp": 610,
+    "hpperlevel": 100,
+    "hpregen": 5.5,
+    "hpregenperlevel": 0.55,
+    "movespeed": 325,
+    "mp": 350,
+    "mpperlevel": 40,
+    "mpregen": 7.4,
+    "mpregenperlevel": 0.7,
+    "spellblock": 33,
+    "spellblockperlevel": 1.1
+  },
+  "tags": [
+    "Marksman",
+    "Mage"
+  ],
+  "title": "El Bombardero Osado"
+}

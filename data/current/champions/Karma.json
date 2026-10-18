@@ -1,0 +1,1157 @@
+{
+  "allytips": [
+    "Fuego reunificador recompensa el juego agresivo. Intenta acertar con las habilidades y usa ataques básicos en tu oponente para reducir el enfriamiento de Mantra y sigue a la ofensiva.",
+    "Al usar Resolución concentrada, ralentiza a tus oponentes con Llama interior o aumenta tu velocidad con Inspiración si tienes problemas para mantenerte al lado de un objetivo. ",
+    "No seas muy conservador con Mantra. Fuego reunificador es muy potente en luchas de equipo, de forma que resulta fácil recargar Mantra varias veces."
+  ],
+  "blurb": "No hay mortal que ejemplifique las tradiciones espirituales de Jonia mejor que Karma. Es la personificación de un alma antigua reencarnada un sinfín de veces, que acumula en cada vida sucesiva los recuerdos de las vidas pasadas y que ha sido bendecida...",
+  "enemytips": [
+    "La habilidad pasiva de Karma reduce el enfriamiento de Mantra cuando golpea a campeones enemigos con habilidades y ataques básicos. Que no te ataque, y si lo hace, que asuma los riesgos.",
+    "Fulgor espiritual explota e inflige daño adicional en una zona. Reacciona rápido y escapa para no sufrir daños.",
+    "Resolución concentrada es un poderoso motivo para ponerse a salvo. Mantén las distancias para evitar que te inmovilice y vuelve a la lucha cuando acaben sus efectos."
+  ],
+  "id": "Karma",
+  "image": {
+    "full": "Karma.png",
+    "group": "champion",
+    "h": 48,
+    "sprite": "champion1.png",
+    "w": 48,
+    "x": 336,
+    "y": 96
+  },
+  "info": {
+    "attack": 1,
+    "defense": 7,
+    "difficulty": 5,
+    "magic": 8
+  },
+  "key": "43",
+  "lore": "No hay mortal que ejemplifique las tradiciones espirituales de Jonia mejor que Karma. Es la personificación de un alma antigua reencarnada un sinfín de veces, que acumula en cada vida sucesiva los recuerdos de las vidas pasadas y que ha sido bendecida con un poder que pocos pueden comprender. Ha hecho lo que estaba en su mano para guiar a su pueblo en los recientes tiempos de crisis, pero sabe que la paz y la armonía solo se alcanzarán pagando un alto precio, tanto para ella como para la tierra que más aprecia.",
+  "name": "Karma",
+  "partype": "Maná",
+  "passive": {
+    "description": "Las habilidades de daño de Karma reducen el enfriamiento de Mantra.",
+    "image": {
+      "full": "Karma_Passive.png",
+      "group": "passive",
+      "h": 48,
+      "sprite": "passive1.png",
+      "w": 48,
+      "x": 336,
+      "y": 96
+    },
+    "name": "Fuego reunificador"
+  },
+  "recommended": [],
+  "skins": [
+    {
+      "chromas": false,
+      "id": "43000",
+      "name": "default",
+      "num": 0
+    },
+    {
+      "chromas": false,
+      "id": "43001",
+      "name": "Karma diosa del sol",
+      "num": 1
+    },
+    {
+      "chromas": false,
+      "id": "43002",
+      "name": "Sakura Karma",
+      "num": 2
+    },
+    {
+      "chromas": false,
+      "id": "43003",
+      "name": "Karma tradicional",
+      "num": 3
+    },
+    {
+      "chromas": false,
+      "id": "43004",
+      "name": "Karma Orden del Loto",
+      "num": 4
+    },
+    {
+      "chromas": false,
+      "id": "43005",
+      "name": "Karma coraza plateada",
+      "num": 5
+    },
+    {
+      "chromas": false,
+      "id": "43006",
+      "name": "Karma maravilla invernal",
+      "num": 6
+    },
+    {
+      "chromas": true,
+      "id": "43007",
+      "name": "Karma conquistadora",
+      "num": 7
+    },
+    {
+      "chromas": true,
+      "id": "43008",
+      "name": "Karma estrella oscura",
+      "num": 8
+    },
+    {
+      "chromas": false,
+      "id": "43010",
+      "name": "Karma conquistadora (dorado)",
+      "num": 10,
+      "parentSkin": 7
+    },
+    {
+      "chromas": false,
+      "id": "43011",
+      "name": "Karma estrella oscura (aguamarina)",
+      "num": 11,
+      "parentSkin": 8
+    },
+    {
+      "chromas": false,
+      "id": "43012",
+      "name": "Karma estrella oscura (meteorito)",
+      "num": 12,
+      "parentSkin": 8
+    },
+    {
+      "chromas": false,
+      "id": "43013",
+      "name": "Karma estrella oscura (turquesa)",
+      "num": 13,
+      "parentSkin": 8
+    },
+    {
+      "chromas": false,
+      "id": "43014",
+      "name": "Karma estrella oscura (rubí)",
+      "num": 14,
+      "parentSkin": 8
+    },
+    {
+      "chromas": false,
+      "id": "43015",
+      "name": "Karma estrella oscura (cuarzo rosa)",
+      "num": 15,
+      "parentSkin": 8
+    },
+    {
+      "chromas": false,
+      "id": "43016",
+      "name": "Karma estrella oscura (perla)",
+      "num": 16,
+      "parentSkin": 8
+    },
+    {
+      "chromas": false,
+      "id": "43017",
+      "name": "Karma estrella oscura (zafiro)",
+      "num": 17,
+      "parentSkin": 8
+    },
+    {
+      "chromas": false,
+      "id": "43018",
+      "name": "Karma estrella oscura (peridoto)",
+      "num": 18,
+      "parentSkin": 8
+    },
+    {
+      "chromas": false,
+      "id": "43019",
+      "name": "Karma guerrera del orden",
+      "num": 19
+    },
+    {
+      "chromas": true,
+      "id": "43020",
+      "name": "Karma guerrera del orden (rubí)",
+      "num": 20,
+      "parentSkin": 19
+    },
+    {
+      "chromas": false,
+      "id": "43021",
+      "name": "Karma guerrera del orden (ojo de gato)",
+      "num": 21,
+      "parentSkin": 19
+    },
+    {
+      "chromas": false,
+      "id": "43022",
+      "name": "Karma guerrera del orden (peridoto)",
+      "num": 22,
+      "parentSkin": 19
+    },
+    {
+      "chromas": false,
+      "id": "43023",
+      "name": "Karma guerrera del orden (amatista)",
+      "num": 23,
+      "parentSkin": 19
+    },
+    {
+      "chromas": false,
+      "id": "43024",
+      "name": "Karma guerrera del orden (ejemplar)",
+      "num": 24,
+      "parentSkin": 19
+    },
+    {
+      "chromas": false,
+      "id": "43025",
+      "name": "Karma guerrera del orden (cuarzo rosa)",
+      "num": 25,
+      "parentSkin": 19
+    },
+    {
+      "chromas": false,
+      "id": "43026",
+      "name": "Karma de Odisea",
+      "num": 26
+    },
+    {
+      "chromas": true,
+      "id": "43027",
+      "name": "Karma arruinada",
+      "num": 27
+    },
+    {
+      "chromas": true,
+      "id": "43028",
+      "name": "Karma de Odisea (rubí)",
+      "num": 28,
+      "parentSkin": 26
+    },
+    {
+      "chromas": false,
+      "id": "43029",
+      "name": "Karma de Odisea (citrino)",
+      "num": 29,
+      "parentSkin": 26
+    },
+    {
+      "chromas": false,
+      "id": "43030",
+      "name": "Karma de Odisea (peridoto)",
+      "num": 30,
+      "parentSkin": 26
+    },
+    {
+      "chromas": false,
+      "id": "43031",
+      "name": "Karma de Odisea (aguamarina)",
+      "num": 31,
+      "parentSkin": 26
+    },
+    {
+      "chromas": false,
+      "id": "43032",
+      "name": "Karma de Odisea (cuarzo rosa)",
+      "num": 32,
+      "parentSkin": 26
+    },
+    {
+      "chromas": false,
+      "id": "43033",
+      "name": "Karma de Odisea (mercenario)",
+      "num": 33,
+      "parentSkin": 26
+    },
+    {
+      "chromas": false,
+      "id": "43034",
+      "name": "Karma de Odisea (perla)",
+      "num": 34,
+      "parentSkin": 26
+    },
+    {
+      "chromas": false,
+      "id": "43035",
+      "name": "Karma de Odisea (turquesa)",
+      "num": 35,
+      "parentSkin": 26
+    },
+    {
+      "chromas": false,
+      "id": "43036",
+      "name": "Karma arruinada (rubí)",
+      "num": 36,
+      "parentSkin": 27
+    },
+    {
+      "chromas": false,
+      "id": "43037",
+      "name": "Karma arruinada (citrino)",
+      "num": 37,
+      "parentSkin": 27
+    },
+    {
+      "chromas": false,
+      "id": "43038",
+      "name": "Karma arruinada (esmeralda)",
+      "num": 38,
+      "parentSkin": 27
+    },
+    {
+      "chromas": false,
+      "id": "43039",
+      "name": "Karma arruinada (tanzanita)",
+      "num": 39,
+      "parentSkin": 27
+    },
+    {
+      "chromas": false,
+      "id": "43040",
+      "name": "Karma arruinada (zafiro)",
+      "num": 40,
+      "parentSkin": 27
+    },
+    {
+      "chromas": false,
+      "id": "43041",
+      "name": "Karma arruinada (cuarzo rosa)",
+      "num": 41,
+      "parentSkin": 27
+    },
+    {
+      "chromas": false,
+      "id": "43042",
+      "name": "Karma arruinada (perla)",
+      "num": 42,
+      "parentSkin": 27
+    },
+    {
+      "chromas": false,
+      "id": "43043",
+      "name": "Karma arruinada (maldito)",
+      "num": 43,
+      "parentSkin": 27
+    },
+    {
+      "chromas": false,
+      "id": "43044",
+      "name": "Karma dragona de la serenidad",
+      "num": 44
+    },
+    {
+      "chromas": true,
+      "id": "43045",
+      "name": "Karma dragona de la serenidad (rubí)",
+      "num": 45,
+      "parentSkin": 44
+    },
+    {
+      "chromas": false,
+      "id": "43046",
+      "name": "Karma dragona de la serenidad (aguamarina)",
+      "num": 46,
+      "parentSkin": 44
+    },
+    {
+      "chromas": false,
+      "id": "43047",
+      "name": "Karma dragona de la serenidad (esmeralda)",
+      "num": 47,
+      "parentSkin": 44
+    },
+    {
+      "chromas": false,
+      "id": "43048",
+      "name": "Karma dragona de la serenidad (cuarzo rosa)",
+      "num": 48,
+      "parentSkin": 44
+    },
+    {
+      "chromas": false,
+      "id": "43049",
+      "name": "Karma dragona de la serenidad (ojo de gato)",
+      "num": 49,
+      "parentSkin": 44
+    },
+    {
+      "chromas": false,
+      "id": "43050",
+      "name": "Karma dragona de la serenidad (amatista)",
+      "num": 50,
+      "parentSkin": 44
+    },
+    {
+      "chromas": false,
+      "id": "43051",
+      "name": "Karma dragona de la serenidad (perla)",
+      "num": 51,
+      "parentSkin": 44
+    },
+    {
+      "chromas": false,
+      "id": "43052",
+      "name": "Karma dragona de la serenidad (obsidiana)",
+      "num": 52,
+      "parentSkin": 44
+    },
+    {
+      "chromas": false,
+      "id": "43053",
+      "name": "Karma dragona de la serenidad (garra de ascuas)",
+      "num": 53,
+      "parentSkin": 44
+    },
+    {
+      "chromas": false,
+      "id": "43054",
+      "name": "Karma reina feérica",
+      "num": 54
+    },
+    {
+      "chromas": true,
+      "id": "43055",
+      "name": "Karma reina feérica (rubí)",
+      "num": 55,
+      "parentSkin": 54
+    },
+    {
+      "chromas": false,
+      "id": "43056",
+      "name": "Karma reina feérica (ojo de gato)",
+      "num": 56,
+      "parentSkin": 54
+    },
+    {
+      "chromas": false,
+      "id": "43057",
+      "name": "Karma reina feérica (esmeralda)",
+      "num": 57,
+      "parentSkin": 54
+    },
+    {
+      "chromas": false,
+      "id": "43058",
+      "name": "Karma reina feérica (obsidiana)",
+      "num": 58,
+      "parentSkin": 54
+    },
+    {
+      "chromas": false,
+      "id": "43059",
+      "name": "Karma reina feérica (zafiro)",
+      "num": 59,
+      "parentSkin": 54
+    },
+    {
+      "chromas": false,
+      "id": "43060",
+      "name": "Karma reina feérica (adorable)",
+      "num": 60,
+      "parentSkin": 54
+    },
+    {
+      "chromas": false,
+      "id": "43061",
+      "name": "Karma infernal",
+      "num": 61
+    },
+    {
+      "chromas": true,
+      "id": "43062",
+      "name": "Karma infernal (rubí)",
+      "num": 62,
+      "parentSkin": 61
+    },
+    {
+      "chromas": false,
+      "id": "43063",
+      "name": "Karma infernal (ojo de gato)",
+      "num": 63,
+      "parentSkin": 61
+    },
+    {
+      "chromas": false,
+      "id": "43064",
+      "name": "Karma infernal (aguamarina)",
+      "num": 64,
+      "parentSkin": 61
+    },
+    {
+      "chromas": false,
+      "id": "43065",
+      "name": "Karma infernal (peridoto)",
+      "num": 65,
+      "parentSkin": 61
+    },
+    {
+      "chromas": false,
+      "id": "43066",
+      "name": "Karma infernal (cuarzo rosa)",
+      "num": 66,
+      "parentSkin": 61
+    },
+    {
+      "chromas": false,
+      "id": "43067",
+      "name": "Karma infernal (turquesa)",
+      "num": 67,
+      "parentSkin": 61
+    },
+    {
+      "chromas": false,
+      "id": "43068",
+      "name": "Karma infernal (amatista)",
+      "num": 68,
+      "parentSkin": 61
+    },
+    {
+      "chromas": false,
+      "id": "43069",
+      "name": "Karma infernal (perla)",
+      "num": 69,
+      "parentSkin": 61
+    },
+    {
+      "chromas": false,
+      "id": "43070",
+      "name": "Karma florecer espiritual",
+      "num": 70
+    },
+    {
+      "chromas": true,
+      "id": "43071",
+      "name": "Karma florecer espiritual (rubí)",
+      "num": 71,
+      "parentSkin": 70
+    },
+    {
+      "chromas": false,
+      "id": "43072",
+      "name": "Karma florecer espiritual (citrino)",
+      "num": 72,
+      "parentSkin": 70
+    },
+    {
+      "chromas": false,
+      "id": "43073",
+      "name": "Karma florecer espiritual (esmeralda)",
+      "num": 73,
+      "parentSkin": 70
+    },
+    {
+      "chromas": false,
+      "id": "43074",
+      "name": "Karma florecer espiritual (obsidiana)",
+      "num": 74,
+      "parentSkin": 70
+    },
+    {
+      "chromas": false,
+      "id": "43075",
+      "name": "Karma florecer espiritual (arenisca) ",
+      "num": 75,
+      "parentSkin": 70
+    },
+    {
+      "chromas": false,
+      "id": "43076",
+      "name": "Karma florecer espiritual (cuarzo rosa)",
+      "num": 76,
+      "parentSkin": 70
+    }
+  ],
+  "spells": [
+    {
+      "cooldown": [
+        9,
+        8,
+        7,
+        6,
+        5
+      ],
+      "cooldownBurn": "9/8/7/6/5",
+      "cost": [
+        40,
+        50,
+        60,
+        70,
+        80
+      ],
+      "costBurn": "40/50/60/70/80",
+      "costType": " {{ abilityresourcename }}",
+      "datavalues": {},
+      "description": "Karma lanza una bola de energía espiritual que explota e inflige daño al golpear a una unidad enemiga.<br><br>Bonificación de Mantra: Además de la explosión, Mantra aumenta el poder destructivo de Llama interior, lo que crea una onda abrasiva que inflige daño tras unos instantes.",
+      "effect": [
+        null,
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ]
+      ],
+      "effectBurn": [
+        null,
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0"
+      ],
+      "id": "KarmaQ",
+      "image": {
+        "full": "KarmaQ.png",
+        "group": "spell",
+        "h": 48,
+        "sprite": "spell6.png",
+        "w": 48,
+        "x": 96,
+        "y": 96
+      },
+      "leveltip": {
+        "effect": [
+          "{{ basedamage }} -> {{ basedamageNL }}",
+          "{{ cooldown }} -> {{ cooldownNL }}",
+          "{{ cost }} -> {{ costNL }}"
+        ],
+        "label": [
+          "Daño",
+          "Enfriamiento",
+          "Coste de @AbilityResourceName@"
+        ]
+      },
+      "maxammo": "-1",
+      "maxrank": 5,
+      "name": "Llama interior",
+      "range": [
+        950,
+        950,
+        950,
+        950,
+        950
+      ],
+      "rangeBurn": "950",
+      "resource": "{{ cost }} {{ abilityresourcename }}",
+      "tooltip": "Karma lanza un rayo de energía que inflige <magicDamage>{{ totaldamage }} de daño mágico</magicDamage> al primer objetivo golpeado y a los enemigos cercanos, y <status>ralentiza</status> un {{ slowamount*-100 }}% durante {{ slowduration }} s.{{ spellmodifierdescriptionappend }}",
+      "vars": []
+    },
+    {
+      "cooldown": [
+        12,
+        12,
+        12,
+        12,
+        12
+      ],
+      "cooldownBurn": "12",
+      "cost": [
+        50,
+        55,
+        60,
+        65,
+        70
+      ],
+      "costBurn": "50/55/60/65/70",
+      "costType": " {{ abilityresourcename }}",
+      "datavalues": {},
+      "description": "Karma crea un vínculo entre el objetivo enemigo y ella que inflige daño y lo revela. Si no se rompe el vínculo, el objetivo queda enraizado y vuelve a recibir daño.<br><br>Bonificación de Mantra: Karma fortalece el vínculo, lo que, además de curarla, amplía la duración del enraizamiento.",
+      "effect": [
+        null,
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ]
+      ],
+      "effectBurn": [
+        null,
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0"
+      ],
+      "id": "KarmaSpiritBind",
+      "image": {
+        "full": "KarmaSpiritBind.png",
+        "group": "spell",
+        "h": 48,
+        "sprite": "spell6.png",
+        "w": 48,
+        "x": 144,
+        "y": 96
+      },
+      "leveltip": {
+        "effect": [
+          "{{ basedamage }} -> {{ basedamageNL }}",
+          "{{ rootduration }} -> {{ rootdurationNL }}",
+          "{{ cost }} -> {{ costNL }}"
+        ],
+        "label": [
+          "Daño",
+          "Duración del enraizamiento",
+          "Coste de @AbilityResourceName@"
+        ]
+      },
+      "maxammo": "-1",
+      "maxrank": 5,
+      "name": "Resolución concentrada",
+      "range": [
+        675,
+        675,
+        675,
+        675,
+        675
+      ],
+      "rangeBurn": "675",
+      "resource": "{{ cost }} {{ abilityresourcename }}",
+      "tooltip": "Karma se vincula a un campeón o monstruo de la jungla, le inflige <magicDamage>{{ initialdamage }} de daño mágico</magicDamage> y lo revela durante {{ tetherduration }} s. Si el vínculo permanece sin romperse, el objetivo recibe <magicDamage>{{ initialdamage }} de daño mágico</magicDamage> de nuevo y queda <status>enraizado</status> durante {{ rootduration }} s.{{ spellmodifierdescriptionappend }}",
+      "vars": []
+    },
+    {
+      "cooldown": [
+        10,
+        9.5,
+        9,
+        8.5,
+        8
+      ],
+      "cooldownBurn": "10/9.5/9/8.5/8",
+      "cost": [
+        60,
+        65,
+        70,
+        75,
+        80
+      ],
+      "costBurn": "60/65/70/75/80",
+      "costType": " {{ abilityresourcename }}",
+      "datavalues": {},
+      "description": "Karma invoca un escudo protector que absorbe el daño recibido y aumenta la velocidad de movimiento del aliado protegido.<br><br>Bonificación de Mantra: El objetivo irradia energía, lo que refuerza el escudo inicial y aplica Inspiración a los campeones aliados cercanos.",
+      "effect": [
+        null,
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ]
+      ],
+      "effectBurn": [
+        null,
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0"
+      ],
+      "id": "KarmaSolKimShield",
+      "image": {
+        "full": "KarmaSolKimShield.png",
+        "group": "spell",
+        "h": 48,
+        "sprite": "spell6.png",
+        "w": 48,
+        "x": 192,
+        "y": 96
+      },
+      "leveltip": {
+        "effect": [
+          "{{ baseshield }} -> {{ baseshieldNL }}",
+          "{{ cooldown }} -> {{ cooldownNL }}",
+          "{{ cost }} -> {{ costNL }}"
+        ],
+        "label": [
+          "Cantidad de escudo",
+          "Enfriamiento",
+          "Coste de @AbilityResourceName@"
+        ]
+      },
+      "maxammo": "-1",
+      "maxrank": 5,
+      "name": "Inspiración",
+      "range": [
+        800,
+        800,
+        800,
+        800,
+        800
+      ],
+      "rangeBurn": "800",
+      "resource": "{{ cost }} {{ abilityresourcename }}",
+      "tooltip": "Karma otorga a un campeón aliado un <shield>escudo de {{ totalshield }}</shield> durante {{ shieldduration }} s y un <speed>{{ movespeed*100 }}% de velocidad de movimiento</speed> durante {{ movespeedduration }} s.{{ spellmodifierdescriptionappend }}",
+      "vars": []
+    },
+    {
+      "cooldown": [
+        40,
+        38,
+        36,
+        34
+      ],
+      "cooldownBurn": "40/38/36/34",
+      "cost": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "costBurn": "0",
+      "costType": "Sin coste",
+      "datavalues": {},
+      "description": "Karma potencia su siguiente habilidad para conseguir un efecto adicional. Mantra está disponible al nivel 1 y no necesita puntos de habilidad.",
+      "effect": [
+        null,
+        [
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0
+        ]
+      ],
+      "effectBurn": [
+        null,
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0"
+      ],
+      "id": "KarmaMantra",
+      "image": {
+        "full": "KarmaMantra.png",
+        "group": "spell",
+        "h": 48,
+        "sprite": "spell6.png",
+        "w": 48,
+        "x": 240,
+        "y": 96
+      },
+      "leveltip": {
+        "effect": [
+          "{{ qbonusdamage }} -> {{ qbonusdamageNL }}",
+          "{{ qdetonationdamage }} -> {{ qdetonationdamageNL }}",
+          "{{ rwbonusroot }} -> {{ rwbonusrootNL }}",
+          "{{ ebonusshield }} -> {{ ebonusshieldNL }}",
+          "{{ cooldown }} -> {{ cooldownNL }}"
+        ],
+        "label": [
+          "Impacto de Fulgor espiritual",
+          "Daño del círculo de Fulgor espiritual",
+          "Prolongación del enraizamiento de Renovación",
+          "Escudo de Desafío",
+          "Enfriamiento"
+        ]
+      },
+      "maxammo": "-1",
+      "maxrank": 4,
+      "name": "Mantra",
+      "range": [
+        1100,
+        1100,
+        1100,
+        1100
+      ],
+      "rangeBurn": "1100",
+      "resource": "Sin coste",
+      "tooltip": "Karma potencia la siguiente habilidad que use en un margen de 8 s.<br /><li><spellName>Llama interior</spellName>: Inflige <magicDamage>{{ rqimpactdamage }} de daño mágico</magicDamage> adicional y deja un círculo de fuego que <status>ralentiza</status> a los enemigos e inflige <magicDamage>{{ rqfielddamage }} de daño mágico adicional</magicDamage>.<li><spellName>Resolución concentrada</spellName>: Karma restaura un <healing>{{ rwhealamount }} de la vida que le falte</healing> al comienzo y al final del vínculo, y <status>enraíza</status> durante {{ rwbonusroot }} s más.<li><spellName>Inspiración</spellName>: Karma otorga <shield>{{ rebonusshield }} más de escudo</shield> a su objetivo, además de <shield>{{ rebonusshieldarea }} más de escudo</shield> y un <speed>{{ removespeed*100 }}% de velocidad de movimiento</speed> a los aliados cercanos al objetivo.{{ spellmodifierdescriptionappend }}",
+      "vars": []
+    }
+  ],
+  "stats": {
+    "armor": 28,
+    "armorperlevel": 5,
+    "attackdamage": 49,
+    "attackdamageperlevel": 0,
+    "attackrange": 525,
+    "attackspeed": 0.625,
+    "attackspeedperlevel": 2.3,
+    "crit": 0,
+    "critperlevel": 0,
+    "hp": 630,
+    "hpperlevel": 109,
+    "hpregen": 5.5,
+    "hpregenperlevel": 0.55,
+    "movespeed": 335,
+    "mp": 374,
+    "mpperlevel": 40,
+    "mpregen": 13,
+    "mpregenperlevel": 0.8,
+    "spellblock": 30,
+    "spellblockperlevel": 1.3
+  },
+  "tags": [
+    "Mage",
+    "Support"
+  ],
+  "title": "La Iluminada"
+}

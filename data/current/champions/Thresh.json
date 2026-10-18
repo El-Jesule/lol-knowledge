@@ -1,0 +1,1083 @@
+{
+  "allytips": [
+    "La comunicación es algo clave al usar la linterna de Thresh. Haz saber a tus compañeros de equipo cómo te gusta usarla.",
+    "Sentencia de muerte y Despellejar se podrán combinar en cualquier orden para obtener mejores resultados.",
+    "Thresh puede recolectar almas sin necesidad de matar a las unidades él mismo. Es importante planificar bien la colocación en el mapa para estar cerca del mayor número de muertes; esto permitirá sacar el máximo partido a la recolección de almas."
+  ],
+  "blurb": "El sádico y astuto Thresh es un ambicioso y obstinado espectro de las Islas de la Sombra. Otrora guardián de innumerables secretos arcanos, acabó sucumbiendo a un poder por encima de la vida y la muerte. Ahora sobrevive torturando a sus víctimas con...",
+  "enemytips": [
+    "Sentencia de muerte de Thresh tiene un tiempo de lanzamiento bastante largo. Atento al lanzamiento para iniciar las maniobras evasivas.",
+    "Romper intencionadamente un muro de La caja puede permitir que un aliado vulnerable escape ileso.",
+    "Thresh adquiere almas para aumentar su daño y su defensa. Intenta acosarlo cuando se mueva para coger las almas."
+  ],
+  "id": "Thresh",
+  "image": {
+    "full": "Thresh.png",
+    "group": "champion",
+    "h": 48,
+    "sprite": "champion4.png",
+    "w": 48,
+    "x": 384,
+    "y": 48
+  },
+  "info": {
+    "attack": 5,
+    "defense": 6,
+    "difficulty": 7,
+    "magic": 6
+  },
+  "key": "412",
+  "lore": "El sádico y astuto Thresh es un ambicioso y obstinado espectro de las Islas de la Sombra. Otrora guardián de innumerables secretos arcanos, acabó sucumbiendo a un poder por encima de la vida y la muerte. Ahora sobrevive torturando a sus víctimas con prolongados e inimaginables tormentos. Un último suspiro no significa el fin del sufrimiento, pues Thresh siembra la agonía en sus almas y las aprisiona en su nefasta linterna para torturarlas durante toda la eternidad.",
+  "name": "Thresh",
+  "partype": "Maná",
+  "passive": {
+    "description": "Thresh puede cosechar las almas de los enemigos que mueran cerca de él; al hacerlo, obtiene armadura y poder de habilidad permanentes.",
+    "image": {
+      "full": "Thresh_Passive.png",
+      "group": "passive",
+      "h": 48,
+      "sprite": "passive4.png",
+      "w": 48,
+      "x": 384,
+      "y": 48
+    },
+    "name": "Condenación"
+  },
+  "recommended": [],
+  "skins": [
+    {
+      "chromas": false,
+      "id": "412000",
+      "name": "default",
+      "num": 0
+    },
+    {
+      "chromas": false,
+      "id": "412001",
+      "name": "Thresh terror de las profundidades",
+      "num": 1
+    },
+    {
+      "chromas": true,
+      "id": "412002",
+      "name": "Thresh (Mundial 2013)",
+      "num": 2
+    },
+    {
+      "chromas": false,
+      "id": "412003",
+      "name": "Thresh luna sangrienta",
+      "num": 3
+    },
+    {
+      "chromas": false,
+      "id": "412004",
+      "name": "Thresh SSW",
+      "num": 4
+    },
+    {
+      "chromas": true,
+      "id": "412005",
+      "name": "Thresh estrella oscura",
+      "num": 5
+    },
+    {
+      "chromas": true,
+      "id": "412006",
+      "name": "Thresh solo ante el peligro",
+      "num": 6
+    },
+    {
+      "chromas": false,
+      "id": "412007",
+      "name": "Thresh solo ante el peligro (rubí)",
+      "num": 7,
+      "parentSkin": 6
+    },
+    {
+      "chromas": false,
+      "id": "412008",
+      "name": "Thresh solo ante el peligro (obsidiana)",
+      "num": 8,
+      "parentSkin": 6
+    },
+    {
+      "chromas": false,
+      "id": "412009",
+      "name": "Thresh solo ante el peligro (zafiro)",
+      "num": 9,
+      "parentSkin": 6
+    },
+    {
+      "chromas": false,
+      "id": "412010",
+      "name": "Thresh solo ante el peligro (tanzanita)",
+      "num": 10,
+      "parentSkin": 6
+    },
+    {
+      "chromas": false,
+      "id": "412011",
+      "name": "Thresh solo ante el peligro (perla)",
+      "num": 11,
+      "parentSkin": 6
+    },
+    {
+      "chromas": false,
+      "id": "412012",
+      "name": "Thresh del Mundial 2013 (dorado)",
+      "num": 12,
+      "parentSkin": 2
+    },
+    {
+      "chromas": false,
+      "id": "412013",
+      "name": "Thresh pulso de fuego",
+      "num": 13
+    },
+    {
+      "chromas": false,
+      "id": "412014",
+      "name": "Thresh pulso de fuego de prestigio",
+      "num": 14
+    },
+    {
+      "chromas": true,
+      "id": "412015",
+      "name": "Thresh FPX",
+      "num": 15
+    },
+    {
+      "chromas": false,
+      "id": "412016",
+      "name": "Thresh estrella oscura (antimateria)",
+      "num": 16,
+      "parentSkin": 5
+    },
+    {
+      "chromas": true,
+      "id": "412017",
+      "name": "Thresh florecer espiritual",
+      "num": 17
+    },
+    {
+      "chromas": false,
+      "id": "412018",
+      "name": "Thresh FPX (élite)",
+      "num": 18,
+      "parentSkin": 15
+    },
+    {
+      "chromas": false,
+      "id": "412019",
+      "name": "Thresh florecer espiritual (zafiro)",
+      "num": 19,
+      "parentSkin": 17
+    },
+    {
+      "chromas": false,
+      "id": "412020",
+      "name": "Thresh florecer espiritual (rubí)",
+      "num": 20,
+      "parentSkin": 17
+    },
+    {
+      "chromas": false,
+      "id": "412021",
+      "name": "Thresh florecer espiritual (ojo de gato)",
+      "num": 21,
+      "parentSkin": 17
+    },
+    {
+      "chromas": false,
+      "id": "412022",
+      "name": "Thresh florecer espiritual (esmeralda)",
+      "num": 22,
+      "parentSkin": 17
+    },
+    {
+      "chromas": false,
+      "id": "412023",
+      "name": "Thresh florecer espiritual (perla)",
+      "num": 23,
+      "parentSkin": 17
+    },
+    {
+      "chromas": false,
+      "id": "412024",
+      "name": "Thresh florecer espiritual (obsidiana)",
+      "num": 24,
+      "parentSkin": 17
+    },
+    {
+      "chromas": false,
+      "id": "412025",
+      "name": "Thresh florecer espiritual (cuarzo rosa)",
+      "num": 25,
+      "parentSkin": 17
+    },
+    {
+      "chromas": false,
+      "id": "412026",
+      "name": "Thresh florecer espiritual (florecer nocturno)",
+      "num": 26,
+      "parentSkin": 17
+    },
+    {
+      "chromas": false,
+      "id": "412027",
+      "name": "Thresh desatado",
+      "num": 27
+    },
+    {
+      "chromas": true,
+      "id": "412028",
+      "name": "Thresh dragón de acero",
+      "num": 28
+    },
+    {
+      "chromas": false,
+      "id": "412029",
+      "name": "Thresh dragón de acero (rubí)",
+      "num": 29,
+      "parentSkin": 28
+    },
+    {
+      "chromas": false,
+      "id": "412030",
+      "name": "Thresh dragón de acero (perla)",
+      "num": 30,
+      "parentSkin": 28
+    },
+    {
+      "chromas": false,
+      "id": "412031",
+      "name": "Thresh dragón de acero (amatista)",
+      "num": 31,
+      "parentSkin": 28
+    },
+    {
+      "chromas": false,
+      "id": "412032",
+      "name": "Thresh dragón de acero (turquesa)",
+      "num": 32,
+      "parentSkin": 28
+    },
+    {
+      "chromas": false,
+      "id": "412033",
+      "name": "Thresh dragón de acero (obsidiana)",
+      "num": 33,
+      "parentSkin": 28
+    },
+    {
+      "chromas": false,
+      "id": "412034",
+      "name": "Thresh dragón de acero (ojo de gato)",
+      "num": 34,
+      "parentSkin": 28
+    },
+    {
+      "chromas": false,
+      "id": "412035",
+      "name": "Thresh dragón de acero (cuarzo rosa)",
+      "num": 35,
+      "parentSkin": 28
+    },
+    {
+      "chromas": false,
+      "id": "412036",
+      "name": "Thresh dragón de acero (aguamarina)",
+      "num": 36,
+      "parentSkin": 28
+    },
+    {
+      "chromas": false,
+      "id": "412037",
+      "name": "Thresh dragón de acero (garra de ascuas)",
+      "num": 37,
+      "parentSkin": 28
+    },
+    {
+      "chromas": false,
+      "id": "412038",
+      "name": "Thresh pulso de fuego de prestigio (2022)",
+      "num": 38
+    },
+    {
+      "chromas": true,
+      "id": "412039",
+      "name": "Thresh emperador lunar",
+      "num": 39
+    },
+    {
+      "chromas": false,
+      "id": "412040",
+      "name": "Thresh emperador lunar (rubí)",
+      "num": 40,
+      "parentSkin": 39
+    },
+    {
+      "chromas": false,
+      "id": "412041",
+      "name": "Thresh emperador lunar (granito)",
+      "num": 41,
+      "parentSkin": 39
+    },
+    {
+      "chromas": false,
+      "id": "412042",
+      "name": "Thresh emperador lunar (esmeralda)",
+      "num": 42,
+      "parentSkin": 39
+    },
+    {
+      "chromas": false,
+      "id": "412043",
+      "name": "Thresh emperador lunar (turquesa)",
+      "num": 43,
+      "parentSkin": 39
+    },
+    {
+      "chromas": false,
+      "id": "412044",
+      "name": "Thresh emperador lunar (perla)",
+      "num": 44,
+      "parentSkin": 39
+    },
+    {
+      "chromas": false,
+      "id": "412045",
+      "name": "Thresh emperador lunar (cuarzo rosa)",
+      "num": 45,
+      "parentSkin": 39
+    },
+    {
+      "chromas": false,
+      "id": "412046",
+      "name": "Thresh emperador lunar (citrino)",
+      "num": 46,
+      "parentSkin": 39
+    },
+    {
+      "chromas": false,
+      "id": "412047",
+      "name": "Thresh emperador lunar (obsidiana)",
+      "num": 47,
+      "parentSkin": 39
+    },
+    {
+      "chromas": false,
+      "id": "412048",
+      "name": "Thresh emperador lunar (resplandeciente)",
+      "num": 48,
+      "parentSkin": 39
+    },
+    {
+      "chromas": true,
+      "id": "412049",
+      "name": "Thresh bendición invernal",
+      "num": 49
+    },
+    {
+      "chromas": false,
+      "id": "412050",
+      "name": "Thresh bendición invernal (rubí)",
+      "num": 50,
+      "parentSkin": 49
+    },
+    {
+      "chromas": false,
+      "id": "412051",
+      "name": "Thresh bendición invernal (aguamarina)",
+      "num": 51,
+      "parentSkin": 49
+    },
+    {
+      "chromas": false,
+      "id": "412052",
+      "name": "Thresh bendición invernal (esmeralda)",
+      "num": 52,
+      "parentSkin": 49
+    },
+    {
+      "chromas": false,
+      "id": "412053",
+      "name": "Thresh bendición invernal (citrino)",
+      "num": 53,
+      "parentSkin": 49
+    },
+    {
+      "chromas": false,
+      "id": "412054",
+      "name": "Thresh bendición invernal (turquesa)",
+      "num": 54,
+      "parentSkin": 49
+    },
+    {
+      "chromas": false,
+      "id": "412055",
+      "name": "Thresh bendición invernal (amatista)",
+      "num": 55,
+      "parentSkin": 49
+    },
+    {
+      "chromas": false,
+      "id": "412056",
+      "name": "Thresh bendición invernal (perla)",
+      "num": 56,
+      "parentSkin": 49
+    },
+    {
+      "chromas": false,
+      "id": "412057",
+      "name": "Thresh bendición invernal (obsidiana)",
+      "num": 57,
+      "parentSkin": 49
+    },
+    {
+      "chromas": false,
+      "id": "412058",
+      "name": "Thresh bendición invernal (guirnalda)",
+      "num": 58,
+      "parentSkin": 49
+    },
+    {
+      "chromas": true,
+      "id": "412059",
+      "name": "Thresh conserje",
+      "num": 59
+    },
+    {
+      "chromas": false,
+      "id": "412060",
+      "name": "Thresh conserje (rubí)",
+      "num": 60,
+      "parentSkin": 59
+    },
+    {
+      "chromas": false,
+      "id": "412061",
+      "name": "Thresh conserje (cuarzo rosa)",
+      "num": 61,
+      "parentSkin": 59
+    },
+    {
+      "chromas": false,
+      "id": "412062",
+      "name": "Thresh conserje (esmeralda)",
+      "num": 62,
+      "parentSkin": 59
+    },
+    {
+      "chromas": false,
+      "id": "412063",
+      "name": "Thresh conserje (citrino)",
+      "num": 63,
+      "parentSkin": 59
+    },
+    {
+      "chromas": false,
+      "id": "412064",
+      "name": "Thresh conserje (zafiro)",
+      "num": 64,
+      "parentSkin": 59
+    },
+    {
+      "chromas": false,
+      "id": "412065",
+      "name": "Thresh conserje (perla)",
+      "num": 65,
+      "parentSkin": 59
+    },
+    {
+      "chromas": false,
+      "id": "412066",
+      "name": "Thresh conserje (meteorito)",
+      "num": 66,
+      "parentSkin": 59
+    },
+    {
+      "chromas": false,
+      "id": "412067",
+      "name": "Thresh conserje (tanzanita)",
+      "num": 67,
+      "parentSkin": 59
+    }
+  ],
+  "spells": [
+    {
+      "cooldown": [
+        19,
+        16.5,
+        14,
+        11.5,
+        9
+      ],
+      "cooldownBurn": "19/16.5/14/11.5/9",
+      "cost": [
+        70,
+        70,
+        70,
+        70,
+        70
+      ],
+      "costBurn": "70",
+      "costType": " {{ abilityresourcename }}",
+      "datavalues": {},
+      "description": "Thresh atrapa a un enemigo con su cadena y lo atrae hacia él. Si se activa esta habilidad una segunda vez, Thresh se lanza hacia el enemigo.",
+      "effect": [
+        null,
+        [
+          100,
+          100,
+          100,
+          100,
+          100
+        ],
+        [
+          1.5,
+          1.5,
+          1.5,
+          1.5,
+          1.5
+        ],
+        [
+          75,
+          75,
+          75,
+          75,
+          75
+        ],
+        [
+          12,
+          12,
+          12,
+          12,
+          12
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ]
+      ],
+      "effectBurn": [
+        null,
+        "100",
+        "1.5",
+        "75",
+        "12",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0"
+      ],
+      "id": "ThreshQ",
+      "image": {
+        "full": "ThreshQ.png",
+        "group": "spell",
+        "h": 48,
+        "sprite": "spell14.png",
+        "w": 48,
+        "x": 288,
+        "y": 96
+      },
+      "leveltip": {
+        "effect": [
+          "{{ basedamage }} -> {{ basedamageNL }}",
+          "{{ cooldown }} -> {{ cooldownNL }}"
+        ],
+        "label": [
+          "Daño",
+          "Enfriamiento"
+        ]
+      },
+      "maxammo": "-1",
+      "maxrank": 5,
+      "name": "Sentencia de muerte",
+      "range": [
+        1075,
+        1075,
+        1075,
+        1075,
+        1075
+      ],
+      "rangeBurn": "1075",
+      "resource": "{{ cost }} {{ abilityresourcename }}",
+      "tooltip": "Thresh lanza su gancho, <status>aturde</status> a la primera unidad golpeada y la <status>atrae</status> hacia sí durante {{ tauntlength }} s. El gancho inflige <magicDamage>{{ totaldamage }} de daño mágico</magicDamage> y otorga <keywordStealth>visión verdadera</keywordStealth> mientras dura su efecto.<br /><br />Thresh puede <recast>volver a lanzar</recast> esta habilidad para acercarse al enemigo.<br /><br />Si alcanza a un enemigo, su enfriamiento se reduce {{ hitbonuscooldown }} s.{{ spellmodifierdescriptionappend }}",
+      "vars": []
+    },
+    {
+      "cooldown": [
+        21,
+        20,
+        19,
+        18,
+        17
+      ],
+      "cooldownBurn": "21/20/19/18/17",
+      "cost": [
+        50,
+        55,
+        60,
+        65,
+        70
+      ],
+      "costBurn": "50/55/60/65/70",
+      "costType": " {{ abilityresourcename }}",
+      "datavalues": {},
+      "description": "Thresh lanza una linterna que otorga un escudo a los campeones aliados cercanos. Los aliados pueden hacer clic en la linterna para deslizarse hacia Thresh.",
+      "effect": [
+        null,
+        [
+          1,
+          1,
+          1,
+          1,
+          1
+        ],
+        [
+          2,
+          2,
+          2,
+          2,
+          2
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          6,
+          6,
+          6,
+          6,
+          6
+        ],
+        [
+          4,
+          4,
+          4,
+          4,
+          4
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ]
+      ],
+      "effectBurn": [
+        null,
+        "1",
+        "2",
+        "0",
+        "6",
+        "4",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0"
+      ],
+      "id": "ThreshW",
+      "image": {
+        "full": "ThreshW.png",
+        "group": "spell",
+        "h": 48,
+        "sprite": "spell14.png",
+        "w": 48,
+        "x": 336,
+        "y": 96
+      },
+      "leveltip": {
+        "effect": [
+          "{{ baseshieldvalue }} -> {{ baseshieldvalueNL }}",
+          "{{ cooldown }} -> {{ cooldownNL }}",
+          "{{ cost }} -> {{ costNL }}"
+        ],
+        "label": [
+          "Cantidad de escudo",
+          "Enfriamiento",
+          "Coste de @AbilityResourceName@"
+        ]
+      },
+      "maxammo": "-1",
+      "maxrank": 5,
+      "name": "Camino oscuro",
+      "range": [
+        950,
+        950,
+        950,
+        950,
+        950
+      ],
+      "rangeBurn": "950",
+      "resource": "{{ cost }} {{ abilityresourcename }}",
+      "tooltip": "Thresh lanza su linterna, lo que permite a un aliado hacer clic en ella para deslizarse hacia él.<br /><br />La linterna también otorga un <shield>escudo de {{ totalshield }}</shield> durante {{ shieldduration }} s a Thresh y al primer campeón aliado que entre en contacto con ella.{{ spellmodifierdescriptionappend }}",
+      "vars": []
+    },
+    {
+      "cooldown": [
+        13,
+        12.25,
+        11.5,
+        10.75,
+        10
+      ],
+      "cooldownBurn": "13/12.25/11.5/10.75/10",
+      "cost": [
+        60,
+        65,
+        70,
+        75,
+        80
+      ],
+      "costBurn": "60/65/70/75/80",
+      "costType": " {{ abilityresourcename }}",
+      "datavalues": {},
+      "description": "Thresh va preparando los ataques, e inflige más daño cuanto más tiempo espere entre ellos. Al activarla, Thresh barre la zona con su cadena y empuja a todos los enemigos impactados en la dirección del golpe.",
+      "effect": [
+        null,
+        [
+          75,
+          120,
+          165,
+          210,
+          255
+        ],
+        [
+          20,
+          25,
+          30,
+          35,
+          40
+        ],
+        [
+          80,
+          110,
+          140,
+          170,
+          200
+        ],
+        [
+          1,
+          1,
+          1,
+          1,
+          1
+        ],
+        [
+          1.5,
+          1.5,
+          1.5,
+          1.5,
+          1.5
+        ],
+        [
+          1.7,
+          1.7,
+          1.7,
+          1.7,
+          1.7
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ]
+      ],
+      "effectBurn": [
+        null,
+        "75/120/165/210/255",
+        "20/25/30/35/40",
+        "80/110/140/170/200",
+        "1",
+        "1.5",
+        "1.7",
+        "0",
+        "0",
+        "0",
+        "0"
+      ],
+      "id": "ThreshE",
+      "image": {
+        "full": "ThreshE.png",
+        "group": "spell",
+        "h": 48,
+        "sprite": "spell14.png",
+        "w": 48,
+        "x": 384,
+        "y": 96
+      },
+      "leveltip": {
+        "effect": [
+          "{{ passiveadratio }}% -> {{ passiveadratioNL }}%",
+          "{{ activebasedamage }} -> {{ activebasedamageNL }}",
+          "{{ activeslowpercentage }}% -> {{ activeslowpercentageNL }}%",
+          "{{ cost }} -> {{ costNL }}",
+          "{{ cooldown }} -> {{ cooldownNL }}"
+        ],
+        "label": [
+          "Daño de la pasiva",
+          "Daño de la activa",
+          "Ralentización",
+          "Coste de @AbilityResourceName@",
+          "Enfriamiento"
+        ]
+      },
+      "maxammo": "-1",
+      "maxrank": 5,
+      "name": "Despellejar",
+      "range": [
+        500,
+        500,
+        500,
+        500,
+        500
+      ],
+      "rangeBurn": "500",
+      "resource": "{{ cost }} {{ abilityresourcename }}",
+      "tooltip": "<spellPassive>Pasiva:</spellPassive> Los ataques de Thresh infligen daño adicional en función del tiempo transcurrido desde su último ataque. Infligen entre <magicDamage>{{ pattackdamagemin }}</magicDamage> y <magicDamage>{{ pattackdamagemax }} de daño mágico</magicDamage>.<br /><br /><spellActive>Activa:</spellActive> Thresh golpea con sus cadenas y <status>atrae</status> o <status>empuja</status> a los enemigos en la dirección del movimiento. Los enemigos alcanzados también quedan <status>ralentizados</status> un {{ activeslowpercentage }}% durante {{ slowduration }} s y reciben <magicDamage>{{ totaldamage }} de daño mágico</magicDamage>.{{ spellmodifierdescriptionappend }}",
+      "vars": []
+    },
+    {
+      "cooldown": [
+        120,
+        100,
+        80
+      ],
+      "cooldownBurn": "120/100/80",
+      "cost": [
+        100,
+        100,
+        100
+      ],
+      "costBurn": "100",
+      "costType": " {{ abilityresourcename }}",
+      "datavalues": {},
+      "description": "Una prisión de muros que ralentizan e infligen daño al romperlos.",
+      "effect": [
+        null,
+        [
+          250,
+          400,
+          550
+        ],
+        [
+          2,
+          2,
+          2
+        ],
+        [
+          99,
+          99,
+          99
+        ],
+        [
+          4,
+          4,
+          4
+        ],
+        [
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0
+        ]
+      ],
+      "effectBurn": [
+        null,
+        "250/400/550",
+        "2",
+        "99",
+        "4",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0"
+      ],
+      "id": "ThreshRPenta",
+      "image": {
+        "full": "ThreshRPenta.png",
+        "group": "spell",
+        "h": 48,
+        "sprite": "spell14.png",
+        "w": 48,
+        "x": 432,
+        "y": 96
+      },
+      "leveltip": {
+        "effect": [
+          "{{ damage }} -> {{ damageNL }}",
+          "{{ cooldown }} -> {{ cooldownNL }}"
+        ],
+        "label": [
+          "Daño",
+          "Enfriamiento"
+        ]
+      },
+      "maxammo": "-1",
+      "maxrank": 3,
+      "name": "La caja",
+      "range": [
+        450,
+        450,
+        450
+      ],
+      "rangeBurn": "450",
+      "resource": "{{ cost }} {{ abilityresourcename }}",
+      "tooltip": "Thresh crea una prisión de muros espectrales que <status>ralentiza</status> a los campeones un {{ slowamount }}% durante {{ slowduration }} s e inflige <magicDamage>{{ totaldamage }} de daño mágico</magicDamage>. Los muros se rompen tras una colisión y, después de que se rompa uno, el resto no inflige daño y <status>ralentiza</status> la mitad de lo normal.{{ spellmodifierdescriptionappend }}",
+      "vars": []
+    }
+  ],
+  "stats": {
+    "armor": 33,
+    "armorperlevel": 0,
+    "attackdamage": 56,
+    "attackdamageperlevel": 0,
+    "attackrange": 450,
+    "attackspeed": 0.625,
+    "attackspeedperlevel": 3.5,
+    "crit": 0,
+    "critperlevel": 0,
+    "hp": 620,
+    "hpperlevel": 120,
+    "hpregen": 7,
+    "hpregenperlevel": 0.55,
+    "movespeed": 330,
+    "mp": 274,
+    "mpperlevel": 44,
+    "mpregen": 6,
+    "mpregenperlevel": 0.8,
+    "spellblock": 30,
+    "spellblockperlevel": 1.55
+  },
+  "tags": [
+    "Support",
+    "Tank"
+  ],
+  "title": "El Carcelero Implacable"
+}

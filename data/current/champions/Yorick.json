@@ -1,0 +1,1031 @@
+{
+  "allytips": [
+    "No tienes que lanzar Despertar para recuperar la capacidad de lanzar Ritos funerarios.",
+    "La Dama intentará ayudarte en el combate, así que elige bien tus objetivos.",
+    "Puedes enviar a una Dama calle abajo sola, pero cuidado, pues supone una gran parte de tu poder de combate."
+  ],
+  "blurb": "Yorick, último superviviente de una orden religiosa olvidada hace tiempo, carga con la bendición y la maldición de controlar a los muertos. Dado que está atrapado en las Islas de la Sombra, sus únicos compañeros son cadáveres en descomposición y los...",
+  "enemytips": [
+    "Puedes lanzar Aplastar sobre los caminantes de la Niebla y la Dama de la Niebla para infligirles daño o matarlos.",
+    "Intenta mermar a los súbditos de Yorick antes de atacarlo a él; los caminantes de la Niebla morirán con un ataque básico o un hechizo de objetivo único.",
+    "Puedes atacar el muro de Cortejo oscuro para derribarlo."
+  ],
+  "id": "Yorick",
+  "image": {
+    "full": "Yorick.png",
+    "group": "champion",
+    "h": 48,
+    "sprite": "champion5.png",
+    "w": 48,
+    "x": 96,
+    "y": 48
+  },
+  "info": {
+    "attack": 6,
+    "defense": 6,
+    "difficulty": 6,
+    "magic": 4
+  },
+  "key": "83",
+  "lore": "Yorick, último superviviente de una orden religiosa olvidada hace tiempo, carga con la bendición y la maldición de controlar a los muertos. Dado que está atrapado en las Islas de la Sombra, sus únicos compañeros son cadáveres en descomposición y los espectros aullantes que atrae. Los monstruosos actos de Yorick responden a un noble propósito: liberar su hogar de la maldición de la Ruina. ",
+  "name": "Yorick",
+  "partype": "Maná",
+  "passive": {
+    "description": "<font color='#FF9900'>La horda maldita:</font> Yorick puede invocar a caminantes de la Niebla para que hostiguen y ataquen a los enemigos cercanos.",
+    "image": {
+      "full": "Yorick_P.png",
+      "group": "passive",
+      "h": 48,
+      "sprite": "passive5.png",
+      "w": 48,
+      "x": 96,
+      "y": 48
+    },
+    "name": "Pastor de Almas"
+  },
+  "recommended": [],
+  "skins": [
+    {
+      "chromas": false,
+      "id": "83000",
+      "name": "default",
+      "num": 0
+    },
+    {
+      "chromas": false,
+      "id": "83001",
+      "name": "Yorick enterrador",
+      "num": 1
+    },
+    {
+      "chromas": false,
+      "id": "83002",
+      "name": "Yorick Pentakill",
+      "num": 2
+    },
+    {
+      "chromas": false,
+      "id": "83003",
+      "name": "Yorick luz celestial",
+      "num": 3
+    },
+    {
+      "chromas": true,
+      "id": "83004",
+      "name": "Miaurick",
+      "num": 4
+    },
+    {
+      "chromas": false,
+      "id": "83005",
+      "name": "Miaurick (rubí)",
+      "num": 5,
+      "parentSkin": 4
+    },
+    {
+      "chromas": false,
+      "id": "83006",
+      "name": "Miaurick (ojo de gato)",
+      "num": 6,
+      "parentSkin": 4
+    },
+    {
+      "chromas": false,
+      "id": "83007",
+      "name": "Miaurick (turquesa)",
+      "num": 7,
+      "parentSkin": 4
+    },
+    {
+      "chromas": false,
+      "id": "83008",
+      "name": "Miaurick (arcoíris)",
+      "num": 8,
+      "parentSkin": 4
+    },
+    {
+      "chromas": false,
+      "id": "83009",
+      "name": "Miaurick (obsidiana)",
+      "num": 9,
+      "parentSkin": 4
+    },
+    {
+      "chromas": false,
+      "id": "83010",
+      "name": "Miaurick (arenisca)",
+      "num": 10,
+      "parentSkin": 4
+    },
+    {
+      "chromas": false,
+      "id": "83011",
+      "name": "Miaurick (perla)",
+      "num": 11,
+      "parentSkin": 4
+    },
+    {
+      "chromas": true,
+      "id": "83012",
+      "name": "Yorick de la resistencia",
+      "num": 12
+    },
+    {
+      "chromas": false,
+      "id": "83013",
+      "name": "Yorick de la resistencia (rubí)",
+      "num": 13,
+      "parentSkin": 12
+    },
+    {
+      "chromas": false,
+      "id": "83014",
+      "name": "Yorick de la resistencia (ojo de gato)",
+      "num": 14,
+      "parentSkin": 12
+    },
+    {
+      "chromas": false,
+      "id": "83015",
+      "name": "Yorick de la resistencia (zafiro)",
+      "num": 15,
+      "parentSkin": 12
+    },
+    {
+      "chromas": false,
+      "id": "83016",
+      "name": "Yorick de la resistencia (turquesa)",
+      "num": 16,
+      "parentSkin": 12
+    },
+    {
+      "chromas": false,
+      "id": "83017",
+      "name": "Yorick de la resistencia (tanzanita)",
+      "num": 17,
+      "parentSkin": 12
+    },
+    {
+      "chromas": false,
+      "id": "83018",
+      "name": "Yorick de la resistencia (esmeralda)",
+      "num": 18,
+      "parentSkin": 12
+    },
+    {
+      "chromas": false,
+      "id": "83019",
+      "name": "Yorick de la resistencia (perla)",
+      "num": 19,
+      "parentSkin": 12
+    },
+    {
+      "chromas": false,
+      "id": "83020",
+      "name": "Yorick de la resistencia (cuarzo rosa)",
+      "num": 20,
+      "parentSkin": 12
+    },
+    {
+      "chromas": true,
+      "id": "83021",
+      "name": "Yorick Pentakill III: Lost Chapter",
+      "num": 21
+    },
+    {
+      "chromas": false,
+      "id": "83022",
+      "name": "Yorick Pentakill III: Lost Chapter (rubí)",
+      "num": 22,
+      "parentSkin": 21
+    },
+    {
+      "chromas": false,
+      "id": "83023",
+      "name": "Yorick Pentakill III: Lost Chapter (citrino)",
+      "num": 23,
+      "parentSkin": 21
+    },
+    {
+      "chromas": false,
+      "id": "83024",
+      "name": "Yorick Pentakill III: Lost Chapter (esmeralda)",
+      "num": 24,
+      "parentSkin": 21
+    },
+    {
+      "chromas": false,
+      "id": "83025",
+      "name": "Yorick Pentakill III: Lost Chapter (cuarzo rosa)",
+      "num": 25,
+      "parentSkin": 21
+    },
+    {
+      "chromas": false,
+      "id": "83026",
+      "name": "Yorick Pentakill III: Lost Chapter (tanzanita)",
+      "num": 26,
+      "parentSkin": 21
+    },
+    {
+      "chromas": false,
+      "id": "83027",
+      "name": "Yorick Pentakill III: Lost Chapter (zafiro)",
+      "num": 27,
+      "parentSkin": 21
+    },
+    {
+      "chromas": false,
+      "id": "83028",
+      "name": "Yorick Pentakill III: Lost Chapter (perla)",
+      "num": 28,
+      "parentSkin": 21
+    },
+    {
+      "chromas": false,
+      "id": "83029",
+      "name": "Yorick Pentakill III: Lost Chapter (obsidiana)",
+      "num": 29,
+      "parentSkin": 21
+    },
+    {
+      "chromas": true,
+      "id": "83030",
+      "name": "Yorick florecer espiritual",
+      "num": 30
+    },
+    {
+      "chromas": false,
+      "id": "83031",
+      "name": "Yorick florecer espiritual (rubí)",
+      "num": 31,
+      "parentSkin": 30
+    },
+    {
+      "chromas": false,
+      "id": "83032",
+      "name": "Yorick florecer espiritual (citrino)",
+      "num": 32,
+      "parentSkin": 30
+    },
+    {
+      "chromas": false,
+      "id": "83033",
+      "name": "Yorick florecer espiritual (zafiro)",
+      "num": 33,
+      "parentSkin": 30
+    },
+    {
+      "chromas": false,
+      "id": "83034",
+      "name": "Yorick florecer espiritual (perla)",
+      "num": 34,
+      "parentSkin": 30
+    },
+    {
+      "chromas": false,
+      "id": "83035",
+      "name": "Yorick florecer espiritual (esmeralda)",
+      "num": 35,
+      "parentSkin": 30
+    },
+    {
+      "chromas": false,
+      "id": "83036",
+      "name": "Yorick florecer espiritual (cuarzo rosa)",
+      "num": 36,
+      "parentSkin": 30
+    },
+    {
+      "chromas": false,
+      "id": "83037",
+      "name": "Yorick florecer espiritual (turquesa)",
+      "num": 37,
+      "parentSkin": 30
+    },
+    {
+      "chromas": false,
+      "id": "83038",
+      "name": "Yorick florecer espiritual (obsidiana)",
+      "num": 38,
+      "parentSkin": 30
+    },
+    {
+      "chromas": false,
+      "id": "83039",
+      "name": "Yorick florecer espiritual (florecer nocturno)",
+      "num": 39,
+      "parentSkin": 30
+    },
+    {
+      "chromas": true,
+      "id": "83040",
+      "name": "Yorick estrella oscura",
+      "num": 40
+    },
+    {
+      "chromas": false,
+      "id": "83041",
+      "name": "Yorick estrella oscura (rubí)",
+      "num": 41,
+      "parentSkin": 40
+    },
+    {
+      "chromas": false,
+      "id": "83042",
+      "name": "Yorick estrella oscura (turquesa)",
+      "num": 42,
+      "parentSkin": 40
+    },
+    {
+      "chromas": false,
+      "id": "83043",
+      "name": "Yorick estrella oscura (esmeralda)",
+      "num": 43,
+      "parentSkin": 40
+    },
+    {
+      "chromas": false,
+      "id": "83044",
+      "name": "Yorick estrella oscura (zafiro)",
+      "num": 44,
+      "parentSkin": 40
+    },
+    {
+      "chromas": false,
+      "id": "83045",
+      "name": "Yorick estrella oscura (cuarzo rosa)",
+      "num": 45,
+      "parentSkin": 40
+    },
+    {
+      "chromas": false,
+      "id": "83046",
+      "name": "Yorick estrella oscura (perla)",
+      "num": 46,
+      "parentSkin": 40
+    },
+    {
+      "chromas": false,
+      "id": "83047",
+      "name": "Yorick estrella oscura (citrino)",
+      "num": 47,
+      "parentSkin": 40
+    },
+    {
+      "chromas": false,
+      "id": "83048",
+      "name": "Yorick estrella oscura (obsidiana)",
+      "num": 48,
+      "parentSkin": 40
+    },
+    {
+      "chromas": false,
+      "id": "83049",
+      "name": "Yorick estrella oscura (cuásar)",
+      "num": 49,
+      "parentSkin": 40
+    },
+    {
+      "chromas": true,
+      "id": "83050",
+      "name": "Yorick solo ante el peligro",
+      "num": 50
+    },
+    {
+      "chromas": false,
+      "id": "83051",
+      "name": "Yorick solo ante el peligro (rubí)",
+      "num": 51,
+      "parentSkin": 50
+    },
+    {
+      "chromas": false,
+      "id": "83052",
+      "name": "Yorick solo ante el peligro (esmeralda)",
+      "num": 52,
+      "parentSkin": 50
+    },
+    {
+      "chromas": false,
+      "id": "83053",
+      "name": "Yorick solo ante el peligro (zafiro)",
+      "num": 53,
+      "parentSkin": 50
+    },
+    {
+      "chromas": false,
+      "id": "83054",
+      "name": "Yorick solo ante el peligro (ojo de gato)",
+      "num": 54,
+      "parentSkin": 50
+    },
+    {
+      "chromas": false,
+      "id": "83055",
+      "name": "Yorick solo ante el peligro (tanzanita)",
+      "num": 55,
+      "parentSkin": 50
+    },
+    {
+      "chromas": false,
+      "id": "83056",
+      "name": "Yorick solo ante el peligro (turquesa)",
+      "num": 56,
+      "parentSkin": 50
+    },
+    {
+      "chromas": false,
+      "id": "83057",
+      "name": "Yorick solo ante el peligro (cuarzo rosa)",
+      "num": 57,
+      "parentSkin": 50
+    },
+    {
+      "chromas": false,
+      "id": "83058",
+      "name": "Yorick solo ante el peligro (perla)",
+      "num": 58,
+      "parentSkin": 50
+    }
+  ],
+  "spells": [
+    {
+      "cooldown": [
+        6,
+        5.5,
+        5,
+        4.5,
+        4
+      ],
+      "cooldownBurn": "6/5.5/5/4.5/4",
+      "cost": [
+        20,
+        20,
+        20,
+        20,
+        20
+      ],
+      "costBurn": "20",
+      "costType": " {{ abilityresourcename }}",
+      "datavalues": {},
+      "description": "Yorick inflige daño adicional en su siguiente ataque y se cura. Si el objetivo es un campeón o un monstruo gigante o si este muere, se cavará una tumba.",
+      "effect": [
+        null,
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ]
+      ],
+      "effectBurn": [
+        null,
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0"
+      ],
+      "id": "YorickQ",
+      "image": {
+        "full": "YorickQ.png",
+        "group": "spell",
+        "h": 48,
+        "sprite": "spell17.png",
+        "w": 48,
+        "x": 96,
+        "y": 0
+      },
+      "leveltip": {
+        "effect": [
+          "{{ basedamage }} -> {{ basedamageNL }}",
+          "{{ missinghealthratio }}% -> {{ missinghealthratioNL }}%",
+          "{{ cooldown }} -> {{ cooldownNL }}"
+        ],
+        "label": [
+          "Daño adicional",
+          "Curación",
+          "Enfriamiento"
+        ]
+      },
+      "maxammo": "-1",
+      "maxrank": 5,
+      "name": "Ritos funerarios",
+      "range": [
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "rangeBurn": "0",
+      "resource": "{{ cost }} {{ abilityresourcename }}",
+      "tooltip": "El siguiente ataque de Yorick inflige <physicalDamage>{{ bonusdamage }} de daño físico adicional</physicalDamage> y restaura <healing>{{ qheal }} más un {{ missinghealthratio }}% de la vida que le falte</healing>, que se reduce un {{ healreduction }}% contra unidades que no sean campeones. Si este ataque golpea a un campeón o monstruo gigante o acaba con el objetivo, deja una tumba.<br /><br />Cuando hay 3 o más tumbas cerca y esta habilidad ya se ha usado, Yorick puede <recast>reactivarla</recast> para invocar <keywordMajor>caminantes de la Niebla</keywordMajor> de todas las tumbas cercanas.{{ spellmodifierdescriptionappend }}",
+      "vars": []
+    },
+    {
+      "cooldown": [
+        20,
+        18,
+        16,
+        14,
+        12
+      ],
+      "cooldownBurn": "20/18/16/14/12",
+      "cost": [
+        70,
+        70,
+        70,
+        70,
+        70
+      ],
+      "costBurn": "70",
+      "costType": " {{ abilityresourcename }}",
+      "datavalues": {},
+      "description": "Yorick invoca un muro destruible en la ubicación objetivo que bloqueará el movimiento enemigo.",
+      "effect": [
+        null,
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ]
+      ],
+      "effectBurn": [
+        null,
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0"
+      ],
+      "id": "YorickW",
+      "image": {
+        "full": "YorickW.png",
+        "group": "spell",
+        "h": 48,
+        "sprite": "spell17.png",
+        "w": 48,
+        "x": 144,
+        "y": 0
+      },
+      "leveltip": {
+        "effect": [
+          "{{ cooldown }} -> {{ cooldownNL }}",
+          "{{ wallhealthtooltip }} -> {{ wallhealthtooltipNL }}"
+        ],
+        "label": [
+          "Enfriamiento",
+          "Vida"
+        ]
+      },
+      "maxammo": "-1",
+      "maxrank": 5,
+      "name": "Cortejo oscuro",
+      "range": [
+        600,
+        600,
+        600,
+        600,
+        600
+      ],
+      "rangeBurn": "600",
+      "resource": "{{ cost }} {{ abilityresourcename }}",
+      "tooltip": "Yorick invoca un muro de espíritus que bloquea el camino de los enemigos, pero no el de los aliados. El muro tiene <healing>{{ wallhealthtooltip }} de vida</healing> y desaparece tras {{ circleduration }} s.{{ spellmodifierdescriptionappend }}",
+      "vars": []
+    },
+    {
+      "cooldown": [
+        12,
+        11,
+        10,
+        9,
+        8
+      ],
+      "cooldownBurn": "12/11/10/9/8",
+      "cost": [
+        50,
+        55,
+        60,
+        65,
+        70
+      ],
+      "costBurn": "50/55/60/65/70",
+      "costType": " {{ abilityresourcename }}",
+      "datavalues": {},
+      "description": "Yorick lanza un glóbulo de Niebla Negra que reduce la armadura, inflige daño, ralentiza y marca a los enemigos. Las unidades invocadas obtienen velocidad de movimiento al moverse hacia los objetivos marcados. ",
+      "effect": [
+        null,
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ]
+      ],
+      "effectBurn": [
+        null,
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0"
+      ],
+      "id": "YorickE",
+      "image": {
+        "full": "YorickE.png",
+        "group": "spell",
+        "h": 48,
+        "sprite": "spell17.png",
+        "w": 48,
+        "x": 192,
+        "y": 0
+      },
+      "leveltip": {
+        "effect": [
+          "{{ armorshred*100.000000 }}% -> {{ armorshrednl*100.000000 }}%",
+          "{{ hasteamount*100.000000 }}% -> {{ hasteamountnl*100.000000 }}%",
+          "{{ cooldown }} -> {{ cooldownNL }}",
+          "{{ cost }} -> {{ costNL }}",
+          "{{ healthdamage }}% -> {{ healthdamageNL }}%"
+        ],
+        "label": [
+          "% reducción de armadura",
+          "Velocidad de movimiento",
+          "Enfriamiento",
+          "Coste de @AbilityResourceName@",
+          "Daño por vida máxima"
+        ]
+      },
+      "maxammo": "-1",
+      "maxrank": 5,
+      "name": "Niebla de luto",
+      "range": [
+        700,
+        700,
+        700,
+        700,
+        700
+      ],
+      "rangeBurn": "700",
+      "resource": "{{ cost }} {{ abilityresourcename }}",
+      "tooltip": "Yorick lanza un glóbulo de Niebla Negra que inflige un <magicDamage>{{ calc_healthdamage }} de daño mágico según la vida máxima</magicDamage>, <status>ralentiza</status> un {{ calc_slow }} durante {{ slowduration }} s y marca a los campeones y monstruos durante {{ markduration }} s. Los enemigos marcados <spellName>despiertan</spellName> las tumbas cercanas continuamente (pero sin sobrepasar el máximo de {{ spell.yorickpassive:yorickpassiveghoulmax }} unidades) y tienen un <scaleArmor>{{ armorshred*100 }}% de armadura reducida</scaleArmor>.<br /><br />Yorick y sus unidades invocadas obtienen un <speed>{{ hasteamount*100 }}% de velocidad de movimiento</speed> hacia el objetivo marcado. Los <keywordMajor>caminantes de la Niebla</keywordMajor> saltarán una vez contra los enemigos marcados que se alejen de ellos.{{ spellmodifierdescriptionappend }}",
+      "vars": []
+    },
+    {
+      "cooldown": [
+        160,
+        130,
+        100
+      ],
+      "cooldownBurn": "160/130/100",
+      "cost": [
+        100,
+        100,
+        100
+      ],
+      "costBurn": "100",
+      "costType": " {{ abilityresourcename }}",
+      "datavalues": {},
+      "description": "Yorick invoca a la Dama de la Niebla, que provoca que los ataques de Yorick al objetivo de la Dama inflijan daño adicional. La Dama además convertirá a los enemigos muertos en caminantes.",
+      "effect": [
+        null,
+        [
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0
+        ]
+      ],
+      "effectBurn": [
+        null,
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0"
+      ],
+      "id": "YorickR",
+      "image": {
+        "full": "YorickR.png",
+        "group": "spell",
+        "h": 48,
+        "sprite": "spell17.png",
+        "w": 48,
+        "x": 240,
+        "y": 0
+      },
+      "leveltip": {
+        "effect": [
+          "{{ rbigghoulbonusad }} -> {{ rbigghoulbonusadNL }}",
+          "{{ rmarkdamagepercent }}% -> {{ rmarkdamagepercentNL }}%",
+          "{{ rghoulnumbers }} -> {{ rghoulnumbersNL }}",
+          "{{ cooldown }} -> {{ cooldownNL }}"
+        ],
+        "label": [
+          "Daño de ataque",
+          "Daño con marca",
+          "Caminantes de la Niebla",
+          "Enfriamiento"
+        ]
+      },
+      "maxammo": "-1",
+      "maxrank": 3,
+      "name": "Panegírico de las Islas",
+      "range": [
+        600,
+        600,
+        600
+      ],
+      "rangeBurn": "600",
+      "resource": "{{ cost }} {{ abilityresourcename }}",
+      "tooltip": "Yorick invoca a la <keywordMajor>Dama de la Niebla</keywordMajor> con <healing>{{ yorickbigghoulhealth }} de vida</healing> y <magicDamage>{{ yorickbigghouldamage }} de daño mágico</magicDamage> y a {{ rghoulnumbers }} <keywordMajor>caminantes de la Niebla</keywordMajor>. La <keywordMajor>Dama</keywordMajor> convierte en <keywordMajor>caminantes de la Niebla</keywordMajor> a los enemigos muertos cercanos de forma automática y marca a los campeones enemigos con sus ataques. Cuando Yorick daña al objetivo de la <keywordMajor>Dama</keywordMajor>, inflige un <magicDamage>{{ rmarkdamagepercent }}% de daño mágico en función de la vida máxima</magicDamage>.<br /><br />Tras 10 s, Yorick puede <recast>reactivar</recast> esta habilidad para liberar a la <keywordMajor>Dama</keywordMajor>, lo que la envía a la calle más cercana.{{ spellmodifierdescriptionappend }}",
+      "vars": []
+    }
+  ],
+  "stats": {
+    "armor": 36,
+    "armorperlevel": 4.5,
+    "attackdamage": 62,
+    "attackdamageperlevel": 0,
+    "attackrange": 175,
+    "attackspeed": 0.625,
+    "attackspeedperlevel": 2,
+    "crit": 0,
+    "critperlevel": 0,
+    "hp": 650,
+    "hpperlevel": 114,
+    "hpregen": 8,
+    "hpregenperlevel": 0.8,
+    "movespeed": 340,
+    "mp": 300,
+    "mpperlevel": 60,
+    "mpregen": 7.5,
+    "mpregenperlevel": 0.75,
+    "spellblock": 32,
+    "spellblockperlevel": 2.05
+  },
+  "tags": [
+    "Fighter",
+    "Tank"
+  ],
+  "title": "Pastor de las Almas Perdidas"
+}

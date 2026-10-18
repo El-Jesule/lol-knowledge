@@ -1,0 +1,823 @@
+{
+  "allytips": [],
+  "blurb": "La incontrolable sed de sangre que siente Briar, un experimento fallido de la Rosa Negra, la obliga a cargar con una picota especial que calma su enajenada mente. Tras años de confinamiento, esta arma viviente se ha librado de sus cadenas y se ha...",
+  "enemytips": [],
+  "id": "Briar",
+  "image": {
+    "full": "Briar.png",
+    "group": "champion",
+    "h": 48,
+    "sprite": "champion0.png",
+    "w": 48,
+    "x": 432,
+    "y": 48
+  },
+  "info": {
+    "attack": 9,
+    "defense": 5,
+    "difficulty": 3,
+    "magic": 3
+  },
+  "key": "233",
+  "lore": "La incontrolable sed de sangre que siente Briar, un experimento fallido de la Rosa Negra, la obliga a cargar con una picota especial que calma su enajenada mente. Tras años de confinamiento, esta arma viviente se ha librado de sus cadenas y se ha lanzado al mundo. Ahora nadie la controla, por lo que solo su sed de conocimiento... y sangre guía sus actos. Asimismo, goza con aquellas oportunidades que le permiten dar rienda suelta a sus instintos, aun si luego le cuesta sobremanera reprimir ese frenesí.",
+  "name": "Briar",
+  "partype": "Furia",
+  "passive": {
+    "description": "Los ataques y habilidades de Briar aplican acumulaciones de sangrado, lo que la cura parte del daño que infligen. Dominada por un hambre insaciable, obtiene curación adicional según la vida que le falte, pero no cuenta con regeneración de vida de forma innata.",
+    "image": {
+      "full": "BriarP.png",
+      "group": "passive",
+      "h": 48,
+      "sprite": "passive0.png",
+      "w": 48,
+      "x": 432,
+      "y": 48
+    },
+    "name": "Maldición carmesí"
+  },
+  "recommended": [],
+  "skins": [
+    {
+      "chromas": false,
+      "id": "233000",
+      "name": "default",
+      "num": 0
+    },
+    {
+      "chromas": true,
+      "id": "233001",
+      "name": "Briar diabla callejera",
+      "num": 1
+    },
+    {
+      "chromas": false,
+      "id": "233002",
+      "name": "Briar diabla callejera (rubí)",
+      "num": 2,
+      "parentSkin": 1
+    },
+    {
+      "chromas": false,
+      "id": "233003",
+      "name": "Briar diabla callejera (esmeralda)",
+      "num": 3,
+      "parentSkin": 1
+    },
+    {
+      "chromas": false,
+      "id": "233004",
+      "name": "Briar diabla callejera (cuarzo rosa)",
+      "num": 4,
+      "parentSkin": 1
+    },
+    {
+      "chromas": false,
+      "id": "233005",
+      "name": "Briar diabla callejera (tanzanita)",
+      "num": 5,
+      "parentSkin": 1
+    },
+    {
+      "chromas": false,
+      "id": "233006",
+      "name": "Briar diabla callejera (turquesa)",
+      "num": 6,
+      "parentSkin": 1
+    },
+    {
+      "chromas": false,
+      "id": "233007",
+      "name": "Briar diabla callejera (zafiro)",
+      "num": 7,
+      "parentSkin": 1
+    },
+    {
+      "chromas": false,
+      "id": "233008",
+      "name": "Briar diabla callejera (obsidiana)",
+      "num": 8,
+      "parentSkin": 1
+    },
+    {
+      "chromas": false,
+      "id": "233009",
+      "name": "Briar diabla callejera (perla)",
+      "num": 9,
+      "parentSkin": 1
+    },
+    {
+      "chromas": true,
+      "id": "233010",
+      "name": "Briar primordiana",
+      "num": 10
+    },
+    {
+      "chromas": false,
+      "id": "233011",
+      "name": "Briar primordiana (rubí)",
+      "num": 11,
+      "parentSkin": 10
+    },
+    {
+      "chromas": false,
+      "id": "233012",
+      "name": "Briar primordiana (ojo de gato)",
+      "num": 12,
+      "parentSkin": 10
+    },
+    {
+      "chromas": false,
+      "id": "233013",
+      "name": "Briar primordiana (aguamarina)",
+      "num": 13,
+      "parentSkin": 10
+    },
+    {
+      "chromas": false,
+      "id": "233014",
+      "name": "Briar primordiana (peridoto)",
+      "num": 14,
+      "parentSkin": 10
+    },
+    {
+      "chromas": false,
+      "id": "233015",
+      "name": "Briar primordiana (amatista)",
+      "num": 15,
+      "parentSkin": 10
+    },
+    {
+      "chromas": false,
+      "id": "233016",
+      "name": "Briar primordiana (cuarzo rosa)",
+      "num": 16,
+      "parentSkin": 10
+    },
+    {
+      "chromas": false,
+      "id": "233017",
+      "name": "Briar primordiana (obsidiana)",
+      "num": 17,
+      "parentSkin": 10
+    },
+    {
+      "chromas": false,
+      "id": "233018",
+      "name": "Briar primordiana (perla)",
+      "num": 18,
+      "parentSkin": 10
+    },
+    {
+      "chromas": false,
+      "id": "233019",
+      "name": "Briar primordiana (abisal)",
+      "num": 19,
+      "parentSkin": 10
+    },
+    {
+      "chromas": true,
+      "id": "233020",
+      "name": "Briar academia de combate",
+      "num": 20
+    },
+    {
+      "chromas": false,
+      "id": "233021",
+      "name": "Briar academia de combate (rubí)",
+      "num": 21,
+      "parentSkin": 20
+    },
+    {
+      "chromas": false,
+      "id": "233022",
+      "name": "Briar academia de combate (ojo de gato)",
+      "num": 22,
+      "parentSkin": 20
+    },
+    {
+      "chromas": false,
+      "id": "233023",
+      "name": "Briar academia de combate (esmeralda)",
+      "num": 23,
+      "parentSkin": 20
+    },
+    {
+      "chromas": false,
+      "id": "233024",
+      "name": "Briar academia de combate (zafiro)",
+      "num": 24,
+      "parentSkin": 20
+    },
+    {
+      "chromas": false,
+      "id": "233025",
+      "name": "Briar academia de combate (turquesa)",
+      "num": 25,
+      "parentSkin": 20
+    },
+    {
+      "chromas": false,
+      "id": "233026",
+      "name": "Briar academia de combate (cuarzo rosa)",
+      "num": 26,
+      "parentSkin": 20
+    },
+    {
+      "chromas": false,
+      "id": "233027",
+      "name": "Briar academia de combate (obsidiana)",
+      "num": 27,
+      "parentSkin": 20
+    },
+    {
+      "chromas": false,
+      "id": "233028",
+      "name": "Briar academia de combate (perla)",
+      "num": 28,
+      "parentSkin": 20
+    }
+  ],
+  "spells": [
+    {
+      "cooldown": [
+        13,
+        12,
+        11,
+        10,
+        9
+      ],
+      "cooldownBurn": "13/12/11/10/9",
+      "cost": [
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "costBurn": "0",
+      "costType": "% de la vida actual",
+      "datavalues": {},
+      "description": "Briar se lanza contra una unidad y golpea a los enemigos con una patada voladora (de la muerte), los aturde y destroza su armadura.",
+      "effect": [
+        null,
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ]
+      ],
+      "effectBurn": [
+        null,
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0"
+      ],
+      "id": "BriarQ",
+      "image": {
+        "full": "BriarQ.png",
+        "group": "spell",
+        "h": 48,
+        "sprite": "spell2.png",
+        "w": 48,
+        "x": 0,
+        "y": 144
+      },
+      "leveltip": {
+        "effect": [
+          "{{ basedamage }} -> {{ basedamageNL }}",
+          "{{ shredpercent*100.000000 }}% -> {{ shredpercentnl*100.000000 }}%",
+          "{{ cooldown }} -> {{ cooldownNL }}"
+        ],
+        "label": [
+          "Daño",
+          "Reducción de armadura y resistencia mágica",
+          "Enfriamiento"
+        ]
+      },
+      "maxammo": "-1",
+      "maxrank": 5,
+      "name": "A la yugular",
+      "range": [
+        475,
+        475,
+        475,
+        475,
+        475
+      ],
+      "rangeBurn": "475",
+      "resource": "Cuesta un {{ spell.briarp:currenthealthpercentcost*100 }}% de la vida actual",
+      "tooltip": "Briar se abalanza contra su objetivo, lo <status>aturde</status> durante {{ stunduration }} s, le inflige <physicalDamage>{{ totaldamage }} de daño físico</physicalDamage> y reduce un {{ shredpercent*100 }}% su <scaleArmor>armadura</scaleArmor> y su <scaleMR>resistencia mágica</scaleMR> durante {{ shredduration }} s.<br /><br /><rules>Briar dejará de priorizar a campeones si lanza esta habilidad contra un súbdito o monstruo durante <keywordMajor>Frenesí sanguinario</keywordMajor>.</rules>{{ spellmodifierdescriptionappend }}",
+      "vars": []
+    },
+    {
+      "cooldown": [
+        14,
+        13,
+        12,
+        11,
+        10
+      ],
+      "cooldownBurn": "14/13/12/11/10",
+      "cost": [
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "costBurn": "0",
+      "costType": "% de la vida actual",
+      "datavalues": {},
+      "description": "Briar se lanza hacia delante y destruye su picota, lo que la hace entrar en Frenesí sanguinario y perseguir sin descanso al enemigo más cercano (priorizando a los campeones). Mientras se encuentra en este estado, obtiene velocidad de ataque y de movimiento adicionales, y sus ataques infligen daño en área en torno a su objetivo.<br><br>Briar puede reactivar esta habilidad durante el frenesí para darle un mordisco a su objetivo con su próximo ataque, lo que inflige daño adicional en base a la vida que le falte a la unidad y cura a Briar según el daño que inflija.",
+      "effect": [
+        null,
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ]
+      ],
+      "effectBurn": [
+        null,
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0"
+      ],
+      "id": "BriarW",
+      "image": {
+        "full": "BriarW.png",
+        "group": "spell",
+        "h": 48,
+        "sprite": "spell2.png",
+        "w": 48,
+        "x": 48,
+        "y": 144
+      },
+      "leveltip": {
+        "effect": [
+          "{{ berserkas*100.000000 }}% -> {{ berserkasnl*100.000000 }}%",
+          "{{ berserkms*100.000000 }}% -> {{ berserkmsnl*100.000000 }}%",
+          "{{ aoeattackdamagepercent*100.000000 }}% -> {{ aoeattackdamagepercentnl*100.000000 }}%",
+          "{{ attackbonusdamage }} -> {{ attackbonusdamageNL }}",
+          "{{ attackhealpercent*100.000000 }}% -> {{ attackhealpercentnl*100.000000 }}%",
+          "{{ cooldown }} -> {{ cooldownNL }}"
+        ],
+        "label": [
+          "Velocidad de ataque",
+          "Velocidad de movimiento",
+          "Relación de daño de ataque en área",
+          "Daño",
+          "Curación",
+          "Enfriamiento"
+        ]
+      },
+      "maxammo": "-1",
+      "maxrank": 5,
+      "name": "Frenesí sanguinario / Otro mordisquito",
+      "range": [
+        350,
+        350,
+        350,
+        350,
+        350
+      ],
+      "rangeBurn": "350",
+      "resource": "Cuesta un {{ spell.briarp:currenthealthpercentcost*100 }}% de la vida actual",
+      "tooltip": "Briar salta y entra en un estado de <keywordMajor>Frenesí sanguinario</keywordMajor>, provocándose a sí misma para atacar al enemigo más cercano durante {{ berserkduration }} s, priorizando a los campeones. Mientras dure <keywordMajor>Frenesí sanguinario</keywordMajor>, obtiene un <attackSpeed>{{ berserkas*100 }}% de velocidad de ataque</attackSpeed> y un <speed>{{ berserkms*100 }}% de velocidad de movimiento</speed>. Además, sus ataques infligen <physicalDamage>{{ totalaoedamage }} de daño físico</physicalDamage> a los enemigos que rodean a su objetivo principal.<br /><br />Briar puede <recast>reactivar</recast> esta habilidad para potenciar su siguiente ataque. Inflige <physicalDamage>{{ totalattackbonusdamage }}&nbsp;+&nbsp;{{ totalattackpercentmissinghealth }}% de la vida que le falte como daño físico</physicalDamage> y <healing>se cura {{ attackhealpercent*100 }}&nbsp;+&nbsp;{{ attackmaxhpheal }}% del daño infligido</healing>.<br />{{ spellmodifierdescriptionappend }}",
+      "vars": []
+    },
+    {
+      "cooldown": [
+        16,
+        16,
+        16,
+        16,
+        16
+      ],
+      "cooldownBurn": "16",
+      "cost": [
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "costBurn": "0",
+      "costType": "% de la vida actual",
+      "datavalues": {},
+      "description": "Briar se concentra, pone fin a Frenesí sanguinario y canaliza su energía para proferir un poderoso alarido que inflige daño y ralentiza a los enemigos. Mientras canaliza, recibe menos daño y recupera parte de su vida máxima. Al canalizar por completo el alarido, este empuja a los enemigos, inflige daño adicional y aturde a los que choquen contra muros.",
+      "effect": [
+        null,
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ]
+      ],
+      "effectBurn": [
+        null,
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0"
+      ],
+      "id": "BriarE",
+      "image": {
+        "full": "BriarE.png",
+        "group": "spell",
+        "h": 48,
+        "sprite": "spell2.png",
+        "w": 48,
+        "x": 96,
+        "y": 144
+      },
+      "leveltip": {
+        "effect": [
+          "{{ maxbasedamage }} -> {{ maxbasedamageNL }}",
+          "{{ wallhitbasedamage }} -> {{ wallhitbasedamageNL }}",
+          "{{ healhppercent*100.000000 }}% -> {{ healhppercentnl*100.000000 }}%"
+        ],
+        "label": [
+          "Daño",
+          "Daño adicional",
+          "Relación de curación"
+        ]
+      },
+      "maxammo": "-1",
+      "maxrank": 5,
+      "name": "Alarido escalofriante",
+      "range": [
+        400,
+        400,
+        400,
+        400,
+        400
+      ],
+      "rangeBurn": "400",
+      "resource": "Cuesta un {{ spell.briarp:currenthealthpercentcost*100 }}% de la vida actual",
+      "tooltip": "<charge>Inicio de la carga:</charge> Briar se deshace de <keywordMajor>Frenesí sanguinario</keywordMajor> y reúne energía, lo que reduce el daño que recibe un {{ drpercent }}% y recupera <healing>{{ percentmaxhpheal }} de vida</healing> durante 1 s.<br /><br /><release>Lanzamiento:</release> Briar emite un alarido que inflige hasta <magicDamage>{{ damage }} de daño mágico</magicDamage> según el tiempo de carga y <status>ralentiza</status> un {{ slowpercent*100 }}% durante {{ slowduration }} s. Con la carga al máximo, el alarido <status>empuja</status> a los enemigos, lo que inflige <magicDamage>{{ wallhitdamage }} de daño mágico</magicDamage> a aquellos que choquen contra un muro y los <status>aturde</status> durante {{ wallstunduration }} s.{{ spellmodifierdescriptionappend }}",
+      "vars": []
+    },
+    {
+      "cooldown": [
+        120,
+        100,
+        80
+      ],
+      "cooldownBurn": "120/100/80",
+      "cost": [
+        0,
+        0,
+        0
+      ],
+      "costBurn": "0",
+      "costType": "% de la vida actual",
+      "datavalues": {},
+      "description": "Briar lanza la gema hemolítica de su picota, que marca al primer campeón golpeado y lo convierte en su presa. Después, corre directa hacia él, aterroriza a los enemigos cercanos al alcanzar a su objetivo y entra en un estado de hemomanía incontrolable. Perseguirá a su presa hasta la muerte, con los efectos de Frenesí sanguinario y armadura, resistencia mágica, robo de vida y velocidad de movimiento adicionales.",
+      "effect": [
+        null,
+        [
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0
+        ]
+      ],
+      "effectBurn": [
+        null,
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0"
+      ],
+      "id": "BriarR",
+      "image": {
+        "full": "BriarR.png",
+        "group": "spell",
+        "h": 48,
+        "sprite": "spell2.png",
+        "w": 48,
+        "x": 144,
+        "y": 144
+      },
+      "leveltip": {
+        "effect": [
+          "{{ basedamage }} -> {{ basedamageNL }}",
+          "{{ lifestealpercent*100.000000 }}% -> {{ lifestealpercentnl*100.000000 }}%",
+          "{{ extramovespeedpercent*100.000000 }}% -> {{ extramovespeedpercentnl*100.000000 }}%",
+          "{{ cooldown }} -> {{ cooldownNL }}"
+        ],
+        "label": [
+          "Daño",
+          "Robo de vida",
+          "Velocidad de movimiento",
+          "Enfriamiento"
+        ]
+      },
+      "maxammo": "-1",
+      "maxrank": 3,
+      "name": "Final sangriento",
+      "range": [
+        12000,
+        12000,
+        12000
+      ],
+      "rangeBurn": "12000",
+      "resource": "Cuesta un {{ spell.briarp:currenthealthpercentcost*100 }}% de la vida actual",
+      "tooltip": "Briar lanza la gema hemolítica de su picota, se lanza hasta la ubicación del primer campeón golpeado y lo marca como presa. Al aterrizar, inflige <magicDamage>{{ damage }} de daño mágico</magicDamage> a quienes haya cerca y hace que los enemigos que no son su presa <status>huyan</status> durante {{ fearduration }} s. Entra en un estado de <keywordMajor>Frenesí sanguinario</keywordMajor> potenciado y persigue a su presa hasta la muerte. Durante dicho periodo, obtiene {{ totalresists }} de <scaleArmor>armadura</scaleArmor> y de <scaleMR>resistencia mágica</scaleMR>, un {{ lifestealpercent*100 }}% de robo de vida y un <speed>{{ extramovespeedpercent*100 }}% de velocidad de movimiento</speed> adicionales.{{ spellmodifierdescriptionappend }}",
+      "vars": []
+    }
+  ],
+  "stats": {
+    "armor": 30,
+    "armorperlevel": 4.5,
+    "attackdamage": 60,
+    "attackdamageperlevel": 0,
+    "attackrange": 125,
+    "attackspeed": 0.644,
+    "attackspeedperlevel": 2,
+    "crit": 0,
+    "critperlevel": 0,
+    "hp": 625,
+    "hpperlevel": 95,
+    "hpregen": 0,
+    "hpregenperlevel": 0,
+    "movespeed": 340,
+    "mp": 0,
+    "mpperlevel": 0,
+    "mpregen": 0,
+    "mpregenperlevel": 0,
+    "spellblock": 32,
+    "spellblockperlevel": 2.05
+  },
+  "tags": [
+    "Fighter",
+    "Assassin"
+  ],
+  "title": "la Gula Confinada"
+}

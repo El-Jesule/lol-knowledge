@@ -1,0 +1,905 @@
+{
+  "allytips": [
+    "Parrrlamento aplica efectos de impacto como Mazo helado o La cuchilla negra.",
+    "Si prestas atención en el mapa a los enemigos con poca vida, puedes matarlos por sorpresa con Andanada de cañón.",
+    "Intenta colocar Andanada de cañón en la ruta de escape para cazar a los enemigos en fuga."
+  ],
+  "blurb": "Tan impredecible como brutal, el destronado rey de los piratas conocido como Gangplank es temido a lo largo y ancho del mundo. Antes gobernaba la ciudad portuaria de Aguas Estancadas, y aunque su reinado haya terminado, hay quienes creen que esto solo...",
+  "enemytips": [
+    "Parrrlamento inflige una gran cantidad de daño físico. Los objetos que proporcionan armadura pueden ayudar si Gangplank se convierte en un problema.",
+    "¡Cuando este campeón llega a nivel 6, cuidado con su definitiva de alcance global, Andanada de cañón!"
+  ],
+  "id": "Gangplank",
+  "image": {
+    "full": "Gangplank.png",
+    "group": "champion",
+    "h": 48,
+    "sprite": "champion1.png",
+    "w": 48,
+    "x": 336,
+    "y": 0
+  },
+  "info": {
+    "attack": 7,
+    "defense": 6,
+    "difficulty": 9,
+    "magic": 4
+  },
+  "key": "41",
+  "lore": "Tan impredecible como brutal, el destronado rey de los piratas conocido como Gangplank es temido a lo largo y ancho del mundo. Antes gobernaba la ciudad portuaria de Aguas Estancadas, y aunque su reinado haya terminado, hay quienes creen que esto solo lo ha hecho más peligroso. Gangplank preferiría ver Aguas Estancadas bañada en sangre una vez más antes de dejar que alguien más la tomase. Ahora con pistola, machete y barriles de pólvora, está decidido a reclamar lo que ha perdido.",
+  "name": "Gangplank",
+  "partype": "Maná",
+  "passive": {
+    "description": "Cada pocos segundos, los ataques cuerpo a cuerpo de Gangplank hacen arder a sus víctimas.",
+    "image": {
+      "full": "Gangplank_Passive.png",
+      "group": "passive",
+      "h": 48,
+      "sprite": "passive1.png",
+      "w": 48,
+      "x": 336,
+      "y": 0
+    },
+    "name": "Prueba de fuego"
+  },
+  "recommended": [],
+  "skins": [
+    {
+      "chromas": false,
+      "id": "41000",
+      "name": "default",
+      "num": 0
+    },
+    {
+      "chromas": false,
+      "id": "41001",
+      "name": "Gangplank tremebundo",
+      "num": 1
+    },
+    {
+      "chromas": false,
+      "id": "41002",
+      "name": "Gangplank miliciano",
+      "num": 2
+    },
+    {
+      "chromas": false,
+      "id": "41003",
+      "name": "Gangplank marinero",
+      "num": 3
+    },
+    {
+      "chromas": false,
+      "id": "41004",
+      "name": "Gangplank soldado de juguete",
+      "num": 4
+    },
+    {
+      "chromas": false,
+      "id": "41005",
+      "name": "Gangplank fuerzas especiales",
+      "num": 5
+    },
+    {
+      "chromas": false,
+      "id": "41006",
+      "name": "Gangplank sultán",
+      "num": 6
+    },
+    {
+      "chromas": false,
+      "id": "41007",
+      "name": "Capitán Gangplank",
+      "num": 7
+    },
+    {
+      "chromas": true,
+      "id": "41008",
+      "name": "Gangplank nova terrorífica",
+      "num": 8
+    },
+    {
+      "chromas": false,
+      "id": "41009",
+      "name": "Gangplank nova terrorífica (rubí)",
+      "num": 9,
+      "parentSkin": 8
+    },
+    {
+      "chromas": false,
+      "id": "41010",
+      "name": "Gangplank nova terrorífica (perla)",
+      "num": 10,
+      "parentSkin": 8
+    },
+    {
+      "chromas": false,
+      "id": "41011",
+      "name": "Gangplank nova terrorífica (zafiro)",
+      "num": 11,
+      "parentSkin": 8
+    },
+    {
+      "chromas": false,
+      "id": "41012",
+      "name": "Gangplank nova terrorífica (tanzanita)",
+      "num": 12,
+      "parentSkin": 8
+    },
+    {
+      "chromas": false,
+      "id": "41013",
+      "name": "Gangplank nova terrorífica (obsidiana)",
+      "num": 13,
+      "parentSkin": 8
+    },
+    {
+      "chromas": true,
+      "id": "41014",
+      "name": "Gangplank fiesta en la piscina",
+      "num": 14
+    },
+    {
+      "chromas": false,
+      "id": "41015",
+      "name": "Gangplank fiesta en la piscina (obsidiana)",
+      "num": 15,
+      "parentSkin": 14
+    },
+    {
+      "chromas": false,
+      "id": "41016",
+      "name": "Gangplank fiesta en la piscina (amatista)",
+      "num": 16,
+      "parentSkin": 14
+    },
+    {
+      "chromas": false,
+      "id": "41017",
+      "name": "Gangplank fiesta en la piscina (rubí)",
+      "num": 17,
+      "parentSkin": 14
+    },
+    {
+      "chromas": false,
+      "id": "41018",
+      "name": "Gangplank fiesta en la piscina (citrino)",
+      "num": 18,
+      "parentSkin": 14
+    },
+    {
+      "chromas": false,
+      "id": "41019",
+      "name": "Gangplank fiesta en la piscina (cuarzo rosa)",
+      "num": 19,
+      "parentSkin": 14
+    },
+    {
+      "chromas": false,
+      "id": "41020",
+      "name": "Gangplank fiesta en la piscina (perla)",
+      "num": 20,
+      "parentSkin": 14
+    },
+    {
+      "chromas": true,
+      "id": "41021",
+      "name": "Gangplank FPX",
+      "num": 21
+    },
+    {
+      "chromas": false,
+      "id": "41022",
+      "name": "Gangplank FPX (élite)",
+      "num": 22,
+      "parentSkin": 21
+    },
+    {
+      "chromas": true,
+      "id": "41023",
+      "name": "Gangplank el traidor",
+      "num": 23
+    },
+    {
+      "chromas": false,
+      "id": "41024",
+      "name": "Gangplank el traidor (rubí)",
+      "num": 24,
+      "parentSkin": 23
+    },
+    {
+      "chromas": false,
+      "id": "41025",
+      "name": "Gangplank el traidor (ojo de gato)",
+      "num": 25,
+      "parentSkin": 23
+    },
+    {
+      "chromas": false,
+      "id": "41026",
+      "name": "Gangplank el traidor (esmeralda)",
+      "num": 26,
+      "parentSkin": 23
+    },
+    {
+      "chromas": false,
+      "id": "41027",
+      "name": "Gangplank el traidor (turquesa)",
+      "num": 27,
+      "parentSkin": 23
+    },
+    {
+      "chromas": false,
+      "id": "41028",
+      "name": "Gangplank el traidor (aguamarina)",
+      "num": 28,
+      "parentSkin": 23
+    },
+    {
+      "chromas": false,
+      "id": "41029",
+      "name": "Gangplank el traidor (cuarzo rosa)",
+      "num": 29,
+      "parentSkin": 23
+    },
+    {
+      "chromas": false,
+      "id": "41030",
+      "name": "Gangplank el traidor (perla)",
+      "num": 30,
+      "parentSkin": 23
+    },
+    {
+      "chromas": false,
+      "id": "41031",
+      "name": "Gangplank el traidor (obsidiana)",
+      "num": 31,
+      "parentSkin": 23
+    },
+    {
+      "chromas": false,
+      "id": "41032",
+      "name": "Gangplank nova terrorífica (pícaro)",
+      "num": 32,
+      "parentSkin": 8
+    },
+    {
+      "chromas": true,
+      "id": "41033",
+      "name": "PROYECTO: Gangplank",
+      "num": 33
+    },
+    {
+      "chromas": false,
+      "id": "41034",
+      "name": "PROYECTO: Gangplank (rubí)",
+      "num": 34,
+      "parentSkin": 33
+    },
+    {
+      "chromas": false,
+      "id": "41035",
+      "name": "PROYECTO: Gangplank (citrino)",
+      "num": 35,
+      "parentSkin": 33
+    },
+    {
+      "chromas": false,
+      "id": "41036",
+      "name": "PROYECTO: Gangplank (peridoto)",
+      "num": 36,
+      "parentSkin": 33
+    },
+    {
+      "chromas": false,
+      "id": "41037",
+      "name": "PROYECTO: Gangplank (zafiro)",
+      "num": 37,
+      "parentSkin": 33
+    },
+    {
+      "chromas": false,
+      "id": "41038",
+      "name": "PROYECTO: Gangplank (cuarzo rosa)",
+      "num": 38,
+      "parentSkin": 33
+    },
+    {
+      "chromas": false,
+      "id": "41039",
+      "name": "PROYECTO: Gangplank (turquesa)",
+      "num": 39,
+      "parentSkin": 33
+    },
+    {
+      "chromas": false,
+      "id": "41040",
+      "name": "PROYECTO: Gangplank (amatista)",
+      "num": 40,
+      "parentSkin": 33
+    },
+    {
+      "chromas": false,
+      "id": "41041",
+      "name": "PROYECTO: Gangplank (perla)",
+      "num": 41,
+      "parentSkin": 33
+    }
+  ],
+  "spells": [
+    {
+      "cooldown": [
+        4.5,
+        4.5,
+        4.5,
+        4.5,
+        4.5
+      ],
+      "cooldownBurn": "4.5",
+      "cost": [
+        50,
+        45,
+        40,
+        35,
+        30
+      ],
+      "costBurn": "50/45/40/35/30",
+      "costType": " {{ abilityresourcename }}",
+      "datavalues": {},
+      "description": "Dispara a un objetivo y recibe oro por cada unidad enemiga asesinada.",
+      "effect": [
+        null,
+        [
+          10,
+          40,
+          70,
+          100,
+          130
+        ],
+        [
+          3,
+          4,
+          5,
+          6,
+          7
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          500,
+          500,
+          500,
+          500,
+          500
+        ],
+        [
+          4,
+          5,
+          6,
+          7,
+          8
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ]
+      ],
+      "effectBurn": [
+        null,
+        "10/40/70/100/130",
+        "3/4/5/6/7",
+        "0",
+        "500",
+        "4/5/6/7/8",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0"
+      ],
+      "id": "GangplankQWrapper",
+      "image": {
+        "full": "GangplankQWrapper.png",
+        "group": "spell",
+        "h": 48,
+        "sprite": "spell4.png",
+        "w": 48,
+        "x": 96,
+        "y": 96
+      },
+      "leveltip": {
+        "effect": [
+          "{{ spelldamage }} -> {{ spelldamageNL }}",
+          "{{ goldproc }} -> {{ goldprocNL }}",
+          "{{ ssproc }} -> {{ ssprocNL }}",
+          "{{ cost }} -> {{ costNL }}"
+        ],
+        "label": [
+          "Daño",
+          "Oro saqueado",
+          "Serpientes de plata saqueadas",
+          "Coste de @AbilityResourceName@"
+        ]
+      },
+      "maxammo": "-1",
+      "maxrank": 5,
+      "name": "Parrrlamento",
+      "range": [
+        625,
+        625,
+        625,
+        625,
+        625
+      ],
+      "rangeBurn": "625",
+      "resource": "{{ cost }} {{ abilityresourcename }}",
+      "tooltip": "{{Spell_GangplankQWrapper_Tooltip_{{ gamemodeinteger }}}}{{ spellmodifierdescriptionappend }}",
+      "vars": []
+    },
+    {
+      "cooldown": [
+        22,
+        20,
+        18,
+        16,
+        14
+      ],
+      "cooldownBurn": "22/20/18/16/14",
+      "cost": [
+        60,
+        70,
+        80,
+        90,
+        100
+      ],
+      "costBurn": "60/70/80/90/100",
+      "costType": " {{ abilityresourcename }}",
+      "datavalues": {},
+      "description": "Los efectos curativos de los cítricos eliminan los efectos de control de adversario y restauran vida.",
+      "effect": [
+        null,
+        [
+          45,
+          70,
+          95,
+          120,
+          145
+        ],
+        [
+          13,
+          13,
+          13,
+          13,
+          13
+        ],
+        [
+          0.25,
+          0.25,
+          0.25,
+          0.25,
+          0.25
+        ],
+        [
+          200,
+          200,
+          200,
+          200,
+          200
+        ],
+        [
+          30,
+          40,
+          50,
+          60,
+          70
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ]
+      ],
+      "effectBurn": [
+        null,
+        "45/70/95/120/145",
+        "13",
+        "0.25",
+        "200",
+        "30/40/50/60/70",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0"
+      ],
+      "id": "GangplankW",
+      "image": {
+        "full": "GangplankW.png",
+        "group": "spell",
+        "h": 48,
+        "sprite": "spell4.png",
+        "w": 48,
+        "x": 144,
+        "y": 96
+      },
+      "leveltip": {
+        "effect": [
+          "{{ baseheal }} -> {{ basehealNL }}",
+          "{{ cooldown }} -> {{ cooldownNL }}",
+          "{{ cost }} -> {{ costNL }}"
+        ],
+        "label": [
+          "Curación",
+          "Enfriamiento",
+          "Coste de @AbilityResourceName@"
+        ]
+      },
+      "maxammo": "-1",
+      "maxrank": 5,
+      "name": "Eliminar escorbuto",
+      "range": [
+        400,
+        400,
+        400,
+        400,
+        400
+      ],
+      "rangeBurn": "400",
+      "resource": "{{ cost }} {{ abilityresourcename }}",
+      "tooltip": "Gangplank consume gran cantidad de cítricos, lo que elimina todos los efectos de <status>inhabilitación</status> y restaura <healing>{{ basehealth }} más un {{ percentheal }}% de la vida que le falte</healing>.{{ spellmodifierdescriptionappend }}",
+      "vars": []
+    },
+    {
+      "cooldown": [
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "cooldownBurn": "0",
+      "cost": [
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "costBurn": "0",
+      "costType": "Sin coste",
+      "datavalues": {},
+      "description": "Gangplank destapa un barril explosivo en una ubicación objetivo. Si lo rompe, el barril explota y, además de extender el daño del ataque a los enemigos de la zona, los ralentiza.",
+      "effect": [
+        null,
+        [
+          3,
+          3,
+          4,
+          4,
+          5
+        ],
+        [
+          2,
+          2,
+          2,
+          2,
+          2
+        ],
+        [
+          75,
+          95,
+          115,
+          135,
+          155
+        ],
+        [
+          40,
+          50,
+          60,
+          70,
+          80
+        ],
+        [
+          25,
+          25,
+          25,
+          25,
+          25
+        ],
+        [
+          2,
+          2,
+          2,
+          2,
+          2
+        ],
+        [
+          10,
+          10,
+          10,
+          10,
+          10
+        ],
+        [
+          100,
+          100,
+          100,
+          100,
+          100
+        ],
+        [
+          0.5,
+          0.5,
+          0.5,
+          0.5,
+          0.5
+        ],
+        [
+          40,
+          40,
+          40,
+          40,
+          40
+        ]
+      ],
+      "effectBurn": [
+        null,
+        "3/3/4/4/5",
+        "2",
+        "75/95/115/135/155",
+        "40/50/60/70/80",
+        "25",
+        "2",
+        "10",
+        "100",
+        "0.5",
+        "40"
+      ],
+      "id": "GangplankE",
+      "image": {
+        "full": "GangplankE.png",
+        "group": "spell",
+        "h": 48,
+        "sprite": "spell4.png",
+        "w": 48,
+        "x": 192,
+        "y": 96
+      },
+      "leveltip": {
+        "effect": [
+          "{{ bonusdamagetochampions }} -> {{ bonusdamagetochampionsNL }}",
+          "{{ maxbarrels }} -> {{ maxbarrelsNL }}",
+          "{{ barrelslow }}% -> {{ barrelslowNL }}%",
+          "{{ ammorechargetime }} -> {{ ammorechargetimeNL }}"
+        ],
+        "label": [
+          "Daño adicional contra campeones",
+          "Máximo de cargas",
+          "Ralentización",
+          "Tiempo de recarga"
+        ]
+      },
+      "maxammo": "3",
+      "maxrank": 5,
+      "name": "Barril de pólvora",
+      "range": [
+        1000,
+        1000,
+        1000,
+        1000,
+        1000
+      ],
+      "rangeBurn": "1000",
+      "resource": "Sin coste",
+      "tooltip": "Gangplank coloca un barril de pólvora que dura {{ barrelduration }} s y que puede ser atacado tanto por él como por los campeones enemigos. Cuando un enemigo lo destruye, este se desactiva. Cuando lo hace Gangplank, explota, <status>ralentiza</status> un {{ finalslowamount }}% durante {{ debuffduration }} s e inflige el <physicalDamage>daño del ataque</physicalDamage>, lo que ignora un {{ barrelarmorpenetration }}% de armadura. Los campeones reciben <physicalDamage>{{ bonusdamagetochampions }} de daño físico</physicalDamage> adicional.<br /><br />Los barriles pierden vida cada {{ barreldecaytime }} segundos. Las explosiones de los barriles hacen explotar otros barriles con zonas de detonación superpuestas, pero no infligen daño al mismo objetivo más de una vez. Los barriles explotados con <spellName>Parrrlamento</spellName> otorgarán el oro adicional por los objetivos asesinados.{{ spellmodifierdescriptionappend }}",
+      "vars": []
+    },
+    {
+      "cooldown": [
+        160,
+        140,
+        120
+      ],
+      "cooldownBurn": "160/140/120",
+      "cost": [
+        100,
+        100,
+        100
+      ],
+      "costBurn": "100",
+      "costType": " {{ abilityresourcename }}",
+      "datavalues": {},
+      "description": "Gangplank ordena a su barco que dispare sobre un área. Los enemigos situados en ella quedan ralentizados y sufren daño.",
+      "effect": [
+        null,
+        [
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0
+        ],
+        [
+          1.5,
+          0.5,
+          0.5
+        ],
+        [
+          0,
+          0,
+          0
+        ],
+        [
+          300,
+          300,
+          300
+        ],
+        [
+          75,
+          75,
+          75
+        ],
+        [
+          1,
+          1,
+          1
+        ],
+        [
+          40,
+          40,
+          40
+        ]
+      ],
+      "effectBurn": [
+        null,
+        "0",
+        "0",
+        "0",
+        "0",
+        "1.5/0.5/0.5",
+        "0",
+        "300",
+        "75",
+        "1",
+        "40"
+      ],
+      "id": "GangplankR",
+      "image": {
+        "full": "GangplankR.png",
+        "group": "spell",
+        "h": 48,
+        "sprite": "spell4.png",
+        "w": 48,
+        "x": 240,
+        "y": 96
+      },
+      "leveltip": {
+        "effect": [
+          "{{ damageperwave }} -> {{ damageperwaveNL }}",
+          "{{ cooldown }} -> {{ cooldownNL }}"
+        ],
+        "label": [
+          "Daño por andanada",
+          "Enfriamiento"
+        ]
+      },
+      "maxammo": "-1",
+      "maxrank": 3,
+      "name": "Andanada de cañón",
+      "range": [
+        30000,
+        30000,
+        30000
+      ],
+      "rangeBurn": "30000",
+      "resource": "{{ cost }} {{ abilityresourcename }}",
+      "tooltip": "Gangplank ordena a su barco que dispare {{ totalwavestooltip }} andanadas de balas de cañón en cualquier parte del mapa a lo largo de {{ zoneduration }} s. Cada andanada <status>ralentiza</status> un {{ slowpercent }}% durante {{ slowduration }} s e inflige <magicDamage>{{ onewavedamage }} de daño mágico</magicDamage>. Daño máximo: {{ totaldamagetooltip }}<br /><br />Esta habilidad se puede mejorar en la tienda a través de <spellName>Parrrlamento</spellName>.<br /><br /><spellName>Fuego a discreción</spellName>: Dispara 6 andanadas de balas de cañón adicionales.<br /><spellName>Hija de la muerte</spellName>: Dispara una megabala de cañón que inflige <trueDamage>{{ deathsdaughterdamage }} de daño verdadero</trueDamage> y <status>ralentiza</status> un {{ deathsdaughterslow }}% durante {{ deathsdaughterslowduration }} s.<br /><spellName>Subir moral</spellName>: Los aliados dentro de Andanada de cañón obtienen un <speed>{{ raisemoralehaste }}% de velocidad de movimiento</speed> durante {{ raisemoralehasteduration }} s.{{ spellmodifierdescriptionappend }}",
+      "vars": []
+    }
+  ],
+  "stats": {
+    "armor": 31,
+    "armorperlevel": 4.7,
+    "attackdamage": 64,
+    "attackdamageperlevel": 0,
+    "attackrange": 125,
+    "attackspeed": 0.658,
+    "attackspeedperlevel": 3.2,
+    "crit": 0,
+    "critperlevel": 0,
+    "hp": 630,
+    "hpperlevel": 114,
+    "hpregen": 6,
+    "hpregenperlevel": 0.6,
+    "movespeed": 345,
+    "mp": 280,
+    "mpperlevel": 60,
+    "mpregen": 8,
+    "mpregenperlevel": 0.7,
+    "spellblock": 32,
+    "spellblockperlevel": 2.05
+  },
+  "tags": [
+    "Fighter"
+  ],
+  "title": "El Azote de los Mares"
+}

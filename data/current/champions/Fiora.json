@@ -1,0 +1,1303 @@
+{
+  "allytips": [
+    "Fiora es perfecta para los intercambios rápidos, gracias a Baile de duelista. Usa la velocidad de movimiento adicional obtenida al golpear en un punto vital para poner pies en polvorosa o preparar el siguiente ataque.",
+    "Duelo excelso permite a Fiora acabar hasta con los enemigos más resistentes y luego recobrarse, así que no dudes en atacar la primera línea."
+  ],
+  "blurb": "Fiora, la duelista más temida de Valoran, ha alcanzado renombre por su estilo brusco y su mente astuta, así como por la velocidad de su estoque. Fiora nació en el seno de la Casa Laurent, en el reino de Demacia, y asumió el control de la familia a raíz...",
+  "enemytips": [
+    "Baile de duelista indica dónde intentará atacar Fiora, así que prepárate para responder cuando lo haga.",
+    "Cuidado al lanzar efectos de inmovilización contra Fiora. Si tiene Réplica disponible, podría volverlos contra ti."
+  ],
+  "id": "Fiora",
+  "image": {
+    "full": "Fiora.png",
+    "group": "champion",
+    "h": 48,
+    "sprite": "champion1.png",
+    "w": 48,
+    "x": 192,
+    "y": 0
+  },
+  "info": {
+    "attack": 10,
+    "defense": 4,
+    "difficulty": 3,
+    "magic": 2
+  },
+  "key": "114",
+  "lore": "Fiora, la duelista más temida de Valoran, ha alcanzado renombre por su estilo brusco y su mente astuta, así como por la velocidad de su estoque. Fiora nació en el seno de la Casa Laurent, en el reino de Demacia, y asumió el control de la familia a raíz de un escándalo que casi acaba con ellos. La reputación de la Casa Laurent se hundió, pero Fiora empeñó todos sus esfuerzos en restablecer el honor de su familia y devolverla al lugar que le correspondía entre las mejores de Demacia.",
+  "name": "Fiora",
+  "partype": "Maná",
+  "passive": {
+    "description": "Fiora ha revelado un <keywordMajor>punto vital</keywordMajor> de este campeón. Si golpea este <keywordMajor>punto vital</keywordMajor>, <healing>restaura vida</healing> y obtiene <speed>velocidad de movimiento</speed>.",
+    "image": {
+      "full": "Fiora_P.png",
+      "group": "passive",
+      "h": 48,
+      "sprite": "passive1.png",
+      "w": 48,
+      "x": 192,
+      "y": 0
+    },
+    "name": "Baile de duelista"
+  },
+  "recommended": [],
+  "skins": [
+    {
+      "chromas": false,
+      "id": "114000",
+      "name": "default",
+      "num": 0
+    },
+    {
+      "chromas": false,
+      "id": "114001",
+      "name": "Fiora guardia real",
+      "num": 1
+    },
+    {
+      "chromas": false,
+      "id": "114002",
+      "name": "Fiora cuervo nocturno",
+      "num": 2
+    },
+    {
+      "chromas": true,
+      "id": "114003",
+      "name": "Fiora jefa de estudios",
+      "num": 3
+    },
+    {
+      "chromas": true,
+      "id": "114004",
+      "name": "PROYECTO: Fiora",
+      "num": 4
+    },
+    {
+      "chromas": true,
+      "id": "114005",
+      "name": "Fiora fiesta en la piscina",
+      "num": 5
+    },
+    {
+      "chromas": false,
+      "id": "114006",
+      "name": "Fiora jefa de estudios (jaspe)",
+      "num": 6,
+      "parentSkin": 3
+    },
+    {
+      "chromas": false,
+      "id": "114007",
+      "name": "Fiora jefa de estudios (amatista)",
+      "num": 7,
+      "parentSkin": 3
+    },
+    {
+      "chromas": false,
+      "id": "114008",
+      "name": "Fiora jefa de estudios (arenisca)",
+      "num": 8,
+      "parentSkin": 3
+    },
+    {
+      "chromas": false,
+      "id": "114009",
+      "name": "Fiora jefa de estudios (rubí)",
+      "num": 9,
+      "parentSkin": 3
+    },
+    {
+      "chromas": false,
+      "id": "114010",
+      "name": "Fiora jefa de estudios (zafiro)",
+      "num": 10,
+      "parentSkin": 3
+    },
+    {
+      "chromas": false,
+      "id": "114011",
+      "name": "Fiora jefa de estudios (perla)",
+      "num": 11,
+      "parentSkin": 3
+    },
+    {
+      "chromas": false,
+      "id": "114012",
+      "name": "Fiora jefa de estudios (ojo de gato)",
+      "num": 12,
+      "parentSkin": 3
+    },
+    {
+      "chromas": false,
+      "id": "114013",
+      "name": "Fiora jefa de estudios (cuarzo rosa)",
+      "num": 13,
+      "parentSkin": 3
+    },
+    {
+      "chromas": false,
+      "id": "114014",
+      "name": "Fiora fiesta en la piscina (tanzanita)",
+      "num": 14,
+      "parentSkin": 5
+    },
+    {
+      "chromas": false,
+      "id": "114015",
+      "name": "Fiora fiesta en la piscina (turquesa)",
+      "num": 15,
+      "parentSkin": 5
+    },
+    {
+      "chromas": false,
+      "id": "114016",
+      "name": "Fiora fiesta en la piscina (cuarzo rosa)",
+      "num": 16,
+      "parentSkin": 5
+    },
+    {
+      "chromas": false,
+      "id": "114017",
+      "name": "Fiora fiesta en la piscina (aguamarina)",
+      "num": 17,
+      "parentSkin": 5
+    },
+    {
+      "chromas": false,
+      "id": "114018",
+      "name": "Fiora fiesta en la piscina (citrino)",
+      "num": 18,
+      "parentSkin": 5
+    },
+    {
+      "chromas": false,
+      "id": "114019",
+      "name": "Fiora fiesta en la piscina (perla)",
+      "num": 19,
+      "parentSkin": 5
+    },
+    {
+      "chromas": false,
+      "id": "114020",
+      "name": "Fiora fiesta en la piscina (arcoíris)",
+      "num": 20,
+      "parentSkin": 5
+    },
+    {
+      "chromas": false,
+      "id": "114021",
+      "name": "Fiora fiesta en la piscina (zafiro)",
+      "num": 21,
+      "parentSkin": 5
+    },
+    {
+      "chromas": false,
+      "id": "114022",
+      "name": "Fiora espada ascendente",
+      "num": 22
+    },
+    {
+      "chromas": true,
+      "id": "114023",
+      "name": "Fiora perforacorazones",
+      "num": 23
+    },
+    {
+      "chromas": false,
+      "id": "114024",
+      "name": "Fiora perforacorazones (rubí)",
+      "num": 24,
+      "parentSkin": 23
+    },
+    {
+      "chromas": false,
+      "id": "114025",
+      "name": "Fiora perforacorazones (citrino)",
+      "num": 25,
+      "parentSkin": 23
+    },
+    {
+      "chromas": false,
+      "id": "114026",
+      "name": "Fiora perforacorazones (amatista)",
+      "num": 26,
+      "parentSkin": 23
+    },
+    {
+      "chromas": false,
+      "id": "114027",
+      "name": "Fiora perforacorazones (cuarzo rosa)",
+      "num": 27,
+      "parentSkin": 23
+    },
+    {
+      "chromas": false,
+      "id": "114028",
+      "name": "Fiora perforacorazones (aguamarina)",
+      "num": 28,
+      "parentSkin": 23
+    },
+    {
+      "chromas": false,
+      "id": "114029",
+      "name": "Fiora perforacorazones (obsidiana)",
+      "num": 29,
+      "parentSkin": 23
+    },
+    {
+      "chromas": false,
+      "id": "114030",
+      "name": "Fiora perforacorazones (perla)",
+      "num": 30,
+      "parentSkin": 23
+    },
+    {
+      "chromas": true,
+      "id": "114031",
+      "name": "Fiora iG",
+      "num": 31
+    },
+    {
+      "chromas": false,
+      "id": "114040",
+      "name": "PROYECTO: Fiora (Ajuste de cuentas)",
+      "num": 40,
+      "parentSkin": 4
+    },
+    {
+      "chromas": false,
+      "id": "114041",
+      "name": "Fiora pulso de fuego",
+      "num": 41
+    },
+    {
+      "chromas": false,
+      "id": "114042",
+      "name": "Fiora pulso de fuego (rubí)",
+      "num": 42,
+      "parentSkin": 41
+    },
+    {
+      "chromas": false,
+      "id": "114043",
+      "name": "Fiora pulso de fuego (citrino)",
+      "num": 43,
+      "parentSkin": 41
+    },
+    {
+      "chromas": false,
+      "id": "114044",
+      "name": "Fiora pulso de fuego (turquesa)",
+      "num": 44,
+      "parentSkin": 41
+    },
+    {
+      "chromas": false,
+      "id": "114045",
+      "name": "Fiora pulso de fuego (zafiro)",
+      "num": 45,
+      "parentSkin": 41
+    },
+    {
+      "chromas": false,
+      "id": "114046",
+      "name": "Fiora pulso de fuego (amatista)",
+      "num": 46,
+      "parentSkin": 41
+    },
+    {
+      "chromas": false,
+      "id": "114047",
+      "name": "Fiora pulso de fuego (perla)",
+      "num": 47,
+      "parentSkin": 41
+    },
+    {
+      "chromas": false,
+      "id": "114048",
+      "name": "Fiora pulso de fuego (obsidiana)",
+      "num": 48,
+      "parentSkin": 41
+    },
+    {
+      "chromas": true,
+      "id": "114049",
+      "name": "Fiora pulso de fuego (crono)",
+      "num": 49,
+      "parentSkin": 41
+    },
+    {
+      "chromas": false,
+      "id": "114050",
+      "name": "Fiora bestia lunar",
+      "num": 50
+    },
+    {
+      "chromas": false,
+      "id": "114051",
+      "name": "Fiora bestia lunar de prestigio",
+      "num": 51
+    },
+    {
+      "chromas": false,
+      "id": "114052",
+      "name": "Fiora bestia lunar (rubí)",
+      "num": 52,
+      "parentSkin": 50
+    },
+    {
+      "chromas": false,
+      "id": "114053",
+      "name": "Fiora bestia lunar (ojo de gato)",
+      "num": 53,
+      "parentSkin": 50
+    },
+    {
+      "chromas": false,
+      "id": "114054",
+      "name": "Fiora bestia lunar (tanzanita)",
+      "num": 54,
+      "parentSkin": 50
+    },
+    {
+      "chromas": false,
+      "id": "114055",
+      "name": "Fiora bestia lunar (zafiro)",
+      "num": 55,
+      "parentSkin": 50
+    },
+    {
+      "chromas": false,
+      "id": "114056",
+      "name": "Fiora bestia lunar (vitalidad)",
+      "num": 56,
+      "parentSkin": 50
+    },
+    {
+      "chromas": false,
+      "id": "114057",
+      "name": "Fiora bestia lunar (cuarzo rosa)",
+      "num": 57,
+      "parentSkin": 50
+    },
+    {
+      "chromas": true,
+      "id": "114058",
+      "name": "Fiora bestia lunar (obsidiana)",
+      "num": 58,
+      "parentSkin": 50
+    },
+    {
+      "chromas": false,
+      "id": "114060",
+      "name": "Fiora embrujada",
+      "num": 60
+    },
+    {
+      "chromas": false,
+      "id": "114061",
+      "name": "Fiora embrujada (rubí)",
+      "num": 61,
+      "parentSkin": 60
+    },
+    {
+      "chromas": false,
+      "id": "114062",
+      "name": "Fiora embrujada (citrino)",
+      "num": 62,
+      "parentSkin": 60
+    },
+    {
+      "chromas": false,
+      "id": "114063",
+      "name": "Fiora embrujada (esmeralda)",
+      "num": 63,
+      "parentSkin": 60
+    },
+    {
+      "chromas": false,
+      "id": "114064",
+      "name": "Fiora embrujada (cuarzo rosa)",
+      "num": 64,
+      "parentSkin": 60
+    },
+    {
+      "chromas": false,
+      "id": "114065",
+      "name": "Fiora embrujada (turquesa)",
+      "num": 65,
+      "parentSkin": 60
+    },
+    {
+      "chromas": false,
+      "id": "114066",
+      "name": "Fiora embrujada (zafiro)",
+      "num": 66,
+      "parentSkin": 60
+    },
+    {
+      "chromas": false,
+      "id": "114067",
+      "name": "Fiora embrujada (perla)",
+      "num": 67,
+      "parentSkin": 60
+    },
+    {
+      "chromas": false,
+      "id": "114068",
+      "name": "Fiora embrujada (obsidiana)",
+      "num": 68,
+      "parentSkin": 60
+    },
+    {
+      "chromas": true,
+      "id": "114069",
+      "name": "Fiora corte feérica",
+      "num": 69
+    },
+    {
+      "chromas": false,
+      "id": "114070",
+      "name": "Fiora corte feérica (rubí)",
+      "num": 70,
+      "parentSkin": 69
+    },
+    {
+      "chromas": false,
+      "id": "114071",
+      "name": "Fiora corte feérica (ojo de gato)",
+      "num": 71,
+      "parentSkin": 69
+    },
+    {
+      "chromas": false,
+      "id": "114072",
+      "name": "Fiora corte feérica (zafiro)",
+      "num": 72,
+      "parentSkin": 69
+    },
+    {
+      "chromas": false,
+      "id": "114073",
+      "name": "Fiora corte feérica (esmeralda)",
+      "num": 73,
+      "parentSkin": 69
+    },
+    {
+      "chromas": false,
+      "id": "114074",
+      "name": "Fiora corte feérica (turquesa)",
+      "num": 74,
+      "parentSkin": 69
+    },
+    {
+      "chromas": false,
+      "id": "114075",
+      "name": "Fiora corte feérica (cuarzo rosa)",
+      "num": 75,
+      "parentSkin": 69
+    },
+    {
+      "chromas": false,
+      "id": "114076",
+      "name": "Fiora corte feérica (obsidiana)",
+      "num": 76,
+      "parentSkin": 69
+    },
+    {
+      "chromas": false,
+      "id": "114077",
+      "name": "Fiora corte feérica (peridoto)",
+      "num": 77,
+      "parentSkin": 69
+    },
+    {
+      "chromas": true,
+      "id": "114078",
+      "name": "Fiora corte feérica (adorable)",
+      "num": 78,
+      "parentSkin": 69
+    },
+    {
+      "chromas": false,
+      "id": "114079",
+      "name": "Fiora iG (triunfo décuplo)",
+      "num": 79,
+      "parentSkin": 31
+    },
+    {
+      "chromas": false,
+      "id": "114080",
+      "name": "Fiora dragomante",
+      "num": 80
+    },
+    {
+      "chromas": false,
+      "id": "114081",
+      "name": "Fiora dragomante (rubí)",
+      "num": 81,
+      "parentSkin": 80
+    },
+    {
+      "chromas": false,
+      "id": "114082",
+      "name": "Fiora dragomante (citrino)",
+      "num": 82,
+      "parentSkin": 80
+    },
+    {
+      "chromas": false,
+      "id": "114083",
+      "name": "Fiora dragomante (esmeralda)",
+      "num": 83,
+      "parentSkin": 80
+    },
+    {
+      "chromas": false,
+      "id": "114084",
+      "name": "Fiora dragomante (zafiro)",
+      "num": 84,
+      "parentSkin": 80
+    },
+    {
+      "chromas": false,
+      "id": "114085",
+      "name": "Fiora dragomante (cuarzo rosa)",
+      "num": 85,
+      "parentSkin": 80
+    },
+    {
+      "chromas": false,
+      "id": "114086",
+      "name": "Fiora dragomante (obsidiana)",
+      "num": 86,
+      "parentSkin": 80
+    },
+    {
+      "chromas": false,
+      "id": "114087",
+      "name": "Fiora dragomante (tanzanita)",
+      "num": 87,
+      "parentSkin": 80
+    },
+    {
+      "chromas": false,
+      "id": "114088",
+      "name": "Fiora dragomante (perla)",
+      "num": 88,
+      "parentSkin": 80
+    },
+    {
+      "chromas": true,
+      "id": "114089",
+      "name": "Fiora reina guerrera",
+      "num": 89
+    },
+    {
+      "chromas": false,
+      "id": "114090",
+      "name": "Fiora reina guerrera (rubí)",
+      "num": 90,
+      "parentSkin": 89
+    },
+    {
+      "chromas": false,
+      "id": "114091",
+      "name": "Fiora reina guerrera (ojo de gato)",
+      "num": 91,
+      "parentSkin": 89
+    },
+    {
+      "chromas": false,
+      "id": "114092",
+      "name": "Fiora reina guerrera (esmeralda)",
+      "num": 92,
+      "parentSkin": 89
+    },
+    {
+      "chromas": false,
+      "id": "114093",
+      "name": "Fiora reina guerrera (zafiro)",
+      "num": 93,
+      "parentSkin": 89
+    },
+    {
+      "chromas": false,
+      "id": "114094",
+      "name": "Fiora reina guerrera (tanzanita)",
+      "num": 94,
+      "parentSkin": 89
+    },
+    {
+      "chromas": false,
+      "id": "114095",
+      "name": "Fiora reina guerrera (cuarzo rosa)",
+      "num": 95,
+      "parentSkin": 89
+    },
+    {
+      "chromas": false,
+      "id": "114096",
+      "name": "Fiora reina guerrera (perla)",
+      "num": 96,
+      "parentSkin": 89
+    },
+    {
+      "chromas": false,
+      "id": "114097",
+      "name": "Fiora reina guerrera (obsidiana)",
+      "num": 97,
+      "parentSkin": 89
+    },
+    {
+      "chromas": true,
+      "id": "114098",
+      "name": "Fiora victoriosa",
+      "num": 98
+    },
+    {
+      "chromas": false,
+      "id": "114099",
+      "name": "Fiora victoriosa (Bronce)",
+      "num": 99,
+      "parentSkin": 98
+    },
+    {
+      "chromas": false,
+      "id": "114100",
+      "name": "Fiora victoriosa (Plata)",
+      "num": 100,
+      "parentSkin": 98
+    },
+    {
+      "chromas": false,
+      "id": "114101",
+      "name": "Fiora victoriosa (Oro)",
+      "num": 101,
+      "parentSkin": 98
+    },
+    {
+      "chromas": false,
+      "id": "114102",
+      "name": "Fiora victoriosa (Platino)",
+      "num": 102,
+      "parentSkin": 98
+    },
+    {
+      "chromas": false,
+      "id": "114103",
+      "name": "Fiora victoriosa (Esmeralda)",
+      "num": 103,
+      "parentSkin": 98
+    },
+    {
+      "chromas": false,
+      "id": "114104",
+      "name": "Fiora victoriosa (Diamante)",
+      "num": 104,
+      "parentSkin": 98
+    },
+    {
+      "chromas": false,
+      "id": "114105",
+      "name": "Fiora victoriosa (Maestro)",
+      "num": 105,
+      "parentSkin": 98
+    },
+    {
+      "chromas": false,
+      "id": "114106",
+      "name": "Fiora victoriosa (Gran Maestro)",
+      "num": 106,
+      "parentSkin": 98
+    },
+    {
+      "chromas": true,
+      "id": "114107",
+      "name": "Fiora victoriosa (Aspirante)",
+      "num": 107,
+      "parentSkin": 98
+    },
+    {
+      "chromas": false,
+      "id": "114108",
+      "name": "Fiora iG (élite)",
+      "num": 108,
+      "parentSkin": 31
+    }
+  ],
+  "spells": [
+    {
+      "cooldown": [
+        13,
+        11.25,
+        9.5,
+        7.75,
+        6
+      ],
+      "cooldownBurn": "13/11.25/9.5/7.75/6",
+      "cost": [
+        20,
+        20,
+        20,
+        20,
+        20
+      ],
+      "costBurn": "20",
+      "costType": " {{ abilityresourcename }}",
+      "datavalues": {},
+      "description": "Fiora se abalanza hacia un punto y apuñala a un enemigo cercano, al que causa daño físico y aplica efectos de impacto.",
+      "effect": [
+        null,
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ]
+      ],
+      "effectBurn": [
+        null,
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0"
+      ],
+      "id": "FioraQ",
+      "image": {
+        "full": "FioraQ.png",
+        "group": "spell",
+        "h": 48,
+        "sprite": "spell4.png",
+        "w": 48,
+        "x": 0,
+        "y": 48
+      },
+      "leveltip": {
+        "effect": [
+          "{{ damage }} -> {{ damageNL }}",
+          "{{ badratio*100.000000 }}% -> {{ badrationl*100.000000 }}%",
+          "{{ cooldown }} -> {{ cooldownNL }}"
+        ],
+        "label": [
+          "Daño",
+          "Relación de DA adicional",
+          "Enfriamiento"
+        ]
+      },
+      "maxammo": "-1",
+      "maxrank": 5,
+      "name": "Embestida",
+      "range": [
+        400,
+        400,
+        400,
+        400,
+        400
+      ],
+      "rangeBurn": "400",
+      "resource": "{{ cost }} {{ abilityresourcename }}",
+      "tooltip": "Fiora se abalanza hacia un punto y apuñala al enemigo, guardián o estructura más cercanos, lo que inflige <physicalDamage>{{ totaldamage }} de daño físico</physicalDamage>. El ataque priorizará los <keywordMajor>puntos vitales</keywordMajor> y a los enemigos que pueda matar.<br /><br />Si Fiora golpea a un enemigo, el enfriamiento de esta habilidad se reduce un {{ cdrefundpercent*100 }}%.{{ spellmodifierdescriptionappend }}",
+      "vars": []
+    },
+    {
+      "cooldown": [
+        24,
+        22,
+        20,
+        18,
+        16
+      ],
+      "cooldownBurn": "24/22/20/18/16",
+      "cost": [
+        50,
+        50,
+        50,
+        50,
+        50
+      ],
+      "costBurn": "50",
+      "costType": " {{ abilityresourcename }}",
+      "datavalues": {},
+      "description": "Fiora bloquea todo el daño y las inhabilitaciones durante breve tiempo y luego golpea en una dirección. La estocada ralentiza al primer campeón enemigo alcanzado, o lo aturde si Fiora bloqueó un efecto de inmovilización con la habilidad.",
+      "effect": [
+        null,
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ]
+      ],
+      "effectBurn": [
+        null,
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0"
+      ],
+      "id": "FioraW",
+      "image": {
+        "full": "FioraW.png",
+        "group": "spell",
+        "h": 48,
+        "sprite": "spell4.png",
+        "w": 48,
+        "x": 48,
+        "y": 48
+      },
+      "leveltip": {
+        "effect": [
+          "{{ basedamage }} -> {{ basedamageNL }}",
+          "{{ cooldown }} -> {{ cooldownNL }}"
+        ],
+        "label": [
+          "Daño",
+          "Enfriamiento"
+        ]
+      },
+      "maxammo": "-1",
+      "maxrank": 5,
+      "name": "Réplica",
+      "range": [
+        750,
+        750,
+        750,
+        750,
+        750
+      ],
+      "rangeBurn": "750",
+      "resource": "{{ cost }} {{ abilityresourcename }}",
+      "tooltip": "Fiora bloquea todo el daño, las inhabilitaciones y los efectos negativos durante {{ parryduration }} s y después lanza una estocada. El golpe inflige <magicDamage>{{ stabdamage }} de daño mágico</magicDamage> al primer campeón alcanzado y <status>ralentiza</status><speed> un {{ msslowpercent*-100 }}% la velocidad de movimiento</speed> y un <attackSpeed>{{ attackslowpercent*-100 }}% la velocidad de ataque</attackSpeed> durante {{ ccduration }} s. Si Fiora bloquea un efecto de <status>inmovilización</status>, el enemigo golpeado queda <status>aturdido</status> en lugar de <status>ralentizado</status>.{{ spellmodifierdescriptionappend }}",
+      "vars": []
+    },
+    {
+      "cooldown": [
+        11,
+        10,
+        9,
+        8,
+        7
+      ],
+      "cooldownBurn": "11/10/9/8/7",
+      "cost": [
+        40,
+        40,
+        40,
+        40,
+        40
+      ],
+      "costBurn": "40",
+      "costType": " {{ abilityresourcename }}",
+      "datavalues": {},
+      "description": "Fiora cuenta con velocidad de ataque adicional durante dos ataques. El primero ralentiza al objetivo y el segundo asesta un golpe crítico.",
+      "effect": [
+        null,
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ]
+      ],
+      "effectBurn": [
+        null,
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0"
+      ],
+      "id": "FioraE",
+      "image": {
+        "full": "FioraE.png",
+        "group": "spell",
+        "h": 48,
+        "sprite": "spell4.png",
+        "w": 48,
+        "x": 96,
+        "y": 48
+      },
+      "leveltip": {
+        "effect": [
+          "{{ attacktwopercenttad*100.000000 }}% -> {{ attacktwopercenttadnl*100.000000 }}%",
+          "{{ cooldown }} -> {{ cooldownNL }}",
+          "{{ aspercent*100.000000 }}% -> {{ aspercentnl*100.000000 }}%"
+        ],
+        "label": [
+          "Daño de impacto crítico",
+          "Enfriamiento",
+          "Velocidad de ataque"
+        ]
+      },
+      "maxammo": "-1",
+      "maxrank": 5,
+      "name": "Esgrima",
+      "range": [
+        425,
+        425,
+        425,
+        425,
+        425
+      ],
+      "rangeBurn": "425",
+      "resource": "{{ cost }} {{ abilityresourcename }}",
+      "tooltip": "Fiora obtiene un <attackSpeed>{{ aspercent*100 }}% de velocidad de ataque</attackSpeed> en sus dos siguientes ataques. El primero <status>ralentiza</status> un {{ slowpercent*-100 }}% durante {{ slowduration }} s. El segundo siempre es un golpe crítico e inflige un <physicalDamage>{{ attacktwopercenttad*100 }}% de daño</physicalDamage>.{{ spellmodifierdescriptionappend }}",
+      "vars": []
+    },
+    {
+      "cooldown": [
+        110,
+        90,
+        70
+      ],
+      "cooldownBurn": "110/90/70",
+      "cost": [
+        100,
+        100,
+        100
+      ],
+      "costBurn": "100",
+      "costType": " {{ abilityresourcename }}",
+      "datavalues": {},
+      "description": "Fiora localiza los cuatro puntos vitales de un campeón enemigo y obtiene velocidad de movimiento mientras está cerca de ellos. Si lo alcanza en los cuatro puntos vitales o el objetivo muere después de que haya alcanzado al menos uno, Fiora y sus aliados de la zona reciben curación durante los siguientes segundos.",
+      "effect": [
+        null,
+        [
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0
+        ]
+      ],
+      "effectBurn": [
+        null,
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0"
+      ],
+      "id": "FioraR",
+      "image": {
+        "full": "FioraR.png",
+        "group": "spell",
+        "h": 48,
+        "sprite": "spell4.png",
+        "w": 48,
+        "x": 144,
+        "y": 48
+      },
+      "leveltip": {
+        "effect": [
+          "{{ cooldown }} -> {{ cooldownNL }}",
+          "{{ percentms*100.000000 }}% -> {{ percentmsnl*100.000000 }}%",
+          "{{ healpersecond }} -> {{ healpersecondNL }}"
+        ],
+        "label": [
+          "Enfriamiento",
+          "Velocidad de mov. de Baile de duelista",
+          "Curación por segundo"
+        ]
+      },
+      "maxammo": "-1",
+      "maxrank": 3,
+      "name": "Duelo excelso",
+      "range": [
+        500,
+        500,
+        500
+      ],
+      "rangeBurn": "500",
+      "resource": "{{ cost }} {{ abilityresourcename }}",
+      "tooltip": "<spellPassive>Pasiva:</spellPassive> La <speed>velocidad de movimiento</speed> adicional de <spellName>Baile de duelista</spellName> aumenta a un {{ percentms*100 }}%.<br /><br /><spellActive>Activa:</spellActive> Fiora revela los cuatro <keywordMajor>puntos vitales</keywordMajor> de un campeón para infligir un máximo de un <trueDamage>{{ spell.fiorapassive:rdamagetotal }} de daño verdadero en función de la vida máxima</trueDamage> y obtiene la bonificación de <speed>velocidad de movimiento</speed> de <spellName>Baile de duelista</spellName> al estar cerca del objetivo.<br /><br />Si golpea los cuatro <keywordMajor>puntos vitales</keywordMajor> en un margen de {{ markduration }} s o si el objetivo muere tras haberle golpeado en al menos uno, Fiora <healing>restaura {{ healpersecondcalc }} de vida por segundo</healing> a los campeones aliados cercanos durante {{ healduration }} s.{{ spellmodifierdescriptionappend }}",
+      "vars": []
+    }
+  ],
+  "stats": {
+    "armor": 33,
+    "armorperlevel": 4.7,
+    "attackdamage": 66,
+    "attackdamageperlevel": 0,
+    "attackrange": 150,
+    "attackspeed": 0.69,
+    "attackspeedperlevel": 3.2,
+    "crit": 0,
+    "critperlevel": 0,
+    "hp": 620,
+    "hpperlevel": 105,
+    "hpregen": 8.5,
+    "hpregenperlevel": 0.55,
+    "movespeed": 345,
+    "mp": 300,
+    "mpperlevel": 60,
+    "mpregen": 8,
+    "mpregenperlevel": 0.7,
+    "spellblock": 32,
+    "spellblockperlevel": 2.05
+  },
+  "tags": [
+    "Fighter",
+    "Assassin"
+  ],
+  "title": "La Estocada Excelsa"
+}

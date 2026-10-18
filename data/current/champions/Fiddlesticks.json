@@ -1,0 +1,990 @@
+{
+  "allytips": [],
+  "blurb": "Algo ha despertado en Runaterra. Algo ancestral. Algo terrible. El horror conocido como Fiddlesticks acecha en las lindes de la sociedad, en las zonas en las que impera la paranoia, donde se alimenta de aquellos a los que aterroriza. Armada con una...",
+  "enemytips": [],
+  "id": "Fiddlesticks",
+  "image": {
+    "full": "Fiddlesticks.png",
+    "group": "champion",
+    "h": 48,
+    "sprite": "champion1.png",
+    "w": 48,
+    "x": 144,
+    "y": 0
+  },
+  "info": {
+    "attack": 2,
+    "defense": 3,
+    "difficulty": 9,
+    "magic": 9
+  },
+  "key": "9",
+  "lore": "Algo ha despertado en Runaterra. Algo ancestral. Algo terrible. El horror conocido como Fiddlesticks acecha en las lindes de la sociedad, en las zonas en las que impera la paranoia, donde se alimenta de aquellos a los que aterroriza. Armada con una destartalada guadaña, esta criatura cosecha miedo en estado puro y consume las mentes de aquellos desafortunados que consiguen sobrevivir a su encuentro. Temed el graznido del cuervo, el susurro de esa silueta que parece casi humana... Fiddlesticks ha regresado.",
+  "name": "Fiddlesticks",
+  "partype": "Maná",
+  "passive": {
+    "description": "El talismán de Fiddlesticks se reemplaza por figuras de espantapájaros.",
+    "image": {
+      "full": "FiddlesticksP.png",
+      "group": "passive",
+      "h": 48,
+      "sprite": "passive1.png",
+      "w": 48,
+      "x": 144,
+      "y": 0
+    },
+    "name": "Un simple espantapájaros"
+  },
+  "recommended": [],
+  "skins": [
+    {
+      "chromas": false,
+      "id": "9000",
+      "name": "default",
+      "num": 0
+    },
+    {
+      "chromas": false,
+      "id": "9001",
+      "name": "Fiddlesticks espectral",
+      "num": 1
+    },
+    {
+      "chromas": false,
+      "id": "9002",
+      "name": "Fiddlesticks Union Jack",
+      "num": 2
+    },
+    {
+      "chromas": true,
+      "id": "9003",
+      "name": "Fiddlesticks bandido",
+      "num": 3
+    },
+    {
+      "chromas": false,
+      "id": "9004",
+      "name": "Fiddlesticks caracalabaza",
+      "num": 4
+    },
+    {
+      "chromas": false,
+      "id": "9005",
+      "name": "Fiddlesticks pata de palo",
+      "num": 5
+    },
+    {
+      "chromas": true,
+      "id": "9006",
+      "name": "Fiddlesticks fiesta sorpresa",
+      "num": 6
+    },
+    {
+      "chromas": false,
+      "id": "9007",
+      "name": "Fiddlesticks golosina siniestra",
+      "num": 7
+    },
+    {
+      "chromas": false,
+      "id": "9008",
+      "name": "Fiddlesticks alzado",
+      "num": 8
+    },
+    {
+      "chromas": true,
+      "id": "9009",
+      "name": "Fiddlesticks pretoriano",
+      "num": 9
+    },
+    {
+      "chromas": false,
+      "id": "9010",
+      "name": "Fiddlesticks pretoriano (rubí)",
+      "num": 10,
+      "parentSkin": 9
+    },
+    {
+      "chromas": false,
+      "id": "9011",
+      "name": "Fiddlesticks pretoriano (obsidiana)",
+      "num": 11,
+      "parentSkin": 9
+    },
+    {
+      "chromas": false,
+      "id": "9012",
+      "name": "Fiddlesticks pretoriano (citrino)",
+      "num": 12,
+      "parentSkin": 9
+    },
+    {
+      "chromas": false,
+      "id": "9013",
+      "name": "Fiddlesticks pretoriano (perla)",
+      "num": 13,
+      "parentSkin": 9
+    },
+    {
+      "chromas": false,
+      "id": "9014",
+      "name": "Fiddlesticks pretoriano (cuarzo rosa)",
+      "num": 14,
+      "parentSkin": 9
+    },
+    {
+      "chromas": false,
+      "id": "9015",
+      "name": "Fiddlesticks pretoriano (tanzanita)",
+      "num": 15,
+      "parentSkin": 9
+    },
+    {
+      "chromas": false,
+      "id": "9016",
+      "name": "Fiddlesticks fiesta sorpresa (rubí)",
+      "num": 16,
+      "parentSkin": 6
+    },
+    {
+      "chromas": false,
+      "id": "9017",
+      "name": "Fiddlesticks fiesta sorpresa (peridoto)",
+      "num": 17,
+      "parentSkin": 6
+    },
+    {
+      "chromas": false,
+      "id": "9018",
+      "name": "Fiddlesticks fiesta sorpresa (amatista)",
+      "num": 18,
+      "parentSkin": 6
+    },
+    {
+      "chromas": false,
+      "id": "9019",
+      "name": "Fiddlesticks bandido (rubí)",
+      "num": 19,
+      "parentSkin": 3
+    },
+    {
+      "chromas": false,
+      "id": "9020",
+      "name": "Fiddlesticks bandido (obsidiana)",
+      "num": 20,
+      "parentSkin": 3
+    },
+    {
+      "chromas": false,
+      "id": "9021",
+      "name": "Fiddlesticks bandido (perla)",
+      "num": 21,
+      "parentSkin": 3
+    },
+    {
+      "chromas": false,
+      "id": "9022",
+      "name": "Fiddlesticks bandido (zafiro)",
+      "num": 22,
+      "parentSkin": 3
+    },
+    {
+      "chromas": false,
+      "id": "9023",
+      "name": "Fiddlesticks bandido (citrino)",
+      "num": 23,
+      "parentSkin": 3
+    },
+    {
+      "chromas": false,
+      "id": "9024",
+      "name": "Fiddlesticks bandido (peridoto)",
+      "num": 24,
+      "parentSkin": 3
+    },
+    {
+      "chromas": false,
+      "id": "9025",
+      "name": "Fiddlesticks bandido (turquesa)",
+      "num": 25,
+      "parentSkin": 3
+    },
+    {
+      "chromas": false,
+      "id": "9026",
+      "name": "Fiddlesticks bandido (amatista)",
+      "num": 26,
+      "parentSkin": 3
+    },
+    {
+      "chromas": true,
+      "id": "9027",
+      "name": "Fiddlesticks némesis de las estrellas",
+      "num": 27
+    },
+    {
+      "chromas": false,
+      "id": "9028",
+      "name": "Fiddlesticks némesis de las estrellas (rubí)",
+      "num": 28,
+      "parentSkin": 27
+    },
+    {
+      "chromas": false,
+      "id": "9029",
+      "name": "Fiddlesticks némesis de las estrellas (citrino)",
+      "num": 29,
+      "parentSkin": 27
+    },
+    {
+      "chromas": false,
+      "id": "9030",
+      "name": "Fiddlesticks némesis de las estrellas (peridoto)",
+      "num": 30,
+      "parentSkin": 27
+    },
+    {
+      "chromas": false,
+      "id": "9031",
+      "name": "Fiddlesticks némesis de las estrellas (zafiro)",
+      "num": 31,
+      "parentSkin": 27
+    },
+    {
+      "chromas": false,
+      "id": "9032",
+      "name": "Fiddlesticks némesis de las estrellas (cuarzo rosa)",
+      "num": 32,
+      "parentSkin": 27
+    },
+    {
+      "chromas": false,
+      "id": "9033",
+      "name": "Fiddlesticks némesis de las estrellas (turquesa)",
+      "num": 33,
+      "parentSkin": 27
+    },
+    {
+      "chromas": false,
+      "id": "9034",
+      "name": "Fiddlesticks némesis de las estrellas (obsidiana)",
+      "num": 34,
+      "parentSkin": 27
+    },
+    {
+      "chromas": false,
+      "id": "9035",
+      "name": "Fiddlesticks némesis de las estrellas (arenisca)",
+      "num": 35,
+      "parentSkin": 27
+    },
+    {
+      "chromas": false,
+      "id": "9036",
+      "name": "Fiddlesticks némesis de las estrellas (vil)",
+      "num": 36,
+      "parentSkin": 27
+    },
+    {
+      "chromas": true,
+      "id": "9037",
+      "name": "Fiddlesticks luna sangrienta",
+      "num": 37
+    },
+    {
+      "chromas": false,
+      "id": "9038",
+      "name": "Fiddlesticks luna sangrienta (rubí)",
+      "num": 38,
+      "parentSkin": 37
+    },
+    {
+      "chromas": false,
+      "id": "9039",
+      "name": "Fiddlesticks luna sangrienta (citrino)",
+      "num": 39,
+      "parentSkin": 37
+    },
+    {
+      "chromas": false,
+      "id": "9040",
+      "name": "Fiddlesticks luna sangrienta (esmeralda)",
+      "num": 40,
+      "parentSkin": 37
+    },
+    {
+      "chromas": false,
+      "id": "9041",
+      "name": "Fiddlesticks luna sangrienta (amatista)",
+      "num": 41,
+      "parentSkin": 37
+    },
+    {
+      "chromas": false,
+      "id": "9042",
+      "name": "Fiddlesticks luna sangrienta (zafiro)",
+      "num": 42,
+      "parentSkin": 37
+    },
+    {
+      "chromas": false,
+      "id": "9043",
+      "name": "Fiddlesticks luna sangrienta (cuarzo rosa)",
+      "num": 43,
+      "parentSkin": 37
+    },
+    {
+      "chromas": false,
+      "id": "9044",
+      "name": "Fiddlesticks luna sangrienta (perla)",
+      "num": 44,
+      "parentSkin": 37
+    },
+    {
+      "chromas": false,
+      "id": "9045",
+      "name": "Fiddlesticks luna sangrienta (obsidiana)",
+      "num": 45,
+      "parentSkin": 37
+    },
+    {
+      "chromas": true,
+      "id": "9046",
+      "name": "Fiddlesticks flora fatalis",
+      "num": 46
+    },
+    {
+      "chromas": false,
+      "id": "9047",
+      "name": "Fiddlesticks flora fatalis (rubí)",
+      "num": 47,
+      "parentSkin": 46
+    },
+    {
+      "chromas": false,
+      "id": "9048",
+      "name": "Fiddlesticks flora fatalis (zafiro)",
+      "num": 48,
+      "parentSkin": 46
+    },
+    {
+      "chromas": false,
+      "id": "9049",
+      "name": "Fiddlesticks flora fatalis (esmeralda)",
+      "num": 49,
+      "parentSkin": 46
+    },
+    {
+      "chromas": false,
+      "id": "9050",
+      "name": "Fiddlesticks flora fatalis (turquesa)",
+      "num": 50,
+      "parentSkin": 46
+    },
+    {
+      "chromas": false,
+      "id": "9051",
+      "name": "Fiddlesticks flora fatalis (cuarzo rosa)",
+      "num": 51,
+      "parentSkin": 46
+    },
+    {
+      "chromas": false,
+      "id": "9052",
+      "name": "Fiddlesticks flora fatalis (ojo de gato)",
+      "num": 52,
+      "parentSkin": 46
+    },
+    {
+      "chromas": false,
+      "id": "9053",
+      "name": "Fiddlesticks flora fatalis (obsidiana)",
+      "num": 53,
+      "parentSkin": 46
+    },
+    {
+      "chromas": false,
+      "id": "9054",
+      "name": "Fiddlesticks flora fatalis (perla)",
+      "num": 54,
+      "parentSkin": 46
+    }
+  ],
+  "spells": [
+    {
+      "cooldown": [
+        15,
+        14.5,
+        14,
+        13.5,
+        13
+      ],
+      "cooldownBurn": "15/14.5/14/13.5/13",
+      "cost": [
+        65,
+        65,
+        65,
+        65,
+        65
+      ],
+      "costBurn": "65",
+      "costType": " {{ abilityresourcename }}",
+      "datavalues": {},
+      "description": "Fiddlesticks infunde miedo al infligir daño con habilidades sin ser visto o al activar Terror seleccionando como objetivo a una unidad enemiga, provocando que los enemigos afectados huyan despavoridos mientras dure el efecto.",
+      "effect": [
+        null,
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ]
+      ],
+      "effectBurn": [
+        null,
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0"
+      ],
+      "id": "FiddleSticksQ",
+      "image": {
+        "full": "FiddleSticksQ.png",
+        "group": "spell",
+        "h": 48,
+        "sprite": "spell4.png",
+        "w": 48,
+        "x": 288,
+        "y": 0
+      },
+      "leveltip": {
+        "effect": [
+          "{{ fearduration }} -> {{ feardurationNL }}",
+          "{{ cooldown }} -> {{ cooldownNL }}",
+          "{{ maxhealthdamage*100.000000 }}% -> {{ maxhealthdamagenl*100.000000 }}%"
+        ],
+        "label": [
+          "Duración",
+          "Enfriamiento",
+          "% de la vida actual"
+        ]
+      },
+      "maxammo": "-1",
+      "maxrank": 5,
+      "name": "Terror",
+      "range": [
+        575,
+        575,
+        575,
+        575,
+        575
+      ],
+      "rangeBurn": "575",
+      "resource": "{{ cost }} {{ abilityresourcename }}",
+      "tooltip": "<spellPassive>Pasiva:</spellPassive> Cuando inflige daño con una habilidad a un enemigo sin ser visto y estando fuera de combate o cuando se hace pasar por una <keywordMajor>figura</keywordMajor>, le causa <status>miedo</status> durante {{ fearduration }} s.<br /><br /><spellActive>Activa:</spellActive> Causa <status>miedo</status> a un enemigo durante {{ fearduration }} s e inflige un <magicDamage>{{ totalpercenthealthdamage }} de la vida actual del objetivo como daño mágico</magicDamage>. Si Fiddlesticks ha causado <status>miedo</status> al objetivo, inflige un <magicDamage>{{ totalpercenthealthdamagefeared }} de la vida actual del objetivo como daño mágico</magicDamage> en su lugar.<br />{{ spellmodifierdescriptionappend }}",
+      "vars": []
+    },
+    {
+      "cooldown": [
+        10,
+        9.5,
+        9,
+        8.5,
+        8
+      ],
+      "cooldownBurn": "10/9.5/9/8.5/8",
+      "cost": [
+        60,
+        65,
+        70,
+        75,
+        80
+      ],
+      "costBurn": "60/65/70/75/80",
+      "costType": " {{ abilityresourcename }}",
+      "datavalues": {},
+      "description": "Fiddlesticks drena la vida de los enemigos cercanos e inflige daño de ejecución adicional al final del efecto.",
+      "effect": [
+        null,
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ]
+      ],
+      "effectBurn": [
+        null,
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0"
+      ],
+      "id": "FiddleSticksW",
+      "image": {
+        "full": "FiddleSticksW.png",
+        "group": "spell",
+        "h": 48,
+        "sprite": "spell4.png",
+        "w": 48,
+        "x": 336,
+        "y": 0
+      },
+      "leveltip": {
+        "effect": [
+          "{{ damagepersecond }} -> {{ damagepersecondNL }}",
+          "{{ percentfortooltip }}% -> {{ percentfortooltipNL }}%",
+          "{{ vamppercentage }}% -> {{ vamppercentageNL }}%",
+          "{{ cooldown }} -> {{ cooldownNL }}"
+        ],
+        "label": [
+          "Daño por segundo",
+          "Daño por vida que falta",
+          "Porcentaje de curación",
+          "Enfriamiento"
+        ]
+      },
+      "maxammo": "-1",
+      "maxrank": 5,
+      "name": "Cosecha abundante",
+      "range": [
+        650,
+        650,
+        650,
+        650,
+        650
+      ],
+      "rangeBurn": "650",
+      "resource": "{{ cost }} {{ abilityresourcename }}",
+      "tooltip": "Fiddlesticks canaliza y drena las almas de los enemigos cercanos, lo que inflige <magicDamage>{{ draindamagecalc }} de daño mágico</magicDamage> por segundo durante 2 s, más un <magicDamage>{{ percentfortooltip }}% de la vida que le falte al objetivo como daño mágico</magicDamage> al final. Fiddlesticks restaura un <healing>{{ vamppercentage }}% del daño como vida</healing>.<br /><br />Si Fiddlesticks termina la canalización sin interrupción, el enfriamiento restante se reduce un 60%.<br />{{ spellmodifierdescriptionappend }}",
+      "vars": []
+    },
+    {
+      "cooldown": [
+        10,
+        9,
+        8,
+        7,
+        6
+      ],
+      "cooldownBurn": "10/9/8/7/6",
+      "cost": [
+        40,
+        45,
+        50,
+        55,
+        60
+      ],
+      "costBurn": "40/45/50/55/60",
+      "costType": " {{ abilityresourcename }}",
+      "datavalues": {},
+      "description": "Fiddlesticks ataca en área con su guadaña, lo que ralentiza a todos los enemigos alcanzados y silencia a aquellos que golpea en el centro de la cuchillada.",
+      "effect": [
+        null,
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ]
+      ],
+      "effectBurn": [
+        null,
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0"
+      ],
+      "id": "FiddleSticksE",
+      "image": {
+        "full": "FiddleSticksE.png",
+        "group": "spell",
+        "h": 48,
+        "sprite": "spell4.png",
+        "w": 48,
+        "x": 384,
+        "y": 0
+      },
+      "leveltip": {
+        "effect": [
+          "{{ basedamage }} -> {{ basedamageNL }}",
+          "{{ slowamount*-100.000000 }}% -> {{ slowamountnl*-100.000000 }}%",
+          "{{ cooldown }} -> {{ cooldownNL }}",
+          "{{ cost }} -> {{ costNL }}"
+        ],
+        "label": [
+          "Daño",
+          "Ralentización",
+          "Enfriamiento",
+          "Coste de @AbilityResourceName@"
+        ]
+      },
+      "maxammo": "-1",
+      "maxrank": 5,
+      "name": "Segar",
+      "range": [
+        850,
+        850,
+        850,
+        850,
+        850
+      ],
+      "rangeBurn": "850",
+      "resource": "{{ cost }} {{ abilityresourcename }}",
+      "tooltip": "Fiddlesticks libera magia oscura que inflige <magicDamage>{{ damage }} de daño mágico</magicDamage> y <status>ralentiza</status> un {{ slowamount*-100 }}% durante {{ silenceduration }} s. Los enemigos en el centro también resultan <status>silenciados</status> mientras dura el efecto.{{ spellmodifierdescriptionappend }}",
+      "vars": []
+    },
+    {
+      "cooldown": [
+        140,
+        110,
+        80
+      ],
+      "cooldownBurn": "140/110/80",
+      "cost": [
+        100,
+        100,
+        100
+      ],
+      "costBurn": "100",
+      "costType": " {{ abilityresourcename }}",
+      "datavalues": {},
+      "description": "Una bandada de cuervos rodea a Fiddlesticks e inflige daño cada segundo a todas las unidades enemigas de la zona.",
+      "effect": [
+        null,
+        [
+          125,
+          225,
+          325
+        ],
+        [
+          5,
+          5,
+          5
+        ],
+        [
+          1.5,
+          1.5,
+          1.5
+        ],
+        [
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0
+        ]
+      ],
+      "effectBurn": [
+        null,
+        "125/225/325",
+        "5",
+        "1.5",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0"
+      ],
+      "id": "FiddleSticksR",
+      "image": {
+        "full": "FiddleSticksR.png",
+        "group": "spell",
+        "h": 48,
+        "sprite": "spell4.png",
+        "w": 48,
+        "x": 432,
+        "y": 0
+      },
+      "leveltip": {
+        "effect": [
+          "{{ damagepersecond }} -> {{ damagepersecondNL }}",
+          "{{ cooldown }} -> {{ cooldownNL }}"
+        ],
+        "label": [
+          "Daño por segundo",
+          "Enfriamiento"
+        ]
+      },
+      "maxammo": "-1",
+      "maxrank": 3,
+      "name": "Tormenta de cuervos",
+      "range": [
+        800,
+        800,
+        800
+      ],
+      "rangeBurn": "800",
+      "resource": "{{ cost }} {{ abilityresourcename }}",
+      "tooltip": "Fiddlesticks canaliza durante {{ channeltime }} s, se teleporta y libera una bandada de cuervos que inflige <magicDamage>{{ totaldamage }} de daño mágico</magicDamage> a lo largo de {{ duration }} s.{{ spellmodifierdescriptionappend }}",
+      "vars": []
+    }
+  ],
+  "stats": {
+    "armor": 34,
+    "armorperlevel": 4.7,
+    "attackdamage": 55,
+    "attackdamageperlevel": 0,
+    "attackrange": 480,
+    "attackspeed": 0.625,
+    "attackspeedperlevel": 2.11,
+    "crit": 0,
+    "critperlevel": 0,
+    "hp": 650,
+    "hpperlevel": 106,
+    "hpregen": 5.5,
+    "hpregenperlevel": 0.6,
+    "movespeed": 335,
+    "mp": 500,
+    "mpperlevel": 28,
+    "mpregen": 8,
+    "mpregenperlevel": 0.8,
+    "spellblock": 30,
+    "spellblockperlevel": 1.3
+  },
+  "tags": [
+    "Mage",
+    "Support"
+  ],
+  "title": "el Terror Ancestral"
+}

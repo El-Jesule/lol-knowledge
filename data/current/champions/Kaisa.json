@@ -1,0 +1,1161 @@
+{
+  "allytips": [
+    "Intenta atrapar a los carries enemigos cuando estén solos para dejarlos con poca vida con Lluvia de Icathia.",
+    "Trabaja con tu equipo para preparar la definitiva y optimizar el daño con la pasiva.",
+    "Asegúrate de comprar objetos que evolucionen al menos 1 o 2 hechizos."
+  ],
+  "blurb": "Reclamada por el Vacío cuando era solo una niña, Kai'Sa logró sobrevivir por pura tenacidad y fuerza de voluntad. Sus experiencias la han convertido en una cazadora letal y, para algunos, el presagio de un futuro que preferirían no vivir para ver. Ahora...",
+  "enemytips": [
+    "A Kai'Sa se le da muy bien acabar con enemigos aislados. Cuando te enfrentes a ella, no te separes de tu equipo.",
+    "Es fácil que los magos y los carries con un gran alcance consigan quedar fuera del alcance de Kai'Sa.",
+    "Asegúrate de colocar guardianes en los puntos clave para poder verla venir."
+  ],
+  "id": "Kaisa",
+  "image": {
+    "full": "Kaisa.png",
+    "group": "champion",
+    "h": 48,
+    "sprite": "champion1.png",
+    "w": 48,
+    "x": 240,
+    "y": 96
+  },
+  "info": {
+    "attack": 8,
+    "defense": 5,
+    "difficulty": 6,
+    "magic": 3
+  },
+  "key": "145",
+  "lore": "Reclamada por el Vacío cuando era solo una niña, Kai'Sa logró sobrevivir por pura tenacidad y fuerza de voluntad. Sus experiencias la han convertido en una cazadora letal y, para algunos, el presagio de un futuro que preferirían no vivir para ver. Ahora que ha entrado en una tensa simbiosis con un caparazón viviente del Vacío, pronto llegará el momento de decidir si perdona a aquellos mortales que la llaman monstruo y se alía con ellos para tratar de derrotar a la oscuridad que se avecina... o simplemente deja que su mente olvide y que el Vacío consuma el mundo que la abandonó.",
+  "name": "Kai'Sa",
+  "partype": "Maná",
+  "passive": {
+    "description": "Los ataques básicos de Kai'Sa acumulan Plasma, lo que inflige daño mágico adicional en aumento. Los efectos de inmovilización de los aliados ayudan a acumular Plasma. Además, los objetos que Kai'Sa compre mejoran sus hechizos básicos y les otorgan propiedades más potentes.",
+    "image": {
+      "full": "Kaisa_Passive.png",
+      "group": "passive",
+      "h": 48,
+      "sprite": "passive1.png",
+      "w": 48,
+      "x": 240,
+      "y": 96
+    },
+    "name": "Segunda piel"
+  },
+  "recommended": [],
+  "skins": [
+    {
+      "chromas": false,
+      "id": "145000",
+      "name": "default",
+      "num": 0
+    },
+    {
+      "chromas": true,
+      "id": "145001",
+      "name": "Kai'Sa ángel de las balas",
+      "num": 1
+    },
+    {
+      "chromas": false,
+      "id": "145002",
+      "name": "Kai'Sa ángel de las balas (ojo de gato)",
+      "num": 2,
+      "parentSkin": 1
+    },
+    {
+      "chromas": false,
+      "id": "145003",
+      "name": "Kai'Sa ángel de las balas (rubí)",
+      "num": 3,
+      "parentSkin": 1
+    },
+    {
+      "chromas": false,
+      "id": "145004",
+      "name": "Kai'Sa ángel de las balas (cuarzo rosa)",
+      "num": 4,
+      "parentSkin": 1
+    },
+    {
+      "chromas": false,
+      "id": "145005",
+      "name": "Kai'Sa ángel de las balas (aguamarina)",
+      "num": 5,
+      "parentSkin": 1
+    },
+    {
+      "chromas": false,
+      "id": "145006",
+      "name": "Kai'Sa ángel de las balas (obsidiana)",
+      "num": 6,
+      "parentSkin": 1
+    },
+    {
+      "chromas": false,
+      "id": "145007",
+      "name": "Kai'Sa ángel de las balas (granito)",
+      "num": 7,
+      "parentSkin": 1
+    },
+    {
+      "chromas": false,
+      "id": "145008",
+      "name": "Kai'Sa ángel de las balas (amatista)",
+      "num": 8,
+      "parentSkin": 1
+    },
+    {
+      "chromas": false,
+      "id": "145009",
+      "name": "Kai'Sa ángel de las balas (perla)",
+      "num": 9,
+      "parentSkin": 1
+    },
+    {
+      "chromas": false,
+      "id": "145014",
+      "name": "Kai'Sa K/DA",
+      "num": 14
+    },
+    {
+      "chromas": false,
+      "id": "145015",
+      "name": "Kai'Sa K/DA de prestigio",
+      "num": 15
+    },
+    {
+      "chromas": false,
+      "id": "145016",
+      "name": "Kai'Sa iG",
+      "num": 16
+    },
+    {
+      "chromas": false,
+      "id": "145017",
+      "name": "Kai'Sa de recreativa",
+      "num": 17
+    },
+    {
+      "chromas": false,
+      "id": "145018",
+      "name": "Kai'Sa de recreativa (KO)",
+      "num": 18,
+      "parentSkin": 17
+    },
+    {
+      "chromas": false,
+      "id": "145019",
+      "name": "Kai'Sa de recreativa (rubí)",
+      "num": 19,
+      "parentSkin": 17
+    },
+    {
+      "chromas": true,
+      "id": "145020",
+      "name": "Kai'Sa de recreativa (cuarzo rosa)",
+      "num": 20,
+      "parentSkin": 17
+    },
+    {
+      "chromas": true,
+      "id": "145021",
+      "name": "Kai'Sa de recreativa (ojo de gato)",
+      "num": 21,
+      "parentSkin": 17
+    },
+    {
+      "chromas": false,
+      "id": "145022",
+      "name": "Kai'Sa de recreativa (aguamarina)",
+      "num": 22,
+      "parentSkin": 17
+    },
+    {
+      "chromas": false,
+      "id": "145023",
+      "name": "Kai'Sa de recreativa (obsidiana)",
+      "num": 23,
+      "parentSkin": 17
+    },
+    {
+      "chromas": false,
+      "id": "145024",
+      "name": "Kai'Sa de recreativa (amatista)",
+      "num": 24,
+      "parentSkin": 17
+    },
+    {
+      "chromas": false,
+      "id": "145025",
+      "name": "Kai'Sa de recreativa (esmeralda)",
+      "num": 25,
+      "parentSkin": 17
+    },
+    {
+      "chromas": false,
+      "id": "145026",
+      "name": "Kai'Sa K/DA - ALL OUT",
+      "num": 26
+    },
+    {
+      "chromas": false,
+      "id": "145027",
+      "name": "Kai'Sa K/DA: ALL OUT de prestigio",
+      "num": 27
+    },
+    {
+      "chromas": false,
+      "id": "145028",
+      "name": "Kai'Sa K/DA: ALL OUT (BADDEST)",
+      "num": 28,
+      "parentSkin": 26
+    },
+    {
+      "chromas": false,
+      "id": "145029",
+      "name": "Kai'Sa dragona de la laguna",
+      "num": 29
+    },
+    {
+      "chromas": true,
+      "id": "145030",
+      "name": "Kai'Sa dragona de la laguna (rubí)",
+      "num": 30,
+      "parentSkin": 29
+    },
+    {
+      "chromas": false,
+      "id": "145031",
+      "name": "Kai'Sa dragona de la laguna (zafiro)",
+      "num": 31,
+      "parentSkin": 29
+    },
+    {
+      "chromas": false,
+      "id": "145032",
+      "name": "Kai'Sa dragona de la laguna (cuarzo rosa)",
+      "num": 32,
+      "parentSkin": 29
+    },
+    {
+      "chromas": true,
+      "id": "145033",
+      "name": "Kai'Sa dragona de la laguna (citrino)",
+      "num": 33,
+      "parentSkin": 29
+    },
+    {
+      "chromas": false,
+      "id": "145034",
+      "name": "Kai'Sa dragona de la laguna (tanzanita)",
+      "num": 34,
+      "parentSkin": 29
+    },
+    {
+      "chromas": false,
+      "id": "145035",
+      "name": "Kai'Sa dragona de la laguna (perla)",
+      "num": 35,
+      "parentSkin": 29
+    },
+    {
+      "chromas": false,
+      "id": "145036",
+      "name": "Kai'Sa dragona de la laguna (obsidiana)",
+      "num": 36,
+      "parentSkin": 29
+    },
+    {
+      "chromas": false,
+      "id": "145037",
+      "name": "Kai'Sa dragona de la laguna (esmeralda)",
+      "num": 37,
+      "parentSkin": 29
+    },
+    {
+      "chromas": false,
+      "id": "145038",
+      "name": "Kai'Sa dragona de la laguna (garra de ascuas)",
+      "num": 38,
+      "parentSkin": 29
+    },
+    {
+      "chromas": false,
+      "id": "145039",
+      "name": "Kai'Sa K/DA de prestigio (2022)",
+      "num": 39
+    },
+    {
+      "chromas": false,
+      "id": "145040",
+      "name": "Kai'Sa guardiana de las estrellas",
+      "num": 40
+    },
+    {
+      "chromas": false,
+      "id": "145041",
+      "name": "Kai'Sa guardiana de las estrellas (rubí)",
+      "num": 41,
+      "parentSkin": 40
+    },
+    {
+      "chromas": false,
+      "id": "145042",
+      "name": "Kai'Sa guardiana de las estrellas (ojo de gato)",
+      "num": 42,
+      "parentSkin": 40
+    },
+    {
+      "chromas": false,
+      "id": "145043",
+      "name": "Kai'Sa guardiana de las estrellas (aguamarina)",
+      "num": 43,
+      "parentSkin": 40
+    },
+    {
+      "chromas": true,
+      "id": "145044",
+      "name": "Kai'Sa guardiana de las estrellas (esmeralda)",
+      "num": 44,
+      "parentSkin": 40
+    },
+    {
+      "chromas": false,
+      "id": "145045",
+      "name": "Kai'Sa guardiana de las estrellas (tanzanita)",
+      "num": 45,
+      "parentSkin": 40
+    },
+    {
+      "chromas": false,
+      "id": "145046",
+      "name": "Kai'Sa guardiana de las estrellas (brillante)",
+      "num": 46,
+      "parentSkin": 40
+    },
+    {
+      "chromas": false,
+      "id": "145047",
+      "name": "Kai'Sa ángel de las balas (rebelde)",
+      "num": 47,
+      "parentSkin": 1
+    },
+    {
+      "chromas": false,
+      "id": "145048",
+      "name": "Kai'Sa sombra de tinta",
+      "num": 48
+    },
+    {
+      "chromas": false,
+      "id": "145049",
+      "name": "Kai'Sa sombra de tinta (rubí)",
+      "num": 49,
+      "parentSkin": 48
+    },
+    {
+      "chromas": false,
+      "id": "145050",
+      "name": "Kai'Sa sombra de tinta (ojo de gato)",
+      "num": 50,
+      "parentSkin": 48
+    },
+    {
+      "chromas": false,
+      "id": "145051",
+      "name": "Kai'Sa sombra de tinta (jaspe)",
+      "num": 51,
+      "parentSkin": 48
+    },
+    {
+      "chromas": true,
+      "id": "145052",
+      "name": "Kai'Sa sombra de tinta (esmeralda)",
+      "num": 52,
+      "parentSkin": 48
+    },
+    {
+      "chromas": false,
+      "id": "145053",
+      "name": "Kai'Sa sombra de tinta (zafiro)",
+      "num": 53,
+      "parentSkin": 48
+    },
+    {
+      "chromas": false,
+      "id": "145054",
+      "name": "Kai'Sa sombra de tinta (obsidiana)",
+      "num": 54,
+      "parentSkin": 48
+    },
+    {
+      "chromas": false,
+      "id": "145055",
+      "name": "Kai'Sa sombra de tinta (amatista)",
+      "num": 55,
+      "parentSkin": 48
+    },
+    {
+      "chromas": false,
+      "id": "145056",
+      "name": "Kai'Sa sombra de tinta (cuarzo rosa)",
+      "num": 56,
+      "parentSkin": 48
+    },
+    {
+      "chromas": false,
+      "id": "145057",
+      "name": "Kai'Sa sombra de tinta (entintado)",
+      "num": 57,
+      "parentSkin": 48
+    },
+    {
+      "chromas": false,
+      "id": "145058",
+      "name": "Kai'Sa iG (triunfo décuplo)",
+      "num": 58,
+      "parentSkin": 16
+    },
+    {
+      "chromas": false,
+      "id": "145059",
+      "name": "Kai'Sa poder celestial",
+      "num": 59
+    },
+    {
+      "chromas": false,
+      "id": "145060",
+      "name": "Kai'Sa poder celestial (rubí)",
+      "num": 60,
+      "parentSkin": 59
+    },
+    {
+      "chromas": false,
+      "id": "145061",
+      "name": "Kai'Sa poder celestial (ojo de gato)",
+      "num": 61,
+      "parentSkin": 59
+    },
+    {
+      "chromas": false,
+      "id": "145062",
+      "name": "Kai'Sa poder celestial (esmeralda)",
+      "num": 62,
+      "parentSkin": 59
+    },
+    {
+      "chromas": true,
+      "id": "145063",
+      "name": "Kai'Sa poder celestial (amatista)",
+      "num": 63,
+      "parentSkin": 59
+    },
+    {
+      "chromas": false,
+      "id": "145064",
+      "name": "Kai'Sa poder celestial (granito)",
+      "num": 64,
+      "parentSkin": 59
+    },
+    {
+      "chromas": false,
+      "id": "145065",
+      "name": "Kai'Sa poder celestial (cuarzo rosa)",
+      "num": 65,
+      "parentSkin": 59
+    },
+    {
+      "chromas": false,
+      "id": "145066",
+      "name": "Kai'Sa poder celestial (zafiro)",
+      "num": 66,
+      "parentSkin": 59
+    },
+    {
+      "chromas": false,
+      "id": "145067",
+      "name": "Kai'Sa poder celestial (lustre)",
+      "num": 67,
+      "parentSkin": 59
+    },
+    {
+      "chromas": false,
+      "id": "145068",
+      "name": "Kai'Sa poder celestial (obsidiana)",
+      "num": 68,
+      "parentSkin": 59
+    },
+    {
+      "chromas": false,
+      "id": "145069",
+      "name": "Kai'Sa estrella oscura",
+      "num": 69
+    },
+    {
+      "chromas": false,
+      "id": "145070",
+      "name": "Kai'Sa leyenda alzada",
+      "num": 70
+    },
+    {
+      "chromas": false,
+      "id": "145071",
+      "name": "Kai'Sa leyenda inmortal",
+      "num": 71
+    },
+    {
+      "chromas": false,
+      "id": "145072",
+      "name": "Kai'Sa estrella oscura (rubí)",
+      "num": 72,
+      "parentSkin": 69
+    },
+    {
+      "chromas": true,
+      "id": "145073",
+      "name": "Kai'Sa estrella oscura (zafiro)",
+      "num": 73,
+      "parentSkin": 69
+    },
+    {
+      "chromas": false,
+      "id": "145074",
+      "name": "Kai'Sa estrella oscura (ojo de gato)",
+      "num": 74,
+      "parentSkin": 69
+    },
+    {
+      "chromas": false,
+      "id": "145075",
+      "name": "Kai'Sa estrella oscura (esmeralda)",
+      "num": 75,
+      "parentSkin": 69
+    },
+    {
+      "chromas": false,
+      "id": "145076",
+      "name": "Kai'Sa estrella oscura (cuarzo rosa)",
+      "num": 76,
+      "parentSkin": 69
+    },
+    {
+      "chromas": false,
+      "id": "145077",
+      "name": "Kai'Sa estrella oscura (turquesa)",
+      "num": 77,
+      "parentSkin": 69
+    },
+    {
+      "chromas": false,
+      "id": "145078",
+      "name": "Kai'Sa estrella oscura (amatista)",
+      "num": 78,
+      "parentSkin": 69
+    },
+    {
+      "chromas": false,
+      "id": "145079",
+      "name": "Kai'Sa estrella oscura (perla)",
+      "num": 79,
+      "parentSkin": 69
+    },
+    {
+      "chromas": false,
+      "id": "145080",
+      "name": "Kai'Sa estrella oscura (cuásar)",
+      "num": 80,
+      "parentSkin": 69
+    },
+    {
+      "chromas": false,
+      "id": "145081",
+      "name": "Kai'Sa iG (élite)",
+      "num": 81,
+      "parentSkin": 16
+    },
+    {
+      "chromas": false,
+      "id": "145082",
+      "name": "Kai'Sa poder celestial (baliza)",
+      "num": 82,
+      "parentSkin": 59
+    }
+  ],
+  "spells": [
+    {
+      "cooldown": [
+        10,
+        9,
+        8,
+        7,
+        6
+      ],
+      "cooldownBurn": "10/9/8/7/6",
+      "cost": [
+        55,
+        55,
+        55,
+        55,
+        55
+      ],
+      "costBurn": "55",
+      "costType": " {{ abilityresourcename }}",
+      "datavalues": {},
+      "description": "Kai'Sa libera una ráfaga de proyectiles que buscan campeones enemigos cercanos.<br><br>Arma viviente: Lluvia de Icathia mejora y dispara más misiles.",
+      "effect": [
+        null,
+        [
+          40,
+          55,
+          70,
+          85,
+          100
+        ],
+        [
+          6,
+          6,
+          6,
+          6,
+          6
+        ],
+        [
+          0.25,
+          0.25,
+          0.25,
+          0.25,
+          0.25
+        ],
+        [
+          2,
+          2,
+          2,
+          2,
+          2
+        ],
+        [
+          0.35,
+          0.35,
+          0.35,
+          0.35,
+          0.35
+        ],
+        [
+          100,
+          100,
+          100,
+          100,
+          100
+        ],
+        [
+          12,
+          12,
+          12,
+          12,
+          12
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ]
+      ],
+      "effectBurn": [
+        null,
+        "40/55/70/85/100",
+        "6",
+        "0.25",
+        "2",
+        "0.35",
+        "100",
+        "12",
+        "0",
+        "0",
+        "0"
+      ],
+      "id": "KaisaQ",
+      "image": {
+        "full": "KaisaQ.png",
+        "group": "spell",
+        "h": 48,
+        "sprite": "spell6.png",
+        "w": 48,
+        "x": 192,
+        "y": 48
+      },
+      "leveltip": {
+        "effect": [
+          "{{ cooldown }} -> {{ cooldownNL }}",
+          "{{ basedamage }} -> {{ basedamageNL }}"
+        ],
+        "label": [
+          "Enfriamiento",
+          "Daño por proyectil"
+        ]
+      },
+      "maxammo": "-1",
+      "maxrank": 5,
+      "name": "Lluvia de Icathia",
+      "range": [
+        600,
+        600,
+        600,
+        600,
+        600
+      ],
+      "rangeBurn": "600",
+      "resource": "{{ cost }} {{ abilityresourcename }}",
+      "tooltip": "Kai'Sa libera {{ e2 }} proyectiles que se reparten entre los enemigos cercanos. Cada proyectil inflige <physicalDamage>{{ totalindividualmissiledamage }} de daño físico</physicalDamage>, hasta un máximo de {{ maxdamagedisplay }}. Los impactos de proyectiles adicionales contra campeones o monstruos infligen un {{ extrahitreduction*100 }}% de daño.<br /><br /><keywordMajor>Evolucionada</keywordMajor>: Kai'Sa dispara {{ e7 }} misiles.<br />Actual: <physicalDamage>{{ f11.1 }}/{{ e6 }} de daño de ataque adicional</physicalDamage>{{ spellmodifierdescriptionappend }}",
+      "vars": []
+    },
+    {
+      "cooldown": [
+        20,
+        18.5,
+        17,
+        15.5,
+        14
+      ],
+      "cooldownBurn": "20/18.5/17/15.5/14",
+      "cost": [
+        55,
+        60,
+        65,
+        70,
+        75
+      ],
+      "costBurn": "55/60/65/70/75",
+      "costType": " {{ abilityresourcename }}",
+      "datavalues": {},
+      "description": "Kai'Sa dispara un misil de largo alcance y marca a los enemigos con la pasiva.<br><br>Arma viviente: Buscador del Vacío mejora y aplica más acumulaciones de la pasiva, además de reducir el enfriamiento al golpear a un campeón.",
+      "effect": [
+        null,
+        [
+          30,
+          55,
+          80,
+          105,
+          130
+        ],
+        [
+          100,
+          100,
+          100,
+          100,
+          100
+        ],
+        [
+          75,
+          75,
+          75,
+          75,
+          75
+        ],
+        [
+          2,
+          2,
+          2,
+          2,
+          2
+        ],
+        [
+          3,
+          3,
+          3,
+          3,
+          3
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ]
+      ],
+      "effectBurn": [
+        null,
+        "30/55/80/105/130",
+        "100",
+        "75",
+        "2",
+        "3",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0"
+      ],
+      "id": "KaisaW",
+      "image": {
+        "full": "KaisaW.png",
+        "group": "spell",
+        "h": 48,
+        "sprite": "spell6.png",
+        "w": 48,
+        "x": 240,
+        "y": 48
+      },
+      "leveltip": {
+        "effect": [
+          "{{ cooldown }} -> {{ cooldownNL }}",
+          "{{ e1 }} -> {{ e1NL }}",
+          "{{ cost }} -> {{ costNL }}"
+        ],
+        "label": [
+          "Enfriamiento",
+          "Daño",
+          "Coste de maná"
+        ]
+      },
+      "maxammo": "-1",
+      "maxrank": 5,
+      "name": "Buscador del Vacío",
+      "range": [
+        3000,
+        3000,
+        3000,
+        3000,
+        3000
+      ],
+      "rangeBurn": "3000",
+      "resource": "{{ cost }} {{ abilityresourcename }}",
+      "tooltip": "Kai'Sa lanza una explosión del Vacío que inflige <magicDamage>{{ totaldamage }} de daño mágico</magicDamage>, aplica {{ e4 }} acumulaciones de <keywordMajor>Plasma</keywordMajor> y otorga <keywordStealth>visión verdadera</keywordStealth> del primer enemigo golpeado durante {{ spell.kaisapassive:pduration }} s.<br /><br /><keywordMajor>Evolucionada</keywordMajor>: Kai'Sa aplica {{ e5 }} acumulaciones de <keywordMajor>Plasma</keywordMajor> en su lugar, y golpear a un campeón reduce el enfriamiento un {{ e3 }}%.<br />Actual: <scaleAP>{{ f2.1 }}/{{ e2 }} de poder de habilidad</scaleAP>{{ spellmodifierdescriptionappend }}",
+      "vars": []
+    },
+    {
+      "cooldown": [
+        16,
+        14.5,
+        13,
+        11.5,
+        10
+      ],
+      "cooldownBurn": "16/14.5/13/11.5/10",
+      "cost": [
+        30,
+        30,
+        30,
+        30,
+        30
+      ],
+      "costBurn": "30",
+      "costType": " {{ abilityresourcename }}",
+      "datavalues": {},
+      "description": "Kai'Sa aumenta brevemente su velocidad de movimiento y después su velocidad de ataque.<br><br>Arma viviente: Supercarga mejora y otorga brevemente invisibilidad.",
+      "effect": [
+        null,
+        [
+          0.55,
+          0.6,
+          0.65,
+          0.7,
+          0.75
+        ],
+        [
+          4,
+          4,
+          4,
+          4,
+          4
+        ],
+        [
+          1.2,
+          1.2,
+          1.2,
+          1.2,
+          1.2
+        ],
+        [
+          0.5,
+          0.5,
+          0.5,
+          0.5,
+          0.5
+        ],
+        [
+          40,
+          50,
+          60,
+          70,
+          80
+        ],
+        [
+          100,
+          100,
+          100,
+          100,
+          100
+        ],
+        [
+          0.5,
+          0.5,
+          0.5,
+          0.5,
+          0.5
+        ],
+        [
+          0.6,
+          0.6,
+          0.6,
+          0.6,
+          0.6
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ]
+      ],
+      "effectBurn": [
+        null,
+        "0.55/0.6/0.65/0.7/0.75",
+        "4",
+        "1.2",
+        "0.5",
+        "40/50/60/70/80",
+        "100",
+        "0.5",
+        "0.6",
+        "0",
+        "0"
+      ],
+      "id": "KaisaE",
+      "image": {
+        "full": "KaisaE.png",
+        "group": "spell",
+        "h": 48,
+        "sprite": "spell6.png",
+        "w": 48,
+        "x": 288,
+        "y": 48
+      },
+      "leveltip": {
+        "effect": [
+          "{{ cooldown }} -> {{ cooldownNL }}",
+          "{{ effect1amount*100.000000 }}% -> {{ effect1amountnl*100.000000 }}%",
+          "{{ effect5amount*100.000000 }}% -> {{ effect5amountnl*100.000000 }}%"
+        ],
+        "label": [
+          "Enfriamiento",
+          "Velocidad de movimiento",
+          "Velocidad de ataque"
+        ]
+      },
+      "maxammo": "-1",
+      "maxrank": 5,
+      "name": "Supercarga",
+      "range": [
+        1,
+        1,
+        1,
+        1,
+        1
+      ],
+      "rangeBurn": "1",
+      "resource": "{{ cost }} {{ abilityresourcename }}",
+      "tooltip": "Kai'Sa supercarga su energía del Vacío, obtiene un <speed>{{ totalmovespeed }} de velocidad de movimiento</speed> y se vuelve fantasmal mientras la carga. Tras esto, obtiene un <attackSpeed>{{ e5 }}% de velocidad de ataque</attackSpeed> durante {{ e2 }} s.<br /><br />Los ataques reducen el enfriamiento de esta habilidad en {{ e4 }} s.<br /><br /><keywordMajor>Evolucionada</keywordMajor>: Kai'Sa también se vuelve <keywordStealth>invisible</keywordStealth> durante {{ e7 }} s.<br />Actual: <attackSpeed>{{ f10.1 }}%/{{ e6 }}% de velocidad de ataque adicional</attackSpeed>{{ spellmodifierdescriptionappend }}",
+      "vars": []
+    },
+    {
+      "cooldown": [
+        130,
+        100,
+        70
+      ],
+      "cooldownBurn": "130/100/70",
+      "cost": [
+        100,
+        100,
+        100
+      ],
+      "costBurn": "100",
+      "costType": " {{ abilityresourcename }}",
+      "datavalues": {},
+      "description": "Kai'Sa se desliza cerca de un campeón enemigo.",
+      "effect": [
+        null,
+        [
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0
+        ]
+      ],
+      "effectBurn": [
+        null,
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0"
+      ],
+      "id": "KaisaR",
+      "image": {
+        "full": "KaisaR.png",
+        "group": "spell",
+        "h": 48,
+        "sprite": "spell6.png",
+        "w": 48,
+        "x": 336,
+        "y": 48
+      },
+      "leveltip": {
+        "effect": [
+          "{{ rrange }} -> {{ rrangeNL }}",
+          "{{ cooldown }} -> {{ cooldownNL }}",
+          "{{ rbasevalue }} -> {{ rbasevalueNL }}",
+          "{{ rtotaladratio*100.000000 }}% -> {{ rtotaladrationl*100.000000 }}%"
+        ],
+        "label": [
+          "Alcance",
+          "Enfriamiento",
+          "Cantidad de escudo",
+          "Relación del daño de ataque"
+        ]
+      },
+      "maxammo": "-1",
+      "maxrank": 3,
+      "name": "Instinto asesino",
+      "range": [
+        2000,
+        2500,
+        3000
+      ],
+      "rangeBurn": "2000/2500/3000",
+      "resource": "{{ cost }} {{ abilityresourcename }}",
+      "tooltip": "Kai'Sa aparece cerca de un campeón enemigo afectado por <keywordMajor>Plasma</keywordMajor> y obtiene <shield>{{ rcalculatedshieldvalue }} de escudo</shield> durante {{ rshieldduration }} s.{{ spellmodifierdescriptionappend }}",
+      "vars": []
+    }
+  ],
+  "stats": {
+    "armor": 25,
+    "armorperlevel": 4.2,
+    "attackdamage": 59,
+    "attackdamageperlevel": 0,
+    "attackrange": 525,
+    "attackspeed": 0.644,
+    "attackspeedperlevel": 1.8,
+    "crit": 0,
+    "critperlevel": 0,
+    "hp": 640,
+    "hpperlevel": 102,
+    "hpregen": 4,
+    "hpregenperlevel": 0.55,
+    "movespeed": 335,
+    "mp": 345,
+    "mpperlevel": 40,
+    "mpregen": 8.2,
+    "mpregenperlevel": 0.7,
+    "spellblock": 33,
+    "spellblockperlevel": 1.1
+  },
+  "tags": [
+    "Marksman",
+    "Mage"
+  ],
+  "title": "La Hija del Vacío"
+}

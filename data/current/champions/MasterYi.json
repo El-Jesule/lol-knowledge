@@ -1,0 +1,1229 @@
+{
+  "allytips": [
+    "Si estás en una calle con jugadores a distancia, subir el nivel de Meditar te permitirá permanecer más tiempo en la calle y ganar niveles más rápido que ellos.",
+    "El Estilo Wuju es muy eficaz al principio para asestar un último golpe a los súbditos.",
+    "Intenta usar Golpe fulgurante en un súbdito delante de un campeón enemigo para colocarte a una distancia segura al final del hechizo."
+  ],
+  "blurb": "Maestro Yi ha atemperado su cuerpo y agudizado su mente, de modo que el pensamiento y la acción se han convertido casi en uno. Aunque elige emplear la violencia solo como último recurso, la gracia y la velocidad de su espada aseguran que el final...",
+  "enemytips": [
+    "Meditar es eficaz para curar vida a lo largo del tiempo, pero, al principio del juego, el Maestro Yi es vulnerable a las emboscadas coordinadas.",
+    "Si el Maestro Yi intenta matar súbditos con Golpe fulgurante, golpéalo repetidamente y oblígalo a gastar maná haciendo que se cure con Meditar.",
+    "Aunque el Maestro Yi no puede ser ralentizado mientras usa Imparable, otras inhabilitaciones pueden frenarlo en seco."
+  ],
+  "id": "MasterYi",
+  "image": {
+    "full": "MasterYi.png",
+    "group": "champion",
+    "h": 48,
+    "sprite": "champion2.png",
+    "w": 48,
+    "x": 48,
+    "y": 96
+  },
+  "info": {
+    "attack": 10,
+    "defense": 4,
+    "difficulty": 4,
+    "magic": 2
+  },
+  "key": "11",
+  "lore": "Maestro Yi ha atemperado su cuerpo y agudizado su mente, de modo que el pensamiento y la acción se han convertido casi en uno. Aunque elige emplear la violencia solo como último recurso, la gracia y la velocidad de su espada aseguran que el final siempre será rápido. Como uno de los últimos practicantes vivos del arte jonio de Wuju, Yi ha dedicado su vida a perpetuar el legado de su pueblo, escudriñando a los nuevos discípulos potenciales con sus siete lentes de la perspicacia para identificar a los más dignos.",
+  "name": "Maestro Yi",
+  "partype": "Maná",
+  "passive": {
+    "description": "Cada varios ataques básicos consecutivos, Maestro Yi golpea dos veces.",
+    "image": {
+      "full": "MasterYi_Passive1.png",
+      "group": "passive",
+      "h": 48,
+      "sprite": "passive2.png",
+      "w": 48,
+      "x": 48,
+      "y": 96
+    },
+    "name": "Golpe doble"
+  },
+  "recommended": [],
+  "skins": [
+    {
+      "chromas": false,
+      "id": "11000",
+      "name": "default",
+      "num": 0
+    },
+    {
+      "chromas": false,
+      "id": "11001",
+      "name": "Maestro Yi asesino",
+      "num": 1
+    },
+    {
+      "chromas": false,
+      "id": "11002",
+      "name": "Maestro Yi elegido",
+      "num": 2
+    },
+    {
+      "chromas": false,
+      "id": "11003",
+      "name": "Maestro Yi Jonia",
+      "num": 3
+    },
+    {
+      "chromas": false,
+      "id": "11004",
+      "name": "Yi samurái",
+      "num": 4
+    },
+    {
+      "chromas": true,
+      "id": "11005",
+      "name": "Maestro Yi cazador de cabezas",
+      "num": 5
+    },
+    {
+      "chromas": false,
+      "id": "11006",
+      "name": "Maestro Yi cazador de cabezas - Golpe de oro",
+      "num": 6,
+      "parentSkin": 5
+    },
+    {
+      "chromas": false,
+      "id": "11007",
+      "name": "Maestro Yi cazador de cabezas - Golpe de agua",
+      "num": 7,
+      "parentSkin": 5
+    },
+    {
+      "chromas": false,
+      "id": "11008",
+      "name": "Maestro Yi cazador de cabezas - Golpe carmesí",
+      "num": 8,
+      "parentSkin": 5
+    },
+    {
+      "chromas": false,
+      "id": "11009",
+      "name": "PROYECTO: Yi",
+      "num": 9
+    },
+    {
+      "chromas": false,
+      "id": "11010",
+      "name": "Maestro Yi espada cósmica",
+      "num": 10
+    },
+    {
+      "chromas": true,
+      "id": "11011",
+      "name": "Yi espada eterna",
+      "num": 11
+    },
+    {
+      "chromas": false,
+      "id": "11012",
+      "name": "Yi espada eterna (perla)",
+      "num": 12,
+      "parentSkin": 11
+    },
+    {
+      "chromas": false,
+      "id": "11013",
+      "name": "Yi espada eterna (turquesa)",
+      "num": 13,
+      "parentSkin": 11
+    },
+    {
+      "chromas": false,
+      "id": "11014",
+      "name": "Yi espada eterna (rubí)",
+      "num": 14,
+      "parentSkin": 11
+    },
+    {
+      "chromas": false,
+      "id": "11015",
+      "name": "Yi espada eterna (obsidiana)",
+      "num": 15,
+      "parentSkin": 11
+    },
+    {
+      "chromas": false,
+      "id": "11016",
+      "name": "Yi espada eterna (cuarzo rosa)",
+      "num": 16,
+      "parentSkin": 11
+    },
+    {
+      "chromas": true,
+      "id": "11017",
+      "name": "Yi muñeco de nieve",
+      "num": 17
+    },
+    {
+      "chromas": false,
+      "id": "11019",
+      "name": "Yi muñeco de nieve (rubí)",
+      "num": 19,
+      "parentSkin": 17
+    },
+    {
+      "chromas": false,
+      "id": "11020",
+      "name": "Yi muñeco de nieve (cuarzo rosa)",
+      "num": 20,
+      "parentSkin": 17
+    },
+    {
+      "chromas": false,
+      "id": "11021",
+      "name": "Yi muñeco de nieve (perla)",
+      "num": 21,
+      "parentSkin": 17
+    },
+    {
+      "chromas": false,
+      "id": "11022",
+      "name": "Yi muñeco de nieve (amatista)",
+      "num": 22,
+      "parentSkin": 17
+    },
+    {
+      "chromas": false,
+      "id": "11023",
+      "name": "Yi muñeco de nieve (obsidiana)",
+      "num": 23,
+      "parentSkin": 17
+    },
+    {
+      "chromas": false,
+      "id": "11024",
+      "name": "Maestro Yi luna sangrienta",
+      "num": 24
+    },
+    {
+      "chromas": true,
+      "id": "11025",
+      "name": "Maestro Yi luna sangrienta (rubí)",
+      "num": 25,
+      "parentSkin": 24
+    },
+    {
+      "chromas": false,
+      "id": "11026",
+      "name": "Maestro Yi luna sangrienta (ojo de gato)",
+      "num": 26,
+      "parentSkin": 24
+    },
+    {
+      "chromas": false,
+      "id": "11027",
+      "name": "Maestro Yi luna sangrienta (esmeralda)",
+      "num": 27,
+      "parentSkin": 24
+    },
+    {
+      "chromas": false,
+      "id": "11028",
+      "name": "Maestro Yi luna sangrienta (aguamarina)",
+      "num": 28,
+      "parentSkin": 24
+    },
+    {
+      "chromas": false,
+      "id": "11029",
+      "name": "Maestro Yi luna sangrienta (amatista)",
+      "num": 29,
+      "parentSkin": 24
+    },
+    {
+      "chromas": false,
+      "id": "11030",
+      "name": "Maestro Yi luna sangrienta (perla)",
+      "num": 30,
+      "parentSkin": 24
+    },
+    {
+      "chromas": false,
+      "id": "11031",
+      "name": "Maestro Yi luna sangrienta (cuarzo rosa)",
+      "num": 31,
+      "parentSkin": 24
+    },
+    {
+      "chromas": false,
+      "id": "11032",
+      "name": "Maestro Yi luna sangrienta (obsidiana)",
+      "num": 32,
+      "parentSkin": 24
+    },
+    {
+      "chromas": false,
+      "id": "11033",
+      "name": "Maestro Yi PsyOps",
+      "num": 33
+    },
+    {
+      "chromas": true,
+      "id": "11034",
+      "name": "Maestro Yi PsyOps (esmeralda)",
+      "num": 34,
+      "parentSkin": 33
+    },
+    {
+      "chromas": false,
+      "id": "11035",
+      "name": "Maestro Yi PsyOps (tanzanita)",
+      "num": 35,
+      "parentSkin": 33
+    },
+    {
+      "chromas": false,
+      "id": "11036",
+      "name": "Maestro Yi PsyOps (turquesa)",
+      "num": 36,
+      "parentSkin": 33
+    },
+    {
+      "chromas": false,
+      "id": "11037",
+      "name": "Maestro Yi PsyOps (arenisca)",
+      "num": 37,
+      "parentSkin": 33
+    },
+    {
+      "chromas": false,
+      "id": "11038",
+      "name": "Maestro Yi PsyOps (rubí)",
+      "num": 38,
+      "parentSkin": 33
+    },
+    {
+      "chromas": false,
+      "id": "11039",
+      "name": "Maestro Yi PsyOps (zafiro)",
+      "num": 39,
+      "parentSkin": 33
+    },
+    {
+      "chromas": false,
+      "id": "11040",
+      "name": "Maestro Yi PsyOps (cuarzo rosa)",
+      "num": 40,
+      "parentSkin": 33
+    },
+    {
+      "chromas": false,
+      "id": "11041",
+      "name": "Maestro Yi PsyOps (caza)",
+      "num": 41,
+      "parentSkin": 33
+    },
+    {
+      "chromas": false,
+      "id": "11042",
+      "name": "Maestro Yi galante",
+      "num": 42
+    },
+    {
+      "chromas": true,
+      "id": "11043",
+      "name": "Maestro Yi galante (rubí)",
+      "num": 43,
+      "parentSkin": 42
+    },
+    {
+      "chromas": false,
+      "id": "11044",
+      "name": "Maestro Yi galante (ojo de gato)",
+      "num": 44,
+      "parentSkin": 42
+    },
+    {
+      "chromas": false,
+      "id": "11045",
+      "name": "Maestro Yi galante (esmeralda)",
+      "num": 45,
+      "parentSkin": 42
+    },
+    {
+      "chromas": false,
+      "id": "11046",
+      "name": "Maestro Yi galante (cuarzo rosa)",
+      "num": 46,
+      "parentSkin": 42
+    },
+    {
+      "chromas": false,
+      "id": "11047",
+      "name": "Maestro Yi galante (zafiro)",
+      "num": 47,
+      "parentSkin": 42
+    },
+    {
+      "chromas": false,
+      "id": "11048",
+      "name": "Maestro Yi galante (turquesa)",
+      "num": 48,
+      "parentSkin": 42
+    },
+    {
+      "chromas": false,
+      "id": "11049",
+      "name": "Maestro Yi galante (amatista)",
+      "num": 49,
+      "parentSkin": 42
+    },
+    {
+      "chromas": false,
+      "id": "11050",
+      "name": "Maestro Yi galante (obsidiana)",
+      "num": 50,
+      "parentSkin": 42
+    },
+    {
+      "chromas": false,
+      "id": "11051",
+      "name": "Maestro Yi galante (Club cerúleo)",
+      "num": 51,
+      "parentSkin": 42
+    },
+    {
+      "chromas": false,
+      "id": "11052",
+      "name": "Maestro Yi florecer espiritual",
+      "num": 52
+    },
+    {
+      "chromas": true,
+      "id": "11053",
+      "name": "Maestro Yi florecer espiritual de prestigio",
+      "num": 53
+    },
+    {
+      "chromas": false,
+      "id": "11080",
+      "name": "Maestro Yi florecer espiritual (rubí)",
+      "num": 80,
+      "parentSkin": 52
+    },
+    {
+      "chromas": false,
+      "id": "11081",
+      "name": "Maestro Yi florecer espiritual (ojo de gato)",
+      "num": 81,
+      "parentSkin": 52
+    },
+    {
+      "chromas": false,
+      "id": "11082",
+      "name": "Maestro Yi florecer espiritual (zafiro)",
+      "num": 82,
+      "parentSkin": 52
+    },
+    {
+      "chromas": false,
+      "id": "11083",
+      "name": "Maestro Yi florecer espiritual (esmeralda)",
+      "num": 83,
+      "parentSkin": 52
+    },
+    {
+      "chromas": false,
+      "id": "11084",
+      "name": "Maestro Yi florecer espiritual (cuarzo rosa)",
+      "num": 84,
+      "parentSkin": 52
+    },
+    {
+      "chromas": false,
+      "id": "11085",
+      "name": "Maestro Yi florecer espiritual (turquesa)",
+      "num": 85,
+      "parentSkin": 52
+    },
+    {
+      "chromas": false,
+      "id": "11086",
+      "name": "Maestro Yi florecer espiritual (perla)",
+      "num": 86,
+      "parentSkin": 52
+    },
+    {
+      "chromas": false,
+      "id": "11087",
+      "name": "Maestro Yi florecer espiritual (obsidiana)",
+      "num": 87,
+      "parentSkin": 52
+    },
+    {
+      "chromas": false,
+      "id": "11088",
+      "name": "Maestro Yi florecer espiritual (florecer nocturno)",
+      "num": 88,
+      "parentSkin": 52
+    },
+    {
+      "chromas": false,
+      "id": "11089",
+      "name": "Maestro Yi sombra de tinta",
+      "num": 89
+    },
+    {
+      "chromas": false,
+      "id": "11090",
+      "name": "Maestro Yi sombra de tinta (rubí)",
+      "num": 90,
+      "parentSkin": 89
+    },
+    {
+      "chromas": false,
+      "id": "11091",
+      "name": "Maestro Yi sombra de tinta (ojo de gato)",
+      "num": 91,
+      "parentSkin": 89
+    },
+    {
+      "chromas": false,
+      "id": "11092",
+      "name": "Maestro Yi sombra de tinta (turquesa)",
+      "num": 92,
+      "parentSkin": 89
+    },
+    {
+      "chromas": false,
+      "id": "11093",
+      "name": "Maestro Yi sombra de tinta (cuarzo rosa)",
+      "num": 93,
+      "parentSkin": 89
+    },
+    {
+      "chromas": false,
+      "id": "11094",
+      "name": "Maestro Yi sombra de tinta (tanzanita)",
+      "num": 94,
+      "parentSkin": 89
+    },
+    {
+      "chromas": false,
+      "id": "11095",
+      "name": "Maestro Yi sombra de tinta (entintado)",
+      "num": 95,
+      "parentSkin": 89
+    },
+    {
+      "chromas": false,
+      "id": "11096",
+      "name": "Maestro Yi poder celestial",
+      "num": 96
+    },
+    {
+      "chromas": false,
+      "id": "11097",
+      "name": "Maestro Yi poder celestial (rubí)",
+      "num": 97,
+      "parentSkin": 96
+    },
+    {
+      "chromas": false,
+      "id": "11098",
+      "name": "Maestro Yi poder celestial (citrino)",
+      "num": 98,
+      "parentSkin": 96
+    },
+    {
+      "chromas": false,
+      "id": "11099",
+      "name": "Maestro Yi poder celestial (esmeralda)",
+      "num": 99,
+      "parentSkin": 96
+    },
+    {
+      "chromas": false,
+      "id": "11100",
+      "name": "Maestro Yi poder celestial (cuarzo rosa)",
+      "num": 100,
+      "parentSkin": 96
+    },
+    {
+      "chromas": false,
+      "id": "11101",
+      "name": "Maestro Yi poder celestial (amatista)",
+      "num": 101,
+      "parentSkin": 96
+    },
+    {
+      "chromas": false,
+      "id": "11102",
+      "name": "Maestro Yi poder celestial (zafiro)",
+      "num": 102,
+      "parentSkin": 96
+    },
+    {
+      "chromas": false,
+      "id": "11103",
+      "name": "Maestro Yi poder celestial (meteorito)",
+      "num": 103,
+      "parentSkin": 96
+    },
+    {
+      "chromas": false,
+      "id": "11104",
+      "name": "Maestro Yi poder celestial (lustre)",
+      "num": 104,
+      "parentSkin": 96
+    },
+    {
+      "chromas": false,
+      "id": "11105",
+      "name": "Maestro Yi poder celestial (obsidiana)",
+      "num": 105,
+      "parentSkin": 96
+    },
+    {
+      "chromas": false,
+      "id": "11106",
+      "name": "Maestro Yi victorioso",
+      "num": 106
+    },
+    {
+      "chromas": false,
+      "id": "11107",
+      "name": "Maestro Yi victorioso (Bronce)",
+      "num": 107,
+      "parentSkin": 106
+    },
+    {
+      "chromas": false,
+      "id": "11108",
+      "name": "Maestro Yi victorioso (Plata)",
+      "num": 108,
+      "parentSkin": 106
+    },
+    {
+      "chromas": false,
+      "id": "11109",
+      "name": "Maestro Yi victorioso (Oro)",
+      "num": 109,
+      "parentSkin": 106
+    },
+    {
+      "chromas": false,
+      "id": "11110",
+      "name": "Maestro Yi victorioso (Platino)",
+      "num": 110,
+      "parentSkin": 106
+    },
+    {
+      "chromas": false,
+      "id": "11111",
+      "name": "Maestro Yi victorioso (Esmeralda)",
+      "num": 111,
+      "parentSkin": 106
+    },
+    {
+      "chromas": false,
+      "id": "11112",
+      "name": "Maestro Yi victorioso (Diamante)",
+      "num": 112,
+      "parentSkin": 106
+    },
+    {
+      "chromas": false,
+      "id": "11113",
+      "name": "Maestro Yi victorioso (Maestro)",
+      "num": 113,
+      "parentSkin": 106
+    },
+    {
+      "chromas": false,
+      "id": "11114",
+      "name": "Maestro Yi victorioso (Gran Maestro)",
+      "num": 114,
+      "parentSkin": 106
+    },
+    {
+      "chromas": false,
+      "id": "11115",
+      "name": "Maestro Yi victorioso (Aspirante)",
+      "num": 115,
+      "parentSkin": 106
+    },
+    {
+      "chromas": true,
+      "id": "11116",
+      "name": "PROYECTO: Yi línea de mando",
+      "num": 116
+    }
+  ],
+  "spells": [
+    {
+      "cooldown": [
+        20,
+        19.5,
+        19,
+        18.5,
+        18
+      ],
+      "cooldownBurn": "20/19.5/19/18.5/18",
+      "cost": [
+        50,
+        55,
+        60,
+        65,
+        70
+      ],
+      "costBurn": "50/55/60/65/70",
+      "costType": " {{ abilityresourcename }}",
+      "datavalues": {},
+      "description": "Maestro Yi se teleporta por el campo de batalla a toda velocidad, infligiendo daño físico a múltiples unidades a su paso. Además, no se le puede marcar como objetivo. Golpe fulgurante puede asestar golpes críticos e inflige daño físico adicional a los monstruos. Los ataques básicos reducen el enfriamiento de Golpe fulgurante.",
+      "effect": [
+        null,
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ]
+      ],
+      "effectBurn": [
+        null,
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0"
+      ],
+      "id": "AlphaStrike",
+      "image": {
+        "full": "AlphaStrike.png",
+        "group": "spell",
+        "h": 48,
+        "sprite": "spell8.png",
+        "w": 48,
+        "x": 384,
+        "y": 144
+      },
+      "leveltip": {
+        "effect": [
+          "{{ basedamage }} -> {{ basedamageNL }}",
+          "{{ bonusmonsterdamage }} -> {{ bonusmonsterdamageNL }}",
+          "{{ cooldown }} -> {{ cooldownNL }}",
+          "{{ cost }} -> {{ costNL }}"
+        ],
+        "label": [
+          "Daño",
+          "Daño adicional a monstruos",
+          "Enfriamiento",
+          "Coste de @AbilityResourceName@"
+        ]
+      },
+      "maxammo": "-1",
+      "maxrank": 5,
+      "name": "Golpe fulgurante",
+      "range": [
+        600,
+        600,
+        600,
+        600,
+        600
+      ],
+      "rangeBurn": "600",
+      "resource": "{{ cost }} {{ abilityresourcename }}",
+      "tooltip": "Maestro Yi se vuelve inalcanzable y se teleporta para golpear velozmente a los enemigos situados cerca de su objetivo, lo que inflige <physicalDamage>{{ totaldamage }} de daño físico</physicalDamage> a todos los enemigos alcanzados tras {{ alphastrikebounces }} impactos. <br /><br />Esta habilidad puede golpear varias veces al mismo enemigo si no hay otros objetivos, lo que inflige un {{ subsequenthitmultiplier*100 }}% de daño con los siguientes golpes (<physicalDamage>{{ subesquentdamage }}</physicalDamage>), siendo el total máximo a un solo objetivo de <physicalDamage>{{ singletotaldamage }} de daño físico</physicalDamage>.{{ spellmodifierdescriptionappend }}",
+      "vars": []
+    },
+    {
+      "cooldown": [
+        10,
+        10,
+        10,
+        10,
+        10
+      ],
+      "cooldownBurn": "10",
+      "cost": [
+        40,
+        40,
+        40,
+        40,
+        40
+      ],
+      "costBurn": "40",
+      "costType": " de maná (+ un {{ percentmanacostpersecond*100 }}% del maná máximo por segundo)",
+      "datavalues": {},
+      "description": "Maestro Yi medita y rejuvenece su cuerpo, restaurando vida y reduciendo el daño recibido durante un breve periodo de tiempo. Además, obtiene acumulaciones de Golpe doble y pausa la duración restante de Estilo Wuju e Imparable por cada segundo de canalización.",
+      "effect": [
+        null,
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ]
+      ],
+      "effectBurn": [
+        null,
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0"
+      ],
+      "id": "Meditate",
+      "image": {
+        "full": "Meditate.png",
+        "group": "spell",
+        "h": 48,
+        "sprite": "spell8.png",
+        "w": 48,
+        "x": 432,
+        "y": 144
+      },
+      "leveltip": {
+        "effect": [
+          "{{ baseheal }} -> {{ basehealNL }}",
+          "{{ damagereduction*100.000000 }}% -> {{ damagereductionnl*100.000000 }}%"
+        ],
+        "label": [
+          "Vida restaurada",
+          "Reducción de daño"
+        ]
+      },
+      "maxammo": "-1",
+      "maxrank": 5,
+      "name": "Meditar",
+      "range": [
+        20,
+        20,
+        20,
+        20,
+        20
+      ],
+      "rangeBurn": "20",
+      "resource": "{{ basemanacost }} de maná (+ un {{ percentmanacostpersecond*100 }}% del maná máximo por segundo)",
+      "tooltip": "Maestro Yi canaliza la habilidad y restaura <healing>{{ totalheal }} de vida</healing> a lo largo de {{ healduration }} s. Esta curación aumenta hasta un {{ maxmissinghealthpercent*100 }}% según la vida que le falte a Maestro Yi.<br /><br />Durante la canalización y los {{ drlinger }} s posteriores, recibe un {{ initialdr }} de daño reducido, que disminuye hasta un {{ damagereduction*100 }}% tras los primeros {{ initialextradrduration }} s.{{ spellmodifierdescriptionappend }}",
+      "vars": []
+    },
+    {
+      "cooldown": [
+        14,
+        14,
+        14,
+        14,
+        14
+      ],
+      "cooldownBurn": "14",
+      "cost": [
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "costBurn": "0",
+      "costType": "Sin coste",
+      "datavalues": {},
+      "description": "Otorga daño verdadero adicional con los ataques básicos.",
+      "effect": [
+        null,
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ]
+      ],
+      "effectBurn": [
+        null,
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0"
+      ],
+      "id": "WujuStyle",
+      "image": {
+        "full": "WujuStyle.png",
+        "group": "spell",
+        "h": 48,
+        "sprite": "spell9.png",
+        "w": 48,
+        "x": 0,
+        "y": 0
+      },
+      "leveltip": {
+        "effect": [
+          "{{ basedamage }} -> {{ basedamageNL }}"
+        ],
+        "label": [
+          "Daño"
+        ]
+      },
+      "maxammo": "-1",
+      "maxrank": 5,
+      "name": "Estilo Wuju",
+      "range": [
+        20,
+        20,
+        20,
+        20,
+        20
+      ],
+      "rangeBurn": "20",
+      "resource": "Sin coste",
+      "tooltip": "Los ataques de Maestro Yi infligen <trueDamage>{{ totaldamage }} de daño verdadero</trueDamage> adicional durante {{ duration }} s.{{ spellmodifierdescriptionappend }}",
+      "vars": []
+    },
+    {
+      "cooldown": [
+        85,
+        85,
+        85
+      ],
+      "cooldownBurn": "85",
+      "cost": [
+        100,
+        100,
+        100
+      ],
+      "costBurn": "100",
+      "costType": " {{ abilityresourcename }}",
+      "datavalues": {},
+      "description": "Maestro Yi se mueve con una agilidad sin igual, lo que aumenta temporalmente su velocidad de ataque y su velocidad de movimiento, además de hacerlo inmune a todos los efectos de ralentización. Mientras la habilidad siga activa, los asesinatos de campeones y las ayudas aumentan la duración de Imparable. Reduce de forma pasiva el enfriamiento de sus otras habilidades al conseguir un asesinato o una ayuda.",
+      "effect": [
+        null,
+        [
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0
+        ]
+      ],
+      "effectBurn": [
+        null,
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0"
+      ],
+      "id": "Highlander",
+      "image": {
+        "full": "Highlander.png",
+        "group": "spell",
+        "h": 48,
+        "sprite": "spell9.png",
+        "w": 48,
+        "x": 48,
+        "y": 0
+      },
+      "leveltip": {
+        "effect": [
+          "{{ rasbonus }}% -> {{ rasbonusNL }}%",
+          "{{ rmsbonus }}% -> {{ rmsbonusNL }}%"
+        ],
+        "label": [
+          "Velocidad de ataque",
+          "Velocidad de movimiento"
+        ]
+      },
+      "maxammo": "-1",
+      "maxrank": 3,
+      "name": "Imparable",
+      "range": [
+        1,
+        1,
+        1
+      ],
+      "rangeBurn": "1",
+      "resource": "{{ cost }} {{ abilityresourcename }}",
+      "tooltip": "<spellPassive>Pasiva:</spellPassive> Los asesinatos y asistencias de campeones reducen el enfriamiento de las habilidades básicas de Maestro Yi en un {{ rcooldownrefund*100 }}%.<br /><br /><spellActive>Activa:</spellActive> Maestro Yi entra en trance y obtiene un <speed>{{ rmsbonus }}% de velocidad de movimiento</speed>, un <attackSpeed>{{ rasbonus }}% de velocidad de ataque</attackSpeed> e inmunidad a las <status>ralentizaciones</status> durante {{ rduration }} s. Los asesinatos y asistencias de campeones aumentan la duración de esta habilidad en {{ rkillassistextension }} s.{{ spellmodifierdescriptionappend }}",
+      "vars": []
+    }
+  ],
+  "stats": {
+    "armor": 33,
+    "armorperlevel": 5,
+    "attackdamage": 65,
+    "attackdamageperlevel": 0,
+    "attackrange": 175,
+    "attackspeed": 0.679,
+    "attackspeedperlevel": 2.5,
+    "crit": 0,
+    "critperlevel": 0,
+    "hp": 640,
+    "hpperlevel": 105,
+    "hpregen": 7.5,
+    "hpregenperlevel": 0.65,
+    "movespeed": 355,
+    "mp": 251,
+    "mpperlevel": 42,
+    "mpregen": 7.25,
+    "mpregenperlevel": 0.45,
+    "spellblock": 32,
+    "spellblockperlevel": 2.05
+  },
+  "tags": [
+    "Fighter",
+    "Assassin"
+  ],
+  "title": "El Espadachín Wuju"
+}

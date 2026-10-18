@@ -1,0 +1,1128 @@
+{
+  "allytips": [
+    "Ojo de la tormenta se puede usar con las torretas aliadas.",
+    "Lanzar rápidamente un Temporal sin haberlo cargado puede servir para inhabilitar en gran medida al otro equipo.",
+    "Calcula cuidadosamente el momento de utilizar la habilidad definitiva de Janna para apartar a los enemigos de un compañero herido o incluso separarlos entre sí."
+  ],
+  "blurb": "Janna, armada con el poder de los vendavales de Runaterra, es un misterioso espíritu elemental que aprovecha el viento para proteger a los más desfavorecidos de Zaun. Hay quien cree que surgió de los ruegos de los marineros de Runaterra, que rezaban por...",
+  "enemytips": [
+    "Guarda una habilidad de interrupción para cuando Janna use su definitiva.",
+    "Mantente alerta por si escuchas el sonido de carga de Temporal; si lo oyes, puede que Janna esté intentando atacarte con él desde fuera de la pantalla o desde la maleza.",
+    "Janna alcanza su máxima fuerza cuando mejora a otro aliado. Si puedes hostigar a su aliado, debilitarás su capacidad para enfrentarse a ti."
+  ],
+  "id": "Janna",
+  "image": {
+    "full": "Janna.png",
+    "group": "champion",
+    "h": 48,
+    "sprite": "champion1.png",
+    "w": 48,
+    "x": 432,
+    "y": 48
+  },
+  "info": {
+    "attack": 3,
+    "defense": 5,
+    "difficulty": 7,
+    "magic": 7
+  },
+  "key": "40",
+  "lore": "Janna, armada con el poder de los vendavales de Runaterra, es un misterioso espíritu elemental que aprovecha el viento para proteger a los más desfavorecidos de Zaun. Hay quien cree que surgió de los ruegos de los marineros de Runaterra, que rezaban por ganarse el favor de los vientos en sus singladuras por aguas traicioneras o en el fragor de la tempestad. Desde entonces, el nombre de Janna ha resonado en las profundidades de Zaun, donde se ha convertido en un faro de esperanza para los necesitados. Nadie sabe dónde ni cuándo aparecerá, pero casi siempre ha respondido a la llamada.",
+  "name": "Janna",
+  "partype": "Maná",
+  "passive": {
+    "description": "Los aliados de Janna obtienen velocidad de movimiento al avanzar hacia ella.<br><br>Janna inflige parte de la velocidad de movimiento adicional como daño mágico adicional al golpear y con Céfiro.",
+    "image": {
+      "full": "JannaP.png",
+      "group": "passive",
+      "h": 48,
+      "sprite": "passive1.png",
+      "w": 48,
+      "x": 432,
+      "y": 48
+    },
+    "name": "Empuje"
+  },
+  "recommended": [],
+  "skins": [
+    {
+      "chromas": false,
+      "id": "40000",
+      "name": "default",
+      "num": 0
+    },
+    {
+      "chromas": false,
+      "id": "40001",
+      "name": "Janna tempestad",
+      "num": 1
+    },
+    {
+      "chromas": false,
+      "id": "40002",
+      "name": "Janna hextech",
+      "num": 2
+    },
+    {
+      "chromas": false,
+      "id": "40003",
+      "name": "Janna reina helada",
+      "num": 3
+    },
+    {
+      "chromas": false,
+      "id": "40004",
+      "name": "Janna victoriosa",
+      "num": 4
+    },
+    {
+      "chromas": false,
+      "id": "40005",
+      "name": "Janna chica del tiempo",
+      "num": 5
+    },
+    {
+      "chromas": false,
+      "id": "40006",
+      "name": "Janna Fnatic",
+      "num": 6
+    },
+    {
+      "chromas": false,
+      "id": "40007",
+      "name": "Janna guardiana de las estrellas",
+      "num": 7
+    },
+    {
+      "chromas": true,
+      "id": "40008",
+      "name": "Janna espada sagrada",
+      "num": 8
+    },
+    {
+      "chromas": false,
+      "id": "40009",
+      "name": "Janna espada sagrada (peridoto)",
+      "num": 9,
+      "parentSkin": 8
+    },
+    {
+      "chromas": false,
+      "id": "40010",
+      "name": "Janna espada sagrada (zafiro)",
+      "num": 10,
+      "parentSkin": 8
+    },
+    {
+      "chromas": false,
+      "id": "40011",
+      "name": "Janna espada sagrada (cuarzo rosa)",
+      "num": 11,
+      "parentSkin": 8
+    },
+    {
+      "chromas": false,
+      "id": "40012",
+      "name": "Janna espada sagrada (aguamarina)",
+      "num": 12,
+      "parentSkin": 8
+    },
+    {
+      "chromas": true,
+      "id": "40013",
+      "name": "Janna embrujada",
+      "num": 13
+    },
+    {
+      "chromas": false,
+      "id": "40014",
+      "name": "Janna embrujada (rubí)",
+      "num": 14,
+      "parentSkin": 13
+    },
+    {
+      "chromas": false,
+      "id": "40015",
+      "name": "Janna embrujada (citrino)",
+      "num": 15,
+      "parentSkin": 13
+    },
+    {
+      "chromas": false,
+      "id": "40016",
+      "name": "Janna embrujada (esmeralda)",
+      "num": 16,
+      "parentSkin": 13
+    },
+    {
+      "chromas": false,
+      "id": "40017",
+      "name": "Janna embrujada (arcoíris)",
+      "num": 17,
+      "parentSkin": 13
+    },
+    {
+      "chromas": false,
+      "id": "40018",
+      "name": "Janna embrujada (cuarzo rosa)",
+      "num": 18,
+      "parentSkin": 13
+    },
+    {
+      "chromas": false,
+      "id": "40019",
+      "name": "Janna embrujada (dorado)",
+      "num": 19,
+      "parentSkin": 13
+    },
+    {
+      "chromas": true,
+      "id": "40020",
+      "name": "Janna guardiana de las arenas",
+      "num": 20
+    },
+    {
+      "chromas": false,
+      "id": "40021",
+      "name": "Janna guardiana de las arenas (rubí)",
+      "num": 21,
+      "parentSkin": 20
+    },
+    {
+      "chromas": false,
+      "id": "40022",
+      "name": "Janna guardiana de las arenas (cuarzo rosa)",
+      "num": 22,
+      "parentSkin": 20
+    },
+    {
+      "chromas": false,
+      "id": "40023",
+      "name": "Janna guardiana de las arenas (zafiro)",
+      "num": 23,
+      "parentSkin": 20
+    },
+    {
+      "chromas": false,
+      "id": "40024",
+      "name": "Janna guardiana de las arenas (peridoto)",
+      "num": 24,
+      "parentSkin": 20
+    },
+    {
+      "chromas": false,
+      "id": "40025",
+      "name": "Janna guardiana de las arenas (tanzanita)",
+      "num": 25,
+      "parentSkin": 20
+    },
+    {
+      "chromas": false,
+      "id": "40026",
+      "name": "Janna guardiana de las arenas (ojo de gato)",
+      "num": 26,
+      "parentSkin": 20
+    },
+    {
+      "chromas": true,
+      "id": "40027",
+      "name": "Janna reina guerrera",
+      "num": 27
+    },
+    {
+      "chromas": false,
+      "id": "40028",
+      "name": "Janna reina guerrera (rubí)",
+      "num": 28,
+      "parentSkin": 27
+    },
+    {
+      "chromas": false,
+      "id": "40029",
+      "name": "Janna reina guerrera (ojo de gato)",
+      "num": 29,
+      "parentSkin": 27
+    },
+    {
+      "chromas": false,
+      "id": "40030",
+      "name": "Janna reina guerrera (peridoto)",
+      "num": 30,
+      "parentSkin": 27
+    },
+    {
+      "chromas": false,
+      "id": "40031",
+      "name": "Janna reina guerrera (aguamarina)",
+      "num": 31,
+      "parentSkin": 27
+    },
+    {
+      "chromas": false,
+      "id": "40032",
+      "name": "Janna reina guerrera (amatista)",
+      "num": 32,
+      "parentSkin": 27
+    },
+    {
+      "chromas": false,
+      "id": "40033",
+      "name": "Janna reina guerrera (coronación)",
+      "num": 33,
+      "parentSkin": 27
+    },
+    {
+      "chromas": false,
+      "id": "40034",
+      "name": "Janna reina guerrera (perla)",
+      "num": 34,
+      "parentSkin": 27
+    },
+    {
+      "chromas": false,
+      "id": "40035",
+      "name": "Janna reina guerrera (obsidiana)",
+      "num": 35,
+      "parentSkin": 27
+    },
+    {
+      "chromas": true,
+      "id": "40036",
+      "name": "Janna rosa de cristal",
+      "num": 36
+    },
+    {
+      "chromas": false,
+      "id": "40037",
+      "name": "Janna rosa de cristal (rubí)",
+      "num": 37,
+      "parentSkin": 36
+    },
+    {
+      "chromas": false,
+      "id": "40038",
+      "name": "Janna rosa de cristal (zafiro)",
+      "num": 38,
+      "parentSkin": 36
+    },
+    {
+      "chromas": false,
+      "id": "40039",
+      "name": "Janna rosa de cristal (esmeralda)",
+      "num": 39,
+      "parentSkin": 36
+    },
+    {
+      "chromas": false,
+      "id": "40040",
+      "name": "Janna rosa de cristal (cuarzo rosa)",
+      "num": 40,
+      "parentSkin": 36
+    },
+    {
+      "chromas": false,
+      "id": "40041",
+      "name": "Janna rosa de cristal (tanzanita)",
+      "num": 41,
+      "parentSkin": 36
+    },
+    {
+      "chromas": false,
+      "id": "40042",
+      "name": "Janna rosa de cristal (ojo de gato)",
+      "num": 42,
+      "parentSkin": 36
+    },
+    {
+      "chromas": false,
+      "id": "40043",
+      "name": "Janna rosa de cristal (perla)",
+      "num": 43,
+      "parentSkin": 36
+    },
+    {
+      "chromas": false,
+      "id": "40044",
+      "name": "Janna rosa de cristal (obsidiana)",
+      "num": 44,
+      "parentSkin": 36
+    },
+    {
+      "chromas": true,
+      "id": "40045",
+      "name": "Janna halo cibernético",
+      "num": 45
+    },
+    {
+      "chromas": false,
+      "id": "40046",
+      "name": "Janna halo cibernético de prestigio",
+      "num": 46
+    },
+    {
+      "chromas": false,
+      "id": "40047",
+      "name": "Janna halo cibernético (rubí)",
+      "num": 47,
+      "parentSkin": 45
+    },
+    {
+      "chromas": false,
+      "id": "40048",
+      "name": "Janna halo cibernético (aguamarina)",
+      "num": 48,
+      "parentSkin": 45
+    },
+    {
+      "chromas": false,
+      "id": "40049",
+      "name": "Janna halo cibernético (peridoto)",
+      "num": 49,
+      "parentSkin": 45
+    },
+    {
+      "chromas": false,
+      "id": "40050",
+      "name": "Janna halo cibernético (ojo de gato)",
+      "num": 50,
+      "parentSkin": 45
+    },
+    {
+      "chromas": false,
+      "id": "40051",
+      "name": "Janna halo cibernético (cuarzo rosa)",
+      "num": 51,
+      "parentSkin": 45
+    },
+    {
+      "chromas": false,
+      "id": "40052",
+      "name": "Janna halo cibernético (tanzanita)",
+      "num": 52,
+      "parentSkin": 45
+    },
+    {
+      "chromas": false,
+      "id": "40053",
+      "name": "Janna halo cibernético (perla)",
+      "num": 53,
+      "parentSkin": 45
+    },
+    {
+      "chromas": false,
+      "id": "40054",
+      "name": "Janna halo cibernético (turquesa)",
+      "num": 54,
+      "parentSkin": 45
+    },
+    {
+      "chromas": false,
+      "id": "40055",
+      "name": "Janna halo cibernético (as)",
+      "num": 55,
+      "parentSkin": 45
+    },
+    {
+      "chromas": true,
+      "id": "40056",
+      "name": "Janna poder celestial",
+      "num": 56
+    },
+    {
+      "chromas": false,
+      "id": "40057",
+      "name": "Janna poder celestial (rubí)",
+      "num": 57,
+      "parentSkin": 56
+    },
+    {
+      "chromas": false,
+      "id": "40058",
+      "name": "Janna poder celestial (turquesa)",
+      "num": 58,
+      "parentSkin": 56
+    },
+    {
+      "chromas": false,
+      "id": "40059",
+      "name": "Janna poder celestial (amatista)",
+      "num": 59,
+      "parentSkin": 56
+    },
+    {
+      "chromas": false,
+      "id": "40060",
+      "name": "Janna poder celestial (ojo de gato)",
+      "num": 60,
+      "parentSkin": 56
+    },
+    {
+      "chromas": false,
+      "id": "40061",
+      "name": "Janna poder celestial (cuarzo rosa)",
+      "num": 61,
+      "parentSkin": 56
+    },
+    {
+      "chromas": false,
+      "id": "40062",
+      "name": "Janna poder celestial (esmeralda)",
+      "num": 62,
+      "parentSkin": 56
+    },
+    {
+      "chromas": false,
+      "id": "40063",
+      "name": "Janna poder celestial (zafiro)",
+      "num": 63,
+      "parentSkin": 56
+    },
+    {
+      "chromas": false,
+      "id": "40064",
+      "name": "Janna poder celestial (obsidiana)",
+      "num": 64,
+      "parentSkin": 56
+    },
+    {
+      "chromas": false,
+      "id": "40065",
+      "name": "Janna poder celestial (lustre)",
+      "num": 65,
+      "parentSkin": 56
+    },
+    {
+      "chromas": false,
+      "id": "40066",
+      "name": "Janna guerrera del orden",
+      "num": 66
+    },
+    {
+      "chromas": true,
+      "id": "40067",
+      "name": "Janna aquelarre",
+      "num": 67
+    },
+    {
+      "chromas": false,
+      "id": "40068",
+      "name": "Janna aquelarre (rubí)",
+      "num": 68,
+      "parentSkin": 67
+    },
+    {
+      "chromas": false,
+      "id": "40069",
+      "name": "Janna aquelarre (zafiro)",
+      "num": 69,
+      "parentSkin": 67
+    },
+    {
+      "chromas": false,
+      "id": "40070",
+      "name": "Janna aquelarre (cuarzo rosa)",
+      "num": 70,
+      "parentSkin": 67
+    },
+    {
+      "chromas": false,
+      "id": "40071",
+      "name": "Janna aquelarre (ojo de gato)",
+      "num": 71,
+      "parentSkin": 67
+    },
+    {
+      "chromas": false,
+      "id": "40072",
+      "name": "Janna aquelarre (obsidiana)",
+      "num": 72,
+      "parentSkin": 67
+    },
+    {
+      "chromas": false,
+      "id": "40073",
+      "name": "Janna aquelarre (perla)",
+      "num": 73,
+      "parentSkin": 67
+    }
+  ],
+  "spells": [
+    {
+      "cooldown": [
+        14,
+        14,
+        14,
+        14,
+        14
+      ],
+      "cooldownBurn": "14",
+      "cost": [
+        90,
+        95,
+        100,
+        105,
+        110
+      ],
+      "costBurn": "90/95/100/105/110",
+      "costType": " {{ abilityresourcename }}",
+      "datavalues": {},
+      "description": "Cambiando puntualmente la presión y la temperatura, Janna logra crear una pequeña tormenta que aumenta de tamaño con el tiempo. Se puede activar de nuevo el hechizo para lanzar la tormenta. Al lanzarla, esta tormenta se desplaza hacia la dirección en que fue arrojada, lo que inflige daño y lanza por los aires a los enemigos que se encuentren en su camino.",
+      "effect": [
+        null,
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ]
+      ],
+      "effectBurn": [
+        null,
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0"
+      ],
+      "id": "HowlingGale",
+      "image": {
+        "full": "HowlingGale.png",
+        "group": "spell",
+        "h": 48,
+        "sprite": "spell5.png",
+        "w": 48,
+        "x": 0,
+        "y": 144
+      },
+      "leveltip": {
+        "effect": [
+          "{{ mindamage }} -> {{ mindamageNL }}",
+          "{{ bonusdamage }} -> {{ bonusdamageNL }}",
+          "{{ cost }} -> {{ costNL }}"
+        ],
+        "label": [
+          "Daño",
+          "Daño por segundo cargado",
+          "Coste de @AbilityResourceName@"
+        ]
+      },
+      "maxammo": "-1",
+      "maxrank": 5,
+      "name": "Temporal",
+      "range": [
+        1075,
+        1075,
+        1075,
+        1075,
+        1075
+      ],
+      "rangeBurn": "1075",
+      "resource": "{{ cost }} {{ abilityresourcename }}",
+      "tooltip": "Janna invoca un tornado que se hace cada vez más fuerte a lo largo de {{ maxduration }} s y, a continuación, recorre su camino. Inflige <magicDamage>{{ minimumdamage }} - {{ maxdamage }} de daño mágico</magicDamage> y <status>levanta por los aires</status> durante {{ baseknockup }} - {{ maxknockup }} s. La distancia, el daño y la duración del <status>levantamiento por los aires</status> aumentan en función de lo que haya crecido el tornado. Janna puede <recast>reactivar</recast> la habilidad para que el tornado salga antes.{{ spellmodifierdescriptionappend }}",
+      "vars": []
+    },
+    {
+      "cooldown": [
+        8,
+        7.5,
+        7,
+        6.5,
+        6
+      ],
+      "cooldownBurn": "8/7.5/7/6.5/6",
+      "cost": [
+        50,
+        55,
+        60,
+        65,
+        70
+      ],
+      "costBurn": "50/55/60/65/70",
+      "costType": " {{ abilityresourcename }}",
+      "datavalues": {},
+      "description": "Janna invoca un elemental de aire que aumenta de forma pasiva su velocidad de movimiento y le permite atravesar unidades. También puede activar esta habilidad para infligir daño y reducir la velocidad de movimiento de un enemigo.",
+      "effect": [
+        null,
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ]
+      ],
+      "effectBurn": [
+        null,
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0"
+      ],
+      "id": "SowTheWind",
+      "image": {
+        "full": "SowTheWind.png",
+        "group": "spell",
+        "h": 48,
+        "sprite": "spell5.png",
+        "w": 48,
+        "x": 48,
+        "y": 144
+      },
+      "leveltip": {
+        "effect": [
+          "{{ basedamage }} -> {{ basedamageNL }}",
+          "{{ slowpercent }}% -> {{ slowpercentNL }}%",
+          "{{ mspercent*100.000000 }}% -> {{ mspercentnl*100.000000 }}%",
+          "{{ cooldown }} -> {{ cooldownNL }}",
+          "{{ cost }} -> {{ costNL }}"
+        ],
+        "label": [
+          "Daño",
+          "Ralentización",
+          "Velocidad de movimiento de la pasiva",
+          "Enfriamiento",
+          "Coste de @AbilityResourceName@"
+        ]
+      },
+      "maxammo": "-1",
+      "maxrank": 5,
+      "name": "Céfiro",
+      "range": [
+        4294967295,
+        4294967295,
+        4294967295,
+        4294967295,
+        4294967295
+      ],
+      "rangeBurn": "4294967295",
+      "resource": "{{ cost }} {{ abilityresourcename }}",
+      "tooltip": "<spellPassive>Pasiva:</spellPassive> Janna obtiene un <speed>{{ totalms }} de velocidad de movimiento</speed> y se vuelve fantasmal.<br /><br /><spellActive>Activa:</spellActive> Janna lanza un golpe elemental a un enemigo, lo <status>ralentiza</status> un {{ totalslow }} durante {{ slowduration }} s e inflige <magicDamage>{{ totaldamage }} + {{ spell.tailwindself:bonusdamage }} de daño mágico</magicDamage>.{{ spellmodifierdescriptionappend }}",
+      "vars": []
+    },
+    {
+      "cooldown": [
+        16,
+        15,
+        14,
+        13,
+        12
+      ],
+      "cooldownBurn": "16/15/14/13/12",
+      "cost": [
+        70,
+        75,
+        80,
+        85,
+        90
+      ],
+      "costBurn": "70/75/80/85/90",
+      "costType": " {{ abilityresourcename }}",
+      "datavalues": {},
+      "description": "Janna conjura un vendaval defensivo que protege a una torreta o un campeón aliado del daño y aumenta su daño de ataque.",
+      "effect": [
+        null,
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ]
+      ],
+      "effectBurn": [
+        null,
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0"
+      ],
+      "id": "EyeOfTheStorm",
+      "image": {
+        "full": "EyeOfTheStorm.png",
+        "group": "spell",
+        "h": 48,
+        "sprite": "spell5.png",
+        "w": 48,
+        "x": 96,
+        "y": 144
+      },
+      "leveltip": {
+        "effect": [
+          "{{ baseshield }} -> {{ baseshieldNL }}",
+          "{{ bonusad }} -> {{ bonusadNL }}",
+          "{{ cooldown }} -> {{ cooldownNL }}",
+          "{{ cost }} -> {{ costNL }}"
+        ],
+        "label": [
+          "Vida del escudo",
+          "Daño de ataque",
+          "Enfriamiento",
+          "Coste de @AbilityResourceName@"
+        ]
+      },
+      "maxammo": "-1",
+      "maxrank": 5,
+      "name": "Ojo de la tormenta",
+      "range": [
+        800,
+        800,
+        800,
+        800,
+        800
+      ],
+      "rangeBurn": "800",
+      "resource": "{{ cost }} {{ abilityresourcename }}",
+      "tooltip": "Janna otorga a una torreta o campeón aliado un <shield>escudo de {{ totalshield }}</shield> durante {{ shieldduration }}&nbsp;s. Mientras está protegido, obtiene <scaleAD>{{ totalad }} de daño de ataque</scaleAD>.<br /><br />Janna recupera un {{ ecdrefundforcc*100 }}% del enfriamiento cada vez que inmoviliza a un campeón enemigo con una activa.{{ spellmodifierdescriptionappend }}",
+      "vars": []
+    },
+    {
+      "cooldown": [
+        130,
+        115,
+        100
+      ],
+      "cooldownBurn": "130/115/100",
+      "cost": [
+        100,
+        100,
+        100
+      ],
+      "costBurn": "100",
+      "costType": " {{ abilityresourcename }}",
+      "datavalues": {},
+      "description": "Janna se envuelve con una tormenta mágica que repele a sus enemigos. Una vez pasada la tormenta, unos vientos reparadores curan a los aliados cercanos mientras la habilidad se encuentra activa.",
+      "effect": [
+        null,
+        [
+          0,
+          0,
+          0
+        ],
+        [
+          300,
+          450,
+          600
+        ],
+        [
+          3,
+          3,
+          3
+        ],
+        [
+          700,
+          700,
+          700
+        ],
+        [
+          875,
+          875,
+          875
+        ],
+        [
+          875,
+          875,
+          875
+        ],
+        [
+          1200,
+          1200,
+          1200
+        ],
+        [
+          10,
+          10,
+          10
+        ],
+        [
+          0.5,
+          0.5,
+          0.5
+        ],
+        [
+          0,
+          0,
+          0
+        ]
+      ],
+      "effectBurn": [
+        null,
+        "0",
+        "300/450/600",
+        "3",
+        "700",
+        "875",
+        "875",
+        "1200",
+        "10",
+        "0.5",
+        "0"
+      ],
+      "id": "ReapTheWhirlwind",
+      "image": {
+        "full": "ReapTheWhirlwind.png",
+        "group": "spell",
+        "h": 48,
+        "sprite": "spell5.png",
+        "w": 48,
+        "x": 144,
+        "y": 144
+      },
+      "leveltip": {
+        "effect": [
+          "{{ healbasepersecond }} -> {{ healbasepersecondNL }}",
+          "{{ cooldown }} -> {{ cooldownNL }}"
+        ],
+        "label": [
+          "Curación por segundo",
+          "Enfriamiento"
+        ]
+      },
+      "maxammo": "-1",
+      "maxrank": 3,
+      "name": "Monzón",
+      "range": [
+        725,
+        725,
+        725
+      ],
+      "rangeBurn": "725",
+      "resource": "{{ cost }} {{ abilityresourcename }}",
+      "tooltip": "Janna invoca un monzón mágico, <status>empuja hacia atrás</status> a los enemigos cercanos y cura <healing>{{ totalheal }} de vida</healing> a los aliados cercanos a lo largo de {{ duration }} s. Moverse o usar una habilidad hace que termine antes el monzón.{{ spellmodifierdescriptionappend }}",
+      "vars": []
+    }
+  ],
+  "stats": {
+    "armor": 28,
+    "armorperlevel": 4.5,
+    "attackdamage": 47,
+    "attackdamageperlevel": 0,
+    "attackrange": 550,
+    "attackspeed": 0.625,
+    "attackspeedperlevel": 3,
+    "crit": 0,
+    "critperlevel": 0,
+    "hp": 570,
+    "hpperlevel": 90,
+    "hpregen": 5.5,
+    "hpregenperlevel": 0.55,
+    "movespeed": 325,
+    "mp": 360,
+    "mpperlevel": 50,
+    "mpregen": 11.5,
+    "mpregenperlevel": 0.4,
+    "spellblock": 30,
+    "spellblockperlevel": 1.3
+  },
+  "tags": [
+    "Support",
+    "Mage"
+  ],
+  "title": "La Furia de la Tormenta"
+}

@@ -1,0 +1,861 @@
+{
+  "allytips": [
+    "Bola de poder también es un eficaz método de escape.",
+    "Provocar a un campeón cercano a tu torre puede hacer que esta ataque a tu enemigo.",
+    "Seísmos y Posición defensiva pueden emplearse para arrasar las torres cuando la partida está avanzada. Si estás teniendo problemas en un combate en equipo, a veces conviene que te salgas y ataques las estructuras."
+  ],
+  "blurb": "Idealizado por muchos, ignorado por otros, inexplicable para todos, Rammus, el extraño ser, es todo un enigma. Protegido por un armazón de pinchos, inspira teorías cada vez más absurdas sobre sus orígenes allá donde va. Estas pasan por considerarlo un...",
+  "enemytips": [
+    "Presta especial atención a cuándo se desactiva su Posición defensiva. En ese momento, las características de Rammus serán muy inferiores a las de un tanque normal.",
+    "Rammus suele acumular armadura, lo que le hace especialmente vulnerable al daño de hechizos cuando no está en Posición defensiva."
+  ],
+  "id": "Rammus",
+  "image": {
+    "full": "Rammus.png",
+    "group": "champion",
+    "h": 48,
+    "sprite": "champion3.png",
+    "w": 48,
+    "x": 288,
+    "y": 48
+  },
+  "info": {
+    "attack": 4,
+    "defense": 10,
+    "difficulty": 5,
+    "magic": 5
+  },
+  "key": "33",
+  "lore": "Idealizado por muchos, ignorado por otros, inexplicable para todos, Rammus, el extraño ser, es todo un enigma. Protegido por un armazón de pinchos, inspira teorías cada vez más absurdas sobre sus orígenes allá donde va. Estas pasan por considerarlo un semidiós, un oráculo sagrado y hasta una simple bestia producto de la magia. Sea cual sea la verdad, Rammus se guarda su opinión y no se detiene ante nadie en sus viajes por el desierto de Shurima.",
+  "name": "Rammus",
+  "partype": "Maná",
+  "passive": {
+    "description": "Rammus obtiene daño de ataque adicional que progresa en función de su armadura y resistencia mágica.",
+    "image": {
+      "full": "Armordillo_ScavengeArmor.png",
+      "group": "passive",
+      "h": 48,
+      "sprite": "passive3.png",
+      "w": 48,
+      "x": 288,
+      "y": 48
+    },
+    "name": "Armazón de pinchos"
+  },
+  "recommended": [],
+  "skins": [
+    {
+      "chromas": false,
+      "id": "33000",
+      "name": "default",
+      "num": 0
+    },
+    {
+      "chromas": false,
+      "id": "33001",
+      "name": "Rey Rammus",
+      "num": 1
+    },
+    {
+      "chromas": false,
+      "id": "33002",
+      "name": "Rammus cromo",
+      "num": 2
+    },
+    {
+      "chromas": false,
+      "id": "33003",
+      "name": "Rammus fundido",
+      "num": 3
+    },
+    {
+      "chromas": false,
+      "id": "33004",
+      "name": "Rammus Freljord",
+      "num": 4
+    },
+    {
+      "chromas": false,
+      "id": "33005",
+      "name": "Rammus ninja",
+      "num": 5
+    },
+    {
+      "chromas": false,
+      "id": "33006",
+      "name": "Rammus armadura completa",
+      "num": 6
+    },
+    {
+      "chromas": false,
+      "id": "33007",
+      "name": "Rammus guardián de las arenas",
+      "num": 7
+    },
+    {
+      "chromas": true,
+      "id": "33008",
+      "name": "Rammus líbero",
+      "num": 8
+    },
+    {
+      "chromas": false,
+      "id": "33009",
+      "name": "Rammus líbero (rubí)",
+      "num": 9,
+      "parentSkin": 8
+    },
+    {
+      "chromas": false,
+      "id": "33010",
+      "name": "Rammus líbero (cuarzo rosa)",
+      "num": 10,
+      "parentSkin": 8
+    },
+    {
+      "chromas": false,
+      "id": "33011",
+      "name": "Rammus líbero (esmeralda)",
+      "num": 11,
+      "parentSkin": 8
+    },
+    {
+      "chromas": false,
+      "id": "33012",
+      "name": "Rammus líbero (zafiro)",
+      "num": 12,
+      "parentSkin": 8
+    },
+    {
+      "chromas": false,
+      "id": "33013",
+      "name": "Rammus líbero (aguamarina)",
+      "num": 13,
+      "parentSkin": 8
+    },
+    {
+      "chromas": false,
+      "id": "33014",
+      "name": "Rammus líbero (tanzanita)",
+      "num": 14,
+      "parentSkin": 8
+    },
+    {
+      "chromas": false,
+      "id": "33015",
+      "name": "Rammus líbero (obsidiana)",
+      "num": 15,
+      "parentSkin": 8
+    },
+    {
+      "chromas": false,
+      "id": "33016",
+      "name": "Rammus hextech",
+      "num": 16
+    },
+    {
+      "chromas": true,
+      "id": "33017",
+      "name": "Rammus astronauta",
+      "num": 17
+    },
+    {
+      "chromas": false,
+      "id": "33018",
+      "name": "Rammus astronauta (rubí)",
+      "num": 18,
+      "parentSkin": 17
+    },
+    {
+      "chromas": false,
+      "id": "33019",
+      "name": "Rammus astronauta (citrino)",
+      "num": 19,
+      "parentSkin": 17
+    },
+    {
+      "chromas": false,
+      "id": "33020",
+      "name": "Rammus astronauta (ojo de gato)",
+      "num": 20,
+      "parentSkin": 17
+    },
+    {
+      "chromas": false,
+      "id": "33021",
+      "name": "Rammus astronauta (turquesa)",
+      "num": 21,
+      "parentSkin": 17
+    },
+    {
+      "chromas": false,
+      "id": "33022",
+      "name": "Rammus astronauta (zafiro)",
+      "num": 22,
+      "parentSkin": 17
+    },
+    {
+      "chromas": false,
+      "id": "33023",
+      "name": "Rammus astronauta (esmeralda)",
+      "num": 23,
+      "parentSkin": 17
+    },
+    {
+      "chromas": false,
+      "id": "33024",
+      "name": "Rammus astronauta (amatista)",
+      "num": 24,
+      "parentSkin": 17
+    },
+    {
+      "chromas": false,
+      "id": "33025",
+      "name": "Rammus astronauta (cuarzo rosa)",
+      "num": 25,
+      "parentSkin": 17
+    },
+    {
+      "chromas": true,
+      "id": "33026",
+      "name": "Rammus defensor del durián",
+      "num": 26
+    },
+    {
+      "chromas": false,
+      "id": "33027",
+      "name": "Rammus defensor del durián (rubí)",
+      "num": 27,
+      "parentSkin": 26
+    },
+    {
+      "chromas": false,
+      "id": "33028",
+      "name": "Rammus defensor del durián (citrino)",
+      "num": 28,
+      "parentSkin": 26
+    },
+    {
+      "chromas": false,
+      "id": "33029",
+      "name": "Rammus defensor del durián (aguamarina)",
+      "num": 29,
+      "parentSkin": 26
+    },
+    {
+      "chromas": false,
+      "id": "33030",
+      "name": "Rammus defensor del durián (cuarzo rosa)",
+      "num": 30,
+      "parentSkin": 26
+    },
+    {
+      "chromas": false,
+      "id": "33031",
+      "name": "Rammus defensor del durián (tanzanita)",
+      "num": 31,
+      "parentSkin": 26
+    },
+    {
+      "chromas": false,
+      "id": "33032",
+      "name": "Rammus defensor del durián (obsidiana)",
+      "num": 32,
+      "parentSkin": 26
+    },
+    {
+      "chromas": false,
+      "id": "33033",
+      "name": "Rammus defensor del durián (jaspe)",
+      "num": 33,
+      "parentSkin": 26
+    },
+    {
+      "chromas": false,
+      "id": "33034",
+      "name": "Rammus defensor del durián (perla)",
+      "num": 34,
+      "parentSkin": 26
+    },
+    {
+      "chromas": false,
+      "id": "33035",
+      "name": "Barón Rammus",
+      "num": 35
+    }
+  ],
+  "spells": [
+    {
+      "cooldown": [
+        12,
+        10.5,
+        9,
+        7.5,
+        6
+      ],
+      "cooldownBurn": "12/10.5/9/7.5/6",
+      "cost": [
+        60,
+        60,
+        60,
+        60,
+        60
+      ],
+      "costBurn": "60",
+      "costType": " {{ abilityresourcename }}",
+      "datavalues": {},
+      "description": "Rammus se lanza como una bola a gran velocidad contra sus enemigos, infligiéndoles daño y ralentizando a los afectados por el impacto.",
+      "effect": [
+        null,
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          1000,
+          1000,
+          1000,
+          1000,
+          1000
+        ]
+      ],
+      "effectBurn": [
+        null,
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "1000"
+      ],
+      "id": "PowerBall",
+      "image": {
+        "full": "PowerBall.png",
+        "group": "spell",
+        "h": 48,
+        "sprite": "spell11.png",
+        "w": 48,
+        "x": 384,
+        "y": 48
+      },
+      "leveltip": {
+        "effect": [
+          "{{ qbasedamage }} -> {{ qbasedamageNL }}",
+          "{{ slowpercent }}% -> {{ slowpercentNL }}%",
+          "{{ cooldown }} -> {{ cooldownNL }}"
+        ],
+        "label": [
+          "Daño",
+          "Ralentización",
+          "Enfriamiento"
+        ]
+      },
+      "maxammo": "-1",
+      "maxrank": 5,
+      "name": "Bola de poder",
+      "range": [
+        300,
+        300,
+        300,
+        300,
+        300
+      ],
+      "rangeBurn": "300",
+      "resource": "{{ cost }} {{ abilityresourcename }}",
+      "tooltip": "Rammus se hace una bola y va ganando desde un <speed>{{ minimummovespeed }} de velocidad de movimiento</speed> hasta un <speed>{{ maximummovespeed }} de velocidad de movimiento</speed> durante {{ rollduration }} s. Rammus se detiene tras chocar contra un enemigo, le inflige <magicDamage>{{ powerballdamage }} de daño mágico</magicDamage>, lo <status>empuja hacia atrás</status> y <status>ralentiza</status> a los enemigos cercanos un {{ slowpercent }}% durante {{ slowduration }} s.<br /><br /><recast>Reactivar</recast>: Rammus pone fin a esta habilidad antes de tiempo.{{ spellmodifierdescriptionappend }}",
+      "vars": []
+    },
+    {
+      "cooldown": [
+        7,
+        7,
+        7,
+        7,
+        7
+      ],
+      "cooldownBurn": "7",
+      "cost": [
+        40,
+        40,
+        40,
+        40,
+        40
+      ],
+      "costBurn": "40",
+      "costType": " {{ abilityresourcename }}",
+      "datavalues": {},
+      "description": "Rammus adopta una posición defensiva, lo que aumenta en gran medida su armadura y su resistencia mágica. Además, devuelve daño a los enemigos que lo atacan.",
+      "effect": [
+        null,
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ]
+      ],
+      "effectBurn": [
+        null,
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0"
+      ],
+      "id": "DefensiveBallCurl",
+      "image": {
+        "full": "DefensiveBallCurl.png",
+        "group": "spell",
+        "h": 48,
+        "sprite": "spell11.png",
+        "w": 48,
+        "x": 432,
+        "y": 48
+      },
+      "leveltip": {
+        "effect": [
+          "{{ flatbonusarmor }} -> {{ flatbonusarmorNL }}",
+          "{{ flatbonusmr }} -> {{ flatbonusmrNL }}",
+          "{{ bonusarmorpercent*100.000000 }}% -> {{ bonusarmorpercentnl*100.000000 }}%",
+          "{{ bonusmrpercent*100.000000 }}% -> {{ bonusmrpercentnl*100.000000 }}%"
+        ],
+        "label": [
+          "Bonificación de armadura",
+          "Resistencia mágica adicional",
+          "Porcentaje de armadura adicional",
+          "Porcentaje de resistencia mágica adicional"
+        ]
+      },
+      "maxammo": "-1",
+      "maxrank": 5,
+      "name": "Posición defensiva",
+      "range": [
+        300,
+        300,
+        300,
+        300,
+        300
+      ],
+      "rangeBurn": "300",
+      "resource": "{{ cost }} {{ abilityresourcename }}",
+      "tooltip": "Rammus entra en posición defensiva durante {{ buffduration }} s, obtiene <scaleArmor>{{ bonusarmortooltip }} de armadura</scaleArmor> y <scaleMR>{{ bonusmrtooltip }} de resistencia mágica</scaleMR>, e inflige <magicDamage>{{ returndamagecalc }} de daño mágico</magicDamage> a los enemigos que lo atacan.<br /><br /><recast>Reactivar</recast>: Rammus pone fin a esta habilidad antes de tiempo.{{ spellmodifierdescriptionappend }}",
+      "vars": []
+    },
+    {
+      "cooldown": [
+        12,
+        12,
+        12,
+        12,
+        12
+      ],
+      "cooldownBurn": "12",
+      "cost": [
+        50,
+        50,
+        50,
+        50,
+        50
+      ],
+      "costBurn": "50",
+      "costType": " {{ abilityresourcename }}",
+      "datavalues": {},
+      "description": "Rammus provoca a un monstruo o a un campeón enemigo para que se lance a lo loco contra él.",
+      "effect": [
+        null,
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ]
+      ],
+      "effectBurn": [
+        null,
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0"
+      ],
+      "id": "PuncturingTaunt",
+      "image": {
+        "full": "PuncturingTaunt.png",
+        "group": "spell",
+        "h": 48,
+        "sprite": "spell11.png",
+        "w": 48,
+        "x": 0,
+        "y": 96
+      },
+      "leveltip": {
+        "effect": [
+          "{{ duration }} -> {{ durationNL }}",
+          "{{ monsterdamage }} -> {{ monsterdamageNL }}"
+        ],
+        "label": [
+          "Duración",
+          "Daño a monstruos"
+        ]
+      },
+      "maxammo": "-1",
+      "maxrank": 5,
+      "name": "Provocación frenética",
+      "range": [
+        325,
+        325,
+        325,
+        325,
+        325
+      ],
+      "rangeBurn": "325",
+      "resource": "{{ cost }} {{ abilityresourcename }}",
+      "tooltip": "Rammus <status>provoca</status> a un campeón o monstruo enemigo durante {{ duration }} s. Los monstruos reciben <magicDamage>{{ monsterdamagecalc }} de daño mágico</magicDamage>.{{ spellmodifierdescriptionappend }}",
+      "vars": []
+    },
+    {
+      "cooldown": [
+        120,
+        105,
+        90
+      ],
+      "cooldownBurn": "120/105/90",
+      "cost": [
+        100,
+        100,
+        100
+      ],
+      "costBurn": "100",
+      "costType": " {{ abilityresourcename }}",
+      "datavalues": {},
+      "description": "Rammus salta y golpea una ubicación objetivo, lo que inflige daño mágico y ralentiza a los enemigos. Si se lanza mientras Rammus usa Bola de poder, Rammus también lanza por los aires a los enemigos que se encuentren cerca del centro.",
+      "effect": [
+        null,
+        [
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0
+        ]
+      ],
+      "effectBurn": [
+        null,
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0"
+      ],
+      "id": "Tremors2",
+      "image": {
+        "full": "Tremors2.png",
+        "group": "spell",
+        "h": 48,
+        "sprite": "spell11.png",
+        "w": 48,
+        "x": 48,
+        "y": 96
+      },
+      "leveltip": {
+        "effect": [
+          "{{ initialdamage }} -> {{ initialdamageNL }}",
+          "{{ slowamount*100.000000 }}% -> {{ slowamountnl*100.000000 }}%",
+          "{{ cooldown }} -> {{ cooldownNL }}"
+        ],
+        "label": [
+          "Daño",
+          "Ralentización",
+          "Enfriamiento"
+        ]
+      },
+      "maxammo": "-1",
+      "maxrank": 3,
+      "name": "Golpe veloz",
+      "range": [
+        25000,
+        25000,
+        25000
+      ],
+      "rangeBurn": "25000",
+      "resource": "{{ cost }} {{ abilityresourcename }}",
+      "tooltip": "Rammus salta y golpea una ubicación objetivo, lo que inflige <magicDamage>{{ initialdamagecalc }} de daño mágico</magicDamage> y <status>ralentiza</status> a los enemigos un {{ slowamount*100 }}% durante {{ slowduration }} s. Si se usa durante <spellName>Bola de poder</spellName>, los enemigos que estén en el centro reciben <magicDamage>{{ spell.powerball:powerballdamage }} de daño mágico</magicDamage> adicional y se ven <status>lanzados por los aires</status> durante {{ knockupduration }} s.<br /><br />Después, Rammus genera {{ numberofpulses }} réplicas en la zona durante {{ buffduration }} s que aplican de nuevo la <status>ralentización</status>.<br /><br />La <speed>velocidad de movimiento</speed> de Rammus determina el alcance de esta habilidad.{{ spellmodifierdescriptionappend }}",
+      "vars": []
+    }
+  ],
+  "stats": {
+    "armor": 35,
+    "armorperlevel": 4.5,
+    "attackdamage": 65,
+    "attackdamageperlevel": 0,
+    "attackrange": 125,
+    "attackspeed": 0.7,
+    "attackspeedperlevel": 2.215,
+    "crit": 0,
+    "critperlevel": 0,
+    "hp": 645,
+    "hpperlevel": 100,
+    "hpregen": 8,
+    "hpregenperlevel": 0.55,
+    "movespeed": 335,
+    "mp": 310,
+    "mpperlevel": 33,
+    "mpregen": 7.85,
+    "mpregenperlevel": 0.5,
+    "spellblock": 32,
+    "spellblockperlevel": 2.05
+  },
+  "tags": [
+    "Tank"
+  ],
+  "title": "El Armadurillo"
+}

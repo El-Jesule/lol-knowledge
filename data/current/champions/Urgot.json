@@ -1,0 +1,965 @@
+{
+  "allytips": [
+    "Presta atención a los enfriamientos individuales de las piernas, ya que estas suponen una parte importante de tu daño.",
+    "Acierta Carga corrosiva o Desdén para fijar a los objetivos con Purgar; una buena forma de activar varias piernas rápidamente.",
+    "Reserva Miedo más allá de la muerte para los oponentes que sepas que están demasiado débiles como para sobrevivir. Es especialmente buena para cargarse a los que intentan escapar."
+  ],
+  "blurb": "Urgot, antiguo verdugo noxiano, fue traicionado por el imperio por el que había matado a tantos. Amarrado con cadenas de hierro, se vio obligado a aprender el verdadero significado de la fuerza en la Draga; una mina penitenciaria en las profundidades de...",
+  "enemytips": [
+    "Urgot depende en gran medida de acribillar a sus oponentes con las piernas, las cuales tienen sus propios enfriamientos y solo explotan cuando él ataca en la misma dirección. Evita que varias te golpeen.",
+    "Urgot puede infligir y absorber una tremenda cantidad de daño con Purgar, pero se ralentiza mientras dispara.",
+    "Si te golpea Miedo más allá de la muerte, intenta mantenerte por encima del umbral de ejecución (25% de tu vida máxima) hasta que pase el efecto."
+  ],
+  "id": "Urgot",
+  "image": {
+    "full": "Urgot.png",
+    "group": "champion",
+    "h": 48,
+    "sprite": "champion4.png",
+    "w": 48,
+    "x": 240,
+    "y": 96
+  },
+  "info": {
+    "attack": 8,
+    "defense": 5,
+    "difficulty": 8,
+    "magic": 3
+  },
+  "key": "6",
+  "lore": "Urgot, antiguo verdugo noxiano, fue traicionado por el imperio por el que había matado a tantos. Amarrado con cadenas de hierro, se vio obligado a aprender el verdadero significado de la fuerza en la Draga; una mina penitenciaria en las profundidades de Zaun. Surgido en medio de un desastre que propagó el caos por la ciudad, ahora proyecta una imponente sombra sobre el inframundo delictivo. Alza a sus víctimas con las mismas cadenas que una vez lo esclavizaron; aspira a purgar su nuevo hogar de los indignos y convertirlo en un crisol de dolor.",
+  "name": "Urgot",
+  "partype": "Maná",
+  "passive": {
+    "description": "Los ataques básicos de Urgot y Purgar hacen que sus piernas echen fuego e inflijan daño físico de forma periódica.",
+    "image": {
+      "full": "Urgot_Passive.png",
+      "group": "passive",
+      "h": 48,
+      "sprite": "passive4.png",
+      "w": 48,
+      "x": 240,
+      "y": 96
+    },
+    "name": "Articulaciones llameantes"
+  },
+  "recommended": [],
+  "skins": [
+    {
+      "chromas": false,
+      "id": "6000",
+      "name": "default",
+      "num": 0
+    },
+    {
+      "chromas": false,
+      "id": "6001",
+      "name": "Crabgot enemigo gigante",
+      "num": 1
+    },
+    {
+      "chromas": false,
+      "id": "6002",
+      "name": "Urgot carnicero",
+      "num": 2
+    },
+    {
+      "chromas": true,
+      "id": "6003",
+      "name": "Urgot máquina de guerra",
+      "num": 3
+    },
+    {
+      "chromas": false,
+      "id": "6004",
+      "name": "Urgot máquina de guerra (rubí)",
+      "num": 4,
+      "parentSkin": 3
+    },
+    {
+      "chromas": false,
+      "id": "6005",
+      "name": "Urgot máquina de guerra (zafiro)",
+      "num": 5,
+      "parentSkin": 3
+    },
+    {
+      "chromas": false,
+      "id": "6006",
+      "name": "Urgot máquina de guerra (perla)",
+      "num": 6,
+      "parentSkin": 3
+    },
+    {
+      "chromas": false,
+      "id": "6007",
+      "name": "Urgot máquina de guerra (tanzanita)",
+      "num": 7,
+      "parentSkin": 3
+    },
+    {
+      "chromas": false,
+      "id": "6008",
+      "name": "Urgot máquina de guerra (obsidiana)",
+      "num": 8,
+      "parentSkin": 3
+    },
+    {
+      "chromas": true,
+      "id": "6009",
+      "name": "Urgot solo ante el peligro",
+      "num": 9
+    },
+    {
+      "chromas": false,
+      "id": "6010",
+      "name": "Urgot solo ante el peligro (tanzanita)",
+      "num": 10,
+      "parentSkin": 9
+    },
+    {
+      "chromas": false,
+      "id": "6011",
+      "name": "Urgot solo ante el peligro (turquesa)",
+      "num": 11,
+      "parentSkin": 9
+    },
+    {
+      "chromas": false,
+      "id": "6012",
+      "name": "Urgot solo ante el peligro (rubí)",
+      "num": 12,
+      "parentSkin": 9
+    },
+    {
+      "chromas": false,
+      "id": "6013",
+      "name": "Urgot solo ante el peligro (perla)",
+      "num": 13,
+      "parentSkin": 9
+    },
+    {
+      "chromas": false,
+      "id": "6014",
+      "name": "Urgot solo ante el peligro (zafiro)",
+      "num": 14,
+      "parentSkin": 9
+    },
+    {
+      "chromas": true,
+      "id": "6015",
+      "name": "Urgot cosplay de guardiana de los pijamas",
+      "num": 15
+    },
+    {
+      "chromas": false,
+      "id": "6016",
+      "name": "Urgot cosplay de guardiana de los pijamas (rubí)",
+      "num": 16,
+      "parentSkin": 15
+    },
+    {
+      "chromas": false,
+      "id": "6017",
+      "name": "Urgot cosplay de guardiana de los pijamas (cuarzo rosa)",
+      "num": 17,
+      "parentSkin": 15
+    },
+    {
+      "chromas": false,
+      "id": "6018",
+      "name": "Urgot cosplay de guardiana de los pijamas (esmeralda)",
+      "num": 18,
+      "parentSkin": 15
+    },
+    {
+      "chromas": false,
+      "id": "6019",
+      "name": "Urgot cosplay de guardiana de los pijamas (ojo de gato)",
+      "num": 19,
+      "parentSkin": 15
+    },
+    {
+      "chromas": false,
+      "id": "6020",
+      "name": "Urgot cosplay de guardiana de los pijamas (perla)",
+      "num": 20,
+      "parentSkin": 15
+    },
+    {
+      "chromas": false,
+      "id": "6021",
+      "name": "Urgot cosplay de guardiana de los pijamas (amatista)",
+      "num": 21,
+      "parentSkin": 15
+    },
+    {
+      "chromas": false,
+      "id": "6022",
+      "name": "Urgot cosplay de guardiana de los pijamas (obsidiana)",
+      "num": 22,
+      "parentSkin": 15
+    },
+    {
+      "chromas": true,
+      "id": "6023",
+      "name": "Urgot noche de miedo",
+      "num": 23
+    },
+    {
+      "chromas": false,
+      "id": "6024",
+      "name": "Urgot noche de miedo (rubí)",
+      "num": 24,
+      "parentSkin": 23
+    },
+    {
+      "chromas": false,
+      "id": "6025",
+      "name": "Urgot noche de miedo (ojo de gato)",
+      "num": 25,
+      "parentSkin": 23
+    },
+    {
+      "chromas": false,
+      "id": "6026",
+      "name": "Urgot noche de miedo (esmeralda)",
+      "num": 26,
+      "parentSkin": 23
+    },
+    {
+      "chromas": false,
+      "id": "6027",
+      "name": "Urgot noche de miedo (zafiro)",
+      "num": 27,
+      "parentSkin": 23
+    },
+    {
+      "chromas": false,
+      "id": "6028",
+      "name": "Urgot noche de miedo (citrino)",
+      "num": 28,
+      "parentSkin": 23
+    },
+    {
+      "chromas": false,
+      "id": "6029",
+      "name": "Urgot noche de miedo (cuarzo rosa)",
+      "num": 29,
+      "parentSkin": 23
+    },
+    {
+      "chromas": false,
+      "id": "6030",
+      "name": "Urgot noche de miedo (amatista)",
+      "num": 30,
+      "parentSkin": 23
+    },
+    {
+      "chromas": false,
+      "id": "6031",
+      "name": "Urgot noche de miedo (turquesa)",
+      "num": 31,
+      "parentSkin": 23
+    },
+    {
+      "chromas": true,
+      "id": "6032",
+      "name": "Urgot desatascador",
+      "num": 32
+    },
+    {
+      "chromas": false,
+      "id": "6033",
+      "name": "Urgot desatascador (rubí)",
+      "num": 33,
+      "parentSkin": 32
+    },
+    {
+      "chromas": false,
+      "id": "6034",
+      "name": "Urgot desatascador (turquesa)",
+      "num": 34,
+      "parentSkin": 32
+    },
+    {
+      "chromas": false,
+      "id": "6035",
+      "name": "Urgot desatascador (ojo de gato)",
+      "num": 35,
+      "parentSkin": 32
+    },
+    {
+      "chromas": false,
+      "id": "6036",
+      "name": "Urgot desatascador (tanzanita)",
+      "num": 36,
+      "parentSkin": 32
+    },
+    {
+      "chromas": false,
+      "id": "6037",
+      "name": "Urgot desatascador (cuarzo rosa)",
+      "num": 37,
+      "parentSkin": 32
+    },
+    {
+      "chromas": false,
+      "id": "6038",
+      "name": "Urgot desatascador (perla)",
+      "num": 38,
+      "parentSkin": 32
+    },
+    {
+      "chromas": false,
+      "id": "6039",
+      "name": "Urgot desatascador (meteorito)",
+      "num": 39,
+      "parentSkin": 32
+    },
+    {
+      "chromas": false,
+      "id": "6040",
+      "name": "Urgot desatascador (obsidiana)",
+      "num": 40,
+      "parentSkin": 32
+    },
+    {
+      "chromas": true,
+      "id": "6041",
+      "name": "Urgot dios antiguo",
+      "num": 41
+    },
+    {
+      "chromas": false,
+      "id": "6042",
+      "name": "Urgot dios antiguo (rubí)",
+      "num": 42,
+      "parentSkin": 41
+    },
+    {
+      "chromas": false,
+      "id": "6043",
+      "name": "Urgot dios antiguo (ojo de gato)",
+      "num": 43,
+      "parentSkin": 41
+    },
+    {
+      "chromas": false,
+      "id": "6044",
+      "name": "Urgot dios antiguo (esmeralda)",
+      "num": 44,
+      "parentSkin": 41
+    },
+    {
+      "chromas": false,
+      "id": "6045",
+      "name": "Urgot dios antiguo (zafiro)",
+      "num": 45,
+      "parentSkin": 41
+    },
+    {
+      "chromas": false,
+      "id": "6046",
+      "name": "Urgot dios antiguo (tanzanita)",
+      "num": 46,
+      "parentSkin": 41
+    },
+    {
+      "chromas": false,
+      "id": "6047",
+      "name": "Urgot dios antiguo (cuarzo rosa)",
+      "num": 47,
+      "parentSkin": 41
+    },
+    {
+      "chromas": false,
+      "id": "6048",
+      "name": "Urgot dios antiguo (perla)",
+      "num": 48,
+      "parentSkin": 41
+    },
+    {
+      "chromas": false,
+      "id": "6049",
+      "name": "Urgot dios antiguo (obsidiana)",
+      "num": 49,
+      "parentSkin": 41
+    }
+  ],
+  "spells": [
+    {
+      "cooldown": [
+        10,
+        9.5,
+        9,
+        8.5,
+        8
+      ],
+      "cooldownBurn": "10/9.5/9/8.5/8",
+      "cost": [
+        70,
+        70,
+        70,
+        70,
+        70
+      ],
+      "costBurn": "70",
+      "costType": " {{ abilityresourcename }}",
+      "datavalues": {},
+      "description": "Lanza una carga explosiva hacia la ubicación del objetivo, lo que inflige daño físico y ralentiza a los enemigos a los que alcance la explosión.",
+      "effect": [
+        null,
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ]
+      ],
+      "effectBurn": [
+        null,
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0"
+      ],
+      "id": "UrgotQ",
+      "image": {
+        "full": "UrgotQ.png",
+        "group": "spell",
+        "h": 48,
+        "sprite": "spell15.png",
+        "w": 48,
+        "x": 192,
+        "y": 48
+      },
+      "leveltip": {
+        "effect": [
+          "{{ cooldown }} -> {{ cooldownNL }}",
+          "{{ basedamage }} -> {{ basedamageNL }}",
+          "{{ slowamount*100.000000 }}% -> {{ slowamountnl*100.000000 }}%"
+        ],
+        "label": [
+          "Enfriamiento",
+          "Daño",
+          "Ralentización"
+        ]
+      },
+      "maxammo": "-1",
+      "maxrank": 5,
+      "name": "Carga corrosiva",
+      "range": [
+        800,
+        800,
+        800,
+        800,
+        800
+      ],
+      "rangeBurn": "800",
+      "resource": "{{ cost }} {{ abilityresourcename }}",
+      "tooltip": "Urgot dispara una carga explosiva que inflige <physicalDamage>{{ totaldamage }} de daño físico</physicalDamage> y <status>ralentiza</status> un {{ slowamount*100 }}% durante {{ slowduration }} s.{{ spellmodifierdescriptionappend }}",
+      "vars": []
+    },
+    {
+      "cooldown": [
+        12,
+        9,
+        6,
+        3,
+        0
+      ],
+      "cooldownBurn": "12/9/6/3/0",
+      "cost": [
+        40,
+        30,
+        20,
+        10,
+        0
+      ],
+      "costBurn": "40/30/20/10/0",
+      "costType": " {{ abilityresourcename }}",
+      "datavalues": {},
+      "description": "Urgot se ralentiza mientras descarga su arma sobre los enemigos cercanos. Da prioridad a los campeones enemigos a los que Urgot ha golpeado con otras habilidades y activa Articulaciones llameantes.",
+      "effect": [
+        null,
+        [
+          30,
+          60,
+          90,
+          120,
+          150
+        ],
+        [
+          40,
+          40,
+          40,
+          40,
+          40
+        ],
+        [
+          4,
+          4,
+          4,
+          4,
+          25000
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          125,
+          125,
+          125,
+          125,
+          125
+        ],
+        [
+          0.5,
+          0.5,
+          0.5,
+          0.5,
+          0.5
+        ],
+        [
+          20,
+          23.5,
+          27,
+          30.5,
+          34
+        ],
+        [
+          3,
+          3,
+          3,
+          3,
+          3
+        ],
+        [
+          12,
+          12,
+          12,
+          12,
+          12
+        ],
+        [
+          50,
+          50,
+          50,
+          50,
+          50
+        ]
+      ],
+      "effectBurn": [
+        null,
+        "30/60/90/120/150",
+        "40",
+        "4/4/4/4/25000",
+        "0",
+        "125",
+        "0.5",
+        "20/23.5/27/30.5/34",
+        "3",
+        "12",
+        "50"
+      ],
+      "id": "UrgotW",
+      "image": {
+        "full": "UrgotW.png",
+        "group": "spell",
+        "h": 48,
+        "sprite": "spell15.png",
+        "w": 48,
+        "x": 240,
+        "y": 48
+      },
+      "leveltip": {
+        "effect": [
+          "{{ cooldown }} -> {{ cooldownNL }}",
+          "{{ adratiott }}% -> {{ adratiottNL }}%",
+          "{{ cost }} -> {{ costNL }}"
+        ],
+        "label": [
+          "Enfriamiento",
+          "Daño de ataque por disparo",
+          "Coste de @AbilityResourceName@"
+        ]
+      },
+      "maxammo": "-1",
+      "maxrank": 5,
+      "name": "Purgar",
+      "range": [
+        490,
+        490,
+        490,
+        490,
+        490
+      ],
+      "rangeBurn": "490",
+      "resource": "{{ cost }} {{ abilityresourcename }}",
+      "tooltip": "<spellPassive>Pasiva:</spellPassive> Las demás habilidades de Urgot marcan al último campeón golpeado durante 5 s.<br /><br /><spellActive>Activa:</spellActive> Urgot comienza a disparar su ametralladora contra el enemigo más cercano, dando prioridad a los enemigos marcados. Ataca {{ wattackspersecond }} veces por segundo e inflige <physicalDamage>{{ damagepershot }} de daño físico</physicalDamage> por disparo. Urgot puede moverse mientras dispara y obtiene un {{ slowresistance }}% de resistencia a <status>ralentizaciones</status>, pero pierde <speed>{{ movespeedmod }} de velocidad de movimiento</speed>.<br /><br />En el nivel máximo, esta habilidad dura indefinidamente y se puede <toggle>activar y desactivar</toggle>.{{ spellmodifierdescriptionappend }}",
+      "vars": []
+    },
+    {
+      "cooldown": [
+        16,
+        15.5,
+        15,
+        14.5,
+        14
+      ],
+      "cooldownBurn": "16/15.5/15/14.5/14",
+      "cost": [
+        60,
+        70,
+        80,
+        90,
+        100
+      ],
+      "costBurn": "60/70/80/90/100",
+      "costType": " {{ abilityresourcename }}",
+      "datavalues": {},
+      "description": "Urgot carga en una dirección, genera un escudo y pisotea a los enemigos que no sean campeones. Si alcanza a un campeón enemigo, se detendrá y lo apartará de su camino.",
+      "effect": [
+        null,
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ]
+      ],
+      "effectBurn": [
+        null,
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0"
+      ],
+      "id": "UrgotE",
+      "image": {
+        "full": "UrgotE.png",
+        "group": "spell",
+        "h": 48,
+        "sprite": "spell15.png",
+        "w": 48,
+        "x": 288,
+        "y": 48
+      },
+      "leveltip": {
+        "effect": [
+          "{{ ebasedamage }} -> {{ ebasedamageNL }}",
+          "{{ eshieldbasehealth }} -> {{ eshieldbasehealthNL }}",
+          "{{ cost }} -> {{ costNL }}",
+          "{{ cooldown }} -> {{ cooldownNL }}"
+        ],
+        "label": [
+          "Daño",
+          "Cantidad de escudo",
+          "Coste de @AbilityResourceName@",
+          "Enfriamiento"
+        ]
+      },
+      "maxammo": "-1",
+      "maxrank": 5,
+      "name": "Desdén",
+      "range": [
+        475,
+        475,
+        475,
+        475,
+        475
+      ],
+      "rangeBurn": "475",
+      "resource": "{{ cost }} {{ abilityresourcename }}",
+      "tooltip": "Urgot carga hacia delante y obtiene un <shield>escudo de {{ etotalshieldhealth }}</shield> durante {{ eshieldduration }} s. El primer campeón golpeado resulta <status>aturdido</status> durante {{ stunduration }} s, y Urgot lo lanza detrás de él. Todos los enemigos contra los que Urgot impacta reciben <physicalDamage>{{ edamage }} de daño físico</physicalDamage>.{{ spellmodifierdescriptionappend }}",
+      "vars": []
+    },
+    {
+      "cooldown": [
+        100,
+        85,
+        70
+      ],
+      "cooldownBurn": "100/85/70",
+      "cost": [
+        100,
+        100,
+        100
+      ],
+      "costBurn": "100",
+      "costType": " {{ abilityresourcename }}",
+      "datavalues": {},
+      "description": "Urgot dispara taladros que empalan al primer campeón enemigo que golpeen. Si ese campeón baja de cierto umbral de vida, Urgot lo considerará débil y podrá ejecutarlo.",
+      "effect": [
+        null,
+        [
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0
+        ]
+      ],
+      "effectBurn": [
+        null,
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0"
+      ],
+      "id": "UrgotR",
+      "image": {
+        "full": "UrgotR.png",
+        "group": "spell",
+        "h": 48,
+        "sprite": "spell15.png",
+        "w": 48,
+        "x": 336,
+        "y": 48
+      },
+      "leveltip": {
+        "effect": [
+          "{{ rbasedamage }} -> {{ rbasedamageNL }}",
+          "{{ cooldown }} -> {{ cooldownNL }}"
+        ],
+        "label": [
+          "Daño",
+          "Enfriamiento"
+        ]
+      },
+      "maxammo": "-1",
+      "maxrank": 3,
+      "name": "Miedo más allá de la muerte",
+      "range": [
+        2500,
+        2500,
+        2500
+      ],
+      "rangeBurn": "2500",
+      "resource": "{{ cost }} {{ abilityresourcename }}",
+      "tooltip": "Urgot dispara un taladro químico que empala al primer campeón golpeado, lo que inflige <physicalDamage>{{ rcalculateddamage }} de daño físico</physicalDamage> y <status>ralentiza</status> durante {{ rslowduration }} s un 1% por cada 1% de la vida que le falte al objetivo, hasta un {{ rmovespeedmod }}%.<br /><br />Si la víctima baja del {{ rhealththreshold }}% de vida, Urgot puede <recast>volver a lanzar</recast> la habilidad para <status>suprimir</status> a la víctima y arrastrarla hacia él. Al llegar a Urgot, el objetivo muere y provoca <status>miedo</status> a los enemigos cercanos durante {{ rfearduration }} s.{{ spellmodifierdescriptionappend }}",
+      "vars": []
+    }
+  ],
+  "stats": {
+    "armor": 36,
+    "armorperlevel": 5,
+    "attackdamage": 63,
+    "attackdamageperlevel": 0,
+    "attackrange": 350,
+    "attackspeed": 0.625,
+    "attackspeedperlevel": 3.75,
+    "crit": 0,
+    "critperlevel": 0,
+    "hp": 655,
+    "hpperlevel": 102,
+    "hpregen": 7.5,
+    "hpregenperlevel": 0.7,
+    "movespeed": 330,
+    "mp": 340,
+    "mpperlevel": 45,
+    "mpregen": 7.25,
+    "mpregenperlevel": 0.8,
+    "spellblock": 32,
+    "spellblockperlevel": 2.05
+  },
+  "tags": [
+    "Fighter",
+    "Tank"
+  ],
+  "title": "la Pesadilla Mecánica"
+}

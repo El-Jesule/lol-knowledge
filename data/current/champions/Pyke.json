@@ -1,0 +1,1197 @@
+{
+  "allytips": [
+    "Pyke es muy endeble, así que no vaciles si te tienes que salir un rato de un combate. Puedes regenerar una cantidad considerable de vida con Bendición de los ahogados cuando los enemigos no puedan verte.",
+    "Golpear a un enemigo tras mantener pulsado Espetón de huesos arrastra al objetivo siempre la misma distancia. Úsalo en alcance cuerpo a cuerpo para lanzar al rival detrás de ti.",
+    "Si usas Espetón de huesos pulsando la habilidad, esta es mucho más rápida e inflige daño adicional.",
+    "Muchos de tus hechizos agresivos constituyen también tus vías de escape. Asegúrate de tener siempre un plan con el que poder salir del combate."
+  ],
+  "blurb": "A Pyke, un conocido arponero de los Muelles del Matadero de Aguas Estancadas, le esperaba la muerte en el estómago de una gigantesca criatura marina... y sin embargo, regresó. Desde entonces acecha en los fríos y húmedos callejones y caminos de la que...",
+  "enemytips": [
+    "Pyke regenera una cantidad considerable del daño que sufre de los campeones enemigos, ¡pero solo si no lo veis!",
+    "Cuando Pyke esté oculto con su Inmersión espectromarina, los tiburones te rodearán los pies.",
+    "No te quedes cerca de los aliados con poca vida. Si Pyke los destripa con Muerte de las profundidades, puede que el siguiente de la lista seas tú."
+  ],
+  "id": "Pyke",
+  "image": {
+    "full": "Pyke.png",
+    "group": "champion",
+    "h": 48,
+    "sprite": "champion3.png",
+    "w": 48,
+    "x": 96,
+    "y": 48
+  },
+  "info": {
+    "attack": 9,
+    "defense": 3,
+    "difficulty": 7,
+    "magic": 1
+  },
+  "key": "555",
+  "lore": "A Pyke, un conocido arponero de los Muelles del Matadero de Aguas Estancadas, le esperaba la muerte en el estómago de una gigantesca criatura marina... y sin embargo, regresó. Desde entonces acecha en los fríos y húmedos callejones y caminos de la que fue su ciudad natal, donde usa sus dones sobrenaturales para dar una rápida y truculenta muerte a quienes se ganan la vida explotando a otros. Cómo son las cosas: una ciudad que se enorgullece de cazar monstruos ahora tiene un monstruo que caza a sus habitantes.",
+  "name": "Pyke",
+  "partype": "Maná",
+  "passive": {
+    "description": "Cuando Pyke se oculta de los enemigos, regenera el daño que haya sufrido recientemente de campeones. Además, en vez de obtener vida máxima extra de cualquier tipo, gana DA adicional.",
+    "image": {
+      "full": "PykePassive.png",
+      "group": "passive",
+      "h": 48,
+      "sprite": "passive3.png",
+      "w": 48,
+      "x": 96,
+      "y": 48
+    },
+    "name": "Bendición de los ahogados"
+  },
+  "recommended": [],
+  "skins": [
+    {
+      "chromas": false,
+      "id": "555000",
+      "name": "default",
+      "num": 0
+    },
+    {
+      "chromas": true,
+      "id": "555001",
+      "name": "Pyke espectro arenoso",
+      "num": 1
+    },
+    {
+      "chromas": false,
+      "id": "555002",
+      "name": "Pyke espectro arenoso (ojo de gato)",
+      "num": 2,
+      "parentSkin": 1
+    },
+    {
+      "chromas": false,
+      "id": "555003",
+      "name": "Pyke espectro arenoso (obsidiana)",
+      "num": 3,
+      "parentSkin": 1
+    },
+    {
+      "chromas": false,
+      "id": "555004",
+      "name": "Pyke espectro arenoso (zafiro)",
+      "num": 4,
+      "parentSkin": 1
+    },
+    {
+      "chromas": false,
+      "id": "555005",
+      "name": "Pyke espectro arenoso (tanzanita)",
+      "num": 5,
+      "parentSkin": 1
+    },
+    {
+      "chromas": false,
+      "id": "555006",
+      "name": "Pyke espectro arenoso (cuarzo rosa)",
+      "num": 6,
+      "parentSkin": 1
+    },
+    {
+      "chromas": false,
+      "id": "555007",
+      "name": "Pyke espectro arenoso (turquesa)",
+      "num": 7,
+      "parentSkin": 1
+    },
+    {
+      "chromas": false,
+      "id": "555008",
+      "name": "Pyke espectro arenoso (perla)",
+      "num": 8,
+      "parentSkin": 1
+    },
+    {
+      "chromas": true,
+      "id": "555009",
+      "name": "Pyke luna sangrienta",
+      "num": 9
+    },
+    {
+      "chromas": false,
+      "id": "555010",
+      "name": "Pyke luna sangrienta (rubí)",
+      "num": 10,
+      "parentSkin": 9
+    },
+    {
+      "chromas": false,
+      "id": "555011",
+      "name": "Pyke luna sangrienta (citrino)",
+      "num": 11,
+      "parentSkin": 9
+    },
+    {
+      "chromas": false,
+      "id": "555012",
+      "name": "Pyke luna sangrienta (aguamarina)",
+      "num": 12,
+      "parentSkin": 9
+    },
+    {
+      "chromas": false,
+      "id": "555013",
+      "name": "Pyke luna sangrienta (cuarzo rosa)",
+      "num": 13,
+      "parentSkin": 9
+    },
+    {
+      "chromas": false,
+      "id": "555014",
+      "name": "Pyke luna sangrienta (obsidiana)",
+      "num": 14,
+      "parentSkin": 9
+    },
+    {
+      "chromas": false,
+      "id": "555015",
+      "name": "Pyke luna sangrienta (perla)",
+      "num": 15,
+      "parentSkin": 9
+    },
+    {
+      "chromas": true,
+      "id": "555016",
+      "name": "PROYECTO: Pyke",
+      "num": 16
+    },
+    {
+      "chromas": false,
+      "id": "555017",
+      "name": "PROYECTO: Pyke (obsidiana)",
+      "num": 17,
+      "parentSkin": 16
+    },
+    {
+      "chromas": false,
+      "id": "555018",
+      "name": "PROYECTO: Pyke (rubí)",
+      "num": 18,
+      "parentSkin": 16
+    },
+    {
+      "chromas": false,
+      "id": "555019",
+      "name": "PROYECTO: Pyke (turquesa)",
+      "num": 19,
+      "parentSkin": 16
+    },
+    {
+      "chromas": false,
+      "id": "555020",
+      "name": "PROYECTO: Pyke (perla)",
+      "num": 20,
+      "parentSkin": 16
+    },
+    {
+      "chromas": false,
+      "id": "555021",
+      "name": "PROYECTO: Pyke (aguamarina)",
+      "num": 21,
+      "parentSkin": 16
+    },
+    {
+      "chromas": false,
+      "id": "555022",
+      "name": "PROYECTO: Pyke (amatista)",
+      "num": 22,
+      "parentSkin": 16
+    },
+    {
+      "chromas": false,
+      "id": "555023",
+      "name": "PROYECTO: Pyke (cuarzo rosa)",
+      "num": 23,
+      "parentSkin": 16
+    },
+    {
+      "chromas": false,
+      "id": "555024",
+      "name": "PROYECTO: Pyke (Ajuste de cuentas)",
+      "num": 24,
+      "parentSkin": 16
+    },
+    {
+      "chromas": true,
+      "id": "555025",
+      "name": "Pyke PsyOps",
+      "num": 25
+    },
+    {
+      "chromas": false,
+      "id": "555026",
+      "name": "Pyke PsyOps (rubí)",
+      "num": 26,
+      "parentSkin": 25
+    },
+    {
+      "chromas": false,
+      "id": "555027",
+      "name": "Pyke PsyOps (arenisca)",
+      "num": 27,
+      "parentSkin": 25
+    },
+    {
+      "chromas": false,
+      "id": "555028",
+      "name": "Pyke PsyOps (zafiro)",
+      "num": 28,
+      "parentSkin": 25
+    },
+    {
+      "chromas": false,
+      "id": "555029",
+      "name": "Pyke PsyOps (tanzanita)",
+      "num": 29,
+      "parentSkin": 25
+    },
+    {
+      "chromas": false,
+      "id": "555030",
+      "name": "Pyke PsyOps (esmeralda)",
+      "num": 30,
+      "parentSkin": 25
+    },
+    {
+      "chromas": false,
+      "id": "555031",
+      "name": "Pyke PsyOps (cuarzo rosa)",
+      "num": 31,
+      "parentSkin": 25
+    },
+    {
+      "chromas": false,
+      "id": "555032",
+      "name": "Pyke PsyOps (caza)",
+      "num": 32,
+      "parentSkin": 25
+    },
+    {
+      "chromas": false,
+      "id": "555033",
+      "name": "Pyke PsyOps (obsidiana)",
+      "num": 33,
+      "parentSkin": 25
+    },
+    {
+      "chromas": true,
+      "id": "555034",
+      "name": "Pyke centinela",
+      "num": 34
+    },
+    {
+      "chromas": false,
+      "id": "555035",
+      "name": "Pyke centinela (rubí)",
+      "num": 35,
+      "parentSkin": 34
+    },
+    {
+      "chromas": false,
+      "id": "555036",
+      "name": "Pyke centinela (citrino)",
+      "num": 36,
+      "parentSkin": 34
+    },
+    {
+      "chromas": false,
+      "id": "555037",
+      "name": "Pyke centinela (esmeralda)",
+      "num": 37,
+      "parentSkin": 34
+    },
+    {
+      "chromas": false,
+      "id": "555038",
+      "name": "Pyke centinela (tanzanita)",
+      "num": 38,
+      "parentSkin": 34
+    },
+    {
+      "chromas": false,
+      "id": "555039",
+      "name": "Pyke centinela (zafiro)",
+      "num": 39,
+      "parentSkin": 34
+    },
+    {
+      "chromas": false,
+      "id": "555040",
+      "name": "Pyke centinela (perla)",
+      "num": 40,
+      "parentSkin": 34
+    },
+    {
+      "chromas": false,
+      "id": "555041",
+      "name": "Pyke centinela (aguamarina)",
+      "num": 41,
+      "parentSkin": 34
+    },
+    {
+      "chromas": false,
+      "id": "555042",
+      "name": "Pyke centinela (turquesa)",
+      "num": 42,
+      "parentSkin": 34
+    },
+    {
+      "chromas": false,
+      "id": "555043",
+      "name": "Pyke centinela (resuelto)",
+      "num": 43,
+      "parentSkin": 34
+    },
+    {
+      "chromas": true,
+      "id": "555044",
+      "name": "Pyke guerrero de la ceniza",
+      "num": 44
+    },
+    {
+      "chromas": true,
+      "id": "555045",
+      "name": "Pyke empíreo",
+      "num": 45
+    },
+    {
+      "chromas": false,
+      "id": "555046",
+      "name": "Pyke guerrero de la ceniza (ascua ardiente)",
+      "num": 46,
+      "parentSkin": 44
+    },
+    {
+      "chromas": false,
+      "id": "555047",
+      "name": "Pyke empíreo (rubí)",
+      "num": 47,
+      "parentSkin": 45
+    },
+    {
+      "chromas": false,
+      "id": "555048",
+      "name": "Pyke empíreo (esmeralda)",
+      "num": 48,
+      "parentSkin": 45
+    },
+    {
+      "chromas": false,
+      "id": "555049",
+      "name": "Pyke empíreo (perla)",
+      "num": 49,
+      "parentSkin": 45
+    },
+    {
+      "chromas": false,
+      "id": "555050",
+      "name": "Pyke empíreo (cuarzo rosa)",
+      "num": 50,
+      "parentSkin": 45
+    },
+    {
+      "chromas": false,
+      "id": "555051",
+      "name": "Pyke empíreo (turquesa)",
+      "num": 51,
+      "parentSkin": 45
+    },
+    {
+      "chromas": false,
+      "id": "555052",
+      "name": "Pyke empíreo (fulgor de neón)",
+      "num": 52,
+      "parentSkin": 45
+    },
+    {
+      "chromas": true,
+      "id": "555053",
+      "name": "Pyke luchador de almas",
+      "num": 53
+    },
+    {
+      "chromas": false,
+      "id": "555054",
+      "name": "Pyke luchador de almas de prestigio",
+      "num": 54
+    },
+    {
+      "chromas": false,
+      "id": "555055",
+      "name": "Pyke luchador de almas (rubí)",
+      "num": 55,
+      "parentSkin": 53
+    },
+    {
+      "chromas": false,
+      "id": "555056",
+      "name": "Pyke luchador de almas (tanzanita)",
+      "num": 56,
+      "parentSkin": 53
+    },
+    {
+      "chromas": false,
+      "id": "555057",
+      "name": "Pyke luchador de almas (citrino)",
+      "num": 57,
+      "parentSkin": 53
+    },
+    {
+      "chromas": false,
+      "id": "555058",
+      "name": "Pyke luchador de almas (turquesa)",
+      "num": 58,
+      "parentSkin": 53
+    },
+    {
+      "chromas": false,
+      "id": "555059",
+      "name": "Pyke luchador de almas (cuarzo rosa)",
+      "num": 59,
+      "parentSkin": 53
+    },
+    {
+      "chromas": false,
+      "id": "555060",
+      "name": "Pyke luchador de almas (esmeralda)",
+      "num": 60,
+      "parentSkin": 53
+    },
+    {
+      "chromas": false,
+      "id": "555061",
+      "name": "Pyke luchador de almas (perla)",
+      "num": 61,
+      "parentSkin": 53
+    },
+    {
+      "chromas": false,
+      "id": "555062",
+      "name": "Pyke luchador de almas (obsidiana)",
+      "num": 62,
+      "parentSkin": 53
+    },
+    {
+      "chromas": false,
+      "id": "555063",
+      "name": "Pyke luchador de almas (ilimitado)",
+      "num": 63,
+      "parentSkin": 53
+    },
+    {
+      "chromas": true,
+      "id": "555064",
+      "name": "Pyke noche de miedo",
+      "num": 64
+    },
+    {
+      "chromas": false,
+      "id": "555065",
+      "name": "Pyke noche de miedo (rubí)",
+      "num": 65,
+      "parentSkin": 64
+    },
+    {
+      "chromas": false,
+      "id": "555066",
+      "name": "Pyke noche de miedo (ojo de gato)",
+      "num": 66,
+      "parentSkin": 64
+    },
+    {
+      "chromas": false,
+      "id": "555067",
+      "name": "Pyke noche de miedo (esmeralda)",
+      "num": 67,
+      "parentSkin": 64
+    },
+    {
+      "chromas": false,
+      "id": "555068",
+      "name": "Pyke noche de miedo (turquesa)",
+      "num": 68,
+      "parentSkin": 64
+    },
+    {
+      "chromas": false,
+      "id": "555069",
+      "name": "Pyke noche de miedo (zafiro)",
+      "num": 69,
+      "parentSkin": 64
+    },
+    {
+      "chromas": false,
+      "id": "555070",
+      "name": "Pyke noche de miedo (amatista)",
+      "num": 70,
+      "parentSkin": 64
+    },
+    {
+      "chromas": false,
+      "id": "555071",
+      "name": "Pyke noche de miedo (perla)",
+      "num": 71,
+      "parentSkin": 64
+    },
+    {
+      "chromas": false,
+      "id": "555072",
+      "name": "Pyke noche de miedo (tanzanita)",
+      "num": 72,
+      "parentSkin": 64
+    },
+    {
+      "chromas": false,
+      "id": "555073",
+      "name": "Pyke noche de miedo (espectral)",
+      "num": 73,
+      "parentSkin": 64
+    },
+    {
+      "chromas": true,
+      "id": "555074",
+      "name": "Pyke sombra de tinta",
+      "num": 74
+    },
+    {
+      "chromas": true,
+      "id": "555075",
+      "name": "Pyke T1",
+      "num": 75
+    },
+    {
+      "chromas": false,
+      "id": "555076",
+      "name": "Pyke sombra de tinta (rubí)",
+      "num": 76,
+      "parentSkin": 74
+    },
+    {
+      "chromas": false,
+      "id": "555077",
+      "name": "Pyke sombra de tinta (esmeralda)",
+      "num": 77,
+      "parentSkin": 74
+    },
+    {
+      "chromas": false,
+      "id": "555078",
+      "name": "Pyke sombra de tinta (cuarzo rosa)",
+      "num": 78,
+      "parentSkin": 74
+    },
+    {
+      "chromas": false,
+      "id": "555079",
+      "name": "Pyke sombra de tinta (zafiro)",
+      "num": 79,
+      "parentSkin": 74
+    },
+    {
+      "chromas": false,
+      "id": "555080",
+      "name": "Pyke sombra de tinta (obsidiana)",
+      "num": 80,
+      "parentSkin": 74
+    },
+    {
+      "chromas": false,
+      "id": "555081",
+      "name": "Pyke sombra de tinta (perla)",
+      "num": 81,
+      "parentSkin": 74
+    },
+    {
+      "chromas": false,
+      "id": "555082",
+      "name": "Pyke sombra de tinta (citrino)",
+      "num": 82,
+      "parentSkin": 74
+    },
+    {
+      "chromas": false,
+      "id": "555083",
+      "name": "Pyke sombra de tinta (turquesa)",
+      "num": 83,
+      "parentSkin": 74
+    },
+    {
+      "chromas": false,
+      "id": "555084",
+      "name": "Pyke T1 (élite)",
+      "num": 84,
+      "parentSkin": 75
+    }
+  ],
+  "spells": [
+    {
+      "cooldown": [
+        10,
+        9.5,
+        9,
+        8.5,
+        8
+      ],
+      "cooldownBurn": "10/9.5/9/8.5/8",
+      "cost": [
+        70,
+        75,
+        80,
+        85,
+        90
+      ],
+      "costBurn": "70/75/80/85/90",
+      "costType": " {{ abilityresourcename }}",
+      "datavalues": {},
+      "description": "Pyke apuñala a un enemigo que tenga delante o lo arrastra hacia él.",
+      "effect": [
+        null,
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ]
+      ],
+      "effectBurn": [
+        null,
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0"
+      ],
+      "id": "PykeQ",
+      "image": {
+        "full": "PykeQ.png",
+        "group": "spell",
+        "h": 48,
+        "sprite": "spell11.png",
+        "w": 48,
+        "x": 96,
+        "y": 0
+      },
+      "leveltip": {
+        "effect": [
+          "{{ basedamage }} -> {{ basedamageNL }}",
+          "{{ cooldown }} -> {{ cooldownNL }}",
+          "{{ cost }} -> {{ costNL }}"
+        ],
+        "label": [
+          "Daño",
+          "Enfriamiento",
+          "Coste de @AbilityResourceName@"
+        ]
+      },
+      "maxammo": "-1",
+      "maxrank": 5,
+      "name": "Espetón de huesos",
+      "range": [
+        400,
+        400,
+        400,
+        400,
+        400
+      ],
+      "rangeBurn": "400",
+      "resource": "{{ cost }} {{ abilityresourcename }}",
+      "tooltip": "<tap>Pulsar:</tap> Pyke apuñala e inflige <physicalDamage>{{ totaldamage }} de daño físico</physicalDamage> al primer enemigo alcanzado (prioriza campeones). <status>Ralentiza</status> al objetivo un {{ slowamount*100 }}% durante {{ slowduration }} s.<br /><br /><hold>Mantener pulsado: </hold>Pyke lanza su arpón, lo que inflige <physicalDamage>{{ totaldamage }} de daño físico</physicalDamage> al primer enemigo golpeado y lo <status>atrae</status> hacia él. <status>Ralentiza</status> al objetivo un {{ slowamount*100 }}% durante {{ slowduration }} s.<br /><br />Si Pyke logra golpear a un campeón enemigo o la canalización no se completa con éxito, recupera un {{ manarefund*100 }}% del coste de maná.{{ spellmodifierdescriptionappend }}",
+      "vars": []
+    },
+    {
+      "cooldown": [
+        14,
+        13,
+        12,
+        11,
+        10
+      ],
+      "cooldownBurn": "14/13/12/11/10",
+      "cost": [
+        65,
+        65,
+        65,
+        65,
+        65
+      ],
+      "costBurn": "65",
+      "costType": " {{ abilityresourcename }}",
+      "datavalues": {},
+      "description": "Pyke entra en estado de camuflaje y obtiene una buena cantidad de velocidad de movimiento que disminuye a lo largo del tiempo.",
+      "effect": [
+        null,
+        [
+          45,
+          45,
+          45,
+          45,
+          45
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0.3,
+          0.3,
+          0.3,
+          0.3,
+          0.3
+        ],
+        [
+          0.03,
+          0.03,
+          0.03,
+          0.03,
+          0.03
+        ],
+        [
+          80,
+          80,
+          80,
+          80,
+          80
+        ],
+        [
+          0.55,
+          0.55,
+          0.55,
+          0.55,
+          0.55
+        ],
+        [
+          8,
+          8,
+          8,
+          8,
+          8
+        ],
+        [
+          0.01,
+          0.01,
+          0.01,
+          0.01,
+          0.01
+        ],
+        [
+          1.15,
+          1.15,
+          1.15,
+          1.15,
+          1.15
+        ],
+        [
+          5,
+          5,
+          5,
+          5,
+          5
+        ]
+      ],
+      "effectBurn": [
+        null,
+        "45",
+        "0",
+        "0.3",
+        "0.03",
+        "80",
+        "0.55",
+        "8",
+        "0.01",
+        "1.15",
+        "5"
+      ],
+      "id": "PykeW",
+      "image": {
+        "full": "PykeW.png",
+        "group": "spell",
+        "h": 48,
+        "sprite": "spell11.png",
+        "w": 48,
+        "x": 144,
+        "y": 0
+      },
+      "leveltip": {
+        "effect": [
+          "{{ cooldown }} -> {{ cooldownNL }}"
+        ],
+        "label": [
+          "Enfriamiento"
+        ]
+      },
+      "maxammo": "-1",
+      "maxrank": 5,
+      "name": "Inmersión espectromarina",
+      "range": [
+        600,
+        600,
+        600,
+        600,
+        600
+      ],
+      "rangeBurn": "600",
+      "resource": "{{ cost }} {{ abilityresourcename }}",
+      "tooltip": "Pyke obtiene <keywordStealth>camuflaje</keywordStealth> y un <speed>{{ movespeed }}% de velocidad de movimiento</speed> que disminuye a lo largo de {{ camoduration }} s.{{ spellmodifierdescriptionappend }}",
+      "vars": []
+    },
+    {
+      "cooldown": [
+        15,
+        14,
+        13,
+        12,
+        11
+      ],
+      "cooldownBurn": "15/14/13/12/11",
+      "cost": [
+        40,
+        40,
+        40,
+        40,
+        40
+      ],
+      "costBurn": "40",
+      "costType": " {{ abilityresourcename }}",
+      "datavalues": {},
+      "description": "Pyke se desliza y deja un espíritu tras él que, cuando vuelve a su cuerpo, aturde a los campeones enemigos que encuentra a su paso.",
+      "effect": [
+        null,
+        [
+          100,
+          150,
+          200,
+          250,
+          300
+        ],
+        [
+          1.25,
+          1.25,
+          1.25,
+          1.25,
+          1.25
+        ],
+        [
+          550,
+          550,
+          550,
+          550,
+          550
+        ],
+        [
+          1,
+          1,
+          1,
+          1,
+          1
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ]
+      ],
+      "effectBurn": [
+        null,
+        "100/150/200/250/300",
+        "1.25",
+        "550",
+        "1",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0"
+      ],
+      "id": "PykeE",
+      "image": {
+        "full": "PykeE.png",
+        "group": "spell",
+        "h": 48,
+        "sprite": "spell11.png",
+        "w": 48,
+        "x": 192,
+        "y": 0
+      },
+      "leveltip": {
+        "effect": [
+          "{{ basedamage }} -> {{ basedamageNL }}",
+          "{{ cooldown }} -> {{ cooldownNL }}"
+        ],
+        "label": [
+          "Daño",
+          "Enfriamiento"
+        ]
+      },
+      "maxammo": "-1",
+      "maxrank": 5,
+      "name": "Corriente fantasma",
+      "range": [
+        550,
+        550,
+        550,
+        550,
+        550
+      ],
+      "rangeBurn": "550",
+      "resource": "{{ cost }} {{ abilityresourcename }}",
+      "tooltip": "Pyke se desliza y deja tras él al espíritu de un ahogado que lo alcanza poco después. El fantasma <status>aturde</status> durante {{ stunduration }} s e inflige <physicalDamage>{{ totaldamage }} de daño físico</physicalDamage> a campeones.{{ spellmodifierdescriptionappend }}",
+      "vars": []
+    },
+    {
+      "cooldown": [
+        100,
+        85,
+        70
+      ],
+      "cooldownBurn": "100/85/70",
+      "cost": [
+        100,
+        100,
+        100
+      ],
+      "costBurn": "100",
+      "costType": " {{ abilityresourcename }}",
+      "datavalues": {},
+      "description": "Pyke aparece junto a enemigos con poca vida y los ejecuta, lo que le permite lanzar de nuevo su hechizo y otorgar oro adicional al aliado que le asista.",
+      "effect": [
+        null,
+        [
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0
+        ]
+      ],
+      "effectBurn": [
+        null,
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0"
+      ],
+      "id": "PykeR",
+      "image": {
+        "full": "PykeR.png",
+        "group": "spell",
+        "h": 48,
+        "sprite": "spell11.png",
+        "w": 48,
+        "x": 240,
+        "y": 0
+      },
+      "leveltip": {
+        "effect": [
+          "{{ cooldown }} -> {{ cooldownNL }}"
+        ],
+        "label": [
+          "Enfriamiento"
+        ]
+      },
+      "maxammo": "-1",
+      "maxrank": 3,
+      "name": "Muerte de las profundidades",
+      "range": [
+        750,
+        750,
+        750
+      ],
+      "rangeBurn": "750",
+      "resource": "{{ cost }} {{ abilityresourcename }}",
+      "tooltip": "Pyke golpea a todos los campeones enemigos en un área en forma de cruz, se traslada y <danger>ejecuta</danger> a los objetivos por debajo del <scaleAD>{{ rdamage }}</scaleAD> de vida. Los objetivos que estén por encima del umbral o que no sean campeones reciben en su lugar daño físico igual al {{ reduceddamage*100 }}% de esa cantidad (<physicalDamage>{{ reduceddamagefinal }}</physicalDamage>). <br /><br />Cuando un campeón enemigo muere dentro de la cruz, Pyke puede <recast>volver a lanzar</recast> esta habilidad de forma gratuita durante {{ rrecastduration }} s. Si ha ejecutado al campeón, el último aliado que lo haya asistido también recibirá el oro del asesinato. De lo contrario, recibirá oro del asesinato como si lo hubiese hecho.<br />{{ spellmodifierdescriptionappend }}",
+      "vars": []
+    }
+  ],
+  "stats": {
+    "armor": 37,
+    "armorperlevel": 4.7,
+    "attackdamage": 62,
+    "attackdamageperlevel": 0,
+    "attackrange": 150,
+    "attackspeed": 0.667,
+    "attackspeedperlevel": 2.5,
+    "crit": 0,
+    "critperlevel": 0,
+    "hp": 670,
+    "hpperlevel": 110,
+    "hpregen": 7,
+    "hpregenperlevel": 0.5,
+    "movespeed": 330,
+    "mp": 415,
+    "mpperlevel": 50,
+    "mpregen": 8,
+    "mpregenperlevel": 1,
+    "spellblock": 32,
+    "spellblockperlevel": 2.05
+  },
+  "tags": [
+    "Support",
+    "Assassin"
+  ],
+  "title": "el Destripador de los Puertos"
+}

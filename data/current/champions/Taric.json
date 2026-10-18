@@ -1,0 +1,857 @@
+{
+  "allytips": [
+    "El componente de reducción de enfriamiento que tiene Bravuconería hace que los objetos de reducción de enfriamiento como Corazón de hielo, Guantelete de hielo y Rostro espiritual sean extraordinariamente efectivos en Taric.",
+    "El uso de Toque de luz estelar con pocas cargas hace que su curación sea menos eficiente en cuanto al maná, pero puede aumentar bastante la capacidad de daño continuo de Taric a través de Bravuconería.",
+    "En lugar de guardarse el Esplendor cósmico para el último momento y arriesgarse a que alguien muera mientras se carga, puede ser más beneficioso lanzarlo enseguida cuando estés seguro de que un combate de equipo va a empezar."
+  ],
+  "blurb": "Taric es el Aspecto del Protector, y gracias a su increíble poder es el guardián de la vida, el amor y la belleza en Runaterra. Caído en desgracia debido a la negligencia de su deber y exiliado de su hogar, Demacia, Taric ascendió al Monte Targon...",
+  "enemytips": [
+    "La habilidad definitiva de Taric, Esplendor cósmico, tarda un poco en hacer efecto. Intenta evaluar rápidamente si es mejor retroceder de la refriega o intentar matar a sus aliados antes de que se active.",
+    "Taric reduce el enfriamiento de sus hechizos con ataques básicos a sus enemigos gracias a Bravuconería. Intenta alejarte de él en combates de equipo y castígalo por acercarse a las oleadas de súbditos en las calles."
+  ],
+  "id": "Taric",
+  "image": {
+    "full": "Taric.png",
+    "group": "champion",
+    "h": 48,
+    "sprite": "champion4.png",
+    "w": 48,
+    "x": 288,
+    "y": 48
+  },
+  "info": {
+    "attack": 4,
+    "defense": 8,
+    "difficulty": 3,
+    "magic": 5
+  },
+  "key": "44",
+  "lore": "Taric es el Aspecto del Protector, y gracias a su increíble poder es el guardián de la vida, el amor y la belleza en Runaterra. Caído en desgracia debido a la negligencia de su deber y exiliado de su hogar, Demacia, Taric ascendió al Monte Targon buscando la redención, y lo que encontró en la cima fue la llamada de las estrellas. Imbuido con el poder del Targon ancestral, el Escudo de Valoran no descansa en su deber de vigilar la traicionera corrupción del Vacío.",
+  "name": "Taric",
+  "partype": "Maná",
+  "passive": {
+    "description": "Los hechizos potencian los dos siguientes ataques básicos de Taric; infligen daño mágico adicional, reducen el enfriamiento de sus hechizos y atacan en una sucesión rápida.",
+    "image": {
+      "full": "Taric_Passive.png",
+      "group": "passive",
+      "h": 48,
+      "sprite": "passive4.png",
+      "w": 48,
+      "x": 288,
+      "y": 48
+    },
+    "name": "Bravuconería"
+  },
+  "recommended": [],
+  "skins": [
+    {
+      "chromas": false,
+      "id": "44000",
+      "name": "default",
+      "num": 0
+    },
+    {
+      "chromas": false,
+      "id": "44001",
+      "name": "Taric esmeralda",
+      "num": 1
+    },
+    {
+      "chromas": false,
+      "id": "44002",
+      "name": "Taric armadura de la quinta era",
+      "num": 2
+    },
+    {
+      "chromas": false,
+      "id": "44003",
+      "name": "Taric piedra carmesí",
+      "num": 3
+    },
+    {
+      "chromas": true,
+      "id": "44004",
+      "name": "Taric fiesta en la piscina",
+      "num": 4
+    },
+    {
+      "chromas": false,
+      "id": "44005",
+      "name": "Taric fiesta en la piscina (cuarzo rosa)",
+      "num": 5,
+      "parentSkin": 4
+    },
+    {
+      "chromas": false,
+      "id": "44006",
+      "name": "Taric fiesta en la piscina (ojo de gato)",
+      "num": 6,
+      "parentSkin": 4
+    },
+    {
+      "chromas": false,
+      "id": "44007",
+      "name": "Taric fiesta en la piscina (obsidiana)",
+      "num": 7,
+      "parentSkin": 4
+    },
+    {
+      "chromas": false,
+      "id": "44008",
+      "name": "Taric fiesta en la piscina (perla)",
+      "num": 8,
+      "parentSkin": 4
+    },
+    {
+      "chromas": true,
+      "id": "44009",
+      "name": "Taric escudo radiante",
+      "num": 9
+    },
+    {
+      "chromas": false,
+      "id": "44010",
+      "name": "Taric escudo radiante (perla)",
+      "num": 10,
+      "parentSkin": 9
+    },
+    {
+      "chromas": false,
+      "id": "44011",
+      "name": "Taric escudo radiante (aguamarina)",
+      "num": 11,
+      "parentSkin": 9
+    },
+    {
+      "chromas": false,
+      "id": "44012",
+      "name": "Taric escudo radiante (obsidiana)",
+      "num": 12,
+      "parentSkin": 9
+    },
+    {
+      "chromas": false,
+      "id": "44013",
+      "name": "Taric escudo radiante (rubí)",
+      "num": 13,
+      "parentSkin": 9
+    },
+    {
+      "chromas": false,
+      "id": "44014",
+      "name": "Taric escudo radiante (amatista)",
+      "num": 14,
+      "parentSkin": 9
+    },
+    {
+      "chromas": false,
+      "id": "44015",
+      "name": "Taric escudo radiante (cuarzo rosa)",
+      "num": 15,
+      "parentSkin": 9
+    },
+    {
+      "chromas": false,
+      "id": "44016",
+      "name": "Taric escudo radiante (arcoíris)",
+      "num": 16,
+      "parentSkin": 9
+    },
+    {
+      "chromas": false,
+      "id": "44017",
+      "name": "Taric escudo radiante (peridoto)",
+      "num": 17,
+      "parentSkin": 9
+    },
+    {
+      "chromas": true,
+      "id": "44018",
+      "name": "Taric onda espacial",
+      "num": 18
+    },
+    {
+      "chromas": false,
+      "id": "44019",
+      "name": "Taric onda espacial (rubí)",
+      "num": 19,
+      "parentSkin": 18
+    },
+    {
+      "chromas": false,
+      "id": "44020",
+      "name": "Taric onda espacial (ojo de gato)",
+      "num": 20,
+      "parentSkin": 18
+    },
+    {
+      "chromas": false,
+      "id": "44021",
+      "name": "Taric onda espacial (cuarzo rosa)",
+      "num": 21,
+      "parentSkin": 18
+    },
+    {
+      "chromas": false,
+      "id": "44022",
+      "name": "Taric onda espacial (turquesa)",
+      "num": 22,
+      "parentSkin": 18
+    },
+    {
+      "chromas": false,
+      "id": "44023",
+      "name": "Taric onda espacial (zafiro)",
+      "num": 23,
+      "parentSkin": 18
+    },
+    {
+      "chromas": false,
+      "id": "44024",
+      "name": "Taric onda espacial (esmeralda)",
+      "num": 24,
+      "parentSkin": 18
+    },
+    {
+      "chromas": false,
+      "id": "44025",
+      "name": "Taric onda espacial (obsidiana)",
+      "num": 25,
+      "parentSkin": 18
+    },
+    {
+      "chromas": false,
+      "id": "44026",
+      "name": "Taric onda espacial (arcoíris)",
+      "num": 26,
+      "parentSkin": 18
+    },
+    {
+      "chromas": true,
+      "id": "44027",
+      "name": "Taric quiebradestinos",
+      "num": 27
+    },
+    {
+      "chromas": false,
+      "id": "44028",
+      "name": "Taric quiebradestinos (rubí)",
+      "num": 28,
+      "parentSkin": 27
+    },
+    {
+      "chromas": false,
+      "id": "44029",
+      "name": "Taric quiebradestinos (citrino)",
+      "num": 29,
+      "parentSkin": 27
+    },
+    {
+      "chromas": false,
+      "id": "44030",
+      "name": "Taric quiebradestinos (zafiro)",
+      "num": 30,
+      "parentSkin": 27
+    },
+    {
+      "chromas": false,
+      "id": "44031",
+      "name": "Taric quiebradestinos (esmeralda)",
+      "num": 31,
+      "parentSkin": 27
+    },
+    {
+      "chromas": false,
+      "id": "44032",
+      "name": "Taric quiebradestinos (perla)",
+      "num": 32,
+      "parentSkin": 27
+    },
+    {
+      "chromas": false,
+      "id": "44033",
+      "name": "Taric quiebradestinos (amatista)",
+      "num": 33,
+      "parentSkin": 27
+    },
+    {
+      "chromas": false,
+      "id": "44034",
+      "name": "Taric quiebradestinos (cuarzo rosa)",
+      "num": 34,
+      "parentSkin": 27
+    },
+    {
+      "chromas": false,
+      "id": "44035",
+      "name": "Taric quiebradestinos (obsidiana)",
+      "num": 35,
+      "parentSkin": 27
+    }
+  ],
+  "spells": [
+    {
+      "cooldown": [
+        3,
+        3,
+        3,
+        3,
+        3
+      ],
+      "cooldownBurn": "3",
+      "cost": [
+        60,
+        60,
+        60,
+        60,
+        60
+      ],
+      "costBurn": "60",
+      "costType": " de maná, todas las cargas",
+      "datavalues": {},
+      "description": "Cura a los aliados cercanos según las cargas acumuladas. Los ataques potenciados por Bravuconería otorgan una carga de Toque de luz estelar.",
+      "effect": [
+        null,
+        [
+          25,
+          25,
+          25,
+          25,
+          25
+        ],
+        [
+          1,
+          1,
+          1,
+          1,
+          1
+        ],
+        [
+          0.15,
+          0.3,
+          0.45,
+          0.6,
+          0.75
+        ],
+        [
+          0.75,
+          1.5,
+          2.25,
+          3,
+          3.75
+        ],
+        [
+          25,
+          50,
+          75,
+          100,
+          125
+        ],
+        [
+          1,
+          2,
+          3,
+          4,
+          5
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ]
+      ],
+      "effectBurn": [
+        null,
+        "25",
+        "1",
+        "0.15/0.3/0.45/0.6/0.75",
+        "0.75/1.5/2.25/3/3.75",
+        "25/50/75/100/125",
+        "1/2/3/4/5",
+        "0",
+        "0",
+        "0",
+        "0"
+      ],
+      "id": "TaricQ",
+      "image": {
+        "full": "TaricQ.png",
+        "group": "spell",
+        "h": 48,
+        "sprite": "spell14.png",
+        "w": 48,
+        "x": 384,
+        "y": 48
+      },
+      "leveltip": {
+        "effect": [
+          "{{ maxcharges }} -> {{ maxchargesNL }}",
+          "{{ basehealmax }} -> {{ basehealmaxNL }}"
+        ],
+        "label": [
+          "Máximo de cargas",
+          "Curación máxima"
+        ]
+      },
+      "maxammo": "-1",
+      "maxrank": 5,
+      "name": "Toque de luz estelar",
+      "range": [
+        325,
+        325,
+        325,
+        325,
+        325
+      ],
+      "rangeBurn": "325",
+      "resource": "{{ cost }} de maná, todas las cargas",
+      "tooltip": "<spellPassive>Pasiva:</spellPassive> Obtiene una acumulación (máximo: {{ maxcharges }}) cada {{ stackcooldown }} s y cada vez que asesta un ataque potenciado por <spellName>Bravuconería</spellName>.<br /><br /><spellActive>Activa:</spellActive> Consume todas las acumulaciones y restaura <healing>{{ healingperstack }} de vida</healing> por acumulación a los campeones aliados cercanos (<healing>{{ maxstackhealing }}</healing> de curación con {{ maxcharges }} acumulación(es)).{{ spellmodifierdescriptionappend }}",
+      "vars": []
+    },
+    {
+      "cooldown": [
+        15,
+        15,
+        15,
+        15,
+        15
+      ],
+      "cooldownBurn": "15",
+      "cost": [
+        60,
+        60,
+        60,
+        60,
+        60
+      ],
+      "costBurn": "60",
+      "costType": " {{ abilityresourcename }}",
+      "datavalues": {},
+      "description": "Aumenta de forma pasiva la armadura de Taric y del aliado vinculado con Bastión.<br><br>Al activarlo, coloca un escudo a un aliado y le otorga Bastión mientras que permanezca cerca de Taric. Los hechizos de Taric también se lanzan desde el aliado vinculado por Bastión.",
+      "effect": [
+        null,
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          7,
+          8,
+          9,
+          10,
+          11
+        ],
+        [
+          2.5,
+          2.5,
+          2.5,
+          2.5,
+          2.5
+        ],
+        [
+          1000,
+          1000,
+          1000,
+          1000,
+          1000
+        ],
+        [
+          1300,
+          1300,
+          1300,
+          1300,
+          1300
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ]
+      ],
+      "effectBurn": [
+        null,
+        "0",
+        "7/8/9/10/11",
+        "2.5",
+        "1000",
+        "1300",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0"
+      ],
+      "id": "TaricW",
+      "image": {
+        "full": "TaricW.png",
+        "group": "spell",
+        "h": 48,
+        "sprite": "spell14.png",
+        "w": 48,
+        "x": 432,
+        "y": 48
+      },
+      "leveltip": {
+        "effect": [
+          "{{ armorbonuspercentage*100.000000 }}% -> {{ armorbonuspercentagenl*100.000000 }}%",
+          "{{ shieldhpratio }}% -> {{ shieldhpratioNL }}%"
+        ],
+        "label": [
+          "Armadura pasiva",
+          "Relación de escudo"
+        ]
+      },
+      "maxammo": "-1",
+      "maxrank": 5,
+      "name": "Bastión",
+      "range": [
+        800,
+        800,
+        800,
+        800,
+        800
+      ],
+      "rangeBurn": "800",
+      "resource": "{{ cost }} {{ abilityresourcename }}",
+      "tooltip": "<spellPassive>Pasiva: </spellPassive>Taric obtiene <scaleArmor>{{ bonusarmor }} de armadura</scaleArmor> y forma un vínculo con un aliado. Cuando están cerca, el aliado obtiene <scaleArmor>{{ bonusarmor }} de armadura</scaleArmor>, y Taric lanza todas sus habilidades desde su posición y la de su aliado vinculado.<br /><br /><spellPassive>Activa: </spellPassive>Taric se vincula a un campeón aliado, lo que le otorga un escudo del <shield>{{ shieldhpratio }}% de la vida máxima</shield> durante {{ shieldduration }} s.{{ spellmodifierdescriptionappend }}",
+      "vars": []
+    },
+    {
+      "cooldown": [
+        16,
+        15,
+        14,
+        13,
+        12
+      ],
+      "cooldownBurn": "16/15/14/13/12",
+      "cost": [
+        40,
+        40,
+        40,
+        40,
+        40
+      ],
+      "costBurn": "40",
+      "costType": " {{ abilityresourcename }}",
+      "datavalues": {},
+      "description": "Taric prepara un rayo de luz estelar que, tras un breve momento, inflige daño mágico y aturde a los enemigos.",
+      "effect": [
+        null,
+        [
+          90,
+          130,
+          170,
+          210,
+          250
+        ],
+        [
+          1.5,
+          1.5,
+          1.5,
+          1.5,
+          1.5
+        ],
+        [
+          1,
+          1,
+          1,
+          1,
+          1
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ]
+      ],
+      "effectBurn": [
+        null,
+        "90/130/170/210/250",
+        "1.5",
+        "1",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0"
+      ],
+      "id": "TaricE",
+      "image": {
+        "full": "TaricE.png",
+        "group": "spell",
+        "h": 48,
+        "sprite": "spell14.png",
+        "w": 48,
+        "x": 0,
+        "y": 96
+      },
+      "leveltip": {
+        "effect": [
+          "{{ basedamage }} -> {{ basedamageNL }}",
+          "{{ cooldown }} -> {{ cooldownNL }}"
+        ],
+        "label": [
+          "Daño",
+          "Enfriamiento"
+        ]
+      },
+      "maxammo": "-1",
+      "maxrank": 5,
+      "name": "Desorientación",
+      "range": [
+        610,
+        610,
+        610,
+        610,
+        610
+      ],
+      "rangeBurn": "610",
+      "resource": "{{ cost }} {{ abilityresourcename }}",
+      "tooltip": "Taric proyecta un rayo de luz estelar que explota tras {{ chargeduration }} s para infligir <magicDamage>{{ totaldamage }} de daño mágico</magicDamage> y <status>aturdir</status> a los enemigos durante {{ stunduration }} s.{{ spellmodifierdescriptionappend }}",
+      "vars": []
+    },
+    {
+      "cooldown": [
+        180,
+        150,
+        120
+      ],
+      "cooldownBurn": "180/150/120",
+      "cost": [
+        100,
+        100,
+        100
+      ],
+      "costBurn": "100",
+      "costType": " {{ abilityresourcename }}",
+      "datavalues": {},
+      "description": "Emite energía cósmica a los campeones aliados cercanos tras un breve lapso de tiempo, lo que los hace invulnerables durante unos instantes.",
+      "effect": [
+        null,
+        [
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0
+        ]
+      ],
+      "effectBurn": [
+        null,
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0"
+      ],
+      "id": "TaricR",
+      "image": {
+        "full": "TaricR.png",
+        "group": "spell",
+        "h": 48,
+        "sprite": "spell14.png",
+        "w": 48,
+        "x": 48,
+        "y": 96
+      },
+      "leveltip": {
+        "effect": [
+          "{{ cooldown }} -> {{ cooldownNL }}"
+        ],
+        "label": [
+          "Enfriamiento"
+        ]
+      },
+      "maxammo": "-1",
+      "maxrank": 3,
+      "name": "Esplendor cósmico",
+      "range": [
+        400,
+        400,
+        400
+      ],
+      "rangeBurn": "400",
+      "resource": "{{ cost }} {{ abilityresourcename }}",
+      "tooltip": "Taric invoca protección divina. Tras {{ initialdelay }} s, los campeones aliados cercanos se vuelven invulnerables durante {{ invulnduration }} s.{{ spellmodifierdescriptionappend }}",
+      "vars": []
+    }
+  ],
+  "stats": {
+    "armor": 40,
+    "armorperlevel": 4.3,
+    "attackdamage": 55,
+    "attackdamageperlevel": 0,
+    "attackrange": 150,
+    "attackspeed": 0.625,
+    "attackspeedperlevel": 2,
+    "crit": 0,
+    "critperlevel": 0,
+    "hp": 645,
+    "hpperlevel": 99,
+    "hpregen": 6,
+    "hpregenperlevel": 0.5,
+    "movespeed": 340,
+    "mp": 300,
+    "mpperlevel": 60,
+    "mpregen": 8.5,
+    "mpregenperlevel": 0.8,
+    "spellblock": 28,
+    "spellblockperlevel": 2.05
+  },
+  "tags": [
+    "Support",
+    "Tank"
+  ],
+  "title": "El Escudo de Valoran"
+}
