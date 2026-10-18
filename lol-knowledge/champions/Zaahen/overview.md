@@ -45,5 +45,6 @@ Interpretación estratégica del texto oficial de las habilidades, no demostrada
 ## Advertencias de datos (`Pendiente de verificación`)
 
 - Data Dragon reporta `0` como crecimiento de daño de ataque por nivel. No se corrige ni se interpreta como decisión de diseño: puede ser un hueco de datos del parche.
+- Existe una discrepancia sobre ese crecimiento: un export del bin del cliente (CommunityDragon, fuente **no oficial**) indica otro valor, y la wiki (tercero) coincide con ese otro valor. Ninguno de los dos es fuente oficial y la discrepancia sigue abierta. Evidencia y detalle en [`../../../research/zaahen-research-handoff.md`](../../../research/zaahen-research-handoff.md).
 - No hay valores de daño, escalados ni porcentajes de las habilidades en la fuente. Cualquier cifra de daño exigiría otra fuente oficial o medición propia.
 - No hay consejos oficiales de aliados ni de enemigos: Data Dragon los publica vacíos para este campeón.

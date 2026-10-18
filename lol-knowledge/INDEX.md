@@ -13,6 +13,7 @@
 | Comprobar las fuentes | [Fuentes de Zaahen](champions/Zaahen/sources.md) |
 | Leer el dato crudo | [Zaahen.json](../data/current/champions/Zaahen.json) |
 | Comprobar el snapshot | [manifest.json](../data/current/manifest.json) |
+| Continuar la investigación de datos de Zaahen | [Documento de continuidad](../research/zaahen-research-handoff.md) |
 
 ## Cobertura actual
 
