@@ -68,7 +68,7 @@ Ejecutar en la raíz del repositorio, con el intérprete del venv:
 .\.venv\Scripts\python.exe -m lol_knowledge validate
 ```
 
-`validate` se incorpora en la fase 2; no lo documentes como disponible antes de existir.
+`validate` devuelve `0` si todo es coherente, `1` si hay violaciones y `2` si el entorno falla. No lo des por superado sin mirar el código de salida.
 
 ## 6. Etiquetas de conocimiento (obligatorias)
 
@@ -91,6 +91,9 @@ Toda sección con datos debe indicar: **parche**, **fuente**, **fecha de consult
 - Evita duplicar: el dato oficial vive en `data/current/`; la KB lo cita, no lo copia entero.
 - Archivos pequeños y consultables: el objetivo es recuperar solo lo necesario, no leer un monolito.
 - No rellenes huecos con texto plausible. Un hueco declarado es información; un hueco inventado es un fallo.
+- Para citar una entidad del snapshot usa `data:item:<id>`, `data:rune:<id>` o `data:champion:<Id>`. El validador comprueba que existan.
+- Toda ruta enlazada en Markdown debe existir y quedarse dentro del repositorio. `validate` lo comprueba.
+- Los archivos de `data/current/` se escriben con LF y sus checksums dependen de los bytes exactos. `.gitattributes` fija `eol=lf`; no lo cambies.
 
 ## 8. Pruebas
 
@@ -125,7 +128,7 @@ Un cambio está terminado cuando:
 
 - [ ] El comportamiento pedido existe y está cubierto por tests que pasan.
 - [ ] `pytest`, `ruff check .` y `ruff format --check .` pasan sin errores.
-- [ ] `lol_knowledge validate` pasa (desde la fase 2).
+- [ ] `lol_knowledge validate` pasa sin violaciones.
 - [ ] El diff se ha revisado y no incluye archivos ni cambios ajenos.
 - [ ] La documentación afectada está actualizada y no documenta nada inexistente.
 - [ ] Los commits son unidades coherentes con mensajes Conventional en inglés.

@@ -98,11 +98,11 @@ def _snapshot_files(payload: PatchPayload) -> dict[str, bytes]:
 
     for champion in payload.champions:
         champion_id = validate_champion_id(champion.champion_id)
-        _validate_champion(champion_id, champion.payload)
+        validate_champion_payload(champion_id, champion.payload)
         files[f"{CHAMPIONS_DIRNAME}/{champion_id}.json"] = _dump_json(champion.payload)
 
     for item_id, item in payload.items.items():
-        _validate_item(item_id, item)
+        validate_item_payload(item_id, item)
     unnamed_items = sorted(
         item_id for item_id, item in payload.items.items() if item.get("name") == ""
     )
@@ -117,7 +117,7 @@ def _snapshot_files(payload: PatchPayload) -> dict[str, bytes]:
         )
     files[ITEMS_FILENAME] = _dump_json(dict(payload.items))
 
-    _validate_runes(payload.runes)
+    validate_runes_payload(payload.runes)
     files[RUNES_FILENAME] = _dump_json(list(payload.runes))
 
     return files
@@ -140,7 +140,7 @@ def _champion_index(payload: PatchPayload) -> list[dict[str, Any]]:
     return index
 
 
-def _validate_champion(champion_id: str, payload: Mapping[str, Any]) -> None:
+def validate_champion_payload(champion_id: str, payload: Mapping[str, Any]) -> None:
     context = f"champion {champion_id}"
     if _require_str(payload, "id", context) != champion_id:
         raise PayloadError(f"{context} declares a different id")
@@ -170,7 +170,7 @@ def _validate_champion(champion_id: str, payload: Mapping[str, Any]) -> None:
             _require_str(record, field, spell_context)
 
 
-def _validate_item(item_id: str, item: Mapping[str, Any]) -> None:
+def validate_item_payload(item_id: str, item: Mapping[str, Any]) -> None:
     context = f"item {item_id}"
     record = _require_mapping(item, context)
     if not isinstance(record.get("name"), str):
@@ -183,7 +183,7 @@ def _validate_item(item_id: str, item: Mapping[str, Any]) -> None:
     _require_mapping(record.get("maps"), f"{context}.maps")
 
 
-def _validate_runes(runes: Sequence[Any]) -> None:
+def validate_runes_payload(runes: Sequence[Any]) -> None:
     if not isinstance(runes, Sequence) or isinstance(runes, (str, bytes)) or not runes:
         raise PayloadError("runes must be a non-empty list of rune trees")
 

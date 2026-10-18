@@ -2,7 +2,7 @@
 
 Base de conocimiento verificable de League of Legends: datos oficiales de Riot (Data Dragon), análisis con fuente declarada y una CLI en Python que ingesta, valida y calcula de forma reproducible.
 
-Estado actual: **fase 1**. Existe la ingesta del snapshot oficial de Data Dragon; el validador de integridad y el análisis de campeones llegan en las fases siguientes.
+Estado actual: **fase 2**. Existe la ingesta del snapshot oficial de Data Dragon y el validador de integridad; el análisis de campeones llega en las fases siguientes.
 
 ## Requisitos
 
@@ -24,6 +24,7 @@ python -m venv .venv
 .\.venv\Scripts\python.exe -m pytest -q
 .\.venv\Scripts\python.exe -m ruff check .
 .\.venv\Scripts\python.exe -m ruff format --check .
+.\.venv\Scripts\python.exe -m lol_knowledge validate
 ```
 
 La suite incluye pruebas de integración que ejecutan `python -m lol_knowledge` en un subproceso. Requieren el paquete instalado en modo editable (`pip install -e .`); si falta esa instalación, fallan de forma visible y no se saltan en silencio.
@@ -45,7 +46,7 @@ La suite incluye pruebas de integración que ejecutan `python -m lol_knowledge` 
 |---|---|
 | `python -m lol_knowledge version` | Disponible |
 | `python -m lol_knowledge update` | Disponible |
-| `python -m lol_knowledge validate` | Fase 2 |
+| `python -m lol_knowledge validate` | Disponible |
 | `python -m lol_knowledge damage` | Fase 4 |
 
 ## Actualización de datos
@@ -62,6 +63,25 @@ Escribe `data/current/` con `manifest.json`, `champion-index.json`, `champions/<
 La descarga se valida antes de publicarse y se escribe primero en un directorio de staging; el snapshot anterior solo se sustituye cuando el nuevo está completo, y se restaura si el renombrado falla.
 
 Códigos de salida: `0` éxito (con o sin cambios), `1` datos de origen inválidos, `2` problema de red, entorno o escritura. Sin claves de API y sin Riot API.
+
+## Validación de integridad
+
+```powershell
+.\.venv\Scripts\python.exe -m lol_knowledge validate
+```
+
+Comprueba el snapshot y la estructura de la base de conocimiento:
+
+- Forma del manifiesto, parche y fecha UTC válidos.
+- Cada archivo listado existe, con el tamaño y el `sha256` registrados; ningún archivo sobrante.
+- Índice de campeones coherente con los archivos: ids únicos y válidos, sin huérfanos, 4 habilidades y estadísticas numéricas.
+- Objetos y runas con la forma esperada.
+- Enlaces Markdown existentes y dentro del repositorio; directorios de campeón que correspondan a un id publicado.
+- Referencias `data:item:<id>`, `data:rune:<id>` y `data:champion:<Id>` que existan en el snapshot.
+
+Códigos de salida: `0` todo coherente, `1` violaciones (se listan con archivo y motivo), `2` problema de entorno. Si `lol-knowledge/` aún no existe, las comprobaciones de enlaces y referencias se informan como omitidas, no como superadas.
+
+Los checksums dependen de los bytes exactos: `.gitattributes` fija `eol=lf` para que cualquier checkout use LF.
 
 ## Limitaciones conocidas
 

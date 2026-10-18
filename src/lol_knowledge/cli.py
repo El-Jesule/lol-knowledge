@@ -10,6 +10,7 @@ from pathlib import Path
 from . import __version__
 from .errors import LolKnowledgeError, NetworkError, PayloadError
 from .snapshot import build_snapshot
+from .validate import validate_project
 
 DEFAULT_DATA_DIR = "data"
 
@@ -43,6 +44,17 @@ def build_parser() -> argparse.ArgumentParser:
         help="Directory that holds the current snapshot (default: data).",
     )
 
+    validate = subparsers.add_parser(
+        "validate",
+        help="Validate the snapshot and the knowledge base.",
+    )
+    validate.add_argument(
+        "--root",
+        type=Path,
+        default=Path("."),
+        help="Project root to validate (default: current directory).",
+    )
+
     return parser
 
 
@@ -57,7 +69,38 @@ def main(argv: list[str] | None = None) -> int:
     if args.command == "version":
         print(__version__)
         return 0
-    return _run_update(args)
+
+    handler = {"update": _run_update, "validate": _run_validate}[args.command]
+    return handler(args)
+
+
+def _run_validate(args: argparse.Namespace) -> int:
+    root: Path = args.root
+    if not root.is_dir():
+        print(f"error: {root} is not a directory", file=sys.stderr)
+        return 2
+
+    try:
+        report = validate_project(root)
+    except OSError as exc:
+        # Application boundary: filesystem failures are reported, never swallowed.
+        print(f"error: {exc}", file=sys.stderr)
+        return 2
+
+    for note in report.skipped:
+        print(f"note: {note}", file=sys.stderr)
+    for violation in report.violations:
+        print(f"error: {violation}", file=sys.stderr)
+
+    if report.violations:
+        print(
+            f"invalid: {len(report.violations)} violations in {report.checked_files} files",
+            file=sys.stderr,
+        )
+        return 1
+
+    print(f"valid: {report.checked_files} files checked")
+    return 0
 
 
 def _run_update(args: argparse.Namespace) -> int:
