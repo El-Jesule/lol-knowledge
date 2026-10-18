@@ -13,7 +13,7 @@ from datetime import UTC, datetime
 from pathlib import Path
 from typing import Any
 
-from .ddragon import DataDragonClient, PatchPayload
+from .ddragon import DataDragonClient, PatchPayload, validate_champion_id
 from .errors import PayloadError, SnapshotError
 
 LOGGER = logging.getLogger(__name__)
@@ -97,8 +97,9 @@ def _snapshot_files(payload: PatchPayload) -> dict[str, bytes]:
     files: dict[str, bytes] = {CHAMPION_INDEX_FILENAME: _dump_json(_champion_index(payload))}
 
     for champion in payload.champions:
-        _validate_champion(champion.champion_id, champion.payload)
-        files[f"{CHAMPIONS_DIRNAME}/{champion.champion_id}.json"] = _dump_json(champion.payload)
+        champion_id = validate_champion_id(champion.champion_id)
+        _validate_champion(champion_id, champion.payload)
+        files[f"{CHAMPIONS_DIRNAME}/{champion_id}.json"] = _dump_json(champion.payload)
 
     for item_id, item in payload.items.items():
         _validate_item(item_id, item)
@@ -129,7 +130,7 @@ def _champion_index(payload: PatchPayload) -> list[dict[str, Any]]:
         record = _require_mapping(entry, context)
         index.append(
             {
-                "id": _require_str(record, "id", context),
+                "id": validate_champion_id(_require_str(record, "id", context)),
                 "key": _require_str(record, "key", context),
                 "name": _require_str(record, "name", context),
                 "title": _require_str(record, "title", context),
@@ -289,8 +290,13 @@ def _publish(data_dir: Path, files: Mapping[str, bytes]) -> None:
         if staging.exists():
             shutil.rmtree(staging)
 
+        staging_root = staging.resolve()
         for relative, content in sorted(files.items()):
-            target = staging / relative
+            target = (staging / relative).resolve()
+            if not target.is_relative_to(staging_root):
+                # Defence in depth: no external value may choose a path outside staging,
+                # even if an earlier validation is ever relaxed.
+                raise SnapshotError(f"refusing to write {relative!r} outside {staging}")
             target.parent.mkdir(parents=True, exist_ok=True)
             target.write_bytes(content)
 
