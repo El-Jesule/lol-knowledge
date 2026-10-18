@@ -23,7 +23,7 @@ Objetivo: publicar en `lol-knowledge/` los valores derivados de Zaahen aprobados
 - [x] T2 — Valores derivados en `abilities.md`. Spec: S2.
 - [x] T3 — Atribución y aviso legal en `sources.md`, `README.md` e `INDEX.md`. Spec: S3, S4.
 - [x] T4 — `build.md` con insumos derivados y pendientes. Spec: S5, S6.
-- [ ] T5 — Validaciones y commit en la rama. Spec: S7, S8.
+- [x] T5 — Validaciones y commit en la rama. Spec: S7, S8.
 
 ## Log
 
@@ -31,3 +31,4 @@ Objetivo: publicar en `lol-knowledge/` los valores derivados de Zaahen aprobados
 - **L2.** Base de la decisión: sección H del handoff. Se mantiene la prohibición de presentar wiki o CommunityDragon como fuente oficial, y la de versionar archivos originales del cliente.
 - **L3.** Las cifras derivadas se escriben en texto plano para no romper la trazabilidad numérica de `validate`, que cruza los code spans de `overview.md`/`abilities.md` contra `data/current/champions/Zaahen.json`.
 - **L4.** E.1 y E.2 no se resuelven: el dato oficial de Data Dragon no se sobrescribe y la discrepancia queda declarada.
+- **L5.** Validaciones ejecutadas el 2026-10-18: `pytest -q` → `105 passed`; `PYTHONPATH=research pytest research -q` → `31 passed`; `ruff check .` → `All checks passed!`; `ruff format --check .` → `46 files already formatted`; `lol_knowledge validate` → `valid: 181 files checked` (exit 0). Commits: `ff0eb55` y `416bef1`.
