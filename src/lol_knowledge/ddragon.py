@@ -3,6 +3,7 @@
 from __future__ import annotations
 
 import json
+import re
 import urllib.error
 import urllib.parse
 import urllib.request
@@ -17,7 +18,18 @@ DEFAULT_LOCALE = "es_ES"
 REQUEST_TIMEOUT_SECONDS = 30.0
 USER_AGENT = "LoL-Knowledge/0.1 (+https://github.com/El-Jesule/lol-knowledge)"
 
+# Official Data Dragon champion ids look like "Aatrox", "AurelionSol" or "KSante".
+# The value becomes a file name in the snapshot, so anything else is rejected.
+CHAMPION_ID_PATTERN = re.compile(r"[A-Z][A-Za-z0-9]{0,30}")
+
 Opener = Callable[[str, float], bytes]
+
+
+def validate_champion_id(value: object) -> str:
+    """Return a champion id that is safe to use as a file name or URL segment."""
+    if not isinstance(value, str) or CHAMPION_ID_PATTERN.fullmatch(value) is None:
+        raise PayloadError(f"unsupported champion id {value!r}")
+    return value
 
 
 @dataclass(frozen=True)
@@ -107,9 +119,10 @@ class DataDragonClient:
         summary_payload = self.fetch_json(summary_url)
         summary = _require_data_mapping(summary_payload, summary_url)
 
-        champions = tuple(
-            self._fetch_champion(patch, champion_id) for champion_id in sorted(summary)
-        )
+        # Fail before any per-champion request if an id could escape the snapshot layout.
+        champion_ids = [validate_champion_id(raw) for raw in sorted(summary)]
+
+        champions = tuple(self._fetch_champion(patch, champion_id) for champion_id in champion_ids)
 
         items_url = self._data_url(patch, "item.json")
         items = _require_data_mapping(self.fetch_json(items_url), items_url)
@@ -130,6 +143,7 @@ class DataDragonClient:
         )
 
     def _fetch_champion(self, patch: str, champion_id: str) -> ChampionPayload:
+        validate_champion_id(champion_id)
         url = self._data_url(patch, f"champion/{urllib.parse.quote(champion_id, safe='')}.json")
         payload = self.fetch_json(url)
         data = _require_data_mapping(payload, url)
