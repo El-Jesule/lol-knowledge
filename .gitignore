@@ -1,0 +1,22 @@
+# Local environment
+.venv/
+.env
+.env.*
+
+# Python artifacts
+__pycache__/
+*.py[cod]
+*.egg-info/
+.pytest_cache/
+.ruff_cache/
+
+# Gentle-AI generated artifacts (contain absolute local paths)
+.atl/
+
+# Snapshot staging and rollback areas
+data/.staging/
+data/.backup/
+
+# OS noise
+Thumbs.db
+.DS_Store
