@@ -88,14 +88,15 @@ def fnv1a32(name: str) -> int:
         h = (h * 0x01000193) & 0xFFFFFFFF
     return h
 
+
 format(fnv1a32("ByCharLevelNamedDataValuesInterpolationCalculationPart"), "08x")  # 'ee18a47b'
 ```
 
 - **Consecuencia práctica:** se puede tratar `{ee18a47b}` como esa parte de interpolación al analizar el bin, dejando constancia de que la etiqueta es una reconstrucción propia.
 
-### D.2 H2 — Multiplicador de Q contra monstruos (valores verificados; semántica inferida)
+### D.2 H2 — Multiplicador de Q contra monstruos (valores y semántica verificados)
 
-Valores observados en el campo `MonsterDamagePercent` del bin, por versión:
+Valores observados en el campo `MonsterDamagePercent` del bin, por versión, **re-verificados el 2026-10-18** descargando cada export:
 
 | Versión de contenido | Bin | Wiki (contraste) |
 |---|---|---|
@@ -104,20 +105,21 @@ Valores observados en el campo `MonsterDamagePercent` del bin, por versión:
 | 16.3 | `1.0` | 200 % |
 | 16.20 | `1.0` | 200 % |
 
-- **Verificado:** los cuatro valores del bin, uno por versión, en el mismo campo (7 entradas idénticas por versión).
-- **Alcance de la verificación:** el valor de 16.20 se re-verificó contra el informe del prototipo (`q.monster_damage_multiplier` = `1.0`, estado `conflict`). Los de 15.23, 15.24 y 16.3 provienen de la fase anterior, con descargas puntuales que no se conservaron: **no se pueden repetir sin volver a descargar esas versiones de contenido**.
-- **Inferido (no demostrado):** que el total contra monstruos sea `1 + campo`. La secuencia encaja con la de la wiki, pero **no** se ha leído el código consumidor ni se ha medido en partida. Queda como inferencia explícita.
-- **Verificado también:** `Q1BaseDamage` no cambia entre versiones; el enfriamiento de Q sí cambió (de `9/9/8/7/6` a `10/10/9/8/7/6`), lo que confirma que el multiplicador es un campo independiente y no un efecto lateral del daño base.
-- **Uso permitido:** documentarlo como discrepancia a resolver. **Prohibido** presentarlo como daño real de Q ni extrapolarlo a otras habilidades o a otros objetivos.
+- **Verificado:** los cuatro valores del bin, uno por versión, en el mismo campo (7 entradas idénticas por versión). URLs: `https://raw.communitydragon.org/<versión>/game/data/characters/zaahen/zaahen.bin.json` para `15.23`, `15.24`, `16.3` y `16.20`. Los cuatro exports se descargaron de nuevo; no se reutilizaron cifras de la fase anterior.
+- **Verificado también:** `Q1BaseDamage` no cambia entre versiones (`15 / 30 / 45 / 60 / 75` en los cuatro exports). El enfriamiento sí cambió: `cooldownTime` es `[9, 9, 8, 7, 6, 5, 7]` en 15.23 y `[10, 10, 9, 8, 7, 6, 5]` desde 15.24. En 15.23–16.3 **no existe** el campo `Cooldown`; solo `cooldownTime`. Eso confirma que el multiplicador es un campo independiente y no un efecto lateral del daño base.
+- **Semántica verificada por el texto oficial del cliente:** la cadena `spell_zaahenq_tooltipextended` de `Global.es_ES.wad.client` dice literalmente: «Inflige un `@MonsterDamagePercent*100@%` de **daño adicional** a monstruos.» El campo es, por tanto, el porcentaje **adicional**, no el multiplicador total. Con `1.0` → +100 % adicional → 200 % del daño base. La cifra de la wiki (200 %) es coherente con esa lectura.
+- **Límite que permanece:** no se ha medido en partida ni se ha leído el código consumidor; el total se deriva de la palabra «adicional» del texto oficial. **Prohibido** presentarlo como daño real de Q sin una medición o una fórmula oficial que lo confirme.
 
-### D.3 H3 — Cadenas localizadas de Zaahen (ubicación y formato verificados; índice abierto)
+
+### D.3 H3 — Cadenas localizadas de Zaahen (ubicación, formato e índice verificados)
 
 Resumen (detalle técnico completo en la sección F):
 
 - Las cadenas localizadas de Zaahen **no** están en `Zaahen.es_ES.wad.client` (ese contenedor solo trae un activo `r3d2` y dos `BKHD` de audio).
 - Están en `Global.es_ES.wad.client` (4 084 993 bytes), dentro de dos chunks en formato **RST v5**.
-- Se verificó la presencia de las claves de localización de Zaahen y de sus valores en español.
-- **Abierto:** la asociación entre las ranuras del índice y las cadenas del blob. Los scripts de la fase anterior **no** la resolvieron (ver F.4).
+- **Resuelto:** la asociación ranura → cadena. La ranura de 8 bytes empaqueta un hash de **38 bits** en los bits bajos y el desplazamiento de la cadena en los bits altos: `clave = v & (2^38 - 1)`, `offset = v >> 38`. Verificado con `item_1001_name` → `Botas` y con los nueve nombres/tooltips de Zaahen.
+- El segundo `uint32` que antes parecía un desplazamiento inválido es `(offset << 6) | (hash >> 32 & 0x3F)`; por eso no coincidía ni con la mitad alta del hash ni con un offset.
+
 
 ### D.4 Prototipo CommunityDragon — resultados observados
 
@@ -157,9 +159,9 @@ Ninguna de estas se resolvió. **No deben usarse como datos** en cálculos ni en
 | # | Discrepancia | Evidencia | Estado |
 |---|---|---|---|
 | E.1 | Crecimiento de daño de ataque por nivel | Data Dragon publica `0`; el bin y la wiki dan `4.0` | Abierta. `validate` cruza los números oficiales contra el JSON, así que la cifra alternativa no puede ir en code span en `overview.md` |
-| E.2 | AD por acumulación de la pasiva | Bin: `PBonusADMin = 0.015` y `PBonusADMax = 0.028` (valores float32 con ruido de representación en el export: `0.014999999664723873` y `0.02800000086426735`); wiki: `2.95 %` con máximo `70.87 %` | Abierta. El mínimo coincide con la wiki y queda `corroborated`; el máximo choca y queda `conflict`. La extrapolación a nivel 20 explica `70.87 %` numéricamente, pero no demuestra el comportamiento real. El historial de parches de la propia wiki documenta `2.8 %`, contradiciendo su propio resumen |
+| E.2 | AD por acumulación de la pasiva | Bin: `PBonusADMin = 0.015` y `PBonusADMax = 0.028` (valores float32 con ruido de representación en el export: `0.014999999664723873` y `0.02800000086426735`); el tooltip oficial del cliente usa `@PercentBonusADCalc@`, y ese cálculo parte de `PBonusADMin`/`PBonusADMax`; wiki: `2.95 %` con máximo `70.87 %` | Abierta solo en el máximo: el bin y el tooltip del cliente apuntan a `2.8 %`, y el historial de la wiki también documenta `2.8 %`; el `2.95 %` del resumen de la wiki no aparece en el bin. La curva exacta por nivel depende de la parte de interpolación `{ee18a47b}` y no se ha medido |
 | E.3 | Enfriamiento: `cooldownTime` frente a `Cooldown.values` | Ambos campos existen y difieren; el segundo coincide con Data Dragon, RCP y wiki | Criterio adoptado (usar `Cooldown.values`), no equivalencia demostrada |
-| E.4 | Multiplicador de Q contra monstruos | Ver D.2 | Abierta; semántica inferida |
+| E.4 | Multiplicador de Q contra monstruos | Ver D.2 | **Resuelta en semántica:** el texto oficial del cliente dice «daño adicional»; `1.0` = +100 % → 200 % total, coherente con la wiki. El prototipo todavía compara el campo bruto (`1.0`) contra el total (`2.0`) y por eso lo marca `conflict`: es una discrepancia de representación, no de valor. Pendiente corregir el prototipo |
 | E.5 | Semántica de campos de interpolación | `mStat`/`mStatFormula` y las partes `ByCharLevel*` | Inferida por cálculo (H1) y por coherencia, no documentada |
 
 ---
@@ -203,27 +205,31 @@ Compresión: zstd (nivel 3), descomprimible con `compression.zstd` de la bibliot
 
 ### F.3 Qué sí se verificó
 
-- **Función de hash del índice:** los 32 bits **bajos** de `XXH3-64` de la clave en minúsculas. Comprobado con pares conocidos del diccionario público `hashes.rst.xxh3.txt`:
-  - `spell_zaahenq_name` → XXH3 `d81f83978bd9292d` → 32 bits bajos `8bd9292d`, presentes en el índice del chunk 0.
-  - `spell_zaahenp_name` → 32 bits bajos `9bf4c98d`, presentes.
-  - `spell_zaahenq_tooltipextended` → 32 bits bajos `9c508f79`, presentes.
-  - `generatedtip_spell_zaahenq_tooltipextended` → `972bb8562cabbabd`.
+- **Función de hash del índice:** `XXH3-64` de la clave en minúsculas, truncado a **38 bits**. El diccionario público `hashes.rst.xxh3.txt` da el hash completo; el índice usa `hash & (2^38 - 1)`.
+  - `item_1001_name` → `Botas` (verificación independiente del campeón).
+  - `spell_zaahenq_name`, `spell_zaahenp_name`, `spell_zaahenw_name`, `spell_zaahene_name`, `spell_zaahenr_name` → nombres en español.
+  - `spell_zaahenq_tooltip`, `spell_zaahenq_tooltipextended`, `spell_zaahenw_tooltip`, `spell_zaahene_tooltip`, `spell_zaahenr_tooltip`, `spell_zaahenp_summary` → textos completos con marcadores `@...@`.
+- **Discrepancia con `cdragon-rst` 0.2.0:** ese crate indica 39 bits para RST v5. En este archivo, 39 bits produce cadenas erróneas y 38 bits resuelve todos los pares comprobados. Se adopta 38 por evidencia empírica; queda anotado como posible diferencia de versión del formato.
 - **Diccionarios útiles:** `https://raw.communitydragon.org/data/hashes/lol/hashes.rst.xxh3.txt` (147 656 líneas) contiene las claves de Zaahen. `hashes.rst.txt` y `hashes.rst.xxh64.txt` (108 709 líneas cada uno) **no** las contienen.
 - **Claves ASCII en el chunk 1** (mayormente localización en inglés) y **valores en español en el chunk 0**.
 - **Claves de Zaahen verificadas como presentes:** `Spell_ZaahenQ_Name`, `Spell_ZaahenQ_Summary`, `Spell_ZaahenQ_Tooltip`, `Spell_ZaahenQ_TooltipExtended`, `Spell_ZaahenP_Name`, `Spell_ZaahenP_Summary`, `Spell_ZaahenW_Tooltip`, `Spell_ZaahenE_Tooltip`, `Spell_ZaahenR_Tooltip`.
 - **Valores en español verificados como presentes:** `Florescencia de la guerra`, `La guja de los Oscuros`, `Impulso áureo`, `Redención funesta`, `Hendidura del retorno`. Los valores contienen marcadores `@OtraClave@` que remiten a otras claves de la tabla.
 
-### F.4 Qué queda abierto (punto exacto de parada)
+### F.4 Índice RST: resuelto
 
-**Resolver la asociación ranura → cadena.** La ranura es de 8 bytes y contiene los 32 bits bajos del hash, pero:
+La ranura de 8 bytes no son dos `uint32` independientes: es un `uint64` empaquetado.
 
-- el segundo `uint32` **no** es la mitad alta del hash (para `spell_zaahenq_name` la mitad alta sería `0xd81f8397` y no aparece);
-- el segundo `uint32` **no** es un desplazamiento válido dentro del blob (se observó un valor de 1 163 902 766, fuera de los límites del archivo);
-- la tabla **no está ordenada**, así que no se puede recorrer como índice ordenado por hash.
+```text
+v      = (offset << 38) | (hash & 0x3FFFFFFFFF)
+hash   = v & 0x3FFFFFFFFF
+offset = v >> 38
+```
 
-Consecuencia: hoy la extracción de texto se hace leyendo el blob y buscando literales de clave, lo cual es suficiente para inspeccionar contenido pero **no** permite resolver `@OtraClave@` de forma sistemática ni reconstruir los tooltips completos.
-
-**El progreso del proyecto no depende de resolver esto.** Es una línea de investigación, no un bloqueo.
+- El segundo `uint32` que parecía inválido es `(offset << 6) | (hash >> 32 & 0x3F)`.
+- `entry_data` empieza en `8 + 8N`; el offset es relativo a ese punto.
+- Verificación: `item_1001_name` → `Botas`; los nueve nombres/tooltips de Zaahen se resuelven con el diccionario.
+- Consecuencia: ya se pueden reconstruir tooltips completos y resolver los marcadores `@OtraClave@` recorriendo la tabla; no hace falta buscar literales en el blob.
+- Límite: comprobado en `Global.es_ES.wad.client` de 16.20; si se reutiliza con otra locale o build, repetir la comprobación de bits.
 
 ---
 
@@ -310,12 +316,12 @@ $env:PYTHONPATH="research"
 ### Prioridad 1 — desbloquear el cálculo
 
 1. Cerrar E.1 (crecimiento de AD: `0` frente a `4.0`) con una fuente oficial o medición propia.
-2. Cerrar E.2 (AD por acumulación de la pasiva) leyendo la fórmula de la pasiva en el bin y contrastando con una medición en partida.
-3. Cerrar E.3 (tipo y valores de la penetración de la R) para poder modelar letalidad.
+2. Cerrar E.2 (AD por acumulación de la pasiva) contrastando la interpolación `PercentBonusADCalc` con una medición en partida; el bin y el tooltip del cliente apuntan a `2.8 %`, no a `2.95 %`.
+3. Cerrar G.2 (tipo y valores de la penetración de la R) para poder modelar letalidad.
 
 ### Prioridad 2 — investigación técnica
 
-4. Resolver la asociación ranura → cadena del índice RST (F.4). Con ella se podrían reconstruir tooltips completos y resolver los marcadores `@OtraClave@`.
+4. Corregir en el prototipo la representación de `MonsterDamagePercent`: el campo es daño **adicional** (`1.0` = +100 % → 200 % total), no un multiplicador total. Hasta entonces, `q.monster_damage_multiplier` seguirá marcado `conflict` por una diferencia de representación ya explicada en D.2/E.4.
 5. Confirmar si la etiqueta `ByCharLevelNamedDataValuesInterpolationCalculationPart` (H1) es correcta por una segunda vía independiente.
 
 ### Prioridad 3 — decisión de producto
