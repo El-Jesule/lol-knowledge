@@ -26,7 +26,7 @@ Objetivo: dejar el repositorio con reglas persistentes, estructura mínima y val
 ## Log
 
 - **L1.** El usuario aprueba el plan por fases presentado el 2026-10-18: «Apruebo el plan. Adelante». Decisiones aplicables a esta fase: ramas de tarea → `integration` (`--no-ff`) → `dev` (`--ff-only`); sin push; sin firma; pytest + ruff obligatorios; `AGENTS.md` como fuente de reglas; documentos de tareas compatibles con las herramientas instaladas (no hay SDD/OpenSpec, se usa ODD en `odd/tasks/`).
-- **L2.** Verificado en solo lectura: ramas `main`, `dev`, `integration` (local y remoto) apuntan al mismo commit `5fd136e`; no existía `dev` local. Data Dragon responde y el parche más reciente es `16.20.1`. `.atl/skill-registry.md` contiene 10 rutas absolutas `C:\Users\Yisus\...`, por lo que se ignora.
+- **L2.** Verificado en solo lectura: ramas `main`, `dev`, `integration` (local y remoto) apuntan al mismo commit `5fd136e`; no existía `dev` local. Data Dragon responde y el parche más reciente es `16.20.1`. `.atl/skill-registry.md` contiene rutas absolutas de la máquina local, por lo que se ignora.
 - **L3.** Entorno: OpenCode 1.18.34, Gentle-AI 4.2.0, Python 3.14.7, Node 24.18.0. pytest y ruff no estaban instalados.
 - **L4.** Verificación ejecutada el 2026-10-18 sobre `chore/project-bootstrap`: `pytest -q` → 5 passed; `ruff check .` → All checks passed; `ruff format --check .` → 7 files already formatted; `python -m lol_knowledge version` → `0.1.0`. `lol_knowledge validate` no se ejecuta: pertenece a la fase 2 y todavía no existe.
 - **L5.** Desvío justificado: el documento del plan no incluía un `.gitattributes`. Git avisa de conversión LF→CRLF en el árbol de trabajo por `core.autocrlf`; no afecta al contenido versionado y no se añadió configuración extra.
