@@ -1,0 +1,929 @@
+{
+  "allytips": [
+    "Es muy importante administrar bien la furia. Intenta coordinar las transformaciones de manera que puedas sacar el máximo partido a las dos formas. ",
+    "Colócate cerca de paredes para atraer a tus enemigos y atúrdelos con tu definitiva. ",
+    "¡Es fundamental conocer bien tus virtudes! Mini Gnar es rápido y causa mucho daño continuo, pero es vulnerable. Mega Gnar es lento, pero también duro y posee gran capacidad de estallido de daño."
+  ],
+  "blurb": "Gnar es un yordle primitivo cuyas payasadas lúdicas pueden estallar en la ira de un niño pequeño en un instante, transformándolo en una bestia enorme empeñada en la destrucción. Congelado en Hielo Puro durante milenios, la curiosa criatura se liberó y...",
+  "enemytips": [
+    "Después de hacerse pequeño, Gnar no puede acumular furia durante 15 s. Usa la oportunidad para atacar a su equipo.",
+    "La animación y la barra de recursos de Gnar cambian al acercarse el momento de su transformación. ",
+    "La definitiva de Gnar puede aturdirte si te lanza contra una pared. Ten cuidado al luchar con él cerca de una."
+  ],
+  "id": "Gnar",
+  "image": {
+    "full": "Gnar.png",
+    "group": "champion",
+    "h": 48,
+    "sprite": "champion1.png",
+    "w": 48,
+    "x": 432,
+    "y": 0
+  },
+  "info": {
+    "attack": 6,
+    "defense": 5,
+    "difficulty": 8,
+    "magic": 5
+  },
+  "key": "150",
+  "lore": "Gnar es un yordle primitivo cuyas payasadas lúdicas pueden estallar en la ira de un niño pequeño en un instante, transformándolo en una bestia enorme empeñada en la destrucción. Congelado en Hielo Puro durante milenios, la curiosa criatura se liberó y ahora salta por un mundo cambiado que él ve como exótico y maravilloso. Encantado con el peligro, Gnar arroja todo lo que puede a sus enemigos, ya sea su boomerang de hueso o un edificio cercano.",
+  "name": "Gnar",
+  "partype": "Furia",
+  "passive": {
+    "description": "Gnar genera furia en combate. Al llegar a su nivel máximo, su próxima habilidad lo transforma en Mega-Gnar, una forma en la que es más resistente y tiene acceso a nuevas habilidades.",
+    "image": {
+      "full": "Gnar_Passive.png",
+      "group": "passive",
+      "h": 48,
+      "sprite": "passive1.png",
+      "w": 48,
+      "x": 432,
+      "y": 0
+    },
+    "name": "Gen de furia"
+  },
+  "recommended": [],
+  "skins": [
+    {
+      "chromas": false,
+      "id": "150000",
+      "name": "default",
+      "num": 0
+    },
+    {
+      "chromas": true,
+      "id": "150001",
+      "name": "Gnar dinosaurio",
+      "num": 1
+    },
+    {
+      "chromas": false,
+      "id": "150002",
+      "name": "Gnar caballero",
+      "num": 2
+    },
+    {
+      "chromas": false,
+      "id": "150003",
+      "name": "Gnar día nevado",
+      "num": 3
+    },
+    {
+      "chromas": false,
+      "id": "150004",
+      "name": "El León Gnar",
+      "num": 4
+    },
+    {
+      "chromas": false,
+      "id": "150005",
+      "name": "Gnar dinosaurio (zafiro)",
+      "num": 5,
+      "parentSkin": 1
+    },
+    {
+      "chromas": false,
+      "id": "150006",
+      "name": "Gnar dinosaurio (cuarzo rosa)",
+      "num": 6,
+      "parentSkin": 1
+    },
+    {
+      "chromas": false,
+      "id": "150007",
+      "name": "Gnar dinosaurio (ojo de gato)",
+      "num": 7,
+      "parentSkin": 1
+    },
+    {
+      "chromas": false,
+      "id": "150008",
+      "name": "Gnar dinosaurio (perla)",
+      "num": 8,
+      "parentSkin": 1
+    },
+    {
+      "chromas": false,
+      "id": "150009",
+      "name": "Gnar dinosaurio (astral)",
+      "num": 9,
+      "parentSkin": 1
+    },
+    {
+      "chromas": false,
+      "id": "150010",
+      "name": "Gnar dinosaurio (peridoto)",
+      "num": 10,
+      "parentSkin": 1
+    },
+    {
+      "chromas": false,
+      "id": "150011",
+      "name": "Gnar dinosaurio (aguamarina)",
+      "num": 11,
+      "parentSkin": 1
+    },
+    {
+      "chromas": false,
+      "id": "150012",
+      "name": "Gnar dinosaurio (amatista)",
+      "num": 12,
+      "parentSkin": 1
+    },
+    {
+      "chromas": false,
+      "id": "150013",
+      "name": "Gnar supergaláctico",
+      "num": 13
+    },
+    {
+      "chromas": true,
+      "id": "150014",
+      "name": "Gnar SSG",
+      "num": 14
+    },
+    {
+      "chromas": true,
+      "id": "150015",
+      "name": "Gnar astronauta",
+      "num": 15
+    },
+    {
+      "chromas": false,
+      "id": "150016",
+      "name": "Gnar astronauta (rubí)",
+      "num": 16,
+      "parentSkin": 15
+    },
+    {
+      "chromas": false,
+      "id": "150017",
+      "name": "Gnar astronauta (ojo de gato)",
+      "num": 17,
+      "parentSkin": 15
+    },
+    {
+      "chromas": false,
+      "id": "150018",
+      "name": "Gnar astronauta (cuarzo rosa)",
+      "num": 18,
+      "parentSkin": 15
+    },
+    {
+      "chromas": false,
+      "id": "150019",
+      "name": "Gnar astronauta (aguamarina)",
+      "num": 19,
+      "parentSkin": 15
+    },
+    {
+      "chromas": false,
+      "id": "150020",
+      "name": "Gnar astronauta (granito)",
+      "num": 20,
+      "parentSkin": 15
+    },
+    {
+      "chromas": false,
+      "id": "150021",
+      "name": "Gnar astronauta (crono)",
+      "num": 21,
+      "parentSkin": 15
+    },
+    {
+      "chromas": true,
+      "id": "150022",
+      "name": "Gnar bosque ancestral",
+      "num": 22
+    },
+    {
+      "chromas": false,
+      "id": "150023",
+      "name": "Gnar bosque ancestral (rubí)",
+      "num": 23,
+      "parentSkin": 22
+    },
+    {
+      "chromas": false,
+      "id": "150024",
+      "name": "Gnar bosque ancestral (citrino)",
+      "num": 24,
+      "parentSkin": 22
+    },
+    {
+      "chromas": false,
+      "id": "150025",
+      "name": "Gnar bosque ancestral (esmeralda)",
+      "num": 25,
+      "parentSkin": 22
+    },
+    {
+      "chromas": false,
+      "id": "150026",
+      "name": "Gnar bosque ancestral (tanzanita)",
+      "num": 26,
+      "parentSkin": 22
+    },
+    {
+      "chromas": false,
+      "id": "150027",
+      "name": "Gnar bosque ancestral (zafiro)",
+      "num": 27,
+      "parentSkin": 22
+    },
+    {
+      "chromas": false,
+      "id": "150028",
+      "name": "Gnar bosque ancestral (cuarzo rosa)",
+      "num": 28,
+      "parentSkin": 22
+    },
+    {
+      "chromas": false,
+      "id": "150029",
+      "name": "Gnar bosque ancestral (perla)",
+      "num": 29,
+      "parentSkin": 22
+    },
+    {
+      "chromas": false,
+      "id": "150030",
+      "name": "Gnar bosque ancestral (obsidiana)",
+      "num": 30,
+      "parentSkin": 22
+    },
+    {
+      "chromas": true,
+      "id": "150031",
+      "name": "Gnar la Ilusión",
+      "num": 31
+    },
+    {
+      "chromas": false,
+      "id": "150032",
+      "name": "Gnar la Ilusión (rubí)",
+      "num": 32,
+      "parentSkin": 31
+    },
+    {
+      "chromas": false,
+      "id": "150033",
+      "name": "Gnar la Ilusión (esmeralda)",
+      "num": 33,
+      "parentSkin": 31
+    },
+    {
+      "chromas": false,
+      "id": "150034",
+      "name": "Gnar la Ilusión (cuarzo rosa)",
+      "num": 34,
+      "parentSkin": 31
+    },
+    {
+      "chromas": false,
+      "id": "150035",
+      "name": "Gnar la Ilusión (zafiro)",
+      "num": 35,
+      "parentSkin": 31
+    },
+    {
+      "chromas": false,
+      "id": "150036",
+      "name": "Gnar la Ilusión (ojo de gato)",
+      "num": 36,
+      "parentSkin": 31
+    },
+    {
+      "chromas": false,
+      "id": "150037",
+      "name": "Gnar la Ilusión (turquesa)",
+      "num": 37,
+      "parentSkin": 31
+    },
+    {
+      "chromas": false,
+      "id": "150038",
+      "name": "Gnar la Ilusión (tanzanita)",
+      "num": 38,
+      "parentSkin": 31
+    },
+    {
+      "chromas": false,
+      "id": "150039",
+      "name": "Gnar la Ilusión (perla)",
+      "num": 39,
+      "parentSkin": 31
+    },
+    {
+      "chromas": false,
+      "id": "150040",
+      "name": "Gnar la Ilusión (vívido)",
+      "num": 40,
+      "parentSkin": 31
+    },
+    {
+      "chromas": true,
+      "id": "150041",
+      "name": "Gnar T1",
+      "num": 41
+    },
+    {
+      "chromas": false,
+      "id": "150042",
+      "name": "Gnar T1 (élite)",
+      "num": 42,
+      "parentSkin": 41
+    },
+    {
+      "chromas": false,
+      "id": "150043",
+      "name": "Gnar SSG (élite)",
+      "num": 43,
+      "parentSkin": 14
+    }
+  ],
+  "spells": [
+    {
+      "cooldown": [
+        16,
+        14.5,
+        13,
+        11.5,
+        10
+      ],
+      "cooldownBurn": "16/14.5/13/11.5/10",
+      "cost": [
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "costBurn": "0",
+      "costType": "Sin coste",
+      "datavalues": {},
+      "description": "Gnar lanza un bumerán que daña y ralentiza a los enemigos que alcanza antes de volver a él. Si recoge el bumerán, el enfriamiento se reduce.<br><br>Mega-Gnar lanza un peñasco a un enemigo y daña y ralentiza a los que están a su alrededor. También en este caso se puede recoger el proyectil para reducir el enfriamiento.",
+      "effect": [
+        null,
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ]
+      ],
+      "effectBurn": [
+        null,
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0"
+      ],
+      "id": "GnarQ",
+      "image": {
+        "full": "GnarQ.png",
+        "group": "spell",
+        "h": 48,
+        "sprite": "spell4.png",
+        "w": 48,
+        "x": 0,
+        "y": 144
+      },
+      "leveltip": {
+        "effect": [
+          "{{ minibasedamage }} -> {{ minibasedamageNL }}",
+          "{{ megabasedamage }} -> {{ megabasedamageNL }}",
+          "{{ slowamount*100.000000 }}% -> {{ slowamountnl*100.000000 }}%",
+          "{{ megaslowamount*100.000000 }}% -> {{ megaslowamountnl*100.000000 }}%",
+          "{{ cooldown }} -> {{ cooldownNL }}"
+        ],
+        "label": [
+          "Daño del bumerán",
+          "Daño del peñasco",
+          "Ralentización",
+          "Porcentaje de ralentización de Peñascazo",
+          "Enfriamiento"
+        ]
+      },
+      "maxammo": "-1",
+      "maxrank": 5,
+      "name": "Bumerán / Peñascazo",
+      "range": [
+        1100,
+        1100,
+        1100,
+        1100,
+        1100
+      ],
+      "rangeBurn": "1100",
+      "resource": "Sin coste",
+      "tooltip": "<keywordMajor>Mini-Gnar:</keywordMajor> Gnar lanza un bumerán que inflige <physicalDamage>{{ spell.gnarq:minitotaldamage }} de daño físico</physicalDamage> y <status>ralentiza</status> un {{ spell.gnarq:slowamount*100 }}% durante {{ spell.gnarq:slowduration }} s. El bumerán vuelve después de golpear a un enemigo e inflige daño reducido a los siguientes objetivos golpeados. Solo se puede golpear una vez a cada enemigo. Recoger el bumerán reduce su enfriamiento un {{ spell.gnarq:minicdrefund*100 }}%.{{ spellmodifierdescriptionappend }}",
+      "vars": []
+    },
+    {
+      "cooldown": [
+        7,
+        7,
+        7,
+        7,
+        7
+      ],
+      "cooldownBurn": "7",
+      "cost": [
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "costBurn": "0",
+      "costType": "Sin coste",
+      "datavalues": {},
+      "description": "Los ataques y hechizos de Gnar lo aceleran, con lo que causa daño adicional y aumenta su velocidad de movimiento.<br><br>Mega-Gnar está demasiado furioso para correr y lo que hace es levantarse y golpear con violencia la zona que tiene delante. Los enemigos situados en ella quedan aturdidos.",
+      "effect": [
+        null,
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ]
+      ],
+      "effectBurn": [
+        null,
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0"
+      ],
+      "id": "GnarW",
+      "image": {
+        "full": "GnarW.png",
+        "group": "spell",
+        "h": 48,
+        "sprite": "spell4.png",
+        "w": 48,
+        "x": 48,
+        "y": 144
+      },
+      "leveltip": {
+        "effect": [
+          "{{ minibasedamage }} -> {{ minibasedamageNL }}",
+          "{{ minipercenthpdamage*100.000000 }}% -> {{ minipercenthpdamagenl*100.000000 }}%",
+          "{{ megabasedamage }} -> {{ megabasedamageNL }}"
+        ],
+        "label": [
+          "Daño de Híper",
+          "Daño porcentual de vida de Híper",
+          "Daño de Golpazo"
+        ]
+      },
+      "maxammo": "-1",
+      "maxrank": 5,
+      "name": "Híper / Golpazo",
+      "range": [
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "rangeBurn": "0",
+      "resource": "Sin coste",
+      "tooltip": "<keywordMajor>Pasiva de Mini-Gnar:</keywordMajor> Cada tercer ataque o habilidad contra un mismo objetivo inflige <magicDamage>{{ spell.gnarw:minitotaldamage }} + {{ spell.gnarw:minipercenthpdamage*100 }}% de su vida máxima como daño mágico</magicDamage> adicional y otorga a Gnar un <speed>{{ spell.gnarr:rhypermovementspeedpercent }}% de velocidad de movimiento</speed> que disminuye a lo largo de {{ spell.gnarw:minihasteduration }} s.{{ spellmodifierdescriptionappend }}",
+      "vars": []
+    },
+    {
+      "cooldown": [
+        22,
+        19.5,
+        17,
+        14.5,
+        12
+      ],
+      "cooldownBurn": "22/19.5/17/14.5/12",
+      "cost": [
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "costBurn": "0",
+      "costType": "Sin coste",
+      "datavalues": {},
+      "description": "Gnar salta sobre una ubicación y, si aterriza sobre la cabeza de una unidad, puede seguir saltando.<br><br>Mega-Gnar es demasiado grande para rebotar, así que aterriza con fuerza devastadora y causa daño en la zona circundante.",
+      "effect": [
+        null,
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ]
+      ],
+      "effectBurn": [
+        null,
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0"
+      ],
+      "id": "GnarE",
+      "image": {
+        "full": "GnarE.png",
+        "group": "spell",
+        "h": 48,
+        "sprite": "spell4.png",
+        "w": 48,
+        "x": 96,
+        "y": 144
+      },
+      "leveltip": {
+        "effect": [
+          "{{ minidamage }} -> {{ minidamageNL }}",
+          "{{ megadamage }} -> {{ megadamageNL }}",
+          "{{ minibas*100.000000 }}% -> {{ minibasnl*100.000000 }}%",
+          "{{ cooldown }} -> {{ cooldownNL }}"
+        ],
+        "label": [
+          "Daño de Brinco",
+          "Daño de Sacudida",
+          "Velocidad de ataque adicional",
+          "Enfriamiento"
+        ]
+      },
+      "maxammo": "-1",
+      "maxrank": 5,
+      "name": "Brinco / Sacudida",
+      "range": [
+        475,
+        475,
+        475,
+        475,
+        475
+      ],
+      "rangeBurn": "475",
+      "resource": "Sin coste",
+      "tooltip": "<keywordMajor>Mini-Gnar:</keywordMajor> Gnar salta y obtiene un <attackSpeed>{{ spell.gnare:minibas*100 }}% de velocidad de ataque</attackSpeed> durante {{ spell.gnare:miniasduration }} s. Si Gnar aterriza sobre una unidad, rebota en ella y prolonga el salto. Rebotar sobre un enemigo le inflige <physicalDamage>{{ spell.gnare:minitotaldamage }} de daño físico</physicalDamage> y lo <status>ralentiza brevemente</status> un {{ spell.gnare:movespeedmod*-100 }}%.{{ spellmodifierdescriptionappend }}",
+      "vars": []
+    },
+    {
+      "cooldown": [
+        90,
+        60,
+        30
+      ],
+      "cooldownBurn": "90/60/30",
+      "cost": [
+        0,
+        0,
+        0
+      ],
+      "costBurn": "0",
+      "costType": "Sin coste",
+      "datavalues": {},
+      "description": "Mega-Gnar arroja en una dirección a todos los enemigos circundantes, que resultan dañados y ralentizados. Cualquier enemigo que choque con un muro queda aturdido y recibe daño adicional.",
+      "effect": [
+        null,
+        [
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0
+        ]
+      ],
+      "effectBurn": [
+        null,
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0"
+      ],
+      "id": "GnarR",
+      "image": {
+        "full": "GnarR.png",
+        "group": "spell",
+        "h": 48,
+        "sprite": "spell4.png",
+        "w": 48,
+        "x": 144,
+        "y": 144
+      },
+      "leveltip": {
+        "effect": [
+          "{{ rbasedamage }} -> {{ rbasedamageNL }}",
+          "{{ rccduration }} -> {{ rccdurationNL }}",
+          "{{ rhypermovementspeedpercent }}% -> {{ rhypermovementspeedpercentNL }}%",
+          "{{ cooldown }} -> {{ cooldownNL }}"
+        ],
+        "label": [
+          "Daño",
+          "Duración de la ralentización/aturdimiento",
+          "Hipervelocidad de movimiento",
+          "Enfriamiento"
+        ]
+      },
+      "maxammo": "-1",
+      "maxrank": 3,
+      "name": "¡GNAR!",
+      "range": [
+        590,
+        590,
+        590
+      ],
+      "rangeBurn": "590",
+      "resource": "Sin coste",
+      "tooltip": "<keywordMajor>Pasiva de Mini-Gnar:</keywordMajor> Aumenta la <speed>velocidad de movimiento</speed> de <spellName>Híper</spellName>.<br /><br /><keywordMajor>Mega-Gnar:</keywordMajor> Gnar lanza a los enemigos cercanos, lo que les inflige <physicalDamage>{{ damage }} de daño físico</physicalDamage>, los <status>empuja</status> y los <status>ralentiza</status> un {{ rslowpercent }}% durante {{ rccduration }} s. Los enemigos que se estrellen contra un muro sufren <physicalDamage>{{ walldamage }} de daño físico</physicalDamage> y quedan <status>aturdidos</status>.{{ spellmodifierdescriptionappend }}",
+      "vars": []
+    }
+  ],
+  "stats": {
+    "armor": 32,
+    "armorperlevel": 3.7,
+    "attackdamage": 60,
+    "attackdamageperlevel": 0,
+    "attackrange": 175,
+    "attackspeed": 0.625,
+    "attackspeedperlevel": 6,
+    "crit": 0,
+    "critperlevel": 0,
+    "hp": 540,
+    "hpperlevel": 79,
+    "hpregen": 4.5,
+    "hpregenperlevel": 1.25,
+    "movespeed": 335,
+    "mp": 100,
+    "mpperlevel": 0,
+    "mpregen": 0,
+    "mpregenperlevel": 0,
+    "spellblock": 30,
+    "spellblockperlevel": 1.3
+  },
+  "tags": [
+    "Fighter",
+    "Tank"
+  ],
+  "title": "El Eslabón Perdido"
+}

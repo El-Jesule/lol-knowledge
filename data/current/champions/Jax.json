@@ -1,0 +1,922 @@
+{
+  "allytips": [
+    "Jax puede utilizar Golpe en salto sobre las unidades aliadas, guardianes incluidos. Puedes usar esta habilidad para huir de los problemas.",
+    "Jax se beneficia mucho de objetos con poder de habilidad y daño de ataque, tales como la Hoja de furia de Guinsoo y el Sable-pistola hextech."
+  ],
+  "blurb": "Incomparable en su habilidad con armas especiales y su mordaz sarcasmo, Jax es el último maestro de armas conocido de Icathia. Después de que su tierra natal fuera devastada por su propia arrogancia al desatar el Vacío, Jax y los suyos juraron proteger...",
+  "enemytips": [
+    "En vez de chocar directamente con él, intenta atacarlo en rápidas ráfagas. Impedir que ataque de forma consecutiva reduce drásticamente su capacidad de daño.",
+    "Jax puede esquivar todos los ataques que reciba durante un breve período de tiempo y, al acabarse, aturde a todos los enemigos que estén al alcance de un ataque cuerpo a cuerpo. Para golpearle, espera hasta que acabe su habilidad de Contraataque."
+  ],
+  "id": "Jax",
+  "image": {
+    "full": "Jax.png",
+    "group": "champion",
+    "h": 48,
+    "sprite": "champion1.png",
+    "w": 48,
+    "x": 48,
+    "y": 96
+  },
+  "info": {
+    "attack": 7,
+    "defense": 5,
+    "difficulty": 5,
+    "magic": 7
+  },
+  "key": "24",
+  "lore": "Incomparable en su habilidad con armas especiales y su mordaz sarcasmo, Jax es el último maestro de armas conocido de Icathia. Después de que su tierra natal fuera devastada por su propia arrogancia al desatar el Vacío, Jax y los suyos juraron proteger lo poco que quedó. Ahora que la magia se asienta en el mundo, esta amenaza durmiente acecha de nuevo y Jax vaga por Valoran con la última luz de Icathia, poniendo a prueba a todos los guerreros con los que se encuentra para saber si hay alguno lo suficientemente fuerte como para combatir a su lado...",
+  "name": "Jax",
+  "partype": "Maná",
+  "passive": {
+    "description": "Los ataques básicos consecutivos de Jax aumentan su velocidad de ataque constantemente.",
+    "image": {
+      "full": "Armsmaster_MasterOfArms.png",
+      "group": "passive",
+      "h": 48,
+      "sprite": "passive1.png",
+      "w": 48,
+      "x": 48,
+      "y": 96
+    },
+    "name": "Asalto implacable"
+  },
+  "recommended": [],
+  "skins": [
+    {
+      "chromas": false,
+      "id": "24000",
+      "name": "default",
+      "num": 0
+    },
+    {
+      "chromas": false,
+      "id": "24001",
+      "name": "Jax poderoso",
+      "num": 1
+    },
+    {
+      "chromas": false,
+      "id": "24002",
+      "name": "Jax vándalo",
+      "num": 2
+    },
+    {
+      "chromas": false,
+      "id": "24003",
+      "name": "Jax pescador",
+      "num": 3
+    },
+    {
+      "chromas": false,
+      "id": "24004",
+      "name": "Jax PAX",
+      "num": 4
+    },
+    {
+      "chromas": false,
+      "id": "24005",
+      "name": "Jáximus",
+      "num": 5
+    },
+    {
+      "chromas": false,
+      "id": "24006",
+      "name": "Jax del templo",
+      "num": 6
+    },
+    {
+      "chromas": true,
+      "id": "24007",
+      "name": "Jax némesis",
+      "num": 7
+    },
+    {
+      "chromas": true,
+      "id": "24008",
+      "name": "Jax SKT T1",
+      "num": 8
+    },
+    {
+      "chromas": false,
+      "id": "24009",
+      "name": "Jax némesis - Arena brillante",
+      "num": 9,
+      "parentSkin": 7
+    },
+    {
+      "chromas": false,
+      "id": "24010",
+      "name": "Jax némesis - Arena ámbar",
+      "num": 10,
+      "parentSkin": 7
+    },
+    {
+      "chromas": false,
+      "id": "24011",
+      "name": "Jax némesis - Arena ladrillo",
+      "num": 11,
+      "parentSkin": 7
+    },
+    {
+      "chromas": false,
+      "id": "24012",
+      "name": "Jax coraza plateada",
+      "num": 12
+    },
+    {
+      "chromas": false,
+      "id": "24013",
+      "name": "Jax bastón divino",
+      "num": 13
+    },
+    {
+      "chromas": true,
+      "id": "24014",
+      "name": "Jax Reinos mecha",
+      "num": 14
+    },
+    {
+      "chromas": false,
+      "id": "24015",
+      "name": "Jax Reinos mecha (rubí)",
+      "num": 15,
+      "parentSkin": 14
+    },
+    {
+      "chromas": false,
+      "id": "24016",
+      "name": "Jax Reinos mecha (peridoto)",
+      "num": 16,
+      "parentSkin": 14
+    },
+    {
+      "chromas": false,
+      "id": "24017",
+      "name": "Jax Reinos mecha (cuarzo rosa)",
+      "num": 17,
+      "parentSkin": 14
+    },
+    {
+      "chromas": false,
+      "id": "24018",
+      "name": "Jax Reinos mecha (agente de la ley)",
+      "num": 18,
+      "parentSkin": 14
+    },
+    {
+      "chromas": false,
+      "id": "24019",
+      "name": "Jax Reinos mecha (perla)",
+      "num": 19,
+      "parentSkin": 14
+    },
+    {
+      "chromas": false,
+      "id": "24020",
+      "name": "Jax conquistador",
+      "num": 20
+    },
+    {
+      "chromas": false,
+      "id": "24021",
+      "name": "Jax conquistador de prestigio",
+      "num": 21
+    },
+    {
+      "chromas": true,
+      "id": "24022",
+      "name": "Jax empíreo",
+      "num": 22
+    },
+    {
+      "chromas": false,
+      "id": "24023",
+      "name": "Jax empíreo (rubí)",
+      "num": 23,
+      "parentSkin": 22
+    },
+    {
+      "chromas": false,
+      "id": "24024",
+      "name": "Jax empíreo (ojo de gato)",
+      "num": 24,
+      "parentSkin": 22
+    },
+    {
+      "chromas": false,
+      "id": "24025",
+      "name": "Jax empíreo (esmeralda)",
+      "num": 25,
+      "parentSkin": 22
+    },
+    {
+      "chromas": false,
+      "id": "24026",
+      "name": "Jax empíreo (cuarzo rosa)",
+      "num": 26,
+      "parentSkin": 22
+    },
+    {
+      "chromas": false,
+      "id": "24027",
+      "name": "Jax empíreo (turquesa)",
+      "num": 27,
+      "parentSkin": 22
+    },
+    {
+      "chromas": false,
+      "id": "24028",
+      "name": "Jax empíreo (tanzanita)",
+      "num": 28,
+      "parentSkin": 22
+    },
+    {
+      "chromas": false,
+      "id": "24029",
+      "name": "Jax empíreo (citrino)",
+      "num": 29,
+      "parentSkin": 22
+    },
+    {
+      "chromas": false,
+      "id": "24030",
+      "name": "Jax empíreo (perla)",
+      "num": 30,
+      "parentSkin": 22
+    },
+    {
+      "chromas": false,
+      "id": "24031",
+      "name": "Jax empíreo (fulgor de neón)",
+      "num": 31,
+      "parentSkin": 22
+    },
+    {
+      "chromas": false,
+      "id": "24032",
+      "name": "Jax PAX Neo",
+      "num": 32
+    },
+    {
+      "chromas": true,
+      "id": "24033",
+      "name": "PROYECTO: Jax",
+      "num": 33
+    },
+    {
+      "chromas": false,
+      "id": "24034",
+      "name": "PROYECTO: Jax (rubí)",
+      "num": 34,
+      "parentSkin": 33
+    },
+    {
+      "chromas": false,
+      "id": "24035",
+      "name": "PROYECTO: Jax (ojo de gato)",
+      "num": 35,
+      "parentSkin": 33
+    },
+    {
+      "chromas": false,
+      "id": "24036",
+      "name": "PROYECTO: Jax (esmeralda)",
+      "num": 36,
+      "parentSkin": 33
+    },
+    {
+      "chromas": false,
+      "id": "24037",
+      "name": "PROYECTO: Jax (turquesa)",
+      "num": 37,
+      "parentSkin": 33
+    },
+    {
+      "chromas": false,
+      "id": "24038",
+      "name": "PROYECTO: Jax (amatista)",
+      "num": 38,
+      "parentSkin": 33
+    },
+    {
+      "chromas": false,
+      "id": "24039",
+      "name": "PROYECTO: Jax (zafiro)",
+      "num": 39,
+      "parentSkin": 33
+    },
+    {
+      "chromas": false,
+      "id": "24040",
+      "name": "PROYECTO: Jax (obsidiana)",
+      "num": 40,
+      "parentSkin": 33
+    },
+    {
+      "chromas": false,
+      "id": "24041",
+      "name": "PROYECTO: Jax (arenisca)",
+      "num": 41,
+      "parentSkin": 33
+    },
+    {
+      "chromas": true,
+      "id": "24042",
+      "name": "Jax cámara de magma de prestigio",
+      "num": 42
+    },
+    {
+      "chromas": false,
+      "id": "24043",
+      "name": "Jax cámara de magma de prestigio (vívido)",
+      "num": 43,
+      "parentSkin": 42
+    },
+    {
+      "chromas": false,
+      "id": "24044",
+      "name": "Jax SKT T1 (élite)",
+      "num": 44,
+      "parentSkin": 8
+    }
+  ],
+  "spells": [
+    {
+      "cooldown": [
+        8,
+        7.5,
+        7,
+        6.5,
+        6
+      ],
+      "cooldownBurn": "8/7.5/7/6.5/6",
+      "cost": [
+        50,
+        50,
+        50,
+        50,
+        50
+      ],
+      "costBurn": "50",
+      "costType": " {{ abilityresourcename }}",
+      "datavalues": {},
+      "description": "Jax salta hacia una unidad. Si es un enemigo, lo golpea con su arma.",
+      "effect": [
+        null,
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ]
+      ],
+      "effectBurn": [
+        null,
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0"
+      ],
+      "id": "JaxQ",
+      "image": {
+        "full": "JaxQ.png",
+        "group": "spell",
+        "h": 48,
+        "sprite": "spell5.png",
+        "w": 48,
+        "x": 384,
+        "y": 144
+      },
+      "leveltip": {
+        "effect": [
+          "{{ damage }} -> {{ damageNL }}",
+          "{{ cooldown }} -> {{ cooldownNL }}"
+        ],
+        "label": [
+          "Daño",
+          "Enfriamiento"
+        ]
+      },
+      "maxammo": "-1",
+      "maxrank": 5,
+      "name": "Golpe en salto",
+      "range": [
+        700,
+        700,
+        700,
+        700,
+        700
+      ],
+      "rangeBurn": "700",
+      "resource": "{{ cost }} {{ abilityresourcename }}",
+      "tooltip": "Jax salta hacia una unidad amistosa o enemiga o un guardián, lo que inflige <physicalDamage>{{ totaldamage }} de daño físico</physicalDamage> si es un enemigo.{{ spellmodifierdescriptionappend }}",
+      "vars": []
+    },
+    {
+      "cooldown": [
+        7,
+        6,
+        5,
+        4,
+        3
+      ],
+      "cooldownBurn": "7/6/5/4/3",
+      "cost": [
+        30,
+        30,
+        30,
+        30,
+        30
+      ],
+      "costBurn": "30",
+      "costType": " {{ abilityresourcename }}",
+      "datavalues": {},
+      "description": "Jax carga su arma con energía para que su siguiente ataque cause daño adicional.",
+      "effect": [
+        null,
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ]
+      ],
+      "effectBurn": [
+        null,
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0"
+      ],
+      "id": "JaxW",
+      "image": {
+        "full": "JaxW.png",
+        "group": "spell",
+        "h": 48,
+        "sprite": "spell5.png",
+        "w": 48,
+        "x": 432,
+        "y": 144
+      },
+      "leveltip": {
+        "effect": [
+          "{{ damage }} -> {{ damageNL }}",
+          "{{ cooldown }} -> {{ cooldownNL }}"
+        ],
+        "label": [
+          "Daño",
+          "Enfriamiento"
+        ]
+      },
+      "maxammo": "-1",
+      "maxrank": 5,
+      "name": "Potenciación",
+      "range": [
+        300,
+        300,
+        300,
+        300,
+        300
+      ],
+      "rangeBurn": "300",
+      "resource": "{{ cost }} {{ abilityresourcename }}",
+      "tooltip": "Jax carga su arma con energía para que su siguiente ataque o <spellName>Golpe en salto</spellName> inflija <magicDamage>{{ totaldamage }} de daño mágico</magicDamage> adicional.{{ spellmodifierdescriptionappend }}",
+      "vars": []
+    },
+    {
+      "cooldown": [
+        17,
+        15,
+        13,
+        11,
+        9
+      ],
+      "cooldownBurn": "17/15/13/11/9",
+      "cost": [
+        50,
+        60,
+        70,
+        80,
+        90
+      ],
+      "costBurn": "50/60/70/80/90",
+      "costType": " {{ abilityresourcename }}",
+      "datavalues": {},
+      "description": "La habilidad de Jax para el combate le permite esquivar todos los ataques que reciba durante un breve período de tiempo y luego contraatacar rápidamente, aturdiendo a todos los enemigos de los alrededores.",
+      "effect": [
+        null,
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ]
+      ],
+      "effectBurn": [
+        null,
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0"
+      ],
+      "id": "JaxE",
+      "image": {
+        "full": "JaxE.png",
+        "group": "spell",
+        "h": 48,
+        "sprite": "spell6.png",
+        "w": 48,
+        "x": 0,
+        "y": 0
+      },
+      "leveltip": {
+        "effect": [
+          "{{ basedamage }} -> {{ basedamageNL }}",
+          "{{ cooldown }} -> {{ cooldownNL }}",
+          "{{ cost }} -> {{ costNL }}"
+        ],
+        "label": [
+          "Daño",
+          "Enfriamiento",
+          "Coste de @AbilityResourceName@"
+        ]
+      },
+      "maxammo": "-1",
+      "maxrank": 5,
+      "name": "Contraataque",
+      "range": [
+        300,
+        300,
+        300,
+        300,
+        300
+      ],
+      "rangeBurn": "300",
+      "resource": "{{ cost }} {{ abilityresourcename }}",
+      "tooltip": "Jax adopta una pose defensiva durante un máximo de {{ dodgeduration }} s, esquiva los ataques y recibe un {{ aoedamagereduction }}% menos de daño de las habilidades de área de efecto. Tras {{ dodgeduration }} s o al <recast>volver a lanzar la habilidad</recast>, Jax inflige <magicDamage>{{ totaldamage }} + {{ percenthealthdamage }}% de su vida máxima como daño mágico</magicDamage> y <status>aturde</status> a los enemigos cercanos durante {{ stunduration }} s. <br /><br />El daño aumenta un {{ percentincreasedperdodge*100 }}% por ataque esquivado, hasta un máximo de <magicDamage>{{ maxdamage }} + {{ maxpercenthealthdamage }}% de la vida máxima</magicDamage>.{{ spellmodifierdescriptionappend }}",
+      "vars": []
+    },
+    {
+      "cooldown": [
+        110,
+        100,
+        90
+      ],
+      "cooldownBurn": "110/100/90",
+      "cost": [
+        100,
+        100,
+        100
+      ],
+      "costBurn": "100",
+      "costType": " {{ abilityresourcename }}",
+      "datavalues": {},
+      "description": "Cada tercer golpe consecutivo inflige daño mágico adicional. Además, Jax puede activar esta habilidad para infligir daño a su alrededor y fortalecer su resolución, lo que aumenta su armadura y resistencia mágica durante un breve periodo.",
+      "effect": [
+        null,
+        [
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0
+        ]
+      ],
+      "effectBurn": [
+        null,
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0"
+      ],
+      "id": "JaxR",
+      "image": {
+        "full": "JaxR.png",
+        "group": "spell",
+        "h": 48,
+        "sprite": "spell6.png",
+        "w": 48,
+        "x": 48,
+        "y": 0
+      },
+      "leveltip": {
+        "effect": [
+          "{{ passivebasedamage }} -> {{ passivebasedamageNL }}",
+          "{{ swingdamagebase }} -> {{ swingdamagebaseNL }}",
+          "{{ baseresists }} -> {{ baseresistsNL }}",
+          "{{ baseresists*0.600000 }} -> {{ baseresistsnl*0.600000 }}",
+          "{{ resistsperextratarget }} -> {{ resistsperextratargetNL }}",
+          "{{ resistsperextratarget*0.600000 }} -> {{ resistsperextratargetnl*0.600000 }}",
+          "{{ cooldown }} -> {{ cooldownNL }}"
+        ],
+        "label": [
+          "Daño de la pasiva",
+          "Daño de la activa",
+          "Armadura básica",
+          "Resistencia mágica básica",
+          "Armadura por campeón adicional",
+          "Resistencia mágica por campeón adicional",
+          "Enfriamiento"
+        ]
+      },
+      "maxammo": "-1",
+      "maxrank": 3,
+      "name": "Gran Maestro de Armas",
+      "range": [
+        260,
+        260,
+        260
+      ],
+      "rangeBurn": "260",
+      "resource": "{{ cost }} {{ abilityresourcename }}",
+      "tooltip": "<spellPassive>Pasiva</spellPassive>: Cada tercer ataque en {{ passivefallofftime }} s inflige <magicDamage>{{ onhitdamage }} de daño mágico</magicDamage> adicional.<br /><br /><spellActive>Activa:</spellActive> Jax da un golpetazo con su linterna, lo que inflige <magicDamage>{{ swingdamagetotal }} de daño mágico</magicDamage> a los enemigos cercanos. Si golpea a un campeón, obtiene <scaleArmor>{{ basearmor }} de armadura</scaleArmor> y <scaleMR>{{ basemr }} de resistencia mágica</scaleMR>, más <scaleArmor>{{ bonusarmor }} de armadura</scaleArmor> y <scaleMR>{{ bonusmr }} de resistencia mágica</scaleMR> adicionales por cada campeón golpeado durante {{ duration }} s. Durante este tiempo, en lugar de cada tres ataques, inflige <magicDamage>daño mágico</magicDamage> adicional cada dos.{{ spellmodifierdescriptionappend }}",
+      "vars": []
+    }
+  ],
+  "stats": {
+    "armor": 36,
+    "armorperlevel": 4.2,
+    "attackdamage": 68,
+    "attackdamageperlevel": 0,
+    "attackrange": 125,
+    "attackspeed": 0.638,
+    "attackspeedperlevel": 3.4,
+    "crit": 0,
+    "critperlevel": 0,
+    "hp": 650,
+    "hpperlevel": 103,
+    "hpregen": 8.5,
+    "hpregenperlevel": 0.55,
+    "movespeed": 350,
+    "mp": 339,
+    "mpperlevel": 52,
+    "mpregen": 8.2,
+    "mpregenperlevel": 0.7,
+    "spellblock": 32,
+    "spellblockperlevel": 2.05
+  },
+  "tags": [
+    "Fighter"
+  ],
+  "title": "El Maestro de Armas"
+}

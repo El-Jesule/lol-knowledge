@@ -1,0 +1,811 @@
+{
+  "allytips": [],
+  "blurb": "Desde que nació, Aurora ha tenido una visión única de la vida gracias a su capacidad para moverse entre los reinos material y espiritual. Decidida a conocer mejor a los habitantes del reino espiritual, abandonó su hogar para ampliar sus conocimientos...",
+  "enemytips": [],
+  "id": "Aurora",
+  "image": {
+    "full": "Aurora.png",
+    "group": "champion",
+    "h": 48,
+    "sprite": "champion0.png",
+    "w": 48,
+    "x": 96,
+    "y": 48
+  },
+  "info": {
+    "attack": 3,
+    "defense": 4,
+    "difficulty": 5,
+    "magic": 8
+  },
+  "key": "893",
+  "lore": "Desde que nació, Aurora ha tenido una visión única de la vida gracias a su capacidad para moverse entre los reinos material y espiritual. Decidida a conocer mejor a los habitantes del reino espiritual, abandonó su hogar para ampliar sus conocimientos, hasta que se topó con un semidiós errante que había sucumbido a la oscuridad, perdiéndose así en el tiempo. Al ver su desesperación, Aurora se propuso ayudar a su feroz amigo a recuperar su identidad olvidada en un viaje que la llevaría hasta los lugares más recónditos de Freljord.",
+  "name": "Aurora",
+  "partype": "Maná",
+  "passive": {
+    "description": "Las habilidades y ataques de Aurora exorcizan espíritus de los enemigos a los que inflige daño. Los espíritus exorcizados siguen a Aurora y la curan.",
+    "image": {
+      "full": "AuroraPassive.png",
+      "group": "passive",
+      "h": 48,
+      "sprite": "passive0.png",
+      "w": 48,
+      "x": 96,
+      "y": 48
+    },
+    "name": "Abjuración espiritual"
+  },
+  "recommended": [],
+  "skins": [
+    {
+      "chromas": false,
+      "id": "893000",
+      "name": "default",
+      "num": 0
+    },
+    {
+      "chromas": true,
+      "id": "893001",
+      "name": "Aurora conejo de batalla",
+      "num": 1
+    },
+    {
+      "chromas": false,
+      "id": "893002",
+      "name": "Aurora conejo de batalla (rubí)",
+      "num": 2,
+      "parentSkin": 1
+    },
+    {
+      "chromas": false,
+      "id": "893003",
+      "name": "Aurora conejo de batalla (ojo de gato)",
+      "num": 3,
+      "parentSkin": 1
+    },
+    {
+      "chromas": false,
+      "id": "893004",
+      "name": "Aurora conejo de batalla (esmeralda)",
+      "num": 4,
+      "parentSkin": 1
+    },
+    {
+      "chromas": false,
+      "id": "893005",
+      "name": "Aurora conejo de batalla (turquesa)",
+      "num": 5,
+      "parentSkin": 1
+    },
+    {
+      "chromas": false,
+      "id": "893006",
+      "name": "Aurora conejo de batalla (obsidiana)",
+      "num": 6,
+      "parentSkin": 1
+    },
+    {
+      "chromas": false,
+      "id": "893007",
+      "name": "Aurora conejo de batalla (amatista)",
+      "num": 7,
+      "parentSkin": 1
+    },
+    {
+      "chromas": false,
+      "id": "893008",
+      "name": "Aurora conejo de batalla (meteorito)",
+      "num": 8,
+      "parentSkin": 1
+    },
+    {
+      "chromas": false,
+      "id": "893009",
+      "name": "Aurora conejo de batalla (cuarzo rosa)",
+      "num": 9,
+      "parentSkin": 1
+    },
+    {
+      "chromas": false,
+      "id": "893010",
+      "name": "Aurora conejo de batalla (nocturno)",
+      "num": 10,
+      "parentSkin": 1
+    },
+    {
+      "chromas": true,
+      "id": "893011",
+      "name": "Aurora arcana",
+      "num": 11
+    },
+    {
+      "chromas": false,
+      "id": "893012",
+      "name": "Aurora arcana (rubí)",
+      "num": 12,
+      "parentSkin": 11
+    },
+    {
+      "chromas": false,
+      "id": "893013",
+      "name": "Aurora arcana (ojo de gato)",
+      "num": 13,
+      "parentSkin": 11
+    },
+    {
+      "chromas": false,
+      "id": "893014",
+      "name": "Aurora arcana (esmeralda)",
+      "num": 14,
+      "parentSkin": 11
+    },
+    {
+      "chromas": false,
+      "id": "893015",
+      "name": "Aurora arcana (zafiro)",
+      "num": 15,
+      "parentSkin": 11
+    },
+    {
+      "chromas": false,
+      "id": "893016",
+      "name": "Aurora arcana (cuarzo rosa)",
+      "num": 16,
+      "parentSkin": 11
+    },
+    {
+      "chromas": false,
+      "id": "893017",
+      "name": "Aurora arcana (tanzanita)",
+      "num": 17,
+      "parentSkin": 11
+    },
+    {
+      "chromas": false,
+      "id": "893018",
+      "name": "Aurora arcana (perla)",
+      "num": 18,
+      "parentSkin": 11
+    },
+    {
+      "chromas": false,
+      "id": "893019",
+      "name": "Aurora arcana (obsidiana)",
+      "num": 19,
+      "parentSkin": 11
+    },
+    {
+      "chromas": true,
+      "id": "893020",
+      "name": "Aurora alianza quebrada",
+      "num": 20
+    },
+    {
+      "chromas": false,
+      "id": "893021",
+      "name": "Aurora alianza quebrada (rubí)",
+      "num": 21,
+      "parentSkin": 20
+    },
+    {
+      "chromas": false,
+      "id": "893022",
+      "name": "Aurora alianza quebrada (ojo de gato)",
+      "num": 22,
+      "parentSkin": 20
+    },
+    {
+      "chromas": false,
+      "id": "893023",
+      "name": "Aurora alianza quebrada (esmeralda)",
+      "num": 23,
+      "parentSkin": 20
+    },
+    {
+      "chromas": false,
+      "id": "893024",
+      "name": "Aurora alianza quebrada (tanzanita)",
+      "num": 24,
+      "parentSkin": 20
+    },
+    {
+      "chromas": false,
+      "id": "893025",
+      "name": "Aurora alianza quebrada (zafiro)",
+      "num": 25,
+      "parentSkin": 20
+    },
+    {
+      "chromas": false,
+      "id": "893026",
+      "name": "Aurora alianza quebrada (cuarzo rosa)",
+      "num": 26,
+      "parentSkin": 20
+    },
+    {
+      "chromas": false,
+      "id": "893027",
+      "name": "Aurora alianza quebrada (perla)",
+      "num": 27,
+      "parentSkin": 20
+    },
+    {
+      "chromas": false,
+      "id": "893028",
+      "name": "Aurora alianza quebrada (obsidiana)",
+      "num": 28,
+      "parentSkin": 20
+    }
+  ],
+  "spells": [
+    {
+      "cooldown": [
+        9,
+        8.5,
+        8,
+        7.5,
+        7
+      ],
+      "cooldownBurn": "9/8.5/8/7.5/7",
+      "cost": [
+        60,
+        60,
+        60,
+        60,
+        60
+      ],
+      "costBurn": "60",
+      "costType": " {{ abilityresourcename }}",
+      "datavalues": {},
+      "description": "Aurora lanza un proyectil que maldice a los enemigos golpeados. Después, puede reactivar la habilidad para atraer hacia ella las maldiciones activas, lo que inflige daño a los enemigos golpeados por el camino.",
+      "effect": [
+        null,
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ]
+      ],
+      "effectBurn": [
+        null,
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0"
+      ],
+      "id": "AuroraQ",
+      "image": {
+        "full": "AuroraQ.png",
+        "group": "spell",
+        "h": 48,
+        "sprite": "spell2.png",
+        "w": 48,
+        "x": 96,
+        "y": 0
+      },
+      "leveltip": {
+        "effect": [
+          "{{ basedamage }} -> {{ basedamageNL }}",
+          "{{ cooldown }} -> {{ cooldownNL }}"
+        ],
+        "label": [
+          "Daño",
+          "Enfriamiento"
+        ]
+      },
+      "maxammo": "-1",
+      "maxrank": 5,
+      "name": "Ánimas malditas",
+      "range": [
+        900,
+        900,
+        900,
+        900,
+        900
+      ],
+      "rangeBurn": "900",
+      "resource": "{{ cost }} {{ abilityresourcename }}",
+      "tooltip": "Lanza energía maldita en una dirección, que inflige <magicDamage>{{ damage }} de daño mágico</magicDamage> a los enemigos y los maldice durante {{ markduration }} s.<br /><br /><recast>Reactivar</recast>: Aurora pone fin a la maldición para recuperar parte del espíritu del enemigo, lo que inflige hasta <magicDamage>{{ q2damagemax }} de daño mágico</magicDamage> a los enemigos atravesados a su paso según la vida que les falte. Tras el primer impacto, el daño se reduce un 20%.<br /><br />Si el efecto llega a su fin, Aurora <recast>reactivará</recast> la habilidad automáticamente.{{ spellmodifierdescriptionappend }}",
+      "vars": []
+    },
+    {
+      "cooldown": [
+        22,
+        21,
+        20,
+        19,
+        18
+      ],
+      "cooldownBurn": "22/21/20/19/18",
+      "cost": [
+        80,
+        80,
+        80,
+        80,
+        80
+      ],
+      "costBurn": "80",
+      "costType": " {{ abilityresourcename }}",
+      "datavalues": {},
+      "description": "Aurora brinca, se adentra en el reino espiritual al aterrizar, se vuelve invisible y obtiene velocidad de movimiento durante un breve periodo de tiempo.",
+      "effect": [
+        null,
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ]
+      ],
+      "effectBurn": [
+        null,
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0"
+      ],
+      "id": "AuroraW",
+      "image": {
+        "full": "AuroraW.png",
+        "group": "spell",
+        "h": 48,
+        "sprite": "spell2.png",
+        "w": 48,
+        "x": 144,
+        "y": 0
+      },
+      "leveltip": {
+        "effect": [
+          "{{ cooldown }} -> {{ cooldownNL }}",
+          "{{ invisduration }} -> {{ invisdurationNL }}",
+          "{{ movespeedbonus }}% -> {{ movespeedbonusNL }}%"
+        ],
+        "label": [
+          "Enfriamiento",
+          "Duración",
+          "Velocidad de movimiento"
+        ]
+      },
+      "maxammo": "-1",
+      "maxrank": 5,
+      "name": "A través del velo",
+      "range": [
+        700,
+        700,
+        700,
+        700,
+        700
+      ],
+      "rangeBurn": "700",
+      "resource": "{{ cost }} {{ abilityresourcename }}",
+      "tooltip": "Brinca en una dirección. Al aterrizar, se adentra en el reino espiritual, lo que la vuelve <keywordStealth>invisible</keywordStealth> durante {{ invisduration }} s y activa <keywordMajor>Brincarreinos</keywordMajor>, que le otorga un <speed>{{ movespeedbonus }}%</speed> de velocidad de movimiento.<br /><br />Conseguir una asistencia o asesinato de un campeón enemigo reinicia el enfriamiento de esta habilidad.{{ spellmodifierdescriptionappend }}",
+      "vars": []
+    },
+    {
+      "cooldown": [
+        15,
+        14,
+        13,
+        12,
+        11
+      ],
+      "cooldownBurn": "15/14/13/12/11",
+      "cost": [
+        80,
+        80,
+        80,
+        80,
+        80
+      ],
+      "costBurn": "80",
+      "costType": " {{ abilityresourcename }}",
+      "datavalues": {},
+      "description": "Aurora hace converger los reinos y emite un pulso de energía espiritual que inflige daño y ralentiza a los enemigos alcanzados antes de brincar a un lugar seguro.",
+      "effect": [
+        null,
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ]
+      ],
+      "effectBurn": [
+        null,
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0"
+      ],
+      "id": "AuroraE",
+      "image": {
+        "full": "AuroraE.png",
+        "group": "spell",
+        "h": 48,
+        "sprite": "spell2.png",
+        "w": 48,
+        "x": 192,
+        "y": 0
+      },
+      "leveltip": {
+        "effect": [
+          "{{ cooldown }} -> {{ cooldownNL }}",
+          "{{ basedamage }} -> {{ basedamageNL }}"
+        ],
+        "label": [
+          "Enfriamiento",
+          "Daño"
+        ]
+      },
+      "maxammo": "-1",
+      "maxrank": 5,
+      "name": "Estallido espectral",
+      "range": [
+        825,
+        825,
+        825,
+        825,
+        825
+      ],
+      "rangeBurn": "825",
+      "resource": "{{ cost }} {{ abilityresourcename }}",
+      "tooltip": "Hace converger los reinos, lo que emite un estallido de magia espiritual que inflige <magicDamage>{{ damagecalc }} de daño mágico</magicDamage> a los enemigos en un área y los <status>ralentiza</status> un {{ slowpercent*-100 }}%, que disminuye a lo largo de {{ slowduration }} s.<br /><br />Tras el lanzamiento, Aurora brinca hacia atrás y se aleja una corta distancia.<br />{{ spellmodifierdescriptionappend }}",
+      "vars": []
+    },
+    {
+      "cooldown": [
+        140,
+        120,
+        100
+      ],
+      "cooldownBurn": "140/120/100",
+      "cost": [
+        100,
+        100,
+        100
+      ],
+      "costBurn": "100",
+      "costType": " {{ abilityresourcename }}",
+      "datavalues": {},
+      "description": "Aurora brinca y emite una onda de choque que inflige daño y ralentiza a los enemigos golpeados. Después, crea un área que ralentiza a los enemigos en su interior y permite a Aurora teleportarse de un lado al otro del área.",
+      "effect": [
+        null,
+        [
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0
+        ]
+      ],
+      "effectBurn": [
+        null,
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0"
+      ],
+      "id": "AuroraR",
+      "image": {
+        "full": "AuroraR.png",
+        "group": "spell",
+        "h": 48,
+        "sprite": "spell2.png",
+        "w": 48,
+        "x": 240,
+        "y": 0
+      },
+      "leveltip": {
+        "effect": [
+          "{{ cooldown }} -> {{ cooldownNL }}",
+          "{{ basedamage }} -> {{ basedamageNL }}",
+          "{{ areaduration }} -> {{ areadurationNL }}"
+        ],
+        "label": [
+          "Enfriamiento",
+          "Daño",
+          "Duración"
+        ]
+      },
+      "maxammo": "-1",
+      "maxrank": 3,
+      "name": "Entre mundos",
+      "range": [
+        250,
+        250,
+        250
+      ],
+      "rangeBurn": "250",
+      "resource": "{{ cost }} {{ abilityresourcename }}",
+      "tooltip": "Brinca en una dirección. Al aterrizar, Aurora hace converger los reinos y emite un pulso de energía espiritual que inflige <magicDamage>{{ damagecalc }} de daño mágico</magicDamage> y <status>ralentiza</status> a los enemigos golpeados un {{ slowpercent*-100 }}% durante 2 s.<br /><br />El área de convergencia permanece activa durante {{ areaduration }} s, lo que otorga a Aurora <keywordMajor>Brincarreinos</keywordMajor> durante {{ rbuffduration }} s y le permite saltar de un extremo del área al otro.<br /><br /><status>Ralentiza</status> un {{ exitslowpercent*-100 }}% durante {{ stunduration }} s a los enemigos que intentan entrar o salir del área.<br /><br />Aurora puede <recast>volver a lanzar</recast> esta habilidad para poner fin al efecto antes.{{ spellmodifierdescriptionappend }}",
+      "vars": []
+    }
+  ],
+  "stats": {
+    "armor": 23,
+    "armorperlevel": 4.5,
+    "attackdamage": 53,
+    "attackdamageperlevel": 0,
+    "attackrange": 550,
+    "attackspeed": 0.668,
+    "attackspeedperlevel": 2,
+    "crit": 0,
+    "critperlevel": 0,
+    "hp": 607,
+    "hpperlevel": 110,
+    "hpregen": 6,
+    "hpregenperlevel": 0.55,
+    "movespeed": 335,
+    "mp": 475,
+    "mpperlevel": 30,
+    "mpregen": 8,
+    "mpregenperlevel": 0.8,
+    "spellblock": 32,
+    "spellblockperlevel": 1.3
+  },
+  "tags": [
+    "Mage",
+    "Assassin"
+  ],
+  "title": "la Bruja entre Mundos"
+}

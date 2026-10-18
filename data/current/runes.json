@@ -1,0 +1,618 @@
+[
+  {
+    "icon": "perk-images/Styles/7200_Domination.png",
+    "id": 8100,
+    "key": "Domination",
+    "name": "Dominación",
+    "slots": [
+      {
+        "runes": [
+          {
+            "icon": "perk-images/Styles/Domination/Electrocute/Electrocute.png",
+            "id": 8112,
+            "key": "Electrocute",
+            "longDesc": "Golpear a un campeón con 3 ataques o habilidades <b>diferentes</b> en un margen de 3 s hace que inflijas <lol-uikit-tooltipped-keyword key='LinkTooltip_Description_AdaptiveDmg'><font color='#48C4B7'>daño adaptable</font></lol-uikit-tooltipped-keyword> adicional.<br><br>Daño: 70-240 (+0.1 de DA adicional, +0.05 de PH) de daño.<br>Enfriamiento: 20 s<br><br><i>''Lo llamamos 'Señor del trueno' porque hablar de sus rayos era llamar al desastre''.</i>",
+            "name": "Electrocutar",
+            "shortDesc": "Golpear a un campeón con 3 ataques o habilidades <b>diferentes</b> en un margen de 3 s hace que inflijas <lol-uikit-tooltipped-keyword key='LinkTooltip_Description_AdaptiveDmg'>daño adaptable</lol-uikit-tooltipped-keyword> adicional."
+          },
+          {
+            "icon": "perk-images/Styles/Domination/DarkHarvest/DarkHarvest.png",
+            "id": 8128,
+            "key": "DarkHarvest",
+            "longDesc": "Al dañar a un campeón por debajo del 50% de vida, le infliges <lol-uikit-tooltipped-keyword key='LinkTooltip_Description_AdaptiveDmg'>daño adaptable</lol-uikit-tooltipped-keyword> y cosechas su alma, lo que incrementa permanentemente el daño de Cosecha oscura en 11.<br><br>Cosecha oscura de daño: 30 (+11 de daño por alma) (+0.1 de DA adicional) (+0.05 de PH)<br>Enfriamiento: 35 s (se reinicia a 1.0 s al conseguir un asesinato o asistencia).",
+            "name": "Cosecha oscura",
+            "shortDesc": "Dañar a un campeón con poca vida inflige <lol-uikit-tooltipped-keyword key='LinkTooltip_Description_AdaptiveDmg'>daño adaptable</lol-uikit-tooltipped-keyword> y cosecha una alma de la víctima."
+          },
+          {
+            "icon": "perk-images/Styles/Domination/HailOfBlades/HailOfBlades.png",
+            "id": 9923,
+            "key": "HailOfBlades",
+            "longDesc": "Al atacar a un campeón enemigo, obtienes un 90% (60% para campeones a distancia) de velocidad de ataque y <trueDamage>daño verdadero adicional</trueDamage> en un máximo de 3 ataques.<br><br>Si transcurren más de 3 s entre ataques, el efecto se detendrá.<br><br>Enfriamiento: 10 s<br>Daño de impacto: 2 - 20 (+0.12 de DA adicional, +0.1 de PH) de daño<br><br><rules>Los reinicios de los ataques aumentan el límite de ataques en 1.<br>Permite sobrepasar el límite de velocidad de ataque temporalmente.</rules>",
+            "name": "Lluvia de cuchillas",
+            "shortDesc": "Obtienes una gran cantidad de velocidad de ataque y <trueDamage>daño verdadero</trueDamage> adicional en los 3 primeros ataques contra campeones enemigos."
+          }
+        ]
+      },
+      {
+        "runes": [
+          {
+            "icon": "perk-images/Styles/Domination/CheapShot/CheapShot.png",
+            "id": 8126,
+            "key": "CheapShot",
+            "longDesc": "Dañar a campeones con <b>acciones o movimiento reducidos</b> inflige 10-45 de daño verdadero adicional (según el nivel).<br><br>Enfriamiento: 4 s<br><rules>Se activa con el daño de después de la inmovilización.</rules>",
+            "name": "Golpe bajo",
+            "shortDesc": "Infliges daño verdadero adicional a los campeones enemigos con <lol-uikit-tooltipped-keyword key='LinkTooltip_Description_ImpairAct'>movimiento o acciones debilitadas</lol-uikit-tooltipped-keyword>. "
+          },
+          {
+            "icon": "perk-images/Styles/Domination/TasteOfBlood/GreenTerror_TasteOfBlood.png",
+            "id": 8139,
+            "key": "TasteOfBlood",
+            "longDesc": "Te curas cuando dañas a un campeón enemigo.<br><br>Curación: 16-40 (+0.1 de DA adicional, +0.05 de PH) de vida (según el nivel)<br><br>Enfriamiento: 20 s",
+            "name": "Sabor a sangre",
+            "shortDesc": "Recuperas vida cuando dañas a un campeón enemigo."
+          },
+          {
+            "icon": "perk-images/Styles/Domination/SuddenImpact/SuddenImpact.png",
+            "id": 8143,
+            "key": "SuddenImpact",
+            "longDesc": "Infligir daño con ataques básicos y habilidades inflige <trueDamage>20-80 de daño verdadero</trueDamage> adicional según el nivel a campeones enemigos después de usar algún deslizamiento, salto, teleportación, teleportación instantánea o al salir de sigilo durante 4 s.<br><br>Enfriamiento: 10 s",
+            "name": "Impacto repentino",
+            "shortDesc": "Infligir daño con ataques básicos y habilidades inflige daño verdadero adicional a campeones enemigos después de usar algún deslizamiento, salto, teleportación, teleportación instantánea o al salir de sigilo."
+          }
+        ]
+      },
+      {
+        "runes": [
+          {
+            "icon": "perk-images/Styles/Domination/SixthSense/SixthSense.png",
+            "id": 8137,
+            "key": "SixthSense",
+            "longDesc": "Sientes de forma automática un guardián enemigo cercano sin marcar y que no hayas visto, y lo marcas para el equipo. <br><br>Nivel 11: Además, revelas el guardián durante 10 s.<br><br>Este efecto tiene 250 s de enfriamiento.",
+            "name": "Sexto sentido",
+            "shortDesc": "Tras un largo enfriamiento, sientes de forma automática un guardián enemigo cercano sin marcar y que no hayas visto, y lo marcas para el equipo. <br><br>Nivel 11: Además, revelas el guardián durante 10 s."
+          },
+          {
+            "icon": "perk-images/Styles/Domination/GrislyMementos/GrislyMementos.png",
+            "id": 8140,
+            "key": "GrislyMementos",
+            "longDesc": "Reúne 1 recuerdo(s) por cada<lol-uikit-tooltipped-keyword key='LinkTooltip_Description_Takedown'>eliminación de campeón</lol-uikit-tooltipped-keyword> (hasta 18 en total).<br><br>Obtienes 6 de velocidad de habilidades de talismán por cada recuerdo. En los modos de juego en los que no existan los talismanes de visión, estos otorgan 3 de velocidad de hechizos de invocador.",
+            "name": "Recuerdo macabro",
+            "shortDesc": "Reúne 1 recuerdo(s) por cada<lol-uikit-tooltipped-keyword key='LinkTooltip_Description_Takedown'>eliminación de campeón</lol-uikit-tooltipped-keyword> (hasta 18 en total).<br><br>Obtienes 6 de velocidad de habilidades de talismán por cada recuerdo."
+          },
+          {
+            "icon": "perk-images/Styles/Domination/DeepWard/DeepWard.png",
+            "id": 8141,
+            "key": "DeepWard",
+            "longDesc": "Los guardianes que coloques en la jungla enemiga se consideran <keywordMajor>de profundidad</keywordMajor>. Los guardianes <keywordMajor>de profundidad</keywordMajor> obtienen +1 de vida adicional y su duración aumenta en +30 - 45 s (+45 - 150 s para los guardianes invisibles).<br><br>Nivel 9: Los guardianes del río también se consideran <keywordMajor>de profundidad</keywordMajor>.",
+            "name": "Guardián de profundidad",
+            "shortDesc": "Los guardianes que coloques en la jungla enemiga se consideran <keywordMajor>de profundidad</keywordMajor> y obtienen vida y una mayor duración.<br><br>Nivel 9: Los guardianes del río también se consideran <keywordMajor>de profundidad</keywordMajor>."
+          }
+        ]
+      },
+      {
+        "runes": [
+          {
+            "icon": "perk-images/Styles/Domination/TreasureHunter/TreasureHunter.png",
+            "id": 8135,
+            "key": "TreasureHunter",
+            "longDesc": "Obtienes <gold>50 de oro</gold> adicional la próxima vez que obtengas una acumulación de <i>Cazarrecompensas</i>. Aumenta el oro obtenido en <gold>20</gold> por cada acumulación de <i>Cazarrecompensas</i>, hasta <gold>130 de oro</gold>.<br><br>Las acumulaciones de <i>Cazarrecompensas</i> se consiguen la primera vez que participes en la eliminación de cada campeón enemigo.",
+            "name": "Cazador de tesoros",
+            "shortDesc": "<b>Único</b> Los <lol-uikit-tooltipped-keyword key='LinkTooltip_Description_Takedown'>asesinatos y asistencias</lol-uikit-tooltipped-keyword> otorgan oro adicional la primera vez que se consiguen. "
+          },
+          {
+            "icon": "perk-images/Styles/Domination/RelentlessHunter/RelentlessHunter.png",
+            "id": 8105,
+            "key": "RelentlessHunter",
+            "longDesc": "Obtienes <speed>8 de velocidad de movimiento</speed> fuera de combate por cada acumulación de <i>Cazarrecompensas</i>. Las acumulaciones de <i>Cazarrecompensas</i> se consiguen la primera vez que logres un asesinato o asistencia de cada campeón enemigo.",
+            "name": "Cazador incesante",
+            "shortDesc": "Los <lol-uikit-tooltipped-keyword key='LinkTooltip_Description_Takedown'>asesinatos o asistencias</lol-uikit-tooltipped-keyword> <b>únicos</b> otorgan <b> <lol-uikit-tooltipped-keyword key='LinkTooltip_Description_MS'>velocidad de movimiento</lol-uikit-tooltipped-keyword></b> fuera de combate de forma permanente. "
+          },
+          {
+            "icon": "perk-images/Styles/Domination/UltimateHunter/UltimateHunter.png",
+            "id": 8106,
+            "key": "UltimateHunter",
+            "longDesc": "Tu definitiva obtiene <attention>6</attention> de velocidad de habilidades y <attention>5</attention> de velocidad de habilidades adicional por acumulación de <i>Cazarrecompensas</i>. Las acumulaciones de <i>Cazarrecompensas</i> se consiguen la primera vez que logres un asesinato o asistencia de cada campeón enemigo.",
+            "name": "Cazador definitivo",
+            "shortDesc": "Los <lol-uikit-tooltipped-keyword key='LinkTooltip_Description_Takedown'>asesinatos y asistencias</lol-uikit-tooltipped-keyword> <b>únicas</b> otorgan reducción de enfriamiento permanente a tu definitiva. "
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "icon": "perk-images/Styles/7203_Whimsy.png",
+    "id": 8300,
+    "key": "Inspiration",
+    "name": "Inspiración",
+    "slots": [
+      {
+        "runes": [
+          {
+            "icon": "perk-images/Styles/Inspiration/GlacialAugment/GlacialAugment.png",
+            "id": 8351,
+            "key": "GlacialAugment",
+            "longDesc": "Inmovilizar a un campeón enemigo hará que 3 rayos glaciales emanen desde el objetivo hacia ti y hacia otros campeones cercanos, lo que crea zonas congeladas durante 3 (+ la duración del efecto de inmovilización) s que ralentizan a los enemigos un 20% (+90% por cada 100% de poder de curaciones y escudos) (+6% por cada 100 de poder de habilidad) (+7% por cada 100 de daño de ataque adicional) y reducen un 15% el daño que infligen a tus aliados (no se aplica al portador).<br><br>Enfriamiento: 25 s",
+            "name": "Mejora glacial",
+            "shortDesc": "Inmovilizar a un campeón enemigo genera 3 rayos glaciales que ralentizan a los enemigos cercanos y reduce el daño que infligen a tus aliados."
+          },
+          {
+            "icon": "perk-images/Styles/Inspiration/UnsealedSpellbook/UnsealedSpellbook.png",
+            "id": 8360,
+            "key": "UnsealedSpellbook",
+            "longDesc": "Cambia uno de los hechizos de invocador que tienes equipado por uno nuevo de un solo uso. Cada hechizo de invocador único que cambies permanentemente reduce el enfriamiento del cambio de hechizos en 25 s (el enfriamiento inicial es de @f3@ s).<br><br>El primer cambio está disponible a los 6 min. <br><rules><br>Los hechizos de invocador solo pueden cambiarse fuera de combate. <br>Después de usar un hechizo de invocador cambiado, has de cambiar 3 veces más antes de poder volver a seleccionar el primero.<br>Aumenta el daño de Aplastar cuando se cambian dos hechizos de invocador. </rules>",
+            "name": "Libro de hechizos",
+            "shortDesc": "Cambia hechizos de invocador fuera de combate. Cambiar a hechizos de invocador únicos aumenta el ritmo al que puedes cambiar hechizos en el futuro."
+          },
+          {
+            "icon": "perk-images/Styles/Inspiration/FirstStrike/FirstStrike.png",
+            "id": 8369,
+            "key": "FirstStrike",
+            "longDesc": "Los ataques o habilidades que afecten a un campeón enemigo durante los 0.25 s posteriores a entrar en combate con un campeón otorgan 10 de oro y <b>Primer golpe</b> durante 3 s, lo que te hará infligir un <truedamage>7%</truedamage> de <truedamage>daño verdadero</truedamage> adicional contra campeones y te otorgará un <gold>50% (35% para campeones a distancia)</gold> del daño adicional infligido como <gold>oro</gold>.<br><br>Enfriamiento: <scaleLevel>25-15</scaleLevel> s",
+            "name": "Primer golpe",
+            "shortDesc": "Al iniciar un combate con un campeón, infliges un 7% de daño adicional durante 3 s y obtienes oro en base al daño infligido."
+          }
+        ]
+      },
+      {
+        "runes": [
+          {
+            "icon": "perk-images/Styles/Inspiration/HextechFlashtraption/HextechFlashtraption.png",
+            "id": 8306,
+            "key": "HextechFlashtraption",
+            "longDesc": "Cuando Destello está en enfriamiento, se reemplaza por <i>Hextello</i>.<br><br><i>Hextello</i>: tras 2 s de canalización, te trasladas a una ubicación nueva.<br><br>Enfriamiento: 20 s. Pasa a 10 s de enfriamiento al entrar en combate con campeones.",
+            "name": "Destello hextech",
+            "shortDesc": "Cuando Destello está en enfriamiento, se reemplaza por <i>Hextello</i>.<br><br><i>Hextello</i>: Tras una canalización, te trasladas a una ubicación nueva."
+          },
+          {
+            "icon": "perk-images/Styles/Inspiration/MagicalFootwear/MagicalFootwear.png",
+            "id": 8304,
+            "key": "MagicalFootwear",
+            "longDesc": "A los 12 min, recibes Calzado ligeramente mágico gratis. No puedes comprar botas antes. Por cada asesinato o asistencia, recibes las botas 45 s antes.<br><br>Calzado ligeramente mágico te otorga <speed>10 de velocidad de movimiento</speed> adicional.",
+            "name": "Calzado mágico",
+            "shortDesc": "A los 12 min, recibes unas botas gratis. No puedes comprar botas antes. Cada <lol-uikit-tooltipped-keyword key='LinkTooltip_Description_Takedown'>asesinato o asistencia</lol-uikit-tooltipped-keyword> que consigues hace que tus botas aparezcan 45 s antes."
+          },
+          {
+            "icon": "perk-images/Styles/Inspiration/CashBack/CashBack2.png",
+            "id": 8321,
+            "key": "CashBack",
+            "longDesc": "Recupera un 7.5% de oro al comprar objetos legendarios.",
+            "name": "Reembolso",
+            "shortDesc": "Recuperas algo de oro al comprar objetos legendarios."
+          }
+        ]
+      },
+      {
+        "runes": [
+          {
+            "icon": "perk-images/Styles/Inspiration/PerfectTiming/AlchemistCabinet.png",
+            "id": 8313,
+            "key": "PerfectTiming",
+            "longDesc": "Al subir al nivel 3, obtienes un Elixir de la avaricia.<br>Al subir al nivel 6, obtienes un Elixir de fuerza.<br>Al subir al nivel 9, obtienes un Elixir de habilidad. ",
+            "name": "Tónico triple",
+            "shortDesc": "Al subir al nivel 3, obtienes un Elixir de la avaricia.<br>Al subir al nivel 6, obtienes un Elixir de fuerza.<br>Al subir al nivel 9, obtienes un Elixir de habilidad. "
+          },
+          {
+            "icon": "perk-images/Styles/Inspiration/TimeWarpTonic/TimeWarpTonic.png",
+            "id": 8352,
+            "key": "TimeWarpTonic",
+            "longDesc": "Consumir una poción concede un 40% de la restauración de vida al instante.",
+            "name": "Tónico de distorsión temporal",
+            "shortDesc": "Las pociones proporcionan algo de restauración inmediata."
+          },
+          {
+            "icon": "perk-images/Styles/Inspiration/BiscuitDelivery/BiscuitDelivery.png",
+            "id": 8345,
+            "key": "BiscuitDelivery",
+            "longDesc": "Entrega de galletas: Obtienes 1 Galleta de la voluntad eterna cada 2 min, hasta el minuto 6.<br><br>Las galletas restauran 20 + 2% de tu vida máxima, que aumenta hasta un 100% según la vida que te falte. Al consumir o vender una galleta, tu vida máxima aumenta permanentemente en 30. ",
+            "name": "Entrega de galletas",
+            "shortDesc": "Consigues una galleta gratis cada 2 min hasta el minuto 6. Consumir o vender una galleta aumenta de forma permanente tu vida máxima y restaura vida."
+          }
+        ]
+      },
+      {
+        "runes": [
+          {
+            "icon": "perk-images/Styles/Inspiration/CosmicInsight/CosmicInsight.png",
+            "id": 8347,
+            "key": "CosmicInsight",
+            "longDesc": "+<attention>18</attention> de velocidad de hechizos de invocador<br>+<attention>10</attention> de velocidad de objetos",
+            "name": "Perspicacia cósmica",
+            "shortDesc": "+<attention>18</attention> de velocidad de hechizos de invocador<br>+<attention>10</attention> de velocidad de objetos"
+          },
+          {
+            "icon": "perk-images/Styles/Resolve/ApproachVelocity/ApproachVelocity.png",
+            "id": 8410,
+            "key": "ApproachVelocity",
+            "longDesc": "Obtienes un <speed>7.5% de velocidad de movimiento</speed> hacia enemigos cercanos con movimiento reducido. Esta bonificación aumenta hasta un <speed>15% de velocidad de movimiento</speed> por cada campeón enemigo al que hayas aplicado efectos de reducción de movimiento. <br><br>Alcance de activación para efectos de control de adversario de aliados: 1000",
+            "name": "Velocidad de acercamiento",
+            "shortDesc": "Obtienes <lol-uikit-tooltipped-keyword key='LinkTooltip_Description_MS'>velocidad de movimiento</lol-uikit-tooltipped-keyword> adicional hacia campeones enemigos cercanos con <lol-uikit-tooltipped-keyword key='LinkTooltip_Description_ImpairMov'>movimiento reducido</lol-uikit-tooltipped-keyword>, que aumenta hacia campeones enemigos a los que les hayas aplicado efectos de reducción de movimiento."
+          },
+          {
+            "icon": "perk-images/Styles/Inspiration/JackOfAllTrades/JackofAllTrades2.png",
+            "id": 8316,
+            "key": "JackOfAllTrades",
+            "longDesc": "Por cada estadística distinta obtenida de objetos, consigue una acumulación de Manitas. Cada acumulación te otorga <speed>1 de velocidad de habilidades</speed>.<br><br>Obtienes 8 o 20 de <lol-uikit-tooltipped-keyword key='LinkTooltip_Description_Adaptive'>fuerza adaptable</lol-uikit-tooltipped-keyword> adicional con 5 y 10 acumulaciones, respectivamente.",
+            "name": "Manitas",
+            "shortDesc": "Por cada estadística distinta obtenida de objetos, consigue una acumulación de Manitas. Cada acumulación te otorga <speed>1 de velocidad de habilidades</speed>.<br><br>Obtienes <lol-uikit-tooltipped-keyword key='LinkTooltip_Description_Adaptive'>Fuerza adaptable</lol-uikit-tooltipped-keyword> adicional con 5 y 10 acumulaciones."
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "icon": "perk-images/Styles/7201_Precision.png",
+    "id": 8000,
+    "key": "Precision",
+    "name": "Precisión",
+    "slots": [
+      {
+        "runes": [
+          {
+            "icon": "perk-images/Styles/Precision/PressTheAttack/PressTheAttack.png",
+            "id": 8005,
+            "key": "PressTheAttack",
+            "longDesc": "Al asestar 3 ataques básicos consecutivos a un campeón enemigo, le inflige 40-160 de <lol-uikit-tooltipped-keyword key='LinkTooltip_Description_AdaptiveDmg'><font color='#48C4B7'>daño adaptable</font></lol-uikit-tooltipped-keyword> adicional (según el nivel) y potencia el daño que infliges un 8% hasta que abandonas el combate con campeones.",
+            "name": "Ataque intensificado",
+            "shortDesc": "Golpear a un campeón enemigo 3 veces consecutivas inflige daño adicional y potencia tu daño hasta que abandonas el combate con campeones."
+          },
+          {
+            "icon": "perk-images/Styles/Precision/LethalTempo/LethalTempoTemp.png",
+            "id": 8008,
+            "key": "LethalTempo",
+            "longDesc": "Atacar a un campeón enemigo te otorga [6% para campeones cuerpo a cuerpo || 4% para campeones a distancia] de velocidad de ataque durante 6 s, hasta 6 acumulaciones. Con el máximo de acumulaciones, inflige [9 - 30 para campeones cuerpo a cuerpo || 6 - 24 para campeones a distancia] <lol-uikit-tooltipped-keyword key='LinkTooltip_Description_AdaptiveDmg'>de daño adaptable adicional al atacar, que aumenta un 1% por cada 1% de velocidad de ataque adicional</lol-uikit-tooltipped-keyword>.",
+            "name": "Compás letal",
+            "shortDesc": "Atacar a un campeón enemigo te otorga velocidad de ataque, hasta 6 acumulaciones. Con el máximo de acumulaciones, inflige <lol-uikit-tooltipped-keyword key='LinkTooltip_Description_AdaptiveDmg'><font color='#48C4B7'>daño adaptable adicional</font></lol-uikit-tooltipped-keyword> al atacar."
+          },
+          {
+            "icon": "perk-images/Styles/Precision/FleetFootwork/FleetFootwork.png",
+            "id": 8021,
+            "key": "FleetFootwork",
+            "longDesc": "Atacar y moverse genera acumulaciones de energía. A las 100 acumulaciones, tu siguiente ataque será con vigor.<br><br>Los ataques con vigor te curan 15-160 (+0.1 del DA adicional, +0.05 del PH) de vida y te otorgan un <speed>20% de velocidad de movimiento</speed> durante 1 s.<br><br>La curación recibida tiene una efectividad del 60% en campeones a distancia y la velocidad de movimiento, del 75%. Toda curación tiene una efectividad del 15% contra súbditos.",
+            "name": "Pies veloces",
+            "shortDesc": "Atacar y moverse genera acumulaciones de energía. A las 100 acumulaciones, tu siguiente ataque te cura y te otorga <lol-uikit-tooltipped-keyword key='LinkTooltip_Description_MS'>velocidad de movimiento</lol-uikit-tooltipped-keyword> adicional."
+          },
+          {
+            "icon": "perk-images/Styles/Precision/Conqueror/Conqueror.png",
+            "id": 8010,
+            "key": "Conqueror",
+            "longDesc": "Los ataques básicos o hechizos que inflijan daño a un campeón enemigo otorgan 2 acumulaciones de Conquistador durante 5 s, lo que otorga 1.8-4 <lol-uikit-tooltipped-keyword key='LinkTooltip_Description_Adaptive'><font color='#48C4B7'>de fuerza adaptable</font></lol-uikit-tooltipped-keyword> por acumulación. Se acumula hasta 12 veces. Los campeones a distancia solo obtienen 1 acumulación por ataque básico.<br><br>Con el máximo de acumulaciones, cura un 8% del daño que infliges a campeones (un 5% en el caso de campeones a distancia).",
+            "name": "Conquistador",
+            "shortDesc": "Otorga acumulaciones de fuerza adaptable al atacar a campeones enemigos. Tras conseguir 12 acumulaciones, te curas una porción del daño que inflijas a campeones."
+          }
+        ]
+      },
+      {
+        "runes": [
+          {
+            "icon": "perk-images/Styles/Precision/AbsorbLife/AbsorbLife.png",
+            "id": 9101,
+            "key": "AbsorbLife",
+            "longDesc": "Asesinar a un objetivo te cura @HealAmount@ de vida.",
+            "name": "Absorber vida",
+            "shortDesc": "Asesinar a un objetivo te cura."
+          },
+          {
+            "icon": "perk-images/Styles/Precision/Triumph.png",
+            "id": 9111,
+            "key": "Triumph",
+            "longDesc": "Los asesinatos y asistencias restauran un 5% de la vida que te falte, un 2.5% de tu vida máxima y otorgan otros 20 de oro. <br><br><hr><br><i>''El juego más peligroso es el que otorga mayor gloria''. <br>— Justiciero noxiano.</i>",
+            "name": "Triunfo",
+            "shortDesc": "Los <lol-uikit-tooltipped-keyword key='LinkTooltip_Description_Takedown'>asesinatos y asistencias</lol-uikit-tooltipped-keyword> restauran un 5% de la vida que te falte y otorgan 20 de oro adicional. "
+          },
+          {
+            "icon": "perk-images/Styles/Precision/PresenceOfMind/PresenceOfMind.png",
+            "id": 8009,
+            "key": "PresenceOfMind",
+            "longDesc": "Infligir daño a un campeón enemigo restaura 6-50 de maná (un 80% para campeones a distancia) o 6 de energía.<br><br>Los asesinatos y asistencias restauran un 15% de tu maná o energía máximos.<br><br>Enfriamiento de restauración por daño: 8 s",
+            "name": "Claridad mental",
+            "shortDesc": "Restaura una pequeña cantidad de maná o energía al infligir daño a un campeón enemigo. Los asesinatos o asistencias restauran maná o energía."
+          }
+        ]
+      },
+      {
+        "runes": [
+          {
+            "icon": "perk-images/Styles/Precision/LegendAlacrity/LegendAlacrity.png",
+            "id": 9104,
+            "key": "LegendAlacrity",
+            "longDesc": "Obtienes un 3% de velocidad de ataque y un 1.5% adicional por cada acumulación de <i>Leyenda</i> (<statGood>10 acumulaciones como máximo</statGood>).<br><br>Consigue acumulaciones de <i>Leyenda</i> con asesinatos o asistencias de campeones y monstruos épicos, y por eliminaciones de monstruos grandes y de súbditos.",
+            "name": "Leyenda: Presteza",
+            "shortDesc": "Los <lol-uikit-tooltipped-keyword key='LinkTooltip_Description_Takedown'>asesinatos y asistencias</lol-uikit-tooltipped-keyword> otorgan <b>velocidad de ataque</b> permanente. "
+          },
+          {
+            "icon": "perk-images/Styles/Precision/LegendHaste/LegendHaste.png",
+            "id": 9105,
+            "key": "LegendHaste",
+            "longDesc": "Obtienes 1,5 de velocidad de habilidades básica por cada acumulación de <i>Leyenda</i> (<statGood>10 acumulaciones como máximo</statGood>).<br><br>Consigue acumulaciones de <i>Leyenda</i> con asesinatos o asistencias de campeones y monstruos épicos, y por asesinatos de monstruos gigantes y de súbditos.",
+            "name": "Leyenda: Velocidad",
+            "shortDesc": "Los <lol-uikit-tooltipped-keyword key='LinkTooltip_Description_Takedown'>asesinatos y asistencias</lol-uikit-tooltipped-keyword> otorgan <b>velocidad</b> de habilidades básica permanente. "
+          },
+          {
+            "icon": "perk-images/Styles/Precision/LegendBloodline/LegendBloodline.png",
+            "id": 9103,
+            "key": "LegendBloodline",
+            "longDesc": "Obtienes un <scaleAD>0.45% de robo de vida</scaleAD> por cada acumulación de <i>Leyenda</i> (<statGood>acumulaciones máximas: 15</statGood>). Con el máximo de acumulaciones de <i>Leyenda</i>, obtienes <scaleHealth>85 de vida máxima</scaleHealth>.<br><br>Consigues acumulaciones de <i>Leyenda</i> con asistencias o asesinatos de campeones y monstruos épicos, y por asesinatos de monstruos gigantes y de súbditos.",
+            "name": "Leyenda: Linaje",
+            "shortDesc": "Los <lol-uikit-tooltipped-keyword key='LinkTooltip_Description_Takedown'>asesinatos y asistencias</lol-uikit-tooltipped-keyword> otorgan <b>robo de vida</b> permanente, hasta un máximo. Cuando lo alcanzas, aumenta tu vida máxima. Es más débil al principio, pero más fuerte que otras runas de Leyenda cuando avanza la partida."
+          }
+        ]
+      },
+      {
+        "runes": [
+          {
+            "icon": "perk-images/Styles/Precision/CoupDeGrace/CoupDeGrace.png",
+            "id": 8014,
+            "key": "CoupDeGrace",
+            "longDesc": "Infliges un 8% más de daño a los campeones que estén por debajo del 40% de vida.",
+            "name": "Golpe de gracia",
+            "shortDesc": "Infliges más daño a los campeones enemigos con poca vida."
+          },
+          {
+            "icon": "perk-images/Styles/Precision/CutDown/CutDown.png",
+            "id": 8017,
+            "key": "CutDown",
+            "longDesc": "Infliges un 8% más de daño a los campeones que estén por encima del 60% de vida.",
+            "name": "Derribado",
+            "shortDesc": "Infliges más daño a los campeones enemigos con mucha vida."
+          },
+          {
+            "icon": "perk-images/Styles/Sorcery/LastStand/LastStand.png",
+            "id": 8299,
+            "key": "LastStand",
+            "longDesc": "Infliges un 5-11% más de daño a los campeones mientras estés por debajo del 60% de vida. El daño máximo se consigue al llegar al 30% de vida.",
+            "name": "Último esfuerzo",
+            "shortDesc": "Infliges más daño a campeones cuando tienes poca vida."
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "icon": "perk-images/Styles/7204_Resolve.png",
+    "id": 8400,
+    "key": "Resolve",
+    "name": "Valor",
+    "slots": [
+      {
+        "runes": [
+          {
+            "icon": "perk-images/Styles/Resolve/GraspOfTheUndying/GraspOfTheUndying.png",
+            "id": 8437,
+            "key": "GraspOfTheUndying",
+            "longDesc": "Cada 4 s en combate, tu siguiente ataque básico a un campeón hará que:<li>Inflijas daño mágico adicional equivalente al 3.5% de tu vida máxima.<li>Te cure un 1.3% de tu vida máxima.<li>Aumente tu vida en 5 de forma permanente.<br><rules><i>Campeones a distancia:</i> El daño, la curación y la vida permanente obtenida tienen una efectividad del 40%.</rules>",
+            "name": "Garras del inmortal",
+            "shortDesc": "Cada 4 s, tu siguiente ataque a un campeón inflige daño mágico adicional, te cura y aumenta tu vida permanentemente."
+          },
+          {
+            "icon": "perk-images/Styles/Resolve/VeteranAftershock/VeteranAftershock.png",
+            "id": 8439,
+            "key": "Aftershock",
+            "longDesc": "Tras inmovilizar a un campeón enemigo, tu armadura y resistencia mágica aumentan en 45 + 75% de tus resistencias adicionales durante 2.5 s. Después, explotas e infliges daño mágico a los enemigos cercanos.<br><br>Daño: 25-120 (+8% de la vida adicional).<br>Enfriamiento: 20 s.<br><br>La resistencia adicional de Reverberacción tiene un límite de 80-150 (según el nivel).<br>",
+            "name": "Reverberacción",
+            "shortDesc": "Al <lol-uikit-tooltipped-keyword key='LinkTooltip_Description_Immobilize'>inmovilizar</lol-uikit-tooltipped-keyword> a un campeón enemigo, aumentan tus resistencias y, luego, infliges daño mágico explosivo a tu alrededor."
+          },
+          {
+            "icon": "perk-images/Styles/Resolve/Guardian/Guardian.png",
+            "id": 8465,
+            "key": "Guardian",
+            "longDesc": "<i>Protege</i> a los aliados que se encuentren a 350 unidades de ti y a los aliados a los que lanzas hechizos durante 2.5 s. Si a lo largo de su duración tu aliado o tú recibís más que una pequeña cantidad de daño, ambos obtenéis un escudo durante 1.5 s.<br><br>Enfriamiento: <scaleLevel>75-40</scaleLevel> s<br>Escudo: <scaleLevel>40-150</scaleLevel> + <scaleAP>20%</scaleAP> del poder de habilidad + <scalehealth>6%</scalehealth> de la vida adicional<br>Umbral de activación: <scaleLevel>50 - 165</scaleLevel> de daño posmitigación",
+            "name": "Protector",
+            "shortDesc": "Protege a los aliados sobre los que has lanzado un hechizo y a aquellos que están muy cerca. Si tú o un campeón aliado protegido cercano recibís daño según el nivel, ambos obtenéis un escudo."
+          }
+        ]
+      },
+      {
+        "runes": [
+          {
+            "icon": "perk-images/Styles/Resolve/Demolish/Demolish.png",
+            "id": 8446,
+            "key": "Demolish",
+            "longDesc": "Tu tercer ataque contra torretas inflige [85 (+28% de la vida máxima) cuerpo a cuerpo || 50 (+20% de la vida máxima) a distancia] de daño físico adicional.<br><br>Enfriamiento: 30 s",
+            "name": "Demoler",
+            "shortDesc": "Tu tercer ataque contra torretas inflige daño adicional."
+          },
+          {
+            "icon": "perk-images/Styles/Resolve/FontOfLife/FontOfLife.png",
+            "id": 8463,
+            "key": "FontOfLife",
+            "longDesc": "Reducir la movilidad de un campeón enemigo te cura <healing>@BaseHeal@ de vida</healing> a ti y al campeón aliado cercano con menos vida.<br><br>Un 70% de efecto para campeones a distancia.<br><br>Enfriamiento: 20 s",
+            "name": "Fuente de vida",
+            "shortDesc": "<lol-uikit-tooltipped-keyword key='LinkTooltip_Description_ImpairMov'>Reducir</lol-uikit-tooltipped-keyword> la movilidad de un campeón enemigo cura a los campeones aliados cercanos. "
+          },
+          {
+            "icon": "perk-images/Styles/Resolve/MirrorShell/MirrorShell.png",
+            "id": 8401,
+            "key": "ShieldBash",
+            "longDesc": "Siempre que obtengas un nuevo escudo, tu siguiente ataque básico contra un campeón inflige <scaleLevel>5 - 30</scaleLevel> <scaleHealth>(+2.5% de vida adicional)</scaleHealth> <scaleMana>(+15.0% de la cantidad del escudo nuevo)</scaleMana> de daño <lol-uikit-tooltipped-keyword key='LinkTooltip_Description_Adaptive'><font color='#48C4B7'>adaptable</font></lol-uikit-tooltipped-keyword> adicional.<br><br>Puedes usar este efecto hasta 2 s después de que el escudo se agote.",
+            "name": "Golpe de escudo",
+            "shortDesc": "Siempre que obtengas un escudo, tu siguiente ataque básico contra un campeón inflige daño <lol-uikit-tooltipped-keyword key='LinkTooltip_Description_Adaptive'><font color='#48C4B7'>adaptable</font></lol-uikit-tooltipped-keyword> adicional."
+          }
+        ]
+      },
+      {
+        "runes": [
+          {
+            "icon": "perk-images/Styles/Resolve/Conditioning/Conditioning.png",
+            "id": 8429,
+            "key": "Conditioning",
+            "longDesc": "Pasados 12 min, obtienes +8 de armadura y +8 de resistencia mágica. Además, tu armadura y resistencia mágica aumentan un 3 %.",
+            "name": "Condicionamiento",
+            "shortDesc": "Pasados 12 min, obtienes +8 de armadura y +8 de resistencia mágica. Además, tu armadura y resistencia mágica aumentan un 3 %."
+          },
+          {
+            "icon": "perk-images/Styles/Resolve/SecondWind/SecondWind.png",
+            "id": 8444,
+            "key": "SecondWind",
+            "longDesc": "Tras recibir daño de un campeón enemigo, te curas un 4% de la vida que te falte a lo largo de 10 s.",
+            "name": "Fuerzas renovadas",
+            "shortDesc": "Tras recibir daño de un campeón enemigo, recuperas algo de la vida que te falte a lo largo del tiempo. "
+          },
+          {
+            "icon": "perk-images/Styles/Resolve/BonePlating/BonePlating.png",
+            "id": 8473,
+            "key": "BonePlating",
+            "longDesc": "Tras recibir daño de un campeón enemigo, los siguientes 3 hechizos o ataques dirigidos a ti infligen 30-60 menos de daño (en función del nivel).<br><br>Duración: 1.5 s<br>Enfriamiento: 55 s",
+            "name": "Revestimiento de huesos",
+            "shortDesc": "Tras recibir daño de un campeón enemigo, los siguientes 3 hechizos o ataques dirigidos a ti infligen 30-60 menos de daño (en función del nivel).<br><br>Duración: 1.5 s<br>Enfriamiento: 55 s"
+          }
+        ]
+      },
+      {
+        "runes": [
+          {
+            "icon": "perk-images/Styles/Resolve/Overgrowth/Overgrowth.png",
+            "id": 8451,
+            "key": "Overgrowth",
+            "longDesc": "Absorbes esencia vital de monstruos o súbditos enemigos que mueran cerca de ti, por lo que obtienes de forma permanente 3 de vida máxima por cada 8.<br><br>Cuando hayas absorbido a 120 monstruos o súbditos enemigos, obtendrás un 3.5% de vida máxima adicional.",
+            "name": "Sobrecrecimiento",
+            "shortDesc": "Obtienes vida máxima permanente cuando súbditos o monstruos mueren cerca de ti."
+          },
+          {
+            "icon": "perk-images/Styles/Resolve/Revitalize/Revitalize.png",
+            "id": 8453,
+            "key": "Revitalize",
+            "longDesc": "Obtienes un 5% de poder de curaciones y escudos.<br><br>Las curaciones y los escudos que lanzas o recibes son un 10% más potentes para objetivos que se encuentren por debajo del 40% de vida.",
+            "name": "Revitalizar",
+            "shortDesc": "Obtienes un 5% de poder de curaciones y escudos.<br><br>Las curaciones y los escudos que lanzas o recibes son un 10% más potentes para objetivos que se encuentren por debajo del 40% de vida."
+          },
+          {
+            "icon": "perk-images/Styles/Sorcery/Unflinching/Unflinching.png",
+            "id": 8242,
+            "key": "Unflinching",
+            "longDesc": "Obtienes 10 de armadura y de resistencia mágica (según el nivel) al recibir efectos de control de adversario y durante 2 s después.",
+            "name": "Inquebrantable",
+            "shortDesc": "Obtienes armadura y resistencia mágica al recibir efectos de control de adversario."
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "icon": "perk-images/Styles/7202_Sorcery.png",
+    "id": 8200,
+    "key": "Sorcery",
+    "name": "Brujería",
+    "slots": [
+      {
+        "runes": [
+          {
+            "icon": "perk-images/Styles/Sorcery/SummonAery/SummonAery.png",
+            "id": 8214,
+            "key": "SummonAery",
+            "longDesc": "Infligir daño a campeones enemigos con ataques básicos o habilidades envía a Aery contra ellos, lo que inflige 10 - 50 según el nivel (+<scaleAP>0.05 de PH</scaleAP>) (+<scaleAD>0.1 de DA adicional</scaleAD>).<br><br>Potenciar o proteger a aliados con habilidades envía a Aery hacia ellos, lo que les otorga un escudo de 20 - 100 según el nivel (+<scaleAP>0.05 de PH</scaleAP>) (+<scaleAD>0.1 de DA adicional</scaleAD>).<br><br>No se puede enviar a Aery de nuevo hasta que vuelva a ti.",
+            "name": "Invocar a Aery",
+            "shortDesc": "Tus ataques y habilidades envían a Aery a un objetivo para dañar a los enemigos u otorgar un escudo a los aliados."
+          },
+          {
+            "icon": "perk-images/Styles/Sorcery/ArcaneComet/ArcaneComet.png",
+            "id": 8229,
+            "key": "ArcaneComet",
+            "longDesc": "Infligir daño con una habilidad a un campeón proyecta un cometa hacia su ubicación, lo que inflige daño adicional según la distancia.<br><br><lol-uikit-tooltipped-keyword key='LinkTooltip_Description_AdaptiveDmg'><font color='#48C4B7'>Daño adaptable</font></lol-uikit-tooltipped-keyword>: 15 - 100 según el nivel (<scaleAP>+0.05 de PH</scaleAP> y <scaleAD>+0.1 de DA adicional</scaleAD>)<br>Enfriamiento: 20 - 8 s<br><rules><br>La amplificación de daño aumenta hasta un 100% a 750 de alcance.<br></rules>",
+            "name": "Cometa arcano",
+            "shortDesc": "Infligir daño a un campeón con una habilidad proyecta un cometa dañino hacia su ubicación."
+          },
+          {
+            "icon": "perk-images/Styles/Sorcery/PhaseRush/StormraidersSurgeRuneIcon2.png",
+            "id": 8230,
+            "key": "PhaseRush",
+            "longDesc": "Infligir un 25% de la vida máxima de un campeón en un plazo de 3 s otorga un <speed>48% de velocidad de movimiento</speed> y un <status>50% de resistencia a ralentizaciones</status> durante 4 s. La velocidad de movimiento tiene un 75% de efectividad en campeones a distancia.<br>Enfriamiento: 20 s - 10 s",
+            "name": "Tensión del saqueador de tormentas",
+            "shortDesc": "Infligir un 25% de la vida máxima de un campeón otorga <lol-uikit-tooltipped-keyword key='LinkTooltip_Description_MS'>velocidad de movimiento</lol-uikit-tooltipped-keyword> y resistencia a ralentizaciones adicionales. "
+          },
+          {
+            "icon": "perk-images/Styles/Sorcery/DeathfireTouch/DEATHFIRE_TOUCH_KEYSTONE.png",
+            "id": 8992,
+            "key": "DeathfireTouch",
+            "longDesc": "Al infligir daño a un campeón con una habilidad, lo quemas y le infliges 3 - 12 según el nivel (+<scaleAP>2.5% del PH</scaleAP>) (+<scaleAD>7% del DA adicional</scaleAD>) de daño mágico por segundo. Tras arder durante 3 s, el daño de la quemadura aumenta un 75% mientras siga ardiendo.<br><rules><br>Duración:<br>Objetivo único: 4 s.<br>Área de efecto: 2 s.<br>Daño prolongado: 1 s.<br></rules>",
+            "name": "Toque de muerte ígnea",
+            "shortDesc": "Al infligir daño a un campeón con una habilidad, lo quemas y le infliges daño prolongado."
+          }
+        ]
+      },
+      {
+        "runes": [
+          {
+            "icon": "perk-images/Styles/Sorcery/NullifyingOrb/Axiom_Arcanist.png",
+            "id": 8224,
+            "key": "NullifyingOrb",
+            "longDesc": "Tu habilidad definitiva obtiene un 12% de daño, curación y escudos adicionales. <br>El aumento del daño en área se reduce un 8%.<br><br>Conseguir una eliminación de un campeón enemigo reduce el enfriamiento actual de la definitiva un 7%.",
+            "name": "Arcanólogo axiomático",
+            "shortDesc": "Tu habilidad definitiva obtiene daño y poder de curación y escudos adicionales. Conseguir una eliminación de un campeón enemigo reduce el enfriamiento actual de la definitiva."
+          },
+          {
+            "icon": "perk-images/Styles/Sorcery/ManaflowBand/ManaflowBand.png",
+            "id": 8226,
+            "key": "ManaflowBand",
+            "longDesc": "Golpear a un campeón enemigo con una habilidad aumenta permanentemente tu maná máximo en 25, hasta 250 de maná.<br><br>Tras llegar a 250 de maná adicional, restauras un 1% del maná que te falte cada 5 s.<br><br>Enfriamiento: 15 s",
+            "name": "Banda de maná",
+            "shortDesc": "Golpear a un campeón enemigo con una habilidad aumenta permanentemente tu maná máximo en 25, hasta 250 de maná.<br><br>Tras llegar a 250 de maná adicional, recuperas un 1% del maná que te falte cada 5 s."
+          },
+          {
+            "icon": "perk-images/Styles/Sorcery/NimbusCloak/6361.png",
+            "id": 8275,
+            "key": "NimbusCloak",
+            "longDesc": "Después de lanzar un hechizo de invocador, obtienes un aumento de <speed>velocidad de movimiento</speed> que dura 2 s y te permite atravesar unidades.<br><br>Aumento: <speed>15-45% de velocidad de movimiento</speed> según el enfriamiento del hechizo de invocador (cuanto más largo sea el enfriamiento, más <speed>velocidad de movimiento</speed> se obtiene). ",
+            "name": "Capa del nimbo",
+            "shortDesc": "Después de lanzar un hechizo de invocador, obtienes un breve aumento de <speed>velocidad de movimiento</speed> que te permite atravesar unidades."
+          }
+        ]
+      },
+      {
+        "runes": [
+          {
+            "icon": "perk-images/Styles/Sorcery/Transcendence/Transcendence.png",
+            "id": 8210,
+            "key": "Transcendence",
+            "longDesc": "Obtienes bonificaciones al alcanzar los siguientes niveles:<br>Nivel 5: +5 <lol-uikit-tooltipped-keyword key='LinkTooltip_Description_CDR'>de velocidad de habilidades</lol-uikit-tooltipped-keyword> <br>Nivel 8: +5 <lol-uikit-tooltipped-keyword key='LinkTooltip_Description_CDR'>de velocidad de habilidades</lol-uikit-tooltipped-keyword> <br>Nivel 11: Al conseguir un asesinato o asistencia, se reduce el enfriamiento restante de las habilidades básicas un 20%.",
+            "name": "Trascendencia",
+            "shortDesc": "Obtienes bonificaciones al alcanzar los siguientes niveles:<br>Nivel 5: +5 <lol-uikit-tooltipped-keyword key='LinkTooltip_Description_CDR'>de velocidad de habilidades</lol-uikit-tooltipped-keyword> <br>Nivel 8: +5 <lol-uikit-tooltipped-keyword key='LinkTooltip_Description_CDR'>de velocidad de habilidades</lol-uikit-tooltipped-keyword> <br>Nivel 11: al conseguir un asesinato o asistencia, se reduce el enfriamiento restante de las habilidades básicas un 20%."
+          },
+          {
+            "icon": "perk-images/Styles/Sorcery/Celerity/CelerityTemp.png",
+            "id": 8234,
+            "key": "Celerity",
+            "longDesc": "Todas las bonificaciones de movimiento son un 7% más efectivas sobre ti y tu <speed>velocidad de movimiento</speed> aumenta un 1%.",
+            "name": "Celeridad",
+            "shortDesc": "Todas las bonificaciones de <speed>velocidad de movimiento</speed> son un 7% más efectivas sobre ti y tu <speed>velocidad de movimiento</speed> aumenta un 1%."
+          },
+          {
+            "icon": "perk-images/Styles/Sorcery/AbsoluteFocus/AbsoluteFocus.png",
+            "id": 8233,
+            "key": "AbsoluteFocus",
+            "longDesc": "Mientras estés por encima del 70% de vida, obtienes una bonificación <lol-uikit-tooltipped-keyword key='LinkTooltip_Description_Adaptive'><font color='#48C4B7'>adaptable</font></lol-uikit-tooltipped-keyword> de hasta 18 de daño de ataque o 30 de poder de habilidad (según el nivel). <br><br>Otorga 1.8 de daño de ataque o 3 de poder de habilidad a nivel 1. ",
+            "name": "Concentración absoluta",
+            "shortDesc": "Mientras estés por encima del 70% de vida, obtienes <lol-uikit-tooltipped-keyword key='LinkTooltip_Description_AdaptiveDmg'>daño adaptable</lol-uikit-tooltipped-keyword> adicional."
+          }
+        ]
+      },
+      {
+        "runes": [
+          {
+            "icon": "perk-images/Styles/Sorcery/Scorch/Scorch.png",
+            "id": 8237,
+            "key": "Scorch",
+            "longDesc": "Tu siguiente habilidad con daño prende fuego a los campeones e inflige 20-40 de daño mágico adicional (según el nivel) tras 1 s.<br><br>Enfriamiento: 10 s",
+            "name": "Piroláser",
+            "shortDesc": "La primera habilidad con daño que aciertes cada 10 s prende fuego a los campeones."
+          },
+          {
+            "icon": "perk-images/Styles/Sorcery/Waterwalking/Waterwalking.png",
+            "id": 8232,
+            "key": "Waterwalking",
+            "longDesc": "Obtienes <speed>10 de velocidad de movimiento</speed> y <lol-uikit-tooltipped-keyword key='LinkTooltip_Description_Adaptive'><font color='#48C4B7'>13 - 30 de fuerza adaptable</font></lol-uikit-tooltipped-keyword> (en función del nivel) cuando estás en el río.<br><br><i>Sé tan veloz como un arroyo y tan ágil como un Escurridizo de la Grieta asustado.</i>",
+            "name": "Caminar sobre agua",
+            "shortDesc": "Obtienes <lol-uikit-tooltipped-keyword key='LinkTooltip_Description_MS'>velocidad de movimiento</lol-uikit-tooltipped-keyword> y PH o DA <lol-uikit-tooltipped-keyword key='LinkTooltip_Description_Adaptive'>adaptable</lol-uikit-tooltipped-keyword> cuando estás en el río."
+          },
+          {
+            "icon": "perk-images/Styles/Sorcery/GatheringStorm/GatheringStorm.png",
+            "id": 8236,
+            "key": "GatheringStorm",
+            "longDesc": "Cada 10 min obtiene PH o DA <lol-uikit-tooltipped-keyword key='LinkTooltip_Description_Adaptive'><font color='#48C4B7'>adaptable</font></lol-uikit-tooltipped-keyword>.<br><br><i>10 min</i>: + 8 de PH o 5 de DA. <br><i>20 min</i>: + 24 de PH o 14 de DA.<br><i>30 min</i>: + 48 de PH o 29 de DA.<br><i>40 min</i>: + 80 de PH o 48 de DA.<br><i>50 min</i>: + 120 de PH o 72 de DA.<br><i>60 min</i>: + 168 de PH o 101 de DA.<br>etc.",
+            "name": "Se avecina tormenta",
+            "shortDesc": "Obtienes cada vez más DA o PH <lol-uikit-tooltipped-keyword key='LinkTooltip_Description_Adaptive'>adaptable</lol-uikit-tooltipped-keyword> durante el transcurso de la partida."
+          }
+        ]
+      }
+    ]
+  }
+]

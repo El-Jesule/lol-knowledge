@@ -1,0 +1,1028 @@
+{
+  "allytips": [
+    "Puedes usar Camino del asesino para colocarte tras el enemigo y prepararte para atacar cuerpo a cuerpo con Diplomacia noxiana.",
+    "Asalto de sombra es muy útil para escapar, pero también puede usarse a la ofensiva para atacar a un grupo.",
+    "No olvides elegir al objetivo adecuado antes de lanzarte a la lucha. Centrar todas las habilidades de Talon en un solo objetivo es muy beneficioso, pero si las repartes entre muchos te quedarás indefenso."
+  ],
+  "blurb": "Talon es el cuchillo de la oscuridad, un asesino despiadado capaz de atacar sin previo aviso y huir antes de que salte alarma alguna. Logró granjearse una peligrosa reputación en las terribles calles de Noxus, donde se vio obligado a luchar, matar y...",
+  "enemytips": [
+    "Los ataques de Talon son puro daño físico. Aumenta pronto tu armadura para contrarrestar su oleada de daño.",
+    "Talon depende mucho de Asalto de sombra para escapar de los combates. Cuando no la puede activar, es mucho más vulnerable.",
+    "Talon no tiene igual a la hora de ayudar en otras calles. Recuerda controlar su posición o forzarlo a permanecer en su calle a base de avanzar de forma agresiva."
+  ],
+  "id": "Talon",
+  "image": {
+    "full": "Talon.png",
+    "group": "champion",
+    "h": 48,
+    "sprite": "champion4.png",
+    "w": 48,
+    "x": 240,
+    "y": 48
+  },
+  "info": {
+    "attack": 9,
+    "defense": 3,
+    "difficulty": 7,
+    "magic": 1
+  },
+  "key": "91",
+  "lore": "Talon es el cuchillo de la oscuridad, un asesino despiadado capaz de atacar sin previo aviso y huir antes de que salte alarma alguna. Logró granjearse una peligrosa reputación en las terribles calles de Noxus, donde se vio obligado a luchar, matar y robar para sobrevivir. Talon, adoptado por la ilustre familia Du Couteau, ejerce ahora su letal profesión a las órdenes del imperio, asesinando líderes, capitanes y héroes rivales, además de noxianos lo bastante osados como para atraerse la enemistad de sus dirigentes.",
+  "name": "Talon",
+  "partype": "Maná",
+  "passive": {
+    "description": "Los hechizos de Talon provocan una herida a los campeones y monstruos gigantes, que puede acumularse hasta 3 veces. Cuando Talon ataca a un objetivo con 3 heridas, este sufre una hemorragia que le causa daño prolongado.",
+    "image": {
+      "full": "TalonP.png",
+      "group": "passive",
+      "h": 48,
+      "sprite": "passive4.png",
+      "w": 48,
+      "x": 240,
+      "y": 48
+    },
+    "name": "Final de la hoja"
+  },
+  "recommended": [],
+  "skins": [
+    {
+      "chromas": false,
+      "id": "91000",
+      "name": "default",
+      "num": 0
+    },
+    {
+      "chromas": false,
+      "id": "91001",
+      "name": "Talon renegado",
+      "num": 1
+    },
+    {
+      "chromas": false,
+      "id": "91002",
+      "name": "Talon élite carmesí",
+      "num": 2
+    },
+    {
+      "chromas": true,
+      "id": "91003",
+      "name": "Talon hoja del dragón",
+      "num": 3
+    },
+    {
+      "chromas": false,
+      "id": "91004",
+      "name": "Talon SSW",
+      "num": 4
+    },
+    {
+      "chromas": false,
+      "id": "91005",
+      "name": "Talon luna sangrienta",
+      "num": 5
+    },
+    {
+      "chromas": false,
+      "id": "91006",
+      "name": "Talon hoja del dragón (amatista)",
+      "num": 6,
+      "parentSkin": 3
+    },
+    {
+      "chromas": false,
+      "id": "91007",
+      "name": "Talon hoja del dragón (ojo de gato)",
+      "num": 7,
+      "parentSkin": 3
+    },
+    {
+      "chromas": false,
+      "id": "91008",
+      "name": "Talon hoja del dragón (esmeralda)",
+      "num": 8,
+      "parentSkin": 3
+    },
+    {
+      "chromas": false,
+      "id": "91009",
+      "name": "Talon hoja del dragón (obsidiana)",
+      "num": 9,
+      "parentSkin": 3
+    },
+    {
+      "chromas": false,
+      "id": "91010",
+      "name": "Talon hoja del dragón (perla)",
+      "num": 10,
+      "parentSkin": 3
+    },
+    {
+      "chromas": false,
+      "id": "91011",
+      "name": "Talon hoja del dragón (zafiro)",
+      "num": 11,
+      "parentSkin": 3
+    },
+    {
+      "chromas": true,
+      "id": "91012",
+      "name": "Talon espada sempiterna",
+      "num": 12
+    },
+    {
+      "chromas": false,
+      "id": "91013",
+      "name": "Talon espada sempiterna (rubí)",
+      "num": 13,
+      "parentSkin": 12
+    },
+    {
+      "chromas": false,
+      "id": "91014",
+      "name": "Talon espada sempiterna (cuarzo rosa)",
+      "num": 14,
+      "parentSkin": 12
+    },
+    {
+      "chromas": false,
+      "id": "91015",
+      "name": "Talon espada sempiterna (ojo de gato)",
+      "num": 15,
+      "parentSkin": 12
+    },
+    {
+      "chromas": false,
+      "id": "91016",
+      "name": "Talon espada sempiterna (esmeralda)",
+      "num": 16,
+      "parentSkin": 12
+    },
+    {
+      "chromas": false,
+      "id": "91017",
+      "name": "Talon espada sempiterna (amatista)",
+      "num": 17,
+      "parentSkin": 12
+    },
+    {
+      "chromas": false,
+      "id": "91018",
+      "name": "Talon espada sempiterna (zafiro)",
+      "num": 18,
+      "parentSkin": 12
+    },
+    {
+      "chromas": false,
+      "id": "91019",
+      "name": "Talon espada sempiterna (obsidiana)",
+      "num": 19,
+      "parentSkin": 12
+    },
+    {
+      "chromas": true,
+      "id": "91020",
+      "name": "Talon bosque oscuro",
+      "num": 20
+    },
+    {
+      "chromas": false,
+      "id": "91021",
+      "name": "Talon bosque oscuro (perla)",
+      "num": 21,
+      "parentSkin": 20
+    },
+    {
+      "chromas": false,
+      "id": "91022",
+      "name": "Talon bosque oscuro (aguamarina)",
+      "num": 22,
+      "parentSkin": 20
+    },
+    {
+      "chromas": false,
+      "id": "91023",
+      "name": "Talon bosque oscuro (obsidiana)",
+      "num": 23,
+      "parentSkin": 20
+    },
+    {
+      "chromas": false,
+      "id": "91024",
+      "name": "Talon bosque oscuro (rubí)",
+      "num": 24,
+      "parentSkin": 20
+    },
+    {
+      "chromas": false,
+      "id": "91025",
+      "name": "Talon bosque oscuro (cuarzo rosa)",
+      "num": 25,
+      "parentSkin": 20
+    },
+    {
+      "chromas": false,
+      "id": "91026",
+      "name": "Talon bosque oscuro (ojo de gato)",
+      "num": 26,
+      "parentSkin": 20
+    },
+    {
+      "chromas": false,
+      "id": "91027",
+      "name": "Talon bosque oscuro (peridoto)",
+      "num": 27,
+      "parentSkin": 20
+    },
+    {
+      "chromas": false,
+      "id": "91028",
+      "name": "Talon bosque oscuro (turquesa)",
+      "num": 28,
+      "parentSkin": 20
+    },
+    {
+      "chromas": true,
+      "id": "91029",
+      "name": "Talon rosa marchita",
+      "num": 29
+    },
+    {
+      "chromas": false,
+      "id": "91030",
+      "name": "Talon rosa marchita (rubí)",
+      "num": 30,
+      "parentSkin": 29
+    },
+    {
+      "chromas": false,
+      "id": "91031",
+      "name": "Talon rosa marchita (citrino)",
+      "num": 31,
+      "parentSkin": 29
+    },
+    {
+      "chromas": false,
+      "id": "91032",
+      "name": "Talon rosa marchita (esmeralda)",
+      "num": 32,
+      "parentSkin": 29
+    },
+    {
+      "chromas": false,
+      "id": "91033",
+      "name": "Talon rosa marchita (turquesa)",
+      "num": 33,
+      "parentSkin": 29
+    },
+    {
+      "chromas": false,
+      "id": "91034",
+      "name": "Talon rosa marchita (cuarzo rosa)",
+      "num": 34,
+      "parentSkin": 29
+    },
+    {
+      "chromas": false,
+      "id": "91035",
+      "name": "Talon rosa marchita (zafiro)",
+      "num": 35,
+      "parentSkin": 29
+    },
+    {
+      "chromas": false,
+      "id": "91036",
+      "name": "Talon rosa marchita (obsidiana)",
+      "num": 36,
+      "parentSkin": 29
+    },
+    {
+      "chromas": false,
+      "id": "91037",
+      "name": "Talon rosa marchita (perla)",
+      "num": 37,
+      "parentSkin": 29
+    },
+    {
+      "chromas": true,
+      "id": "91038",
+      "name": "Talon solo ante el peligro",
+      "num": 38
+    },
+    {
+      "chromas": false,
+      "id": "91039",
+      "name": "Talon solo ante el peligro (edición de prestigio)",
+      "num": 39
+    },
+    {
+      "chromas": false,
+      "id": "91040",
+      "name": "Talon solo ante el peligro (rubí)",
+      "num": 40,
+      "parentSkin": 38
+    },
+    {
+      "chromas": false,
+      "id": "91041",
+      "name": "Talon solo ante el peligro (ojo de gato)",
+      "num": 41,
+      "parentSkin": 38
+    },
+    {
+      "chromas": false,
+      "id": "91042",
+      "name": "Talon solo ante el peligro (cuarzo rosa)",
+      "num": 42,
+      "parentSkin": 38
+    },
+    {
+      "chromas": false,
+      "id": "91043",
+      "name": "Talon solo ante el peligro (zafiro)",
+      "num": 43,
+      "parentSkin": 38
+    },
+    {
+      "chromas": false,
+      "id": "91044",
+      "name": "Talon solo ante el peligro (tanzanita)",
+      "num": 44,
+      "parentSkin": 38
+    },
+    {
+      "chromas": false,
+      "id": "91045",
+      "name": "Talon solo ante el peligro (esmeralda)",
+      "num": 45,
+      "parentSkin": 38
+    },
+    {
+      "chromas": false,
+      "id": "91046",
+      "name": "Talon solo ante el peligro (obsidiana)",
+      "num": 46,
+      "parentSkin": 38
+    },
+    {
+      "chromas": false,
+      "id": "91047",
+      "name": "Talon solo ante el peligro (perla)",
+      "num": 47,
+      "parentSkin": 38
+    },
+    {
+      "chromas": false,
+      "id": "91048",
+      "name": "Talon solo ante el peligro (nómada)",
+      "num": 48,
+      "parentSkin": 38
+    },
+    {
+      "chromas": true,
+      "id": "91049",
+      "name": "Talon emboscada primigenia",
+      "num": 49
+    },
+    {
+      "chromas": false,
+      "id": "91050",
+      "name": "Talon hoja del dragón (meteorito)",
+      "num": 50,
+      "parentSkin": 3
+    },
+    {
+      "chromas": false,
+      "id": "91051",
+      "name": "Talon emboscada primigenia (rubí)",
+      "num": 51,
+      "parentSkin": 49
+    },
+    {
+      "chromas": false,
+      "id": "91052",
+      "name": "Talon emboscada primigenia (citrino)",
+      "num": 52,
+      "parentSkin": 49
+    },
+    {
+      "chromas": false,
+      "id": "91053",
+      "name": "Talon emboscada primigenia (esmeralda)",
+      "num": 53,
+      "parentSkin": 49
+    },
+    {
+      "chromas": false,
+      "id": "91054",
+      "name": "Talon emboscada primigenia (turquesa)",
+      "num": 54,
+      "parentSkin": 49
+    },
+    {
+      "chromas": false,
+      "id": "91055",
+      "name": "Talon emboscada primigenia (zafiro)",
+      "num": 55,
+      "parentSkin": 49
+    },
+    {
+      "chromas": false,
+      "id": "91056",
+      "name": "Talon emboscada primigenia (tanzanita)",
+      "num": 56,
+      "parentSkin": 49
+    },
+    {
+      "chromas": false,
+      "id": "91057",
+      "name": "Talon emboscada primigenia (cuarzo rosa)",
+      "num": 57,
+      "parentSkin": 49
+    },
+    {
+      "chromas": false,
+      "id": "91058",
+      "name": "Talon emboscada primigenia (perla)",
+      "num": 58,
+      "parentSkin": 49
+    },
+    {
+      "chromas": false,
+      "id": "91059",
+      "name": "Talon Gran Ordalía",
+      "num": 59
+    }
+  ],
+  "spells": [
+    {
+      "cooldown": [
+        8,
+        7.5,
+        7,
+        6.5,
+        6
+      ],
+      "cooldownBurn": "8/7.5/7/6.5/6",
+      "cost": [
+        40,
+        40,
+        40,
+        40,
+        40
+      ],
+      "costBurn": "40",
+      "costType": " {{ abilityresourcename }}",
+      "datavalues": {},
+      "description": "Talon apuñala al objetivo. Si este se encuentra al alcance de sus golpes cuerpo a cuerpo, el ataque es un golpe crítico. Si no, Talon se abalanza sobre él antes de apuñalarlo. Si consigue acabar con el objetivo, recupera algo de vida y reduce el enfriamiento de la habilidad.",
+      "effect": [
+        null,
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ]
+      ],
+      "effectBurn": [
+        null,
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0"
+      ],
+      "id": "TalonQ",
+      "image": {
+        "full": "TalonQ.png",
+        "group": "spell",
+        "h": 48,
+        "sprite": "spell14.png",
+        "w": 48,
+        "x": 192,
+        "y": 48
+      },
+      "leveltip": {
+        "effect": [
+          "{{ basedamage }} -> {{ basedamageNL }}",
+          "{{ cooldown }} -> {{ cooldownNL }}"
+        ],
+        "label": [
+          "Daño",
+          "Enfriamiento"
+        ]
+      },
+      "maxammo": "-1",
+      "maxrank": 5,
+      "name": "Diplomacia noxiana",
+      "range": [
+        575,
+        575,
+        575,
+        575,
+        575
+      ],
+      "rangeBurn": "575",
+      "resource": "{{ cost }} {{ abilityresourcename }}",
+      "tooltip": "Talon se abalanza sobre un objetivo y le inflige <physicalDamage>{{ leapdamage }} de daño físico</physicalDamage>. Si se utiliza cuerpo a cuerpo, esta habilidad causa un impacto crítico de <physicalDamage>{{ criticaldamage }} de daño físico</physicalDamage>.<br /><br />Si esta habilidad mata al objetivo, Talon recupera <healing>{{ totalhealing }} de vida</healing> y un {{ cooldownrefund*100 }}% del enfriamiento de la misma.{{ spellmodifierdescriptionappend }}",
+      "vars": []
+    },
+    {
+      "cooldown": [
+        9,
+        8.5,
+        8,
+        7.5,
+        7
+      ],
+      "cooldownBurn": "9/8.5/8/7.5/7",
+      "cost": [
+        50,
+        55,
+        60,
+        65,
+        70
+      ],
+      "costBurn": "50/55/60/65/70",
+      "costType": " {{ abilityresourcename }}",
+      "datavalues": {},
+      "description": "Talon lanza una andanada de dagas que luego vuelven a él y causan daño físico cada vez que pasan a través de un enemigo. Al volver, las dagas infligen daño adicional y ralentizan a las unidades alcanzadas.",
+      "effect": [
+        null,
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ]
+      ],
+      "effectBurn": [
+        null,
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0"
+      ],
+      "id": "TalonW",
+      "image": {
+        "full": "TalonW.png",
+        "group": "spell",
+        "h": 48,
+        "sprite": "spell14.png",
+        "w": 48,
+        "x": 240,
+        "y": 48
+      },
+      "leveltip": {
+        "effect": [
+          "{{ cost }} -> {{ costNL }}",
+          "{{ initialbasedamage }} -> {{ initialbasedamageNL }}",
+          "{{ returnbasedamage }} -> {{ returnbasedamageNL }}",
+          "{{ movespeedslow*100.000000 }}% -> {{ movespeedslownl*100.000000 }}%",
+          "{{ cooldown }} -> {{ cooldownNL }}"
+        ],
+        "label": [
+          "Coste de @AbilityResourceName@",
+          "Daño inicial",
+          "Daño de vuelta",
+          "Ralentización",
+          "Enfriamiento"
+        ]
+      },
+      "maxammo": "-1",
+      "maxrank": 5,
+      "name": "Rastrillar",
+      "range": [
+        650,
+        650,
+        650,
+        650,
+        650
+      ],
+      "rangeBurn": "650",
+      "resource": "{{ cost }} {{ abilityresourcename }}",
+      "tooltip": "Talon lanza un abanico de hojas que inflige <physicalDamage>{{ totalinitialdamage }} de daño físico</physicalDamage>. A continuación, las cuchillas regresan a él, lo que inflige <physicalDamage>{{ totalreturndamage }} de daño físico</physicalDamage> y <status>ralentiza</status> un {{ movespeedslow*100 }}% durante {{ slowduration }} s.{{ spellmodifierdescriptionappend }}",
+      "vars": []
+    },
+    {
+      "cooldown": [
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "cooldownBurn": "0",
+      "cost": [
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "costBurn": "0",
+      "costType": "Sin coste",
+      "datavalues": {},
+      "description": "Talon salta sobre cualquier obstáculo o estructura hasta una distancia máxima. Esta habilidad tiene poco tiempo de enfriamiento, pero no podrá volver a utilizarla en la misma zona durante un buen rato.",
+      "effect": [
+        null,
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          625,
+          625,
+          625,
+          625,
+          625
+        ],
+        [
+          1250,
+          1250,
+          1250,
+          1250,
+          1250
+        ],
+        [
+          2,
+          2,
+          2,
+          2,
+          2
+        ],
+        [
+          160,
+          135,
+          110,
+          85,
+          60
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ]
+      ],
+      "effectBurn": [
+        null,
+        "0",
+        "0",
+        "625",
+        "1250",
+        "2",
+        "160/135/110/85/60",
+        "0",
+        "0",
+        "0",
+        "0"
+      ],
+      "id": "TalonE",
+      "image": {
+        "full": "TalonE.png",
+        "group": "spell",
+        "h": 48,
+        "sprite": "spell14.png",
+        "w": 48,
+        "x": 288,
+        "y": 48
+      },
+      "leveltip": {
+        "effect": [
+          "{{ wallcd }} -> {{ wallcdNL }}"
+        ],
+        "label": [
+          "Enfriamiento del terreno"
+        ]
+      },
+      "maxammo": "-1",
+      "maxrank": 5,
+      "name": "Camino del asesino",
+      "range": [
+        725,
+        725,
+        725,
+        725,
+        725
+      ],
+      "rangeBurn": "725",
+      "resource": "Sin coste",
+      "tooltip": "Talon salta por encima de la estructura o el obstáculo del terreno más próximo. No puede usar esta habilidad sobre el mismo obstáculo del terreno más de una vez cada {{ wallcd }} s.{{ spellmodifierdescriptionappend }}",
+      "vars": []
+    },
+    {
+      "cooldown": [
+        100,
+        80,
+        60
+      ],
+      "cooldownBurn": "100/80/60",
+      "cost": [
+        100,
+        100,
+        100
+      ],
+      "costBurn": "100",
+      "costType": " {{ abilityresourcename }}",
+      "datavalues": {},
+      "description": "Talon esparce un anillo de hojas, se hace invisible y consigue velocidad de movimiento adicional. Cuando se hace visible de nuevo, las hojas convergen sobre él. Cada vez que se mueven las hojas, Asalto de sombra inflige daño físico a los enemigos alcanzados al menos por una de ellas.",
+      "effect": [
+        null,
+        [
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0
+        ]
+      ],
+      "effectBurn": [
+        null,
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0"
+      ],
+      "id": "TalonR",
+      "image": {
+        "full": "TalonR.png",
+        "group": "spell",
+        "h": 48,
+        "sprite": "spell14.png",
+        "w": 48,
+        "x": 336,
+        "y": 48
+      },
+      "leveltip": {
+        "effect": [
+          "{{ basedamage }} -> {{ basedamageNL }}",
+          "{{ movespeed*100.000000 }}% -> {{ movespeednl*100.000000 }}%",
+          "{{ cooldown }} -> {{ cooldownNL }}"
+        ],
+        "label": [
+          "Daño",
+          "Velocidad de movimiento",
+          "Enfriamiento"
+        ]
+      },
+      "maxammo": "-1",
+      "maxrank": 3,
+      "name": "Asalto de sombra",
+      "range": [
+        550,
+        550,
+        550
+      ],
+      "rangeBurn": "550",
+      "resource": "{{ cost }} {{ abilityresourcename }}",
+      "tooltip": "Talon esparce un anillo de hojas que inflige <physicalDamage>{{ damage }} de daño físico</physicalDamage>, obtiene un <speed>{{ movespeed*100 }}% de velocidad de movimiento</speed> y se vuelve <keywordStealth>invisible</keywordStealth> durante {{ duration }} s. Cuando la <keywordStealth>invisibilidad</keywordStealth> termina, las hojas vuelven a Talon, lo que inflige <physicalDamage>{{ damage }} de daño físico</physicalDamage> de nuevo.<br /><br />Si Talon cancela la <keywordStealth>invisibilidad</keywordStealth> con un ataque o con <spellName>Diplomacia noxiana</spellName>, las cuchillas vuelven al objetivo.{{ spellmodifierdescriptionappend }}",
+      "vars": []
+    }
+  ],
+  "stats": {
+    "armor": 30,
+    "armorperlevel": 4.7,
+    "attackdamage": 68,
+    "attackdamageperlevel": 0,
+    "attackrange": 125,
+    "attackspeed": 0.625,
+    "attackspeedperlevel": 2.9,
+    "crit": 0,
+    "critperlevel": 0,
+    "hp": 658,
+    "hpperlevel": 109,
+    "hpregen": 8.5,
+    "hpregenperlevel": 0.75,
+    "movespeed": 335,
+    "mp": 400,
+    "mpperlevel": 37,
+    "mpregen": 7.6,
+    "mpregenperlevel": 0.8,
+    "spellblock": 36,
+    "spellblockperlevel": 2.05
+  },
+  "tags": [
+    "Assassin"
+  ],
+  "title": "La Sombra de la Espada"
+}

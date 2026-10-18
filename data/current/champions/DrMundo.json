@@ -1,0 +1,825 @@
+{
+  "allytips": [
+    "El Sadismo sincronizado puede hacer que los campeones enemigos te ataquen aunque no tengan daño suficiente para acabar contigo.",
+    "Rostro espiritual aumenta la curación conseguida por tu definitiva y disminuye los enfriamientos de todas tus habilidades.",
+    "Las cuchillas son un arma potente para matar monstruos neutrales. En lugar de volver a la base, mata monstruos reiteradamente hasta que tu definitiva pueda curarte."
+  ],
+  "blurb": "Loco de remate, trágicamente homicida, terriblemente morado: el Dr. Mundo es lo que mantiene en sus casas a muchos habitantes de Zaun en las noches especialmente oscuras. Este autoproclamado doctor fue paciente del psiquiátrico más infame de Zaun. Tras...",
+  "enemytips": [
+    "Intenta coordinar con tus aliados el uso de habilidades que causen mucho daño justo después de que el Dr. Mundo use su definitiva. Sin embargo, si no lográis matarlo rápidamente, conseguirá curarse.",
+    "Intenta lanzar Prender cuando el Dr. Mundo use Sadismo para anular una gran parte de su curación."
+  ],
+  "id": "DrMundo",
+  "image": {
+    "full": "DrMundo.png",
+    "group": "champion",
+    "h": 48,
+    "sprite": "champion0.png",
+    "w": 48,
+    "x": 384,
+    "y": 96
+  },
+  "info": {
+    "attack": 5,
+    "defense": 7,
+    "difficulty": 5,
+    "magic": 6
+  },
+  "key": "36",
+  "lore": "Loco de remate, trágicamente homicida, terriblemente morado: el Dr. Mundo es lo que mantiene en sus casas a muchos habitantes de Zaun en las noches especialmente oscuras. Este autoproclamado doctor fue paciente del psiquiátrico más infame de Zaun. Tras ''curar'' a todo el personal, Dr. Mundo estableció su consulta en las salas vacías en las que solían tratarlo y comenzó a imitar los inmorales procedimientos que estaba tan acostumbrado a vivir en sus carnes. Con un armario repleto de medicinas y ningún tipo de conocimiento médico, se vuelve más monstruoso tras cada inyección y aterroriza a los desgraciados ''pacientes'' que deambulan demasiado cerca de su oficina.",
+  "name": "Dr. Mundo",
+  "partype": "Nada",
+  "passive": {
+    "description": "Dr. Mundo resiste el siguiente efecto inmovilizador que lo golpea, pero pierde vida y deja caer un vial químico cerca. Puede recoger dicho vial caminando sobre él, lo que restaura vida y reduce el enfriamiento de esta pasiva.<br><br>Dr. Mundo también tiene gran regeneración de vida adicional.<br>",
+    "image": {
+      "full": "DrMundo_P.png",
+      "group": "passive",
+      "h": 48,
+      "sprite": "passive0.png",
+      "w": 48,
+      "x": 384,
+      "y": 96
+    },
+    "name": "Va donde quiere"
+  },
+  "recommended": [],
+  "skins": [
+    {
+      "chromas": false,
+      "id": "36000",
+      "name": "default",
+      "num": 0
+    },
+    {
+      "chromas": false,
+      "id": "36001",
+      "name": "Dr. Mundo tóxico",
+      "num": 1
+    },
+    {
+      "chromas": false,
+      "id": "36002",
+      "name": "Míster Mundoverso",
+      "num": 2
+    },
+    {
+      "chromas": true,
+      "id": "36003",
+      "name": "Mundo ejecutivo",
+      "num": 3
+    },
+    {
+      "chromas": false,
+      "id": "36004",
+      "name": "Mundo Mundo",
+      "num": 4
+    },
+    {
+      "chromas": false,
+      "id": "36005",
+      "name": "Mundo verdugo",
+      "num": 5
+    },
+    {
+      "chromas": false,
+      "id": "36006",
+      "name": "Mundo nacido de la ira",
+      "num": 6
+    },
+    {
+      "chromas": false,
+      "id": "36007",
+      "name": "Mundo TPA",
+      "num": 7
+    },
+    {
+      "chromas": false,
+      "id": "36008",
+      "name": "Mundo fiesta en la piscina",
+      "num": 8
+    },
+    {
+      "chromas": false,
+      "id": "36009",
+      "name": "El Macho Mundo",
+      "num": 9
+    },
+    {
+      "chromas": true,
+      "id": "36010",
+      "name": "Mundo príncipe gélido",
+      "num": 10
+    },
+    {
+      "chromas": false,
+      "id": "36011",
+      "name": "Mundo príncipe gélido (rubí)",
+      "num": 11,
+      "parentSkin": 10
+    },
+    {
+      "chromas": false,
+      "id": "36012",
+      "name": "Mundo príncipe gélido (aguamarina)",
+      "num": 12,
+      "parentSkin": 10
+    },
+    {
+      "chromas": false,
+      "id": "36013",
+      "name": "Mundo príncipe gélido (obsidiana)",
+      "num": 13,
+      "parentSkin": 10
+    },
+    {
+      "chromas": false,
+      "id": "36014",
+      "name": "Mundo príncipe gélido (perla)",
+      "num": 14,
+      "parentSkin": 10
+    },
+    {
+      "chromas": false,
+      "id": "36015",
+      "name": "Mundo príncipe gélido (cuarzo rosa)",
+      "num": 15,
+      "parentSkin": 10
+    },
+    {
+      "chromas": false,
+      "id": "36016",
+      "name": "Mundo ejecutivo (rubí)",
+      "num": 16,
+      "parentSkin": 3
+    },
+    {
+      "chromas": false,
+      "id": "36017",
+      "name": "Mundo ejecutivo (cuarzo rosa)",
+      "num": 17,
+      "parentSkin": 3
+    },
+    {
+      "chromas": false,
+      "id": "36018",
+      "name": "Mundo ejecutivo (tanzanita)",
+      "num": 18,
+      "parentSkin": 3
+    },
+    {
+      "chromas": false,
+      "id": "36019",
+      "name": "Mundo ejecutivo (perla)",
+      "num": 19,
+      "parentSkin": 3
+    },
+    {
+      "chromas": false,
+      "id": "36020",
+      "name": "Mundo ejecutivo (obsidiana)",
+      "num": 20,
+      "parentSkin": 3
+    },
+    {
+      "chromas": true,
+      "id": "36021",
+      "name": "Dr. Mundo diablo callejero",
+      "num": 21
+    },
+    {
+      "chromas": false,
+      "id": "36022",
+      "name": "Dr. Mundo diablo callejero (rubí)",
+      "num": 22,
+      "parentSkin": 21
+    },
+    {
+      "chromas": false,
+      "id": "36023",
+      "name": "Dr. Mundo diablo callejero (arenisca)",
+      "num": 23,
+      "parentSkin": 21
+    },
+    {
+      "chromas": false,
+      "id": "36024",
+      "name": "Dr. Mundo diablo callejero (esmeralda)",
+      "num": 24,
+      "parentSkin": 21
+    },
+    {
+      "chromas": false,
+      "id": "36025",
+      "name": "Dr. Mundo diablo callejero (tanzanita)",
+      "num": 25,
+      "parentSkin": 21
+    },
+    {
+      "chromas": false,
+      "id": "36026",
+      "name": "Dr. Mundo diablo callejero (obsidiana)",
+      "num": 26,
+      "parentSkin": 21
+    },
+    {
+      "chromas": false,
+      "id": "36027",
+      "name": "Dr. Mundo diablo callejero (cuarzo rosa)",
+      "num": 27,
+      "parentSkin": 21
+    },
+    {
+      "chromas": false,
+      "id": "36028",
+      "name": "Dr. Mundo diablo callejero (turquesa)",
+      "num": 28,
+      "parentSkin": 21
+    },
+    {
+      "chromas": false,
+      "id": "36029",
+      "name": "Dr. Mundo diablo callejero (citrino)",
+      "num": 29,
+      "parentSkin": 21
+    }
+  ],
+  "spells": [
+    {
+      "cooldown": [
+        4,
+        4,
+        4,
+        4,
+        4
+      ],
+      "cooldownBurn": "4",
+      "cost": [
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "costBurn": "0",
+      "costType": " de vida",
+      "datavalues": {},
+      "description": "Dr. Mundo lanza un serrucho infectado que inflige daño al primer enemigo golpeado según su vida actual y lo ralentiza.",
+      "effect": [
+        null,
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ]
+      ],
+      "effectBurn": [
+        null,
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0"
+      ],
+      "id": "DrMundoQ",
+      "image": {
+        "full": "DrMundoQ.png",
+        "group": "spell",
+        "h": 48,
+        "sprite": "spell3.png",
+        "w": 48,
+        "x": 288,
+        "y": 96
+      },
+      "leveltip": {
+        "effect": [
+          "{{ currenthealthdamage*100.000000 }}% -> {{ currenthealthdamagenl*100.000000 }}%",
+          "{{ minimumdamage }} -> {{ minimumdamageNL }}",
+          "{{ maximummonsterdamage }} -> {{ maximummonsterdamageNL }}",
+          "{{ healthcost }} -> {{ healthcostNL }}"
+        ],
+        "label": [
+          "Daño por vida actual",
+          "Daño mínimo",
+          "Límite del daño a monstruos",
+          "Coste de vida"
+        ]
+      },
+      "maxammo": "-1",
+      "maxrank": 5,
+      "name": "Serrucho infectado",
+      "range": [
+        975,
+        975,
+        975,
+        975,
+        975
+      ],
+      "rangeBurn": "975",
+      "resource": "{{ healthcost }} de vida",
+      "tooltip": "Dr. Mundo lanza su serrucho, lo que inflige un <magicDamage>{{ currenthealthdamage*100 }}% de la vida actual como daño mágico</magicDamage> al primer enemigo al que alcanza y lo <status>ralentiza</status> un {{ slowamount*100 }}% durante {{ slowduration }} s.<br /><br />Si el serrucho golpea a un campeón o monstruo, Dr. Mundo restaura <healing>{{ healthrestoreonhitchampionmonster }} de vida</healing>. Si alcanza a un objetivo que no sea un campeón ni un monstruo, Dr. Mundo restaura <healing>{{ healthrestoreonhitminion }} de vida</healing> en su lugar.{{ spellmodifierdescriptionappend }}",
+      "vars": []
+    },
+    {
+      "cooldown": [
+        17,
+        16.5,
+        16,
+        15.5,
+        15
+      ],
+      "cooldownBurn": "17/16.5/16/15.5/15",
+      "cost": [
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "costBurn": "0",
+      "costType": "% de la vida actual",
+      "datavalues": {},
+      "description": "Dr. Mundo se autoelectrocuta, lo que inflige daño constante a los enemigos cercanos y almacena parte del daño recibido. Al final de la duración o al volver a lanzar la habilidad, Dr. Mundo inflige daño explosivo a los enemigos cercanos. Si la explosión alcanza a un enemigo, cura un porcentaje del daño acumulado.",
+      "effect": [
+        null,
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ]
+      ],
+      "effectBurn": [
+        null,
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0"
+      ],
+      "id": "DrMundoW",
+      "image": {
+        "full": "DrMundoW.png",
+        "group": "spell",
+        "h": 48,
+        "sprite": "spell3.png",
+        "w": 48,
+        "x": 336,
+        "y": 96
+      },
+      "leveltip": {
+        "effect": [
+          "{{ damagepertick }} -> {{ damagepertickNL }}",
+          "{{ recastbasedamage }} -> {{ recastbasedamageNL }}",
+          "{{ cooldown }} -> {{ cooldownNL }}"
+        ],
+        "label": [
+          "Daño por giro",
+          "Daño al volver a lanzar la habilidad",
+          "Enfriamiento"
+        ]
+      },
+      "maxammo": "-1",
+      "maxrank": 5,
+      "name": "Desisfibrulación",
+      "range": [
+        325,
+        325,
+        325,
+        325,
+        325
+      ],
+      "rangeBurn": "325",
+      "resource": "{{ currenthealthcost*100 }}% de la vida actual",
+      "tooltip": "Dr. Mundo carga un desfibrilador, lo que inflige <magicDamage>{{ damagepertick*4 }} de daño mágico</magicDamage> cada segundo durante un máximo de {{ duration }} s a los enemigos cercanos. Además, acumula un {{ grayhealthstorageinitial }} del daño recibido en los primeros {{ grayhealthinitialduration }} s y un {{ grayhealthstorage*100 }}% durante la duración restante como vida gris y puede <recast>volver a lanzar</recast> la habilidad.<br /><br /><recast>Reactivación:</recast> Detona el desfibrilador, lo que inflige <magicDamage>{{ totaldamage }} de daño mágico</magicDamage> a los enemigos cercanos. Si golpea al menos a un campeón, Dr. Mundo restaura un <healing>{{ grayhealthbigmod*100 }}% de la vida gris</healing>. De lo contrario, restaura un <healing>{{ grayhealthsmallmod*100 }}% de la vida gris</healing>.{{ spellmodifierdescriptionappend }}",
+      "vars": []
+    },
+    {
+      "cooldown": [
+        9,
+        8.25,
+        7.5,
+        6.75,
+        6
+      ],
+      "cooldownBurn": "9/8.25/7.5/6.75/6",
+      "cost": [
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "costBurn": "0",
+      "costType": " de vida",
+      "datavalues": {},
+      "description": "Pasiva: Dr. Mundo obtiene daño de ataque adicional, que aumenta según la vida máxima.<br><br>Activa: Dr. Mundo golpea con su ''botiquín'' a un enemigo, lo que inflige daño adicional según la vida que le falte. Si el enemigo muere, lo empuja, lo que inflige daño a los enemigos a los que atraviesa.",
+      "effect": [
+        null,
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ]
+      ],
+      "effectBurn": [
+        null,
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0"
+      ],
+      "id": "DrMundoE",
+      "image": {
+        "full": "DrMundoE.png",
+        "group": "spell",
+        "h": 48,
+        "sprite": "spell3.png",
+        "w": 48,
+        "x": 384,
+        "y": 96
+      },
+      "leveltip": {
+        "effect": [
+          "{{ cooldown }} -> {{ cooldownNL }}",
+          "{{ basedamage }} -> {{ basedamageNL }}",
+          "{{ flathealthcost }} -> {{ flathealthcostNL }}",
+          "{{ healthtoadratio }}% -> {{ healthtoadratioNL }}%"
+        ],
+        "label": [
+          "Enfriamiento",
+          "Daño básico",
+          "Coste de vida",
+          "Vida en daño de ataque"
+        ]
+      },
+      "maxammo": "-1",
+      "maxrank": 5,
+      "name": "Traumatismo",
+      "range": [
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "rangeBurn": "0",
+      "resource": "{{ flathealthcost }} de vida",
+      "tooltip": "<spellPassive>Pasiva:</spellPassive> Dr. Mundo obtiene <physicalDamage>{{ passivebonusad }} de daño de ataque</physicalDamage>.<br /><br /><spellActive>Activa:</spellActive> Mundo hace girar violentamente su ''botiquín'', lo que provoca que su siguiente ataque inflija <physicalDamage>{{ additionaldamage }} de daño físico</physicalDamage> adicional, que aumenta hasta un {{ maxdamageamptooltip }} según la vida que le falte. Si el enemigo muere, Mundo lo empuja, lo que inflige <physicalDamage>{{ additionaldamage }} de daño físico</physicalDamage> a todos los enemigos a los que atraviese.{{ spellmodifierdescriptionappend }}",
+      "vars": []
+    },
+    {
+      "cooldown": [
+        120,
+        120,
+        120
+      ],
+      "cooldownBurn": "120",
+      "cost": [
+        0,
+        0,
+        0
+      ],
+      "costBurn": "0",
+      "costType": "Sin coste",
+      "datavalues": {},
+      "description": "Dr. Mundo se inyecta productos químicos, lo que restaura al instante un porcentaje de la vida que le falte. Después, obtiene velocidad de movimiento adicional y se cura parte de su vida máxima durante un largo periodo de tiempo.",
+      "effect": [
+        null,
+        [
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0
+        ]
+      ],
+      "effectBurn": [
+        null,
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0"
+      ],
+      "id": "DrMundoR",
+      "image": {
+        "full": "DrMundoR.png",
+        "group": "spell",
+        "h": 48,
+        "sprite": "spell3.png",
+        "w": 48,
+        "x": 432,
+        "y": 96
+      },
+      "leveltip": {
+        "effect": [
+          "{{ missinghealthheal*100.000000 }}% -> {{ missinghealthhealnl*100.000000 }}%",
+          "{{ speedboostamount*100.000000 }}% -> {{ speedboostamountnl*100.000000 }}%",
+          "{{ maxhealthhot*100.000000 }}% -> {{ maxhealthhotnl*100.000000 }}%"
+        ],
+        "label": [
+          "Vida adicional",
+          "Velocidad de movimiento",
+          "% de la vida máxima"
+        ]
+      },
+      "maxammo": "-1",
+      "maxrank": 3,
+      "name": "Dosis máxima",
+      "range": [
+        20,
+        20,
+        20
+      ],
+      "rangeBurn": "20",
+      "resource": "Sin coste",
+      "tooltip": "Dr. Mundo se inyecta productos químicos, lo que le otorga temporalmente un <healing>{{ missinghealthheal*100 }}% de la vida que le falte como vida máxima</healing>, obtiene un <speed>{{ speedboostamount*100 }}% de velocidad de movimiento</speed> y regenera un <healing>{{ maxhealthhot*100 }}% de la vida máxima</healing> a lo largo de {{ duration }} s.<br /><br />Al nivel 3, ambos efectos aumentan un {{ bonuspernearbychampion*100 }}% adicional por cada campeón enemigo cercano.{{ spellmodifierdescriptionappend }}",
+      "vars": []
+    }
+  ],
+  "stats": {
+    "armor": 32,
+    "armorperlevel": 4.5,
+    "attackdamage": 61,
+    "attackdamageperlevel": 0,
+    "attackrange": 125,
+    "attackspeed": 0.67,
+    "attackspeedperlevel": 3.3,
+    "crit": 0,
+    "critperlevel": 0,
+    "hp": 640,
+    "hpperlevel": 103,
+    "hpregen": 7,
+    "hpregenperlevel": 0.5,
+    "movespeed": 345,
+    "mp": 0,
+    "mpperlevel": 0,
+    "mpregen": 0,
+    "mpregenperlevel": 0,
+    "spellblock": 29,
+    "spellblockperlevel": 2.3
+  },
+  "tags": [
+    "Tank",
+    "Fighter"
+  ],
+  "title": "El Loco de Zaun"
+}

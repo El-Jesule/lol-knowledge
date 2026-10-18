@@ -1,0 +1,992 @@
+{
+  "allytips": [
+    "Puedes utilizar el combo Estandarte demaciano / Golpe del dragón para salir de tus propias arenas de Cataclismo.",
+    "Reparte tus ataques básicos entre diferentes campeones al principio de los combates para maximizar el daño.",
+    "Si te preocupa saber por dónde vienen los enemigos, usa Estandarte demaciano como herramienta de exploración."
+  ],
+  "blurb": "El príncipe Jarvan, descendiente de la dinastía Escudo de Luz, es heredero al trono de Demacia. Criado para ser ejemplo de las mayores virtudes de su nación, se ve obligado a equilibrar las grandes expectativas que se le imponen con su propio deseo de...",
+  "enemytips": [
+    "Aléjate de la línea entre Jarvan IV y su Estandarte demaciano para evitar que te derriben.",
+    "El terreno de Cataclismo es una fuerza temible contra la que luchar, pero las habilidades de movimiento pueden ayudarte a escapar."
+  ],
+  "id": "JarvanIV",
+  "image": {
+    "full": "JarvanIV.png",
+    "group": "champion",
+    "h": 48,
+    "sprite": "champion1.png",
+    "w": 48,
+    "x": 0,
+    "y": 96
+  },
+  "info": {
+    "attack": 6,
+    "defense": 8,
+    "difficulty": 5,
+    "magic": 3
+  },
+  "key": "59",
+  "lore": "El príncipe Jarvan, descendiente de la dinastía Escudo de Luz, es heredero al trono de Demacia. Criado para ser ejemplo de las mayores virtudes de su nación, se ve obligado a equilibrar las grandes expectativas que se le imponen con su propio deseo de luchar en el frente. Jarvan sirve de inspiración a sus tropas gracias a su imponente valor y abnegada determinación, vistiendo los colores de su familia con orgullo como prueba irrefutable de su capacidad de liderazgo.",
+  "name": "Jarvan IV",
+  "partype": "Maná",
+  "passive": {
+    "description": "El primer ataque básico de Jarvan contra un enemigo le inflige daño físico adicional según la vida que tenga. Este efecto no puede aplicarse de nuevo al mismo enemigo durante unos segundos.",
+    "image": {
+      "full": "JarvanIVP.png",
+      "group": "passive",
+      "h": 48,
+      "sprite": "passive1.png",
+      "w": 48,
+      "x": 0,
+      "y": 96
+    },
+    "name": "Cadencia marcial"
+  },
+  "recommended": [],
+  "skins": [
+    {
+      "chromas": false,
+      "id": "59000",
+      "name": "default",
+      "num": 0
+    },
+    {
+      "chromas": false,
+      "id": "59001",
+      "name": "Jarvan IV comando",
+      "num": 1
+    },
+    {
+      "chromas": false,
+      "id": "59002",
+      "name": "Jarvan IV matadragones",
+      "num": 2
+    },
+    {
+      "chromas": false,
+      "id": "59003",
+      "name": "Jarvan IV forja oscura",
+      "num": 3
+    },
+    {
+      "chromas": false,
+      "id": "59004",
+      "name": "Jarvan IV victorioso",
+      "num": 4
+    },
+    {
+      "chromas": true,
+      "id": "59005",
+      "name": "Jarvan IV Reinos Combatientes",
+      "num": 5
+    },
+    {
+      "chromas": false,
+      "id": "59006",
+      "name": "Jarvan IV Fnatic",
+      "num": 6
+    },
+    {
+      "chromas": true,
+      "id": "59007",
+      "name": "Jarvan IV estrella oscura",
+      "num": 7
+    },
+    {
+      "chromas": true,
+      "id": "59008",
+      "name": "Jarvan IV SSG",
+      "num": 8
+    },
+    {
+      "chromas": false,
+      "id": "59009",
+      "name": "Jarvan IV hextech",
+      "num": 9
+    },
+    {
+      "chromas": false,
+      "id": "59010",
+      "name": "Jarvan IV Reinos Combatientes (dorado)",
+      "num": 10,
+      "parentSkin": 5
+    },
+    {
+      "chromas": true,
+      "id": "59011",
+      "name": "Jarvan IV fiesta en la piscina",
+      "num": 11
+    },
+    {
+      "chromas": false,
+      "id": "59012",
+      "name": "Jarvan IV estrella oscura (antimateria)",
+      "num": 12,
+      "parentSkin": 7
+    },
+    {
+      "chromas": false,
+      "id": "59013",
+      "name": "Jarvan IV fiesta en la piscina (rubí)",
+      "num": 13,
+      "parentSkin": 11
+    },
+    {
+      "chromas": false,
+      "id": "59014",
+      "name": "Jarvan IV fiesta en la piscina (esmeralda)",
+      "num": 14,
+      "parentSkin": 11
+    },
+    {
+      "chromas": false,
+      "id": "59015",
+      "name": "Jarvan IV fiesta en la piscina (aguamarina)",
+      "num": 15,
+      "parentSkin": 11
+    },
+    {
+      "chromas": false,
+      "id": "59016",
+      "name": "Jarvan IV fiesta en la piscina (amatista)",
+      "num": 16,
+      "parentSkin": 11
+    },
+    {
+      "chromas": false,
+      "id": "59017",
+      "name": "Jarvan IV fiesta en la piscina (cuarzo rosa)",
+      "num": 17,
+      "parentSkin": 11
+    },
+    {
+      "chromas": false,
+      "id": "59018",
+      "name": "Jarvan IV fiesta en la piscina (perla)",
+      "num": 18,
+      "parentSkin": 11
+    },
+    {
+      "chromas": false,
+      "id": "59019",
+      "name": "Jarvan IV fiesta en la piscina (obsidiana)",
+      "num": 19,
+      "parentSkin": 11
+    },
+    {
+      "chromas": false,
+      "id": "59020",
+      "name": "Jarvan IV fiesta en la piscina (peridoto)",
+      "num": 20,
+      "parentSkin": 11
+    },
+    {
+      "chromas": true,
+      "id": "59021",
+      "name": "Jarvan IV bestia lunar",
+      "num": 21
+    },
+    {
+      "chromas": false,
+      "id": "59022",
+      "name": "Jarvan IV bestia lunar (rubí)",
+      "num": 22,
+      "parentSkin": 21
+    },
+    {
+      "chromas": false,
+      "id": "59023",
+      "name": "Jarvan IV bestia lunar (ojo de gato)",
+      "num": 23,
+      "parentSkin": 21
+    },
+    {
+      "chromas": false,
+      "id": "59024",
+      "name": "Jarvan IV bestia lunar (cuarzo rosa)",
+      "num": 24,
+      "parentSkin": 21
+    },
+    {
+      "chromas": false,
+      "id": "59025",
+      "name": "Jarvan IV bestia lunar (zafiro)",
+      "num": 25,
+      "parentSkin": 21
+    },
+    {
+      "chromas": false,
+      "id": "59026",
+      "name": "Jarvan IV bestia lunar (vitalidad)",
+      "num": 26,
+      "parentSkin": 21
+    },
+    {
+      "chromas": false,
+      "id": "59027",
+      "name": "Jarvan IV bestia lunar (obsidiana)",
+      "num": 27,
+      "parentSkin": 21
+    },
+    {
+      "chromas": false,
+      "id": "59028",
+      "name": "Jarvan IV bestia lunar (amatista)",
+      "num": 28,
+      "parentSkin": 21
+    },
+    {
+      "chromas": false,
+      "id": "59030",
+      "name": "Jarvan IV Mundial 2021",
+      "num": 30
+    },
+    {
+      "chromas": true,
+      "id": "59031",
+      "name": "Jarvan IV Mundial 2021 (aguamarina)",
+      "num": 31,
+      "parentSkin": 30
+    },
+    {
+      "chromas": false,
+      "id": "59032",
+      "name": "Jarvan IV Mundial 2021 (ojo de gato)",
+      "num": 32,
+      "parentSkin": 30
+    },
+    {
+      "chromas": false,
+      "id": "59033",
+      "name": "Jarvan IV Mundial 2021 (amatista)",
+      "num": 33,
+      "parentSkin": 30
+    },
+    {
+      "chromas": false,
+      "id": "59034",
+      "name": "Jarvan IV Mundial 2021 (VICTORIA/DERROTA)",
+      "num": 34,
+      "parentSkin": 30
+    },
+    {
+      "chromas": false,
+      "id": "59035",
+      "name": "Jarvan IV heraldo del caos",
+      "num": 35
+    },
+    {
+      "chromas": true,
+      "id": "59036",
+      "name": "Jarvan IV heraldo del caos (rubí)",
+      "num": 36,
+      "parentSkin": 35
+    },
+    {
+      "chromas": false,
+      "id": "59037",
+      "name": "Jarvan IV heraldo del caos (citrino)",
+      "num": 37,
+      "parentSkin": 35
+    },
+    {
+      "chromas": false,
+      "id": "59038",
+      "name": "Jarvan IV heraldo del caos (amatista)",
+      "num": 38,
+      "parentSkin": 35
+    },
+    {
+      "chromas": false,
+      "id": "59039",
+      "name": "Jarvan IV heraldo del caos (zafiro)",
+      "num": 39,
+      "parentSkin": 35
+    },
+    {
+      "chromas": false,
+      "id": "59040",
+      "name": "Jarvan IV heraldo del caos (cuarzo rosa)",
+      "num": 40,
+      "parentSkin": 35
+    },
+    {
+      "chromas": false,
+      "id": "59041",
+      "name": "Jarvan IV heraldo del caos (esmeralda)",
+      "num": 41,
+      "parentSkin": 35
+    },
+    {
+      "chromas": false,
+      "id": "59042",
+      "name": "Jarvan IV heraldo del caos (obsidiana)",
+      "num": 42,
+      "parentSkin": 35
+    },
+    {
+      "chromas": false,
+      "id": "59043",
+      "name": "Jarvan IV heraldo del caos (perla)",
+      "num": 43,
+      "parentSkin": 35
+    },
+    {
+      "chromas": false,
+      "id": "59044",
+      "name": "Jarvan IV hacedor de mitos",
+      "num": 44
+    },
+    {
+      "chromas": true,
+      "id": "59045",
+      "name": "Jarvan IV hacedor de mitos (rubí)",
+      "num": 45,
+      "parentSkin": 44
+    },
+    {
+      "chromas": false,
+      "id": "59046",
+      "name": "Jarvan IV hacedor de mitos (turquesa)",
+      "num": 46,
+      "parentSkin": 44
+    },
+    {
+      "chromas": false,
+      "id": "59047",
+      "name": "Jarvan IV hacedor de mitos (cuarzo rosa)",
+      "num": 47,
+      "parentSkin": 44
+    },
+    {
+      "chromas": false,
+      "id": "59048",
+      "name": "Jarvan IV hacedor de mitos (zafiro)",
+      "num": 48,
+      "parentSkin": 44
+    },
+    {
+      "chromas": false,
+      "id": "59049",
+      "name": "Jarvan IV hacedor de mitos (ojo de gato)",
+      "num": 49,
+      "parentSkin": 44
+    },
+    {
+      "chromas": false,
+      "id": "59050",
+      "name": "Jarvan IV hacedor de mitos (tanzanita)",
+      "num": 50,
+      "parentSkin": 44
+    },
+    {
+      "chromas": false,
+      "id": "59051",
+      "name": "Jarvan IV hacedor de mitos (esmeralda)",
+      "num": 51,
+      "parentSkin": 44
+    },
+    {
+      "chromas": false,
+      "id": "59052",
+      "name": "Jarvan IV hacedor de mitos (obsidiana)",
+      "num": 52,
+      "parentSkin": 44
+    },
+    {
+      "chromas": false,
+      "id": "59054",
+      "name": "Jarvan IV visión de los caídos de prestigio",
+      "num": 54
+    },
+    {
+      "chromas": false,
+      "id": "59055",
+      "name": "Jarvan IV visión de los caídos (vívido)",
+      "num": 55,
+      "parentSkin": 54
+    },
+    {
+      "chromas": true,
+      "id": "59056",
+      "name": "Jarvan IV SSG (élite)",
+      "num": 56,
+      "parentSkin": 8
+    }
+  ],
+  "spells": [
+    {
+      "cooldown": [
+        10,
+        9,
+        8,
+        7,
+        6
+      ],
+      "cooldownBurn": "10/9/8/7/6",
+      "cost": [
+        45,
+        50,
+        55,
+        60,
+        65
+      ],
+      "costBurn": "45/50/55/60/65",
+      "costType": " {{ abilityresourcename }}",
+      "datavalues": {},
+      "description": "Jarvan IV proyecta su lanza ante sí, causando daño físico y mermando la armadura a los enemigos que se encuentre en su camino. Además, de este modo Jarvan se lanzará hacia su Estandarte demaciano, derribando a los enemigos que se encuentren en su camino.",
+      "effect": [
+        null,
+        [
+          80,
+          120,
+          160,
+          200,
+          240
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          3,
+          3,
+          3,
+          3,
+          3
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ]
+      ],
+      "effectBurn": [
+        null,
+        "80/120/160/200/240",
+        "0",
+        "3",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0"
+      ],
+      "id": "JarvanIVDragonStrike",
+      "image": {
+        "full": "JarvanIVDragonStrike.png",
+        "group": "spell",
+        "h": 48,
+        "sprite": "spell5.png",
+        "w": 48,
+        "x": 192,
+        "y": 144
+      },
+      "leveltip": {
+        "effect": [
+          "{{ basedamage }} -> {{ basedamageNL }}",
+          "{{ basearshred*100.000000 }}% -> {{ basearshrednl*100.000000 }}%",
+          "{{ cooldown }} -> {{ cooldownNL }}",
+          "{{ cost }} -> {{ costNL }}"
+        ],
+        "label": [
+          "Daño",
+          "Reducción de armadura",
+          "Enfriamiento",
+          "Coste de @AbilityResourceName@"
+        ]
+      },
+      "maxammo": "-1",
+      "maxrank": 5,
+      "name": "Golpe del dragón",
+      "range": [
+        770,
+        770,
+        770,
+        770,
+        770
+      ],
+      "rangeBurn": "770",
+      "resource": "{{ cost }} {{ abilityresourcename }}",
+      "tooltip": "Jarvan extiende su lanza, lo que inflige <physicalDamage>{{ totaldamage }} de daño físico</physicalDamage> y elimina un <scaleArmor>{{ basearshred*100 }}% de armadura</scaleArmor> durante {{ e3 }} s.<br /><br />Si la lanza se conecta con <spellName>Estandarte demaciano</spellName>, Jarvan se desplaza hacia él y <status>lanza por los aires</status> a los enemigos en su camino durante 0,75 s.{{ spellmodifierdescriptionappend }}",
+      "vars": []
+    },
+    {
+      "cooldown": [
+        9,
+        9,
+        9,
+        9,
+        9
+      ],
+      "cooldownBurn": "9",
+      "cost": [
+        30,
+        30,
+        30,
+        30,
+        30
+      ],
+      "costBurn": "30",
+      "costType": " {{ abilityresourcename }}",
+      "datavalues": {},
+      "description": "Jarvan IV invoca a los antiguos reyes de Demacia para que le protejan de todo posible daño y ralenticen a los enemigos que le rodeen.",
+      "effect": [
+        null,
+        [
+          60,
+          80,
+          100,
+          120,
+          140
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          10,
+          20,
+          30,
+          40,
+          50
+        ],
+        [
+          4,
+          4,
+          4,
+          4,
+          4
+        ],
+        [
+          2,
+          2,
+          2,
+          2,
+          2
+        ],
+        [
+          0.013,
+          0.013,
+          0.013,
+          0.013,
+          0.013
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ]
+      ],
+      "effectBurn": [
+        null,
+        "60/80/100/120/140",
+        "0",
+        "10/20/30/40/50",
+        "4",
+        "2",
+        "0.01",
+        "0",
+        "0",
+        "0",
+        "0"
+      ],
+      "id": "JarvanIVGoldenAegis",
+      "image": {
+        "full": "JarvanIVGoldenAegis.png",
+        "group": "spell",
+        "h": 48,
+        "sprite": "spell5.png",
+        "w": 48,
+        "x": 240,
+        "y": 144
+      },
+      "leveltip": {
+        "effect": [
+          "{{ e1 }} -> {{ e1NL }}",
+          "{{ baseslowamount*100.000000 }}% -> {{ baseslowamountnl*100.000000 }}%"
+        ],
+        "label": [
+          "Cantidad de escudo",
+          "Ralentización"
+        ]
+      },
+      "maxammo": "-1",
+      "maxrank": 5,
+      "name": "Protección áurea",
+      "range": [
+        625,
+        625,
+        625,
+        625,
+        625
+      ],
+      "rangeBurn": "625",
+      "resource": "{{ cost }} {{ abilityresourcename }}",
+      "tooltip": "Jarvan invoca una protección, <status>ralentiza</status> a los enemigos cercanos un {{ baseslowamount*100 }}% durante {{ e5 }} s y obtiene <shield>{{ totalshield }} de escudo</shield>, que aumenta en <shield>{{ bonusshield }}</shield> por cada campeón enemigo golpeado.{{ spellmodifierdescriptionappend }}",
+      "vars": []
+    },
+    {
+      "cooldown": [
+        12,
+        11.5,
+        11,
+        10.5,
+        10
+      ],
+      "cooldownBurn": "12/11.5/11/10.5/10",
+      "cost": [
+        55,
+        55,
+        55,
+        55,
+        55
+      ],
+      "costBurn": "55",
+      "costType": " {{ abilityresourcename }}",
+      "datavalues": {},
+      "description": "Jarvan IV representa el orgullo de Demacia y goza, de forma pasiva, de una bonificación de velocidad de ataque. Al activar Estandarte demaciano, Jarvan IV puede colocar una bandera de Demacia que inflige daño mágico al impactar y otorga velocidad de ataque a los campeones aliados cercanos.",
+      "effect": [
+        null,
+        [
+          10,
+          13,
+          16,
+          19,
+          22
+        ],
+        [
+          80,
+          120,
+          160,
+          200,
+          240
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          8,
+          8,
+          8,
+          8,
+          8
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ]
+      ],
+      "effectBurn": [
+        null,
+        "10/13/16/19/22",
+        "80/120/160/200/240",
+        "0",
+        "8",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0"
+      ],
+      "id": "JarvanIVDemacianStandard",
+      "image": {
+        "full": "JarvanIVDemacianStandard.png",
+        "group": "spell",
+        "h": 48,
+        "sprite": "spell5.png",
+        "w": 48,
+        "x": 288,
+        "y": 144
+      },
+      "leveltip": {
+        "effect": [
+          "{{ e2 }} -> {{ e2NL }}",
+          "{{ permanentattackspeed*100.000000 }}% -> {{ permanentattackspeednl*100.000000 }}%",
+          "{{ baseauraas*100.000000 }}% -> {{ baseauraasnl*100.000000 }}%",
+          "{{ cooldown }} -> {{ cooldownNL }}"
+        ],
+        "label": [
+          "Daño",
+          "Velocidad de ataque de la pasiva",
+          "Velocidad de ataque de la activa",
+          "Enfriamiento"
+        ]
+      },
+      "maxammo": "-1",
+      "maxrank": 5,
+      "name": "Estandarte demaciano",
+      "range": [
+        860,
+        860,
+        860,
+        860,
+        860
+      ],
+      "rangeBurn": "860",
+      "resource": "{{ cost }} {{ abilityresourcename }}",
+      "tooltip": "<spellPassive>Pasiva:</spellPassive> Jarvan obtiene un <attackSpeed>{{ permanentattackspeed*100 }}% de velocidad de ataque</attackSpeed>.<br /><br /><spellActive>Activa:</spellActive> Jarvan lanza un estandarte al suelo, lo que inflige <magicDamage>{{ totaldamage }} de daño mágico</magicDamage> y otorga a los aliados cerca del estandarte un <attackSpeed>{{ baseauraas*100 }}% de velocidad de ataque</attackSpeed> durante {{ e4 }} s.{{ spellmodifierdescriptionappend }}",
+      "vars": []
+    },
+    {
+      "cooldown": [
+        120,
+        105,
+        90
+      ],
+      "cooldownBurn": "120/105/90",
+      "cost": [
+        100,
+        100,
+        100
+      ],
+      "costBurn": "100",
+      "costType": " {{ abilityresourcename }}",
+      "datavalues": {},
+      "description": "Jarvan IV salta heroicamente al combate cayendo sobre un objetivo, con tal fuerza que levanta la tierra a su alrededor para delimitar una zona de lucha. Los enemigos cercanos reciben daño en el momento del impacto.",
+      "effect": [
+        null,
+        [
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0
+        ]
+      ],
+      "effectBurn": [
+        null,
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0"
+      ],
+      "id": "JarvanIVCataclysm",
+      "image": {
+        "full": "JarvanIVCataclysm.png",
+        "group": "spell",
+        "h": 48,
+        "sprite": "spell5.png",
+        "w": 48,
+        "x": 336,
+        "y": 144
+      },
+      "leveltip": {
+        "effect": [
+          "{{ basedamage }} -> {{ basedamageNL }}",
+          "{{ cooldown }} -> {{ cooldownNL }}"
+        ],
+        "label": [
+          "Daño",
+          "Enfriamiento"
+        ]
+      },
+      "maxammo": "-1",
+      "maxrank": 3,
+      "name": "Cataclismo",
+      "range": [
+        650,
+        650,
+        650
+      ],
+      "rangeBurn": "650",
+      "resource": "{{ cost }} {{ abilityresourcename }}",
+      "tooltip": "Salta de forma heroica hacia un campeón enemigo. Inflige <physicalDamage>{{ damagecalc }} de daño físico</physicalDamage> a todos los enemigos cercanos y crea un obstáculo del terreno en forma de círculo a su alrededor durante {{ wallduration }} s.<br /><br />Jarvan puede <recast>volver a lanzar</recast> la habilidad para derribar los muros.{{ spellmodifierdescriptionappend }}",
+      "vars": []
+    }
+  ],
+  "stats": {
+    "armor": 36,
+    "armorperlevel": 4.6,
+    "attackdamage": 64,
+    "attackdamageperlevel": 0,
+    "attackrange": 175,
+    "attackspeed": 0.658,
+    "attackspeedperlevel": 2.5,
+    "crit": 0,
+    "critperlevel": 0,
+    "hp": 640,
+    "hpperlevel": 104,
+    "hpregen": 8,
+    "hpregenperlevel": 0.7,
+    "movespeed": 340,
+    "mp": 300,
+    "mpperlevel": 55,
+    "mpregen": 6.5,
+    "mpregenperlevel": 0.45,
+    "spellblock": 32,
+    "spellblockperlevel": 2.05
+  },
+  "tags": [
+    "Fighter",
+    "Tank"
+  ],
+  "title": "El Ejemplo de Demacia"
+}

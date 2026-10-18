@@ -1,0 +1,866 @@
+{
+  "allytips": [
+    "Señuelo y Golpe de nimbo se complementan bien para lanzar ataques rápidos y replegarse antes de que el enemigo pueda responder.",
+    "Intenta usar Señuelo cerca de la maleza para que el enemigo reaccione innecesariamente a tu movimiento."
+  ],
+  "blurb": "Wukong es un embaucador vastaya que se vale de su fuerza, agilidad e inteligencia para confundir a sus oponentes y conseguir ventaja. Tras forjar una amistad para toda la vida con el guerrero conocido como el Maestro Yi, Wukong se convirtió en el último...",
+  "enemytips": [
+    "Wukong suele usar Señuelo después de Golpe de nimbo. Procura demorar un poco el uso de tus habilidades para asegurarte de golpear al Wukong verdadero.",
+    "Es más difícil matar a Wukong cuando está rodeado de enemigos. Intenta aislarlo para obtener ventaja."
+  ],
+  "id": "MonkeyKing",
+  "image": {
+    "full": "MonkeyKing.png",
+    "group": "champion",
+    "h": 48,
+    "sprite": "champion2.png",
+    "w": 48,
+    "x": 240,
+    "y": 96
+  },
+  "info": {
+    "attack": 8,
+    "defense": 5,
+    "difficulty": 3,
+    "magic": 2
+  },
+  "key": "62",
+  "lore": "Wukong es un embaucador vastaya que se vale de su fuerza, agilidad e inteligencia para confundir a sus oponentes y conseguir ventaja. Tras forjar una amistad para toda la vida con el guerrero conocido como el Maestro Yi, Wukong se convirtió en el último pupilo del arte marcial llamado Wuju. Armado con un bastón encantado, Wukong pretende evitar la caída en desgracia de Jonia.",
+  "name": "Wukong",
+  "partype": "Maná",
+  "passive": {
+    "description": "Wukong obtiene regeneración de vida máxima y acumula armadura mientras lucha contra campeones y monstruos.",
+    "image": {
+      "full": "MonkeyKingStoneSkin.png",
+      "group": "passive",
+      "h": 48,
+      "sprite": "passive2.png",
+      "w": 48,
+      "x": 240,
+      "y": 96
+    },
+    "name": "Piel de piedra"
+  },
+  "recommended": [],
+  "skins": [
+    {
+      "chromas": false,
+      "id": "62000",
+      "name": "default",
+      "num": 0
+    },
+    {
+      "chromas": false,
+      "id": "62001",
+      "name": "Wukong volcánico",
+      "num": 1
+    },
+    {
+      "chromas": false,
+      "id": "62002",
+      "name": "Wukong general",
+      "num": 2
+    },
+    {
+      "chromas": true,
+      "id": "62003",
+      "name": "Wukong dragón de jade",
+      "num": 3
+    },
+    {
+      "chromas": true,
+      "id": "62004",
+      "name": "Wukong del inframundo",
+      "num": 4
+    },
+    {
+      "chromas": false,
+      "id": "62005",
+      "name": "Wukong radiante",
+      "num": 5
+    },
+    {
+      "chromas": false,
+      "id": "62006",
+      "name": "Wukong lancero nimbus",
+      "num": 6
+    },
+    {
+      "chromas": true,
+      "id": "62007",
+      "name": "Wukong academia de combate",
+      "num": 7
+    },
+    {
+      "chromas": false,
+      "id": "62008",
+      "name": "Wukong academia de combate (rubí)",
+      "num": 8,
+      "parentSkin": 7
+    },
+    {
+      "chromas": false,
+      "id": "62009",
+      "name": "Wukong academia de combate (cuarzo rosa)",
+      "num": 9,
+      "parentSkin": 7
+    },
+    {
+      "chromas": false,
+      "id": "62010",
+      "name": "Wukong academia de combate (ojo de gato)",
+      "num": 10,
+      "parentSkin": 7
+    },
+    {
+      "chromas": false,
+      "id": "62011",
+      "name": "Wukong academia de combate (zafiro)",
+      "num": 11,
+      "parentSkin": 7
+    },
+    {
+      "chromas": false,
+      "id": "62012",
+      "name": "Wukong academia de combate (esmeralda)",
+      "num": 12,
+      "parentSkin": 7
+    },
+    {
+      "chromas": false,
+      "id": "62013",
+      "name": "Wukong academia de combate (perla)",
+      "num": 13,
+      "parentSkin": 7
+    },
+    {
+      "chromas": false,
+      "id": "62014",
+      "name": "Wukong academia de combate (meteorito)",
+      "num": 14,
+      "parentSkin": 7
+    },
+    {
+      "chromas": false,
+      "id": "62015",
+      "name": "Wukong academia de combate (obsidiana)",
+      "num": 15,
+      "parentSkin": 7
+    },
+    {
+      "chromas": true,
+      "id": "62016",
+      "name": "Wukong bosque ancestral",
+      "num": 16
+    },
+    {
+      "chromas": false,
+      "id": "62017",
+      "name": "Wukong bosque ancestral (rubí)",
+      "num": 17,
+      "parentSkin": 16
+    },
+    {
+      "chromas": false,
+      "id": "62018",
+      "name": "Wukong bosque ancestral (citrino)",
+      "num": 18,
+      "parentSkin": 16
+    },
+    {
+      "chromas": false,
+      "id": "62019",
+      "name": "Wukong bosque ancestral (esmeralda)",
+      "num": 19,
+      "parentSkin": 16
+    },
+    {
+      "chromas": false,
+      "id": "62020",
+      "name": "Wukong bosque ancestral (turquesa)",
+      "num": 20,
+      "parentSkin": 16
+    },
+    {
+      "chromas": false,
+      "id": "62021",
+      "name": "Wukong bosque ancestral (aguamarina)",
+      "num": 21,
+      "parentSkin": 16
+    },
+    {
+      "chromas": false,
+      "id": "62022",
+      "name": "Wukong bosque ancestral (cuarzo rosa)",
+      "num": 22,
+      "parentSkin": 16
+    },
+    {
+      "chromas": false,
+      "id": "62023",
+      "name": "Wukong bosque ancestral (amatista)",
+      "num": 23,
+      "parentSkin": 16
+    },
+    {
+      "chromas": false,
+      "id": "62024",
+      "name": "Wukong bosque ancestral (perla)",
+      "num": 24,
+      "parentSkin": 16
+    },
+    {
+      "chromas": false,
+      "id": "62025",
+      "name": "Wukong dragón de jade (meteorito)",
+      "num": 25,
+      "parentSkin": 3
+    },
+    {
+      "chromas": true,
+      "id": "62026",
+      "name": "Wukong Reinos mecha",
+      "num": 26
+    },
+    {
+      "chromas": false,
+      "id": "62027",
+      "name": "Wukong del inframundo (maldito)",
+      "num": 27,
+      "parentSkin": 4
+    },
+    {
+      "chromas": false,
+      "id": "62029",
+      "name": "Wukong Reinos mecha (rubí)",
+      "num": 29,
+      "parentSkin": 26
+    },
+    {
+      "chromas": false,
+      "id": "62030",
+      "name": " Wukong Reinos mecha (esmeralda)",
+      "num": 30,
+      "parentSkin": 26
+    },
+    {
+      "chromas": false,
+      "id": "62031",
+      "name": " Wukong Reinos mecha (cuarzo rosa)",
+      "num": 31,
+      "parentSkin": 26
+    },
+    {
+      "chromas": false,
+      "id": "62032",
+      "name": "Wukong Reinos mecha (zafiro)",
+      "num": 32,
+      "parentSkin": 26
+    },
+    {
+      "chromas": false,
+      "id": "62033",
+      "name": "Wukong Reinos mecha (amatista)",
+      "num": 33,
+      "parentSkin": 26
+    },
+    {
+      "chromas": false,
+      "id": "62034",
+      "name": "Wukong Reinos mecha (perla)",
+      "num": 34,
+      "parentSkin": 26
+    },
+    {
+      "chromas": false,
+      "id": "62035",
+      "name": "Wukong Reinos mecha (obsidiana)",
+      "num": 35,
+      "parentSkin": 26
+    },
+    {
+      "chromas": false,
+      "id": "62036",
+      "name": "Wukong Reinos mecha (ojo de gato)",
+      "num": 36,
+      "parentSkin": 26
+    }
+  ],
+  "spells": [
+    {
+      "cooldown": [
+        8,
+        7.5,
+        7,
+        6.5,
+        6
+      ],
+      "cooldownBurn": "8/7.5/7/6.5/6",
+      "cost": [
+        20,
+        20,
+        20,
+        20,
+        20
+      ],
+      "costBurn": "20",
+      "costType": " {{ abilityresourcename }}",
+      "datavalues": {},
+      "description": "Wukong aumenta el alcance y el daño de su próximo ataque y reduce la armadura del objetivo durante unos segundos.",
+      "effect": [
+        null,
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ]
+      ],
+      "effectBurn": [
+        null,
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0"
+      ],
+      "id": "MonkeyKingDoubleAttack",
+      "image": {
+        "full": "MonkeyKingDoubleAttack.png",
+        "group": "spell",
+        "h": 48,
+        "sprite": "spell9.png",
+        "w": 48,
+        "x": 192,
+        "y": 48
+      },
+      "leveltip": {
+        "effect": [
+          "{{ basedamage }} -> {{ basedamageNL }}",
+          "{{ armorshredpercent*100.000000 }}% -> {{ armorshredpercentnl*100.000000 }}%",
+          "{{ attackrangebonus }} -> {{ attackrangebonusNL }}",
+          "{{ cooldown }} -> {{ cooldownNL }}"
+        ],
+        "label": [
+          "Daño",
+          "% reducción de armadura",
+          "Alcance",
+          "Enfriamiento"
+        ]
+      },
+      "maxammo": "-1",
+      "maxrank": 5,
+      "name": "Golpe aplastante",
+      "range": [
+        250,
+        275,
+        300,
+        325,
+        350
+      ],
+      "rangeBurn": "250/275/300/325/350",
+      "resource": "{{ cost }} {{ abilityresourcename }}",
+      "tooltip": "El siguiente ataque de Wukong y de su <keywordMajor>clon</keywordMajor> obtiene {{ attackrangebonus }} de alcance, inflige <physicalDamage>{{ bonusdamagett }} de daño físico adicional</physicalDamage> y reduce la <scaleArmor>armadura del enemigo un {{ armorshredpercent*100 }}%</scaleArmor> durante {{ shredduration }} s.<br /><br />El enfriamiento de esta habilidad se reduce en {{ cooldowndecrease }} s cada vez que Wukong o su <keywordMajor>clon</keywordMajor> golpean a un enemigo con un ataque o habilidad.<br /><br /><rules>Esta habilidad aplica efectos de hechizo al infligir daño.</rules>{{ spellmodifierdescriptionappend }}",
+      "vars": []
+    },
+    {
+      "cooldown": [
+        22,
+        21,
+        20,
+        19,
+        18
+      ],
+      "cooldownBurn": "22/21/20/19/18",
+      "cost": [
+        60,
+        55,
+        50,
+        45,
+        40
+      ],
+      "costBurn": "60/55/50/45/40",
+      "costType": " {{ abilityresourcename }}",
+      "datavalues": {},
+      "description": "Wukong se vuelve <font color='#91d7ee'>invisible</font>, se desliza en una dirección y deja tras de sí un clon que ataca a los enemigos cercanos.",
+      "effect": [
+        null,
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ]
+      ],
+      "effectBurn": [
+        null,
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0"
+      ],
+      "id": "MonkeyKingDecoy",
+      "image": {
+        "full": "MonkeyKingDecoy.png",
+        "group": "spell",
+        "h": 48,
+        "sprite": "spell9.png",
+        "w": 48,
+        "x": 240,
+        "y": 48
+      },
+      "leveltip": {
+        "effect": [
+          "{{ clonedamagemod*100.000000 }}% -> {{ clonedamagemodnl*100.000000 }}%",
+          "{{ cooldown }} -> {{ cooldownNL }}",
+          "{{ cost }} -> {{ costNL }}"
+        ],
+        "label": [
+          "Porcentaje de daño",
+          "Enfriamiento",
+          "Coste de @AbilityResourceName@"
+        ]
+      },
+      "maxammo": "-1",
+      "maxrank": 5,
+      "name": "Guerrero pícaro",
+      "range": [
+        275,
+        275,
+        275,
+        275,
+        275
+      ],
+      "rangeBurn": "275",
+      "resource": "{{ cost }} {{ abilityresourcename }}",
+      "tooltip": "Wukong se desliza, se vuelve <keywordStealth>invisible</keywordStealth> durante {{ stealthduration }} s y deja tras de sí un <keywordMajor>clon</keywordMajor> que permanece en el sitio y dura {{ cloneduration }} s.<br /><br />El <keywordMajor>clon</keywordMajor> ataca a los enemigos cercanos a los que Wukong haya infligido daño recientemente y copia su definitiva, lo que inflige un {{ clonedamagemod*100 }}% de su daño habitual.{{ spellmodifierdescriptionappend }}",
+      "vars": []
+    },
+    {
+      "cooldown": [
+        10,
+        9.25,
+        8.5,
+        7.75,
+        7
+      ],
+      "cooldownBurn": "10/9.25/8.5/7.75/7",
+      "cost": [
+        30,
+        35,
+        40,
+        45,
+        50
+      ],
+      "costBurn": "30/35/40/45/50",
+      "costType": " {{ abilityresourcename }}",
+      "datavalues": {},
+      "description": "Wukong se lanza contra un objetivo enemigo y envía clones para que ataquen a los enemigos situados junto a su objetivo. Cada enemigo alcanzado recibe daño.",
+      "effect": [
+        null,
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ]
+      ],
+      "effectBurn": [
+        null,
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0"
+      ],
+      "id": "MonkeyKingNimbus",
+      "image": {
+        "full": "MonkeyKingNimbus.png",
+        "group": "spell",
+        "h": 48,
+        "sprite": "spell9.png",
+        "w": 48,
+        "x": 288,
+        "y": 48
+      },
+      "leveltip": {
+        "effect": [
+          "{{ basedamage }} -> {{ basedamageNL }}",
+          "{{ attackspeed*100.000000 }}% -> {{ attackspeednl*100.000000 }}%",
+          "{{ cooldown }} -> {{ cooldownNL }}",
+          "{{ cost }} -> {{ costNL }}"
+        ],
+        "label": [
+          "Daño",
+          "Velocidad de ataque",
+          "Enfriamiento",
+          "Coste de @AbilityResourceName@"
+        ]
+      },
+      "maxammo": "-1",
+      "maxrank": 5,
+      "name": "Golpe de nimbo",
+      "range": [
+        650,
+        650,
+        650,
+        650,
+        650
+      ],
+      "rangeBurn": "650",
+      "resource": "{{ cost }} {{ abilityresourcename }}",
+      "tooltip": "Wukong se desliza hacia un enemigo y envía <keywordMajor>clones</keywordMajor> que también se deslizan hacia un máximo de {{ extratargets }} enemigos cercanos adicionales. Cada enemigo golpeado recibe <magicDamage>{{ totaldamage }} de daño mágico</magicDamage>. Wukong y su <keywordMajor>clon</keywordMajor> obtienen un <attackSpeed>{{ attackspeed*100 }}% de velocidad de ataque</attackSpeed> durante {{ attackspeedduration }} s.<br /><br />{{ spellmodifierdescriptionappend }}",
+      "vars": []
+    },
+    {
+      "cooldown": [
+        130,
+        110,
+        90
+      ],
+      "cooldownBurn": "130/110/90",
+      "cost": [
+        100,
+        100,
+        100
+      ],
+      "costBurn": "100",
+      "costType": " {{ abilityresourcename }}",
+      "datavalues": {},
+      "description": "Wukong extiende su vara, la hace girar repetidas veces y obtiene velocidad de movimiento.<br><br>Inflige daño y levanta por los aires a los enemigos golpeados.",
+      "effect": [
+        null,
+        [
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0
+        ]
+      ],
+      "effectBurn": [
+        null,
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0"
+      ],
+      "id": "MonkeyKingSpinToWin",
+      "image": {
+        "full": "MonkeyKingSpinToWin.png",
+        "group": "spell",
+        "h": 48,
+        "sprite": "spell9.png",
+        "w": 48,
+        "x": 336,
+        "y": 48
+      },
+      "leveltip": {
+        "effect": [
+          "{{ basepercentmaxhpdmgpersec*200.000000 }}% -> {{ basepercentmaxhpdmgpersecnl*200.000000 }}%",
+          "{{ cooldown }} -> {{ cooldownNL }}"
+        ],
+        "label": [
+          "Daño por vida máxima",
+          "Enfriamiento"
+        ]
+      },
+      "maxammo": "-1",
+      "maxrank": 3,
+      "name": "Ciclón",
+      "range": [
+        315,
+        315,
+        315
+      ],
+      "rangeBurn": "315",
+      "resource": "{{ cost }} {{ abilityresourcename }}",
+      "tooltip": "Wukong obtiene un <speed>{{ movespeed*100 }}% de velocidad de movimiento</speed> y hace girar su vara, lo que <status>levanta por los aires</status> a los enemigos cercanos durante {{ knockupduration }} s e inflige <physicalDamage>{{ totaldamagett }} de daño físico más un {{ percenthpdamagett }} según su vida máxima</physicalDamage> a lo largo de {{ spinduration }} s.<br /><br />Esta habilidad se puede lanzar una segunda vez en un margen de {{ recastwindow }} s antes de que entre en enfriamiento.{{ spellmodifierdescriptionappend }}",
+      "vars": []
+    }
+  ],
+  "stats": {
+    "armor": 31,
+    "armorperlevel": 4.7,
+    "attackdamage": 66,
+    "attackdamageperlevel": 0,
+    "attackrange": 175,
+    "attackspeed": 0.69,
+    "attackspeedperlevel": 3,
+    "crit": 0,
+    "critperlevel": 0,
+    "hp": 610,
+    "hpperlevel": 99,
+    "hpregen": 3.5,
+    "hpregenperlevel": 0.65,
+    "movespeed": 340,
+    "mp": 330,
+    "mpperlevel": 65,
+    "mpregen": 8,
+    "mpregenperlevel": 0.8,
+    "spellblock": 28,
+    "spellblockperlevel": 2.05
+  },
+  "tags": [
+    "Fighter",
+    "Tank"
+  ],
+  "title": "El Rey Mono"
+}

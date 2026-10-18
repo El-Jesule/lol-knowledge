@@ -1,0 +1,970 @@
+{
+  "allytips": [
+    "El broquel de la pasiva de Poppy suele caer cerca de paredes. Trata de sacar provecho de ello con Carga heroica.",
+    "Veredicto de la guardiana también puede utilizarse antes de que esté completamente listo para lanzar al enemigo hacia arriba. Aprovecha la situación en duelos."
+  ],
+  "blurb": "En Runaterra hay un gran número de campeones valerosos, pero muy pocos son tan tenaces como Poppy. Esta yordle tan obstinada porta el legendario martillo de Orlon, que la dobla en tamaño, y se ha pasado infinidad de años buscando en secreto al famoso...",
+  "enemytips": [
+    "Poppy se sirve de Entereza inalterable para impedir que los enemigos cercanos utilicen cualquiera de sus habilidades de movimiento rápido.",
+    "Cuando Poppy empieza a girar su martillo, es que está cargando Veredicto de la guardiana.",
+    "Puedes pisar el escudo de Poppy para evitar que lo use."
+  ],
+  "id": "Poppy",
+  "image": {
+    "full": "Poppy.png",
+    "group": "champion",
+    "h": 48,
+    "sprite": "champion3.png",
+    "w": 48,
+    "x": 48,
+    "y": 48
+  },
+  "info": {
+    "attack": 6,
+    "defense": 7,
+    "difficulty": 6,
+    "magic": 2
+  },
+  "key": "78",
+  "lore": "En Runaterra hay un gran número de campeones valerosos, pero muy pocos son tan tenaces como Poppy. Esta yordle tan obstinada porta el legendario martillo de Orlon, que la dobla en tamaño, y se ha pasado infinidad de años buscando en secreto al famoso ''héroe de Demacia'' quien, supuestamente, es el legítimo portador de su arma. Mientras tanto, lucha diligentemente en la batalla, haciendo retroceder a los enemigos del reino con cada golpe giratorio.",
+  "name": "Poppy",
+  "partype": "Maná",
+  "passive": {
+    "description": "Poppy lanza su broquel, el cual rebotará en el objetivo. Podrá recogerlo para obtener un escudo temporal.",
+    "image": {
+      "full": "Poppy_Passive.png",
+      "group": "passive",
+      "h": 48,
+      "sprite": "passive3.png",
+      "w": 48,
+      "x": 48,
+      "y": 48
+    },
+    "name": "Embajadora de hierro"
+  },
+  "recommended": [],
+  "skins": [
+    {
+      "chromas": false,
+      "id": "78000",
+      "name": "default",
+      "num": 0
+    },
+    {
+      "chromas": false,
+      "id": "78001",
+      "name": "Poppy Noxus",
+      "num": 1
+    },
+    {
+      "chromas": false,
+      "id": "78002",
+      "name": "Poppyruleta",
+      "num": 2
+    },
+    {
+      "chromas": false,
+      "id": "78003",
+      "name": "Poppy herrera",
+      "num": 3
+    },
+    {
+      "chromas": false,
+      "id": "78004",
+      "name": "Poppy marioneta",
+      "num": 4
+    },
+    {
+      "chromas": true,
+      "id": "78005",
+      "name": "Poppy atuendo de batalla",
+      "num": 5
+    },
+    {
+      "chromas": false,
+      "id": "78006",
+      "name": "Poppy martillo escarlata",
+      "num": 6
+    },
+    {
+      "chromas": false,
+      "id": "78007",
+      "name": "Poppy guardiana de las estrellas",
+      "num": 7
+    },
+    {
+      "chromas": false,
+      "id": "78008",
+      "name": "Poppy atuendo de batalla (cuarzo rosa)",
+      "num": 8,
+      "parentSkin": 5
+    },
+    {
+      "chromas": false,
+      "id": "78009",
+      "name": "Poppy atuendo de batalla (rubí)",
+      "num": 9,
+      "parentSkin": 5
+    },
+    {
+      "chromas": false,
+      "id": "78010",
+      "name": "Poppy atuendo de batalla (esmeralda)",
+      "num": 10,
+      "parentSkin": 5
+    },
+    {
+      "chromas": false,
+      "id": "78011",
+      "name": "Poppy atuendo de batalla (zafiro)",
+      "num": 11,
+      "parentSkin": 5
+    },
+    {
+      "chromas": false,
+      "id": "78012",
+      "name": "Poppy atuendo de batalla (amatista)",
+      "num": 12,
+      "parentSkin": 5
+    },
+    {
+      "chromas": false,
+      "id": "78013",
+      "name": "Poppy atuendo de batalla (obsidiana)",
+      "num": 13,
+      "parentSkin": 5
+    },
+    {
+      "chromas": false,
+      "id": "78014",
+      "name": "Poppy cervatilla",
+      "num": 14
+    },
+    {
+      "chromas": false,
+      "id": "78015",
+      "name": "Poppy hextech",
+      "num": 15
+    },
+    {
+      "chromas": true,
+      "id": "78016",
+      "name": "Poppy astronauta",
+      "num": 16
+    },
+    {
+      "chromas": false,
+      "id": "78017",
+      "name": "Poppy astronauta (rubí)",
+      "num": 17,
+      "parentSkin": 16
+    },
+    {
+      "chromas": false,
+      "id": "78018",
+      "name": "Poppy astronauta (citrino)",
+      "num": 18,
+      "parentSkin": 16
+    },
+    {
+      "chromas": false,
+      "id": "78019",
+      "name": "Poppy astronauta (peridoto)",
+      "num": 19,
+      "parentSkin": 16
+    },
+    {
+      "chromas": false,
+      "id": "78020",
+      "name": "Poppy astronauta (aguamarina)",
+      "num": 20,
+      "parentSkin": 16
+    },
+    {
+      "chromas": false,
+      "id": "78021",
+      "name": "Poppy astronauta (amatista)",
+      "num": 21,
+      "parentSkin": 16
+    },
+    {
+      "chromas": false,
+      "id": "78022",
+      "name": "Poppy astronauta (cuarzo rosa)",
+      "num": 22,
+      "parentSkin": 16
+    },
+    {
+      "chromas": false,
+      "id": "78023",
+      "name": "Poppy astronauta (crono)",
+      "num": 23,
+      "parentSkin": 16
+    },
+    {
+      "chromas": true,
+      "id": "78024",
+      "name": "Poppy embrujada",
+      "num": 24
+    },
+    {
+      "chromas": false,
+      "id": "78025",
+      "name": "Poppy embrujada (rubí)",
+      "num": 25,
+      "parentSkin": 24
+    },
+    {
+      "chromas": false,
+      "id": "78026",
+      "name": "Poppy embrujada (citrino)",
+      "num": 26,
+      "parentSkin": 24
+    },
+    {
+      "chromas": false,
+      "id": "78027",
+      "name": "Poppy embrujada (turquesa)",
+      "num": 27,
+      "parentSkin": 24
+    },
+    {
+      "chromas": false,
+      "id": "78028",
+      "name": "Poppy embrujada (cuarzo rosa)",
+      "num": 28,
+      "parentSkin": 24
+    },
+    {
+      "chromas": false,
+      "id": "78029",
+      "name": "Poppy embrujada (esmeralda)",
+      "num": 29,
+      "parentSkin": 24
+    },
+    {
+      "chromas": false,
+      "id": "78030",
+      "name": "Poppy embrujada (zafiro)",
+      "num": 30,
+      "parentSkin": 24
+    },
+    {
+      "chromas": false,
+      "id": "78031",
+      "name": "Poppy embrujada (perla)",
+      "num": 31,
+      "parentSkin": 24
+    },
+    {
+      "chromas": false,
+      "id": "78032",
+      "name": "Poppy embrujada (obsidiana)",
+      "num": 32,
+      "parentSkin": 24
+    },
+    {
+      "chromas": true,
+      "id": "78033",
+      "name": "Poppy monada de cafetería",
+      "num": 33
+    },
+    {
+      "chromas": false,
+      "id": "78034",
+      "name": "Poppy monada de cafetería (rubí)",
+      "num": 34,
+      "parentSkin": 33
+    },
+    {
+      "chromas": false,
+      "id": "78035",
+      "name": "Poppy monada de cafetería (peridoto)",
+      "num": 35,
+      "parentSkin": 33
+    },
+    {
+      "chromas": false,
+      "id": "78036",
+      "name": "Poppy monada de cafetería (aguamarina)",
+      "num": 36,
+      "parentSkin": 33
+    },
+    {
+      "chromas": false,
+      "id": "78037",
+      "name": "Poppy monada de cafetería (cuarzo rosa)",
+      "num": 37,
+      "parentSkin": 33
+    },
+    {
+      "chromas": false,
+      "id": "78038",
+      "name": "Poppy monada de cafetería (tanzanita)",
+      "num": 38,
+      "parentSkin": 33
+    },
+    {
+      "chromas": false,
+      "id": "78039",
+      "name": "Poppy monada de cafetería (ojo de gato)",
+      "num": 39,
+      "parentSkin": 33
+    },
+    {
+      "chromas": false,
+      "id": "78040",
+      "name": "Poppy monada de cafetería (obsidiana)",
+      "num": 40,
+      "parentSkin": 33
+    },
+    {
+      "chromas": false,
+      "id": "78041",
+      "name": "Poppy monada de cafetería (arenisca)",
+      "num": 41,
+      "parentSkin": 33
+    },
+    {
+      "chromas": true,
+      "id": "78042",
+      "name": "Poppy artificiera",
+      "num": 42
+    },
+    {
+      "chromas": false,
+      "id": "78043",
+      "name": "Poppy artificiera (rubí)",
+      "num": 43,
+      "parentSkin": 42
+    },
+    {
+      "chromas": false,
+      "id": "78044",
+      "name": "Poppy artificiera (zafiro)",
+      "num": 44,
+      "parentSkin": 42
+    },
+    {
+      "chromas": false,
+      "id": "78045",
+      "name": "Poppy artificiera (amatista)",
+      "num": 45,
+      "parentSkin": 42
+    },
+    {
+      "chromas": false,
+      "id": "78046",
+      "name": "Poppy artificiera (cuarzo rosa)",
+      "num": 46,
+      "parentSkin": 42
+    },
+    {
+      "chromas": false,
+      "id": "78047",
+      "name": "Poppy artificiera (esmeralda)",
+      "num": 47,
+      "parentSkin": 42
+    },
+    {
+      "chromas": false,
+      "id": "78048",
+      "name": "Poppy artificiera (ojo de gato)",
+      "num": 48,
+      "parentSkin": 42
+    },
+    {
+      "chromas": false,
+      "id": "78049",
+      "name": "Poppy artificiera (obsidiana)",
+      "num": 49,
+      "parentSkin": 42
+    },
+    {
+      "chromas": false,
+      "id": "78050",
+      "name": "Poppy artificiera (perla)",
+      "num": 50,
+      "parentSkin": 42
+    }
+  ],
+  "spells": [
+    {
+      "cooldown": [
+        8,
+        7,
+        6,
+        5,
+        4
+      ],
+      "cooldownBurn": "8/7/6/5/4",
+      "cost": [
+        35,
+        40,
+        45,
+        50,
+        55
+      ],
+      "costBurn": "35/40/45/50/55",
+      "costType": " {{ abilityresourcename }}",
+      "datavalues": {},
+      "description": "Poppy usa su martillo, inflige daño y crea una zona que ralentizará a los enemigos y explotará tras un breve lapso de tiempo.",
+      "effect": [
+        null,
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ]
+      ],
+      "effectBurn": [
+        null,
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0"
+      ],
+      "id": "PoppyQ",
+      "image": {
+        "full": "PoppyQ.png",
+        "group": "spell",
+        "h": 48,
+        "sprite": "spell10.png",
+        "w": 48,
+        "x": 384,
+        "y": 144
+      },
+      "leveltip": {
+        "effect": [
+          "{{ basedamagevalue }} -> {{ basedamagevalueNL }}",
+          "{{ healthdamagepercent }}% -> {{ healthdamagepercentNL }}%",
+          "{{ basemovespeedmod*100.000000 }}% -> {{ basemovespeedmodnl*100.000000 }}%",
+          "{{ cooldown }} -> {{ cooldownNL }}",
+          "{{ cost }} -> {{ costNL }}",
+          "{{ maxhealthdamagetononheroes }} -> {{ maxhealthdamagetononheroesNL }}"
+        ],
+        "label": [
+          "Daño",
+          "% de la vida máxima",
+          "Ralentización",
+          "Enfriamiento",
+          "Coste de @AbilityResourceName@",
+          "Límite contra monstruos"
+        ]
+      },
+      "maxammo": "-1",
+      "maxrank": 5,
+      "name": "Impacto de martillo",
+      "range": [
+        430,
+        430,
+        430,
+        430,
+        430
+      ],
+      "rangeBurn": "430",
+      "resource": "{{ cost }} {{ abilityresourcename }}",
+      "tooltip": "Poppy golpea el suelo, lo que inflige <physicalDamage>{{ basedamage }}</physicalDamage> + <physicalDamage>{{ healthdamagepercent }}% de daño físico según la vida máxima</physicalDamage> y vuelve el suelo inestable.<br /><br />La zona inestable <status>ralentiza</status> a los enemigos un {{ movespeedmod }} y explota tras {{ delaybetweentwohits }} s, lo que inflige <physicalDamage>{{ basedamage }}</physicalDamage> + <physicalDamage>{{ healthdamagepercent }}% de daño físico según la vida máxima</physicalDamage> de nuevo.{{ spellmodifierdescriptionappend }}",
+      "vars": []
+    },
+    {
+      "cooldown": [
+        20,
+        18,
+        16,
+        14,
+        12
+      ],
+      "cooldownBurn": "20/18/16/14/12",
+      "cost": [
+        50,
+        50,
+        50,
+        50,
+        50
+      ],
+      "costBurn": "50",
+      "costType": " {{ abilityresourcename }}",
+      "datavalues": {},
+      "description": "Poppy gana armadura y resistencia mágica de forma pasiva. La bonificación aumenta cuando tiene poca vida. Poppy puede activar Entereza inalterable para obtener velocidad de movimiento y evitar que los enemigos se deslicen a su alrededor. Si detiene un deslizamiento, el enemigo queda ralentizado y anclado.",
+      "effect": [
+        null,
+        [
+          2,
+          2,
+          2,
+          2,
+          2
+        ],
+        [
+          40,
+          40,
+          40,
+          40,
+          40
+        ],
+        [
+          10,
+          10,
+          10,
+          10,
+          10
+        ],
+        [
+          0.5,
+          0.5,
+          0.5,
+          0.5,
+          0.5
+        ],
+        [
+          70,
+          110,
+          150,
+          190,
+          230
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ]
+      ],
+      "effectBurn": [
+        null,
+        "2",
+        "40",
+        "10",
+        "0.5",
+        "70/110/150/190/230",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0"
+      ],
+      "id": "PoppyW",
+      "image": {
+        "full": "PoppyW.png",
+        "group": "spell",
+        "h": 48,
+        "sprite": "spell10.png",
+        "w": 48,
+        "x": 432,
+        "y": 144
+      },
+      "leveltip": {
+        "effect": [
+          "{{ cooldown }} -> {{ cooldownNL }}",
+          "{{ damagevalue }} -> {{ damagevalueNL }}"
+        ],
+        "label": [
+          "Enfriamiento",
+          "Daño"
+        ]
+      },
+      "maxammo": "-1",
+      "maxrank": 5,
+      "name": "Entereza inalterable",
+      "range": [
+        400,
+        400,
+        400,
+        400,
+        400
+      ],
+      "rangeBurn": "400",
+      "resource": "{{ cost }} {{ abilityresourcename }}",
+      "tooltip": "<spellPassive>Pasiva:</spellPassive> Poppy obtiene <scaleArmor>{{ bonusarmor }} de armadura</scaleArmor> y <scaleMR>{{ bonusmr }} de resistencia mágica</scaleMR>. Esta bonificación se duplica si Poppy está por debajo del {{ passiveempoweredhealthpercent*100 }}% de vida.<br /><br /><spellActive>Activa:</spellActive> Poppy obtiene un <speed>{{ haste }}% de velocidad de movimiento</speed> y crea un campo a su alrededor durante {{ duration }} s que detiene los deslizamientos enemigos. Los enemigos detenidos por el campo quedan <status>anclados</status> y <status>ralentizados</status> un {{ slowamount*-100 }}% durante {{ groundingduration }} s, y reciben <magicDamage>{{ interruptdamage }} de daño mágico</magicDamage>.{{ spellmodifierdescriptionappend }}",
+      "vars": []
+    },
+    {
+      "cooldown": [
+        14,
+        13,
+        12,
+        11,
+        10
+      ],
+      "cooldownBurn": "14/13/12/11/10",
+      "cost": [
+        70,
+        70,
+        70,
+        70,
+        70
+      ],
+      "costBurn": "70",
+      "costType": " {{ abilityresourcename }}",
+      "datavalues": {},
+      "description": "Poppy carga hacia su objetivo y lo empuja. Si el objetivo choca contra un muro, se queda aturdido.",
+      "effect": [
+        null,
+        [
+          40,
+          60,
+          80,
+          100,
+          120
+        ],
+        [
+          40,
+          60,
+          80,
+          100,
+          120
+        ],
+        [
+          1.6,
+          1.7,
+          1.8,
+          1.9,
+          2
+        ],
+        [
+          1800,
+          1800,
+          1800,
+          1800,
+          1800
+        ],
+        [
+          400,
+          400,
+          400,
+          400,
+          400
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ]
+      ],
+      "effectBurn": [
+        null,
+        "40/60/80/100/120",
+        "40/60/80/100/120",
+        "1.6/1.7/1.8/1.9/2",
+        "1800",
+        "400",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0"
+      ],
+      "id": "PoppyE",
+      "image": {
+        "full": "PoppyE.png",
+        "group": "spell",
+        "h": 48,
+        "sprite": "spell11.png",
+        "w": 48,
+        "x": 0,
+        "y": 0
+      },
+      "leveltip": {
+        "effect": [
+          "{{ basedamagevalue }} -> {{ basedamagevalueNL }}",
+          "{{ walldamage }} -> {{ walldamageNL }}",
+          "{{ stunduration }} -> {{ stundurationNL }}",
+          "{{ cooldown }} -> {{ cooldownNL }}"
+        ],
+        "label": [
+          "Daño inicial",
+          "Daño de obstáculo",
+          "Duración del aturdimiento:",
+          "Enfriamiento"
+        ]
+      },
+      "maxammo": "-1",
+      "maxrank": 5,
+      "name": "Carga heroica",
+      "range": [
+        475,
+        475,
+        475,
+        475,
+        475
+      ],
+      "rangeBurn": "475",
+      "resource": "{{ cost }} {{ abilityresourcename }}",
+      "tooltip": "Poppy ataca a un enemigo, lo que inflige <physicalDamage>{{ tackledamage }} de daño físico</physicalDamage> y lo arrastra hacia delante. Si Poppy lo empuja contra un obstáculo del terreno, <status>aturde</status> al enemigo durante {{ stunduration }} s y le inflige <physicalDamage>{{ tackledamage }} de daño físico</physicalDamage> adicional.{{ spellmodifierdescriptionappend }}",
+      "vars": []
+    },
+    {
+      "cooldown": [
+        140,
+        120,
+        100
+      ],
+      "cooldownBurn": "140/120/100",
+      "cost": [
+        100,
+        100,
+        100
+      ],
+      "costBurn": "100",
+      "costType": " {{ abilityresourcename }}",
+      "datavalues": {},
+      "description": "Poppy ejecuta un golpe con el martillo que lanza a los enemigos muy, muy lejos.",
+      "effect": [
+        null,
+        [
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0
+        ]
+      ],
+      "effectBurn": [
+        null,
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0"
+      ],
+      "id": "PoppyR",
+      "image": {
+        "full": "PoppyR.png",
+        "group": "spell",
+        "h": 48,
+        "sprite": "spell11.png",
+        "w": 48,
+        "x": 48,
+        "y": 0
+      },
+      "leveltip": {
+        "effect": [
+          "{{ basedamage }} -> {{ basedamageNL }}",
+          "{{ cooldown }} -> {{ cooldownNL }}"
+        ],
+        "label": [
+          "Daño",
+          "Enfriamiento"
+        ]
+      },
+      "maxammo": "-1",
+      "maxrank": 3,
+      "name": "Veredicto de la guardiana",
+      "range": [
+        500,
+        500,
+        500
+      ],
+      "rangeBurn": "500",
+      "resource": "{{ cost }} {{ abilityresourcename }}",
+      "tooltip": "<charge>Lanzamiento:</charge> Poppy comienza a cargar su martillo durante un máximo de {{ channelmaxduration }} s, lo que la <status>ralentiza</status> un {{ selfslow }}%.<br /><br /><release>Liberación</release>: Poppy golpea el suelo, crea una onda de choque que inflige <physicalDamage>{{ damage }} de daño físico</physicalDamage> al primer campeón golpeado y a los enemigos cercanos, los <status>empuja</status> hacia <status>atrás</status> en dirección a su nexo y los vuelve inalcanzables mientras huyen. El alcance y la distancia del <status>empujón</status> aumentan con la duración de la carga.<br /><br />Un golpe sin carga inflige <physicalDamage>{{ halfdamage }} de daño físico</physicalDamage> y <status>lanza por los aires</status> a los objetivos durante {{ knockupdurationsnap }} s.{{ spellmodifierdescriptionappend }}",
+      "vars": []
+    }
+  ],
+  "stats": {
+    "armor": 35,
+    "armorperlevel": 5,
+    "attackdamage": 56,
+    "attackdamageperlevel": 0,
+    "attackrange": 125,
+    "attackspeed": 0.658,
+    "attackspeedperlevel": 2.5,
+    "crit": 0,
+    "critperlevel": 0,
+    "hp": 610,
+    "hpperlevel": 110,
+    "hpregen": 9,
+    "hpregenperlevel": 0.8,
+    "movespeed": 345,
+    "mp": 300,
+    "mpperlevel": 45,
+    "mpregen": 7,
+    "mpregenperlevel": 0.7,
+    "spellblock": 32,
+    "spellblockperlevel": 2.05
+  },
+  "tags": [
+    "Tank",
+    "Fighter"
+  ],
+  "title": "La Guardiana del Martillo"
+}

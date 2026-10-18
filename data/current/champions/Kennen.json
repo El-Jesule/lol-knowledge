@@ -1,0 +1,851 @@
+{
+  "allytips": [
+    "Puedes aturdir a tus rivales infligiéndoles 3 Marcas de la tormenta.",
+    "Ataque del rayo puede usarse para iniciar luchas con su componente de retorno de energía, lo que permite utilizar después otras habilidades.",
+    "Puedes otorgar una debilitación inicial de Marca de la tormenta en un rival utilizando Shuriken atronador, y aumentarla luego con Tensión eléctrica."
+  ],
+  "blurb": "Más allá de ser el rápido encargado de mantener el equilibrio en Jonia, Kennen es también el único yordle de los kinkou. A pesar de su pequeño y peludo tamaño, siempre está impaciente por enfrentarse a cualquier amenaza dando rienda suelta a una...",
+  "enemytips": [
+    "Juega con cautela cerca de Kennen cuando tengas una debilitación de Marca de la tormenta. Si te golpea con 3 Marcas de la tormenta, te aturdirá.",
+    "Kennen es frágil por naturaleza; si arriesga demasiado con Ataque del rayo, no dudes en atacarle."
+  ],
+  "id": "Kennen",
+  "image": {
+    "full": "Kennen.png",
+    "group": "champion",
+    "h": 48,
+    "sprite": "champion2.png",
+    "w": 48,
+    "x": 144,
+    "y": 0
+  },
+  "info": {
+    "attack": 6,
+    "defense": 4,
+    "difficulty": 4,
+    "magic": 7
+  },
+  "key": "85",
+  "lore": "Más allá de ser el rápido encargado de mantener el equilibrio en Jonia, Kennen es también el único yordle de los kinkou. A pesar de su pequeño y peludo tamaño, siempre está impaciente por enfrentarse a cualquier amenaza dando rienda suelta a una tormenta de shurikens con un entusiasmo inagotable. Junto a su maestro Shen, Kennen vigila el reino espiritual y emplea una energía eléctrica asoladora para acabar con sus enemigos.",
+  "name": "Kennen",
+  "partype": "Energía",
+  "passive": {
+    "description": "Kennen aturde a los enemigos a los que golpea 3 veces con sus habilidades.",
+    "image": {
+      "full": "Kennen_Passive.png",
+      "group": "passive",
+      "h": 48,
+      "sprite": "passive2.png",
+      "w": 48,
+      "x": 144,
+      "y": 0
+    },
+    "name": "Marca de la tormenta"
+  },
+  "recommended": [],
+  "skins": [
+    {
+      "chromas": false,
+      "id": "85000",
+      "name": "default",
+      "num": 0
+    },
+    {
+      "chromas": false,
+      "id": "85001",
+      "name": "Kennen mortífero",
+      "num": 1
+    },
+    {
+      "chromas": false,
+      "id": "85002",
+      "name": "Kennen maestro del pantano",
+      "num": 2
+    },
+    {
+      "chromas": false,
+      "id": "85003",
+      "name": "Kennen karateka",
+      "num": 3
+    },
+    {
+      "chromas": true,
+      "id": "85004",
+      "name": "Doctor Kennen",
+      "num": 4
+    },
+    {
+      "chromas": false,
+      "id": "85005",
+      "name": "Kennen operación ártica",
+      "num": 5
+    },
+    {
+      "chromas": false,
+      "id": "85006",
+      "name": "Kennen luna sangrienta",
+      "num": 6
+    },
+    {
+      "chromas": false,
+      "id": "85007",
+      "name": "Superkennen",
+      "num": 7
+    },
+    {
+      "chromas": true,
+      "id": "85008",
+      "name": "Kennen infernal",
+      "num": 8
+    },
+    {
+      "chromas": false,
+      "id": "85009",
+      "name": "Doctor Kennen (cuarzo rosa)",
+      "num": 9,
+      "parentSkin": 4
+    },
+    {
+      "chromas": false,
+      "id": "85010",
+      "name": "Doctor Kennen (rubí)",
+      "num": 10,
+      "parentSkin": 4
+    },
+    {
+      "chromas": false,
+      "id": "85011",
+      "name": "Doctor Kennen (aguamarina)",
+      "num": 11,
+      "parentSkin": 4
+    },
+    {
+      "chromas": false,
+      "id": "85012",
+      "name": "Doctor Kennen (citrino)",
+      "num": 12,
+      "parentSkin": 4
+    },
+    {
+      "chromas": false,
+      "id": "85013",
+      "name": "Doctor Kennen (amatista)",
+      "num": 13,
+      "parentSkin": 4
+    },
+    {
+      "chromas": false,
+      "id": "85014",
+      "name": "Doctor Kennen (zafiro)",
+      "num": 14,
+      "parentSkin": 4
+    },
+    {
+      "chromas": false,
+      "id": "85015",
+      "name": "Doctor Kennen (obsidiana)",
+      "num": 15,
+      "parentSkin": 4
+    },
+    {
+      "chromas": false,
+      "id": "85016",
+      "name": "Doctor Kennen (arcoíris)",
+      "num": 16,
+      "parentSkin": 4
+    },
+    {
+      "chromas": false,
+      "id": "85017",
+      "name": "Kennen infernal (esmeralda)",
+      "num": 17,
+      "parentSkin": 8
+    },
+    {
+      "chromas": false,
+      "id": "85018",
+      "name": "Kennen infernal (ojo de gato)",
+      "num": 18,
+      "parentSkin": 8
+    },
+    {
+      "chromas": false,
+      "id": "85019",
+      "name": "Kennen infernal (rubí)",
+      "num": 19,
+      "parentSkin": 8
+    },
+    {
+      "chromas": false,
+      "id": "85020",
+      "name": "Kennen infernal (cuarzo rosa)",
+      "num": 20,
+      "parentSkin": 8
+    },
+    {
+      "chromas": false,
+      "id": "85021",
+      "name": "Kennen infernal (amatista)",
+      "num": 21,
+      "parentSkin": 8
+    },
+    {
+      "chromas": false,
+      "id": "85022",
+      "name": "Kennen infernal (arcoíris)",
+      "num": 22,
+      "parentSkin": 8
+    },
+    {
+      "chromas": true,
+      "id": "85023",
+      "name": "Kennen DWG",
+      "num": 23
+    },
+    {
+      "chromas": false,
+      "id": "85024",
+      "name": "Kennen DWG (élite)",
+      "num": 24,
+      "parentSkin": 23
+    },
+    {
+      "chromas": true,
+      "id": "85025",
+      "name": "Kennen astronauta",
+      "num": 25
+    },
+    {
+      "chromas": false,
+      "id": "85026",
+      "name": "Kennen astronauta (rubí)",
+      "num": 26,
+      "parentSkin": 25
+    },
+    {
+      "chromas": false,
+      "id": "85027",
+      "name": "Kennen astronauta (ojo de gato)",
+      "num": 27,
+      "parentSkin": 25
+    },
+    {
+      "chromas": false,
+      "id": "85028",
+      "name": "Kennen astronauta (aguamarina)",
+      "num": 28,
+      "parentSkin": 25
+    },
+    {
+      "chromas": false,
+      "id": "85029",
+      "name": "Kennen astronauta (esmeralda)",
+      "num": 29,
+      "parentSkin": 25
+    },
+    {
+      "chromas": false,
+      "id": "85030",
+      "name": "Kennen astronauta (obsidiana)",
+      "num": 30,
+      "parentSkin": 25
+    },
+    {
+      "chromas": false,
+      "id": "85031",
+      "name": "Kennen astronauta (amatista)",
+      "num": 31,
+      "parentSkin": 25
+    },
+    {
+      "chromas": false,
+      "id": "85032",
+      "name": "Kennen astronauta (cuarzo rosa)",
+      "num": 32,
+      "parentSkin": 25
+    },
+    {
+      "chromas": false,
+      "id": "85033",
+      "name": "Kennen astronauta (turquesa)",
+      "num": 33,
+      "parentSkin": 25
+    }
+  ],
+  "spells": [
+    {
+      "cooldown": [
+        7,
+        6.25,
+        5.5,
+        4.75,
+        4
+      ],
+      "cooldownBurn": "7/6.25/5.5/4.75/4",
+      "cost": [
+        60,
+        55,
+        50,
+        45,
+        40
+      ],
+      "costBurn": "60/55/50/45/40",
+      "costType": " {{ abilityresourcename }}",
+      "datavalues": {},
+      "description": "Kennen arroja hacia un lugar un veloz shuriken, causando daño y añadiendo una Marca de la tormenta a todos los rivales que golpea.",
+      "effect": [
+        null,
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ]
+      ],
+      "effectBurn": [
+        null,
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0"
+      ],
+      "id": "KennenShurikenHurlMissile1",
+      "image": {
+        "full": "KennenShurikenHurlMissile1.png",
+        "group": "spell",
+        "h": 48,
+        "sprite": "spell7.png",
+        "w": 48,
+        "x": 288,
+        "y": 0
+      },
+      "leveltip": {
+        "effect": [
+          "{{ cooldown }} -> {{ cooldownNL }}",
+          "{{ cost }} -> {{ costNL }}",
+          "{{ basedamage }} -> {{ basedamageNL }}"
+        ],
+        "label": [
+          "Enfriamiento",
+          "Coste de @AbilityResourceName@",
+          "Daño"
+        ]
+      },
+      "maxammo": "-1",
+      "maxrank": 5,
+      "name": "Shuriken atronador",
+      "range": [
+        950,
+        950,
+        950,
+        950,
+        950
+      ],
+      "rangeBurn": "950",
+      "resource": "{{ cost }} {{ abilityresourcename }}",
+      "tooltip": "Kennen lanza un shuriken que inflige <magicDamage>{{ totaldamage }} de daño mágico</magicDamage> al primer enemigo alcanzado.{{ spellmodifierdescriptionappend }}",
+      "vars": []
+    },
+    {
+      "cooldown": [
+        13,
+        11.25,
+        9.5,
+        7.75,
+        6
+      ],
+      "cooldownBurn": "13/11.25/9.5/7.75/6",
+      "cost": [
+        40,
+        40,
+        40,
+        40,
+        40
+      ],
+      "costBurn": "40",
+      "costType": " {{ abilityresourcename }}",
+      "datavalues": {},
+      "description": "Kennen inflige daño adicional de forma pasiva y añade a su objetivo una Marca de la tormenta cada varios ataques. Puede activar esta habilidad para dañar y añadir otra Marca de la tormenta a los objetivos que ya están marcados.",
+      "effect": [
+        null,
+        [
+          70,
+          95,
+          120,
+          145,
+          170
+        ],
+        [
+          25,
+          25,
+          25,
+          25,
+          25
+        ],
+        [
+          0.7,
+          0.7,
+          0.7,
+          0.7,
+          0.7
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ]
+      ],
+      "effectBurn": [
+        null,
+        "70/95/120/145/170",
+        "25",
+        "0.7",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0"
+      ],
+      "id": "KennenBringTheLight",
+      "image": {
+        "full": "KennenBringTheLight.png",
+        "group": "spell",
+        "h": 48,
+        "sprite": "spell7.png",
+        "w": 48,
+        "x": 336,
+        "y": 0
+      },
+      "leveltip": {
+        "effect": [
+          "{{ cooldown }} -> {{ cooldownNL }}",
+          "{{ badratio*100.000000 }}% -> {{ badrationl*100.000000 }}%",
+          "{{ baseonhitdamage }} -> {{ baseonhitdamageNL }}",
+          "{{ e1 }} -> {{ e1NL }}"
+        ],
+        "label": [
+          "Enfriamiento",
+          "Relación de DA adicional",
+          "Daño (de la pasiva)",
+          "Daño (de la activa)"
+        ]
+      },
+      "maxammo": "-1",
+      "maxrank": 5,
+      "name": "Tensión eléctrica",
+      "range": [
+        725,
+        725,
+        725,
+        725,
+        725
+      ],
+      "rangeBurn": "725",
+      "resource": "{{ cost }} {{ abilityresourcename }}",
+      "tooltip": "<spellPassive>Pasiva:</spellPassive> Cada 5 ataques, inflige <magicDamage>{{ totaldamagepassive }} de daño mágico</magicDamage> adicional %i:OnHit% <OnHit>al impactar</OnHit>.<br /><br /><spellActive>Activa:</spellActive> Kennen lanza una explosión de electricidad que inflige <magicDamage>{{ totaldamageactive }} de daño mágico</magicDamage> a los enemigos cercanos afectados por <spellName>Marca de la tormenta</spellName>.<br />{{ spellmodifierdescriptionappend }}",
+      "vars": []
+    },
+    {
+      "cooldown": [
+        10,
+        9,
+        8,
+        7,
+        6
+      ],
+      "cooldownBurn": "10/9/8/7/6",
+      "cost": [
+        80,
+        80,
+        80,
+        80,
+        80
+      ],
+      "costBurn": "80",
+      "costType": " {{ abilityresourcename }}",
+      "datavalues": {},
+      "description": "Kennen adopta la forma de un rayo, lo que le permite atravesar a las unidades y aplicar una Marca de la tormenta. Kennen obtiene velocidad de movimiento cuando adopta esta forma y velocidad de ataque cuando la abandona.",
+      "effect": [
+        null,
+        [
+          85,
+          125,
+          165,
+          205,
+          245
+        ],
+        [
+          40,
+          40,
+          40,
+          40,
+          40
+        ],
+        [
+          10,
+          20,
+          30,
+          40,
+          50
+        ],
+        [
+          1,
+          1,
+          1,
+          1,
+          1
+        ],
+        [
+          2,
+          2,
+          2,
+          2,
+          2
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          4,
+          4,
+          4,
+          4,
+          4
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ]
+      ],
+      "effectBurn": [
+        null,
+        "85/125/165/205/245",
+        "40",
+        "10/20/30/40/50",
+        "1",
+        "2",
+        "0",
+        "4",
+        "0",
+        "0",
+        "0"
+      ],
+      "id": "KennenLightningRush",
+      "image": {
+        "full": "KennenLightningRush.png",
+        "group": "spell",
+        "h": 48,
+        "sprite": "spell7.png",
+        "w": 48,
+        "x": 384,
+        "y": 0
+      },
+      "leveltip": {
+        "effect": [
+          "{{ cooldown }} -> {{ cooldownNL }}",
+          "{{ basedamage }} -> {{ basedamageNL }}",
+          "{{ totalas*100.000000 }}% -> {{ totalasnl*100.000000 }}%"
+        ],
+        "label": [
+          "Enfriamiento",
+          "Daño",
+          "Velocidad de ataque"
+        ]
+      },
+      "maxammo": "-1",
+      "maxrank": 5,
+      "name": "Ataque del rayo",
+      "range": [
+        170,
+        170,
+        170,
+        170,
+        170
+      ],
+      "rangeBurn": "170",
+      "resource": "{{ cost }} {{ abilityresourcename }}",
+      "tooltip": "Kennen se convierte en una bola de rayos, obtiene un <speed>{{ movementspeed*100 }}% de velocidad de movimiento</speed>, inflige <magicDamage>{{ totaldamage }} de daño mágico</magicDamage> a los enemigos que atraviesa y se vuelve fantasmal durante {{ durationasball }} s. Si Kennen daña al menos a un enemigo, obtiene {{ energyrefund }} de energía. <br /><br />Cuando la habilidad termina, Kennen obtiene un <attackSpeed>{{ totalas*100 }}% de velocidad de ataque</attackSpeed> durante {{ durationafterball }} s. Los impactos críticos aumentan la duración en {{ critdurationbonus }} s. Kennen puede <recast>reactivar</recast> esta habilidad para que termine antes.{{ spellmodifierdescriptionappend }}",
+      "vars": []
+    },
+    {
+      "cooldown": [
+        120,
+        120,
+        120
+      ],
+      "cooldownBurn": "120",
+      "cost": [
+        0,
+        0,
+        0
+      ],
+      "costBurn": "0",
+      "costType": "Sin coste",
+      "datavalues": {},
+      "description": "Kennen invoca una tormenta que golpea a los campeones enemigos cercanos y les causa daño mágico.",
+      "effect": [
+        null,
+        [
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0
+        ]
+      ],
+      "effectBurn": [
+        null,
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0"
+      ],
+      "id": "KennenShurikenStorm",
+      "image": {
+        "full": "KennenShurikenStorm.png",
+        "group": "spell",
+        "h": 48,
+        "sprite": "spell7.png",
+        "w": 48,
+        "x": 432,
+        "y": 0
+      },
+      "leveltip": {
+        "effect": [
+          "{{ basedamage }} -> {{ basedamageNL }}",
+          "{{ kennenrdefenses }} -> {{ kennenrdefensesNL }}",
+          "{{ kennenrdefenses }} -> {{ kennenrdefensesNL }}"
+        ],
+        "label": [
+          "Daño",
+          "Bonificación de armadura",
+          "Resistencia mágica adicional"
+        ]
+      },
+      "maxammo": "-1",
+      "maxrank": 3,
+      "name": "Tempestad cercenante",
+      "range": [
+        550,
+        550,
+        550
+      ],
+      "rangeBurn": "550",
+      "resource": "Sin coste",
+      "tooltip": "Kennen libera una tormenta mágica que inflige <magicDamage>{{ pertickdamagecalculated }} de daño mágico</magicDamage> a todos los enemigos cercanos cada {{ kennenrtickrate }} s, y obtiene <scaleArmor>{{ kennenrdefenses }} de armadura</scaleArmor> y <scaleMR>{{ kennenrdefenses }} de resistencia mágica</scaleMR> durante {{ kennenrduration }} s. Los impactos sucesivos infligen un {{ damageamp*100 }}% más de daño por cada impacto que haya alcanzado al enemigo.{{ spellmodifierdescriptionappend }}",
+      "vars": []
+    }
+  ],
+  "stats": {
+    "armor": 29,
+    "armorperlevel": 4.95,
+    "attackdamage": 48,
+    "attackdamageperlevel": 0,
+    "attackrange": 550,
+    "attackspeed": 0.625,
+    "attackspeedperlevel": 3.4,
+    "crit": 0,
+    "critperlevel": 0,
+    "hp": 580,
+    "hpperlevel": 98,
+    "hpregen": 5.5,
+    "hpregenperlevel": 0.65,
+    "movespeed": 335,
+    "mp": 200,
+    "mpperlevel": 0,
+    "mpregen": 50,
+    "mpregenperlevel": 0,
+    "spellblock": 30,
+    "spellblockperlevel": 1.3
+  },
+  "tags": [
+    "Mage"
+  ],
+  "title": "El Corazón de la Tempestad"
+}

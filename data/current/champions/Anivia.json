@@ -1,0 +1,1057 @@
+{
+  "allytips": [
+    "Sincronizar Destello helado con Congelación puede provocar resultados devastadores.",
+    "Anivia depende en gran medida del maná para desatar Tormenta glacial. Intenta hacerte con objetos que lo tengan o con la mejora Emblema de Perspicacia en la Grieta del Invocador.",
+    "Al principio, el huevo es muy difícil de matar para los campeones enemigos. Aprovecha la ventaja jugando con agresividad."
+  ],
+  "blurb": "Anivia es un espíritu alado benevolente que soporta ciclos interminables de vida, muerte y nacimiento para proteger Freljord. Semidiosa nacida del hielo implacable y los vientos crueles, canaliza estos poderes elementales para anular a cualquiera que se...",
+  "enemytips": [
+    "Contra Anivia hay que intentar hacer emboscada en las calles. Con varios atacantes es más fácil asegurar la muerte del huevo.",
+    "Si juegas con un campeón a distancia, permanece lo suficientemente lejos de Anivia para poder esquivar Destello helado más fácilmente.",
+    "Intenta luchar contra ella en las calles. En la jungla, puede bloquear caminos con los niveles inferiores de Cristalización."
+  ],
+  "id": "Anivia",
+  "image": {
+    "full": "Anivia.png",
+    "group": "champion",
+    "h": 48,
+    "sprite": "champion0.png",
+    "w": 48,
+    "x": 336,
+    "y": 0
+  },
+  "info": {
+    "attack": 1,
+    "defense": 4,
+    "difficulty": 10,
+    "magic": 10
+  },
+  "key": "34",
+  "lore": "Anivia es un espíritu alado benevolente que soporta ciclos interminables de vida, muerte y nacimiento para proteger Freljord. Semidiosa nacida del hielo implacable y los vientos crueles, canaliza estos poderes elementales para anular a cualquiera que se atreva a perturbar su hogar. Anivia guía y protege a las tribus del severo norte, donde la veneran como un símbolo de esperanza y un presagio de grandes cambios. Ella lo da todo en la lucha sabiendo que, a través de su sacrificio, su memoria perdurará y renacerá en un nuevo mañana.",
+  "name": "Anivia",
+  "partype": "Maná",
+  "passive": {
+    "description": "Al recibir daño letal, Anivia vuelve a su estado de huevo y renace con toda la vida.",
+    "image": {
+      "full": "Anivia_P.png",
+      "group": "passive",
+      "h": 48,
+      "sprite": "passive0.png",
+      "w": 48,
+      "x": 336,
+      "y": 0
+    },
+    "name": "Renacimiento"
+  },
+  "recommended": [],
+  "skins": [
+    {
+      "chromas": false,
+      "id": "34000",
+      "name": "default",
+      "num": 0
+    },
+    {
+      "chromas": false,
+      "id": "34001",
+      "name": "Anivia espíritu de equipo",
+      "num": 1
+    },
+    {
+      "chromas": false,
+      "id": "34002",
+      "name": "Anivia ave de rapiña",
+      "num": 2
+    },
+    {
+      "chromas": false,
+      "id": "34003",
+      "name": "Anivia cazadora de Noxus",
+      "num": 3
+    },
+    {
+      "chromas": false,
+      "id": "34004",
+      "name": "Anivia hextech",
+      "num": 4
+    },
+    {
+      "chromas": false,
+      "id": "34005",
+      "name": "Anivia escarcha oscura",
+      "num": 5
+    },
+    {
+      "chromas": false,
+      "id": "34006",
+      "name": "Anivia prehistórica",
+      "num": 6
+    },
+    {
+      "chromas": false,
+      "id": "34007",
+      "name": "Anivia reina del festival",
+      "num": 7
+    },
+    {
+      "chromas": true,
+      "id": "34008",
+      "name": "Anivia de origami",
+      "num": 8
+    },
+    {
+      "chromas": false,
+      "id": "34009",
+      "name": "Anivia de origami (rubí)",
+      "num": 9,
+      "parentSkin": 8
+    },
+    {
+      "chromas": false,
+      "id": "34010",
+      "name": "Anivia de origami (ojo de gato)",
+      "num": 10,
+      "parentSkin": 8
+    },
+    {
+      "chromas": false,
+      "id": "34011",
+      "name": "Anivia de origami (perla)",
+      "num": 11,
+      "parentSkin": 8
+    },
+    {
+      "chromas": false,
+      "id": "34012",
+      "name": "Anivia de origami (esmeralda)",
+      "num": 12,
+      "parentSkin": 8
+    },
+    {
+      "chromas": false,
+      "id": "34013",
+      "name": "Anivia de origami (obsidiana)",
+      "num": 13,
+      "parentSkin": 8
+    },
+    {
+      "chromas": false,
+      "id": "34014",
+      "name": "Anivia de origami (tanzanita)",
+      "num": 14,
+      "parentSkin": 8
+    },
+    {
+      "chromas": false,
+      "id": "34015",
+      "name": "Anivia de origami (cuarzo rosa)",
+      "num": 15,
+      "parentSkin": 8
+    },
+    {
+      "chromas": false,
+      "id": "34016",
+      "name": "Anivia de origami (arcoíris)",
+      "num": 16,
+      "parentSkin": 8
+    },
+    {
+      "chromas": true,
+      "id": "34017",
+      "name": "Anivia vuelo cósmico",
+      "num": 17
+    },
+    {
+      "chromas": false,
+      "id": "34018",
+      "name": "Anivia vuelo cósmico (rubí)",
+      "num": 18,
+      "parentSkin": 17
+    },
+    {
+      "chromas": false,
+      "id": "34019",
+      "name": "Anivia vuelo cósmico (citrino)",
+      "num": 19,
+      "parentSkin": 17
+    },
+    {
+      "chromas": false,
+      "id": "34020",
+      "name": "Anivia vuelo cósmico (esmeralda)",
+      "num": 20,
+      "parentSkin": 17
+    },
+    {
+      "chromas": false,
+      "id": "34021",
+      "name": "Anivia vuelo cósmico (turquesa)",
+      "num": 21,
+      "parentSkin": 17
+    },
+    {
+      "chromas": false,
+      "id": "34022",
+      "name": "Anivia vuelo cósmico (zafiro)",
+      "num": 22,
+      "parentSkin": 17
+    },
+    {
+      "chromas": false,
+      "id": "34023",
+      "name": "Anivia vuelo cósmico (tanzanita)",
+      "num": 23,
+      "parentSkin": 17
+    },
+    {
+      "chromas": false,
+      "id": "34024",
+      "name": "Anivia vuelo cósmico (cuarzo rosa)",
+      "num": 24,
+      "parentSkin": 17
+    },
+    {
+      "chromas": false,
+      "id": "34025",
+      "name": "Anivia vuelo cósmico (obsidiana)",
+      "num": 25,
+      "parentSkin": 17
+    },
+    {
+      "chromas": false,
+      "id": "34026",
+      "name": "Anivia vuelo cósmico (arcoíris)",
+      "num": 26,
+      "parentSkin": 17
+    },
+    {
+      "chromas": true,
+      "id": "34027",
+      "name": "Anivia fénix divino",
+      "num": 27
+    },
+    {
+      "chromas": false,
+      "id": "34028",
+      "name": "Anivia fénix divino (rubí)",
+      "num": 28,
+      "parentSkin": 27
+    },
+    {
+      "chromas": false,
+      "id": "34029",
+      "name": "Anivia fénix divino (esmeralda)",
+      "num": 29,
+      "parentSkin": 27
+    },
+    {
+      "chromas": false,
+      "id": "34030",
+      "name": "Anivia fénix divino (cuarzo rosa)",
+      "num": 30,
+      "parentSkin": 27
+    },
+    {
+      "chromas": false,
+      "id": "34031",
+      "name": "Anivia fénix divino (aguamarina)",
+      "num": 31,
+      "parentSkin": 27
+    },
+    {
+      "chromas": false,
+      "id": "34032",
+      "name": "Anivia fénix divino (citrino)",
+      "num": 32,
+      "parentSkin": 27
+    },
+    {
+      "chromas": false,
+      "id": "34033",
+      "name": "Anivia fénix divino (amatista)",
+      "num": 33,
+      "parentSkin": 27
+    },
+    {
+      "chromas": false,
+      "id": "34034",
+      "name": "Anivia fénix divino (obsidiana)",
+      "num": 34,
+      "parentSkin": 27
+    },
+    {
+      "chromas": false,
+      "id": "34035",
+      "name": "Anivia fénix divino (perla)",
+      "num": 35,
+      "parentSkin": 27
+    },
+    {
+      "chromas": false,
+      "id": "34036",
+      "name": "Anivia fénix divino (tigre dorado)",
+      "num": 36,
+      "parentSkin": 27
+    },
+    {
+      "chromas": true,
+      "id": "34037",
+      "name": "Batnivia embrujada",
+      "num": 37
+    },
+    {
+      "chromas": false,
+      "id": "34038",
+      "name": "Batnivia embrujada (rubí)",
+      "num": 38,
+      "parentSkin": 37
+    },
+    {
+      "chromas": false,
+      "id": "34039",
+      "name": "Batnivia embrujada (ojo de gato)",
+      "num": 39,
+      "parentSkin": 37
+    },
+    {
+      "chromas": false,
+      "id": "34040",
+      "name": "Batnivia embrujada (zafiro)",
+      "num": 40,
+      "parentSkin": 37
+    },
+    {
+      "chromas": false,
+      "id": "34041",
+      "name": "Batnivia embrujada (cuarzo rosa)",
+      "num": 41,
+      "parentSkin": 37
+    },
+    {
+      "chromas": false,
+      "id": "34042",
+      "name": "Batnivia embrujada (esmeralda)",
+      "num": 42,
+      "parentSkin": 37
+    },
+    {
+      "chromas": false,
+      "id": "34043",
+      "name": "Batnivia embrujada (amatista)",
+      "num": 43,
+      "parentSkin": 37
+    },
+    {
+      "chromas": false,
+      "id": "34044",
+      "name": "Batnivia embrujada (turquesa)",
+      "num": 44,
+      "parentSkin": 37
+    },
+    {
+      "chromas": false,
+      "id": "34045",
+      "name": "Batnivia embrujada (perla)",
+      "num": 45,
+      "parentSkin": 37
+    },
+    {
+      "chromas": true,
+      "id": "34046",
+      "name": "Anivia victoriosa",
+      "num": 46
+    },
+    {
+      "chromas": false,
+      "id": "34047",
+      "name": "Anivia victoriosa (Bronce)",
+      "num": 47,
+      "parentSkin": 46
+    },
+    {
+      "chromas": false,
+      "id": "34048",
+      "name": "Anivia victoriosa (Plata)",
+      "num": 48,
+      "parentSkin": 46
+    },
+    {
+      "chromas": false,
+      "id": "34049",
+      "name": "Anivia victoriosa (Oro)",
+      "num": 49,
+      "parentSkin": 46
+    },
+    {
+      "chromas": false,
+      "id": "34050",
+      "name": "Anivia victoriosa (Platino)",
+      "num": 50,
+      "parentSkin": 46
+    },
+    {
+      "chromas": false,
+      "id": "34051",
+      "name": "Anivia victoriosa (Diamante)",
+      "num": 51,
+      "parentSkin": 46
+    },
+    {
+      "chromas": false,
+      "id": "34052",
+      "name": "Anivia victoriosa (Maestro)",
+      "num": 52,
+      "parentSkin": 46
+    },
+    {
+      "chromas": false,
+      "id": "34053",
+      "name": "Anivia victoriosa (Gran Maestro)",
+      "num": 53,
+      "parentSkin": 46
+    },
+    {
+      "chromas": false,
+      "id": "34054",
+      "name": "Anivia victoriosa (Aspirante)",
+      "num": 54,
+      "parentSkin": 46
+    },
+    {
+      "chromas": false,
+      "id": "34056",
+      "name": "Anivia diosa antigua",
+      "num": 56
+    },
+    {
+      "chromas": true,
+      "id": "34057",
+      "name": "Anivia diosa antigua (rubí)",
+      "num": 57,
+      "parentSkin": 56
+    },
+    {
+      "chromas": false,
+      "id": "34058",
+      "name": "Anivia diosa antigua (esmeralda)",
+      "num": 58,
+      "parentSkin": 56
+    },
+    {
+      "chromas": false,
+      "id": "34059",
+      "name": "Anivia diosa antigua (citrino)",
+      "num": 59,
+      "parentSkin": 56
+    },
+    {
+      "chromas": false,
+      "id": "34060",
+      "name": "Anivia diosa antigua (perla)",
+      "num": 60,
+      "parentSkin": 56
+    },
+    {
+      "chromas": false,
+      "id": "34061",
+      "name": "Anivia diosa antigua (zafiro)",
+      "num": 61,
+      "parentSkin": 56
+    },
+    {
+      "chromas": false,
+      "id": "34062",
+      "name": "Anivia diosa antigua (obsidiana)",
+      "num": 62,
+      "parentSkin": 56
+    },
+    {
+      "chromas": false,
+      "id": "34063",
+      "name": "Anivia diosa antigua (cuarzo rosa)",
+      "num": 63,
+      "parentSkin": 56
+    },
+    {
+      "chromas": false,
+      "id": "34064",
+      "name": "Anivia diosa antigua (tanzanita)",
+      "num": 64,
+      "parentSkin": 56
+    }
+  ],
+  "spells": [
+    {
+      "cooldown": [
+        11,
+        10,
+        9,
+        8,
+        7
+      ],
+      "cooldownBurn": "11/10/9/8/7",
+      "cost": [
+        80,
+        85,
+        90,
+        95,
+        100
+      ],
+      "costBurn": "80/85/90/95/100",
+      "costType": " {{ abilityresourcename }}",
+      "datavalues": {},
+      "description": "Anivia junta las alas e invoca una esfera de hielo que vuela hacia sus enemigos, de modo que enfría y daña a cualquiera que se cruce en su camino. Al explotar, la esfera inflige daño moderado en un radio y aturde a los que se encuentren en la zona.",
+      "effect": [
+        null,
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ]
+      ],
+      "effectBurn": [
+        null,
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0"
+      ],
+      "id": "FlashFrost",
+      "image": {
+        "full": "FlashFrost.png",
+        "group": "spell",
+        "h": 48,
+        "sprite": "spell1.png",
+        "w": 48,
+        "x": 96,
+        "y": 96
+      },
+      "leveltip": {
+        "effect": [
+          "{{ passthroughbasedamage }} -> {{ passthroughbasedamageNL }}",
+          "{{ explosionbasedamage }} -> {{ explosionbasedamageNL }}",
+          "{{ stunduration }} -> {{ stundurationNL }}",
+          "{{ cooldown }} -> {{ cooldownNL }}",
+          "{{ cost }} -> {{ costNL }}"
+        ],
+        "label": [
+          "Daño",
+          "Daño de la explosión",
+          "Duración del aturdimiento:",
+          "Enfriamiento",
+          "Coste de @AbilityResourceName@"
+        ]
+      },
+      "maxammo": "-1",
+      "maxrank": 5,
+      "name": "Destello helado",
+      "range": [
+        1075,
+        1075,
+        1075,
+        1075,
+        1075
+      ],
+      "rangeBurn": "1075",
+      "resource": "{{ cost }} {{ abilityresourcename }}",
+      "tooltip": "Anivia lanza una gran esfera de hielo que inflige <magicDamage>{{ totalpassthroughdamage }} de daño mágico</magicDamage> y <keywordMajor>enfría</keywordMajor> a los enemigos durante {{ slowduration }} s, lo que los <status>ralentiza</status> un {{ spell.glacialstorm:slowamount }}%. El hielo explota al final del recorrido, lo que <status>aturde</status> a los enemigos durante {{ stunduration }} s e inflige <magicDamage>{{ totalexplosiondamage }} de daño mágico</magicDamage>.<br /><br />Anivia puede <recast>volver a usar</recast> esta habilidad mientras el hielo está en el aire para hacerlo detonar antes.{{ spellmodifierdescriptionappend }}",
+      "vars": []
+    },
+    {
+      "cooldown": [
+        17,
+        17,
+        17,
+        17,
+        17
+      ],
+      "cooldownBurn": "17",
+      "cost": [
+        70,
+        70,
+        70,
+        70,
+        70
+      ],
+      "costBurn": "70",
+      "costType": " {{ abilityresourcename }}",
+      "datavalues": {},
+      "description": "Anivia condensa la humedad del aire en un muro de hielo infranqueable que bloquea todos los movimientos. El muro aguanta un breve periodo de tiempo antes de derretirse.",
+      "effect": [
+        null,
+        [
+          5,
+          5,
+          5,
+          5,
+          5
+        ],
+        [
+          400,
+          500,
+          600,
+          700,
+          800
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ]
+      ],
+      "effectBurn": [
+        null,
+        "5",
+        "400/500/600/700/800",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0"
+      ],
+      "id": "Crystallize",
+      "image": {
+        "full": "Crystallize.png",
+        "group": "spell",
+        "h": 48,
+        "sprite": "spell1.png",
+        "w": 48,
+        "x": 144,
+        "y": 96
+      },
+      "leveltip": {
+        "effect": [
+          "{{ wallwidth }} -> {{ wallwidthNL }}"
+        ],
+        "label": [
+          "Anchura"
+        ]
+      },
+      "maxammo": "-1",
+      "maxrank": 5,
+      "name": "Cristalización",
+      "range": [
+        1000,
+        1000,
+        1000,
+        1000,
+        1000
+      ],
+      "rangeBurn": "1000",
+      "resource": "{{ cost }} {{ abilityresourcename }}",
+      "tooltip": "Anivia invoca un muro de hielo de {{ wallwidth }} unidades de ancho. El muro aguanta {{ wallduration }} s antes de derretirse.{{ spellmodifierdescriptionappend }}",
+      "vars": []
+    },
+    {
+      "cooldown": [
+        4,
+        4,
+        4,
+        4,
+        4
+      ],
+      "cooldownBurn": "4",
+      "cost": [
+        50,
+        50,
+        50,
+        50,
+        50
+      ],
+      "costBurn": "50",
+      "costType": " {{ abilityresourcename }}",
+      "datavalues": {},
+      "description": "Con un aleteo, Anivia lanza una ráfaga de viento congelado a su objetivo, lo que inflige daño. Si hace poco que el objetivo ha sido golpeado por Destello helado o dañado por una Tormenta glacial completamente formada, recibe el doble de daño.",
+      "effect": [
+        null,
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ]
+      ],
+      "effectBurn": [
+        null,
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0"
+      ],
+      "id": "Frostbite",
+      "image": {
+        "full": "Frostbite.png",
+        "group": "spell",
+        "h": 48,
+        "sprite": "spell1.png",
+        "w": 48,
+        "x": 192,
+        "y": 96
+      },
+      "leveltip": {
+        "effect": [
+          "{{ basedamage }} -> {{ basedamageNL }}"
+        ],
+        "label": [
+          "Daño"
+        ]
+      },
+      "maxammo": "-1",
+      "maxrank": 5,
+      "name": "Congelación",
+      "range": [
+        650,
+        650,
+        650,
+        650,
+        650
+      ],
+      "rangeBurn": "650",
+      "resource": "{{ cost }} {{ abilityresourcename }}",
+      "tooltip": "Anivia golpea a un enemigo con un viento helado, lo que inflige <magicDamage>{{ totaldamage }} de daño mágico</magicDamage>. Anivia inflige <magicDamage>{{ empowereddamage }} de daño mágico</magicDamage> contra enemigos <keywordMajor>enfriados</keywordMajor>.{{ spellmodifierdescriptionappend }}",
+      "vars": []
+    },
+    {
+      "cooldown": [
+        4,
+        3,
+        2
+      ],
+      "cooldownBurn": "4/3/2",
+      "cost": [
+        60,
+        60,
+        60
+      ],
+      "costBurn": "60",
+      "costType": " + {{ manacostpersecond }} de maná por segundo",
+      "datavalues": {},
+      "description": "Anivia invoca una lluvia de hielo y granizo que daña a sus enemigos y dificulta su movimiento.",
+      "effect": [
+        null,
+        [
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0
+        ]
+      ],
+      "effectBurn": [
+        null,
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0"
+      ],
+      "id": "GlacialStorm",
+      "image": {
+        "full": "GlacialStorm.png",
+        "group": "spell",
+        "h": 48,
+        "sprite": "spell1.png",
+        "w": 48,
+        "x": 240,
+        "y": 96
+      },
+      "leveltip": {
+        "effect": [
+          "{{ damagepersecond }} -> {{ damagepersecondNL }}",
+          "{{ slowamount }}% -> {{ slowamountNL }}%",
+          "{{ slowpercentempoweredtt }}% -> {{ slowpercentempoweredttNL }}%",
+          "{{ manacostpersecond }} -> {{ manacostpersecondNL }}",
+          "{{ cooldown }} -> {{ cooldownNL }}"
+        ],
+        "label": [
+          "Daño por segundo",
+          "Ralentización",
+          "Porcentaje de ralentización de enfriado",
+          "Coste de maná por segundo",
+          "Enfriamiento"
+        ]
+      },
+      "maxammo": "-1",
+      "maxrank": 3,
+      "name": "Tormenta glacial",
+      "range": [
+        750,
+        750,
+        750
+      ],
+      "rangeBurn": "750",
+      "resource": "{{ cost }} + {{ manacostpersecond }} de maná por segundo",
+      "tooltip": "<toggle>Activación:</toggle> Anivia provoca una lluvia de hielo y granizo que <status>ralentiza</status> a los enemigos un {{ slowamount }}% e inflige <magicDamage>{{ totaldamagepersecond }} de daño mágico por segundo.</magicDamage> La tormenta aumenta de tamaño a largo de {{ growthtime }} s.<br /><br />Cuando la tormenta está completamente formada, <keywordMajor>hiela</keywordMajor>, <status>ralentiza</status> un {{ slowpercentempoweredtt }}% e inflige <magicDamage>{{ empowereddamagepersecondtooltiponly }} de daño mágico por segundo</magicDamage>.{{ spellmodifierdescriptionappend }}",
+      "vars": []
+    }
+  ],
+  "stats": {
+    "armor": 19,
+    "armorperlevel": 4.1,
+    "attackdamage": 51,
+    "attackdamageperlevel": 0,
+    "attackrange": 600,
+    "attackspeed": 0.658,
+    "attackspeedperlevel": 1.68,
+    "crit": 0,
+    "critperlevel": 0,
+    "hp": 550,
+    "hpperlevel": 92,
+    "hpregen": 5.5,
+    "hpregenperlevel": 0.55,
+    "movespeed": 325,
+    "mp": 495,
+    "mpperlevel": 45,
+    "mpregen": 8,
+    "mpregenperlevel": 0.8,
+    "spellblock": 30,
+    "spellblockperlevel": 1.3
+  },
+  "tags": [
+    "Mage"
+  ],
+  "title": "La Criofénix"
+}

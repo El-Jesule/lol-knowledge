@@ -1,0 +1,1028 @@
+{
+  "allytips": [
+    "Fisura temporal es muy útil para escapar, pero también puede ser muy potente cuando se utiliza de manera ofensiva. No subestiméis su potencial de daño.",
+    "Si creéis que podéis lanzar Resonancia Z sobre un campeón enemigo merece la pena correr el riesgo de intentarlo. Gracias a la velocidad de movimiento adicional que otorga, luego es fácil escapar.",
+    "Salto de fase es muy útil para posicionarse de cara a las demás habilidades de Ekko. Usadla para alcanzar a un mismo objetivo con los dos impactos de Engranaje temporal o para lanzar Convergencia paralela desde una posición idónea."
+  ],
+  "blurb": "Ekko, un prodigio surgido de las implacables calles de Zaun, puede manipular el tiempo para sacar ventaja de todas las situaciones. Con una máquina de su invención llamada Dispositivo Z, explora las distintas posibilidades de la realidad hasta dar con...",
+  "enemytips": [
+    "Ekko es mucho más débil cuando no puede usar su definitiva. Buscad el rastro que deja para ver si tiene acceso a Fisura temporal.",
+    "Su zona de aturdimiento tarda 3 s en armarse. Buscad la imagen que se crea cuando la lanza y tratad de adivinar dónde la ha colocado.",
+    "El segundo impacto de Engranaje temporal causa más daño que el primero. Procurad evitarlo."
+  ],
+  "id": "Ekko",
+  "image": {
+    "full": "Ekko.png",
+    "group": "champion",
+    "h": 48,
+    "sprite": "champion0.png",
+    "w": 48,
+    "x": 432,
+    "y": 96
+  },
+  "info": {
+    "attack": 5,
+    "defense": 3,
+    "difficulty": 8,
+    "magic": 7
+  },
+  "key": "245",
+  "lore": "Ekko, un prodigio surgido de las implacables calles de Zaun, puede manipular el tiempo para sacar ventaja de todas las situaciones. Con una máquina de su invención llamada Dispositivo Z, explora las distintas posibilidades de la realidad hasta dar con el momento ideal para conseguir lo imposible a la primera. Aunque Ekko valora muchísimo su libertad, si algo amenaza a sus seres queridos, él y los Firelights harán lo que sea para defenderlos.",
+  "name": "Ekko",
+  "partype": "Maná",
+  "passive": {
+    "description": "Cada tercer ataque o hechizo dañino lanzado sobre un mismo objetivo inflige daño mágico adicional, y Ekko obtiene una mejora de velocidad de movimiento si el objetivo es un campeón.<br><br>",
+    "image": {
+      "full": "Ekko_P.png",
+      "group": "passive",
+      "h": 48,
+      "sprite": "passive0.png",
+      "w": 48,
+      "x": 432,
+      "y": 96
+    },
+    "name": "Resonancia Z"
+  },
+  "recommended": [],
+  "skins": [
+    {
+      "chromas": false,
+      "id": "245000",
+      "name": "default",
+      "num": 0
+    },
+    {
+      "chromas": true,
+      "id": "245001",
+      "name": "Ekko tormenta de arena",
+      "num": 1
+    },
+    {
+      "chromas": false,
+      "id": "245002",
+      "name": "Ekko academia",
+      "num": 2
+    },
+    {
+      "chromas": false,
+      "id": "245003",
+      "name": "PROYECTO: Ekko",
+      "num": 3
+    },
+    {
+      "chromas": false,
+      "id": "245004",
+      "name": "Ekko tormenta de arena (tanzanita)",
+      "num": 4,
+      "parentSkin": 1
+    },
+    {
+      "chromas": false,
+      "id": "245005",
+      "name": "Ekko tormenta de arena (citrino)",
+      "num": 5,
+      "parentSkin": 1
+    },
+    {
+      "chromas": false,
+      "id": "245006",
+      "name": "Ekko tormenta de arena (obsidiana)",
+      "num": 6,
+      "parentSkin": 1
+    },
+    {
+      "chromas": false,
+      "id": "245007",
+      "name": "Ekko tormenta de arena (arenisca)",
+      "num": 7,
+      "parentSkin": 1
+    },
+    {
+      "chromas": false,
+      "id": "245008",
+      "name": "Ekko tormenta de arena (perla)",
+      "num": 8,
+      "parentSkin": 1
+    },
+    {
+      "chromas": false,
+      "id": "245009",
+      "name": "Ekko tormenta de arena (peridoto)",
+      "num": 9,
+      "parentSkin": 1
+    },
+    {
+      "chromas": false,
+      "id": "245010",
+      "name": "Ekko tormenta de arena (cuarzo rosa)",
+      "num": 10,
+      "parentSkin": 1
+    },
+    {
+      "chromas": false,
+      "id": "245011",
+      "name": "Ekko SKT T1",
+      "num": 11
+    },
+    {
+      "chromas": true,
+      "id": "245012",
+      "name": "Ekko truco o trato",
+      "num": 12
+    },
+    {
+      "chromas": false,
+      "id": "245013",
+      "name": "Ekko truco o trato (rubí)",
+      "num": 13,
+      "parentSkin": 12
+    },
+    {
+      "chromas": false,
+      "id": "245014",
+      "name": "Ekko truco o trato (cuarzo rosa)",
+      "num": 14,
+      "parentSkin": 12
+    },
+    {
+      "chromas": false,
+      "id": "245015",
+      "name": "Ekko truco o trato (esmeralda)",
+      "num": 15,
+      "parentSkin": 12
+    },
+    {
+      "chromas": false,
+      "id": "245016",
+      "name": "Ekko truco o trato (amatista)",
+      "num": 16,
+      "parentSkin": 12
+    },
+    {
+      "chromas": false,
+      "id": "245017",
+      "name": "Ekko truco o trato (obsidiana)",
+      "num": 17,
+      "parentSkin": 12
+    },
+    {
+      "chromas": false,
+      "id": "245018",
+      "name": "Ekko truco o trato (dorado)",
+      "num": 18,
+      "parentSkin": 12
+    },
+    {
+      "chromas": true,
+      "id": "245019",
+      "name": "Ekko True Damage",
+      "num": 19
+    },
+    {
+      "chromas": false,
+      "id": "245020",
+      "name": "Ekko True Damage (rubí)",
+      "num": 20,
+      "parentSkin": 19
+    },
+    {
+      "chromas": false,
+      "id": "245021",
+      "name": "Ekko True Damage (amatista)",
+      "num": 21,
+      "parentSkin": 19
+    },
+    {
+      "chromas": false,
+      "id": "245022",
+      "name": "Ekko True Damage (freestyle)",
+      "num": 22,
+      "parentSkin": 19
+    },
+    {
+      "chromas": false,
+      "id": "245023",
+      "name": "Ekko True Damage (turquesa)",
+      "num": 23,
+      "parentSkin": 19
+    },
+    {
+      "chromas": false,
+      "id": "245024",
+      "name": "Ekko True Damage (ojo de gato)",
+      "num": 24,
+      "parentSkin": 19
+    },
+    {
+      "chromas": false,
+      "id": "245025",
+      "name": "Ekko True Damage (cuarzo rosa)",
+      "num": 25,
+      "parentSkin": 19
+    },
+    {
+      "chromas": false,
+      "id": "245026",
+      "name": "Ekko True Damage (perla)",
+      "num": 26,
+      "parentSkin": 19
+    },
+    {
+      "chromas": false,
+      "id": "245027",
+      "name": "Ekko True Damage (obsidiana)",
+      "num": 27,
+      "parentSkin": 19
+    },
+    {
+      "chromas": true,
+      "id": "245028",
+      "name": "Ekko pulso de fuego",
+      "num": 28
+    },
+    {
+      "chromas": false,
+      "id": "245029",
+      "name": "Ekko pulso de fuego (rubí)",
+      "num": 29,
+      "parentSkin": 28
+    },
+    {
+      "chromas": false,
+      "id": "245030",
+      "name": "Ekko pulso de fuego (citrino)",
+      "num": 30,
+      "parentSkin": 28
+    },
+    {
+      "chromas": false,
+      "id": "245031",
+      "name": "Ekko pulso de fuego (perla)",
+      "num": 31,
+      "parentSkin": 28
+    },
+    {
+      "chromas": false,
+      "id": "245032",
+      "name": "Ekko pulso de fuego (amatista)",
+      "num": 32,
+      "parentSkin": 28
+    },
+    {
+      "chromas": false,
+      "id": "245033",
+      "name": "Ekko pulso de fuego (crono)",
+      "num": 33,
+      "parentSkin": 28
+    },
+    {
+      "chromas": false,
+      "id": "245034",
+      "name": "Ekko pulso de fuego (esmeralda)",
+      "num": 34,
+      "parentSkin": 28
+    },
+    {
+      "chromas": false,
+      "id": "245035",
+      "name": "Ekko pulso de fuego (cuarzo rosa)",
+      "num": 35,
+      "parentSkin": 28
+    },
+    {
+      "chromas": true,
+      "id": "245036",
+      "name": "Ekko Firelight de Arcane",
+      "num": 36
+    },
+    {
+      "chromas": false,
+      "id": "245037",
+      "name": "Ekko Firelight de Arcane (rubí)",
+      "num": 37,
+      "parentSkin": 36
+    },
+    {
+      "chromas": false,
+      "id": "245038",
+      "name": "Ekko Firelight de Arcane (turquesa)",
+      "num": 38,
+      "parentSkin": 36
+    },
+    {
+      "chromas": false,
+      "id": "245039",
+      "name": "Ekko Firelight de Arcane (cuarzo rosa)",
+      "num": 39,
+      "parentSkin": 36
+    },
+    {
+      "chromas": false,
+      "id": "245040",
+      "name": "Ekko Firelight de Arcane (aguamarina)",
+      "num": 40,
+      "parentSkin": 36
+    },
+    {
+      "chromas": false,
+      "id": "245041",
+      "name": "Ekko Firelight de Arcane (citrino)",
+      "num": 41,
+      "parentSkin": 36
+    },
+    {
+      "chromas": false,
+      "id": "245042",
+      "name": "Ekko Firelight de Arcane (tanzanita)",
+      "num": 42,
+      "parentSkin": 36
+    },
+    {
+      "chromas": false,
+      "id": "245043",
+      "name": "Ekko Firelight de Arcane (obsidiana)",
+      "num": 43,
+      "parentSkin": 36
+    },
+    {
+      "chromas": false,
+      "id": "245044",
+      "name": "Ekko Firelight de Arcane (perla)",
+      "num": 44,
+      "parentSkin": 36
+    },
+    {
+      "chromas": true,
+      "id": "245045",
+      "name": "Ekko guardián de las estrellas",
+      "num": 45
+    },
+    {
+      "chromas": false,
+      "id": "245046",
+      "name": "Ekko guardián de las estrellas de prestigio",
+      "num": 46
+    },
+    {
+      "chromas": false,
+      "id": "245047",
+      "name": "Ekko guardián de las estrellas (rubí)",
+      "num": 47,
+      "parentSkin": 45
+    },
+    {
+      "chromas": false,
+      "id": "245048",
+      "name": "Ekko guardián de las estrellas (zafiro)",
+      "num": 48,
+      "parentSkin": 45
+    },
+    {
+      "chromas": false,
+      "id": "245049",
+      "name": "Ekko guardián de las estrellas (esmeralda)",
+      "num": 49,
+      "parentSkin": 45
+    },
+    {
+      "chromas": false,
+      "id": "245050",
+      "name": "Ekko guardián de las estrellas (ojo de gato)",
+      "num": 50,
+      "parentSkin": 45
+    },
+    {
+      "chromas": false,
+      "id": "245051",
+      "name": "Ekko guardián de las estrellas (turquesa)",
+      "num": 51,
+      "parentSkin": 45
+    },
+    {
+      "chromas": false,
+      "id": "245052",
+      "name": "Ekko guardián de las estrellas (tanzanita)",
+      "num": 52,
+      "parentSkin": 45
+    },
+    {
+      "chromas": false,
+      "id": "245053",
+      "name": "Ekko guardián de las estrellas (perla)",
+      "num": 53,
+      "parentSkin": 45
+    },
+    {
+      "chromas": false,
+      "id": "245054",
+      "name": "Ekko guardián de las estrellas (obsidiana)",
+      "num": 54,
+      "parentSkin": 45
+    },
+    {
+      "chromas": false,
+      "id": "245055",
+      "name": "Ekko guardián de las estrellas (brillante)",
+      "num": 55,
+      "parentSkin": 45
+    },
+    {
+      "chromas": false,
+      "id": "245056",
+      "name": "Ekko True Damage de éxito",
+      "num": 56
+    },
+    {
+      "chromas": true,
+      "id": "245057",
+      "name": "Ekko última esperanza de Arcane",
+      "num": 57
+    },
+    {
+      "chromas": false,
+      "id": "245058",
+      "name": "Ekko última esperanza de Arcane (ejemplar)",
+      "num": 58,
+      "parentSkin": 57
+    }
+  ],
+  "spells": [
+    {
+      "cooldown": [
+        9,
+        8.5,
+        8,
+        7.5,
+        7
+      ],
+      "cooldownBurn": "9/8.5/8/7.5/7",
+      "cost": [
+        40,
+        50,
+        60,
+        70,
+        80
+      ],
+      "costBurn": "40/50/60/70/80",
+      "costType": " {{ abilityresourcename }}",
+      "datavalues": {},
+      "description": "Ekko lanza una granada temporal que, al alcanzar a un campeón enemigo, genera un campo de distorsión cronológica. Las unidades sorprendidas en su interior sufren daño y quedan ralentizadas. Al cabo de unos instantes, la granada regresa a Ekko y daña a todo cuanto se encuentre en su camino.",
+      "effect": [
+        null,
+        [
+          70,
+          85,
+          100,
+          115,
+          130
+        ],
+        [
+          -0.4,
+          -0.45,
+          -0.5,
+          -0.55,
+          -0.6
+        ],
+        [
+          40,
+          65,
+          90,
+          115,
+          140
+        ],
+        [
+          100,
+          100,
+          100,
+          100,
+          100
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          165,
+          165,
+          165,
+          165,
+          165
+        ],
+        [
+          1.75,
+          1.75,
+          1.75,
+          1.75,
+          1.75
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ]
+      ],
+      "effectBurn": [
+        null,
+        "70/85/100/115/130",
+        "-0.4/-0.45/-0.5/-0.55/-0.6",
+        "40/65/90/115/140",
+        "100",
+        "0",
+        "165",
+        "1.75",
+        "0",
+        "0",
+        "0"
+      ],
+      "id": "EkkoQ",
+      "image": {
+        "full": "EkkoQ.png",
+        "group": "spell",
+        "h": 48,
+        "sprite": "spell3.png",
+        "w": 48,
+        "x": 0,
+        "y": 144
+      },
+      "leveltip": {
+        "effect": [
+          "{{ cooldown }} -> {{ cooldownNL }}",
+          "{{ cost }} -> {{ costNL }}",
+          "{{ outgoingdamage }} -> {{ outgoingdamageNL }}",
+          "{{ slowpercent*-100.000000 }}% -> {{ slowpercentnl*-100.000000 }}%",
+          "{{ returndamage }} -> {{ returndamageNL }}"
+        ],
+        "label": [
+          "Enfriamiento",
+          "Coste de @AbilityResourceName@",
+          "Daño de ida",
+          "Ralentización",
+          "Daño de vuelta"
+        ]
+      },
+      "maxammo": "-1",
+      "maxrank": 5,
+      "name": "Engranaje temporal",
+      "range": [
+        1075,
+        1075,
+        1075,
+        1075,
+        1075
+      ],
+      "rangeBurn": "1075",
+      "resource": "{{ cost }} {{ abilityresourcename }}",
+      "tooltip": "Ekko lanza un dispositivo que inflige <magicDamage>{{ initialdamage }} de daño mágico</magicDamage>. Al golpear a un campeón o llegar al final de su alcance, se expande creando una zona que <status>ralentiza</status> a los enemigos un {{ slowpercent*-100 }}%. Cuando se expande, Ekko lo recupera e inflige <magicDamage>{{ recalldamage }} de daño mágico</magicDamage>.{{ spellmodifierdescriptionappend }}",
+      "vars": []
+    },
+    {
+      "cooldown": [
+        22,
+        20,
+        18,
+        16,
+        14
+      ],
+      "cooldownBurn": "22/20/18/16/14",
+      "cost": [
+        30,
+        35,
+        40,
+        45,
+        50
+      ],
+      "costBurn": "30/35/40/45/50",
+      "costType": " {{ abilityresourcename }}",
+      "datavalues": {},
+      "description": "Los ataques básicos de Ekko infligen daño mágico adicional a objetivos con poca vida. Con Convergencia paralela puede romper la línea temporal y, al cabo de unos segundos, crea una anomalía que ralentiza a los enemigos situados dentro. Si el propio Ekko entra en ella, recibe un escudo y aturde a los enemigos al dejarlos congelados en el tiempo.",
+      "effect": [
+        null,
+        [
+          375,
+          375,
+          375,
+          375,
+          375
+        ],
+        [
+          2.25,
+          2.25,
+          2.25,
+          2.25,
+          2.25
+        ],
+        [
+          3,
+          3,
+          3,
+          3,
+          3
+        ],
+        [
+          100,
+          120,
+          140,
+          160,
+          180
+        ],
+        [
+          150,
+          150,
+          150,
+          150,
+          150
+        ],
+        [
+          15,
+          15,
+          15,
+          15,
+          15
+        ],
+        [
+          1.5,
+          1.5,
+          1.5,
+          1.5,
+          1.5
+        ],
+        [
+          3,
+          3,
+          3,
+          3,
+          3
+        ],
+        [
+          2,
+          2,
+          2,
+          2,
+          2
+        ],
+        [
+          40,
+          40,
+          40,
+          40,
+          40
+        ]
+      ],
+      "effectBurn": [
+        null,
+        "375",
+        "2.25",
+        "3",
+        "100/120/140/160/180",
+        "150",
+        "15",
+        "1.5",
+        "3",
+        "2",
+        "40"
+      ],
+      "id": "EkkoW",
+      "image": {
+        "full": "EkkoW.png",
+        "group": "spell",
+        "h": 48,
+        "sprite": "spell3.png",
+        "w": 48,
+        "x": 48,
+        "y": 144
+      },
+      "leveltip": {
+        "effect": [
+          "{{ shieldbase }} -> {{ shieldbaseNL }}",
+          "{{ cooldown }} -> {{ cooldownNL }}",
+          "{{ cost }} -> {{ costNL }}"
+        ],
+        "label": [
+          "Cantidad de escudo",
+          "Enfriamiento",
+          "Coste de @AbilityResourceName@"
+        ]
+      },
+      "maxammo": "-1",
+      "maxrank": 5,
+      "name": "Convergencia paralela",
+      "range": [
+        1600,
+        1600,
+        1600,
+        1600,
+        1600
+      ],
+      "rangeBurn": "1600",
+      "resource": "{{ cost }} {{ abilityresourcename }}",
+      "tooltip": "<spellPassive>Pasiva:</spellPassive> Los ataques de Ekko contra enemigos con menos de un {{ belowhealththreshold*100 }}% de vida infligen un <magicDamage>{{ missinghealthpercent }} de daño mágico según la vida que les falte</magicDamage>.<br /><br /><spellActive>Activa:</spellActive> Ekko lanza una cronosfera que dura {{ slowzoneduration }} s tras un lapso de tiempo y que <status>ralentiza</status> a los enemigos en el interior un {{ slowpercent }}%. Si Ekko entra en la esfera, la detona, <status>aturde</status> durante {{ stunduration }} s y obtiene un escudo de <shield>{{ totalshield }}</shield>.{{ spellmodifierdescriptionappend }}",
+      "vars": []
+    },
+    {
+      "cooldown": [
+        9,
+        8.5,
+        8,
+        7.5,
+        7
+      ],
+      "cooldownBurn": "9/8.5/8/7.5/7",
+      "cost": [
+        40,
+        45,
+        50,
+        55,
+        60
+      ],
+      "costBurn": "40/45/50/55/60",
+      "costType": " {{ abilityresourcename }}",
+      "datavalues": {},
+      "description": "Ekko rueda por el suelo en un movimiento evasivo mientras activa su Dispositivo Z. Su siguiente ataque inflige daño adicional y distorsiona la realidad para teleportarlo hasta su objetivo.",
+      "effect": [
+        null,
+        [
+          50,
+          75,
+          100,
+          125,
+          150
+        ],
+        [
+          350,
+          350,
+          350,
+          350,
+          350
+        ],
+        [
+          3,
+          3,
+          3,
+          3,
+          3
+        ],
+        [
+          300,
+          300,
+          300,
+          300,
+          300
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ]
+      ],
+      "effectBurn": [
+        null,
+        "50/75/100/125/150",
+        "350",
+        "3",
+        "300",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0"
+      ],
+      "id": "EkkoE",
+      "image": {
+        "full": "EkkoE.png",
+        "group": "spell",
+        "h": 48,
+        "sprite": "spell3.png",
+        "w": 48,
+        "x": 96,
+        "y": 144
+      },
+      "leveltip": {
+        "effect": [
+          "{{ basedamage }} -> {{ basedamageNL }}",
+          "{{ cooldown }} -> {{ cooldownNL }}",
+          "{{ cost }} -> {{ costNL }}"
+        ],
+        "label": [
+          "Daño",
+          "Enfriamiento",
+          "Coste de @AbilityResourceName@"
+        ]
+      },
+      "maxammo": "-1",
+      "maxrank": 5,
+      "name": "Salto de fase",
+      "range": [
+        325,
+        325,
+        325,
+        325,
+        325
+      ],
+      "rangeBurn": "325",
+      "resource": "{{ cost }} {{ abilityresourcename }}",
+      "tooltip": "Ekko se desliza y potencia su siguiente ataque, que tiene alcance adicional, se teleporta hasta su objetivo e inflige <magicDamage>{{ totaldamage }} de daño mágico adicional</magicDamage>.{{ spellmodifierdescriptionappend }}",
+      "vars": []
+    },
+    {
+      "cooldown": [
+        110,
+        80,
+        50
+      ],
+      "cooldownBurn": "110/80/50",
+      "cost": [
+        100,
+        100,
+        100
+      ],
+      "costBurn": "100",
+      "costType": " {{ abilityresourcename }}",
+      "datavalues": {},
+      "description": "Ekko fragmenta su línea temporal y se vuelve imposible de seleccionar como objetivo mientras regresa a un momento pasado más favorable. Reaparece en el mismo sitio donde se encontraba unos segundos antes y recupera una parte de la vida que hubiera perdido en ese tiempo. Los enemigos situados cerca de su zona de llegada reciben muchísimo daño.",
+      "effect": [
+        null,
+        [
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0
+        ]
+      ],
+      "effectBurn": [
+        null,
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0"
+      ],
+      "id": "EkkoR",
+      "image": {
+        "full": "EkkoR.png",
+        "group": "spell",
+        "h": 48,
+        "sprite": "spell3.png",
+        "w": 48,
+        "x": 144,
+        "y": 144
+      },
+      "leveltip": {
+        "effect": [
+          "{{ damage }} -> {{ damageNL }}",
+          "{{ flatheal }} -> {{ flathealNL }}",
+          "{{ cooldown }} -> {{ cooldownNL }}"
+        ],
+        "label": [
+          "Daño",
+          "Curación",
+          "Enfriamiento"
+        ]
+      },
+      "maxammo": "-1",
+      "maxrank": 3,
+      "name": "Fisura temporal",
+      "range": [
+        850,
+        850,
+        850
+      ],
+      "rangeBurn": "850",
+      "resource": "{{ cost }} {{ abilityresourcename }}",
+      "tooltip": "Ekko hace retroceder el tiempo y entra en estasis mientras se teleporta a donde estaba hace 4 segundos, lo que inflige <magicDamage>{{ totaldamage }} de daño mágico</magicDamage> a los enemigos cercanos. Además, Ekko recupera <healing>{{ totalbaseheal }} de vida</healing> que aumenta un {{ percenthealampperpercentmissinghealth }}% por cada un 1% de vida que haya perdido en los últimos 4 s.{{ spellmodifierdescriptionappend }}",
+      "vars": []
+    }
+  ],
+  "stats": {
+    "armor": 32,
+    "armorperlevel": 4.2,
+    "attackdamage": 58,
+    "attackdamageperlevel": 0,
+    "attackrange": 125,
+    "attackspeed": 0.688,
+    "attackspeedperlevel": 3.3,
+    "crit": 0,
+    "critperlevel": 0,
+    "hp": 655,
+    "hpperlevel": 99,
+    "hpregen": 9,
+    "hpregenperlevel": 0.9,
+    "movespeed": 340,
+    "mp": 280,
+    "mpperlevel": 70,
+    "mpregen": 7,
+    "mpregenperlevel": 0.8,
+    "spellblock": 32,
+    "spellblockperlevel": 2.05
+  },
+  "tags": [
+    "Assassin",
+    "Mage"
+  ],
+  "title": "El Chico que Quebró el Tiempo"
+}

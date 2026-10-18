@@ -1,0 +1,1041 @@
+{
+  "allytips": [
+    "Presta atención a tus aliados y estate siempre preparado para teleportarte a su lado.",
+    "Calcula bien tu energía para obtener ventaja a largo plazo sobre los enemigos que usan maná."
+  ],
+  "blurb": "Shen, el Ojo del Crepúsculo, es el cabecilla de los sigilosos guerreros de Jonia conocidos como Kinkou. Su objetivo es mantenerse libre de las ataduras de cualquier emoción, prejuicio o ego, y avanza por el camino invisible del juicio desapasionado...",
+  "enemytips": [
+    "Evita la provocación de Shen y castígale si falla.",
+    "Cuando Shen llegue a nivel 6, ten cuidado con el alcance de su definitiva. Es capaz de cambiar las tornas a cualquier combate."
+  ],
+  "id": "Shen",
+  "image": {
+    "full": "Shen.png",
+    "group": "champion",
+    "h": 48,
+    "sprite": "champion4.png",
+    "w": 48,
+    "x": 48,
+    "y": 0
+  },
+  "info": {
+    "attack": 3,
+    "defense": 9,
+    "difficulty": 4,
+    "magic": 3
+  },
+  "key": "98",
+  "lore": "Shen, el Ojo del Crepúsculo, es el cabecilla de los sigilosos guerreros de Jonia conocidos como Kinkou. Su objetivo es mantenerse libre de las ataduras de cualquier emoción, prejuicio o ego, y avanza por el camino invisible del juicio desapasionado, entre el reino espiritual y el mundo físico. La tarea de Shen reside en hacer cumplir el equilibrio entre ambos mundos, y hará uso de sus espadas de acero y energía arcana ante todo aquel que ose amenazar dicha armonía.",
+  "name": "Shen",
+  "partype": "Energía",
+  "passive": {
+    "description": "Shen obtiene un escudo tras lanzar un hechizo. Si afecta a otros campeones, reduce el enfriamiento del efecto.",
+    "image": {
+      "full": "Shen_Passive.png",
+      "group": "passive",
+      "h": 48,
+      "sprite": "passive4.png",
+      "w": 48,
+      "x": 48,
+      "y": 0
+    },
+    "name": "Barrera ki"
+  },
+  "recommended": [],
+  "skins": [
+    {
+      "chromas": false,
+      "id": "98000",
+      "name": "default",
+      "num": 0
+    },
+    {
+      "chromas": false,
+      "id": "98001",
+      "name": "Shen helado",
+      "num": 1
+    },
+    {
+      "chromas": false,
+      "id": "98002",
+      "name": "Shen chaqueta amarilla",
+      "num": 2
+    },
+    {
+      "chromas": true,
+      "id": "98003",
+      "name": "Shen cirujano",
+      "num": 3
+    },
+    {
+      "chromas": false,
+      "id": "98004",
+      "name": "Shen luna sangrienta",
+      "num": 4
+    },
+    {
+      "chromas": true,
+      "id": "98005",
+      "name": "Shen señor de la guerra",
+      "num": 5
+    },
+    {
+      "chromas": false,
+      "id": "98006",
+      "name": "Shen TPA",
+      "num": 6
+    },
+    {
+      "chromas": false,
+      "id": "98007",
+      "name": "Shen señor de la guerra (ojo de gato)",
+      "num": 7,
+      "parentSkin": 5
+    },
+    {
+      "chromas": false,
+      "id": "98008",
+      "name": "Shen señor de la guerra (perla)",
+      "num": 8,
+      "parentSkin": 5
+    },
+    {
+      "chromas": false,
+      "id": "98009",
+      "name": "Shen señor de la guerra (tanzanita)",
+      "num": 9,
+      "parentSkin": 5
+    },
+    {
+      "chromas": false,
+      "id": "98010",
+      "name": "Shen señor de la guerra (obsidiana)",
+      "num": 10,
+      "parentSkin": 5
+    },
+    {
+      "chromas": false,
+      "id": "98011",
+      "name": "Shen señor de la guerra (rubí)",
+      "num": 11,
+      "parentSkin": 5
+    },
+    {
+      "chromas": false,
+      "id": "98012",
+      "name": "Shen señor de la guerra (zafiro)",
+      "num": 12,
+      "parentSkin": 5
+    },
+    {
+      "chromas": false,
+      "id": "98013",
+      "name": "Shen señor de la guerra (esmeralda)",
+      "num": 13,
+      "parentSkin": 5
+    },
+    {
+      "chromas": false,
+      "id": "98014",
+      "name": "Shen señor de la guerra (amatista)",
+      "num": 14,
+      "parentSkin": 5
+    },
+    {
+      "chromas": true,
+      "id": "98015",
+      "name": "Shen pulso de fuego",
+      "num": 15
+    },
+    {
+      "chromas": true,
+      "id": "98016",
+      "name": "Shen infernal",
+      "num": 16
+    },
+    {
+      "chromas": false,
+      "id": "98017",
+      "name": "Shen infernal (rubí)",
+      "num": 17,
+      "parentSkin": 16
+    },
+    {
+      "chromas": false,
+      "id": "98018",
+      "name": "Shen infernal (ojo de gato)",
+      "num": 18,
+      "parentSkin": 16
+    },
+    {
+      "chromas": false,
+      "id": "98019",
+      "name": "Shen infernal (cuarzo rosa)",
+      "num": 19,
+      "parentSkin": 16
+    },
+    {
+      "chromas": false,
+      "id": "98020",
+      "name": "Shen infernal (perla)",
+      "num": 20,
+      "parentSkin": 16
+    },
+    {
+      "chromas": false,
+      "id": "98021",
+      "name": "Shen infernal (peridoto)",
+      "num": 21,
+      "parentSkin": 16
+    },
+    {
+      "chromas": true,
+      "id": "98022",
+      "name": "Shen PsyOps",
+      "num": 22
+    },
+    {
+      "chromas": false,
+      "id": "98023",
+      "name": "Shen cirujano (obsidiana)",
+      "num": 23,
+      "parentSkin": 3
+    },
+    {
+      "chromas": false,
+      "id": "98024",
+      "name": "Shen cirujano (esmeralda)",
+      "num": 24,
+      "parentSkin": 3
+    },
+    {
+      "chromas": false,
+      "id": "98025",
+      "name": "Shen cirujano (zafiro)",
+      "num": 25,
+      "parentSkin": 3
+    },
+    {
+      "chromas": false,
+      "id": "98026",
+      "name": "Shen cirujano (cuarzo rosa)",
+      "num": 26,
+      "parentSkin": 3
+    },
+    {
+      "chromas": false,
+      "id": "98027",
+      "name": "Shen cirujano (rubí)",
+      "num": 27,
+      "parentSkin": 3
+    },
+    {
+      "chromas": false,
+      "id": "98028",
+      "name": "Shen cirujano (perla)",
+      "num": 28,
+      "parentSkin": 3
+    },
+    {
+      "chromas": false,
+      "id": "98029",
+      "name": "Shen cirujano (arenisca)",
+      "num": 29,
+      "parentSkin": 3
+    },
+    {
+      "chromas": false,
+      "id": "98030",
+      "name": "Shen cirujano (arcoíris)",
+      "num": 30,
+      "parentSkin": 3
+    },
+    {
+      "chromas": false,
+      "id": "98031",
+      "name": "Shen pulso de fuego (crono)",
+      "num": 31,
+      "parentSkin": 15
+    },
+    {
+      "chromas": false,
+      "id": "98032",
+      "name": "Shen PsyOps (rubí)",
+      "num": 32,
+      "parentSkin": 22
+    },
+    {
+      "chromas": false,
+      "id": "98033",
+      "name": "Shen PsyOps (obsidiana)",
+      "num": 33,
+      "parentSkin": 22
+    },
+    {
+      "chromas": false,
+      "id": "98034",
+      "name": "Shen PsyOps (arenisca)",
+      "num": 34,
+      "parentSkin": 22
+    },
+    {
+      "chromas": false,
+      "id": "98035",
+      "name": "Shen PsyOps (esmeralda)",
+      "num": 35,
+      "parentSkin": 22
+    },
+    {
+      "chromas": false,
+      "id": "98036",
+      "name": "Shen PsyOps (tanzanita)",
+      "num": 36,
+      "parentSkin": 22
+    },
+    {
+      "chromas": false,
+      "id": "98037",
+      "name": "Shen PsyOps (turquesa)",
+      "num": 37,
+      "parentSkin": 22
+    },
+    {
+      "chromas": false,
+      "id": "98038",
+      "name": "Shen PsyOps (zafiro)",
+      "num": 38,
+      "parentSkin": 22
+    },
+    {
+      "chromas": false,
+      "id": "98039",
+      "name": "Shen PsyOps (caza)",
+      "num": 39,
+      "parentSkin": 22
+    },
+    {
+      "chromas": true,
+      "id": "98040",
+      "name": "Shen hoja relámpago",
+      "num": 40
+    },
+    {
+      "chromas": false,
+      "id": "98041",
+      "name": "Shen hoja relámpago (rubí)",
+      "num": 41,
+      "parentSkin": 40
+    },
+    {
+      "chromas": false,
+      "id": "98042",
+      "name": "Shen hoja relámpago (ojo de gato)",
+      "num": 42,
+      "parentSkin": 40
+    },
+    {
+      "chromas": false,
+      "id": "98043",
+      "name": "Shen hoja relámpago (esmeralda)",
+      "num": 43,
+      "parentSkin": 40
+    },
+    {
+      "chromas": false,
+      "id": "98044",
+      "name": "Shen hoja relámpago (aguamarina)",
+      "num": 44,
+      "parentSkin": 40
+    },
+    {
+      "chromas": false,
+      "id": "98045",
+      "name": "Shen hoja relámpago (amatista)",
+      "num": 45,
+      "parentSkin": 40
+    },
+    {
+      "chromas": false,
+      "id": "98046",
+      "name": "Shen hoja relámpago (cuarzo rosa)",
+      "num": 46,
+      "parentSkin": 40
+    },
+    {
+      "chromas": false,
+      "id": "98047",
+      "name": "Shen hoja relámpago (obsidiana)",
+      "num": 47,
+      "parentSkin": 40
+    },
+    {
+      "chromas": false,
+      "id": "98048",
+      "name": "Shen hoja relámpago (turquesa)",
+      "num": 48,
+      "parentSkin": 40
+    },
+    {
+      "chromas": true,
+      "id": "98049",
+      "name": "Shen guardián de la ceniza",
+      "num": 49
+    },
+    {
+      "chromas": false,
+      "id": "98050",
+      "name": "Shen guardián de la ceniza (ascua ardiente)",
+      "num": 50,
+      "parentSkin": 49
+    },
+    {
+      "chromas": false,
+      "id": "98051",
+      "name": "Shen tres honores",
+      "num": 51
+    },
+    {
+      "chromas": false,
+      "id": "98053",
+      "name": "Shen PsyOps (ejemplar)",
+      "num": 53,
+      "parentSkin": 22
+    },
+    {
+      "chromas": false,
+      "id": "98054",
+      "name": "Shen alianza quebrada",
+      "num": 54
+    },
+    {
+      "chromas": true,
+      "id": "98055",
+      "name": "Shen alianza quebrada (rubí)",
+      "num": 55,
+      "parentSkin": 54
+    },
+    {
+      "chromas": false,
+      "id": "98056",
+      "name": "Shen alianza quebrada (ojo de gato)",
+      "num": 56,
+      "parentSkin": 54
+    },
+    {
+      "chromas": false,
+      "id": "98057",
+      "name": "Shen alianza quebrada (zafiro)",
+      "num": 57,
+      "parentSkin": 54
+    },
+    {
+      "chromas": false,
+      "id": "98058",
+      "name": "Shen alianza quebrada (turquesa)",
+      "num": 58,
+      "parentSkin": 54
+    },
+    {
+      "chromas": false,
+      "id": "98059",
+      "name": "Shen alianza quebrada (cuarzo rosa)",
+      "num": 59,
+      "parentSkin": 54
+    },
+    {
+      "chromas": false,
+      "id": "98060",
+      "name": "Shen alianza quebrada (tanzanita)",
+      "num": 60,
+      "parentSkin": 54
+    },
+    {
+      "chromas": false,
+      "id": "98061",
+      "name": "Shen alianza quebrada (perla)",
+      "num": 61,
+      "parentSkin": 54
+    },
+    {
+      "chromas": false,
+      "id": "98062",
+      "name": "Shen alianza quebrada (obsidiana)",
+      "num": 62,
+      "parentSkin": 54
+    }
+  ],
+  "spells": [
+    {
+      "cooldown": [
+        8,
+        7.25,
+        6.5,
+        5.75,
+        5
+      ],
+      "cooldownBurn": "8/7.25/6.5/5.75/5",
+      "cost": [
+        140,
+        130,
+        120,
+        110,
+        100
+      ],
+      "costBurn": "140/130/120/110/100",
+      "costType": " {{ abilityresourcename }}",
+      "datavalues": {},
+      "description": "Shen recupera su espada espiritual para atacar con ella e infligir un daño basado en la vida máxima del objetivo. Los ataques se verán muy potenciados si la espada impacta en un campeón enemigo. Además, todos los enemigos impactados se verán ralentizados al intentar huir de Shen.",
+      "effect": [
+        null,
+        [
+          1,
+          1,
+          1,
+          1,
+          1
+        ],
+        [
+          2,
+          2.5,
+          3,
+          3.5,
+          4
+        ],
+        [
+          3,
+          3,
+          3,
+          3,
+          3
+        ],
+        [
+          25,
+          30,
+          35,
+          40,
+          45
+        ],
+        [
+          2,
+          2,
+          2,
+          2,
+          2
+        ],
+        [
+          5,
+          5.5,
+          6,
+          6.5,
+          7
+        ],
+        [
+          100,
+          125,
+          150,
+          175,
+          200
+        ],
+        [
+          8,
+          8,
+          8,
+          8,
+          8
+        ],
+        [
+          50,
+          50,
+          50,
+          50,
+          50
+        ],
+        [
+          75,
+          75,
+          75,
+          75,
+          75
+        ]
+      ],
+      "effectBurn": [
+        null,
+        "1",
+        "2/2.5/3/3.5/4",
+        "3",
+        "25/30/35/40/45",
+        "2",
+        "5/5.5/6/6.5/7",
+        "100/125/150/175/200",
+        "8",
+        "50",
+        "75"
+      ],
+      "id": "ShenQ",
+      "image": {
+        "full": "ShenQ.png",
+        "group": "spell",
+        "h": 48,
+        "sprite": "spell12.png",
+        "w": 48,
+        "x": 384,
+        "y": 144
+      },
+      "leveltip": {
+        "effect": [
+          "{{ basepercentdamage }}% -> {{ basepercentdamageNL }}%",
+          "{{ enhancedpercentdamage }}% -> {{ enhancedpercentdamageNL }}%",
+          "{{ slowpercent }}% -> {{ slowpercentNL }}%",
+          "{{ cost }} -> {{ costNL }}",
+          "{{ miniondamagecap }} -> {{ miniondamagecapNL }}",
+          "{{ cooldown }} -> {{ cooldownNL }}"
+        ],
+        "label": [
+          "Porcentaje de daño básico",
+          "Porcentaje de daño mejorado",
+          "Ralentización",
+          "Coste de @AbilityResourceName@",
+          "Límite del daño a monstruos",
+          "Enfriamiento"
+        ]
+      },
+      "maxammo": "-1",
+      "maxrank": 5,
+      "name": "Asalto del crepúsculo",
+      "range": [
+        400,
+        400,
+        400,
+        400,
+        400
+      ],
+      "rangeBurn": "400",
+      "resource": "{{ cost }} {{ abilityresourcename }}",
+      "tooltip": "Shen recupera su <keywordMajor>espada espiritual</keywordMajor>. Los enemigos con los que impacte se verán <status>ralentizados</status> un {{ slowpercent }}% durante {{ slowduration }} s al intentar alejarse de Shen.<br /><br />Además, los siguientes {{ numenhancedattacks }} ataques de Shen infligirán <magicDamage>{{ baseflatdamage }}</magicDamage> + <magicDamage>{{ basepercenthealth }} de daño mágico en función de la vida máxima</magicDamage> adicional. Si Shen ha golpeado a un campeón enemigo con la <keywordMajor>espada espiritual</keywordMajor>, el daño aumenta a <magicDamage>{{ baseflatdamage }}</magicDamage> + <magicDamage>{{ emppercenthealth }} de daño mágico en función de la vida máxima</magicDamage> y obtiene un <attackSpeed>{{ steroidas }}% de velocidad de ataque</attackSpeed> para esos ataques.{{ spellmodifierdescriptionappend }}",
+      "vars": []
+    },
+    {
+      "cooldown": [
+        16,
+        14.5,
+        13,
+        11.5,
+        10
+      ],
+      "cooldownBurn": "16/14.5/13/11.5/10",
+      "cost": [
+        40,
+        40,
+        40,
+        40,
+        40
+      ],
+      "costBurn": "40",
+      "costType": " {{ abilityresourcename }}",
+      "datavalues": {},
+      "description": "Se bloquean los ataques que pudiesen recibir Shen o sus aliados cerca de la espada espiritual.",
+      "effect": [
+        null,
+        [
+          1.75,
+          1.75,
+          1.75,
+          1.75,
+          1.75
+        ],
+        [
+          2,
+          2,
+          2,
+          2,
+          2
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ]
+      ],
+      "effectBurn": [
+        null,
+        "1.75",
+        "2",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0"
+      ],
+      "id": "ShenW",
+      "image": {
+        "full": "ShenW.png",
+        "group": "spell",
+        "h": 48,
+        "sprite": "spell12.png",
+        "w": 48,
+        "x": 432,
+        "y": 144
+      },
+      "leveltip": {
+        "effect": [
+          "{{ cooldown }} -> {{ cooldownNL }}"
+        ],
+        "label": [
+          "Enfriamiento"
+        ]
+      },
+      "maxammo": "-1",
+      "maxrank": 5,
+      "name": "Refugio espiritual",
+      "range": [
+        400,
+        400,
+        400,
+        400,
+        400
+      ],
+      "rangeBurn": "400",
+      "resource": "{{ cost }} {{ abilityresourcename }}",
+      "tooltip": "Shen crea una zona defensiva donde está su <keywordMajor>espada espiritual</keywordMajor> durante {{ zoneduration }} s. Los ataques contra campeones aliados en la zona están bloqueados.<br /><br />Si no hay campeones que proteger en la zona cuando empieza, esperará hasta {{ zonedelay }} s.{{ spellmodifierdescriptionappend }}",
+      "vars": []
+    },
+    {
+      "cooldown": [
+        18,
+        16,
+        14,
+        12,
+        10
+      ],
+      "cooldownBurn": "18/16/14/12/10",
+      "cost": [
+        150,
+        150,
+        150,
+        150,
+        150
+      ],
+      "costBurn": "150",
+      "costType": " {{ abilityresourcename }}",
+      "datavalues": {},
+      "description": "Shen se abalanza en una dirección y provoca a los enemigos que se encuentre a su paso.",
+      "effect": [
+        null,
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ]
+      ],
+      "effectBurn": [
+        null,
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0"
+      ],
+      "id": "ShenE",
+      "image": {
+        "full": "ShenE.png",
+        "group": "spell",
+        "h": 48,
+        "sprite": "spell13.png",
+        "w": 48,
+        "x": 0,
+        "y": 0
+      },
+      "leveltip": {
+        "effect": [
+          "{{ basedamage }} -> {{ basedamageNL }}",
+          "{{ cooldown }} -> {{ cooldownNL }}"
+        ],
+        "label": [
+          "Daño",
+          "Enfriamiento"
+        ]
+      },
+      "maxammo": "-1",
+      "maxrank": 5,
+      "name": "Movimiento de sombra",
+      "range": [
+        600,
+        600,
+        600,
+        600,
+        600
+      ],
+      "rangeBurn": "600",
+      "resource": "{{ cost }} {{ abilityresourcename }}",
+      "tooltip": "<spellPassive>Pasiva:</spellPassive> Infligir daño con <spellName>Asalto del crepúsculo</spellName> o con esta habilidad recupera <keywordMajor>{{ energyrefund }} de energía</keywordMajor>.<br /><br /><spellActive>Activa:</spellActive> Shen se desliza, <status>provoca</status> a los campeones y monstruos de la jungla durante {{ ccduration }} s e inflige <physicalDamage>{{ tauntdamage }} de daño físico</physicalDamage>.{{ spellmodifierdescriptionappend }}",
+      "vars": []
+    },
+    {
+      "cooldown": [
+        200,
+        180,
+        160
+      ],
+      "cooldownBurn": "200/180/160",
+      "cost": [
+        0,
+        0,
+        0
+      ],
+      "costBurn": "0",
+      "costType": "Sin coste",
+      "datavalues": {},
+      "description": "Shen protege del daño a un campeón aliado y poco después se teleporta hasta su ubicación.",
+      "effect": [
+        null,
+        [
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0
+        ]
+      ],
+      "effectBurn": [
+        null,
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0"
+      ],
+      "id": "ShenR",
+      "image": {
+        "full": "ShenR.png",
+        "group": "spell",
+        "h": 48,
+        "sprite": "spell13.png",
+        "w": 48,
+        "x": 48,
+        "y": 0
+      },
+      "leveltip": {
+        "effect": [
+          "{{ baseshieldamount }} -> {{ baseshieldamountNL }}",
+          "{{ baseshieldamount*1.600000 }} -> {{ baseshieldamountnl*1.600000 }}",
+          "{{ cooldown }} -> {{ cooldownNL }}"
+        ],
+        "label": [
+          "Vida mínima del escudo",
+          "Vida máxima del escudo",
+          "Enfriamiento"
+        ]
+      },
+      "maxammo": "-1",
+      "maxrank": 3,
+      "name": "Mantenerse unidos",
+      "range": [
+        35000,
+        35000,
+        35000
+      ],
+      "rangeBurn": "35000",
+      "resource": "Sin coste",
+      "tooltip": "Shen otorga a un campeón aliado en cualquier parte del mapa un escudo entre <shield>{{ shield }}</shield> y <shield>{{ maxshield }}</shield> según la vida que le falte durante {{ shieldduration }} s (el escudo máximo es de un 60 % de la vida que le falte). Después de canalizar durante {{ channelduration }} s, Shen se teleporta a la ubicación de su aliado con su <keywordMajor>espada espiritual</keywordMajor>.{{ spellmodifierdescriptionappend }}",
+      "vars": []
+    }
+  ],
+  "stats": {
+    "armor": 34,
+    "armorperlevel": 4.2,
+    "attackdamage": 64,
+    "attackdamageperlevel": 0,
+    "attackrange": 125,
+    "attackspeed": 0.751,
+    "attackspeedperlevel": 3,
+    "crit": 0,
+    "critperlevel": 0,
+    "hp": 610,
+    "hpperlevel": 99,
+    "hpregen": 8.5,
+    "hpregenperlevel": 0.75,
+    "movespeed": 340,
+    "mp": 400,
+    "mpperlevel": 0,
+    "mpregen": 50,
+    "mpregenperlevel": 0,
+    "spellblock": 32,
+    "spellblockperlevel": 2.05
+  },
+  "tags": [
+    "Tank"
+  ],
+  "title": "El Ojo del Crepúsculo"
+}

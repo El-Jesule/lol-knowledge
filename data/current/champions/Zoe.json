@@ -1,0 +1,926 @@
+{
+  "allytips": [
+    "Pádel estelar inflige más daño cuanto más distancia haya recorrido. Lanzadlo detrás de vosotros antes de redirigirlo para infligir más daño.",
+    "Romped el efecto de dormido con vuestra habilidad de más daño, ya que los enemigos dormidos reciben el doble de daño.",
+    "Burbuja somnífera recorre más distancia por encima de los muros. Lanzadla desde un punto estratégico para conseguir un asesinato desde la distancia."
+  ],
+  "blurb": "Como personificación de la travesura, de la imaginación y del cambio, Zoe es la mensajera cósmica de Targon y anuncia acontecimientos importantes que remodelan mundos. Su mera presencia distorsiona las matemáticas arcanas que gobiernan las realidades y...",
+  "enemytips": [
+    "Pádel estelar de Zoe inflige más daño cuanto más distancia haya recorrido.",
+    "Zoe tiene que volver a su punto inicial tras lanzar Salto dimensional, lo que la hace vulnerable a un contraataque.",
+    "Burbuja somnífera recorre más distancia por encima de los muros. Evitad que Zoe entre en la niebla de guerra para impedir que prepare el hechizo."
+  ],
+  "id": "Zoe",
+  "image": {
+    "full": "Zoe.png",
+    "group": "champion",
+    "h": 48,
+    "sprite": "champion5.png",
+    "w": 48,
+    "x": 48,
+    "y": 96
+  },
+  "info": {
+    "attack": 1,
+    "defense": 7,
+    "difficulty": 5,
+    "magic": 8
+  },
+  "key": "142",
+  "lore": "Como personificación de la travesura, de la imaginación y del cambio, Zoe es la mensajera cósmica de Targon y anuncia acontecimientos importantes que remodelan mundos. Su mera presencia distorsiona las matemáticas arcanas que gobiernan las realidades y a veces provoca cataclismos sin intención ni malicia. Puede que eso explique el aire de indiferencia con el que Zoe aborda sus responsabilidades, lo que le da el tiempo suficiente para dedicarse a jugar, a gastar bromas a los mortales o, simplemente, a divertirse. Un encuentro con Zoe puede ser dichoso y alentador, pero siempre implica más de lo que parece y suele resultar extremadamente peligroso.",
+  "name": "Zoe",
+  "partype": "Maná",
+  "passive": {
+    "description": "Tras lanzar un hechizo, el siguiente ataque básico de Zoe inflige daño mágico adicional.",
+    "image": {
+      "full": "Zoe_P.png",
+      "group": "passive",
+      "h": 48,
+      "sprite": "passive5.png",
+      "w": 48,
+      "x": 48,
+      "y": 96
+    },
+    "name": "¡Más chispas!"
+  },
+  "recommended": [],
+  "skins": [
+    {
+      "chromas": false,
+      "id": "142000",
+      "name": "default",
+      "num": 0
+    },
+    {
+      "chromas": false,
+      "id": "142001",
+      "name": "Zoe hacker",
+      "num": 1
+    },
+    {
+      "chromas": true,
+      "id": "142002",
+      "name": "Zoe fiesta en la piscina",
+      "num": 2
+    },
+    {
+      "chromas": false,
+      "id": "142003",
+      "name": "Zoe fiesta en la piscina (rubí)",
+      "num": 3,
+      "parentSkin": 2
+    },
+    {
+      "chromas": false,
+      "id": "142004",
+      "name": "Zoe fiesta en la piscina (esmeralda)",
+      "num": 4,
+      "parentSkin": 2
+    },
+    {
+      "chromas": false,
+      "id": "142005",
+      "name": "Zoe fiesta en la piscina (zafiro)",
+      "num": 5,
+      "parentSkin": 2
+    },
+    {
+      "chromas": false,
+      "id": "142006",
+      "name": "Zoe fiesta en la piscina (amatista)",
+      "num": 6,
+      "parentSkin": 2
+    },
+    {
+      "chromas": false,
+      "id": "142007",
+      "name": "Zoe fiesta en la piscina (arcoíris)",
+      "num": 7,
+      "parentSkin": 2
+    },
+    {
+      "chromas": false,
+      "id": "142008",
+      "name": "Zoe fiesta en la piscina (cuarzo rosa)",
+      "num": 8,
+      "parentSkin": 2
+    },
+    {
+      "chromas": true,
+      "id": "142009",
+      "name": "Zoe guardiana de las estrellas",
+      "num": 9
+    },
+    {
+      "chromas": false,
+      "id": "142010",
+      "name": "Zoe guardiana de las estrellas (jaspe)",
+      "num": 10,
+      "parentSkin": 9
+    },
+    {
+      "chromas": false,
+      "id": "142011",
+      "name": "Zoe guardiana de las estrellas (amatista)",
+      "num": 11,
+      "parentSkin": 9
+    },
+    {
+      "chromas": false,
+      "id": "142012",
+      "name": "Zoe guardiana de las estrellas (perla)",
+      "num": 12,
+      "parentSkin": 9
+    },
+    {
+      "chromas": false,
+      "id": "142013",
+      "name": "Zoe guardiana de las estrellas (citrino)",
+      "num": 13,
+      "parentSkin": 9
+    },
+    {
+      "chromas": false,
+      "id": "142014",
+      "name": "Zoe guardiana de las estrellas (aguamarina)",
+      "num": 14,
+      "parentSkin": 9
+    },
+    {
+      "chromas": false,
+      "id": "142015",
+      "name": "Zoe guardiana de las estrellas (rubí)",
+      "num": 15,
+      "parentSkin": 9
+    },
+    {
+      "chromas": false,
+      "id": "142016",
+      "name": "Zoe guardiana de las estrellas (cuarzo rosa)",
+      "num": 16,
+      "parentSkin": 9
+    },
+    {
+      "chromas": false,
+      "id": "142017",
+      "name": "Zoe guardiana de las estrellas (esmeralda)",
+      "num": 17,
+      "parentSkin": 9
+    },
+    {
+      "chromas": false,
+      "id": "142018",
+      "name": "Zoe arcana",
+      "num": 18
+    },
+    {
+      "chromas": false,
+      "id": "142019",
+      "name": "Zoe arcana de prestigio",
+      "num": 19
+    },
+    {
+      "chromas": true,
+      "id": "142020",
+      "name": "Zoe EDG",
+      "num": 20
+    },
+    {
+      "chromas": false,
+      "id": "142021",
+      "name": "Zoe EDG (élite)",
+      "num": 21,
+      "parentSkin": 20
+    },
+    {
+      "chromas": true,
+      "id": "142022",
+      "name": "Zoe bendición invernal",
+      "num": 22
+    },
+    {
+      "chromas": false,
+      "id": "142023",
+      "name": "Zoe bendición invernal (rubí)",
+      "num": 23,
+      "parentSkin": 22
+    },
+    {
+      "chromas": false,
+      "id": "142024",
+      "name": "Zoe bendición invernal (ojo de gato)",
+      "num": 24,
+      "parentSkin": 22
+    },
+    {
+      "chromas": false,
+      "id": "142025",
+      "name": "Zoe bendición invernal (aguamarina)",
+      "num": 25,
+      "parentSkin": 22
+    },
+    {
+      "chromas": false,
+      "id": "142026",
+      "name": "Zoe bendición invernal (peridoto)",
+      "num": 26,
+      "parentSkin": 22
+    },
+    {
+      "chromas": false,
+      "id": "142027",
+      "name": "Zoe bendición invernal (esmeralda)",
+      "num": 27,
+      "parentSkin": 22
+    },
+    {
+      "chromas": false,
+      "id": "142028",
+      "name": "Zoe bendición invernal (cuarzo rosa)",
+      "num": 28,
+      "parentSkin": 22
+    },
+    {
+      "chromas": false,
+      "id": "142029",
+      "name": "Zoe bendición invernal (zafiro)",
+      "num": 29,
+      "parentSkin": 22
+    },
+    {
+      "chromas": false,
+      "id": "142030",
+      "name": "Zoe bendición invernal (arcoíris)",
+      "num": 30,
+      "parentSkin": 22
+    },
+    {
+      "chromas": false,
+      "id": "142031",
+      "name": "Zoe bendición invernal (guirnalda)",
+      "num": 31,
+      "parentSkin": 22
+    },
+    {
+      "chromas": false,
+      "id": "142032",
+      "name": "Zoe EDG (triunfo décuplo)",
+      "num": 32,
+      "parentSkin": 20
+    },
+    {
+      "chromas": true,
+      "id": "142033",
+      "name": "Zoe estrella oscura",
+      "num": 33
+    },
+    {
+      "chromas": false,
+      "id": "142034",
+      "name": "Zoe estrella oscura (rubí)",
+      "num": 34,
+      "parentSkin": 33
+    },
+    {
+      "chromas": false,
+      "id": "142035",
+      "name": "Zoe estrella oscura (ojo de gato)",
+      "num": 35,
+      "parentSkin": 33
+    },
+    {
+      "chromas": false,
+      "id": "142036",
+      "name": "Zoe estrella oscura (zafiro)",
+      "num": 36,
+      "parentSkin": 33
+    },
+    {
+      "chromas": false,
+      "id": "142037",
+      "name": "Zoe estrella oscura (cuarzo rosa)",
+      "num": 37,
+      "parentSkin": 33
+    },
+    {
+      "chromas": false,
+      "id": "142038",
+      "name": "Zoe estrella oscura (perla)",
+      "num": 38,
+      "parentSkin": 33
+    },
+    {
+      "chromas": false,
+      "id": "142039",
+      "name": "Zoe estrella oscura (esmeralda)",
+      "num": 39,
+      "parentSkin": 33
+    },
+    {
+      "chromas": false,
+      "id": "142040",
+      "name": "Zoe estrella oscura (tanzanita)",
+      "num": 40,
+      "parentSkin": 33
+    },
+    {
+      "chromas": false,
+      "id": "142041",
+      "name": "Zoe estrella oscura (turquesa)",
+      "num": 41,
+      "parentSkin": 33
+    },
+    {
+      "chromas": false,
+      "id": "142042",
+      "name": "Zoe estrella oscura (cuásar)",
+      "num": 42,
+      "parentSkin": 33
+    },
+    {
+      "chromas": true,
+      "id": "142043",
+      "name": "Zoe aspecto de la eternidad de prestigio",
+      "num": 43
+    },
+    {
+      "chromas": false,
+      "id": "142044",
+      "name": "Zoe aspecto de la eternidad de prestigio (vívido)",
+      "num": 44,
+      "parentSkin": 43
+    }
+  ],
+  "spells": [
+    {
+      "cooldown": [
+        8.5,
+        8,
+        7.5,
+        7,
+        6.5
+      ],
+      "cooldownBurn": "8.5/8/7.5/7/6.5",
+      "cost": [
+        40,
+        45,
+        50,
+        55,
+        60
+      ],
+      "costBurn": "40/45/50/55/60",
+      "costType": " {{ abilityresourcename }}",
+      "datavalues": {},
+      "description": "Zoe dispara un misil que puede redirigir en el aire. Cuanta más distancia haya recorrido en línea recta, más daño infligirá.",
+      "effect": [
+        null,
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ]
+      ],
+      "effectBurn": [
+        null,
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0"
+      ],
+      "id": "ZoeQ",
+      "image": {
+        "full": "ZoeQ.png",
+        "group": "spell",
+        "h": 48,
+        "sprite": "spell17.png",
+        "w": 48,
+        "x": 384,
+        "y": 144
+      },
+      "leveltip": {
+        "effect": [
+          "{{ basedamage }} -> {{ basedamageNL }}",
+          "{{ cooldown }} -> {{ cooldownNL }}",
+          "{{ cost }} -> {{ costNL }}"
+        ],
+        "label": [
+          "Daño básico",
+          "Enfriamiento",
+          "Coste de @AbilityResourceName@"
+        ]
+      },
+      "maxammo": "-1",
+      "maxrank": 5,
+      "name": "Pádel estelar",
+      "range": [
+        800,
+        800,
+        800,
+        800,
+        800
+      ],
+      "rangeBurn": "800",
+      "resource": "{{ cost }} {{ abilityresourcename }}",
+      "tooltip": "Zoe lanza una estrella que inflige más daño cuanta más distancia haya recorrido hacia el primer enemigo golpeado y a los enemigos cercanos (de <magicDamage>{{ totaldamagetooltip }} a {{ maxdamagetooltip }} de daño mágico</magicDamage>).<br /><br />Zoe puede <recast>volver a lanzar</recast> esta habilidad para redirigir el misil hacia una nueva posición cerca de ella.{{ spellmodifierdescriptionappend }}",
+      "vars": []
+    },
+    {
+      "cooldown": [
+        0.25,
+        0.25,
+        0.25,
+        0.25,
+        0.25
+      ],
+      "cooldownBurn": "0.25",
+      "cost": [
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "costBurn": "0",
+      "costType": "Sin coste",
+      "datavalues": {},
+      "description": "Zoe puede recoger los restos de los hechizos de invocador enemigos y las activas de los objetos y lanzarlos una vez. Cuando lanza un hechizo de invocador, consigue 3 misiles que dispara al objetivo más cercano.",
+      "effect": [
+        null,
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          3000,
+          4500,
+          6000,
+          0,
+          0
+        ],
+        [
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1
+        ],
+        [
+          2500,
+          2500,
+          2500,
+          2500,
+          2500
+        ],
+        [
+          60,
+          60,
+          60,
+          60,
+          60
+        ],
+        [
+          20,
+          50,
+          80,
+          110,
+          140
+        ],
+        [
+          0.2,
+          0.2,
+          0.2,
+          0.2,
+          0.2
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0.3,
+          0.4,
+          0.5,
+          0.6,
+          0.7
+        ],
+        [
+          2,
+          2.25,
+          2.5,
+          2.75,
+          3
+        ]
+      ],
+      "effectBurn": [
+        null,
+        "0",
+        "3000/4500/6000/0/0",
+        "0.1",
+        "2500",
+        "60",
+        "20/50/80/110/140",
+        "0.2",
+        "0",
+        "0.3/0.4/0.5/0.6/0.7",
+        "2/2.25/2.5/2.75/3"
+      ],
+      "id": "ZoeW",
+      "image": {
+        "full": "ZoeW.png",
+        "group": "spell",
+        "h": 48,
+        "sprite": "spell17.png",
+        "w": 48,
+        "x": 432,
+        "y": 144
+      },
+      "leveltip": {
+        "effect": [
+          "{{ totalbasedamage*3.000000 }} -> {{ totalbasedamagenl*3.000000 }}",
+          "{{ movespeedmod*100.000000 }}% -> {{ movespeedmodnl*100.000000 }}%",
+          "{{ movespeedduration }} -> {{ movespeeddurationNL }}"
+        ],
+        "label": [
+          "Daño total",
+          "Velocidad de movimiento",
+          "Duración de la velocidad"
+        ]
+      },
+      "maxammo": "-1",
+      "maxrank": 5,
+      "name": "Ladrona de hechizos",
+      "range": [
+        3000,
+        4500,
+        6000,
+        3000,
+        3000
+      ],
+      "rangeBurn": "3000/4500/6000/3000/3000",
+      "resource": "Sin coste",
+      "tooltip": "<spellPassive>Pasiva:</spellPassive> Los enemigos sueltan fragmentos de hechizo al lanzar un hechizo de invocador o al usar la activa de un objeto. Algunos súbditos también sueltan fragmentos de hechizo cuando Zoe o un aliado cercano los asesina. Zoe puede recoger un fragmento para lanzar esa habilidad una vez.<br /><br /><spellPassive>Pasiva:</spellPassive> Cuando Zoe lanza la habilidad activa o un hechizo de invocador, obtiene un <speed>{{ movementspeed*100 }}% de velocidad de movimiento</speed> durante {{ msduration }} s y lanza 3 proyectiles al objetivo al que atacó más recientemente. Cada proyectil inflige <magicDamage>{{ missiledamagetooltip }} de daño mágico</magicDamage>.<br /><br /><spellActive>Activa:</spellActive> Zoe lanza la habilidad de un fragmento de hechizo que ha recogido.{{ spellmodifierdescriptionappend }}",
+      "vars": []
+    },
+    {
+      "cooldown": [
+        18,
+        17,
+        16,
+        15,
+        14
+      ],
+      "cooldownBurn": "18/17/16/15/14",
+      "cost": [
+        80,
+        80,
+        80,
+        80,
+        80
+      ],
+      "costBurn": "80",
+      "costType": " {{ abilityresourcename }}",
+      "datavalues": {},
+      "description": "Deja al objetivo aletargado y hace que se duerma. Mientras está dormido, se reduce la resistencia mágica del objetivo. El daño del primer ataque que despierte al objetivo se duplica, hasta cierto límite.",
+      "effect": [
+        null,
+        [
+          70,
+          110,
+          150,
+          190,
+          230
+        ],
+        [
+          0.1,
+          0.15,
+          0.2,
+          0.25,
+          0.3
+        ],
+        [
+          5,
+          15,
+          25,
+          35,
+          45
+        ],
+        [
+          5,
+          5,
+          5,
+          5,
+          5
+        ],
+        [
+          0.1,
+          0.15,
+          0.2,
+          0.25,
+          0.3
+        ],
+        [
+          70,
+          110,
+          150,
+          190,
+          230
+        ],
+        [
+          0.45,
+          0.45,
+          0.45,
+          0.45,
+          0.45
+        ],
+        [
+          1.4,
+          1.4,
+          1.4,
+          1.4,
+          1.4
+        ],
+        [
+          2.25,
+          2.25,
+          2.25,
+          2.25,
+          2.25
+        ],
+        [
+          1,
+          1,
+          1,
+          1,
+          1
+        ]
+      ],
+      "effectBurn": [
+        null,
+        "70/110/150/190/230",
+        "0.1/0.15/0.2/0.25/0.3",
+        "5/15/25/35/45",
+        "5",
+        "0.1/0.15/0.2/0.25/0.3",
+        "70/110/150/190/230",
+        "0.45",
+        "1.4",
+        "2.25",
+        "1"
+      ],
+      "id": "ZoeE",
+      "image": {
+        "full": "ZoeE.png",
+        "group": "spell",
+        "h": 48,
+        "sprite": "spell18.png",
+        "w": 48,
+        "x": 0,
+        "y": 0
+      },
+      "leveltip": {
+        "effect": [
+          "{{ basedamage }} -> {{ basedamageNL }}",
+          "{{ basedamage }} -> {{ basedamageNL }}",
+          "{{ cooldown }} -> {{ cooldownNL }}",
+          "{{ cooldownrefresh*100.000000 }}% -> {{ cooldownrefreshnl*100.000000 }}%"
+        ],
+        "label": [
+          "Daño",
+          "Límite de daño adicional",
+          "Enfriamiento",
+          "Restauración del enfriamiento"
+        ]
+      },
+      "maxammo": "-1",
+      "maxrank": 5,
+      "name": "Burbuja somnífera",
+      "range": [
+        800,
+        800,
+        800,
+        800,
+        800
+      ],
+      "rangeBurn": "800",
+      "resource": "{{ cost }} {{ abilityresourcename }}",
+      "tooltip": "Zoe lanza una burbuja que inflige <magicDamage>{{ totaldamagetooltip }} de daño mágico</magicDamage> y que permanece como una trampa si no alcanza a ningún objetivo. El alcance de la burbuja se extiende cuando vuela sobre obstáculos del terreno.<br /><br />Si la burbuja o la trampa alcanzan a un campeón enemigo, ella recupera un {{ cooldownrefresh*100 }}% del enfriamiento.<br /><br />Tras un breve lapso de tiempo, la víctima se queda <status>dormida</status> y se reduce su <scaleMR>resistencia mágica</scaleMR> en un {{ percentpen*100 }}% durante 2 s. Los ataques y las habilidades despiertan a la víctima, pero infligen el doble de daño, hasta <trueDamage>{{ breakdamagetooltip }} de daño verdadero</trueDamage>.<br /><br />{{ spellmodifierdescriptionappend }}",
+      "vars": []
+    },
+    {
+      "cooldown": [
+        11,
+        8,
+        5
+      ],
+      "cooldownBurn": "11/8/5",
+      "cost": [
+        40,
+        40,
+        40
+      ],
+      "costBurn": "40",
+      "costType": " {{ abilityresourcename }}",
+      "datavalues": {},
+      "description": "Zoe se traslada a una ubicación cercana durante 1 s y después vuelve al punto inicial.",
+      "effect": [
+        null,
+        [
+          -0.3,
+          -0.4,
+          -0.5
+        ],
+        [
+          1.5,
+          2,
+          2.5
+        ],
+        [
+          4,
+          4,
+          4
+        ],
+        [
+          0.5,
+          0.5,
+          0.5
+        ],
+        [
+          3,
+          3,
+          3
+        ],
+        [
+          100,
+          200,
+          300
+        ],
+        [
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0
+        ]
+      ],
+      "effectBurn": [
+        null,
+        "-0.3/-0.4/-0.5",
+        "1.5/2/2.5",
+        "4",
+        "0.5",
+        "3",
+        "100/200/300",
+        "0",
+        "0",
+        "0",
+        "0"
+      ],
+      "id": "ZoeR",
+      "image": {
+        "full": "ZoeR.png",
+        "group": "spell",
+        "h": 48,
+        "sprite": "spell18.png",
+        "w": 48,
+        "x": 48,
+        "y": 0
+      },
+      "leveltip": {
+        "effect": [
+          "{{ cooldown }} -> {{ cooldownNL }}"
+        ],
+        "label": [
+          "Enfriamiento"
+        ]
+      },
+      "maxammo": "-1",
+      "maxrank": 3,
+      "name": "Salto dimensional",
+      "range": [
+        575,
+        575,
+        575
+      ],
+      "rangeBurn": "575",
+      "resource": "{{ cost }} {{ abilityresourcename }}",
+      "tooltip": "Zoe se teleporta a una ubicación cercana durante 1 s. Después, se teleporta de vuelta. Zoe puede usar habilidades y atacar, pero no puede moverse durante ese tiempo.{{ spellmodifierdescriptionappend }}",
+      "vars": []
+    }
+  ],
+  "stats": {
+    "armor": 21,
+    "armorperlevel": 4.7,
+    "attackdamage": 58,
+    "attackdamageperlevel": 0,
+    "attackrange": 550,
+    "attackspeed": 0.658,
+    "attackspeedperlevel": 2.5,
+    "crit": 0,
+    "critperlevel": 0,
+    "hp": 630,
+    "hpperlevel": 106,
+    "hpregen": 7.5,
+    "hpregenperlevel": 0.6,
+    "movespeed": 340,
+    "mp": 425,
+    "mpperlevel": 25,
+    "mpregen": 8,
+    "mpregenperlevel": 0.65,
+    "spellblock": 30,
+    "spellblockperlevel": 1.3
+  },
+  "tags": [
+    "Mage"
+  ],
+  "title": "el Aspecto del Crepúsculo"
+}

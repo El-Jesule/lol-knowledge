@@ -1,0 +1,841 @@
+{
+  "allytips": [
+    "Puedes combinar Bomba de relojería con Retroceder para colocar rápidamente dos bombas de relojería en un objetivo. Colocar la segunda bomba hará detonar la primera y aturdirá a todos los enemigos cercanos.",
+    "Distorsión temporal es un modo eficaz de permitir que los aliados rematen a los enemigos o que escapen de una batalla perdida.",
+    "Alteración del tiempo es un potente elemento disuasorio de los ataques a tus mejores aliados, pero si lo lanzas demasiado pronto en un combate puedes hacer que el enemigo cambie su objetivo y que pierda eficacia."
+  ],
+  "blurb": "Zilean, el que un día fuera un poderoso mago de Icathia, se obsesionó con el paso del tiempo tras ser testigo de la destrucción de su tierra natal a manos del Vacío. Incapaz de parar un minuto a llorar tan catastrófica pérdida, se entregó a la vetusta...",
+  "enemytips": [
+    "Si logras igualar la velocidad de Zilean, a veces puede ser conveniente esperar a que su habilidad definitiva se apague antes de asestar el golpe mortal.",
+    "Zilean es frágil si un equipo se concentra en él, pero por lo demás es difícil de matar. Enfrentaos a él en equipo."
+  ],
+  "id": "Zilean",
+  "image": {
+    "full": "Zilean.png",
+    "group": "champion",
+    "h": 48,
+    "sprite": "champion5.png",
+    "w": 48,
+    "x": 0,
+    "y": 96
+  },
+  "info": {
+    "attack": 2,
+    "defense": 5,
+    "difficulty": 6,
+    "magic": 8
+  },
+  "key": "26",
+  "lore": "Zilean, el que un día fuera un poderoso mago de Icathia, se obsesionó con el paso del tiempo tras ser testigo de la destrucción de su tierra natal a manos del Vacío. Incapaz de parar un minuto a llorar tan catastrófica pérdida, se entregó a la vetusta magia temporal para descubrir todos los resultados posibles. Tras volverse prácticamente inmortal, Zilean viaja por el pasado, el presente y el futuro, deformando y retorciendo el flujo temporal que lo rodea, siempre en busca del preciso instante al que poder volver para evitar la destrucción de Icathia.",
+  "name": "Zilean",
+  "partype": "Maná",
+  "passive": {
+    "description": "Zilean almacena el tiempo como experiencia y puede otorgársela a sus aliados. Cuando tiene suficiente experiencia para terminar el nivel de un aliado, puede hacer clic derecho sobre él para entregársela. Zilean recibe tanta experiencia como da.",
+    "image": {
+      "full": "Zilean_Passive.png",
+      "group": "passive",
+      "h": 48,
+      "sprite": "passive5.png",
+      "w": 48,
+      "x": 0,
+      "y": 96
+    },
+    "name": "Tiempo embotellado"
+  },
+  "recommended": [],
+  "skins": [
+    {
+      "chromas": false,
+      "id": "26000",
+      "name": "default",
+      "num": 0
+    },
+    {
+      "chromas": false,
+      "id": "26001",
+      "name": "Zilean Papá Noel",
+      "num": 1
+    },
+    {
+      "chromas": false,
+      "id": "26002",
+      "name": "Zilean formidable",
+      "num": 2
+    },
+    {
+      "chromas": false,
+      "id": "26003",
+      "name": "Zilean desierto de Shurima",
+      "num": 3
+    },
+    {
+      "chromas": false,
+      "id": "26004",
+      "name": "Zilean máquina del tiempo",
+      "num": 4
+    },
+    {
+      "chromas": false,
+      "id": "26005",
+      "name": "Zilean luna sangrienta",
+      "num": 5
+    },
+    {
+      "chromas": true,
+      "id": "26006",
+      "name": "Zilean subidón de azúcar",
+      "num": 6
+    },
+    {
+      "chromas": false,
+      "id": "26007",
+      "name": "Zilean subidón de azúcar (rubí)",
+      "num": 7,
+      "parentSkin": 6
+    },
+    {
+      "chromas": false,
+      "id": "26008",
+      "name": "Zilean subidón de azúcar (cuarzo rosa)",
+      "num": 8,
+      "parentSkin": 6
+    },
+    {
+      "chromas": false,
+      "id": "26009",
+      "name": "Zilean subidón de azúcar (peridoto)",
+      "num": 9,
+      "parentSkin": 6
+    },
+    {
+      "chromas": false,
+      "id": "26010",
+      "name": "Zilean subidón de azúcar (aguamarina)",
+      "num": 10,
+      "parentSkin": 6
+    },
+    {
+      "chromas": false,
+      "id": "26011",
+      "name": "Zilean subidón de azúcar (citrino)",
+      "num": 11,
+      "parentSkin": 6
+    },
+    {
+      "chromas": false,
+      "id": "26012",
+      "name": "Zilean subidón de azúcar (meteorito)",
+      "num": 12,
+      "parentSkin": 6
+    },
+    {
+      "chromas": false,
+      "id": "26013",
+      "name": "Zilean subidón de azúcar (dulce)",
+      "num": 13,
+      "parentSkin": 6
+    },
+    {
+      "chromas": true,
+      "id": "26014",
+      "name": "Zilean bendición invernal",
+      "num": 14
+    },
+    {
+      "chromas": false,
+      "id": "26015",
+      "name": "Zilean bendición invernal (rubí)",
+      "num": 15,
+      "parentSkin": 14
+    },
+    {
+      "chromas": false,
+      "id": "26016",
+      "name": "Zilean bendición invernal (citrino)",
+      "num": 16,
+      "parentSkin": 14
+    },
+    {
+      "chromas": false,
+      "id": "26017",
+      "name": "Zilean bendición invernal (zafiro)",
+      "num": 17,
+      "parentSkin": 14
+    },
+    {
+      "chromas": false,
+      "id": "26018",
+      "name": "Zilean bendición invernal (esmeralda)",
+      "num": 18,
+      "parentSkin": 14
+    },
+    {
+      "chromas": false,
+      "id": "26019",
+      "name": "Zilean bendición invernal (perla)",
+      "num": 19,
+      "parentSkin": 14
+    },
+    {
+      "chromas": false,
+      "id": "26020",
+      "name": "Zilean bendición invernal (obsidiana)",
+      "num": 20,
+      "parentSkin": 14
+    },
+    {
+      "chromas": false,
+      "id": "26021",
+      "name": "Zilean bendición invernal (turquesa)",
+      "num": 21,
+      "parentSkin": 14
+    },
+    {
+      "chromas": false,
+      "id": "26022",
+      "name": "Zilean bendición invernal (cuarzo rosa)",
+      "num": 22,
+      "parentSkin": 14
+    },
+    {
+      "chromas": false,
+      "id": "26023",
+      "name": "Zilean bendición invernal (guirnalda)",
+      "num": 23,
+      "parentSkin": 14
+    },
+    {
+      "chromas": true,
+      "id": "26024",
+      "name": "Zilean arcano",
+      "num": 24
+    },
+    {
+      "chromas": false,
+      "id": "26025",
+      "name": "Zilean arcano (rubí)",
+      "num": 25,
+      "parentSkin": 24
+    },
+    {
+      "chromas": false,
+      "id": "26026",
+      "name": "Zilean arcano (ojo de gato)",
+      "num": 26,
+      "parentSkin": 24
+    },
+    {
+      "chromas": false,
+      "id": "26027",
+      "name": "Zilean arcano (esmeralda)",
+      "num": 27,
+      "parentSkin": 24
+    },
+    {
+      "chromas": false,
+      "id": "26028",
+      "name": "Zilean arcano (tanzanita)",
+      "num": 28,
+      "parentSkin": 24
+    },
+    {
+      "chromas": false,
+      "id": "26029",
+      "name": "Zilean arcano (zafiro)",
+      "num": 29,
+      "parentSkin": 24
+    },
+    {
+      "chromas": false,
+      "id": "26030",
+      "name": "Zilean arcano (cuarzo rosa)",
+      "num": 30,
+      "parentSkin": 24
+    },
+    {
+      "chromas": false,
+      "id": "26031",
+      "name": "Zilean arcano (perla)",
+      "num": 31,
+      "parentSkin": 24
+    },
+    {
+      "chromas": false,
+      "id": "26032",
+      "name": "Zilean arcano (obsidiana)",
+      "num": 32,
+      "parentSkin": 24
+    }
+  ],
+  "spells": [
+    {
+      "cooldown": [
+        10,
+        9.5,
+        9,
+        8.5,
+        8
+      ],
+      "cooldownBurn": "10/9.5/9/8.5/8",
+      "cost": [
+        60,
+        65,
+        70,
+        75,
+        80
+      ],
+      "costBurn": "60/65/70/75/80",
+      "costType": " {{ abilityresourcename }}",
+      "datavalues": {},
+      "description": "Arroja una bomba a una zona. El artefacto, que se adhiere a las unidades cercanas (prioriza a los campeones), detona pasados 3 s e inflige daño de área. Además, si la Bomba de relojería detona antes de tiempo por la acción de otra, aturde a los enemigos afectados.",
+      "effect": [
+        null,
+        [
+          75,
+          115,
+          165,
+          230,
+          300
+        ],
+        [
+          3,
+          3,
+          3,
+          3,
+          3
+        ],
+        [
+          7,
+          7,
+          7,
+          7,
+          7
+        ],
+        [
+          1.1,
+          1.2,
+          1.3,
+          1.4,
+          1.5
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ]
+      ],
+      "effectBurn": [
+        null,
+        "75/115/165/230/300",
+        "3",
+        "7",
+        "1.1/1.2/1.3/1.4/1.5",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0"
+      ],
+      "id": "ZileanQ",
+      "image": {
+        "full": "ZileanQ.png",
+        "group": "spell",
+        "h": 48,
+        "sprite": "spell17.png",
+        "w": 48,
+        "x": 192,
+        "y": 144
+      },
+      "leveltip": {
+        "effect": [
+          "{{ cooldown }} -> {{ cooldownNL }}",
+          "{{ cost }} -> {{ costNL }}",
+          "{{ bombbasedamage }} -> {{ bombbasedamageNL }}",
+          "{{ stunduration }} -> {{ stundurationNL }}"
+        ],
+        "label": [
+          "Enfriamiento",
+          "Coste de @AbilityResourceName@",
+          "Daño",
+          "Duración del aturdimiento:"
+        ]
+      },
+      "maxammo": "-1",
+      "maxrank": 5,
+      "name": "Bomba de relojería",
+      "range": [
+        900,
+        900,
+        900,
+        900,
+        900
+      ],
+      "rangeBurn": "900",
+      "resource": "{{ cost }} {{ abilityresourcename }}",
+      "tooltip": "Zilean lanza una bomba de efecto retardado que se adhiere a la primera unidad que entra en una zona pequeña a su alrededor. Después de {{ fuseduration }} s, detona e inflige <magicDamage>{{ totaldamage }} de daño mágico</magicDamage>.<br /><br />Colocar una segunda bomba en una unidad que ya tiene una detona la primera bomba inmediatamente y <status>aturde</status> a los enemigos en la zona de explosión durante {{ stunduration }} s.{{ spellmodifierdescriptionappend }}",
+      "vars": []
+    },
+    {
+      "cooldown": [
+        14,
+        12,
+        10,
+        8,
+        6
+      ],
+      "cooldownBurn": "14/12/10/8/6",
+      "cost": [
+        35,
+        35,
+        35,
+        35,
+        35
+      ],
+      "costBurn": "35",
+      "costType": " Maná",
+      "datavalues": {},
+      "description": "Zilean puede prepararse para futuros enfrentamientos reduciendo el enfriamiento de sus demás habilidades básicas.",
+      "effect": [
+        null,
+        [
+          20,
+          30,
+          40,
+          50,
+          60
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          35,
+          35,
+          35,
+          35,
+          35
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ]
+      ],
+      "effectBurn": [
+        null,
+        "20/30/40/50/60",
+        "0",
+        "35",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0"
+      ],
+      "id": "ZileanW",
+      "image": {
+        "full": "ZileanW.png",
+        "group": "spell",
+        "h": 48,
+        "sprite": "spell17.png",
+        "w": 48,
+        "x": 240,
+        "y": 144
+      },
+      "leveltip": {
+        "effect": [
+          "{{ cooldown }} -> {{ cooldownNL }}"
+        ],
+        "label": [
+          "Enfriamiento"
+        ]
+      },
+      "maxammo": "-1",
+      "maxrank": 5,
+      "name": "Retroceder",
+      "range": [
+        600,
+        600,
+        600,
+        600,
+        600
+      ],
+      "rangeBurn": "600",
+      "resource": "{{ manacost }} Maná",
+      "tooltip": "Zilean hace avanzar el tiempo y reduce los enfriamientos de sus otras habilidades básicas en {{ cooldownreduction }} s.{{ spellmodifierdescriptionappend }}",
+      "vars": []
+    },
+    {
+      "cooldown": [
+        15,
+        15,
+        15,
+        15,
+        15
+      ],
+      "cooldownBurn": "15",
+      "cost": [
+        50,
+        50,
+        50,
+        50,
+        50
+      ],
+      "costBurn": "50",
+      "costType": " {{ abilityresourcename }}",
+      "datavalues": {},
+      "description": "Zilean pliega el tiempo alrededor de cualquier unidad, lo que reduce la velocidad de movimiento de un enemigo o aumenta la de un aliado durante un breve periodo.",
+      "effect": [
+        null,
+        [
+          2.5,
+          2.5,
+          2.5,
+          2.5,
+          2.5
+        ],
+        [
+          40,
+          55,
+          70,
+          85,
+          99
+        ],
+        [
+          1.5,
+          1.5,
+          1.5,
+          1.5,
+          1.5
+        ],
+        [
+          8,
+          8,
+          8,
+          8,
+          8
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ]
+      ],
+      "effectBurn": [
+        null,
+        "2.5",
+        "40/55/70/85/99",
+        "1.5",
+        "8",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0"
+      ],
+      "id": "TimeWarp",
+      "image": {
+        "full": "TimeWarp.png",
+        "group": "spell",
+        "h": 48,
+        "sprite": "spell17.png",
+        "w": 48,
+        "x": 288,
+        "y": 144
+      },
+      "leveltip": {
+        "effect": [
+          "{{ speedamount }}% -> {{ speedamountNL }}%",
+          "{{ speedamount }}% -> {{ speedamountNL }}%"
+        ],
+        "label": [
+          "Ralentización",
+          "Velocidad de movimiento"
+        ]
+      },
+      "maxammo": "-1",
+      "maxrank": 5,
+      "name": "Distorsión temporal",
+      "range": [
+        550,
+        550,
+        550,
+        550,
+        550
+      ],
+      "rangeBurn": "550",
+      "resource": "{{ cost }} {{ abilityresourcename }}",
+      "tooltip": "Zilean <status>ralentiza</status> a un campeón enemigo un {{ speedamount }}% u otorga un <speed>{{ speedamount }}% de velocidad de movimiento</speed> durante {{ duration }} s a un campeón aliado.{{ spellmodifierdescriptionappend }}",
+      "vars": []
+    },
+    {
+      "cooldown": [
+        120,
+        90,
+        60
+      ],
+      "cooldownBurn": "120/90/60",
+      "cost": [
+        125,
+        150,
+        175
+      ],
+      "costBurn": "125/150/175",
+      "costType": " {{ abilityresourcename }}",
+      "datavalues": {},
+      "description": "Zilean coloca sobre un campeón aliado una runa temporal protectora que lo lleva atrás en el tiempo en caso de sufrir daño letal.",
+      "effect": [
+        null,
+        [
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0
+        ]
+      ],
+      "effectBurn": [
+        null,
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0"
+      ],
+      "id": "ChronoShift",
+      "image": {
+        "full": "ChronoShift.png",
+        "group": "spell",
+        "h": 48,
+        "sprite": "spell17.png",
+        "w": 48,
+        "x": 336,
+        "y": 144
+      },
+      "leveltip": {
+        "effect": [
+          "{{ cooldown }} -> {{ cooldownNL }}",
+          "{{ cost }} -> {{ costNL }}",
+          "{{ rbaseheal }} -> {{ rbasehealNL }}"
+        ],
+        "label": [
+          "Enfriamiento",
+          "Coste de @AbilityResourceName@",
+          "Curación"
+        ]
+      },
+      "maxammo": "-1",
+      "maxrank": 3,
+      "name": "Alteración del tiempo",
+      "range": [
+        900,
+        900,
+        900
+      ],
+      "rangeBurn": "900",
+      "resource": "{{ cost }} {{ abilityresourcename }}",
+      "tooltip": "Zilean otorga una runa protectora temporal a un campeón aliado durante {{ rduration }} s. Si el objetivo muere, la runa rebobina su línea temporal, entra en estasis durante {{ revivestateduration }} s, tras lo cual revive y recupera <healing>{{ rtotalheal }} de vida</healing>.{{ spellmodifierdescriptionappend }}",
+      "vars": []
+    }
+  ],
+  "stats": {
+    "armor": 24,
+    "armorperlevel": 5,
+    "attackdamage": 52,
+    "attackdamageperlevel": 0,
+    "attackrange": 550,
+    "attackspeed": 0.658,
+    "attackspeedperlevel": 2.13,
+    "crit": 0,
+    "critperlevel": 0,
+    "hp": 574,
+    "hpperlevel": 96,
+    "hpregen": 5.5,
+    "hpregenperlevel": 0.5,
+    "movespeed": 335,
+    "mp": 452,
+    "mpperlevel": 50,
+    "mpregen": 11.35,
+    "mpregenperlevel": 0.8,
+    "spellblock": 30,
+    "spellblockperlevel": 1.3
+  },
+  "tags": [
+    "Support",
+    "Mage"
+  ],
+  "title": "El Guardián del Tiempo"
+}

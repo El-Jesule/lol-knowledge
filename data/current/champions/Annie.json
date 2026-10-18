@@ -1,0 +1,1026 @@
+{
+  "allytips": [
+    "Usar un aturdimiento junto a su habilidad definitiva puede cambiar las tornas en un combate de equipo.",
+    "Golpear mortalmente a los súbditos con Desintegración permite a Annie cosechar muertes con mucha facilidad al principio del juego.",
+    "Escudo fundido es un buen hechizo para preparar el aturdimiento de Annie, por lo que a veces conviene subirlo al menos un nivel en los primeros compases del juego."
+  ],
+  "blurb": "Peligrosa pero encantadoramente precoz, Annie es una pequeña maga con un inmenso poder piromántico. Incluso en los parajes montañosos al norte de Noxus es una hechicera sin precedentes. Su afinidad natural con el fuego se manifestó a temprana edad en...",
+  "enemytips": [
+    "El oso invocado de Annie, Tibbers, quema a las unidades enemigas que lo rodean. Intenta mantenerte a cierta distancia de él.",
+    "Puede utilizarse el hechizo de invocador Aplastar para ayudar a acabar con Tibbers.",
+    "Estate pendiente de una energía blanca que se arremolina alrededor de Annie. Al verla, sabrás que está lista para liberar su aturdimiento."
+  ],
+  "id": "Annie",
+  "image": {
+    "full": "Annie.png",
+    "group": "champion",
+    "h": 48,
+    "sprite": "champion0.png",
+    "w": 48,
+    "x": 384,
+    "y": 0
+  },
+  "info": {
+    "attack": 2,
+    "defense": 3,
+    "difficulty": 6,
+    "magic": 10
+  },
+  "key": "1",
+  "lore": "Peligrosa pero encantadoramente precoz, Annie es una pequeña maga con un inmenso poder piromántico. Incluso en los parajes montañosos al norte de Noxus es una hechicera sin precedentes. Su afinidad natural con el fuego se manifestó a temprana edad en arrebatos emocionales e impredecibles, aunque finalmente aprendió a controlar esos \"trucos traviesos\". Uno de sus favoritos es invocar a su adorado osito de peluche Tibbers; una bestia protectora envuelta en llamas. Atrapada en la perpetua inocencia de la niñez, Annie vaga por bosques oscuros, siempre buscando a alguien con quien jugar.",
+  "name": "Annie",
+  "partype": "Maná",
+  "passive": {
+    "description": "Después de 4 lanzamientos, el siguiente hechizo ofensivo de Annie aturdirá al objetivo.<br><br>Annie comienza la partida y reaparece con Piromanía disponible.",
+    "image": {
+      "full": "Annie_Passive.png",
+      "group": "passive",
+      "h": 48,
+      "sprite": "passive0.png",
+      "w": 48,
+      "x": 384,
+      "y": 0
+    },
+    "name": "Piromanía"
+  },
+  "recommended": [],
+  "skins": [
+    {
+      "chromas": false,
+      "id": "1000",
+      "name": "default",
+      "num": 0
+    },
+    {
+      "chromas": false,
+      "id": "1001",
+      "name": "Annie gótica",
+      "num": 1
+    },
+    {
+      "chromas": false,
+      "id": "1002",
+      "name": "Annie Caperucita Roja",
+      "num": 2
+    },
+    {
+      "chromas": false,
+      "id": "1003",
+      "name": "Annie en el País de las Maravillas",
+      "num": 3
+    },
+    {
+      "chromas": false,
+      "id": "1004",
+      "name": "Annie reina de la promoción",
+      "num": 4
+    },
+    {
+      "chromas": false,
+      "id": "1005",
+      "name": "Annie fuego escarchado",
+      "num": 5
+    },
+    {
+      "chromas": false,
+      "id": "1006",
+      "name": "Annie al revés",
+      "num": 6
+    },
+    {
+      "chromas": false,
+      "id": "1007",
+      "name": "Annie Frankentibbers",
+      "num": 7
+    },
+    {
+      "chromas": false,
+      "id": "1008",
+      "name": "Annie panda",
+      "num": 8
+    },
+    {
+      "chromas": false,
+      "id": "1009",
+      "name": "Annie amorosa",
+      "num": 9
+    },
+    {
+      "chromas": false,
+      "id": "1010",
+      "name": "Annie hextech",
+      "num": 10
+    },
+    {
+      "chromas": false,
+      "id": "1011",
+      "name": "Annie supergaláctica",
+      "num": 11
+    },
+    {
+      "chromas": false,
+      "id": "1012",
+      "name": "Annieversario",
+      "num": 12
+    },
+    {
+      "chromas": true,
+      "id": "1013",
+      "name": "Annie bestia lunar",
+      "num": 13
+    },
+    {
+      "chromas": false,
+      "id": "1014",
+      "name": "Annie bestia lunar (rubí)",
+      "num": 14,
+      "parentSkin": 13
+    },
+    {
+      "chromas": false,
+      "id": "1015",
+      "name": "Annie bestia lunar (vitalidad)",
+      "num": 15,
+      "parentSkin": 13
+    },
+    {
+      "chromas": false,
+      "id": "1016",
+      "name": "Annie bestia lunar (citrino)",
+      "num": 16,
+      "parentSkin": 13
+    },
+    {
+      "chromas": false,
+      "id": "1017",
+      "name": "Annie bestia lunar (amatista)",
+      "num": 17,
+      "parentSkin": 13
+    },
+    {
+      "chromas": false,
+      "id": "1018",
+      "name": "Annie bestia lunar (zafiro)",
+      "num": 18,
+      "parentSkin": 13
+    },
+    {
+      "chromas": false,
+      "id": "1019",
+      "name": "Annie bestia lunar (obsidiana)",
+      "num": 19,
+      "parentSkin": 13
+    },
+    {
+      "chromas": false,
+      "id": "1020",
+      "name": "Annie bestia lunar (cuarzo rosa)",
+      "num": 20,
+      "parentSkin": 13
+    },
+    {
+      "chromas": false,
+      "id": "1022",
+      "name": "Annie monada de cafetería",
+      "num": 22
+    },
+    {
+      "chromas": true,
+      "id": "1023",
+      "name": "Annie monada de cafetería (rubí)",
+      "num": 23,
+      "parentSkin": 22
+    },
+    {
+      "chromas": false,
+      "id": "1024",
+      "name": "Annie monada de cafetería (ojo de gato)",
+      "num": 24,
+      "parentSkin": 22
+    },
+    {
+      "chromas": false,
+      "id": "1025",
+      "name": "Annie monada de cafetería (esmeralda)",
+      "num": 25,
+      "parentSkin": 22
+    },
+    {
+      "chromas": false,
+      "id": "1026",
+      "name": "Annie monada de cafetería (aguamarina)",
+      "num": 26,
+      "parentSkin": 22
+    },
+    {
+      "chromas": false,
+      "id": "1027",
+      "name": "Annie monada de cafetería (tanzanita)",
+      "num": 27,
+      "parentSkin": 22
+    },
+    {
+      "chromas": false,
+      "id": "1028",
+      "name": "Annie monada de cafetería (cuarzo rosa)",
+      "num": 28,
+      "parentSkin": 22
+    },
+    {
+      "chromas": false,
+      "id": "1029",
+      "name": "Annie monada de cafetería (perla)",
+      "num": 29,
+      "parentSkin": 22
+    },
+    {
+      "chromas": false,
+      "id": "1030",
+      "name": "Annie monada de cafetería (obsidiana)",
+      "num": 30,
+      "parentSkin": 22
+    },
+    {
+      "chromas": false,
+      "id": "1031",
+      "name": "Annie noche de miedo",
+      "num": 31
+    },
+    {
+      "chromas": true,
+      "id": "1032",
+      "name": "Annie noche de miedo (rubí)",
+      "num": 32,
+      "parentSkin": 31
+    },
+    {
+      "chromas": false,
+      "id": "1033",
+      "name": "Annie noche de miedo (ojo de gato)",
+      "num": 33,
+      "parentSkin": 31
+    },
+    {
+      "chromas": false,
+      "id": "1034",
+      "name": "Annie noche de miedo (esmeralda)",
+      "num": 34,
+      "parentSkin": 31
+    },
+    {
+      "chromas": false,
+      "id": "1035",
+      "name": "Annie noche de miedo (aguamarina)",
+      "num": 35,
+      "parentSkin": 31
+    },
+    {
+      "chromas": false,
+      "id": "1036",
+      "name": "Annie noche de miedo (cuarzo rosa)",
+      "num": 36,
+      "parentSkin": 31
+    },
+    {
+      "chromas": false,
+      "id": "1037",
+      "name": "Annie noche de miedo (tanzanita)",
+      "num": 37,
+      "parentSkin": 31
+    },
+    {
+      "chromas": false,
+      "id": "1038",
+      "name": "Annie noche de miedo (perla)",
+      "num": 38,
+      "parentSkin": 31
+    },
+    {
+      "chromas": false,
+      "id": "1039",
+      "name": "Annie noche de miedo (obsidiana)",
+      "num": 39,
+      "parentSkin": 31
+    },
+    {
+      "chromas": false,
+      "id": "1040",
+      "name": "Annie bendición invernal",
+      "num": 40
+    },
+    {
+      "chromas": true,
+      "id": "1041",
+      "name": "Annie bendición invernal (rubí)",
+      "num": 41,
+      "parentSkin": 40
+    },
+    {
+      "chromas": false,
+      "id": "1042",
+      "name": "Annie bendición invernal (cuarzo rosa)",
+      "num": 42,
+      "parentSkin": 40
+    },
+    {
+      "chromas": false,
+      "id": "1043",
+      "name": "Annie bendición invernal (ojo de gato)",
+      "num": 43,
+      "parentSkin": 40
+    },
+    {
+      "chromas": false,
+      "id": "1044",
+      "name": "Annie bendición invernal (esmeralda)",
+      "num": 44,
+      "parentSkin": 40
+    },
+    {
+      "chromas": false,
+      "id": "1045",
+      "name": "Annie bendición invernal (zafiro)",
+      "num": 45,
+      "parentSkin": 40
+    },
+    {
+      "chromas": false,
+      "id": "1046",
+      "name": "Annie bendición invernal (aguamarina)",
+      "num": 46,
+      "parentSkin": 40
+    },
+    {
+      "chromas": false,
+      "id": "1047",
+      "name": "Annie bendición invernal (arcoíris)",
+      "num": 47,
+      "parentSkin": 40
+    },
+    {
+      "chromas": false,
+      "id": "1048",
+      "name": "Annie bendición invernal (obsidiana)",
+      "num": 48,
+      "parentSkin": 40
+    },
+    {
+      "chromas": false,
+      "id": "1049",
+      "name": "Annie bendición invernal (guirnalda)",
+      "num": 49,
+      "parentSkin": 40
+    },
+    {
+      "chromas": false,
+      "id": "1050",
+      "name": "Annie princesa guerrera",
+      "num": 50
+    },
+    {
+      "chromas": true,
+      "id": "1051",
+      "name": "Annie princesa guerrera (rubí)",
+      "num": 51,
+      "parentSkin": 50
+    },
+    {
+      "chromas": false,
+      "id": "1052",
+      "name": "Annie princesa guerrera (citrino)",
+      "num": 52,
+      "parentSkin": 50
+    },
+    {
+      "chromas": false,
+      "id": "1053",
+      "name": "Annie princesa guerrera (turquesa)",
+      "num": 53,
+      "parentSkin": 50
+    },
+    {
+      "chromas": false,
+      "id": "1054",
+      "name": "Annie princesa guerrera (zafiro)",
+      "num": 54,
+      "parentSkin": 50
+    },
+    {
+      "chromas": false,
+      "id": "1055",
+      "name": "Annie princesa guerrera (tanzanita)",
+      "num": 55,
+      "parentSkin": 50
+    },
+    {
+      "chromas": false,
+      "id": "1056",
+      "name": "Annie princesa guerrera (cuarzo rosa)",
+      "num": 56,
+      "parentSkin": 50
+    },
+    {
+      "chromas": false,
+      "id": "1057",
+      "name": "Annie princesa guerrera (perla)",
+      "num": 57,
+      "parentSkin": 50
+    },
+    {
+      "chromas": false,
+      "id": "1058",
+      "name": "Annie princesa guerrera (obsidiana)",
+      "num": 58,
+      "parentSkin": 50
+    },
+    {
+      "chromas": false,
+      "id": "1059",
+      "name": "Annie pandemonium",
+      "num": 59
+    },
+    {
+      "chromas": false,
+      "id": "1060",
+      "name": "Annie gótica moderna",
+      "num": 60
+    }
+  ],
+  "spells": [
+    {
+      "cooldown": [
+        4,
+        4,
+        4,
+        4,
+        4
+      ],
+      "cooldownBurn": "4",
+      "cost": [
+        60,
+        65,
+        70,
+        75,
+        80
+      ],
+      "costBurn": "60/65/70/75/80",
+      "costType": " {{ abilityresourcename }}",
+      "datavalues": {},
+      "description": "Annie lanza una bola de fuego imbuida de maná que daña al objetivo y le devuelve el maná gastado si este resulta destruido.",
+      "effect": [
+        null,
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ]
+      ],
+      "effectBurn": [
+        null,
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0"
+      ],
+      "id": "AnnieQ",
+      "image": {
+        "full": "AnnieQ.png",
+        "group": "spell",
+        "h": 48,
+        "sprite": "spell1.png",
+        "w": 48,
+        "x": 288,
+        "y": 96
+      },
+      "leveltip": {
+        "effect": [
+          "{{ basedamage }} -> {{ basedamageNL }}",
+          "{{ cost }} -> {{ costNL }}"
+        ],
+        "label": [
+          "Daño",
+          "Coste de @AbilityResourceName@"
+        ]
+      },
+      "maxammo": "-1",
+      "maxrank": 5,
+      "name": "Desintegración",
+      "range": [
+        625,
+        625,
+        625,
+        625,
+        625
+      ],
+      "rangeBurn": "625",
+      "resource": "{{ cost }} {{ abilityresourcename }}",
+      "tooltip": "Annie lanza una bola de fuego que inflige <magicDamage>{{ totaldamage }} de daño mágico</magicDamage>. Si el objetivo muere, Annie recupera el coste de maná y reduce el enfriamiento un 50%.{{ spellmodifierdescriptionappend }}",
+      "vars": []
+    },
+    {
+      "cooldown": [
+        7,
+        7,
+        7,
+        7,
+        7
+      ],
+      "cooldownBurn": "7",
+      "cost": [
+        70,
+        75,
+        80,
+        85,
+        90
+      ],
+      "costBurn": "70/75/80/85/90",
+      "costType": " {{ abilityresourcename }}",
+      "datavalues": {},
+      "description": "Annie lanza un abrasador cono de fuego, dañando a todos los enemigos de la zona.",
+      "effect": [
+        null,
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ]
+      ],
+      "effectBurn": [
+        null,
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0"
+      ],
+      "id": "AnnieW",
+      "image": {
+        "full": "AnnieW.png",
+        "group": "spell",
+        "h": 48,
+        "sprite": "spell1.png",
+        "w": 48,
+        "x": 336,
+        "y": 96
+      },
+      "leveltip": {
+        "effect": [
+          "{{ basedamage }} -> {{ basedamageNL }}",
+          "{{ cost }} -> {{ costNL }}"
+        ],
+        "label": [
+          "Daño",
+          "Coste de @AbilityResourceName@"
+        ]
+      },
+      "maxammo": "-1",
+      "maxrank": 5,
+      "name": "Incineración",
+      "range": [
+        600,
+        600,
+        600,
+        600,
+        600
+      ],
+      "rangeBurn": "600",
+      "resource": "{{ cost }} {{ abilityresourcename }}",
+      "tooltip": "Annie proyecta una ola de fuego que inflige <magicDamage>{{ totaldamage }} de daño mágico</magicDamage>.{{ spellmodifierdescriptionappend }}",
+      "vars": []
+    },
+    {
+      "cooldown": [
+        10,
+        10,
+        10,
+        10,
+        10
+      ],
+      "cooldownBurn": "10",
+      "cost": [
+        60,
+        65,
+        70,
+        75,
+        80
+      ],
+      "costBurn": "60/65/70/75/80",
+      "costType": " {{ abilityresourcename }}",
+      "datavalues": {},
+      "description": "Otorga a Annie o a un aliado un escudo y velocidad de movimiento adicional de forma temporal, y daña a los enemigos que le inflijan daño con ataques o hechizos.",
+      "effect": [
+        null,
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ]
+      ],
+      "effectBurn": [
+        null,
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0"
+      ],
+      "id": "AnnieE",
+      "image": {
+        "full": "AnnieE.png",
+        "group": "spell",
+        "h": 48,
+        "sprite": "spell1.png",
+        "w": 48,
+        "x": 384,
+        "y": 96
+      },
+      "leveltip": {
+        "effect": [
+          "{{ shieldamount }} -> {{ shieldamountNL }}",
+          "{{ damagereflection }} -> {{ damagereflectionNL }}",
+          "{{ cost }} -> {{ costNL }}"
+        ],
+        "label": [
+          "Vida del escudo",
+          "Daño reflejado",
+          "Coste de @AbilityResourceName@"
+        ]
+      },
+      "maxammo": "-1",
+      "maxrank": 5,
+      "name": "Escudo fundido",
+      "range": [
+        800,
+        800,
+        800,
+        800,
+        800
+      ],
+      "rangeBurn": "800",
+      "resource": "{{ cost }} {{ abilityresourcename }}",
+      "tooltip": "Annie otorga a un campeón aliado un <shield>escudo de {{ shieldblocktotal }}</shield> durante {{ shieldduration }} s y un <speed>{{ movespeedcalc }} de velocidad de movimiento que se reduce con el tiempo</speed> durante {{ movementspeedduration }} s. Mientras el escudo esté activo, los enemigos que inflijan daño con un ataque o habilidad al aliado con el escudo recibirán <magicDamage>{{ damagereturn }} de daño mágico</magicDamage> una vez por escudo.<br /><br />Tibbers siempre obtiene el efecto de <spellName>Escudo fundido</spellName> si está invocado.{{ spellmodifierdescriptionappend }}",
+      "vars": []
+    },
+    {
+      "cooldown": [
+        130,
+        115,
+        100
+      ],
+      "cooldownBurn": "130/115/100",
+      "cost": [
+        100,
+        100,
+        100
+      ],
+      "costBurn": "100",
+      "costType": " {{ abilityresourcename }}",
+      "datavalues": {},
+      "description": "Annie da vida a su oso Tibbers, que daña a todas las unidades de la zona. Tibbers puede atacar y quemar a los enemigos adyacentes.",
+      "effect": [
+        null,
+        [
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0
+        ]
+      ],
+      "effectBurn": [
+        null,
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0"
+      ],
+      "id": "AnnieR",
+      "image": {
+        "full": "AnnieR.png",
+        "group": "spell",
+        "h": 48,
+        "sprite": "spell1.png",
+        "w": 48,
+        "x": 432,
+        "y": 96
+      },
+      "leveltip": {
+        "effect": [
+          "{{ initialdamage }} -> {{ initialdamageNL }}",
+          "{{ auradamage }} -> {{ auradamageNL }}",
+          "{{ tibbersattackdamage }} -> {{ tibbersattackdamageNL }}",
+          "{{ tibbersbonusms }} -> {{ tibbersbonusmsNL }}",
+          "{{ cooldown }} -> {{ cooldownNL }}",
+          "{{ rpercentpenbuff*100.000000 }}% -> {{ rpercentpenbuffnl*100.000000 }}%"
+        ],
+        "label": [
+          "Daño inicial",
+          "Daño de aura",
+          "Daño de ataque",
+          "Velocidad de movimiento adicional",
+          "Enfriamiento",
+          "Penetración mágica"
+        ]
+      },
+      "maxammo": "-1",
+      "maxrank": 3,
+      "name": "Invocar: Tibbers",
+      "range": [
+        600,
+        600,
+        600
+      ],
+      "rangeBurn": "600",
+      "resource": "{{ cost }} {{ abilityresourcename }}",
+      "tooltip": "<spellPassive>Pasiva:</spellPassive> Annie obtiene un <magicPen>{{ rpercentpenbuff*100 }}% de penetración mágica</magicPen>.<br /><br />Annie invoca a su oso Tibbers e inflige <magicDamage>{{ initialburstdamage }} de daño mágico</magicDamage>. Durante los siguientes {{ tibberslifetime }} s, Tibbers inflige <magicDamage>{{ tibbersauradamage }} de daño mágico a los enemigos cercanos cada segundo</magicDamage>.<br /><br />Tibbers enfurece al invocarlo, si Annie aturde a un campeón enemigo o si Annie muere. Mientras está enfurecido, Tibbers obtiene un <attackSpeed>275% de velocidad de ataque</attackSpeed> y un <speed>100% de velocidad de movimiento</speed>, que se van reduciendo a lo largo de 3 s.<br /><br /><recast>Reactivación:</recast> Da órdenes a Tibbers de forma manual.{{ spellmodifierdescriptionappend }}",
+      "vars": []
+    }
+  ],
+  "stats": {
+    "armor": 23,
+    "armorperlevel": 4,
+    "attackdamage": 50,
+    "attackdamageperlevel": 0,
+    "attackrange": 625,
+    "attackspeed": 0.61,
+    "attackspeedperlevel": 1.36,
+    "crit": 0,
+    "critperlevel": 0,
+    "hp": 560,
+    "hpperlevel": 96,
+    "hpregen": 5.5,
+    "hpregenperlevel": 0.55,
+    "movespeed": 335,
+    "mp": 418,
+    "mpperlevel": 25,
+    "mpregen": 8,
+    "mpregenperlevel": 0.8,
+    "spellblock": 30,
+    "spellblockperlevel": 1.3
+  },
+  "tags": [
+    "Mage",
+    "Support"
+  ],
+  "title": "La Hija de la Oscuridad"
+}

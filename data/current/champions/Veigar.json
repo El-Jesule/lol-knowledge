@@ -1,0 +1,1091 @@
+{
+  "allytips": [
+    "Usa Horizonte de sucesos para aumentar tus probabilidades de éxito al emplear Materia oscura.",
+    "Veigar depende en gran medida del maná y la reducción de enfriamiento. Si compras objetos con estas estadísticas, aumentarás la eficacia de tu pasiva y de Ataque maligno.",
+    "Veigar es muy frágil. Intenta asegurarte de tener al menos un hechizo de invocador que se pueda usar de forma defensiva."
+  ],
+  "blurb": "Entusiasta maestro de la magia negra, Veigar ha hecho suyos poderes a los que pocos mortales se atreven a acercarse. Como espíritu de Ciudad de Bandle, buscó durante mucho tiempo deshacerse de las limitaciones de la magia yordle, así que su atención se...",
+  "enemytips": [
+    "Materia oscura es una habilidad muy peligrosa, pero se puede esquivar. Presta atención al indicador auditivo y visual para saber cuándo y dónde llegará el hechizo.",
+    "Horizonte de sucesos solo aturde a las unidades en el borde. Si estás dentro del hechizo, podrás moverte y atacar.",
+    "La definitiva de Veigar inflige daño adicional en función de la vida que hayas perdido."
+  ],
+  "id": "Veigar",
+  "image": {
+    "full": "Veigar.png",
+    "group": "champion",
+    "h": 48,
+    "sprite": "champion4.png",
+    "w": 48,
+    "x": 384,
+    "y": 96
+  },
+  "info": {
+    "attack": 2,
+    "defense": 2,
+    "difficulty": 7,
+    "magic": 10
+  },
+  "key": "45",
+  "lore": "Entusiasta maestro de la magia negra, Veigar ha hecho suyos poderes a los que pocos mortales se atreven a acercarse. Como espíritu de Ciudad de Bandle, buscó durante mucho tiempo deshacerse de las limitaciones de la magia yordle, así que su atención se posó sobre unos textos arcanos que habían estado escondidos durante siglos. Ahora, dada su terquedad y su curiosidad infinita por los misterios del universo, Veigar es menospreciado a menudo pero, aunque él se ve a sí mismo como una fuerza del mal, posee una moral interior que lleva a algunos a cuestionar sus motivaciones ulteriores.",
+  "name": "Veigar",
+  "partype": "Maná",
+  "passive": {
+    "description": "Veigar es el mayor mal que se haya visto en el corazón de Runaterra... ¡y cada vez es más malvado! Veigar aumenta su poder de habilidad de forma permanente al golpear a un campeón enemigo con un hechizo o al acabar con un enemigo.",
+    "image": {
+      "full": "VeigarEntropy.png",
+      "group": "passive",
+      "h": 48,
+      "sprite": "passive4.png",
+      "w": 48,
+      "x": 384,
+      "y": 96
+    },
+    "name": "Poder de Maldad increíble"
+  },
+  "recommended": [],
+  "skins": [
+    {
+      "chromas": false,
+      "id": "45000",
+      "name": "default",
+      "num": 0
+    },
+    {
+      "chromas": false,
+      "id": "45001",
+      "name": "Veigar hechicero blanco",
+      "num": 1
+    },
+    {
+      "chromas": false,
+      "id": "45002",
+      "name": "Veigar curling",
+      "num": 2
+    },
+    {
+      "chromas": false,
+      "id": "45003",
+      "name": "Veigar barbagrís",
+      "num": 3
+    },
+    {
+      "chromas": false,
+      "id": "45004",
+      "name": "Veigar duende",
+      "num": 4
+    },
+    {
+      "chromas": false,
+      "id": "45005",
+      "name": "Barón von Veigar",
+      "num": 5
+    },
+    {
+      "chromas": false,
+      "id": "45006",
+      "name": "Veigar villano con clase",
+      "num": 6
+    },
+    {
+      "chromas": false,
+      "id": "45007",
+      "name": "Veigar Papá Noel pérfido",
+      "num": 7
+    },
+    {
+      "chromas": true,
+      "id": "45008",
+      "name": "Veigar jefe final",
+      "num": 8
+    },
+    {
+      "chromas": true,
+      "id": "45009",
+      "name": "Veigar escuadrón omega",
+      "num": 9
+    },
+    {
+      "chromas": false,
+      "id": "45010",
+      "name": "Veigar escuadrón omega (zafiro)",
+      "num": 10,
+      "parentSkin": 9
+    },
+    {
+      "chromas": false,
+      "id": "45011",
+      "name": "Veigar escuadrón omega (tanzanita)",
+      "num": 11,
+      "parentSkin": 9
+    },
+    {
+      "chromas": false,
+      "id": "45012",
+      "name": "Veigar escuadrón omega (ojo de gato)",
+      "num": 12,
+      "parentSkin": 9
+    },
+    {
+      "chromas": true,
+      "id": "45013",
+      "name": "Veigar bosque ancestral",
+      "num": 13
+    },
+    {
+      "chromas": false,
+      "id": "45014",
+      "name": "Veigar bosque ancestral (esmeralda)",
+      "num": 14,
+      "parentSkin": 13
+    },
+    {
+      "chromas": false,
+      "id": "45015",
+      "name": "Veigar bosque ancestral (perla)",
+      "num": 15,
+      "parentSkin": 13
+    },
+    {
+      "chromas": false,
+      "id": "45016",
+      "name": "Veigar bosque ancestral (obsidiana)",
+      "num": 16,
+      "parentSkin": 13
+    },
+    {
+      "chromas": false,
+      "id": "45017",
+      "name": "Veigar bosque ancestral (cuarzo rosa)",
+      "num": 17,
+      "parentSkin": 13
+    },
+    {
+      "chromas": false,
+      "id": "45018",
+      "name": "Veigar bosque ancestral (turquesa)",
+      "num": 18,
+      "parentSkin": 13
+    },
+    {
+      "chromas": false,
+      "id": "45019",
+      "name": "Veigar bosque ancestral (rubí)",
+      "num": 19,
+      "parentSkin": 13
+    },
+    {
+      "chromas": false,
+      "id": "45020",
+      "name": "Veigar bosque ancestral (ojo de gato)",
+      "num": 20,
+      "parentSkin": 13
+    },
+    {
+      "chromas": false,
+      "id": "45021",
+      "name": "Veigar bosque ancestral (amatista)",
+      "num": 21,
+      "parentSkin": 13
+    },
+    {
+      "chromas": false,
+      "id": "45022",
+      "name": "Veigar bosque ancestral (arcoíris)",
+      "num": 22,
+      "parentSkin": 13
+    },
+    {
+      "chromas": true,
+      "id": "45023",
+      "name": "Veigar cosplay de Cuernofurioso",
+      "num": 23
+    },
+    {
+      "chromas": false,
+      "id": "45024",
+      "name": "Veigar cosplay de Cuernofurioso (rubí)",
+      "num": 24,
+      "parentSkin": 23
+    },
+    {
+      "chromas": false,
+      "id": "45025",
+      "name": "Veigar cosplay de Cuernofurioso (aguamarina)",
+      "num": 25,
+      "parentSkin": 23
+    },
+    {
+      "chromas": false,
+      "id": "45026",
+      "name": "Veigar cosplay de Cuernofurioso (cuarzo rosa)",
+      "num": 26,
+      "parentSkin": 23
+    },
+    {
+      "chromas": false,
+      "id": "45027",
+      "name": "Veigar cosplay de Cuernofurioso (esmeralda)",
+      "num": 27,
+      "parentSkin": 23
+    },
+    {
+      "chromas": false,
+      "id": "45028",
+      "name": "Veigar cosplay de Cuernofurioso (citrino)",
+      "num": 28,
+      "parentSkin": 23
+    },
+    {
+      "chromas": false,
+      "id": "45029",
+      "name": "Veigar cosplay de Cuernofurioso (perla)",
+      "num": 29,
+      "parentSkin": 23
+    },
+    {
+      "chromas": false,
+      "id": "45030",
+      "name": "Veigar cosplay de Cuernofurioso (tanzanita)",
+      "num": 30,
+      "parentSkin": 23
+    },
+    {
+      "chromas": false,
+      "id": "45031",
+      "name": "Veigar cosplay de Cuernofurioso (obsidiana)",
+      "num": 31,
+      "parentSkin": 23
+    },
+    {
+      "chromas": true,
+      "id": "45032",
+      "name": "Veigar astronauta",
+      "num": 32
+    },
+    {
+      "chromas": false,
+      "id": "45033",
+      "name": "Veigar astronauta (rubí)",
+      "num": 33,
+      "parentSkin": 32
+    },
+    {
+      "chromas": false,
+      "id": "45034",
+      "name": "Veigar astronauta (zafiro)",
+      "num": 34,
+      "parentSkin": 32
+    },
+    {
+      "chromas": false,
+      "id": "45035",
+      "name": "Veigar astronauta (ojo de gato)",
+      "num": 35,
+      "parentSkin": 32
+    },
+    {
+      "chromas": false,
+      "id": "45036",
+      "name": "Veigar astronauta (cuarzo rosa)",
+      "num": 36,
+      "parentSkin": 32
+    },
+    {
+      "chromas": false,
+      "id": "45037",
+      "name": "Veigar astronauta (esmeralda)",
+      "num": 37,
+      "parentSkin": 32
+    },
+    {
+      "chromas": false,
+      "id": "45038",
+      "name": "Veigar astronauta (tanzanita)",
+      "num": 38,
+      "parentSkin": 32
+    },
+    {
+      "chromas": false,
+      "id": "45039",
+      "name": "Veigar astronauta (arcoíris)",
+      "num": 39,
+      "parentSkin": 32
+    },
+    {
+      "chromas": false,
+      "id": "45040",
+      "name": "Veigar astronauta (citrino)",
+      "num": 40,
+      "parentSkin": 32
+    },
+    {
+      "chromas": true,
+      "id": "45041",
+      "name": "Veigar domador de monstruos",
+      "num": 41
+    },
+    {
+      "chromas": false,
+      "id": "45042",
+      "name": "Veigar jefe final (mítico)",
+      "num": 42,
+      "parentSkin": 8
+    },
+    {
+      "chromas": false,
+      "id": "45043",
+      "name": "Veigar domador de monstruos (rubí)",
+      "num": 43,
+      "parentSkin": 41
+    },
+    {
+      "chromas": false,
+      "id": "45044",
+      "name": "Veigar domador de monstruos (zafiro)",
+      "num": 44,
+      "parentSkin": 41
+    },
+    {
+      "chromas": false,
+      "id": "45045",
+      "name": "Veigar domador de monstruos (ojo de gato)",
+      "num": 45,
+      "parentSkin": 41
+    },
+    {
+      "chromas": false,
+      "id": "45046",
+      "name": "Veigar domador de monstruos (turquesa)",
+      "num": 46,
+      "parentSkin": 41
+    },
+    {
+      "chromas": false,
+      "id": "45047",
+      "name": "Veigar domador de monstruos (cuarzo rosa)",
+      "num": 47,
+      "parentSkin": 41
+    },
+    {
+      "chromas": false,
+      "id": "45048",
+      "name": "Veigar domador de monstruos (jaspe)",
+      "num": 48,
+      "parentSkin": 41
+    },
+    {
+      "chromas": false,
+      "id": "45049",
+      "name": "Veigar domador de monstruos (obsidiana)",
+      "num": 49,
+      "parentSkin": 41
+    },
+    {
+      "chromas": false,
+      "id": "45050",
+      "name": "Veigar domador de monstruos (arcoíris)",
+      "num": 50,
+      "parentSkin": 41
+    },
+    {
+      "chromas": true,
+      "id": "45051",
+      "name": "Rey Aveijar",
+      "num": 51
+    },
+    {
+      "chromas": false,
+      "id": "45052",
+      "name": "Rey Aveijar (rubí)",
+      "num": 52,
+      "parentSkin": 51
+    },
+    {
+      "chromas": false,
+      "id": "45053",
+      "name": "Rey Aveijar (esmeralda)",
+      "num": 53,
+      "parentSkin": 51
+    },
+    {
+      "chromas": false,
+      "id": "45054",
+      "name": "Rey Aveijar (cuarzo rosa)",
+      "num": 54,
+      "parentSkin": 51
+    },
+    {
+      "chromas": false,
+      "id": "45055",
+      "name": "Rey Aveijar (turquesa)",
+      "num": 55,
+      "parentSkin": 51
+    },
+    {
+      "chromas": false,
+      "id": "45056",
+      "name": "Rey Aveijar (zafiro)",
+      "num": 56,
+      "parentSkin": 51
+    },
+    {
+      "chromas": false,
+      "id": "45057",
+      "name": "Rey Aveijar (amatista)",
+      "num": 57,
+      "parentSkin": 51
+    },
+    {
+      "chromas": false,
+      "id": "45058",
+      "name": "Rey Aveijar (obsidiana)",
+      "num": 58,
+      "parentSkin": 51
+    },
+    {
+      "chromas": false,
+      "id": "45059",
+      "name": "Rey Aveijar (perla)",
+      "num": 59,
+      "parentSkin": 51
+    },
+    {
+      "chromas": true,
+      "id": "45060",
+      "name": "Veigar noche de miedo",
+      "num": 60
+    },
+    {
+      "chromas": false,
+      "id": "45061",
+      "name": "Veigar noche de miedo (rubí)",
+      "num": 61,
+      "parentSkin": 60
+    },
+    {
+      "chromas": false,
+      "id": "45062",
+      "name": "Veigar noche de miedo (amatista)",
+      "num": 62,
+      "parentSkin": 60
+    },
+    {
+      "chromas": false,
+      "id": "45063",
+      "name": "Veigar noche de miedo (turquesa)",
+      "num": 63,
+      "parentSkin": 60
+    },
+    {
+      "chromas": false,
+      "id": "45064",
+      "name": "Veigar noche de miedo (zafiro)",
+      "num": 64,
+      "parentSkin": 60
+    },
+    {
+      "chromas": false,
+      "id": "45065",
+      "name": "Veigar noche de miedo (cuarzo rosa)",
+      "num": 65,
+      "parentSkin": 60
+    },
+    {
+      "chromas": false,
+      "id": "45066",
+      "name": "Veigar noche de miedo (espectral)",
+      "num": 66,
+      "parentSkin": 60
+    },
+    {
+      "chromas": true,
+      "id": "45067",
+      "name": "Veigar cámara de magma de prestigio",
+      "num": 67
+    },
+    {
+      "chromas": false,
+      "id": "45068",
+      "name": "Veigar cámara de magma de prestigio (vívido)",
+      "num": 68,
+      "parentSkin": 67
+    }
+  ],
+  "spells": [
+    {
+      "cooldown": [
+        6,
+        5.5,
+        5,
+        4.5,
+        4
+      ],
+      "cooldownBurn": "6/5.5/5/4.5/4",
+      "cost": [
+        30,
+        35,
+        40,
+        45,
+        50
+      ],
+      "costBurn": "30/35/40/45/50",
+      "costType": " {{ abilityresourcename }}",
+      "datavalues": {},
+      "description": "Veigar lanza un rayo de energía oscura que inflige daño mágico a los dos primeros enemigos alcanzados. Las unidades asesinadas por el rayo otorgan a Veigar un poco de poder de habilidad permanente.",
+      "effect": [
+        null,
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          1,
+          1,
+          1,
+          1,
+          1
+        ],
+        [
+          2,
+          2,
+          2,
+          2,
+          2
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ]
+      ],
+      "effectBurn": [
+        null,
+        "0",
+        "1",
+        "2",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0"
+      ],
+      "id": "VeigarBalefulStrike",
+      "image": {
+        "full": "VeigarBalefulStrike.png",
+        "group": "spell",
+        "h": 48,
+        "sprite": "spell15.png",
+        "w": 48,
+        "x": 288,
+        "y": 96
+      },
+      "leveltip": {
+        "effect": [
+          "{{ basedamage }} -> {{ basedamageNL }}",
+          "{{ apratio*100.000000 }}% -> {{ aprationl*100.000000 }}%",
+          "{{ cooldown }} -> {{ cooldownNL }}",
+          "{{ cost }} -> {{ costNL }}"
+        ],
+        "label": [
+          "Daño",
+          "Relación de PH total",
+          "Enfriamiento",
+          "Coste de @AbilityResourceName@"
+        ]
+      },
+      "maxammo": "-1",
+      "maxrank": 5,
+      "name": "Ataque maligno",
+      "range": [
+        1000,
+        1000,
+        1000,
+        1000,
+        1000
+      ],
+      "rangeBurn": "1000",
+      "resource": "{{ cost }} {{ abilityresourcename }}",
+      "tooltip": "Veigar libera un rayo de energía oscura que inflige <magicDamage>{{ totaldamage }} de daño mágico</magicDamage> a los dos primeros enemigos alcanzados.<br /><br />Si Veigar mata a un enemigo con esta habilidad, obtiene {{ spell.veigarpassive:dqkillstacks }} acumulación de <keywordMajor>Maldad increíble</keywordMajor>. Los súbditos grandes y monstruos gigantes otorgan {{ spell.veigarpassive:dqkillstackslarge }} acumulaciones.{{ spellmodifierdescriptionappend }}",
+      "vars": []
+    },
+    {
+      "cooldown": [
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "cooldownBurn": "0",
+      "cost": [
+        60,
+        65,
+        70,
+        75,
+        80
+      ],
+      "costBurn": "60/65/70/75/80",
+      "costType": " {{ abilityresourcename }}",
+      "datavalues": {},
+      "description": "Veigar invoca una gran masa de materia oscura que cae del cielo sobre la ubicación del objetivo e inflige daño mágico. Las acumulaciones de Maldad increíble reducen el enfriamiento de Materia oscura.",
+      "effect": [
+        null,
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          1.2,
+          1.2,
+          1.2,
+          1.2,
+          1.2
+        ],
+        [
+          8,
+          8,
+          8,
+          8,
+          8
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ]
+      ],
+      "effectBurn": [
+        null,
+        "0",
+        "1.2",
+        "8",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0"
+      ],
+      "id": "VeigarDarkMatter",
+      "image": {
+        "full": "VeigarDarkMatter.png",
+        "group": "spell",
+        "h": 48,
+        "sprite": "spell15.png",
+        "w": 48,
+        "x": 336,
+        "y": 96
+      },
+      "leveltip": {
+        "effect": [
+          "{{ basedamage }} -> {{ basedamageNL }}",
+          "{{ apratio*100.000000 }}% -> {{ aprationl*100.000000 }}%",
+          "{{ cost }} -> {{ costNL }}"
+        ],
+        "label": [
+          "Daño",
+          "Relación de PH total",
+          "Coste de @AbilityResourceName@"
+        ]
+      },
+      "maxammo": "-1",
+      "maxrank": 5,
+      "name": "Materia oscura",
+      "range": [
+        950,
+        950,
+        950,
+        950,
+        950
+      ],
+      "rangeBurn": "950",
+      "resource": "{{ cost }} {{ abilityresourcename }}",
+      "tooltip": "Veigar invoca materia oscura que cae desde el cielo e inflige <magicDamage>{{ totaldamage }} de daño mágico</magicDamage>.<br /><br />Por cada {{ spell.veigarpassive:pstacksperdarkmattercdr }} acumulaciones de <keywordMajor>Maldad increíble</keywordMajor>, se reduce el enfriamiento de esta habilidad un {{ spell.veigarpassive:darkmattercdrincrement*100 }}%.{{ spellmodifierdescriptionappend }}",
+      "vars": []
+    },
+    {
+      "cooldown": [
+        20,
+        18.5,
+        17,
+        15.5,
+        14
+      ],
+      "cooldownBurn": "20/18.5/17/15.5/14",
+      "cost": [
+        70,
+        75,
+        80,
+        85,
+        90
+      ],
+      "costBurn": "70/75/80/85/90",
+      "costType": " {{ abilityresourcename }}",
+      "datavalues": {},
+      "description": "Veigar retuerce los límites del espacio y crea una cárcel que aturde a los enemigos que la atraviesan.",
+      "effect": [
+        null,
+        [
+          1.5,
+          1.75,
+          2,
+          2.25,
+          2.5
+        ],
+        [
+          0.5,
+          0.5,
+          0.5,
+          0.5,
+          0.5
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ]
+      ],
+      "effectBurn": [
+        null,
+        "1.5/1.75/2/2.25/2.5",
+        "0.5",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0"
+      ],
+      "id": "VeigarEventHorizon",
+      "image": {
+        "full": "VeigarEventHorizon.png",
+        "group": "spell",
+        "h": 48,
+        "sprite": "spell15.png",
+        "w": 48,
+        "x": 384,
+        "y": 96
+      },
+      "leveltip": {
+        "effect": [
+          "{{ stunduration }} -> {{ stundurationNL }}",
+          "{{ cooldown }} -> {{ cooldownNL }}",
+          "{{ cost }} -> {{ costNL }}"
+        ],
+        "label": [
+          "Duración del aturdimiento:",
+          "Enfriamiento",
+          "Coste de @AbilityResourceName@"
+        ]
+      },
+      "maxammo": "-1",
+      "maxrank": 5,
+      "name": "Horizonte de sucesos",
+      "range": [
+        725,
+        725,
+        725,
+        725,
+        725
+      ],
+      "rangeBurn": "725",
+      "resource": "{{ cost }} {{ abilityresourcename }}",
+      "tooltip": "Veigar retuerce los límites del espacio y crea una cárcel que <status>aturde</status> a los enemigos que la atraviesan durante {{ stunduration }} s. La cárcel dura 3 s.{{ spellmodifierdescriptionappend }}",
+      "vars": []
+    },
+    {
+      "cooldown": [
+        120,
+        90,
+        60
+      ],
+      "cooldownBurn": "120/90/60",
+      "cost": [
+        100,
+        100,
+        100
+      ],
+      "costBurn": "100",
+      "costType": " {{ abilityresourcename }}",
+      "datavalues": {},
+      "description": "El campeón objetivo sufre una explosión que inflige una gran cantidad de daño mágico. Dicha cantidad aumenta según la vida que le falte al objetivo.",
+      "effect": [
+        null,
+        [
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0
+        ]
+      ],
+      "effectBurn": [
+        null,
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0"
+      ],
+      "id": "VeigarR",
+      "image": {
+        "full": "VeigarR.png",
+        "group": "spell",
+        "h": 48,
+        "sprite": "spell15.png",
+        "w": 48,
+        "x": 432,
+        "y": 96
+      },
+      "leveltip": {
+        "effect": [
+          "{{ basedamage }} -> {{ basedamageNL }}",
+          "{{ apratio*100.000000 }}% -> {{ aprationl*100.000000 }}%",
+          "{{ cooldown }} -> {{ cooldownNL }}"
+        ],
+        "label": [
+          "Daño",
+          "Relación de PH total",
+          "Enfriamiento"
+        ]
+      },
+      "maxammo": "-1",
+      "maxrank": 3,
+      "name": "Estallido primordial",
+      "range": [
+        650,
+        650,
+        650
+      ],
+      "rangeBurn": "650",
+      "resource": "{{ cost }} {{ abilityresourcename }}",
+      "tooltip": "Veigar lanza un rayo de magia primordial a un campeón enemigo, lo que inflige entre <magicDamage>{{ mindamage }} y {{ maxdamage }} de daño mágico</magicDamage>, que aumenta según la vida que le falte al objetivo. El daño se maximiza contra los enemigos que estén por debajo del 33% de vida.{{ spellmodifierdescriptionappend }}",
+      "vars": []
+    }
+  ],
+  "stats": {
+    "armor": 18,
+    "armorperlevel": 5.2,
+    "attackdamage": 52,
+    "attackdamageperlevel": 0,
+    "attackrange": 550,
+    "attackspeed": 0.625,
+    "attackspeedperlevel": 2.24,
+    "crit": 0,
+    "critperlevel": 0,
+    "hp": 580,
+    "hpperlevel": 108,
+    "hpregen": 6.5,
+    "hpregenperlevel": 0.6,
+    "movespeed": 340,
+    "mp": 490,
+    "mpperlevel": 26,
+    "mpregen": 8,
+    "mpregenperlevel": 0.8,
+    "spellblock": 32,
+    "spellblockperlevel": 1.3
+  },
+  "tags": [
+    "Mage"
+  ],
+  "title": "El Pequeño Maestro del Mal"
+}

@@ -1,0 +1,1108 @@
+{
+  "allytips": [
+    "Ahorrar energía y enfriamientos de hechizo hasta que se use Marca de la muerte maximizará su daño.",
+    "Haz clic dos veces rápidamente en Sombra viviente para teleportar a Zed hasta su sombra inmediatamente y que pueda escapar rápido.",
+    "Colocar una Sombra viviente antes de usar Marca de la muerte puede ayudar a Zed a escapar del combate a salvo."
+  ],
+  "blurb": "Zed, despiadado y nada compasivo, es el líder de la Orden de la Sombra, una organización que él mismo creó con el propósito de militarizar las tradiciones marciales y mágicas de Jonia para expulsar a los invasores noxianos. Durante la guerra, la...",
+  "enemytips": [
+    "Zed recibe efectos adicionales de los objetos de daño de ataque que compra, así que la armadura es particularmente efectiva contra él.",
+    "Se vuelve especialmente vulnerable una vez usada Sombra viviente, pues de ella dependen su daño, su ralentización y su movilidad.",
+    "La Cuchillada de sombra de Zed sólo te ralentiza si su sombra te alcanza con ella. "
+  ],
+  "id": "Zed",
+  "image": {
+    "full": "Zed.png",
+    "group": "champion",
+    "h": 48,
+    "sprite": "champion5.png",
+    "w": 48,
+    "x": 336,
+    "y": 48
+  },
+  "info": {
+    "attack": 9,
+    "defense": 2,
+    "difficulty": 7,
+    "magic": 1
+  },
+  "key": "238",
+  "lore": "Zed, despiadado y nada compasivo, es el líder de la Orden de la Sombra, una organización que él mismo creó con el propósito de militarizar las tradiciones marciales y mágicas de Jonia para expulsar a los invasores noxianos. Durante la guerra, la desesperación lo llevó a desbloquear la forma secreta de las sombras, un espíritu mágico tan peligroso y corrupto como poderoso. Zed ha dominado todas las técnicas prohibidas para destruir todo aquello que amenace a su nación o a su nuevo orden.",
+  "name": "Zed",
+  "partype": "Energía",
+  "passive": {
+    "description": "Los ataques básicos de Zed contra objetivos con poca vida infligen daño mágico adicional. Este efecto no puede aplicarse al mismo campeón enemigo más de una vez cada pocos segundos.",
+    "image": {
+      "full": "ZedP.png",
+      "group": "passive",
+      "h": 48,
+      "sprite": "passive5.png",
+      "w": 48,
+      "x": 336,
+      "y": 48
+    },
+    "name": "Desprecio por los débiles"
+  },
+  "recommended": [],
+  "skins": [
+    {
+      "chromas": false,
+      "id": "238000",
+      "name": "default",
+      "num": 0
+    },
+    {
+      "chromas": true,
+      "id": "238001",
+      "name": "Zed hoja relámpago",
+      "num": 1
+    },
+    {
+      "chromas": true,
+      "id": "238002",
+      "name": "Zed SKT T1",
+      "num": 2
+    },
+    {
+      "chromas": true,
+      "id": "238003",
+      "name": "PROYECTO: Zed",
+      "num": 3
+    },
+    {
+      "chromas": false,
+      "id": "238004",
+      "name": "Zed hoja relámpago (cuarzo rosa)",
+      "num": 4,
+      "parentSkin": 1
+    },
+    {
+      "chromas": false,
+      "id": "238005",
+      "name": "Zed hoja relámpago (ojo de gato)",
+      "num": 5,
+      "parentSkin": 1
+    },
+    {
+      "chromas": false,
+      "id": "238006",
+      "name": "Zed hoja relámpago (aguamarina)",
+      "num": 6,
+      "parentSkin": 1
+    },
+    {
+      "chromas": false,
+      "id": "238007",
+      "name": "Zed hoja relámpago (rubí)",
+      "num": 7,
+      "parentSkin": 1
+    },
+    {
+      "chromas": false,
+      "id": "238008",
+      "name": "Zed hoja relámpago (amatista)",
+      "num": 8,
+      "parentSkin": 1
+    },
+    {
+      "chromas": false,
+      "id": "238009",
+      "name": "Zed hoja relámpago (esmeralda)",
+      "num": 9,
+      "parentSkin": 1
+    },
+    {
+      "chromas": true,
+      "id": "238010",
+      "name": "Zed (Mundial 2016)",
+      "num": 10
+    },
+    {
+      "chromas": false,
+      "id": "238011",
+      "name": "Zed muerte anunciada",
+      "num": 11
+    },
+    {
+      "chromas": false,
+      "id": "238012",
+      "name": "Zed del Mundial 2016 (dorado)",
+      "num": 12,
+      "parentSkin": 10
+    },
+    {
+      "chromas": true,
+      "id": "238013",
+      "name": "Zed exterminador galáctico",
+      "num": 13
+    },
+    {
+      "chromas": false,
+      "id": "238014",
+      "name": "PROYECTO: Zed (Ajuste de cuentas)",
+      "num": 14,
+      "parentSkin": 3
+    },
+    {
+      "chromas": true,
+      "id": "238015",
+      "name": "Zed PsyOps",
+      "num": 15
+    },
+    {
+      "chromas": false,
+      "id": "238016",
+      "name": "Zed PsyOps (obsidiana)",
+      "num": 16,
+      "parentSkin": 15
+    },
+    {
+      "chromas": false,
+      "id": "238017",
+      "name": "Zed PsyOps (rubí)",
+      "num": 17,
+      "parentSkin": 15
+    },
+    {
+      "chromas": false,
+      "id": "238018",
+      "name": "Zed PsyOps (esmeralda)",
+      "num": 18,
+      "parentSkin": 15
+    },
+    {
+      "chromas": false,
+      "id": "238019",
+      "name": "Zed PsyOps (caza)",
+      "num": 19,
+      "parentSkin": 15
+    },
+    {
+      "chromas": false,
+      "id": "238020",
+      "name": "Zed PsyOps (arenisca)",
+      "num": 20,
+      "parentSkin": 15
+    },
+    {
+      "chromas": false,
+      "id": "238021",
+      "name": "Zed PsyOps (zafiro)",
+      "num": 21,
+      "parentSkin": 15
+    },
+    {
+      "chromas": false,
+      "id": "238022",
+      "name": "Zed PsyOps (tanzanita)",
+      "num": 22,
+      "parentSkin": 15
+    },
+    {
+      "chromas": false,
+      "id": "238023",
+      "name": "Zed PsyOps (turquesa)",
+      "num": 23,
+      "parentSkin": 15
+    },
+    {
+      "chromas": false,
+      "id": "238024",
+      "name": "Zed exterminador galáctico (rubí)",
+      "num": 24,
+      "parentSkin": 13
+    },
+    {
+      "chromas": false,
+      "id": "238025",
+      "name": "Zed exterminador galáctico (cuarzo rosa)",
+      "num": 25,
+      "parentSkin": 13
+    },
+    {
+      "chromas": false,
+      "id": "238026",
+      "name": "Zed exterminador galáctico (esmeralda)",
+      "num": 26,
+      "parentSkin": 13
+    },
+    {
+      "chromas": false,
+      "id": "238027",
+      "name": "Zed exterminador galáctico (perla)",
+      "num": 27,
+      "parentSkin": 13
+    },
+    {
+      "chromas": false,
+      "id": "238028",
+      "name": "Zed exterminador galáctico (zafiro)",
+      "num": 28,
+      "parentSkin": 13
+    },
+    {
+      "chromas": false,
+      "id": "238029",
+      "name": "Zed exterminador galáctico (mercenario)",
+      "num": 29,
+      "parentSkin": 13
+    },
+    {
+      "chromas": false,
+      "id": "238030",
+      "name": "PROYECTO: Zed de prestigio",
+      "num": 30
+    },
+    {
+      "chromas": true,
+      "id": "238031",
+      "name": "Zed galante",
+      "num": 31
+    },
+    {
+      "chromas": false,
+      "id": "238032",
+      "name": "Zed galante (rubí)",
+      "num": 32,
+      "parentSkin": 31
+    },
+    {
+      "chromas": false,
+      "id": "238033",
+      "name": "Zed galante (ojo de gato)",
+      "num": 33,
+      "parentSkin": 31
+    },
+    {
+      "chromas": false,
+      "id": "238034",
+      "name": "Zed galante (esmeralda)",
+      "num": 34,
+      "parentSkin": 31
+    },
+    {
+      "chromas": false,
+      "id": "238035",
+      "name": "Zed galante (tanzanita)",
+      "num": 35,
+      "parentSkin": 31
+    },
+    {
+      "chromas": false,
+      "id": "238036",
+      "name": "Zed galante (obsidiana)",
+      "num": 36,
+      "parentSkin": 31
+    },
+    {
+      "chromas": false,
+      "id": "238037",
+      "name": "Zed galante (Club cerúleo)",
+      "num": 37,
+      "parentSkin": 31
+    },
+    {
+      "chromas": true,
+      "id": "238038",
+      "name": "Zed empíreo",
+      "num": 38
+    },
+    {
+      "chromas": false,
+      "id": "238039",
+      "name": "Zed exterminador galáctico (mítico)",
+      "num": 39,
+      "parentSkin": 13
+    },
+    {
+      "chromas": false,
+      "id": "238040",
+      "name": "Zed empíreo (rubí)",
+      "num": 40,
+      "parentSkin": 38
+    },
+    {
+      "chromas": false,
+      "id": "238041",
+      "name": "Zed empíreo (cuarzo rosa)",
+      "num": 41,
+      "parentSkin": 38
+    },
+    {
+      "chromas": false,
+      "id": "238042",
+      "name": "Zed empíreo (ojo de gato)",
+      "num": 42,
+      "parentSkin": 38
+    },
+    {
+      "chromas": false,
+      "id": "238043",
+      "name": "Zed empíreo (zafiro)",
+      "num": 43,
+      "parentSkin": 38
+    },
+    {
+      "chromas": false,
+      "id": "238044",
+      "name": "Zed empíreo (perla)",
+      "num": 44,
+      "parentSkin": 38
+    },
+    {
+      "chromas": false,
+      "id": "238045",
+      "name": "Zed empíreo (esmeralda)",
+      "num": 45,
+      "parentSkin": 38
+    },
+    {
+      "chromas": false,
+      "id": "238046",
+      "name": "Zed empíreo (amatista)",
+      "num": 46,
+      "parentSkin": 38
+    },
+    {
+      "chromas": false,
+      "id": "238047",
+      "name": "Zed empíreo (turquesa)",
+      "num": 47,
+      "parentSkin": 38
+    },
+    {
+      "chromas": false,
+      "id": "238048",
+      "name": "Zed empíreo (fulgor de neón)",
+      "num": 48,
+      "parentSkin": 38
+    },
+    {
+      "chromas": true,
+      "id": "238049",
+      "name": "Zed viaje inmortal",
+      "num": 49
+    },
+    {
+      "chromas": false,
+      "id": "238050",
+      "name": "Zed viaje inmortal (rubí)",
+      "num": 50,
+      "parentSkin": 49
+    },
+    {
+      "chromas": false,
+      "id": "238051",
+      "name": "Zed viaje inmortal (ojo de gato)",
+      "num": 51,
+      "parentSkin": 49
+    },
+    {
+      "chromas": false,
+      "id": "238052",
+      "name": "Zed viaje inmortal (esmeralda)",
+      "num": 52,
+      "parentSkin": 49
+    },
+    {
+      "chromas": false,
+      "id": "238053",
+      "name": "Zed viaje inmortal (cuarzo rosa)",
+      "num": 53,
+      "parentSkin": 49
+    },
+    {
+      "chromas": false,
+      "id": "238054",
+      "name": "Zed viaje inmortal (zafiro)",
+      "num": 54,
+      "parentSkin": 49
+    },
+    {
+      "chromas": false,
+      "id": "238055",
+      "name": "Zed viaje inmortal (amatista)",
+      "num": 55,
+      "parentSkin": 49
+    },
+    {
+      "chromas": false,
+      "id": "238056",
+      "name": "Zed viaje inmortal (turquesa)",
+      "num": 56,
+      "parentSkin": 49
+    },
+    {
+      "chromas": false,
+      "id": "238057",
+      "name": "Zed viaje inmortal (perla)",
+      "num": 57,
+      "parentSkin": 49
+    },
+    {
+      "chromas": true,
+      "id": "238058",
+      "name": "Zed luna sangrienta",
+      "num": 58
+    },
+    {
+      "chromas": false,
+      "id": "238059",
+      "name": "Zed luna sangrienta (rubí)",
+      "num": 59,
+      "parentSkin": 58
+    },
+    {
+      "chromas": false,
+      "id": "238060",
+      "name": "Zed luna sangrienta (ojo de gato)",
+      "num": 60,
+      "parentSkin": 58
+    },
+    {
+      "chromas": false,
+      "id": "238061",
+      "name": "Zed luna sangrienta (zafiro)",
+      "num": 61,
+      "parentSkin": 58
+    },
+    {
+      "chromas": false,
+      "id": "238062",
+      "name": "Zed luna sangrienta (amatista)",
+      "num": 62,
+      "parentSkin": 58
+    },
+    {
+      "chromas": false,
+      "id": "238063",
+      "name": "Zed luna sangrienta (esmeralda)",
+      "num": 63,
+      "parentSkin": 58
+    },
+    {
+      "chromas": false,
+      "id": "238064",
+      "name": "Zed luna sangrienta (turquesa)",
+      "num": 64,
+      "parentSkin": 58
+    },
+    {
+      "chromas": false,
+      "id": "238065",
+      "name": "Zed luna sangrienta (perla)",
+      "num": 65,
+      "parentSkin": 58
+    },
+    {
+      "chromas": false,
+      "id": "238066",
+      "name": "Zed luna sangrienta (obsidiana)",
+      "num": 66,
+      "parentSkin": 58
+    },
+    {
+      "chromas": false,
+      "id": "238067",
+      "name": "Zed SKT T1 (ejemplar)",
+      "num": 67,
+      "parentSkin": 2
+    },
+    {
+      "chromas": false,
+      "id": "238068",
+      "name": "Zed exterminador galáctico cuántico",
+      "num": 68
+    },
+    {
+      "chromas": true,
+      "id": "238069",
+      "name": "Zed florecer espiritual de prestigio",
+      "num": 69
+    },
+    {
+      "chromas": false,
+      "id": "238070",
+      "name": "Zed florecer espiritual de prestigio (vívido)",
+      "num": 70,
+      "parentSkin": 69
+    },
+    {
+      "chromas": false,
+      "id": "238071",
+      "name": "Zed SKT T1 (élite)",
+      "num": 71,
+      "parentSkin": 2
+    }
+  ],
+  "spells": [
+    {
+      "cooldown": [
+        6,
+        6,
+        6,
+        6,
+        6
+      ],
+      "cooldownBurn": "6",
+      "cost": [
+        75,
+        70,
+        65,
+        60,
+        55
+      ],
+      "costBurn": "75/70/65/60/55",
+      "costType": " {{ abilityresourcename }}",
+      "datavalues": {},
+      "description": "Tanto Zed como sus sombras lanzan los shurikens.<br><br>Cada shuriken inflige daño a todos los enemigos que golpea.",
+      "effect": [
+        null,
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ]
+      ],
+      "effectBurn": [
+        null,
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0"
+      ],
+      "id": "ZedQ",
+      "image": {
+        "full": "ZedQ.png",
+        "group": "spell",
+        "h": 48,
+        "sprite": "spell17.png",
+        "w": 48,
+        "x": 96,
+        "y": 96
+      },
+      "leveltip": {
+        "effect": [
+          "{{ basedamage }} -> {{ basedamageNL }}",
+          "{{ cost }} -> {{ costNL }}"
+        ],
+        "label": [
+          "Daño",
+          "Coste de @AbilityResourceName@"
+        ]
+      },
+      "maxammo": "-1",
+      "maxrank": 5,
+      "name": "Shuriken navaja",
+      "range": [
+        900,
+        900,
+        900,
+        900,
+        900
+      ],
+      "rangeBurn": "900",
+      "resource": "{{ cost }} {{ abilityresourcename }}",
+      "tooltip": "Tanto Zed como sus <keywordMajor>sombras</keywordMajor> lanzan sus shurikens e infligen <physicalDamage>{{ totaldamage }} de daño físico</physicalDamage> al primer enemigo al que atraviesen y <physicalDamage>{{ passthroughdamage }} de daño físico</physicalDamage> a cada enemigo adicional.{{ spellmodifierdescriptionappend }}",
+      "vars": []
+    },
+    {
+      "cooldown": [
+        20,
+        19,
+        18,
+        17,
+        16
+      ],
+      "cooldownBurn": "20/19/18/17/16",
+      "cost": [
+        40,
+        35,
+        30,
+        25,
+        20
+      ],
+      "costBurn": "40/35/30/25/20",
+      "costType": " {{ abilityresourcename }}",
+      "datavalues": {},
+      "description": "<font color='#FF9900'>Pasiva:</font> Cada vez que Zed y sus sombras golpean a un objetivo con la misma habilidad, Zed obtiene energía. Solo se puede obtener energía una vez por habilidad lanzada.<br><br><font color='#FF9900'>Activa:</font> La sombra de Zed se desliza hacia delante y se queda en el sitio durante unos s. Si Zed reactiva Sombra viviente, intercambia su posición con la sombra.",
+      "effect": [
+        null,
+        [
+          5.25,
+          5.25,
+          5.25,
+          5.25,
+          5.25
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          30,
+          35,
+          40,
+          45,
+          50
+        ],
+        [
+          5.25,
+          5.25,
+          5.25,
+          5.25,
+          5.25
+        ],
+        [
+          5,
+          5,
+          5,
+          5,
+          5
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ]
+      ],
+      "effectBurn": [
+        null,
+        "5.25",
+        "0",
+        "30/35/40/45/50",
+        "5.25",
+        "5",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0"
+      ],
+      "id": "ZedW",
+      "image": {
+        "full": "ZedW.png",
+        "group": "spell",
+        "h": 48,
+        "sprite": "spell17.png",
+        "w": 48,
+        "x": 144,
+        "y": 96
+      },
+      "leveltip": {
+        "effect": [
+          "{{ energyrestoredoublehit }} -> {{ energyrestoredoublehitNL }}",
+          "{{ cost }} -> {{ costNL }}",
+          "{{ cooldown }} -> {{ cooldownNL }}"
+        ],
+        "label": [
+          "Devolución de energía",
+          "Coste de @AbilityResourceName@",
+          "Enfriamiento"
+        ]
+      },
+      "maxammo": "-1",
+      "maxrank": 5,
+      "name": "Sombra viviente",
+      "range": [
+        650,
+        650,
+        650,
+        650,
+        650
+      ],
+      "rangeBurn": "650",
+      "resource": "{{ cost }} {{ abilityresourcename }}",
+      "tooltip": "<spellPassive>Pasiva:</spellPassive> Cada vez que Zed y sus <keywordMajor>sombras</keywordMajor> golpean a un objetivo con la misma habilidad, Zed obtiene <keywordMajor>{{ energyrestoredoublehit }} de energía</keywordMajor>.<br /><br /><spellActive>Activa:</spellActive> La <keywordMajor>sombra</keywordMajor> de Zed se desliza hacia delante y se queda en el sitio durante {{ shadowdurationtooltip }} s. Si se <recast>vuelve a lanzar</recast> la habilidad, Zed intercambia su posición con la <keywordMajor>sombra</keywordMajor>.{{ spellmodifierdescriptionappend }}",
+      "vars": []
+    },
+    {
+      "cooldown": [
+        5,
+        4.5,
+        4,
+        3.5,
+        3
+      ],
+      "cooldownBurn": "5/4.5/4/3.5/3",
+      "cost": [
+        40,
+        40,
+        40,
+        40,
+        40
+      ],
+      "costBurn": "40",
+      "costType": " {{ abilityresourcename }}",
+      "datavalues": {},
+      "description": "Zed y sus sombras acuchillan e infligen daño a los enemigos cercanos. Se ralentiza a los enemigos golpeados por Cuchillada de sombra.",
+      "effect": [
+        null,
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ]
+      ],
+      "effectBurn": [
+        null,
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0"
+      ],
+      "id": "ZedE",
+      "image": {
+        "full": "ZedE.png",
+        "group": "spell",
+        "h": 48,
+        "sprite": "spell17.png",
+        "w": 48,
+        "x": 192,
+        "y": 96
+      },
+      "leveltip": {
+        "effect": [
+          "{{ basedamage }} -> {{ basedamageNL }}",
+          "{{ movespeedmod*-100.000000 }}% -> {{ movespeedmodnl*-100.000000 }}%",
+          "{{ cooldown }} -> {{ cooldownNL }}"
+        ],
+        "label": [
+          "Daño",
+          "Ralentización",
+          "Enfriamiento"
+        ]
+      },
+      "maxammo": "-1",
+      "maxrank": 5,
+      "name": "Cuchillada de sombra",
+      "range": [
+        290,
+        290,
+        290,
+        290,
+        290
+      ],
+      "rangeBurn": "290",
+      "resource": "{{ cost }} {{ abilityresourcename }}",
+      "tooltip": "Zed y sus <keywordMajor>sombras</keywordMajor> ejecutan una cuchillada que inflige <physicalDamage>{{ totaldamage }} de daño físico</physicalDamage> a los enemigos cercanos.<br /><br />Cada enemigo alcanzado por la cuchillada reduce en {{ shadowhitcdr }} s el enfriamiento de <spellName>Sombra viviente</spellName>.<br /><br />Los enemigos alcanzados por <keywordMajor>Cuchillada de sombra</keywordMajor> sufren una <status>ralentización</status> del {{ movespeedmod*-100 }}% durante {{ slowduration }} s. Los enemigos alcanzados por varias cuchilladas no reciben daño adicional, pero sí una <status>ralentización</status> del {{ movespeedmodbonus*-100 }}%.{{ spellmodifierdescriptionappend }}",
+      "vars": []
+    },
+    {
+      "cooldown": [
+        120,
+        110,
+        100
+      ],
+      "cooldownBurn": "120/110/100",
+      "cost": [
+        0,
+        0,
+        0
+      ],
+      "costBurn": "0",
+      "costType": "Sin coste",
+      "datavalues": {},
+      "description": "No se puede marcar a Zed como objetivo y se desliza hacia un campeón enemigo, marcándolo. Tras 3 segundos, la marca se activa, repitiendo una parte del daño infligido por Zed al objetivo mientras estaba marcado.",
+      "effect": [
+        null,
+        [
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0
+        ]
+      ],
+      "effectBurn": [
+        null,
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0"
+      ],
+      "id": "ZedR",
+      "image": {
+        "full": "ZedR.png",
+        "group": "spell",
+        "h": 48,
+        "sprite": "spell17.png",
+        "w": 48,
+        "x": 240,
+        "y": 96
+      },
+      "leveltip": {
+        "effect": [
+          "{{ rdamageamp*100.000000 }}% -> {{ rdamageampnl*100.000000 }}%",
+          "{{ cooldown }} -> {{ cooldownNL }}"
+        ],
+        "label": [
+          "Daño de la explosión de la marca",
+          "Enfriamiento"
+        ]
+      },
+      "maxammo": "-1",
+      "maxrank": 3,
+      "name": "Marca de la muerte",
+      "range": [
+        625,
+        625,
+        625
+      ],
+      "rangeBurn": "625",
+      "resource": "Sin coste",
+      "tooltip": "No se puede marcar a Zed como objetivo y se desliza hacia un campeón enemigo, marcándolo. Al cabo de {{ rdeathmarkduration }} s, la marca se activa, inflige <physicalDamage>{{ rcalculateddamage }} de daño físico</physicalDamage> y repite un {{ rdamageamp*100 }}% de todo el daño infligido por Zed al objetivo mientras la marca estaba activa.<br /><br />El deslizamiento deja atrás una <keywordMajor>sombra</keywordMajor> que dura {{ rshadowdurationdisplayed }} s. Zed puede <recast>volver a lanzar</recast> esta habilidad para intercambiar su posición con la <keywordMajor>sombra</keywordMajor>.{{ spellmodifierdescriptionappend }}",
+      "vars": []
+    }
+  ],
+  "stats": {
+    "armor": 32,
+    "armorperlevel": 4.7,
+    "attackdamage": 63,
+    "attackdamageperlevel": 0,
+    "attackrange": 125,
+    "attackspeed": 0.651,
+    "attackspeedperlevel": 3.3,
+    "crit": 0,
+    "critperlevel": 0,
+    "hp": 654,
+    "hpperlevel": 99,
+    "hpregen": 7,
+    "hpregenperlevel": 0.65,
+    "movespeed": 345,
+    "mp": 200,
+    "mpperlevel": 0,
+    "mpregen": 50,
+    "mpregenperlevel": 0,
+    "spellblock": 29,
+    "spellblockperlevel": 2.05
+  },
+  "tags": [
+    "Assassin"
+  ],
+  "title": "El Maestro de las Sombras"
+}

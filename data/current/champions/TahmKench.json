@@ -1,0 +1,949 @@
+{
+  "allytips": [
+    "Como apoyo, tu principal función es proteger a tus aliados más vulnerables. ¡Ten muy presente el alcance y el enfriamiento de Devorar y posiciónate en función de ello!",
+    "Piénsate muy bien cuándo usar la activa de Piel gruesa. A veces conviene usar el escudo pronto para no sufrir más daño, pero otras es más interesante la curación."
+  ],
+  "blurb": "Tahm Kench, al que se le han atribuido diferentes nombres a lo largo de la historia, es un demonio que viaja por los canales de Runaterra colmando su insaciable apetito con las desgracias ajenas. Pese a que pueda parecer cautivador y orgulloso, se...",
+  "enemytips": [
+    "Cuando veas que Tahm Kench usa el escudo de Piel gruesa, no olvides que ha renunciado a la curación de la habilidad. No volverá a acumular vida gris hasta que termine el enfriamiento de Piel gruesa. ¡Aprovéchate de ello!",
+    "Cuidado con la Inmersión abisal de Kench; puedes cancelar la canalización con efectos de control de adversario de inmovilización."
+  ],
+  "id": "TahmKench",
+  "image": {
+    "full": "TahmKench.png",
+    "group": "champion",
+    "h": 48,
+    "sprite": "champion4.png",
+    "w": 48,
+    "x": 144,
+    "y": 48
+  },
+  "info": {
+    "attack": 3,
+    "defense": 9,
+    "difficulty": 5,
+    "magic": 6
+  },
+  "key": "223",
+  "lore": "Tahm Kench, al que se le han atribuido diferentes nombres a lo largo de la historia, es un demonio que viaja por los canales de Runaterra colmando su insaciable apetito con las desgracias ajenas. Pese a que pueda parecer cautivador y orgulloso, se pavonea por el mundo físico como un vagabundo en busca de una presa incauta. Su lengua, poderosa como un látigo, es capaz de aturdir incluso a un guerrero pesado desde varios metros de distancia; caer en su ruidoso estómago implica precipitarse a un abismo del que no hay esperanza de regresar.",
+  "name": "Tahm Kench",
+  "partype": "Maná",
+  "passive": {
+    "description": "Tahm Kench utiliza su fuerza corporal para reforzar sus ataques, con lo que obtiene daño extra en función de su vida total. Consigue acumulaciones de <spellName>Paladar peculiar</spellName> al infligir daño a los campeones enemigos. Con tres acumulaciones, puede usar <spellName>Devorar</spellName> contra un campeón enemigo.",
+    "image": {
+      "full": "TahmKenchP.png",
+      "group": "passive",
+      "h": 48,
+      "sprite": "passive4.png",
+      "w": 48,
+      "x": 144,
+      "y": 48
+    },
+    "name": "Paladar peculiar"
+  },
+  "recommended": [],
+  "skins": [
+    {
+      "chromas": false,
+      "id": "223000",
+      "name": "default",
+      "num": 0
+    },
+    {
+      "chromas": false,
+      "id": "223001",
+      "name": "Tahm Kench maestro chef",
+      "num": 1
+    },
+    {
+      "chromas": false,
+      "id": "223002",
+      "name": "Urf Kench",
+      "num": 2
+    },
+    {
+      "chromas": true,
+      "id": "223003",
+      "name": "Tahm Kench emperador de la moneda",
+      "num": 3
+    },
+    {
+      "chromas": false,
+      "id": "223004",
+      "name": "Tahm Kench emperador de la moneda (obsidiana)",
+      "num": 4,
+      "parentSkin": 3
+    },
+    {
+      "chromas": false,
+      "id": "223005",
+      "name": "Tahm Kench emperador de la moneda (aguamarina)",
+      "num": 5,
+      "parentSkin": 3
+    },
+    {
+      "chromas": false,
+      "id": "223006",
+      "name": "Tahm Kench emperador de la moneda (amatista)",
+      "num": 6,
+      "parentSkin": 3
+    },
+    {
+      "chromas": false,
+      "id": "223007",
+      "name": "Tahm Kench emperador de la moneda (cuarzo rosa)",
+      "num": 7,
+      "parentSkin": 3
+    },
+    {
+      "chromas": false,
+      "id": "223008",
+      "name": "Tahm Kench emperador de la moneda (perla)",
+      "num": 8,
+      "parentSkin": 3
+    },
+    {
+      "chromas": false,
+      "id": "223009",
+      "name": "Tahm Kench emperador de la moneda (rubí)",
+      "num": 9,
+      "parentSkin": 3
+    },
+    {
+      "chromas": false,
+      "id": "223011",
+      "name": "Tahm Kench arcano",
+      "num": 11
+    },
+    {
+      "chromas": true,
+      "id": "223012",
+      "name": "Tahm Kench arcano (rubí)",
+      "num": 12,
+      "parentSkin": 11
+    },
+    {
+      "chromas": false,
+      "id": "223013",
+      "name": "Tahm Kench arcano (citrino)",
+      "num": 13,
+      "parentSkin": 11
+    },
+    {
+      "chromas": false,
+      "id": "223014",
+      "name": "Tahm Kench arcano (amatista)",
+      "num": 14,
+      "parentSkin": 11
+    },
+    {
+      "chromas": false,
+      "id": "223015",
+      "name": "Tahm Kench arcano (zafiro)",
+      "num": 15,
+      "parentSkin": 11
+    },
+    {
+      "chromas": false,
+      "id": "223016",
+      "name": "Tahm Kench arcano (esmeralda)",
+      "num": 16,
+      "parentSkin": 11
+    },
+    {
+      "chromas": false,
+      "id": "223017",
+      "name": "Tahm Kench arcano (cuarzo rosa)",
+      "num": 17,
+      "parentSkin": 11
+    },
+    {
+      "chromas": false,
+      "id": "223018",
+      "name": "Tahm Kench arcano (perla)",
+      "num": 18,
+      "parentSkin": 11
+    },
+    {
+      "chromas": false,
+      "id": "223019",
+      "name": "Tahm Kench arcano (obsidiana)",
+      "num": 19,
+      "parentSkin": 11
+    },
+    {
+      "chromas": false,
+      "id": "223020",
+      "name": "Tahm Kench solo ante el peligro",
+      "num": 20
+    },
+    {
+      "chromas": true,
+      "id": "223021",
+      "name": "Tahm Kench solo ante el peligro (rubí)",
+      "num": 21,
+      "parentSkin": 20
+    },
+    {
+      "chromas": false,
+      "id": "223022",
+      "name": "Tahm Kench solo ante el peligro (ojo de gato)",
+      "num": 22,
+      "parentSkin": 20
+    },
+    {
+      "chromas": false,
+      "id": "223023",
+      "name": "Tahm Kench solo ante el peligro (amatista)",
+      "num": 23,
+      "parentSkin": 20
+    },
+    {
+      "chromas": false,
+      "id": "223024",
+      "name": "Tahm Kench solo ante el peligro (zafiro)",
+      "num": 24,
+      "parentSkin": 20
+    },
+    {
+      "chromas": false,
+      "id": "223025",
+      "name": "Tahm Kench solo ante el peligro (cuarzo rosa)",
+      "num": 25,
+      "parentSkin": 20
+    },
+    {
+      "chromas": false,
+      "id": "223026",
+      "name": "Tahm Kench solo ante el peligro (esmeralda)",
+      "num": 26,
+      "parentSkin": 20
+    },
+    {
+      "chromas": false,
+      "id": "223027",
+      "name": "Tahm Kench solo ante el peligro (obsidiana)",
+      "num": 27,
+      "parentSkin": 20
+    },
+    {
+      "chromas": false,
+      "id": "223028",
+      "name": "Tahm Kench solo ante el peligro (perla)",
+      "num": 28,
+      "parentSkin": 20
+    },
+    {
+      "chromas": false,
+      "id": "223029",
+      "name": "Tahm Kench solo ante el peligro (nómada)",
+      "num": 29,
+      "parentSkin": 20
+    },
+    {
+      "chromas": false,
+      "id": "223030",
+      "name": "Tahm Kench pergaminos de Shan Hai",
+      "num": 30
+    },
+    {
+      "chromas": true,
+      "id": "223031",
+      "name": "Tahm Kench pergaminos de Shan Hai (rubí)",
+      "num": 31,
+      "parentSkin": 30
+    },
+    {
+      "chromas": false,
+      "id": "223032",
+      "name": "Tahm Kench pergaminos de Shan Hai (citrino)",
+      "num": 32,
+      "parentSkin": 30
+    },
+    {
+      "chromas": false,
+      "id": "223033",
+      "name": "Tahm Kench pergaminos de Shan Hai (granito)",
+      "num": 33,
+      "parentSkin": 30
+    },
+    {
+      "chromas": false,
+      "id": "223034",
+      "name": "Tahm Kench pergaminos de Shan Hai (peridoto)",
+      "num": 34,
+      "parentSkin": 30
+    },
+    {
+      "chromas": false,
+      "id": "223035",
+      "name": "Tahm Kench pergaminos de Shan Hai (arenisca)",
+      "num": 35,
+      "parentSkin": 30
+    },
+    {
+      "chromas": false,
+      "id": "223036",
+      "name": "Tahm Kench pergaminos de Shan Hai (tanzanita)",
+      "num": 36,
+      "parentSkin": 30
+    },
+    {
+      "chromas": false,
+      "id": "223037",
+      "name": "Tahm Kench pergaminos de Shan Hai (cuarzo rosa)",
+      "num": 37,
+      "parentSkin": 30
+    },
+    {
+      "chromas": false,
+      "id": "223038",
+      "name": "Tahm Kench pergaminos de Shan Hai (perla)",
+      "num": 38,
+      "parentSkin": 30
+    },
+    {
+      "chromas": false,
+      "id": "223039",
+      "name": "Choncc Kench",
+      "num": 39
+    },
+    {
+      "chromas": true,
+      "id": "223040",
+      "name": "Choncc Kench (rubí)",
+      "num": 40,
+      "parentSkin": 39
+    },
+    {
+      "chromas": false,
+      "id": "223041",
+      "name": "Choncc Kench (ojo de gato)",
+      "num": 41,
+      "parentSkin": 39
+    },
+    {
+      "chromas": false,
+      "id": "223042",
+      "name": "Choncc Kench (esmeralda)",
+      "num": 42,
+      "parentSkin": 39
+    },
+    {
+      "chromas": false,
+      "id": "223043",
+      "name": "Choncc Kench (zafiro)",
+      "num": 43,
+      "parentSkin": 39
+    },
+    {
+      "chromas": false,
+      "id": "223044",
+      "name": "Choncc Kench (amatista)",
+      "num": 44,
+      "parentSkin": 39
+    },
+    {
+      "chromas": false,
+      "id": "223045",
+      "name": "Choncc Kench (turquesa)",
+      "num": 45,
+      "parentSkin": 39
+    },
+    {
+      "chromas": false,
+      "id": "223046",
+      "name": "Choncc Kench (arenisca)",
+      "num": 46,
+      "parentSkin": 39
+    },
+    {
+      "chromas": false,
+      "id": "223047",
+      "name": "Choncc Kench (obsidiana)",
+      "num": 47,
+      "parentSkin": 39
+    }
+  ],
+  "spells": [
+    {
+      "cooldown": [
+        7,
+        6.5,
+        6,
+        5.5,
+        5
+      ],
+      "cooldownBurn": "7/6.5/6/5.5/5",
+      "cost": [
+        50,
+        46,
+        42,
+        38,
+        34
+      ],
+      "costBurn": "50/46/42/38/34",
+      "costType": " {{ abilityresourcename }}",
+      "datavalues": {},
+      "description": "Tahm Kench lanza un lengüetazo que daña y ralentiza a la primera unidad alcanzada. Además, se cura a sí mismo si golpea a un campeón enemigo.<br><br>Aplica una acumulación de <spellName>Paladar peculiar</spellName> a los campeones enemigos. Si el campeón ya tiene 3 acumulaciones de <spellName>Paladar peculiar</spellName>, resulta aturdido y se consumen las acumulaciones.",
+      "effect": [
+        null,
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ]
+      ],
+      "effectBurn": [
+        null,
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0"
+      ],
+      "id": "TahmKenchQ",
+      "image": {
+        "full": "TahmKenchQ.png",
+        "group": "spell",
+        "h": 48,
+        "sprite": "spell14.png",
+        "w": 48,
+        "x": 288,
+        "y": 0
+      },
+      "leveltip": {
+        "effect": [
+          "{{ basedamage }} -> {{ basedamageNL }}",
+          "{{ baseheal }} -> {{ basehealNL }}",
+          "{{ percenthealthhealing*100.000000 }}% -> {{ percenthealthhealingnl*100.000000 }}%",
+          "{{ cooldown }} -> {{ cooldownNL }}",
+          "{{ cost }} -> {{ costNL }}"
+        ],
+        "label": [
+          "Daño básico",
+          "Curación",
+          "Curación por porcentaje de vida que falta",
+          "Enfriamiento",
+          "Coste de @AbilityResourceName@"
+        ]
+      },
+      "maxammo": "-1",
+      "maxrank": 5,
+      "name": "Lengüetazo",
+      "range": [
+        900,
+        900,
+        900,
+        900,
+        900
+      ],
+      "rangeBurn": "900",
+      "resource": "{{ cost }} {{ abilityresourcename }}",
+      "tooltip": "Inflige <magicDamage>{{ totaldamage }} de daño mágico</magicDamage> al primer enemigo alcanzado y lo <status>ralentiza</status> un {{ slowamount*100 }}% durante {{ slowduration }} s. <br /><br />Al impactar contra campeones, Tahm Kench se cura <healing>{{ baseheal }} +{{ percenthealthhealing*100 }}% de la vida que le falte</healing> y aplica una acumulación de <spellName>Paladar peculiar</spellName>, lo que inflige <magicDamage>{{ spell.tahmkenchpassive:totaldamage }} de daño mágico adicional</magicDamage>. Si ese campeón ya tenía 3 acumulaciones de <spellName>Paladar peculiar</spellName>, también queda <status>aturdido</status> durante {{ stunduration }} s y se consumen las acumulaciones.<br /><br />Activa <span class=\"color0bf7de\">Devorar</span> mientras tu lengua está en el aire para devorar a los campeones enemigos que ya tienen 3 acumulaciones de <spellName>Paladar peculiar</spellName> desde lejos cuando los alcanzas.{{ spellmodifierdescriptionappend }}",
+      "vars": []
+    },
+    {
+      "cooldown": [
+        21,
+        20,
+        19,
+        18,
+        17
+      ],
+      "cooldownBurn": "21/20/19/18/17",
+      "cost": [
+        60,
+        75,
+        90,
+        105,
+        120
+      ],
+      "costBurn": "60/75/90/105/120",
+      "costType": " {{ abilityresourcename }}",
+      "datavalues": {},
+      "description": "Se sumerge y vuelve a aparecer en la ubicación objetivo, lo que inflige daño y lanza por los aires a todos los enemigos en una zona.",
+      "effect": [
+        null,
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ]
+      ],
+      "effectBurn": [
+        null,
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0"
+      ],
+      "id": "TahmKenchW",
+      "image": {
+        "full": "TahmKenchW.png",
+        "group": "spell",
+        "h": 48,
+        "sprite": "spell14.png",
+        "w": 48,
+        "x": 336,
+        "y": 0
+      },
+      "leveltip": {
+        "effect": [
+          "{{ cooldown }} -> {{ cooldownNL }}",
+          "{{ basedamage }} -> {{ basedamageNL }}",
+          "{{ castrange }} -> {{ castrangeNL }}",
+          "{{ cost }} -> {{ costNL }}",
+          "{{ champrefund*100.000000 }}% -> {{ champrefundnl*100.000000 }}%"
+        ],
+        "label": [
+          "Enfriamiento",
+          "Daño",
+          "Alcance",
+          "Coste de @AbilityResourceName@",
+          "Recuperación del enfriamiento"
+        ]
+      },
+      "maxammo": "-1",
+      "maxrank": 5,
+      "name": "Inmersión abisal",
+      "range": [
+        1000,
+        1050,
+        1100,
+        1150,
+        1200
+      ],
+      "rangeBurn": "1000/1050/1100/1150/1200",
+      "resource": "{{ cost }} {{ abilityresourcename }}",
+      "tooltip": "Se sumerge y vuelve a aparecer en la ubicación objetivo, lo que inflige <magicDamage>{{ totaldamage }} de daño mágico</magicDamage> y <status>lanza por los aires</status> a todos los enemigos en una zona durante {{ knockupduration }} s. Golpear al menos a un campeón enemigo devuelve un {{ champrefund*100 }}% del enfriamiento y el coste de <scaleMana>maná</scaleMana>. <br /><br />Los aliados <span class=\"color0bf7de\">devorados</span> pueden desplazarse con él (pero siempre pueden salir antes).{{ spellmodifierdescriptionappend }}",
+      "vars": []
+    },
+    {
+      "cooldown": [
+        3,
+        3,
+        3,
+        3,
+        3
+      ],
+      "cooldownBurn": "3",
+      "cost": [
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "costBurn": "0",
+      "costType": " {{ abilityresourcename }}",
+      "datavalues": {},
+      "description": "<passive>Pasiva:</passive> Tahm Kench acumula un porcentaje del daño que recibe y se cura según dicho porcentaje cuando no está en combate.<br><br><active>Activa:</active> Convierte todo el daño acumulado en un escudo temporal.",
+      "effect": [
+        null,
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ]
+      ],
+      "effectBurn": [
+        null,
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0"
+      ],
+      "id": "TahmKenchE",
+      "image": {
+        "full": "TahmKenchE.png",
+        "group": "spell",
+        "h": 48,
+        "sprite": "spell14.png",
+        "w": 48,
+        "x": 384,
+        "y": 0
+      },
+      "leveltip": {
+        "effect": [
+          "{{ greyhealthratio*100.000000 }}% -> {{ greyhealthrationl*100.000000 }}%",
+          "{{ greyhealthratioenhanced*100.000000 }}% -> {{ greyhealthratioenhancednl*100.000000 }}%"
+        ],
+        "label": [
+          "% de daño a Piel gruesa",
+          "% de daño a Piel gruesa mejorada"
+        ]
+      },
+      "maxammo": "-1",
+      "maxrank": 5,
+      "name": "Piel gruesa",
+      "range": [
+        2400,
+        2400,
+        2400,
+        2400,
+        2400
+      ],
+      "rangeBurn": "2400",
+      "resource": "{{ cost }} {{ abilityresourcename }}",
+      "tooltip": "<passive>Pasiva:</passive> El {{ greyhealthratio*100 }}% del daño que Tahm Kench recibe se acumula en su <spellName>Piel gruesa</spellName>, lo que aumenta en un {{ greyhealthratioenhanced*100 }}% si hay al menos {{ enhancedthreshold }} campeones enemigos cercanos. Si Kench no ha recibido daño durante {{ ooctimer }} s, <spellName>Piel gruesa</spellName> se consume rápidamente para curar a Tahm un {{ greyhealthhealingratio }} de su valor.<br /><br /><active>Activa:</active> Convierte la <spellName>Piel gruesa</spellName> acumulada en un <shield>escudo</shield> que dura {{ shieldduration }} s.{{ spellmodifierdescriptionappend }}",
+      "vars": []
+    },
+    {
+      "cooldown": [
+        0,
+        0,
+        0
+      ],
+      "cooldownBurn": "0",
+      "cost": [
+        100,
+        100,
+        100
+      ],
+      "costBurn": "100",
+      "costType": " de maná",
+      "datavalues": {},
+      "description": "Tahm Kench devora a un campeón durante unos segundos, lo que inflige daño mágico si es un enemigo o lo protege si es un aliado.",
+      "effect": [
+        null,
+        [
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0
+        ]
+      ],
+      "effectBurn": [
+        null,
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0"
+      ],
+      "id": "TahmKenchRWrapper",
+      "image": {
+        "full": "TahmKenchRWrapper.png",
+        "group": "spell",
+        "h": 48,
+        "sprite": "spell14.png",
+        "w": 48,
+        "x": 432,
+        "y": 0
+      },
+      "leveltip": {
+        "effect": [
+          "{{ basedamage }} -> {{ basedamageNL }}",
+          "{{ baseshield }} -> {{ baseshieldNL }}",
+          "{{ datacooldown }} -> {{ datacooldownNL }}"
+        ],
+        "label": [
+          "Daño",
+          "Cantidad de escudo",
+          "Enfriamiento"
+        ]
+      },
+      "maxammo": "-1",
+      "maxrank": 3,
+      "name": "Devorar",
+      "range": [
+        25000,
+        25000,
+        25000
+      ],
+      "rangeBurn": "25000",
+      "resource": "{{ datamanacost }} de maná",
+      "tooltip": "Tahm Kench devora a un campeón durante unos segundos. Puede <recast>reactivar</recast> la habilidad para escupirlo.<br /><br /><specialRules>Campeones enemigos:</specialRules> Se necesitan 3 acumulaciones de <spellName>Paladar peculiar</spellName>. Son devorados durante un máximo de {{ enemyduration }} s y reciben <magicDamage>{{ basedamage }} (+{{ percenthpdamage }} de su vida máxima) de daño mágico</magicDamage>. Tahm Kench queda <status>ralentizado</status> un {{ slowamount*100 }}% y <keywordName>anclado</keywordName> durante este efecto.<br /><br /><specialRules>Campeones aliados:</specialRules> Son devorados durante un máximo de {{ allyduration }} s y reciben un <shield>escudo que bloquea {{ totalshield }}</shield> de daño y que se reduce de forma gradual tras ser escupidos. Los aliados también pueden elegir salir antes. Tahm Kench está <status>anclado</status> durante este efecto, pero puede lanzar <keywordName>Inmersión abisal</keywordName> y obtiene un <speed>{{ allyspeedamount*100 }}% de velocidad de movimiento</speed> durante {{ allyduration }} s.{{ spellmodifierdescriptionappend }}",
+      "vars": []
+    }
+  ],
+  "stats": {
+    "armor": 39,
+    "armorperlevel": 4.7,
+    "attackdamage": 56,
+    "attackdamageperlevel": 0,
+    "attackrange": 175,
+    "attackspeed": 0.658,
+    "attackspeedperlevel": 2.5,
+    "crit": 0,
+    "critperlevel": 0,
+    "hp": 640,
+    "hpperlevel": 103,
+    "hpregen": 6.5,
+    "hpregenperlevel": 0.55,
+    "movespeed": 335,
+    "mp": 325,
+    "mpperlevel": 50,
+    "mpregen": 8,
+    "mpregenperlevel": 1,
+    "spellblock": 32,
+    "spellblockperlevel": 2.05
+  },
+  "tags": [
+    "Tank",
+    "Support"
+  ],
+  "title": "El Rey del Río"
+}

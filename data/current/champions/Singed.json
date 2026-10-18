@@ -1,0 +1,810 @@
+{
+  "allytips": [
+    "Rastro de veneno es muy útil para matar reiteradamente y hostigar, por lo que Singed puede controlar el tráfico de la calle en la que esté.",
+    "Usa Poción de demencia para engañar a los enemigos y que te sigan a través de tu Rastro de veneno.",
+    "Si lanzas a los enemigos contra tu torre puedes causarles gran cantidad de daño."
+  ],
+  "blurb": "Singed es un brillante alquimista de cuestionable moralidad cuyos experimentos le revolverían el estómago hasta al criminal más despiadado. Pone sus habilidades al servicio del mejor postor, y le es indiferente el uso que se le dé a sus malvadas...",
+  "enemytips": [
+    "Mantén la distancia para que Singed no te lance entre las garras de sus aliados.",
+    "Para ser eficaz, Singed debe mantenerse muy cerca de tu equipo. Aprovéchalo usando sobre él efectos de control de adversario mientras atacas a sus aliados.",
+    "Ten cuidado cuando persigas a Singed. Es muy difícil de derribar, y puede dejar su Rastro de veneno para causarte daño mientras lo persigues."
+  ],
+  "id": "Singed",
+  "image": {
+    "full": "Singed.png",
+    "group": "champion",
+    "h": 48,
+    "sprite": "champion4.png",
+    "w": 48,
+    "x": 144,
+    "y": 0
+  },
+  "info": {
+    "attack": 4,
+    "defense": 8,
+    "difficulty": 5,
+    "magic": 7
+  },
+  "key": "27",
+  "lore": "Singed es un brillante alquimista de cuestionable moralidad cuyos experimentos le revolverían el estómago hasta al criminal más despiadado. Pone sus habilidades al servicio del mejor postor, y le es indiferente el uso que se le dé a sus malvadas creaciones; pues el caos resultante supone un experimento en sí mismo. Su creación más infame es el shimmer, una sustancia que ha permitido a los barones químicos convertir Zaun en su campo de juego, donde ahora reina el caos. Singed siempre está trabajando en inventos nuevos, y cada uno es más depravado que el anterior...",
+  "name": "Singed",
+  "partype": "Maná",
+  "passive": {
+    "description": "Singed toma el rebufo de los campeones cercanos, obteniendo así un aumento de la velocidad de movimiento al adelantarlos.",
+    "image": {
+      "full": "Singed_Passive.png",
+      "group": "passive",
+      "h": 48,
+      "sprite": "passive4.png",
+      "w": 48,
+      "x": 144,
+      "y": 0
+    },
+    "name": "Estela nociva"
+  },
+  "recommended": [],
+  "skins": [
+    {
+      "chromas": false,
+      "id": "27000",
+      "name": "default",
+      "num": 0
+    },
+    {
+      "chromas": false,
+      "id": "27001",
+      "name": "Singed antidisturbios",
+      "num": 1
+    },
+    {
+      "chromas": false,
+      "id": "27002",
+      "name": "Singed hextech",
+      "num": 2
+    },
+    {
+      "chromas": false,
+      "id": "27003",
+      "name": "Singed surfista",
+      "num": 3
+    },
+    {
+      "chromas": false,
+      "id": "27004",
+      "name": "Singed científico loco",
+      "num": 4
+    },
+    {
+      "chromas": false,
+      "id": "27005",
+      "name": "Singed mejorado",
+      "num": 5
+    },
+    {
+      "chromas": false,
+      "id": "27006",
+      "name": "Singed día nevado",
+      "num": 6
+    },
+    {
+      "chromas": false,
+      "id": "27007",
+      "name": "Singed SSW",
+      "num": 7
+    },
+    {
+      "chromas": false,
+      "id": "27008",
+      "name": "Singed plaga negra",
+      "num": 8
+    },
+    {
+      "chromas": false,
+      "id": "27009",
+      "name": "Singed apicultor",
+      "num": 9
+    },
+    {
+      "chromas": true,
+      "id": "27010",
+      "name": "Singed de la resistencia",
+      "num": 10
+    },
+    {
+      "chromas": false,
+      "id": "27011",
+      "name": "Singed de la resistencia (rubí)",
+      "num": 11,
+      "parentSkin": 10
+    },
+    {
+      "chromas": false,
+      "id": "27012",
+      "name": "Singed de la resistencia (ojo de gato)",
+      "num": 12,
+      "parentSkin": 10
+    },
+    {
+      "chromas": false,
+      "id": "27013",
+      "name": "Singed de la resistencia (esmeralda)",
+      "num": 13,
+      "parentSkin": 10
+    },
+    {
+      "chromas": false,
+      "id": "27014",
+      "name": "Singed de la resistencia (turquesa)",
+      "num": 14,
+      "parentSkin": 10
+    },
+    {
+      "chromas": false,
+      "id": "27015",
+      "name": "Singed de la resistencia (tanzanita)",
+      "num": 15,
+      "parentSkin": 10
+    },
+    {
+      "chromas": false,
+      "id": "27016",
+      "name": "Singed de la resistencia (cuarzo rosa)",
+      "num": 16,
+      "parentSkin": 10
+    },
+    {
+      "chromas": false,
+      "id": "27017",
+      "name": "Singed de la resistencia (perla)",
+      "num": 17,
+      "parentSkin": 10
+    },
+    {
+      "chromas": false,
+      "id": "27018",
+      "name": "Singed de la resistencia (obsidiana)",
+      "num": 18,
+      "parentSkin": 10
+    },
+    {
+      "chromas": true,
+      "id": "27019",
+      "name": "Singed astronauta",
+      "num": 19
+    },
+    {
+      "chromas": false,
+      "id": "27020",
+      "name": "Singed astronauta (rubí)",
+      "num": 20,
+      "parentSkin": 19
+    },
+    {
+      "chromas": false,
+      "id": "27021",
+      "name": "Singed astronauta (ojo de gato)",
+      "num": 21,
+      "parentSkin": 19
+    },
+    {
+      "chromas": false,
+      "id": "27022",
+      "name": "Singed astronauta (zafiro)",
+      "num": 22,
+      "parentSkin": 19
+    },
+    {
+      "chromas": false,
+      "id": "27023",
+      "name": "Singed astronauta (esmeralda)",
+      "num": 23,
+      "parentSkin": 19
+    },
+    {
+      "chromas": false,
+      "id": "27024",
+      "name": "Singed astronauta (obsidiana)",
+      "num": 24,
+      "parentSkin": 19
+    },
+    {
+      "chromas": false,
+      "id": "27025",
+      "name": "Singed astronauta (amatista)",
+      "num": 25,
+      "parentSkin": 19
+    },
+    {
+      "chromas": false,
+      "id": "27026",
+      "name": "Singed astronauta (cuarzo rosa)",
+      "num": 26,
+      "parentSkin": 19
+    },
+    {
+      "chromas": false,
+      "id": "27027",
+      "name": "Singed astronauta (turquesa)",
+      "num": 27,
+      "parentSkin": 19
+    },
+    {
+      "chromas": false,
+      "id": "27028",
+      "name": "Singed laboratorio de shimmer de Arcane",
+      "num": 28
+    }
+  ],
+  "spells": [
+    {
+      "cooldown": [
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "cooldownBurn": "0",
+      "cost": [
+        13,
+        13,
+        13,
+        13,
+        13
+      ],
+      "costBurn": "13",
+      "costType": " de maná por s",
+      "datavalues": {},
+      "description": "Deja un rastro de veneno tras Singed que daña a los enemigos.",
+      "effect": [
+        null,
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ]
+      ],
+      "effectBurn": [
+        null,
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0"
+      ],
+      "id": "PoisonTrail",
+      "image": {
+        "full": "PoisonTrail.png",
+        "group": "spell",
+        "h": 48,
+        "sprite": "spell13.png",
+        "w": 48,
+        "x": 288,
+        "y": 0
+      },
+      "leveltip": {
+        "effect": [
+          "{{ basedamagepersecond }} -> {{ basedamagepersecondNL }}"
+        ],
+        "label": [
+          "Daño"
+        ]
+      },
+      "maxammo": "-1",
+      "maxrank": 5,
+      "name": "Rastro de veneno",
+      "range": [
+        20,
+        20,
+        20,
+        20,
+        20
+      ],
+      "rangeBurn": "20",
+      "resource": "{{ cost }} de maná por s",
+      "tooltip": "<toggle>Activación:</toggle> Singed deja un rastro de veneno que inflige <magicDamage>{{ damagepersecond }} de daño mágico</magicDamage> cada segundo.{{ spellmodifierdescriptionappend }}",
+      "vars": []
+    },
+    {
+      "cooldown": [
+        17,
+        16,
+        15,
+        14,
+        13
+      ],
+      "cooldownBurn": "17/16/15/14/13",
+      "cost": [
+        60,
+        70,
+        80,
+        90,
+        100
+      ],
+      "costBurn": "60/70/80/90/100",
+      "costType": " {{ abilityresourcename }}",
+      "datavalues": {},
+      "description": "Lanza un frasco de megaadhesivo al suelo que ralentiza y ancla a todos los enemigos que lo pisen.",
+      "effect": [
+        null,
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ]
+      ],
+      "effectBurn": [
+        null,
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0"
+      ],
+      "id": "MegaAdhesive",
+      "image": {
+        "full": "MegaAdhesive.png",
+        "group": "spell",
+        "h": 48,
+        "sprite": "spell13.png",
+        "w": 48,
+        "x": 336,
+        "y": 0
+      },
+      "leveltip": {
+        "effect": [
+          "{{ slowpercent }}% -> {{ slowpercentNL }}%",
+          "{{ cooldown }} -> {{ cooldownNL }}",
+          "{{ cost }} -> {{ costNL }}"
+        ],
+        "label": [
+          "Ralentización",
+          "Enfriamiento",
+          "Coste de @AbilityResourceName@"
+        ]
+      },
+      "maxammo": "-1",
+      "maxrank": 5,
+      "name": "Megaadhesivo",
+      "range": [
+        1000,
+        1000,
+        1000,
+        1000,
+        1000
+      ],
+      "rangeBurn": "1000",
+      "resource": "{{ cost }} {{ abilityresourcename }}",
+      "tooltip": "Singed lanza un frasco de líquido pegajoso que <status>ancla</status> y <status>ralentiza</status> a los enemigos en la zona un {{ slowpercent }}% durante {{ wduration }} s.{{ spellmodifierdescriptionappend }}",
+      "vars": []
+    },
+    {
+      "cooldown": [
+        10,
+        9.5,
+        9,
+        8.5,
+        8
+      ],
+      "cooldownBurn": "10/9.5/9/8.5/8",
+      "cost": [
+        60,
+        70,
+        80,
+        90,
+        100
+      ],
+      "costBurn": "60/70/80/90/100",
+      "costType": " {{ abilityresourcename }}",
+      "datavalues": {},
+      "description": "Daña a la unidad enemiga objetivo y la lanza al aire detrás de Singed. Además, si el objetivo cae sobre el Megaadhesivo, queda enraizado.",
+      "effect": [
+        null,
+        [
+          50,
+          60,
+          70,
+          80,
+          90
+        ],
+        [
+          1,
+          1.25,
+          1.5,
+          1.75,
+          2
+        ],
+        [
+          6,
+          6.5,
+          7,
+          7.5,
+          8
+        ],
+        [
+          420,
+          420,
+          420,
+          420,
+          420
+        ],
+        [
+          300,
+          300,
+          300,
+          300,
+          300
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ]
+      ],
+      "effectBurn": [
+        null,
+        "50/60/70/80/90",
+        "1/1.25/1.5/1.75/2",
+        "6/6.5/7/7.5/8",
+        "420",
+        "300",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0"
+      ],
+      "id": "Fling",
+      "image": {
+        "full": "Fling.png",
+        "group": "spell",
+        "h": 48,
+        "sprite": "spell13.png",
+        "w": 48,
+        "x": 384,
+        "y": 0
+      },
+      "leveltip": {
+        "effect": [
+          "{{ basedamagevalue }} -> {{ basedamagevalueNL }}",
+          "{{ maxhpdamage }}% -> {{ maxhpdamageNL }}%",
+          "{{ rootduration }} -> {{ rootdurationNL }}",
+          "{{ cooldown }} -> {{ cooldownNL }}",
+          "{{ cost }} -> {{ costNL }}"
+        ],
+        "label": [
+          "Daño",
+          "Daño por vida máxima",
+          "Duración del enraizamiento",
+          "Enfriamiento",
+          "Coste de @AbilityResourceName@"
+        ]
+      },
+      "maxammo": "-1",
+      "maxrank": 5,
+      "name": "Lanzar",
+      "range": [
+        125,
+        125,
+        125,
+        125,
+        125
+      ],
+      "rangeBurn": "125",
+      "resource": "{{ cost }} {{ abilityresourcename }}",
+      "tooltip": "Singed lanza a un enemigo por encima del hombro, lo que inflige <magicDamage>{{ basedamage }} + {{ maxhpdamage }}% de la vida máxima como daño mágico</magicDamage>.<br /><br />Si Singed lanza a un objetivo a su <spellName>Megaadhesivo</spellName>, este queda <status>enraizado</status> durante {{ rootduration }} s.{{ spellmodifierdescriptionappend }}",
+      "vars": []
+    },
+    {
+      "cooldown": [
+        100,
+        100,
+        100
+      ],
+      "cooldownBurn": "100",
+      "cost": [
+        100,
+        100,
+        100
+      ],
+      "costBurn": "100",
+      "costType": " {{ abilityresourcename }}",
+      "datavalues": {},
+      "description": "Singed ingiere una potente pócima química que aumenta su capacidad de combate y hace que Rastro de veneno aplique heridas graves.",
+      "effect": [
+        null,
+        [
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0
+        ]
+      ],
+      "effectBurn": [
+        null,
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0"
+      ],
+      "id": "InsanityPotion",
+      "image": {
+        "full": "InsanityPotion.png",
+        "group": "spell",
+        "h": 48,
+        "sprite": "spell13.png",
+        "w": 48,
+        "x": 432,
+        "y": 0
+      },
+      "leveltip": {
+        "effect": [
+          "{{ statamount }} -> {{ statamountNL }}"
+        ],
+        "label": [
+          "Estadísticas adicionales"
+        ]
+      },
+      "maxammo": "-1",
+      "maxrank": 3,
+      "name": "Poción de demencia",
+      "range": [
+        20,
+        20,
+        20
+      ],
+      "rangeBurn": "20",
+      "resource": "{{ cost }} {{ abilityresourcename }}",
+      "tooltip": "Singed bebe una potente pócima química que le otorga {{ statamount }} de <scaleAP>poder de habilidad</scaleAP>, <scaleArmor>armadura</scaleArmor>, <scaleMR>resistencia mágica</scaleMR>, <speed>velocidad de movimiento</speed>, <healing>regeneración de vida</healing> y <scaleMana>regeneración de maná</scaleMana> durante {{ duration }} s. Mientras dura el efecto, <spellName>Rastro de veneno</spellName> de Singed también aplica un {{ grievousamount*100 }}% de heridas graves durante {{ grievousduration }} s.{{ spellmodifierdescriptionappend }}",
+      "vars": []
+    }
+  ],
+  "stats": {
+    "armor": 34,
+    "armorperlevel": 4.2,
+    "attackdamage": 63,
+    "attackdamageperlevel": 0,
+    "attackrange": 125,
+    "attackspeed": 0.7,
+    "attackspeedperlevel": 1.9,
+    "crit": 0,
+    "critperlevel": 0,
+    "hp": 650,
+    "hpperlevel": 96,
+    "hpregen": 9.5,
+    "hpregenperlevel": 0.55,
+    "movespeed": 345,
+    "mp": 330,
+    "mpperlevel": 45,
+    "mpregen": 7.5,
+    "mpregenperlevel": 0.55,
+    "spellblock": 32,
+    "spellblockperlevel": 2.05
+  },
+  "tags": [
+    "Tank",
+    "Mage"
+  ],
+  "title": "El Químico Loco"
+}

@@ -1,0 +1,989 @@
+{
+  "allytips": [
+    "Espera a que tu enemigo o tú tengáis poca vida para usar Matarreyes si quieres sacarle el máximo provecho.",
+    "Raciona el uso de tus habilidades para conseguir el máximo efecto de Arranque de petricita.",
+    "El empleo inteligente de las definitivas de los enemigos puede dar pie a nuevas posibilidades de abordar los combates de equipo."
+  ],
+  "blurb": "Sylas de Dregbourne, originario de uno de los barrios más pobres de Demacia, llega como símbolo del lado más oscuro de la gran ciudad. De niño, su potencial para hallar la brujería oculta llamó la atención de los cazadores de magos más prestigiosos...",
+  "enemytips": [
+    "La barra de vida de Sylas puede engañar, ¡ten cuidado con Matarreyes!",
+    "Prueba a enfrentarte a Sylas cuando no pueda apropiarse de tu definitiva."
+  ],
+  "id": "Sylas",
+  "image": {
+    "full": "Sylas.png",
+    "group": "champion",
+    "h": 48,
+    "sprite": "champion4.png",
+    "w": 48,
+    "x": 48,
+    "y": 48
+  },
+  "info": {
+    "attack": 3,
+    "defense": 4,
+    "difficulty": 5,
+    "magic": 8
+  },
+  "key": "517",
+  "lore": "Sylas de Dregbourne, originario de uno de los barrios más pobres de Demacia, llega como símbolo del lado más oscuro de la gran ciudad. De niño, su potencial para hallar la brujería oculta llamó la atención de los cazadores de magos más prestigiosos, quienes terminaron encarcelándolo por emplear esos mismos poderes contra ellos. Ahora que es libre, Sylas lleva una vida propia de un revolucionario curtido: utiliza la magia de los que están a su alrededor para destruir el reino al que una vez sirvió… y su pandilla de magos proscritos parece que crece cada día más.",
+  "name": "Sylas",
+  "partype": "Maná",
+  "passive": {
+    "description": "Tras lanzar un hechizo, Sylas acumula una carga de Arranque de petricita. Los ataques básicos de Sylas gastan una carga y hacen que sus cadenas giren alrededor de él, lo que inflige daño mágico adicional a los enemigos golpeados. Mientras Sylas tiene una carga de Arranque de petricita, obtiene velocidad de ataque. ",
+    "image": {
+      "full": "SylasP.png",
+      "group": "passive",
+      "h": 48,
+      "sprite": "passive4.png",
+      "w": 48,
+      "x": 48,
+      "y": 48
+    },
+    "name": "Arranque de petricita"
+  },
+  "recommended": [],
+  "skins": [
+    {
+      "chromas": false,
+      "id": "517000",
+      "name": "default",
+      "num": 0
+    },
+    {
+      "chromas": true,
+      "id": "517001",
+      "name": "Sylas espectro lunar",
+      "num": 1
+    },
+    {
+      "chromas": false,
+      "id": "517002",
+      "name": "Sylas espectro lunar (obsidiana)",
+      "num": 2,
+      "parentSkin": 1
+    },
+    {
+      "chromas": false,
+      "id": "517003",
+      "name": "Sylas espectro lunar (rubí)",
+      "num": 3,
+      "parentSkin": 1
+    },
+    {
+      "chromas": false,
+      "id": "517004",
+      "name": "Sylas espectro lunar (ojo de gato)",
+      "num": 4,
+      "parentSkin": 1
+    },
+    {
+      "chromas": false,
+      "id": "517005",
+      "name": "Sylas espectro lunar (aguamarina)",
+      "num": 5,
+      "parentSkin": 1
+    },
+    {
+      "chromas": false,
+      "id": "517006",
+      "name": "Sylas espectro lunar (amatista)",
+      "num": 6,
+      "parentSkin": 1
+    },
+    {
+      "chromas": false,
+      "id": "517007",
+      "name": "Sylas espectro lunar (perla)",
+      "num": 7,
+      "parentSkin": 1
+    },
+    {
+      "chromas": true,
+      "id": "517008",
+      "name": "Sylas Freljord",
+      "num": 8
+    },
+    {
+      "chromas": false,
+      "id": "517009",
+      "name": "Sylas Freljord (rubí)",
+      "num": 9,
+      "parentSkin": 8
+    },
+    {
+      "chromas": false,
+      "id": "517010",
+      "name": "Sylas Freljord (turquesa)",
+      "num": 10,
+      "parentSkin": 8
+    },
+    {
+      "chromas": false,
+      "id": "517011",
+      "name": "Sylas Freljord (amatista)",
+      "num": 11,
+      "parentSkin": 8
+    },
+    {
+      "chromas": false,
+      "id": "517012",
+      "name": "Sylas Freljord (perla)",
+      "num": 12,
+      "parentSkin": 8
+    },
+    {
+      "chromas": true,
+      "id": "517013",
+      "name": "PROYECTO: Sylas",
+      "num": 13
+    },
+    {
+      "chromas": false,
+      "id": "517014",
+      "name": "PROYECTO: Sylas de prestigio",
+      "num": 14
+    },
+    {
+      "chromas": false,
+      "id": "517015",
+      "name": "PROYECTO: Sylas (rubí)",
+      "num": 15,
+      "parentSkin": 13
+    },
+    {
+      "chromas": false,
+      "id": "517016",
+      "name": "PROYECTO: Sylas (ojo de gato)",
+      "num": 16,
+      "parentSkin": 13
+    },
+    {
+      "chromas": false,
+      "id": "517017",
+      "name": "PROYECTO: Sylas (amatista)",
+      "num": 17,
+      "parentSkin": 13
+    },
+    {
+      "chromas": false,
+      "id": "517018",
+      "name": "PROYECTO: Sylas (zafiro)",
+      "num": 18,
+      "parentSkin": 13
+    },
+    {
+      "chromas": false,
+      "id": "517019",
+      "name": "PROYECTO: Sylas (peridoto)",
+      "num": 19,
+      "parentSkin": 13
+    },
+    {
+      "chromas": false,
+      "id": "517020",
+      "name": "PROYECTO: Sylas (turquesa)",
+      "num": 20,
+      "parentSkin": 13
+    },
+    {
+      "chromas": false,
+      "id": "517021",
+      "name": "PROYECTO: Sylas (perla)",
+      "num": 21,
+      "parentSkin": 13
+    },
+    {
+      "chromas": false,
+      "id": "517022",
+      "name": "PROYECTO: Sylas (citrino)",
+      "num": 22,
+      "parentSkin": 13
+    },
+    {
+      "chromas": false,
+      "id": "517023",
+      "name": "PROYECTO: Sylas (Ajuste de cuentas)",
+      "num": 23,
+      "parentSkin": 13
+    },
+    {
+      "chromas": true,
+      "id": "517024",
+      "name": "Sylas lobo de batalla",
+      "num": 24
+    },
+    {
+      "chromas": false,
+      "id": "517025",
+      "name": "Sylas lobo de batalla (rubí)",
+      "num": 25,
+      "parentSkin": 24
+    },
+    {
+      "chromas": false,
+      "id": "517026",
+      "name": "Sylas lobo de batalla (citrino)",
+      "num": 26,
+      "parentSkin": 24
+    },
+    {
+      "chromas": false,
+      "id": "517027",
+      "name": "Sylas lobo de batalla (cuarzo rosa)",
+      "num": 27,
+      "parentSkin": 24
+    },
+    {
+      "chromas": false,
+      "id": "517028",
+      "name": "Sylas lobo de batalla (turquesa)",
+      "num": 28,
+      "parentSkin": 24
+    },
+    {
+      "chromas": false,
+      "id": "517029",
+      "name": "Sylas lobo de batalla (tanzanita)",
+      "num": 29,
+      "parentSkin": 24
+    },
+    {
+      "chromas": false,
+      "id": "517030",
+      "name": "Sylas lobo de batalla (esmeralda)",
+      "num": 30,
+      "parentSkin": 24
+    },
+    {
+      "chromas": false,
+      "id": "517031",
+      "name": "Sylas lobo de batalla (obsidiana)",
+      "num": 31,
+      "parentSkin": 24
+    },
+    {
+      "chromas": false,
+      "id": "517032",
+      "name": "Sylas lobo de batalla (perla)",
+      "num": 32,
+      "parentSkin": 24
+    },
+    {
+      "chromas": false,
+      "id": "517033",
+      "name": "Sylas lobo de batalla (nocturno)",
+      "num": 33,
+      "parentSkin": 24
+    },
+    {
+      "chromas": true,
+      "id": "517034",
+      "name": "Sylas exterminador de la ceniza",
+      "num": 34
+    },
+    {
+      "chromas": false,
+      "id": "517035",
+      "name": "Sylas exterminador de la ceniza (ascua ardiente)",
+      "num": 35,
+      "parentSkin": 34
+    },
+    {
+      "chromas": true,
+      "id": "517036",
+      "name": "Sylas bendición invernal",
+      "num": 36
+    },
+    {
+      "chromas": false,
+      "id": "517037",
+      "name": "Sylas bendición invernal (rubí)",
+      "num": 37,
+      "parentSkin": 36
+    },
+    {
+      "chromas": false,
+      "id": "517038",
+      "name": "Sylas bendición invernal (citrino)",
+      "num": 38,
+      "parentSkin": 36
+    },
+    {
+      "chromas": false,
+      "id": "517039",
+      "name": "Sylas bendición invernal (zafiro)",
+      "num": 39,
+      "parentSkin": 36
+    },
+    {
+      "chromas": false,
+      "id": "517040",
+      "name": "Sylas bendición invernal (peridoto)",
+      "num": 40,
+      "parentSkin": 36
+    },
+    {
+      "chromas": false,
+      "id": "517041",
+      "name": "Sylas bendición invernal (turquesa)",
+      "num": 41,
+      "parentSkin": 36
+    },
+    {
+      "chromas": false,
+      "id": "517042",
+      "name": "Sylas bendición invernal (cuarzo rosa)",
+      "num": 42,
+      "parentSkin": 36
+    },
+    {
+      "chromas": false,
+      "id": "517043",
+      "name": "Sylas bendición invernal (obsidiana)",
+      "num": 43,
+      "parentSkin": 36
+    },
+    {
+      "chromas": false,
+      "id": "517044",
+      "name": "Sylas bendición invernal (perla)",
+      "num": 44,
+      "parentSkin": 36
+    },
+    {
+      "chromas": false,
+      "id": "517045",
+      "name": "Sylas bendición invernal (guirnalda)",
+      "num": 45,
+      "parentSkin": 36
+    },
+    {
+      "chromas": true,
+      "id": "517046",
+      "name": "Sylas estrella oscura",
+      "num": 46
+    },
+    {
+      "chromas": false,
+      "id": "517047",
+      "name": "Sylas estrella oscura (rubí)",
+      "num": 47,
+      "parentSkin": 46
+    },
+    {
+      "chromas": false,
+      "id": "517048",
+      "name": "Sylas estrella oscura (esmeralda)",
+      "num": 48,
+      "parentSkin": 46
+    },
+    {
+      "chromas": false,
+      "id": "517049",
+      "name": "Sylas estrella oscura (zafiro)",
+      "num": 49,
+      "parentSkin": 46
+    },
+    {
+      "chromas": false,
+      "id": "517050",
+      "name": "Sylas estrella oscura (cuarzo rosa)",
+      "num": 50,
+      "parentSkin": 46
+    },
+    {
+      "chromas": false,
+      "id": "517051",
+      "name": "Sylas estrella oscura (perla)",
+      "num": 51,
+      "parentSkin": 46
+    },
+    {
+      "chromas": false,
+      "id": "517052",
+      "name": "Sylas estrella oscura (cuásar)",
+      "num": 52,
+      "parentSkin": 46
+    },
+    {
+      "chromas": false,
+      "id": "517053",
+      "name": "Sylas T1 de prestigio",
+      "num": 53
+    }
+  ],
+  "spells": [
+    {
+      "cooldown": [
+        10,
+        9,
+        8,
+        7,
+        6
+      ],
+      "cooldownBurn": "10/9/8/7/6",
+      "cost": [
+        55,
+        55,
+        55,
+        55,
+        55
+      ],
+      "costBurn": "55",
+      "costType": " {{ abilityresourcename }}",
+      "datavalues": {},
+      "description": "Sylas arremete con sus cadenas, que se cruzan en la ubicación objetivo e infligen daño a los enemigos y los ralentizan. <br><br>Tras unos segundos, se produce una explosión de energía mágica desde el punto de intersección de las cadenas, lo que inflige daño.",
+      "effect": [
+        null,
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ]
+      ],
+      "effectBurn": [
+        null,
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0"
+      ],
+      "id": "SylasQ",
+      "image": {
+        "full": "SylasQ.png",
+        "group": "spell",
+        "h": 48,
+        "sprite": "spell13.png",
+        "w": 48,
+        "x": 384,
+        "y": 144
+      },
+      "leveltip": {
+        "effect": [
+          "{{ basedamage }} -> {{ basedamageNL }}",
+          "{{ explosionbasedamage }} -> {{ explosionbasedamageNL }}",
+          "{{ slowamount*100.000000 }}% -> {{ slowamountnl*100.000000 }}%",
+          "{{ cooldown }} -> {{ cooldownNL }}"
+        ],
+        "label": [
+          "Daño",
+          "Daño de la explosión",
+          "Ralentización",
+          "Enfriamiento"
+        ]
+      },
+      "maxammo": "-1",
+      "maxrank": 5,
+      "name": "Latigazo de cadenas",
+      "range": [
+        775,
+        775,
+        775,
+        775,
+        775
+      ],
+      "rangeBurn": "775",
+      "resource": "{{ cost }} {{ abilityresourcename }}",
+      "tooltip": "Sylas lanza sus cadenas, lo que inflige <magicDamage>{{ damage }} de daño mágico</magicDamage> y <status>ralentiza</status> un {{ slowamountcalc }} durante {{ slowduration }} s. El lugar en el que las cadenas se cruzan explota, lo que inflige <magicDamage>{{ explosiondamage }} de daño mágico</magicDamage> adicional.{{ spellmodifierdescriptionappend }}",
+      "vars": []
+    },
+    {
+      "cooldown": [
+        12,
+        10.5,
+        9,
+        7.5,
+        6
+      ],
+      "cooldownBurn": "12/10.5/9/7.5/6",
+      "cost": [
+        50,
+        60,
+        70,
+        80,
+        90
+      ],
+      "costBurn": "50/60/70/80/90",
+      "costType": " {{ abilityresourcename }}",
+      "datavalues": {},
+      "description": "Sylas embiste a un enemigo con fuerza mágica para infligir daño y curarse a sí mismo contra campeones enemigos.",
+      "effect": [
+        null,
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ]
+      ],
+      "effectBurn": [
+        null,
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0"
+      ],
+      "id": "SylasW",
+      "image": {
+        "full": "SylasW.png",
+        "group": "spell",
+        "h": 48,
+        "sprite": "spell13.png",
+        "w": 48,
+        "x": 432,
+        "y": 144
+      },
+      "leveltip": {
+        "effect": [
+          "{{ damage }} -> {{ damageNL }}",
+          "{{ healing }} -> {{ healingNL }}",
+          "{{ cooldown }} -> {{ cooldownNL }}",
+          "{{ cost }} -> {{ costNL }}"
+        ],
+        "label": [
+          "Daño",
+          "Curación",
+          "Enfriamiento",
+          "Coste de @AbilityResourceName@"
+        ]
+      },
+      "maxammo": "-1",
+      "maxrank": 5,
+      "name": "Matarreyes",
+      "range": [
+        400,
+        400,
+        400,
+        400,
+        400
+      ],
+      "rangeBurn": "400",
+      "resource": "{{ cost }} {{ abilityresourcename }}",
+      "tooltip": "Sylas embiste a un enemigo con fuerza mágica para infligir <magicDamage>{{ mindamage }} de daño mágico</magicDamage>. Contra campeones, Sylas recupera entre <healing>{{ minhealing }}</healing> y <healing>{{ maxhealing }} de vida</healing> según la vida que le falte (curación máxima con un {{ maxexecutethreshold*100 }}% de vida o menos).{{ spellmodifierdescriptionappend }}",
+      "vars": []
+    },
+    {
+      "cooldown": [
+        13,
+        12,
+        11,
+        10,
+        9
+      ],
+      "cooldownBurn": "13/12/11/10/9",
+      "cost": [
+        65,
+        65,
+        65,
+        65,
+        65
+      ],
+      "costBurn": "65",
+      "costType": " {{ abilityresourcename }}",
+      "datavalues": {},
+      "description": "Sylas se desliza hacia una ubicación. Puede volver a usar la habilidad para lanzar sus cadenas y deslizarse hasta el enemigo que golpee.",
+      "effect": [
+        null,
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ]
+      ],
+      "effectBurn": [
+        null,
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0"
+      ],
+      "id": "SylasE",
+      "image": {
+        "full": "SylasE.png",
+        "group": "spell",
+        "h": 48,
+        "sprite": "spell14.png",
+        "w": 48,
+        "x": 0,
+        "y": 0
+      },
+      "leveltip": {
+        "effect": [
+          "{{ pulldamage }} -> {{ pulldamageNL }}",
+          "{{ cooldown }} -> {{ cooldownNL }}"
+        ],
+        "label": [
+          "Daño",
+          "Enfriamiento"
+        ]
+      },
+      "maxammo": "-1",
+      "maxrank": 5,
+      "name": "Fuga / Rapto",
+      "range": [
+        400,
+        400,
+        400,
+        400,
+        400
+      ],
+      "rangeBurn": "400",
+      "resource": "{{ cost }} {{ abilityresourcename }}",
+      "tooltip": "Sylas se desliza rápidamente y puede <recast>volver a lanzar</recast> la habilidad durante 3,5 s.<br /><br /><recast>Reactivación:</recast> Sylas lanza sus cadenas y se desplaza hasta el primer enemigo golpeado, lo que inflige <magicDamage>{{ damage }} de daño mágico</magicDamage> y lo <status>lanza por los aires</status> durante {{ knockupduration }} s.{{ spellmodifierdescriptionappend }}",
+      "vars": []
+    },
+    {
+      "cooldown": [
+        80,
+        55,
+        30
+      ],
+      "cooldownBurn": "80/55/30",
+      "cost": [
+        75,
+        75,
+        75
+      ],
+      "costBurn": "75",
+      "costType": " {{ abilityresourcename }}",
+      "datavalues": {},
+      "description": "Sylas roba la habilidad definitiva del enemigo y puede lanzarla libremente.",
+      "effect": [
+        null,
+        [
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0
+        ]
+      ],
+      "effectBurn": [
+        null,
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0"
+      ],
+      "id": "SylasR",
+      "image": {
+        "full": "SylasR.png",
+        "group": "spell",
+        "h": 48,
+        "sprite": "spell14.png",
+        "w": 48,
+        "x": 48,
+        "y": 0
+      },
+      "leveltip": {
+        "effect": [
+          "{{ cooldown }} -> {{ cooldownNL }}"
+        ],
+        "label": [
+          "Enfriamiento"
+        ]
+      },
+      "maxammo": "-1",
+      "maxrank": 3,
+      "name": "Apropiación",
+      "range": [
+        950,
+        950,
+        950
+      ],
+      "rangeBurn": "950",
+      "resource": "{{ cost }} {{ abilityresourcename }}",
+      "tooltip": "Sylas se apropia de la definitiva de un campeón enemigo, lo que le permite lanzar una copia de ella, pero con el nivel de la definitiva y las estadísticas de Sylas.<br /><br />Al robar la definitiva de un rival, a este se le añade un enfriamiento que es el {{ pertargetcooldown }}% del valor del enfriamiento de la definitiva del enemigo (la velocidad de habilidades de Sylas afecta a este valor), con un mínimo de {{ minimumenemycooldown }} s, tiempo durante el cual Sylas no puede volver a apropiarse de su definitiva.{{ spellmodifierdescriptionappend }}",
+      "vars": []
+    }
+  ],
+  "stats": {
+    "armor": 29,
+    "armorperlevel": 5.2,
+    "attackdamage": 61,
+    "attackdamageperlevel": 0,
+    "attackrange": 175,
+    "attackspeed": 0.645,
+    "attackspeedperlevel": 3.5,
+    "crit": 0,
+    "critperlevel": 0,
+    "hp": 600,
+    "hpperlevel": 122,
+    "hpregen": 9,
+    "hpregenperlevel": 0.9,
+    "movespeed": 340,
+    "mp": 400,
+    "mpperlevel": 70,
+    "mpregen": 8,
+    "mpregenperlevel": 0.8,
+    "spellblock": 32,
+    "spellblockperlevel": 2.55
+  },
+  "tags": [
+    "Mage",
+    "Assassin"
+  ],
+  "title": "el Desencadenado"
+}

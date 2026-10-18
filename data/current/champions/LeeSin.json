@@ -1,0 +1,1169 @@
+{
+  "allytips": [
+    "Usa Onda sónica antes de Ira del dragón para poder perseguir al objetivo con Golpe resonante.",
+    "Aprovecha Ráfaga usando ataques básicos entre los lanzamientos de conjuros. De esta forma mejorarás el daño infligido y reducirás la pérdida de energía.",
+    "Usar Salvaguarda y Voluntad de hierro sobre sí mismo viene muy bien para matar monstruos neutrales (en la jungla)."
+  ],
+  "blurb": "Lee Sin, maestro de las artes marciales ancestrales de Jonia, es un luchador con principios que canaliza la esencia del espíritu del dragón para enfrentarse a cualquier desafío. Aunque perdió la vista hace muchos años, el monje guerrero ha dedicado su...",
+  "enemytips": [
+    "Que el equipo se mantenga separado para minimizar el impacto de la habilidad definitiva de Lee Sin, Ira del dragón.",
+    "Lee Sin es frágil contra daño físico y mágico, pero tiene en Voluntad de hierro e Incapacitar armas poderosas para combatir.",
+    "Lee Sin depende mucho de encadenar sus habilidades. Usa inhabilitaciones para evitar que encadene sus habilidades y ataques."
+  ],
+  "id": "LeeSin",
+  "image": {
+    "full": "LeeSin.png",
+    "group": "champion",
+    "h": 48,
+    "sprite": "champion2.png",
+    "w": 48,
+    "x": 0,
+    "y": 48
+  },
+  "info": {
+    "attack": 8,
+    "defense": 5,
+    "difficulty": 6,
+    "magic": 3
+  },
+  "key": "64",
+  "lore": "Lee Sin, maestro de las artes marciales ancestrales de Jonia, es un luchador con principios que canaliza la esencia del espíritu del dragón para enfrentarse a cualquier desafío. Aunque perdió la vista hace muchos años, el monje guerrero ha dedicado su vida a proteger su hogar contra cualquiera que se atreva a alterar su sagrado equilibrio. Los enemigos que subestiman su actitud meditativa tendrán que vérselas con sus legendarios puños ardientes y sus fulgurantes patadas giratorias.",
+  "name": "Lee Sin",
+  "partype": "Energía",
+  "passive": {
+    "description": "Después de que Lee Sin use una habilidad, sus 2 ataques básicos siguientes reciben velocidad de ataque y restauran energía.",
+    "image": {
+      "full": "LeeSinPassive.png",
+      "group": "passive",
+      "h": 48,
+      "sprite": "passive2.png",
+      "w": 48,
+      "x": 0,
+      "y": 48
+    },
+    "name": "Ráfaga"
+  },
+  "recommended": [],
+  "skins": [
+    {
+      "chromas": false,
+      "id": "64000",
+      "name": "default",
+      "num": 0
+    },
+    {
+      "chromas": false,
+      "id": "64001",
+      "name": "Lee Sin tradicional",
+      "num": 1
+    },
+    {
+      "chromas": false,
+      "id": "64002",
+      "name": "Lee Sin acólito",
+      "num": 2
+    },
+    {
+      "chromas": true,
+      "id": "64003",
+      "name": "Lee Sin puño de dragón",
+      "num": 3
+    },
+    {
+      "chromas": true,
+      "id": "64004",
+      "name": "Lee Sin muay thai",
+      "num": 4
+    },
+    {
+      "chromas": false,
+      "id": "64005",
+      "name": "Lee Sin fiesta en la piscina",
+      "num": 5
+    },
+    {
+      "chromas": true,
+      "id": "64006",
+      "name": "Lee Sin SKT T1",
+      "num": 6
+    },
+    {
+      "chromas": false,
+      "id": "64007",
+      "name": "Lee Sin puño de dragón - Duelo oscuro",
+      "num": 7,
+      "parentSkin": 3
+    },
+    {
+      "chromas": false,
+      "id": "64008",
+      "name": "Lee Sin puño de dragón - Duelo azul",
+      "num": 8,
+      "parentSkin": 3
+    },
+    {
+      "chromas": false,
+      "id": "64009",
+      "name": "Lee Sin puño de dragón - Duelo amarillo",
+      "num": 9,
+      "parentSkin": 3
+    },
+    {
+      "chromas": false,
+      "id": "64010",
+      "name": "Lee Sin boxeador",
+      "num": 10
+    },
+    {
+      "chromas": false,
+      "id": "64011",
+      "name": "Lee Sin puño divino",
+      "num": 11
+    },
+    {
+      "chromas": true,
+      "id": "64012",
+      "name": "Lee Sin pichichi",
+      "num": 12
+    },
+    {
+      "chromas": false,
+      "id": "64013",
+      "name": "Lee Sin pichichi (perla)",
+      "num": 13,
+      "parentSkin": 12
+    },
+    {
+      "chromas": false,
+      "id": "64014",
+      "name": "Lee Sin pichichi (citrino)",
+      "num": 14,
+      "parentSkin": 12
+    },
+    {
+      "chromas": false,
+      "id": "64015",
+      "name": "Lee Sin pichichi (esmeralda)",
+      "num": 15,
+      "parentSkin": 12
+    },
+    {
+      "chromas": false,
+      "id": "64016",
+      "name": "Lee Sin pichichi (zafiro)",
+      "num": 16,
+      "parentSkin": 12
+    },
+    {
+      "chromas": false,
+      "id": "64017",
+      "name": "Lee Sin pichichi (aguamarina)",
+      "num": 17,
+      "parentSkin": 12
+    },
+    {
+      "chromas": false,
+      "id": "64018",
+      "name": "Lee Sin pichichi (tanzanita)",
+      "num": 18,
+      "parentSkin": 12
+    },
+    {
+      "chromas": false,
+      "id": "64019",
+      "name": "Lee Sin pichichi (obsidiana)",
+      "num": 19,
+      "parentSkin": 12
+    },
+    {
+      "chromas": false,
+      "id": "64020",
+      "name": "Lee Sin pichichi (cuarzo rosa)",
+      "num": 20,
+      "parentSkin": 12
+    },
+    {
+      "chromas": false,
+      "id": "64021",
+      "name": "Lee Sin puño de dragón (rubí)",
+      "num": 21,
+      "parentSkin": 3
+    },
+    {
+      "chromas": false,
+      "id": "64022",
+      "name": "Lee Sin puño de dragón (esmeralda)",
+      "num": 22,
+      "parentSkin": 3
+    },
+    {
+      "chromas": false,
+      "id": "64023",
+      "name": "Lee Sin puño de dragón (perla)",
+      "num": 23,
+      "parentSkin": 3
+    },
+    {
+      "chromas": false,
+      "id": "64024",
+      "name": "Lee Sin puño de dragón (cuarzo rosa)",
+      "num": 24,
+      "parentSkin": 3
+    },
+    {
+      "chromas": false,
+      "id": "64025",
+      "name": "Lee Sin puño de dragón (zafiro)",
+      "num": 25,
+      "parentSkin": 3
+    },
+    {
+      "chromas": false,
+      "id": "64027",
+      "name": "Lee Sin heraldo del caos",
+      "num": 27
+    },
+    {
+      "chromas": false,
+      "id": "64028",
+      "name": "Lee Sin heraldo del caos de prestigio",
+      "num": 28
+    },
+    {
+      "chromas": false,
+      "id": "64029",
+      "name": "Lee Sin FPX",
+      "num": 29
+    },
+    {
+      "chromas": true,
+      "id": "64030",
+      "name": "Lee Sin FPX (élite)",
+      "num": 30,
+      "parentSkin": 29
+    },
+    {
+      "chromas": false,
+      "id": "64031",
+      "name": "Lee Sin dragón de la tormenta",
+      "num": 31
+    },
+    {
+      "chromas": true,
+      "id": "64032",
+      "name": "Lee Sin dragón de la tormenta (rubí)",
+      "num": 32,
+      "parentSkin": 31
+    },
+    {
+      "chromas": false,
+      "id": "64033",
+      "name": "Lee Sin dragón de la tormenta (garra de jade)",
+      "num": 33,
+      "parentSkin": 31
+    },
+    {
+      "chromas": false,
+      "id": "64034",
+      "name": "Lee Sin dragón de la tormenta (zafiro)",
+      "num": 34,
+      "parentSkin": 31
+    },
+    {
+      "chromas": false,
+      "id": "64035",
+      "name": "Lee Sin dragón de la tormenta (tanzanita)",
+      "num": 35,
+      "parentSkin": 31
+    },
+    {
+      "chromas": false,
+      "id": "64036",
+      "name": "Lee Sin dragón de la tormenta (obsidiana)",
+      "num": 36,
+      "parentSkin": 31
+    },
+    {
+      "chromas": false,
+      "id": "64037",
+      "name": "Lee Sin dragón de la tormenta (perla)",
+      "num": 37,
+      "parentSkin": 31
+    },
+    {
+      "chromas": false,
+      "id": "64038",
+      "name": "Lee Sin dragón de la tormenta (garra de ascuas)",
+      "num": 38,
+      "parentSkin": 31
+    },
+    {
+      "chromas": false,
+      "id": "64039",
+      "name": "Lee Sin heraldo del caos de prestigio (2022)",
+      "num": 39
+    },
+    {
+      "chromas": false,
+      "id": "64041",
+      "name": "Lee Sin Juegos Cénit",
+      "num": 41
+    },
+    {
+      "chromas": false,
+      "id": "64042",
+      "name": "Lee Sin Juegos Cénit (rubí)",
+      "num": 42,
+      "parentSkin": 41
+    },
+    {
+      "chromas": true,
+      "id": "64043",
+      "name": "Lee Sin Juegos Cénit (ojo de gato)",
+      "num": 43,
+      "parentSkin": 41
+    },
+    {
+      "chromas": false,
+      "id": "64044",
+      "name": "Lee Sin Juegos Cénit (esmeralda)",
+      "num": 44,
+      "parentSkin": 41
+    },
+    {
+      "chromas": false,
+      "id": "64045",
+      "name": "Lee Sin Juegos Cénit (zafiro)",
+      "num": 45,
+      "parentSkin": 41
+    },
+    {
+      "chromas": false,
+      "id": "64046",
+      "name": "Lee Sin Juegos Cénit (turquesa)",
+      "num": 46,
+      "parentSkin": 41
+    },
+    {
+      "chromas": false,
+      "id": "64047",
+      "name": "Lee Sin Juegos Cénit (cuarzo rosa)",
+      "num": 47,
+      "parentSkin": 41
+    },
+    {
+      "chromas": false,
+      "id": "64048",
+      "name": "Lee Sin Juegos Cénit (perla)",
+      "num": 48,
+      "parentSkin": 41
+    },
+    {
+      "chromas": false,
+      "id": "64049",
+      "name": "Lee Sin Juegos Cénit (obsidiana)",
+      "num": 49,
+      "parentSkin": 41
+    },
+    {
+      "chromas": false,
+      "id": "64050",
+      "name": "Lee Sin dragón de la tormenta (mítico)",
+      "num": 50,
+      "parentSkin": 31
+    },
+    {
+      "chromas": false,
+      "id": "64051",
+      "name": "Lee Sin poder celestial",
+      "num": 51
+    },
+    {
+      "chromas": false,
+      "id": "64052",
+      "name": "Lee Sin poder celestial divino",
+      "num": 52
+    },
+    {
+      "chromas": true,
+      "id": "64053",
+      "name": "Lee Sin puño de dragón (meteorito)",
+      "num": 53,
+      "parentSkin": 3
+    },
+    {
+      "chromas": false,
+      "id": "64054",
+      "name": "Lee Sin poder celestial (rubí)",
+      "num": 54,
+      "parentSkin": 51
+    },
+    {
+      "chromas": false,
+      "id": "64055",
+      "name": "Lee Sin poder celestial (cuarzo rosa)",
+      "num": 55,
+      "parentSkin": 51
+    },
+    {
+      "chromas": false,
+      "id": "64056",
+      "name": "Lee Sin poder celestial (citrino)",
+      "num": 56,
+      "parentSkin": 51
+    },
+    {
+      "chromas": false,
+      "id": "64057",
+      "name": "Lee Sin poder celestial (esmeralda)",
+      "num": 57,
+      "parentSkin": 51
+    },
+    {
+      "chromas": false,
+      "id": "64058",
+      "name": "Lee Sin poder celestial (aguamarina)",
+      "num": 58,
+      "parentSkin": 51
+    },
+    {
+      "chromas": false,
+      "id": "64059",
+      "name": "Lee Sin poder celestial (lustre)",
+      "num": 59,
+      "parentSkin": 51
+    },
+    {
+      "chromas": false,
+      "id": "64060",
+      "name": "Lee Sin muay thai (rubí)",
+      "num": 60,
+      "parentSkin": 4
+    },
+    {
+      "chromas": false,
+      "id": "64061",
+      "name": "Lee Sin muay thai (ojo de gato)",
+      "num": 61,
+      "parentSkin": 4
+    },
+    {
+      "chromas": false,
+      "id": "64062",
+      "name": "Lee Sin muay thai (esmeralda)",
+      "num": 62,
+      "parentSkin": 4
+    },
+    {
+      "chromas": false,
+      "id": "64063",
+      "name": "Lee Sin muay thai (turquesa)",
+      "num": 63,
+      "parentSkin": 4
+    },
+    {
+      "chromas": false,
+      "id": "64064",
+      "name": "Lee Sin muay thai (tanzanita)",
+      "num": 64,
+      "parentSkin": 4
+    },
+    {
+      "chromas": false,
+      "id": "64065",
+      "name": "Lee Sin muay thai (cuarzo rosa)",
+      "num": 65,
+      "parentSkin": 4
+    },
+    {
+      "chromas": false,
+      "id": "64066",
+      "name": "Lee Sin muay thai (obsidiana)",
+      "num": 66,
+      "parentSkin": 4
+    },
+    {
+      "chromas": false,
+      "id": "64067",
+      "name": "Lee Sin muay thai (perla)",
+      "num": 67,
+      "parentSkin": 4
+    },
+    {
+      "chromas": false,
+      "id": "64068",
+      "name": "Lee Sin T1",
+      "num": 68
+    },
+    {
+      "chromas": false,
+      "id": "64069",
+      "name": "Lee Sin T1 (élite)",
+      "num": 69,
+      "parentSkin": 68
+    },
+    {
+      "chromas": true,
+      "id": "64070",
+      "name": "Lee Sin puño de dragón (realeza)",
+      "num": 70,
+      "parentSkin": 3
+    },
+    {
+      "chromas": false,
+      "id": "64071",
+      "name": "Lee Sin puño de dragón (jade)",
+      "num": 71,
+      "parentSkin": 3
+    },
+    {
+      "chromas": false,
+      "id": "64072",
+      "name": "Lee Sin sombra de tinta",
+      "num": 72
+    },
+    {
+      "chromas": false,
+      "id": "64073",
+      "name": "Lee Sin sombra de tinta (rubí)",
+      "num": 73,
+      "parentSkin": 72
+    },
+    {
+      "chromas": true,
+      "id": "64074",
+      "name": "Lee Sin sombra de tinta (esmeralda)",
+      "num": 74,
+      "parentSkin": 72
+    },
+    {
+      "chromas": false,
+      "id": "64075",
+      "name": "Lee Sin sombra de tinta (zafiro)",
+      "num": 75,
+      "parentSkin": 72
+    },
+    {
+      "chromas": false,
+      "id": "64076",
+      "name": "Lee Sin sombra de tinta (ojo de gato)",
+      "num": 76,
+      "parentSkin": 72
+    },
+    {
+      "chromas": false,
+      "id": "64077",
+      "name": "Lee Sin sombra de tinta (cuarzo rosa)",
+      "num": 77,
+      "parentSkin": 72
+    },
+    {
+      "chromas": false,
+      "id": "64078",
+      "name": "Lee Sin sombra de tinta (perla)",
+      "num": 78,
+      "parentSkin": 72
+    },
+    {
+      "chromas": false,
+      "id": "64079",
+      "name": "Lee Sin sombra de tinta (tanzanita)",
+      "num": 79,
+      "parentSkin": 72
+    },
+    {
+      "chromas": false,
+      "id": "64080",
+      "name": "Lee Sin sombra de tinta (turquesa)",
+      "num": 80,
+      "parentSkin": 72
+    },
+    {
+      "chromas": false,
+      "id": "64081",
+      "name": "Lee Sin dragón de la tormenta (baliza)",
+      "num": 81,
+      "parentSkin": 31
+    },
+    {
+      "chromas": false,
+      "id": "64082",
+      "name": "Lee Sin SKT T1 (élite)",
+      "num": 82,
+      "parentSkin": 6
+    }
+  ],
+  "spells": [
+    {
+      "cooldown": [
+        10,
+        9,
+        8,
+        7,
+        6
+      ],
+      "cooldownBurn": "10/9/8/7/6",
+      "cost": [
+        50,
+        50,
+        50,
+        50,
+        50
+      ],
+      "costBurn": "50",
+      "costType": " {{ abilityresourcename }}",
+      "datavalues": {},
+      "description": "Onda sónica: Lee Sin emite una onda sonora discordante para localizar a sus enemigos e inflige daño físico al que detecta primero. Si Onda sónica golpea, Lee Sin dispone de 3 s para lanzar Golpe resonante.<br>Golpe resonante: Lee Sin se abalanza sobre el enemigo golpeado por Onda sónica y le causa daño físico según la vida que le falte al objetivo.",
+      "effect": [
+        null,
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ]
+      ],
+      "effectBurn": [
+        null,
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0"
+      ],
+      "id": "LeeSinQOne",
+      "image": {
+        "full": "LeeSinQOne.png",
+        "group": "spell",
+        "h": 48,
+        "sprite": "spell7.png",
+        "w": 48,
+        "x": 192,
+        "y": 144
+      },
+      "leveltip": {
+        "effect": [
+          "{{ q1basedamage }} -> {{ q1basedamageNL }}",
+          "{{ q2basedamage }} -> {{ q2basedamageNL }}",
+          "{{ q2basedamage*2.000000 }} -> {{ q2basedamagenl*2.000000 }}",
+          "{{ cooldown }} -> {{ cooldownNL }}"
+        ],
+        "label": [
+          "Daño de Onda sónica",
+          "Daño básico mínimo de Golpe resonante",
+          "Daño básico máximo de Golpe resonante",
+          "Enfriamiento"
+        ]
+      },
+      "maxammo": "-1",
+      "maxrank": 5,
+      "name": "Onda sónica / Golpe resonante",
+      "range": [
+        1100,
+        1100,
+        1100,
+        1100,
+        1100
+      ],
+      "rangeBurn": "1100",
+      "resource": "{{ cost }} {{ abilityresourcename }}",
+      "tooltip": "Lee Sin emite una onda sonora discordante que inflige <physicalDamage>{{ initialdamage }} de daño físico</physicalDamage> al primer enemigo alcanzado, lo que otorga <keywordStealth>visión verdadera</keywordStealth> y permite a Lee Sin <recast>volver a lanzar</recast> la habilidad durante los siguientes {{ reactivatetime }} s.<br /><br /><recast>Reactivación</recast>: Lee Sin se abalanza sobre el enemigo alcanzado por la onda sónica, lo que inflige entre <physicalDamage>{{ recastdamage }} y {{ empowereddamage }} de daño físico</physicalDamage> según la vida que le falte al objetivo. {{ spellmodifierdescriptionappend }}",
+      "vars": []
+    },
+    {
+      "cooldown": [
+        7,
+        7,
+        7,
+        7,
+        7
+      ],
+      "cooldownBurn": "7",
+      "cost": [
+        50,
+        50,
+        50,
+        50,
+        50
+      ],
+      "costBurn": "50",
+      "costType": " {{ abilityresourcename }}",
+      "datavalues": {},
+      "description": "Salvaguarda: Lee Sin salta sobre el aliado elegido y se pone un escudo que lo protege del daño. Si el aliado es un campeón, también lo escuda. Tras utilizar Salvaguarda, Lee Sin puede lanzar Voluntad de hierro.<br>Voluntad de hierro: El intenso entrenamiento de Lee Sin le permite prosperar en la batalla. Lee Sin obtiene omnisucción.",
+      "effect": [
+        null,
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ]
+      ],
+      "effectBurn": [
+        null,
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0"
+      ],
+      "id": "LeeSinWOne",
+      "image": {
+        "full": "LeeSinWOne.png",
+        "group": "spell",
+        "h": 48,
+        "sprite": "spell7.png",
+        "w": 48,
+        "x": 240,
+        "y": 144
+      },
+      "leveltip": {
+        "effect": [
+          "{{ shieldvalue }} -> {{ shieldvalueNL }}",
+          "{{ lifestealandspellvamp }}% -> {{ lifestealandspellvampNL }}%"
+        ],
+        "label": [
+          "Escudo de absorción de Salvaguarda",
+          "Porcentaje de omnisucción de Voluntad de hierro"
+        ]
+      },
+      "maxammo": "-1",
+      "maxrank": 5,
+      "name": "Salvaguarda / Voluntad de hierro",
+      "range": [
+        700,
+        700,
+        700,
+        700,
+        700
+      ],
+      "rangeBurn": "700",
+      "resource": "{{ cost }} {{ abilityresourcename }}",
+      "tooltip": "Lee Sin se desliza hacia un aliado o un guardián. Si el objetivo es un campeón, Lee Sin le otorga a él y a sí mismo <shield>{{ shieldamount }} de escudo</shield> durante {{ shieldduration }} s. Lee Sin puede <recast>reactivar</recast> la habilidad durante los siguientes {{ w1reactivatetime }} s.<br /><br /><recast>Reactivación:</recast> Lee Sin obtiene un {{ lifestealandspellvamp }}% de omnisucción durante {{ lifestealandspellvamptime }} s.{{ spellmodifierdescriptionappend }}",
+      "vars": []
+    },
+    {
+      "cooldown": [
+        8,
+        8,
+        8,
+        8,
+        8
+      ],
+      "cooldownBurn": "8",
+      "cost": [
+        50,
+        50,
+        50,
+        50,
+        50
+      ],
+      "costBurn": "50",
+      "costType": " {{ abilityresourcename }}",
+      "datavalues": {},
+      "description": "Tempestad: Lee Sin golpea el suelo y provoca una onda de choque que inflige daño mágico y revela a los enemigos alcanzados. Si Tempestad golpea a un enemigo, Lee Sin puede usar Incapacitar.<br>Incapacitar: Lee Sin incapacita a los enemigos cercanos dañados por Tempestad y reduce su velocidad de movimiento. La velocidad de movimiento se recupera gradualmente.",
+      "effect": [
+        null,
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ]
+      ],
+      "effectBurn": [
+        null,
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0"
+      ],
+      "id": "LeeSinEOne",
+      "image": {
+        "full": "LeeSinEOne.png",
+        "group": "spell",
+        "h": 48,
+        "sprite": "spell7.png",
+        "w": 48,
+        "x": 288,
+        "y": 144
+      },
+      "leveltip": {
+        "effect": [
+          "{{ e1damage }} -> {{ e1damageNL }}",
+          "{{ slowamount }}% -> {{ slowamountNL }}%"
+        ],
+        "label": [
+          "Daño de Tempestad",
+          "Ralentización de Incapacitar"
+        ]
+      },
+      "maxammo": "-1",
+      "maxrank": 5,
+      "name": "Tempestad / Incapacitar",
+      "range": [
+        450,
+        450,
+        450,
+        450,
+        450
+      ],
+      "rangeBurn": "450",
+      "resource": "{{ cost }} {{ abilityresourcename }}",
+      "tooltip": "Lee Sin golpea el suelo y provoca una onda de choque que inflige <magicDamage>{{ initialdamage }} de daño mágico</magicDamage> y revela a los enemigos alcanzados durante {{ slowduration }} s. Si golpea a un enemigo, Lee Sin puede <recast>volver a lanzar</recast> la habilidad durante los siguientes {{ reactivatetime }} s.<br /><br /><recast>Reactivación:</recast> Lee Sin <status>ralentiza</status> a los enemigos cercanos golpeados por la onda de choque un {{ slowamount }}% que va disminuyendo a lo largo de {{ slowduration }} s.{{ spellmodifierdescriptionappend }}",
+      "vars": []
+    },
+    {
+      "cooldown": [
+        110,
+        85,
+        60
+      ],
+      "cooldownBurn": "110/85/60",
+      "cost": [
+        0,
+        0,
+        0
+      ],
+      "costBurn": "0",
+      "costType": "Sin coste",
+      "datavalues": {},
+      "description": "Lee Sin realiza una potente patada giratoria, que lanza hacia atrás al objetivo e inflige daño físico a él y a todos los enemigos con los que impacte. Estos últimos salen por los aires durante un breve tiempo. Esta técnica se la enseñó Jesse Perring, aunque Lee Sin no patea a los jugadores fuera del mapa.",
+      "effect": [
+        null,
+        [
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0
+        ]
+      ],
+      "effectBurn": [
+        null,
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0"
+      ],
+      "id": "LeeSinR",
+      "image": {
+        "full": "LeeSinR.png",
+        "group": "spell",
+        "h": 48,
+        "sprite": "spell7.png",
+        "w": 48,
+        "x": 336,
+        "y": 144
+      },
+      "leveltip": {
+        "effect": [
+          "{{ basedamage }} -> {{ basedamageNL }}",
+          "{{ percenthpcarrythrough }}% -> {{ percenthpcarrythroughNL }}%",
+          "{{ cooldown }} -> {{ cooldownNL }}"
+        ],
+        "label": [
+          "Daño",
+          "Daño por vida adicional",
+          "Enfriamiento"
+        ]
+      },
+      "maxammo": "-1",
+      "maxrank": 3,
+      "name": "Ira del dragón",
+      "range": [
+        375,
+        375,
+        375
+      ],
+      "rangeBurn": "375",
+      "resource": "Sin coste",
+      "tooltip": "Lee Sin realiza una potente patada giratoria que <status>empuja hacia atrás</status> a un campeón enemigo y le inflige <physicalDamage>{{ damage }} de daño físico</physicalDamage>.<br /><br /><status>Lanza por los aires</status> a los enemigos contra los que impacte el objetivo y reciben <physicalDamage>{{ damage }} más un {{ percenthpcarrythrough }}% de la vida adicional del enemigo golpeado como daño físico</physicalDamage>.{{ spellmodifierdescriptionappend }}",
+      "vars": []
+    }
+  ],
+  "stats": {
+    "armor": 36,
+    "armorperlevel": 4.5,
+    "attackdamage": 66,
+    "attackdamageperlevel": 0,
+    "attackrange": 125,
+    "attackspeed": 0.651,
+    "attackspeedperlevel": 3,
+    "crit": 0,
+    "critperlevel": 0,
+    "hp": 645,
+    "hpperlevel": 108,
+    "hpregen": 7.5,
+    "hpregenperlevel": 0.7,
+    "movespeed": 345,
+    "mp": 200,
+    "mpperlevel": 0,
+    "mpregen": 50,
+    "mpregenperlevel": 0,
+    "spellblock": 32,
+    "spellblockperlevel": 2.05
+  },
+  "tags": [
+    "Fighter",
+    "Assassin"
+  ],
+  "title": "El Monje Ciego"
+}

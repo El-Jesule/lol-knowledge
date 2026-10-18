@@ -1,0 +1,925 @@
+{
+  "allytips": [
+    "Dado que Fizz puede moverse entre unidades, debes encontrar oportunidades en la calle para moverte entre los súbditos y aplicar la pasiva de Tridente piedramar, para después usar el ataque activo de la habilidad tras unos segundos.",
+    "La habilidad definitiva de Fizz, Carnaza para tiburones, puede apuntarse hacia un enemigo o hacia la zona en la que crees que va a estar.",
+    "Los hechizos de Fizz progresan con su poder de habilidad. Si te enfrentas a equipos que infligen mucho daño en poco tiempo, compra objetos como Reloj de arena de Zhonya o Velo del hada de la muerte; o recurre a objetos como Perdición del liche o Sombrero mortal de Rabadon si crees que podrás sobrevivir con menos vida."
+  ],
+  "blurb": "Fizz es un yordle anfibio que habita entre los arrecifes de alrededor de Aguas Estancadas. Suele recuperar y devolver los diezmos arrojados al mar por capitanes supersticiosos, pero incluso los marineros más agudos saben que no hay que plantarle cara...",
+  "enemytips": [
+    "Después de usar su ataque potenciado, los ataques de Fizz se vuelven más letales durante unos segundos. ¡Aléjate de él hasta que su tridente deje de brillar!",
+    "Fizz puede ser un objetivo muy escurridizo cuando tiene las habilidades disponibles. ¡Engáñalo para que las use antes de tiempo y luego usa ataques de control de adversario o que inflijan mucho daño!"
+  ],
+  "id": "Fizz",
+  "image": {
+    "full": "Fizz.png",
+    "group": "champion",
+    "h": 48,
+    "sprite": "champion1.png",
+    "w": 48,
+    "x": 240,
+    "y": 0
+  },
+  "info": {
+    "attack": 6,
+    "defense": 4,
+    "difficulty": 6,
+    "magic": 7
+  },
+  "key": "105",
+  "lore": "Fizz es un yordle anfibio que habita entre los arrecifes de alrededor de Aguas Estancadas. Suele recuperar y devolver los diezmos arrojados al mar por capitanes supersticiosos, pero incluso los marineros más agudos saben que no hay que plantarle cara, puesto que hay muchas historias que hablan sobre aquellos que han subestimado a este ser resbaladizo. A menudo lo confunden con algún tipo de espíritu caprichoso del océano. Parece ser capaz de dominar a las bestias de las profundidades y se deleita en confundir a sus aliados y a sus enemigos por igual.",
+  "name": "Fizz",
+  "partype": "Maná",
+  "passive": {
+    "description": "Fizz se puede mover a través de unidades y reduce una cantidad fija el daño proveniente de cualquier fuente.",
+    "image": {
+      "full": "Fizz_P.png",
+      "group": "passive",
+      "h": 48,
+      "sprite": "passive1.png",
+      "w": 48,
+      "x": 240,
+      "y": 0
+    },
+    "name": "Luchador ágil"
+  },
+  "recommended": [],
+  "skins": [
+    {
+      "chromas": true,
+      "id": "105000",
+      "name": "default",
+      "num": 0
+    },
+    {
+      "chromas": false,
+      "id": "105001",
+      "name": "Fizz atlante",
+      "num": 1
+    },
+    {
+      "chromas": false,
+      "id": "105002",
+      "name": "Fizz de la tundra",
+      "num": 2
+    },
+    {
+      "chromas": false,
+      "id": "105003",
+      "name": "Fizz pescador",
+      "num": 3
+    },
+    {
+      "chromas": false,
+      "id": "105004",
+      "name": "Fizz del Vacío",
+      "num": 4
+    },
+    {
+      "chromas": false,
+      "id": "105005",
+      "name": "Fizz - Flama ámbar",
+      "num": 5,
+      "parentSkin": 0
+    },
+    {
+      "chromas": false,
+      "id": "105006",
+      "name": "Fizz - Flama oscura",
+      "num": 6,
+      "parentSkin": 0
+    },
+    {
+      "chromas": false,
+      "id": "105007",
+      "name": "Fizz - Flama roja",
+      "num": 7,
+      "parentSkin": 0
+    },
+    {
+      "chromas": false,
+      "id": "105008",
+      "name": "Fizz conejo",
+      "num": 8
+    },
+    {
+      "chromas": false,
+      "id": "105009",
+      "name": "Fizz supergaláctico",
+      "num": 9
+    },
+    {
+      "chromas": true,
+      "id": "105010",
+      "name": "Fizz escuadrón omega",
+      "num": 10
+    },
+    {
+      "chromas": false,
+      "id": "105011",
+      "name": "Fizz escuadrón omega (perla)",
+      "num": 11,
+      "parentSkin": 10
+    },
+    {
+      "chromas": false,
+      "id": "105012",
+      "name": "Fizz escuadrón omega (obsidiana)",
+      "num": 12,
+      "parentSkin": 10
+    },
+    {
+      "chromas": false,
+      "id": "105013",
+      "name": "Fizz escuadrón omega (tanzanita)",
+      "num": 13,
+      "parentSkin": 10
+    },
+    {
+      "chromas": false,
+      "id": "105014",
+      "name": "Fizz peludito",
+      "num": 14
+    },
+    {
+      "chromas": false,
+      "id": "105015",
+      "name": "Fizz peludito de prestigio",
+      "num": 15
+    },
+    {
+      "chromas": true,
+      "id": "105016",
+      "name": "Fizz diablillo",
+      "num": 16
+    },
+    {
+      "chromas": false,
+      "id": "105017",
+      "name": "Fizz diablillo (tanzanita)",
+      "num": 17,
+      "parentSkin": 16
+    },
+    {
+      "chromas": false,
+      "id": "105018",
+      "name": "Fizz diablillo (cuarzo rosa)",
+      "num": 18,
+      "parentSkin": 16
+    },
+    {
+      "chromas": false,
+      "id": "105019",
+      "name": "Fizz diablillo (perla)",
+      "num": 19,
+      "parentSkin": 16
+    },
+    {
+      "chromas": false,
+      "id": "105020",
+      "name": "Fizz diablillo (obsidiana)",
+      "num": 20,
+      "parentSkin": 16
+    },
+    {
+      "chromas": false,
+      "id": "105021",
+      "name": "Fizz diablillo (rubí)",
+      "num": 21,
+      "parentSkin": 16
+    },
+    {
+      "chromas": false,
+      "id": "105022",
+      "name": "Fizz diablillo (esmeralda)",
+      "num": 22,
+      "parentSkin": 16
+    },
+    {
+      "chromas": false,
+      "id": "105023",
+      "name": "Fizz diablillo (citrino)",
+      "num": 23,
+      "parentSkin": 16
+    },
+    {
+      "chromas": false,
+      "id": "105024",
+      "name": "Fizz diablillo (zafiro)",
+      "num": 24,
+      "parentSkin": 16
+    },
+    {
+      "chromas": false,
+      "id": "105025",
+      "name": "Fizz peludito de prestigio (2022)",
+      "num": 25
+    },
+    {
+      "chromas": true,
+      "id": "105026",
+      "name": "Fizz astronauta",
+      "num": 26
+    },
+    {
+      "chromas": false,
+      "id": "105027",
+      "name": "Fizz astronauta (rubí)",
+      "num": 27,
+      "parentSkin": 26
+    },
+    {
+      "chromas": false,
+      "id": "105028",
+      "name": "Fizz astronauta (ojo de gato)",
+      "num": 28,
+      "parentSkin": 26
+    },
+    {
+      "chromas": false,
+      "id": "105029",
+      "name": "Fizz astronauta (aguamarina)",
+      "num": 29,
+      "parentSkin": 26
+    },
+    {
+      "chromas": false,
+      "id": "105030",
+      "name": "Fizz astronauta (esmeralda)",
+      "num": 30,
+      "parentSkin": 26
+    },
+    {
+      "chromas": false,
+      "id": "105031",
+      "name": "Fizz astronauta (obsidiana)",
+      "num": 31,
+      "parentSkin": 26
+    },
+    {
+      "chromas": false,
+      "id": "105032",
+      "name": "Fizz astronauta (cuarzo rosa)",
+      "num": 32,
+      "parentSkin": 26
+    },
+    {
+      "chromas": false,
+      "id": "105033",
+      "name": "Fizz astronauta (turquesa)",
+      "num": 33,
+      "parentSkin": 26
+    },
+    {
+      "chromas": false,
+      "id": "105034",
+      "name": "Fizz astronauta (amatista)",
+      "num": 34,
+      "parentSkin": 26
+    },
+    {
+      "chromas": true,
+      "id": "105035",
+      "name": "Fizz chamán de la lluvia",
+      "num": 35
+    },
+    {
+      "chromas": false,
+      "id": "105036",
+      "name": "Fizz chamán de la lluvia (rubí)",
+      "num": 36,
+      "parentSkin": 35
+    },
+    {
+      "chromas": false,
+      "id": "105037",
+      "name": "Fizz chamán de la lluvia (citrino)",
+      "num": 37,
+      "parentSkin": 35
+    },
+    {
+      "chromas": false,
+      "id": "105038",
+      "name": "Fizz chamán de la lluvia (aguamarina)",
+      "num": 38,
+      "parentSkin": 35
+    },
+    {
+      "chromas": false,
+      "id": "105039",
+      "name": "Fizz chamán de la lluvia (esmeralda)",
+      "num": 39,
+      "parentSkin": 35
+    },
+    {
+      "chromas": false,
+      "id": "105040",
+      "name": "Fizz chamán de la lluvia (amatista)",
+      "num": 40,
+      "parentSkin": 35
+    },
+    {
+      "chromas": false,
+      "id": "105041",
+      "name": "Fizz chamán de la lluvia (cuarzo rosa)",
+      "num": 41,
+      "parentSkin": 35
+    },
+    {
+      "chromas": false,
+      "id": "105042",
+      "name": "Fizz chamán de la lluvia (meteorito)",
+      "num": 42,
+      "parentSkin": 35
+    },
+    {
+      "chromas": false,
+      "id": "105043",
+      "name": "Fizz chamán de la lluvia (turquesa)",
+      "num": 43,
+      "parentSkin": 35
+    }
+  ],
+  "spells": [
+    {
+      "cooldown": [
+        8,
+        7.5,
+        7,
+        6.5,
+        6
+      ],
+      "cooldownBurn": "8/7.5/7/6.5/6",
+      "cost": [
+        50,
+        50,
+        50,
+        50,
+        50
+      ],
+      "costBurn": "50",
+      "costType": " {{ abilityresourcename }}",
+      "datavalues": {},
+      "description": "Fizz atraviesa a su objetivo, inflige daño mágico y aplica efectos de impacto.",
+      "effect": [
+        null,
+        [
+          10,
+          25,
+          40,
+          55,
+          70
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          650,
+          750,
+          850,
+          950,
+          1050
+        ],
+        [
+          1.5,
+          1.5,
+          1.5,
+          1.5,
+          1.5
+        ],
+        [
+          600,
+          600,
+          600,
+          600,
+          600
+        ],
+        [
+          1,
+          1,
+          1,
+          1,
+          1
+        ],
+        [
+          0.35,
+          0.35,
+          0.35,
+          0.35,
+          0.35
+        ],
+        [
+          40,
+          40,
+          40,
+          40,
+          40
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ]
+      ],
+      "effectBurn": [
+        null,
+        "10/25/40/55/70",
+        "0",
+        "650/750/850/950/1050",
+        "1.5",
+        "600",
+        "1",
+        "0.35",
+        "40",
+        "0",
+        "0"
+      ],
+      "id": "FizzQ",
+      "image": {
+        "full": "FizzQ.png",
+        "group": "spell",
+        "h": 48,
+        "sprite": "spell4.png",
+        "w": 48,
+        "x": 192,
+        "y": 48
+      },
+      "leveltip": {
+        "effect": [
+          "{{ e1 }} -> {{ e1NL }}",
+          "{{ cooldown }} -> {{ cooldownNL }}"
+        ],
+        "label": [
+          "Daño",
+          "Enfriamiento"
+        ]
+      },
+      "maxammo": "-1",
+      "maxrank": 5,
+      "name": "Golpe de erizo de mar",
+      "range": [
+        550,
+        550,
+        550,
+        550,
+        550
+      ],
+      "rangeBurn": "550",
+      "resource": "{{ cost }} {{ abilityresourcename }}",
+      "tooltip": "Fizz atraviesa a un enemigo e inflige <physicalDamage>{{ totaldamage }} de daño físico</physicalDamage> y <magicDamage>{{ qdamage }} de daño mágico</magicDamage>.{{ spellmodifierdescriptionappend }}",
+      "vars": []
+    },
+    {
+      "cooldown": [
+        7,
+        6,
+        5,
+        4,
+        3
+      ],
+      "cooldownBurn": "7/6/5/4/3",
+      "cost": [
+        30,
+        40,
+        50,
+        60,
+        70
+      ],
+      "costBurn": "30/40/50/60/70",
+      "costType": " {{ abilityresourcename }}",
+      "datavalues": {},
+      "description": "Los ataques de Fizz hacen que sus enemigos se desangren y sufran daño mágico durante varios segundos. Fizz puede potenciar su siguiente ataque para infligir daño adicional y potenciar sus siguientes ataques durante un breve periodo de tiempo.",
+      "effect": [
+        null,
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ]
+      ],
+      "effectBurn": [
+        null,
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0"
+      ],
+      "id": "FizzW",
+      "image": {
+        "full": "FizzW.png",
+        "group": "spell",
+        "h": 48,
+        "sprite": "spell4.png",
+        "w": 48,
+        "x": 240,
+        "y": 48
+      },
+      "leveltip": {
+        "effect": [
+          "{{ dotbasedamage }} -> {{ dotbasedamageNL }}",
+          "{{ activebasedamage }} -> {{ activebasedamageNL }}",
+          "{{ onhitbuffbasedamage }} -> {{ onhitbuffbasedamageNL }}",
+          "{{ onkillmanarefund }} -> {{ onkillmanarefundNL }}",
+          "{{ cost }} -> {{ costNL }}",
+          "{{ cooldown }} -> {{ cooldownNL }}"
+        ],
+        "label": [
+          "Daño de la pasiva",
+          "Daño de la activa",
+          "Daño al golpear",
+          "Devolución de maná",
+          "Coste de @AbilityResourceName@",
+          "Enfriamiento"
+        ]
+      },
+      "maxammo": "-1",
+      "maxrank": 5,
+      "name": "Tridente piedramar",
+      "range": [
+        600,
+        600,
+        600,
+        600,
+        600
+      ],
+      "rangeBurn": "600",
+      "resource": "{{ cost }} {{ abilityresourcename }}",
+      "tooltip": "<spellPassive>Pasiva</spellPassive>: Los ataques básicos de Fizz hacen sangrar a sus enemigos, lo que inflige <magicDamage>{{ dotdamage }} de daño mágico</magicDamage> a lo largo de {{ bleedduration }} s. <br /><br /><spellActive>Activa</spellActive>: El siguiente ataque de Fizz inflige <magicDamage>{{ activedamage }} de daño mágico</magicDamage> adicional. Si este ataque mata a su objetivo, Fizz recupera <scaleMana>{{ onkillmanarefund }} de maná</scaleMana> y reduce el enfriamiento de esta habilidad a {{ onkillnewcooldown }} s. Si no mata, los ataques de Fizz infligen <magicDamage>{{ onhitbuffdamage }} de daño mágico</magicDamage> adicional durante {{ onhitbuffduration }} s.{{ spellmodifierdescriptionappend }}",
+      "vars": []
+    },
+    {
+      "cooldown": [
+        16,
+        14,
+        12,
+        10,
+        8
+      ],
+      "cooldownBurn": "16/14/12/10/8",
+      "cost": [
+        75,
+        80,
+        85,
+        90,
+        95
+      ],
+      "costBurn": "75/80/85/90/95",
+      "costType": " {{ abilityresourcename }}",
+      "datavalues": {},
+      "description": "Fizz salta al aire y aterriza grácilmente sobre su lanza, siendo imposible atacarlo. Desde esta posición, Fizz puede dejarse caer para aplastar el suelo u optar por saltar de nuevo antes de hacerlo.",
+      "effect": [
+        null,
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ]
+      ],
+      "effectBurn": [
+        null,
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0"
+      ],
+      "id": "FizzE",
+      "image": {
+        "full": "FizzE.png",
+        "group": "spell",
+        "h": 48,
+        "sprite": "spell4.png",
+        "w": 48,
+        "x": 288,
+        "y": 48
+      },
+      "leveltip": {
+        "effect": [
+          "{{ cooldown }} -> {{ cooldownNL }}",
+          "{{ cost }} -> {{ costNL }}",
+          "{{ basedamage }} -> {{ basedamageNL }}",
+          "{{ slowamount*100.000000 }}% -> {{ slowamountnl*100.000000 }}%"
+        ],
+        "label": [
+          "Enfriamiento",
+          "Coste de @AbilityResourceName@",
+          "Daño",
+          "Ralentización"
+        ]
+      },
+      "maxammo": "-1",
+      "maxrank": 5,
+      "name": "Juguetón/Gamberro",
+      "range": [
+        400,
+        400,
+        400,
+        400,
+        400
+      ],
+      "rangeBurn": "400",
+      "resource": "{{ cost }} {{ abilityresourcename }}",
+      "tooltip": "Fizz salta sobre su tridente y se vuelve inalcanzable durante 0,75 s. Tras ello, inflige <magicDamage>{{ edamage }} de daño mágico</magicDamage> a los enemigos cercanos y los <status>ralentiza</status> un {{ slowamount*100 }}% durante {{ slowduration }} s. <br /><br />Fizz puede <recast>volver a lanzar</recast> esta habilidad mientras es inalcanzable para volver a deslizarse, lo que finaliza el efecto antes, inflige daño en una zona pequeña y no <status>ralentiza</status>.{{ spellmodifierdescriptionappend }}",
+      "vars": []
+    },
+    {
+      "cooldown": [
+        120,
+        100,
+        80
+      ],
+      "cooldownBurn": "120/100/80",
+      "cost": [
+        100,
+        100,
+        100
+      ],
+      "costBurn": "100",
+      "costType": " {{ abilityresourcename }}",
+      "datavalues": {},
+      "description": "Fizz lanza hacia una dirección un pez que se adhiere al primer campeón que toca y lo ralentiza. Tras un momento, sale un tiburón de la tierra que lanza al objetivo por los aires y empuja a un lado a los enemigos cercanos. Todos los enemigos alcanzados sufren daño mágico y son ralentizados.",
+      "effect": [
+        null,
+        [
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0
+        ]
+      ],
+      "effectBurn": [
+        null,
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0"
+      ],
+      "id": "FizzR",
+      "image": {
+        "full": "FizzR.png",
+        "group": "spell",
+        "h": 48,
+        "sprite": "spell4.png",
+        "w": 48,
+        "x": 336,
+        "y": 48
+      },
+      "leveltip": {
+        "effect": [
+          "{{ cooldown }} -> {{ cooldownNL }}",
+          "{{ smalldamage }} -> {{ smalldamageNL }}",
+          "{{ smalldamage*1.250000 }} -> {{ smalldamagenl*1.250000 }}",
+          "{{ smalldamage*1.500000 }} -> {{ smalldamagenl*1.500000 }}"
+        ],
+        "label": [
+          "Enfriamiento",
+          "Daño del tiburón pequeño",
+          "Daño del tiburón mediano",
+          "Daño del tiburón grande"
+        ]
+      },
+      "maxammo": "-1",
+      "maxrank": 3,
+      "name": "Carnaza para tiburones",
+      "range": [
+        1300,
+        1300,
+        1300
+      ],
+      "rangeBurn": "1300",
+      "resource": "{{ cost }} {{ abilityresourcename }}",
+      "tooltip": "Fizz lanza un pez que se adhiere al primer campeón enemigo que golpea. La víctima se ve afectada por <keywordStealth>visión verdadera</keywordStealth> y queda <status>ralentizada</status> entre un 40% y un 80% en función de la distancia recorrida por el pez antes de adherirse. <br /><br />Después de {{ detonationtime }} s, un tiburón emerge bajo el objetivo, lo <status>levanta por los aires</status> durante 1 s, <status>empuja hacia atrás</status> a todo lo demás e inflige entre <magicDamage>{{ smallsharkdamage }} y {{ bigsharkdamage }} de daño mágico</magicDamage> según la distancia recorrida por el pez antes de adherirse.{{ spellmodifierdescriptionappend }}",
+      "vars": []
+    }
+  ],
+  "stats": {
+    "armor": 26,
+    "armorperlevel": 4.6,
+    "attackdamage": 58,
+    "attackdamageperlevel": 0,
+    "attackrange": 175,
+    "attackspeed": 0.658,
+    "attackspeedperlevel": 3.1,
+    "crit": 0,
+    "critperlevel": 0,
+    "hp": 640,
+    "hpperlevel": 106,
+    "hpregen": 8,
+    "hpregenperlevel": 0.7,
+    "movespeed": 335,
+    "mp": 317,
+    "mpperlevel": 52,
+    "mpregen": 6,
+    "mpregenperlevel": 0.8,
+    "spellblock": 32,
+    "spellblockperlevel": 2.05
+  },
+  "tags": [
+    "Assassin",
+    "Fighter"
+  ],
+  "title": "El Gamberro de las Mareas"
+}

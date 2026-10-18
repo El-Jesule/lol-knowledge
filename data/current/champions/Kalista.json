@@ -1,0 +1,849 @@
+{
+  "allytips": [
+    "Desgarrar es perfecta para asestar últimos golpes, puesto que su enfriamiento se reduce a cero si acaba con su objetivo.",
+    "Al dar una orden de movimiento que active Aplomo marcial, el objetivo del ataque básico de Kalista sigue seleccionado.",
+    "Debido a su pasiva, la velocidad de ataque de Kalista tiene el efecto práctico de incrementar su velocidad de movimiento."
+  ],
+  "blurb": "Kalista, un espectro de cólera y castigo, es el inmortal espíritu de la venganza, una pesadilla acorazada que llega desde las Islas de la Sombra para dar caza a los embusteros y los traidores. Puede que todos los que han sido traicionados pidan venganza...",
+  "enemytips": [
+    "La movilidad de Kalista depende de que ataque. Esto quiere decir que si no tiene a nadie a su alcance es lenta y que si se ralentiza su velocidad de ataque se reduce la distancia que puede recorrer en combate.",
+    "Kalista no puede cancelar la preparación de sus ataques básicos. Aunque es muy móvil, esto proporciona a sus enemigos cierto margen para lanzar sus hechizos sobre ella si consiguen anticiparse al momento en que comenzará a atacar.",
+    "Si puedes evitar la línea de visión de Kalista, como poniendo maleza de por medio, sus ataques básicos fallarán, por lo que no infligirán ningún daño."
+  ],
+  "id": "Kalista",
+  "image": {
+    "full": "Kalista.png",
+    "group": "champion",
+    "h": 48,
+    "sprite": "champion1.png",
+    "w": 48,
+    "x": 288,
+    "y": 96
+  },
+  "info": {
+    "attack": 8,
+    "defense": 2,
+    "difficulty": 7,
+    "magic": 4
+  },
+  "key": "429",
+  "lore": "Kalista, un espectro de cólera y castigo, es el inmortal espíritu de la venganza, una pesadilla acorazada que llega desde las Islas de la Sombra para dar caza a los embusteros y los traidores. Puede que todos los que han sido traicionados pidan venganza con lágrimas de sangre, pero Kalista solo responde a quienes están dispuestos a ofrecer su alma a cambio. Aquellos que se convierten en el objetivo de la ira de Kalista tienen que hacer las paces con sí mismos, porque cualquier pacto sellado con la sombría cazadora solo puede terminar en las frías llamas de sus lanzas espirituales.",
+  "name": "Kalista",
+  "partype": "Maná",
+  "passive": {
+    "description": "Si Kalista da una orden de movimiento mientras prepara un ataque básico o Atravesar, al asestar el golpe recorrerá una corta distancia en la dirección indicada.",
+    "image": {
+      "full": "Kalista_Passive.png",
+      "group": "passive",
+      "h": 48,
+      "sprite": "passive1.png",
+      "w": 48,
+      "x": 288,
+      "y": 96
+    },
+    "name": "Aplomo marcial"
+  },
+  "recommended": [],
+  "skins": [
+    {
+      "chromas": false,
+      "id": "429000",
+      "name": "default",
+      "num": 0
+    },
+    {
+      "chromas": false,
+      "id": "429001",
+      "name": "Kalista luna sangrienta",
+      "num": 1
+    },
+    {
+      "chromas": true,
+      "id": "429002",
+      "name": "Kalista (Mundial 2015)",
+      "num": 2
+    },
+    {
+      "chromas": false,
+      "id": "429003",
+      "name": "Kalista SKT T1",
+      "num": 3
+    },
+    {
+      "chromas": false,
+      "id": "429004",
+      "name": "Kalista del Mundial 2015 (dorado)",
+      "num": 4,
+      "parentSkin": 2
+    },
+    {
+      "chromas": true,
+      "id": "429005",
+      "name": "Kalista yelmo sombrío",
+      "num": 5
+    },
+    {
+      "chromas": false,
+      "id": "429006",
+      "name": "Kalista yelmo sombrío (citrino)",
+      "num": 6,
+      "parentSkin": 5
+    },
+    {
+      "chromas": false,
+      "id": "429007",
+      "name": "Kalista yelmo sombrío (zafiro)",
+      "num": 7,
+      "parentSkin": 5
+    },
+    {
+      "chromas": false,
+      "id": "429008",
+      "name": "Kalista yelmo sombrío (obsidiana)",
+      "num": 8,
+      "parentSkin": 5
+    },
+    {
+      "chromas": false,
+      "id": "429009",
+      "name": "Kalista yelmo sombrío (rubí)",
+      "num": 9,
+      "parentSkin": 5
+    },
+    {
+      "chromas": false,
+      "id": "429010",
+      "name": "Kalista yelmo sombrío (cuarzo rosa)",
+      "num": 10,
+      "parentSkin": 5
+    },
+    {
+      "chromas": false,
+      "id": "429011",
+      "name": "Kalista yelmo sombrío (amatista)",
+      "num": 11,
+      "parentSkin": 5
+    },
+    {
+      "chromas": false,
+      "id": "429012",
+      "name": "Kalista yelmo sombrío (turquesa)",
+      "num": 12,
+      "parentSkin": 5
+    },
+    {
+      "chromas": false,
+      "id": "429013",
+      "name": "Kalista yelmo sombrío (esmeralda)",
+      "num": 13,
+      "parentSkin": 5
+    },
+    {
+      "chromas": true,
+      "id": "429014",
+      "name": "Kalista corte feérica",
+      "num": 14
+    },
+    {
+      "chromas": false,
+      "id": "429015",
+      "name": "Kalista corte feérica (cuarzo rosa)",
+      "num": 15,
+      "parentSkin": 14
+    },
+    {
+      "chromas": false,
+      "id": "429016",
+      "name": "Kalista corte feérica (ojo de gato)",
+      "num": 16,
+      "parentSkin": 14
+    },
+    {
+      "chromas": false,
+      "id": "429017",
+      "name": "Kalista corte feérica (zafiro)",
+      "num": 17,
+      "parentSkin": 14
+    },
+    {
+      "chromas": false,
+      "id": "429018",
+      "name": "Kalista corte feérica (esmeralda)",
+      "num": 18,
+      "parentSkin": 14
+    },
+    {
+      "chromas": false,
+      "id": "429019",
+      "name": "Kalista corte feérica (amatista)",
+      "num": 19,
+      "parentSkin": 14
+    },
+    {
+      "chromas": false,
+      "id": "429020",
+      "name": "Kalista corte feérica (turquesa)",
+      "num": 20,
+      "parentSkin": 14
+    },
+    {
+      "chromas": false,
+      "id": "429021",
+      "name": "Kalista corte feérica (rubí)",
+      "num": 21,
+      "parentSkin": 14
+    },
+    {
+      "chromas": false,
+      "id": "429022",
+      "name": "Kalista corte feérica (perla)",
+      "num": 22,
+      "parentSkin": 14
+    },
+    {
+      "chromas": false,
+      "id": "429023",
+      "name": "Kalista corte feérica (adorable)",
+      "num": 23,
+      "parentSkin": 14
+    },
+    {
+      "chromas": true,
+      "id": "429024",
+      "name": "Kalista guerrera del orden",
+      "num": 24
+    },
+    {
+      "chromas": false,
+      "id": "429025",
+      "name": "Kalista guerrera del orden (rubí)",
+      "num": 25,
+      "parentSkin": 24
+    },
+    {
+      "chromas": false,
+      "id": "429026",
+      "name": "Kalista guerrera del orden (ojo de gato)",
+      "num": 26,
+      "parentSkin": 24
+    },
+    {
+      "chromas": false,
+      "id": "429027",
+      "name": "Kalista guerrera del orden (esmeralda)",
+      "num": 27,
+      "parentSkin": 24
+    },
+    {
+      "chromas": false,
+      "id": "429028",
+      "name": "Kalista guerrera del orden (tanzanita)",
+      "num": 28,
+      "parentSkin": 24
+    },
+    {
+      "chromas": false,
+      "id": "429029",
+      "name": "Kalista guerrera del orden (turquesa)",
+      "num": 29,
+      "parentSkin": 24
+    },
+    {
+      "chromas": false,
+      "id": "429030",
+      "name": "Kalista guerrera del orden (cuarzo rosa)",
+      "num": 30,
+      "parentSkin": 24
+    },
+    {
+      "chromas": false,
+      "id": "429031",
+      "name": "Kalista guerrera del orden (perla)",
+      "num": 31,
+      "parentSkin": 24
+    },
+    {
+      "chromas": false,
+      "id": "429032",
+      "name": "Kalista guerrera del orden (obsidiana)",
+      "num": 32,
+      "parentSkin": 24
+    }
+  ],
+  "spells": [
+    {
+      "cooldown": [
+        9,
+        9,
+        9,
+        9,
+        9
+      ],
+      "cooldownBurn": "9",
+      "cost": [
+        60,
+        65,
+        70,
+        75,
+        80
+      ],
+      "costBurn": "60/65/70/75/80",
+      "costType": " {{ abilityresourcename }}",
+      "datavalues": {},
+      "description": "Arroja una veloz lanza que atraviesa a los enemigos que asesina.",
+      "effect": [
+        null,
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ]
+      ],
+      "effectBurn": [
+        null,
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0"
+      ],
+      "id": "KalistaMysticShot",
+      "image": {
+        "full": "KalistaMysticShot.png",
+        "group": "spell",
+        "h": 48,
+        "sprite": "spell6.png",
+        "w": 48,
+        "x": 384,
+        "y": 48
+      },
+      "leveltip": {
+        "effect": [
+          "{{ cost }} -> {{ costNL }}",
+          "{{ basedamage }} -> {{ basedamageNL }}"
+        ],
+        "label": [
+          "Coste de @AbilityResourceName@",
+          "Daño"
+        ]
+      },
+      "maxammo": "-1",
+      "maxrank": 5,
+      "name": "Atravesar",
+      "range": [
+        1150,
+        1150,
+        1150,
+        1150,
+        1150
+      ],
+      "rangeBurn": "1150",
+      "resource": "{{ cost }} {{ abilityresourcename }}",
+      "tooltip": "Kalista arroja una lanza que inflige <physicalDamage>{{ totaldamage }} de daño físico</physicalDamage> al primer objetivo golpeado. Si mata al objetivo, la lanza sigue adelante y lleva cualquier acumulación de <spellName>Desgarrar</spellName> al siguiente objetivo golpeado.<br /><br />Kalista puede deslizarse tras usar esta habilidad usando <spellName>Aplomo marcial</spellName>.{{ spellmodifierdescriptionappend }}",
+      "vars": []
+    },
+    {
+      "cooldown": [
+        30,
+        30,
+        30,
+        30,
+        30
+      ],
+      "cooldownBurn": "30",
+      "cost": [
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "costBurn": "0",
+      "costType": "Sin coste",
+      "datavalues": {},
+      "description": "Obtiene daño adicional cuando Kalista y su Juramentado golpean al mismo objetivo. <br><br>Actívala para enviar un alma a patrullar una zona. El alma revelará la zona que tiene delante.",
+      "effect": [
+        null,
+        [
+          80,
+          80,
+          80,
+          80,
+          80
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          125,
+          150,
+          175,
+          200,
+          225
+        ],
+        [
+          90,
+          80,
+          70,
+          60,
+          50
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          75,
+          100,
+          125,
+          150,
+          175
+        ],
+        [
+          10,
+          10,
+          10,
+          10,
+          10
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ]
+      ],
+      "effectBurn": [
+        null,
+        "80",
+        "0",
+        "125/150/175/200/225",
+        "90/80/70/60/50",
+        "0",
+        "75/100/125/150/175",
+        "10",
+        "0",
+        "0",
+        "0"
+      ],
+      "id": "KalistaW",
+      "image": {
+        "full": "KalistaW.png",
+        "group": "spell",
+        "h": 48,
+        "sprite": "spell6.png",
+        "w": 48,
+        "x": 432,
+        "y": 48
+      },
+      "leveltip": {
+        "effect": [
+          "{{ maxhealthdamage*100.000000 }}% -> {{ maxhealthdamagenl*100.000000 }}%",
+          "{{ ammorechargetooltip }} -> {{ ammorechargetooltipNL }}",
+          "{{ maximummonsterdamage }} -> {{ maximummonsterdamageNL }}"
+        ],
+        "label": [
+          "Daño por vida máxima",
+          "Recarga de munición",
+          "Límite del daño a monstruos"
+        ]
+      },
+      "maxammo": "2",
+      "maxrank": 5,
+      "name": "Centinela",
+      "range": [
+        5000,
+        5000,
+        5000,
+        5000,
+        5000
+      ],
+      "rangeBurn": "5000",
+      "resource": "Sin coste",
+      "tooltip": "<spellPassive>Pasiva:</spellPassive> Cuando Kalista y su <keywordMajor>Juramentado</keywordMajor> atacan al mismo objetivo, ella inflige un <magicDamage>{{ maxhealthdamage*100 }}% de daño mágico en función de su vida máxima</magicDamage>. Este efecto tiene un enfriamiento de {{ pertargetcooldown }} s por objetivo y un límite de {{ maximummonsterdamage }} a unidades que no son campeones.<br /><br /><spellPassive>Activa:</spellPassive> Kalista envía un fantasma que patrulla una zona durante tres vueltas. Esto revela a los campeones detectados durante 4 s. Esta habilidad tiene 2 cargas ({{ ammorechargetooltip }} s de recarga).{{ spellmodifierdescriptionappend }}",
+      "vars": []
+    },
+    {
+      "cooldown": [
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "cooldownBurn": "0",
+      "cost": [
+        30,
+        30,
+        30,
+        30,
+        30
+      ],
+      "costBurn": "30",
+      "costType": " {{ abilityresourcename }}",
+      "datavalues": {},
+      "description": "Cuando ataca, atraviesa a sus enemigos con lanzas. Actívala para arrancarlas, lo que ralentiza a las víctimas y les causa daño en función del nivel.",
+      "effect": [
+        null,
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          2,
+          2,
+          2,
+          2,
+          2
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ]
+      ],
+      "effectBurn": [
+        null,
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "2",
+        "0",
+        "0",
+        "0"
+      ],
+      "id": "KalistaExpungeWrapper",
+      "image": {
+        "full": "KalistaExpungeWrapper.png",
+        "group": "spell",
+        "h": 48,
+        "sprite": "spell6.png",
+        "w": 48,
+        "x": 0,
+        "y": 96
+      },
+      "leveltip": {
+        "effect": [
+          "{{ basedamage }} -> {{ basedamageNL }}",
+          "{{ additionalbasedamage }} -> {{ additionalbasedamageNL }}",
+          "{{ additionaladratio*100.000000 }}% -> {{ additionaladrationl*100.000000 }}%",
+          "{{ slowamount*100.000000 }}% -> {{ slowamountnl*100.000000 }}%",
+          "{{ manarefund }} -> {{ manarefundNL }}",
+          "{{ fakedcooldown }} -> {{ fakedcooldownNL }}"
+        ],
+        "label": [
+          "Daño",
+          "Daño por acumulación",
+          "Relación de DA por acumulación",
+          "Ralentización de velocidad de movimiento",
+          "Devolución de maná",
+          "Enfriamiento"
+        ]
+      },
+      "maxammo": "-1",
+      "maxrank": 5,
+      "name": "Desgarrar",
+      "range": [
+        1000,
+        1000,
+        1000,
+        1000,
+        1000
+      ],
+      "rangeBurn": "1000",
+      "resource": "{{ cost }} {{ abilityresourcename }}",
+      "tooltip": "<spellPassive>Pasiva:</spellPassive> Las lanzas de Kalista permanecen en su objetivo durante 4 s y se acumulan indefinidamente.<br /><br /><spellActive>Activa:</spellActive> Kalista arranca las lanzas de los enemigos cercanos, lo que inflige <physicalDamage>{{ normaldamage }}</physicalDamage> más <physicalDamage>{{ additionaldamage }} de daño físico</physicalDamage> por cada lanza a partir de la primera. <status>Ralentiza</status> a los enemigos golpeados un <attention>{{ totalslowamount }}</attention> durante {{ slowduration }} s.<br /><br />Si esta habilidad mata al menos a un objetivo, su enfriamiento se reinicia y devuelve <scaleMana>{{ manarefund }} de maná</scaleMana>.{{ spellmodifierdescriptionappend }}",
+      "vars": []
+    },
+    {
+      "cooldown": [
+        160,
+        140,
+        120
+      ],
+      "cooldownBurn": "160/140/120",
+      "cost": [
+        100,
+        100,
+        100
+      ],
+      "costBurn": "100",
+      "costType": " {{ abilityresourcename }}",
+      "datavalues": {},
+      "description": "Kalista teleporta al Juramentado hasta sí. Este adquiere la capacidad de lanzarse hacia una posición y derribar a los campeones enemigos con los que se encuentra.",
+      "effect": [
+        null,
+        [
+          0,
+          0,
+          0
+        ],
+        [
+          1,
+          1.5,
+          2
+        ],
+        [
+          40,
+          60,
+          80
+        ],
+        [
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0
+        ]
+      ],
+      "effectBurn": [
+        null,
+        "0",
+        "1/1.5/2",
+        "40/60/80",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0"
+      ],
+      "id": "KalistaRx",
+      "image": {
+        "full": "KalistaRx.png",
+        "group": "spell",
+        "h": 48,
+        "sprite": "spell6.png",
+        "w": 48,
+        "x": 48,
+        "y": 96
+      },
+      "leveltip": {
+        "effect": [
+          "{{ cooldown }} -> {{ cooldownNL }}",
+          "{{ knockupduration }} -> {{ knockupdurationNL }}"
+        ],
+        "label": [
+          "Enfriamiento",
+          "Tiempo en el aire"
+        ]
+      },
+      "maxammo": "-1",
+      "maxrank": 3,
+      "name": "Llamada del destino",
+      "range": [
+        1000,
+        1000,
+        1000
+      ],
+      "rangeBurn": "1000",
+      "resource": "{{ cost }} {{ abilityresourcename }}",
+      "tooltip": "Kalista pone a su <keywordMajor>Juramentado</keywordMajor> en estasis y lo atrae hacia sí misma durante hasta 4 s. El <keywordMajor>Juramentado</keywordMajor> puede hacer clic para lanzarse a sí mismo. Se detiene en el primer campeón golpeado y <status>empuja</status> a todos los enemigos cercanos. Si el <keywordMajor>Juramentado</keywordMajor> golpea a un campeón, se sitúa a su alcance de ataque máximo.{{ spellmodifierdescriptionappend }}",
+      "vars": []
+    }
+  ],
+  "stats": {
+    "armor": 24,
+    "armorperlevel": 5.2,
+    "attackdamage": 57,
+    "attackdamageperlevel": 0,
+    "attackrange": 525,
+    "attackspeed": 0.694,
+    "attackspeedperlevel": 4.5,
+    "crit": 0,
+    "critperlevel": 0,
+    "hp": 560,
+    "hpperlevel": 114,
+    "hpregen": 4,
+    "hpregenperlevel": 0.75,
+    "movespeed": 330,
+    "mp": 300,
+    "mpperlevel": 45,
+    "mpregen": 6.3,
+    "mpregenperlevel": 0.8,
+    "spellblock": 33,
+    "spellblockperlevel": 1.1
+  },
+  "tags": [
+    "Marksman"
+  ],
+  "title": "El Espíritu de la Venganza"
+}

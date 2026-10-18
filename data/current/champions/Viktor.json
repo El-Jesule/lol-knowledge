@@ -1,0 +1,852 @@
+{
+  "allytips": [
+    "El Rayo hextech es una poderosa herramienta que te permite hostigar a los enemigos e impedir su avance en la zona. Combinado con Campo gravitatorio permite controlar la posición del enemigo.",
+    "Es importante seleccionar el aumento adecuado en el momento justo."
+  ],
+  "blurb": "Gracias a la evolución biomecánica de su antiguo yo, Viktor se ha entregado en cuerpo y alma a su gloriosa evolución, convirtiéndose en una especie de mesías a ojos de sus fieles. Sacrificó su propia humanidad siguiendo la lógica de que, si eliminaba...",
+  "enemytips": [
+    "Ten cuidado cuando se te acerque Viktor. Su capacidad de control del campo de batalla aumenta con su proximidad al oponente.",
+    "Para saber la cantidad de aumentos que lleva, fíjate en el color de su bastón (morado, amarillo, azul o rojo)."
+  ],
+  "id": "Viktor",
+  "image": {
+    "full": "Viktor.png",
+    "group": "champion",
+    "h": 48,
+    "sprite": "champion5.png",
+    "w": 48,
+    "x": 144,
+    "y": 0
+  },
+  "info": {
+    "attack": 2,
+    "defense": 4,
+    "difficulty": 9,
+    "magic": 10
+  },
+  "key": "112",
+  "lore": "Gracias a la evolución biomecánica de su antiguo yo, Viktor se ha entregado en cuerpo y alma a su gloriosa evolución, convirtiéndose en una especie de mesías a ojos de sus fieles. Sacrificó su propia humanidad siguiendo la lógica de que, si eliminaba todo tipo de sentimientos, dejaría de sufrir. Ahora, busca poner en conocimiento de todo el mundo el hallazgo del núcleo hex, aunque nadie sea capaz de comprender sus beneficios. Al fin y al cabo, para este maestro de lo arcano, la violencia no es más que una variable necesaria para equilibrar la ecuación definitiva.",
+  "name": "Viktor",
+  "partype": "Maná",
+  "passive": {
+    "description": "Viktor obtiene fragmentos hextech cada vez que asesina a un enemigo. Por cada 100 fragmentos hextech que obtiene, Viktor mejora una habilidad activa de forma permanente. Tras mejorar todas sus habilidades básicas, puede reunir 100 fragmentos hextech para mejorar su habilidad definitiva.",
+    "image": {
+      "full": "Viktor_Passive.png",
+      "group": "passive",
+      "h": 48,
+      "sprite": "passive5.png",
+      "w": 48,
+      "x": 144,
+      "y": 0
+    },
+    "name": "Gloriosa evolución"
+  },
+  "recommended": [],
+  "skins": [
+    {
+      "chromas": false,
+      "id": "112000",
+      "name": "default",
+      "num": 0
+    },
+    {
+      "chromas": false,
+      "id": "112001",
+      "name": "Viktor máquina completa",
+      "num": 1
+    },
+    {
+      "chromas": false,
+      "id": "112002",
+      "name": "Viktor prototipo",
+      "num": 2
+    },
+    {
+      "chromas": false,
+      "id": "112003",
+      "name": "Viktor creador",
+      "num": 3
+    },
+    {
+      "chromas": false,
+      "id": "112004",
+      "name": "Viktor muerte anunciada",
+      "num": 4
+    },
+    {
+      "chromas": true,
+      "id": "112005",
+      "name": "Viktor PsyOps",
+      "num": 5
+    },
+    {
+      "chromas": false,
+      "id": "112006",
+      "name": "Viktor PsyOps (rubí)",
+      "num": 6,
+      "parentSkin": 5
+    },
+    {
+      "chromas": false,
+      "id": "112007",
+      "name": "Viktor PsyOps (arenisca)",
+      "num": 7,
+      "parentSkin": 5
+    },
+    {
+      "chromas": false,
+      "id": "112008",
+      "name": "Viktor PsyOps (zafiro)",
+      "num": 8,
+      "parentSkin": 5
+    },
+    {
+      "chromas": false,
+      "id": "112009",
+      "name": "Viktor PsyOps (amatista)",
+      "num": 9,
+      "parentSkin": 5
+    },
+    {
+      "chromas": false,
+      "id": "112010",
+      "name": "Viktor PsyOps (turquesa)",
+      "num": 10,
+      "parentSkin": 5
+    },
+    {
+      "chromas": false,
+      "id": "112011",
+      "name": "Viktor PsyOps (obsidiana)",
+      "num": 11,
+      "parentSkin": 5
+    },
+    {
+      "chromas": false,
+      "id": "112012",
+      "name": "Viktor PsyOps (peridoto)",
+      "num": 12,
+      "parentSkin": 5
+    },
+    {
+      "chromas": false,
+      "id": "112013",
+      "name": "Viktor PsyOps (caza)",
+      "num": 13,
+      "parentSkin": 5
+    },
+    {
+      "chromas": true,
+      "id": "112014",
+      "name": "Viktor solo ante el peligro",
+      "num": 14
+    },
+    {
+      "chromas": false,
+      "id": "112015",
+      "name": "Viktor solo ante el peligro (rubí)",
+      "num": 15,
+      "parentSkin": 14
+    },
+    {
+      "chromas": false,
+      "id": "112016",
+      "name": "Viktor solo ante el peligro (ojo de gato)",
+      "num": 16,
+      "parentSkin": 14
+    },
+    {
+      "chromas": false,
+      "id": "112017",
+      "name": "Viktor solo ante el peligro (esmeralda)",
+      "num": 17,
+      "parentSkin": 14
+    },
+    {
+      "chromas": false,
+      "id": "112018",
+      "name": "Viktor solo ante el peligro (turquesa)",
+      "num": 18,
+      "parentSkin": 14
+    },
+    {
+      "chromas": false,
+      "id": "112019",
+      "name": "Viktor solo ante el peligro (tanzanita)",
+      "num": 19,
+      "parentSkin": 14
+    },
+    {
+      "chromas": false,
+      "id": "112020",
+      "name": "Viktor solo ante el peligro (cuarzo rosa)",
+      "num": 20,
+      "parentSkin": 14
+    },
+    {
+      "chromas": false,
+      "id": "112021",
+      "name": "Viktor solo ante el peligro (obsidiana)",
+      "num": 21,
+      "parentSkin": 14
+    },
+    {
+      "chromas": false,
+      "id": "112022",
+      "name": "Viktor solo ante el peligro (perla)",
+      "num": 22,
+      "parentSkin": 14
+    },
+    {
+      "chromas": false,
+      "id": "112023",
+      "name": "Viktor solo ante el peligro (nómada)",
+      "num": 23,
+      "parentSkin": 14
+    },
+    {
+      "chromas": false,
+      "id": "112024",
+      "name": "Viktor salvador de Arcane",
+      "num": 24
+    },
+    {
+      "chromas": true,
+      "id": "112025",
+      "name": "Viktor heraldo de las máquinas",
+      "num": 25
+    },
+    {
+      "chromas": false,
+      "id": "112026",
+      "name": "Viktor heraldo de las máquinas (rubí)",
+      "num": 26,
+      "parentSkin": 25
+    },
+    {
+      "chromas": false,
+      "id": "112027",
+      "name": "Viktor heraldo de las máquinas (esmeralda)",
+      "num": 27,
+      "parentSkin": 25
+    },
+    {
+      "chromas": false,
+      "id": "112028",
+      "name": "Viktor heraldo de las máquinas (tanzanita)",
+      "num": 28,
+      "parentSkin": 25
+    },
+    {
+      "chromas": false,
+      "id": "112029",
+      "name": "Viktor heraldo de las máquinas (turquesa)",
+      "num": 29,
+      "parentSkin": 25
+    },
+    {
+      "chromas": false,
+      "id": "112030",
+      "name": "Viktor heraldo de las máquinas (cuarzo rosa)",
+      "num": 30,
+      "parentSkin": 25
+    },
+    {
+      "chromas": false,
+      "id": "112031",
+      "name": "Viktor heraldo de las máquinas (perla)",
+      "num": 31,
+      "parentSkin": 25
+    },
+    {
+      "chromas": false,
+      "id": "112032",
+      "name": "Viktor heraldo de las máquinas (obsidiana)",
+      "num": 32,
+      "parentSkin": 25
+    },
+    {
+      "chromas": false,
+      "id": "112033",
+      "name": "Viktor heraldo de las máquinas (ojo de gato)",
+      "num": 33,
+      "parentSkin": 25
+    }
+  ],
+  "spells": [
+    {
+      "cooldown": [
+        9,
+        8,
+        7,
+        6,
+        5
+      ],
+      "cooldownBurn": "9/8/7/6/5",
+      "cost": [
+        45,
+        50,
+        55,
+        60,
+        65
+      ],
+      "costBurn": "45/50/55/60/65",
+      "costType": " {{ abilityresourcename }}",
+      "datavalues": {},
+      "description": "Viktor ataca a una unidad enemiga con daño mágico. Además, obtiene un escudo y potencia su siguiente ataque básico.<br><br>Mejora: El escudo de Transferencia de potencia aumenta un 60% y Viktor obtiene velocidad de movimiento adicional tras lanzar la habilidad.<br>",
+      "effect": [
+        null,
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          2.5,
+          2.5,
+          2.5,
+          2.5,
+          2.5
+        ],
+        [
+          30,
+          30,
+          30,
+          30,
+          30
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ]
+      ],
+      "effectBurn": [
+        null,
+        "0",
+        "2.5",
+        "30",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0"
+      ],
+      "id": "ViktorQ",
+      "image": {
+        "full": "ViktorQ.png",
+        "group": "spell",
+        "h": 48,
+        "sprite": "spell16.png",
+        "w": 48,
+        "x": 288,
+        "y": 0
+      },
+      "leveltip": {
+        "effect": [
+          "{{ cooldown }} -> {{ cooldownNL }}",
+          "{{ cost }} -> {{ costNL }}",
+          "{{ missiledamage }} -> {{ missiledamageNL }}",
+          "{{ aabonusdamage }} -> {{ aabonusdamageNL }}"
+        ],
+        "label": [
+          "Enfriamiento",
+          "Coste de @AbilityResourceName@",
+          "Daño (proyectil)",
+          "Daño (ataque)"
+        ]
+      },
+      "maxammo": "-1",
+      "maxrank": 5,
+      "name": "Transferencia de potencia",
+      "range": [
+        600,
+        600,
+        600,
+        600,
+        600
+      ],
+      "rangeBurn": "600",
+      "resource": "{{ cost }} {{ abilityresourcename }}",
+      "tooltip": "Viktor dispara a un enemigo, lo que inflige <magicDamage>{{ totalmissiledamage }} de daño mágico</magicDamage> y otorga a Viktor un <shield>escudo de {{ shieldlevelscaling }}</shield> durante {{ buffduration }} s.<br /><br />El siguiente ataque de Viktor en 4 s inflige <magicDamage>{{ attacktotaldmg }} de daño mágico</magicDamage>.<br /><br /><keywordMajor>Mejorada:</keywordMajor> Otorga un <shield>escudo de {{ totalaugmentedshieldvalue }}</shield> y Viktor también obtiene un <speed>{{ augmentmovespeedbonus }}% de velocidad de movimiento</speed> durante {{ buffduration }} s.{{ spellmodifierdescriptionappend }}",
+      "vars": []
+    },
+    {
+      "cooldown": [
+        17,
+        16,
+        15,
+        14,
+        13
+      ],
+      "cooldownBurn": "17/16/15/14/13",
+      "cost": [
+        65,
+        65,
+        65,
+        65,
+        65
+      ],
+      "costBurn": "65",
+      "costType": " {{ abilityresourcename }}",
+      "datavalues": {},
+      "description": "Viktor crea un potente campo gravitacional que ralentiza a los enemigos que queden atrapados en su radio. Los enemigos que permanecen demasiado tiempo en el campo se ven aturdidos.<br><br>Mejora: Los hechizos de Viktor aplican una ralentización a los enemigos alcanzados.<br>",
+      "effect": [
+        null,
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ]
+      ],
+      "effectBurn": [
+        null,
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0"
+      ],
+      "id": "ViktorW",
+      "image": {
+        "full": "ViktorW.png",
+        "group": "spell",
+        "h": 48,
+        "sprite": "spell16.png",
+        "w": 48,
+        "x": 336,
+        "y": 0
+      },
+      "leveltip": {
+        "effect": [
+          "{{ cooldown }} -> {{ cooldownNL }}",
+          "{{ slowpotency*-1.000000 }}% -> {{ slowpotencynl*-1.000000 }}%"
+        ],
+        "label": [
+          "Enfriamiento",
+          "Ralentización de movimiento"
+        ]
+      },
+      "maxammo": "-1",
+      "maxrank": 5,
+      "name": "Campo gravitatorio",
+      "range": [
+        800,
+        800,
+        800,
+        800,
+        800
+      ],
+      "rangeBurn": "800",
+      "resource": "{{ cost }} {{ abilityresourcename }}",
+      "tooltip": "Viktor despliega un artefacto de inmovilización gravitacional durante {{ fieldduration }} s, lo que <status>ralentiza</status> a los enemigos que se encuentran en su interior un {{ slowpotency*-1 }}%. Los enemigos que permanezcan dentro del radio durante 1,25 s quedan <status>aturdidos</status> durante {{ stunduration }} s.<br /><br /><keywordMajor>Pasiva mejorada:</keywordMajor> Las habilidades de Viktor <status>ralentizan</status> un {{ augmentslow }}% durante 1 s.<br /><br /><br />{{ spellmodifierdescriptionappend }}",
+      "vars": []
+    },
+    {
+      "cooldown": [
+        12,
+        11,
+        10,
+        9,
+        8
+      ],
+      "cooldownBurn": "12/11/10/9/8",
+      "cost": [
+        60,
+        70,
+        80,
+        90,
+        100
+      ],
+      "costBurn": "60/70/80/90/100",
+      "costType": " {{ abilityresourcename }}",
+      "datavalues": {},
+      "description": "Viktor usa su brazo biomecánico para lanzar un rayo hextech que atraviesa el campo de batalla en línea recta e inflige daño a todos los enemigos en su trayectoria.<br><br>Mejora: Tras un breve retardo, se produce una explosión en el surco del rayo que inflige daño mágico.<br>",
+      "effect": [
+        null,
+        [
+          70,
+          110,
+          150,
+          190,
+          230
+        ],
+        [
+          20,
+          60,
+          100,
+          140,
+          180
+        ],
+        [
+          1,
+          1,
+          1,
+          1,
+          1
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ]
+      ],
+      "effectBurn": [
+        null,
+        "70/110/150/190/230",
+        "20/60/100/140/180",
+        "1",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0"
+      ],
+      "id": "ViktorE",
+      "image": {
+        "full": "ViktorE.png",
+        "group": "spell",
+        "h": 48,
+        "sprite": "spell16.png",
+        "w": 48,
+        "x": 384,
+        "y": 0
+      },
+      "leveltip": {
+        "effect": [
+          "{{ basedamagelaser }} -> {{ basedamagelaserNL }}",
+          "{{ basedamageaftershock }} -> {{ basedamageaftershockNL }}",
+          "{{ cooldown }} -> {{ cooldownNL }}",
+          "{{ cost }} -> {{ costNL }}"
+        ],
+        "label": [
+          "Daño (Rayo hextech)",
+          "Daño (Réplica)",
+          "Enfriamiento",
+          "Coste de @AbilityResourceName@"
+        ]
+      },
+      "maxammo": "-1",
+      "maxrank": 5,
+      "name": "Rayo hextech",
+      "range": [
+        525,
+        525,
+        525,
+        525,
+        525
+      ],
+      "rangeBurn": "525",
+      "resource": "{{ cost }} {{ abilityresourcename }}",
+      "tooltip": "Viktor dispara un rayo hextech en la dirección seleccionada, lo que inflige <magicDamage>{{ laserdamage }} de daño mágico</magicDamage> a los enemigos golpeados.<br /><br /><keywordMajor>Mejorada:</keywordMajor> Tras el Rayo hextech, se produce una reverberación que inflige <magicDamage>{{ aftershockdamage }} de daño mágico</magicDamage>.<br /><br /><br />{{ spellmodifierdescriptionappend }}",
+      "vars": []
+    },
+    {
+      "cooldown": [
+        120,
+        100,
+        80
+      ],
+      "cooldownBurn": "120/100/80",
+      "cost": [
+        100,
+        100,
+        100
+      ],
+      "costBurn": "100",
+      "costType": " {{ abilityresourcename }}",
+      "datavalues": {},
+      "description": "Viktor conjura una tormenta arcana en el campo de batalla que inflige daño mágico e interrumpe las canalizaciones enemigas. La tormenta inflige daño mágico de forma periódica a todos los enemigos cercanos y Viktor puede redirigirla.<br><br>Mejora: La tormenta arcana se desplaza un 25% más rápido. Cada vez que un campeón muere tras recibir daño de la tormenta, esta aumenta de tamaño y amplía su duración.<br><br>",
+      "effect": [
+        null,
+        [
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0
+        ]
+      ],
+      "effectBurn": [
+        null,
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0"
+      ],
+      "id": "ViktorR",
+      "image": {
+        "full": "ViktorR.png",
+        "group": "spell",
+        "h": 48,
+        "sprite": "spell16.png",
+        "w": 48,
+        "x": 432,
+        "y": 0
+      },
+      "leveltip": {
+        "effect": [
+          "{{ cooldown }} -> {{ cooldownNL }}",
+          "{{ initialburstbasedamage }} -> {{ initialburstbasedamageNL }}",
+          "{{ subsequentburstbasedamage }} -> {{ subsequentburstbasedamageNL }}"
+        ],
+        "label": [
+          "Enfriamiento",
+          "Daño (estallido inicial)",
+          "Daño (pulsos periódicos)"
+        ]
+      },
+      "maxammo": "-1",
+      "maxrank": 3,
+      "name": "Tormenta arcana",
+      "range": [
+        700,
+        700,
+        700
+      ],
+      "rangeBurn": "700",
+      "resource": "{{ cost }} {{ abilityresourcename }}",
+      "tooltip": "Viktor conjura una tormenta arcana en un área durante {{ stormduration }} s, lo que inflige <magicDamage>{{ initialburstdamage }} de daño mágico</magicDamage> al instante y <magicDamage>{{ subsequentburstdamage }} de daño mágico</magicDamage> por segundo a los enemigos cercanos. La tormenta sigue automáticamente a los campeones a los que ha dañado recientemente.<br /><br /><recast>Reactivación:</recast> Viktor determina el rumbo de la tormenta manualmente.<br /><br /><keywordMajor>Mejorada:</keywordMajor> La tormenta se mueve un {{ augmentboost*100 }}% más rápido. Si muere un campeón que ha recibido daño de la tormenta, esta aumenta de tamaño y amplía su duración en {{ tooltip_durationextension }} s (hasta {{ maxgrowths }} veces).<br /><br />{{ spellmodifierdescriptionappend }}",
+      "vars": []
+    }
+  ],
+  "stats": {
+    "armor": 23,
+    "armorperlevel": 4.4,
+    "attackdamage": 53,
+    "attackdamageperlevel": 0,
+    "attackrange": 525,
+    "attackspeed": 0.658,
+    "attackspeedperlevel": 2.11,
+    "crit": 0,
+    "critperlevel": 0,
+    "hp": 600,
+    "hpperlevel": 100,
+    "hpregen": 8,
+    "hpregenperlevel": 0.65,
+    "movespeed": 335,
+    "mp": 405,
+    "mpperlevel": 45,
+    "mpregen": 8,
+    "mpregenperlevel": 0.8,
+    "spellblock": 30,
+    "spellblockperlevel": 1.3
+  },
+  "tags": [
+    "Mage"
+  ],
+  "title": "el Heraldo de lo Arcano"
+}

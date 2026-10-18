@@ -1,0 +1,984 @@
+{
+  "allytips": [
+    "Cuando tenga poca vida, Olaf puede combinar Furia berserker, Golpes virulentos y Ragnarok para volverse engañosamente fuerte.",
+    "La curación adicional que ofrece Golpes virulentos amplifica tanto el robo de vida a cualquier objetivo como las curaciones provenientes de los aliados."
+  ],
+  "blurb": "Olaf porta sus hachas de forma que es una fuerza imparable de destrucción que no quiere nada, salvo morir en un combate glorioso. Natural de Lokfar, una brutal península de Freljord, una vez escuchó una profecía que lo avisaba de una muerte tranquila...",
+  "enemytips": [
+    "Olaf se vuelve más peligroso según pierde vida. Reserva las inhabilitaciones para rematarlo.",
+    "Si evitas que Olaf alcance su hacha, minimizarás los efectos de su acoso en la fase de calles.",
+    "Olaf tiene sus defensas reducidas por el daño sufrido durante Ragnarok, aún a pesar de ser inmune a las inhabilitaciones. Si no puedes huir de Olaf durante Ragnarok, tus compañeros de equipo y tú deberíais centrar en él vuestros ataques."
+  ],
+  "id": "Olaf",
+  "image": {
+    "full": "Olaf.png",
+    "group": "champion",
+    "h": 48,
+    "sprite": "champion3.png",
+    "w": 48,
+    "x": 336,
+    "y": 0
+  },
+  "info": {
+    "attack": 9,
+    "defense": 5,
+    "difficulty": 3,
+    "magic": 3
+  },
+  "key": "2",
+  "lore": "Olaf porta sus hachas de forma que es una fuerza imparable de destrucción que no quiere nada, salvo morir en un combate glorioso. Natural de Lokfar, una brutal península de Freljord, una vez escuchó una profecía que lo avisaba de una muerte tranquila, el destino de un cobarde y un gran insulto entre los suyos. En busca de la muerte y motivado por la ira, arrasó por toda la tierra, acabando con montones de guerreros magníficos y bestias legendarios, en busca de un rival que pudiera detenerlo. Ahora es el sicario de la Garra Invernal y busca su perdición en las grandes guerras que están por llegar.",
+  "name": "Olaf",
+  "partype": "Maná",
+  "passive": {
+    "description": "Olaf obtiene velocidad de ataque y robo de vida según la vida que le falte.",
+    "image": {
+      "full": "Olaf_Passive.png",
+      "group": "passive",
+      "h": 48,
+      "sprite": "passive3.png",
+      "w": 48,
+      "x": 336,
+      "y": 0
+    },
+    "name": "Furia berserker"
+  },
+  "recommended": [],
+  "skins": [
+    {
+      "chromas": false,
+      "id": "2000",
+      "name": "default",
+      "num": 0
+    },
+    {
+      "chromas": false,
+      "id": "2001",
+      "name": "Olaf proscrito",
+      "num": 1
+    },
+    {
+      "chromas": false,
+      "id": "2002",
+      "name": "Olaf glacial",
+      "num": 2
+    },
+    {
+      "chromas": true,
+      "id": "2003",
+      "name": "Brolaf",
+      "num": 3
+    },
+    {
+      "chromas": false,
+      "id": "2004",
+      "name": "Olaf Pentakill",
+      "num": 4
+    },
+    {
+      "chromas": false,
+      "id": "2005",
+      "name": "Olaf yelmo sombrío",
+      "num": 5
+    },
+    {
+      "chromas": false,
+      "id": "2006",
+      "name": "Olaf carnicero",
+      "num": 6
+    },
+    {
+      "chromas": false,
+      "id": "2007",
+      "name": "Brolaf (turquesa)",
+      "num": 7,
+      "parentSkin": 3
+    },
+    {
+      "chromas": false,
+      "id": "2008",
+      "name": "Brolaf (citrino)",
+      "num": 8,
+      "parentSkin": 3
+    },
+    {
+      "chromas": false,
+      "id": "2009",
+      "name": "Brolaf (cuarzo rosa)",
+      "num": 9,
+      "parentSkin": 3
+    },
+    {
+      "chromas": false,
+      "id": "2010",
+      "name": "Brolaf (tanzanita)",
+      "num": 10,
+      "parentSkin": 3
+    },
+    {
+      "chromas": false,
+      "id": "2011",
+      "name": "Brolaf (aguamarina)",
+      "num": 11,
+      "parentSkin": 3
+    },
+    {
+      "chromas": false,
+      "id": "2012",
+      "name": "Brolaf (granito)",
+      "num": 12,
+      "parentSkin": 3
+    },
+    {
+      "chromas": false,
+      "id": "2013",
+      "name": "Brolaf (zafiro)",
+      "num": 13,
+      "parentSkin": 3
+    },
+    {
+      "chromas": false,
+      "id": "2014",
+      "name": "Brolaf (obsidiana)",
+      "num": 14,
+      "parentSkin": 3
+    },
+    {
+      "chromas": false,
+      "id": "2015",
+      "name": "Olaf SKT T1",
+      "num": 15
+    },
+    {
+      "chromas": true,
+      "id": "2016",
+      "name": "Olaf matadragones",
+      "num": 16
+    },
+    {
+      "chromas": false,
+      "id": "2017",
+      "name": "Olaf matadragones (zafiro)",
+      "num": 17,
+      "parentSkin": 16
+    },
+    {
+      "chromas": false,
+      "id": "2018",
+      "name": "Olaf matadragones (citrino)",
+      "num": 18,
+      "parentSkin": 16
+    },
+    {
+      "chromas": false,
+      "id": "2019",
+      "name": "Olaf matadragones (esmeralda)",
+      "num": 19,
+      "parentSkin": 16
+    },
+    {
+      "chromas": false,
+      "id": "2020",
+      "name": "Olaf matadragones (amatista)",
+      "num": 20,
+      "parentSkin": 16
+    },
+    {
+      "chromas": false,
+      "id": "2021",
+      "name": "Olaf matadragones (rubí)",
+      "num": 21,
+      "parentSkin": 16
+    },
+    {
+      "chromas": false,
+      "id": "2022",
+      "name": "Olaf matadragones (perla)",
+      "num": 22,
+      "parentSkin": 16
+    },
+    {
+      "chromas": false,
+      "id": "2023",
+      "name": "Olaf matadragones (obsidiana)",
+      "num": 23,
+      "parentSkin": 16
+    },
+    {
+      "chromas": false,
+      "id": "2024",
+      "name": "Olaf matadragones (meteorito)",
+      "num": 24,
+      "parentSkin": 16
+    },
+    {
+      "chromas": true,
+      "id": "2025",
+      "name": "Olaf centinela",
+      "num": 25
+    },
+    {
+      "chromas": false,
+      "id": "2026",
+      "name": "Olaf centinela (rubí)",
+      "num": 26,
+      "parentSkin": 25
+    },
+    {
+      "chromas": false,
+      "id": "2027",
+      "name": "Olaf centinela (ojo de gato)",
+      "num": 27,
+      "parentSkin": 25
+    },
+    {
+      "chromas": false,
+      "id": "2028",
+      "name": "Olaf centinela (cuarzo rosa)",
+      "num": 28,
+      "parentSkin": 25
+    },
+    {
+      "chromas": false,
+      "id": "2029",
+      "name": "Olaf centinela (tanzanita)",
+      "num": 29,
+      "parentSkin": 25
+    },
+    {
+      "chromas": false,
+      "id": "2030",
+      "name": "Olaf centinela (zafiro)",
+      "num": 30,
+      "parentSkin": 25
+    },
+    {
+      "chromas": false,
+      "id": "2031",
+      "name": "Olaf centinela (perla)",
+      "num": 31,
+      "parentSkin": 25
+    },
+    {
+      "chromas": false,
+      "id": "2032",
+      "name": "Olaf centinela (esmeralda)",
+      "num": 32,
+      "parentSkin": 25
+    },
+    {
+      "chromas": false,
+      "id": "2033",
+      "name": "Olaf centinela (turquesa)",
+      "num": 33,
+      "parentSkin": 25
+    },
+    {
+      "chromas": false,
+      "id": "2034",
+      "name": "Olaf centinela (resuelto)",
+      "num": 34,
+      "parentSkin": 25
+    },
+    {
+      "chromas": true,
+      "id": "2035",
+      "name": "Olaf Pentakill III: Lost Chapter",
+      "num": 35
+    },
+    {
+      "chromas": false,
+      "id": "2036",
+      "name": "Olaf Pentakill III: Lost Chapter (rubí)",
+      "num": 36,
+      "parentSkin": 35
+    },
+    {
+      "chromas": false,
+      "id": "2037",
+      "name": "Olaf Pentakill III: Lost Chapter (aguamarina)",
+      "num": 37,
+      "parentSkin": 35
+    },
+    {
+      "chromas": false,
+      "id": "2038",
+      "name": "Olaf Pentakill III: Lost Chapter (ojo de gato)",
+      "num": 38,
+      "parentSkin": 35
+    },
+    {
+      "chromas": false,
+      "id": "2039",
+      "name": "Olaf Pentakill III: Lost Chapter (esmeralda)",
+      "num": 39,
+      "parentSkin": 35
+    },
+    {
+      "chromas": false,
+      "id": "2040",
+      "name": "Olaf Pentakill III: Lost Chapter (tanzanita)",
+      "num": 40,
+      "parentSkin": 35
+    },
+    {
+      "chromas": false,
+      "id": "2041",
+      "name": "Olaf Pentakill III: Lost Chapter (cuarzo rosa)",
+      "num": 41,
+      "parentSkin": 35
+    },
+    {
+      "chromas": false,
+      "id": "2042",
+      "name": "Olaf Pentakill III: Lost Chapter (perla)",
+      "num": 42,
+      "parentSkin": 35
+    },
+    {
+      "chromas": false,
+      "id": "2043",
+      "name": "Olaf Pentakill III: Lost Chapter (obsidiana)",
+      "num": 43,
+      "parentSkin": 35
+    },
+    {
+      "chromas": true,
+      "id": "2044",
+      "name": "Olaf infernal",
+      "num": 44
+    },
+    {
+      "chromas": false,
+      "id": "2045",
+      "name": "Olaf infernal (rubí)",
+      "num": 45,
+      "parentSkin": 44
+    },
+    {
+      "chromas": false,
+      "id": "2046",
+      "name": "Olaf infernal (cuarzo rosa)",
+      "num": 46,
+      "parentSkin": 44
+    },
+    {
+      "chromas": false,
+      "id": "2047",
+      "name": "Olaf infernal (ojo de gato)",
+      "num": 47,
+      "parentSkin": 44
+    },
+    {
+      "chromas": false,
+      "id": "2048",
+      "name": "Olaf infernal (esmeralda)",
+      "num": 48,
+      "parentSkin": 44
+    },
+    {
+      "chromas": false,
+      "id": "2049",
+      "name": "Olaf infernal (turquesa)",
+      "num": 49,
+      "parentSkin": 44
+    },
+    {
+      "chromas": false,
+      "id": "2050",
+      "name": "Olaf infernal (zafiro)",
+      "num": 50,
+      "parentSkin": 44
+    },
+    {
+      "chromas": false,
+      "id": "2051",
+      "name": "Olaf infernal (amatista)",
+      "num": 51,
+      "parentSkin": 44
+    },
+    {
+      "chromas": false,
+      "id": "2052",
+      "name": "Olaf infernal (arcoíris)",
+      "num": 52,
+      "parentSkin": 44
+    }
+  ],
+  "spells": [
+    {
+      "cooldown": [
+        9,
+        9,
+        9,
+        9,
+        9
+      ],
+      "cooldownBurn": "9",
+      "cost": [
+        50,
+        55,
+        60,
+        65,
+        70
+      ],
+      "costBurn": "50/55/60/65/70",
+      "costType": " {{ abilityresourcename }}",
+      "datavalues": {},
+      "description": "Olaf lanza un hacha que impacta en la ubicación seleccionada. Inflige daño a los enemigos que atraviesa y reduce su armadura y su velocidad de movimiento. Si Olaf recoge el hacha, el enfriamiento de la habilidad se restablece.",
+      "effect": [
+        null,
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ]
+      ],
+      "effectBurn": [
+        null,
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0"
+      ],
+      "id": "OlafAxeThrowCast",
+      "image": {
+        "full": "OlafAxeThrowCast.png",
+        "group": "spell",
+        "h": 48,
+        "sprite": "spell10.png",
+        "w": 48,
+        "x": 96,
+        "y": 96
+      },
+      "leveltip": {
+        "effect": [
+          "{{ basedamage }} -> {{ basedamageNL }}",
+          "{{ slowamount*100.000000 }}% -> {{ slowamountnl*100.000000 }}%",
+          "{{ monsterdamage }} -> {{ monsterdamageNL }}",
+          "{{ cost }} -> {{ costNL }}"
+        ],
+        "label": [
+          "Daño",
+          "Ralentización",
+          "Daño a monstruos",
+          "Coste de maná"
+        ]
+      },
+      "maxammo": "-1",
+      "maxrank": 5,
+      "name": "Lanzamiento",
+      "range": [
+        1000,
+        1000,
+        1000,
+        1000,
+        1000
+      ],
+      "rangeBurn": "1000",
+      "resource": "{{ cost }} {{ abilityresourcename }}",
+      "tooltip": "Olaf lanza un hacha que inflige <physicalDamage>{{ totaldamage }} de daño físico</physicalDamage> y <status>ralentiza</status> un {{ slowamount*100 }}% hasta {{ maxslowduration }} s, según la distancia recorrida. Los campeones golpeados pierden un <scaleArmor>{{ shredamount*100 }}% de armadura</scaleArmor> durante {{ debuffduration }}&nbsp;s.<br /><br />Si Olaf recoge el hacha, se reinicia el enfriamiento de la habilidad hasta {{ tooltipcdrefund }} s, o por completo si han pasado {{ tooltipcdrefund }} s.{{ spellmodifierdescriptionappend }}",
+      "vars": []
+    },
+    {
+      "cooldown": [
+        16,
+        15,
+        14,
+        13,
+        12
+      ],
+      "cooldownBurn": "16/15/14/13/12",
+      "cost": [
+        50,
+        50,
+        50,
+        50,
+        50
+      ],
+      "costBurn": "50",
+      "costType": " {{ abilityresourcename }}",
+      "datavalues": {},
+      "description": "Aumenta la velocidad de ataque de Olaf y obtiene un escudo.",
+      "effect": [
+        null,
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ]
+      ],
+      "effectBurn": [
+        null,
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0"
+      ],
+      "id": "OlafFrenziedStrikes",
+      "image": {
+        "full": "OlafFrenziedStrikes.png",
+        "group": "spell",
+        "h": 48,
+        "sprite": "spell10.png",
+        "w": 48,
+        "x": 144,
+        "y": 96
+      },
+      "leveltip": {
+        "effect": [
+          "{{ attackspeed*100.000000 }}% -> {{ attackspeednl*100.000000 }}%",
+          "{{ baseshield }} -> {{ baseshieldNL }}",
+          "{{ cooldown }} -> {{ cooldownNL }}"
+        ],
+        "label": [
+          "Velocidad de ataque",
+          "Escudo básico",
+          "Enfriamiento"
+        ]
+      },
+      "maxammo": "-1",
+      "maxrank": 5,
+      "name": "Aguante",
+      "range": [
+        700,
+        700,
+        700,
+        700,
+        700
+      ],
+      "rangeBurn": "700",
+      "resource": "{{ cost }} {{ abilityresourcename }}",
+      "tooltip": "Olaf obtiene un <attackSpeed>{{ attackspeed*100 }}% de velocidad de ataque</attackSpeed> durante {{ duration }} s, y un escudo de <shield>{{ baseshield }} más un {{ shieldpercmissinghp*100 }}% de la vida que le falte (hasta un máximo de {{ maxshieldcalc }} si está por debajo del {{ thresholdformax*100 }}% de vida)</shield> durante {{ shieldduration }} s.{{ spellmodifierdescriptionappend }}",
+      "vars": []
+    },
+    {
+      "cooldown": [
+        11,
+        10,
+        9,
+        8,
+        7
+      ],
+      "cooldownBurn": "11/10/9/8/7",
+      "cost": [
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "costBurn": "0",
+      "costType": " de vida",
+      "datavalues": {},
+      "description": "Olaf ataca con tal fuerza que causa daño verdadero a su objetivo y a sí mismo, pero el daño autoinfligido se recupera si destruye al objetivo.",
+      "effect": [
+        null,
+        [
+          70,
+          115,
+          160,
+          205,
+          250
+        ],
+        [
+          40,
+          40,
+          40,
+          40,
+          40
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ]
+      ],
+      "effectBurn": [
+        null,
+        "70/115/160/205/250",
+        "40",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0"
+      ],
+      "id": "OlafRecklessStrike",
+      "image": {
+        "full": "OlafRecklessStrike.png",
+        "group": "spell",
+        "h": 48,
+        "sprite": "spell10.png",
+        "w": 48,
+        "x": 192,
+        "y": 96
+      },
+      "leveltip": {
+        "effect": [
+          "{{ e1 }} -> {{ e1NL }}",
+          "{{ cooldown }} -> {{ cooldownNL }}"
+        ],
+        "label": [
+          "Daño",
+          "Enfriamiento"
+        ]
+      },
+      "maxammo": "-1",
+      "maxrank": 5,
+      "name": "Embestida temeraria",
+      "range": [
+        325,
+        325,
+        325,
+        325,
+        325
+      ],
+      "rangeBurn": "325",
+      "resource": "Cuesta {{ healthcostcalc }} de vida",
+      "tooltip": "Olaf golpea ferozmente con sus hachas e inflige <trueDamage>{{ totaldamage }} de daño verdadero</trueDamage>. Si el enemigo muere, se recupera el coste.<br /><br />Los ataques reducen el enfriamiento de esta habilidad en 1 s, que aumenta a 2 s al atacar a monstruos.{{ spellmodifierdescriptionappend }}",
+      "vars": []
+    },
+    {
+      "cooldown": [
+        100,
+        90,
+        80
+      ],
+      "cooldownBurn": "100/90/80",
+      "cost": [
+        100,
+        100,
+        100
+      ],
+      "costBurn": "100",
+      "costType": " {{ abilityresourcename }}",
+      "datavalues": {},
+      "description": "Olaf gana armadura y resistencia mágica de forma pasiva. Puede activar esta habilidad para volverse inmune a las inhabilitaciones siempre y cuando siga atacando.",
+      "effect": [
+        null,
+        [
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0
+        ]
+      ],
+      "effectBurn": [
+        null,
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0"
+      ],
+      "id": "OlafRagnarok",
+      "image": {
+        "full": "OlafRagnarok.png",
+        "group": "spell",
+        "h": 48,
+        "sprite": "spell10.png",
+        "w": 48,
+        "x": 240,
+        "y": 96
+      },
+      "leveltip": {
+        "effect": [
+          "{{ resists }} -> {{ resistsNL }}",
+          "{{ flatad }} -> {{ flatadNL }}",
+          "{{ haste*100.000000 }} -> {{ hastenl*100.000000 }}",
+          "{{ cooldown }} -> {{ cooldownNL }}"
+        ],
+        "label": [
+          "Armadura y resistencia mágica",
+          "Daño de ataque",
+          "Velocidad de movimiento",
+          "Enfriamiento"
+        ]
+      },
+      "maxammo": "-1",
+      "maxrank": 3,
+      "name": "Ragnarok",
+      "range": [
+        400,
+        400,
+        400
+      ],
+      "rangeBurn": "400",
+      "resource": "{{ cost }} {{ abilityresourcename }}",
+      "tooltip": "<spellPassive>Pasiva:</spellPassive> Olaf obtiene <scaleArmor>{{ resists }} de armadura</scaleArmor> y <scaleMR>{{ resists }} de resistencia mágica</scaleMR>.<br /><br /><spellActive>Activa: </spellActive>Olaf elimina todos los efectos de <status>inmovilización</status> e <status>inhabilitación</status> que sufra y se vuelve inmune a ellos durante {{ duration }} s. Mientras está activa, Olaf obtiene <scaleAD>{{ ad }} de daño de ataque</scaleAD>. Golpear a un campeón con un ataque o con <spellName>Embestida temeraria</spellName> amplía la duración en {{ durationextension }} s.<br /><br />Además, Olaf obtiene un <speed>{{ haste*100 }}% de velocidad de movimiento</speed> al desplazarse hacia campeones enemigos durante {{ hasteduration }} s.{{ spellmodifierdescriptionappend }}",
+      "vars": []
+    }
+  ],
+  "stats": {
+    "armor": 35,
+    "armorperlevel": 4.2,
+    "attackdamage": 68,
+    "attackdamageperlevel": 0,
+    "attackrange": 125,
+    "attackspeed": 0.72,
+    "attackspeedperlevel": 2.7,
+    "crit": 0,
+    "critperlevel": 0,
+    "hp": 645,
+    "hpperlevel": 119,
+    "hpregen": 6.5,
+    "hpregenperlevel": 0.6,
+    "movespeed": 350,
+    "mp": 316,
+    "mpperlevel": 50,
+    "mpregen": 7.5,
+    "mpregenperlevel": 0.6,
+    "spellblock": 32,
+    "spellblockperlevel": 2.05
+  },
+  "tags": [
+    "Fighter",
+    "Tank"
+  ],
+  "title": "El Berserker"
+}

@@ -1,0 +1,874 @@
+{
+  "allytips": [],
+  "blurb": "Aurelion Sol solía agraciar al vasto vacío del cosmos con las maravillas celestiales que él mismo ideaba. Ahora, se ve forzado a hacer uso de su increíble poder para satisfacer los deseos de un imperio espacial que lo ha engañado para convertirlo en su...",
+  "enemytips": [],
+  "id": "AurelionSol",
+  "image": {
+    "full": "AurelionSol.png",
+    "group": "champion",
+    "h": 48,
+    "sprite": "champion0.png",
+    "w": 48,
+    "x": 48,
+    "y": 48
+  },
+  "info": {
+    "attack": 2,
+    "defense": 3,
+    "difficulty": 7,
+    "magic": 8
+  },
+  "key": "136",
+  "lore": "Aurelion Sol solía agraciar al vasto vacío del cosmos con las maravillas celestiales que él mismo ideaba. Ahora, se ve forzado a hacer uso de su increíble poder para satisfacer los deseos de un imperio espacial que lo ha engañado para convertirlo en su esclavo. Aurelion Sol desea regresar a su vida como forjador de estrellas, por lo que no dudará en hacer uso del mismísimo firmamento para recuperar su libertad.",
+  "name": "Aurelion Sol",
+  "partype": "Maná",
+  "passive": {
+    "description": "Las habilidades de daño de Aurelion Sol cosechan acumulaciones de <font color='#3458eb'>polvo estelar</font> de sus enemigos, lo que mejora permanentemente cada habilidad. ",
+    "image": {
+      "full": "AurelionSolP.png",
+      "group": "passive",
+      "h": 48,
+      "sprite": "passive0.png",
+      "w": 48,
+      "x": 48,
+      "y": 48
+    },
+    "name": "Creador cósmico"
+  },
+  "recommended": [],
+  "skins": [
+    {
+      "chromas": false,
+      "id": "136000",
+      "name": "default",
+      "num": 0
+    },
+    {
+      "chromas": false,
+      "id": "136001",
+      "name": "Aurelion Sol señor de la ceniza",
+      "num": 1
+    },
+    {
+      "chromas": true,
+      "id": "136002",
+      "name": "Aurelion Sol mecha",
+      "num": 2
+    },
+    {
+      "chromas": false,
+      "id": "136004",
+      "name": "Aurelion Sol mecha (rubí)",
+      "num": 4,
+      "parentSkin": 2
+    },
+    {
+      "chromas": false,
+      "id": "136005",
+      "name": "Aurelion Sol mecha (ojo de gato)",
+      "num": 5,
+      "parentSkin": 2
+    },
+    {
+      "chromas": false,
+      "id": "136006",
+      "name": "Aurelion Sol mecha (zafiro)",
+      "num": 6,
+      "parentSkin": 2
+    },
+    {
+      "chromas": false,
+      "id": "136007",
+      "name": "Aurelion Sol mecha (cuarzo rosa)",
+      "num": 7,
+      "parentSkin": 2
+    },
+    {
+      "chromas": false,
+      "id": "136008",
+      "name": "Aurelion Sol mecha (amatista)",
+      "num": 8,
+      "parentSkin": 2
+    },
+    {
+      "chromas": false,
+      "id": "136009",
+      "name": "Aurelion Sol mecha (perla)",
+      "num": 9,
+      "parentSkin": 2
+    },
+    {
+      "chromas": false,
+      "id": "136010",
+      "name": "Aurelion Sol mecha (obsidiana)",
+      "num": 10,
+      "parentSkin": 2
+    },
+    {
+      "chromas": false,
+      "id": "136011",
+      "name": "Aurelion Sol dragón de la tormenta",
+      "num": 11
+    },
+    {
+      "chromas": true,
+      "id": "136012",
+      "name": "Aurelion Sol dragón de la tormenta (rubí)",
+      "num": 12,
+      "parentSkin": 11
+    },
+    {
+      "chromas": false,
+      "id": "136013",
+      "name": "Aurelion Sol dragón de la tormenta (tanzanita)",
+      "num": 13,
+      "parentSkin": 11
+    },
+    {
+      "chromas": false,
+      "id": "136014",
+      "name": "Aurelion Sol dragón de la tormenta (garra de jade)",
+      "num": 14,
+      "parentSkin": 11
+    },
+    {
+      "chromas": false,
+      "id": "136015",
+      "name": "Aurelion Sol dragón de la tormenta (zafiro)",
+      "num": 15,
+      "parentSkin": 11
+    },
+    {
+      "chromas": false,
+      "id": "136016",
+      "name": "Aurelion Sol dragón de la tormenta (obsidiana)",
+      "num": 16,
+      "parentSkin": 11
+    },
+    {
+      "chromas": false,
+      "id": "136017",
+      "name": "Aurelion Sol dragón de la tormenta (perla)",
+      "num": 17,
+      "parentSkin": 11
+    },
+    {
+      "chromas": false,
+      "id": "136018",
+      "name": "Aurelion Sol dragón de la tormenta (amatista)",
+      "num": 18,
+      "parentSkin": 11
+    },
+    {
+      "chromas": false,
+      "id": "136019",
+      "name": "Aurelion Sol dragón de la tormenta (cuarzo rosa)",
+      "num": 19,
+      "parentSkin": 11
+    },
+    {
+      "chromas": false,
+      "id": "136020",
+      "name": "Aurelion Sol dragón de la tormenta (garra de ascuas)",
+      "num": 20,
+      "parentSkin": 11
+    },
+    {
+      "chromas": false,
+      "id": "136021",
+      "name": "Aurelion Sol sombra de tinta",
+      "num": 21
+    },
+    {
+      "chromas": true,
+      "id": "136022",
+      "name": "Aurelion Sol sombra de tinta (rubí)",
+      "num": 22,
+      "parentSkin": 21
+    },
+    {
+      "chromas": false,
+      "id": "136023",
+      "name": "Aurelion Sol sombra de tinta (citrino)",
+      "num": 23,
+      "parentSkin": 21
+    },
+    {
+      "chromas": false,
+      "id": "136024",
+      "name": "Aurelion Sol sombra de tinta (esmeralda)",
+      "num": 24,
+      "parentSkin": 21
+    },
+    {
+      "chromas": false,
+      "id": "136025",
+      "name": "Aurelion Sol sombra de tinta (turquesa)",
+      "num": 25,
+      "parentSkin": 21
+    },
+    {
+      "chromas": false,
+      "id": "136026",
+      "name": "Aurelion Sol sombra de tinta (zafiro)",
+      "num": 26,
+      "parentSkin": 21
+    },
+    {
+      "chromas": false,
+      "id": "136027",
+      "name": "Aurelion Sol sombra de tinta (cuarzo rosa)",
+      "num": 27,
+      "parentSkin": 21
+    },
+    {
+      "chromas": false,
+      "id": "136028",
+      "name": "Aurelion Sol sombra de tinta (tanzanita)",
+      "num": 28,
+      "parentSkin": 21
+    },
+    {
+      "chromas": false,
+      "id": "136029",
+      "name": "Aurelion Sol sombra de tinta (obsidiana)",
+      "num": 29,
+      "parentSkin": 21
+    },
+    {
+      "chromas": false,
+      "id": "136030",
+      "name": "Aurelion Sol sombra de tinta (entintado)",
+      "num": 30,
+      "parentSkin": 21
+    },
+    {
+      "chromas": false,
+      "id": "136031",
+      "name": "Aurelion Sol protector de porcelana",
+      "num": 31
+    },
+    {
+      "chromas": true,
+      "id": "136032",
+      "name": "Aurelion Sol protector de porcelana (rubí)",
+      "num": 32,
+      "parentSkin": 31
+    },
+    {
+      "chromas": false,
+      "id": "136033",
+      "name": "Aurelion Sol protector de porcelana (amatista)",
+      "num": 33,
+      "parentSkin": 31
+    },
+    {
+      "chromas": false,
+      "id": "136034",
+      "name": "Aurelion Sol protector de porcelana (opulencia)",
+      "num": 34,
+      "parentSkin": 31
+    },
+    {
+      "chromas": false,
+      "id": "136035",
+      "name": "Aurelion Sol protector de porcelana (obsidiana)",
+      "num": 35,
+      "parentSkin": 31
+    },
+    {
+      "chromas": false,
+      "id": "136036",
+      "name": "Aurelion Sol protector de porcelana (cuarzo rosa)",
+      "num": 36,
+      "parentSkin": 31
+    },
+    {
+      "chromas": false,
+      "id": "136037",
+      "name": "Aurelion Sol protector de porcelana (ojo de gato)",
+      "num": 37,
+      "parentSkin": 31
+    },
+    {
+      "chromas": false,
+      "id": "136038",
+      "name": "Aurelion Sol arquitecto divino de porcelana",
+      "num": 38
+    }
+  ],
+  "spells": [
+    {
+      "cooldown": [
+        3,
+        3,
+        3,
+        3,
+        3
+      ],
+      "cooldownBurn": "3",
+      "cost": [
+        30,
+        35,
+        40,
+        45,
+        50
+      ],
+      "costBurn": "30/35/40/45/50",
+      "costType": " de maná por s",
+      "datavalues": {},
+      "description": "Aurelion Sol canaliza su aliento de dragón durante unos segundos, lo que inflige daño al primer enemigo golpeado y daño reducido a los enemigos cercanos. Cada segundo que el aliento se canalice directamente a un enemigo, infligirá daño adicional, que mejora según la cantidad de polvo estelar conseguido. Esta habilidad otorga polvo estelar si el objetivo es un campeón.",
+      "effect": [
+        null,
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ]
+      ],
+      "effectBurn": [
+        null,
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0"
+      ],
+      "id": "AurelionSolQ",
+      "image": {
+        "full": "AurelionSolQ.png",
+        "group": "spell",
+        "h": 48,
+        "sprite": "spell1.png",
+        "w": 48,
+        "x": 384,
+        "y": 144
+      },
+      "leveltip": {
+        "effect": [
+          "{{ cost }} -> {{ costNL }}",
+          "{{ rankdamagepersecond }} -> {{ rankdamagepersecondNL }}",
+          "{{ rankburstdamage }} -> {{ rankburstdamageNL }}",
+          "{{ maxchannelduration }} -> {{ maxchanneldurationNL }}"
+        ],
+        "label": [
+          "Coste de @AbilityResourceName@",
+          "Daño por segundo",
+          "Daño explosivo",
+          "Duración máxima de la canalización"
+        ]
+      },
+      "maxammo": "-1",
+      "maxrank": 5,
+      "name": "El aliento de los dioses",
+      "range": [
+        750,
+        750,
+        750,
+        750,
+        750
+      ],
+      "rangeBurn": "750",
+      "resource": "{{ manacostpersecond }} de maná por s",
+      "tooltip": "Aurelion Sol exhala fuego estelar hasta {{ maxchannelduration }} s, e inflige <magicDamage>{{ damagepersecond }} de daño mágico</magicDamage> por segundo al primer enemigo golpeado y un {{ aoemodifier*100 }}% del daño a los enemigos cercanos.<br /><br />Cada segundo aliento que se lance al mismo enemigo resulta en una explosión de <magicDamage>{{ burstdamage }} de daño mágico</magicDamage> más un <magicDamage>{{ burstbonustruedamagetochamps }} de daño mágico según la vida máxima</magicDamage>. Además, absorbe <span class=\"color3458eb\">{{ qmassstolen }} de polvo estelar</span> si el enemigo es un campeón.{{ spellmodifierdescriptionappend }}",
+      "vars": []
+    },
+    {
+      "cooldown": [
+        22,
+        20,
+        18,
+        16,
+        14
+      ],
+      "cooldownBurn": "22/20/18/16/14",
+      "cost": [
+        50,
+        55,
+        60,
+        65,
+        70
+      ],
+      "costBurn": "50/55/60/65/70",
+      "costType": " {{ abilityresourcename }}",
+      "datavalues": {},
+      "description": "Aurelion Sol sobrevuela el terreno en la dirección indicada. En este estado, puede lanzar otras habilidades. El aliento de los dioses ya no tiene enfriamiento, la puede canalizar sin límite de tiempo e inflige daño adicional mientras vuela.<br><br>El enfriamiento restante de Vuelo astral se reduce cada vez que muere un campeón tras recibir daño de Aurelion Sol.<br><br>El polvo estelar aumenta el alcance máximo de Vuelo astral.",
+      "effect": [
+        null,
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ]
+      ],
+      "effectBurn": [
+        null,
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0"
+      ],
+      "id": "AurelionSolW",
+      "image": {
+        "full": "AurelionSolW.png",
+        "group": "spell",
+        "h": 48,
+        "sprite": "spell1.png",
+        "w": 48,
+        "x": 432,
+        "y": 144
+      },
+      "leveltip": {
+        "effect": [
+          "{{ truedamagebonus*100.000000 }}% -> {{ truedamagebonusnl*100.000000 }}%",
+          "{{ cost }} -> {{ costNL }}",
+          "{{ cooldown }} -> {{ cooldownNL }}"
+        ],
+        "label": [
+          "Porcentaje de daño mágico adicional",
+          "Coste de @AbilityResourceName@",
+          "Enfriamiento"
+        ]
+      },
+      "maxammo": "-1",
+      "maxrank": 5,
+      "name": "Vuelo astral",
+      "range": [
+        1500,
+        1500,
+        1500,
+        1500,
+        1500
+      ],
+      "rangeBurn": "1500",
+      "resource": "{{ cost }} {{ abilityresourcename }}",
+      "tooltip": "Aurelion Sol vuela en una dirección. Mientras vuela, <spellName>El aliento de los dioses</spellName> no tiene enfriamiento ni tiempo de canalización máximo, y el daño fijo aumenta en un {{ truedamagebonus*100 }}%.<br /><br />Las asistencias o asesinatos de campeones en un periodo de {{ resetwindow }} s tras infligirles daño devuelven un {{ tooltiptakedowncooldownmultiplier }}% del enfriamiento de esta habilidad.<br /><br /><recast>Reactivación:</recast> Acaba el vuelo antes.{{ spellmodifierdescriptionappend }}",
+      "vars": []
+    },
+    {
+      "cooldown": [
+        12,
+        12,
+        12,
+        12,
+        12
+      ],
+      "cooldownBurn": "12",
+      "cost": [
+        90,
+        90,
+        90,
+        90,
+        90
+      ],
+      "costBurn": "90",
+      "costType": " {{ abilityresourcename }}",
+      "datavalues": {},
+      "description": "Aurelion Sol invoca un agujero negro, lo que inflige daño a los enemigos y los atrae lentamente hacia su centro. Esta habilidad otorga polvo estelar cada vez que muere un enemigo en el agujero negro y por cada segundo que haya un campeón enemigo en su interior. El centro del agujero negro ejecuta a los enemigos que estén por debajo de cierto porcentaje de su vida máxima. El polvo estelar aumenta la zona de Singularidad y el umbral de ejecución.",
+      "effect": [
+        null,
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ]
+      ],
+      "effectBurn": [
+        null,
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0"
+      ],
+      "id": "AurelionSolE",
+      "image": {
+        "full": "AurelionSolE.png",
+        "group": "spell",
+        "h": 48,
+        "sprite": "spell2.png",
+        "w": 48,
+        "x": 0,
+        "y": 0
+      },
+      "leveltip": {
+        "effect": [
+          "{{ basedamagepersecond }} -> {{ basedamagepersecondNL }}"
+        ],
+        "label": [
+          "Daño por segundo"
+        ]
+      },
+      "maxammo": "-1",
+      "maxrank": 5,
+      "name": "Singularidad",
+      "range": [
+        750,
+        750,
+        750,
+        750,
+        750
+      ],
+      "rangeBurn": "750",
+      "resource": "{{ cost }} {{ abilityresourcename }}",
+      "tooltip": "Aurelion Sol invoca un agujero negro que inflige <magicDamage>{{ damagepersecond }} de daño mágico</magicDamage> por segundo y <status>arrastra</status> a los enemigos hacia el centro durante {{ duration }} s. Los enemigos que estén en el centro y tengan menos del <scaleHealth>{{ currentexecutionthreshold }}% de su vida máxima</scaleHealth> mueren al instante.<br /><br />El agujero negro absorbe <span class=\"color3458eb\">polvo estelar</span> por cada segundo que haya un campeón enemigo en su interior y cuando los enemigos mueren en él.{{ spellmodifierdescriptionappend }}",
+      "vars": []
+    },
+    {
+      "cooldown": [
+        120,
+        110,
+        100
+      ],
+      "cooldownBurn": "120/110/100",
+      "cost": [
+        100,
+        100,
+        100
+      ],
+      "costBurn": "100",
+      "costType": " {{ abilityresourcename }}",
+      "datavalues": {},
+      "description": "Estrella fugaz: Aurelion Sol provoca que una estrella se estampe contra el suelo. Este impacto inflige daño mágico y aturde a los enemigos. Además, otorga polvo estelar por cada campeón golpeado. Al conseguir polvo estelar suficiente, transforma la siguiente Estrella fugaz de Aurelion Sol en Ocaso celeste.<br><br>Ocaso celeste: Aurelion Sol lanza una gigantesca estrella con un área de impacto aumentada, potencia el daño infligido y lanza a los enemigos por los aires, en lugar de aturdirlos. Después, emite una enorme onda de choque desde los bordes del área de impacto, lo que inflige daño y ralentiza a los campeones golpeados. El polvo estelar aumenta el área de impacto de Estrella fugaz y Ocaso celeste.",
+      "effect": [
+        null,
+        [
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0
+        ]
+      ],
+      "effectBurn": [
+        null,
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0"
+      ],
+      "id": "AurelionSolR",
+      "image": {
+        "full": "AurelionSolR.png",
+        "group": "spell",
+        "h": 48,
+        "sprite": "spell2.png",
+        "w": 48,
+        "x": 48,
+        "y": 0
+      },
+      "leveltip": {
+        "effect": [
+          "{{ cooldown }} -> {{ cooldownNL }}",
+          "{{ basedamage }} -> {{ basedamageNL }}",
+          "{{ basedamage*1.250000 }} -> {{ basedamagenl*1.250000 }}",
+          "{{ basedamage*0.900000 }} -> {{ basedamagenl*0.900000 }}"
+        ],
+        "label": [
+          "Enfriamiento",
+          "Daño",
+          "Daño potenciado",
+          "Daño de Onda de choque"
+        ]
+      },
+      "maxammo": "-1",
+      "maxrank": 3,
+      "name": "Estrella fugaz / Ocaso celeste",
+      "range": [
+        1250,
+        1250,
+        1250
+      ],
+      "rangeBurn": "1250",
+      "resource": "{{ cost }} {{ abilityresourcename }}",
+      "tooltip": "Aurelion Sol toma una estrella desde el cielo y la lanza contra la tierra, lo que inflige <magicDamage>{{ maxdamagetooltip }} de daño mágico</magicDamage>, <status>aturde</status> a los enemigos durante {{ stunduration }} s y absorbe <span class=\"color3458eb\">{{ massstolen }} de polvo estelar</span> por cada campeón golpeado.<br /><br />Al conseguir <span class=\"color3458eb\">{{ calamitystacks }} de polvo estelar</span>, se transforma <spellName>Estrella fugaz</spellName> en <spellName>Ocaso celeste</spellName>.<br /><br /><spellName>Ocaso celeste</spellName>: Aurelion Sol arrastra toda una constelación de furia del cosmos, lo que inflige <magicDamage>{{ r2damage }} de daño mágico</magicDamage> en una zona más amplia, <status>lanza por los aires</status> a los enemigos golpeados durante {{ stunduration }} s y libera una onda de choque enorme que inflige <magicDamage>{{ shockwavedamage }} de daño mágico</magicDamage> a campeones y monstruos épicos, además de <status>ralentizar</status> a los enemigos golpeados un {{ shockwaveslow*100 }}% durante 1 s.{{ spellmodifierdescriptionappend }}",
+      "vars": []
+    }
+  ],
+  "stats": {
+    "armor": 22,
+    "armorperlevel": 4,
+    "attackdamage": 58,
+    "attackdamageperlevel": 0,
+    "attackrange": 550,
+    "attackspeed": 0.625,
+    "attackspeedperlevel": 1.5,
+    "crit": 0,
+    "critperlevel": 0,
+    "hp": 600,
+    "hpperlevel": 90,
+    "hpregen": 5.5,
+    "hpregenperlevel": 0.55,
+    "movespeed": 340,
+    "mp": 530,
+    "mpperlevel": 40,
+    "mpregen": 8,
+    "mpregenperlevel": 0.75,
+    "spellblock": 30,
+    "spellblockperlevel": 1.3
+  },
+  "tags": [
+    "Mage"
+  ],
+  "title": "El Forjador de Estrellas"
+}

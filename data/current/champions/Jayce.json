@@ -1,0 +1,939 @@
+{
+  "allytips": [
+    "Cambia de posición a menudo. Así potenciarás tus ataques y conseguirás impulsos de velocidad.",
+    "Si sufres mucho daño, intenta usar la forma de Martillo de Jayce, ya que otorga defensa adicional.",
+    "Prueba a usar Explosión eléctrica a través del Portal de aceleración para causar más daño a distancias mayores."
+  ],
+  "blurb": "Jayce Talis es un brillante inventor que, junto a su amigo Viktor, realizó grandes hallazgos en el campo de la tecnología hextech. Con el reconocimiento de todo Piltover, intenta estar a la altura de su reputación como \"el hombre del progreso\"; sin...",
+  "enemytips": [
+    "Jayce puede atacar cuerpo a cuerpo o a distancia. Presta atención a su posición y al color de su arma para saber si va a atacar.",
+    "Si ves a Jayce usar su Portal de aceleración, ten cuidado ya que es posible que vaya a lanzar Explosión eléctrica.",
+    "Jayce es fuerte al principio de la partida. Si cobra ventaja, juega de forma defensiva."
+  ],
+  "id": "Jayce",
+  "image": {
+    "full": "Jayce.png",
+    "group": "champion",
+    "h": 48,
+    "sprite": "champion1.png",
+    "w": 48,
+    "x": 96,
+    "y": 96
+  },
+  "info": {
+    "attack": 8,
+    "defense": 4,
+    "difficulty": 7,
+    "magic": 3
+  },
+  "key": "126",
+  "lore": "Jayce Talis es un brillante inventor que, junto a su amigo Viktor, realizó grandes hallazgos en el campo de la tecnología hextech. Con el reconocimiento de todo Piltover, intenta estar a la altura de su reputación como \"el hombre del progreso\"; sin embargo, no son pocas las veces en las que se ve sobrepasado por las expectativas. Jayce, armado con su martillo hextech y dispuesto a defender el mañana, ha empezado a observar cómo su invento ha contribuido a agrandar la brecha entre Piltover y Zaun.",
+  "name": "Jayce",
+  "partype": "Maná",
+  "passive": {
+    "description": "Cuando Jayce cambia de arma, obtiene velocidad de movimiento durante un breve periodo de tiempo.",
+    "image": {
+      "full": "Jayce_Passive.png",
+      "group": "passive",
+      "h": 48,
+      "sprite": "passive1.png",
+      "w": 48,
+      "x": 96,
+      "y": 96
+    },
+    "name": "Condensador hextech"
+  },
+  "recommended": [],
+  "skins": [
+    {
+      "chromas": false,
+      "id": "126000",
+      "name": "default",
+      "num": 0
+    },
+    {
+      "chromas": false,
+      "id": "126001",
+      "name": "Jayce armadura completa",
+      "num": 1
+    },
+    {
+      "chromas": false,
+      "id": "126002",
+      "name": "Jayce galante",
+      "num": 2
+    },
+    {
+      "chromas": false,
+      "id": "126003",
+      "name": "Jayce proscrito",
+      "num": 3
+    },
+    {
+      "chromas": false,
+      "id": "126004",
+      "name": "Jayce martillo radiante",
+      "num": 4
+    },
+    {
+      "chromas": true,
+      "id": "126005",
+      "name": "Jayce academia de combate",
+      "num": 5
+    },
+    {
+      "chromas": false,
+      "id": "126006",
+      "name": "Jayce academia de combate (perla)",
+      "num": 6,
+      "parentSkin": 5
+    },
+    {
+      "chromas": false,
+      "id": "126007",
+      "name": "Jayce academia de combate (cuarzo rosa)",
+      "num": 7,
+      "parentSkin": 5
+    },
+    {
+      "chromas": false,
+      "id": "126008",
+      "name": "Jayce academia de combate (obsidiana)",
+      "num": 8,
+      "parentSkin": 5
+    },
+    {
+      "chromas": false,
+      "id": "126009",
+      "name": "Jayce academia de combate (rubí)",
+      "num": 9,
+      "parentSkin": 5
+    },
+    {
+      "chromas": false,
+      "id": "126010",
+      "name": "Jayce academia de combate (zafiro)",
+      "num": 10,
+      "parentSkin": 5
+    },
+    {
+      "chromas": false,
+      "id": "126011",
+      "name": "Jayce academia de combate (tanzanita)",
+      "num": 11,
+      "parentSkin": 5
+    },
+    {
+      "chromas": false,
+      "id": "126012",
+      "name": "Jayce academia de combate (turquesa)",
+      "num": 12,
+      "parentSkin": 5
+    },
+    {
+      "chromas": false,
+      "id": "126013",
+      "name": "Jayce academia de combate (esmeralda)",
+      "num": 13,
+      "parentSkin": 5
+    },
+    {
+      "chromas": false,
+      "id": "126014",
+      "name": "Jayce academia de combate (elegante)",
+      "num": 14,
+      "parentSkin": 5
+    },
+    {
+      "chromas": true,
+      "id": "126015",
+      "name": "Jayce de la resistencia",
+      "num": 15
+    },
+    {
+      "chromas": false,
+      "id": "126016",
+      "name": "Jayce de la resistencia (rubí)",
+      "num": 16,
+      "parentSkin": 15
+    },
+    {
+      "chromas": false,
+      "id": "126017",
+      "name": "Jayce de la resistencia (citrino)",
+      "num": 17,
+      "parentSkin": 15
+    },
+    {
+      "chromas": false,
+      "id": "126018",
+      "name": "Jayce de la resistencia (esmeralda)",
+      "num": 18,
+      "parentSkin": 15
+    },
+    {
+      "chromas": false,
+      "id": "126019",
+      "name": "Jayce de la resistencia (cuarzo rosa)",
+      "num": 19,
+      "parentSkin": 15
+    },
+    {
+      "chromas": false,
+      "id": "126020",
+      "name": "Jayce de la resistencia (zafiro)",
+      "num": 20,
+      "parentSkin": 15
+    },
+    {
+      "chromas": false,
+      "id": "126021",
+      "name": "Jayce de la resistencia (tanzanita)",
+      "num": 21,
+      "parentSkin": 15
+    },
+    {
+      "chromas": false,
+      "id": "126022",
+      "name": "Jayce de la resistencia (perla)",
+      "num": 22,
+      "parentSkin": 15
+    },
+    {
+      "chromas": false,
+      "id": "126023",
+      "name": "Jayce de la resistencia (obsidiana)",
+      "num": 23,
+      "parentSkin": 15
+    },
+    {
+      "chromas": false,
+      "id": "126024",
+      "name": "Jayce inventor de Arcane",
+      "num": 24
+    },
+    {
+      "chromas": true,
+      "id": "126025",
+      "name": "Jayce Juegos Cénit",
+      "num": 25
+    },
+    {
+      "chromas": false,
+      "id": "126026",
+      "name": "Jayce Juegos Cénit (rubí)",
+      "num": 26,
+      "parentSkin": 25
+    },
+    {
+      "chromas": false,
+      "id": "126027",
+      "name": "Jayce Juegos Cénit (ojo de gato)",
+      "num": 27,
+      "parentSkin": 25
+    },
+    {
+      "chromas": false,
+      "id": "126028",
+      "name": "Jayce Juegos Cénit (aguamarina)",
+      "num": 28,
+      "parentSkin": 25
+    },
+    {
+      "chromas": false,
+      "id": "126029",
+      "name": "Jayce Juegos Cénit (cuarzo rosa)",
+      "num": 29,
+      "parentSkin": 25
+    },
+    {
+      "chromas": false,
+      "id": "126030",
+      "name": "Jayce Juegos Cénit (esmeralda)",
+      "num": 30,
+      "parentSkin": 25
+    },
+    {
+      "chromas": false,
+      "id": "126031",
+      "name": "Jayce Juegos Cénit (amatista)",
+      "num": 31,
+      "parentSkin": 25
+    },
+    {
+      "chromas": false,
+      "id": "126032",
+      "name": "Jayce Juegos Cénit (perla)",
+      "num": 32,
+      "parentSkin": 25
+    },
+    {
+      "chromas": false,
+      "id": "126033",
+      "name": "Jayce Juegos Cénit (obsidiana)",
+      "num": 33,
+      "parentSkin": 25
+    },
+    {
+      "chromas": true,
+      "id": "126034",
+      "name": "Jayce T1",
+      "num": 34
+    },
+    {
+      "chromas": false,
+      "id": "126035",
+      "name": "Jayce superviviente de Arcane",
+      "num": 35
+    },
+    {
+      "chromas": false,
+      "id": "126036",
+      "name": "Jayce T1 de prestigio",
+      "num": 36
+    },
+    {
+      "chromas": false,
+      "id": "126037",
+      "name": "Jayce T1 (élite)",
+      "num": 37,
+      "parentSkin": 34
+    },
+    {
+      "chromas": true,
+      "id": "126038",
+      "name": "Jayce pétalos de primavera",
+      "num": 38
+    },
+    {
+      "chromas": false,
+      "id": "126039",
+      "name": "Jayce pétalos de primavera (rubí)",
+      "num": 39,
+      "parentSkin": 38
+    },
+    {
+      "chromas": false,
+      "id": "126040",
+      "name": "Jayce pétalos de primavera (zafiro)",
+      "num": 40,
+      "parentSkin": 38
+    },
+    {
+      "chromas": false,
+      "id": "126041",
+      "name": "Jayce pétalos de primavera (amatista)",
+      "num": 41,
+      "parentSkin": 38
+    },
+    {
+      "chromas": false,
+      "id": "126042",
+      "name": "Jayce pétalos de primavera (cuarzo rosa)",
+      "num": 42,
+      "parentSkin": 38
+    },
+    {
+      "chromas": false,
+      "id": "126043",
+      "name": "Jayce pétalos de primavera (esmeralda)",
+      "num": 43,
+      "parentSkin": 38
+    },
+    {
+      "chromas": false,
+      "id": "126044",
+      "name": "Jayce pétalos de primavera (ojo de gato)",
+      "num": 44,
+      "parentSkin": 38
+    },
+    {
+      "chromas": false,
+      "id": "126045",
+      "name": "Jayce pétalos de primavera (perla)",
+      "num": 45,
+      "parentSkin": 38
+    },
+    {
+      "chromas": false,
+      "id": "126046",
+      "name": "Jayce pétalos de primavera (obsidiana)",
+      "num": 46,
+      "parentSkin": 38
+    }
+  ],
+  "spells": [
+    {
+      "cooldown": [
+        16,
+        14,
+        12,
+        10,
+        8,
+        6
+      ],
+      "cooldownBurn": "16/14/12/10/8/6",
+      "cost": [
+        40,
+        40,
+        40,
+        40,
+        40,
+        40
+      ],
+      "costBurn": "40",
+      "costType": " {{ abilityresourcename }}",
+      "datavalues": {},
+      "description": "Posición de Martillo: Salta a una zona, infligiendo daño físico y ralentizando a los enemigos.<br><br>Posición de Cañón: Lanza un orbe de electricidad que detona al golpear a un enemigo o llegar a su alcance máximo, infligiendo daño físico a todos los enemigos alcanzados.",
+      "effect": [
+        null,
+        [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ]
+      ],
+      "effectBurn": [
+        null,
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0"
+      ],
+      "id": "JayceToTheSkies",
+      "image": {
+        "full": "JayceToTheSkies.png",
+        "group": "spell",
+        "h": 48,
+        "sprite": "spell6.png",
+        "w": 48,
+        "x": 96,
+        "y": 0
+      },
+      "leveltip": {
+        "effect": [
+          "{{ basedamage }} -> {{ basedamageNL }}",
+          "{{ cooldown }} -> {{ cooldownNL }}",
+          "{{ slow*-100.000000 }}% -> {{ slownl*-100.000000 }}%"
+        ],
+        "label": [
+          "Daño",
+          "Enfriamiento",
+          "Ralentización"
+        ]
+      },
+      "maxammo": "-1",
+      "maxrank": 6,
+      "name": "¡Hacia los cielos! / Explosión eléctrica",
+      "range": [
+        600,
+        600,
+        600,
+        600,
+        600,
+        600
+      ],
+      "rangeBurn": "600",
+      "resource": "{{ cost }} {{ abilityresourcename }}",
+      "tooltip": "<keywordMajor>Martillo de mercurio:</keywordMajor> Jayce salta hacia un enemigo, lo que inflige <physicalDamage>{{ spell.jaycetotheskies:damage }} de daño físico</physicalDamage> a los enemigos cercanos y los <status>ralentiza</status> un {{ spell.jaycetotheskies:slow*-100 }}% durante {{ spell.jaycetotheskies:slowduration }} s.{{ spellmodifierdescriptionappend }}",
+      "vars": []
+    },
+    {
+      "cooldown": [
+        10,
+        10,
+        10,
+        10,
+        10,
+        10
+      ],
+      "cooldownBurn": "10",
+      "cost": [
+        40,
+        40,
+        40,
+        40,
+        40,
+        40
+      ],
+      "costBurn": "40",
+      "costType": " {{ abilityresourcename }}",
+      "datavalues": {},
+      "description": "Posición de Martillo: Pasiva: Restaura maná por cada golpe. Activa: Crea un campo de rayos que daña a los enemigos cercanos durante varios segundos.<br><br>Posición de Cañón: Obtiene un impulso de energía y aumenta al máximo la velocidad de ataque durante varios ataques.",
+      "effect": [
+        null,
+        [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ]
+      ],
+      "effectBurn": [
+        null,
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0"
+      ],
+      "id": "JayceStaticField",
+      "image": {
+        "full": "JayceStaticField.png",
+        "group": "spell",
+        "h": 48,
+        "sprite": "spell6.png",
+        "w": 48,
+        "x": 144,
+        "y": 0
+      },
+      "leveltip": {
+        "effect": [
+          "{{ basedamage }} -> {{ basedamageNL }}",
+          "{{ managain }} -> {{ managainNL }}"
+        ],
+        "label": [
+          "Daño",
+          "Restauración de maná"
+        ]
+      },
+      "maxammo": "-1",
+      "maxrank": 6,
+      "name": "Campo de rayos / Hipercarga",
+      "range": [
+        285,
+        285,
+        285,
+        285,
+        285,
+        285
+      ],
+      "rangeBurn": "285",
+      "resource": "{{ cost }} {{ abilityresourcename }}",
+      "tooltip": "<keywordMajor>Martillo de mercurio - Pasiva:</keywordMajor> Los ataques de Jayce con el <keywordMajor>Martillo</keywordMajor> otorgan <scaleMana>{{ spell.jaycestaticfield:managain }} de maná</scaleMana>.<br /><br /><keywordMajor>Martillo de mercurio - Activa:</keywordMajor> Jayce crea un aura eléctrica que inflige <magicDamage>{{ spell.jaycestaticfield:damage }} de daño mágico</magicDamage> a lo largo de {{ spell.jaycestaticfield:duration }} s.{{ spellmodifierdescriptionappend }}",
+      "vars": []
+    },
+    {
+      "cooldown": [
+        20,
+        18,
+        16,
+        14,
+        12,
+        10
+      ],
+      "cooldownBurn": "20/18/16/14/12/10",
+      "cost": [
+        55,
+        55,
+        55,
+        55,
+        55,
+        55
+      ],
+      "costBurn": "55",
+      "costType": " {{ abilityresourcename }}",
+      "datavalues": {},
+      "description": "Posición de martillo: Inflige daño mágico y desplaza levemente a un enemigo.<br><br>Posición de cañón: Lanza un Portal de aceleración que aumenta la velocidad de movimiento de todos los campeones aliados que lo atraviesen. Si se lanza Explosión eléctrica a través del portal, la velocidad, daño y alcance del proyectil aumentarán.",
+      "effect": [
+        null,
+        [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ]
+      ],
+      "effectBurn": [
+        null,
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0"
+      ],
+      "id": "JayceThunderingBlow",
+      "image": {
+        "full": "JayceThunderingBlow.png",
+        "group": "spell",
+        "h": 48,
+        "sprite": "spell6.png",
+        "w": 48,
+        "x": 192,
+        "y": 0
+      },
+      "leveltip": {
+        "effect": [
+          "{{ perchpdamage*100.000000 }}% -> {{ perchpdamagenl*100.000000 }}%",
+          "{{ cooldown }} -> {{ cooldownNL }}",
+          "{{ monstercap }} -> {{ monstercapNL }}"
+        ],
+        "label": [
+          "% de la vida máxima",
+          "Enfriamiento",
+          "Límite del daño a monstruos"
+        ]
+      },
+      "maxammo": "-1",
+      "maxrank": 6,
+      "name": "Golpe tormentoso / Portal de aceleración",
+      "range": [
+        240,
+        240,
+        240,
+        240,
+        240,
+        240
+      ],
+      "rangeBurn": "240",
+      "resource": "{{ cost }} {{ abilityresourcename }}",
+      "tooltip": "<keywordMajor>Posición de martillo:</keywordMajor> Jayce golpea con su martillo, <status>empuja hacia atrás</status> a su objetivo e inflige <magicDamage>{{ spell.jaycethunderingblow:flatdamage }} más un {{ spell.jaycethunderingblow:perchpdamage*100 }}% de la vida máxima del objetivo como daño mágico</magicDamage>.{{ spellmodifierdescriptionappend }}",
+      "vars": []
+    },
+    {
+      "cooldown": [
+        6
+      ],
+      "cooldownBurn": "6",
+      "cost": [
+        0
+      ],
+      "costBurn": "0",
+      "costType": "Sin coste",
+      "datavalues": {},
+      "description": "Posición de Martillo: Se transforma en el Cañón de mercurio, con nuevas habilidades y mayor alcance. Su primer ataque reduce la armadura y la resistencia mágica del objetivo.<br><br>Posición de Cañón: Se transforma en el Martillo de mercurio, con nuevas habilidades y un aumento de sus defensas. Su primer ataque inflige daño mágico adicional.",
+      "effect": [
+        null,
+        [
+          0
+        ],
+        [
+          0
+        ],
+        [
+          0
+        ],
+        [
+          0
+        ],
+        [
+          0
+        ],
+        [
+          0
+        ],
+        [
+          0
+        ],
+        [
+          0
+        ],
+        [
+          0
+        ],
+        [
+          0
+        ]
+      ],
+      "effectBurn": [
+        null,
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0"
+      ],
+      "id": "JayceStanceHtG",
+      "image": {
+        "full": "JayceStanceHtG.png",
+        "group": "spell",
+        "h": 48,
+        "sprite": "spell6.png",
+        "w": 48,
+        "x": 240,
+        "y": 0
+      },
+      "maxammo": "-1",
+      "maxrank": 1,
+      "name": "Cañón de mercurio / Martillo de mercurio",
+      "range": [
+        600
+      ],
+      "rangeBurn": "600",
+      "resource": "Sin coste",
+      "tooltip": "<keywordMajor>Martillo de mercurio:</keywordMajor> Jayce transforma su arma en el <keywordMajor>Cañón de mercurio</keywordMajor>, obtiene alcance de ataque y nuevas habilidades. El siguiente ataque de Jayce elimina un <scaleArmor>{{ spell.jaycestancehtg:rangedformshred }} de armadura</scaleArmor> y <scaleMR>resistencia mágica</scaleMR> durante {{ spell.jaycestancehtg:shredduration }} s.{{ spellmodifierdescriptionappend }}",
+      "vars": []
+    }
+  ],
+  "stats": {
+    "armor": 22,
+    "armorperlevel": 5,
+    "attackdamage": 59,
+    "attackdamageperlevel": 0,
+    "attackrange": 125,
+    "attackspeed": 0.658,
+    "attackspeedperlevel": 3,
+    "crit": 0,
+    "critperlevel": 0,
+    "hp": 590,
+    "hpperlevel": 109,
+    "hpregen": 6,
+    "hpregenperlevel": 0.6,
+    "movespeed": 335,
+    "mp": 375,
+    "mpperlevel": 45,
+    "mpregen": 6,
+    "mpregenperlevel": 0.8,
+    "spellblock": 30,
+    "spellblockperlevel": 1.3
+  },
+  "tags": [
+    "Fighter",
+    "Marksman"
+  ],
+  "title": "El Defensor del Mañana"
+}

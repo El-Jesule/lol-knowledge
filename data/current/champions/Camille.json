@@ -1,0 +1,986 @@
+{
+  "allytips": [
+    "Procura esperar a que el otro equipo esté distraído luchando contra tu equipo y usa Tiro de gancho para atrapar a los objetivos vulnerables.",
+    "Usa el control de adversario de tus habilidades para alcanzar a los enemigos con tus dos ataques de Protocolo de precisión."
+  ],
+  "blurb": "Convertida en un arma viviente diseñada para operar fuera de la ley, Camille es la jefa de espías del clan Ferros, una elegante agente de élite que se asegura de que nada amenace el funcionamiento de Piltover ni de Zaun. Su adaptabilidad y minuciosidad...",
+  "enemytips": [
+    "El escudo de Camille solo funciona con un tipo de daño, así que golpéala cuando sea vulnerable a tu daño.",
+    "Ultimátum hextech tiene un alcance muy corto, así que procura usar Destello para huir antes de que se pueda acercar a ti."
+  ],
+  "id": "Camille",
+  "image": {
+    "full": "Camille.png",
+    "group": "champion",
+    "h": 48,
+    "sprite": "champion0.png",
+    "w": 48,
+    "x": 48,
+    "y": 96
+  },
+  "info": {
+    "attack": 8,
+    "defense": 6,
+    "difficulty": 4,
+    "magic": 3
+  },
+  "key": "164",
+  "lore": "Convertida en un arma viviente diseñada para operar fuera de la ley, Camille es la jefa de espías del clan Ferros, una elegante agente de élite que se asegura de que nada amenace el funcionamiento de Piltover ni de Zaun. Su adaptabilidad y minuciosidad hacen que vea la técnica descuidada como una humillación con la que hay que terminar. Dotada de una mente tan aguda como las hojas que esgrime, ha emprendido una búsqueda de la perfección a través de las mejoras hextech a las que se ha sometido, mejoras que han llevado a muchos a preguntarse si no será más máquina que mujer.",
+  "name": "Camille",
+  "partype": "Maná",
+  "passive": {
+    "description": "Los ataques básicos a campeones le otorgan un escudo equivalente a un porcentaje de la vida máxima de Camille que la protege de su tipo de daño (físico o mágico) durante un corto periodo de tiempo.",
+    "image": {
+      "full": "Camille_Passive.png",
+      "group": "passive",
+      "h": 48,
+      "sprite": "passive0.png",
+      "w": 48,
+      "x": 48,
+      "y": 96
+    },
+    "name": "Defensa adaptable"
+  },
+  "recommended": [],
+  "skins": [
+    {
+      "chromas": false,
+      "id": "164000",
+      "name": "default",
+      "num": 0
+    },
+    {
+      "chromas": false,
+      "id": "164001",
+      "name": "Programa Camille",
+      "num": 1
+    },
+    {
+      "chromas": true,
+      "id": "164002",
+      "name": "Camille aquelarre",
+      "num": 2
+    },
+    {
+      "chromas": false,
+      "id": "164003",
+      "name": "Camille aquelarre (tanzanita)",
+      "num": 3,
+      "parentSkin": 2
+    },
+    {
+      "chromas": false,
+      "id": "164004",
+      "name": "Camille aquelarre (aguamarina)",
+      "num": 4,
+      "parentSkin": 2
+    },
+    {
+      "chromas": false,
+      "id": "164005",
+      "name": "Camille aquelarre (obsidiana)",
+      "num": 5,
+      "parentSkin": 2
+    },
+    {
+      "chromas": false,
+      "id": "164006",
+      "name": "Camille aquelarre (cuarzo rosa)",
+      "num": 6,
+      "parentSkin": 2
+    },
+    {
+      "chromas": false,
+      "id": "164007",
+      "name": "Camille aquelarre (rubí)",
+      "num": 7,
+      "parentSkin": 2
+    },
+    {
+      "chromas": false,
+      "id": "164008",
+      "name": "Camille aquelarre (perla)",
+      "num": 8,
+      "parentSkin": 2
+    },
+    {
+      "chromas": false,
+      "id": "164009",
+      "name": "Camille aquelarre (turquesa)",
+      "num": 9,
+      "parentSkin": 2
+    },
+    {
+      "chromas": true,
+      "id": "164010",
+      "name": "Camille iG",
+      "num": 10
+    },
+    {
+      "chromas": true,
+      "id": "164011",
+      "name": "Camille arcana",
+      "num": 11
+    },
+    {
+      "chromas": false,
+      "id": "164012",
+      "name": "Camille arcana (rubí)",
+      "num": 12,
+      "parentSkin": 11
+    },
+    {
+      "chromas": false,
+      "id": "164013",
+      "name": "Camille arcana (citrino)",
+      "num": 13,
+      "parentSkin": 11
+    },
+    {
+      "chromas": false,
+      "id": "164014",
+      "name": "Camille arcana (tanzanita)",
+      "num": 14,
+      "parentSkin": 11
+    },
+    {
+      "chromas": false,
+      "id": "164015",
+      "name": "Camille arcana (esmeralda)",
+      "num": 15,
+      "parentSkin": 11
+    },
+    {
+      "chromas": false,
+      "id": "164016",
+      "name": "Camille arcana (zafiro)",
+      "num": 16,
+      "parentSkin": 11
+    },
+    {
+      "chromas": false,
+      "id": "164017",
+      "name": "Camille arcana (cuarzo rosa)",
+      "num": 17,
+      "parentSkin": 11
+    },
+    {
+      "chromas": false,
+      "id": "164018",
+      "name": "Camille arcana (perla)",
+      "num": 18,
+      "parentSkin": 11
+    },
+    {
+      "chromas": false,
+      "id": "164019",
+      "name": "Camille arcana (obsidiana)",
+      "num": 19,
+      "parentSkin": 11
+    },
+    {
+      "chromas": false,
+      "id": "164020",
+      "name": "Camille aquelarre (ritual oscuro)",
+      "num": 20,
+      "parentSkin": 2
+    },
+    {
+      "chromas": true,
+      "id": "164021",
+      "name": "Camille comandante de asalto",
+      "num": 21
+    },
+    {
+      "chromas": false,
+      "id": "164022",
+      "name": "Camille comandante de asalto (rubí)",
+      "num": 22,
+      "parentSkin": 21
+    },
+    {
+      "chromas": false,
+      "id": "164023",
+      "name": "Camille comandante de asalto (citrino)",
+      "num": 23,
+      "parentSkin": 21
+    },
+    {
+      "chromas": false,
+      "id": "164024",
+      "name": "Camille comandante de asalto (cuarzo rosa)",
+      "num": 24,
+      "parentSkin": 21
+    },
+    {
+      "chromas": false,
+      "id": "164025",
+      "name": "Camille comandante de asalto (aguamarina)",
+      "num": 25,
+      "parentSkin": 21
+    },
+    {
+      "chromas": false,
+      "id": "164026",
+      "name": "Camille comandante de asalto (tanzanita)",
+      "num": 26,
+      "parentSkin": 21
+    },
+    {
+      "chromas": false,
+      "id": "164027",
+      "name": "Camille comandante de asalto (turquesa)",
+      "num": 27,
+      "parentSkin": 21
+    },
+    {
+      "chromas": false,
+      "id": "164028",
+      "name": "Camille comandante de asalto (obsidiana)",
+      "num": 28,
+      "parentSkin": 21
+    },
+    {
+      "chromas": false,
+      "id": "164029",
+      "name": "Camille comandante de asalto (perla)",
+      "num": 29,
+      "parentSkin": 21
+    },
+    {
+      "chromas": false,
+      "id": "164030",
+      "name": "Camille comandante de asalto (as)",
+      "num": 30,
+      "parentSkin": 21
+    },
+    {
+      "chromas": true,
+      "id": "164031",
+      "name": "Camille bendición invernal",
+      "num": 31
+    },
+    {
+      "chromas": false,
+      "id": "164032",
+      "name": "Camille bendición invernal de prestigio",
+      "num": 32
+    },
+    {
+      "chromas": false,
+      "id": "164033",
+      "name": "Camille bendición invernal (rubí)",
+      "num": 33,
+      "parentSkin": 31
+    },
+    {
+      "chromas": false,
+      "id": "164034",
+      "name": "Camille bendición invernal (citrino)",
+      "num": 34,
+      "parentSkin": 31
+    },
+    {
+      "chromas": false,
+      "id": "164035",
+      "name": "Camille bendición invernal (zafiro)",
+      "num": 35,
+      "parentSkin": 31
+    },
+    {
+      "chromas": false,
+      "id": "164036",
+      "name": "Camille bendición invernal (esmeralda)",
+      "num": 36,
+      "parentSkin": 31
+    },
+    {
+      "chromas": false,
+      "id": "164037",
+      "name": "Camille bendición invernal (obsidiana)",
+      "num": 37,
+      "parentSkin": 31
+    },
+    {
+      "chromas": false,
+      "id": "164038",
+      "name": "Camille bendición invernal (perla)",
+      "num": 38,
+      "parentSkin": 31
+    },
+    {
+      "chromas": false,
+      "id": "164039",
+      "name": "Camille bendición invernal (turquesa)",
+      "num": 39,
+      "parentSkin": 31
+    },
+    {
+      "chromas": false,
+      "id": "164040",
+      "name": "Camille bendición invernal (cuarzo rosa)",
+      "num": 40,
+      "parentSkin": 31
+    },
+    {
+      "chromas": false,
+      "id": "164041",
+      "name": "Camille bendición invernal (guirnalda)",
+      "num": 41,
+      "parentSkin": 31
+    },
+    {
+      "chromas": false,
+      "id": "164042",
+      "name": "Camille bendición invernal (adornado)",
+      "num": 42,
+      "parentSkin": 31
+    },
+    {
+      "chromas": false,
+      "id": "164043",
+      "name": "Camille iG (élite)",
+      "num": 43,
+      "parentSkin": 10
+    },
+    {
+      "chromas": true,
+      "id": "164044",
+      "name": "Camille pétalos de primavera",
+      "num": 44
+    },
+    {
+      "chromas": false,
+      "id": "164045",
+      "name": "Camille pétalos de primavera (rubí)",
+      "num": 45,
+      "parentSkin": 44
+    },
+    {
+      "chromas": false,
+      "id": "164046",
+      "name": "Camille pétalos de primavera (peridoto)",
+      "num": 46,
+      "parentSkin": 44
+    },
+    {
+      "chromas": false,
+      "id": "164047",
+      "name": "Camille pétalos de primavera (tanzanita)",
+      "num": 47,
+      "parentSkin": 44
+    },
+    {
+      "chromas": false,
+      "id": "164048",
+      "name": "Camille pétalos de primavera (ojo de gato)",
+      "num": 48,
+      "parentSkin": 44
+    },
+    {
+      "chromas": false,
+      "id": "164049",
+      "name": "Camille pétalos de primavera (cuarzo rosa)",
+      "num": 49,
+      "parentSkin": 44
+    },
+    {
+      "chromas": false,
+      "id": "164050",
+      "name": "Camille pétalos de primavera (zafiro)",
+      "num": 50,
+      "parentSkin": 44
+    },
+    {
+      "chromas": false,
+      "id": "164051",
+      "name": "Camille pétalos de primavera (obsidiana)",
+      "num": 51,
+      "parentSkin": 44
+    },
+    {
+      "chromas": false,
+      "id": "164052",
+      "name": "Camille pétalos de primavera (perla)",
+      "num": 52,
+      "parentSkin": 44
+    }
+  ],
+  "spells": [
+    {
+      "cooldown": [
+        9,
+        8,
+        7,
+        6,
+        5
+      ],
+      "cooldownBurn": "9/8/7/6/5",
+      "cost": [
+        25,
+        25,
+        25,
+        25,
+        25
+      ],
+      "costBurn": "25",
+      "costType": " {{ abilityresourcename }}",
+      "datavalues": {},
+      "description": "El próximo ataque de Camille inflige daño adicional y otorga más velocidad de movimiento. Este hechizo puede lanzarse de nuevo durante un breve periodo de tiempo, de modo que inflige una cantidad adicional de daño considerablemente mayor si Camille deja un tiempo entre los dos ataques.",
+      "effect": [
+        null,
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ]
+      ],
+      "effectBurn": [
+        null,
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0"
+      ],
+      "id": "CamilleQ",
+      "image": {
+        "full": "CamilleQ.png",
+        "group": "spell",
+        "h": 48,
+        "sprite": "spell2.png",
+        "w": 48,
+        "x": 384,
+        "y": 144
+      },
+      "leveltip": {
+        "effect": [
+          "{{ tadratio*100.000000 }}% -> {{ tadrationl*100.000000 }}%",
+          "{{ msbonus*100.000000 }}% -> {{ msbonusnl*100.000000 }}%",
+          "{{ cooldown }} -> {{ cooldownNL }}"
+        ],
+        "label": [
+          "Relación de DA total",
+          "Velocidad de movimiento",
+          "Enfriamiento"
+        ]
+      },
+      "maxammo": "-1",
+      "maxrank": 5,
+      "name": "Protocolo de precisión",
+      "range": [
+        325,
+        325,
+        325,
+        325,
+        325
+      ],
+      "rangeBurn": "325",
+      "resource": "{{ cost }} {{ abilityresourcename }}",
+      "tooltip": "El siguiente ataque de Camille inflige <physicalDamage>{{ bonusdamage }} de daño físico</physicalDamage> adicional y otorga un <speed>{{ msbonus*100 }}% de velocidad de movimiento</speed> durante {{ msduration }} s. Esta habilidad se puede <recast>volver a lanzar</recast> durante los próximos {{ qtotalrecasttime }} s.<br /><br />Si el ataque del <recast>segundo lanzamiento</recast> golpea al menos {{ qrampuptime }} s después del primero, el daño adicional aumenta a <physicalDamage>{{ empoweredbonusdamage }}</physicalDamage> y un {{ damageconversionpercentage }} del daño de ataque se convierte en <trueDamage>daño verdadero</trueDamage>.<br /><br /><rules>Esta habilidad aplica efectos de hechizo al infligir daño.</rules>{{ spellmodifierdescriptionappend }}",
+      "vars": []
+    },
+    {
+      "cooldown": [
+        12,
+        11.5,
+        11,
+        10.5,
+        10
+      ],
+      "cooldownBurn": "12/11.5/11/10.5/10",
+      "cost": [
+        50,
+        55,
+        60,
+        65,
+        70
+      ],
+      "costBurn": "50/55/60/65/70",
+      "costType": " {{ abilityresourcename }}",
+      "datavalues": {},
+      "description": "Tras un breve lapso de tiempo, Camille provoca una explosión en forma de cono que inflige daño. Los enemigos en la mitad exterior se ralentizan y reciben daño adicional al mismo tiempo que curan a Camille.",
+      "effect": [
+        null,
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ]
+      ],
+      "effectBurn": [
+        null,
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0"
+      ],
+      "id": "CamilleW",
+      "image": {
+        "full": "CamilleW.png",
+        "group": "spell",
+        "h": 48,
+        "sprite": "spell2.png",
+        "w": 48,
+        "x": 432,
+        "y": 144
+      },
+      "leveltip": {
+        "effect": [
+          "{{ cost }} -> {{ costNL }}",
+          "{{ basedamage }} -> {{ basedamageNL }}",
+          "{{ outerconemaxhpdamage*100.000000 }}% -> {{ outerconemaxhpdamagenl*100.000000 }}%",
+          "{{ cooldown }} -> {{ cooldownNL }}"
+        ],
+        "label": [
+          "Coste de @AbilityResourceName@",
+          "Daño",
+          "Daño por vida máxima",
+          "Enfriamiento"
+        ]
+      },
+      "maxammo": "-1",
+      "maxrank": 5,
+      "name": "Barrido táctico",
+      "range": [
+        610,
+        610,
+        610,
+        610,
+        610
+      ],
+      "rangeBurn": "610",
+      "resource": "{{ cost }} {{ abilityresourcename }}",
+      "tooltip": "Camille se lanza y ataca, lo que inflige <physicalDamage>{{ basedamagetotal }} de daño físico</physicalDamage>.<br /><br />Los enemigos golpeados por la mitad exterior quedan <status>ralentizados</status> un {{ slowpercentage }}%, que disminuye a lo largo de {{ slowduration }} s, y reciben un <physicalDamage>{{ outeredgetooltip }} de daño físico adicional según su vida máxima</physicalDamage>. Camille recupera un <healing>{{ outerconehealingratio }}% del daño adicional infligido a campeones como vida</healing>.{{ spellmodifierdescriptionappend }}",
+      "vars": []
+    },
+    {
+      "cooldown": [
+        16,
+        15,
+        14,
+        13,
+        12
+      ],
+      "cooldownBurn": "16/15/14/13/12",
+      "cost": [
+        70,
+        70,
+        70,
+        70,
+        70
+      ],
+      "costBurn": "70",
+      "costType": " {{ abilityresourcename }}",
+      "datavalues": {},
+      "description": "Camille se desliza hasta un muro, salta y golpea a los enemigos al caer.",
+      "effect": [
+        null,
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ]
+      ],
+      "effectBurn": [
+        null,
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0"
+      ],
+      "id": "CamilleE",
+      "image": {
+        "full": "CamilleE.png",
+        "group": "spell",
+        "h": 48,
+        "sprite": "spell3.png",
+        "w": 48,
+        "x": 0,
+        "y": 0
+      },
+      "leveltip": {
+        "effect": [
+          "{{ cooldown }} -> {{ cooldownNL }}",
+          "{{ basedamage }} -> {{ basedamageNL }}",
+          "{{ asbuff*100.000000 }}% -> {{ asbuffnl*100.000000 }}%"
+        ],
+        "label": [
+          "Enfriamiento",
+          "Daño",
+          "Velocidad de ataque"
+        ]
+      },
+      "maxammo": "-1",
+      "maxrank": 5,
+      "name": "Tiro de gancho",
+      "range": [
+        800,
+        800,
+        800,
+        800,
+        800
+      ],
+      "rangeBurn": "800",
+      "resource": "{{ cost }} {{ abilityresourcename }}",
+      "tooltip": "Lanza un gancho que se adhiere a un obstáculo del terreno y tira de Camille hasta él durante 1 s, lo que le permite <recast>reactivar</recast> la habilidad.<br /><br /><recast>Reactivación</recast>: Camille se desliza desde el muro y colisiona con el primer campeón enemigo golpeado. Al caer, obtiene un <attackSpeed>{{ asbuff*100 }}% de velocidad de ataque</attackSpeed> durante {{ asduration }} s, inflige <physicalDamage>{{ totaldamage }} de daño físico</physicalDamage> a los enemigos cercanos y <status>aturde</status> durante {{ knockupduration }} s a los campeones enemigos. Los deslizamientos hacia los campeones enemigos tienen el doble de alcance.{{ spellmodifierdescriptionappend }}",
+      "vars": []
+    },
+    {
+      "cooldown": [
+        140,
+        115,
+        90
+      ],
+      "cooldownBurn": "140/115/90",
+      "cost": [
+        100,
+        100,
+        100
+      ],
+      "costBurn": "100",
+      "costType": " {{ abilityresourcename }}",
+      "datavalues": {},
+      "description": "Camille se desliza hacia un campeón objetivo y lo ancla en el área. También inflige daño mágico adicional al objetivo con sus ataques básicos.",
+      "effect": [
+        null,
+        [
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0
+        ]
+      ],
+      "effectBurn": [
+        null,
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0"
+      ],
+      "id": "CamilleR",
+      "image": {
+        "full": "CamilleR.png",
+        "group": "spell",
+        "h": 48,
+        "sprite": "spell3.png",
+        "w": 48,
+        "x": 48,
+        "y": 0
+      },
+      "leveltip": {
+        "effect": [
+          "{{ rpercentcurrenthpdamage }}% -> {{ rpercentcurrenthpdamageNL }}%",
+          "{{ rduration }} -> {{ rdurationNL }}",
+          "{{ cooldown }} -> {{ cooldownNL }}"
+        ],
+        "label": [
+          "Daño por vida actual",
+          "Duración",
+          "Enfriamiento"
+        ]
+      },
+      "maxammo": "-1",
+      "maxrank": 3,
+      "name": "Ultimátum hextech",
+      "range": [
+        475,
+        475,
+        475
+      ],
+      "rangeBurn": "475",
+      "resource": "{{ cost }} {{ abilityresourcename }}",
+      "tooltip": "Camille se vuelve inalcanzable durante un breve lapso de tiempo y salta sobre un campeón enemigo, lo que interrumpe las canalizaciones y lo encierra en un área de la que no puede escapar de ningún modo durante {{ rduration }} s. Al resto de enemigos cercanos los <status>empuja</status>. Sus ataques contra el enemigo atrapado infligen un <magicDamage>{{ rpercentcurrenthpdamage }}% de daño mágico adicional según la vida actual</magicDamage>.{{ spellmodifierdescriptionappend }}",
+      "vars": []
+    }
+  ],
+  "stats": {
+    "armor": 35,
+    "armorperlevel": 4.5,
+    "attackdamage": 68,
+    "attackdamageperlevel": 0,
+    "attackrange": 125,
+    "attackspeed": 0.644,
+    "attackspeedperlevel": 2.5,
+    "crit": 0,
+    "critperlevel": 0,
+    "hp": 650,
+    "hpperlevel": 99,
+    "hpregen": 8.5,
+    "hpregenperlevel": 0.8,
+    "movespeed": 340,
+    "mp": 375,
+    "mpperlevel": 52,
+    "mpregen": 8.15,
+    "mpregenperlevel": 0.75,
+    "spellblock": 32,
+    "spellblockperlevel": 2.05
+  },
+  "tags": [
+    "Fighter",
+    "Assassin"
+  ],
+  "title": "la Sombra de Acero"
+}
