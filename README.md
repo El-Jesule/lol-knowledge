@@ -2,7 +2,7 @@
 
 Base de conocimiento verificable de League of Legends: datos oficiales de Riot (Data Dragon), análisis con fuente declarada y una CLI en Python que ingesta, valida y calcula de forma reproducible.
 
-Estado actual: **fase 2**. Existe la ingesta del snapshot oficial de Data Dragon y el validador de integridad; el análisis de campeones llega en las fases siguientes.
+Estado actual: **fase 3**. Existen la ingesta, el validador de integridad y el primer campeón analizado, Zaahen; la calculadora de daño llega en la fase 4.
 
 ## Requisitos
 
@@ -88,6 +88,7 @@ Los checksums dependen de los bytes exactos: `.gitattributes` fija `eol=lf` para
 - No hay integración con la Riot API ni claves de API.
 - No hay estadísticas comunitarias: solo datos oficiales.
 - No hay CI ni publicación remota.
+- Data Dragon 16.20.1 no publica valores numéricos de las habilidades de Zaahen; están marcados como pendientes en lugar de rellenarse.
 - La cobertura de campeones empieza por un caso representativo y crece de forma incremental.
 
 ## Flujo de trabajo

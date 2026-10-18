@@ -92,6 +92,7 @@ Toda sección con datos debe indicar: **parche**, **fuente**, **fecha de consult
 - Archivos pequeños y consultables: el objetivo es recuperar solo lo necesario, no leer un monolito.
 - No rellenes huecos con texto plausible. Un hueco declarado es información; un hueco inventado es un fallo.
 - Para citar una entidad del snapshot usa `data:item:<id>`, `data:rune:<id>` o `data:champion:<Id>`. El validador comprueba que existan.
+- Los valores numéricos oficiales de un campeón se escriben en code spans (`` `640` ``) dentro de `overview.md` y `abilities.md`; `validate` comprueba que aparezcan en el JSON del campeón. Los números en prosa (fechas, parche, recuentos) no se validan.
 - Toda ruta enlazada en Markdown debe existir y quedarse dentro del repositorio. `validate` lo comprueba.
 - Los archivos de `data/current/` se escriben con LF y sus checksums dependen de los bytes exactos. `.gitattributes` fija `eol=lf`; no lo cambies.
 
