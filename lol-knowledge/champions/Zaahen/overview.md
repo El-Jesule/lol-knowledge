@@ -3,7 +3,7 @@
 - **Parche:** 16.20.1
 - **Fuente:** [`data/current/champions/Zaahen.json`](../../../data/current/champions/Zaahen.json) (Data Dragon, `es_ES`)
 - **Fecha de consulta:** 2026-10-18
-- **Limitación principal:** Data Dragon no publica los valores numéricos de las habilidades de este campeón. Ver [`abilities.md`](abilities.md) y [`sources.md`](sources.md).
+- **Limitación principal:** Data Dragon no publica los valores numéricos de los efectos de este campeón. Los valores derivados de datos del cliente, marcados `Derivado`, están en [`abilities.md`](abilities.md) y su trazabilidad en [`sources.md`](sources.md).
 
 ## Identidad (`Oficial`)
 
@@ -33,6 +33,8 @@
 
 La velocidad de ataque se expresa como proporción base y crecimiento porcentual por nivel, según la convención de Data Dragon.
 
+El cliente (CommunityDragon, build 16.20.8248524) indica un crecimiento de daño de ataque de 4,0 por nivel; Data Dragon publica 0. La discrepancia sigue abierta y no se sustituye el valor oficial. Detalle en [`sources.md`](sources.md).
+
 ## Lectura del kit (`Recomendación`)
 
 Interpretación estratégica del texto oficial de las habilidades, no demostrada con estadísticas:
@@ -44,7 +46,7 @@ Interpretación estratégica del texto oficial de las habilidades, no demostrada
 
 ## Advertencias de datos (`Pendiente de verificación`)
 
-- Data Dragon reporta `0` como crecimiento de daño de ataque por nivel. No se corrige ni se interpreta como decisión de diseño: puede ser un hueco de datos del parche.
+- Data Dragon reporta `0` como crecimiento de daño de ataque por nivel. No se corrige ni se interpreta como decisión de diseño: puede ser un hueco de datos del parche. El cliente indica 4,0, pero el valor oficial no se sobrescribe.
 - Existe una discrepancia sobre ese crecimiento: un export del bin del cliente (CommunityDragon, fuente **no oficial**) indica otro valor, y la wiki (tercero) coincide con ese otro valor. Ninguno de los dos es fuente oficial y la discrepancia sigue abierta. Evidencia y detalle en [`../../../research/zaahen-research-handoff.md`](../../../research/zaahen-research-handoff.md).
-- No hay valores de daño, escalados ni porcentajes de las habilidades en la fuente. Cualquier cifra de daño exigiría otra fuente oficial o medición propia.
+- Data Dragon no publica daño, escalados ni porcentajes de las habilidades. Los valores derivados publicados en [`abilities.md`](abilities.md) proceden de datos del cliente y están marcados como `Derivado`; no son datos oficiales.
 - No hay consejos oficiales de aliados ni de enemigos: Data Dragon los publica vacíos para este campeón.

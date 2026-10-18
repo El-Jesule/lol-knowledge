@@ -18,3 +18,7 @@
 ## Cobertura actual
 
 Un campeón con análisis completo y datos oficiales de los 173 campeones en `data/current/`. La cobertura crece de uno en uno: cada campeón nuevo reutiliza esta estructura.
+
+## Aviso de fuentes
+
+Los valores marcados `Derivado` proceden de datos del cliente publicados por CommunityDragon, **no** de una API oficial de Riot. Se incluyen con atribución y aviso de no afiliación; el detalle está en [Fuentes de Zaahen](champions/Zaahen/sources.md). El aviso completo está en [`../README.md`](../README.md).

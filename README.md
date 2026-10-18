@@ -83,12 +83,20 @@ Códigos de salida: `0` todo coherente, `1` violaciones (se listan con archivo y
 
 Los checksums dependen de los bytes exactos: `.gitattributes` fija `eol=lf` para que cualquier checkout use LF.
 
+## Aviso legal
+
+Este proyecto es una base de conocimiento no comercial. Incluye datos oficiales de Data Dragon y, para Zaahen, valores derivados de los datos del cliente publicados por CommunityDragon, marcados como `Derivado`. No se redistribuyen archivos originales del cliente.
+
+> LoL-Knowledge isn't endorsed by Riot Games and doesn't reflect the views or opinions of Riot Games or anyone officially involved in producing or managing Riot Games properties. Riot Games, and all associated properties are trademarks or registered trademarks of Riot Games, Inc.
+
+Condiciones de uso y cuestiones pendientes: [`research/evidence/usage-conditions.md`](research/evidence/usage-conditions.md).
+
 ## Limitaciones conocidas
 
 - No hay integración con la Riot API ni claves de API.
-- No hay estadísticas comunitarias: solo datos oficiales.
+- No hay estadísticas comunitarias; para Zaahen se publican valores derivados de datos del cliente, marcados `Derivado` y con atribución.
 - No hay CI ni publicación remota.
-- Data Dragon 16.20.1 no publica valores numéricos de las habilidades de Zaahen; están marcados como pendientes en lugar de rellenarse.
+- Data Dragon 16.20.1 no publica valores numéricos de las habilidades de Zaahen; los valores derivados están documentados y las discrepancias abiertas siguen como pendientes.
 - La cobertura de campeones empieza por un caso representativo y crece de forma incremental.
 
 ## Flujo de trabajo
