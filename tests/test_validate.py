@@ -270,6 +270,37 @@ def test_detects_unexpected_directory_inside_champions(tmp_path: Path, fake_sour
     assert "unexpected directory inside champions/" in messages(report)
 
 
+def test_detects_untraceable_number_in_champion_doc(tmp_path: Path, fake_source) -> None:
+    root = make_project(tmp_path, fake_source)
+    write_kb(root, "champions/Aatrox/overview.md", "| Vida | `9999` |\n")
+
+    report = validate_project(root)
+
+    assert "number 9999 does not appear" in messages(report)
+
+
+def test_accepts_traceable_numbers_in_champion_doc(tmp_path: Path, fake_source) -> None:
+    root = make_project(tmp_path, fake_source)
+    write_kb(root, "champions/Aatrox/overview.md", "| Vida | `650` |\n")
+
+    report = validate_project(root)
+
+    assert report.ok, messages(report)
+
+
+def test_prose_numbers_in_champion_doc_are_not_checked(tmp_path: Path, fake_source) -> None:
+    root = make_project(tmp_path, fake_source)
+    write_kb(
+        root,
+        "champions/Aatrox/overview.md",
+        "Hay 173 campeones y el parche es 16.20.1.\n",
+    )
+
+    report = validate_project(root)
+
+    assert report.ok, messages(report)
+
+
 def test_cli_validate_returns_zero_for_a_valid_project(
     tmp_path: Path, fake_source, capsys: pytest.CaptureFixture[str]
 ) -> None:

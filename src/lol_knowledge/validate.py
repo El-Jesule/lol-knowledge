@@ -31,7 +31,10 @@ TIMESTAMP_PATTERN = re.compile(r"\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}Z")
 SHA256_PATTERN = re.compile(r"[0-9a-f]{64}")
 LINK_PATTERN = re.compile(r"\[[^\]]*\]\(([^)]+)\)")
 DATA_REF_PATTERN = re.compile(r"data:(item|rune|champion):([A-Za-z0-9_-]+)")
+NUMERIC_CODE_SPAN_PATTERN = re.compile(r"`([^`\n]+)`")
+NUMBER_PATTERN = re.compile(r"\d+(?:\.\d+)?")
 EXTERNAL_LINK_PREFIXES = ("http://", "https://", "mailto:", "#")
+CHAMPION_DOC_FILENAMES = ("overview.md", "abilities.md")
 
 
 @dataclass(frozen=True)
@@ -72,6 +75,7 @@ class _Validator:
         self.skipped: list[str] = []
         self.checked_files = 0
         self.champion_ids: set[str] = set()
+        self.champion_numbers: dict[str, set[str]] = {}
         self.item_ids: set[str] = set()
         self.rune_ids: set[int] = set()
 
@@ -236,6 +240,8 @@ class _Validator:
             except PayloadError as exc:
                 self.fail(champion_path, str(exc))
 
+            self.champion_numbers[champion_id] = numeric_tokens(payload)
+
             for field in ("key", "name"):
                 if entry.get(field) != payload.get(field):
                     self.fail(
@@ -307,6 +313,15 @@ class _Validator:
             self._check_links(md_path, text)
             self._check_data_refs(md_path, text)
 
+        for champion_id, numbers in sorted(self.champion_numbers.items()):
+            champion_dir = kb_root / CHAMPIONS_DIRNAME / champion_id
+            if not champion_dir.is_dir():
+                continue
+            for filename in CHAMPION_DOC_FILENAMES:
+                doc = champion_dir / filename
+                if doc.is_file():
+                    self._check_champion_numbers(doc, champion_id, numbers)
+
         champions_dir = kb_root / CHAMPIONS_DIRNAME
         if champions_dir.is_dir():
             for child in sorted(champions_dir.iterdir()):
@@ -339,6 +354,48 @@ class _Validator:
                 self.fail(md_path, f"unknown champion reference data:champion:{value}")
             elif kind == "rune" and (not value.isdigit() or int(value) not in self.rune_ids):
                 self.fail(md_path, f"unknown rune reference data:rune:{value}")
+
+    def _check_champion_numbers(self, path: Path, champion_id: str, numbers: set[str]) -> None:
+        try:
+            text = path.read_text(encoding="utf-8")
+        except UnicodeDecodeError:
+            return  # already reported by the Markdown scan
+
+        for match in NUMERIC_CODE_SPAN_PATTERN.finditer(text):
+            value = match.group(1).strip()
+            if NUMBER_PATTERN.fullmatch(value) is None:
+                continue
+            if value not in numbers:
+                self.fail(
+                    path,
+                    f"number {value} does not appear in data/current/champions/{champion_id}.json",
+                )
+
+
+def numeric_tokens(value: Any) -> set[str]:
+    """Collect every number and numeric fragment so docs can be traced to data."""
+    tokens: set[str] = set()
+
+    def walk(node: Any) -> None:
+        if isinstance(node, bool):
+            return
+        if isinstance(node, (int, float)):
+            tokens.add(str(node))
+            if isinstance(node, float) and node.is_integer():
+                tokens.add(str(int(node)))
+            return
+        if isinstance(node, str):
+            tokens.update(NUMBER_PATTERN.findall(node))
+            return
+        if isinstance(node, Mapping):
+            for item in node.values():
+                walk(item)
+        elif isinstance(node, Sequence) and not isinstance(node, (str, bytes)):
+            for item in node:
+                walk(item)
+
+    walk(value)
+    return tokens
 
 
 def collect_rune_ids(runes: Sequence[Any]) -> set[int]:
