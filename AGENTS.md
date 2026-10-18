@@ -77,6 +77,7 @@ Cada afirmación relevante en `lol-knowledge/` debe encabezarse o anotarse con u
 | Etiqueta | Significado |
 |---|---|
 | `Oficial` | Copiado de Data Dragon o notas de parche, con parche y ruta de origen |
+| `Derivado` | Extraído de datos del cliente u otra fuente técnica, con build, ruta y método declarados; **no** es una API oficial de Riot |
 | `Calculado` | Resultado determinista de `src/lol_knowledge/`, con supuestos declarados |
 | `Recomendación` | Criterio estratégico propio, no demostrado matemáticamente |
 | `Pendiente de verificación` | No verificable con las fuentes accesibles hoy |
@@ -93,6 +94,10 @@ Toda sección con datos debe indicar: **parche**, **fuente**, **fecha de consult
 - No rellenes huecos con texto plausible. Un hueco declarado es información; un hueco inventado es un fallo.
 - Para citar una entidad del snapshot usa `data:item:<id>`, `data:rune:<id>` o `data:champion:<Id>`. El validador comprueba que existan.
 - Los valores numéricos oficiales de un campeón se escriben en code spans (`` `640` ``) dentro de `overview.md` y `abilities.md`; `validate` comprueba que aparezcan en el JSON del campeón. Los números en prosa (fechas, parche, recuentos) no se validan.
+- Los valores `Derivado` se escriben en texto plano, nunca en code spans numéricos dentro de `overview.md` o `abilities.md` (el validador los cruzaría contra el JSON oficial). Deben citar fuente, build, ruta y método en `sources.md`.
+- Un valor `Derivado` que contradiga a Data Dragon no sustituye al oficial: se marca `Pendiente de verificación` y se documenta la discrepancia.
+- No se versionan archivos originales del cliente. Solo se publican valores derivados y su trazabilidad.
+- El aviso de no afiliación de Riot se mantiene visible en `README.md` y `lol-knowledge/INDEX.md`.
 - Toda ruta enlazada en Markdown debe existir y quedarse dentro del repositorio. `validate` lo comprueba.
 - Los archivos de `data/current/` se escriben con LF y sus checksums dependen de los bytes exactos. `.gitattributes` fija `eol=lf`; no lo cambies.
 

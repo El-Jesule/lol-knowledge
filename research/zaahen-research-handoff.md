@@ -261,6 +261,8 @@ Detalle completo en [`evidence/usage-conditions.md`](evidence/usage-conditions.m
 
 **Conclusión registrada:** el uso interno de investigación no presenta objeción evidente. La **redistribución de archivos originales del cliente no está autorizada de forma clara**, por eso el bin completo vive solo en `research/.cache/` (ignorado por Git). La publicación de valores derivados es defendible como dato estático del juego dentro de la política de Riot, pero exige atribución, aviso de no afiliación y revisión jurídica antes de volverse permanente.
 
+**Decisión de producto (2026-10-18): aprobada.** Los valores derivados se publican en `lol-knowledge/champions/Zaahen/` con la etiqueta `Derivado`, atribución al build `16.20.8248524` y aviso de no afiliación en `README.md` y `lol-knowledge/INDEX.md`. No se versionan archivos originales del cliente.
+
 **Prohibición explícita para el siguiente agente:** no presentar la wiki ni CommunityDragon como fuente oficial de Riot, y no copiar cifras de la wiki a `lol-knowledge/` como si fueran dato oficial.
 
 ---
@@ -326,7 +328,7 @@ $env:PYTHONPATH="research"
 
 ### Prioridad 3 — decisión de producto
 
-6. Decidir si `lol-knowledge/` puede publicar valores derivados de CommunityDragon con la atribución y el aviso de no afiliación exigidos (sección H). Sin esa decisión, los hallazgos viven en `research/` y no en la base de conocimiento.
+6. ~~Decidir si `lol-knowledge/` puede publicar valores derivados~~: aprobado el 2026-10-18 y aplicado con la etiqueta `Derivado`, atribución y aviso de no afiliación (sección H).
 
 ### Referencias externas
 
