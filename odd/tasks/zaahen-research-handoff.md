@@ -22,11 +22,12 @@ Objetivo: cerrar la fase de investigación de Zaahen integrando en la base de co
 ## Tasks
 
 - [x] T1 — Rama de tarea y documento de seguimiento. Spec: S10. Route: inline. Evidencia: rama `docs/zaahen-research-handoff` creada desde `dev` sobre un árbol limpio (`?? research/` únicamente).
-- [ ] T2 — `research/zaahen-research-handoff.md` con secciones A–J. Spec: S1, S4, S5, S6, S7. Route: inline.
-- [ ] T3 — `research/README.md` como índice, enlazando el handoff. Spec: S2. Route: inline.
-- [ ] T4 — Integración en la KB: `overview.md`, `abilities.md`, `build.md`, `sources.md`, `INDEX.md`. Spec: S3, S4, S5, S9. Route: inline.
-- [ ] T5 — Ejecutar suite completa, Ruff (check y format), validador de la KB y tests del prototipo. Spec: S8. Route: inline.
-- [ ] T6 — Commits por unidad coherente. Spec: S10. Route: inline.
+- [x] T2 — `research/zaahen-research-handoff.md` con secciones A–J. Spec: S1, S4, S5, S6, S7. Route: inline. Evidencia: archivo nuevo, 339 líneas; commit `b6f4185`.
+- [x] T3 — `research/README.md` como índice, enlazando el handoff. Spec: S2. Route: inline. Evidencia: sección «Navegación» y fila nueva en la tabla de estructura; commit `b6f4185`.
+- [x] T4 — Integración en la KB: `overview.md`, `abilities.md`, `build.md`, `sources.md`, `INDEX.md`. Spec: S3, S4, S5, S9. Route: inline. Evidencia: 27 inserciones; commit `3d894c6`.
+- [x] T5 — Ejecutar suite completa, Ruff (check y format), validador de la KB y tests del prototipo. Spec: S8. Route: inline. Evidencia: L7.
+- [x] T6 — Commits por unidad coherente. Spec: S10. Route: inline. Evidencia: L8.
+- [ ] T7 — Re-verificación de los hallazgos de la fase anterior que siguen citados en el handoff (versiones 15.23, 15.24, 16.3 y asociación ranura→cadena del índice RST). Spec: S1. Route: pendiente. Motivo: requieren descargas del cliente y trabajo de formato no autorizados en esta fase.
 
 ## Log
 
@@ -36,4 +37,9 @@ Objetivo: cerrar la fase de investigación de Zaahen integrando en la base de co
 - **L4.** Riesgo detectado antes de escribir: `validate` cruza **todo** code span numérico de `overview.md` y `abilities.md` contra `data/current/champions/Zaahen.json`. Por eso las cifras de terceros (CommunityDragon, wiki) no pueden ir en code spans en esos dos archivos; se documentan en prosa o en `research/`.
 - **L5.** Verificación de referencias externas con `HEAD` (2026-10-18): `https://github.com/LeagueToolkit/lol-meta-classes`, `https://github.com/CommunityDragon/Docs`, el JSON RCP de Zaahen en CommunityDragon, `https://docs.rs/cdragon-rst/latest/cdragon_rst/` y `https://communitydragon.org/` responden 200. La página de la wiki devuelve 403 a peticiones automatizadas: el contenido proviene de lectura manual previa y así se declara en el handoff.
 - **L6.** Decisión de alcance: no se resuelve la asociación slot→cadena del índice RST en esta fase. El progreso del proyecto no depende de ello (la extracción de texto funciona leyendo el blob de cadenas y buscando literales). Queda como línea de investigación futura en el handoff.
-- **L7.** Pendiente de evidencia: resultados de `pytest`, `ruff check`, `ruff format --check`, `lol_knowledge validate` y los tests del prototipo se anotan aquí cuando se ejecuten, con su salida observada.
+- **L7.** Pruebas ejecutadas (S8), todas en verde, sobre el árbol de trabajo antes de commitear: `.\.venv\Scripts\python.exe -m pytest -q` → `105 passed in 3.67s` (repetido tras commitear: `105 passed in 2.58s`); `ruff check .` → `All checks passed!` (exit 0); `ruff format --check .` → `45 files already formatted` (exit 0); `.\.venv\Scripts\python.exe -m lol_knowledge validate` → `valid: 181 files checked` (exit 0); `PYTHONPATH=research .\.venv\Scripts\python.exe -m pytest research -q` → `31 passed in 0.40s` (exit 0).
+- **L8.** Commits de la rama (todos en local, sin push): `67b6e95 feat(research): add Zaahen CommunityDragon prototype`, `b6f4185 docs(research): add Zaahen research handoff and index`, `3d894c6 docs(kb): record unverified Zaahen third-party sources`.
+- **L9.** Verificación puntual de las afirmaciones centrales antes de cerrar: `fnv1a32("ByCharLevelNamedDataValuesInterpolationCalculationPart")` recalculado → `ee18a47b`, y el fixture `zaahen_spells_min.json` contiene `ee18a47b`; el informe del prototipo confirma `q.monster_damage_multiplier = [1.0]` (estado `conflict`), `passive.ad_per_stack = [0.02800000086426735]` (`conflict`), `passive.ad_per_stack_min = [0.014999999664723873]` (`corroborated`) y `champion.attack_damage_per_level = [4.0]` (`conflict`); los tres primeros aparecen en `blocked`. Los cuatro archivos del cliente citados existen con los tamaños documentados. Corrección aplicada al handoff: `Zaahen.es_ES.wad.client` está en `DATA\FINAL\Champions\`, no en `Localized\`.
+- **L10.** Evaluación de riesgo nativa sobre el rango `dev..docs/zaahen-research-handoff` (`gentle-ai review assess --committed-only`): `risk: medium` (motivo `executable_change` en `research/.gitignore`), `review_due: false`, `review_due_reason: under_budget`. No corresponde revisión en este punto: el rango sigue bajo presupuesto y la verificación propia (L7) cubre la ruta. RDD está activo por defecto (`on (decided by default)`), sin decisión explícita del usuario.
+- **L11.** Límite declarado: los valores de las versiones 15.23, 15.24 y 16.3 (H2) y la asociación ranura→cadena (F.4) provienen de la fase anterior y **no se re-verificaron** en esta sesión. Están etiquetados como tales en el handoff.
+- **L12.** Pendiente de decisión del usuario: integrar la rama a `integration` y promoverla a `dev` (flujo de `AGENTS.md`). Esta fase no hace push ni merge.
