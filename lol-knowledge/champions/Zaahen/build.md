@@ -22,10 +22,16 @@ Estas son hipótesis de trabajo, no conclusiones. Cualquier build concreta exige
 ## Datos que faltan (`Pendiente de verificación`)
 
 - Ratios y daño base de Q, W, E y R.
-- Si el crecimiento de daño de ataque `0` es un hueco de datos o un valor real.
+- Si el crecimiento de daño de ataque `0` es un hueco de datos o un valor real. Un export del bin del cliente (CommunityDragon, **no oficial**) y la wiki (tercero) dan otro valor; la discrepancia sigue abierta.
+- Porcentaje de AD que aporta cada acumulación de la pasiva. El bin del cliente y la wiki difieren, y el historial de parches de la propia wiki contradice su propio resumen.
+- Tipo y valores de la penetración de armadura de la R (la R la describe como porcentual, sin cifra publicada).
 - Eficiencia de objetos en el parche 16.20.1.
 - Rendimiento por rango y región.
+
+Mientras estos datos no existan, no se publica ninguna build cuantificada: un cálculo con entradas no verificadas produciría cifras que parecen dato y no lo son. El estado de la investigación, con evidencia y líneas abiertas, está en [`../../../research/zaahen-research-handoff.md`](../../../research/zaahen-research-handoff.md).
 
 ## Política de fuentes
 
 No se consultaron estadísticas comunitarias: la autorización vigente permite usarlas solo si el acceso es viable y respeta sus condiciones. Si se incorporan, deberán citar parche, rango, región, fecha y tamaño de muestra.
+
+Las fuentes no oficiales ya consultadas (CommunityDragon y la wiki) se registran en [`sources.md`](sources.md), con su naturaleza, su licencia y sus límites.

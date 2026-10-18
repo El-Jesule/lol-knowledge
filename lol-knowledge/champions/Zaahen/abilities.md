@@ -27,6 +27,7 @@ Zaahen golpea dos veces con su próximo ataque, lo que inflige daño adicional y
 - **Coste:** `25`
 - **Enfriamiento:** `10/9/8/7/6`
 - **Valores de daño y curación:** `Pendiente de verificación`.
+- **Contra monstruos:** un export del bin del cliente (CommunityDragon, fuente **no oficial**) y la wiki (tercero) no coinciden sobre el multiplicador contra monstruos. La discrepancia está abierta y no se publica ningún valor aquí. Detalle en [`../../../research/zaahen-research-handoff.md`](../../../research/zaahen-research-handoff.md).
 
 ## W — Hendidura del retorno (`Oficial`)
 
