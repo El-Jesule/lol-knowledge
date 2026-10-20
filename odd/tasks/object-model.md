@@ -109,7 +109,7 @@ Conventional Commits en inglés, asunto ≤ 72 caracteres, sin atribución de IA
 | T5 | Evaluador de fórmulas e interfaz de daño | S8, S9 | inline | hecho: `objects/formula.py`, `objects/interface.py` |
 | T6 | Pruebas del modelo y del validador | S10 | inline | hecho: 68 pruebas nuevas, 173 totales |
 | T7 | Documentación, índice y auditoría publicada | S11 | inline | hecho: KB, índice, README raíz y `research/` |
-| T8 | Puertas de calidad y commits | S12 | inline | hecho: commit de producto `215e19c`; cierre documental pendiente |
+| T8 | Puertas de calidad y commits | S12 | inline | hecho: `dde181d`, `61b1d8e`, `215e19c`, `c6bc5c3`, `69dca32` |
 
 ## Log
 
