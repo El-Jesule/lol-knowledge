@@ -88,4 +88,36 @@ No existían los informes A/B/C, la spec, el inventario ni el registro de incert
 
 La fase es aceptable como **prototipo de extracción**: los datos centrales están verificados, las fórmulas se reconstruyen desde el árbol, lo desconocido se conserva y la generalización está probada con un campeón sintético y dos reales. No es aceptable presentar la pasiva como completamente resuelta ni afirmar que el modelo reproduce el juego sin mediciones de habilidades.
 
-La verificación final debe repetirse después de los cambios de esta fase; el coordinador dejó los tests y las puertas en verde.
+## 7. Segunda pasada (después de las correcciones)
+
+La segunda verificación independiente encontró tres defectos nuevos, todos corregidos:
+
+| Defecto | Corrección | Evidencia |
+|---|---|---|
+| El resumen contaba solo el `BotData` de las habilidades principales, no el de los hijos | `_summary` recorre `child_spells`; el cache muestra 41 nodos no resueltos (36 `{150d1b92}` + 5 `BotsSpellData`) | `test_summary_counts_child_botdata_unresolved` |
+| Pasiva, W y R listaban su propio hechizo raíz en `mChildSpells`, duplicando payloads | Se filtran duplicados y el propio `path`; los hijos restantes son reales | `test_child_spells_do_not_repeat_the_root` |
+| No había test de referencia rota y las referencias no se marcaban como no resueltas al parsear | `{f3cbe7b2}`, `{ba007871}` y `{9e9e2e5c}` comprueban su destino; se emite `missing_*` y `confidence=unverified` | `test_broken_calculation_reference_is_reported` |
+| Los nodos tipados no tenían `confidence` por nodo | `_node_base` añade `confidence` (`source_explicit`, `inferred` o `unverified`); los nodos `stat_scaled` usan la confianza del enum | `test_typed_tree_nodes_have_confidence` |
+| `KnockupDuration` de `ZaahenQ2` no coincidía con `KnockUpDuration` de `ZaahenQ` | Resolución case-insensitive con diagnóstico `case_insensitive_reference` | Salida del cache: 0 nodos de fórmula no resueltos |
+
+### Veredicto final
+
+**PASS WITH ADVISORIES.** Las specs S1–S13 se cumplen en lo que respecta al prototipo; las advertencias restantes son límites de datos, no defectos de implementación:
+
+- La base de aplicación de la pasiva y el multiplicador máximo siguen abiertos; requieren mediciones controladas.
+- El script Lua que aplica la pasiva no está en el WAD de Zaahen.
+- `{150d1b92}`, `BotsSpellData` y `mStat=13` no tienen semántica; se preservan como no resueltos.
+- `EffectValueCalculationPart` y `GameCalculationConditional` se tipan, pero no se evalúan.
+- No hay mediciones en partida de Q/W/E/R; la validación es estructural y contra la wiki.
+
+### Puertas finales
+
+| Comando | Resultado |
+|---|---|
+| `pytest research -q` | 82 pasaron |
+| `pytest -q` | 105 pasaron |
+| `ruff check .` | limpio |
+| `ruff format --check .` | limpio |
+| `lol_knowledge validate` | `valid: 181 files checked`, exit 0 |
+
+No se hizo push ni merge a `dev`/`integration`; la rama `research/zaahen-formula-extraction` queda local.

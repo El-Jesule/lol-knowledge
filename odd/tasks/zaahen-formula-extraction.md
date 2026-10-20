@@ -212,7 +212,7 @@ Cada afirmaci√≥n importante debe llevar fuente, ruta, valor bruto, transformaci√
 | T3 | Traversor gen?rico y modelo de datos | S2, S3, S5, S11 | inline | hecho: `binmodel/traverse.py`, `model.py`, 24/24 c?lculos |
 | T4 | Evaluador, crecimiento y validaci?n | S6, S7, S8 | inline | hecho: `evaluate.py`, `stats.py`, `validation.py` |
 | T5 | CLI y salida JSON | S11 | inline | hecho: `python -m binmodel` |
-| T6 | Pruebas y fixtures | S12 | inline | hecho: 75 pruebas, fixtures Zaahen/Darius/tooltips |
+| T6 | Pruebas y fixtures | S12 | inline | hecho: 82 pruebas, fixtures Zaahen/Darius/tooltips |
 | T7 | Generalizaci?n (Darius/Kha'Zix + sint?tico) | S10 | inline | hecho: fixture Darius, sint?tico y ejecuci?n Kha'Zix |
 | T8 | Documentaci?n e informes | S13 | inline | hecho: README, handoff, spec, inventario, incertidumbres, informes A/B/C |
 | T9 | Verificaci?n independiente (Agente C) | S12, S13 | delegated | hecho: bloqueos corregidos; ver informe C |
@@ -245,7 +245,7 @@ Investigar los archivos locales de League of Legends para reconstruir de forma r
 - Se generaron fixtures recortados con `tools/make_extract_fixture.py`: `zaahen_extract_min.json` (43 KB) y `darius_extract_min.json` (34 KB). El generador verifica el SHA-256 del original y registra la procedencia.
 - Se implement? `tools/extract_rst.py` y se gener? `fixtures/zaahen_tooltips_es_es.json` con 123 cadenas es_ES; el WAD es_ES tiene SHA-256 `284604a42cb66761f2ae1e987a3b2dc2553f3de3703da3f9594fd14d093cee93`.
 - Se verific? el bin local: la entrada 618 de `Zaahen.wad.client` descomprime a 28 038 B con SHA-256 `7f1e936990c527d1cf457eea9d9327efaa743d6619436f0ccfc15e7e844078d1`, igual al bin crudo de CommunityDragon.
-- La suite `pytest research -q` pas? de 63 a 75 pruebas. `ruff check` y `ruff format --check` limpios. La suite completa del repo y `lol_knowledge validate` se ejecutaron antes de la fase de documentaci?n.
+- La suite `pytest research -q` pas? de 63 a 82 pruebas. `ruff check` y `ruff format --check` limpios. La suite completa del repo y `lol_knowledge validate` se ejecutaron antes de la fase de documentaci?n.
 - El Agente C hizo una verificaci?n independiente en copia temporal. Encontr? 5 bloqueos: procedencia de overrides, resumen que ocultaba no resueltos, `--validate` exclusivo de Zaahen, ausencia de regresi?n de no-sustituci?n por cero y documentaci?n faltante. Todos se corrigieron; los detalles est?n en `research/reports/agent-c-verification.md`.
 - Se a?adieron tests de las 24 `GameCalculation`, de procedencia de `cherry`, de referencia rota/entrada malformada, de nodos condicionales y de valores de efecto.
 - Se separ? `input_sha256` de `artifact_sha256` en la salida; el fixture ya no hace pasar su propio hash por el del bin original.

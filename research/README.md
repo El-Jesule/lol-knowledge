@@ -50,7 +50,7 @@ $env:PYTHONPATH="research"
 .\.venv\Scripts\python.exe -m binmodel `
   --input research\fixtures\darius_extract_min.json
 
-# Suite offline (75 pruebas)
+# Suite offline (82 pruebas)
 .\.venv\Scripts\python.exe -m pytest research -q
 ```
 
@@ -64,7 +64,7 @@ $env:PYTHONPATH="research"
 - Generalización: fixture sintético `TestChampion` y fixture real de Darius; Kha'Zix (no versionado) descubre 18 cálculos y marca 4 `EffectValueCalculationPart` como no evaluables.
 - Separación de `Cooldown.values` (efectivo) y `cooldownTime` (legado); W se marca como discrepancia.
 - `DataValuesModeOverride/cherry` se conserva separado y con su propio puntero.
-- 75 pruebas offline; `ruff check` y `ruff format --check` limpios.
+- 82 pruebas offline; `ruff check` y `ruff format --check` limpios.
 
 ### Estructura nueva
 
