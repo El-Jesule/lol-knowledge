@@ -1,0 +1,402 @@
+{
+  "schema_version": 1,
+  "provenance": {
+    "name": "LoL bin calculation class registry",
+    "source": "LeagueToolkit lol-meta-classes db/database.py and meta-wiki.leaguetoolkit.dev",
+    "source_url": "https://github.com/LeagueToolkit/lol-meta-classes",
+    "retrieved": "2026-10-20",
+    "scope": "Only classes used by the calculation traversal. Hashed names that are not public are marked provisional.",
+    "note": "This is a compact, derived registry, not a copy of the upstream database. Hashed class and field names are factual identifiers; provisional names are ours and must not be presented as official."
+  },
+  "field_hashes": {
+    "3de6ce2d": "CalculationKey"
+  },
+  "classes": {
+    "IGameCalculation": {
+      "hash": null,
+      "base": null,
+      "properties": {
+        "mMultiplier": {"type": "Pointer", "class_ref": "IGameCalculationPart"},
+        "mExpandedTooltipCalculationDisplay": {"type": "U8"},
+        "DamageType": {"type": "U32"},
+        "ResultModifier": {"type": "U8"},
+        "mSimpleTooltipCalculationDisplay": {"type": "U8"},
+        "tooltipOnly": {"type": "Bool"}
+      }
+    },
+    "GameCalculation": {
+      "hash": null,
+      "base": "IGameCalculation",
+      "properties": {
+        "mFormulaParts": {"type": "List", "value_type": "Pointer", "class_ref": "IGameCalculationPart"},
+        "mDisplayAsPercent": {"type": "Bool"},
+        "mPrecision": {"type": "U8"}
+      }
+    },
+    "GameCalculationModified": {
+      "hash": null,
+      "base": "IGameCalculation",
+      "properties": {
+        "mModifiedGameCalculation": {"type": "Hash"},
+        "mMultiplier": {"type": "Pointer", "class_ref": "IGameCalculationPart"},
+        "mOverrideSpellLevel": {"type": "Option", "value_type": "I32"}
+      }
+    },
+    "GameCalculationConditional": {
+      "hash": null,
+      "base": "IGameCalculation",
+      "properties": {
+        "mDefaultGameCalculation": {"type": "Hash"},
+        "mConditionalGameCalculation": {"type": "Hash"},
+        "mConditionalCalculationRequirements": {"type": "Pointer"},
+        "mExpandedTooltipCalculationDisplay": {"type": "U8"},
+        "tooltipOnly": {"type": "Bool"}
+      }
+    },
+    "IGameCalculationPart": {
+      "hash": null,
+      "base": null,
+      "properties": {}
+    },
+    "IGameCalculationPartWithStats": {
+      "hash": null,
+      "base": "IGameCalculationPart",
+      "properties": {
+        "mStat": {"type": "U8"},
+        "mStatFormula": {"type": "U8"},
+        "statType": {"type": "U8"},
+        "OutputType": {"type": "U8"},
+        "UseNewStats": {"type": "Bool"}
+      }
+    },
+    "IGameCalculationPartByCharLevel": {
+      "hash": null,
+      "base": "IGameCalculationPart",
+      "properties": {}
+    },
+    "NamedDataValueCalculationPart": {
+      "hash": null,
+      "base": "IGameCalculationPart",
+      "properties": {
+        "mDataValue": {"type": "Hash"}
+      }
+    },
+    "NumberCalculationPart": {
+      "hash": null,
+      "base": "IGameCalculationPart",
+      "properties": {
+        "mNumber": {"type": "F32"}
+      }
+    },
+    "EffectValueCalculationPart": {
+      "hash": null,
+      "base": "IGameCalculationPart",
+      "properties": {
+        "mEffectIndex": {"type": "I32"}
+      }
+    },
+    "HasBuffCastRequirement": {
+      "hash": null,
+      "base": null,
+      "properties": {
+        "mBuffName": {"type": "Hash"}
+      }
+    },
+    "StatByNamedDataValueCalculationPart": {
+      "hash": null,
+      "base": "IGameCalculationPartWithStats",
+      "properties": {
+        "mDataValue": {"type": "Hash"}
+      }
+    },
+    "StatByCoefficientCalculationPart": {
+      "hash": null,
+      "base": "IGameCalculationPartWithStats",
+      "properties": {
+        "mCoefficient": {"type": "F32"}
+      }
+    },
+    "StatBySubPartCalculationPart": {
+      "hash": null,
+      "base": "IGameCalculationPartWithStats",
+      "properties": {
+        "mSubpart": {"type": "Pointer", "class_ref": "IGameCalculationPart"}
+      }
+    },
+    "ProductOfSubPartsCalculationPart": {
+      "hash": null,
+      "base": "IGameCalculationPart",
+      "properties": {
+        "mPart1": {"type": "Pointer", "class_ref": "IGameCalculationPart"},
+        "mPart2": {"type": "Pointer", "class_ref": "IGameCalculationPart"}
+      }
+    },
+    "SumOfSubPartsCalculationPart": {
+      "hash": null,
+      "base": "IGameCalculationPart",
+      "properties": {
+        "mSubparts": {"type": "List", "value_type": "Pointer", "class_ref": "IGameCalculationPart"}
+      }
+    },
+    "ByCharLevelBreakpointsCalculationPart": {
+      "hash": null,
+      "base": "IGameCalculationPartByCharLevel",
+      "properties": {
+        "mLevel1Value": {"type": "F32"},
+        "mInitialBonusPerLevel": {"type": "F32"},
+        "mBreakpoints": {"type": "List", "value_type": "Embed", "class_ref": "Breakpoint"}
+      }
+    },
+    "Breakpoint": {
+      "hash": null,
+      "base": null,
+      "properties": {
+        "mLevel": {"type": "U32"},
+        "mAdditionalBonusAtThisLevel": {"type": "F32"},
+        "mBonusPerLevelAtAndAfter": {"type": "F32"}
+      }
+    },
+    "ByCharLevelFormulaCalculationPart": {
+      "hash": null,
+      "base": "IGameCalculationPartByCharLevel",
+      "properties": {
+        "mValues": {"type": "List", "value_type": "F32"},
+        "values": {"type": "List", "value_type": "F32"}
+      }
+    },
+    "ByCharLevelInterpolationCalculationPart": {
+      "hash": null,
+      "base": "IGameCalculationPartByCharLevel",
+      "properties": {
+        "mStartValue": {"type": "F32"},
+        "mEndValue": {"type": "F32"},
+        "mScaleByStatProgressionMultiplier": {"type": "Bool"},
+        "mScalePastDefaultMaxLevel": {"type": "Bool"}
+      }
+    },
+    "SpellDataValue": {
+      "hash": null,
+      "base": null,
+      "properties": {
+        "name": {"type": "String"},
+        "values": {"type": "List", "value_type": "F32"}
+      }
+    },
+    "SpellDataValueVector": {
+      "hash": null,
+      "base": null,
+      "properties": {
+        "values": {"type": "List", "value_type": "F32"},
+        "SpellDataValues": {"type": "List", "value_type": "Embed", "class_ref": "SpellDataValue"}
+      }
+    },
+    "SpellDataResource": {
+      "hash": null,
+      "base": null,
+      "properties": {
+        "DataValues": {"type": "List", "value_type": "Embed", "class_ref": "SpellDataValue"},
+        "DataValuesModeOverride": {"type": "Map"},
+        "mSpellCalculations": {"type": "Map"},
+        "Cooldown": {"type": "Embed", "class_ref": "0x0a0eddc9"},
+        "cooldownTime": {"type": "List", "value_type": "F32"},
+        "mana": {"type": "List", "value_type": "F32"},
+        "manaValues": {"type": "Embed", "class_ref": "0x630af303"},
+        "castRange": {"type": "List", "value_type": "F32"},
+        "castRangeValues": {"type": "Embed", "class_ref": "0x0a0eddc9"},
+        "mClientData": {"type": "Embed", "class_ref": "SpellDataResourceClient"},
+        "mSpellTags": {"type": "List", "value_type": "String"}
+      }
+    },
+    "SpellDataResourceClient": {
+      "hash": null,
+      "base": null,
+      "properties": {
+        "mTooltipData": {"type": "Embed", "class_ref": "TooltipInstanceSpell"}
+      }
+    },
+    "TooltipInstanceSpell": {
+      "hash": null,
+      "base": null,
+      "properties": {
+        "mObjectName": {"type": "String"},
+        "mFormat": {"type": "Hash"},
+        "mLocKeys": {"type": "Map"},
+        "mLists": {"type": "Map"}
+      }
+    },
+    "TooltipInstanceList": {
+      "hash": null,
+      "base": null,
+      "properties": {
+        "levelCount": {"type": "U32"},
+        "Elements": {"type": "List", "value_type": "Embed", "class_ref": "TooltipInstanceListElement"}
+      }
+    },
+    "TooltipInstanceListElement": {
+      "hash": null,
+      "base": null,
+      "properties": {
+        "type": {"type": "Hash"},
+        "typeIndex": {"type": "U32"},
+        "nameOverride": {"type": "Hash"},
+        "multiplier": {"type": "F32"},
+        "Style": {"type": "U8"}
+      }
+    },
+    "SpellObject": {
+      "hash": null,
+      "base": null,
+      "properties": {
+        "ObjectName": {"type": "String"},
+        "objectPath": {"type": "String"},
+        "mScriptName": {"type": "String"},
+        "mSpell": {"type": "Embed", "class_ref": "SpellDataResource"},
+        "mBuff": {"type": "Embed", "class_ref": "BuffData"},
+        "BotData": {"type": "Embed", "class_ref": "0xb09016f6"}
+      }
+    },
+    "AbilityObject": {
+      "hash": null,
+      "base": null,
+      "properties": {
+        "mRootSpell": {"type": "Hash"},
+        "mChildSpells": {"type": "List", "value_type": "Hash"},
+        "mName": {"type": "String"}
+      }
+    },
+    "CharacterRecord": {
+      "hash": null,
+      "base": null,
+      "properties": {
+        "mCharacterName": {"type": "String"},
+        "baseDamageModifiable": {"type": "Embed", "class_ref": "ModifiableFloat"},
+        "damagePerLevelModifiable": {"type": "Embed", "class_ref": "ModifiableFloat"},
+        "baseHPModifiable": {"type": "Embed", "class_ref": "ModifiableFloat"},
+        "hpPerLevelModifiable": {"type": "Embed", "class_ref": "ModifiableFloat"},
+        "baseArmorModifiable": {"type": "Embed", "class_ref": "ModifiableFloat"},
+        "armorPerLevelModifiable": {"type": "Embed", "class_ref": "ModifiableFloat"},
+        "baseMR": {"type": "Embed", "class_ref": "ModifiableFloat"},
+        "mrPerLevel": {"type": "Embed", "class_ref": "ModifiableFloat"},
+        "baseMoveSpeedModifiable": {"type": "Embed", "class_ref": "ModifiableFloat"},
+        "attackRangeModifiable": {"type": "Embed", "class_ref": "ModifiableFloat"},
+        "attackSpeedModifiable": {"type": "Embed", "class_ref": "ModifiableFloat"},
+        "attackSpeedRatioModifiable": {"type": "Embed", "class_ref": "ModifiableFloat"},
+        "attackSpeedPerLevelModifiable": {"type": "Embed", "class_ref": "ModifiableFloat"},
+        "spells": {"type": "List", "value_type": "Hash"},
+        "mAbilities": {"type": "List", "value_type": "Hash"},
+        "mCharacterPassiveSpell": {"type": "Hash"},
+        "spellNames": {"type": "List", "value_type": "String"}
+      }
+    },
+    "ModifiableFloat": {
+      "hash": null,
+      "base": null,
+      "properties": {
+        "baseValue": {"type": "F32"}
+      }
+    },
+    "BuffData": {
+      "hash": null,
+      "base": null,
+      "properties": {}
+    },
+    "0x0a0eddc9": {
+      "hash": "0x0a0eddc9",
+      "base": null,
+      "provisional_name": "UnnamedSpellDataValueVector7",
+      "properties": {
+        "values": {"type": "List", "value_type": "F32"},
+        "0a3e0478": {"type": "F32", "provisional_name": "UnresolvedScalar0a3e0478"}
+      }
+    },
+    "0x630af303": {
+      "hash": "0x630af303",
+      "base": null,
+      "provisional_name": "UnnamedSpellDataValueVector6",
+      "properties": {
+        "values": {"type": "List", "value_type": "F32"}
+      }
+    },
+    "0x150d1b92": {
+      "hash": "0x150d1b92",
+      "base": null,
+      "provisional_name": "UnnamedBotDataEntry",
+      "properties": {
+        "0x717e686": {"type": "Bool", "provisional_name": "UnresolvedBool717e686"},
+        "0xe38f54f7": {"type": "U32", "provisional_name": "UnresolvedU32e38f54f7"}
+      }
+    },
+    "0xf3cbe7b2": {
+      "hash": "0xf3cbe7b2",
+      "base": "IGameCalculationPart",
+      "provisional_name": "SpellCalculationKeyReference",
+      "properties": {
+        "mSpellCalculationKey": {"type": "Hash"}
+      }
+    },
+    "0xb09016f6": {
+      "hash": "0xb09016f6",
+      "base": null,
+      "provisional_name": "BotDataEffect",
+      "properties": {
+        "EffectTag": {"type": "U32"},
+        "EffectCalculation": {"type": "Pointer", "class_ref": "IGameCalculation"}
+      }
+    },
+    "0x0333530c": {
+      "hash": "0x0333530c",
+      "base": null,
+      "provisional_name": "NamedBreakpoint",
+      "properties": {
+        "level": {"type": "U32"},
+        "0xae9b464d": {"type": "Hash", "provisional_name": "AdditionalBonusDataValue"},
+        "0xb0d8b2ac": {"type": "Hash", "provisional_name": "BonusPerLevelAtAndAfterDataValue"}
+      }
+    },
+    "0x4ce08984": {
+      "hash": "0x4ce08984",
+      "base": "IGameCalculationPartByCharLevel",
+      "provisional_name": "ByCharLevelNamedDataValuesBreakpointsCalculationPart",
+      "properties": {
+        "0x91d404a5": {"type": "Hash", "provisional_name": "Level1DataValue"},
+        "0xbbd778a2": {"type": "Hash", "provisional_name": "BonusPerLevelDataValue"},
+        "0x9823b29a": {"type": "List", "value_type": "Embed", "class_ref": "0x0333530c", "provisional_name": "Breakpoints"}
+      }
+    },
+    "0xba007871": {
+      "hash": "0xba007871",
+      "base": "IGameCalculationPart",
+      "provisional_name": "ExternalCalculationReference",
+      "properties": {
+        "SourceObject": {"type": "Hash"},
+        "CalculationKey": {"type": "Hash"}
+      }
+    },
+    "0x9e9e2e5c": {
+      "hash": "0x9e9e2e5c",
+      "base": "IGameCalculationPart",
+      "provisional_name": "ExternalDataValueReference",
+      "properties": {
+        "SourceObject": {"type": "Hash"},
+        "DataValue": {"type": "Hash"}
+      }
+    },
+    "0x6c87d653": {
+      "hash": "0x6c87d653",
+      "base": null,
+      "provisional_name": "UnnamedEmptyStruct",
+      "properties": {}
+    },
+    "0xee18a47b": {
+      "hash": "0xee18a47b",
+      "base": "IGameCalculationPartByCharLevel",
+      "provisional_name": "ByCharLevelNamedDataValuesInterpolationCalculationPart",
+      "properties": {
+        "StartDataValue": {"type": "Hash"},
+        "EndDataValue": {"type": "Hash"},
+        "0x32a393a": {"type": "Bool", "provisional_name": "ScalePastDefaultMaxLevel"},
+        "0xf4e470e6": {"type": "Bool", "provisional_name": "ScaleByStatProgressionMultiplier"}
+      }
+    }
+  }
+}
