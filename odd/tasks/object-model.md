@@ -102,14 +102,14 @@ Conventional Commits en inglés, asunto ≤ 72 caracteres, sin atribución de IA
 
 | ID | Tarea | Specs | Ruta | Estado |
 |---|---|---|---|---|
-| T1 | Auditoría del extractor y evidencia | S1, S2 | inline | pendiente |
-| T2 | Regresiones y correcciones acotadas | S3 | inline | pendiente |
-| T3 | Esquema y catálogo curado (12 objetos) | S4, S5, S6 | inline | pendiente |
-| T4 | Carga, modelo canónico y validador determinista | S4, S5, S7 | inline | pendiente |
-| T5 | Evaluador de fórmulas e interfaz de daño | S8, S9 | inline | pendiente |
-| T6 | Pruebas del modelo y del validador | S10 | inline | pendiente |
-| T7 | Documentación, índice y auditoría publicada | S11 | inline | pendiente |
-| T8 | Puertas de calidad y commits | S12 | inline | pendiente |
+| T1 | Auditoría del extractor y evidencia | S1, S2 | inline | hecho: `research/reports/agent-d-extractor-audit.md` |
+| T2 | Regresiones y correcciones acotadas | S3 | inline | hecho: 6 defectos, 15 pruebas; commit `61b1d8e` |
+| T3 | Esquema y catálogo curado (13 objetos) | S4, S5, S6 | inline | hecho: `lol-object-model/1`, 8 efectos |
+| T4 | Carga, modelo canónico y validador determinista | S4, S5, S7 | inline | hecho: `objects/catalog.py`, `objects/validate.py` |
+| T5 | Evaluador de fórmulas e interfaz de daño | S8, S9 | inline | hecho: `objects/formula.py`, `objects/interface.py` |
+| T6 | Pruebas del modelo y del validador | S10 | inline | hecho: 64 pruebas nuevas, 171 totales |
+| T7 | Documentación, índice y auditoría publicada | S11 | inline | hecho: KB, índice, README raíz y `research/` |
+| T8 | Puertas de calidad y commits | S12 | inline | hecho: commit de producto `215e19c`; cierre documental pendiente |
 
 ## Log
 
@@ -225,3 +225,25 @@ Actualiza la documentación necesaria y entrega:
 Si la auditoría encuentra un defecto que invalida la fiabilidad del extractor, prioriza corregirlo y demostrar la corrección antes de ampliar el modelo de objetos.
 
 Criterio de éxito: un modelo de objetos pequeño pero verificable, conectado conceptualmente con el extractor y preparado para un motor determinista. La cobertura real y las limitaciones deben quedar explícitas.
+
+### L2 — Ejecución y evidencia (2026-10-20)
+
+**Base y protección.** La rama se creó desde `research/zaahen-formula-extraction` (`89e2dbe`), no desde `dev`, porque el extractor auditado todavía no está integrado. `dev` seguía en `f3e2948` y el árbol estaba limpio. No se descartó ni reorganizó trabajo existente.
+
+**Línea base.** `pytest -q` 105, `pytest research -q` 82, Ruff limpio, `lol_knowledge validate` 181 archivos y salida 0. Ningún fallo de entorno.
+
+**Auditoría.** Se corrigieron seis defectos reales con regresión: cero silencioso en breakpoints y cálculos vacíos; `TypeError`/`KeyError` en nodos malformados; dependencias filtradas entre evaluaciones; `unresolved` sin SHA-256 ni versión; factores sintéticos sin confianza ni procedencia. La política de defaults omitidos queda marcada como `inferred`. Detalle y líneas en `research/reports/agent-d-extractor-audit.md`; commit `61b1d8e`. `pytest research` pasó de 82 a 97.
+
+**Modelo.** `lol-object-model/1` con identidad, estadísticas planas y porcentuales normalizadas, letalidad, penetraciones, aceleración, robo de vida, efectos pasivos/activos, fórmulas, condiciones, enfriamientos, acumulaciones, límites, disponibilidad, procedencia, confianza, recetas y componentes. El catálogo curado no repite lo derivable de Data Dragon y cita la descripción para cada dato de prosa.
+
+**Muestra real.** 13 objetos, 28 estadísticas (7 declaradas desde prosa), 8 efectos: 3 `evaluable`, 4 `partially_evaluable`, 1 `excluded`. Objetos: 1036, 1031, 3067, 3134, 3135, 3089, 3031, 3153, 3036, 3047, 3157, 3075 y 6617. No se afirma cobertura del resto del catálogo.
+
+**Interfaz.** `ChampionState`, `ItemSlot`, `RuneState`, `TargetProfile`, `ImpactConditions`, `RotationStep`, `DamageRequest` y `DamageOutcome` con cuatro estados (`evaluable`, `partially_evaluable`, `excluded`, `unreliable`). `validate_request` rechaza hojas incompletas, objetivos incoherentes, objetos duplicados y rotaciones vacías. No hay simulación.
+
+**Validación ejecutada.** `pytest -q`: 171 pasan. `pytest research -q`: 97 pasan. `ruff check .`: limpio. `ruff format --check .`: 91 archivos formateados. `lol_knowledge validate`: 183 archivos, salida 0. `python -m lol_knowledge.objects --validate`: 1 catálogo válido. `--json` produjo dos veces el mismo SHA-256 (`d7b6ab05…`), 33 800 bytes.
+
+**Git.** Rama `feat/object-model`. Commits: `dde181d` plan ODD, `61b1d8e` correcciones del extractor, `215e19c` modelo de objetos. Sin push, sin merge a `dev`/`integration`, sin operaciones destructivas.
+
+**Coste.** La herramienta no expone tokens, CPU ni coste monetario; no se inventan. Métricas disponibles: 171 pruebas en 2.8 s, 183 archivos validados y el diff de la rama.
+
+**Límites.** Muestra de 13 objetos; sin motor de daño, sin búsqueda de builds y sin simulación temporal. Ratios, curvas y enfriamientos no publicados se marcan como desconocidos o excluidos.

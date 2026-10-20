@@ -1,8 +1,9 @@
 # Investigación LoL-Knowledge — Zaahen
 
-Índice del trabajo de investigación. Hay dos fases vivas:
+Índice del trabajo de investigación. Hay tres fases vivas:
 
-- **Fase 4 (actual):** extractor genérico de árboles de cálculo desde el bin 16.20, con evaluación determinista, procedencia y validación experimental.
+- **Fase 5 (actual):** auditoría de garantías del extractor y modelo mecánico de objetos (`lol-object-model/1`) preparado para el futuro motor de daño.
+- **Fase 4:** extractor genérico de árboles de cálculo desde el bin 16.20, con evaluación determinista, procedencia y validación experimental.
 - **Fase 3.5 (anterior):** prototipo CommunityDragon que extrae un subconjunto de valores y los compara con Data Dragon, RCP y la wiki.
 
 Nada de `research/` modifica `data/current/`, `src/lol_knowledge/` ni `lol-knowledge/`. El prototipo se puede borrar sin afectar a la CLI ni al snapshot.
@@ -18,6 +19,8 @@ Nada de `research/` modifica `data/current/`, `src/lol_knowledge/` ni `lol-knowl
 | Leer el informe de fórmulas (Agente A) | [`reports/agent-a-formulas.md`](reports/agent-a-formulas.md) |
 | Leer el informe de estructuras binarias (Agente B) | [`reports/agent-b-bin-structures.md`](reports/agent-b-bin-structures.md) |
 | Leer la verificación independiente (Agente C) | [`reports/agent-c-verification.md`](reports/agent-c-verification.md) |
+| Leer la auditoría de garantías del extractor (Agente D) | [`reports/agent-d-extractor-audit.md`](reports/agent-d-extractor-audit.md) |
+| Entender el modelo mecánico de objetos | [`../lol-knowledge/objects/README.md`](../lol-knowledge/objects/README.md) |
 | Saber qué fuentes se consultaron y qué límites tienen | [`evidence/usage-conditions.md`](evidence/usage-conditions.md) |
 | Ver el estado del campeón en la base de conocimiento | [`../lol-knowledge/champions/Zaahen/overview.md`](../lol-knowledge/champions/Zaahen/overview.md) |
 | Ver el seguimiento de la fase 4 | [`../odd/tasks/zaahen-formula-extraction.md`](../odd/tasks/zaahen-formula-extraction.md) |
@@ -50,7 +53,7 @@ $env:PYTHONPATH="research"
 .\.venv\Scripts\python.exe -m binmodel `
   --input research\fixtures\darius_extract_min.json
 
-# Suite offline (82 pruebas)
+# Suite offline (97 pruebas)
 .\.venv\Scripts\python.exe -m pytest research -q
 ```
 
@@ -64,7 +67,7 @@ $env:PYTHONPATH="research"
 - Generalización: fixture sintético `TestChampion` y fixture real de Darius; Kha'Zix (no versionado) descubre 18 cálculos y marca 4 `EffectValueCalculationPart` como no evaluables.
 - Separación de `Cooldown.values` (efectivo) y `cooldownTime` (legado); W se marca como discrepancia.
 - `DataValuesModeOverride/cherry` se conserva separado y con su propio puntero.
-- 82 pruebas offline; `ruff check` y `ruff format --check` limpios.
+- 97 pruebas offline; `ruff check` y `ruff format --check` limpios.
 
 ### Estructura nueva
 
@@ -88,6 +91,24 @@ $env:PYTHONPATH="research"
 - `EffectValueCalculationPart` y `GameCalculationConditional` se tipan, pero no se evalúan.
 - El tipo de daño no está en el árbol de cálculo; se infiere del marcado de los tooltips.
 - La fórmula de crecimiento de estadísticas es un modelo externo, no un dato del bin.
+
+## Fase 5 — auditoría y modelo de objetos
+
+La auditoría de la fase 4 encontró y corrigió defectos reales de la garantía «desconocido nunca es cero»: breakpoints, cálculos vacíos, nodos malformados, dependencias filtradas, procedencia incompleta y factores sin confianza. El informe con evidencias y regresiones es [`reports/agent-d-extractor-audit.md`](reports/agent-d-extractor-audit.md).
+
+El modelo de objetos vive fuera de `research/`, en la base de conocimiento y la biblioteca:
+
+- Esquema, decisiones, objetos modelados, inventario no soportado e interfaz del motor: [`../lol-knowledge/objects/README.md`](../lol-knowledge/objects/README.md).
+- Catálogo curado: [`../lol-knowledge/objects/catalog.json`](../lol-knowledge/objects/catalog.json).
+- Código y validador: [`../src/lol_knowledge/objects/`](../src/lol_knowledge/objects/).
+- Seguimiento de la fase: [`../odd/tasks/object-model.md`](../odd/tasks/object-model.md).
+
+```powershell
+.\.venv\Scripts\python.exe -m lol_knowledge.objects --validate
+.\.venv\Scripts\python.exe -m lol_knowledge.objects --json
+```
+
+Límites: la muestra es de 13 objetos; no hay motor de daño ni búsqueda de builds. Los ratios y curvas no publicados se marcan como desconocidos o excluidos.
 
 ## Fase 3.5 — prototipo CommunityDragon
 

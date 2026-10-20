@@ -2,7 +2,7 @@
 
 Base de conocimiento verificable de League of Legends: datos oficiales de Riot (Data Dragon), análisis con fuente declarada y una CLI en Python que ingesta, valida y calcula de forma reproducible.
 
-Estado actual: **fase 3**. Existen la ingesta, el validador de integridad y el primer campeón analizado, Zaahen; la calculadora de daño llega en la fase 4.
+Estado actual: **fase 5**. Existen la ingesta, el validador de integridad, el primer campeón analizado (Zaahen), el extractor de cálculos en `research/` y un modelo mecánico de objetos versionado para 13 objetos. El motor determinista de daño todavía no existe.
 
 ## Requisitos
 
@@ -33,9 +33,10 @@ La suite incluye pruebas de integración que ejecutan `python -m lol_knowledge` 
 
 | Ruta | Contenido |
 |---|---|
-| `lol-knowledge/` | Base de conocimiento: índices, campeones, mecánicas, metodología |
+| `lol-knowledge/` | Base de conocimiento: índices, campeones, objetos, metodología |
 | `data/current/` | Snapshot oficial generado desde Data Dragon (no editar a mano) |
-| `src/lol_knowledge/` | CLI y biblioteca de cálculo |
+| `src/lol_knowledge/` | CLI, biblioteca de cálculo y modelo de objetos |
+| `research/` | Extractor de cálculos, auditoría y prototipos aislados |
 | `tests/` | Pruebas sin acceso a red |
 | `odd/tasks/` | Documentos de tarea por fase |
 | `AGENTS.md` | Reglas persistentes del proyecto |
@@ -47,7 +48,8 @@ La suite incluye pruebas de integración que ejecutan `python -m lol_knowledge` 
 | `python -m lol_knowledge version` | Disponible |
 | `python -m lol_knowledge update` | Disponible |
 | `python -m lol_knowledge validate` | Disponible |
-| `python -m lol_knowledge damage` | Fase 4 |
+| `python -m lol_knowledge.objects` | Disponible (modelo de objetos) |
+| `python -m lol_knowledge damage` | Pendiente (motor de daño) |
 
 ## Actualización de datos
 
@@ -78,6 +80,7 @@ Comprueba el snapshot y la estructura de la base de conocimiento:
 - Objetos y runas con la forma esperada.
 - Enlaces Markdown existentes y dentro del repositorio; directorios de campeón que correspondan a un id publicado.
 - Referencias `data:item:<id>`, `data:rune:<id>` y `data:champion:<Id>` que existan en el snapshot.
+- Catálogo de objetos: esquema y parche, ids y estadísticas canónicas, citas literales de la descripción, fórmulas, estados de modelo, procedencia y referencias de receta.
 
 Códigos de salida: `0` todo coherente, `1` violaciones (se listan con archivo y motivo), `2` problema de entorno. Si `lol-knowledge/` aún no existe, las comprobaciones de enlaces y referencias se informan como omitidas, no como superadas.
 
@@ -98,6 +101,7 @@ Condiciones de uso y cuestiones pendientes: [`research/evidence/usage-conditions
 - No hay CI ni publicación remota.
 - Data Dragon 16.20.1 no publica valores numéricos de las habilidades de Zaahen; los valores derivados están documentados y las discrepancias abiertas siguen como pendientes.
 - La cobertura de campeones empieza por un caso representativo y crece de forma incremental.
+- El modelo de objetos cubre una muestra de 13 objetos por diversidad mecánica; los efectos no publicados se marcan como desconocidos o excluidos, no se inventan.
 
 ## Flujo de trabajo
 
