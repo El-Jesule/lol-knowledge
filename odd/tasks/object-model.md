@@ -107,7 +107,7 @@ Conventional Commits en inglés, asunto ≤ 72 caracteres, sin atribución de IA
 | T3 | Esquema y catálogo curado (13 objetos) | S4, S5, S6 | inline | hecho: `lol-object-model/1`, 8 efectos |
 | T4 | Carga, modelo canónico y validador determinista | S4, S5, S7 | inline | hecho: `objects/catalog.py`, `objects/validate.py` |
 | T5 | Evaluador de fórmulas e interfaz de daño | S8, S9 | inline | hecho: `objects/formula.py`, `objects/interface.py` |
-| T6 | Pruebas del modelo y del validador | S10 | inline | hecho: 64 pruebas nuevas, 171 totales |
+| T6 | Pruebas del modelo y del validador | S10 | inline | hecho: 68 pruebas nuevas, 173 totales |
 | T7 | Documentación, índice y auditoría publicada | S11 | inline | hecho: KB, índice, README raíz y `research/` |
 | T8 | Puertas de calidad y commits | S12 | inline | hecho: commit de producto `215e19c`; cierre documental pendiente |
 
@@ -244,6 +244,6 @@ Criterio de éxito: un modelo de objetos pequeño pero verificable, conectado co
 
 **Git.** Rama `feat/object-model`. Commits: `dde181d` plan ODD, `61b1d8e` correcciones del extractor, `215e19c` modelo de objetos. Sin push, sin merge a `dev`/`integration`, sin operaciones destructivas.
 
-**Coste.** La herramienta no expone tokens, CPU ni coste monetario; no se inventan. Métricas disponibles: 171 pruebas en 2.8 s, 183 archivos validados y el diff de la rama.
+**Coste.** La herramienta no expone tokens, CPU ni coste monetario; no se inventan. Métricas disponibles: 173 pruebas en 2.7 s, 183 archivos validados y el diff de la rama.
 
 **Límites.** Muestra de 13 objetos; sin motor de daño, sin búsqueda de builds y sin simulación temporal. Ratios, curvas y enfriamientos no publicados se marcan como desconocidos o excluidos.

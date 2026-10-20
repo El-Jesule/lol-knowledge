@@ -123,4 +123,4 @@ $env:PYTHONPATH="research"
 .\.venv\Scripts\python.exe -m binmodel --input research\fixtures\zaahen_extract_min.json --validate
 ```
 
-Resultados de la rama `feat/object-model` al cerrar la auditoría: `97 passed` en `research`, `105 passed` en la suite principal en ese límite (171 tras añadir las pruebas del modelo de objetos), Ruff limpio, validador `181 files checked` antes de añadir el catálogo de objetos (`183` después).
+Resultados de la rama `feat/object-model` al cerrar la auditoría: `97 passed` en `research`, `105 passed` en la suite principal en ese límite (173 tras añadir las pruebas del modelo de objetos), Ruff limpio, validador `181 files checked` antes de añadir el catálogo de objetos (`183` después).

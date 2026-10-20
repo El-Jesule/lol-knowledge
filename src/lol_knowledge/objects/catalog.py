@@ -175,17 +175,26 @@ def _is_unknown_scalar(value: Any) -> bool:
 
 
 def derived_effect_status(effect: Mapping[str, Any]) -> str:
-    states = [
-        classify_formula(component["formula"])
-        for component in effect.get("components") or []
-        if isinstance(component, Mapping) and "formula" in component
-    ]
+    states: list[str] = []
     unknown_scalar = any(
         _is_unknown_scalar(effect.get(key)) for key in ("cooldown_seconds", "duration_seconds")
     )
     stacks = effect.get("stacks")
     if isinstance(stacks, Mapping):
         unknown_scalar = unknown_scalar or _is_unknown_scalar(stacks.get("window_seconds"))
+    for component in effect.get("components") or []:
+        if not isinstance(component, Mapping):
+            continue
+        for key in ("formula", "magnitude"):
+            if key in component:
+                states.append(classify_formula(component[key]))
+        if _is_unknown_scalar(component.get("duration_seconds")):
+            unknown_scalar = True
+        component_stacks = component.get("stacks")
+        if isinstance(component_stacks, Mapping):
+            unknown_scalar = unknown_scalar or _is_unknown_scalar(
+                component_stacks.get("window_seconds")
+            )
     if any(state == "excluded" for state in states):
         return "excluded"
     if unknown_scalar or any(state == "partially_evaluable" for state in states):

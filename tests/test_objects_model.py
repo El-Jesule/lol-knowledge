@@ -137,6 +137,31 @@ def test_moonstone_models_healing_and_shield_percentages(object_model) -> None:
     assert components["shield"]["formula"] == {"op": "constant", "value": 35}
 
 
+def test_unknown_component_values_make_the_effect_partial() -> None:
+    from lol_knowledge.objects.catalog import derived_effect_status
+
+    effect = {
+        "components": [
+            {
+                "kind": "crowd_control",
+                "effect": "slow",
+                "magnitude": {"op": "unknown", "reason": "missing"},
+            }
+        ]
+    }
+    assert derived_effect_status(effect) == "partially_evaluable"
+
+    effect = {
+        "components": [
+            {
+                "kind": "stasis",
+                "duration_seconds": {"status": "unknown", "reason": "missing"},
+            }
+        ]
+    }
+    assert derived_effect_status(effect) == "partially_evaluable"
+
+
 def test_zhonya_keeps_an_unknown_cooldown(object_model) -> None:
     time_stop = _effect(_object(object_model, "3157"), "time-stop")
     assert time_stop["cooldown_seconds"]["status"] == "unknown"

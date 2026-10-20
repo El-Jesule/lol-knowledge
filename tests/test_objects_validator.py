@@ -228,6 +228,21 @@ def test_basis_must_match_the_formula_state() -> None:
     assert any("description_partial needs" in message for message in messages)
 
 
+def test_absolute_healing_component_is_accepted() -> None:
+    snapshot = _snapshot(description="Cura 100 de vida y 30% de daño adicional.")
+    effect = _valid_effect()
+    effect["quote"] = "Cura 100 de vida"
+    effect["components"] = [
+        {
+            "kind": "healing",
+            "mode": "absolute",
+            "target": {"kind": "ally_champion"},
+            "formula": {"op": "constant", "value": 100},
+        }
+    ]
+    assert _messages(_catalog(effect=effect), snapshot) == []
+
+
 def test_unknown_keys_are_reported() -> None:
     catalog = _catalog(_valid_stat())
     catalog["unexpected"] = True
