@@ -46,7 +46,7 @@ def build_parser() -> argparse.ArgumentParser:
 
     validate = subparsers.add_parser(
         "validate",
-        help="Validate the snapshot and the knowledge base.",
+        help="Validate the snapshot, the knowledge base and the object catalog.",
     )
     validate.add_argument(
         "--root",

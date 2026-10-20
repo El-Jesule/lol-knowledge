@@ -1,0 +1,458 @@
+{
+  "schema_version": 1,
+  "kind": "lol-object-model-catalog",
+  "catalog_version": 1,
+  "game_version": "16.20.1",
+  "notes": "Curated overlay for a mechanically diverse sample. Data Dragon derivatives (stats, gold, maps, recipes) are not repeated here; see lol-knowledge/objects/README.md.",
+  "objects": [
+    {
+      "id": "1036",
+      "effect_review": "complete",
+      "stats": [],
+      "effects": []
+    },
+    {
+      "id": "1031",
+      "effect_review": "complete",
+      "stats": [],
+      "effects": []
+    },
+    {
+      "id": "3067",
+      "effect_review": "complete",
+      "stats": [
+        {
+          "id": "ability_haste",
+          "kind": "flat",
+          "value": 10,
+          "quote": "10 de velocidad de habilidades"
+        }
+      ],
+      "effects": []
+    },
+    {
+      "id": "3134",
+      "effect_review": "complete",
+      "stats": [
+        {
+          "id": "lethality",
+          "kind": "flat",
+          "value": 10,
+          "quote": "10 de letalidad"
+        }
+      ],
+      "effects": []
+    },
+    {
+      "id": "3135",
+      "effect_review": "complete",
+      "stats": [
+        {
+          "id": "magic_penetration_percent",
+          "kind": "percent",
+          "value": 40,
+          "quote": "40% de penetración mágica"
+        }
+      ],
+      "effects": []
+    },
+    {
+      "id": "3089",
+      "effect_review": "complete",
+      "stats": [],
+      "effects": [
+        {
+          "id": "magic-orb",
+          "kind": "passive",
+          "name": "Obra mágica",
+          "quote": "Aumenta tu poder de habilidad total un 30%",
+          "basis": "description_explicit",
+          "trigger": {
+            "event": "always"
+          },
+          "target": {
+            "kind": "self"
+          },
+          "components": [
+            {
+              "kind": "stat_modifier",
+              "stat": "ability_power",
+              "scope": "total",
+              "mode": "percent",
+              "formula": {
+                "op": "constant",
+                "value": 30
+              }
+            }
+          ],
+          "cooldown_seconds": null,
+          "stacks": null,
+          "duration_seconds": null,
+          "limits": [],
+          "model_status": "evaluable"
+        }
+      ]
+    },
+    {
+      "id": "3031",
+      "effect_review": "complete",
+      "stats": [
+        {
+          "id": "crit_damage_bonus",
+          "kind": "percent",
+          "value": 30,
+          "quote": "30% de daño de impacto crítico"
+        }
+      ],
+      "effects": []
+    },
+    {
+      "id": "3153",
+      "effect_review": "complete",
+      "stats": [],
+      "effects": [
+        {
+          "id": "fogblade",
+          "kind": "passive",
+          "name": "Filo de la niebla",
+          "quote": "Los ataques infligen un porcentaje de la vida actual del objetivo como daño físico adicional al impactar",
+          "basis": "description_partial",
+          "trigger": {
+            "event": "on_hit"
+          },
+          "target": {
+            "kind": "enemy_unit"
+          },
+          "conditions": [
+            {
+              "kind": "on_hit"
+            }
+          ],
+          "components": [
+            {
+              "kind": "damage",
+              "damage_type": "physical",
+              "target": {
+                "kind": "enemy_unit"
+              },
+              "formula": {
+                "op": "mul",
+                "operands": [
+                  {
+                    "op": "stat",
+                    "stat": "health",
+                    "scope": "current"
+                  },
+                  {
+                    "op": "unknown",
+                    "reason": "Data Dragon localizes the ratio as 'un porcentaje'; no numeric value is published"
+                  }
+                ]
+              }
+            }
+          ],
+          "cooldown_seconds": null,
+          "stacks": null,
+          "duration_seconds": null,
+          "limits": [],
+          "model_status": "partially_evaluable"
+        },
+        {
+          "id": "night-claw",
+          "kind": "passive",
+          "name": "Zarpazo sombrío",
+          "quote": "Atacar a un campeón tres veces lo ralentiza un 30% durante 1 s.",
+          "basis": "description_explicit",
+          "trigger": {
+            "event": "on_hit"
+          },
+          "target": {
+            "kind": "enemy_champion"
+          },
+          "conditions": [
+            {
+              "kind": "target_is_champion"
+            }
+          ],
+          "components": [
+            {
+              "kind": "crowd_control",
+              "effect": "slow",
+              "target": {
+                "kind": "enemy_champion"
+              },
+              "magnitude": {
+                "op": "constant",
+                "value": 30
+              },
+              "duration_seconds": 1
+            }
+          ],
+          "cooldown_seconds": null,
+          "stacks": {
+            "required": 3,
+            "window_seconds": {
+              "status": "unknown",
+              "reason": "The description does not state a time window"
+            },
+            "max_stacks": null
+          },
+          "duration_seconds": 1,
+          "limits": [],
+          "model_status": "partially_evaluable",
+          "note": "The description says 'tres veces'; required=3 is the numeric reading."
+        }
+      ]
+    },
+    {
+      "id": "3036",
+      "effect_review": "complete",
+      "stats": [
+        {
+          "id": "armor_penetration_percent",
+          "kind": "percent",
+          "value": 35,
+          "quote": "35% de penetración de armadura"
+        }
+      ],
+      "effects": [
+        {
+          "id": "giant-slayer",
+          "kind": "passive",
+          "name": "Verdugo de gigantes",
+          "quote": "Infliges hasta un 15% de daño adicional a campeones, según su vida adicional. El máximo de daño adicional se alcanza con 1500 de vida adicional.",
+          "basis": "description_silent",
+          "trigger": {
+            "event": "always"
+          },
+          "target": {
+            "kind": "enemy_champion"
+          },
+          "components": [
+            {
+              "kind": "damage_modifier",
+              "direction": "dealt",
+              "source": "all",
+              "mode": "percent",
+              "target": {
+                "kind": "enemy_champion"
+              },
+              "formula": {
+                "op": "unsupported",
+                "reason": "The description gives only the 15% cap at 1500 bonus health; the curve is not stated",
+                "needed": [
+                  "bonus health interpolation"
+                ]
+              }
+            }
+          ],
+          "cooldown_seconds": null,
+          "stacks": null,
+          "duration_seconds": null,
+          "limits": [
+            {
+              "kind": "maximum",
+              "value": 15,
+              "unit": "percent",
+              "condition": "target has 1500 bonus health"
+            }
+          ],
+          "model_status": "excluded"
+        }
+      ]
+    },
+    {
+      "id": "3047",
+      "effect_review": "complete",
+      "stats": [],
+      "effects": [
+        {
+          "id": "plates",
+          "kind": "passive",
+          "name": "Placas",
+          "quote": "Reduce un 10% el daño sufrido por ataques.",
+          "basis": "description_explicit",
+          "trigger": {
+            "event": "taking_attack"
+          },
+          "target": {
+            "kind": "self"
+          },
+          "components": [
+            {
+              "kind": "damage_modifier",
+              "direction": "taken",
+              "source": "attack",
+              "mode": "percent",
+              "formula": {
+                "op": "constant",
+                "value": -10
+              }
+            }
+          ],
+          "cooldown_seconds": null,
+          "stacks": null,
+          "duration_seconds": null,
+          "limits": [],
+          "model_status": "evaluable",
+          "note": "Negative values reduce the damage taken."
+        }
+      ]
+    },
+    {
+      "id": "3157",
+      "effect_review": "complete",
+      "stats": [],
+      "effects": [
+        {
+          "id": "time-stop",
+          "kind": "active",
+          "name": "Tiempo detenido",
+          "quote": "Entras en estasis durante 2.5 s.",
+          "basis": "description_explicit",
+          "trigger": {
+            "event": "cast"
+          },
+          "target": {
+            "kind": "self"
+          },
+          "components": [
+            {
+              "kind": "stasis",
+              "target": {
+                "kind": "self"
+              },
+              "duration_seconds": 2.5
+            }
+          ],
+          "cooldown_seconds": {
+            "status": "unknown",
+            "reason": "Data Dragon does not publish the active cooldown"
+          },
+          "stacks": null,
+          "duration_seconds": 2.5,
+          "limits": [],
+          "model_status": "partially_evaluable"
+        }
+      ]
+    },
+    {
+      "id": "3075",
+      "effect_review": "complete",
+      "stats": [],
+      "effects": [
+        {
+          "id": "thorns",
+          "kind": "passive",
+          "name": "Espinas",
+          "quote": "Al recibir un ataque, inflige daño mágico al atacante y aplica un 40% de heridas durante 3 s si se trata de un campeón.",
+          "basis": "description_partial",
+          "trigger": {
+            "event": "taking_attack"
+          },
+          "target": {
+            "kind": "attacker"
+          },
+          "components": [
+            {
+              "kind": "damage",
+              "damage_type": "magic",
+              "target": {
+                "kind": "attacker"
+              },
+              "formula": {
+                "op": "unknown",
+                "reason": "The description does not state the reflected damage amount"
+              }
+            },
+            {
+              "kind": "status",
+              "effect": "grievous_wounds",
+              "target": {
+                "kind": "enemy_champion"
+              },
+              "conditions": [
+                {
+                  "kind": "target_is_champion"
+                }
+              ],
+              "magnitude": {
+                "op": "constant",
+                "value": 40
+              },
+              "duration_seconds": 3
+            }
+          ],
+          "cooldown_seconds": null,
+          "stacks": null,
+          "duration_seconds": null,
+          "limits": [],
+          "model_status": "partially_evaluable"
+        }
+      ]
+    },
+    {
+      "id": "6617",
+      "effect_review": "complete",
+      "stats": [
+        {
+          "id": "ability_haste",
+          "kind": "flat",
+          "value": 20,
+          "quote": "20 de velocidad de habilidades"
+        },
+        {
+          "id": "mana_regen",
+          "kind": "percent",
+          "value": 125,
+          "quote": "125% de regeneración de maná básica"
+        }
+      ],
+      "effects": [
+        {
+          "id": "stargrace",
+          "kind": "passive",
+          "name": "Gracia estelar",
+          "quote": "Al curar u otorgar un escudo a un aliado, el efecto se transmite a otro aliado (excluyéndote a ti) y lo cura un 30% o le otorga un escudo del 35% de la cantidad original.",
+          "basis": "description_explicit",
+          "trigger": {
+            "event": "on_heal_or_shield"
+          },
+          "target": {
+            "kind": "ally_champion"
+          },
+          "components": [
+            {
+              "kind": "healing",
+              "mode": "percent_of_trigger",
+              "target": {
+                "kind": "ally_champion"
+              },
+              "formula": {
+                "op": "constant",
+                "value": 30
+              }
+            },
+            {
+              "kind": "shield",
+              "mode": "percent_of_trigger",
+              "target": {
+                "kind": "ally_champion"
+              },
+              "formula": {
+                "op": "constant",
+                "value": 35
+              }
+            }
+          ],
+          "cooldown_seconds": null,
+          "stacks": null,
+          "duration_seconds": null,
+          "limits": [],
+          "model_status": "evaluable",
+          "note": "The formulas return the percentage of the triggering heal or shield; that amount is an engine input."
+        }
+      ]
+    }
+  ]
+}

@@ -1,7 +1,7 @@
 # Índice de la base de conocimiento
 
 - **Parche:** 16.20.1
-- **Última actualización:** 2026-10-18
+- **Última actualización:** 2026-10-20
 
 ## Por intención
 
@@ -13,11 +13,15 @@
 | Comprobar las fuentes | [Fuentes de Zaahen](champions/Zaahen/sources.md) |
 | Leer el dato crudo | [Zaahen.json](../data/current/champions/Zaahen.json) |
 | Comprobar el snapshot | [manifest.json](../data/current/manifest.json) |
+| Entender el modelo mecánico de objetos | [Modelo de objetos](objects/README.md) |
+| Ver el catálogo curado de objetos | [catalog.json](objects/catalog.json) |
 | Continuar la investigación de datos de Zaahen | [Documento de continuidad](../research/zaahen-research-handoff.md) |
 
 ## Cobertura actual
 
 Un campeón con análisis completo y datos oficiales de los 173 campeones en `data/current/`. La cobertura crece de uno en uno: cada campeón nuevo reutiliza esta estructura.
+
+El modelo mecánico de objetos cubre una muestra de **13 objetos** elegidos por diversidad mecánica; no es cobertura completa. Los límites están en [Modelo de objetos](objects/README.md).
 
 ## Aviso de fuentes
 
