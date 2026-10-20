@@ -240,7 +240,7 @@ Criterio de éxito: un modelo de objetos pequeño pero verificable, conectado co
 
 **Interfaz.** `ChampionState`, `ItemSlot`, `RuneState`, `TargetProfile`, `ImpactConditions`, `RotationStep`, `DamageRequest` y `DamageOutcome` con cuatro estados (`evaluable`, `partially_evaluable`, `excluded`, `unreliable`). `validate_request` rechaza hojas incompletas, objetivos incoherentes, objetos duplicados y rotaciones vacías. No hay simulación.
 
-**Validación ejecutada.** `pytest -q`: 171 pasan. `pytest research -q`: 97 pasan. `ruff check .`: limpio. `ruff format --check .`: 91 archivos formateados. `lol_knowledge validate`: 183 archivos, salida 0. `python -m lol_knowledge.objects --validate`: 1 catálogo válido. `--json` produjo dos veces el mismo SHA-256 (`d7b6ab05…`), 33 800 bytes.
+**Validación ejecutada.** `pytest -q`: 171 pasan. `pytest research -q`: 97 pasan. `ruff check .`: limpio. `ruff format --check .`: 91 archivos formateados. `lol_knowledge validate`: 183 archivos, salida 0. `python -m lol_knowledge.objects --validate`: 1 catálogo válido. `--json` produjo dos veces el mismo SHA-256 (`ed1b0be7…`), 38 015 bytes.
 
 **Git.** Rama `feat/object-model`. Commits: `dde181d` plan ODD, `61b1d8e` correcciones del extractor, `215e19c` modelo de objetos. Sin push, sin merge a `dev`/`integration`, sin operaciones destructivas.
 
