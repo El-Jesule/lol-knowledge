@@ -6,7 +6,7 @@ from collections.abc import Mapping, Sequence
 from dataclasses import dataclass, field
 from typing import Any
 
-from .model import DataValue, Diagnostic
+from .model import OMITTED_FLOAT_DEFAULT_POLICY, DataValue, Diagnostic
 from .registry import Registry
 
 SLOTS = ("Q", "W", "E", "R")
@@ -44,6 +44,28 @@ class TraversalContext:
             "source_sha256": self.source_sha256,
             "content_version": self.content_version,
         }
+
+    def record_unresolved(
+        self,
+        pointer: str,
+        reason: str,
+        *,
+        entry_type: Any = None,
+        raw: Any = None,
+        **extra: Any,
+    ) -> None:
+        """Record one unresolved reference with its artifact provenance."""
+        item: dict[str, Any] = {
+            "pointer": pointer,
+            "source_path": self.spell_path,
+            "reason": reason,
+            "type": entry_type,
+            "source_sha256": self.source_sha256,
+            "content_version": self.content_version,
+            "raw": raw if isinstance(raw, (str, int, float, bool)) else None,
+        }
+        item.update(extra)
+        self.unresolved.append(item)
 
     def diagnostic(
         self,
@@ -594,14 +616,11 @@ def _unresolved(
         node["provenance"] = context.provenance(pointer)
     node["confidence"] = "unverified"
     node.update(extra)
-    context.unresolved.append(
-        {
-            "pointer": pointer,
-            "source_path": context.spell_path,
-            "reason": reason,
-            "type": node.get("type"),
-            "raw": raw if isinstance(raw, (str, int, float, bool)) else None,
-        }
+    context.record_unresolved(
+        pointer,
+        reason,
+        entry_type=node.get("type"),
+        raw=raw,
     )
     return node
 
@@ -658,30 +677,36 @@ def parse_part(
         node["effect_index"] = part.get("mEffectIndex")
         node["resolved"] = False
         node["confidence"] = "unverified"
-        context.unresolved.append(
-            {
-                "pointer": pointer,
-                "source_path": context.spell_path,
-                "reason": "effect value requires SpellEffectAmount data",
-                "type": node.get("type"),
-                "raw": None,
-            }
+        context.record_unresolved(
+            pointer,
+            "effect value requires SpellEffectAmount data",
+            entry_type=node.get("type"),
         )
         return node
 
     if type_value == "StatByNamedDataValueCalculationPart":
         node = _stat_part(context, part, pointer)
+        name = part.get("mDataValue")
         node["factor"] = {
             "kind": "data_value",
-            "name": part.get("mDataValue"),
+            "name": name,
+            "confidence": "source_explicit" if isinstance(name, str) and name else "unverified",
+            "provenance": context.provenance(f"{pointer}/mDataValue"),
         }
         return node
 
     if type_value == "StatByCoefficientCalculationPart":
         node = _stat_part(context, part, pointer)
+        coefficient = part.get("mCoefficient")
         node["factor"] = {
             "kind": "number",
-            "value": part.get("mCoefficient"),
+            "value": coefficient,
+            "confidence": (
+                "source_explicit"
+                if isinstance(coefficient, (int, float)) and not isinstance(coefficient, bool)
+                else "unverified"
+            ),
+            "provenance": context.provenance(f"{pointer}/mCoefficient"),
         }
         return node
 
@@ -704,9 +729,20 @@ def parse_part(
     if type_value == "SumOfSubPartsCalculationPart":
         node = _node_base(context, part, pointer)
         node["kind"] = "sum"
+        subparts = part.get("mSubparts")
+        if not isinstance(subparts, Sequence) or isinstance(subparts, (str, bytes)):
+            node["operands"] = None
+            node["confidence"] = "unverified"
+            context.diagnostic(
+                "error",
+                "missing_formula_operands",
+                f"{pointer}/mSubparts",
+                "SumOfSubPartsCalculationPart.mSubparts is not a list.",
+            )
+            return node
         node["operands"] = [
             parse_part(item, context=context, pointer=f"{pointer}/mSubparts/{index}")
-            for index, item in enumerate(part.get("mSubparts") or [])
+            for index, item in enumerate(subparts)
         ]
         return node
 
@@ -714,17 +750,44 @@ def parse_part(
         node = _node_base(context, part, pointer)
         node["kind"] = "by_char_level_breakpoints"
         node["level1_value"] = part.get("mLevel1Value")
-        node["initial_bonus_per_level"] = part.get("mInitialBonusPerLevel", 0.0)
-        node["breakpoints"] = [
-            {
-                "level": item.get("mLevel"),
-                "additional_bonus_at_this_level": item.get("mAdditionalBonusAtThisLevel"),
-                "bonus_per_level_at_and_after": item.get("mBonusPerLevelAtAndAfter", 0.0),
-                "provenance": context.provenance(f"{pointer}/mBreakpoints/{index}"),
-            }
-            for index, item in enumerate(part.get("mBreakpoints") or [])
-            if isinstance(item, Mapping)
-        ]
+        node["initial_bonus_per_level"] = part.get("mInitialBonusPerLevel")
+        absent_fields: list[str] = []
+        if "mInitialBonusPerLevel" not in part:
+            absent_fields.append("initial_bonus_per_level")
+        raw_breakpoints = part.get("mBreakpoints")
+        if raw_breakpoints is not None and (
+            not isinstance(raw_breakpoints, Sequence) or isinstance(raw_breakpoints, (str, bytes))
+        ):
+            node["breakpoints"] = None
+            node["confidence"] = "unverified"
+            context.diagnostic(
+                "error",
+                "missing_formula_operands",
+                f"{pointer}/mBreakpoints",
+                "ByCharLevelBreakpointsCalculationPart.mBreakpoints is not a list.",
+            )
+            return node
+        breakpoints = []
+        for index, item in enumerate(raw_breakpoints or []):
+            if not isinstance(item, Mapping):
+                continue
+            prefix = f"breakpoints[{index}]"
+            if "mAdditionalBonusAtThisLevel" not in item:
+                absent_fields.append(f"{prefix}.additional_bonus_at_this_level")
+            if "mBonusPerLevelAtAndAfter" not in item:
+                absent_fields.append(f"{prefix}.bonus_per_level_at_and_after")
+            breakpoints.append(
+                {
+                    "level": item.get("mLevel"),
+                    "additional_bonus_at_this_level": item.get("mAdditionalBonusAtThisLevel"),
+                    "bonus_per_level_at_and_after": item.get("mBonusPerLevelAtAndAfter"),
+                    "provenance": context.provenance(f"{pointer}/mBreakpoints/{index}"),
+                }
+            )
+        node["breakpoints"] = breakpoints
+        node["default_policy"] = OMITTED_FLOAT_DEFAULT_POLICY if absent_fields else None
+        node["absent_fields"] = absent_fields
+        node["value_confidence"] = "inferred" if absent_fields else "source_explicit"
         return node
 
     if type_value == "ByCharLevelFormulaCalculationPart":
@@ -793,15 +856,11 @@ def parse_part(
         calculations = _spell_calculations(context.document, context.spell_path)
         if not isinstance(key, str) or calculations is None or key not in calculations:
             node["confidence"] = "unverified"
-            context.unresolved.append(
-                {
-                    "pointer": pointer,
-                    "source_path": context.spell_path,
-                    "reason": "missing calculation target",
-                    "target": key,
-                    "type": node.get("type"),
-                    "raw": None,
-                }
+            context.record_unresolved(
+                pointer,
+                "missing calculation target",
+                entry_type=node.get("type"),
+                target=key,
             )
         else:
             node["confidence"] = "source_explicit"
@@ -817,16 +876,12 @@ def parse_part(
         calculations = _spell_calculations(context.document, source)
         if not isinstance(key, str) or calculations is None or key not in calculations:
             node["confidence"] = "unverified"
-            context.unresolved.append(
-                {
-                    "pointer": pointer,
-                    "source_path": context.spell_path,
-                    "reason": "missing external calculation target",
-                    "source_object": source,
-                    "target": key,
-                    "type": node.get("type"),
-                    "raw": None,
-                }
+            context.record_unresolved(
+                pointer,
+                "missing external calculation target",
+                entry_type=node.get("type"),
+                source_object=source,
+                target=key,
             )
         else:
             node["confidence"] = "source_explicit"
@@ -856,16 +911,12 @@ def parse_part(
         node["name"] = resolved_name
         if not isinstance(resolved_name, str) or names is None or resolved_name not in names:
             node["confidence"] = "unverified"
-            context.unresolved.append(
-                {
-                    "pointer": pointer,
-                    "source_path": context.spell_path,
-                    "reason": "missing external data value",
-                    "source_object": source,
-                    "target": name,
-                    "type": node.get("type"),
-                    "raw": None,
-                }
+            context.record_unresolved(
+                pointer,
+                "missing external data value",
+                entry_type=node.get("type"),
+                source_object=source,
+                target=name,
             )
         else:
             node["confidence"] = "source_explicit"
@@ -906,9 +957,30 @@ def parse_calculation(
         node["tooltip_only"] = calculation.get("tooltipOnly", False)
         node["display_as_percent"] = calculation.get("mDisplayAsPercent", False)
         node["precision"] = calculation.get("mPrecision")
+        parts = calculation.get("mFormulaParts")
+        if parts is None:
+            node["parts"] = None
+            node["confidence"] = "unverified"
+            context.diagnostic(
+                "warning",
+                "missing_formula_parts",
+                f"{pointer}/mFormulaParts",
+                "GameCalculation has no mFormulaParts; it is preserved but not evaluated.",
+            )
+            return node
+        if not isinstance(parts, Sequence) or isinstance(parts, (str, bytes)):
+            node["parts"] = None
+            node["confidence"] = "unverified"
+            context.diagnostic(
+                "error",
+                "malformed_formula_parts",
+                f"{pointer}/mFormulaParts",
+                "GameCalculation.mFormulaParts is not a list.",
+            )
+            return node
         node["parts"] = [
             parse_part(item, context=context, pointer=f"{pointer}/mFormulaParts/{index}")
-            for index, item in enumerate(calculation.get("mFormulaParts") or [])
+            for index, item in enumerate(parts)
         ]
         return node
     if type_value == "GameCalculationModified":

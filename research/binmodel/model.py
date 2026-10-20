@@ -5,6 +5,11 @@ from __future__ import annotations
 from dataclasses import dataclass, field
 from typing import Any
 
+# CommunityDragon omits float fields that hold the class default. The extractor
+# records which fields were absent; the evaluator is the only place where a
+# declared default may become a number, and it is marked ``inferred``.
+OMITTED_FLOAT_DEFAULT_POLICY = "lol-bin-omitted-float-defaults/v1"
+
 
 @dataclass
 class Diagnostic:

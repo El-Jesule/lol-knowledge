@@ -93,7 +93,7 @@ def test_typed_tree_nodes_have_confidence(extract_document):
 
     def walk(node):
         if isinstance(node, dict):
-            if "kind" in node and "provenance" in node:
+            if "kind" in node:
                 nodes.append(node)
             for value in node.values():
                 walk(value)
@@ -101,8 +101,9 @@ def test_typed_tree_nodes_have_confidence(extract_document):
             for value in node:
                 walk(value)
 
-    walk(extract.to_dict())
+    walk(extract.to_dict()["abilities"])
     assert nodes
+    assert all(node.get("provenance") for node in nodes)
     assert all(node.get("confidence") in allowed for node in nodes)
 
 

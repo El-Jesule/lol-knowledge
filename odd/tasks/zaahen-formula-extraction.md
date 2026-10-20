@@ -258,3 +258,10 @@ Investigar los archivos locales de League of Legends para reconstruir de forma r
 - `BotData` contiene 36 `{150d1b92}` sin sem?ntica; `EffectValueCalculationPart` y `GameCalculationConditional` se tipan pero no se eval?an.
 - No se hizo push ni merge a `dev`/`integration`. La rama `research/zaahen-formula-extraction` queda local.
 - Siguiente paso imprescindible: cerrar P1/P2 con mediciones controladas. Siguiente paso opcional: localizar el Lua de la pasiva y ampliar el evaluador a condicionales/efectos.
+
+### L5 — Auditoría de garantías (fase 5, 2026-10-20)
+
+- Auditoría independiente sobre `89e2dbe`; informe completo en `research/reports/agent-d-extractor-audit.md`.
+- Defectos reales corregidos con regresión: cero silencioso en breakpoints y en cálculos vacíos; `TypeError`/`KeyError` en nodos malformados; dependencias filtradas entre evaluaciones; `unresolved` sin SHA-256/versión; factores sintéticos sin confianza ni procedencia.
+- La política de defaults omitidos (`lol-bin-omitted-float-defaults/v1`) queda marcada como `inferred`: el bin no la documenta, se apoya en la serialización de CommunityDragon y en las mediciones de `ReviveCooldownCalc`.
+- Siguen abiertos: 41 nodos BotData, dos `GameCalculation` vacíos, `RevivePercentCalc` incompleta y la base de aplicación de la pasiva.
