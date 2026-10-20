@@ -11,7 +11,7 @@ from collections.abc import Mapping, Sequence
 from dataclasses import dataclass, field
 from typing import Any
 
-from .schema import OUTCOME_STATES, STAT_ORDER
+from .schema import HOLDER_RANGES, OUTCOME_STATES, STAT_ORDER
 
 TARGET_KINDS = frozenset({"champion", "monster", "minion", "structure"})
 _ABILITY_SLOTS = frozenset({"passive", "q", "w", "e", "r"})
@@ -19,12 +19,18 @@ _ABILITY_SLOTS = frozenset({"passive", "q", "w", "e", "r"})
 
 @dataclass(frozen=True)
 class ChampionState:
-    """The champion and its post-rune, post-item stat sheet."""
+    """The champion and its post-rune, post-item stat sheet.
+
+    ``attack_range`` is the game's melee/ranged classification of the holder.
+    Effects such as Blade of the Ruined King branch on it, so it is required:
+    an absent value must never silently default to melee.
+    """
 
     champion_id: str
     level: int
     ability_ranks: Mapping[str, int]
     stats: Mapping[str, float]
+    attack_range: str
 
 
 @dataclass(frozen=True)
@@ -46,7 +52,11 @@ class RuneState:
 
 @dataclass(frozen=True)
 class TargetProfile:
-    """The target's defensive state."""
+    """The target's defensive state.
+
+    ``bonus_health`` is required: effects such as Lord Dominik's Regards read
+    it, and an omitted value must not silently behave like a real zero.
+    """
 
     kind: str
     level: int
@@ -54,7 +64,7 @@ class TargetProfile:
     magic_resist: float
     health: float
     max_health: float
-    bonus_health: float = 0.0
+    bonus_health: float
     damage_reduction_percent: float = 0.0
 
 
@@ -151,6 +161,8 @@ def validate_request(request: DamageRequest) -> tuple[str, ...]:
             problems.append(f"champion.ability_ranks has unknown slot {ability!r}")
         if not isinstance(rank, int) or isinstance(rank, bool) or rank < 1:
             problems.append(f"champion.ability_ranks[{ability!r}] must be a positive integer")
+    if champion.attack_range not in HOLDER_RANGES:
+        problems.append(f"champion.attack_range must be one of {sorted(HOLDER_RANGES)}")
     for stat in required_stat_sheet():
         if stat not in champion.stats:
             problems.append(f"champion.stats is missing {stat!r}")
@@ -250,16 +262,23 @@ def formula_stat_requirements(model: Mapping[str, Any]) -> dict[str, tuple[str, 
     def walk(formula: Any) -> None:
         if not isinstance(formula, Mapping):
             return
-        if formula.get("op") == "stat":
+        operation = formula.get("op")
+        if operation in {"stat", "percent_of"}:
             stat = formula.get("stat")
             scope = formula.get("scope")
             if not isinstance(stat, str) or not isinstance(scope, str):
                 return
             key = stat if scope == "total" else f"{scope}_{stat}"
-            if scope in {"current", "max"}:
+            subject = formula.get("subject")
+            is_target = subject == "target" or (subject is None and scope in {"current", "max"})
+            if is_target:
                 target.add(key)
             else:
                 champion.add(key)
+            return
+        if operation == "by_holder_range":
+            for branch in ("melee", "ranged"):
+                walk(formula.get(branch))
             return
         operands = formula.get("operands")
         if isinstance(operands, Sequence) and not isinstance(operands, (str, bytes)):

@@ -301,3 +301,134 @@ def test_missing_readme_is_a_violation(tmp_path: Path) -> None:
     report = validate_object_catalog(tmp_path)
     assert not report.ok
     assert "README.md not found" in report.violations[0].message
+
+
+def _external_effect() -> dict:
+    source = {
+        "kind": "community_wiki",
+        "reference": "https://wiki.leagueoflegends.com/en-us/Example?action=raw",
+        "quote": "1% per 100 bonus health.",
+        "retrieved_at": "2026-10-20",
+        "confidence": "secondary",
+    }
+    effect = _valid_effect()
+    effect["basis"] = "external_evidence_explicit"
+    effect["components"] = [
+        {
+            "kind": "damage",
+            "damage_type": "physical",
+            "target": {"kind": "enemy_champion"},
+            "formula": {
+                "op": "percent_of",
+                "percent": 1,
+                "stat": "health",
+                "scope": "bonus",
+            },
+        }
+    ]
+    effect["sources"] = [source]
+    effect["evidence_confidence"] = "secondary"
+    return effect
+
+
+def test_external_evidence_with_a_cited_source_is_accepted() -> None:
+    effect = _external_effect()
+    assert _messages(_catalog(effect=effect)) == []
+
+
+def test_external_evidence_needs_a_source() -> None:
+    effect = _external_effect()
+    del effect["sources"]
+    messages = _messages(_catalog(effect=effect))
+    assert any("needs at least one declared source" in message for message in messages)
+
+
+def test_external_evidence_cannot_hide_a_non_evaluable_formula() -> None:
+    effect = _external_effect()
+    effect["components"][0]["formula"] = {"op": "unknown", "reason": "missing"}
+    effect["model_status"] = "partially_evaluable"
+    messages = _messages(_catalog(effect=effect))
+    assert any("requires every formula to be evaluable" in message for message in messages)
+
+
+def test_source_needs_reference_quote_and_date() -> None:
+    effect = _external_effect()
+    del effect["sources"][0]["quote"]
+    messages = _messages(_catalog(effect=effect))
+    assert any("source quote must be a non-empty string" in message for message in messages)
+
+
+def test_source_kind_and_confidence_are_checked() -> None:
+    effect = _external_effect()
+    effect["sources"][0]["kind"] = "random_blog"
+    effect["sources"][0]["confidence"] = "certain"
+    messages = _messages(_catalog(effect=effect))
+    assert any("source kind must be one of" in message for message in messages)
+    assert any("source confidence must be one of" in message for message in messages)
+
+
+def test_every_effect_number_needs_a_cited_quote() -> None:
+    effect = _external_effect()
+    effect["components"][0]["formula"]["percent"] = 99
+    messages = _messages(_catalog(effect=effect))
+    assert any("not present in any cited quote" in message for message in messages)
+
+
+def test_sources_require_an_explicit_confidence() -> None:
+    effect = _external_effect()
+    del effect["evidence_confidence"]
+    messages = _messages(_catalog(effect=effect))
+    assert any("need an explicit evidence_confidence" in message for message in messages)
+
+
+def test_secondary_confidence_without_sources_is_rejected() -> None:
+    effect = _valid_effect()
+    effect["evidence_confidence"] = "secondary"
+    messages = _messages(_catalog(effect=effect))
+    assert any("needs at least one source" in message for message in messages)
+
+
+def test_flat_magic_penetration_is_a_canonical_stat() -> None:
+    snapshot = _snapshot(description="12 de penetración mágica")
+    stat = {
+        "id": "magic_penetration_flat",
+        "kind": "flat",
+        "value": 12,
+        "quote": "12 de penetración mágica",
+    }
+    assert _messages(_catalog(stat=stat), snapshot) == []
+
+
+def test_community_source_cannot_be_official() -> None:
+    effect = _external_effect()
+    effect["sources"][0]["confidence"] = "official"
+    effect["evidence_confidence"] = "official"
+    messages = _messages(_catalog(effect=effect))
+    assert any("cannot be 'official'" in message for message in messages)
+    assert any("official evidence must come from" in message for message in messages)
+
+
+def test_corroborated_evidence_needs_two_sources() -> None:
+    effect = _external_effect()
+    effect["evidence_confidence"] = "corroborated"
+    messages = _messages(_catalog(effect=effect))
+    assert any("needs at least two independent sources" in message for message in messages)
+
+
+def test_uncited_stack_count_is_reported() -> None:
+    effect = _valid_effect()
+    effect["stacks"] = {"required": 7, "window_seconds": None, "max_stacks": None}
+    messages = _messages(_catalog(effect=effect))
+    assert any("not present in any cited quote" in message for message in messages)
+
+
+def test_formula_key_typo_is_reported() -> None:
+    effect = _valid_effect()
+    effect["components"][0]["formula"] = {
+        "op": "stat",
+        "stat": "health",
+        "scope": "bonus",
+        "subjet": "target",
+    }
+    messages = _messages(_catalog(effect=effect))
+    assert any("unknown keys" in message for message in messages)

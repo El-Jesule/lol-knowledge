@@ -2,7 +2,7 @@
 
 Base de conocimiento verificable de League of Legends: datos oficiales de Riot (Data Dragon), análisis con fuente declarada y una CLI en Python que ingesta, valida y calcula de forma reproducible.
 
-Estado actual: **fase 5**. Existen la ingesta, el validador de integridad, el primer campeón analizado (Zaahen), el extractor de cálculos en `research/` y un modelo mecánico de objetos versionado para 13 objetos. El motor determinista de daño todavía no existe.
+Estado actual: **fase 6**. Existen la ingesta, el validador de integridad, el primer campeón analizado (Zaahen), el extractor de cálculos en `research/` y un modelo mecánico de objetos versionado para 15 objetos, con evidencia primaria y secundaria separada. El motor determinista de daño todavía no existe.
 
 ## Requisitos
 
@@ -101,7 +101,7 @@ Condiciones de uso y cuestiones pendientes: [`research/evidence/usage-conditions
 - No hay CI ni publicación remota.
 - Data Dragon 16.20.1 no publica valores numéricos de las habilidades de Zaahen; los valores derivados están documentados y las discrepancias abiertas siguen como pendientes.
 - La cobertura de campeones empieza por un caso representativo y crece de forma incremental.
-- El modelo de objetos cubre una muestra de 13 objetos por diversidad mecánica; los efectos no publicados se marcan como desconocidos o excluidos, no se inventan.
+- El modelo de objetos cubre una muestra de 15 objetos por diversidad mecánica. Las cifras que Data Dragon no publica solo se incorporan con una fuente citada y `evidence_confidence: secondary`; lo no verificado se marca como desconocido o parcial, no se inventa.
 
 ## Flujo de trabajo
 

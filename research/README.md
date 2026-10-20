@@ -1,8 +1,9 @@
 # Investigación LoL-Knowledge — Zaahen
 
-Índice del trabajo de investigación. Hay tres fases vivas:
+Índice del trabajo de investigación. Hay cuatro fases vivas:
 
-- **Fase 5 (actual):** auditoría de garantías del extractor y modelo mecánico de objetos (`lol-object-model/1`) preparado para el futuro motor de daño.
+- **Fase 6 (actual):** cierre de cinco mecánicas de objetos con evidencia citada, ampliación selectiva del catálogo y auditoría Git sin fusiones.
+- **Fase 5:** auditoría de garantías del extractor y modelo mecánico de objetos (`lol-object-model/1`) preparado para el futuro motor de daño.
 - **Fase 4:** extractor genérico de árboles de cálculo desde el bin 16.20, con evaluación determinista, procedencia y validación experimental.
 - **Fase 3.5 (anterior):** prototipo CommunityDragon que extrae un subconjunto de valores y los compara con Data Dragon, RCP y la wiki.
 
@@ -20,6 +21,7 @@ Nada de `research/` modifica `data/current/`, `src/lol_knowledge/` ni `lol-knowl
 | Leer el informe de estructuras binarias (Agente B) | [`reports/agent-b-bin-structures.md`](reports/agent-b-bin-structures.md) |
 | Leer la verificación independiente (Agente C) | [`reports/agent-c-verification.md`](reports/agent-c-verification.md) |
 | Leer la auditoría de garantías del extractor (Agente D) | [`reports/agent-d-extractor-audit.md`](reports/agent-d-extractor-audit.md) |
+| Leer la evidencia de las mecánicas de objetos y el plan Git | [`reports/object-mechanics-2026-10-20.md`](reports/object-mechanics-2026-10-20.md) |
 | Entender el modelo mecánico de objetos | [`../lol-knowledge/objects/README.md`](../lol-knowledge/objects/README.md) |
 | Saber qué fuentes se consultaron y qué límites tienen | [`evidence/usage-conditions.md`](evidence/usage-conditions.md) |
 | Ver el estado del campeón en la base de conocimiento | [`../lol-knowledge/champions/Zaahen/overview.md`](../lol-knowledge/champions/Zaahen/overview.md) |
@@ -108,7 +110,14 @@ El modelo de objetos vive fuera de `research/`, en la base de conocimiento y la 
 .\.venv\Scripts\python.exe -m lol_knowledge.objects --json
 ```
 
-Límites: la muestra es de 13 objetos; no hay motor de daño ni búsqueda de builds. Los ratios y curvas no publicados se marcan como desconocidos o excluidos.
+Límites: la muestra es de 15 objetos tras la fase 6; no hay motor de daño ni búsqueda de builds. Los ratios y curvas no publicados se marcan como desconocidos o excluidos.
+
+## Fase 6 — mecánicas de objetos y plan de integración
+
+Cierra BotRK (daño de impacto y acumulaciones), Lord Dominik (curva completa), Zhonya (enfriamiento de la activa) y Malla de espinas (daño reflejado), y añade Botas de hechicero y Randuin. Separa la evidencia oficial de Data Dragon de la evidencia secundaria citada, con `sources`, `evidence_confidence` y validación de que ningún número quede huérfano.
+
+- Informe completo con fuentes, citas, confianza, límites y grafo Git: [`reports/object-mechanics-2026-10-20.md`](reports/object-mechanics-2026-10-20.md).
+- Seguimiento de la fase: [`../odd/tasks/object-mechanics-coverage.md`](../odd/tasks/object-mechanics-coverage.md).
 
 ## Fase 3.5 — prototipo CommunityDragon
 

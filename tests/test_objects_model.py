@@ -37,15 +37,15 @@ def _reverse_keys(value: Any) -> Any:
 def test_model_header_links_to_the_snapshot(object_model, object_snapshot) -> None:
     assert object_model["schema_version"] == 1
     assert object_model["kind"] == "lol-object-model"
-    assert object_model["catalog_version"] == 1
+    assert object_model["catalog_version"] == 2
     assert object_model["game_version"] == object_snapshot.patch
     assert object_model["source"]["items_sha256"] == object_snapshot.items_sha256
     assert object_model["source"]["catalog"] == "lol-knowledge/objects/catalog.json"
 
 
-def test_sample_has_thirteen_objects(object_model) -> None:
+def test_sample_has_fifteen_objects(object_model) -> None:
     ids = [item["id"] for item in object_model["objects"]]
-    assert len(ids) == 13
+    assert len(ids) == 15
     assert ids == sorted(ids, key=lambda value: int(value))
 
 
@@ -71,6 +71,18 @@ def test_description_stats_are_quoted(object_model) -> None:
     assert lethality["verification"] == "description_quote_verified"
     assert lethality["source"]["kind"] == "ddragon_description"
     assert lethality["source"]["quote"] == "10 de letalidad"
+
+
+def test_flat_magic_penetration_is_declared_from_prose(object_model) -> None:
+    shoes = _object(object_model, "3020")
+    penetration = _stat(shoes, "magic_penetration_flat")
+    assert penetration["kind"] == "flat"
+    assert penetration["value"] == 12.0
+    assert penetration["source"] == {
+        "kind": "ddragon_description",
+        "item_id": "3020",
+        "quote": "12 de penetración mágica",
+    }
 
 
 def test_crit_damage_is_not_mixed_with_crit_chance(object_model) -> None:
@@ -112,16 +124,112 @@ def test_effect_statuses_match_the_formulas(object_model) -> None:
     assert deathcap["derived_status"] == "evaluable"
 
     fogblade = _effect(_object(object_model, "3153"), "fogblade")
-    assert fogblade["model_status"] == "partially_evaluable"
-    assert fogblade["derived_status"] == "partially_evaluable"
+    assert fogblade["model_status"] == "evaluable"
+    assert fogblade["derived_status"] == "evaluable"
 
     giant_slayer = _effect(_object(object_model, "3036"), "giant-slayer")
-    assert giant_slayer["model_status"] == "excluded"
-    assert giant_slayer["derived_status"] == "excluded"
+    assert giant_slayer["model_status"] == "evaluable"
+    assert giant_slayer["derived_status"] == "evaluable"
 
     thorns = _effect(_object(object_model, "3075"), "thorns")
-    assert thorns["model_status"] == "partially_evaluable"
-    assert thorns["derived_status"] == "partially_evaluable"
+    assert thorns["model_status"] == "evaluable"
+    assert thorns["derived_status"] == "evaluable"
+
+
+def test_botrk_damage_records_the_range_variants(object_model) -> None:
+    fogblade = _effect(_object(object_model, "3153"), "fogblade")
+    formula = fogblade["components"][0]["formula"]
+    assert formula["op"] == "by_holder_range"
+    assert formula["melee"] == {
+        "op": "percent_of",
+        "percent": 9,
+        "stat": "health",
+        "scope": "current",
+    }
+    assert formula["ranged"]["percent"] == 6
+    assert fogblade["limits"] == [
+        {
+            "kind": "maximum",
+            "value": 100,
+            "unit": "flat",
+            "condition": "target is a minion or monster",
+        }
+    ]
+
+
+def test_botrk_stacks_record_window_and_cooldown(object_model) -> None:
+    night_claw = _effect(_object(object_model, "3153"), "night-claw")
+    assert night_claw["stacks"] == {
+        "required": 3,
+        "window_seconds": 6,
+        "max_stacks": 3,
+    }
+    assert night_claw["cooldown_seconds"] == 15
+    assert night_claw["model_status"] == "partially_evaluable"
+
+
+def test_lord_dominik_uses_the_capped_linear_curve(object_model) -> None:
+    giant_slayer = _effect(_object(object_model, "3036"), "giant-slayer")
+    formula = giant_slayer["components"][0]["formula"]
+    assert formula == {
+        "op": "min",
+        "operands": [
+            {
+                "op": "percent_of",
+                "percent": 1,
+                "stat": "health",
+                "scope": "bonus",
+                "subject": "target",
+            },
+            {"op": "constant", "value": 15},
+        ],
+    }
+
+
+def test_thornmail_records_base_and_bonus_armor_ratio(object_model) -> None:
+    thorns = _effect(_object(object_model, "3075"), "thorns")
+    damage = thorns["components"][0]
+    assert damage["damage_type"] == "magic"
+    assert damage["formula"] == {
+        "op": "add",
+        "operands": [
+            {"op": "constant", "value": 20},
+            {"op": "percent_of", "percent": 10, "stat": "armor", "scope": "bonus"},
+        ],
+    }
+
+
+def test_randuin_models_crit_reduction_and_active_slow(object_model) -> None:
+    randuin = _object(object_model, "3143")
+    resilience = _effect(randuin, "resilience")
+    assert resilience["components"][0]["formula"] == {"op": "constant", "value": -30}
+    assert resilience["components"][0]["conditions"] == [{"kind": "critical_strike"}]
+
+    humility = _effect(randuin, "humility")
+    assert humility["cooldown_seconds"] == 90
+    assert humility["components"][0]["magnitude"] == {"op": "constant", "value": 70}
+    assert humility["components"][0]["duration_seconds"] == 2
+
+
+def test_secondary_sources_are_explicit_and_preserved(object_model) -> None:
+    for item_id, effect_id in (
+        ("3153", "fogblade"),
+        ("3153", "night-claw"),
+        ("3036", "giant-slayer"),
+        ("3157", "time-stop"),
+        ("3075", "thorns"),
+        ("3143", "humility"),
+    ):
+        effect = _effect(_object(object_model, item_id), effect_id)
+        assert effect["evidence_confidence"] == "secondary"
+        assert effect["sources"]
+        for source in effect["sources"]:
+            assert source["kind"] == "community_wiki"
+            assert source["reference"].startswith("https://wiki.leagueoflegends.com/")
+            assert source["retrieved_at"] == "2026-10-20"
+            assert source["quote"]
+    assert _object(object_model, "3153")["verification"] == "secondary_source_verified"
+    assert _object(object_model, "3036")["verification"] == "secondary_source_verified"
 
 
 def test_moonstone_models_healing_and_shield_percentages(object_model) -> None:
@@ -162,11 +270,11 @@ def test_unknown_component_values_make_the_effect_partial() -> None:
     assert derived_effect_status(effect) == "partially_evaluable"
 
 
-def test_zhonya_keeps_an_unknown_cooldown(object_model) -> None:
+def test_zhonya_records_the_active_cooldown_not_the_stasis_duration(object_model) -> None:
     time_stop = _effect(_object(object_model, "3157"), "time-stop")
-    assert time_stop["cooldown_seconds"]["status"] == "unknown"
+    assert time_stop["cooldown_seconds"] == 120
     assert time_stop["duration_seconds"] == 2.5
-    assert time_stop["model_status"] == "partially_evaluable"
+    assert time_stop["model_status"] == "evaluable"
 
 
 def test_no_snapshot_stats_are_unmapped(object_model) -> None:
@@ -176,8 +284,8 @@ def test_no_snapshot_stats_are_unmapped(object_model) -> None:
 
 def test_formula_requirements_use_the_target_scope(object_model) -> None:
     requirements = formula_stat_requirements(object_model)
-    assert requirements["champion"] == ()
-    assert requirements["target"] == ("current_health",)
+    assert requirements["champion"] == ("bonus_armor",)
+    assert requirements["target"] == ("bonus_health", "current_health")
 
 
 def test_model_is_deterministic(project_root, object_catalog, object_snapshot) -> None:

@@ -50,6 +50,7 @@ CANONICAL_STAT_KINDS: dict[str, frozenset[str]] = {
     "lethality": frozenset({"flat"}),
     "armor_penetration_percent": frozenset({"percent"}),
     "magic_penetration_percent": frozenset({"percent"}),
+    "magic_penetration_flat": frozenset({"flat"}),
     "ability_haste": frozenset({"flat"}),
 }
 
@@ -75,13 +76,36 @@ STAT_SCOPES_BY_STAT: dict[str, frozenset[str]] = {
     "lethality": frozenset({"total"}),
     "armor_penetration_percent": frozenset({"total"}),
     "magic_penetration_percent": frozenset({"total"}),
+    "magic_penetration_flat": frozenset({"total"}),
     "ability_haste": frozenset({"total"}),
 }
 
-VERIFICATION_STATES = frozenset({"official_field", "description_quote_verified", "unverified"})
+VERIFICATION_STATES = frozenset(
+    {
+        "official_field",
+        "description_quote_verified",
+        "secondary_source_verified",
+        "unverified",
+    }
+)
 MODEL_STATUSES = frozenset({"evaluable", "partially_evaluable", "excluded"})
 MODEL_STATUS_RANK = {"excluded": 0, "partially_evaluable": 1, "evaluable": 2}
-BASIS_STATES = frozenset({"description_explicit", "description_partial", "description_silent"})
+BASIS_STATES = frozenset(
+    {
+        "description_explicit",
+        "description_partial",
+        "description_silent",
+        "external_evidence_explicit",
+    }
+)
+# Evidence that is not the Data Dragon description. ``secondary`` is a
+# community source; it is never presented as an official Riot value.
+EVIDENCE_KINDS = frozenset(
+    {"ddragon_description", "community_wiki", "community_dragon", "in_game_measurement"}
+)
+EVIDENCE_CONFIDENCE = frozenset({"official", "corroborated", "secondary", "unverified"})
+HOLDER_RANGES = frozenset({"melee", "ranged"})
+STAT_SUBJECTS = frozenset({"champion", "target"})
 EFFECT_KINDS = frozenset({"passive", "active"})
 TRIGGER_EVENTS = frozenset(
     {
@@ -114,7 +138,19 @@ COMPONENT_KINDS = frozenset(
 DAMAGE_TYPES = frozenset({"physical", "magic", "true"})
 HEALING_MODES = frozenset({"absolute", "percent_of_trigger"})
 STAT_SCOPES = frozenset({"base", "bonus", "total", "current", "max"})
-FORMULA_OPS = frozenset({"constant", "stat", "add", "mul", "unknown", "unsupported"})
+FORMULA_OPS = frozenset(
+    {
+        "constant",
+        "stat",
+        "percent_of",
+        "add",
+        "mul",
+        "min",
+        "by_holder_range",
+        "unknown",
+        "unsupported",
+    }
+)
 LIMIT_KINDS = frozenset({"maximum", "minimum", "threshold", "cap"})
 CONDITION_KINDS = frozenset(
     {

@@ -28,6 +28,8 @@ from .schema import (
     CONDITION_KINDS,
     DAMAGE_TYPES,
     EFFECT_KINDS,
+    EVIDENCE_CONFIDENCE,
+    EVIDENCE_KINDS,
     HEALING_MODES,
     LIMIT_KINDS,
     MODEL_STATUS_RANK,
@@ -65,6 +67,8 @@ _EFFECT_KEYS = {
     "limits",
     "model_status",
     "note",
+    "sources",
+    "evidence_confidence",
 }
 _COMPONENT_KEYS = {
     "kind",
@@ -86,6 +90,13 @@ _COMPONENT_KEYS = {
 _LIMIT_KEYS = {"kind", "value", "unit", "condition"}
 _SCALAR_KEYS = {"status", "reason"}
 _STACK_KEYS = {"required", "window_seconds", "max_stacks"}
+_SOURCE_KEYS = {"kind", "reference", "quote", "retrieved_at", "confidence", "note"}
+_SOURCE_CONFIDENCE = {
+    "ddragon_description": {"official"},
+    "community_wiki": {"secondary", "corroborated"},
+    "community_dragon": {"secondary", "corroborated"},
+    "in_game_measurement": {"secondary", "corroborated"},
+}
 
 
 @dataclass(frozen=True)
@@ -134,8 +145,17 @@ def _quote_has_number(quote: str, value: float) -> bool:
 def _collect_constants(formula: Any, output: list[float]) -> None:
     if not isinstance(formula, Mapping):
         return
-    if formula.get("op") == "constant" and _is_number(formula.get("value")):
+    operation = formula.get("op")
+    if operation == "constant" and _is_number(formula.get("value")):
         output.append(float(formula["value"]))
+        return
+    if operation == "percent_of":
+        if _is_number(formula.get("percent")):
+            output.append(float(formula["percent"]))
+        return
+    if operation == "by_holder_range":
+        for branch in ("melee", "ranged"):
+            _collect_constants(formula.get(branch), output)
         return
     operands = formula.get("operands")
     if isinstance(operands, Sequence) and not isinstance(operands, (str, bytes)):
@@ -162,6 +182,12 @@ def _effect_numbers(effect: Mapping[str, Any]) -> list[float]:
     for limit in effect.get("limits") or []:
         if isinstance(limit, Mapping) and _is_number(limit.get("value")):
             numbers.append(float(limit["value"]))
+    stacks = effect.get("stacks")
+    if isinstance(stacks, Mapping):
+        for key in ("required", "max_stacks", "window_seconds"):
+            value = stacks.get(key)
+            if _is_number(value):
+                numbers.append(float(value))
     return numbers
 
 
@@ -416,19 +442,46 @@ class _CatalogChecker:
         self._check_scalar(effect.get("duration_seconds"), f"{pointer}.duration_seconds")
         self._check_stacks(effect.get("stacks"), f"{pointer}.stacks")
         self._check_limits(effect.get("limits"), f"{pointer}.limits")
+        sources = self._check_sources(effect.get("sources"), f"{pointer}.sources")
+        confidence = effect.get("evidence_confidence")
+        if confidence is not None and confidence not in EVIDENCE_CONFIDENCE:
+            self.fail(
+                f"{pointer}.evidence_confidence",
+                f"evidence_confidence must be one of {sorted(EVIDENCE_CONFIDENCE)}",
+            )
+        if sources and confidence is None:
+            self.fail(
+                f"{pointer}.evidence_confidence",
+                "effects with sources need an explicit evidence_confidence",
+            )
+        if confidence in {"secondary", "corroborated", "unverified"} and not sources:
+            self.fail(
+                f"{pointer}.sources",
+                f"evidence_confidence {confidence!r} needs at least one source",
+            )
+        if confidence == "official" and sources:
+            self.fail(
+                f"{pointer}.evidence_confidence",
+                "official evidence must come from the Data Dragon description, not sources",
+            )
+        if confidence == "corroborated" and len(sources) < 2:
+            self.fail(
+                f"{pointer}.sources",
+                "corroborated evidence needs at least two independent sources",
+            )
         status = effect.get("model_status")
         if status not in MODEL_STATUSES:
             self.fail(
                 f"{pointer}.model_status", f"model_status must be one of {sorted(MODEL_STATUSES)}"
             )
             return
-        if quote:
-            for number in _effect_numbers(effect):
-                if not _quote_has_number(quote, number):
-                    self.fail(
-                        f"{pointer}.quote",
-                        f"number {number!r} is not present in the quote",
-                    )
+        cited_texts = [quote, *(source["quote"] for source in sources)]
+        for number in _effect_numbers(effect):
+            if not any(_quote_has_number(text, number) for text in cited_texts):
+                self.fail(
+                    f"{pointer}.quote",
+                    f"number {number!r} is not present in any cited quote",
+                )
         derived = derived_effect_status(effect)
         if MODEL_STATUS_RANK[status] > MODEL_STATUS_RANK[derived]:
             self.fail(
@@ -455,6 +508,70 @@ class _CatalogChecker:
                 f"{pointer}.basis",
                 "description_partial needs at least one non-evaluable formula",
             )
+        if basis == "external_evidence_explicit":
+            if not sources:
+                self.fail(
+                    f"{pointer}.basis",
+                    "external_evidence_explicit needs at least one declared source",
+                )
+            if any(state != "evaluable" for state in formula_states):
+                self.fail(
+                    f"{pointer}.basis",
+                    "external_evidence_explicit requires every formula to be evaluable",
+                )
+
+    def _check_sources(self, sources: Any, pointer: str) -> list[Mapping[str, Any]]:
+        if sources is None:
+            return []
+        if not isinstance(sources, Sequence) or isinstance(sources, (str, bytes)):
+            self.fail(pointer, "sources must be a list")
+            return []
+        if not sources:
+            self.fail(pointer, "sources must not be empty when present")
+            return []
+        checked: list[Mapping[str, Any]] = []
+        for index, source in enumerate(sources):
+            item_pointer = f"{pointer}[{index}]"
+            if not isinstance(source, Mapping):
+                self.fail(item_pointer, "source must be an object")
+                continue
+            unknown = set(source) - _SOURCE_KEYS
+            if unknown:
+                self.fail(item_pointer, f"unknown source keys: {sorted(unknown)}")
+            if source.get("kind") not in EVIDENCE_KINDS:
+                self.fail(
+                    f"{item_pointer}.kind",
+                    f"source kind must be one of {sorted(EVIDENCE_KINDS)}",
+                )
+            if source.get("confidence") not in EVIDENCE_CONFIDENCE:
+                self.fail(
+                    f"{item_pointer}.confidence",
+                    f"source confidence must be one of {sorted(EVIDENCE_CONFIDENCE)}",
+                )
+            allowed_confidence = _SOURCE_CONFIDENCE.get(source.get("kind"))
+            if (
+                allowed_confidence is not None
+                and source.get("confidence") not in allowed_confidence
+            ):
+                self.fail(
+                    f"{item_pointer}.confidence",
+                    (f"source kind {source.get('kind')!r} cannot be {source.get('confidence')!r}"),
+                )
+            required_valid = True
+            for field in ("reference", "quote", "retrieved_at"):
+                value = source.get(field)
+                if not isinstance(value, str) or not value.strip():
+                    self.fail(
+                        f"{item_pointer}.{field}",
+                        f"source {field} must be a non-empty string",
+                    )
+                    required_valid = False
+            note = source.get("note")
+            if note is not None and (not isinstance(note, str) or not note.strip()):
+                self.fail(f"{item_pointer}.note", "source note must be a non-empty string")
+            if required_valid:
+                checked.append(source)
+        return checked
 
     def _check_trigger(self, trigger: Any, pointer: str) -> None:
         if not isinstance(trigger, Mapping):

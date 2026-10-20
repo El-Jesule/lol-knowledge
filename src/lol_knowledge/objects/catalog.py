@@ -230,11 +230,16 @@ def _build_object(entry: Mapping[str, Any], snapshot: Snapshot) -> dict[str, Any
     from_ids = item.get("from")
     from_counts = Counter(str(item_id) for item_id in from_ids or [])
     tags = item.get("tags")
-    verification = (
-        "description_quote_verified"
-        if entry.get("stats") or entry.get("effects")
-        else "official_field"
+    has_secondary_sources = any(
+        isinstance(effect, Mapping) and bool(effect.get("sources"))
+        for effect in entry.get("effects") or []
     )
+    if has_secondary_sources:
+        verification = "secondary_source_verified"
+    elif entry.get("stats") or entry.get("effects"):
+        verification = "description_quote_verified"
+    else:
+        verification = "official_field"
     return {
         "id": item_id,
         "name": item.get("name"),

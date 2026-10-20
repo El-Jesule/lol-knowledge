@@ -2,7 +2,7 @@
 
 from __future__ import annotations
 
-from dataclasses import replace
+from dataclasses import MISSING, fields, replace
 
 import pytest
 
@@ -47,6 +47,7 @@ def _request() -> DamageRequest:
             level=18,
             ability_ranks={"q": 5, "w": 5, "e": 5, "r": 3},
             stats=_stats(),
+            attack_range="melee",
         ),
         items=(ItemSlot("3153"), ItemSlot("3047")),
         runes=RuneState(rune_ids=(8005,), shards=("adaptive",)),
@@ -136,9 +137,26 @@ def test_ability_rank_must_be_positive() -> None:
     )
 
 
+def test_target_bonus_health_is_required() -> None:
+    target_fields = {field.name: field for field in fields(TargetProfile)}
+    assert target_fields["bonus_health"].default is MISSING
+
+
+def test_attack_range_must_be_melee_or_ranged() -> None:
+    request = _request()
+    champion = replace(request.champion, attack_range="siege")
+    assert any(
+        "attack_range" in problem
+        for problem in validate_request(replace(request, champion=champion))
+    )
+
+
 def test_formula_requirements_separate_target_stats(object_model) -> None:
     requirements = formula_stat_requirements(object_model)
-    assert requirements == {"champion": (), "target": ("current_health",)}
+    assert requirements == {
+        "champion": ("bonus_armor",),
+        "target": ("bonus_health", "current_health"),
+    }
 
 
 def test_outcome_states_are_the_four_documented_ones() -> None:
@@ -156,4 +174,5 @@ def test_required_stat_sheet_is_complete() -> None:
     assert "attack_damage" in sheet
     assert "lethality" in sheet
     assert "magic_penetration_percent" in sheet
+    assert "magic_penetration_flat" in sheet
     assert len(sheet) == len(set(sheet))

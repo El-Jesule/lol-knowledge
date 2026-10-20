@@ -15,13 +15,14 @@
 | Comprobar el snapshot | [manifest.json](../data/current/manifest.json) |
 | Entender el modelo mecánico de objetos | [Modelo de objetos](objects/README.md) |
 | Ver el catálogo curado de objetos | [catalog.json](objects/catalog.json) |
+| Ver la evidencia de las mecánicas de objetos | [Informe de mecánicas](../research/reports/object-mechanics-2026-10-20.md) |
 | Continuar la investigación de datos de Zaahen | [Documento de continuidad](../research/zaahen-research-handoff.md) |
 
 ## Cobertura actual
 
 Un campeón con análisis completo y datos oficiales de los 173 campeones en `data/current/`. La cobertura crece de uno en uno: cada campeón nuevo reutiliza esta estructura.
 
-El modelo mecánico de objetos cubre una muestra de **13 objetos** elegidos por diversidad mecánica; no es cobertura completa. Los límites están en [Modelo de objetos](objects/README.md).
+El modelo mecánico de objetos cubre una muestra de **15 objetos** elegidos por diversidad mecánica; no es cobertura completa. Las cifras que Data Dragon no publica se registran con fuente citada y confianza secundaria. Los límites están en [Modelo de objetos](objects/README.md).
 
 ## Aviso de fuentes
 
