@@ -194,7 +194,12 @@ def extract_champion(
         tooltip = extract_tooltip(spell, path)
         bot_data = summarize_bot_data(node, spell_path=path, context=context)
         child_spells: list[dict[str, Any]] = []
-        for child_path in descriptor["children"]:
+        child_paths: list[str] = []
+        for item in descriptor["children"]:
+            if item == path or item in child_paths:
+                continue
+            child_paths.append(item)
+        for child_path in child_paths:
             child_node = document.get(child_path)
             if not isinstance(child_node, Mapping):
                 diagnostics.append(
@@ -273,7 +278,7 @@ def extract_champion(
                 mana=mana,
                 cast_range=cast_range,
                 tooltip=tooltip,
-                children=[str(item) for item in descriptor["children"]],
+                children=child_paths,
                 child_spells=child_spells,
                 bot_data=bot_data,
                 diagnostics=[],

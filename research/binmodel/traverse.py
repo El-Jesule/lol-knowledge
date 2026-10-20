@@ -524,13 +524,53 @@ def _field(raw: Mapping[str, Any], hash_key: str, default: Any = None) -> Any:
     return default
 
 
+def _spell_calculations(document: Mapping[str, Any], path: str | None) -> Mapping[str, Any] | None:
+    if not isinstance(path, str):
+        return None
+    node = document.get(path)
+    if not isinstance(node, Mapping):
+        return None
+    spell = node.get("mSpell")
+    if not isinstance(spell, Mapping):
+        return None
+    calculations = spell.get("mSpellCalculations")
+    return calculations if isinstance(calculations, Mapping) else None
+
+
+def _spell_data_value_names(document: Mapping[str, Any], path: str | None) -> set[str] | None:
+    if not isinstance(path, str):
+        return None
+    node = document.get(path)
+    if not isinstance(node, Mapping):
+        return None
+    spell = node.get("mSpell")
+    if not isinstance(spell, Mapping):
+        return None
+    entries = spell.get("DataValues")
+    if not isinstance(entries, Sequence) or isinstance(entries, (str, bytes)):
+        return None
+    return {
+        entry["name"]
+        for entry in entries
+        if isinstance(entry, Mapping) and isinstance(entry.get("name"), str)
+    }
+
+
 def _node_base(
     context: TraversalContext,
     raw: Mapping[str, Any],
     pointer: str,
 ) -> dict[str, Any]:
+    type_description = context.registry.describe_type(raw.get("__type"))
+    if type_description.get("name"):
+        confidence = "source_explicit"
+    elif type_description.get("provisional_name"):
+        confidence = "inferred"
+    else:
+        confidence = "unverified"
     return {
-        "type": context.registry.describe_type(raw.get("__type")),
+        "type": type_description,
+        "confidence": confidence,
         "provenance": context.provenance(pointer),
     }
 
@@ -552,6 +592,7 @@ def _unresolved(
     else:
         node["type"] = None
         node["provenance"] = context.provenance(pointer)
+    node["confidence"] = "unverified"
     node.update(extra)
     context.unresolved.append(
         {
@@ -584,6 +625,7 @@ def _stat_part(
     node = _node_base(context, raw, pointer)
     node["kind"] = "stat_scaled"
     node["stat"] = stat
+    node["confidence"] = stat["confidence"]
     return node
 
 
@@ -615,6 +657,7 @@ def parse_part(
         node["kind"] = "effect_value"
         node["effect_index"] = part.get("mEffectIndex")
         node["resolved"] = False
+        node["confidence"] = "unverified"
         context.unresolved.append(
             {
                 "pointer": pointer,
@@ -704,6 +747,7 @@ def parse_part(
     if type_value == "GameCalculationModified":
         node = _node_base(context, part, pointer)
         node["kind"] = "modified"
+        node["confidence"] = "source_explicit"
         node["tooltip_only"] = part.get("tooltipOnly", False)
         node["base_calculation"] = part.get("mModifiedGameCalculation")
         multiplier = part.get("mMultiplier")
@@ -744,21 +788,87 @@ def parse_part(
     if type_value == "{f3cbe7b2}":
         node = _node_base(context, part, pointer)
         node["kind"] = "calculation_reference"
-        node["key"] = part.get("mSpellCalculationKey")
+        key = part.get("mSpellCalculationKey")
+        node["key"] = key
+        calculations = _spell_calculations(context.document, context.spell_path)
+        if not isinstance(key, str) or calculations is None or key not in calculations:
+            node["confidence"] = "unverified"
+            context.unresolved.append(
+                {
+                    "pointer": pointer,
+                    "source_path": context.spell_path,
+                    "reason": "missing calculation target",
+                    "target": key,
+                    "type": node.get("type"),
+                    "raw": None,
+                }
+            )
+        else:
+            node["confidence"] = "source_explicit"
         return node
 
     if type_value == "{ba007871}":
         node = _node_base(context, part, pointer)
         node["kind"] = "external_calculation_reference"
-        node["source_object"] = part.get("SourceObject")
-        node["key"] = part.get("CalculationKey")
+        source = part.get("SourceObject")
+        key = _field(part, "3de6ce2d")
+        node["source_object"] = source
+        node["key"] = key
+        calculations = _spell_calculations(context.document, source)
+        if not isinstance(key, str) or calculations is None or key not in calculations:
+            node["confidence"] = "unverified"
+            context.unresolved.append(
+                {
+                    "pointer": pointer,
+                    "source_path": context.spell_path,
+                    "reason": "missing external calculation target",
+                    "source_object": source,
+                    "target": key,
+                    "type": node.get("type"),
+                    "raw": None,
+                }
+            )
+        else:
+            node["confidence"] = "source_explicit"
         return node
 
     if type_value == "{9e9e2e5c}":
         node = _node_base(context, part, pointer)
         node["kind"] = "external_data_value"
-        node["source_object"] = part.get("SourceObject")
-        node["name"] = part.get("DataValue")
+        source = part.get("SourceObject")
+        name = part.get("DataValue")
+        node["source_object"] = source
+        node["name"] = name
+        names = _spell_data_value_names(context.document, source)
+        resolved_name = name
+        if isinstance(name, str) and names is not None and name not in names:
+            matches = [candidate for candidate in names if candidate.lower() == name.lower()]
+            if len(matches) == 1:
+                resolved_name = matches[0]
+                context.diagnostic(
+                    "info",
+                    "case_insensitive_reference",
+                    pointer,
+                    f"Resolved data value {name!r} as {resolved_name!r}.",
+                    requested=name,
+                    resolved=resolved_name,
+                )
+        node["name"] = resolved_name
+        if not isinstance(resolved_name, str) or names is None or resolved_name not in names:
+            node["confidence"] = "unverified"
+            context.unresolved.append(
+                {
+                    "pointer": pointer,
+                    "source_path": context.spell_path,
+                    "reason": "missing external data value",
+                    "source_object": source,
+                    "target": name,
+                    "type": node.get("type"),
+                    "raw": None,
+                }
+            )
+        else:
+            node["confidence"] = "source_explicit"
         return node
 
     if type_value == "{b09016f6}":
@@ -806,6 +916,7 @@ def parse_calculation(
     if type_value == "GameCalculationConditional":
         node = _node_base(context, calculation, pointer)
         node["kind"] = "conditional"
+        node["confidence"] = "inferred"
         node["default_calculation"] = calculation.get("mDefaultGameCalculation")
         node["conditional_calculation"] = calculation.get("mConditionalGameCalculation")
         requirement = calculation.get("mConditionalCalculationRequirements")

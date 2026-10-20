@@ -60,12 +60,16 @@ def _sha256(path: Path) -> str:
 
 
 def _summary(extract, *, validation: dict[str, Any] | None, damage: dict[str, Any] | None) -> str:
-    bot_unresolved = sum(
-        len(item.bot_data.get("unresolved", [])) for item in extract.abilities if item.bot_data
-    )
-    bot_calculations = sum(
-        len(item.bot_data.get("calculations", [])) for item in extract.abilities if item.bot_data
-    )
+    bot_unresolved = 0
+    bot_calculations = 0
+    for item in extract.abilities:
+        if item.bot_data:
+            bot_unresolved += len(item.bot_data.get("unresolved", []))
+            bot_calculations += len(item.bot_data.get("calculations", []))
+        for child in item.child_spells:
+            child_bot = child.get("bot_data") or {}
+            bot_unresolved += len(child_bot.get("unresolved", []))
+            bot_calculations += len(child_bot.get("calculations", []))
     lines = [
         f"champion: {extract.champion['id']}",
         f"game version: {extract.game_version}",

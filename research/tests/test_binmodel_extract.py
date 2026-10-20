@@ -124,8 +124,8 @@ def test_passive_interpolation_tree_and_missing_values(extract_document):
         "ByCharLevelNamedDataValuesInterpolationCalculationPart"
     )
     codes = [item.code for item in extract.diagnostics if "ZaahenPassive" in item.path]
-    # Base and cherry mode both reference the two values without a values array.
-    assert codes.count("missing_data_value_values") == 4
+    # The two values without a values array are referenced from the base mode.
+    assert codes.count("missing_data_value_values") == 2
 
 
 def test_provenance_is_attached_to_nodes(extract_document):

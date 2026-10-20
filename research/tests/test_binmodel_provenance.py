@@ -70,7 +70,11 @@ def test_all_24_game_calculations_have_a_typed_tree():
     def collect(node):
         if isinstance(node, dict):
             provenance = node.get("provenance")
-            if isinstance(provenance, dict) and "json_pointer" in provenance:
+            if (
+                node.get("kind") == "game_calculation"
+                and isinstance(provenance, dict)
+                and "json_pointer" in provenance
+            ):
                 seen.add(provenance["json_pointer"])
             for value in node.values():
                 collect(value)
