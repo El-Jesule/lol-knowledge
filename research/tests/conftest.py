@@ -21,6 +21,16 @@ def bin_document():
 
 
 @pytest.fixture
+def extract_document():
+    return load_json(RESEARCH_ROOT / "fixtures" / "zaahen_extract_min.json")
+
+
+@pytest.fixture
+def darius_document():
+    return load_json(RESEARCH_ROOT / "fixtures" / "darius_extract_min.json")
+
+
+@pytest.fixture
 def ddragon_document():
     return load_json(REPO_ROOT / "data" / "current" / "champions" / "Zaahen.json")
 

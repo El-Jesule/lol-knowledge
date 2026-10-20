@@ -1,0 +1,1362 @@
+{
+  "_provenance": {
+    "source": "communitydragon",
+    "url": "https://raw.communitydragon.org/16.20/game/data/characters/darius/darius.bin.json",
+    "content_version": "16.20.8248524+branch.releases-16-20.content.release",
+    "source_sha256": "eeafed29a3741f2c096094a6c5139c9d7b9830a489a452a2b54c161ea986df91",
+    "selection": "Root stat fields and spell lists; passive/Q/W/E/R spell objects with DataValues, mode overrides, mSpellCalculations, cooldown/mana/range vectors and tooltip level lists; ability objects with root/child spells. BotData, buffs, animations and skins are omitted."
+  },
+  "Characters/Darius/CharacterRecords/Root": {
+    "mCharacterName": "Darius",
+    "baseHPModifiable": {
+      "baseValue": 652.0,
+      "__type": "ModifiableFloat"
+    },
+    "hpPerLevelModifiable": {
+      "baseValue": 114.0,
+      "__type": "ModifiableFloat"
+    },
+    "baseStaticHPRegenModifiable": {
+      "baseValue": 2.0,
+      "__type": "ModifiableFloat"
+    },
+    "hpRegenPerLevelModifiable": {
+      "baseValue": 0.1899999976158142,
+      "__type": "ModifiableFloat"
+    },
+    "baseDamageModifiable": {
+      "baseValue": 64.0,
+      "__type": "ModifiableFloat"
+    },
+    "damagePerLevelModifiable": {
+      "baseValue": 5.0,
+      "__type": "ModifiableFloat"
+    },
+    "baseArmorModifiable": {
+      "baseValue": 37.0,
+      "__type": "ModifiableFloat"
+    },
+    "armorPerLevelModifiable": {
+      "baseValue": 5.199999809265137,
+      "__type": "ModifiableFloat"
+    },
+    "baseMR": {
+      "baseValue": 32.0,
+      "__type": "ModifiableFloat"
+    },
+    "mrPerLevel": {
+      "baseValue": 2.049999952316284,
+      "__type": "ModifiableFloat"
+    },
+    "baseMoveSpeedModifiable": {
+      "baseValue": 340.0,
+      "__type": "ModifiableFloat"
+    },
+    "attackRangeModifiable": {
+      "baseValue": 175.0,
+      "__type": "ModifiableFloat"
+    },
+    "attackSpeedModifiable": {
+      "baseValue": 0.625,
+      "__type": "ModifiableFloat"
+    },
+    "attackSpeedRatioModifiable": {
+      "baseValue": 0.625,
+      "__type": "ModifiableFloat"
+    },
+    "attackSpeedPerLevelModifiable": {
+      "baseValue": 1.0,
+      "__type": "ModifiableFloat"
+    },
+    "spells": [
+      "Characters/Darius/Spells/DariusCleaveAbility/DariusCleave",
+      "Characters/Darius/Spells/DariusNoxianTacticsONHAbility/DariusNoxianTacticsONH",
+      "Characters/Darius/Spells/DariusAxeGrabConeAbility/DariusAxeGrabCone",
+      "Characters/Darius/Spells/DariusExecuteAbility/DariusExecute"
+    ],
+    "mAbilities": [
+      "Characters/Darius/Spells/DariusExecuteAbility",
+      "Characters/Darius/Spells/DariusCleaveAbility",
+      "Characters/Darius/Spells/DariusNoxianTacticsONHAbility",
+      "Characters/Darius/Spells/DariusAxeGrabConeAbility",
+      "Characters/Darius/Spells/DariusHemoMarkerAbility"
+    ],
+    "mCharacterPassiveSpell": "Characters/Darius/Spells/DariusHemoMarkerAbility/DariusHemoMarker",
+    "passiveName": "Spell_DariusHemoMarker_Name",
+    "passiveToolTip": "Spell_DariusHemoMarker_Summary",
+    "__type": "CharacterRecord"
+  },
+  "Characters/Darius/Spells/DariusHemoMarkerAbility/DariusHemoMarker": {
+    "ObjectName": "DariusHemoMarker",
+    "objectPath": "Characters/Darius/Spells/DariusHemoMarkerAbility/DariusHemoMarker",
+    "mScriptName": "DariusHemoMarker",
+    "__type": "SpellObject",
+    "mSpell": {
+      "DataValues": [
+        {
+          "name": "MonsterMod",
+          "values": [
+            2.5,
+            2.5,
+            2.5,
+            2.5,
+            2.5,
+            2.5,
+            2.5
+          ],
+          "__type": "SpellDataValue"
+        },
+        {
+          "name": "SecondsPerTick",
+          "values": [
+            1.2599999904632568,
+            1.2599999904632568,
+            1.2599999904632568,
+            1.2599999904632568,
+            1.2599999904632568,
+            1.2599999904632568,
+            1.2599999904632568
+          ],
+          "__type": "SpellDataValue"
+        },
+        {
+          "name": "BleedDuration",
+          "values": [
+            5.0,
+            5.0,
+            5.0,
+            5.0,
+            5.0,
+            5.0,
+            5.0
+          ],
+          "__type": "SpellDataValue"
+        },
+        {
+          "name": "MaxStacks",
+          "values": [
+            5.0,
+            5.0,
+            5.0,
+            5.0,
+            5.0,
+            5.0,
+            5.0
+          ],
+          "__type": "SpellDataValue"
+        }
+      ],
+      "mSpellCalculations": {
+        "BleedDamagePerStack": {
+          "mFormulaParts": [
+            {
+              "mStartValue": 13.0,
+              "mEndValue": 30.0,
+              "__type": "ByCharLevelInterpolationCalculationPart"
+            },
+            {
+              "mStat": 2,
+              "mStatFormula": 2,
+              "mCoefficient": 0.30000001192092896,
+              "__type": "StatByCoefficientCalculationPart"
+            }
+          ],
+          "__type": "GameCalculation"
+        },
+        "NoxianMightBonusAD": {
+          "mFormulaParts": [
+            {
+              "mLevel1Value": 30.0,
+              "mInitialBonusPerLevel": 5.0,
+              "mBreakpoints": [
+                {
+                  "mLevel": 11,
+                  "mBonusPerLevelAtAndAfter": 10.0,
+                  "__type": "Breakpoint"
+                },
+                {
+                  "mLevel": 14,
+                  "mBonusPerLevelAtAndAfter": 25.0,
+                  "__type": "Breakpoint"
+                }
+              ],
+              "__type": "ByCharLevelBreakpointsCalculationPart"
+            }
+          ],
+          "__type": "GameCalculation"
+        }
+      },
+      "mClientData": {
+        "__type": "SpellDataResourceClient",
+        "mTooltipData": {
+          "mObjectName": "DariusHemoMarker",
+          "mFormat": "{476ec0b8}",
+          "mLocKeys": {
+            "keyName": "Spell_DariusHemoMarker_Name",
+            "keySummary": "Spell_DariusHemoMarker_Summary",
+            "keyTooltip": "Spell_DariusHemoMarker_Tooltip",
+            "keyTooltipExtended": "Spell_DariusHemoMarker_TooltipExtended"
+          },
+          "mLists": null,
+          "__type": "TooltipInstanceSpell"
+        }
+      }
+    }
+  },
+  "Characters/Darius/Spells/DariusCleaveAbility/DariusCleave": {
+    "ObjectName": "DariusCleave",
+    "objectPath": "Characters/Darius/Spells/DariusCleaveAbility/DariusCleave",
+    "mScriptName": "DariusCleave",
+    "__type": "SpellObject",
+    "mSpell": {
+      "DataValues": [
+        {
+          "name": "MissingHealthHeal",
+          "values": [
+            17.0,
+            17.0,
+            17.0,
+            17.0,
+            17.0,
+            17.0,
+            17.0
+          ],
+          "__type": "SpellDataValue"
+        },
+        {
+          "name": "TotalADRatio",
+          "values": [
+            90.0,
+            100.0,
+            110.0,
+            120.0,
+            130.0,
+            140.0,
+            150.0
+          ],
+          "__type": "SpellDataValue"
+        },
+        {
+          "name": "BaseDamage",
+          "values": [
+            10.0,
+            50.0,
+            80.0,
+            110.0,
+            140.0,
+            170.0,
+            200.0
+          ],
+          "__type": "SpellDataValue"
+        },
+        {
+          "name": "InnerCircleDamagePercent",
+          "values": [
+            35.0,
+            35.0,
+            35.0,
+            35.0,
+            35.0,
+            35.0,
+            35.0
+          ],
+          "__type": "SpellDataValue"
+        },
+        {
+          "name": "MissingHealPercent",
+          "values": [
+            51.0,
+            51.0,
+            51.0,
+            51.0,
+            51.0,
+            51.0,
+            51.0
+          ],
+          "__type": "SpellDataValue"
+        }
+      ],
+      "DataValuesModeOverride": {
+        "cherry": {
+          "SpellDataValues": [
+            {
+              "name": "MissingHealthHeal",
+              "values": [
+                10.0,
+                10.0,
+                10.0,
+                10.0,
+                10.0,
+                10.0,
+                10.0
+              ],
+              "__type": "SpellDataValue"
+            },
+            {
+              "name": "TotalADRatio",
+              "values": [
+                70.0,
+                80.0,
+                90.0,
+                100.0,
+                110.0,
+                120.0,
+                130.0
+              ],
+              "__type": "SpellDataValue"
+            }
+          ],
+          "__type": "SpellDataValueVector"
+        }
+      },
+      "mSpellCalculations": {
+        "BladeDamage": {
+          "tooltipOnly": true,
+          "mFormulaParts": [
+            {
+              "mDataValue": "BaseDamage",
+              "__type": "NamedDataValueCalculationPart"
+            },
+            {
+              "mStat": 2,
+              "mSubpart": {
+                "mPart1": {
+                  "mDataValue": "TotalADRatio",
+                  "__type": "NamedDataValueCalculationPart"
+                },
+                "mPart2": {
+                  "mNumber": 0.009999999776482582,
+                  "__type": "NumberCalculationPart"
+                },
+                "__type": "ProductOfSubPartsCalculationPart"
+              },
+              "__type": "StatBySubPartCalculationPart"
+            }
+          ],
+          "__type": "GameCalculation"
+        },
+        "HandleDamage": {
+          "mMultiplier": {
+            "mNumber": 0.3499999940395355,
+            "__type": "NumberCalculationPart"
+          },
+          "tooltipOnly": true,
+          "mModifiedGameCalculation": "BladeDamage",
+          "__type": "GameCalculationModified"
+        }
+      },
+      "Cooldown": {
+        "values": [
+          10.0,
+          9.0,
+          8.0,
+          7.0,
+          6.0,
+          5.0,
+          5.0
+        ],
+        "__type": "{0a0eddc9}"
+      },
+      "cooldownTime": [
+        10.0,
+        9.0,
+        8.0,
+        7.0,
+        6.0,
+        5.0,
+        5.0
+      ],
+      "mana": [
+        25.0,
+        30.0,
+        35.0,
+        40.0,
+        45.0,
+        50.0
+      ],
+      "manaValues": {
+        "values": [
+          25.0,
+          30.0,
+          35.0,
+          40.0,
+          45.0,
+          50.0
+        ],
+        "{0a3e0478}": 25.0,
+        "__type": "{630af303}"
+      },
+      "castRange": [
+        270.0,
+        270.0,
+        270.0,
+        270.0,
+        270.0,
+        270.0,
+        270.0
+      ],
+      "castRangeValues": {
+        "values": [
+          270.0,
+          270.0,
+          270.0,
+          270.0,
+          270.0,
+          270.0,
+          270.0
+        ],
+        "{0a3e0478}": 270.0,
+        "__type": "{0a0eddc9}"
+      },
+      "mClientData": {
+        "__type": "SpellDataResourceClient",
+        "mTooltipData": {
+          "mObjectName": "DariusCleave",
+          "mFormat": "{d7c27163}",
+          "mLocKeys": {
+            "keyName": "Spell_DariusQ_Name",
+            "keySummary": "Spell_DariusQ_Summary",
+            "keyTooltip": "Spell_DariusQ_Tooltip",
+            "keyTooltipSimple": "Spell_DariusQ_TooltipSimple"
+          },
+          "mLists": {
+            "LevelUp": {
+              "levelCount": 5,
+              "Elements": [
+                {
+                  "type": "BaseDamage",
+                  "nameOverride": "Spell_ListType_Damage",
+                  "__type": "TooltipInstanceListElement"
+                },
+                {
+                  "type": "TotalADRatio",
+                  "nameOverride": "Spell_ListType_TotalADScalar",
+                  "Style": 1,
+                  "__type": "TooltipInstanceListElement"
+                },
+                {
+                  "type": "Cooldown",
+                  "__type": "TooltipInstanceListElement"
+                },
+                {
+                  "type": "Cost",
+                  "__type": "TooltipInstanceListElement"
+                }
+              ],
+              "__type": "TooltipInstanceList"
+            }
+          },
+          "__type": "TooltipInstanceSpell"
+        }
+      }
+    }
+  },
+  "Characters/Darius/Spells/DariusNoxianTacticsONHAbility/DariusNoxianTacticsONH": {
+    "ObjectName": "DariusNoxianTacticsONH",
+    "objectPath": "Characters/Darius/Spells/DariusNoxianTacticsONHAbility/DariusNoxianTacticsONH",
+    "mScriptName": "DariusNoxianTacticsONH",
+    "__type": "SpellObject",
+    "mSpell": {
+      "DataValues": [
+        {
+          "name": "SlowPercent",
+          "values": [
+            90.0,
+            90.0,
+            90.0,
+            90.0,
+            90.0,
+            90.0,
+            90.0
+          ],
+          "__type": "SpellDataValue"
+        },
+        {
+          "name": "PercentCDRefund",
+          "values": [
+            50.0,
+            50.0,
+            50.0,
+            50.0,
+            50.0,
+            50.0,
+            50.0
+          ],
+          "__type": "SpellDataValue"
+        },
+        {
+          "name": "ADRatio",
+          "values": [
+            1.5,
+            1.399999976158142,
+            1.4500000476837158,
+            1.5,
+            1.5499999523162842,
+            1.600000023841858,
+            1.649999976158142
+          ],
+          "__type": "SpellDataValue"
+        },
+        {
+          "name": "SlowDuration",
+          "values": [
+            1.0,
+            1.0,
+            1.0,
+            1.0,
+            1.0,
+            1.0,
+            1.0
+          ],
+          "__type": "SpellDataValue"
+        }
+      ],
+      "mSpellCalculations": {
+        "EmpoweredAttackDamage": {
+          "tooltipOnly": true,
+          "mFormulaParts": [
+            {
+              "mStat": 2,
+              "mSubpart": {
+                "mDataValue": "ADRatio",
+                "__type": "NamedDataValueCalculationPart"
+              },
+              "__type": "StatBySubPartCalculationPart"
+            }
+          ],
+          "__type": "GameCalculation"
+        }
+      },
+      "Cooldown": {
+        "values": [
+          5.0,
+          5.0,
+          5.0,
+          5.0,
+          5.0,
+          5.0,
+          5.0
+        ],
+        "{0a3e0478}": 5.0,
+        "__type": "{0a0eddc9}"
+      },
+      "cooldownTime": [
+        5.0,
+        5.0,
+        5.0,
+        5.0,
+        5.0,
+        5.0,
+        5.0
+      ],
+      "mana": [
+        40.0,
+        40.0,
+        40.0,
+        40.0,
+        40.0,
+        40.0
+      ],
+      "manaValues": {
+        "values": [
+          40.0,
+          40.0,
+          40.0,
+          40.0,
+          40.0,
+          40.0
+        ],
+        "{0a3e0478}": 40.0,
+        "__type": "{630af303}"
+      },
+      "castRange": [
+        300.0,
+        300.0,
+        300.0,
+        300.0,
+        300.0,
+        300.0,
+        300.0
+      ],
+      "castRangeValues": {
+        "values": [
+          300.0,
+          300.0,
+          300.0,
+          300.0,
+          300.0,
+          300.0,
+          300.0
+        ],
+        "{0a3e0478}": 300.0,
+        "__type": "{0a0eddc9}"
+      },
+      "mClientData": {
+        "__type": "SpellDataResourceClient",
+        "mTooltipData": {
+          "mObjectName": "DariusNoxianTacticsONH",
+          "mFormat": "{d7c27163}",
+          "mLocKeys": {
+            "keyName": "Spell_DariusW_Name",
+            "keySummary": "Spell_DariusW_Summary",
+            "keyTooltip": "Spell_DariusW_Tooltip",
+            "keyTooltipSimple": "Spell_DariusW_TooltipSimple"
+          },
+          "mLists": {
+            "LevelUp": {
+              "levelCount": 5,
+              "Elements": [
+                {
+                  "type": "ADRatio",
+                  "multiplier": 100.0,
+                  "nameOverride": "Spell_ListType_TotalADScalar",
+                  "__type": "TooltipInstanceListElement"
+                }
+              ],
+              "__type": "TooltipInstanceList"
+            }
+          },
+          "__type": "TooltipInstanceSpell"
+        }
+      }
+    }
+  },
+  "Characters/Darius/Spells/DariusAxeGrabConeAbility/DariusAxeGrabCone": {
+    "ObjectName": "DariusAxeGrabCone",
+    "objectPath": "Characters/Darius/Spells/DariusAxeGrabConeAbility/DariusAxeGrabCone",
+    "mScriptName": "DariusAxeGrabCone",
+    "__type": "SpellObject",
+    "mSpell": {
+      "DataValues": [
+        {
+          "name": "PassivePercentArmorPen",
+          "values": [
+            20.0,
+            20.0,
+            25.0,
+            30.0,
+            35.0,
+            40.0,
+            45.0
+          ],
+          "__type": "SpellDataValue"
+        },
+        {
+          "name": "SlowPercent",
+          "values": [
+            40.0,
+            40.0,
+            40.0,
+            40.0,
+            40.0,
+            40.0,
+            40.0
+          ],
+          "__type": "SpellDataValue"
+        },
+        {
+          "name": "SlowDuration",
+          "values": [
+            1.0,
+            1.0,
+            1.0,
+            1.0,
+            1.0,
+            1.0,
+            1.0
+          ],
+          "__type": "SpellDataValue"
+        }
+      ],
+      "Cooldown": {
+        "values": [
+          26.0,
+          26.0,
+          23.5,
+          21.0,
+          18.5,
+          16.0,
+          16.0
+        ],
+        "__type": "{0a0eddc9}"
+      },
+      "cooldownTime": [
+        26.0,
+        26.0,
+        23.5,
+        21.0,
+        18.5,
+        16.0,
+        16.0
+      ],
+      "mana": [
+        70.0,
+        60.0,
+        50.0,
+        40.0,
+        30.0,
+        20.0
+      ],
+      "manaValues": {
+        "values": [
+          70.0,
+          60.0,
+          50.0,
+          40.0,
+          30.0,
+          20.0
+        ],
+        "{0a3e0478}": 70.0,
+        "__type": "{630af303}"
+      },
+      "castRange": [
+        550.0,
+        550.0,
+        550.0,
+        550.0,
+        550.0,
+        550.0,
+        550.0
+      ],
+      "castRangeValues": {
+        "values": [
+          550.0,
+          550.0,
+          550.0,
+          550.0,
+          550.0,
+          550.0,
+          550.0
+        ],
+        "{0a3e0478}": 550.0,
+        "__type": "{0a0eddc9}"
+      },
+      "mClientData": {
+        "__type": "SpellDataResourceClient",
+        "mTooltipData": {
+          "mObjectName": "DariusAxeGrabCone",
+          "mFormat": "{d7c27163}",
+          "mLocKeys": {
+            "keyName": "Spell_DariusE_Name",
+            "keySummary": "Spell_DariusE_Summary",
+            "keyTooltip": "Spell_DariusE_Tooltip",
+            "keyTooltipSimple": "Spell_DariusE_TooltipSimple"
+          },
+          "mLists": {
+            "LevelUp": {
+              "levelCount": 5,
+              "Elements": [
+                {
+                  "type": "PassivePercentArmorPen",
+                  "nameOverride": "Spell_DariusE_PercentageArmorPenetration",
+                  "__type": "TooltipInstanceListElement"
+                },
+                {
+                  "type": "Cost",
+                  "__type": "TooltipInstanceListElement"
+                },
+                {
+                  "type": "Cooldown",
+                  "__type": "TooltipInstanceListElement"
+                }
+              ],
+              "__type": "TooltipInstanceList"
+            }
+          },
+          "__type": "TooltipInstanceSpell"
+        }
+      }
+    }
+  },
+  "Characters/Darius/Spells/DariusExecuteAbility/DariusExecute": {
+    "ObjectName": "DariusExecute",
+    "objectPath": "Characters/Darius/Spells/DariusExecuteAbility/DariusExecute",
+    "mScriptName": "DariusExecute",
+    "__type": "SpellObject",
+    "mSpell": {
+      "DataValues": [
+        {
+          "name": "RBaseDamage",
+          "values": [
+            0.0,
+            125.0,
+            250.0,
+            375.0,
+            500.0,
+            625.0,
+            750.0
+          ],
+          "__type": "SpellDataValue"
+        },
+        {
+          "name": "RDamagePercentPerHemoStack",
+          "values": [
+            0.20000000298023224,
+            0.20000000298023224,
+            0.20000000298023224,
+            0.20000000298023224,
+            0.20000000298023224,
+            0.20000000298023224,
+            0.20000000298023224
+          ],
+          "__type": "SpellDataValue"
+        },
+        {
+          "name": "RRecastDuration",
+          "values": [
+            20.0,
+            20.0,
+            20.0,
+            20.0,
+            20.0,
+            20.0,
+            20.0
+          ],
+          "__type": "SpellDataValue"
+        }
+      ],
+      "mSpellCalculations": {
+        "Damage": {
+          "mFormulaParts": [
+            {
+              "mDataValue": "RBaseDamage",
+              "__type": "NamedDataValueCalculationPart"
+            },
+            {
+              "mStat": 2,
+              "mStatFormula": 2,
+              "mCoefficient": 0.75,
+              "__type": "StatByCoefficientCalculationPart"
+            }
+          ],
+          "__type": "GameCalculation"
+        },
+        "MaximumDamage": {
+          "mMultiplier": {
+            "mNumber": 2.0,
+            "__type": "NumberCalculationPart"
+          },
+          "tooltipOnly": true,
+          "mModifiedGameCalculation": "Damage",
+          "__type": "GameCalculationModified"
+        }
+      },
+      "Cooldown": {
+        "values": [
+          120.0,
+          120.0,
+          100.0,
+          80.0,
+          6.0,
+          6.0,
+          6.0
+        ],
+        "__type": "{0a0eddc9}"
+      },
+      "cooldownTime": [
+        120.0,
+        120.0,
+        100.0,
+        80.0,
+        6.0,
+        6.0,
+        6.0
+      ],
+      "mana": [
+        100.0,
+        100.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0
+      ],
+      "manaValues": {
+        "values": [
+          100.0,
+          100.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "__type": "{630af303}"
+      },
+      "castRange": [
+        475.0,
+        475.0,
+        475.0,
+        475.0,
+        475.0,
+        475.0,
+        375.0
+      ],
+      "castRangeValues": {
+        "values": [
+          475.0,
+          475.0,
+          475.0,
+          475.0,
+          475.0,
+          475.0,
+          375.0
+        ],
+        "__type": "{0a0eddc9}"
+      },
+      "mClientData": {
+        "__type": "SpellDataResourceClient",
+        "mTooltipData": {
+          "mObjectName": "DariusExecute",
+          "mFormat": "{d7c27163}",
+          "mLocKeys": {
+            "keyName": "Spell_DariusR_Name",
+            "keySummary": "Spell_DariusR_Summary",
+            "keyTooltip": "Spell_DariusR_Tooltip",
+            "keyTooltipSimple": "Spell_DariusR_TooltipSimple"
+          },
+          "mLists": {
+            "LevelUp": {
+              "levelCount": 3,
+              "Elements": [
+                {
+                  "type": "RBaseDamage",
+                  "typeIndex": 1,
+                  "nameOverride": "Spell_ListType_Damage",
+                  "__type": "TooltipInstanceListElement"
+                },
+                {
+                  "type": "Cooldown",
+                  "nameOverride": "Spell_ListType_Cooldown",
+                  "__type": "TooltipInstanceListElement"
+                }
+              ],
+              "__type": "TooltipInstanceList"
+            }
+          },
+          "__type": "TooltipInstanceSpell"
+        }
+      }
+    }
+  },
+  "Characters/Darius/Spells/DariusExecuteAbility": {
+    "mRootSpell": "Characters/Darius/Spells/DariusExecuteAbility/DariusExecute",
+    "mChildSpells": [
+      "Characters/Darius/Spells/DariusExecuteAbility/DariusExecuteMulticast"
+    ],
+    "mName": "DariusExecuteAbility",
+    "__type": "AbilityObject"
+  },
+  "Characters/Darius/Spells/DariusCleaveAbility": {
+    "mRootSpell": "Characters/Darius/Spells/DariusCleaveAbility/DariusCleave",
+    "mChildSpells": [
+      "Characters/Darius/Spells/DariusCleaveAbility/DariusCleave",
+      "Characters/Darius/Spells/DariusCleaveAbility/DariusCleaveCloseTarget"
+    ],
+    "mName": "DariusCleaveAbility",
+    "__type": "AbilityObject"
+  },
+  "Characters/Darius/Spells/DariusNoxianTacticsONHAbility": {
+    "mRootSpell": "Characters/Darius/Spells/DariusNoxianTacticsONHAbility/DariusNoxianTacticsONH",
+    "mChildSpells": [
+      "Characters/Darius/Spells/DariusNoxianTacticsONHAbility/DariusNoxianTacticsONH",
+      "Characters/Darius/Spells/DariusNoxianTacticsONHAbility/DariusNoxianTacticsActive",
+      "Characters/Darius/Spells/DariusNoxianTacticsONHAbility/DariusNoxianTacticsONHAttack",
+      "Characters/Darius/Spells/DariusNoxianTacticsONHAbility/DariusNoxianTacticsSlow",
+      "Characters/Darius/Spells/DariusNoxianTacticsONHAbility/DariusSlow"
+    ],
+    "mName": "DariusNoxianTacticsONHAbility",
+    "__type": "AbilityObject"
+  },
+  "Characters/Darius/Spells/DariusAxeGrabConeAbility": {
+    "mRootSpell": "Characters/Darius/Spells/DariusAxeGrabConeAbility/DariusAxeGrabCone",
+    "mChildSpells": [
+      "Characters/Darius/Spells/DariusAxeGrabConeAbility/DariusAxeGrabCone",
+      "Characters/Darius/Spells/DariusAxeGrabConeAbility/DariusESlow",
+      "Characters/Darius/Spells/DariusAxeGrabConeAbility/DariusAxeGrabArmorPen"
+    ],
+    "mName": "DariusAxeGrabConeAbility",
+    "__type": "AbilityObject"
+  },
+  "Characters/Darius/Spells/DariusHemoMarkerAbility": {
+    "mRootSpell": "Characters/Darius/Spells/DariusHemoMarkerAbility/DariusHemoMarker",
+    "mChildSpells": [
+      "Characters/Darius/Spells/DariusHemoMarkerAbility/DariusHemoMarker",
+      "Characters/Darius/Spells/DariusHemoMarkerAbility/DariusHemo",
+      "Characters/Darius/Spells/DariusHemoMarkerAbility/DariusHemoInternal",
+      "Characters/Darius/Spells/DariusHemoMarkerAbility/DariusHemoMax",
+      "Characters/Darius/Spells/DariusHemoMarkerAbility/DariusHemoVisual"
+    ],
+    "mName": "DariusHemoMarkerAbility",
+    "__type": "AbilityObject"
+  },
+  "Characters/Darius/Spells/DariusExecuteAbility/DariusExecuteMulticast": {
+    "ObjectName": "DariusExecuteMulticast",
+    "objectPath": "Characters/Darius/Spells/DariusExecuteAbility/DariusExecuteMulticast",
+    "mScriptName": "DariusExecuteMulticast",
+    "__type": "SpellObject"
+  },
+  "Characters/Darius/Spells/DariusCleaveAbility/DariusCleaveCloseTarget": {
+    "ObjectName": "DariusCleaveCloseTarget",
+    "objectPath": "Characters/Darius/Spells/DariusCleaveAbility/DariusCleaveCloseTarget",
+    "mScriptName": "DariusCleaveCloseTarget",
+    "__type": "SpellObject"
+  },
+  "Characters/Darius/Spells/DariusNoxianTacticsONHAbility/DariusNoxianTacticsActive": {
+    "ObjectName": "DariusNoxianTacticsActive",
+    "objectPath": "Characters/Darius/Spells/DariusNoxianTacticsONHAbility/DariusNoxianTacticsActive",
+    "mScriptName": "DariusNoxianTacticsActive",
+    "__type": "SpellObject"
+  },
+  "Characters/Darius/Spells/DariusNoxianTacticsONHAbility/DariusNoxianTacticsONHAttack": {
+    "ObjectName": "DariusNoxianTacticsONHAttack",
+    "objectPath": "Characters/Darius/Spells/DariusNoxianTacticsONHAbility/DariusNoxianTacticsONHAttack",
+    "mScriptName": "DariusNoxianTacticsONHAttack",
+    "__type": "SpellObject",
+    "mSpell": {
+      "Cooldown": {
+        "values": [
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "{0a3e0478}": 0.0,
+        "__type": "{0a0eddc9}"
+      },
+      "cooldownTime": [
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0
+      ],
+      "mClientData": {
+        "__type": "SpellDataResourceClient"
+      }
+    }
+  },
+  "Characters/Darius/Spells/DariusNoxianTacticsONHAbility/DariusNoxianTacticsSlow": {
+    "ObjectName": "DariusNoxianTacticsSlow",
+    "objectPath": "Characters/Darius/Spells/DariusNoxianTacticsONHAbility/DariusNoxianTacticsSlow",
+    "mScriptName": "DariusNoxianTacticsSlow",
+    "__type": "SpellObject",
+    "mSpell": {
+      "Cooldown": {
+        "values": [
+          16.0,
+          15.0,
+          14.0,
+          13.0,
+          12.0,
+          11.0,
+          11.0
+        ],
+        "__type": "{0a0eddc9}"
+      },
+      "cooldownTime": [
+        16.0,
+        15.0,
+        14.0,
+        13.0,
+        12.0,
+        11.0,
+        11.0
+      ],
+      "mana": [
+        80.0,
+        80.0,
+        80.0,
+        80.0,
+        80.0,
+        80.0
+      ],
+      "manaValues": {
+        "values": [
+          80.0,
+          80.0,
+          80.0,
+          80.0,
+          80.0,
+          80.0
+        ],
+        "{0a3e0478}": 80.0,
+        "__type": "{630af303}"
+      },
+      "castRange": [
+        700.0,
+        700.0,
+        700.0,
+        700.0,
+        700.0,
+        700.0,
+        700.0
+      ],
+      "castRangeValues": {
+        "values": [
+          700.0,
+          700.0,
+          700.0,
+          700.0,
+          700.0,
+          700.0,
+          700.0
+        ],
+        "{0a3e0478}": 700.0,
+        "__type": "{0a0eddc9}"
+      },
+      "mClientData": {
+        "__type": "SpellDataResourceClient"
+      }
+    }
+  },
+  "Characters/Darius/Spells/DariusNoxianTacticsONHAbility/DariusSlow": {
+    "ObjectName": "DariusSlow",
+    "objectPath": "Characters/Darius/Spells/DariusNoxianTacticsONHAbility/DariusSlow",
+    "mScriptName": "DariusSlow",
+    "__type": "SpellObject"
+  },
+  "Characters/Darius/Spells/DariusAxeGrabConeAbility/DariusESlow": {
+    "ObjectName": "DariusESlow",
+    "objectPath": "Characters/Darius/Spells/DariusAxeGrabConeAbility/DariusESlow",
+    "mScriptName": "DariusESlow",
+    "__type": "SpellObject"
+  },
+  "Characters/Darius/Spells/DariusAxeGrabConeAbility/DariusAxeGrabArmorPen": {
+    "ObjectName": "DariusAxeGrabArmorPen",
+    "objectPath": "Characters/Darius/Spells/DariusAxeGrabConeAbility/DariusAxeGrabArmorPen",
+    "mScriptName": "DariusAxeGrabArmorPen",
+    "__type": "SpellObject"
+  },
+  "Characters/Darius/Spells/DariusHemoMarkerAbility/DariusHemo": {
+    "ObjectName": "DariusHemo",
+    "objectPath": "Characters/Darius/Spells/DariusHemoMarkerAbility/DariusHemo",
+    "mScriptName": "DariusHemo",
+    "__type": "SpellObject",
+    "mSpell": {
+      "Cooldown": {
+        "values": [
+          9.0,
+          8.0,
+          7.0,
+          6.0,
+          5.0,
+          4.0,
+          4.0
+        ],
+        "__type": "{0a0eddc9}"
+      },
+      "cooldownTime": [
+        9.0,
+        8.0,
+        7.0,
+        6.0,
+        5.0,
+        4.0,
+        4.0
+      ],
+      "mana": [
+        40.0,
+        45.0,
+        50.0,
+        55.0,
+        60.0,
+        65.0
+      ],
+      "manaValues": {
+        "values": [
+          40.0,
+          45.0,
+          50.0,
+          55.0,
+          60.0,
+          65.0
+        ],
+        "{0a3e0478}": 40.0,
+        "__type": "{630af303}"
+      },
+      "castRange": [
+        300.0,
+        300.0,
+        300.0,
+        300.0,
+        300.0,
+        300.0,
+        300.0
+      ],
+      "castRangeValues": {
+        "values": [
+          300.0,
+          300.0,
+          300.0,
+          300.0,
+          300.0,
+          300.0,
+          300.0
+        ],
+        "{0a3e0478}": 300.0,
+        "__type": "{0a0eddc9}"
+      },
+      "mClientData": {
+        "__type": "SpellDataResourceClient"
+      }
+    }
+  },
+  "Characters/Darius/Spells/DariusHemoMarkerAbility/DariusHemoInternal": {
+    "ObjectName": "DariusHemoInternal",
+    "objectPath": "Characters/Darius/Spells/DariusHemoMarkerAbility/DariusHemoInternal",
+    "mScriptName": "DariusHemoInternal",
+    "__type": "SpellObject",
+    "mSpell": {
+      "Cooldown": {
+        "values": [
+          8.5,
+          8.0,
+          7.5,
+          7.0,
+          6.5,
+          6.0,
+          6.0
+        ],
+        "__type": "{0a0eddc9}"
+      },
+      "cooldownTime": [
+        8.5,
+        8.0,
+        7.5,
+        7.0,
+        6.5,
+        6.0,
+        6.0
+      ],
+      "mana": [
+        50.0,
+        50.0,
+        50.0,
+        50.0,
+        50.0,
+        50.0
+      ],
+      "manaValues": {
+        "values": [
+          50.0,
+          50.0,
+          50.0,
+          50.0,
+          50.0,
+          50.0
+        ],
+        "{0a3e0478}": 50.0,
+        "__type": "{630af303}"
+      },
+      "castRange": [
+        25000.0,
+        25000.0,
+        25000.0,
+        25000.0,
+        25000.0,
+        25000.0,
+        25000.0
+      ],
+      "castRangeValues": {
+        "values": [
+          25000.0,
+          25000.0,
+          25000.0,
+          25000.0,
+          25000.0,
+          25000.0,
+          25000.0
+        ],
+        "{0a3e0478}": 25000.0,
+        "__type": "{0a0eddc9}"
+      },
+      "mClientData": {
+        "__type": "SpellDataResourceClient"
+      }
+    }
+  },
+  "Characters/Darius/Spells/DariusHemoMarkerAbility/DariusHemoMax": {
+    "ObjectName": "DariusHemoMax",
+    "objectPath": "Characters/Darius/Spells/DariusHemoMarkerAbility/DariusHemoMax",
+    "mScriptName": "DariusHemoMax",
+    "__type": "SpellObject"
+  },
+  "Characters/Darius/Spells/DariusHemoMarkerAbility/DariusHemoVisual": {
+    "ObjectName": "DariusHemoVisual",
+    "objectPath": "Characters/Darius/Spells/DariusHemoMarkerAbility/DariusHemoVisual",
+    "mScriptName": "DariusHemoVisual",
+    "__type": "SpellObject",
+    "mSpell": {
+      "Cooldown": {
+        "values": [
+          8.5,
+          8.0,
+          7.5,
+          7.0,
+          6.5,
+          6.0,
+          6.0
+        ],
+        "__type": "{0a0eddc9}"
+      },
+      "cooldownTime": [
+        8.5,
+        8.0,
+        7.5,
+        7.0,
+        6.5,
+        6.0,
+        6.0
+      ],
+      "mana": [
+        50.0,
+        50.0,
+        50.0,
+        50.0,
+        50.0,
+        50.0
+      ],
+      "manaValues": {
+        "values": [
+          50.0,
+          50.0,
+          50.0,
+          50.0,
+          50.0,
+          50.0
+        ],
+        "{0a3e0478}": 50.0,
+        "__type": "{630af303}"
+      },
+      "castRange": [
+        25000.0,
+        25000.0,
+        25000.0,
+        25000.0,
+        25000.0,
+        25000.0,
+        25000.0
+      ],
+      "castRangeValues": {
+        "values": [
+          25000.0,
+          25000.0,
+          25000.0,
+          25000.0,
+          25000.0,
+          25000.0,
+          25000.0
+        ],
+        "{0a3e0478}": 25000.0,
+        "__type": "{0a0eddc9}"
+      },
+      "mClientData": {
+        "__type": "SpellDataResourceClient"
+      }
+    }
+  }
+}

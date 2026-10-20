@@ -1,0 +1,1744 @@
+{
+  "_provenance": {
+    "source": "communitydragon",
+    "url": "https://raw.communitydragon.org/16.20/game/data/characters/zaahen/zaahen.bin.json",
+    "content_version": "16.20.8248524+branch.releases-16-20.content.release",
+    "source_sha256": "76e32de67667917769cc6022a818b13e5024ea521a23c70436dc48eea533ed0b",
+    "selection": "Root stat fields and spell lists; passive/Q/W/E/R spell objects with DataValues, mode overrides, mSpellCalculations, cooldown/mana/range vectors and tooltip level lists; ability objects with root/child spells. BotData, buffs, animations and skins are omitted."
+  },
+  "Characters/Zaahen/CharacterRecords/Root": {
+    "mCharacterName": "Zaahen",
+    "baseHPModifiable": {
+      "baseValue": 640.0,
+      "__type": "ModifiableFloat"
+    },
+    "hpPerLevelModifiable": {
+      "baseValue": 114.0,
+      "__type": "ModifiableFloat"
+    },
+    "baseStaticHPRegenModifiable": {
+      "baseValue": 1.5,
+      "__type": "ModifiableFloat"
+    },
+    "hpRegenPerLevelModifiable": {
+      "baseValue": 0.1599999964237213,
+      "__type": "ModifiableFloat"
+    },
+    "baseDamageModifiable": {
+      "baseValue": 63.0,
+      "__type": "ModifiableFloat"
+    },
+    "damagePerLevelModifiable": {
+      "baseValue": 4.0,
+      "__type": "ModifiableFloat"
+    },
+    "baseArmorModifiable": {
+      "baseValue": 36.0,
+      "__type": "ModifiableFloat"
+    },
+    "armorPerLevelModifiable": {
+      "baseValue": 5.0,
+      "__type": "ModifiableFloat"
+    },
+    "baseMR": {
+      "baseValue": 32.0,
+      "__type": "ModifiableFloat"
+    },
+    "mrPerLevel": {
+      "baseValue": 2.049999952316284,
+      "__type": "ModifiableFloat"
+    },
+    "baseMoveSpeedModifiable": {
+      "baseValue": 345.0,
+      "__type": "ModifiableFloat"
+    },
+    "attackRangeModifiable": {
+      "baseValue": 175.0,
+      "__type": "ModifiableFloat"
+    },
+    "attackSpeedModifiable": {
+      "baseValue": 0.625,
+      "__type": "ModifiableFloat"
+    },
+    "attackSpeedRatioModifiable": {
+      "baseValue": 0.625,
+      "__type": "ModifiableFloat"
+    },
+    "attackSpeedPerLevelModifiable": {
+      "baseValue": 2.5,
+      "__type": "ModifiableFloat"
+    },
+    "spells": [
+      "Characters/Zaahen/Spells/ZaahenQAbility/ZaahenQ",
+      "Characters/Zaahen/Spells/ZaahenWAbility/ZaahenW",
+      "Characters/Zaahen/Spells/ZaahenEAbility/ZaahenE",
+      "Characters/Zaahen/Spells/ZaahenRAbility/ZaahenR"
+    ],
+    "mAbilities": [
+      "Characters/Zaahen/Spells/ZaahenPassiveAbility",
+      "Characters/Zaahen/Spells/ZaahenQAbility",
+      "Characters/Zaahen/Spells/ZaahenEAbility",
+      "Characters/Zaahen/Spells/ZaahenRAbility",
+      "Characters/Zaahen/Spells/ZaahenWAbility"
+    ],
+    "mCharacterPassiveSpell": "Characters/Zaahen/Spells/ZaahenPassiveAbility/ZaahenPassive",
+    "passiveName": "Spell_ZaahenP_Name",
+    "passiveToolTip": "Spell_ZaahenP_Summary",
+    "__type": "CharacterRecord"
+  },
+  "Characters/Zaahen/Spells/ZaahenPassiveAbility/ZaahenPassive": {
+    "ObjectName": "ZaahenPassive",
+    "objectPath": "Characters/Zaahen/Spells/ZaahenPassiveAbility/ZaahenPassive",
+    "mScriptName": "ZaahenPassive",
+    "__type": "SpellObject",
+    "mSpell": {
+      "DataValues": [
+        {
+          "name": "PercentBonusAD",
+          "values": [
+            0.02500000037252903,
+            0.02500000037252903,
+            0.02500000037252903,
+            0.02500000037252903,
+            0.02500000037252903,
+            0.02500000037252903,
+            0.02500000037252903
+          ],
+          "__type": "SpellDataValue"
+        },
+        {
+          "name": "FallOffDuration",
+          "values": [
+            5.0,
+            5.0,
+            5.0,
+            5.0,
+            5.0,
+            5.0,
+            5.0
+          ],
+          "__type": "SpellDataValue"
+        },
+        {
+          "name": "RevivePercent",
+          "values": [
+            0.6000000238418579,
+            0.6000000238418579,
+            0.6000000238418579,
+            0.6000000238418579,
+            0.6000000238418579,
+            0.6000000238418579,
+            0.6000000238418579
+          ],
+          "__type": "SpellDataValue"
+        },
+        {
+          "name": "MaxStacks",
+          "values": [
+            12.0,
+            12.0,
+            12.0,
+            12.0,
+            12.0,
+            12.0,
+            12.0
+          ],
+          "__type": "SpellDataValue"
+        },
+        {
+          "name": "ReviveDuration",
+          "values": [
+            4.0,
+            4.0,
+            4.0,
+            4.0,
+            4.0,
+            4.0,
+            4.0
+          ],
+          "__type": "SpellDataValue"
+        },
+        {
+          "name": "NumberOfTicks",
+          "values": [
+            32.0,
+            32.0,
+            32.0,
+            32.0,
+            32.0,
+            32.0,
+            32.0
+          ],
+          "__type": "SpellDataValue"
+        },
+        {
+          "name": "MaxStacksMultiplier",
+          "values": [
+            2.0,
+            2.0,
+            2.0,
+            2.0,
+            2.0,
+            2.0,
+            2.0
+          ],
+          "__type": "SpellDataValue"
+        },
+        {
+          "name": "PBonusADMin",
+          "values": [
+            0.014999999664723873,
+            0.014999999664723873,
+            0.014999999664723873,
+            0.014999999664723873,
+            0.014999999664723873,
+            0.014999999664723873,
+            0.014999999664723873
+          ],
+          "__type": "SpellDataValue"
+        },
+        {
+          "name": "PBonusADMax",
+          "values": [
+            0.02800000086426735,
+            0.02800000086426735,
+            0.02800000086426735,
+            0.02800000086426735,
+            0.02800000086426735,
+            0.02800000086426735,
+            0.02800000086426735
+          ],
+          "__type": "SpellDataValue"
+        },
+        {
+          "name": "ReviveLevel1Value",
+          "values": [
+            0.30000001192092896,
+            0.30000001192092896,
+            0.30000001192092896,
+            0.30000001192092896,
+            0.30000001192092896,
+            0.30000001192092896,
+            0.30000001192092896
+          ],
+          "__type": "SpellDataValue"
+        },
+        {
+          "name": "ReviveBonusPerLevel",
+          "__type": "SpellDataValue"
+        },
+        {
+          "name": "ReviveAdditionalBonusAtThisLevel",
+          "values": [
+            0.15000000596046448,
+            0.15000000596046448,
+            0.15000000596046448,
+            0.15000000596046448,
+            0.15000000596046448,
+            0.15000000596046448,
+            0.15000000596046448
+          ],
+          "__type": "SpellDataValue"
+        },
+        {
+          "name": "ReviveBonusPerLevelAtAndAfter",
+          "__type": "SpellDataValue"
+        }
+      ],
+      "DataValuesModeOverride": {
+        "cherry": {
+          "SpellDataValues": [
+            {
+              "name": "PBonusADMin",
+              "values": [
+                0.009999999776482582,
+                0.009999999776482582,
+                0.009999999776482582,
+                0.009999999776482582,
+                0.009999999776482582,
+                0.009999999776482582,
+                0.009999999776482582
+              ],
+              "__type": "SpellDataValue"
+            },
+            {
+              "name": "PBonusADMax",
+              "values": [
+                0.019999999552965164,
+                0.019999999552965164,
+                0.019999999552965164,
+                0.019999999552965164,
+                0.019999999552965164,
+                0.019999999552965164,
+                0.019999999552965164
+              ],
+              "__type": "SpellDataValue"
+            },
+            {
+              "name": "ReviveLevel1Value",
+              "values": [
+                0.30000001192092896,
+                0.30000001192092896,
+                0.30000001192092896,
+                0.30000001192092896,
+                0.30000001192092896,
+                0.30000001192092896,
+                0.30000001192092896
+              ],
+              "__type": "SpellDataValue"
+            },
+            {
+              "name": "ReviveAdditionalBonusAtThisLevel",
+              "values": [
+                0.05000000074505806,
+                0.05000000074505806,
+                0.05000000074505806,
+                0.05000000074505806,
+                0.05000000074505806,
+                0.05000000074505806,
+                0.05000000074505806
+              ],
+              "__type": "SpellDataValue"
+            }
+          ],
+          "__type": "SpellDataValueVector"
+        }
+      },
+      "mSpellCalculations": {
+        "ReviveCooldownCalc": {
+          "mFormulaParts": [
+            {
+              "mLevel1Value": 300.0,
+              "mBreakpoints": [
+                {
+                  "mLevel": 6,
+                  "mAdditionalBonusAtThisLevel": -60.0,
+                  "__type": "Breakpoint"
+                },
+                {
+                  "mLevel": 11,
+                  "mAdditionalBonusAtThisLevel": -60.0,
+                  "__type": "Breakpoint"
+                },
+                {
+                  "mLevel": 16,
+                  "mAdditionalBonusAtThisLevel": -60.0,
+                  "__type": "Breakpoint"
+                }
+              ],
+              "__type": "ByCharLevelBreakpointsCalculationPart"
+            }
+          ],
+          "__type": "GameCalculation"
+        },
+        "RevivePercentCalc": {
+          "mFormulaParts": [
+            {
+              "{91d404a5}": "ReviveLevel1Value",
+              "{bbd778a2}": "ReviveBonusPerLevel",
+              "{9823b29a}": [
+                {
+                  "level": 6,
+                  "{ae9b464d}": "ReviveAdditionalBonusAtThisLevel",
+                  "{b0d8b2ac}": "ReviveBonusPerLevelAtAndAfter",
+                  "__type": "{0333530c}"
+                },
+                {
+                  "level": 11,
+                  "{ae9b464d}": "ReviveAdditionalBonusAtThisLevel",
+                  "{b0d8b2ac}": "ReviveBonusPerLevelAtAndAfter",
+                  "__type": "{0333530c}"
+                },
+                {
+                  "level": 16,
+                  "{ae9b464d}": "ReviveAdditionalBonusAtThisLevel",
+                  "{b0d8b2ac}": "ReviveBonusPerLevelAtAndAfter",
+                  "__type": "{0333530c}"
+                }
+              ],
+              "__type": "{4ce08984}"
+            }
+          ],
+          "mDisplayAsPercent": true,
+          "__type": "GameCalculation"
+        },
+        "PercentBonusADCalc": {
+          "mFormulaParts": [
+            {
+              "StartDataValue": "PBonusADMin",
+              "EndDataValue": "PBonusADMax",
+              "__type": "{ee18a47b}"
+            }
+          ],
+          "mDisplayAsPercent": true,
+          "mPrecision": 1,
+          "__type": "GameCalculation"
+        }
+      },
+      "Cooldown": {
+        "values": [
+          100.0,
+          100.0,
+          100.0,
+          100.0,
+          100.0,
+          100.0,
+          100.0
+        ],
+        "{0a3e0478}": 100.0,
+        "__type": "{0a0eddc9}"
+      },
+      "cooldownTime": [
+        100.0,
+        100.0,
+        100.0,
+        100.0,
+        100.0,
+        100.0,
+        100.0
+      ],
+      "castRange": [
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0
+      ],
+      "castRangeValues": {
+        "values": [
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "{0a3e0478}": 0.0,
+        "__type": "{0a0eddc9}"
+      },
+      "mClientData": {
+        "__type": "SpellDataResourceClient",
+        "mTooltipData": {
+          "mObjectName": "ZaahenPassive",
+          "mFormat": "{476ec0b8}",
+          "mLocKeys": {
+            "keyName": "Spell_ZaahenP_Name",
+            "keySummary": "Spell_ZaahenP_Summary",
+            "keyTooltip": "Spell_ZaahenP_Tooltip",
+            "keyTooltipExtended": "Spell_ZaahenP_TooltipExtended"
+          },
+          "mLists": null,
+          "__type": "TooltipInstanceSpell"
+        }
+      }
+    }
+  },
+  "Characters/Zaahen/Spells/ZaahenQAbility/ZaahenQ": {
+    "ObjectName": "ZaahenQ",
+    "objectPath": "Characters/Zaahen/Spells/ZaahenQAbility/ZaahenQ",
+    "mScriptName": "ZaahenQ",
+    "__type": "SpellObject",
+    "mSpell": {
+      "DataValues": [
+        {
+          "name": "Q1BaseDamage",
+          "values": [
+            0.0,
+            15.0,
+            30.0,
+            45.0,
+            60.0,
+            75.0,
+            90.0
+          ],
+          "__type": "SpellDataValue"
+        },
+        {
+          "name": "KnockUpDuration",
+          "values": [
+            0.75,
+            0.75,
+            0.75,
+            0.75,
+            0.75,
+            0.75,
+            0.75
+          ],
+          "__type": "SpellDataValue"
+        },
+        {
+          "name": "RecastWindow",
+          "values": [
+            4.0,
+            4.0,
+            4.0,
+            4.0,
+            4.0,
+            4.0,
+            4.0
+          ],
+          "__type": "SpellDataValue"
+        },
+        {
+          "name": "TimeBetweenAttacks",
+          "values": [
+            1.5,
+            1.5,
+            1.5,
+            1.5,
+            1.5,
+            1.5,
+            1.5
+          ],
+          "__type": "SpellDataValue"
+        },
+        {
+          "name": "HealPercent",
+          "values": [
+            0.03999999910593033,
+            0.05000000074505806,
+            0.05999999865889549,
+            0.07000000029802322,
+            0.07999999821186066,
+            0.09000000357627869,
+            0.10000000149011612
+          ],
+          "__type": "SpellDataValue"
+        },
+        {
+          "name": "MinionHealPercent",
+          "values": [
+            0.5,
+            0.5,
+            0.5,
+            0.5,
+            0.5,
+            0.5,
+            0.5
+          ],
+          "__type": "SpellDataValue"
+        },
+        {
+          "name": "Q2BaseDamage",
+          "values": [
+            0.0,
+            30.0,
+            60.0,
+            90.0,
+            120.0,
+            150.0,
+            180.0
+          ],
+          "__type": "SpellDataValue"
+        },
+        {
+          "name": "QBonusRange",
+          "values": [
+            25.0,
+            25.0,
+            25.0,
+            25.0,
+            25.0,
+            25.0,
+            25.0
+          ],
+          "__type": "SpellDataValue"
+        },
+        {
+          "name": "QCoeff",
+          "values": [
+            0.15000000596046448,
+            0.20000000298023224,
+            0.25,
+            0.30000001192092896,
+            0.3499999940395355,
+            0.4000000059604645,
+            0.44999998807907104
+          ],
+          "__type": "SpellDataValue"
+        },
+        {
+          "name": "MonsterDamagePercent",
+          "values": [
+            1.0,
+            1.0,
+            1.0,
+            1.0,
+            1.0,
+            1.0,
+            1.0
+          ],
+          "__type": "SpellDataValue"
+        }
+      ],
+      "DataValuesModeOverride": {
+        "cherry": {
+          "SpellDataValues": [
+            {
+              "name": "QCoeff",
+              "values": [
+                0.02500000037252903,
+                0.10000000149011612,
+                0.17499999701976776,
+                0.25,
+                0.32499998807907104,
+                0.4000000059604645,
+                0.4749999940395355
+              ],
+              "__type": "SpellDataValue"
+            },
+            {
+              "name": "HealPercent",
+              "values": [
+                0.019999999552965164,
+                0.029999999329447746,
+                0.03999999910593033,
+                0.05000000074505806,
+                0.05999999865889549,
+                0.07000000029802322,
+                0.07999999821186066
+              ],
+              "__type": "SpellDataValue"
+            }
+          ],
+          "__type": "SpellDataValueVector"
+        }
+      },
+      "mSpellCalculations": {
+        "InitialDamage": {
+          "mFormulaParts": [
+            {
+              "mDataValue": "Q1BaseDamage",
+              "__type": "NamedDataValueCalculationPart"
+            },
+            {
+              "mStat": 2,
+              "mStatFormula": 2,
+              "mDataValue": "QCoeff",
+              "__type": "StatByNamedDataValueCalculationPart"
+            }
+          ],
+          "__type": "GameCalculation"
+        },
+        "SecondHitDamage": {
+          "mFormulaParts": [
+            {
+              "mDataValue": "Q2BaseDamage",
+              "__type": "NamedDataValueCalculationPart"
+            },
+            {
+              "mStat": 2,
+              "mStatFormula": 2,
+              "mDataValue": "QCoeff",
+              "__type": "StatByNamedDataValueCalculationPart"
+            }
+          ],
+          "__type": "GameCalculation"
+        }
+      },
+      "Cooldown": {
+        "values": [
+          10.0,
+          10.0,
+          9.0,
+          8.0,
+          7.0,
+          6.0,
+          5.0
+        ],
+        "__type": "{0a0eddc9}"
+      },
+      "cooldownTime": [
+        10.0,
+        10.0,
+        9.0,
+        8.0,
+        7.0,
+        6.0,
+        5.0
+      ],
+      "mana": [
+        25.0,
+        25.0,
+        25.0,
+        25.0,
+        25.0,
+        25.0
+      ],
+      "manaValues": {
+        "values": [
+          25.0,
+          25.0,
+          25.0,
+          25.0,
+          25.0,
+          25.0
+        ],
+        "{0a3e0478}": 25.0,
+        "__type": "{630af303}"
+      },
+      "castRange": [
+        25000.0,
+        25000.0,
+        25000.0,
+        25000.0,
+        25000.0,
+        25000.0,
+        25000.0
+      ],
+      "castRangeValues": {
+        "values": [
+          25000.0,
+          25000.0,
+          25000.0,
+          25000.0,
+          25000.0,
+          25000.0,
+          25000.0
+        ],
+        "{0a3e0478}": 25000.0,
+        "__type": "{0a0eddc9}"
+      },
+      "mClientData": {
+        "__type": "SpellDataResourceClient",
+        "mTooltipData": {
+          "mObjectName": "ZaahenQ",
+          "mFormat": "{d7c27163}",
+          "mLocKeys": {
+            "keyName": "Spell_ZaahenQ_Name",
+            "keySummary": "Spell_ZaahenQ_Summary",
+            "keyTooltip": "Spell_ZaahenQ_Tooltip",
+            "keyTooltipExtendedBelowLine": "Spell_ZaahenQ_TooltipExtended"
+          },
+          "mLists": {
+            "LevelUp": {
+              "levelCount": 5,
+              "Elements": [
+                {
+                  "type": "Q1BaseDamage",
+                  "nameOverride": "Spell_ListType_Damage",
+                  "__type": "TooltipInstanceListElement"
+                },
+                {
+                  "type": "Q2BaseDamage",
+                  "nameOverride": "Spell_ListType_RecastDamage",
+                  "__type": "TooltipInstanceListElement"
+                },
+                {
+                  "type": "Cooldown",
+                  "__type": "TooltipInstanceListElement"
+                },
+                {
+                  "type": "HealPercent",
+                  "multiplier": 100.0,
+                  "nameOverride": "Spell_ListType_HealPercentOfDamageDealt",
+                  "Style": 1,
+                  "__type": "TooltipInstanceListElement"
+                },
+                {
+                  "type": "QCoeff",
+                  "multiplier": 100.0,
+                  "nameOverride": "Spell_ListType_BonusADRatio",
+                  "Style": 1,
+                  "__type": "TooltipInstanceListElement"
+                }
+              ],
+              "__type": "TooltipInstanceList"
+            }
+          },
+          "__type": "TooltipInstanceSpell"
+        }
+      }
+    }
+  },
+  "Characters/Zaahen/Spells/ZaahenWAbility/ZaahenW": {
+    "ObjectName": "ZaahenW",
+    "objectPath": "Characters/Zaahen/Spells/ZaahenWAbility/ZaahenW",
+    "mScriptName": "ZaahenW",
+    "__type": "SpellObject",
+    "mSpell": {
+      "DataValues": [
+        {
+          "name": "InitialBaseDamage",
+          "values": [
+            20.0,
+            40.0,
+            60.0,
+            80.0,
+            100.0,
+            120.0,
+            140.0
+          ],
+          "__type": "SpellDataValue"
+        },
+        {
+          "name": "SecondaryBaseDamage",
+          "values": [
+            10.0,
+            30.0,
+            50.0,
+            70.0,
+            90.0,
+            110.0,
+            130.0
+          ],
+          "__type": "SpellDataValue"
+        },
+        {
+          "name": "MaximumPullDistance",
+          "values": [
+            225.0,
+            225.0,
+            225.0,
+            225.0,
+            225.0,
+            225.0,
+            225.0
+          ],
+          "__type": "SpellDataValue"
+        },
+        {
+          "name": "PullSpeed",
+          "values": [
+            900.0,
+            900.0,
+            900.0,
+            900.0,
+            900.0,
+            900.0,
+            900.0
+          ],
+          "__type": "SpellDataValue"
+        }
+      ],
+      "mSpellCalculations": {
+        "InitialDamage": {
+          "mFormulaParts": [
+            {
+              "mDataValue": "InitialBaseDamage",
+              "__type": "NamedDataValueCalculationPart"
+            },
+            {
+              "mStat": 2,
+              "mStatFormula": 2,
+              "mCoefficient": 0.5,
+              "__type": "StatByCoefficientCalculationPart"
+            }
+          ],
+          "__type": "GameCalculation"
+        },
+        "SecondaryDamage": {
+          "mFormulaParts": [
+            {
+              "mDataValue": "SecondaryBaseDamage",
+              "__type": "NamedDataValueCalculationPart"
+            },
+            {
+              "mStat": 2,
+              "mStatFormula": 2,
+              "mCoefficient": 0.30000001192092896,
+              "__type": "StatByCoefficientCalculationPart"
+            }
+          ],
+          "__type": "GameCalculation"
+        }
+      },
+      "Cooldown": {
+        "values": [
+          14.0,
+          14.0,
+          13.5,
+          13.0,
+          12.5,
+          12.0,
+          11.5
+        ],
+        "__type": "{0a0eddc9}"
+      },
+      "cooldownTime": [
+        16.0,
+        16.0,
+        15.0,
+        14.0,
+        13.0,
+        12.0,
+        11.0
+      ],
+      "mana": [
+        50.0,
+        50.0,
+        50.0,
+        50.0,
+        50.0,
+        50.0
+      ],
+      "manaValues": {
+        "values": [
+          50.0,
+          50.0,
+          50.0,
+          50.0,
+          50.0,
+          50.0
+        ],
+        "{0a3e0478}": 50.0,
+        "__type": "{630af303}"
+      },
+      "castRange": [
+        850.0,
+        850.0,
+        850.0,
+        850.0,
+        850.0,
+        850.0,
+        850.0
+      ],
+      "castRangeValues": {
+        "values": [
+          850.0,
+          850.0,
+          850.0,
+          850.0,
+          850.0,
+          850.0,
+          850.0
+        ],
+        "{0a3e0478}": 850.0,
+        "__type": "{0a0eddc9}"
+      },
+      "mClientData": {
+        "__type": "SpellDataResourceClient",
+        "mTooltipData": {
+          "mObjectName": "ZaahenW",
+          "mFormat": "{d7c27163}",
+          "mLocKeys": {
+            "keyName": "Spell_ZaahenW_Name",
+            "keySummary": "Spell_ZaahenW_Summary",
+            "keyTooltip": "Spell_ZaahenW_Tooltip"
+          },
+          "mLists": {
+            "LevelUp": {
+              "levelCount": 5,
+              "Elements": [
+                {
+                  "type": "InitialBaseDamage",
+                  "typeIndex": 1,
+                  "nameOverride": "Spell_ListType_Damage",
+                  "__type": "TooltipInstanceListElement"
+                },
+                {
+                  "type": "SecondaryBaseDamage",
+                  "nameOverride": "Spell_ListType_Damage",
+                  "__type": "TooltipInstanceListElement"
+                },
+                {
+                  "type": "Cooldown",
+                  "__type": "TooltipInstanceListElement"
+                }
+              ],
+              "__type": "TooltipInstanceList"
+            }
+          },
+          "__type": "TooltipInstanceSpell"
+        }
+      }
+    }
+  },
+  "Characters/Zaahen/Spells/ZaahenEAbility/ZaahenE": {
+    "ObjectName": "ZaahenE",
+    "objectPath": "Characters/Zaahen/Spells/ZaahenEAbility/ZaahenE",
+    "mScriptName": "ZaahenE",
+    "__type": "SpellObject",
+    "mSpell": {
+      "DataValues": [
+        {
+          "name": "Damage_Base",
+          "values": [
+            20.0,
+            40.0,
+            60.0,
+            80.0,
+            100.0,
+            120.0,
+            140.0
+          ],
+          "__type": "SpellDataValue"
+        },
+        {
+          "name": "DashDistance",
+          "values": [
+            350.0,
+            350.0,
+            350.0,
+            350.0,
+            350.0,
+            350.0,
+            350.0
+          ],
+          "__type": "SpellDataValue"
+        },
+        {
+          "name": "DashSpeed",
+          "values": [
+            900.0,
+            900.0,
+            900.0,
+            900.0,
+            900.0,
+            900.0,
+            900.0
+          ],
+          "__type": "SpellDataValue"
+        },
+        {
+          "name": "MaximumRadius",
+          "values": [
+            375.0,
+            375.0,
+            375.0,
+            375.0,
+            375.0,
+            375.0,
+            375.0
+          ],
+          "__type": "SpellDataValue"
+        },
+        {
+          "name": "MinimumRadius",
+          "values": [
+            200.0,
+            200.0,
+            200.0,
+            200.0,
+            200.0,
+            200.0,
+            200.0
+          ],
+          "__type": "SpellDataValue"
+        },
+        {
+          "name": "PercentHPDamage",
+          "values": [
+            0.03500000014901161,
+            0.03999999910593033,
+            0.04500000178813934,
+            0.05000000074505806,
+            0.054999999701976776,
+            0.05999999865889549,
+            0.06499999761581421
+          ],
+          "__type": "SpellDataValue"
+        },
+        {
+          "name": "MonsterDamageCap",
+          "values": [
+            400.0,
+            400.0,
+            400.0,
+            400.0,
+            400.0,
+            400.0,
+            400.0
+          ],
+          "__type": "SpellDataValue"
+        },
+        {
+          "name": "MonsterDamageBonus",
+          "values": [
+            50.0,
+            50.0,
+            50.0,
+            50.0,
+            50.0,
+            50.0,
+            50.0
+          ],
+          "__type": "SpellDataValue"
+        },
+        {
+          "name": "SweetSpotDamageMod",
+          "values": [
+            1.5,
+            1.5,
+            1.5,
+            1.5,
+            1.5,
+            1.5,
+            1.5
+          ],
+          "__type": "SpellDataValue"
+        },
+        {
+          "name": "DamageBonusBase",
+          "values": [
+            30.0,
+            60.0,
+            90.0,
+            120.0,
+            150.0,
+            180.0,
+            210.0
+          ],
+          "__type": "SpellDataValue"
+        }
+      ],
+      "mSpellCalculations": {
+        "BaseDamageCalc": {
+          "mFormulaParts": [
+            {
+              "mDataValue": "Damage_Base",
+              "__type": "NamedDataValueCalculationPart"
+            },
+            {
+              "mStat": 2,
+              "mStatFormula": 2,
+              "mCoefficient": 0.5,
+              "__type": "StatByCoefficientCalculationPart"
+            }
+          ],
+          "__type": "GameCalculation"
+        },
+        "BonusDamageCalc": {
+          "mMultiplier": {
+            "mDataValue": "SweetSpotDamageMod",
+            "__type": "NamedDataValueCalculationPart"
+          },
+          "mModifiedGameCalculation": "BaseDamageCalc",
+          "__type": "GameCalculationModified"
+        }
+      },
+      "Cooldown": {
+        "values": [
+          10.0,
+          10.0,
+          9.5,
+          9.0,
+          8.5,
+          8.0,
+          8.0
+        ],
+        "__type": "{0a0eddc9}"
+      },
+      "cooldownTime": [
+        10.0,
+        10.0,
+        9.5,
+        9.0,
+        8.5,
+        8.0,
+        8.0
+      ],
+      "mana": [
+        40.0,
+        40.0,
+        40.0,
+        40.0,
+        40.0,
+        40.0
+      ],
+      "manaValues": {
+        "values": [
+          40.0,
+          40.0,
+          40.0,
+          40.0,
+          40.0,
+          40.0
+        ],
+        "{0a3e0478}": 40.0,
+        "__type": "{630af303}"
+      },
+      "castRange": [
+        25000.0,
+        25000.0,
+        25000.0,
+        25000.0,
+        25000.0,
+        25000.0,
+        25000.0
+      ],
+      "castRangeValues": {
+        "values": [
+          25000.0,
+          25000.0,
+          25000.0,
+          25000.0,
+          25000.0,
+          25000.0,
+          25000.0
+        ],
+        "{0a3e0478}": 25000.0,
+        "__type": "{0a0eddc9}"
+      },
+      "mClientData": {
+        "__type": "SpellDataResourceClient",
+        "mTooltipData": {
+          "mObjectName": "ZaahenE",
+          "mFormat": "{d7c27163}",
+          "mLocKeys": {
+            "keyName": "Spell_ZaahenE_Name",
+            "keySummary": "Spell_ZaahenE_Summary",
+            "keyTooltip": "Spell_ZaahenE_Tooltip",
+            "keyTooltipExtendedBelowLine": "Spell_ZaahenE_TooltipExtended"
+          },
+          "mLists": {
+            "LevelUp": {
+              "levelCount": 5,
+              "Elements": [
+                {
+                  "type": "Damage_Base",
+                  "nameOverride": "Spell_ListType_BaseDamage",
+                  "__type": "TooltipInstanceListElement"
+                },
+                {
+                  "type": "DamageBonusBase",
+                  "nameOverride": "Spell_ZaahenE_SweetSpotDamage",
+                  "__type": "TooltipInstanceListElement"
+                },
+                {
+                  "type": "Cooldown",
+                  "__type": "TooltipInstanceListElement"
+                },
+                {
+                  "type": "PercentHPDamage",
+                  "multiplier": 100.0,
+                  "nameOverride": "Spell_ListType_PercentHealthDamage",
+                  "Style": 1,
+                  "__type": "TooltipInstanceListElement"
+                }
+              ],
+              "__type": "TooltipInstanceList"
+            }
+          },
+          "__type": "TooltipInstanceSpell"
+        }
+      }
+    }
+  },
+  "Characters/Zaahen/Spells/ZaahenRAbility/ZaahenR": {
+    "ObjectName": "ZaahenR",
+    "objectPath": "Characters/Zaahen/Spells/ZaahenRAbility/ZaahenR",
+    "mScriptName": "ZaahenR",
+    "__type": "SpellObject",
+    "mSpell": {
+      "DataValues": [
+        {
+          "name": "DashMaxDistance",
+          "values": [
+            600.0,
+            600.0,
+            600.0,
+            600.0,
+            600.0,
+            600.0,
+            600.0
+          ],
+          "__type": "SpellDataValue"
+        },
+        {
+          "name": "DashMinDistance",
+          "values": [
+            10.0,
+            10.0,
+            10.0,
+            10.0,
+            10.0,
+            10.0,
+            10.0
+          ],
+          "__type": "SpellDataValue"
+        },
+        {
+          "name": "EndDamage",
+          "values": [
+            100.0,
+            250.0,
+            400.0,
+            550.0,
+            700.0,
+            850.0,
+            1000.0
+          ],
+          "__type": "SpellDataValue"
+        },
+        {
+          "name": "DashSpeed",
+          "values": [
+            2800.0,
+            2800.0,
+            2800.0,
+            2800.0,
+            2800.0,
+            2800.0,
+            2800.0
+          ],
+          "__type": "SpellDataValue"
+        },
+        {
+          "name": "HealPercent",
+          "values": [
+            0.33000001311302185,
+            0.33000001311302185,
+            0.33000001311302185,
+            0.33000001311302185,
+            0.33000001311302185,
+            0.33000001311302185,
+            0.33000001311302185
+          ],
+          "__type": "SpellDataValue"
+        },
+        {
+          "name": "AoESize",
+          "values": [
+            550.0,
+            550.0,
+            550.0,
+            550.0,
+            550.0,
+            550.0,
+            550.0
+          ],
+          "__type": "SpellDataValue"
+        },
+        {
+          "name": "DamageReduction",
+          "values": [
+            0.5,
+            0.5,
+            0.5,
+            0.5,
+            0.5,
+            0.5,
+            0.5
+          ],
+          "__type": "SpellDataValue"
+        },
+        {
+          "name": "ArmorPen",
+          "values": [
+            0.0,
+            0.10000000149011612,
+            0.20000000298023224,
+            0.30000001192092896,
+            0.4000000059604645,
+            0.5,
+            0.6000000238418579
+          ],
+          "__type": "SpellDataValue"
+        },
+        {
+          "name": "BonusADDamageRatio",
+          "values": [
+            2.0,
+            2.0,
+            2.0,
+            2.0,
+            2.0,
+            2.0,
+            2.0
+          ],
+          "__type": "SpellDataValue"
+        }
+      ],
+      "DataValuesModeOverride": {
+        "cherry": {
+          "SpellDataValues": [
+            {
+              "name": "EndDamage",
+              "values": [
+                50.0,
+                200.0,
+                350.0,
+                500.0,
+                650.0,
+                800.0,
+                950.0
+              ],
+              "__type": "SpellDataValue"
+            },
+            {
+              "name": "BonusADDamageRatio",
+              "values": [
+                1.5,
+                1.5,
+                1.5,
+                1.5,
+                1.5,
+                1.5,
+                1.5
+              ],
+              "__type": "SpellDataValue"
+            },
+            {
+              "name": "ArmorPen",
+              "values": [
+                -0.05000000074505806,
+                0.05000000074505806,
+                0.15000000596046448,
+                0.25,
+                0.3499999940395355,
+                0.44999998807907104,
+                0.550000011920929
+              ],
+              "__type": "SpellDataValue"
+            }
+          ],
+          "__type": "SpellDataValueVector"
+        }
+      },
+      "mSpellCalculations": {
+        "DamageEndCalc": {
+          "mFormulaParts": [
+            {
+              "mDataValue": "EndDamage",
+              "__type": "NamedDataValueCalculationPart"
+            },
+            {
+              "mStat": 2,
+              "mStatFormula": 2,
+              "mDataValue": "BonusADDamageRatio",
+              "__type": "StatByNamedDataValueCalculationPart"
+            }
+          ],
+          "__type": "GameCalculation"
+        }
+      },
+      "Cooldown": {
+        "values": [
+          110.0,
+          110.0,
+          95.0,
+          80.0,
+          65.0,
+          60.0,
+          20.0
+        ],
+        "__type": "{0a0eddc9}"
+      },
+      "cooldownTime": [
+        110.0,
+        110.0,
+        95.0,
+        80.0,
+        65.0,
+        60.0,
+        20.0
+      ],
+      "mana": [
+        100.0,
+        100.0,
+        100.0,
+        100.0,
+        100.0,
+        100.0
+      ],
+      "manaValues": {
+        "values": [
+          100.0,
+          100.0,
+          100.0,
+          100.0,
+          100.0,
+          100.0
+        ],
+        "{0a3e0478}": 100.0,
+        "__type": "{630af303}"
+      },
+      "castRange": [
+        600.0,
+        600.0,
+        600.0,
+        600.0,
+        600.0,
+        600.0,
+        600.0
+      ],
+      "castRangeValues": {
+        "values": [
+          600.0,
+          600.0,
+          600.0,
+          600.0,
+          600.0,
+          600.0,
+          600.0
+        ],
+        "{0a3e0478}": 600.0,
+        "__type": "{0a0eddc9}"
+      },
+      "mClientData": {
+        "__type": "SpellDataResourceClient",
+        "mTooltipData": {
+          "mObjectName": "ZaahenR",
+          "mFormat": "{d7c27163}",
+          "mLocKeys": {
+            "keyName": "Spell_ZaahenR_Name",
+            "keySummary": "Spell_ZaahenR_Summary",
+            "keyTooltip": "Spell_ZaahenR_Tooltip"
+          },
+          "mLists": {
+            "LevelUp": {
+              "levelCount": 3,
+              "Elements": [
+                {
+                  "type": "Cooldown",
+                  "__type": "TooltipInstanceListElement"
+                },
+                {
+                  "type": "EndDamage",
+                  "nameOverride": "Spell_ListType_Damage",
+                  "__type": "TooltipInstanceListElement"
+                },
+                {
+                  "type": "ArmorPen",
+                  "multiplier": 100.0,
+                  "nameOverride": "Spell_ListType_ArmorPenetration",
+                  "Style": 1,
+                  "__type": "TooltipInstanceListElement"
+                }
+              ],
+              "__type": "TooltipInstanceList"
+            }
+          },
+          "__type": "TooltipInstanceSpell"
+        }
+      }
+    }
+  },
+  "Characters/Zaahen/Spells/ZaahenPassiveAbility": {
+    "mRootSpell": "Characters/Zaahen/Spells/ZaahenPassiveAbility/ZaahenPassive",
+    "mChildSpells": [
+      "Characters/Zaahen/Spells/ZaahenPassiveAbility/ZaahenPassive",
+      "Characters/Zaahen/Spells/ZaahenPassiveAbility/ZaahenPassiveReviveReady",
+      "Characters/Zaahen/Spells/ZaahenPassiveAbility/ZaahenPassiveRevive",
+      "Characters/Zaahen/Spells/ZaahenPassiveAbility/ZaahenPassiveReviveCooldown",
+      "Characters/Zaahen/Spells/ZaahenPassiveAbility/ZaahenPassiveResourceTimer"
+    ],
+    "mName": "ZaahenPassiveAbility",
+    "__type": "AbilityObject"
+  },
+  "Characters/Zaahen/Spells/ZaahenQAbility": {
+    "mRootSpell": "Characters/Zaahen/Spells/ZaahenQAbility/ZaahenQ",
+    "mChildSpells": [
+      "Characters/Zaahen/Spells/ZaahenQAbility/ZaahenQAttack",
+      "Characters/Zaahen/Spells/ZaahenQAbility/ZaahenQ2Attack",
+      "Characters/Zaahen/Spells/ZaahenQAbility/ZaahenQ2"
+    ],
+    "mName": "ZaahenQAbility",
+    "__type": "AbilityObject"
+  },
+  "Characters/Zaahen/Spells/ZaahenEAbility": {
+    "mRootSpell": "Characters/Zaahen/Spells/ZaahenEAbility/ZaahenE",
+    "mChildSpells": null,
+    "mName": "ZaahenEAbility",
+    "__type": "AbilityObject"
+  },
+  "Characters/Zaahen/Spells/ZaahenRAbility": {
+    "mRootSpell": "Characters/Zaahen/Spells/ZaahenRAbility/ZaahenR",
+    "mChildSpells": [
+      "Characters/Zaahen/Spells/ZaahenRAbility/ZaahenR"
+    ],
+    "mName": "ZaahenRAbility",
+    "__type": "AbilityObject"
+  },
+  "Characters/Zaahen/Spells/ZaahenWAbility": {
+    "mRootSpell": "Characters/Zaahen/Spells/ZaahenWAbility/ZaahenW",
+    "mChildSpells": [
+      "Characters/Zaahen/Spells/ZaahenWAbility/ZaahenW"
+    ],
+    "mName": "ZaahenWAbility",
+    "__type": "AbilityObject"
+  },
+  "Characters/Zaahen/Spells/ZaahenPassiveAbility/ZaahenPassiveReviveReady": {
+    "ObjectName": "ZaahenPassiveReviveReady",
+    "objectPath": "Characters/Zaahen/Spells/ZaahenPassiveAbility/ZaahenPassiveReviveReady",
+    "mScriptName": "ZaahenPassiveReviveReady",
+    "__type": "SpellObject"
+  },
+  "Characters/Zaahen/Spells/ZaahenPassiveAbility/ZaahenPassiveRevive": {
+    "ObjectName": "ZaahenPassiveRevive",
+    "objectPath": "Characters/Zaahen/Spells/ZaahenPassiveAbility/ZaahenPassiveRevive",
+    "mScriptName": "ZaahenPassiveRevive",
+    "__type": "SpellObject"
+  },
+  "Characters/Zaahen/Spells/ZaahenPassiveAbility/ZaahenPassiveReviveCooldown": {
+    "ObjectName": "ZaahenPassiveReviveCooldown",
+    "objectPath": "Characters/Zaahen/Spells/ZaahenPassiveAbility/ZaahenPassiveReviveCooldown",
+    "mScriptName": "ZaahenPassiveReviveCooldown",
+    "__type": "SpellObject"
+  },
+  "Characters/Zaahen/Spells/ZaahenPassiveAbility/ZaahenPassiveResourceTimer": {
+    "ObjectName": "ZaahenPassiveResourceTimer",
+    "objectPath": "Characters/Zaahen/Spells/ZaahenPassiveAbility/ZaahenPassiveResourceTimer",
+    "mScriptName": "ZaahenPassiveResourceTimer",
+    "__type": "SpellObject"
+  },
+  "Characters/Zaahen/Spells/ZaahenQAbility/ZaahenQAttack": {
+    "ObjectName": "ZaahenQAttack",
+    "objectPath": "Characters/Zaahen/Spells/ZaahenQAbility/ZaahenQAttack",
+    "mScriptName": "ZaahenQAttack",
+    "__type": "SpellObject",
+    "mSpell": {
+      "Cooldown": {
+        "values": [
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "{0a3e0478}": 0.0,
+        "__type": "{0a0eddc9}"
+      },
+      "cooldownTime": [
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0
+      ],
+      "castRange": [
+        20.0,
+        20.0,
+        20.0,
+        20.0,
+        20.0,
+        20.0,
+        20.0
+      ],
+      "castRangeValues": {
+        "values": [
+          20.0,
+          20.0,
+          20.0,
+          20.0,
+          20.0,
+          20.0,
+          20.0
+        ],
+        "{0a3e0478}": 20.0,
+        "__type": "{0a0eddc9}"
+      },
+      "mClientData": {
+        "__type": "SpellDataResourceClient"
+      }
+    }
+  },
+  "Characters/Zaahen/Spells/ZaahenQAbility/ZaahenQ2Attack": {
+    "ObjectName": "ZaahenQ2Attack",
+    "objectPath": "Characters/Zaahen/Spells/ZaahenQAbility/ZaahenQ2Attack",
+    "mScriptName": "ZaahenQ2Attack",
+    "__type": "SpellObject",
+    "mSpell": {
+      "Cooldown": {
+        "values": [
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "{0a3e0478}": 0.0,
+        "__type": "{0a0eddc9}"
+      },
+      "cooldownTime": [
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0
+      ],
+      "castRange": [
+        20.0,
+        20.0,
+        20.0,
+        20.0,
+        20.0,
+        20.0,
+        20.0
+      ],
+      "castRangeValues": {
+        "values": [
+          20.0,
+          20.0,
+          20.0,
+          20.0,
+          20.0,
+          20.0,
+          20.0
+        ],
+        "{0a3e0478}": 20.0,
+        "__type": "{0a0eddc9}"
+      },
+      "mClientData": {
+        "__type": "SpellDataResourceClient"
+      }
+    }
+  },
+  "Characters/Zaahen/Spells/ZaahenQAbility/ZaahenQ2": {
+    "ObjectName": "ZaahenQ2",
+    "objectPath": "Characters/Zaahen/Spells/ZaahenQAbility/ZaahenQ2",
+    "mScriptName": "ZaahenQ2",
+    "__type": "SpellObject",
+    "mSpell": {
+      "Cooldown": {
+        "values": [
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "{0a3e0478}": 0.0,
+        "__type": "{0a0eddc9}"
+      },
+      "cooldownTime": [
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0
+      ],
+      "castRange": [
+        25000.0,
+        25000.0,
+        25000.0,
+        25000.0,
+        25000.0,
+        25000.0,
+        25000.0
+      ],
+      "castRangeValues": {
+        "values": [
+          25000.0,
+          25000.0,
+          25000.0,
+          25000.0,
+          25000.0,
+          25000.0,
+          25000.0
+        ],
+        "{0a3e0478}": 25000.0,
+        "__type": "{0a0eddc9}"
+      },
+      "mClientData": {
+        "__type": "SpellDataResourceClient"
+      }
+    }
+  }
+}
