@@ -42,3 +42,7 @@ class StatsError(LolKnowledgeError):
 
 class KitError(LolKnowledgeError):
     """A champion kit is malformed or cannot be evaluated without inventing data."""
+
+
+class RotationError(LolKnowledgeError):
+    """A rotation cannot be evaluated without guessing a step, a target state or a rule."""

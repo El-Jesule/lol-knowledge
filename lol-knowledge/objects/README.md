@@ -16,7 +16,7 @@ Este documento explica el esquema, las decisiones, lo que está modelado y lo qu
 
 Resuelve: representar de forma versionada y verificable la identidad, las estadísticas y los efectos de un objeto, distinguiendo lo que Data Dragon publica de forma estructurada, lo que solo aparece en prosa y lo que no se sabe.
 
-No resuelve todavía: evaluar daño de una rotación, buscar builds, simular tiempo, modelar todos los objetos ni interpretar efectos que dependen de estado del juego no publicado. Tampoco convierte una fuente secundaria en oficial: cada cifra externa conserva su cita y su nivel de confianza.
+Las rotaciones con sus efectos evaluables se calculan con `python -m lol_knowledge rotation` (ver el README del repositorio). No resuelve todavía: buscar builds, simular tiempo, modelar todos los objetos ni interpretar efectos que dependen de estado del juego no publicado. Tampoco convierte una fuente secundaria en oficial: cada cifra externa conserva su cita y su nivel de confianza.
 
 ## 2. Ejecutar
 

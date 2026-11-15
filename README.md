@@ -2,7 +2,7 @@
 
 Base de conocimiento verificable de League of Legends: datos oficiales de Riot (Data Dragon), análisis con fuente declarada y una CLI en Python que ingesta, valida y calcula de forma reproducible.
 
-Estado actual: **fase 13**. Existen la ingesta, el validador de integridad, el primer campeón analizado (Zaahen), el extractor de cálculos y el lector del bin del cliente en `research/`, un modelo mecánico de objetos versionado para 15 objetos, el núcleo del motor de daño (mitigación por resistencias), la hoja de estadísticas de campeón con sus primeras métricas (vida efectiva y enfriamientos) y una tabla de estadísticas base y por nivel extraída del cliente para los 173 campeones. El primer kit de habilidades (Zaahen) se evalúa con `python -m lol_knowledge ability`, que encadena hoja de estadísticas, habilidad y mitigación contra un objetivo.
+Estado actual: **fase 14**. Existen la ingesta, el validador de integridad, el primer campeón analizado (Zaahen), el extractor de cálculos y el lector del bin del cliente en `research/`, un modelo mecánico de objetos versionado para 15 objetos, el núcleo del motor de daño (mitigación por resistencias), la hoja de estadísticas de campeón con sus primeras métricas (vida efectiva y enfriamientos) y una tabla de estadísticas base y por nivel extraída del cliente para los 173 campeones. El primer kit de habilidades (Zaahen) se evalúa con `python -m lol_knowledge ability`, que encadena hoja de estadísticas, habilidad y mitigación contra un objetivo. `python -m lol_knowledge rotation` encadena ataques básicos, críticos y habilidades con los efectos de objeto evaluables (daño al impactar, aumentos y reducciones de daño) y lleva la vida del objetivo de un paso a otro.
 
 ## Requisitos
 
@@ -52,6 +52,7 @@ La suite incluye pruebas de integración que ejecutan `python -m lol_knowledge` 
 | `python -m lol_knowledge damage` | Disponible (mitigación de una instancia de daño) |
 | `python -m lol_knowledge stats` | Disponible (hoja de estadísticas, vida efectiva y enfriamientos) |
 | `python -m lol_knowledge ability` | Disponible (daño de una habilidad contra un objetivo; campeones con kit) |
+| `python -m lol_knowledge rotation` | Disponible (secuencia de ataques y habilidades con efectos de objeto; campeones con kit) |
 
 ## Actualización de datos
 
@@ -106,10 +107,10 @@ Resuelve las estadísticas de un campeón a un nivel, con objetos del catálogo 
 ```
 
 - **Cada estadística es una lista de aportes** (campeón, crecimiento por nivel, objetos, supuestos), cada uno con su fuente y su etiqueta. La etiqueta de un total es la más débil de sus aportes.
-- **Registro compartido** (`src/lol_knowledge/stats/registry.py`): declara cada estadística, cómo se apilan sus fuentes y si tiene regla documentada. Las que no la tienen (velocidad de ataque y de movimiento, regeneración, críticos, robo de vida, omnivampirismo, tenacidad) se listan con sus aportes, pero sin total.
+- **Registro compartido** (`src/lol_knowledge/stats/registry.py`): declara cada estadística, cómo se apilan sus fuentes y si tiene regla documentada. Las que no la tienen (velocidad de ataque y de movimiento, regeneración, probabilidad de crítico, robo de vida, omnivampirismo, tenacidad) se listan con sus aportes, pero sin total.
 - **Defectos de datos** ([`lol-knowledge/data-issues.json`](lol-knowledge/data-issues.json)): un campo oficial que se sabe incorrecto no se usa. Se sustituye por el registro del cliente ([`lol-knowledge/derived/champion-records.json`](lol-knowledge/derived/champion-records.json)), `Derivado` si el parche coincide con el snapshot y `Pendiente de verificación` si no. Sin registro, la estadística queda bloqueada. `--assume` tiene prioridad y siempre es `Pendiente de verificación`.
 - **Solo objetos curados:** Data Dragon no publica todas las estadísticas de los objetos (letalidad, aceleración, penetración van en la descripción), así que un objeto fuera del catálogo se rechaza.
-- Reglas: [crecimiento](lol-knowledge/mechanics/stat-growth.md), [aceleración](lol-knowledge/mechanics/ability-haste.md), [vida efectiva](lol-knowledge/mechanics/effective-health.md), [defectos conocidos](lol-knowledge/mechanics/known-data-issues.md).
+- Reglas: [crecimiento](lol-knowledge/mechanics/stat-growth.md), [aceleración](lol-knowledge/mechanics/ability-haste.md), [vida efectiva](lol-knowledge/mechanics/effective-health.md), [defectos conocidos](lol-knowledge/mechanics/known-data-issues.md), [impacto crítico](lol-knowledge/mechanics/critical-strike.md).
 
 Códigos de salida: `0` hoja calculada (aunque alguna estadística esté bloqueada; el informe lo dice), `2` petición inválida o datos ausentes.
 
@@ -153,6 +154,27 @@ parts = ability_damage(kit, "E", 5, sheet, case="edge", target={"max_health": 25
 
 Códigos de salida: `0` cálculo hecho, `2` petición inválida, dato ausente o campeón sin kit.
 
+## Rotaciones
+
+`rotation` evalúa pasos en orden contra un objetivo: ataques básicos (`attack`, `attack:crit`) con el daño al impactar de los objetos del atacante, y casos de habilidad (`Q`, `E.edge`…). Cada parte se mitiga y después se multiplica por los aumentos de daño del atacante (Verdugo de gigantes) y las reducciones de los objetos del objetivo (Placas, Adaptabilidad). La vida actual del objetivo baja paso a paso, así que Filo de la niebla lee la vida que dejaron los pasos anteriores.
+
+```powershell
+# Zaahen nivel 16 con Hoja del rey arruinado, lord Dominik y Filo infinito contra Ahri
+.\.venv\Scripts\python.exe -m lol_knowledge rotation --champion Zaahen --level 16 `
+  --learned Q=5 --learned W=3 --learned E=5 --learned R=3 `
+  --item 3153 --item 3036 --item 3031 --attacker-range melee `
+  --steps "attack, Q.first_hit, attack:crit, E.edge, R" `
+  --target-champion Ahri --target-level 16 --target-item 3047 --target-item 3143
+```
+
+- **Pasos:** `attack`, `attack:crit`, `SLOT` o `SLOT.caso`, separados por comas o espacios. Una habilidad con varios casos exige elegir uno, y su rango sale de `--learned`.
+- **Crítico:** multiplicador base del registro del cliente (`critdamagemultiplier`, 2,0 desde el parche 26.1) más el daño crítico adicional de los objetos. No hay valor esperado: cada paso dice si critica.
+- **Datos que no se adivinan:** cuerpo a cuerpo o a distancia (`--attacker-range`, lo pide Filo de la niebla), el tipo de un objetivo manual (`--target-kind`) y su vida adicional (`--target-bonus-health`, lo pide Verdugo de gigantes). La rotación exige la vida del objetivo.
+- **Lo no aplicado se lista:** efectos no evaluables, de otro tipo o de estadística porcentual (Rabadon). Si pueden cambiar el daño, el resultado queda `Pendiente de verificación`.
+- Reglas: [ataques y daño al impactar](lol-knowledge/mechanics/basic-attacks-and-on-hit.md), [impacto crítico](lol-knowledge/mechanics/critical-strike.md), [modificadores de daño](lol-knowledge/mechanics/damage-modifiers.md).
+
+Códigos de salida: `0` cálculo hecho, `2` petición inválida, dato ausente o campeón sin kit.
+
 ## Validación de integridad
 
 ```powershell
@@ -191,8 +213,8 @@ Condiciones de uso y cuestiones pendientes: [`research/evidence/usage-conditions
 - No hay CI ni publicación remota.
 - Data Dragon (16.20.1 y 16.22.1) publica `attackdamageperlevel = 0` para todos los campeones. Se sustituye por el crecimiento del cliente 16.22, `Derivado` porque cliente y snapshot coinciden. Senna no tiene el campo en el bin y su DA queda bloqueado por encima del nivel 1.
 - La hoja de estadísticas no incluye runas, efectos de objeto ni pasivas de campeón, y no valida la legalidad de una build (objetos únicos, botas).
-- `ability` calcula un lanzamiento: no hay rotaciones, tiempo, críticos, efectos de objeto al impactar, reducciones de resistencia del objetivo ni escudos. Solo Zaahen tiene kit.
-- El motor de daño solo modela la mitigación por armadura y resistencia mágica de una instancia. No modela amplificaciones ni reducciones de daño, escudos, críticos, la penetración de armadura adicional ni el redondeo del juego, y todavía no lee campeones ni objetos.
+- `ability` calcula un lanzamiento sin efectos de objeto; para críticos y efectos de objeto está `rotation`. Ninguno de los dos simula tiempo, velocidad de ataque, reducciones de resistencia del objetivo ni escudos. Solo Zaahen tiene kit.
+- El núcleo de mitigación trata una instancia; `rotation` añade críticos y modificadores porcentuales de daño. No se modelan escudos, reducciones planas de daño, la penetración de armadura adicional ni el redondeo del juego.
 - Data Dragon no publica valores numéricos de las habilidades de Zaahen; los valores derivados están documentados y las discrepancias abiertas siguen como pendientes.
 - La cobertura de campeones empieza por un caso representativo y crece de forma incremental.
 - El modelo de objetos cubre una muestra de 15 objetos por diversidad mecánica. Las cifras que Data Dragon no publica solo se incorporan con una fuente citada y `evidence_confidence: secondary`; lo no verificado se marca como desconocido o parcial, no se inventa.

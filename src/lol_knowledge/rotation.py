@@ -1,0 +1,548 @@
+"""Rotations: an ordered list of basic attacks and ability casts against one target.
+
+Each step is turned into damage parts (the attack itself, item on-hit damage,
+ability cases), every part is mitigated by the target's resistance, then
+multiplied by the attacker's damage-dealt modifiers and the target's
+damage-taken modifiers. The target's current health is carried from step to
+step, so current-health effects read the health left by earlier steps.
+
+Rules: ``lol-knowledge/mechanics/critical-strike.md``,
+``lol-knowledge/mechanics/damage-modifiers.md`` and
+``lol-knowledge/mechanics/basic-attacks-and-on-hit.md``. Pure functions over
+already-loaded values; the CLI does the loading.
+"""
+
+from __future__ import annotations
+
+import re
+from collections.abc import Mapping, Sequence
+from dataclasses import dataclass
+from fractions import Fraction
+from typing import Any
+
+from .damage import DamageResult, DamageType, format_number, mitigate
+from .errors import KitError, RotationError
+from .formula import FormulaError, evaluate_formula
+from .kit import Kit, ability_damage, sheet_stats
+from .scenario import PENETRATION, Target, penetration_modifiers
+from .stats import ItemData, Label, StatSheet, weakest
+
+RULES = (
+    "lol-knowledge/mechanics/basic-attacks-and-on-hit.md",
+    "lol-knowledge/mechanics/critical-strike.md",
+    "lol-knowledge/mechanics/damage-modifiers.md",
+    "lol-knowledge/mechanics/damage-mitigation.md",
+    "lol-knowledge/mechanics/stat-growth.md",
+)
+HOLDER_RANGES = frozenset({"melee", "ranged"})
+# Base critical strike multiplier of the patch notes (26.1); records that differ are flagged.
+PATCH_CRIT_MULTIPLIER = Fraction(2)
+# How strongly each evidence level of the object catalog backs a number.
+EVIDENCE_LABEL = {
+    "official": Label.DERIVED,
+    "corroborated": Label.DERIVED,
+    "secondary": Label.PENDING,
+    "unverified": Label.PENDING,
+}
+# Limit conditions of the catalog, as the target kinds they apply to.
+LIMIT_CONDITIONS = {"target is a minion or monster": frozenset({"minion", "monster"})}
+# Effect components that change the damage of a rotation when not applied.
+DAMAGE_KINDS = frozenset({"damage", "damage_modifier", "stat_modifier"})
+
+_ABILITY_STEP = re.compile(r"(?P<slot>[QWER])(?:\.(?P<case>[a-z0-9_]+))?")
+
+
+@dataclass(frozen=True)
+class Step:
+    """One rotation step: a basic attack (``slot`` is ``None``) or an ability case."""
+
+    text: str
+    slot: str | None = None
+    case: str | None = None
+    crit: bool = False
+
+
+def parse_steps(text: str) -> tuple[Step, ...]:
+    """Read ``attack``, ``attack:crit``, ``Q``, ``E.edge``… separated by commas or spaces."""
+    tokens = [token for token in re.split(r"[,\s]+", text.strip()) if token]
+    if not tokens:
+        raise RotationError("the rotation has no steps")
+    steps = []
+    for token in tokens:
+        lowered = token.lower()
+        if lowered == "attack":
+            steps.append(Step(token))
+            continue
+        if lowered == "attack:crit":
+            steps.append(Step(token, crit=True))
+            continue
+        match = _ABILITY_STEP.fullmatch(token[:1].upper() + token[1:])
+        if match is None:
+            raise RotationError(
+                f"unknown step {token!r}: use attack, attack:crit, Q, W, E, R or SLOT.case"
+            )
+        steps.append(Step(token, match.group("slot"), match.group("case")))
+    return tuple(steps)
+
+
+@dataclass(frozen=True)
+class CritBase:
+    """The champion's base critical strike multiplier and where it comes from."""
+
+    value: Fraction
+    label: Label
+    source: str
+
+
+@dataclass(frozen=True)
+class Part:
+    kind: str  # "attack", "on_hit" or "ability"
+    source: str
+    damage_type: DamageType
+    raw: Fraction
+    mitigation: DamageResult
+    dealt: tuple[tuple[str, Fraction], ...]  # (effect, percent) applied
+    taken: tuple[tuple[str, Fraction], ...]
+    label: Label
+    notes: tuple[str, ...] = ()
+
+    @property
+    def dealt_factor(self) -> Fraction:
+        """Damage-dealt modifiers add up (V26.09) before multiplying."""
+        return 1 + sum((percent for _, percent in self.dealt), start=Fraction(0)) / 100
+
+    @property
+    def taken_factor(self) -> Fraction:
+        """Damage-taken modifiers multiply with each other."""
+        factor = Fraction(1)
+        for _, percent in self.taken:
+            factor *= 1 + percent / 100
+        return factor
+
+    @property
+    def damage(self) -> Fraction:
+        return self.mitigation.damage * self.dealt_factor * self.taken_factor
+
+
+@dataclass(frozen=True)
+class StepOutcome:
+    index: int
+    step: Step
+    name: str
+    parts: tuple[Part, ...]
+    health_before: Fraction
+    label: Label
+
+    @property
+    def total(self) -> Fraction:
+        return sum((part.damage for part in self.parts), start=Fraction(0))
+
+    @property
+    def health_after(self) -> Fraction:
+        return max(Fraction(0), self.health_before - self.total)
+
+
+@dataclass(frozen=True)
+class RotationOutcome:
+    steps: tuple[StepOutcome, ...]
+    max_health: Fraction
+    start_health: Fraction
+    holder_range: str | None
+    label: Label
+    notes: tuple[str, ...]
+
+    @property
+    def total(self) -> Fraction:
+        return sum((step.total for step in self.steps), start=Fraction(0))
+
+    @property
+    def remaining_health(self) -> Fraction:
+        return max(Fraction(0), self.start_health - self.total)
+
+    @property
+    def lethal_step(self) -> int | None:
+        """Index (from 1) of the step that takes the target to 0 health, if any."""
+        for step in self.steps:
+            if step.health_after == 0:
+                return step.index
+        return None
+
+
+@dataclass(frozen=True)
+class _Effect:
+    item: str
+    id: str
+    name: str
+    label: Label
+    trigger: str
+    conditions: tuple[str, ...]
+    component: Mapping[str, Any]
+    limits: tuple[Mapping[str, Any], ...]
+
+    @property
+    def title(self) -> str:
+        return f"{self.item} {self.id}"
+
+
+def _effects(items: Sequence[ItemData], owner: str) -> tuple[list[_Effect], list[str], bool]:
+    """Split item effects into evaluable components and notes on the rest.
+
+    Returns the components, the notes and whether a skipped effect could have
+    changed the damage (which weakens the result).
+    """
+    seen: set[str] = set()
+    effects: list[_Effect] = []
+    notes: list[str] = []
+    weakened = False
+    for item in items:
+        if item.id in seen:
+            raise RotationError(
+                f"{owner} item {item.id} is listed twice; unique effects of copies are not modelled"
+            )
+        seen.add(item.id)
+        for effect in item.effects:
+            status = effect.get("model_status")
+            components = effect.get("components") or ()
+            if status != "evaluable":
+                notes.append(f"{owner} {item.id} {effect.get('id')}: {status}, not applied")
+                weakened |= any(c.get("kind") in DAMAGE_KINDS for c in components)
+                continue
+            label = EVIDENCE_LABEL.get(str(effect.get("evidence_confidence")), Label.DERIVED)
+            for component in components:
+                effects.append(
+                    _Effect(
+                        item.id,
+                        str(effect.get("id")),
+                        str(effect.get("name", "")),
+                        label,
+                        str((effect.get("trigger") or {}).get("event")),
+                        tuple(
+                            str(entry.get("kind"))
+                            for entry in [
+                                *(effect.get("conditions") or ()),
+                                *(component.get("conditions") or ()),
+                            ]
+                        ),
+                        component,
+                        tuple(effect.get("limits") or ()),
+                    )
+                )
+    return effects, notes, weakened
+
+
+def _target_kind(target: Target, why: str) -> str:
+    if target.kind is None:
+        raise RotationError(f"{why} depends on the target kind; give --target-kind")
+    return target.kind
+
+
+def _conditions_hold(effect: _Effect, target: Target, part_kind: str, crit: bool) -> bool:
+    for condition in effect.conditions:
+        if condition == "target_is_champion":
+            if _target_kind(target, effect.title) != "champion":
+                return False
+        elif condition == "on_hit":
+            if part_kind != "on_hit":
+                return False
+        elif condition == "critical_strike":
+            if not (crit and part_kind == "attack"):
+                return False
+        elif condition == "damage_source_is_attack":
+            if part_kind != "attack":
+                return False
+        else:
+            raise RotationError(f"{effect.title}: condition {condition!r} is not modelled")
+    return True
+
+
+class _Rotation:
+    def __init__(
+        self,
+        kit: Kit,
+        sheet: StatSheet,
+        ranks: Mapping[str, int],
+        target: Target,
+        crit_base: CritBase | None,
+        holder_range: str | None,
+        inputs: Mapping[str, Any],
+    ) -> None:
+        self.kit, self.sheet, self.ranks, self.target = kit, sheet, ranks, target
+        self.crit_base, self.holder_range, self.inputs = crit_base, holder_range, inputs
+        self.stats, self.origin = sheet_stats(sheet)
+        attacker, notes, weakened = _effects(sheet.items, "attacker")
+        defender, target_notes, target_weakened = _effects(target.items, "target")
+        self.notes = notes + target_notes
+        self.weakened = weakened or target_weakened
+        self.on_hit: list[_Effect] = []
+        self.dealt: list[_Effect] = []
+        self.taken: list[_Effect] = []
+        for effect in attacker:
+            kind = effect.component.get("kind")
+            if effect.trigger == "on_hit" and kind == "damage":
+                self.on_hit.append(effect)
+            elif effect.trigger == "always" and kind == "damage_modifier":
+                if effect.component.get("direction") != "dealt":
+                    self._skip(effect, "damage taken by the attacker")
+                else:
+                    self.dealt.append(effect)
+            else:
+                self._skip(effect, f"{effect.trigger} {kind}")
+        for effect in defender:
+            kind = effect.component.get("kind")
+            if kind == "damage_modifier" and effect.component.get("direction") == "taken":
+                self.taken.append(effect)
+            else:
+                self._skip(effect, f"{effect.trigger} {kind}", owner="target")
+
+    def _skip(self, effect: _Effect, why: str, owner: str = "attacker") -> None:
+        self.notes.append(f"{owner} {effect.title}: {why} is not part of rotations, not applied")
+        if effect.component.get("kind") in DAMAGE_KINDS and owner == "attacker":
+            self.weakened = True
+
+    def _percent(self, effect: _Effect, target_stats: Mapping[str, Fraction]) -> Fraction:
+        try:
+            result = evaluate_formula(
+                effect.component.get("formula"),
+                self.stats,
+                holder_range=self.holder_range,
+                target_stats=target_stats,
+            )
+        except FormulaError as exc:
+            raise RotationError(f"{effect.title}: {self._explain(exc)}") from exc
+        return result.exact
+
+    @staticmethod
+    def _explain(exc: FormulaError) -> str:
+        detail = str(exc)
+        if exc.code == "missing_holder_range":
+            detail += " (give --attacker-range melee|ranged)"
+        elif "target:bonus_health" in detail:
+            detail += " (give --target-bonus-health or --target-champion)"
+        return detail
+
+    def _modifiers(
+        self, part_kind: str, crit: bool, target_stats: Mapping[str, Fraction]
+    ) -> tuple[list[tuple[str, Fraction]], list[tuple[str, Fraction]], list[Label], list[str]]:
+        dealt: list[tuple[str, Fraction]] = []
+        taken: list[tuple[str, Fraction]] = []
+        labels: list[Label] = []
+        notes: list[str] = []
+        for effect in self.dealt:
+            if self._mode(effect) and _conditions_hold(effect, self.target, part_kind, crit):
+                if effect.component.get("source") != "all":
+                    raise RotationError(f"{effect.title}: source is not modelled")
+                dealt.append((effect.title, self._percent(effect, target_stats)))
+                labels.append(effect.label)
+        for effect in self.taken:
+            if not (self._mode(effect) and _conditions_hold(effect, self.target, part_kind, crit)):
+                continue
+            source = effect.component.get("source")
+            if source == "attack" and part_kind == "on_hit":
+                notes.append(f"{effect.title}: unknown whether it reduces on-hit item damage")
+                labels.append(Label.PENDING)
+                continue
+            if source == "attack" and part_kind != "attack":
+                continue
+            if source not in {"all", "attack"}:
+                raise RotationError(f"{effect.title}: source {source!r} is not modelled")
+            taken.append((effect.title, self._percent(effect, target_stats)))
+            labels.append(effect.label)
+        return dealt, taken, labels, notes
+
+    @staticmethod
+    def _mode(effect: _Effect) -> bool:
+        if effect.component.get("mode") != "percent":
+            raise RotationError(f"{effect.title}: only percent damage modifiers are modelled")
+        return True
+
+    def _part(
+        self,
+        kind: str,
+        source: str,
+        damage_type: DamageType,
+        raw: Fraction,
+        labels: list[Label],
+        crit: bool,
+        target_stats: Mapping[str, Fraction],
+        notes: Sequence[str] = (),
+    ) -> Part:
+        mitigation = mitigate(
+            raw,
+            damage_type,
+            self.target.resistance(damage_type),
+            penetration_modifiers(self.sheet, damage_type),
+        )
+        if damage_type in PENETRATION:
+            percent, flat = PENETRATION[damage_type]
+            labels = [*labels, self.sheet[percent].label, self.sheet[flat].label]
+        dealt, taken, modifier_labels, modifier_notes = self._modifiers(kind, crit, target_stats)
+        return Part(
+            kind,
+            source,
+            damage_type,
+            raw,
+            mitigation,
+            tuple(dealt),
+            tuple(taken),
+            weakest([*labels, *modifier_labels]),
+            (*notes, *modifier_notes),
+        )
+
+    def _attack(self, step: Step, target_stats: Mapping[str, Fraction]) -> list[Part]:
+        attack_damage = self.sheet["attack_damage"]
+        raw = attack_damage.total()
+        labels = [attack_damage.label]
+        notes: list[str] = []
+        source = "basic attack: total attack damage"
+        if step.crit:
+            if self.crit_base is None:
+                raise RotationError(
+                    f"step {step.text}: no critical multiplier for {self.sheet.champion.id} "
+                    "(lol-knowledge/derived/champion-records.json has no critdamagemultiplier)"
+                )
+            bonus = self.sheet["crit_damage_bonus"]
+            multiplier = self.crit_base.value + bonus.total()
+            raw *= multiplier
+            labels += [self.crit_base.label, bonus.label]
+            source += f" x critical multiplier {format_number(multiplier)}"
+            if len(bonus.sources()) > 1:
+                labels.append(Label.PENDING)
+                notes.append("several crit damage sources: their stacking is not verified")
+            if self.crit_base.value != PATCH_CRIT_MULTIPLIER:
+                labels.append(Label.PENDING)
+                notes.append(
+                    f"{self.sheet.champion.id}'s record has a {self.crit_base.value} critical "
+                    f"multiplier, not the patch's {PATCH_CRIT_MULTIPLIER}; its kit may change "
+                    "crits"
+                )
+        parts = [
+            self._part(
+                "attack", source, DamageType.PHYSICAL, raw, labels, step.crit, target_stats, notes
+            )
+        ]
+        for effect in self.on_hit:
+            if not _conditions_hold(effect, self.target, "on_hit", step.crit):
+                continue
+            value = self._limited(effect, self._percent(effect, target_stats))
+            damage_type = DamageType(str(effect.component.get("damage_type")))
+            parts.append(
+                self._part(
+                    "on_hit",
+                    f"{effect.title} ({effect.name})",
+                    damage_type,
+                    value,
+                    [effect.label],
+                    step.crit,
+                    target_stats,
+                )
+            )
+        return parts
+
+    def _limited(self, effect: _Effect, value: Fraction) -> Fraction:
+        for limit in effect.limits:
+            condition = str(limit.get("condition"))
+            kinds = LIMIT_CONDITIONS.get(condition)
+            if kinds is None or limit.get("kind") != "maximum" or limit.get("unit") != "flat":
+                raise RotationError(f"{effect.title}: limit {condition!r} is not modelled")
+            if _target_kind(self.target, f"{effect.title} limit") in kinds:
+                value = min(value, Fraction(str(limit["value"])))
+        return value
+
+    def _ability(self, step: Step, target_stats: Mapping[str, Fraction]) -> tuple[str, list[Part]]:
+        assert step.slot is not None
+        ability = self.kit.ability(step.slot)
+        if step.slot not in self.ranks:
+            raise RotationError(f"step {step.text}: learn {step.slot} first with --learned")
+        if step.case is None and len(ability.cases) > 1:
+            names = ", ".join(f"{step.slot}.{case.id}" for case in ability.cases)
+            raise RotationError(f"step {step.text}: pick one case ({names})")
+        rank = self.ranks[step.slot]
+        try:
+            raw_parts = ability_damage(
+                self.kit,
+                step.slot,
+                rank,
+                self.sheet,
+                case=step.case,
+                target=target_stats,
+                inputs=self.inputs,
+            )
+        except KitError as exc:
+            raise RotationError(f"step {step.text}: {exc}") from exc
+        notes = tuple(f"{ability.slot}: {note}" for note in ability.not_modelled)
+        parts = [
+            self._part(
+                "ability",
+                f"{ability.slot}.{part.case}[{part.index}] {part.source}",
+                part.damage_type,
+                part.raw,
+                [part.label],
+                False,
+                target_stats,
+                notes,
+            )
+            for part in raw_parts
+        ]
+        return f"{ability.slot} {ability.name} rank {rank}", parts
+
+    def run(self, steps: Sequence[Step]) -> RotationOutcome:
+        if "max_health" not in self.target.stats:
+            raise RotationError(
+                "a rotation tracks the target's health; give --target-max-health "
+                "or --target-champion"
+            )
+        if self.holder_range is not None and self.holder_range not in HOLDER_RANGES:
+            raise RotationError(f"attacker range must be melee or ranged, not {self.holder_range}")
+        start = self.target.stats["current_health"]
+        health = start
+        outcomes = []
+        for index, step in enumerate(steps, start=1):
+            target_stats = {**self.target.stats, "current_health": health}
+            if step.slot is None:
+                name = "critical basic attack" if step.crit else "basic attack"
+                parts = self._attack(step, target_stats)
+            else:
+                name, parts = self._ability(step, target_stats)
+            outcome = StepOutcome(
+                index, step, name, tuple(parts), health, weakest(part.label for part in parts)
+            )
+            outcomes.append(outcome)
+            health = outcome.health_after
+        notes = list(dict.fromkeys(self.notes))
+        passive = self.kit.abilities.get("P")
+        if passive is not None and passive.not_modelled:
+            notes += [f"P: {note}" for note in passive.not_modelled]
+        labels = [self.target.label, *(step.label for step in outcomes)]
+        if self.weakened:
+            labels.append(Label.PENDING)
+        return RotationOutcome(
+            tuple(outcomes),
+            self.target.stats["max_health"],
+            start,
+            self.holder_range,
+            weakest(labels),
+            tuple(notes),
+        )
+
+
+def evaluate_rotation(
+    kit: Kit,
+    sheet: StatSheet,
+    ranks: Mapping[str, int],
+    target: Target,
+    steps: Sequence[Step],
+    crit_base: CritBase | None,
+    *,
+    holder_range: str | None = None,
+    inputs: Mapping[str, Any] | None = None,
+) -> RotationOutcome:
+    """Damage of every step against ``target``, carrying its current health forward.
+
+    ``holder_range`` is the attacker's melee/ranged classification; it is only
+    required by effects that branch on it and is never guessed. ``crit_base``
+    is only required by critical steps.
+    """
+    if not steps:
+        raise RotationError("the rotation has no steps")
+    rotation = _Rotation(kit, sheet, ranks, target, crit_base, holder_range, inputs or {})
+    return rotation.run(steps)
