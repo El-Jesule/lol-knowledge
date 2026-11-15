@@ -16,6 +16,11 @@
 | Entender el modelo mecánico de objetos | [Modelo de objetos](objects/README.md) |
 | Saber cómo se mitiga el daño (armadura, RM, reducción, penetración) | [Mitigación de daño](mechanics/damage-mitigation.md) |
 | Calcular el daño tras resistencias | `python -m lol_knowledge damage` ([uso](../README.md)) |
+| Ver las estadísticas de un campeón por nivel y objetos | `python -m lol_knowledge stats` ([uso](../README.md)) |
+| Entender el crecimiento por nivel | [Crecimiento de estadísticas](mechanics/stat-growth.md) |
+| Entender enfriamientos y aceleración | [Aceleración de habilidades](mechanics/ability-haste.md) |
+| Entender la vida efectiva | [Vida efectiva](mechanics/effective-health.md) |
+| Saber qué datos oficiales son defectuosos | [Defectos conocidos de los datos](mechanics/known-data-issues.md) |
 | Ver el catálogo curado de objetos | [catalog.json](objects/catalog.json) |
 | Ver la evidencia de las mecánicas de objetos | [Informe de mecánicas](../research/reports/object-mechanics-2026-10-20.md) |
 | Continuar la investigación de datos de Zaahen | [Documento de continuidad](../research/zaahen-research-handoff.md) |

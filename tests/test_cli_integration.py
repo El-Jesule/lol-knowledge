@@ -70,3 +70,11 @@ def test_damage_command_rejects_invalid_input_in_subprocess() -> None:
     assert result.returncode == 2
     assert result.stdout == ""
     assert result.stderr.startswith("error: ")
+
+
+def test_stats_command_in_subprocess() -> None:
+    result = run_cli("stats", "--champion", "Zaahen", "--level", "11")
+
+    assert result.returncode == 0, result.stderr
+    assert "attack_damage: blocked: ddragon-attack-damage-growth" in result.stdout
+    assert "label: Calculado" in result.stdout

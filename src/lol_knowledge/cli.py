@@ -10,8 +10,11 @@ from pathlib import Path
 
 from . import __version__
 from .damage import DamageType, Modifiers, format_text, mitigate, to_dict
-from .errors import DamageInputError, LolKnowledgeError, NetworkError, PayloadError
+from .errors import DamageInputError, LolKnowledgeError, NetworkError, PayloadError, StatsError
 from .snapshot import build_snapshot
+from .stats import build_stat_sheet, load_champion, load_issues, load_items
+from .stats import format_text as format_stats_text
+from .stats import to_dict as stats_to_dict
 from .validate import validate_project
 
 DEFAULT_DATA_DIR = "data"
@@ -58,6 +61,7 @@ def build_parser() -> argparse.ArgumentParser:
     )
 
     _add_damage_parser(subparsers)
+    _add_stats_parser(subparsers)
 
     return parser
 
@@ -93,6 +97,46 @@ def _add_damage_parser(subparsers: argparse._SubParsersAction) -> None:
     damage.add_argument("--json", action="store_true", help="Print a JSON report.")
 
 
+def _add_stats_parser(subparsers: argparse._SubParsersAction) -> None:
+    stats = subparsers.add_parser(
+        "stats",
+        help="Resolve a champion's stat sheet and its metrics.",
+        description=(
+            "Resolve a champion's statistics at a level with curated items, then compute "
+            "effective health and ability cooldowns. Statistics affected by a known data "
+            "issue are blocked unless --assume gives the missing value."
+        ),
+    )
+    stats.add_argument("--champion", required=True, help="Champion id or name, e.g. Zaahen.")
+    stats.add_argument("--level", required=True, type=int, help="Champion level.")
+    stats.add_argument(
+        "--item", action="append", default=[], metavar="ID", help="Curated item id (repeat)."
+    )
+    stats.add_argument(
+        "--assume",
+        action="append",
+        default=[],
+        metavar="FIELD=VALUE",
+        help="Value for a Data Dragon field with an open data issue (repeat).",
+    )
+    stats.add_argument(
+        "--root", type=Path, default=Path("."), help="Project root (default: current directory)."
+    )
+    stats.add_argument("--json", action="store_true", help="Print a JSON report.")
+
+
+def _parse_assume(values: list[str]) -> dict[str, str]:
+    parsed: dict[str, str] = {}
+    for entry in values:
+        key, separator, value = entry.partition("=")
+        if not separator or not key.strip() or not value.strip():
+            raise StatsError(f"--assume expects FIELD=VALUE, got {entry!r}")
+        if key.strip() in parsed:
+            raise StatsError(f"--assume repeats {key.strip()!r}")
+        parsed[key.strip()] = value.strip()
+    return parsed
+
+
 def main(argv: list[str] | None = None) -> int:
     """Run the CLI and return the process exit code."""
     parser = build_parser()
@@ -105,7 +149,12 @@ def main(argv: list[str] | None = None) -> int:
         print(__version__)
         return 0
 
-    handlers = {"update": _run_update, "validate": _run_validate, "damage": _run_damage}
+    handlers = {
+        "update": _run_update,
+        "validate": _run_validate,
+        "damage": _run_damage,
+        "stats": _run_stats,
+    }
     handler = handlers[args.command]
     return handler(args)
 
@@ -127,6 +176,29 @@ def _run_damage(args: argparse.Namespace) -> int:
         print(json.dumps(to_dict(result), indent=2, ensure_ascii=False))
     else:
         print(format_text(result))
+    return 0
+
+
+def _run_stats(args: argparse.Namespace) -> int:
+    root: Path = args.root
+    try:
+        assumptions = _parse_assume(args.assume)
+        champion = load_champion(root, args.champion)
+        items = load_items(root, args.item)
+        issues = load_issues(root)
+        sheet = build_stat_sheet(champion, args.level, items, issues, assumptions)
+    except StatsError as exc:
+        print(f"error: {exc}", file=sys.stderr)
+        return 2
+    except OSError as exc:
+        # Application boundary: filesystem failures are reported, never swallowed.
+        print(f"error: {exc}", file=sys.stderr)
+        return 2
+
+    if args.json:
+        print(json.dumps(stats_to_dict(sheet), indent=2, ensure_ascii=False))
+    else:
+        print(format_stats_text(sheet))
     return 0
 
 

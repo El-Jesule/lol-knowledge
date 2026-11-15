@@ -11,7 +11,7 @@ from pathlib import Path
 from typing import Any
 
 from .ddragon import validate_champion_id
-from .errors import PayloadError
+from .errors import PayloadError, StatsError
 from .objects.validate import validate_object_catalog
 from .snapshot import (
     CHAMPION_INDEX_FILENAME,
@@ -23,6 +23,8 @@ from .snapshot import (
     validate_item_payload,
     validate_runes_payload,
 )
+from .stats.issues import ISSUES_PATH, parse_issues
+from .stats.sheet import CHAMPION_FIELDS
 
 SUPPORTED_SCHEMA_VERSIONS = frozenset({1})
 KB_DIRNAME = "lol-knowledge"
@@ -89,6 +91,7 @@ class _Validator:
         self._check_runes()
         self._check_knowledge_base()
         self._check_object_catalog()
+        self._check_data_issues()
         return ValidationReport(
             checked_files=self.checked_files,
             violations=tuple(self.violations),
@@ -336,6 +339,32 @@ class _Validator:
         self.skipped.extend(report.skipped)
         for violation in report.violations:
             self.violations.append(Violation(violation.path, violation.message))
+
+    def _check_data_issues(self) -> None:
+        path = self.root / ISSUES_PATH
+        if not path.is_file():
+            self.skipped.append(
+                f"{ISSUES_PATH.as_posix()} is not present; data issue checks were skipped"
+            )
+            return
+        self.checked_files += 1
+        document = self._read_json(path)
+        if document is None:
+            return
+        try:
+            issues = parse_issues(document)
+        except StatsError as exc:
+            self.fail(path, str(exc))
+            return
+        known_fields = {name for _, base, growth in CHAMPION_FIELDS for name in (base, growth)}
+        for issue in issues:
+            if issue.field not in known_fields:
+                self.fail(path, f"{issue.id}: unknown Data Dragon field {issue.field!r}")
+            if not (self.root / issue.documentation).is_file():
+                self.fail(path, f"{issue.id}: documentation {issue.documentation} does not exist")
+            for champion_id in issue.champions or ():
+                if self.champion_ids and champion_id not in self.champion_ids:
+                    self.fail(path, f"{issue.id}: unknown champion id {champion_id!r}")
 
     def _check_links(self, md_path: Path, text: str) -> None:
         for match in LINK_PATTERN.finditer(text):
