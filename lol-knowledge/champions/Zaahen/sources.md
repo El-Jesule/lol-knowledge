@@ -49,7 +49,9 @@ La naturaleza pasiva de la penetración y su permanencia con la R en enfriamient
 | Campos | Texto `spell_zaahenr_tooltip` («Pasiva: … penetración de armadura»); `ZaahenR.mSpell.mSpellPassives` → `ZaahenRSpellPassive`, `mRemoveWhenOnCooldown: false` |
 | Nombres de campo | Tablas de hashes de LeagueToolkit `lol-meta-classes` (tercero) |
 
-**Límites.** El buff lo aplica un script: ningún dato enlaza el buff con `ArmorPen`. La base (armadura total o adicional) no está resuelta. No se ha medido en partida. El detalle y un protocolo de medición están en el [informe de la R](../../../research/reports/zaahen-r-armor-pen.md).
+**Confirmación (2026-11-15).** El responsable del proyecto confirma que la penetración es pasiva, que sigue activa con la R en enfriamiento y que se aplica sobre la armadura total. Las reglas generales están en [Mitigación de daño](../../mechanics/damage-mitigation.md).
+
+**Límites.** El buff lo aplica un script: ningún dato enlaza el buff con `ArmorPen`. Las cifras no se han medido en partida dentro del repositorio. El detalle y un protocolo de medición están en el [informe de la R](../../../research/reports/zaahen-r-armor-pen.md).
 
 ## Contraste, no fuente publicable (`Pendiente de verificación`)
 

@@ -19,6 +19,10 @@
 | ¿Sobre armadura total o adicional? | El texto no dice «adicional». No hay dato del bin que lo decida | `Pendiente de verificación` |
 | Orden respecto a reducciones, letalidad y otras fuentes de penetración | Regla general del motor de daño, no específica de Zaahen | `Pendiente de verificación` |
 
+## Actualización 2026-11-15
+
+El responsable del proyecto confirma tres cosas: la penetración es pasiva e independiente del enfriamiento; se aplica sobre la armadura total; y su orden es reducción plana → reducción porcentual → penetración porcentual → letalidad. La wiki `Armor_penetration` coincide en el orden y en la armadura total. Las filas «¿Se pierde…?», «¿Sobre armadura total…?» y «Orden…» de la tabla de arriba quedan resueltas; las reglas generales están en [`lol-knowledge/mechanics/damage-mitigation.md`](../../lol-knowledge/mechanics/damage-mitigation.md). Sigue sin medirse en partida dentro del repositorio.
+
 ## Evidencia
 
 ### 1. Texto del cliente 16.22 (`spell_zaahenr_tooltip`, es_ES)
