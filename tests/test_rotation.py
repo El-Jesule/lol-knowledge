@@ -176,8 +176,8 @@ def test_blade_of_the_ruined_king_reads_health_before_each_attack():
     assert first.health_before == 2000
     assert second.health_before == 2000 - first.total
     assert second.parts[1].raw == F(9, 100) * second.health_before
-    assert first.parts[1].label is Label.PENDING  # secondary evidence
-    assert outcome.label is Label.PENDING
+    assert first.parts[1].label is Label.DERIVED  # wiki corroborated by the client
+    assert outcome.label is Label.DERIVED
 
 
 def test_ranged_holders_use_the_ranged_ratio():

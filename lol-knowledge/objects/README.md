@@ -1,10 +1,10 @@
 # Modelo mecánico de objetos — `lol-object-model/1`
 
-- **Parche del snapshot:** `16.22.1` (`data/current/manifest.json`). El catálogo se creó sobre 16.20.1; en 16.22.1 las estadísticas, el oro, las descripciones y las recetas de los 15 objetos son idénticos en Data Dragon (comprobado el 2026-11-15). La evidencia secundaria no se ha revisado contra las notas de parche 16.21 y 16.22.
+- **Parche del snapshot:** `16.22.1` (`data/current/manifest.json`). El catálogo se creó sobre 16.20.1; en 16.22.1 las estadísticas, el oro, las descripciones y las recetas de los 15 objetos son idénticos en Data Dragon (comprobado el 2026-11-15). Las notas de parche 26.21 y 26.22 no tocan ninguno de los 15 objetos, y las cifras secundarias se han contrastado con los datos del cliente 16.22 ([informe](../../research/reports/item-data-values-16.22.md)).
 - **Fuente:** Data Dragon (`https://ddragon.leagueoflegends.com`), locale `es_ES`.
 - **Fecha de consulta:** 2026-10-20.
 - **Estado:** muestra curada de 15 objetos y 10 efectos; **no** es cobertura completa.
-- **Versión del catálogo:** `catalog_version: 4` (esquema `1`; la 3 solo cambió el parche; la 4 añade `subject: target` explícito a la vida actual de Filo de la niebla, para que el motor de rotaciones la lea del objetivo sin depender de la convención implícita).
+- **Versión del catálogo:** `catalog_version: 4` (esquema `1`; la 3 solo cambió el parche; la 4 añade `subject: target` explícito a la vida actual de Filo de la niebla, para que el motor de rotaciones la lea del objetivo sin depender de la convención implícita; la 5 añade los datos del cliente 16.22 como fuente `client_data` y corrige la ralentización a distancia de Zarpazo sombrío).
 - **Código:** [`src/lol_knowledge/objects/`](../../src/lol_knowledge/objects/).
 - **Catálogo curado:** [`catalog.json`](catalog.json).
 - **Auditoría previa del extractor:** [`research/reports/agent-d-extractor-audit.md`](../../research/reports/agent-d-extractor-audit.md).
@@ -164,7 +164,7 @@ Decisiones:
 - `stacks.required` y `stacks.max_stacks` son enteros; la ventana temporal puede ser desconocida.
 - `limits`: topes o umbrales conocidos aunque la curva no lo esté. Ejemplo: el 15 % de Lord Dominik con 1500 de vida adicional.
 - `model_status` es la clasificación curada; `derived_status` se calcula desde las fórmulas. `validate` impide que `model_status` sea **más optimista** que `derived_status`.
-- `sources`: lista opcional de fuentes externas con `kind`, `reference`, `quote`, `retrieved_at`, `confidence` y `note` opcional. Se usa solo para cifras que Data Dragon no publica. La wiki comunitaria se marca `community_wiki` y `secondary`; una fuente comunitaria **no puede** marcarse `official`. `corroborated` exige al menos dos fuentes declaradas.
+- `sources`: lista opcional de fuentes externas con `kind`, `reference`, `quote`, `retrieved_at`, `confidence` y `note` opcional. Se usa solo para cifras que Data Dragon no publica. La wiki comunitaria se marca `community_wiki` y `secondary`; una fuente comunitaria **no puede** marcarse `official`. Los valores de datos del cliente se marcan `client_data` (`secondary` o `corroborated`, nunca `official`); como el cliente guarda los porcentajes como fracciones, en sus citas el validador acepta también el número multiplicado por 100. `corroborated` exige al menos dos fuentes declaradas.
 - `evidence_confidence`: `official`, `corroborated`, `secondary` o `unverified`. Es independiente de `model_status`: una fórmula puede ser evaluable y, aun así, descansar en una fuente secundaria. `official` solo se admite cuando no hay `sources` (la descripción de Data Dragon es la fuente).
 - Regla de números: **cada constante, duración, límite, enfriamiento, contador o ventana de acumulaciones debe aparecer en la descripción de Data Dragon o en la cita de alguna fuente declarada**. El validador rechaza un número huérfano.
 - Las fórmulas rechazan claves desconocidas: un `subjet` mal escrito no cae silenciosamente en la convención de campeón.
@@ -235,9 +235,9 @@ Cobertura real: **15 objetos de los 600+ del snapshot**. No se afirma nada sobre
 | Objeto | Efecto | Estado | Qué falta |
 |---|---|---|---|
 | Rabadon | Obra mágica: +30 % de AP total | `evaluable` | Nada para el modificador; el redondeo de la hoja final es del motor. |
-| BotRK | Filo de la niebla: 9 %/6 % de vida actual como daño físico `on-hit`, cap 100 vs súbditos/monstruos | `evaluable` | La fuente del ratio es secundaria; el cap es un límite declarado que el motor debe aplicar. |
-| BotRK | Zarpazo sombrío: slow 30 %/1 s tras 3 ataques, ventana 6 s, enfriamiento 15 s | `partially_evaluable` | Persistencia de acumulaciones entre objetivos no publicada. |
-| Lord Dominik | Verdugo de gigantes: 1 %/100 de vida adicional, tope 15 % a 1500 | `evaluable` | La pendiente es de fuente secundaria; el orden de modificadores es del motor. |
+| BotRK | Filo de la niebla: 9 %/6 % de vida actual como daño físico `on-hit`, cap 100 vs súbditos/monstruos | `evaluable` | Ratio y tope corroborados por el cliente 16.22; el cap es un límite declarado que el motor debe aplicar. |
+| BotRK | Zarpazo sombrío: slow 30 % (15 % a distancia)/1 s tras 3 ataques, ventana 6 s, enfriamiento 15 s | `partially_evaluable` | Persistencia de acumulaciones entre objetivos no publicada; las 3 acumulaciones solo vienen de la wiki. |
+| Lord Dominik | Verdugo de gigantes: 1 %/100 de vida adicional, tope 15 % a 1500 | `evaluable` | Tope y umbral corroborados por el cliente; la pendiente lineal sigue siendo de fuente secundaria. |
 | Botas blindadas | Placas: −10 % de daño sufrido por ataques | `evaluable` | Nada para el modificador. |
 | Randuin | Adaptabilidad: −30 % de daño crítico | `evaluable` | La reducción es multiplicativa y afecta al total de la instancia; el motor debe aplicarlo. |
 | Randuin | Humildad: slow 70 %/2 s en área, enfriamiento 90 s | `evaluable` | El radio exacto no se modela. |
@@ -344,7 +344,7 @@ assert not validate_request(request)
 
 - La muestra es pequeña (15 objetos) y elegida por diversidad mecánica, no por frecuencia de compra.
 - Data Dragon no publica modos de juego; `availability.modes` es desconocido.
-- Data Dragon no publica el enfriamiento de los activos. Cuando se conoce por una fuente secundaria citada (Zhonya, Randuin), se registra con `evidence_confidence: secondary`; si no, se marca desconocido.
+- Data Dragon no publica el enfriamiento de los activos. Cuando se conoce por una fuente citada, se registra con su confianza (Zhonya y Randuin: wiki y cliente, `corroborated`); si no, se marca desconocido.
 - Los ratios y curvas que solo aparecen como «un porcentaje» o «hasta» se resuelven únicamente si existe una fuente citada y verificable; en caso contrario quedan desconocidos. No se interpolan extremos sin evidencia.
 - La evidencia secundaria no es oficial de Riot. La coincidencia de estadísticas/oro con Data Dragon corrobora el estado de balance, no la exactitud de cada cifra.
 - El modelo no sustituye al extractor de campeones: los objetos describen efectos; el daño de habilidades sigue viniendo de `research/binmodel`.

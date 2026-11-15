@@ -432,3 +432,34 @@ def test_formula_key_typo_is_reported() -> None:
     }
     messages = _messages(_catalog(effect=effect))
     assert any("unknown keys" in message for message in messages)
+
+
+def _client_effect(kind: str = "client_data") -> dict:
+    effect = _external_effect()
+    effect["components"][0]["formula"]["percent"] = 9
+    effect["sources"] = [
+        {
+            "kind": kind,
+            "reference": "Cliente 16.22: Global.wad.client → items → Items/3153.mDataValues",
+            "quote": "MeleeValue = 0.09",
+            "retrieved_at": "2026-11-15",
+            "confidence": "secondary",
+        }
+    ]
+    return effect
+
+
+def test_client_data_quotes_count_fractions_as_percentages() -> None:
+    assert _messages(_catalog(effect=_client_effect())) == []
+
+
+def test_only_client_data_quotes_scale_fractions() -> None:
+    messages = _messages(_catalog(effect=_client_effect("community_wiki")))
+    assert any("number 9.0 is not present" in message for message in messages)
+
+
+def test_client_data_cannot_be_official() -> None:
+    effect = _client_effect()
+    effect["sources"][0]["confidence"] = "official"
+    messages = _messages(_catalog(effect=effect))
+    assert any("'client_data' cannot be 'official'" in message for message in messages)

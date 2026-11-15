@@ -35,4 +35,4 @@
 
 - **Ataques potenciados por habilidades** (por ejemplo, la Q de Zaahen): el kit modela el daño adicional de la habilidad y el informe recuerda que el ataque se suma aparte. Para incluirlo se escribe un paso `attack` junto a la habilidad. No consta si el ataque potenciado aplica los efectos al impactar como un ataque normal.
 - **Tiempo:** el motor no simula enfriamientos, velocidad de ataque ni duraciones.
-- **Efectos de objetos no evaluables o de otro tipo** (control de masas, curación, escudos, estadísticas porcentuales como la de Sombrero mortífero de Rabadon): se listan en el informe como no aplicados. Si pueden cambiar el daño, el resultado queda `Pendiente de verificación`.
+- **Efectos de objetos no evaluables o de otro tipo** (control de masas, curación, escudos, estadísticas porcentuales como la del Sombrero mortal de Rabadon): se listan en el informe como no aplicados. Si pueden cambiar el daño, el resultado queda `Pendiente de verificación`.
