@@ -86,7 +86,13 @@ BASIS_STATES = frozenset(
 # Evidence that is not the Data Dragon description. ``secondary`` is a
 # community source; it is never presented as an official Riot value.
 EVIDENCE_KINDS = frozenset(
-    {"ddragon_description", "community_wiki", "community_dragon", "in_game_measurement"}
+    {
+        "ddragon_description",
+        "community_wiki",
+        "community_dragon",
+        "in_game_measurement",
+        "client_data",
+    }
 )
 EVIDENCE_CONFIDENCE = frozenset({"official", "corroborated", "secondary", "unverified"})
 HOLDER_RANGES = frozenset({"melee", "ranged"})

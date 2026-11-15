@@ -96,7 +96,10 @@ _SOURCE_CONFIDENCE = {
     "community_wiki": {"secondary", "corroborated"},
     "community_dragon": {"secondary", "corroborated"},
     "in_game_measurement": {"secondary", "corroborated"},
+    "client_data": {"secondary", "corroborated"},
 }
+# Client data values store percentages as fractions (0.09 for 9 %).
+_FRACTION_SOURCES = frozenset({"client_data"})
 
 
 @dataclass(frozen=True)
@@ -137,9 +140,12 @@ def _quote_numbers(quote: str) -> set[float]:
     return numbers
 
 
-def _quote_has_number(quote: str, value: float) -> bool:
+def _quote_has_number(quote: str, value: float, *, fractions: bool = False) -> bool:
     target = abs(value)
-    return any(abs(candidate - target) < 1e-9 for candidate in _quote_numbers(quote))
+    candidates = _quote_numbers(quote)
+    if fractions:
+        candidates |= {round(candidate * 100, 9) for candidate in candidates}
+    return any(abs(candidate - target) < 1e-9 for candidate in candidates)
 
 
 def _collect_constants(formula: Any, output: list[float]) -> None:
@@ -475,9 +481,14 @@ class _CatalogChecker:
                 f"{pointer}.model_status", f"model_status must be one of {sorted(MODEL_STATUSES)}"
             )
             return
-        cited_texts = [quote, *(source["quote"] for source in sources)]
+        cited_texts = [(quote, False)] + [
+            (source["quote"], source.get("kind") in _FRACTION_SOURCES) for source in sources
+        ]
         for number in _effect_numbers(effect):
-            if not any(_quote_has_number(text, number) for text in cited_texts):
+            if not any(
+                _quote_has_number(text, number, fractions=fractions)
+                for text, fractions in cited_texts
+            ):
                 self.fail(
                     f"{pointer}.quote",
                     f"number {number!r} is not present in any cited quote",
