@@ -16,14 +16,25 @@ from .errors import (
     LolKnowledgeError,
     NetworkError,
     PayloadError,
+    RotationError,
     StatsError,
 )
 from .kit import load_kit, passive_contributions
+from .rotation import CritBase, evaluate_rotation, parse_steps
+from .rotation_report import format_text as format_rotation_text
+from .rotation_report import to_dict as rotation_to_dict
 from .scenario import evaluate_ability, target_from_sheet, target_from_values
 from .scenario_report import format_text as format_ability_text
 from .scenario_report import to_dict as ability_to_dict
 from .snapshot import build_snapshot
-from .stats import build_stat_sheet, load_champion, load_issues, load_items, load_records
+from .stats import (
+    Label,
+    build_stat_sheet,
+    load_champion,
+    load_issues,
+    load_items,
+    load_records,
+)
 from .stats import format_text as format_stats_text
 from .stats import to_dict as stats_to_dict
 from .validate import validate_project
@@ -74,6 +85,7 @@ def build_parser() -> argparse.ArgumentParser:
     _add_damage_parser(subparsers)
     _add_stats_parser(subparsers)
     _add_ability_parser(subparsers)
+    _add_rotation_parser(subparsers)
 
     return parser
 
@@ -166,15 +178,68 @@ def _add_ability_parser(subparsers: argparse._SubParsersAction) -> None:
     ability.add_argument(
         "--input", action="append", default=[], metavar="NAME=VALUE", help="Scenario input."
     )
-    ability.add_argument("--target-champion", help="Target champion.")
-    ability.add_argument("--target-level", type=int, help="Target champion level.")
-    ability.add_argument("--target-item", action="append", default=[], metavar="ID")
-    ability.add_argument("--target-armor", help="Target armor (manual target).")
-    ability.add_argument("--target-mr", help="Target magic resistance (manual target).")
-    ability.add_argument("--target-max-health", help="Target max health (manual target).")
-    ability.add_argument("--target-current-health", help="Target current health.")
+    _add_target_options(ability)
     ability.add_argument("--root", type=Path, default=Path("."))
     ability.add_argument("--json", action="store_true", help="Print a JSON report.")
+
+
+def _add_target_options(command: argparse.ArgumentParser) -> None:
+    command.add_argument("--target-champion", help="Target champion.")
+    command.add_argument("--target-level", type=int, help="Target champion level.")
+    command.add_argument("--target-item", action="append", default=[], metavar="ID")
+    command.add_argument("--target-armor", help="Target armor (manual target).")
+    command.add_argument("--target-mr", help="Target magic resistance (manual target).")
+    command.add_argument("--target-max-health", help="Target max health (manual target).")
+    command.add_argument(
+        "--target-bonus-health", help="Target bonus health (manual target), e.g. for Giant Slayer."
+    )
+    command.add_argument(
+        "--target-kind",
+        choices=("champion", "monster", "minion", "structure"),
+        help="What the manual target is; effects that depend on it need it.",
+    )
+    command.add_argument("--target-current-health", help="Target current health.")
+
+
+def _add_rotation_parser(subparsers: argparse._SubParsersAction) -> None:
+    rotation = subparsers.add_parser(
+        "rotation",
+        help="Damage of a sequence of basic attacks and abilities, with item effects.",
+        description=(
+            "Evaluate the steps in order against one target: basic attacks (attack, "
+            "attack:crit) with the on-hit damage of the attacker's items, and ability cases "
+            "(Q, E.edge...). Every part is mitigated, then multiplied by the attacker's "
+            "damage-dealt modifiers (Giant Slayer) and the target items' damage-taken "
+            "modifiers. The target's current health is carried from step to step."
+        ),
+    )
+    rotation.add_argument("--champion", required=True, help="Attacker champion, e.g. Zaahen.")
+    rotation.add_argument("--level", required=True, type=int, help="Attacker level.")
+    rotation.add_argument(
+        "--steps",
+        required=True,
+        help='Steps in order, e.g. "attack, Q.first_hit, attack:crit, E.edge, R".',
+    )
+    rotation.add_argument(
+        "--learned",
+        action="append",
+        default=[],
+        metavar="SLOT=RANK",
+        help="Rank of each learned ability (repeat); ability steps use it.",
+    )
+    rotation.add_argument(
+        "--attacker-range",
+        choices=("melee", "ranged"),
+        help="The attacker's melee/ranged classification, for effects that branch on it.",
+    )
+    rotation.add_argument("--item", action="append", default=[], metavar="ID")
+    rotation.add_argument("--assume", action="append", default=[], metavar="FIELD=VALUE")
+    rotation.add_argument(
+        "--input", action="append", default=[], metavar="NAME=VALUE", help="Scenario input."
+    )
+    _add_target_options(rotation)
+    rotation.add_argument("--root", type=Path, default=Path("."))
+    rotation.add_argument("--json", action="store_true", help="Print a JSON report.")
 
 
 def _pairs(values: list[str], option: str) -> dict[str, str]:
@@ -196,6 +261,17 @@ def _number(value: str | None, option: str):
         return to_fraction(value, option)
     except DamageInputError as exc:
         raise StatsError(str(exc)) from exc
+
+
+def _parse_ranks(values: list[str]) -> dict[str, int]:
+    learned = {key.upper(): value for key, value in _pairs(values, "--learned").items()}
+    ranks: dict[str, int] = {}
+    for key, value in learned.items():
+        try:
+            ranks[key] = int(value)
+        except ValueError as exc:
+            raise StatsError(f"--learned {key}: rank must be an integer") from exc
+    return ranks
 
 
 def _parse_assume(values: list[str]) -> dict[str, str]:
@@ -241,6 +317,7 @@ def main(argv: list[str] | None = None) -> int:
         "damage": _run_damage,
         "stats": _run_stats,
         "ability": _run_ability,
+        "rotation": _run_rotation,
     }
     handler = handlers[args.command]
     return handler(args)
@@ -267,7 +344,13 @@ def _run_damage(args: argparse.Namespace) -> int:
 
 
 def _ability_target(args: argparse.Namespace, root: Path, issues, derived):
-    manual = [args.target_armor, args.target_mr, args.target_max_health]
+    manual = [
+        args.target_armor,
+        args.target_mr,
+        args.target_max_health,
+        args.target_bonus_health,
+        args.target_kind,
+    ]
     if args.target_champion:
         if any(value is not None for value in manual):
             raise StatsError("give either --target-champion or manual target values, not both")
@@ -288,6 +371,8 @@ def _ability_target(args: argparse.Namespace, root: Path, issues, derived):
         _number(args.target_mr, "--target-mr"),
         max_health=_number(args.target_max_health, "--target-max-health"),
         current_health=_number(args.target_current_health, "--target-current-health"),
+        bonus_health=_number(args.target_bonus_health, "--target-bonus-health"),
+        kind=args.target_kind,
     )
 
 
@@ -295,13 +380,7 @@ def _run_ability(args: argparse.Namespace) -> int:
     root: Path = args.root
     try:
         slot = args.ability.strip().upper()
-        learned = {key.upper(): value for key, value in _pairs(args.learned, "--learned").items()}
-        ranks: dict[str, int] = {}
-        for key, value in learned.items():
-            try:
-                ranks[key] = int(value)
-            except ValueError as exc:
-                raise StatsError(f"--learned {key}: rank must be an integer") from exc
+        ranks = _parse_ranks(args.learned)
         if slot in ranks and ranks[slot] != args.rank:
             raise StatsError(f"--learned {slot}={ranks[slot]} contradicts --rank {args.rank}")
         ranks[slot] = args.rank
@@ -343,6 +422,73 @@ def _run_ability(args: argparse.Namespace) -> int:
         print(json.dumps(ability_to_dict(outcome, sheet, target), indent=2, ensure_ascii=False))
     else:
         print(format_ability_text(outcome, sheet, target))
+    return 0
+
+
+def _crit_base(champion_id: str, patch: str, derived) -> CritBase | None:
+    value = derived.value(champion_id, "critdamagemultiplier") if derived else None
+    if value is None:
+        return None
+    label = Label.DERIVED if derived.matches_patch(patch) else Label.PENDING
+    return CritBase(
+        value,
+        label,
+        f"{derived.path} {champion_id}.critdamagemultiplier ({derived.content_version})",
+    )
+
+
+def _run_rotation(args: argparse.Namespace) -> int:
+    root: Path = args.root
+    try:
+        steps = parse_steps(args.steps)
+        ranks = _parse_ranks(args.learned)
+        assumptions = _parse_assume(args.assume)
+        inputs = {
+            key: _number(value, f"--input {key}")
+            for key, value in _pairs(args.input, "--input").items()
+        }
+        champion = load_champion(root, args.champion)
+        kit = load_kit(root, champion.id)
+        if kit is None:
+            raise KitError(
+                f"{champion.id} has no kit yet (lol-knowledge/champions/{champion.id}/kit.json)"
+            )
+        issues = load_issues(root)
+        derived = load_records(root)
+        sheet = build_stat_sheet(
+            champion,
+            args.level,
+            load_items(root, args.item),
+            issues,
+            assumptions,
+            derived,
+            passive_contributions(kit, ranks),
+        )
+        target = _ability_target(args, root, issues, derived)
+        crit_base = _crit_base(champion.id, champion.patch, derived)
+        outcome = evaluate_rotation(
+            kit,
+            sheet,
+            ranks,
+            target,
+            steps,
+            crit_base,
+            holder_range=args.attacker_range,
+            inputs=inputs,
+        )
+    except (StatsError, KitError, DamageInputError, RotationError) as exc:
+        print(f"error: {exc}", file=sys.stderr)
+        return 2
+    except OSError as exc:
+        # Application boundary: filesystem failures are reported, never swallowed.
+        print(f"error: {exc}", file=sys.stderr)
+        return 2
+
+    if args.json:
+        report = rotation_to_dict(outcome, sheet, target, crit_base)
+        print(json.dumps(report, indent=2, ensure_ascii=False))
+    else:
+        print(format_rotation_text(outcome, sheet, target, crit_base))
     return 0
 
 

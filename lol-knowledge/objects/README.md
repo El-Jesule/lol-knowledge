@@ -4,7 +4,7 @@
 - **Fuente:** Data Dragon (`https://ddragon.leagueoflegends.com`), locale `es_ES`.
 - **Fecha de consulta:** 2026-10-20.
 - **Estado:** muestra curada de 15 objetos y 10 efectos; **no** es cobertura completa.
-- **Versión del catálogo:** `catalog_version: 3` (esquema `1`; la 3 solo cambia el parche).
+- **Versión del catálogo:** `catalog_version: 4` (esquema `1`; la 3 solo cambió el parche; la 4 añade `subject: target` explícito a la vida actual de Filo de la niebla, para que el motor de rotaciones la lea del objetivo sin depender de la convención implícita).
 - **Código:** [`src/lol_knowledge/objects/`](../../src/lol_knowledge/objects/).
 - **Catálogo curado:** [`catalog.json`](catalog.json).
 - **Auditoría previa del extractor:** [`research/reports/agent-d-extractor-audit.md`](../../research/reports/agent-d-extractor-audit.md).
@@ -16,7 +16,7 @@ Este documento explica el esquema, las decisiones, lo que está modelado y lo qu
 
 Resuelve: representar de forma versionada y verificable la identidad, las estadísticas y los efectos de un objeto, distinguiendo lo que Data Dragon publica de forma estructurada, lo que solo aparece en prosa y lo que no se sabe.
 
-No resuelve todavía: evaluar daño de una rotación, buscar builds, simular tiempo, modelar todos los objetos ni interpretar efectos que dependen de estado del juego no publicado. Tampoco convierte una fuente secundaria en oficial: cada cifra externa conserva su cita y su nivel de confianza.
+Las rotaciones con sus efectos evaluables se calculan con `python -m lol_knowledge rotation` (ver el README del repositorio). No resuelve todavía: buscar builds, simular tiempo, modelar todos los objetos ni interpretar efectos que dependen de estado del juego no publicado. Tampoco convierte una fuente secundaria en oficial: cada cifra externa conserva su cita y su nivel de confianza.
 
 ## 2. Ejecutar
 

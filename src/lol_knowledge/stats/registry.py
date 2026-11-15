@@ -16,6 +16,7 @@ MECHANICS = "lol-knowledge/mechanics"
 GROWTH_RULES = f"{MECHANICS}/stat-growth.md"
 HASTE_RULES = f"{MECHANICS}/ability-haste.md"
 MITIGATION_RULES = f"{MECHANICS}/damage-mitigation.md"
+CRIT_RULES = f"{MECHANICS}/critical-strike.md"
 
 
 class Stacking(StrEnum):
@@ -91,7 +92,13 @@ STATS: dict[str, StatDef] = {
         _pending("health_regen", "Regeneración de vida", "unidad por 5 s y aportes % " + NO_RULE),
         _pending("mana_regen", "Regeneración de maná", "unidad por 5 s y aportes % " + NO_RULE),
         _pending("crit_chance", "Probabilidad de crítico", "tope " + NO_RULE, Unit.FRACTION),
-        _pending("crit_damage_bonus", "Daño crítico adicional", NO_RULE, Unit.FRACTION),
+        StatDef(
+            "crit_damage_bonus",
+            "Daño crítico adicional",
+            Stacking.ADDITIVE,
+            Unit.FRACTION,
+            CRIT_RULES,
+        ),
         _pending("life_steal", "Robo de vida", "curación " + NO_RULE, Unit.FRACTION),
         _pending("omnivamp", "Omnivampirismo", "curación " + NO_RULE, Unit.FRACTION),
         _pending("tenacity", "Tenacidad", "apilamiento " + NO_RULE, Unit.FRACTION),
