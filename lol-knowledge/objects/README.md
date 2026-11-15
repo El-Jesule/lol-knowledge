@@ -4,7 +4,7 @@
 - **Fuente:** Data Dragon (`https://ddragon.leagueoflegends.com`), locale `es_ES`.
 - **Fecha de consulta:** 2026-10-20.
 - **Estado:** muestra curada de 15 objetos y 10 efectos; **no** es cobertura completa.
-- **Versión del catálogo:** `catalog_version: 3` (esquema `1`; la 3 solo cambia el parche).
+- **Versión del catálogo:** `catalog_version: 4` (esquema `1`; la 3 solo cambió el parche; la 4 añade `subject: target` explícito a la vida actual de Filo de la niebla, para que el motor de rotaciones la lea del objetivo sin depender de la convención implícita).
 - **Código:** [`src/lol_knowledge/objects/`](../../src/lol_knowledge/objects/).
 - **Catálogo curado:** [`catalog.json`](catalog.json).
 - **Auditoría previa del extractor:** [`research/reports/agent-d-extractor-audit.md`](../../research/reports/agent-d-extractor-audit.md).
