@@ -6,7 +6,7 @@
 
 ## Cálculo determinista (`Calculado`)
 
-Existe el motor de mitigación (`python -m lol_knowledge damage`, reglas en [Mitigación de daño](../../mechanics/damage-mitigation.md)), que calcula el daño tras resistencias a partir de números de entrada. Todavía no existe la capa que traduce el kit y los objetos de Zaahen a esas entradas, ni una calculadora de eficiencia de objetos. Hay bases y ratios derivados publicados en [`abilities.md`](abilities.md), pero aquí no se afirma daño final, oro por estadística ni umbral de penetración.
+El daño de cada habilidad contra un objetivo se calcula con `python -m lol_knowledge ability` a partir del [kit](kit.json), la hoja de estadísticas y las reglas de [mitigación](../../mechanics/damage-mitigation.md). Todavía no existe una calculadora de eficiencia de objetos ni una búsqueda de builds, así que esta página no afirma qué build es mejor. Hay bases y ratios derivados publicados en [`abilities.md`](abilities.md), pero aquí no se afirma daño final, oro por estadística ni umbral de penetración.
 
 ## Insumos disponibles (`Derivado`)
 

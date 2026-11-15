@@ -2,7 +2,7 @@
 
 Base de conocimiento verificable de League of Legends: datos oficiales de Riot (Data Dragon), análisis con fuente declarada y una CLI en Python que ingesta, valida y calcula de forma reproducible.
 
-Estado actual: **fase 12**. Existen la ingesta, el validador de integridad, el primer campeón analizado (Zaahen), el extractor de cálculos y el lector del bin del cliente en `research/`, un modelo mecánico de objetos versionado para 15 objetos, el núcleo del motor de daño (mitigación por resistencias), la hoja de estadísticas de campeón con sus primeras métricas (vida efectiva y enfriamientos) y una tabla de estadísticas base y por nivel extraída del cliente para los 173 campeones. El primer kit de habilidades (Zaahen) se evalúa sobre la hoja de estadísticas; todavía no hay comando que encadene hoja, habilidad y mitigación.
+Estado actual: **fase 13**. Existen la ingesta, el validador de integridad, el primer campeón analizado (Zaahen), el extractor de cálculos y el lector del bin del cliente en `research/`, un modelo mecánico de objetos versionado para 15 objetos, el núcleo del motor de daño (mitigación por resistencias), la hoja de estadísticas de campeón con sus primeras métricas (vida efectiva y enfriamientos) y una tabla de estadísticas base y por nivel extraída del cliente para los 173 campeones. El primer kit de habilidades (Zaahen) se evalúa con `python -m lol_knowledge ability`, que encadena hoja de estadísticas, habilidad y mitigación contra un objetivo.
 
 ## Requisitos
 
@@ -51,6 +51,7 @@ La suite incluye pruebas de integración que ejecutan `python -m lol_knowledge` 
 | `python -m lol_knowledge.objects` | Disponible (modelo de objetos) |
 | `python -m lol_knowledge damage` | Disponible (mitigación de una instancia de daño) |
 | `python -m lol_knowledge stats` | Disponible (hoja de estadísticas, vida efectiva y enfriamientos) |
+| `python -m lol_knowledge ability` | Disponible (daño de una habilidad contra un objetivo; campeones con kit) |
 
 ## Actualización de datos
 
@@ -129,6 +130,29 @@ parts = ability_damage(kit, "E", 5, sheet, case="edge", target={"max_health": 25
 - `validate` comprueba el esquema, el campeón y que el número de rangos coincida con Data Dragon.
 - Solo existe el kit de Zaahen.
 
+## Daño de una habilidad contra un objetivo
+
+`ability` resuelve la hoja del atacante (nivel, objetos y estadísticas pasivas de las habilidades aprendidas), evalúa la habilidad con el kit del campeón y mitiga cada parte del daño con la resistencia que le corresponde y las penetraciones del atacante.
+
+```powershell
+# R de Zaahen rango 3 contra un objetivo con 150 de armadura y 50 de RM
+.\.venv\Scripts\python.exe -m lol_knowledge ability --champion Zaahen --level 16 `
+  --ability R --rank 3 --item 3036 --target-armor 150 --target-mr 50
+
+# Borde de la E contra Ahri nivel 16 con Botas blindadas; la R aprendida aporta su penetración
+.\.venv\Scripts\python.exe -m lol_knowledge ability --champion Zaahen --level 16 `
+  --ability E --rank 5 --case edge --learned R=3 --item 3036 `
+  --target-champion Ahri --target-level 16 --target-item 3047 --json
+```
+
+- **Objetivo:** a mano (`--target-armor`, `--target-mr` y, si una fórmula lo pide, `--target-max-health`) o como campeón (`--target-champion`, `--target-level`, `--target-item`), resuelto con la misma hoja de estadísticas. No se pueden mezclar.
+- **Penetración:** el daño físico usa la penetración de armadura y la letalidad del atacante; el mágico, la penetración mágica porcentual y plana; el verdadero no se mitiga.
+- **Pasivas de habilidad:** `--learned SLOT=RANK` declara otras habilidades aprendidas (la R de Zaahen da penetración aunque se lance la E). La habilidad lanzada cuenta como aprendida a su rango.
+- **Casos:** sin `--case` se muestran todos (por ejemplo, tajo y borde de la E); el total es por caso.
+- La etiqueta final es la más débil de las entradas; el informe lista lo que el kit no modela.
+
+Códigos de salida: `0` cálculo hecho, `2` petición inválida, dato ausente o campeón sin kit.
+
 ## Validación de integridad
 
 ```powershell
@@ -167,6 +191,7 @@ Condiciones de uso y cuestiones pendientes: [`research/evidence/usage-conditions
 - No hay CI ni publicación remota.
 - Data Dragon (16.20.1 y 16.22.1) publica `attackdamageperlevel = 0` para todos los campeones. Se sustituye por el crecimiento del cliente 16.22, `Derivado` porque cliente y snapshot coinciden. Senna no tiene el campo en el bin y su DA queda bloqueado por encima del nivel 1.
 - La hoja de estadísticas no incluye runas, efectos de objeto ni pasivas de campeón, y no valida la legalidad de una build (objetos únicos, botas).
+- `ability` calcula un lanzamiento: no hay rotaciones, tiempo, críticos, efectos de objeto al impactar, reducciones de resistencia del objetivo ni escudos. Solo Zaahen tiene kit.
 - El motor de daño solo modela la mitigación por armadura y resistencia mágica de una instancia. No modela amplificaciones ni reducciones de daño, escudos, críticos, la penetración de armadura adicional ni el redondeo del juego, y todavía no lee campeones ni objetos.
 - Data Dragon no publica valores numéricos de las habilidades de Zaahen; los valores derivados están documentados y las discrepancias abiertas siguen como pendientes.
 - La cobertura de campeones empieza por un caso representativo y crece de forma incremental.

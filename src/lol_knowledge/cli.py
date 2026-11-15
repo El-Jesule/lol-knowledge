@@ -9,8 +9,19 @@ import sys
 from pathlib import Path
 
 from . import __version__
-from .damage import DamageType, Modifiers, format_text, mitigate, to_dict
-from .errors import DamageInputError, LolKnowledgeError, NetworkError, PayloadError, StatsError
+from .damage import DamageType, Modifiers, format_text, mitigate, to_dict, to_fraction
+from .errors import (
+    DamageInputError,
+    KitError,
+    LolKnowledgeError,
+    NetworkError,
+    PayloadError,
+    StatsError,
+)
+from .kit import load_kit, passive_contributions
+from .scenario import evaluate_ability, target_from_sheet, target_from_values
+from .scenario_report import format_text as format_ability_text
+from .scenario_report import to_dict as ability_to_dict
 from .snapshot import build_snapshot
 from .stats import build_stat_sheet, load_champion, load_issues, load_items, load_records
 from .stats import format_text as format_stats_text
@@ -62,6 +73,7 @@ def build_parser() -> argparse.ArgumentParser:
 
     _add_damage_parser(subparsers)
     _add_stats_parser(subparsers)
+    _add_ability_parser(subparsers)
 
     return parser
 
@@ -125,6 +137,67 @@ def _add_stats_parser(subparsers: argparse._SubParsersAction) -> None:
     stats.add_argument("--json", action="store_true", help="Print a JSON report.")
 
 
+def _add_ability_parser(subparsers: argparse._SubParsersAction) -> None:
+    ability = subparsers.add_parser(
+        "ability",
+        help="Damage of a champion ability against a target, after mitigation.",
+        description=(
+            "Resolve the attacker's stat sheet (items, level and the passive stats of learned "
+            "abilities), evaluate the ability from the champion kit and mitigate every damage "
+            "part with the target's matching resistance and the attacker's penetration. The "
+            "target is either given by hand (--target-armor, --target-mr) or another champion "
+            "(--target-champion, --target-level)."
+        ),
+    )
+    ability.add_argument("--champion", required=True, help="Attacker champion, e.g. Zaahen.")
+    ability.add_argument("--level", required=True, type=int, help="Attacker level.")
+    ability.add_argument("--ability", required=True, help="Ability slot: Q, W, E or R.")
+    ability.add_argument("--rank", required=True, type=int, help="Rank of that ability.")
+    ability.add_argument("--case", help="Only this damage case (for example edge).")
+    ability.add_argument(
+        "--learned",
+        action="append",
+        default=[],
+        metavar="SLOT=RANK",
+        help="Rank of another learned ability, for its passive stats (repeat).",
+    )
+    ability.add_argument("--item", action="append", default=[], metavar="ID")
+    ability.add_argument("--assume", action="append", default=[], metavar="FIELD=VALUE")
+    ability.add_argument(
+        "--input", action="append", default=[], metavar="NAME=VALUE", help="Scenario input."
+    )
+    ability.add_argument("--target-champion", help="Target champion.")
+    ability.add_argument("--target-level", type=int, help="Target champion level.")
+    ability.add_argument("--target-item", action="append", default=[], metavar="ID")
+    ability.add_argument("--target-armor", help="Target armor (manual target).")
+    ability.add_argument("--target-mr", help="Target magic resistance (manual target).")
+    ability.add_argument("--target-max-health", help="Target max health (manual target).")
+    ability.add_argument("--target-current-health", help="Target current health.")
+    ability.add_argument("--root", type=Path, default=Path("."))
+    ability.add_argument("--json", action="store_true", help="Print a JSON report.")
+
+
+def _pairs(values: list[str], option: str) -> dict[str, str]:
+    parsed: dict[str, str] = {}
+    for entry in values:
+        key, separator, value = entry.partition("=")
+        if not separator or not key.strip() or not value.strip():
+            raise StatsError(f"{option} expects KEY=VALUE, got {entry!r}")
+        if key.strip() in parsed:
+            raise StatsError(f"{option} repeats {key.strip()!r}")
+        parsed[key.strip()] = value.strip()
+    return parsed
+
+
+def _number(value: str | None, option: str):
+    if value is None:
+        return None
+    try:
+        return to_fraction(value, option)
+    except DamageInputError as exc:
+        raise StatsError(str(exc)) from exc
+
+
 def _parse_assume(values: list[str]) -> dict[str, str]:
     parsed: dict[str, str] = {}
     for entry in values:
@@ -167,6 +240,7 @@ def main(argv: list[str] | None = None) -> int:
         "validate": _run_validate,
         "damage": _run_damage,
         "stats": _run_stats,
+        "ability": _run_ability,
     }
     handler = handlers[args.command]
     return handler(args)
@@ -189,6 +263,86 @@ def _run_damage(args: argparse.Namespace) -> int:
         print(json.dumps(to_dict(result), indent=2, ensure_ascii=False))
     else:
         print(format_text(result))
+    return 0
+
+
+def _ability_target(args: argparse.Namespace, root: Path, issues, derived):
+    manual = [args.target_armor, args.target_mr, args.target_max_health]
+    if args.target_champion:
+        if any(value is not None for value in manual):
+            raise StatsError("give either --target-champion or manual target values, not both")
+        if args.target_level is None:
+            raise StatsError("--target-champion needs --target-level")
+        champion = load_champion(root, args.target_champion)
+        sheet = build_stat_sheet(
+            champion, args.target_level, load_items(root, args.target_item), issues, {}, derived
+        )
+        current = _number(args.target_current_health, "--target-current-health")
+        return target_from_sheet(sheet, current_health=current)
+    if args.target_level is not None or args.target_item:
+        raise StatsError("--target-level and --target-item need --target-champion")
+    if args.target_armor is None or args.target_mr is None:
+        raise StatsError("give --target-champion, or both --target-armor and --target-mr")
+    return target_from_values(
+        _number(args.target_armor, "--target-armor"),
+        _number(args.target_mr, "--target-mr"),
+        max_health=_number(args.target_max_health, "--target-max-health"),
+        current_health=_number(args.target_current_health, "--target-current-health"),
+    )
+
+
+def _run_ability(args: argparse.Namespace) -> int:
+    root: Path = args.root
+    try:
+        slot = args.ability.strip().upper()
+        learned = {key.upper(): value for key, value in _pairs(args.learned, "--learned").items()}
+        ranks: dict[str, int] = {}
+        for key, value in learned.items():
+            try:
+                ranks[key] = int(value)
+            except ValueError as exc:
+                raise StatsError(f"--learned {key}: rank must be an integer") from exc
+        if slot in ranks and ranks[slot] != args.rank:
+            raise StatsError(f"--learned {slot}={ranks[slot]} contradicts --rank {args.rank}")
+        ranks[slot] = args.rank
+        assumptions = _parse_assume(args.assume)
+        inputs = {
+            key: _number(value, f"--input {key}")
+            for key, value in _pairs(args.input, "--input").items()
+        }
+        champion = load_champion(root, args.champion)
+        kit = load_kit(root, champion.id)
+        if kit is None:
+            raise KitError(
+                f"{champion.id} has no kit yet (lol-knowledge/champions/{champion.id}/kit.json)"
+            )
+        issues = load_issues(root)
+        derived = load_records(root)
+        sheet = build_stat_sheet(
+            champion,
+            args.level,
+            load_items(root, args.item),
+            issues,
+            assumptions,
+            derived,
+            passive_contributions(kit, ranks),
+        )
+        target = _ability_target(args, root, issues, derived)
+        outcome = evaluate_ability(
+            kit, sheet, slot, args.rank, target, case=args.case, inputs=inputs
+        )
+    except (StatsError, KitError, DamageInputError) as exc:
+        print(f"error: {exc}", file=sys.stderr)
+        return 2
+    except OSError as exc:
+        # Application boundary: filesystem failures are reported, never swallowed.
+        print(f"error: {exc}", file=sys.stderr)
+        return 2
+
+    if args.json:
+        print(json.dumps(ability_to_dict(outcome, sheet, target), indent=2, ensure_ascii=False))
+    else:
+        print(format_ability_text(outcome, sheet, target))
     return 0
 
 
