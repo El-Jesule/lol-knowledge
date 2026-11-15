@@ -36,6 +36,21 @@ Los valores marcados `Derivado` en [`abilities.md`](abilities.md) y [`overview.m
 - Las cifras no se han medido en partida.
 - El archivo original no se versiona; solo se publican valores derivados y su trazabilidad.
 
+### Penetración de armadura de la R (cliente local 16.22)
+
+La naturaleza pasiva de la penetración y su permanencia con la R en enfriamiento proceden del cliente instalado, no de CommunityDragon.
+
+| Campo | Valor |
+|---|---|
+| Fuente | Cliente local: `Champions/Zaahen.wad.client` → `data/characters/zaahen/zaahen.bin`; `Localized/Global.es_ES.wad.client` |
+| Build de contenido | `16.22.8348910+branch.releases-16-22.content.release` |
+| `sha256` del bin | `44e0d68c38fc1d715926a8d721d48321acc1b1ff08d844c9955e0fef6b70db75` |
+| Fecha de consulta | 2026-11-15 |
+| Campos | Texto `spell_zaahenr_tooltip` («Pasiva: … penetración de armadura»); `ZaahenR.mSpell.mSpellPassives` → `ZaahenRSpellPassive`, `mRemoveWhenOnCooldown: false` |
+| Nombres de campo | Tablas de hashes de LeagueToolkit `lol-meta-classes` (tercero) |
+
+**Límites.** El buff lo aplica un script: ningún dato enlaza el buff con `ArmorPen`. La base (armadura total o adicional) no está resuelta. No se ha medido en partida. El detalle y un protocolo de medición están en el [informe de la R](../../../research/reports/zaahen-r-armor-pen.md).
+
 ## Contraste, no fuente publicable (`Pendiente de verificación`)
 
 | Fuente | Naturaleza y licencia | Uso | Límite |
