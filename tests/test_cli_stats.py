@@ -29,14 +29,24 @@ def test_level_one_text_report(capsys):
     assert out.rstrip().endswith("label: Calculado")
 
 
-def test_ad_is_blocked_above_level_one_and_other_stats_resolve(capsys):
+def test_ad_uses_the_client_record_with_a_pending_label(capsys):
     code, captured = run(capsys, "--champion", "Zaahen", "--level", "11", "--item", "3067")
     assert code == 0, captured.err
     out = captured.out
-    assert "  attack_damage: blocked: ddragon-attack-damage-growth" in out
+    assert (
+        "  attack_damage: 98.1 [Pendiente de verificación] "
+        "(client 16.22 record used with snapshot 16.20.1)" in out
+    )
     assert "  health: 1840.35 (base 1640.35 + bonus 200) [Derivado]" in out
     assert "cooldowns (ability haste 10): [Derivado]" in out
     assert "  R Redención funesta: 100/86.363636/72.727273" in out
+
+
+def test_ad_without_a_client_record_stays_blocked(capsys):
+    code, captured = run(capsys, "--champion", "Senna", "--level", "11")
+    assert code == 0, captured.err
+    assert "  attack_damage: blocked: ddragon-attack-damage-growth" in captured.out
+    assert "No derived record for Senna" in captured.out
 
 
 def test_assumption_resolves_ad_with_pending_label(capsys):

@@ -10,6 +10,7 @@ from fractions import Fraction
 from ..damage import to_fraction
 from ..errors import DamageInputError, StatsError
 from .data import ChampionData, ItemData
+from .derived import DerivedRecords
 from .growth import check_level, growth_multiplier
 from .issues import DataIssue
 from .labels import Label, weakest
@@ -137,12 +138,14 @@ def build_stat_sheet(
     items: Sequence[ItemData] = (),
     issues: Sequence[DataIssue] = (),
     assumptions: Mapping[str, object] | None = None,
+    derived: DerivedRecords | None = None,
 ) -> StatSheet:
     """Resolve the champion's statistics at ``level`` with ``items``.
 
-    Open data issues for this champion and patch block the statistics they
-    affect, unless ``assumptions`` gives a value for the affected field; an
-    assumed value is labelled ``Pendiente de verificación``.
+    A field with an open data issue is replaced, in this order, by an explicit
+    assumption (``Pendiente de verificación``) or by a derived client record
+    (``Derivado`` when the client patch matches the snapshot, otherwise
+    ``Pendiente de verificación``). With neither, the statistic is blocked.
     """
     check_level(level)
     applicable = [issue for issue in issues if issue.applies_to(champion.id, champion.patch)]
@@ -181,22 +184,34 @@ def build_stat_sheet(
         if growth_field not in champion.stats:
             raise StatsError(f"{champion.id}: stats.{growth_field} is missing")
         issue = issue_by_field.get(growth_field)
-        if issue is not None and growth_field not in assumed:
-            blocked[stat_id] = (
-                f"{issue.id}: {issue.summary} Use --assume {growth_field}=<value> "
-                f"(see {issue.documentation})"
-            )
-            continue
-        if issue is not None:
+        derived_value = derived.value(champion.id, growth_field) if derived else None
+        note = f"growth to level {level}"
+        if issue is not None and growth_field in assumed:
             growth = assumed[growth_field]
             source = f"assumption {growth_field}={growth} ({issue.id})"
             label = Label.PENDING
+        elif issue is not None and derived is not None and derived_value is not None:
+            growth = derived_value
+            source = f"{derived.path} {champion.id}.{growth_field} ({derived.content_version})"
+            if derived.matches_patch(champion.patch):
+                label = Label.DERIVED
+            else:
+                label = Label.PENDING
+                note += (
+                    f"; client {derived.game_version} record used with snapshot {champion.patch}"
+                )
+        elif issue is not None:
+            blocked[stat_id] = (
+                f"{issue.id}: {issue.summary} No derived record for {champion.id}; "
+                f"use --assume {growth_field}=<value> (see {issue.documentation})"
+            )
+            continue
         else:
             growth = champion.stats[growth_field]
             source = _source(champion, growth_field)
             label = Label.DERIVED if growth else Label.OFFICIAL
         contributions[stat_id].append(
-            Contribution(growth * multiplier, "base", source, label, f"growth to level {level}")
+            Contribution(growth * multiplier, "base", source, label, note)
         )
 
     for item in items:

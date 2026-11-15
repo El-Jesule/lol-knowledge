@@ -381,3 +381,42 @@ def test_invalid_data_issues_are_violations(
     report = validate_project(root)
 
     assert message in messages(report)
+
+
+DERIVED = {
+    "schema": "lol-derived-champion-records/1",
+    "label": "Derivado",
+    "content_version": "16.22.1+x",
+    "game_version": "16.22",
+    "champions": {},
+    "failures": {},
+}
+
+
+def test_derived_records_absent_is_reported_as_skipped(tmp_path: Path, fake_source) -> None:
+    report = validate_project(make_project(tmp_path, fake_source))
+
+    assert any("champion-records.json is not present" in note for note in report.skipped)
+
+
+@pytest.mark.parametrize(
+    ("change", "message"),
+    [
+        ({}, None),
+        ({"champions": {"Nobody": {"fields": {}}}}, "unknown champion id"),
+        ({"label": "Oficial"}, "label"),
+        ({"failures": []}, "'failures' must be an object"),
+    ],
+)
+def test_derived_records_are_validated(
+    tmp_path: Path, fake_source, change: dict, message: str | None
+) -> None:
+    root = make_project(tmp_path, fake_source)
+    write_kb(root, "derived/champion-records.json", json.dumps({**DERIVED, **change}))
+
+    report = validate_project(root)
+
+    if message is None:
+        assert report.ok, messages(report)
+    else:
+        assert message in messages(report)
