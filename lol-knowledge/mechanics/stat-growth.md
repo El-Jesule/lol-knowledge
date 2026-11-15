@@ -28,6 +28,7 @@ A nivel 1 el término de crecimiento es 0, así que el valor es exactamente el d
 - **Velocidad de movimiento y alcance:** no crecen por nivel.
 - **Daño de ataque:** la fórmula vale, pero el snapshot no trae el crecimiento. Ver [Defectos conocidos de los datos](known-data-issues.md).
 - **Nivel máximo:** la regla no depende del modo de juego. El motor acepta niveles de 1 a 30 y no valida el tope de cada modo.
+- **Por encima del nivel 18 (`Pendiente de verificación`):** S1 dice que la fórmula vale para cualquier nivel y el motor la aplica así. El prototipo `research/binmodel/stats.py` suma en cambio un crecimiento completo por nivel desde el 18. Ninguna de las dos variantes se ha medido.
 
 ## Implementación (`Calculado`)
 
