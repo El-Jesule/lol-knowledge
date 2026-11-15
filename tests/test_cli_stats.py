@@ -21,22 +21,19 @@ def test_level_one_text_report(capsys):
     code, captured = run(capsys, "--champion", "zaahen", "--level", "1")
     assert code == 0, captured.err
     out = captured.out
-    assert "champion: Zaahen (Zaahen), patch 16.20.1, level 1" in out
+    assert "champion: Zaahen (Zaahen), patch 16.22.1, level 1" in out
     assert "  health: 640 [Oficial]" in out
     assert "  attack_damage: 63 [Oficial]" in out
     assert "note: ddragon-attack-damage-growth does not affect level 1" in out
-    assert "  Q La guja de los Oscuros: 10/9/8/7/6" in out
+    assert "  Q La guja de los Oscuros: 8/7.5/7/6.5/6" in out
     assert out.rstrip().endswith("label: Calculado")
 
 
-def test_ad_uses_the_client_record_with_a_pending_label(capsys):
+def test_ad_uses_the_client_record_of_the_same_patch_as_derived(capsys):
     code, captured = run(capsys, "--champion", "Zaahen", "--level", "11", "--item", "3067")
     assert code == 0, captured.err
     out = captured.out
-    assert (
-        "  attack_damage: 98.1 [Pendiente de verificación] "
-        "(client 16.22 record used with snapshot 16.20.1)" in out
-    )
+    assert "  attack_damage: 98.1 [Derivado]\n" in out
     assert "  health: 1840.35 (base 1640.35 + bonus 200) [Derivado]" in out
     assert "cooldowns (ability haste 10): [Derivado]" in out
     assert "  R Redención funesta: 100/86.363636/72.727273" in out
@@ -74,7 +71,7 @@ def test_json_report_structure(capsys):
     assert code == 0, captured.err
     report = json.loads(captured.out)
     assert report["label"] == "Calculado"
-    assert report["patch"] == "16.20.1"
+    assert report["patch"] == "16.22.1"
     assert report["items"] == [{"id": "3036", "name": "Recuerdos de lord Dominik"}]
     pen = report["stats"]["armor_penetration_percent"]
     assert pen["total"] == pytest.approx(0.35)

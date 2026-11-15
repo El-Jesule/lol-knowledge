@@ -1,8 +1,8 @@
 # Zaahen — Fuentes
 
-- **Parche:** 16.20.1
+- **Parche:** 16.22.1 (datos oficiales; los derivados de CommunityDragon son de 16.20 y se han contrastado con el cliente 16.22)
 - **Locale:** `es_ES`
-- **Fecha de consulta:** 2026-10-18
+- **Fecha de consulta:** 2026-10-18; snapshot 16.22.1 descargado el 2026-11-15
 - **Snapshot:** [`data/current/manifest.json`](../../../data/current/manifest.json), con `sha256` por archivo.
 
 ## Fuentes oficiales (`Oficial`)
@@ -10,9 +10,9 @@
 | Fuente | Uso | Cobertura | Limitación |
 |---|---|---|---|
 | `https://ddragon.leagueoflegends.com/api/versions.json` | Detectar el parche vigente | Lista de versiones | Solo versiones publicadas |
-| `https://ddragon.leagueoflegends.com/cdn/16.20.1/data/es_ES/champion/Zaahen.json` | Identidad, estadísticas, pasiva y textos de habilidades | Completo en nombres, costes, enfriamientos y rangos | Sin valores numéricos de efectos |
-| `https://ddragon.leagueoflegends.com/cdn/16.20.1/data/es_ES/item.json` | Catálogo de objetos del parche | Nombres, costes y mapas | Sin datos de rendimiento |
-| `https://ddragon.leagueoflegends.com/cdn/16.20.1/data/es_ES/runesReforged.json` | Árboles y runas del parche | Nombres e identificadores | Sin datos de rendimiento |
+| `https://ddragon.leagueoflegends.com/cdn/16.22.1/data/es_ES/champion/Zaahen.json` | Identidad, estadísticas, pasiva y textos de habilidades | Completo en nombres, costes, enfriamientos y rangos | Sin valores numéricos de efectos |
+| `https://ddragon.leagueoflegends.com/cdn/16.22.1/data/es_ES/item.json` | Catálogo de objetos del parche | Nombres, costes y mapas | Sin datos de rendimiento |
+| `https://ddragon.leagueoflegends.com/cdn/16.22.1/data/es_ES/runesReforged.json` | Árboles y runas del parche | Nombres e identificadores | Sin datos de rendimiento |
 
 ## Fuente derivada (`Derivado`)
 
@@ -32,6 +32,7 @@ Los valores marcados `Derivado` en [`abilities.md`](abilities.md) y [`overview.m
 **Límites.**
 
 - La vinculación exacta entre el build `16.20.8248524` y la cadena `16.20.1` de Data Dragon no está demostrada; se comprobó que el bin del cliente y el export de CommunityDragon son idénticos byte a byte.
+- **16.22:** el bin del cliente `16.22.8348910` solo cambia, respecto a 16.20, el enfriamiento de la Q (ya oficial en Data Dragon 16.22.1), un valor del modo Arena y el registro de la pasiva de la R. Los valores derivados publicados no cambian ([diferencias](../../../research/reports/zaahen-bin-diff-16.22.md)).
 - La semántica de `mStat`/`mStatFormula` es una interpretación, no un enum publicado por Riot.
 - Las cifras no se han medido en partida.
 - El archivo original no se versiona; solo se publican valores derivados y su trazabilidad.
@@ -82,7 +83,7 @@ Condiciones de uso investigadas y cuestiones pendientes: [`../../../research/evi
 ## Reproducibilidad
 
 ```powershell
-.\.venv\Scripts\python.exe -m lol_knowledge update --patch 16.20.1
+.\.venv\Scripts\python.exe -m lol_knowledge update --patch 16.22.1
 .\.venv\Scripts\python.exe -m lol_knowledge validate
 ```
 

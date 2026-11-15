@@ -58,7 +58,7 @@ Bajo demanda, sin tareas programadas:
 
 ```powershell
 .\.venv\Scripts\python.exe -m lol_knowledge update
-.\.venv\Scripts\python.exe -m lol_knowledge update --patch 16.20.1
+.\.venv\Scripts\python.exe -m lol_knowledge update --patch 16.22.1
 ```
 
 Escribe `data/current/` con `manifest.json`, `champion-index.json`, `champions/<Id>.json` por campeón, `items.json` y `runes.json`. El manifiesto registra parche, locale, origen, fecha UTC y el `sha256` de cada archivo. Con el mismo parche ya aplicado informa «sin cambios» y no reescribe nada.
@@ -147,10 +147,10 @@ Condiciones de uso y cuestiones pendientes: [`research/evidence/usage-conditions
 - No hay integración con la Riot API ni claves de API.
 - No hay estadísticas comunitarias; para Zaahen se publican valores derivados de datos del cliente, marcados `Derivado` y con atribución.
 - No hay CI ni publicación remota.
-- Data Dragon 16.20.1 publica `attackdamageperlevel = 0` para todos los campeones. Se sustituye por el crecimiento del cliente 16.22; mientras el snapshot siga en 16.20.1, ese DA es `Pendiente de verificación`. Senna no tiene el campo en el bin y su DA queda bloqueado por encima del nivel 1.
+- Data Dragon (16.20.1 y 16.22.1) publica `attackdamageperlevel = 0` para todos los campeones. Se sustituye por el crecimiento del cliente 16.22, `Derivado` porque cliente y snapshot coinciden. Senna no tiene el campo en el bin y su DA queda bloqueado por encima del nivel 1.
 - La hoja de estadísticas no incluye runas, efectos de objeto ni pasivas de campeón, y no valida la legalidad de una build (objetos únicos, botas).
 - El motor de daño solo modela la mitigación por armadura y resistencia mágica de una instancia. No modela amplificaciones ni reducciones de daño, escudos, críticos, la penetración de armadura adicional ni el redondeo del juego, y todavía no lee campeones ni objetos.
-- Data Dragon 16.20.1 no publica valores numéricos de las habilidades de Zaahen; los valores derivados están documentados y las discrepancias abiertas siguen como pendientes.
+- Data Dragon no publica valores numéricos de las habilidades de Zaahen; los valores derivados están documentados y las discrepancias abiertas siguen como pendientes.
 - La cobertura de campeones empieza por un caso representativo y crece de forma incremental.
 - El modelo de objetos cubre una muestra de 15 objetos por diversidad mecánica. Las cifras que Data Dragon no publica solo se incorporan con una fuente citada y `evidence_confidence: secondary`; lo no verificado se marca como desconocido o parcial, no se inventa.
 

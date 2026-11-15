@@ -1016,13 +1016,13 @@
       "maxrank": 5,
       "name": "Presteza gatuna",
       "range": [
-        25000,
-        25000,
-        25000,
-        25000,
-        25000
+        500,
+        500,
+        500,
+        500,
+        500
       ],
-      "rangeBurn": "25000",
+      "rangeBurn": "500",
       "resource": "{{ cost }} {{ abilityresourcename }}",
       "tooltip": "Yuumi se protege con un escudo que bloquea <shield>{{ totalshielding }} de daño</shield>. Obtiene un <attackSpeed>{{ totalattackspeed }}% de velocidad de ataque</attackSpeed> durante {{ msduration }} s. Mientras el escudo persiste, el objetivo obtiene un <speed>{{ msamount }}% de velocidad de movimiento</speed>.<br /><br />Si Yuumi está <keywordMajor>vinculada</keywordMajor>, esta habilidad afecta a su aliado en vez de a ella. También restaura <magicDamage>{{ manarestore }} de maná</magicDamage> a su aliado, que aumenta hasta un {{ maxmanapercincrease*100 }}% según el maná que le falte al objetivo.{{ spellmodifierdescriptionappend }}",
       "vars": []

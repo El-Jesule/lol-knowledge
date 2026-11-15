@@ -43,7 +43,9 @@ El resto de campos coincide en 166 campeones. Que coincidan no demuestra que su 
 
 ## Cómo se usa
 
-La hoja de estadísticas sustituye un campo con defecto abierto por el valor de esta tabla. Como el cliente (16.22) y el snapshot (16.20.1) son de parches distintos, el aporte se marca `Pendiente de verificación` y el informe lo explica. Con un snapshot 16.22 pasaría a `Derivado`.
+La hoja de estadísticas sustituye un campo con defecto abierto por el valor de esta tabla. Si el cliente y el snapshot son de parches distintos, el aporte se marca `Pendiente de verificación` y el informe lo explica; con los dos en 16.22 es `Derivado`.
+
+**Actualización 2026-11-15:** con el snapshot en Data Dragon 16.22.1, las diferencias de la tabla anterior de Jinx, Mel, Sion, Thresh y Viktor coinciden exactamente con los cambios de Data Dragon entre 16.20.1 y 16.22.1. Es una corroboración independiente de que el extractor lee bien los registros.
 
 ## Reproducir
 

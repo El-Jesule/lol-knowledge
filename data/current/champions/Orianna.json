@@ -356,25 +356,25 @@
       "effect": [
         null,
         [
-          60,
-          90,
-          120,
-          150,
-          180
+          0,
+          0,
+          0,
+          0,
+          0
         ],
         [
-          30,
-          30,
-          30,
-          30,
-          30
+          0,
+          0,
+          0,
+          0,
+          0
         ],
         [
-          70,
-          70,
-          70,
-          70,
-          70
+          0,
+          0,
+          0,
+          0,
+          0
         ],
         [
           0,
@@ -428,9 +428,9 @@
       ],
       "effectBurn": [
         null,
-        "60/90/120/150/180",
-        "30",
-        "70",
+        "0",
+        "0",
+        "0",
         "0",
         "0",
         "0",
@@ -471,7 +471,7 @@
       ],
       "rangeBurn": "815",
       "resource": "{{ cost }} {{ abilityresourcename }}",
-      "tooltip": "Orianna ordena a la <keywordMajor>bola</keywordMajor> que se mueva a una zona, lo que inflige <magicDamage>{{ totaldamagetooltip }} de daño mágico</magicDamage> a los enemigos cercanos y a los enemigos que atraviesa. Inflige un {{ reduceddamagepercent }}% menos de daño a los enemigos tras la primera.{{ spellmodifierdescriptionappend }}",
+      "tooltip": "Orianna ordena a la <keywordMajor>bola</keywordMajor> que se mueva a una zona, lo que inflige <magicDamage>{{ totaldamage }} de daño mágico</magicDamage> a los enemigos que atraviesa y a los enemigos cercanos al destino de la bola.<br /><br />El daño se reduce a <magicDamage>{{ reduceddamage }} de daño mágico</magicDamage> tras el primer impacto.{{ spellmodifierdescriptionappend }}",
       "vars": []
     },
     {
