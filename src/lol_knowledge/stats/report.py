@@ -26,6 +26,7 @@ def _stat_dict(value: StatValue) -> dict[str, Any]:
         "stacking": definition.stacking.value,
         "unit": definition.unit.value,
         "rules": definition.rules,
+        "cap": _num(definition.cap),
         "label": value.label.value,
         "contributions": [
             {
@@ -41,6 +42,7 @@ def _stat_dict(value: StatValue) -> dict[str, Any]:
     if value.status == "resolved":
         result["total"] = float(value.total())
         result["exact"] = str(value.total())
+        result["capped"] = value.capped
         if definition.stacking is Stacking.ADDITIVE:
             result["base"] = float(value.scoped("base"))
             result["bonus"] = float(value.scoped("bonus"))
@@ -112,6 +114,8 @@ def _stat_line(stat_id: str, value: StatValue) -> str:
             f" (base {format_number(value.scoped('base'))}"
             f" + bonus {format_number(value.scoped('bonus'))})"
         )
+    if value.capped:
+        detail += f" (capped at {format_number(value.definition.cap)})"
     line = f"  {stat_id}: {total}{detail} [{value.label.value}]"
     notes = [item.note for item in value.contributions if "client" in item.note]
     if notes:

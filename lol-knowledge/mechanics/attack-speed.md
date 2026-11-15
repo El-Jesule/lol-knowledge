@@ -1,6 +1,6 @@
 # Velocidad de ataque
 
-- **Ámbito:** regla general para la velocidad de ataque total de un campeón: base, ratio, crecimiento por nivel, aportes adicionales y tope.
+- **Ámbito:** regla general para la velocidad de ataque total de un campeón: base, ratio, crecimiento por nivel, aportes adicionales y tope. La usa la hoja de estadísticas (`python -m lol_knowledge stats`).
 - **Parche de referencia:** Data Dragon 16.22.1 y cliente 16.22 (2026-11-15). El tope es 3,0 desde el parche 25.S1.3.
 - **Fecha de consulta:** 2026-11-15
 
@@ -31,10 +31,22 @@ velocidad(n) = min(base + ratio × adicional(n), 3,0)
 - `ratio`: `attackspeedratio` del cliente (V4). Data Dragon no lo publica. Multiplica toda la velocidad adicional, incluido el crecimiento.
 - **Tope:** 3,0 ataques por segundo desde el parche 25.S1.3 (V1). V2 confirma que sigue habiendo tope en 2026 y V6 da el mismo valor.
 
-Comprobación con el ejemplo de V3: Twisted Fate (base 0,625 y ratio 0,651 en el cliente 16.22) con 97,35 % adicional → 0,625 + 0,651 × 0,9735 ≈ 1,2588. Con `g` = 2,5, el crecimiento a nivel 10 es 2,5 % × 9 × (0,7025 + 0,0175 × 9) = 19,35 %. Ambos ejemplos están en las pruebas.
+Comprobación con el ejemplo de V3: Twisted Fate (base 0,625 y ratio 0,651 en el cliente 16.22) con 97,35 % adicional → 0,625 + 0,651 × 0,9735 ≈ 1,2587485, el mismo resultado que da V3. Con `g` = 2,5, el crecimiento a nivel 10 es 2,5 % × 9 × (0,7025 + 0,0175 × 9) = 19,35 %. Ambos ejemplos están en las pruebas.
+
+## Etiquetas
+
+- La base es `Oficial`. El crecimiento es `Derivado` (fórmula de fuentes secundarias). El aporte escalado por el ratio es `Derivado` si el cliente y el snapshot son del mismo parche, y `Pendiente de verificación` si no.
+- Sin registro del cliente para el campeón, la velocidad solo se calcula cuando no hay nada adicional (nivel 1 sin aportes). En los demás casos queda bloqueada con el motivo.
+- **Campeones cuyo kit cambia el tope** (V3): Bel'Veth lo elimina; Graves, Jhin, Sion y Zeri lo cambian. El motor no modela sus kits: para ellos la velocidad queda `Pendiente de verificación` con una nota. La lista viene de V3 (2024) y no se ha revisado contra las notas de 2025 y 2026.
+
+## Implementación (`Calculado`)
+
+- `src/lol_knowledge/stats/registry.py` declara dos estadísticas: `attack_speed_bonus` (fracción aditiva: crecimiento, objetos y efectos) y `attack_speed` (ataques por segundo, con `cap` 3). Los objetos declaran `attack_speed` en porcentaje, que es velocidad adicional: la hoja lo suma a `attack_speed_bonus` con la nota `declared as attack_speed`.
+- `src/lol_knowledge/stats/sheet.py` añade a `attack_speed` la base de Data Dragon y un aporte `ratio × attack_speed_bonus`. El total respeta el tope; `base` y `bonus` no. El informe JSON trae `cap` y `capped`, y el texto añade `(capped at 3)`.
+- Pruebas: `tests/test_stats_attack_speed.py` y `tests/test_cli_stats.py`.
 
 ## Fuera de alcance
 
-- **Reducciones de velocidad de ataque** (V3: se multiplican y se aplican sobre el total) y el **suelo de 0,2** (V3, sin confirmar después de 2024).
+- **Reducciones de velocidad de ataque** (V3: se multiplican y se aplican sobre el total) y el **suelo de 0,2** (V3, sin confirmar después de 2024). El motor no aplica efectos al atacante.
 - Modos con otro tope (por ejemplo, ARURF: 10,0 en V1).
 - Tiempos de lanzamiento del ataque y ritmo de ataques: la rotación no modela el tiempo.

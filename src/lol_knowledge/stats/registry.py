@@ -9,6 +9,7 @@ from __future__ import annotations
 
 from dataclasses import dataclass
 from enum import StrEnum
+from fractions import Fraction
 
 from ..errors import StatsError
 
@@ -17,6 +18,9 @@ GROWTH_RULES = f"{MECHANICS}/stat-growth.md"
 HASTE_RULES = f"{MECHANICS}/ability-haste.md"
 MITIGATION_RULES = f"{MECHANICS}/damage-mitigation.md"
 CRIT_RULES = f"{MECHANICS}/critical-strike.md"
+ATTACK_SPEED_RULES = f"{MECHANICS}/attack-speed.md"
+# Attacks per second; "Baseline Attack Speed Cap: 2.5 => 3.0" in the 25.S1.3 patch notes.
+ATTACK_SPEED_CAP = Fraction(3)
 
 
 class Stacking(StrEnum):
@@ -37,6 +41,9 @@ class StatDef:
     unit: Unit
     rules: str | None = None
     pending: str | None = None
+    cap: Fraction | None = None  # the total never exceeds it; scopes are uncapped
+    # Item and extra contributions declared with this id are added to that stat instead.
+    routes_to: str | None = None
 
     @property
     def resolvable(self) -> bool:
@@ -44,6 +51,8 @@ class StatDef:
 
     @property
     def item_kind(self) -> str:
+        if self.routes_to is not None:
+            return STATS[self.routes_to].item_kind
         return "percent" if self.unit is Unit.FRACTION else "flat"
 
 
@@ -83,10 +92,23 @@ STATS: dict[str, StatDef] = {
             Unit.FRACTION,
             MITIGATION_RULES,
         ),
-        _pending(
+        # Total attacks per second: base + ratio x attack_speed_bonus, capped. Items
+        # declare "attack_speed" as a percentage, which is bonus attack speed.
+        StatDef(
             "attack_speed",
             "Velocidad de ataque",
-            "usa otra fórmula de crecimiento y un ratio que Data Dragon no publica",
+            Stacking.ADDITIVE,
+            Unit.AMOUNT,
+            ATTACK_SPEED_RULES,
+            cap=ATTACK_SPEED_CAP,
+            routes_to="attack_speed_bonus",
+        ),
+        StatDef(
+            "attack_speed_bonus",
+            "Velocidad de ataque adicional",
+            Stacking.ADDITIVE,
+            Unit.FRACTION,
+            ATTACK_SPEED_RULES,
         ),
         _pending("move_speed", "Velocidad de movimiento", "límites suaves " + NO_RULE),
         _pending("health_regen", "Regeneración de vida", "unidad por 5 s y aportes % " + NO_RULE),
