@@ -2,7 +2,7 @@
 
 Base de conocimiento verificable de League of Legends: datos oficiales de Riot (Data Dragon), análisis con fuente declarada y una CLI en Python que ingesta, valida y calcula de forma reproducible.
 
-Estado actual: **fase 8**. Existen la ingesta, el validador de integridad, el primer campeón analizado (Zaahen), el extractor de cálculos y el lector del bin del cliente en `research/`, un modelo mecánico de objetos versionado para 15 objetos y el núcleo del motor determinista de daño (mitigación por resistencias). Todavía no existe la capa que traduce campeones y objetos a entradas del motor.
+Estado actual: **fase 9**. Existen la ingesta, el validador de integridad, el primer campeón analizado (Zaahen), el extractor de cálculos y el lector del bin del cliente en `research/`, un modelo mecánico de objetos versionado para 15 objetos, el núcleo del motor de daño (mitigación por resistencias) y la hoja de estadísticas de campeón con sus primeras métricas (vida efectiva y enfriamientos). Todavía no se evalúan las habilidades de los campeones.
 
 ## Requisitos
 
@@ -35,7 +35,7 @@ La suite incluye pruebas de integración que ejecutan `python -m lol_knowledge` 
 |---|---|
 | `lol-knowledge/` | Base de conocimiento: índices, campeones, objetos, metodología |
 | `data/current/` | Snapshot oficial generado desde Data Dragon (no editar a mano) |
-| `src/lol_knowledge/` | CLI, motor de daño (`damage/`) y modelo de objetos (`objects/`) |
+| `src/lol_knowledge/` | CLI, hoja de estadísticas y métricas (`stats/`), motor de daño (`damage/`) y modelo de objetos (`objects/`) |
 | `research/` | Extractor de cálculos, auditoría y prototipos aislados |
 | `tests/` | Pruebas sin acceso a red |
 | `odd/tasks/` | Documentos de tarea por fase |
@@ -50,6 +50,7 @@ La suite incluye pruebas de integración que ejecutan `python -m lol_knowledge` 
 | `python -m lol_knowledge validate` | Disponible |
 | `python -m lol_knowledge.objects` | Disponible (modelo de objetos) |
 | `python -m lol_knowledge damage` | Disponible (mitigación de una instancia de daño) |
+| `python -m lol_knowledge stats` | Disponible (hoja de estadísticas, vida efectiva y enfriamientos) |
 
 ## Actualización de datos
 
@@ -90,6 +91,27 @@ Calcula el daño de una instancia tras la resistencia del objetivo. Es independi
 
 Códigos de salida: `0` cálculo hecho, `2` entrada inválida o incoherente (por ejemplo, daño verdadero con resistencia, o un porcentaje fuera de 0–1).
 
+## Hoja de estadísticas
+
+Resuelve las estadísticas de un campeón a un nivel, con objetos del catálogo curado, y calcula métricas a partir de ellas: vida efectiva frente a cada tipo de daño y enfriamientos de Q, W, E y R tras la aceleración de habilidades.
+
+```powershell
+# Zaahen a nivel 11 con Gema avivadora y Botas blindadas
+.\.venv\Scripts\python.exe -m lol_knowledge stats --champion Zaahen --level 11 --item 3067 --item 3047
+
+# El DA queda bloqueado por un defecto de Data Dragon; se puede suponer el crecimiento
+.\.venv\Scripts\python.exe -m lol_knowledge stats --champion Zaahen --level 11 `
+  --assume attackdamageperlevel=4 --json
+```
+
+- **Cada estadística es una lista de aportes** (campeón, crecimiento por nivel, objetos, supuestos), cada uno con su fuente y su etiqueta. La etiqueta de un total es la más débil de sus aportes.
+- **Registro compartido** (`src/lol_knowledge/stats/registry.py`): declara cada estadística, cómo se apilan sus fuentes y si tiene regla documentada. Las que no la tienen (velocidad de ataque y de movimiento, regeneración, críticos, robo de vida, omnivampirismo, tenacidad) se listan con sus aportes, pero sin total.
+- **Defectos de datos que bloquean** ([`lol-knowledge/data-issues.json`](lol-knowledge/data-issues.json)): un campo oficial que se sabe incorrecto bloquea la estadística en lugar de dar un valor falso. Solo esos campos se pueden suponer con `--assume`, y el supuesto queda `Pendiente de verificación`.
+- **Solo objetos curados:** Data Dragon no publica todas las estadísticas de los objetos (letalidad, aceleración, penetración van en la descripción), así que un objeto fuera del catálogo se rechaza.
+- Reglas: [crecimiento](lol-knowledge/mechanics/stat-growth.md), [aceleración](lol-knowledge/mechanics/ability-haste.md), [vida efectiva](lol-knowledge/mechanics/effective-health.md), [defectos conocidos](lol-knowledge/mechanics/known-data-issues.md).
+
+Códigos de salida: `0` hoja calculada (aunque alguna estadística esté bloqueada; el informe lo dice), `2` petición inválida o datos ausentes.
+
 ## Validación de integridad
 
 ```powershell
@@ -105,6 +127,7 @@ Comprueba el snapshot y la estructura de la base de conocimiento:
 - Enlaces Markdown existentes y dentro del repositorio; directorios de campeón que correspondan a un id publicado.
 - Referencias `data:item:<id>`, `data:rune:<id>` y `data:champion:<Id>` que existan en el snapshot.
 - Catálogo de objetos: esquema y parche, ids y estadísticas canónicas, citas literales de la descripción, fórmulas, estados de modelo, procedencia y referencias de receta.
+- Registro de defectos de datos (`lol-knowledge/data-issues.json`): esquema, campos de Data Dragon conocidos, ids de campeón y documentación existente.
 
 Códigos de salida: `0` todo coherente, `1` violaciones (se listan con archivo y motivo), `2` problema de entorno. Si `lol-knowledge/` aún no existe, las comprobaciones de enlaces y referencias se informan como omitidas, no como superadas.
 
@@ -123,6 +146,8 @@ Condiciones de uso y cuestiones pendientes: [`research/evidence/usage-conditions
 - No hay integración con la Riot API ni claves de API.
 - No hay estadísticas comunitarias; para Zaahen se publican valores derivados de datos del cliente, marcados `Derivado` y con atribución.
 - No hay CI ni publicación remota.
+- Data Dragon 16.20.1 publica `attackdamageperlevel = 0` para todos los campeones: el DA solo se calcula a nivel 1 salvo supuesto explícito.
+- La hoja de estadísticas no incluye runas, efectos de objeto ni pasivas de campeón, y no valida la legalidad de una build (objetos únicos, botas).
 - El motor de daño solo modela la mitigación por armadura y resistencia mágica de una instancia. No modela amplificaciones ni reducciones de daño, escudos, críticos, la penetración de armadura adicional ni el redondeo del juego, y todavía no lee campeones ni objetos.
 - Data Dragon 16.20.1 no publica valores numéricos de las habilidades de Zaahen; los valores derivados están documentados y las discrepancias abiertas siguen como pendientes.
 - La cobertura de campeones empieza por un caso representativo y crece de forma incremental.
