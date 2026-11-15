@@ -6,7 +6,7 @@
 
 ## Cálculo determinista (`Calculado`)
 
-Todavía no existe calculadora de daño ni de eficiencia de objetos (fase 4). Hay bases y ratios derivados publicados en [`abilities.md`](abilities.md), pero aquí no se afirma daño final, oro por estadística ni umbral de penetración.
+Existe el motor de mitigación (`python -m lol_knowledge damage`, reglas en [Mitigación de daño](../../mechanics/damage-mitigation.md)), que calcula el daño tras resistencias a partir de números de entrada. Todavía no existe la capa que traduce el kit y los objetos de Zaahen a esas entradas, ni una calculadora de eficiencia de objetos. Hay bases y ratios derivados publicados en [`abilities.md`](abilities.md), pero aquí no se afirma daño final, oro por estadística ni umbral de penetración.
 
 ## Insumos disponibles (`Derivado`)
 

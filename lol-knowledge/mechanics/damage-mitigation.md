@@ -10,6 +10,8 @@
 |---|---|---|---|
 | S1 | Confirmación del responsable del proyecto, 2026-11-15 | Orden de aplicación; penetración y letalidad sobre la armadura total; misma regla para la resistencia mágica; pasiva de la R de Zaahen activa en enfriamiento | Conocimiento del juego del usuario, no medido en este repositorio |
 | S2 | LoL Wiki, `Armor_penetration`, consultada el 2026-11-15 (CC BY-SA 3.0) | Orden de aplicación, apilamiento, mínimo 0, total frente a adicional, conversión de la letalidad | Fuente comunitaria secundaria, no oficial de Riot |
+| S4 | LoL Fandom Wiki, página de armadura (`leagueoflegends.fandom.com/zh/wiki/护甲`, texto en inglés), consultada el 2026-11-15 (CC BY-SA) | Multiplicador de daño con resistencia ≥ 0 y ≤ 0, con ejemplos | Fuente comunitaria secundaria, no oficial de Riot |
+| S5 | Millenium, «League of Theorycraft n°3» (`millenium.org/news/91591.html`), consultada el 2026-11-15 | Multiplicador con armadura negativa | Fuente comunitaria secundaria, no oficial de Riot |
 | S3 | LoLTheory, «What is AD in League of Legends» (`blog.loltheory.gg/what-is-ad-league-of-legends/`), consultada el 2026-11-15 | Fórmula de daño mitigado con resistencia ≥ 0 | Fuente comunitaria secundaria, no oficial de Riot |
 
 Ninguna de las dos es una fuente oficial de Riot. Las reglas que coinciden en S1 y S2 se marcan como corroboradas; las que solo tienen una fuente lo indican.
@@ -19,11 +21,11 @@ Ninguna de las dos es una fuente oficial de Riot. Las reglas que coinciden en S1
 Con una resistencia efectiva `R` (armadura frente a daño físico, resistencia mágica frente a daño mágico):
 
 ```text
-R ≥ 0:  daño = bruto × 100 / (100 + R)          # Derivado, S3 (fuente única)
-R < 0:  daño = bruto × (2 − 100 / (100 − R))    # Pendiente de verificación
+R ≥ 0:  daño = bruto × 100 / (100 + R)          # Derivado, corroborado S3 + S4
+R < 0:  daño = bruto × (2 − 100 / (100 − R))    # Derivado, corroborado S4 + S5
 ```
 
-La rama `R < 0` es la forma conocida, pero ninguna página consultada la ha confirmado (la página `Armor` de la wiki no cargó). No debe usarse en cálculos publicados hasta citarla.
+Ejemplos de S4: 25 de armadura → ×0,8; 100 → ×0,5; −25 → ×1,2. La rama negativa nunca llega a duplicar el daño, lo que coincide con la página `Armor` de la wiki (S2, revisión 4073057): la armadura negativa no puede bajar la vida efectiva de la mitad de la real. El daño verdadero no se mitiga.
 
 ## Orden de aplicación (`Derivado`, corroborado S1 + S2)
 
@@ -52,6 +54,10 @@ R4 = max(0, R3 − Σ pen_plana)  si R3 > 0, si no R3
 ## Resistencia mágica (`Derivado`, solo S1)
 
 Misma regla y mismo orden que la armadura: reducción plana, reducción porcentual, penetración mágica porcentual y penetración mágica plana, todas sobre la resistencia mágica total. S2 no trata la resistencia mágica. **Fuente única**: falta una segunda fuente para considerarla corroborada.
+
+## Implementación (`Calculado`)
+
+Estas reglas están implementadas en `src/lol_knowledge/damage/` y se ejecutan con `python -m lol_knowledge damage` (ver [`../../README.md`](../../README.md)). El motor trabaja con aritmética exacta y no redondea. Sus pruebas (`tests/test_damage_mitigation.py`) fijan el orden, el apilamiento, el suelo en 0 de la penetración plana y los ejemplos de S4.
 
 ## Limitaciones
 

@@ -15,6 +15,7 @@
 | Comprobar el snapshot | [manifest.json](../data/current/manifest.json) |
 | Entender el modelo mecánico de objetos | [Modelo de objetos](objects/README.md) |
 | Saber cómo se mitiga el daño (armadura, RM, reducción, penetración) | [Mitigación de daño](mechanics/damage-mitigation.md) |
+| Calcular el daño tras resistencias | `python -m lol_knowledge damage` ([uso](../README.md)) |
 | Ver el catálogo curado de objetos | [catalog.json](objects/catalog.json) |
 | Ver la evidencia de las mecánicas de objetos | [Informe de mecánicas](../research/reports/object-mechanics-2026-10-20.md) |
 | Continuar la investigación de datos de Zaahen | [Documento de continuidad](../research/zaahen-research-handoff.md) |
