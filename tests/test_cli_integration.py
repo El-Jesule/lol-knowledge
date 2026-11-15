@@ -42,3 +42,31 @@ def test_help_in_subprocess() -> None:
     assert result.returncode == 0, result.stderr
     assert "usage: lol_knowledge" in result.stdout
     assert "--version" in result.stdout
+
+
+def test_damage_command_in_subprocess() -> None:
+    result = run_cli(
+        "damage",
+        "--raw",
+        "450",
+        "--type",
+        "physical",
+        "--resistance",
+        "100",
+        "--percent-penetration",
+        "0.3",
+        "--flat-penetration",
+        "18",
+    )
+
+    assert result.returncode == 0, result.stderr
+    assert "post-mitigation damage: 296.052632" in result.stdout
+    assert result.stderr == ""
+
+
+def test_damage_command_rejects_invalid_input_in_subprocess() -> None:
+    result = run_cli("damage", "--raw", "100", "--type", "physical")
+
+    assert result.returncode == 2
+    assert result.stdout == ""
+    assert result.stderr.startswith("error: ")

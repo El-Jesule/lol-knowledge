@@ -3,12 +3,14 @@
 from __future__ import annotations
 
 import argparse
+import json
 import logging
 import sys
 from pathlib import Path
 
 from . import __version__
-from .errors import LolKnowledgeError, NetworkError, PayloadError
+from .damage import DamageType, Modifiers, format_text, mitigate, to_dict
+from .errors import DamageInputError, LolKnowledgeError, NetworkError, PayloadError
 from .snapshot import build_snapshot
 from .validate import validate_project
 
@@ -55,7 +57,40 @@ def build_parser() -> argparse.ArgumentParser:
         help="Project root to validate (default: current directory).",
     )
 
+    _add_damage_parser(subparsers)
+
     return parser
+
+
+def _add_damage_parser(subparsers: argparse._SubParsersAction) -> None:
+    damage = subparsers.add_parser(
+        "damage",
+        help="Compute the post-mitigation damage of one damage instance.",
+        description=(
+            "Apply resistance reductions and penetrations in the game's order and "
+            "mitigate one damage instance. Percentages are fractions (0.3 = 30 %). "
+            "Repeat a modifier option once per independent source."
+        ),
+    )
+    damage.add_argument("--raw", required=True, help="Raw (pre-mitigation) damage.")
+    damage.add_argument(
+        "--type",
+        required=True,
+        choices=[item.value for item in DamageType],
+        help="Damage type.",
+    )
+    damage.add_argument(
+        "--resistance",
+        help="Target's armor (physical) or magic resistance (magic). Not used by true damage.",
+    )
+    for option, text in (
+        ("--flat-reduction", "Flat resistance reduction on the target."),
+        ("--percent-reduction", "Percent resistance reduction on the target."),
+        ("--percent-penetration", "Attacker's percent penetration."),
+        ("--flat-penetration", "Attacker's flat penetration (lethality for physical damage)."),
+    ):
+        damage.add_argument(option, action="append", default=[], metavar="VALUE", help=text)
+    damage.add_argument("--json", action="store_true", help="Print a JSON report.")
 
 
 def main(argv: list[str] | None = None) -> int:
@@ -70,8 +105,29 @@ def main(argv: list[str] | None = None) -> int:
         print(__version__)
         return 0
 
-    handler = {"update": _run_update, "validate": _run_validate}[args.command]
+    handlers = {"update": _run_update, "validate": _run_validate, "damage": _run_damage}
+    handler = handlers[args.command]
     return handler(args)
+
+
+def _run_damage(args: argparse.Namespace) -> int:
+    try:
+        modifiers = Modifiers(
+            flat_reduction=tuple(args.flat_reduction),
+            percent_reduction=tuple(args.percent_reduction),
+            percent_penetration=tuple(args.percent_penetration),
+            flat_penetration=tuple(args.flat_penetration),
+        )
+        result = mitigate(args.raw, args.type, args.resistance, modifiers)
+    except DamageInputError as exc:
+        print(f"error: {exc}", file=sys.stderr)
+        return 2
+
+    if args.json:
+        print(json.dumps(to_dict(result), indent=2, ensure_ascii=False))
+    else:
+        print(format_text(result))
+    return 0
 
 
 def _run_validate(args: argparse.Namespace) -> int:
