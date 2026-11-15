@@ -82,9 +82,12 @@ class _Validator:
         self.champion_numbers: dict[str, set[str]] = {}
         self.item_ids: set[str] = set()
         self.rune_ids: set[int] = set()
+        self.snapshot_patch: str | None = None
 
     def run(self) -> ValidationReport:
         manifest = self._check_manifest()
+        if manifest is not None and isinstance(manifest.get("patch"), str):
+            self.snapshot_patch = manifest["patch"]
         if manifest is not None:
             self._check_listed_files(manifest)
         self._check_champions()
@@ -360,6 +363,16 @@ class _Validator:
             return
         known_fields = {name for _, base, growth in CHAMPION_FIELDS for name in (base, growth)}
         for issue in issues:
+            if (
+                issue.status == "open"
+                and self.snapshot_patch is not None
+                and self.snapshot_patch not in issue.patches
+            ):
+                self.fail(
+                    path,
+                    f"{issue.id}: open issue checked for {list(issue.patches)} but the snapshot is "
+                    f"{self.snapshot_patch}; re-check it and add the patch, or mark it resolved",
+                )
             if issue.field not in known_fields:
                 self.fail(path, f"{issue.id}: unknown Data Dragon field {issue.field!r}")
             if not (self.root / issue.documentation).is_file():

@@ -328,12 +328,12 @@ def test_cli_validate_returns_two_for_a_missing_root(
 
 
 VALID_ISSUES = {
-    "schema": "lol-data-issues/1",
+    "schema": "lol-data-issues/2",
     "issues": [
         {
             "id": "x",
             "source": "data_dragon",
-            "patch": "16.20.1",
+            "patches": ["16.20.1"],
             "field": "attackdamageperlevel",
             "champions": "*",
             "status": "open",
@@ -420,3 +420,22 @@ def test_derived_records_are_validated(
         assert report.ok, messages(report)
     else:
         assert message in messages(report)
+
+
+def test_open_data_issue_must_be_checked_for_the_snapshot_patch(
+    tmp_path: Path, fake_source
+) -> None:
+    root = make_project(tmp_path, fake_source)
+    write_kb(root, "issues.md", "# Issues\n")
+    document = json.loads(json.dumps(VALID_ISSUES))
+    document["issues"][0]["patches"] = ["16.19.1"]
+    write_kb(root, "data-issues.json", json.dumps(document))
+
+    report = validate_project(root)
+
+    assert "re-check it and add the patch, or mark it resolved" in messages(report)
+
+    document["issues"][0]["status"] = "resolved"
+    write_kb(root, "data-issues.json", json.dumps(document))
+
+    assert validate_project(root).ok, messages(validate_project(root))

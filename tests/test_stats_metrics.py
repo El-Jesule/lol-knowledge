@@ -39,7 +39,7 @@ def test_negative_resistance_never_halves_effective_health_more_than_the_floor()
 
 def test_effective_health_is_blocked_by_a_blocked_resistance():
     issue = DataIssue(
-        "armor-issue", "data_dragon", "16.20.1", "armorperlevel", None, "open", "s", "d.md"
+        "armor-issue", "data_dragon", ("16.20.1",), "armorperlevel", None, "open", "s", "d.md"
     )
     sheet = build_stat_sheet(champion(), 5, issues=[issue])
     physical = effective_health(sheet, "physical")
