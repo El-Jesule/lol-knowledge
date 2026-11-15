@@ -299,7 +299,7 @@ offset = v >> 38
 Con lo verificado hasta ahora **no se puede** producir una build cuantificada. Requisitos mínimos, en orden de valor:
 
 1. **Ratios y daño base publicados o medidos** de Q, W, E y R, con su tipo de daño (físico/mágico/verdadero).
-2. **Penetración de armadura de la R**: tipo (porcentual plana o escalada) y valores por rango. El prototipo extrae `ArmorPen`, pero su comparación con la wiki no cierra la discrepancia.
+2. **Penetración de armadura de la R**: tipo (porcentual plana o escalada) y valores por rango. **Actualización 2026-11-15:** valores 10/20/30 % y naturaleza pasiva resueltos con datos del cliente 16.22; la base (total o adicional) y el orden de aplicación siguen pendientes. Ver [`reports/zaahen-r-armor-pen.md`](reports/zaahen-r-armor-pen.md).
 3. **Multiplicador de Q contra monstruos** (E.4) si el objetivo incluye jungla u objetivos.
 4. **Eficiencia de objetos** del parche 16.20.1: oro por punto de estadística y umbrales de penetración.
 5. **Reglas de daño efectivo**: orden de aplicación de penetración y reducción, y cómo interactúan con la R.
@@ -380,7 +380,7 @@ $env:PYTHONPATH="research"
 
 1. Cerrar E.1 (crecimiento de AD: `0` frente a `4.0`) con una fuente oficial o medición propia.
 2. Cerrar E.2 (AD por acumulación de la pasiva) contrastando la interpolación `PercentBonusADCalc` con una medición en partida; el bin y el tooltip del cliente apuntan a `2.8 %`, no a `2.95 %`.
-3. Cerrar G.2 (tipo y valores de la penetración de la R) para poder modelar letalidad.
+3. ~~Cerrar G.2 (tipo y valores de la penetración de la R)~~: valores y naturaleza pasiva resueltos el 2026-11-15; quedan R5 y R6 de `zaahen-uncertainties.md` y la medición en partida.
 
 ### Prioridad 2 — investigación técnica
 

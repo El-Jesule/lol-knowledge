@@ -69,7 +69,8 @@ Estas cifras cubren el daño adicional de la habilidad; el daño propio del ataq
 - **Enfriamiento:** `110/95/80`
 - **Alcance reportado:** `600`
 - **Daño (`Derivado`):** 250 / 400 / 550 (+200 % de DA adicional).
-- **Penetración de armadura (`Derivado`):** 10 / 20 / 30 %.
+- **Penetración de armadura (`Derivado`):** 10 / 20 / 30 %, porcentual. Es la parte **pasiva** de la habilidad, según el texto del cliente: se obtiene al aprender la R, no solo durante el golpe. En el cliente 16.22 se mantiene con la R en enfriamiento.
+- **Penetración de armadura (`Pendiente de verificación`):** si actúa sobre la armadura total o solo sobre la adicional, y su orden respecto a otras penetraciones y reducciones.
 - **Reducción de daño (`Derivado`):** 50 % durante el lanzamiento.
 - **Curación (`Derivado`):** 33 % del daño premítigación infligido a campeones.
 
