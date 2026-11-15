@@ -103,3 +103,27 @@ def test_errors_are_utf8_even_with_a_legacy_console_encoding() -> None:
 
     assert result.returncode == 2
     assert "Ñoño" in result.stderr
+
+
+def test_ability_command_in_subprocess() -> None:
+    result = run_cli(
+        "ability",
+        "--champion",
+        "Zaahen",
+        "--level",
+        "16",
+        "--ability",
+        "R",
+        "--rank",
+        "3",
+        "--item",
+        "3036",
+        "--target-armor",
+        "150",
+        "--target-mr",
+        "50",
+    )
+
+    assert result.returncode == 0, result.stderr
+    assert "ability: R Redención funesta, rank 3" in result.stdout
+    assert "total: 368.499257" in result.stdout

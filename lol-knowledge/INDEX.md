@@ -10,7 +10,7 @@
 | Entender a Zaahen | [Resumen de Zaahen](champions/Zaahen/overview.md) |
 | Ver sus habilidades | [Habilidades de Zaahen](champions/Zaahen/abilities.md) |
 | Ver la build | [Build de Zaahen](champions/Zaahen/build.md) |
-| Calcular el daño de sus habilidades | [Kit de Zaahen](champions/Zaahen/kit.json) |
+| Calcular el daño de sus habilidades | [Kit de Zaahen](champions/Zaahen/kit.json) y `python -m lol_knowledge ability` ([uso](../README.md)) |
 | Comprobar las fuentes | [Fuentes de Zaahen](champions/Zaahen/sources.md) |
 | Leer el dato crudo | [Zaahen.json](../data/current/champions/Zaahen.json) |
 | Comprobar el snapshot | [manifest.json](../data/current/manifest.json) |
