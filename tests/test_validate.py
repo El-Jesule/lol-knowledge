@@ -458,3 +458,42 @@ def test_open_data_issue_must_be_checked_for_the_snapshot_patch(
     write_kb(root, "data-issues.json", json.dumps(document))
 
     assert validate_project(root).ok, messages(validate_project(root))
+
+
+KIT_DOC = {
+    "schema": "lol-champion-kit/1",
+    "champion": "Aatrox",
+    "label": "Derivado",
+    "game_version": "16.20",
+    "content_version": "16.20.1+x",
+    "abilities": {"Q": {"name": "Q", "max_rank": 5, "cases": []}},
+}
+
+
+@pytest.mark.parametrize(
+    ("change", "message"),
+    [
+        ({}, None),
+        (
+            {"abilities": {"Q": {"name": "Q", "max_rank": 3, "cases": []}}},
+            "max_rank 3 but Data Dragon",
+        ),
+        ({"champion": "Other"}, "the directory is 'Aatrox'"),
+        ({"schema": "x"}, "schema"),
+    ],
+)
+def test_kits_are_validated(tmp_path: Path, fake_source, change: dict, message: str | None) -> None:
+    root = make_project(tmp_path, fake_source)
+    champion_path = current(root) / "champions" / "Aatrox.json"
+    payload = json.loads(champion_path.read_text(encoding="utf-8"))
+    payload["spells"][0]["maxrank"] = 5
+    champion_path.write_text(json.dumps(payload, ensure_ascii=False), encoding="utf-8")
+    refresh_manifest(root)
+    write_kb(root, "champions/Aatrox/kit.json", json.dumps({**KIT_DOC, **change}))
+
+    report = validate_project(root)
+
+    if message is None:
+        assert report.ok, messages(report)
+    else:
+        assert message in messages(report)

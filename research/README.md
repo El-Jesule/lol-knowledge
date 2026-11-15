@@ -25,6 +25,7 @@ Nada de `research/` modifica `data/current/`, `src/lol_knowledge/` ni `lol-knowl
 | Ver qué cambió en el bin de Zaahen entre 16.20 y 16.22 | [`reports/zaahen-bin-diff-16.22.md`](reports/zaahen-bin-diff-16.22.md) |
 | Ver la penetración de armadura de la R de Zaahen | [`reports/zaahen-r-armor-pen.md`](reports/zaahen-r-armor-pen.md) |
 | Ver los registros de estadísticas extraídos del cliente 16.22 | [`reports/champion-records-16.22.md`](reports/champion-records-16.22.md) |
+| Ver la especificación del kit de Zaahen | [`kits/Zaahen.spec.json`](kits/Zaahen.spec.json) |
 | Entender el modelo mecánico de objetos | [`../lol-knowledge/objects/README.md`](../lol-knowledge/objects/README.md) |
 | Saber qué fuentes se consultaron y qué límites tienen | [`evidence/usage-conditions.md`](evidence/usage-conditions.md) |
 | Ver el estado del campeón en la base de conocimiento | [`../lol-knowledge/champions/Zaahen/overview.md`](../lol-knowledge/champions/Zaahen/overview.md) |
@@ -114,6 +115,24 @@ El modelo de objetos vive fuera de `research/`, en la base de conocimiento y la 
 ```
 
 Límites: la muestra es de 15 objetos tras la fase 6; no hay motor de daño ni búsqueda de builds. Los ratios y curvas no publicados se marcan como desconocidos o excluidos.
+
+## Fase 12 — kits de campeón
+
+`python -m binmodel.kitgen` compila `lol-knowledge/champions/<Id>/kit.json` a partir de:
+
+1. la extracción del bin (`python -m binmodel --json`), de la que salen los números;
+2. los tooltips del cliente, de los que sale el tipo de daño de cada parte;
+3. una especificación curada (`kits/<Id>.spec.json`) que dice qué casos tiene cada habilidad y qué cálculo alimenta cada parte.
+
+Un tipo de daño declarado que contradiga el tooltip, un nodo que no sabe traducir o un valor ausente detienen la compilación.
+
+```powershell
+$env:PYTHONPATH="research"
+.\.venv\Scripts\python.exe -m binmodel --input research\.cache\zaahen-16.20.bin.json --json > zaahen-extract.json
+.\.venv\Scripts\python.exe -m binmodel.kitgen --extract zaahen-extract.json `
+  --tooltips research\fixtures\zaahen_tooltips_es_es.json `
+  --spec research\kits\Zaahen.spec.json --output lol-knowledge\champions\Zaahen\kit.json
+```
 
 ## Fase 10 — registros de estadísticas de todos los campeones
 

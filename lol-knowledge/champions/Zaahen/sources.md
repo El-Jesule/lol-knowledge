@@ -54,6 +54,18 @@ La naturaleza pasiva de la penetración y su permanencia con la R en enfriamient
 
 **Límites.** El buff lo aplica un script: ningún dato enlaza el buff con `ArmorPen`. Las cifras no se han medido en partida dentro del repositorio. El detalle y un protocolo de medición están en el [informe de la R](../../../research/reports/zaahen-r-armor-pen.md).
 
+### Modelo calculable (`kit.json`)
+
+| Campo | Valor |
+|---|---|
+| Archivo | [`kit.json`](kit.json), esquema `lol-champion-kit/1` |
+| Números | Árboles de cálculo y `DataValues` del bin 16.20 (`python -m binmodel`), comprobados sin cambios contra el bin del cliente 16.22 |
+| Tipo de daño | Marcado de los tooltips del cliente (`<physicalDamage>`, `<magicDamage>`) |
+| Estructura de casos | Curada en [`research/kits/Zaahen.spec.json`](../../../research/kits/Zaahen.spec.json) |
+| Método | `python -m binmodel.kitgen`; una prueba comprueba que el archivo publicado es exactamente lo que genera el compilador |
+
+**Límites.** La semántica `mStat`/`mStatFormula` («DA adicional») sigue siendo una interpretación corroborada, no un enum publicado. El daño mágico del borde de la E se modela desde el texto del tooltip (porcentaje de la vida máxima del objetivo), no desde un árbol de cálculo.
+
 ## Contraste, no fuente publicable (`Pendiente de verificación`)
 
 | Fuente | Naturaleza y licencia | Uso | Límite |

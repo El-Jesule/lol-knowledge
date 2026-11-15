@@ -192,7 +192,7 @@ Fórmulas soportadas por el evaluador:
 
 Scopes válidos: `base`, `bonus`, `total`, `current` y `max`. `subject` es opcional (`champion` o `target`): sirve para desambiguar estadísticas como `bonus_health` (objetivo) frente a `bonus_armor` (portador). Si se omite, `current`/`max` se interpretan como objetivo y el resto como campeón, que es la convención anterior. La resolución de claves es `total` → `attack_damage`, `bonus` → `bonus_attack_damage`, `current` sobre `health` → `current_health`.
 
-El evaluador [`formula.py`](../../src/lol_knowledge/objects/formula.py) evalúa `constant`, `stat`, `percent_of`, `add`, `mul`, `min` y `by_holder_range`. Rechaza con códigos `unknown_input`, `unsupported_formula`, `missing_stat`, `missing_holder_range`, `malformed_formula`, `unsupported_operation` y `depth_exceeded`.
+El evaluador, compartido con los kits de campeón en [`src/lol_knowledge/formula/`](../../src/lol_knowledge/formula/) desde el 2026-11-15, evalúa para el catálogo `constant`, `stat`, `percent_of`, `add`, `mul`, `min` y `by_holder_range`, con aritmética exacta. Las operaciones de los kits (`by_rank`, `by_level`, `input`) no se admiten en el catálogo. El modelo generado no cambió con el traslado (comprobado byte a byte). Rechaza con códigos `unknown_input`, `unsupported_formula`, `missing_stat`, `missing_holder_range`, `malformed_formula`, `unsupported_operation` y `depth_exceeded`.
 
 ## 4. Decisiones del esquema
 

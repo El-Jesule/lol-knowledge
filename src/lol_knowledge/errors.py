@@ -38,3 +38,7 @@ class DamageInputError(LolKnowledgeError):
 
 class StatsError(LolKnowledgeError):
     """A stat sheet could not be built from the given data or request."""
+
+
+class KitError(LolKnowledgeError):
+    """A champion kit is malformed or cannot be evaluated without inventing data."""

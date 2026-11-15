@@ -4,6 +4,14 @@ from __future__ import annotations
 
 from pathlib import Path
 
+from ..formula.schema import (  # noqa: F401 - re-exported for the object model
+    MAX_FORMULA_DEPTH,
+    STAT_SCOPES,
+    STAT_SCOPES_BY_STAT,
+    STAT_SUBJECTS,
+)
+from ..formula.schema import OBJECT_OPS as FORMULA_OPS  # noqa: F401
+
 OBJECT_SCHEMA_VERSION = 1
 MODEL_KIND = "lol-object-model"
 CATALOG_KIND = "lol-object-model-catalog"
@@ -56,29 +64,6 @@ CANONICAL_STAT_KINDS: dict[str, frozenset[str]] = {
 
 STAT_ORDER = tuple(CANONICAL_STAT_KINDS)
 
-# Which scopes make sense for each stat. The engine resolves ``total`` to the
-# bare key, ``base``/``bonus`` to ``<scope>_<stat>`` and ``current``/``max`` to
-# ``<scope>_<stat>`` (for example ``current_health``).
-STAT_SCOPES_BY_STAT: dict[str, frozenset[str]] = {
-    "attack_damage": frozenset({"base", "bonus", "total"}),
-    "ability_power": frozenset({"total"}),
-    "health": frozenset({"base", "bonus", "total", "current", "max"}),
-    "mana": frozenset({"base", "bonus", "total"}),
-    "armor": frozenset({"base", "bonus", "total"}),
-    "magic_resist": frozenset({"base", "bonus", "total"}),
-    "move_speed": frozenset({"total"}),
-    "health_regen": frozenset({"total"}),
-    "mana_regen": frozenset({"total"}),
-    "crit_chance": frozenset({"total"}),
-    "crit_damage_bonus": frozenset({"total"}),
-    "attack_speed": frozenset({"total"}),
-    "life_steal": frozenset({"total"}),
-    "lethality": frozenset({"total"}),
-    "armor_penetration_percent": frozenset({"total"}),
-    "magic_penetration_percent": frozenset({"total"}),
-    "magic_penetration_flat": frozenset({"total"}),
-    "ability_haste": frozenset({"total"}),
-}
 
 VERIFICATION_STATES = frozenset(
     {
@@ -105,7 +90,6 @@ EVIDENCE_KINDS = frozenset(
 )
 EVIDENCE_CONFIDENCE = frozenset({"official", "corroborated", "secondary", "unverified"})
 HOLDER_RANGES = frozenset({"melee", "ranged"})
-STAT_SUBJECTS = frozenset({"champion", "target"})
 EFFECT_KINDS = frozenset({"passive", "active"})
 TRIGGER_EVENTS = frozenset(
     {
@@ -137,20 +121,6 @@ COMPONENT_KINDS = frozenset(
 )
 DAMAGE_TYPES = frozenset({"physical", "magic", "true"})
 HEALING_MODES = frozenset({"absolute", "percent_of_trigger"})
-STAT_SCOPES = frozenset({"base", "bonus", "total", "current", "max"})
-FORMULA_OPS = frozenset(
-    {
-        "constant",
-        "stat",
-        "percent_of",
-        "add",
-        "mul",
-        "min",
-        "by_holder_range",
-        "unknown",
-        "unsupported",
-    }
-)
 LIMIT_KINDS = frozenset({"maximum", "minimum", "threshold", "cap"})
 CONDITION_KINDS = frozenset(
     {
@@ -168,7 +138,6 @@ CONDITION_KINDS = frozenset(
         "stacks_at_least",
     }
 )
-MAX_FORMULA_DEPTH = 32
 
 # The damage-engine interface reports exactly these outcomes.
 OUTCOME_STATES = ("evaluable", "partially_evaluable", "excluded", "unreliable")
