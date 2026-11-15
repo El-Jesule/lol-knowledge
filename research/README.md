@@ -22,6 +22,7 @@ Nada de `research/` modifica `data/current/`, `src/lol_knowledge/` ni `lol-knowl
 | Leer la verificación independiente (Agente C) | [`reports/agent-c-verification.md`](reports/agent-c-verification.md) |
 | Leer la auditoría de garantías del extractor (Agente D) | [`reports/agent-d-extractor-audit.md`](reports/agent-d-extractor-audit.md) |
 | Leer la evidencia de las mecánicas de objetos y el plan Git | [`reports/object-mechanics-2026-10-20.md`](reports/object-mechanics-2026-10-20.md) |
+| Ver qué cambió en el bin de Zaahen entre 16.20 y 16.22 | [`reports/zaahen-bin-diff-16.22.md`](reports/zaahen-bin-diff-16.22.md) |
 | Entender el modelo mecánico de objetos | [`../lol-knowledge/objects/README.md`](../lol-knowledge/objects/README.md) |
 | Saber qué fuentes se consultaron y qué límites tienen | [`evidence/usage-conditions.md`](evidence/usage-conditions.md) |
 | Ver el estado del campeón en la base de conocimiento | [`../lol-knowledge/champions/Zaahen/overview.md`](../lol-knowledge/champions/Zaahen/overview.md) |
@@ -111,6 +112,42 @@ El modelo de objetos vive fuera de `research/`, en la base de conocimiento y la 
 ```
 
 Límites: la muestra es de 15 objetos tras la fase 6; no hay motor de daño ni búsqueda de builds. Los ratios y curvas no publicados se marcan como desconocidos o excluidos.
+
+## Fase 7 — lectura directa del bin del cliente
+
+Lee el bin binario (`PROP`) desde el `*.wad.client` instalado y lo compara campo a campo con un export `.bin.json` de CommunityDragon. Sirve para saber, en cada parche, qué valores derivados siguen vigentes sin depender de que CommunityDragon sea accesible.
+
+```powershell
+$env:PYTHONPATH="research"
+
+# Comparar el bin instalado con la caché 16.20
+.\.venv\Scripts\python.exe -m binmodel.bindiff `
+  --wad "D:\Games\Riot Games\League of Legends\Game\DATA\FINAL\Champions\Zaahen.wad.client" `
+  --entry data/characters/zaahen/zaahen.bin `
+  --against research\.cache\zaahen-16.20.bin.json
+
+# Informe JSON; --check sale con 1 si hay diferencias
+.\.venv\Scripts\python.exe -m binmodel.bindiff --bin zaahen.bin `
+  --against research\.cache\zaahen-16.20.bin.json --json --check
+```
+
+Códigos de salida: `0` comparación hecha, `1` diferencias con `--check`, `2` entrada ilegible o mal formada.
+
+| Ruta | Contenido |
+|---|---|
+| `binmodel/propbin.py` | Lector estricto de bins `PROP` v1–v3 (y envoltorio `PTCH`) |
+| `binmodel/wad.py` | Lectura de una entrada de un WAD v3 por su ruta |
+| `binmodel/xxh64.py` | XXH64 en Python puro para rutas de WAD y campos `file` |
+| `binmodel/bindiff.py` | Comparador bin binario ↔ export JSON y CLI |
+| `tests/propbuild.py` | Codificadores mínimos de PROP y WAD para generar entradas sintéticas |
+| `tests/test_binmodel_{propbin,wad,xxh64,bindiff}.py` | Pruebas sin red ni archivos del cliente |
+
+### Límites de la fase 7
+
+- El lector es estricto: un tipo desconocido, un tamaño declarado que no cuadra o bytes sobrantes detienen la lectura. `skin0.bin` de Zaahen en 16.22 se rechaza por un tipo `0xb5` sin documentar; no se ha investigado.
+- `wad.py` decodifica entradas de tipo 0, 1 y 3. Las de tipo 2 (satélite) y 4 (zstd por subchunks) se rechazan en lugar de adivinar su formato. `tools/extract_rst.py` sigue saltándose las de tipo 4 en silencio.
+- La comparación es estructural: compara valores por hash de nombre, no interpreta semántica. Un campo nuevo aparece con su hash sin resolver.
+- Los campos `file` se comparan por XXH64 de la ruta en minúsculas; si un export usara otra normalización, aparecería como cambio.
 
 ## Fase 6 — mecánicas de objetos y plan de integración
 
