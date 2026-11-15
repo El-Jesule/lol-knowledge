@@ -1,14 +1,17 @@
 {
-  "schema": "lol-data-issues/1",
+  "schema": "lol-data-issues/2",
   "issues": [
     {
       "id": "ddragon-attack-damage-growth",
       "source": "data_dragon",
-      "patch": "16.20.1",
+      "patches": [
+        "16.20.1",
+        "16.22.1"
+      ],
       "field": "attackdamageperlevel",
       "champions": "*",
       "status": "open",
-      "summary": "Data Dragon publica 0 para los 173 campeones del snapshot; se sustituye por lol-knowledge/derived/champion-records.json cuando hay registro.",
+      "summary": "Data Dragon publica 0 para los 173 campeones en 16.20.1 y 16.22.1; se sustituye por lol-knowledge/derived/champion-records.json cuando hay registro.",
       "documentation": "lol-knowledge/mechanics/known-data-issues.md"
     }
   ]

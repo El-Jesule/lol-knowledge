@@ -13,12 +13,12 @@ from lol_knowledge.stats import load_issues, parse_issues
 
 ROOT = Path(__file__).resolve().parents[1]
 VALID = {
-    "schema": "lol-data-issues/1",
+    "schema": "lol-data-issues/2",
     "issues": [
         {
             "id": "x",
             "source": "data_dragon",
-            "patch": "16.20.1",
+            "patches": ["16.20.1"],
             "field": "attackdamageperlevel",
             "champions": "*",
             "status": "open",
@@ -39,9 +39,10 @@ def test_project_issues_load_and_block_ad_growth():
     issues = load_issues(ROOT)
     issue = next(item for item in issues if item.field == "attackdamageperlevel")
     assert issue.status == "open"
-    assert issue.applies_to("Zaahen", "16.20.1")
+    assert issue.patches == ("16.20.1", "16.22.1")
+    assert issue.applies_to("Zaahen", "16.22.1")
     assert issue.applies_to("Ahri", "16.20.1")
-    assert not issue.applies_to("Zaahen", "16.22.1")
+    assert not issue.applies_to("Zaahen", "16.23.1")
     assert (ROOT / issue.documentation).is_file()
 
 
@@ -69,6 +70,10 @@ def test_resolved_issue_does_not_apply():
         (_with(summary=""), "summary"),
         (_with(extra=1), "unknown keys"),
         ({**VALID, "issues": VALID["issues"] * 2}, "duplicate"),
+        (_with(patches=[]), "patches"),
+        (_with(patches="16.20.1"), "patches"),
+        (_with(patches=["16.20.1", "16.20.1"]), "patches"),
+        (_with(patches=[""]), "patches"),
     ],
 )
 def test_rejects_malformed_documents(document, message):

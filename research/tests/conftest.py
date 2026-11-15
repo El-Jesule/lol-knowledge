@@ -32,7 +32,8 @@ def darius_document():
 
 @pytest.fixture
 def ddragon_document():
-    return load_json(REPO_ROOT / "data" / "current" / "champions" / "Zaahen.json")
+    # Pinned to the Data Dragon patch the 16.20 bin was compared against (phase 3.5).
+    return load_json(RESEARCH_ROOT / "fixtures" / "zaahen_ddragon_16.20.1.json")
 
 
 @pytest.fixture

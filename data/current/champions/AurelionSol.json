@@ -704,10 +704,12 @@
       },
       "leveltip": {
         "effect": [
-          "{{ basedamagepersecond }} -> {{ basedamagepersecondNL }}"
+          "{{ basedamagepersecond }} -> {{ basedamagepersecondNL }}",
+          "{{ damageapratiott*100.000000 }}% -> {{ damageapratiottnl*100.000000 }}%"
         ],
         "label": [
-          "Daño por segundo"
+          "Daño por segundo",
+          "Relación de PH total"
         ]
       },
       "maxammo": "-1",

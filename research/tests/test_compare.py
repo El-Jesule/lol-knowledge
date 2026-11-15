@@ -2,7 +2,6 @@
 
 from __future__ import annotations
 
-import json
 from copy import deepcopy
 from pathlib import Path
 
@@ -12,13 +11,14 @@ from cdragon_zaahen.provenance import Status
 
 RESEARCH_ROOT = Path(__file__).resolve().parents[1]
 REPO_ROOT = RESEARCH_ROOT.parent
-DDRAGON_PATH = REPO_ROOT / "data" / "current" / "champions" / "Zaahen.json"
-MANIFEST_PATH = REPO_ROOT / "data" / "current" / "manifest.json"
+# Phase 3.5 compared the 16.20 bin with Data Dragon 16.20.1; the fixture pins that patch.
+DDRAGON_PATH = RESEARCH_ROOT / "fixtures" / "zaahen_ddragon_16.20.1.json"
+DDRAGON_PATCH = "16.20.1"
 
 
 def make_report(bin_document, ddragon_document, rcp_document):
     meta = bin_document["_provenance"]
-    patch = json.loads(MANIFEST_PATH.read_text(encoding="utf-8"))["patch"]
+    patch = DDRAGON_PATCH
     return build_report(
         bin_document["objects"],
         url=meta["url"],

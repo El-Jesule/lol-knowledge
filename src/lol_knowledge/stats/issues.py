@@ -11,17 +11,17 @@ from typing import Any
 from ..errors import StatsError
 
 ISSUES_PATH = Path("lol-knowledge") / "data-issues.json"
-SCHEMA = "lol-data-issues/1"
+SCHEMA = "lol-data-issues/2"
 SOURCES = frozenset({"data_dragon"})
 STATUSES = frozenset({"open", "resolved"})
-_FIELDS = ("id", "source", "patch", "field", "champions", "status", "summary", "documentation")
+_FIELDS = ("id", "source", "patches", "field", "champions", "status", "summary", "documentation")
 
 
 @dataclass(frozen=True)
 class DataIssue:
     id: str
     source: str
-    patch: str
+    patches: tuple[str, ...]  # snapshot patches where the defect was checked
     field: str
     champions: tuple[str, ...] | None  # None means every champion
     status: str
@@ -29,7 +29,7 @@ class DataIssue:
     documentation: str
 
     def applies_to(self, champion_id: str, patch: str) -> bool:
-        if self.status != "open" or self.patch != patch:
+        if self.status != "open" or patch not in self.patches:
             return False
         return self.champions is None or champion_id in self.champions
 
@@ -59,7 +59,8 @@ def parse_issues(document: Any) -> tuple[DataIssue, ...]:
         unknown = sorted(set(record) - set(_FIELDS))
         if unknown:
             raise StatsError(f"{context}: unknown keys {unknown}")
-        values = {key: _text(record, key, context) for key in _FIELDS if key != "champions"}
+        text_fields = [key for key in _FIELDS if key not in {"champions", "patches"}]
+        values = {key: _text(record, key, context) for key in text_fields}
         if values["id"] in seen:
             raise StatsError(f"{context}: duplicate id {values['id']!r}")
         seen.add(values["id"])
@@ -79,7 +80,16 @@ def parse_issues(document: Any) -> tuple[DataIssue, ...]:
             champions = tuple(champions_value)
         else:
             raise StatsError(f"{context}: champions must be '*' or a non-empty list of ids")
-        issues.append(DataIssue(champions=champions, **values))
+        patches_value = record.get("patches")
+        if (
+            not isinstance(patches_value, Sequence)
+            or isinstance(patches_value, (str, bytes))
+            or not patches_value
+            or not all(isinstance(item, str) and item for item in patches_value)
+            or len(set(patches_value)) != len(patches_value)
+        ):
+            raise StatsError(f"{context}: patches must be a non-empty list of unique patches")
+        issues.append(DataIssue(champions=champions, patches=tuple(patches_value), **values))
     return tuple(issues)
 
 

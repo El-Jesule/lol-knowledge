@@ -1,6 +1,6 @@
 # Zaahen — Build
 
-- **Parche:** 16.20.1
+- **Parche:** 16.22.1
 - **Objetivo por defecto:** rendimiento competitivo general.
 - **Estado:** no hay build validada. Esta página separa lo que se puede demostrar de lo que solo es criterio.
 
@@ -33,7 +33,7 @@ Estas son hipótesis de trabajo, no conclusiones. Cualquier build concreta exige
 
 - Si el crecimiento de daño de ataque 0 de Data Dragon es un hueco o un valor real; el cliente indica 4,0.
 - El máximo exacto de AD por acumulación de la pasiva (2,8 % frente a 2,95 %).
-- Eficiencia de objetos en el parche 16.20.1.
+- Eficiencia de objetos en el parche 16.22.1.
 - Rendimiento por rango y región.
 - Medición en partida de los valores derivados.
 

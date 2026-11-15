@@ -1,7 +1,7 @@
 # Índice de la base de conocimiento
 
-- **Parche:** 16.20.1
-- **Última actualización:** 2026-10-20
+- **Parche:** 16.22.1
+- **Última actualización:** 2026-11-15
 
 ## Por intención
 

@@ -80,7 +80,7 @@ def ad_growth_issue(champions: tuple[str, ...] | None = None, patch: str = PATCH
     return DataIssue(
         id="ddragon-attack-damage-growth",
         source="data_dragon",
-        patch=patch,
+        patches=(patch,),
         field="attackdamageperlevel",
         champions=champions,
         status="open",

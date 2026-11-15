@@ -1,8 +1,8 @@
 # Zaahen — El Impertérrito
 
-- **Parche:** 16.20.1
+- **Parche:** 16.22.1 (datos oficiales; antes 16.20.1)
 - **Fuente:** [`data/current/champions/Zaahen.json`](../../../data/current/champions/Zaahen.json) (Data Dragon, `es_ES`)
-- **Fecha de consulta:** 2026-10-18
+- **Fecha de consulta:** 2026-10-18; snapshot 16.22.1 revisado el 2026-11-15
 - **Limitación principal:** Data Dragon no publica los valores numéricos de los efectos de este campeón. Los valores derivados de datos del cliente, marcados `Derivado`, están en [`abilities.md`](abilities.md) y su trazabilidad en [`sources.md`](sources.md).
 
 ## Identidad (`Oficial`)

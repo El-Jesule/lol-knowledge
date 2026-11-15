@@ -1,10 +1,10 @@
 # Modelo mecánico de objetos — `lol-object-model/1`
 
-- **Parche del snapshot:** `16.20.1` (`data/current/manifest.json`).
+- **Parche del snapshot:** `16.22.1` (`data/current/manifest.json`). El catálogo se creó sobre 16.20.1; en 16.22.1 las estadísticas, el oro, las descripciones y las recetas de los 15 objetos son idénticos en Data Dragon (comprobado el 2026-11-15). La evidencia secundaria no se ha revisado contra las notas de parche 16.21 y 16.22.
 - **Fuente:** Data Dragon (`https://ddragon.leagueoflegends.com`), locale `es_ES`.
 - **Fecha de consulta:** 2026-10-20.
 - **Estado:** muestra curada de 15 objetos y 10 efectos; **no** es cobertura completa.
-- **Versión del catálogo:** `catalog_version: 2` (esquema `1`, cambios aditivos).
+- **Versión del catálogo:** `catalog_version: 3` (esquema `1`; la 3 solo cambia el parche).
 - **Código:** [`src/lol_knowledge/objects/`](../../src/lol_knowledge/objects/).
 - **Catálogo curado:** [`catalog.json`](catalog.json).
 - **Auditoría previa del extractor:** [`research/reports/agent-d-extractor-audit.md`](../../research/reports/agent-d-extractor-audit.md).

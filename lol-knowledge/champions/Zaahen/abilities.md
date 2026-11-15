@@ -1,9 +1,9 @@
 # Zaahen — Habilidades
 
-- **Parche:** 16.20.1
+- **Parche:** 16.22.1 (datos oficiales; antes 16.20.1)
 - **Fuente oficial:** [`data/current/champions/Zaahen.json`](../../../data/current/champions/Zaahen.json) (Data Dragon, `es_ES`)
-- **Valores derivados:** CommunityDragon, build `16.20.8248524` (fuente **no oficial**). Detalle y trazabilidad en [`sources.md`](sources.md).
-- **Fecha de consulta:** 2026-10-18
+- **Valores derivados:** CommunityDragon, build `16.20.8248524` (fuente **no oficial**), comprobados contra el bin del cliente 16.22 sin cambios en los valores publicados aquí ([diferencias 16.20 → 16.22](../../../research/reports/zaahen-bin-diff-16.22.md)). Detalle y trazabilidad en [`sources.md`](sources.md).
+- **Fecha de consulta:** 2026-10-18; snapshot 16.22.1 revisado el 2026-11-15
 - **Limitación:** Data Dragon no publica los valores numéricos de los efectos de este campeón. Las cifras en code spans son oficiales; las cifras en texto plano son `Derivado` y no sustituyen a una fuente oficial de Riot.
 
 ## Pasiva — Florescencia de la guerra (`Oficial` + `Derivado`)
@@ -18,7 +18,7 @@ La wiki indica 2,95 % como máximo por acumulación; el bin y el historial de pa
 
 | Habilidad | Nombre | Rango máximo | Coste | Enfriamiento | Alcance reportado |
 |---|---|---|---|---|---|
-| Q | La guja de los Oscuros | `5` | `25` | `10/9/8/7/6` | `25000` |
+| Q | La guja de los Oscuros | `5` | `25` | `8/7.5/7/6.5/6` | `25000` |
 | W | Hendidura del retorno | `5` | `50` | `14/13.5/13/12.5/12` | `850` |
 | E | Impulso áureo | `5` | `40` | `10/9.5/9/8.5/8` | `25000` |
 | R | Redención funesta | `3` | `100` | `110/95/80` | `600` |
@@ -30,7 +30,7 @@ El alcance de Q y E aparece como `25000` en Data Dragon. Se copia tal cual: no s
 **Texto oficial.** Zaahen golpea dos veces con su próximo ataque, lo que inflige daño adicional y lo cura. Zaahen puede reactivar esta habilidad para que su siguiente ataque inflija daño adicional y lance por los aires al objetivo.
 
 - **Coste:** `25`
-- **Enfriamiento:** `10/9/8/7/6`
+- **Enfriamiento:** `8/7.5/7/6.5/6` (en 16.20.1 era 10/9/8/7/6)
 - **Daño adicional del primer golpe (`Derivado`):** 15 / 30 / 45 / 60 / 75 (+20 / 25 / 30 / 35 / 40 % de DA adicional).
 - **Daño adicional del recast (`Derivado`):** 30 / 60 / 90 / 120 / 150 (+20 / 25 / 30 / 35 / 40 % de DA adicional).
 - **Curación (`Derivado`):** 5 / 6 / 7 / 8 / 9 % de la vida máxima; se reduce al 50 % contra súbditos y monstruos.
