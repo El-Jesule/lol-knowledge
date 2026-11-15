@@ -12,7 +12,7 @@ from . import __version__
 from .damage import DamageType, Modifiers, format_text, mitigate, to_dict
 from .errors import DamageInputError, LolKnowledgeError, NetworkError, PayloadError, StatsError
 from .snapshot import build_snapshot
-from .stats import build_stat_sheet, load_champion, load_issues, load_items
+from .stats import build_stat_sheet, load_champion, load_issues, load_items, load_records
 from .stats import format_text as format_stats_text
 from .stats import to_dict as stats_to_dict
 from .validate import validate_project
@@ -186,7 +186,8 @@ def _run_stats(args: argparse.Namespace) -> int:
         champion = load_champion(root, args.champion)
         items = load_items(root, args.item)
         issues = load_issues(root)
-        sheet = build_stat_sheet(champion, args.level, items, issues, assumptions)
+        derived = load_records(root)
+        sheet = build_stat_sheet(champion, args.level, items, issues, assumptions, derived)
     except StatsError as exc:
         print(f"error: {exc}", file=sys.stderr)
         return 2

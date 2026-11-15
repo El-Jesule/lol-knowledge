@@ -2,7 +2,7 @@
 
 Base de conocimiento verificable de League of Legends: datos oficiales de Riot (Data Dragon), análisis con fuente declarada y una CLI en Python que ingesta, valida y calcula de forma reproducible.
 
-Estado actual: **fase 9**. Existen la ingesta, el validador de integridad, el primer campeón analizado (Zaahen), el extractor de cálculos y el lector del bin del cliente en `research/`, un modelo mecánico de objetos versionado para 15 objetos, el núcleo del motor de daño (mitigación por resistencias) y la hoja de estadísticas de campeón con sus primeras métricas (vida efectiva y enfriamientos). Todavía no se evalúan las habilidades de los campeones.
+Estado actual: **fase 10**. Existen la ingesta, el validador de integridad, el primer campeón analizado (Zaahen), el extractor de cálculos y el lector del bin del cliente en `research/`, un modelo mecánico de objetos versionado para 15 objetos, el núcleo del motor de daño (mitigación por resistencias) la hoja de estadísticas de campeón con sus primeras métricas (vida efectiva y enfriamientos) y una tabla de estadísticas base y por nivel extraída del cliente para los 173 campeones. Todavía no se evalúan las habilidades de los campeones.
 
 ## Requisitos
 
@@ -33,7 +33,7 @@ La suite incluye pruebas de integración que ejecutan `python -m lol_knowledge` 
 
 | Ruta | Contenido |
 |---|---|
-| `lol-knowledge/` | Base de conocimiento: índices, campeones, objetos, metodología |
+| `lol-knowledge/` | Base de conocimiento: índices, campeones, objetos, reglas (`mechanics/`) y datos derivados del cliente (`derived/`) |
 | `data/current/` | Snapshot oficial generado desde Data Dragon (no editar a mano) |
 | `src/lol_knowledge/` | CLI, hoja de estadísticas y métricas (`stats/`), motor de daño (`damage/`) y modelo de objetos (`objects/`) |
 | `research/` | Extractor de cálculos, auditoría y prototipos aislados |
@@ -106,7 +106,7 @@ Resuelve las estadísticas de un campeón a un nivel, con objetos del catálogo 
 
 - **Cada estadística es una lista de aportes** (campeón, crecimiento por nivel, objetos, supuestos), cada uno con su fuente y su etiqueta. La etiqueta de un total es la más débil de sus aportes.
 - **Registro compartido** (`src/lol_knowledge/stats/registry.py`): declara cada estadística, cómo se apilan sus fuentes y si tiene regla documentada. Las que no la tienen (velocidad de ataque y de movimiento, regeneración, críticos, robo de vida, omnivampirismo, tenacidad) se listan con sus aportes, pero sin total.
-- **Defectos de datos que bloquean** ([`lol-knowledge/data-issues.json`](lol-knowledge/data-issues.json)): un campo oficial que se sabe incorrecto bloquea la estadística en lugar de dar un valor falso. Solo esos campos se pueden suponer con `--assume`, y el supuesto queda `Pendiente de verificación`.
+- **Defectos de datos** ([`lol-knowledge/data-issues.json`](lol-knowledge/data-issues.json)): un campo oficial que se sabe incorrecto no se usa. Se sustituye por el registro del cliente ([`lol-knowledge/derived/champion-records.json`](lol-knowledge/derived/champion-records.json)), `Derivado` si el parche coincide con el snapshot y `Pendiente de verificación` si no. Sin registro, la estadística queda bloqueada. `--assume` tiene prioridad y siempre es `Pendiente de verificación`.
 - **Solo objetos curados:** Data Dragon no publica todas las estadísticas de los objetos (letalidad, aceleración, penetración van en la descripción), así que un objeto fuera del catálogo se rechaza.
 - Reglas: [crecimiento](lol-knowledge/mechanics/stat-growth.md), [aceleración](lol-knowledge/mechanics/ability-haste.md), [vida efectiva](lol-knowledge/mechanics/effective-health.md), [defectos conocidos](lol-knowledge/mechanics/known-data-issues.md).
 
@@ -128,6 +128,7 @@ Comprueba el snapshot y la estructura de la base de conocimiento:
 - Referencias `data:item:<id>`, `data:rune:<id>` y `data:champion:<Id>` que existan en el snapshot.
 - Catálogo de objetos: esquema y parche, ids y estadísticas canónicas, citas literales de la descripción, fórmulas, estados de modelo, procedencia y referencias de receta.
 - Registro de defectos de datos (`lol-knowledge/data-issues.json`): esquema, campos de Data Dragon conocidos, ids de campeón y documentación existente.
+- Registros derivados del cliente (`lol-knowledge/derived/champion-records.json`): esquema, etiqueta, versiones coherentes, campos conocidos con valores no negativos e ids de campeón del snapshot.
 
 Códigos de salida: `0` todo coherente, `1` violaciones (se listan con archivo y motivo), `2` problema de entorno. Si `lol-knowledge/` aún no existe, las comprobaciones de enlaces y referencias se informan como omitidas, no como superadas.
 
@@ -146,7 +147,7 @@ Condiciones de uso y cuestiones pendientes: [`research/evidence/usage-conditions
 - No hay integración con la Riot API ni claves de API.
 - No hay estadísticas comunitarias; para Zaahen se publican valores derivados de datos del cliente, marcados `Derivado` y con atribución.
 - No hay CI ni publicación remota.
-- Data Dragon 16.20.1 publica `attackdamageperlevel = 0` para todos los campeones: el DA solo se calcula a nivel 1 salvo supuesto explícito.
+- Data Dragon 16.20.1 publica `attackdamageperlevel = 0` para todos los campeones. Se sustituye por el crecimiento del cliente 16.22; mientras el snapshot siga en 16.20.1, ese DA es `Pendiente de verificación`. Senna no tiene el campo en el bin y su DA queda bloqueado por encima del nivel 1.
 - La hoja de estadísticas no incluye runas, efectos de objeto ni pasivas de campeón, y no valida la legalidad de una build (objetos únicos, botas).
 - El motor de daño solo modela la mitigación por armadura y resistencia mágica de una instancia. No modela amplificaciones ni reducciones de daño, escudos, críticos, la penetración de armadura adicional ni el redondeo del juego, y todavía no lee campeones ni objetos.
 - Data Dragon 16.20.1 no publica valores numéricos de las habilidades de Zaahen; los valores derivados están documentados y las discrepancias abiertas siguen como pendientes.

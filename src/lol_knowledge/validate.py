@@ -23,6 +23,7 @@ from .snapshot import (
     validate_item_payload,
     validate_runes_payload,
 )
+from .stats.derived import RECORDS_PATH, parse_records
 from .stats.issues import ISSUES_PATH, parse_issues
 from .stats.sheet import CHAMPION_FIELDS
 
@@ -92,6 +93,7 @@ class _Validator:
         self._check_knowledge_base()
         self._check_object_catalog()
         self._check_data_issues()
+        self._check_derived_records()
         return ValidationReport(
             checked_files=self.checked_files,
             violations=tuple(self.violations),
@@ -365,6 +367,29 @@ class _Validator:
             for champion_id in issue.champions or ():
                 if self.champion_ids and champion_id not in self.champion_ids:
                     self.fail(path, f"{issue.id}: unknown champion id {champion_id!r}")
+
+    def _check_derived_records(self) -> None:
+        path = self.root / RECORDS_PATH
+        if not path.is_file():
+            self.skipped.append(
+                f"{RECORDS_PATH.as_posix()} is not present; derived record checks were skipped"
+            )
+            return
+        self.checked_files += 1
+        document = self._read_json(path)
+        if document is None:
+            return
+        try:
+            records = parse_records(document)
+        except StatsError as exc:
+            self.fail(path, str(exc))
+            return
+        for champion_id in sorted(records.champions):
+            if self.champion_ids and champion_id not in self.champion_ids:
+                self.fail(path, f"unknown champion id {champion_id!r}")
+        failures = document.get("failures", {})
+        if not isinstance(failures, Mapping):
+            self.fail(path, "'failures' must be an object")
 
     def _check_links(self, md_path: Path, text: str) -> None:
         for match in LINK_PATTERN.finditer(text):

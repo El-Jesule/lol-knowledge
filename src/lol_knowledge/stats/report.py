@@ -112,7 +112,11 @@ def _stat_line(stat_id: str, value: StatValue) -> str:
             f" (base {format_number(value.scoped('base'))}"
             f" + bonus {format_number(value.scoped('bonus'))})"
         )
-    return f"  {stat_id}: {total}{detail} [{value.label.value}]"
+    line = f"  {stat_id}: {total}{detail} [{value.label.value}]"
+    notes = [item.note for item in value.contributions if "client" in item.note]
+    if notes:
+        line += f" ({notes[0].split('; ', 1)[1]})"
+    return line
 
 
 def format_text(sheet: StatSheet) -> str:

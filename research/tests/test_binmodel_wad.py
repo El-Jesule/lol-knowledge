@@ -45,3 +45,11 @@ def test_rejects_corrupt_compressed_data(tmp_path):
     path.write_bytes(bytes(data))
     with pytest.raises(WadError):
         read_entry(path, "data/a.bin")
+
+
+def test_truncated_archive_is_refused(tmp_path):
+    data = encode_wad({"data/a.bin": (0, b"PROP" * 50)})
+    path = tmp_path / "cut.wad.client"
+    path.write_bytes(data[:-20])
+    with pytest.raises(WadError, match="exceeds the archive"):
+        read_entry(path, "data/a.bin")

@@ -10,6 +10,7 @@ from .data import (
     load_champion,
     load_items,
 )
+from .derived import DerivedRecords, load_records, parse_records
 from .growth import growth_multiplier
 from .issues import DataIssue, load_issues, parse_issues
 from .labels import Label, weakest
@@ -24,6 +25,7 @@ __all__ = [
     "Contribution",
     "Cooldowns",
     "DataIssue",
+    "DerivedRecords",
     "EffectiveHealth",
     "ItemData",
     "ItemStat",
@@ -45,7 +47,9 @@ __all__ = [
     "load_champion",
     "load_issues",
     "load_items",
+    "load_records",
     "parse_issues",
+    "parse_records",
     "stat",
     "to_dict",
     "weakest",

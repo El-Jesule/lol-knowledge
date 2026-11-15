@@ -21,6 +21,7 @@
 | Entender enfriamientos y aceleración | [Aceleración de habilidades](mechanics/ability-haste.md) |
 | Entender la vida efectiva | [Vida efectiva](mechanics/effective-health.md) |
 | Saber qué datos oficiales son defectuosos | [Defectos conocidos de los datos](mechanics/known-data-issues.md) |
+| Ver las estadísticas base y por nivel extraídas del cliente | [champion-records.json](derived/champion-records.json) |
 | Ver el catálogo curado de objetos | [catalog.json](objects/catalog.json) |
 | Ver la evidencia de las mecánicas de objetos | [Informe de mecánicas](../research/reports/object-mechanics-2026-10-20.md) |
 | Continuar la investigación de datos de Zaahen | [Documento de continuidad](../research/zaahen-research-handoff.md) |

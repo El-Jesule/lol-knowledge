@@ -41,7 +41,7 @@ class WadEntry:
 
 
 def read_table(blob: bytes) -> dict[int, WadEntry]:
-    """Parse the WAD v3 table of contents."""
+    """Parse the WAD v3 table of contents from the start of the archive."""
     if len(blob) < HEADER_SIZE or blob[:2] != b"RW":
         raise WadError("not a WAD archive")
     if blob[2] != 3:
@@ -57,6 +57,15 @@ def read_table(blob: bytes) -> dict[int, WadEntry]:
     return table
 
 
+def _read_head(handle) -> bytes:
+    """Read the header and the whole table of contents, nothing else."""
+    head = handle.read(HEADER_SIZE)
+    if len(head) < HEADER_SIZE:
+        raise WadError("not a WAD archive")
+    (count,) = struct.unpack_from("<I", head, COUNT_OFFSET)
+    return head + handle.read(count * ENTRY_SIZE)
+
+
 def _decode(raw: bytes, entry: WadEntry) -> bytes:
     if entry.data_type == RAW:
         return raw
@@ -68,16 +77,22 @@ def _decode(raw: bytes, entry: WadEntry) -> bytes:
 
 
 def read_entry(wad: Path, path: str) -> bytes:
-    """Return the decoded bytes of ``path`` inside ``wad``."""
-    blob = wad.read_bytes()
-    entry = read_table(blob).get(path_hash(path))
-    if entry is None:
-        raise WadError(f"{path} is not in {wad.name}")
-    end = entry.offset + entry.compressed_size
-    if end > len(blob):
-        raise WadError(f"{path}: data exceeds the archive")
+    """Return the decoded bytes of ``path`` inside ``wad``.
+
+    Only the table of contents and the requested entry are read from disk.
+    """
+    with wad.open("rb") as handle:
+        table = read_table(_read_head(handle))
+        entry = table.get(path_hash(path))
+        if entry is None:
+            raise WadError(f"{path} is not in {wad.name}")
+        handle.seek(0, 2)
+        if entry.offset + entry.compressed_size > handle.tell():
+            raise WadError(f"{path}: data exceeds the archive")
+        handle.seek(entry.offset)
+        raw = handle.read(entry.compressed_size)
     try:
-        data = _decode(blob[entry.offset : end], entry)
+        data = _decode(raw, entry)
     except (OSError, EOFError, zlib.error, zstd.ZstdError) as exc:
         raise WadError(f"{path}: cannot decompress ({exc})") from exc
     if len(data) != entry.size:
