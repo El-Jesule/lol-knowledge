@@ -22,6 +22,7 @@ Nada de `research/` modifica `data/current/`, `src/lol_knowledge/` ni `lol-knowl
 | Leer la verificación independiente (Agente C) | [`reports/agent-c-verification.md`](reports/agent-c-verification.md) |
 | Leer la auditoría de garantías del extractor (Agente D) | [`reports/agent-d-extractor-audit.md`](reports/agent-d-extractor-audit.md) |
 | Leer la evidencia de las mecánicas de objetos y el plan Git | [`reports/object-mechanics-2026-10-20.md`](reports/object-mechanics-2026-10-20.md) |
+| Ver qué cambió en el bin de Zaahen entre 16.20 y 16.22 | [`reports/zaahen-bin-diff-16.22.md`](reports/zaahen-bin-diff-16.22.md) |
 | Entender el modelo mecánico de objetos | [`../lol-knowledge/objects/README.md`](../lol-knowledge/objects/README.md) |
 | Saber qué fuentes se consultaron y qué límites tienen | [`evidence/usage-conditions.md`](evidence/usage-conditions.md) |
 | Ver el estado del campeón en la base de conocimiento | [`../lol-knowledge/champions/Zaahen/overview.md`](../lol-knowledge/champions/Zaahen/overview.md) |
