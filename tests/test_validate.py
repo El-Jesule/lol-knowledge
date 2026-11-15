@@ -325,3 +325,59 @@ def test_cli_validate_returns_two_for_a_missing_root(
 ) -> None:
     assert main(["validate", "--root", str(tmp_path / "missing")]) == 2
     assert "is not a directory" in capsys.readouterr().err
+
+
+VALID_ISSUES = {
+    "schema": "lol-data-issues/1",
+    "issues": [
+        {
+            "id": "x",
+            "source": "data_dragon",
+            "patch": "16.20.1",
+            "field": "attackdamageperlevel",
+            "champions": "*",
+            "status": "open",
+            "summary": "s",
+            "documentation": "lol-knowledge/issues.md",
+        }
+    ],
+}
+
+
+def test_data_issues_absent_is_reported_as_skipped(tmp_path: Path, fake_source) -> None:
+    report = validate_project(make_project(tmp_path, fake_source))
+
+    assert any("data-issues.json is not present" in note for note in report.skipped)
+
+
+def test_valid_data_issues_pass(tmp_path: Path, fake_source) -> None:
+    root = make_project(tmp_path, fake_source)
+    write_kb(root, "issues.md", "# Issues\n")
+    write_kb(root, "data-issues.json", json.dumps(VALID_ISSUES))
+
+    report = validate_project(root)
+
+    assert report.ok, messages(report)
+
+
+@pytest.mark.parametrize(
+    ("change", "message"),
+    [
+        ({"field": "charisma"}, "unknown Data Dragon field"),
+        ({"documentation": "lol-knowledge/missing.md"}, "does not exist"),
+        ({"champions": ["Nobody"]}, "unknown champion id"),
+        ({"status": "maybe"}, "status"),
+    ],
+)
+def test_invalid_data_issues_are_violations(
+    tmp_path: Path, fake_source, change: dict, message: str
+) -> None:
+    root = make_project(tmp_path, fake_source)
+    write_kb(root, "issues.md", "# Issues\n")
+    document = json.loads(json.dumps(VALID_ISSUES))
+    document["issues"][0].update(change)
+    write_kb(root, "data-issues.json", json.dumps(document))
+
+    report = validate_project(root)
+
+    assert message in messages(report)
