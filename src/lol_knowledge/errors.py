@@ -30,3 +30,7 @@ class PayloadError(LolKnowledgeError):
 
 class SnapshotError(LolKnowledgeError):
     """The snapshot could not be written or replaced safely."""
+
+
+class DamageInputError(LolKnowledgeError):
+    """A damage calculation received an invalid or inconsistent input."""

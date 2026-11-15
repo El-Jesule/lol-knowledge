@@ -2,7 +2,7 @@
 
 Base de conocimiento verificable de League of Legends: datos oficiales de Riot (Data Dragon), análisis con fuente declarada y una CLI en Python que ingesta, valida y calcula de forma reproducible.
 
-Estado actual: **fase 6**. Existen la ingesta, el validador de integridad, el primer campeón analizado (Zaahen), el extractor de cálculos en `research/` y un modelo mecánico de objetos versionado para 15 objetos, con evidencia primaria y secundaria separada. El motor determinista de daño todavía no existe.
+Estado actual: **fase 8**. Existen la ingesta, el validador de integridad, el primer campeón analizado (Zaahen), el extractor de cálculos y el lector del bin del cliente en `research/`, un modelo mecánico de objetos versionado para 15 objetos y el núcleo del motor determinista de daño (mitigación por resistencias). Todavía no existe la capa que traduce campeones y objetos a entradas del motor.
 
 ## Requisitos
 
@@ -35,7 +35,7 @@ La suite incluye pruebas de integración que ejecutan `python -m lol_knowledge` 
 |---|---|
 | `lol-knowledge/` | Base de conocimiento: índices, campeones, objetos, metodología |
 | `data/current/` | Snapshot oficial generado desde Data Dragon (no editar a mano) |
-| `src/lol_knowledge/` | CLI, biblioteca de cálculo y modelo de objetos |
+| `src/lol_knowledge/` | CLI, motor de daño (`damage/`) y modelo de objetos (`objects/`) |
 | `research/` | Extractor de cálculos, auditoría y prototipos aislados |
 | `tests/` | Pruebas sin acceso a red |
 | `odd/tasks/` | Documentos de tarea por fase |
@@ -49,7 +49,7 @@ La suite incluye pruebas de integración que ejecutan `python -m lol_knowledge` 
 | `python -m lol_knowledge update` | Disponible |
 | `python -m lol_knowledge validate` | Disponible |
 | `python -m lol_knowledge.objects` | Disponible (modelo de objetos) |
-| `python -m lol_knowledge damage` | Pendiente (motor de daño) |
+| `python -m lol_knowledge damage` | Disponible (mitigación de una instancia de daño) |
 
 ## Actualización de datos
 
@@ -65,6 +65,30 @@ Escribe `data/current/` con `manifest.json`, `champion-index.json`, `champions/<
 La descarga se valida antes de publicarse y se escribe primero en un directorio de staging; el snapshot anterior solo se sustituye cuando el nuevo está completo, y se restaura si el renombrado falla.
 
 Códigos de salida: `0` éxito (con o sin cambios), `1` datos de origen inválidos, `2` problema de red, entorno o escritura. Sin claves de API y sin Riot API.
+
+## Motor de daño
+
+Calcula el daño de una instancia tras la resistencia del objetivo. Es independiente de los datos del juego: recibe números y aplica las reglas de [`lol-knowledge/mechanics/damage-mitigation.md`](lol-knowledge/mechanics/damage-mitigation.md); no sabe nada de campeones, objetos ni parches.
+
+```powershell
+# 450 de daño físico contra 100 de armadura, con 30 % de penetración y 18 de letalidad
+.\.venv\Scripts\python.exe -m lol_knowledge damage --raw 450 --type physical `
+  --resistance 100 --percent-penetration 0.3 --flat-penetration 18
+
+# Varias fuentes: se repite la opción. Informe en JSON
+.\.venv\Scripts\python.exe -m lol_knowledge damage --raw 300 --type magic --resistance 80 `
+  --flat-reduction 15 --percent-penetration 0.4 --percent-penetration 0.1 --json
+
+# Daño verdadero: no admite resistencia
+.\.venv\Scripts\python.exe -m lol_knowledge damage --raw 275 --type true
+```
+
+- Los porcentajes se escriben como fracción (`0.3` = 30 %). Cada repetición de una opción es una fuente independiente.
+- Orden aplicado: reducción plana → reducción porcentual → penetración porcentual → penetración plana. El informe muestra la resistencia tras cada paso.
+- La aritmética es exacta (fracciones), sin redondeo; el JSON incluye además el resultado como fracción en `exact`.
+- Todo resultado es `Calculado` y declara sus supuestos.
+
+Códigos de salida: `0` cálculo hecho, `2` entrada inválida o incoherente (por ejemplo, daño verdadero con resistencia, o un porcentaje fuera de 0–1).
 
 ## Validación de integridad
 
@@ -99,6 +123,7 @@ Condiciones de uso y cuestiones pendientes: [`research/evidence/usage-conditions
 - No hay integración con la Riot API ni claves de API.
 - No hay estadísticas comunitarias; para Zaahen se publican valores derivados de datos del cliente, marcados `Derivado` y con atribución.
 - No hay CI ni publicación remota.
+- El motor de daño solo modela la mitigación por armadura y resistencia mágica de una instancia. No modela amplificaciones ni reducciones de daño, escudos, críticos, la penetración de armadura adicional ni el redondeo del juego, y todavía no lee campeones ni objetos.
 - Data Dragon 16.20.1 no publica valores numéricos de las habilidades de Zaahen; los valores derivados están documentados y las discrepancias abiertas siguen como pendientes.
 - La cobertura de campeones empieza por un caso representativo y crece de forma incremental.
 - El modelo de objetos cubre una muestra de 15 objetos por diversidad mecánica. Las cifras que Data Dragon no publica solo se incorporan con una fuente citada y `evidence_confidence: secondary`; lo no verificado se marca como desconocido o parcial, no se inventa.
