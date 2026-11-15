@@ -2,7 +2,7 @@
 
 Base de conocimiento verificable de League of Legends: datos oficiales de Riot (Data Dragon), análisis con fuente declarada y una CLI en Python que ingesta, valida y calcula de forma reproducible.
 
-Estado actual: **fase 10**. Existen la ingesta, el validador de integridad, el primer campeón analizado (Zaahen), el extractor de cálculos y el lector del bin del cliente en `research/`, un modelo mecánico de objetos versionado para 15 objetos, el núcleo del motor de daño (mitigación por resistencias) la hoja de estadísticas de campeón con sus primeras métricas (vida efectiva y enfriamientos) y una tabla de estadísticas base y por nivel extraída del cliente para los 173 campeones. Todavía no se evalúan las habilidades de los campeones.
+Estado actual: **fase 12**. Existen la ingesta, el validador de integridad, el primer campeón analizado (Zaahen), el extractor de cálculos y el lector del bin del cliente en `research/`, un modelo mecánico de objetos versionado para 15 objetos, el núcleo del motor de daño (mitigación por resistencias), la hoja de estadísticas de campeón con sus primeras métricas (vida efectiva y enfriamientos) y una tabla de estadísticas base y por nivel extraída del cliente para los 173 campeones. El primer kit de habilidades (Zaahen) se evalúa sobre la hoja de estadísticas; todavía no hay comando que encadene hoja, habilidad y mitigación.
 
 ## Requisitos
 
@@ -35,7 +35,7 @@ La suite incluye pruebas de integración que ejecutan `python -m lol_knowledge` 
 |---|---|
 | `lol-knowledge/` | Base de conocimiento: índices, campeones, objetos, reglas (`mechanics/`) y datos derivados del cliente (`derived/`) |
 | `data/current/` | Snapshot oficial generado desde Data Dragon (no editar a mano) |
-| `src/lol_knowledge/` | CLI, hoja de estadísticas y métricas (`stats/`), motor de daño (`damage/`) y modelo de objetos (`objects/`) |
+| `src/lol_knowledge/` | CLI, hoja de estadísticas y métricas (`stats/`), kits de campeón (`kit/`), fórmulas compartidas (`formula/`), motor de daño (`damage/`) y modelo de objetos (`objects/`) |
 | `research/` | Extractor de cálculos, auditoría y prototipos aislados |
 | `tests/` | Pruebas sin acceso a red |
 | `odd/tasks/` | Documentos de tarea por fase |
@@ -112,6 +112,23 @@ Resuelve las estadísticas de un campeón a un nivel, con objetos del catálogo 
 
 Códigos de salida: `0` hoja calculada (aunque alguna estadística esté bloqueada; el informe lo dice), `2` petición inválida o datos ausentes.
 
+## Kits de campeón
+
+Un kit (`lol-knowledge/champions/<Id>/kit.json`, esquema `lol-champion-kit/1`) describe el daño de cada habilidad como *casos* alternativos con *partes* de daño (fórmula, tipo, etiqueta y fuente), y las estadísticas que una habilidad concede pasivamente. Las fórmulas usan el evaluador compartido con `by_rank` (valor por rango), `by_level` e `input` (dato del escenario, nunca 0 por defecto).
+
+```python
+from lol_knowledge.kit import ability_damage, load_kit, passive_contributions
+
+kit = load_kit(root, "Zaahen")
+extras = passive_contributions(kit, {"R": 3})  # penetración de la R en la hoja
+sheet = build_stat_sheet(..., extras=extras)
+parts = ability_damage(kit, "E", 5, sheet, case="edge", target={"max_health": 2500})
+```
+
+- El kit se genera con `python -m binmodel.kitgen` desde los árboles del bin y el marcado de los tooltips; la estructura de casos se cura en `research/kits/<Id>.spec.json`.
+- `validate` comprueba el esquema, el campeón y que el número de rangos coincida con Data Dragon.
+- Solo existe el kit de Zaahen.
+
 ## Validación de integridad
 
 ```powershell
@@ -129,6 +146,7 @@ Comprueba el snapshot y la estructura de la base de conocimiento:
 - Catálogo de objetos: esquema y parche, ids y estadísticas canónicas, citas literales de la descripción, fórmulas, estados de modelo, procedencia y referencias de receta.
 - Registro de defectos de datos (`lol-knowledge/data-issues.json`): esquema, campos de Data Dragon conocidos, ids de campeón y documentación existente.
 - Registros derivados del cliente (`lol-knowledge/derived/champion-records.json`): esquema, etiqueta, versiones coherentes, campos conocidos con valores no negativos e ids de campeón del snapshot.
+- Kits de campeón (`lol-knowledge/champions/<Id>/kit.json`): esquema, fórmulas, campeón del directorio y rangos máximos frente a Data Dragon.
 
 Códigos de salida: `0` todo coherente, `1` violaciones (se listan con archivo y motivo), `2` problema de entorno. Si `lol-knowledge/` aún no existe, las comprobaciones de enlaces y referencias se informan como omitidas, no como superadas.
 

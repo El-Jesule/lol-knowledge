@@ -73,6 +73,18 @@ Estas cifras cubren el daño adicional de la habilidad; el daño propio del ataq
 - **Reducción de daño (`Derivado`):** 50 % durante el lanzamiento.
 - **Curación (`Derivado`):** 33 % del daño premítigación infligido a campeones.
 
+## Modelo calculable (`Derivado`)
+
+Los daños de esta página están también en forma evaluable en [`kit.json`](kit.json) (esquema `lol-champion-kit/1`), generado desde los árboles de cálculo del bin y el marcado de los tooltips del cliente. Cada habilidad tiene *casos* alternativos con sus partes de daño:
+
+- **Q:** primer golpe y reactivación (daño adicional al ataque, sin el ataque básico).
+- **W:** golpe y atracción (el mismo enemigo recibe las dos partes).
+- **E:** tajo, o borde del tajo, que lo sustituye y añade daño mágico según la vida máxima del objetivo.
+- **R:** golpe descendente, y la penetración de armadura como estadística pasiva.
+- **Pasiva:** no modelada todavía (la curva de acumulaciones no está medida).
+
+Lo que el kit no modela está listado en cada habilidad (`not_modelled`): curaciones, reducción de daño, y bonificaciones y topes contra monstruos.
+
 ## Qué queda pendiente (`Pendiente de verificación`)
 
 - Crecimiento de daño de ataque: Data Dragon publica 0; el cliente indica 4,0. La discrepancia no se resuelve aquí.
