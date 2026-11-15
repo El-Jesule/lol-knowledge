@@ -2,7 +2,7 @@
 
 Base de conocimiento verificable de League of Legends: datos oficiales de Riot (Data Dragon), análisis con fuente declarada y una CLI en Python que ingesta, valida y calcula de forma reproducible.
 
-Estado actual: **fase 14**. Existen la ingesta, el validador de integridad, el primer campeón analizado (Zaahen), el extractor de cálculos y el lector del bin del cliente en `research/`, un modelo mecánico de objetos versionado para 15 objetos, el núcleo del motor de daño (mitigación por resistencias), la hoja de estadísticas de campeón con sus primeras métricas (vida efectiva y enfriamientos) y una tabla de estadísticas base y por nivel extraída del cliente para los 173 campeones. El primer kit de habilidades (Zaahen) se evalúa con `python -m lol_knowledge ability`, que encadena hoja de estadísticas, habilidad y mitigación contra un objetivo. `python -m lol_knowledge rotation` encadena ataques básicos, críticos y habilidades con los efectos de objeto evaluables (daño al impactar, aumentos y reducciones de daño) y lleva la vida del objetivo de un paso a otro.
+Estado actual: **fase 14**. Existen la ingesta, el validador de integridad, el primer campeón analizado (Zaahen), el extractor de cálculos y el lector del bin del cliente en `research/`, un modelo mecánico de objetos versionado para 15 objetos, el núcleo del motor de daño (mitigación por resistencias), la hoja de estadísticas de campeón con sus primeras métricas (vida efectiva y enfriamientos) y una tabla de estadísticas base y por nivel extraída del cliente para los 173 campeones. El primer kit de habilidades (Zaahen) se evalúa con `python -m lol_knowledge ability`, que encadena hoja de estadísticas, habilidad y mitigación contra un objetivo. `python -m lol_knowledge rotation` encadena ataques básicos, críticos y habilidades con los efectos de objeto evaluables (daño al impactar, aumentos y reducciones de daño) y lleva la vida del objetivo de un paso a otro, con la curación del atacante por robo de vida y omnivampirismo.
 
 ## Requisitos
 
@@ -171,7 +171,8 @@ Códigos de salida: `0` cálculo hecho, `2` petición inválida, dato ausente o 
 - **Crítico:** multiplicador base del registro del cliente (`critdamagemultiplier`, 2,0 desde el parche 26.1) más el daño crítico adicional de los objetos. No hay valor esperado: cada paso dice si critica.
 - **Datos que no se adivinan:** cuerpo a cuerpo o a distancia (`--attacker-range`, lo pide Filo de la niebla), el tipo de un objetivo manual (`--target-kind`) y su vida adicional (`--target-bonus-health`, lo pide Verdugo de gigantes). La rotación exige la vida del objetivo.
 - **Lo no aplicado se lista:** efectos no evaluables, de otro tipo o de estadística porcentual (Rabadon). Si pueden cambiar el daño, el resultado queda `Pendiente de verificación`.
-- Reglas: [ataques y daño al impactar](lol-knowledge/mechanics/basic-attacks-and-on-hit.md), [impacto crítico](lol-knowledge/mechanics/critical-strike.md), [modificadores de daño](lol-knowledge/mechanics/damage-modifiers.md).
+- **Curación:** con robo de vida u omnivampirismo, cada parte informa la curación que da su daño final (`heal:`), y cada paso y el total la suman (`step heal`, `total heal`; en JSON, `healing` con su etiqueta). El robo de vida cura con los ataques y con el daño al impactar que el catálogo declara (`applies_life_steal`); el omnivampirismo, con todo. Es la curación que genera el daño: no se limita a la vida que le falta al atacante. Una habilidad con omnivampirismo pide `--target-kind`.
+- Reglas: [ataques y daño al impactar](lol-knowledge/mechanics/basic-attacks-and-on-hit.md), [impacto crítico](lol-knowledge/mechanics/critical-strike.md), [modificadores de daño](lol-knowledge/mechanics/damage-modifiers.md), [robo de vida y omnivampirismo](lol-knowledge/mechanics/life-steal-and-omnivamp.md).
 
 Códigos de salida: `0` cálculo hecho, `2` petición inválida, dato ausente o campeón sin kit.
 
@@ -213,7 +214,7 @@ Condiciones de uso y cuestiones pendientes: [`research/evidence/usage-conditions
 - No hay CI ni publicación remota.
 - Data Dragon (16.20.1 y 16.22.1) publica `attackdamageperlevel = 0` para todos los campeones. Se sustituye por el crecimiento del cliente 16.22, `Derivado` porque cliente y snapshot coinciden. Senna no tiene el campo en el bin y su DA queda bloqueado por encima del nivel 1.
 - La hoja de estadísticas no incluye runas, efectos de objeto ni pasivas de campeón, y no valida la legalidad de una build (objetos únicos, botas).
-- `ability` calcula un lanzamiento sin efectos de objeto; para críticos y efectos de objeto está `rotation`. Ninguno de los dos simula tiempo, velocidad de ataque, reducciones de resistencia del objetivo ni escudos. Solo Zaahen tiene kit.
+- `ability` calcula un lanzamiento sin efectos de objeto; para críticos y efectos de objeto está `rotation`. Ninguno de los dos simula tiempo, velocidad de ataque, reducciones de resistencia del objetivo ni escudos; `rotation` informa la curación por robo de vida y omnivampirismo, pero no la vida del atacante. Solo Zaahen tiene kit.
 - El núcleo de mitigación trata una instancia; `rotation` añade críticos y modificadores porcentuales de daño. No se modelan escudos, reducciones planas de daño, la penetración de armadura adicional ni el redondeo del juego.
 - Data Dragon no publica valores numéricos de las habilidades de Zaahen; los valores derivados están documentados y las discrepancias abiertas siguen como pendientes.
 - La cobertura de campeones empieza por un caso representativo y crece de forma incremental.

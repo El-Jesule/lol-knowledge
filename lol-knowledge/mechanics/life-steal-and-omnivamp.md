@@ -1,6 +1,6 @@
 # Robo de vida y omnivampirismo
 
-- **Ámbito:** curación que obtiene el atacante con el daño que inflige, por robo de vida (`life_steal`) y omnivampirismo (`omnivamp`).
+- **Ámbito:** curación que obtiene el atacante con el daño que inflige, por robo de vida (`life_steal`) y omnivampirismo (`omnivamp`). La usa `python -m lol_knowledge rotation`, paso a paso y en total.
 - **Parche de referencia:** Data Dragon 16.22.1 y cliente 16.22 (2026-11-15). El omnivampirismo funciona así desde el parche 26.1.
 - **Fecha de consulta:** 2026-11-15
 
@@ -41,7 +41,26 @@ curación de una parte = daño final de la parte × (robo de vida aplicable + om
 - **Poder de curación y escudos:** no se aplica a ninguno de los dos (L2, L4).
 - **Heridas graves** sí reduce la curación del robo de vida (L2).
 
+## Cómo lo aplica `rotation`
+
+La curación de cada parte es su daño final (tras la resistencia y los modificadores de daño infligido y recibido, el mismo que informa la rotación) por los porcentajes que se aplican. La etiqueta de la curación es como mucho `Derivado` (la regla viene de fuentes secundarias) y nunca más fuerte que la del daño de la parte ni la de los porcentajes.
+
+| Parte de la rotación | Robo de vida | Omnivampirismo |
+|---|---|---|
+| Ataque básico (`attack`, `attack:crit`) | Sí | Sí |
+| Daño al impactar de un objeto | Solo si el componente del catálogo declara `applies_life_steal` con `value: true`. Si no lo declara, no se aplica y la curación queda `Pendiente de verificación` con una nota | Sí |
+| Habilidad | No: el kit no declara la marca «applies life steal». Con robo de vida, la curación queda `Pendiente de verificación` con una nota | Sí |
+
+- **Etiqueta de `applies_life_steal`:** sigue a la confianza de su fuente. `secondary` deja la curación en `Pendiente de verificación`; Filo de la niebla la declara con L5, así que su curación queda pendiente.
+- **Robo de vida y omnivampirismo en la misma parte:** se suman y la curación queda `Pendiente de verificación` con una nota.
+- **Objetivo campeón:** todo al 100 %.
+- **Súbdito o monstruo:** ataques y daño al impactar al 100 %. Las habilidades se curan al 100 % y quedan `Pendiente de verificación`, porque el kit no dice si son mascotas, daño periódico o área (L1: 33 % en esos casos). Sin `--target-kind`, una habilidad con omnivampirismo no se calcula.
+- **Estructura:** sin curación, `Pendiente de verificación`.
+- **Golpe letal con daño excesivo:** se usa el daño completo de cada parte y la curación de ese paso queda `Pendiente de verificación` con una nota. Un paso que deja la vida exactamente en 0 no es excesivo.
+- **Sin tope por vida perdida:** el motor no lleva la vida del atacante; la curación es la que genera el daño. Heridas graves sobre el atacante no se modela.
+
 ## Implementación (`Calculado`)
 
 - `src/lol_knowledge/stats/registry.py` declara `life_steal` y `omnivamp` como fracciones aditivas con esta regla. La hoja de estadísticas suma sus aportes: el robo de vida viene de `PercentLifeStealMod` de Data Dragon; el omnivampirismo solo puede declararse en el [catálogo de objetos](../objects/catalog.json) con la cita de la descripción (`kind: percent`), porque Data Dragon no lo trae en `stats`. Hoy ningún objeto del catálogo lo declara.
-- Pruebas: `tests/test_stats_vamp.py` y `tests/test_objects_validator.py`.
+- `src/lol_knowledge/rotation.py` calcula `Healing` por parte; `StepOutcome` y `RotationOutcome` la suman y marcan el golpe letal excesivo. `rotation_report.py` la muestra en texto y JSON.
+- Pruebas: `tests/test_stats_vamp.py`, `tests/test_objects_validator.py` y `tests/test_rotation_healing.py`.
