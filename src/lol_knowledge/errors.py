@@ -34,3 +34,7 @@ class SnapshotError(LolKnowledgeError):
 
 class DamageInputError(LolKnowledgeError):
     """A damage calculation received an invalid or inconsistent input."""
+
+
+class StatsError(LolKnowledgeError):
+    """A stat sheet could not be built from the given data or request."""
