@@ -139,6 +139,7 @@ def build_stat_sheet(
     issues: Sequence[DataIssue] = (),
     assumptions: Mapping[str, object] | None = None,
     derived: DerivedRecords | None = None,
+    extras: Sequence[tuple[str, Contribution]] = (),
 ) -> StatSheet:
     """Resolve the champion's statistics at ``level`` with ``items``.
 
@@ -146,6 +147,9 @@ def build_stat_sheet(
     assumption (``Pendiente de verificación``) or by a derived client record
     (``Derivado`` when the client patch matches the snapshot, otherwise
     ``Pendiente de verificación``). With neither, the statistic is blocked.
+
+    ``extras`` adds further contributions, such as stats an ability grants
+    passively (see ``lol_knowledge.kit.passive_contributions``).
     """
     check_level(level)
     applicable = [issue for issue in issues if issue.applies_to(champion.id, champion.patch)]
@@ -237,6 +241,12 @@ def build_stat_sheet(
                     note,
                 )
             )
+
+    for stat_id, extra in extras:
+        definition = stat(stat_id)
+        if definition.unit is Unit.FRACTION and not 0 <= extra.value <= 1:
+            raise StatsError(f"extra {stat_id}: {extra.value} is not a fraction 0..1")
+        contributions[stat_id].append(extra)
 
     for issue in applicable:
         if level == 1:

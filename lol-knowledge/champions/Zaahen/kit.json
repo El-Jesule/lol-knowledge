@@ -1,0 +1,407 @@
+{
+  "schema": "lol-champion-kit/1",
+  "champion": "Zaahen",
+  "label": "Derivado",
+  "game_version": "16.22",
+  "content_version": "16.20.8248524+branch.releases-16-20.content.release",
+  "verified_against": {
+    "content_version": "16.22.8348910+branch.releases-16-22.content.release",
+    "bin_sha256": "44e0d68c38fc1d715926a8d721d48321acc1b1ff08d844c9955e0fef6b70db75",
+    "evidence": "research/reports/zaahen-bin-diff-16.22.md",
+    "result": "Sin cambios en los DataValues ni en los cálculos usados aquí entre 16.20 y 16.22"
+  },
+  "source": "Árboles de cálculo del bin del cliente (python -m binmodel) y marcado de los tooltips del cliente; estructura de casos curada en research/kits/",
+  "abilities": {
+    "P": {
+      "name": "Florescencia de la guerra",
+      "max_rank": 1,
+      "cases": [],
+      "passive_stats": [],
+      "not_modelled": [
+        "DA por acumulación (PercentBonusADCalc): depende de la interpolación por nivel {ee18a47b}, sin regla medida",
+        "Revivir (RevivePercentCalc, ReviveCooldownCalc): faltan valores en el bin"
+      ]
+    },
+    "Q": {
+      "name": "La guja de los Oscuros",
+      "max_rank": 5,
+      "cases": [
+        {
+          "id": "first_hit",
+          "name": "Primer golpe: daño adicional al ataque",
+          "parts": [
+            {
+              "damage_type": "physical",
+              "formula": {
+                "op": "add",
+                "operands": [
+                  {
+                    "op": "by_rank",
+                    "values": [
+                      15,
+                      30,
+                      45,
+                      60,
+                      75
+                    ]
+                  },
+                  {
+                    "op": "mul",
+                    "operands": [
+                      {
+                        "op": "by_rank",
+                        "values": [
+                          0.2,
+                          0.25,
+                          0.3,
+                          0.35,
+                          0.4
+                        ]
+                      },
+                      {
+                        "op": "stat",
+                        "stat": "attack_damage",
+                        "scope": "bonus"
+                      }
+                    ]
+                  }
+                ]
+              },
+              "label": "Derivado",
+              "source": "Characters/Zaahen/Spells/ZaahenQAbility/ZaahenQ.mSpellCalculations.InitialDamage (16.20.8248524+branch.releases-16-20.content.release)",
+              "damage_type_source": "spell_zaahenq_tooltip <physicalDamage>"
+            }
+          ]
+        },
+        {
+          "id": "recast",
+          "name": "Reactivación: daño adicional al ataque",
+          "parts": [
+            {
+              "damage_type": "physical",
+              "formula": {
+                "op": "add",
+                "operands": [
+                  {
+                    "op": "by_rank",
+                    "values": [
+                      30,
+                      60,
+                      90,
+                      120,
+                      150
+                    ]
+                  },
+                  {
+                    "op": "mul",
+                    "operands": [
+                      {
+                        "op": "by_rank",
+                        "values": [
+                          0.2,
+                          0.25,
+                          0.3,
+                          0.35,
+                          0.4
+                        ]
+                      },
+                      {
+                        "op": "stat",
+                        "stat": "attack_damage",
+                        "scope": "bonus"
+                      }
+                    ]
+                  }
+                ]
+              },
+              "label": "Derivado",
+              "source": "Characters/Zaahen/Spells/ZaahenQAbility/ZaahenQ.mSpellCalculations.SecondHitDamage (16.20.8248524+branch.releases-16-20.content.release)",
+              "damage_type_source": "spell_zaahenq_tooltip <physicalDamage>"
+            }
+          ]
+        }
+      ],
+      "passive_stats": [],
+      "not_modelled": [
+        "El daño del propio ataque básico: se suma aparte",
+        "Daño contra monstruos (MonsterDamagePercent) y curación"
+      ]
+    },
+    "W": {
+      "name": "Hendidura del retorno",
+      "max_rank": 5,
+      "cases": [
+        {
+          "id": "hit_and_pull",
+          "name": "Golpe y atracción (el mismo enemigo recibe ambos)",
+          "parts": [
+            {
+              "damage_type": "physical",
+              "formula": {
+                "op": "add",
+                "operands": [
+                  {
+                    "op": "by_rank",
+                    "values": [
+                      40,
+                      60,
+                      80,
+                      100,
+                      120
+                    ]
+                  },
+                  {
+                    "op": "mul",
+                    "operands": [
+                      {
+                        "op": "constant",
+                        "value": 0.5
+                      },
+                      {
+                        "op": "stat",
+                        "stat": "attack_damage",
+                        "scope": "bonus"
+                      }
+                    ]
+                  }
+                ]
+              },
+              "label": "Derivado",
+              "source": "Characters/Zaahen/Spells/ZaahenWAbility/ZaahenW.mSpellCalculations.InitialDamage (16.20.8248524+branch.releases-16-20.content.release)",
+              "damage_type_source": "spell_zaahenw_tooltip <physicalDamage>"
+            },
+            {
+              "damage_type": "physical",
+              "formula": {
+                "op": "add",
+                "operands": [
+                  {
+                    "op": "by_rank",
+                    "values": [
+                      30,
+                      50,
+                      70,
+                      90,
+                      110
+                    ]
+                  },
+                  {
+                    "op": "mul",
+                    "operands": [
+                      {
+                        "op": "constant",
+                        "value": 0.3
+                      },
+                      {
+                        "op": "stat",
+                        "stat": "attack_damage",
+                        "scope": "bonus"
+                      }
+                    ]
+                  }
+                ]
+              },
+              "label": "Derivado",
+              "source": "Characters/Zaahen/Spells/ZaahenWAbility/ZaahenW.mSpellCalculations.SecondaryDamage (16.20.8248524+branch.releases-16-20.content.release)",
+              "damage_type_source": "spell_zaahenw_tooltip <physicalDamage>"
+            }
+          ]
+        }
+      ],
+      "passive_stats": [],
+      "not_modelled": []
+    },
+    "E": {
+      "name": "Impulso áureo",
+      "max_rank": 5,
+      "cases": [
+        {
+          "id": "center",
+          "name": "Tajo",
+          "parts": [
+            {
+              "damage_type": "physical",
+              "formula": {
+                "op": "add",
+                "operands": [
+                  {
+                    "op": "by_rank",
+                    "values": [
+                      40,
+                      60,
+                      80,
+                      100,
+                      120
+                    ]
+                  },
+                  {
+                    "op": "mul",
+                    "operands": [
+                      {
+                        "op": "constant",
+                        "value": 0.5
+                      },
+                      {
+                        "op": "stat",
+                        "stat": "attack_damage",
+                        "scope": "bonus"
+                      }
+                    ]
+                  }
+                ]
+              },
+              "label": "Derivado",
+              "source": "Characters/Zaahen/Spells/ZaahenEAbility/ZaahenE.mSpellCalculations.BaseDamageCalc (16.20.8248524+branch.releases-16-20.content.release)",
+              "damage_type_source": "spell_zaahene_tooltip <physicalDamage>"
+            }
+          ]
+        },
+        {
+          "id": "edge",
+          "name": "Borde del tajo (sustituye al tajo)",
+          "parts": [
+            {
+              "damage_type": "physical",
+              "formula": {
+                "op": "mul",
+                "operands": [
+                  {
+                    "op": "add",
+                    "operands": [
+                      {
+                        "op": "by_rank",
+                        "values": [
+                          40,
+                          60,
+                          80,
+                          100,
+                          120
+                        ]
+                      },
+                      {
+                        "op": "mul",
+                        "operands": [
+                          {
+                            "op": "constant",
+                            "value": 0.5
+                          },
+                          {
+                            "op": "stat",
+                            "stat": "attack_damage",
+                            "scope": "bonus"
+                          }
+                        ]
+                      }
+                    ]
+                  },
+                  {
+                    "op": "constant",
+                    "value": 1.5
+                  }
+                ]
+              },
+              "label": "Derivado",
+              "source": "Characters/Zaahen/Spells/ZaahenEAbility/ZaahenE.mSpellCalculations.BonusDamageCalc (16.20.8248524+branch.releases-16-20.content.release)",
+              "damage_type_source": "spell_zaahene_tooltip <physicalDamage>"
+            },
+            {
+              "damage_type": "magic",
+              "formula": {
+                "op": "mul",
+                "operands": [
+                  {
+                    "op": "by_rank",
+                    "values": [
+                      0.04,
+                      0.045,
+                      0.05,
+                      0.055,
+                      0.06
+                    ]
+                  },
+                  {
+                    "op": "stat",
+                    "stat": "health",
+                    "scope": "max",
+                    "subject": "target"
+                  }
+                ]
+              },
+              "label": "Derivado",
+              "source": "Characters/Zaahen/Spells/ZaahenEAbility/ZaahenE · DataValues.PercentHPDamage × vida máxima del objetivo (texto del tooltip) (16.20.8248524+branch.releases-16-20.content.release)",
+              "damage_type_source": "spell_zaahene_tooltip <magicDamage>"
+            }
+          ]
+        }
+      ],
+      "passive_stats": [],
+      "not_modelled": [
+        "Contra monstruos: +50 de daño físico y tope de 400 del daño mágico"
+      ]
+    },
+    "R": {
+      "name": "Redención funesta",
+      "max_rank": 3,
+      "cases": [
+        {
+          "id": "slam",
+          "name": "Golpe descendente",
+          "parts": [
+            {
+              "damage_type": "physical",
+              "formula": {
+                "op": "add",
+                "operands": [
+                  {
+                    "op": "by_rank",
+                    "values": [
+                      250,
+                      400,
+                      550
+                    ]
+                  },
+                  {
+                    "op": "mul",
+                    "operands": [
+                      {
+                        "op": "constant",
+                        "value": 2
+                      },
+                      {
+                        "op": "stat",
+                        "stat": "attack_damage",
+                        "scope": "bonus"
+                      }
+                    ]
+                  }
+                ]
+              },
+              "label": "Derivado",
+              "source": "Characters/Zaahen/Spells/ZaahenRAbility/ZaahenR.mSpellCalculations.DamageEndCalc (16.20.8248524+branch.releases-16-20.content.release)",
+              "damage_type_source": "spell_zaahenr_tooltip <physicalDamage>"
+            }
+          ]
+        }
+      ],
+      "passive_stats": [
+        {
+          "stat": "armor_penetration_percent",
+          "formula": {
+            "op": "by_rank",
+            "values": [
+              0.1,
+              0.2,
+              0.3
+            ]
+          },
+          "label": "Derivado",
+          "source": "Characters/Zaahen/Spells/ZaahenRAbility/ZaahenR.DataValues.ArmorPen (16.20.8248524+branch.releases-16-20.content.release)",
+          "condition": "pasiva de la R: activa con la R aprendida, también en enfriamiento"
+        }
+      ],
+      "not_modelled": [
+        "Reducción de daño durante el lanzamiento y curación"
+      ]
+    }
+  }
+}
