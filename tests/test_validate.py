@@ -422,6 +422,25 @@ def test_derived_records_are_validated(
         assert message in messages(report)
 
 
+def test_per_rank_sequences_must_match_a_list(tmp_path: Path, fake_source) -> None:
+    root = make_project(tmp_path, fake_source)
+    champion_path = current(root) / "champions" / "Aatrox.json"
+    payload = json.loads(champion_path.read_text(encoding="utf-8"))
+    payload["spells"][0]["cooldown"] = [10, 9.5, 9, 8.5, 8]
+    champion_path.write_text(json.dumps(payload, ensure_ascii=False), encoding="utf-8")
+    refresh_manifest(root)
+    good = "10/9.5/9/8.5/8"
+    stale = "11/10.5/10/9.5/9"
+    write_kb(root, "champions/Aatrox/abilities.md", f"- Enfriamiento: `{good}`\n")
+
+    assert validate_project(root).ok, messages(validate_project(root))
+
+    write_kb(root, "champions/Aatrox/abilities.md", f"- Enfriamiento: `{stale}`\n")
+    report = validate_project(root)
+
+    assert f"sequence {stale} does not appear as a list" in messages(report)
+
+
 def test_open_data_issue_must_be_checked_for_the_snapshot_patch(
     tmp_path: Path, fake_source
 ) -> None:

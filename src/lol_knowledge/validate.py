@@ -37,6 +37,7 @@ LINK_PATTERN = re.compile(r"\[[^\]]*\]\(([^)]+)\)")
 DATA_REF_PATTERN = re.compile(r"data:(item|rune|champion):([A-Za-z0-9_-]+)")
 NUMERIC_CODE_SPAN_PATTERN = re.compile(r"`([^`\n]+)`")
 NUMBER_PATTERN = re.compile(r"\d+(?:\.\d+)?")
+SEQUENCE_PATTERN = re.compile(r"\d+(?:\.\d+)?(?:/\d+(?:\.\d+)?)+")
 EXTERNAL_LINK_PREFIXES = ("http://", "https://", "mailto:", "#")
 CHAMPION_DOC_FILENAMES = ("overview.md", "abilities.md")
 
@@ -80,6 +81,7 @@ class _Validator:
         self.checked_files = 0
         self.champion_ids: set[str] = set()
         self.champion_numbers: dict[str, set[str]] = {}
+        self.champion_sequences: dict[str, set[tuple[float, ...]]] = {}
         self.item_ids: set[str] = set()
         self.rune_ids: set[int] = set()
         self.snapshot_patch: str | None = None
@@ -251,6 +253,7 @@ class _Validator:
                 self.fail(champion_path, str(exc))
 
             self.champion_numbers[champion_id] = numeric_tokens(payload)
+            self.champion_sequences[champion_id] = numeric_sequences(payload)
 
             for field in ("key", "name"):
                 if entry.get(field) != payload.get(field):
@@ -437,8 +440,18 @@ class _Validator:
         except UnicodeDecodeError:
             return  # already reported by the Markdown scan
 
+        sequences = self.champion_sequences.get(champion_id, set())
         for match in NUMERIC_CODE_SPAN_PATTERN.finditer(text):
             value = match.group(1).strip()
+            if SEQUENCE_PATTERN.fullmatch(value) is not None:
+                parsed = tuple(float(part) for part in value.split("/"))
+                if parsed not in sequences:
+                    self.fail(
+                        path,
+                        f"sequence {value} does not appear as a list in "
+                        f"data/current/champions/{champion_id}.json",
+                    )
+                continue
             if NUMBER_PATTERN.fullmatch(value) is None:
                 continue
             if value not in numbers:
@@ -446,6 +459,27 @@ class _Validator:
                     path,
                     f"number {value} does not appear in data/current/champions/{champion_id}.json",
                 )
+
+
+def numeric_sequences(value: Any) -> set[tuple[float, ...]]:
+    """Collect every list of two or more numbers, so per-rank values can be traced."""
+    sequences: set[tuple[float, ...]] = set()
+
+    def is_number(item: Any) -> bool:
+        return isinstance(item, (int, float)) and not isinstance(item, bool)
+
+    def walk(node: Any) -> None:
+        if isinstance(node, Mapping):
+            for item in node.values():
+                walk(item)
+        elif isinstance(node, Sequence) and not isinstance(node, (str, bytes)):
+            if len(node) >= 2 and all(is_number(item) for item in node):
+                sequences.add(tuple(float(item) for item in node))
+            for item in node:
+                walk(item)
+
+    walk(value)
+    return sequences
 
 
 def numeric_tokens(value: Any) -> set[str]:
