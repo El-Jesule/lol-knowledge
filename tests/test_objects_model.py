@@ -37,7 +37,7 @@ def _reverse_keys(value: Any) -> Any:
 def test_model_header_links_to_the_snapshot(object_model, object_snapshot) -> None:
     assert object_model["schema_version"] == 1
     assert object_model["kind"] == "lol-object-model"
-    assert object_model["catalog_version"] == 5
+    assert object_model["catalog_version"] == 6
     assert object_model["game_version"] == object_snapshot.patch
     assert object_model["source"]["items_sha256"] == object_snapshot.items_sha256
     assert object_model["source"]["catalog"] == "lol-knowledge/objects/catalog.json"
@@ -322,3 +322,11 @@ def test_names_come_from_the_snapshot(object_model, object_snapshot) -> None:
 def test_catalog_can_be_rebuilt_from_disk(project_root, object_catalog, object_snapshot) -> None:
     assert load_catalog(project_root)["objects"] == object_catalog["objects"]
     assert load_snapshot(project_root).items_sha256 == object_snapshot.items_sha256
+
+
+def test_mists_edge_declares_life_steal_with_a_secondary_source(object_model) -> None:
+    fogblade = _effect(_object(object_model, "3153"), "fogblade")
+    declaration = fogblade["components"][0]["applies_life_steal"]
+    assert declaration["value"] is True
+    assert declaration["source"]["confidence"] == "secondary"
+    assert "benefits from life steal" in declaration["source"]["quote"]

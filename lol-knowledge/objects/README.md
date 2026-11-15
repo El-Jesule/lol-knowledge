@@ -4,7 +4,7 @@
 - **Fuente:** Data Dragon (`https://ddragon.leagueoflegends.com`), locale `es_ES`.
 - **Fecha de consulta:** 2026-10-20.
 - **Estado:** muestra curada de 15 objetos y 10 efectos; **no** es cobertura completa.
-- **Versión del catálogo:** `catalog_version: 4` (esquema `1`; la 3 solo cambió el parche; la 4 añade `subject: target` explícito a la vida actual de Filo de la niebla, para que el motor de rotaciones la lea del objetivo sin depender de la convención implícita; la 5 añade los datos del cliente 16.22 como fuente `client_data` y corrige la ralentización a distancia de Zarpazo sombrío).
+- **Versión del catálogo:** `catalog_version: 6` (esquema `1`; la 3 solo cambió el parche; la 4 añade `subject: target` explícito a la vida actual de Filo de la niebla, para que el motor de rotaciones la lea del objetivo sin depender de la convención implícita; la 5 añade los datos del cliente 16.22 como fuente `client_data` y corrige la ralentización a distancia de Zarpazo sombrío; la 6 añade `applies_life_steal` a los componentes de daño y lo declara en Filo de la niebla).
 - **Código:** [`src/lol_knowledge/objects/`](../../src/lol_knowledge/objects/).
 - **Catálogo curado:** [`catalog.json`](catalog.json).
 - **Auditoría previa del extractor:** [`research/reports/agent-d-extractor-audit.md`](../../research/reports/agent-d-extractor-audit.md).
@@ -174,6 +174,8 @@ Decisiones:
 ### 3.5 Componentes y fórmulas
 
 Componentes: `damage`, `healing`, `shield`, `stat_modifier`, `damage_modifier`, `crowd_control`, `status`, `stasis`.
+
+Un componente `damage` puede declarar `applies_life_steal`: `{"value": true|false, "source": {…}}`, con una fuente propia del mismo formato que `sources`. Dice si ese daño cura con el robo de vida del portador ([regla](../mechanics/life-steal-and-omnivamp.md)). Si falta, no consta; el motor de rotaciones no lo adivina. Solo Filo de la niebla lo declara (`true`, LoL Wiki, `secondary`).
 
 Los componentes `healing` y `shield` declaran `mode`: `absolute` (la fórmula devuelve la cantidad) o `percent_of_trigger` (la fórmula devuelve el porcentaje de la curación o escudo que disparó el efecto, que es una entrada del motor).
 
