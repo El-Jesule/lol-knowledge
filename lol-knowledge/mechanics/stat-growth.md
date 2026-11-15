@@ -24,7 +24,7 @@ A nivel 1 el término de crecimiento es 0, así que el valor es exactamente el d
 
 ## Qué no cubre
 
-- **Velocidad de ataque:** según S1 usa una fórmula distinta y depende del ratio de velocidad de ataque, que Data Dragon no publica. No se calcula.
+- **Velocidad de ataque:** el crecimiento usa esta misma fórmula, pero da velocidad de ataque adicional que se multiplica por el ratio del cliente. Ver [Velocidad de ataque](attack-speed.md).
 - **Velocidad de movimiento y alcance:** no crecen por nivel.
 - **Daño de ataque:** la fórmula vale, pero el snapshot no trae el crecimiento. Ver [Defectos conocidos de los datos](known-data-issues.md).
 - **Nivel máximo:** la regla no depende del modo de juego. El motor acepta niveles de 1 a 30 y no valida el tope de cada modo.
