@@ -13,7 +13,10 @@ from typing import Any
 from .damage import DamageResult, DamageType, Modifiers, mitigate
 from .errors import StatsError
 from .kit import DamagePart, Kit, ability_damage
-from .stats import Label, StatSheet, weakest
+from .stats import ItemData, Label, StatSheet, weakest
+
+# Unit kinds that item conditions and limits distinguish.
+TARGET_KINDS = frozenset({"champion", "monster", "minion", "structure"})
 
 PENETRATION = {
     DamageType.PHYSICAL: ("armor_penetration_percent", "lethality"),
@@ -23,13 +26,20 @@ PENETRATION = {
 
 @dataclass(frozen=True)
 class Target:
-    """The defender: resistances, health stats for formulas, and how they were obtained."""
+    """The defender: resistances, health stats for formulas, and how they were obtained.
+
+    ``kind`` is ``None`` when nobody said what the target is; effects that
+    depend on it must then refuse to guess. ``items`` are the target's own
+    items, whose damage-taken effects a rotation applies.
+    """
 
     armor: Fraction
     magic_resist: Fraction
     stats: Mapping[str, Fraction]
     label: Label
     description: str
+    kind: str | None = None
+    items: tuple[ItemData, ...] = ()
 
     def resistance(self, damage_type: DamageType) -> Fraction | None:
         if damage_type is DamageType.PHYSICAL:
@@ -39,8 +49,18 @@ class Target:
         return None
 
 
-def _health(max_health: Fraction | None, current_health: Fraction | None) -> dict[str, Fraction]:
+def _health(
+    max_health: Fraction | None,
+    current_health: Fraction | None,
+    bonus_health: Fraction | None = None,
+) -> dict[str, Fraction]:
     stats: dict[str, Fraction] = {}
+    if bonus_health is not None:
+        if bonus_health < 0:
+            raise StatsError("target bonus health must not be negative")
+        if max_health is not None and bonus_health > max_health:
+            raise StatsError("target bonus health exceeds its max health")
+        stats["bonus_health"] = bonus_health
     if max_health is not None:
         if max_health <= 0:
             raise StatsError("target max health must be positive")
@@ -62,17 +82,25 @@ def target_from_values(
     *,
     max_health: Fraction | None = None,
     current_health: Fraction | None = None,
+    bonus_health: Fraction | None = None,
+    kind: str | None = None,
 ) -> Target:
     """A target given by hand.
 
     Its values are scenario inputs, not knowledge, so they weaken no label.
     """
+    if kind is not None and kind not in TARGET_KINDS:
+        raise StatsError(f"unknown target kind {kind!r} (use {', '.join(sorted(TARGET_KINDS))})")
+    description = f"armor {armor}, magic resist {magic_resist}"
+    if kind is not None:
+        description = f"{kind}, {description}"
     return Target(
         armor,
         magic_resist,
-        _health(max_health, current_health),
+        _health(max_health, current_health, bonus_health),
         Label.OFFICIAL,
-        f"armor {armor}, magic resist {magic_resist}",
+        description,
+        kind,
     )
 
 
@@ -83,9 +111,11 @@ def target_from_sheet(sheet: StatSheet, *, current_health: Fraction | None = Non
     return Target(
         armor.total(),
         magic_resist.total(),
-        _health(health.total(), current_health),
+        _health(health.total(), current_health, health.scoped("bonus")),
         weakest((armor.label, magic_resist.label, health.label)),
         f"{sheet.champion.id} level {sheet.level} ({items})",
+        "champion",
+        sheet.items,
     )
 
 
@@ -116,7 +146,8 @@ class AbilityOutcome:
     not_modelled: tuple[str, ...]
 
 
-def _modifiers(sheet: StatSheet, damage_type: DamageType) -> Modifiers:
+def penetration_modifiers(sheet: StatSheet, damage_type: DamageType) -> Modifiers:
+    """The attacker's penetration against ``damage_type``; true damage has none."""
     if damage_type not in PENETRATION:
         return Modifiers()
     percent, flat = PENETRATION[damage_type]
@@ -143,7 +174,7 @@ def evaluate_ability(
     for part in parts:
         resistance = target.resistance(part.damage_type)
         mitigation = mitigate(
-            part.raw, part.damage_type, resistance, _modifiers(sheet, part.damage_type)
+            part.raw, part.damage_type, resistance, penetration_modifiers(sheet, part.damage_type)
         )
         labels.append(part.label)
         if part.damage_type in PENETRATION:

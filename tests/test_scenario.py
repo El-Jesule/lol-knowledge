@@ -77,9 +77,15 @@ def test_target_champion_is_resolved_with_its_sheet():
     level = growth_multiplier(16)
     assert target.armor == 21 + F("4.2") * level + 25
     assert target.magic_resist == 30 + F("1.3") * level
-    assert target.stats == {"max_health": 590 + 104 * level, "current_health": 590 + 104 * level}
+    assert target.stats == {
+        "bonus_health": 0,
+        "max_health": 590 + 104 * level,
+        "current_health": 590 + 104 * level,
+    }
     assert target.label is Label.DERIVED
     assert target.description == "Ahri level 16 (3047)"
+    assert target.kind == "champion"
+    assert [item.id for item in target.items] == ["3047"]
 
 
 def test_case_totals_add_their_parts():

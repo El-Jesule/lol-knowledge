@@ -9,7 +9,7 @@ from __future__ import annotations
 import json
 import math
 from collections.abc import Mapping, Sequence
-from dataclasses import dataclass
+from dataclasses import dataclass, field
 from fractions import Fraction
 from pathlib import Path
 from typing import Any
@@ -52,10 +52,13 @@ class ItemStat:
 
 @dataclass(frozen=True)
 class ItemData:
+    """A curated item: its stats and, untouched, the effects of the object model."""
+
     id: str
     name: str
     game_version: str
     stats: tuple[ItemStat, ...]
+    effects: tuple[Mapping[str, Any], ...] = field(default=(), compare=False, hash=False)
 
 
 def _number(value: Any, context: str) -> Fraction:
@@ -182,7 +185,13 @@ def items_from_model(model: Mapping[str, Any], item_ids: Sequence[str]) -> tuple
                 )
             )
         selected.append(
-            ItemData(str(obj["id"]), str(obj.get("name", "")), str(game_version), tuple(stats))
+            ItemData(
+                str(obj["id"]),
+                str(obj.get("name", "")),
+                str(game_version),
+                tuple(stats),
+                tuple(obj.get("effects") or ()),
+            )
         )
     return tuple(selected)
 
