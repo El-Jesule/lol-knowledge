@@ -27,7 +27,7 @@ python -m venv .venv
 .\.venv\Scripts\python.exe -m lol_knowledge validate
 ```
 
-La suite incluye pruebas de integración que ejecutan `python -m lol_knowledge` en un subproceso. Requieren el paquete instalado en modo editable (`pip install -e .`); si falta esa instalación, fallan de forma visible y no se saltan en silencio.
+La suite incluye pruebas de integración que ejecutan `python -m lol_knowledge` en un subproceso. La CLI escribe siempre en UTF-8, aunque la consola use otra codificación (en Windows, cp1252 cuando la salida va a una tubería); hay pruebas que fuerzan cp1252 para comprobarlo. Requieren el paquete instalado en modo editable (`pip install -e .`); si falta esa instalación, fallan de forma visible y no se saltan en silencio.
 
 ## Estructura
 

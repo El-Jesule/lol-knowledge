@@ -137,8 +137,21 @@ def _parse_assume(values: list[str]) -> dict[str, str]:
     return parsed
 
 
+def _use_utf8_streams() -> None:
+    """Write UTF-8 to the process's own stdout and stderr.
+
+    On Windows a piped stream defaults to the ANSI code page (cp1252), which
+    mangles accented text such as "Maná". Streams replaced by a caller (for
+    example a test capture) are left alone.
+    """
+    for current, original in ((sys.stdout, sys.__stdout__), (sys.stderr, sys.__stderr__)):
+        if current is original and hasattr(current, "reconfigure"):
+            current.reconfigure(encoding="utf-8")
+
+
 def main(argv: list[str] | None = None) -> int:
     """Run the CLI and return the process exit code."""
+    _use_utf8_streams()
     parser = build_parser()
     args = parser.parse_args(argv)
 

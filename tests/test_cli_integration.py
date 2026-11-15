@@ -7,6 +7,7 @@ a missing installation must fail visibly instead of being hidden.
 
 from __future__ import annotations
 
+import os
 import subprocess
 import sys
 from pathlib import Path
@@ -16,11 +17,12 @@ from lol_knowledge import __version__
 REPO_ROOT = Path(__file__).resolve().parents[1]
 
 
-def run_cli(*args: str) -> subprocess.CompletedProcess[str]:
+def run_cli(*args: str, env: dict[str, str] | None = None) -> subprocess.CompletedProcess[str]:
     """Run the CLI module with the current interpreter and capture UTF-8 output."""
     return subprocess.run(
         [sys.executable, "-m", "lol_knowledge", *args],
         cwd=REPO_ROOT,
+        env=env,
         capture_output=True,
         text=True,
         encoding="utf-8",
@@ -78,3 +80,26 @@ def test_stats_command_in_subprocess() -> None:
     assert result.returncode == 0, result.stderr
     assert "attack_damage: blocked: ddragon-attack-damage-growth" in result.stdout
     assert "label: Calculado" in result.stdout
+
+
+def test_output_is_utf8_even_with_a_legacy_console_encoding() -> None:
+    """Regression: on Windows a piped stdout defaults to the ANSI code page (cp1252).
+
+    Accented text such as "Maná" must still reach the caller as UTF-8.
+    """
+    env = {**os.environ, "PYTHONIOENCODING": "cp1252", "PYTHONUTF8": "0"}
+
+    result = run_cli("stats", "--champion", "Zaahen", "--level", "1", env=env)
+
+    assert result.returncode == 0, result.stderr
+    assert "resource: Maná" in result.stdout
+    assert "La guja de los Oscuros" in result.stdout
+
+
+def test_errors_are_utf8_even_with_a_legacy_console_encoding() -> None:
+    env = {**os.environ, "PYTHONIOENCODING": "cp1252", "PYTHONUTF8": "0"}
+
+    result = run_cli("stats", "--champion", "Ñoño", "--level", "1", env=env)
+
+    assert result.returncode == 2
+    assert "Ñoño" in result.stderr
