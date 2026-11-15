@@ -399,6 +399,16 @@ def test_flat_magic_penetration_is_a_canonical_stat() -> None:
     assert _messages(_catalog(stat=stat), snapshot) == []
 
 
+def test_omnivamp_can_be_declared_from_the_description() -> None:
+    snapshot = _snapshot(description="2.5% de omnisucción")
+    stat = {"id": "omnivamp", "kind": "percent", "value": 2.5, "quote": "2.5% de omnisucción"}
+    assert _messages(_catalog(stat=stat), snapshot) == []
+    stat["kind"] = "flat"
+    assert any(
+        "does not support kind 'flat'" in m for m in _messages(_catalog(stat=stat), snapshot)
+    )
+
+
 def test_community_source_cannot_be_official() -> None:
     effect = _external_effect()
     effect["sources"][0]["confidence"] = "official"

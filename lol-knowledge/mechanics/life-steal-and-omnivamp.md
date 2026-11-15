@@ -40,3 +40,8 @@ curación de una parte = daño final de la parte × (robo de vida aplicable + om
 
 - **Poder de curación y escudos:** no se aplica a ninguno de los dos (L2, L4).
 - **Heridas graves** sí reduce la curación del robo de vida (L2).
+
+## Implementación (`Calculado`)
+
+- `src/lol_knowledge/stats/registry.py` declara `life_steal` y `omnivamp` como fracciones aditivas con esta regla. La hoja de estadísticas suma sus aportes: el robo de vida viene de `PercentLifeStealMod` de Data Dragon; el omnivampirismo solo puede declararse en el [catálogo de objetos](../objects/catalog.json) con la cita de la descripción (`kind: percent`), porque Data Dragon no lo trae en `stats`. Hoy ningún objeto del catálogo lo declara.
+- Pruebas: `tests/test_stats_vamp.py` y `tests/test_objects_validator.py`.

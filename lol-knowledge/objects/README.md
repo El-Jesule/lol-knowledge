@@ -123,6 +123,7 @@ Decisiones:
 - `kind` es `flat` o `percent`. Los porcentajes se normalizan a **puntos porcentuales**: `0.25` de Data Dragon se publica como `25.0`. El valor bruto queda en `raw_value`.
 - Solo se declaran en el catálogo las estadísticas que Data Dragon **no** estructura: letalidad, aceleración de habilidades, penetraciones (porcentuales y plana mágica) y daño crítico adicional. Las planas y porcentuales que sí están en `stats` se derivan y no se repiten.
 - `magic_penetration_flat` es una estadística canónica nueva de esta fase (Botas de hechicero). No se confunde con `magic_penetration_percent` (Bastón del Vacío).
+- `omnivamp` (`kind: percent`) es canónica desde 2026-11-15. Data Dragon no la trae en `stats`, así que solo se declara con la cita de la descripción («omnisucción»). Ver [Robo de vida y omnivampirismo](../mechanics/life-steal-and-omnivamp.md).
 - Un valor desconocido se declara con `"value": null`, `"status": "unknown"` y `"reason"`. Un cero real se declara con `"value": 0` y `"status": "declared"`.
 - `source.kind` distingue `ddragon_stat` (campo estructurado) de `ddragon_description` (prosa). En el segundo caso la cita debe existir en la descripción normalizada y el número declarado debe aparecer en la cita; `validate` lo comprueba.
 - `unmapped_source_stats` conserva cualquier clave de `stats` que el mapa canónico no reconozca. No se descarta en silencio.

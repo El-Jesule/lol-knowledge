@@ -55,6 +55,8 @@ CANONICAL_STAT_KINDS: dict[str, frozenset[str]] = {
     "crit_damage_bonus": frozenset({"percent"}),
     "attack_speed": frozenset({"percent"}),
     "life_steal": frozenset({"percent"}),
+    # Data Dragon only shows omnivamp in descriptions ("omnisucción").
+    "omnivamp": frozenset({"percent"}),
     "lethality": frozenset({"flat"}),
     "armor_penetration_percent": frozenset({"percent"}),
     "magic_penetration_percent": frozenset({"percent"}),
