@@ -16,6 +16,7 @@ Data Dragon 16.20.1 publica `attackdamageperlevel = 0` para los 173 campeones (`
 - **173 de 173** campeones del índice de Data Dragon leídos sin fallos.
 - `attackdamageperlevel` presente en 172. El crecimiento va de 1,5 a 4,0 y hay valores no redondos (uno es 3.1415927).
 - `attackspeedratio` (ratio de velocidad de ataque) presente en los 173. Data Dragon no lo publica; servirá para modelar la velocidad de ataque.
+- `critdamagemultiplier` (`critDamageMultiplier`, multiplicador base del impacto crítico) presente en los 173: 2,0 en 172 y 1,0 en Ashe. Data Dragon no lo publica. Coincide con el 200 % de daño crítico base de las notas oficiales del parche 26.1. Añadido el 2026-11-15; el resto de campos y los SHA-256 no cambian.
 
 ### Campos ausentes en el bin (no se rellenan)
 

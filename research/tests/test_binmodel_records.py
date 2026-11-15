@@ -31,6 +31,7 @@ def record_bin(champion: str = "Testchamp", **fields) -> bytes:
         "damagePerLevelModifiable": modifiable(4.0),
         "mrPerLevel": modifiable(2.05),
         "attackSpeedRatioModifiable": prim(T.F32, 0.625),
+        "critDamageMultiplier": prim(T.F32, 2.0),
     }
     default.update(fields)
     return encode_prop(
@@ -44,6 +45,7 @@ def test_extracts_fields_with_data_dragon_names():
         "attackdamage": 63.0,
         "attackdamageperlevel": 4.0,
         "attackspeedratio": 0.625,
+        "critdamagemultiplier": 2.0,
         "hp": 640.0,
         "hpperlevel": 114.0,
         "spellblockperlevel": 2.05,

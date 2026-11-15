@@ -36,6 +36,7 @@ KNOWN_FIELDS = frozenset(
         "attackspeed",
         "attackspeedratio",
         "attackspeedperlevel",
+        "critdamagemultiplier",
     }
 )
 
