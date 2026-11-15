@@ -11,7 +11,8 @@ from pathlib import Path
 from typing import Any
 
 from .ddragon import validate_champion_id
-from .errors import PayloadError, StatsError
+from .errors import KitError, PayloadError, StatsError
+from .kit.model import KIT_FILENAME, parse_kit
 from .objects.validate import validate_object_catalog
 from .snapshot import (
     CHAMPION_INDEX_FILENAME,
@@ -82,6 +83,7 @@ class _Validator:
         self.champion_ids: set[str] = set()
         self.champion_numbers: dict[str, set[str]] = {}
         self.champion_sequences: dict[str, set[tuple[float, ...]]] = {}
+        self.champion_max_ranks: dict[str, tuple[int, ...]] = {}
         self.item_ids: set[str] = set()
         self.rune_ids: set[int] = set()
         self.snapshot_patch: str | None = None
@@ -99,6 +101,7 @@ class _Validator:
         self._check_object_catalog()
         self._check_data_issues()
         self._check_derived_records()
+        self._check_kits()
         return ValidationReport(
             checked_files=self.checked_files,
             violations=tuple(self.violations),
@@ -254,6 +257,11 @@ class _Validator:
 
             self.champion_numbers[champion_id] = numeric_tokens(payload)
             self.champion_sequences[champion_id] = numeric_sequences(payload)
+            spells = payload.get("spells")
+            if isinstance(spells, Sequence) and not isinstance(spells, (str, bytes)):
+                self.champion_max_ranks[champion_id] = tuple(
+                    spell.get("maxrank") if isinstance(spell, Mapping) else None for spell in spells
+                )
 
             for field in ("key", "name"):
                 if entry.get(field) != payload.get(field):
@@ -406,6 +414,38 @@ class _Validator:
         failures = document.get("failures", {})
         if not isinstance(failures, Mapping):
             self.fail(path, "'failures' must be an object")
+
+    def _check_kits(self) -> None:
+        champions_dir = self.root / KB_DIRNAME / CHAMPIONS_DIRNAME
+        if not champions_dir.is_dir():
+            return
+        for path in sorted(champions_dir.glob(f"*/{KIT_FILENAME}")):
+            self.checked_files += 1
+            document = self._read_json(path)
+            if document is None:
+                continue
+            try:
+                kit = parse_kit(document)
+            except KitError as exc:
+                self.fail(path, str(exc))
+                continue
+            champion_id = path.parent.name
+            if kit.champion != champion_id:
+                self.fail(path, f"kit is for {kit.champion!r}, the directory is {champion_id!r}")
+                continue
+            max_ranks = self.champion_max_ranks.get(champion_id)
+            if max_ranks is None:
+                continue
+            for index, slot in enumerate(("Q", "W", "E", "R")):
+                ability = kit.abilities.get(slot)
+                if ability is None or index >= len(max_ranks) or max_ranks[index] is None:
+                    continue
+                if ability.max_rank != max_ranks[index]:
+                    self.fail(
+                        path,
+                        f"{slot}: max_rank {ability.max_rank} but Data Dragon says "
+                        f"{max_ranks[index]}",
+                    )
 
     def _check_links(self, md_path: Path, text: str) -> None:
         for match in LINK_PATTERN.finditer(text):
