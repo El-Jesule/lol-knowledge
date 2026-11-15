@@ -86,7 +86,9 @@ _COMPONENT_KEYS = {
     "duration_seconds",
     "stacks",
     "note",
+    "applies_life_steal",
 }
+_LIFE_STEAL_KEYS = {"value", "source"}
 _LIMIT_KEYS = {"kind", "value", "unit", "condition"}
 _SCALAR_KEYS = {"status", "reason"}
 _STACK_KEYS = {"required", "window_seconds", "max_stacks"}
@@ -645,6 +647,10 @@ class _CatalogChecker:
         self._check_stacks(component.get("stacks"), f"{pointer}.stacks")
         if "formula" in component:
             self._check_formula(component.get("formula"), f"{pointer}.formula")
+        if "applies_life_steal" in component:
+            self._check_life_steal(
+                component["applies_life_steal"], kind, f"{pointer}.applies_life_steal"
+            )
         if kind == "damage":
             if component.get("damage_type") not in DAMAGE_TYPES:
                 self.fail(
@@ -693,6 +699,25 @@ class _CatalogChecker:
         elif kind == "stasis":
             if component.get("duration_seconds") is None:
                 self.fail(f"{pointer}.duration_seconds", "stasis needs a duration")
+
+    def _check_life_steal(self, declaration: Any, kind: Any, pointer: str) -> None:
+        """Whether a damage component heals through life steal, with its own source."""
+        if kind != "damage":
+            self.fail(pointer, "only damage components can declare applies_life_steal")
+            return
+        if not isinstance(declaration, Mapping):
+            self.fail(pointer, "applies_life_steal must be an object with value and source")
+            return
+        unknown = set(declaration) - _LIFE_STEAL_KEYS
+        if unknown:
+            self.fail(pointer, f"unknown applies_life_steal keys: {sorted(unknown)}")
+        if not isinstance(declaration.get("value"), bool):
+            self.fail(f"{pointer}.value", "applies_life_steal value must be true or false")
+        source = declaration.get("source")
+        if source is None:
+            self.fail(f"{pointer}.source", "applies_life_steal needs a source")
+            return
+        self._check_sources([source], f"{pointer}.source")
 
     def _check_formula(self, formula: Any, pointer: str) -> None:
         for message in formula_issues(formula):

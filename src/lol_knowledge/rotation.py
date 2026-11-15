@@ -6,9 +6,13 @@ multiplied by the attacker's damage-dealt modifiers and the target's
 damage-taken modifiers. The target's current health is carried from step to
 step, so current-health effects read the health left by earlier steps.
 
+Every part also carries the healing the attacker gets from it through life
+steal and omnivamp, computed from the part's final damage.
+
 Rules: ``lol-knowledge/mechanics/critical-strike.md``,
-``lol-knowledge/mechanics/damage-modifiers.md`` and
-``lol-knowledge/mechanics/basic-attacks-and-on-hit.md``. Pure functions over
+``lol-knowledge/mechanics/damage-modifiers.md``,
+``lol-knowledge/mechanics/basic-attacks-and-on-hit.md`` and
+``lol-knowledge/mechanics/life-steal-and-omnivamp.md``. Pure functions over
 already-loaded values; the CLI does the loading.
 """
 
@@ -16,7 +20,7 @@ from __future__ import annotations
 
 import re
 from collections.abc import Mapping, Sequence
-from dataclasses import dataclass
+from dataclasses import dataclass, replace
 from fractions import Fraction
 from typing import Any
 
@@ -33,6 +37,7 @@ RULES = (
     "lol-knowledge/mechanics/damage-modifiers.md",
     "lol-knowledge/mechanics/damage-mitigation.md",
     "lol-knowledge/mechanics/stat-growth.md",
+    "lol-knowledge/mechanics/life-steal-and-omnivamp.md",
 )
 HOLDER_RANGES = frozenset({"melee", "ranged"})
 # Base critical strike multiplier of the patch notes (26.1); records that differ are flagged.
@@ -48,6 +53,9 @@ EVIDENCE_LABEL = {
 LIMIT_CONDITIONS = {"target is a minion or monster": frozenset({"minion", "monster"})}
 # Effect components that change the damage of a rotation when not applied.
 DAMAGE_KINDS = frozenset({"damage", "damage_modifier", "stat_modifier"})
+
+# Kinds against which omnivamp drops to 33 % for pets, damage over time and area spells.
+REDUCED_OMNIVAMP_KINDS = frozenset({"minion", "monster"})
 
 _ABILITY_STEP = re.compile(r"(?P<slot>[QWER])(?:\.(?P<case>[a-z0-9_]+))?")
 
@@ -95,6 +103,20 @@ class CritBase:
 
 
 @dataclass(frozen=True)
+class Healing:
+    """Healing from one part: its final damage x (life steal + omnivamp) that apply."""
+
+    life_steal: Fraction  # rate applied to this part; 0 when it does not apply
+    omnivamp: Fraction
+    amount: Fraction
+    label: Label
+    notes: tuple[str, ...] = ()
+
+
+NO_HEALING = Healing(Fraction(0), Fraction(0), Fraction(0), Label.OFFICIAL)
+
+
+@dataclass(frozen=True)
 class Part:
     kind: str  # "attack", "on_hit" or "ability"
     source: str
@@ -105,6 +127,7 @@ class Part:
     taken: tuple[tuple[str, Fraction], ...]
     label: Label
     notes: tuple[str, ...] = ()
+    healing: Healing = NO_HEALING
 
     @property
     def dealt_factor(self) -> Fraction:
@@ -141,6 +164,31 @@ class StepOutcome:
     def health_after(self) -> Fraction:
         return max(Fraction(0), self.health_before - self.total)
 
+    @property
+    def overkill(self) -> bool:
+        """Whether the step deals more damage than the health the target had left."""
+        return self.total > self.health_before
+
+    @property
+    def healing(self) -> Fraction:
+        return sum((part.healing.amount for part in self.parts), start=Fraction(0))
+
+    @property
+    def healing_label(self) -> Label:
+        labels = [part.healing.label for part in self.parts]
+        if self.overkill and self.healing:
+            labels.append(Label.PENDING)
+        return weakest(labels)
+
+    @property
+    def healing_notes(self) -> tuple[str, ...]:
+        if self.overkill and self.healing:
+            return (
+                "the step deals more damage than the target's remaining health; healing uses "
+                "the full damage, which is not verified",
+            )
+        return ()
+
 
 @dataclass(frozen=True)
 class RotationOutcome:
@@ -158,6 +206,14 @@ class RotationOutcome:
     @property
     def remaining_health(self) -> Fraction:
         return max(Fraction(0), self.start_health - self.total)
+
+    @property
+    def healing(self) -> Fraction:
+        return sum((step.healing for step in self.steps), start=Fraction(0))
+
+    @property
+    def healing_label(self) -> Label:
+        return weakest(step.healing_label for step in self.steps)
 
     @property
     def lethal_step(self) -> int | None:
@@ -269,6 +325,7 @@ class _Rotation:
         self.kit, self.sheet, self.ranks, self.target = kit, sheet, ranks, target
         self.crit_base, self.holder_range, self.inputs = crit_base, holder_range, inputs
         self.stats, self.origin = sheet_stats(sheet)
+        self.life_steal, self.omnivamp = sheet["life_steal"], sheet["omnivamp"]
         attacker, notes, weakened = _effects(sheet.items, "attacker")
         defender, target_notes, target_weakened = _effects(target.items, "target")
         self.notes = notes + target_notes
@@ -365,6 +422,7 @@ class _Rotation:
         crit: bool,
         target_stats: Mapping[str, Fraction],
         notes: Sequence[str] = (),
+        life_steal_tag: Mapping[str, Any] | None = None,
     ) -> Part:
         mitigation = mitigate(
             raw,
@@ -376,7 +434,7 @@ class _Rotation:
             percent, flat = PENETRATION[damage_type]
             labels = [*labels, self.sheet[percent].label, self.sheet[flat].label]
         dealt, taken, modifier_labels, modifier_notes = self._modifiers(kind, crit, target_stats)
-        return Part(
+        part = Part(
             kind,
             source,
             damage_type,
@@ -386,6 +444,57 @@ class _Rotation:
             tuple(taken),
             weakest([*labels, *modifier_labels]),
             (*notes, *modifier_notes),
+        )
+        return replace(part, healing=self._healing(part, life_steal_tag))
+
+    def _healing(self, part: Part, tag: Mapping[str, Any] | None) -> Healing:
+        """Life steal and omnivamp healing of ``part`` (life-steal-and-omnivamp.md)."""
+        life_steal, omnivamp = self.life_steal.total(), self.omnivamp.total()
+        if not life_steal and not omnivamp:
+            return NO_HEALING
+        if self.target.kind == "structure":
+            return Healing(
+                Fraction(0),
+                Fraction(0),
+                Fraction(0),
+                Label.PENDING,
+                ("no life steal or omnivamp healing against structures",),
+            )
+        labels = [Label.DERIVED, part.label]
+        notes: list[str] = []
+        applied_life_steal = Fraction(0)
+        if life_steal:
+            if part.kind == "attack":
+                applied_life_steal = life_steal
+            elif part.kind == "on_hit" and tag is not None:
+                if tag.get("value") is True:
+                    applied_life_steal = life_steal
+                    confidence = str((tag.get("source") or {}).get("confidence"))
+                    labels.append(EVIDENCE_LABEL.get(confidence, Label.PENDING))
+            elif part.kind == "on_hit":
+                labels.append(Label.PENDING)
+                notes.append("the catalog does not declare whether it applies life steal")
+            else:
+                labels.append(Label.PENDING)
+                notes.append("the kit does not declare whether it applies life steal")
+            if applied_life_steal:
+                labels.append(self.life_steal.label)
+        if omnivamp:
+            labels.append(self.omnivamp.label)
+            if part.kind == "ability":
+                kind = _target_kind(self.target, "omnivamp healing from an ability")
+                if kind in REDUCED_OMNIVAMP_KINDS:
+                    labels.append(Label.PENDING)
+                    notes.append(
+                        f"omnivamp against a {kind} is 33% for pets, damage over time and "
+                        "area spells; the kit does not say which, healed at 100%"
+                    )
+        if applied_life_steal and omnivamp:
+            labels.append(Label.PENDING)
+            notes.append("life steal and omnivamp on the same damage: their sum is not verified")
+        rate = applied_life_steal + omnivamp
+        return Healing(
+            applied_life_steal, omnivamp, part.damage * rate, weakest(labels), tuple(notes)
         )
 
     def _attack(self, step: Step, target_stats: Mapping[str, Fraction]) -> list[Part]:
@@ -434,6 +543,7 @@ class _Rotation:
                     [effect.label],
                     step.crit,
                     target_stats,
+                    life_steal_tag=effect.component.get("applies_life_steal"),
                 )
             )
         return parts

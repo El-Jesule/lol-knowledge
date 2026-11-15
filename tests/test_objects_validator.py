@@ -4,6 +4,8 @@ from __future__ import annotations
 
 from pathlib import Path
 
+import pytest
+
 from lol_knowledge.objects import (
     Snapshot,
     build_model,
@@ -399,6 +401,16 @@ def test_flat_magic_penetration_is_a_canonical_stat() -> None:
     assert _messages(_catalog(stat=stat), snapshot) == []
 
 
+def test_omnivamp_can_be_declared_from_the_description() -> None:
+    snapshot = _snapshot(description="2.5% de omnisucción")
+    stat = {"id": "omnivamp", "kind": "percent", "value": 2.5, "quote": "2.5% de omnisucción"}
+    assert _messages(_catalog(stat=stat), snapshot) == []
+    stat["kind"] = "flat"
+    assert any(
+        "does not support kind 'flat'" in m for m in _messages(_catalog(stat=stat), snapshot)
+    )
+
+
 def test_community_source_cannot_be_official() -> None:
     effect = _external_effect()
     effect["sources"][0]["confidence"] = "official"
@@ -463,3 +475,61 @@ def test_client_data_cannot_be_official() -> None:
     effect["sources"][0]["confidence"] = "official"
     messages = _messages(_catalog(effect=effect))
     assert any("'client_data' cannot be 'official'" in message for message in messages)
+
+
+def _life_steal_source() -> dict:
+    return {
+        "kind": "community_wiki",
+        "reference": "https://wiki.leagueoflegends.com/en-us/Example?oldid=1",
+        "quote": "The bonus damage benefits from life steal.",
+        "retrieved_at": "2026-11-15",
+        "confidence": "secondary",
+    }
+
+
+@pytest.mark.parametrize("value", [True, False])
+def test_damage_component_can_declare_whether_it_applies_life_steal(value) -> None:
+    effect = _external_effect()
+    effect["components"][0]["applies_life_steal"] = {"value": value, "source": _life_steal_source()}
+    assert _messages(_catalog(effect=effect)) == []
+
+
+@pytest.mark.parametrize(
+    ("declaration", "message"),
+    [
+        (True, "must be an object with value and source"),
+        ({"value": "yes", "source": None}, "value must be true or false"),
+        ({"value": True}, "applies_life_steal needs a source"),
+        ({"value": True, "source": None}, "applies_life_steal needs a source"),
+        ({"value": True, "source": {}, "why": 1}, "unknown applies_life_steal keys: ['why']"),
+        ({"value": True, "source": {"kind": "community_wiki"}}, "source quote must be"),
+    ],
+)
+def test_invalid_life_steal_declarations(declaration, message) -> None:
+    effect = _external_effect()
+    effect["components"][0]["applies_life_steal"] = declaration
+    messages = _messages(_catalog(effect=effect))
+    assert any(message in item for item in messages), messages
+
+
+def test_life_steal_source_confidence_follows_its_kind() -> None:
+    effect = _external_effect()
+    source = {**_life_steal_source(), "confidence": "official"}
+    effect["components"][0]["applies_life_steal"] = {"value": True, "source": source}
+    messages = _messages(_catalog(effect=effect))
+    assert any("cannot be 'official'" in item for item in messages)
+    assert any("applies_life_steal.source[0].confidence" in str(v) for v in _violations(effect))
+
+
+def test_only_damage_components_declare_life_steal() -> None:
+    effect = _valid_effect()
+    effect["components"][0]["applies_life_steal"] = {
+        "value": True,
+        "source": _life_steal_source(),
+    }
+    messages = _messages(_catalog(effect=effect))
+    assert "only damage components can declare applies_life_steal" in messages
+
+
+def _violations(effect: dict) -> list:
+    return list(validate_catalog_document(_catalog(effect=effect), _snapshot()).violations)

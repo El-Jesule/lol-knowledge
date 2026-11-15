@@ -35,5 +35,5 @@
 
 - Sin tiempo: ni enfriamientos, ni velocidad de ataque, ni duraciones.
 - Los ataques potenciados por habilidades (Q de Zaahen) se escriben como la habilidad más un `attack`; no consta si aplican los efectos al impactar.
-- Sin escudos, curación, reducciones planas de daño ni modificadores de estadística porcentual (Rabadon).
+- Sin escudos, curación, reducciones planas de daño ni modificadores de estadística porcentual (Rabadon). Desde la fase 16 se informa la curación por robo de vida y omnivampirismo ([`attack-speed-and-vamp.md`](attack-speed-and-vamp.md)).
 - Solo Zaahen tiene kit.

@@ -7,14 +7,14 @@ from collections.abc import Mapping, Sequence
 from dataclasses import dataclass, field
 from fractions import Fraction
 
-from ..damage import to_fraction
+from ..damage import format_number, to_fraction
 from ..errors import DamageInputError, StatsError
 from .data import ChampionData, ItemData
 from .derived import DerivedRecords
 from .growth import check_level, growth_multiplier
 from .issues import DataIssue
 from .labels import Label, weakest
-from .registry import STATS, Stacking, StatDef, Unit, stat
+from .registry import ATTACK_SPEED_RULES, STATS, Stacking, StatDef, Unit, stat
 
 # Data Dragon field names: (stat, base field, growth field or None)
 CHAMPION_FIELDS: tuple[tuple[str, str, str | None], ...] = (
@@ -26,9 +26,13 @@ CHAMPION_FIELDS: tuple[tuple[str, str, str | None], ...] = (
     ("health_regen", "hpregen", "hpregenperlevel"),
     ("mana_regen", "mpregen", "mpregenperlevel"),
     ("move_speed", "movespeed", None),
-    # Attack speed growth follows another formula; only the base is listed.
+    # Attack speed growth is bonus attack speed (see _attack_speed_growth).
     ("attack_speed", "attackspeed", None),
 )
+ATTACK_SPEED_GROWTH = "attackspeedperlevel"  # percentage points per level
+ATTACK_SPEED_RATIO = "attackspeedratio"  # derived from the client; not in Data Dragon
+# Champions whose kit removes or changes the attack speed cap (attack-speed.md, V3).
+ATTACK_SPEED_CAP_KITS = frozenset({"Belveth", "Graves", "Jhin", "Sion", "Zeri"})
 MANA_STATS = frozenset({"mana", "mana_regen"})
 MANA_RESOURCE = {"es_ES": "Maná", "en_US": "Mana"}
 
@@ -68,12 +72,23 @@ class StatValue:
         if not self.definition.resolvable:
             raise StatBlocked(f"{self.definition.id}: {self.definition.pending}")
 
-    def total(self) -> Fraction:
+    def _uncapped(self) -> Fraction:
         self._check()
         values = [item.value for item in self.contributions]
         if self.definition.stacking is Stacking.MULTIPLICATIVE:
             return 1 - math.prod((1 - value for value in values), start=Fraction(1))
         return sum(values, start=Fraction(0))
+
+    def total(self) -> Fraction:
+        total = self._uncapped()
+        cap = self.definition.cap
+        return total if cap is None else min(total, cap)
+
+    @property
+    def capped(self) -> bool:
+        """Whether the contributions add up to more than the statistic's cap."""
+        cap = self.definition.cap
+        return cap is not None and self.status == "resolved" and self._uncapped() > cap
 
     def scoped(self, scope: str) -> Fraction:
         """Total of one scope (``base`` or ``bonus``) for additive statistics."""
@@ -106,6 +121,12 @@ class StatSheet:
             raise StatsError(f"unknown stat {stat_id!r}") from exc
 
 
+def _receiver(stat_id: str) -> StatDef:
+    """The statistic that receives item and extra contributions declared as ``stat_id``."""
+    definition = stat(stat_id)
+    return stat(definition.routes_to) if definition.routes_to else definition
+
+
 def _parse_assumptions(
     assumptions: Mapping[str, object], issues: Sequence[DataIssue]
 ) -> dict[str, Fraction]:
@@ -132,6 +153,51 @@ def _source(champion: ChampionData, field_name: str) -> str:
     return f"data:champion:{champion.id} stats.{field_name} ({champion.patch})"
 
 
+def _attack_speed_growth(champion: ChampionData, level: int, multiplier: Fraction) -> Contribution:
+    if ATTACK_SPEED_GROWTH not in champion.stats:
+        raise StatsError(f"{champion.id}: stats.{ATTACK_SPEED_GROWTH} is missing")
+    growth = champion.stats[ATTACK_SPEED_GROWTH]
+    return Contribution(
+        growth / 100 * multiplier,
+        "base",
+        _source(champion, ATTACK_SPEED_GROWTH),
+        Label.DERIVED if growth else Label.OFFICIAL,
+        f"growth to level {level}",
+    )
+
+
+def _scaled_attack_speed(
+    champion: ChampionData, bonus: Sequence[Contribution], derived: DerivedRecords | None
+) -> Contribution | str | None:
+    """Bonus attack speed times the champion's ratio, or why it cannot be computed.
+
+    ``None`` means there is no bonus attack speed, so the total is the base.
+    """
+    total_bonus = sum((item.value for item in bonus), start=Fraction(0))
+    if not total_bonus:
+        return None
+    ratio = derived.value(champion.id, ATTACK_SPEED_RATIO) if derived else None
+    if derived is None or ratio is None:
+        return (
+            f"bonus attack speed {format_number(total_bonus)} needs the attack speed ratio, "
+            f"which Data Dragon does not publish, and the derived records have no "
+            f"{champion.id}.{ATTACK_SPEED_RATIO} (see {ATTACK_SPEED_RULES})"
+        )
+    note = f"ratio {format_number(ratio)} x bonus {format_number(total_bonus)}"
+    label = Label.DERIVED
+    if not derived.matches_patch(champion.patch):
+        label = Label.PENDING
+        note += f"; client {derived.game_version} record used with snapshot {champion.patch}"
+    return Contribution(
+        ratio * total_bonus,
+        "bonus",
+        f"{derived.path} {champion.id}.{ATTACK_SPEED_RATIO} ({derived.content_version})"
+        " x attack_speed_bonus",
+        weakest([label, *(item.label for item in bonus)]),
+        note,
+    )
+
+
 def build_stat_sheet(
     champion: ChampionData,
     level: int,
@@ -150,6 +216,10 @@ def build_stat_sheet(
 
     ``extras`` adds further contributions, such as stats an ability grants
     passively (see ``lol_knowledge.kit.passive_contributions``).
+
+    Attack speed is ``base + ratio x attack_speed_bonus``, capped. The bonus
+    holds the level growth and every item or extra declared as attack speed;
+    the ratio comes from the derived records (see attack-speed.md).
     """
     check_level(level)
     applicable = [issue for issue in issues if issue.applies_to(champion.id, champion.patch)]
@@ -217,10 +287,14 @@ def build_stat_sheet(
         contributions[stat_id].append(
             Contribution(growth * multiplier, "base", source, label, note)
         )
+    if level > 1:
+        contributions["attack_speed_bonus"].append(
+            _attack_speed_growth(champion, level, multiplier)
+        )
 
     for item in items:
         for entry in item.stats:
-            definition = stat(entry.stat)
+            definition = _receiver(entry.stat)
             if entry.kind not in {"flat", "percent"}:
                 raise StatsError(f"item {item.id}.{entry.stat}: unknown kind {entry.kind!r}")
             if definition.resolvable and entry.kind != definition.item_kind:
@@ -232,7 +306,9 @@ def build_stat_sheet(
             if definition.unit is Unit.FRACTION and not 0 <= value <= 1:
                 raise StatsError(f"item {item.id}.{entry.stat}: {value} is not a fraction 0..1")
             note = "percent" if entry.kind == "percent" and definition.unit is Unit.AMOUNT else ""
-            contributions[entry.stat].append(
+            if definition.id != entry.stat:
+                note = f"declared as {entry.stat}"
+            contributions[definition.id].append(
                 Contribution(
                     value,
                     "bonus",
@@ -243,10 +319,22 @@ def build_stat_sheet(
             )
 
     for stat_id, extra in extras:
-        definition = stat(stat_id)
+        definition = _receiver(stat_id)
         if definition.unit is Unit.FRACTION and not 0 <= extra.value <= 1:
             raise StatsError(f"extra {stat_id}: {extra.value} is not a fraction 0..1")
-        contributions[stat_id].append(extra)
+        contributions[definition.id].append(extra)
+
+    scaled = _scaled_attack_speed(champion, contributions["attack_speed_bonus"], derived)
+    if isinstance(scaled, str):
+        blocked["attack_speed"] = scaled
+    elif scaled is not None:
+        contributions["attack_speed"].append(scaled)
+    if champion.id in ATTACK_SPEED_CAP_KITS:
+        reason = f"{champion.id}'s kit changes the attack speed cap; not modelled"
+        contributions["attack_speed"].append(
+            Contribution(Fraction(0), "bonus", ATTACK_SPEED_RULES, Label.PENDING, reason)
+        )
+        notes.append(reason)
 
     for issue in applicable:
         if level == 1:

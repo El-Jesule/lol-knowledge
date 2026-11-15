@@ -1,9 +1,9 @@
 {
   "schema_version": 1,
   "kind": "lol-object-model-catalog",
-  "catalog_version": 5,
+  "catalog_version": 6,
   "game_version": "16.22.1",
-  "notes": "Curated overlay for a mechanically diverse sample. Data Dragon derivatives (stats, gold, maps, recipes) are not repeated here; see lol-knowledge/objects/README.md. Numeric mechanics absent from Data Dragon carry declared sources and secondary confidence. Catalog version 3 (2026-11-15): moved to snapshot 16.22.1; stats, gold, descriptions and recipes of the 15 objects are identical to 16.20.1 in Data Dragon; the secondary evidence was not re-checked against the 16.21 and 16.22 patch notes.",
+  "notes": "Curated overlay for a mechanically diverse sample. Data Dragon derivatives (stats, gold, maps, recipes) are not repeated here; see lol-knowledge/objects/README.md. Numeric mechanics absent from Data Dragon carry declared sources and secondary confidence. Catalog version 3 (2026-11-15): moved to snapshot 16.22.1; stats, gold, descriptions and recipes of the 15 objects are identical to 16.20.1 in Data Dragon; the secondary evidence was not re-checked against the 16.21 and 16.22 patch notes. Catalog version 6 (2026-11-15): damage components may declare applies_life_steal with its own source; Mist's Edge declares it from the LoL Wiki (secondary).",
   "objects": [
     {
       "id": "1036",
@@ -168,6 +168,17 @@
                   "stat": "health",
                   "scope": "current",
                   "subject": "target"
+                }
+              },
+              "applies_life_steal": {
+                "value": true,
+                "source": {
+                  "kind": "community_wiki",
+                  "reference": "https://wiki.leagueoflegends.com/en-us/Blade_of_the_Ruined_King?oldid=3688594",
+                  "quote": "The bonus damage dealt by Mist's Edge benefits from life steal.",
+                  "retrieved_at": "2026-11-15",
+                  "confidence": "secondary",
+                  "note": "Revisión del 13-03-2024, leída en el extracto del buscador; la página actual no se pudo abrir."
                 }
               }
             }
