@@ -132,6 +132,7 @@ class PropFile:
     entries: dict[int, Entry]
     patches: tuple[Patch, ...] = ()
     is_patch: bool = False
+    skipped: tuple[int, ...] = ()  # entries left out by ``skip_unreadable``
 
 
 class _Reader:
@@ -224,8 +225,13 @@ def _fields(reader: _Reader, count: int) -> dict[int, Any]:
     return fields
 
 
-def parse_prop(data: bytes) -> PropFile:
-    """Parse a PROP (or PTCH-wrapped PROP) bin buffer."""
+def parse_prop(data: bytes, *, skip_unreadable: bool = False) -> PropFile:
+    """Parse a PROP (or PTCH-wrapped PROP) bin buffer.
+
+    With ``skip_unreadable``, an entry whose fields cannot be decoded is left
+    out and its path hash listed in ``skipped``. Its declared size must still
+    fit the buffer, so the entries after it are read from the right offset.
+    """
     reader = _Reader(data)
     is_patch = data[:4] == b"PTCH"
     if is_patch:
@@ -243,12 +249,24 @@ def parse_prop(data: bytes) -> PropFile:
     count = reader.take("<I")
     classes = [reader.take("<I") for _ in range(count)]
     entries: dict[int, Entry] = {}
+    skipped: list[int] = []
     for class_hash in classes:
         size = reader.take("<I")
         end = reader.pos + size
         path_hash = reader.take("<I")
-        fields = _fields(reader, reader.take("<H"))
-        reader.expect_end(end, f"entry 0x{path_hash:08x}")
+        if skip_unreadable:
+            if end > len(data):
+                raise PropError(f"entry 0x{path_hash:08x} exceeds the buffer")
+            try:
+                fields = _fields(reader, reader.take("<H"))
+                reader.expect_end(end, f"entry 0x{path_hash:08x}")
+            except PropError:
+                skipped.append(path_hash)
+                reader.pos = end
+                continue
+        else:
+            fields = _fields(reader, reader.take("<H"))
+            reader.expect_end(end, f"entry 0x{path_hash:08x}")
         if path_hash in entries:
             raise PropError(f"duplicate entry 0x{path_hash:08x}")
         entries[path_hash] = Entry(path_hash, class_hash, fields)
@@ -264,4 +282,4 @@ def parse_prop(data: bytes) -> PropFile:
             reader.expect_end(end, f"patch 0x{path_hash:08x}")
     if reader.pos != len(data):
         raise PropError(f"{len(data) - reader.pos} trailing bytes after the last entry")
-    return PropFile(version, linked, entries, tuple(patches), is_patch)
+    return PropFile(version, linked, entries, tuple(patches), is_patch, tuple(skipped))
