@@ -37,7 +37,7 @@ def _reverse_keys(value: Any) -> Any:
 def test_model_header_links_to_the_snapshot(object_model, object_snapshot) -> None:
     assert object_model["schema_version"] == 1
     assert object_model["kind"] == "lol-object-model"
-    assert object_model["catalog_version"] == 4
+    assert object_model["catalog_version"] == 5
     assert object_model["game_version"] == object_snapshot.patch
     assert object_model["source"]["items_sha256"] == object_snapshot.items_sha256
     assert object_model["source"]["catalog"] == "lol-knowledge/objects/catalog.json"
@@ -214,22 +214,33 @@ def test_randuin_models_crit_reduction_and_active_slow(object_model) -> None:
 
 
 def test_secondary_sources_are_explicit_and_preserved(object_model) -> None:
-    for item_id, effect_id in (
-        ("3153", "fogblade"),
-        ("3153", "night-claw"),
-        ("3036", "giant-slayer"),
-        ("3157", "time-stop"),
-        ("3075", "thorns"),
-        ("3143", "humility"),
+    for item_id, effect_id, confidence in (
+        ("3153", "fogblade", "corroborated"),
+        ("3153", "night-claw", "secondary"),
+        ("3036", "giant-slayer", "secondary"),
+        ("3157", "time-stop", "corroborated"),
+        ("3075", "thorns", "corroborated"),
+        ("3143", "humility", "corroborated"),
     ):
         effect = _effect(_object(object_model, item_id), effect_id)
-        assert effect["evidence_confidence"] == "secondary"
-        assert effect["sources"]
-        for source in effect["sources"]:
-            assert source["kind"] == "community_wiki"
-            assert source["reference"].startswith("https://wiki.leagueoflegends.com/")
-            assert source["retrieved_at"] == "2026-10-20"
-            assert source["quote"]
+        assert effect["evidence_confidence"] == confidence
+        wiki, client = effect["sources"][0], effect["sources"][-1]
+        assert wiki["kind"] == "community_wiki"
+        assert wiki["reference"].startswith("https://wiki.leagueoflegends.com/")
+        assert wiki["retrieved_at"] == "2026-10-20"
+        assert client["kind"] == "client_data"
+        assert f"Items/{item_id}.mDataValues" in client["reference"]
+        assert client["retrieved_at"] == "2026-11-15"
+        assert all(source["quote"] for source in effect["sources"])
+
+
+def test_night_claw_slows_less_for_ranged_holders(object_model) -> None:
+    claw = _effect(_object(object_model, "3153"), "night-claw")
+    assert claw["components"][0]["magnitude"] == {
+        "op": "by_holder_range",
+        "melee": {"op": "constant", "value": 30},
+        "ranged": {"op": "constant", "value": 15},
+    }
     assert _object(object_model, "3153")["verification"] == "secondary_source_verified"
     assert _object(object_model, "3036")["verification"] == "secondary_source_verified"
 

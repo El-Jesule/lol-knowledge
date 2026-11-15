@@ -1,7 +1,7 @@
 {
   "schema_version": 1,
   "kind": "lol-object-model-catalog",
-  "catalog_version": 4,
+  "catalog_version": 5,
   "game_version": "16.22.1",
   "notes": "Curated overlay for a mechanically diverse sample. Data Dragon derivatives (stats, gold, maps, recipes) are not repeated here; see lol-knowledge/objects/README.md. Numeric mechanics absent from Data Dragon carry declared sources and secondary confidence. Catalog version 3 (2026-11-15): moved to snapshot 16.22.1; stats, gold, descriptions and recipes of the 15 objects are identical to 16.20.1 in Data Dragon; the secondary evidence was not re-checked against the 16.21 and 16.22 patch notes.",
   "objects": [
@@ -190,11 +190,19 @@
               "quote": "Basic attacks deal bonus physical damage on-hit equal to (Melee 9% / Ranged 6%) of the target's current health, with a maximum of 100 against minions and monsters.",
               "retrieved_at": "2026-10-20",
               "confidence": "secondary"
+            },
+            {
+              "kind": "client_data",
+              "reference": "Cliente 16.22.8348910+branch.releases-16-22.content.release: DATA/FINAL/Global.wad.client → items → Items/3153.mDataValues (research/reports/item-data-values-16.22.md)",
+              "quote": "MeleeValue = 0.09; RangedValue = 0.06; MonsterDamageCap = 100",
+              "retrieved_at": "2026-11-15",
+              "confidence": "corroborated",
+              "note": "Valores por defecto; la Grieta del Invocador no tiene sobrescritura por modo."
             }
           ],
-          "evidence_confidence": "secondary",
+          "evidence_confidence": "corroborated",
           "model_status": "evaluable",
-          "note": "The ratio depends on the holder's melee/ranged classification, not on the target's type. The 100 cap applies only to minions and monsters; structures are excluded. ARAM and Arena override the ratio and are not modelled."
+          "note": "The ratio depends on the holder's melee/ranged classification, not on the target's type. The 100 cap applies only to minions and monsters; structures are excluded. The client overrides the ratio in ARAM (12%/10%) and other modes; those are not modelled."
         },
         {
           "id": "night-claw",
@@ -221,8 +229,15 @@
                 "kind": "enemy_champion"
               },
               "magnitude": {
-                "op": "constant",
-                "value": 30
+                "op": "by_holder_range",
+                "melee": {
+                  "op": "constant",
+                  "value": 30
+                },
+                "ranged": {
+                  "op": "constant",
+                  "value": 15
+                }
               },
               "duration_seconds": 1
             }
@@ -242,11 +257,19 @@
               "quote": "Basic attacks on-hit against enemy champions apply a stack for 6 seconds, stacking up to 3 times. The third stack consumes them all to slow the target by 30% for 1 second (15 second cooldown).",
               "retrieved_at": "2026-10-20",
               "confidence": "secondary"
+            },
+            {
+              "kind": "client_data",
+              "reference": "Cliente 16.22.8348910+branch.releases-16-22.content.release: DATA/FINAL/Global.wad.client → items → Items/3153.mDataValues (research/reports/item-data-values-16.22.md)",
+              "quote": "MoveSpeedMod = -0.3; RangedMoveSpeedMod = -0.15; MoveSpeedDuration = 1; AttackCounterDuration = 6; Cooldown = 15",
+              "retrieved_at": "2026-11-15",
+              "confidence": "corroborated",
+              "note": "Valores por defecto; la Grieta del Invocador no tiene sobrescritura por modo."
             }
           ],
           "evidence_confidence": "secondary",
           "model_status": "partially_evaluable",
-          "note": "Basic attacks on-hit against champions count. The 6 s window and 15 s cooldown come from the community wiki. Persistence of stacks across different targets is not published; the model records it as unverified, not as a per-target fact."
+          "note": "Basic attacks on-hit against champions count. The client data confirm the 30% slow (15% for ranged holders, which the wiki quote omits), the 1 s duration, the 6 s window and the 15 s cooldown. The 3 required stacks come only from the community wiki, so the evidence stays secondary. Persistence of stacks across different targets is not published; the model records it as unverified, not as a per-target fact."
         }
       ]
     },
@@ -324,11 +347,19 @@
               "quote": "1% per 100 bonus health, up to a maximum of 15% at 1500 bonus health.",
               "retrieved_at": "2026-10-20",
               "confidence": "secondary"
+            },
+            {
+              "kind": "client_data",
+              "reference": "Cliente 16.22.8348910+branch.releases-16-22.content.release: DATA/FINAL/Global.wad.client → items → Items/3036.mDataValues (research/reports/item-data-values-16.22.md)",
+              "quote": "MaxBonusDamagePercent = 0.15; MaxBonusHealth = 1500",
+              "retrieved_at": "2026-11-15",
+              "confidence": "corroborated",
+              "note": "Valores por defecto; la Grieta del Invocador no tiene sobrescritura por modo."
             }
           ],
           "evidence_confidence": "secondary",
           "model_status": "evaluable",
-          "note": "The curve is the linear ramp 1% per 100 bonus health, capped at 15% at 1500. It applies only to enemy champions. Data Dragon publishes only the cap and the 1500 threshold; the slope comes from the community wiki."
+          "note": "The curve is the linear ramp 1% per 100 bonus health, capped at 15% at 1500. It applies only to enemy champions. Data Dragon and the client data publish only the cap and the 1500 threshold; the linear slope comes from the community wiki, so the evidence stays secondary."
         }
       ]
     },
@@ -407,9 +438,17 @@
               "quote": "Put yourself in stasis for 2.5 seconds, rendering yourself untargetable and invulnerable for the duration but becoming unable to move, declare basic attacks, cast abilities or item actives, or use any summoner spells during this time (120 second cooldown).",
               "retrieved_at": "2026-10-20",
               "confidence": "secondary"
+            },
+            {
+              "kind": "client_data",
+              "reference": "Cliente 16.22.8348910+branch.releases-16-22.content.release: DATA/FINAL/Global.wad.client → items → Items/3157.mDataValues (research/reports/item-data-values-16.22.md)",
+              "quote": "Cooldown = 120; Duration = 2.5",
+              "retrieved_at": "2026-11-15",
+              "confidence": "corroborated",
+              "note": "Valores por defecto; la Grieta del Invocador no tiene sobrescritura por modo."
             }
           ],
-          "evidence_confidence": "secondary",
+          "evidence_confidence": "corroborated",
           "model_status": "evaluable",
           "note": "The 120 s value is the active's cooldown, not the 2.5 s stasis duration. Item actives are reduced by item haste (for example Cosmic Insight), not by ability haste; that interaction is documented but not modelled as a formula."
         }
@@ -496,9 +535,17 @@
               "quote": "Thorns bonus armor ratio reduced to 10% bonus armor from 15%.",
               "retrieved_at": "2026-10-20",
               "confidence": "secondary"
+            },
+            {
+              "kind": "client_data",
+              "reference": "Cliente 16.22.8348910+branch.releases-16-22.content.release: DATA/FINAL/Global.wad.client → items → Items/3075.mDataValues (research/reports/item-data-values-16.22.md)",
+              "quote": "BaseDamage = 20; BonusArmorDamageRatio = 0.1; GrievousAmount = 0.4; GrievousDuration = 3",
+              "retrieved_at": "2026-11-15",
+              "confidence": "corroborated",
+              "note": "Valores por defecto; la Grieta del Invocador no tiene sobrescritura por modo."
             }
           ],
-          "evidence_confidence": "secondary",
+          "evidence_confidence": "corroborated",
           "model_status": "evaluable",
           "note": "The reflected damage is 20 + 10% of the holder's bonus armor as magic damage to the attacker. It is reactive damage mitigated by the attacker's magic resist; it is not a projectile and is not blocked by spell shield. It triggers even when the attack's damage is fully mitigated, but not when the attack is dodged, blocked or misses. Grievous Wounds (40%, 3 s) applies only when the attacker is a champion."
         }
@@ -582,11 +629,19 @@
               "quote": "Humility cooldown increased to 90 seconds from 60.",
               "retrieved_at": "2026-10-20",
               "confidence": "secondary"
+            },
+            {
+              "kind": "client_data",
+              "reference": "Cliente 16.22.8348910+branch.releases-16-22.content.release: DATA/FINAL/Global.wad.client → items → Items/3143.mDataValues (research/reports/item-data-values-16.22.md)",
+              "quote": "SlowAmount = 0.7; SlowDuration = 2; Radius = 500; Cooldown = 90",
+              "retrieved_at": "2026-11-15",
+              "confidence": "corroborated",
+              "note": "Valores por defecto; la Grieta del Invocador no tiene sobrescritura por modo."
             }
           ],
-          "evidence_confidence": "secondary",
+          "evidence_confidence": "corroborated",
           "model_status": "evaluable",
-          "note": "The 90 s cooldown is the active's cooldown. The slow applies to nearby enemies in an area; its exact radius is not modelled."
+          "note": "The 90 s cooldown is the active's cooldown. The slow applies to nearby enemies in an area; the client gives a 500 radius, which is not modelled. ARAM (75 s) and ARAM: Mayhem (60 s) override the cooldown."
         }
       ]
     },

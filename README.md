@@ -217,7 +217,7 @@ Condiciones de uso y cuestiones pendientes: [`research/evidence/usage-conditions
 - El núcleo de mitigación trata una instancia; `rotation` añade críticos y modificadores porcentuales de daño. No se modelan escudos, reducciones planas de daño, la penetración de armadura adicional ni el redondeo del juego.
 - Data Dragon no publica valores numéricos de las habilidades de Zaahen; los valores derivados están documentados y las discrepancias abiertas siguen como pendientes.
 - La cobertura de campeones empieza por un caso representativo y crece de forma incremental.
-- El modelo de objetos cubre una muestra de 15 objetos por diversidad mecánica. Las cifras que Data Dragon no publica solo se incorporan con una fuente citada y `evidence_confidence: secondary`; lo no verificado se marca como desconocido o parcial, no se inventa.
+- El modelo de objetos cubre una muestra de 15 objetos por diversidad mecánica. Las cifras que Data Dragon no publica solo se incorporan con una fuente citada: la wiki (`secondary`) y, cuando coinciden, los datos del cliente 16.22 (`corroborated`). Lo no verificado se marca como desconocido o parcial, no se inventa.
 
 ## Flujo de trabajo
 

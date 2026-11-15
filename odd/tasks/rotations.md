@@ -16,7 +16,7 @@
 2. **La vida se lleva de un paso a otro.** Todas las partes de un paso leen la vida del inicio del paso. La vida no baja de 0 y el informe marca el primer paso letal.
 3. **Nada se adivina.** Cuerpo a cuerpo o a distancia, tipo de objetivo manual y vida adicional se piden cuando un efecto los necesita; sin ellos, el comando falla con la opción que falta.
 4. **Lo no aplicado se dice.** Efectos no evaluables o de otro tipo se listan; si pueden cambiar el daño (Rabadon), el resultado queda `Pendiente de verificación`.
-5. **Etiquetas de la evidencia.** Un efecto con evidencia secundaria deja la parte en `Pendiente de verificación`.
+5. **Etiquetas de la evidencia.** Un efecto con evidencia secundaria deja la parte en `Pendiente de verificación`. Desde la fase 15, Filo de la niebla está corroborado por el cliente y queda `Derivado` ([`item-client-evidence.md`](item-client-evidence.md)).
 6. **Placas y daño al impactar:** no consta si se reduce; no se aplica y la parte queda pendiente con una nota.
 7. **Objetos repetidos** se rechazan: los efectos únicos de varias copias no están modelados.
 
