@@ -12,6 +12,7 @@ from typing import Any
 
 from .ddragon import validate_champion_id
 from .errors import PayloadError
+from .objects.validate import validate_object_catalog
 from .snapshot import (
     CHAMPION_INDEX_FILENAME,
     CHAMPIONS_DIRNAME,
@@ -87,6 +88,7 @@ class _Validator:
         self._check_items()
         self._check_runes()
         self._check_knowledge_base()
+        self._check_object_catalog()
         return ValidationReport(
             checked_files=self.checked_files,
             violations=tuple(self.violations),
@@ -327,6 +329,13 @@ class _Validator:
             for child in sorted(champions_dir.iterdir()):
                 if child.is_dir() and child.name not in self.champion_ids:
                     self.fail(child, "champion directory does not match any published champion id")
+
+    def _check_object_catalog(self) -> None:
+        report = validate_object_catalog(self.root)
+        self.checked_files += report.checked_files
+        self.skipped.extend(report.skipped)
+        for violation in report.violations:
+            self.violations.append(Violation(violation.path, violation.message))
 
     def _check_links(self, md_path: Path, text: str) -> None:
         for match in LINK_PATTERN.finditer(text):

@@ -1,9 +1,70 @@
 # Zaahen — documento de continuidad de la investigación
 
 - **Parche objetivo:** 16.20.1 (Data Dragon) / contenido 16.20 (CommunityDragon)
-- **Fecha de cierre de esta fase:** 2026-10-18
-- **Rama:** `docs/zaahen-research-handoff` (base: `dev`)
-- **Estado:** fase 3.5 cerrada. Hallazgos verificados integrados en la base de conocimiento; líneas abiertas declaradas en la sección J.
+- **Fecha de cierre de la fase 3.5:** 2026-10-18
+- **Fecha de cierre de la fase 4:** 2026-10-20
+- **Rama de la fase 4:** `research/zaahen-formula-extraction` (base: `dev`)
+- **Estado:** fase 4 cerrada como prototipo de investigación. Sin push, sin merge a `dev` ni `integration`.
+
+---
+
+## Fase 4 — extractor genérico de fórmulas (2026-10-20)
+
+Esta sección resume la fase nueva. El detalle vive en:
+
+- [`zaahen-formula-spec.md`](zaahen-formula-spec.md): arquitectura, modelo de datos y CLI.
+- [`zaahen-structure-inventory.md`](zaahen-structure-inventory.md): las 24 `GameCalculation`, `DataValue` y tipos.
+- [`zaahen-uncertainties.md`](zaahen-uncertainties.md): incertidumbres y experimentos propuestos.
+- [`reports/agent-a-formulas.md`](reports/agent-a-formulas.md), [`reports/agent-b-bin-structures.md`](reports/agent-b-bin-structures.md) y [`reports/agent-c-verification.md`](reports/agent-c-verification.md).
+
+### Qué se construyó
+
+`research/binmodel/` es un extractor genérico:
+
+- descubre campeón, pasiva, Q/W/E/R, hechizos hijos, rangos, `DataValue`, cálculos, cooldowns, maná y rango sin `DATA_VALUE_SPECS`;
+- produce árboles tipados con procedencia por nodo (ruta, puntero JSON, SHA-256, versión, tipo, nombre provisional);
+- evalúa Q/W/E/R, la pasiva y los breakpoints con errores explícitos;
+- conserva lo desconocido como `unresolved`, nunca como cero;
+- incluye CLI (`python -m binmodel`), generador de fixtures (`python -m tools.make_extract_fixture`) y extractor RST (`python -m tools.extract_rst`).
+
+### Artefactos verificados
+
+| Artefacto | SHA-256 | Cómo se comprobó |
+|---|---|---|
+| `research/.cache/zaahen-16.20.bin.json` | `76e32de67667917769cc6022a818b13e5024ea521a23c70436dc48eea533ed0b` | `Get-FileHash` 2026-10-20 |
+| Bin crudo CDragon `zaahen.bin` | `7f1e936990c527d1cf457eea9d9327efaa743d6619436f0ccfc15e7e844078d1` | Descarga y SHA-256 |
+| Bin local (entrada 618 de `Zaahen.wad.client`) | mismo `7f1e…` | Descompresión zstd y SHA-256 |
+| WAD es_ES `Global.es_ES.wad.client` | `284604a42cb66761f2ae1e987a3b2dc2553f3de3703da3f9594fd14d093cee93` | SHA-256; fixture de tooltips |
+
+### Hallazgos nuevos
+
+1. **AD base `63.0`, crecimiento `4.0`.** La tabla 74/77/105/142 se reproduce con `63` y runas adaptativas `+10.8`. La hipótesis «base 64 + 10» también reproduce la tabla porque los errores se compensan; el bin y Data Dragon dicen `63`.
+2. **Índice 0 = rango 0 en todos los arrays.** El rango 1 es `raw[1]` aunque `raw[0]` no sea cero: `QCoeff` 0.15 → rango 1 0.20; `EndDamage` 100 → rango 1 250; `ArmorPen` 0 → rango 1 10 %. El número de rangos sale de `mLists.LevelUp.levelCount`.
+3. **`mStat=2` + `mStatFormula=2` = DA adicional.** Evidencia: Kha'Zix Q `BonusADRatio` y tooltip de Zaahen «Relación de DA adicional». `0` = total, `1` = armadura, `6` = RM, `12` = vida; `mStatFormula=1` = base queda inferido.
+4. **`Cooldown.values` es el efectivo.** W difiere de `cooldownTime` (14/13.5/13/12.5/12 frente a 16/16/15/14/13/12/11); se conserva el legado y se emite `cooldown_mismatch`.
+5. **Pasiva:** `PercentBonusADCalc` interpola `PBonusADMin=0.015` y `PBonusADMax=0.028` con `(nivel-1)/17`; reproduce 1.5/1.8/1.9/2.2/2.3/2.6/2.6/2.8. `MaxStacks=12`, `MaxStacksMultiplier=2.0`. La base de aplicación (AD total/base/adicional) sigue abierta; `142→146` favorece AD total.
+6. **Revivir:** cooldown 300/240/180/120 en niveles 1/6/11/16; porcentaje 30/45/60/75 % con `complete=False` porque faltan `ReviveBonusPerLevel` y `ReviveBonusPerLevelAtAndAfter`.
+7. **Q/W/E/R:** fórmulas y valores en `reports/agent-a-formulas.md`. Control a nivel 18, rango 1, 100 DA adicional: Q 35/50, W 90/60, E 90/135, R 450.
+8. **Cobertura:** las 24 `GameCalculation` del documento tienen árbol o entrada explícita; 10 son de nivel superior, 14 están en `BotData`/`ZaahenQ2`. Quedan 36 `{150d1b92}` y `BotsSpellData` sin semántica.
+
+### Comandos
+
+```powershell
+$env:PYTHONPATH="research"
+
+.\.venv\Scripts\python.exe -m pytest research -q
+.\.venv\Scripts\python.exe -m binmodel --input research\fixtures\zaahen_extract_min.json --validate
+.\.venv\Scripts\python.exe -m binmodel --input research\fixtures\zaahen_extract_min.json --level 18 --rank 1 --bonus-ad 100
+.\.venv\Scripts\python.exe -m binmodel --input research\fixtures\darius_extract_min.json
+```
+
+### Límites que quedan
+
+- El script Lua que aplica la pasiva no está en el WAD de Zaahen; la base del porcentaje y el multiplicador máximo no se pueden cerrar solo con el bin.
+- `EffectValueCalculationPart` (Kha'Zix) y `GameCalculationConditional` se tipan, pero no se evalúan.
+- `mStat=13` en `R.BotData` no está mapeado.
+- El tipo de daño vive en el marcado de los tooltips, no en `mSpellCalculations`.
+- No se hizo push ni merge; la rama queda local.
 
 ---
 

@@ -4,11 +4,13 @@ from __future__ import annotations
 
 import json
 from collections.abc import Mapping
+from pathlib import Path
 from typing import Any
 
 import pytest
 
 from lol_knowledge.ddragon import DataDragonClient
+from lol_knowledge.objects import load_catalog, load_model, load_snapshot
 
 BASE_URL = "https://ddragon.example"
 PATCH = "16.20.1"
@@ -167,6 +169,30 @@ def fake_source() -> FakeSource:
 @pytest.fixture
 def fake_client(fake_source: FakeSource) -> DataDragonClient:
     return fake_source.client()
+
+
+PROJECT_ROOT = Path(__file__).resolve().parents[1]
+
+
+@pytest.fixture(scope="session")
+def project_root() -> Path:
+    return PROJECT_ROOT
+
+
+@pytest.fixture(scope="session")
+def object_model(project_root: Path) -> dict[str, Any]:
+    model, _serialized = load_model(project_root)
+    return model
+
+
+@pytest.fixture(scope="session")
+def object_catalog(project_root: Path) -> Mapping[str, Any]:
+    return load_catalog(project_root)
+
+
+@pytest.fixture(scope="session")
+def object_snapshot(project_root: Path):
+    return load_snapshot(project_root)
 
 
 @pytest.fixture
