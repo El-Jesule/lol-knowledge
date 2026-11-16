@@ -8,6 +8,7 @@
 - **Código:** [`src/lol_knowledge/objects/`](../../src/lol_knowledge/objects/).
 - **Catálogo curado (efectos y revisión):** [`catalog.json`](catalog.json).
 - **Estadísticas generadas:** [`catalog-stats.json`](catalog-stats.json), con `src/lol_knowledge/objects/generate.py`. No se edita a mano: `validate` lo regenera y falla si no coincide.
+- **Datos de efectos del cliente (`Derivado`):** [`../derived/item-effects.json`](../derived/item-effects.json): valores, cálculos, variantes cuerpo a cuerpo / distancia y textos es_ES de los 218 objetos ([informe](../../research/reports/item-effects-16.22.md)). Es la fuente de cifras para curar efectos; no los modela. `validate` comprueba su forma, que su versión coincida con el snapshot y que cubra los 218 objetos del archivo generado.
 - **Auditoría previa del extractor:** [`research/reports/agent-d-extractor-audit.md`](../../research/reports/agent-d-extractor-audit.md).
 - **Evidencia de esta fase:** [`research/reports/object-mechanics-2026-10-20.md`](../../research/reports/object-mechanics-2026-10-20.md).
 

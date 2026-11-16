@@ -497,3 +497,18 @@ def test_kits_are_validated(tmp_path: Path, fake_source, change: dict, message: 
         assert report.ok, messages(report)
     else:
         assert message in messages(report)
+
+
+def test_item_effects_absent_is_reported_as_skipped(tmp_path: Path, fake_source) -> None:
+    report = validate_project(make_project(tmp_path, fake_source))
+
+    assert any("item-effects.json is not present" in note for note in report.skipped)
+
+
+def test_item_effects_are_validated(tmp_path: Path, fake_source) -> None:
+    root = make_project(tmp_path, fake_source)
+    write_kb(root, "derived/item-effects.json", json.dumps({"schema": "x"}))
+
+    report = validate_project(root)
+
+    assert "schema must be 'lol-derived-item-effects/1'" in messages(report)

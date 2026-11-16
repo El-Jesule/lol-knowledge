@@ -13,6 +13,8 @@ from typing import Any
 from .ddragon import validate_champion_id
 from .errors import KitError, PayloadError, StatsError
 from .kit.model import KIT_FILENAME, parse_kit
+from .objects.client_effects import ITEM_EFFECTS_PATH, item_effects_problems
+from .objects.schema import GENERATED_STATS_RELATIVE_PATH
 from .objects.validate import validate_object_catalog
 from .snapshot import (
     CHAMPION_INDEX_FILENAME,
@@ -101,6 +103,7 @@ class _Validator:
         self._check_object_catalog()
         self._check_data_issues()
         self._check_derived_records()
+        self._check_item_effects()
         self._check_kits()
         return ValidationReport(
             checked_files=self.checked_files,
@@ -414,6 +417,32 @@ class _Validator:
         failures = document.get("failures", {})
         if not isinstance(failures, Mapping):
             self.fail(path, "'failures' must be an object")
+
+    def _check_item_effects(self) -> None:
+        path = self.root / ITEM_EFFECTS_PATH
+        if not path.is_file():
+            self.skipped.append(
+                f"{ITEM_EFFECTS_PATH.as_posix()} is not present; "
+                "client item data checks were skipped"
+            )
+            return
+        self.checked_files += 1
+        document = self._read_json(path)
+        if document is None:
+            return
+        # The object catalog check already reports a missing or broken stats file.
+        stats_path = self.root / GENERATED_STATS_RELATIVE_PATH
+        generated = self._read_json(stats_path) if stats_path.is_file() else None
+        objects = generated.get("objects") if isinstance(generated, Mapping) else None
+        item_ids = (
+            {str(entry.get("id")) for entry in objects if isinstance(entry, Mapping)}
+            if isinstance(objects, list)
+            else None
+        )
+        for problem in item_effects_problems(
+            document, patch=self.snapshot_patch, item_ids=item_ids
+        ):
+            self.fail(path, problem)
 
     def _check_kits(self) -> None:
         champions_dir = self.root / KB_DIRNAME / CHAMPIONS_DIRNAME
