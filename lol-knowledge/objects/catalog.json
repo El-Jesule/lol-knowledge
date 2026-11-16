@@ -1,9 +1,9 @@
 {
   "schema_version": 1,
   "kind": "lol-object-model-catalog",
-  "catalog_version": 12,
+  "catalog_version": 13,
   "game_version": "16.22.1",
-  "notes": "Curated overlay for a mechanically diverse sample. Data Dragon derivatives (stats, gold, maps, recipes) are not repeated here; see lol-knowledge/objects/README.md. Numeric mechanics absent from Data Dragon carry declared sources and secondary confidence. Catalog version 3 (2026-11-15): moved to snapshot 16.22.1; stats, gold, descriptions and recipes of the 15 objects are identical to 16.20.1 in Data Dragon; the secondary evidence was not re-checked against the 16.21 and 16.22 patch notes. Catalog version 6 (2026-11-15): damage components may declare applies_life_steal with its own source; Mist's Edge declares it from the LoL Wiki (secondary). Catalog version 7 (2026-11-16): adds 3111 (Mercury's Treads) for its tenacity, declared from the 16.22.1 description. Catalog version 8 (2026-11-16): description stats of every Summoner's Rift item, curated ones included, come from catalog-stats.json (generated); this file keeps effects and reviews. Catalog version 9 (2026-11-16): adds 3032 (Yun Tal Wildarrows). Effects may declare scenario max_stacks (the stat sheet applies them at full stacks) and objects may confirm a generated 0 as a real zero (confirmed_zero_stats). Catalog version 10 (2026-11-16): adds the on-hit damage of 1043, 3091, 3115, 3124 and 3302, with client values (evidence derived) where Data Dragon omits them; stat effects that are always active (Rabadon) are applied by the stat sheet. Catalog version 11 (2026-11-16): adds Spellblade (trigger spellblade) to Sheen, Trinity Force, Lich Bane, Essence Reaver, Iceborn Gauntlet, Dusk and Dawn and Bloodsong, the repeat_on_hit component and patch notes as a source kind (Terminus is now corroborated by the 26.15 notes). Catalog version 12 (2026-11-16): attack counters (stacks.required on on-hit effects), the energized trigger and trigger_energized component, by_level formulas for client level breakpoints and the target_is_structure condition; adds Kraken Slayer, Rapid Firecannon, Statikk Shiv, Voltaic Cyclosword and Hullbreaker, applies Guinsoo's phantom hits and Terminus's light-hit resistances.",
+  "notes": "Curated overlay for a mechanically diverse sample. Data Dragon derivatives (stats, gold, maps, recipes) are not repeated here; see lol-knowledge/objects/README.md. Numeric mechanics absent from Data Dragon carry declared sources and secondary confidence. Catalog version 3 (2026-11-15): moved to snapshot 16.22.1; stats, gold, descriptions and recipes of the 15 objects are identical to 16.20.1 in Data Dragon; the secondary evidence was not re-checked against the 16.21 and 16.22 patch notes. Catalog version 6 (2026-11-15): damage components may declare applies_life_steal with its own source; Mist's Edge declares it from the LoL Wiki (secondary). Catalog version 7 (2026-11-16): adds 3111 (Mercury's Treads) for its tenacity, declared from the 16.22.1 description. Catalog version 8 (2026-11-16): description stats of every Summoner's Rift item, curated ones included, come from catalog-stats.json (generated); this file keeps effects and reviews. Catalog version 9 (2026-11-16): adds 3032 (Yun Tal Wildarrows). Effects may declare scenario max_stacks (the stat sheet applies them at full stacks) and objects may confirm a generated 0 as a real zero (confirmed_zero_stats). Catalog version 10 (2026-11-16): adds the on-hit damage of 1043, 3091, 3115, 3124 and 3302, with client values (evidence derived) where Data Dragon omits them; stat effects that are always active (Rabadon) are applied by the stat sheet. Catalog version 11 (2026-11-16): adds Spellblade (trigger spellblade) to Sheen, Trinity Force, Lich Bane, Essence Reaver, Iceborn Gauntlet, Dusk and Dawn and Bloodsong, the repeat_on_hit component and patch notes as a source kind (Terminus is now corroborated by the 26.15 notes). Catalog version 12 (2026-11-16): attack counters (stacks.required on on-hit effects), the energized trigger and trigger_energized component, by_level formulas for client level breakpoints and the target_is_structure condition; adds Kraken Slayer, Rapid Firecannon, Statikk Shiv, Voltaic Cyclosword and Hullbreaker, applies Guinsoo's phantom hits and Terminus's light-hit resistances. Catalog version 13 (2026-11-16): the target's missing health in formulas (scope missing_fraction), target_health_below in rotations, damage_types on damage modifiers and the execute component; Kraken Slayer's missing-health increase, Shadowflame and The Collector.",
   "objects": [
     {
       "id": "1036",
@@ -2081,7 +2081,7 @@
           "id": "bring-it-down",
           "kind": "passive",
           "name": "Abatir",
-          "quote": "Cada tercer ataque inflige daño físico adicional al impactar",
+          "quote": "Cada tercer ataque inflige daño físico adicional al impactar , que aumenta en función de la vida que le falte.",
           "basis": "external_evidence_explicit",
           "trigger": {
             "event": "on_hit"
@@ -2109,30 +2109,7 @@
               "formula": {
                 "op": "by_holder_range",
                 "melee": {
-                  "op": "by_level",
-                  "values": [
-                    150,
-                    150,
-                    150,
-                    150,
-                    150,
-                    150,
-                    150,
-                    150,
-                    155,
-                    160,
-                    165,
-                    170,
-                    175,
-                    180,
-                    185,
-                    190,
-                    195,
-                    200
-                  ]
-                },
-                "ranged": {
-                  "op": "mul",
+                  "op": "add",
                   "operands": [
                     {
                       "op": "by_level",
@@ -2158,8 +2135,120 @@
                       ]
                     },
                     {
-                      "op": "constant",
-                      "value": 0.8
+                      "op": "mul",
+                      "operands": [
+                        {
+                          "op": "by_level",
+                          "values": [
+                            150,
+                            150,
+                            150,
+                            150,
+                            150,
+                            150,
+                            150,
+                            150,
+                            155,
+                            160,
+                            165,
+                            170,
+                            175,
+                            180,
+                            185,
+                            190,
+                            195,
+                            200
+                          ]
+                        },
+                        {
+                          "op": "percent_of",
+                          "percent": 75,
+                          "stat": "health",
+                          "scope": "missing_fraction",
+                          "subject": "target"
+                        }
+                      ]
+                    }
+                  ]
+                },
+                "ranged": {
+                  "op": "add",
+                  "operands": [
+                    {
+                      "op": "mul",
+                      "operands": [
+                        {
+                          "op": "by_level",
+                          "values": [
+                            150,
+                            150,
+                            150,
+                            150,
+                            150,
+                            150,
+                            150,
+                            150,
+                            155,
+                            160,
+                            165,
+                            170,
+                            175,
+                            180,
+                            185,
+                            190,
+                            195,
+                            200
+                          ]
+                        },
+                        {
+                          "op": "constant",
+                          "value": 0.8
+                        }
+                      ]
+                    },
+                    {
+                      "op": "mul",
+                      "operands": [
+                        {
+                          "op": "mul",
+                          "operands": [
+                            {
+                              "op": "by_level",
+                              "values": [
+                                150,
+                                150,
+                                150,
+                                150,
+                                150,
+                                150,
+                                150,
+                                150,
+                                155,
+                                160,
+                                165,
+                                170,
+                                175,
+                                180,
+                                185,
+                                190,
+                                195,
+                                200
+                              ]
+                            },
+                            {
+                              "op": "constant",
+                              "value": 0.8
+                            }
+                          ]
+                        },
+                        {
+                          "op": "percent_of",
+                          "percent": 75,
+                          "stat": "health",
+                          "scope": "missing_fraction",
+                          "subject": "target"
+                        }
+                      ]
                     }
                   ]
                 }
@@ -2181,52 +2270,19 @@
               "quote": "DamageAmount: level 1 = 150, +5 per level from level 9 (ByCharLevelBreakpoints); ranged × RangedDamageMultiplier = 0.8; AttackCount = 3; BuffDuration = 4",
               "retrieved_at": "2026-11-16",
               "confidence": "derived"
-            }
-          ],
-          "evidence_confidence": "derived",
-          "model_status": "evaluable",
-          "note": "Every third attack, counted from zero in a rotation. The level values are the client breakpoints: 150 up to level 8, then +5 per level (200 at 18)."
-        },
-        {
-          "id": "bring-it-down-missing-health",
-          "kind": "passive",
-          "name": "Abatir: vida que falta",
-          "quote": "que aumenta en función de la vida que le falte",
-          "basis": "description_partial",
-          "trigger": {
-            "event": "on_hit"
-          },
-          "target": {
-            "kind": "enemy_unit"
-          },
-          "components": [
+            },
             {
-              "kind": "damage_modifier",
-              "direction": "dealt",
-              "source": "attack",
-              "mode": "percent",
-              "formula": {
-                "op": "unknown",
-                "reason": "up to MaxAmpNumber 1.75 × the damage by the target's missing health; the curve is not modelled"
-              }
-            }
-          ],
-          "cooldown_seconds": null,
-          "stacks": null,
-          "duration_seconds": null,
-          "limits": [],
-          "sources": [
-            {
-              "kind": "client_data",
-              "reference": "Cliente 16.22.8348910+branch.releases-16-22.content.release: lol-knowledge/derived/item-effects.json → items.6672.calculations.MaximumDamage (research/reports/item-effects-16.22.md)",
-              "quote": "MaximumDamage = DamageAmount × MaxAmpNumber; MaxAmpNumber = 1.75",
+              "kind": "community_wiki",
+              "reference": "https://wiki.leagueoflegends.com/en-us/Kraken_Slayer",
+              "quote": "increased by 0% – 75% (based on target's missing health)",
               "retrieved_at": "2026-11-16",
-              "confidence": "derived"
+              "confidence": "secondary",
+              "note": "Extracto del buscador (página de hace 48 días). La misma página da 150 – 210 de base; el historial de ARAM de la wiki y el cliente dan 150 – 200, que es lo que se usa."
             }
           ],
-          "evidence_confidence": "derived",
-          "model_status": "excluded",
-          "note": "Not applied: needs formulas on the target's missing health (next mechanic). A rotation with this item stays Pendiente de verificación."
+          "evidence_confidence": "corroborated",
+          "model_status": "evaluable",
+          "note": "Every third attack, counted from zero in a rotation. Base: the client breakpoints, 150 up to level 8 and +5 per level (200 at 18). It grows linearly with the target's missing health, up to +75 % (MaxAmpNumber 1.75 in the client) at 0 health; the linear curve is the wiki's notation (0 % – 75 %), not verified in the client."
         }
       ]
     },
@@ -2700,6 +2756,120 @@
           "evidence_confidence": "official",
           "model_status": "excluded",
           "note": "Aura for allied minions; not part of champion damage."
+        }
+      ]
+    },
+    {
+      "id": "4645",
+      "effect_review": "complete",
+      "stats": [],
+      "effects": [
+        {
+          "id": "cinderbloom",
+          "kind": "passive",
+          "name": "Florascua",
+          "quote": "El daño mágico y el daño verdadero asestan impactos críticos a los enemigos con menos de un 40% de la vida, lo que inflige un 20% de daño adicional.",
+          "basis": "description_explicit",
+          "trigger": {
+            "event": "always"
+          },
+          "target": {
+            "kind": "enemy_unit"
+          },
+          "conditions": [
+            {
+              "kind": "target_health_below",
+              "value": 40
+            }
+          ],
+          "components": [
+            {
+              "kind": "damage_modifier",
+              "direction": "dealt",
+              "source": "all",
+              "mode": "percent",
+              "damage_types": [
+                "magic",
+                "true"
+              ],
+              "formula": {
+                "op": "constant",
+                "value": 20
+              }
+            }
+          ],
+          "cooldown_seconds": null,
+          "stacks": null,
+          "duration_seconds": null,
+          "limits": [],
+          "evidence_confidence": "official",
+          "model_status": "evaluable",
+          "note": "+20 % to magic and true damage while the target is below 40 % health at the start of the step. The client also has DamageOverTimeAmp 0.2 for damage over time, which rotations do not have."
+        }
+      ]
+    },
+    {
+      "id": "6676",
+      "effect_review": "complete",
+      "stats": [],
+      "effects": [
+        {
+          "id": "death",
+          "kind": "passive",
+          "name": "Muerte",
+          "quote": "Tu daño ejecuta a los campeones con menos del 5% de la vida.",
+          "basis": "description_explicit",
+          "trigger": {
+            "event": "always"
+          },
+          "target": {
+            "kind": "enemy_champion"
+          },
+          "conditions": [
+            {
+              "kind": "target_is_champion"
+            }
+          ],
+          "components": [
+            {
+              "kind": "execute",
+              "target": {
+                "kind": "enemy_champion"
+              },
+              "formula": {
+                "op": "constant",
+                "value": 5
+              }
+            }
+          ],
+          "cooldown_seconds": null,
+          "stacks": null,
+          "duration_seconds": null,
+          "limits": [],
+          "evidence_confidence": "official",
+          "model_status": "evaluable",
+          "note": "After a step whose damage leaves a champion alive below 5 % of its maximum health, the rest of its health is dealt as true damage (part execute)."
+        },
+        {
+          "id": "taxes",
+          "kind": "passive",
+          "name": "Impuestos",
+          "quote": "Los asesinatos de campeones otorgan 25 de oro adicional",
+          "basis": "description_explicit",
+          "trigger": {
+            "event": "on_kill"
+          },
+          "target": {
+            "kind": "self"
+          },
+          "components": [],
+          "cooldown_seconds": null,
+          "stacks": null,
+          "duration_seconds": null,
+          "limits": [],
+          "evidence_confidence": "official",
+          "model_status": "excluded",
+          "note": "Gold; not part of damage."
         }
       ]
     }

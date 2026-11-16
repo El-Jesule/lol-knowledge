@@ -61,17 +61,18 @@ def test_kraken_fires_on_every_third_attack_only():
     fired = [index for index, step in enumerate(outcome.steps, 1) if parts(step, "6672")]
     assert fired == [4, 7]  # abilities do not count
     (part,) = parts(outcome.steps[3], "6672 bring-it-down")
-    assert part.raw == 150 + 5 * 8  # level 16: 150, +5 per level from 9
-    assert outcome.label is Label.PENDING  # the missing-health increase is not applied
+    missing = 1 - outcome.steps[3].health_before / 5000
+    assert part.raw == (150 + 5 * 8) * (1 + F("0.75") * missing)  # level 16
+    assert outcome.label is not Label.PENDING  # the missing-health increase is applied
 
 
 def test_kraken_level_breakpoints_and_ranged_multiplier():
-    (melee,) = parts(run("attack attack attack", "6672", level=9).steps[2], "6672")
-    (ranged,) = parts(
-        run("attack attack attack", "6672", level=8, holder="ranged").steps[2], "6672"
-    )
-    assert melee.raw == 155
-    assert ranged.raw == 150 * F("0.8")
+    melee_step = run("attack attack attack", "6672", level=9).steps[2]
+    ranged_step = run("attack attack attack", "6672", level=8, holder="ranged").steps[2]
+    (melee,) = parts(melee_step, "6672")
+    (ranged,) = parts(ranged_step, "6672")
+    assert melee.raw == 155 * (1 + F("0.75") * (1 - melee_step.health_before / 5000))
+    assert ranged.raw == 150 * F("0.8") * (1 + F("0.75") * (1 - ranged_step.health_before / 5000))
 
 
 def test_guinsoo_repeats_the_on_hit_effects_on_every_third_attack():

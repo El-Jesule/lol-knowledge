@@ -153,6 +153,7 @@ COMPONENT_KINDS = frozenset(
         "stasis",
         "repeat_on_hit",
         "trigger_energized",
+        "execute",
     }
 )
 DAMAGE_TYPES = frozenset({"physical", "magic", "true"})

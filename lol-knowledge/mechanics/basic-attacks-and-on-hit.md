@@ -18,7 +18,8 @@
 2. **Daño al impactar de los objetos del atacante:** cada efecto `on_hit` evaluable del catálogo, con su tipo de daño. No se multiplica por el crítico (A3). Desde la versión 10 del catálogo hay seis (además del golpe de Hoja encantada de siete objetos, desde la 11): Filo de la niebla (Hoja del rey arruinado), Arco curvo, Final del ingenio, Diente de Nashor, Hoja de furia de Guinsoo y El final ([catálogo](../objects/README.md)).
 3. **Hoja encantada:** si una habilidad cargó el ataque, se añade el golpe del objeto como otra parte al impactar ([`spellblade.md`](spellblade.md)). `attack:nospellblade` lo descarta.
 4. **Cada N ataques y Vigor:** los efectos que cuentan ataques o salen con Vigor se añaden cuando toca ([`attack-counters.md`](attack-counters.md)).
-5. Cada parte se mitiga por separado con la resistencia que le toca ([`damage-mitigation.md`](damage-mitigation.md)) y luego se le aplican los modificadores ([`damage-modifiers.md`](damage-modifiers.md)).
+5. **Ejecución:** con Recaudadora, si un campeón queda por debajo del 5 % tras el paso, se añade una parte `execute` con su vida restante ([`target-health.md`](target-health.md)).
+6. Cada parte se mitiga por separado con la resistencia que le toca ([`damage-mitigation.md`](damage-mitigation.md)) y luego se le aplican los modificadores ([`damage-modifiers.md`](damage-modifiers.md)).
 
 ## Vida actual del objetivo
 

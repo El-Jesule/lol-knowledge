@@ -270,7 +270,9 @@ def formula_stat_requirements(model: Mapping[str, Any]) -> dict[str, tuple[str, 
                 return
             key = stat if scope == "total" else f"{scope}_{stat}"
             subject = formula.get("subject")
-            is_target = subject == "target" or (subject is None and scope in {"current", "max"})
+            is_target = subject == "target" or (
+                subject is None and scope in {"current", "max", "missing_fraction"}
+            )
             if is_target:
                 target.add(key)
             else:

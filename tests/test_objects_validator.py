@@ -743,3 +743,33 @@ def test_structure_condition_and_energized_trigger_are_known() -> None:
     effect["trigger"] = {"event": "energized"}
     effect["conditions"] = [{"kind": "target_is_structure"}]
     assert _messages(_catalog(effect=effect)) == []
+
+
+# Target health (catalog version 13)
+
+
+def test_damage_types_and_health_thresholds_are_checked() -> None:
+    effect = _valid_effect()
+    effect["components"] = [
+        {
+            "kind": "damage_modifier",
+            "direction": "dealt",
+            "source": "all",
+            "mode": "percent",
+            "damage_types": ["magic", "fire"],
+            "formula": {"op": "constant", "value": 30},
+        }
+    ]
+    effect["conditions"] = [{"kind": "target_health_below", "value": 140}]
+    found = _messages(_catalog(effect=effect))
+    assert "damage_types must be a non-empty list of ['magic', 'physical', 'true']" in found
+    assert "a target health threshold needs a percentage between 0 and 100" in found
+    effect["components"][0]["damage_types"] = ["magic"]
+    effect["conditions"] = [{"kind": "target_health_below", "value": 40}]
+    assert _messages(_catalog(effect=effect)) == []
+
+
+def test_an_execute_needs_a_threshold() -> None:
+    effect = _valid_effect()
+    effect["components"] = [{"kind": "execute", "target": {"kind": "enemy_champion"}}]
+    assert "execute components need a threshold formula" in _messages(_catalog(effect=effect))

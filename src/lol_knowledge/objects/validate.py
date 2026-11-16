@@ -87,6 +87,7 @@ _EFFECT_KEYS = {
     "scenario",
 }
 _COMPONENT_KEYS = {
+    "damage_types",
     "kind",
     "formula",
     "damage_type",
@@ -717,6 +718,13 @@ class _CatalogChecker:
                     f"{item_pointer}.kind",
                     f"condition kind must be one of {sorted(CONDITION_KINDS)}",
                 )
+            elif condition["kind"] in {"target_health_below", "target_health_above"}:
+                value = condition.get("value")
+                if not _is_number(value) or not 0 < value < 100:
+                    self.fail(
+                        f"{item_pointer}.value",
+                        "a target health threshold needs a percentage between 0 and 100",
+                    )
 
     def _check_component(self, component: Any, pointer: str) -> None:
         if not isinstance(component, Mapping):
@@ -768,7 +776,18 @@ class _CatalogChecker:
                 self.fail(f"{pointer}.mode", "stat_modifier mode must be 'flat' or 'percent'")
             if "formula" not in component:
                 self.fail(f"{pointer}.formula", "stat_modifier components need a formula")
+        elif kind == "execute":
+            if "formula" not in component:
+                self.fail(f"{pointer}.formula", "execute components need a threshold formula")
         elif kind == "damage_modifier":
+            types = component.get("damage_types")
+            if types is not None and (
+                not isinstance(types, list) or not types or not set(types) <= DAMAGE_TYPES
+            ):
+                self.fail(
+                    f"{pointer}.damage_types",
+                    f"damage_types must be a non-empty list of {sorted(DAMAGE_TYPES)}",
+                )
             if component.get("direction") not in {"dealt", "taken"}:
                 self.fail(f"{pointer}.direction", "direction must be 'dealt' or 'taken'")
             if component.get("source") not in {"attack", "ability", "all"}:
