@@ -10,7 +10,7 @@ import pytest
 
 from lol_knowledge.objects import ObjectModelError, Snapshot
 from lol_knowledge.objects.__main__ import main as objects_main
-from lol_knowledge.objects.catalog import load_snapshot, merge_generated
+from lol_knowledge.objects.catalog import load_model, load_snapshot, merge_generated
 from lol_knowledge.objects.generate import (
     ZERO_REASON,
     dump_generated,
@@ -245,6 +245,28 @@ def test_curated_stats_for_a_generated_item_are_reported(project):
     path.write_text(json.dumps(catalog, ensure_ascii=False), encoding="utf-8")
     found = messages(project)
     assert any("item 3111 takes its description stats from" in m for m in found)
+
+
+def test_a_confirmed_zero_without_a_generated_unknown_is_reported(project):
+    path = project / "lol-knowledge/objects/catalog.json"
+    catalog = json.loads(path.read_text(encoding="utf-8"))
+    (treads,) = [entry for entry in catalog["objects"] if entry["id"] == "3111"]
+    treads["confirmed_zero_stats"] = [
+        {"id": "armor", "kind": "flat", "reason": "x"},
+        {"id": "tenacity", "kind": "percent", "reason": "x"},
+    ]
+    path.write_text(json.dumps(catalog, ensure_ascii=False), encoding="utf-8")
+    found = messages(project)
+    assert any("has no unknown armor (flat) for item 3111" in m for m in found)
+    assert any("has no unknown tenacity (percent) for item 3111" in m for m in found)
+
+
+def test_yun_tal_crit_is_a_confirmed_zero_in_the_model(project):
+    model, _ = load_model(project)
+    (yun_tal,) = [entry for entry in model["objects"] if entry["id"] == "3032"]
+    (crit,) = [stat for stat in yun_tal["stats"] if stat["id"] == "crit_chance"]
+    assert (crit["value"], crit["status"]) == (0.0, "declared")
+    assert crit["note"].startswith("confirmed zero: the item has no crit chance stat")
 
 
 def test_the_generate_command_rewrites_the_file(project, capsys):

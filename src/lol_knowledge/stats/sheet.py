@@ -9,11 +9,12 @@ from fractions import Fraction
 
 from ..damage import format_number, format_percent, to_fraction
 from ..errors import DamageInputError, StatsError
+from ..formula import FormulaError, evaluate_formula
 from .data import ChampionData, ItemData
 from .derived import DerivedRecords
 from .growth import check_level, growth_multiplier
 from .issues import DataIssue
-from .labels import Label, weakest
+from .labels import EVIDENCE_LABEL, Label, weakest
 from .registry import (
     ATTACK_SPEED_RULES,
     CRIT_RULES,
@@ -183,6 +184,52 @@ def _percent_amount(
         label=weakest([percent.label, *(item.label for item in reference)]),
         note=note,
     )
+
+
+# Assumptions under which a catalog effect becomes a stat (objects/README.md).
+SCENARIO_NOTES = {"max_stacks": "scenario: maximum stacks"}
+
+
+def _scenario_contributions(item: ItemData) -> list[tuple[str, Contribution]]:
+    """Stats from effects the catalog declares under a scenario assumption.
+
+    A ``flat`` component adds its amount in the catalog unit: percentage
+    points for fraction stats (25 -> 0.25), the stat's own unit otherwise.
+    """
+    result: list[tuple[str, Contribution]] = []
+    for effect in item.effects:
+        scenario = effect.get("scenario")
+        if scenario is None:
+            continue
+        title = f"item {item.id} {effect.get('id')}"
+        note = SCENARIO_NOTES.get(str(scenario))
+        if note is None:
+            raise StatsError(f"{title}: scenario {scenario!r} is not modelled")
+        source = f"data:item:{item.id} effect {effect.get('id')} ({item.game_version})"
+        status = effect.get("model_status")
+        label = EVIDENCE_LABEL.get(str(effect.get("evidence_confidence")), Label.DERIVED)
+        for component in effect.get("components") or ():
+            if component.get("kind") != "stat_modifier" or component.get("mode") != "flat":
+                raise StatsError(f"{title}: only flat stat modifiers can be scenario stats")
+            definition = _receiver(str(component.get("stat")))
+            if status != "evaluable":
+                reason = f"{note}; effect {status}, not applied"
+                result.append(
+                    (
+                        definition.id,
+                        Contribution(Fraction(0), "bonus", source, Label.PENDING, reason),
+                    )
+                )
+                continue
+            try:
+                amount = evaluate_formula(component.get("formula"), {}).exact
+            except FormulaError as exc:
+                raise StatsError(f"{title}: {exc}") from exc
+            value = amount / 100 if definition.unit is Unit.FRACTION else amount
+            if definition.unit is Unit.FRACTION and not 0 <= value <= 1:
+                raise StatsError(f"{title}: {value} is not a fraction 0..1")
+            result.append((definition.id, Contribution(value, "bonus", source, label, note)))
+    return result
 
 
 def _receiver(stat_id: str) -> StatDef:
@@ -443,6 +490,8 @@ def build_stat_sheet(
             )
             target = percents if deferred else contributions
             target.setdefault(definition.id, []).append(contribution)
+        for stat_id, contribution in _scenario_contributions(item):
+            contributions[stat_id].append(contribution)
 
     for stat_id, extra in extras:
         definition = _receiver(stat_id)

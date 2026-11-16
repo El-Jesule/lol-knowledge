@@ -37,3 +37,22 @@ Otros valores que confirman lo que ya decía Data Dragon: Adaptabilidad de Randu
 
 - Los nombres de los valores (`MeleeValue`, `MonsterDamageCap`…) dicen qué miden, pero el código que los aplica está en los scripts del juego, que no se leen aquí. Por ejemplo, que `MonsterDamageCap` también valga para súbditos viene de la wiki.
 - Las sobrescrituras de modos sin nombre identificado no se interpretan.
+
+## Flechas de los Yun Tal (3032), consultado el 2026-11-16
+
+- **Valores por defecto de `Items/3032.mDataValues`:** `CritPerStackMelee` 0,4; `StackRangedMultiplier` 0,5; `CritMax` 25; `ASMod` 0,3; `ASDuration` 6; `Cooldown` 30; `AACDR` 1; `CritCDR` 2.
+- **Estadísticas del registro:** `mFlatPhysicalDamageMod` 50 y `mPercentAttackSpeedMod` 0,45. No hay campo de crítico, así que el «0%» de la descripción es un cero real.
+- **Cálculo `CritPerStackCalc`** (`mItemCalculations`, clave FNV-1a `0x6210abd9`): parte `NamedDataValueCalculationPart` con `CritPerStackMelee` y multiplicador a distancia con `StackRangedMultiplier`; precisión 1.
+- **Sobrescrituras por modo:** ARAM, ARAM: Mayhem y otros dos modos sin nombre identificado cambian `CritPerStackMelee` a 1,0 y mantienen `StackRangedMultiplier` 0,5. Ninguna es la Grieta del Invocador.
+- **Plantilla del tooltip** (`item_3032_tooltip` en `Localized/Global.es_ES.wad.client`, RST v5; nombre de la clave con `hashes.rst.xxh3.txt` de CommunityDragon/Data en GitHub): «Al atacar, obtienes +%i:scaleCrit% @CritPerStackCalc@% de probabilidad de impacto crítico de forma permanente, hasta un @CritMax@%». Los marcadores son los nombres de los valores del registro.
+- **Contraste en internet (secundario):** los agregadores no coinciden. Uno atribuye al parche 26.15 un 0,4 % por ataque para todos los portadores; un datamine del PBE de 2025 ya describía 0,4 % cuerpo a cuerpo y 0,2 % a distancia, que es lo que tiene el cliente 16.22. Se sigue al cliente.
+- **Uso:** el catálogo modela la pasiva con el escenario `max_stacks` (+25 %), y estos valores quedan en la nota del efecto. Ráfaga queda `excluded`.
+
+## Cobertura de los tooltips, consultado el 2026-11-16
+
+Método: para los 218 objetos comprables de la Grieta, se compararon los marcadores `@Nombre@` de `item_<id>_tooltip` (es_ES, tras expandir `{{ … }}` una vez) con lo que guarda `Items/<id>`: `mDataValues`, `mEffectAmount` (`EffectNAmount`), y las claves de `mItemCalculations` y `StringCalculations` (FNV-1a del nombre). Script de un solo uso, no versionado; se versionará si se genera un archivo de efectos.
+
+- **138 objetos:** todos sus marcadores se resuelven en su propio registro. `StringCalculations` guarda las variantes cuerpo a cuerpo / distancia (Espada ciclovoltaica: 9 % / 7 % de vida actual).
+- **71 sin marcadores:** 55 con el tooltip vacío (solo estadísticas o componentes) y 16 con efectos sin cifras (Bailarín espectral: «Te vuelves fantasmal»).
+- **9 con algún marcador sin resolver:** cinco parecen nombres de estadísticas del propio objeto (Escudo de Doran, Armadura lunar alada, Brisa de éter, Ídolo prohibido, Sable-pistola hextech; sin comprobar); `f2` de la Armadura de Warmog se calcula en partida; Espada de Doran (`HealMultiplier`, `HealingReduction`), Daga dentada (`Effect1Amount`) y Carcaj del mediodía (`MinionDamage`) no tienen el valor en su registro.
+- **Límite:** los valores dicen cuánto; cómo se aplican está en los scripts del juego, que no se leen. Por eso cada efecto sigue necesitando un modelo curado.

@@ -119,7 +119,15 @@ def merge_generated(
             }
         else:
             entry = copy.deepcopy(dict(base))
-        entry["stats"] = [*(entry.get("stats") or []), *generated_entry.get("stats", [])]
+        zeros = {
+            (str(zero.get("id")), str(zero.get("kind"))): str(zero.get("reason"))
+            for zero in entry.get("confirmed_zero_stats") or []
+            if isinstance(zero, Mapping)
+        }
+        entry["stats"] = [
+            *(entry.get("stats") or []),
+            *(_confirm_zero(stat, zeros) for stat in generated_entry.get("stats", [])),
+        ]
         if generated_entry.get("unmodelled_stats"):
             entry["unmodelled_stats"] = list(generated_entry["unmodelled_stats"])
         objects.append(entry)
@@ -127,6 +135,22 @@ def merge_generated(
     merged = dict(catalog)
     merged["objects"] = objects
     return merged
+
+
+def _confirm_zero(stat: Mapping[str, Any], zeros: Mapping[tuple[str, str], str]) -> Any:
+    """A generated unknown 0 that the curated catalog confirms becomes a real 0."""
+    if not zeros or not isinstance(stat, Mapping):
+        return stat
+    reason = zeros.get((str(stat.get("id")), str(stat.get("kind"))))
+    if reason is None or stat.get("status") != "unknown":
+        return stat
+    return {
+        "id": stat["id"],
+        "kind": stat["kind"],
+        "value": 0,
+        "quote": stat["quote"],
+        "confirmed_zero": reason,
+    }
 
 
 def _id_key(value: Any) -> tuple[int, Any]:
@@ -202,6 +226,8 @@ def _overlay_stats(entry: Mapping[str, Any]) -> list[dict[str, Any]]:
         if "value" in raw:
             stat["value"] = float(raw["value"])
             stat["status"] = "declared"
+            if "confirmed_zero" in raw:
+                stat["note"] = f"confirmed zero: {raw['confirmed_zero']}"
         else:
             stat["value"] = None
             stat["status"] = raw.get("status", "unknown")

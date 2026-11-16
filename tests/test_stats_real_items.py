@@ -11,6 +11,7 @@ from lol_knowledge.scenario import target_from_values
 from lol_knowledge.stats import (
     Label,
     build_stat_sheet,
+    format_text,
     growth_multiplier,
     load_champion,
     load_issues,
@@ -60,11 +61,21 @@ def test_spellslingers_shoes_flat_and_percent_magic_penetration():
     assert data["magic_penetration_percent"].total() == F("0.08")
 
 
-def test_a_zero_in_the_description_stays_pending():
+def test_yun_tal_has_a_confirmed_zero_and_full_stacks():
     crit = sheet(1, "3032")["crit_chance"]
-    assert crit.total() == 0
-    assert crit.label is Label.PENDING
-    assert crit.contributions[-1].note.startswith("value unknown: the description shows 0")
+    assert crit.total() == F(1, 4)
+    assert crit.label is Label.DERIVED
+    zero, stacks = crit.contributions[-2:]
+    assert (zero.value, zero.label) == (0, Label.OFFICIAL)
+    assert zero.note.startswith("confirmed zero: the item has no crit chance stat")
+    assert (stacks.value, stacks.label, stacks.note) == (
+        F(1, 4),
+        Label.DERIVED,
+        "scenario: maximum stacks",
+    )
+    assert stacks.source == "data:item:3032 effect practice-makes-lethal (16.22.1)"
+    lines = format_text(sheet(1, "3032")).splitlines()
+    assert "  crit_chance: 25% (base 0% + bonus 25%) [Derivado] (scenario: maximum stacks)" in lines
 
 
 def run(*item_ids):
@@ -94,3 +105,13 @@ def test_an_item_with_unreviewed_effects_makes_the_rotation_pending():
         "attacker 3046: effect review pending; effects missing from the catalog are not applied"
         in outcome.notes
     )
+
+
+def test_a_scenario_effect_is_left_to_the_sheet_and_flurry_weakens_the_rotation():
+    outcome = run("3032")
+    assert (
+        "attacker 3032 practice-makes-lethal: applied by the stat sheet (scenario max_stacks)"
+        in outcome.notes
+    )
+    assert "attacker 3032 flurry: excluded, not applied" in outcome.notes
+    assert outcome.label is Label.PENDING

@@ -1,9 +1,9 @@
 {
   "schema_version": 1,
   "kind": "lol-object-model-catalog",
-  "catalog_version": 8,
+  "catalog_version": 9,
   "game_version": "16.22.1",
-  "notes": "Curated overlay for a mechanically diverse sample. Data Dragon derivatives (stats, gold, maps, recipes) are not repeated here; see lol-knowledge/objects/README.md. Numeric mechanics absent from Data Dragon carry declared sources and secondary confidence. Catalog version 3 (2026-11-15): moved to snapshot 16.22.1; stats, gold, descriptions and recipes of the 15 objects are identical to 16.20.1 in Data Dragon; the secondary evidence was not re-checked against the 16.21 and 16.22 patch notes. Catalog version 6 (2026-11-15): damage components may declare applies_life_steal with its own source; Mist's Edge declares it from the LoL Wiki (secondary). Catalog version 7 (2026-11-16): adds 3111 (Mercury's Treads) for its tenacity, declared from the 16.22.1 description. Catalog version 8 (2026-11-16): description stats of every Summoner's Rift item, curated ones included, come from catalog-stats.json (generated); this file keeps effects and reviews.",
+  "notes": "Curated overlay for a mechanically diverse sample. Data Dragon derivatives (stats, gold, maps, recipes) are not repeated here; see lol-knowledge/objects/README.md. Numeric mechanics absent from Data Dragon carry declared sources and secondary confidence. Catalog version 3 (2026-11-15): moved to snapshot 16.22.1; stats, gold, descriptions and recipes of the 15 objects are identical to 16.20.1 in Data Dragon; the secondary evidence was not re-checked against the 16.21 and 16.22 patch notes. Catalog version 6 (2026-11-15): damage components may declare applies_life_steal with its own source; Mist's Edge declares it from the LoL Wiki (secondary). Catalog version 7 (2026-11-16): adds 3111 (Mercury's Treads) for its tenacity, declared from the 16.22.1 description. Catalog version 8 (2026-11-16): description stats of every Summoner's Rift item, curated ones included, come from catalog-stats.json (generated); this file keeps effects and reviews. Catalog version 9 (2026-11-16): adds 3032 (Yun Tal Wildarrows). Effects may declare scenario max_stacks (the stat sheet applies them at full stacks) and objects may confirm a generated 0 as a real zero (confirmed_zero_stats).",
   "objects": [
     {
       "id": "1036",
@@ -669,6 +669,90 @@
       "effect_review": "complete",
       "stats": [],
       "effects": []
+    },
+    {
+      "id": "3032",
+      "effect_review": "complete",
+      "confirmed_zero_stats": [
+        {
+          "id": "crit_chance",
+          "kind": "percent",
+          "reason": "the item has no crit chance stat; its crit chance comes from Practice Makes Lethal (client 16.22: Items/3032 has no crit field)"
+        }
+      ],
+      "stats": [],
+      "effects": [
+        {
+          "id": "practice-makes-lethal",
+          "kind": "passive",
+          "name": "La práctica hace al asesino",
+          "quote": "Al atacar, obtienes probabilidad de impacto crítico de forma permanente, hasta un 25%.",
+          "basis": "description_explicit",
+          "trigger": {
+            "event": "on_attack"
+          },
+          "target": {
+            "kind": "self"
+          },
+          "components": [
+            {
+              "kind": "stat_modifier",
+              "stat": "crit_chance",
+              "scope": "total",
+              "mode": "flat",
+              "formula": {
+                "op": "constant",
+                "value": 25
+              }
+            }
+          ],
+          "cooldown_seconds": null,
+          "stacks": null,
+          "duration_seconds": null,
+          "limits": [],
+          "scenario": "max_stacks",
+          "evidence_confidence": "official",
+          "model_status": "evaluable",
+          "note": "Applied at full stacks (scenario max_stacks). Per attack the client (16.22, Items/3032 mDataValues) grants CritPerStackMelee 0.4 percentage points, times StackRangedMultiplier 0.5 for ranged holders, up to CritMax 25: 63 melee or 125 ranged attacks. ARAM and ARAM: Mayhem raise the melee value to 1.0; not modelled."
+        },
+        {
+          "id": "flurry",
+          "kind": "passive",
+          "name": "Ráfaga",
+          "quote": "Al atacar a un campeón enemigo, obtienes un 30% de velocidad de ataque durante 6 s (30 s de enfriamiento).",
+          "basis": "description_explicit",
+          "trigger": {
+            "event": "on_attack"
+          },
+          "target": {
+            "kind": "self"
+          },
+          "conditions": [
+            {
+              "kind": "target_is_champion"
+            }
+          ],
+          "components": [
+            {
+              "kind": "stat_modifier",
+              "stat": "attack_speed",
+              "scope": "total",
+              "mode": "flat",
+              "formula": {
+                "op": "constant",
+                "value": 30
+              }
+            }
+          ],
+          "cooldown_seconds": 30,
+          "stacks": null,
+          "duration_seconds": 6,
+          "limits": [],
+          "evidence_confidence": "official",
+          "model_status": "excluded",
+          "note": "A timed window whose cooldown attacks and critical strikes shorten (1 s and 2 s); rotations have no timeline, so it is not applied."
+        }
+      ]
     }
   ]
 }

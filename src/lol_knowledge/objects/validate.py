@@ -39,6 +39,7 @@ from .schema import (
     MODEL_STATUS_RANK,
     MODEL_STATUSES,
     OBJECT_SCHEMA_VERSION,
+    SCENARIOS,
     STAT_SCOPES_BY_STAT,
     TARGET_KINDS,
     TRIGGER_EVENTS,
@@ -54,8 +55,17 @@ _TOP_LEVEL_KEYS = {
     "notes",
     "objects",
 }
-_OBJECT_KEYS = {"id", "notes", "effect_review", "stats", "effects", "unmodelled_stats"}
-_STAT_KEYS = {"id", "kind", "value", "status", "reason", "quote"}
+_OBJECT_KEYS = {
+    "id",
+    "notes",
+    "effect_review",
+    "stats",
+    "effects",
+    "unmodelled_stats",
+    "confirmed_zero_stats",
+}
+_CONFIRMED_ZERO_KEYS = {"id", "kind", "reason"}
+_STAT_KEYS = {"id", "kind", "value", "status", "reason", "quote", "confirmed_zero"}
 _EFFECT_KEYS = {
     "id",
     "kind",
@@ -74,6 +84,7 @@ _EFFECT_KEYS = {
     "note",
     "sources",
     "evidence_confidence",
+    "scenario",
 }
 _COMPONENT_KEYS = {
     "kind",
@@ -290,6 +301,9 @@ class _CatalogChecker:
             return
         text = description_text(description)
         self._check_unmodelled(entry.get("unmodelled_stats"), text, f"{pointer}.unmodelled_stats")
+        self._check_confirmed_zeros(
+            entry.get("confirmed_zero_stats"), f"{pointer}.confirmed_zero_stats"
+        )
         self._check_snapshot_references(entry, item, pointer)
         derived_stats, unmapped = derive_stats(item)
         for unknown_stat in unmapped:
@@ -473,6 +487,7 @@ class _CatalogChecker:
         self._check_scalar(effect.get("duration_seconds"), f"{pointer}.duration_seconds")
         self._check_stacks(effect.get("stacks"), f"{pointer}.stacks")
         self._check_limits(effect.get("limits"), f"{pointer}.limits")
+        self._check_scenario(effect, f"{pointer}.scenario")
         sources = self._check_sources(effect.get("sources"), f"{pointer}.sources")
         confidence = effect.get("evidence_confidence")
         if confidence is not None and confidence not in EVIDENCE_CONFIDENCE:
@@ -555,6 +570,41 @@ class _CatalogChecker:
                     f"{pointer}.basis",
                     "external_evidence_explicit requires every formula to be evaluable",
                 )
+
+    def _check_scenario(self, effect: Mapping[str, Any], pointer: str) -> None:
+        if "scenario" not in effect:
+            return
+        if effect["scenario"] not in SCENARIOS:
+            self.fail(pointer, f"scenario must be one of {sorted(SCENARIOS)}")
+            return
+        components = effect.get("components")
+        if not isinstance(components, Sequence) or isinstance(components, (str, bytes)):
+            return
+        for index, component in enumerate(components):
+            if not isinstance(component, Mapping):
+                continue
+            if component.get("kind") != "stat_modifier" or component.get("mode") != "flat":
+                self.fail(
+                    f"{pointer[: -len('.scenario')]}.components[{index}]",
+                    "a max_stacks effect may only have flat stat_modifier components",
+                )
+
+    def _check_confirmed_zeros(self, entries: Any, pointer: str) -> None:
+        if entries is None:
+            return
+        if not isinstance(entries, Sequence) or isinstance(entries, (str, bytes)) or not entries:
+            self.fail(pointer, "confirmed_zero_stats must be a non-empty list")
+            return
+        for index, entry in enumerate(entries):
+            item_pointer = f"{pointer}[{index}]"
+            if not isinstance(entry, Mapping) or set(entry) != _CONFIRMED_ZERO_KEYS:
+                self.fail(item_pointer, "must be an object with id, kind and reason")
+                continue
+            stat, kind = entry["id"], entry["kind"]
+            if stat not in CANONICAL_STAT_KINDS or kind not in CANONICAL_STAT_KINDS[stat]:
+                self.fail(item_pointer, f"unknown stat {stat!r} of kind {kind!r}")
+            if not isinstance(entry["reason"], str) or not entry["reason"].strip():
+                self.fail(f"{item_pointer}.reason", "reason must be a non-empty string")
 
     def _check_sources(self, sources: Any, pointer: str) -> list[Mapping[str, Any]]:
         if sources is None:
@@ -881,6 +931,12 @@ def _generated_violations(
     if dump_generated(generated) != dump_generated(expected):
         violations.append(ObjectViolation(path, f"does not match the snapshot; {REGENERATE}"))
     covered = {str(entry.get("id")) for entry in expected["objects"]}
+    unknown = {
+        (str(entry.get("id")), str(stat.get("id")), str(stat.get("kind")))
+        for entry in expected["objects"]
+        for stat in entry.get("stats") or []
+        if stat.get("status") == "unknown"
+    }
     for index, entry in enumerate(catalog.get("objects") or []):
         if str(entry.get("id")) in covered and entry.get("stats"):
             violations.append(
@@ -889,4 +945,18 @@ def _generated_violations(
                     f"item {entry.get('id')} takes its description stats from {path}",
                 )
             )
+        confirmed = entry.get("confirmed_zero_stats")
+        if not isinstance(confirmed, Sequence) or isinstance(confirmed, (str, bytes)):
+            continue
+        for position, zero in enumerate(confirmed):
+            if not isinstance(zero, Mapping):
+                continue
+            key = (str(entry.get("id")), str(zero.get("id")), str(zero.get("kind")))
+            if key not in unknown:
+                violations.append(
+                    ObjectViolation(
+                        f"objects[{index}].confirmed_zero_stats[{position}]",
+                        f"{path} has no unknown {key[1]} ({key[2]}) for item {key[0]}",
+                    )
+                )
     return tuple(violations)

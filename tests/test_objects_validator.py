@@ -602,3 +602,45 @@ def test_effect_reviews(review, valid) -> None:
     catalog["objects"][0]["effect_review"] = review
     found = any("effect_review must be one of" in item for item in _messages(catalog))
     assert found is not valid
+
+
+# Scenarios and confirmed zeros
+
+
+def _scenario_effect(**component) -> dict:
+    effect = _valid_effect()
+    effect["trigger"] = {"event": "on_attack"}
+    effect["scenario"] = "max_stacks"
+    effect["components"][0].update({"mode": "flat", **component})
+    return effect
+
+
+def test_a_flat_max_stacks_effect_on_attack_is_accepted() -> None:
+    assert _messages(_catalog(effect=_scenario_effect())) == []
+
+
+def test_an_unknown_scenario_is_reported() -> None:
+    effect = _scenario_effect()
+    effect["scenario"] = "half_stacks"
+    assert "scenario must be one of ['max_stacks']" in _messages(_catalog(effect=effect))
+
+
+def test_a_max_stacks_effect_needs_flat_stat_modifiers() -> None:
+    found = _messages(_catalog(effect=_scenario_effect(mode="percent")))
+    assert "a max_stacks effect may only have flat stat_modifier components" in found
+
+
+def test_confirmed_zero_stats_are_checked() -> None:
+    catalog = _catalog()
+    entry = catalog["objects"][0]
+    entry["confirmed_zero_stats"] = [
+        {"id": "crit_chance", "kind": "flat", "reason": "x"},
+        {"id": "crit_chance", "kind": "percent", "reason": " "},
+        {"id": "crit_chance"},
+    ]
+    found = _messages(catalog)
+    assert "unknown stat 'crit_chance' of kind 'flat'" in found
+    assert "reason must be a non-empty string" in found
+    assert "must be an object with id, kind and reason" in found
+    entry["confirmed_zero_stats"] = []
+    assert "confirmed_zero_stats must be a non-empty list" in _messages(catalog)
