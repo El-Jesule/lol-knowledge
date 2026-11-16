@@ -35,8 +35,11 @@ ATTACK_SPEED_RATIO = "attackspeedratio"  # derived from the client; not in Data 
 ATTACK_SPEED_CAP_KITS = frozenset({"Belveth", "Graves", "Jhin", "Sion", "Zeri"})
 # Data Dragon crit chance base and growth; 0 for every champion (critical-strike.md, C8).
 CRIT_FIELDS = ("crit", "critperlevel")
-# Champions whose passive doubles their critical strike chance (critical-strike.md, C9).
+# Yasuo's and Yone's passives (critical-strike.md, C9): their crit chance from every
+# other source is doubled, and each 1 % above 100 % becomes 0.5 bonus attack damage.
 CRIT_CHANCE_KITS = frozenset({"Yasuo", "Yone"})
+CRIT_CHANCE_KIT_MULTIPLIER = 2
+EXCESS_CRIT_AD = 50  # bonus AD per 1.0 (100 %) of excess crit chance: 0.5 per 1 %
 MANA_STATS = frozenset({"mana", "mana_regen"})
 MANA_RESOURCE = {"es_ES": "Maná", "en_US": "Mana"}
 
@@ -221,6 +224,38 @@ def _crit_chance_base(champion: ChampionData) -> Contribution | str:
     return Contribution(Fraction(0), "base", _source(champion, "crit"), Label.OFFICIAL)
 
 
+def _crit_chance_passive(
+    champion: ChampionData, contributions: dict[str, list[Contribution]]
+) -> None:
+    """Yasuo and Yone: double their crit chance and turn the excess into attack damage."""
+    sources = contributions["crit_chance"]
+    total = sum((item.value for item in sources), start=Fraction(0))
+    labels = [Label.DERIVED, *(item.label for item in sources)]
+    passive = f"{CRIT_RULES} ({champion.id} passive)"
+    doubled = total * CRIT_CHANCE_KIT_MULTIPLIER
+    contributions["crit_chance"].append(
+        Contribution(
+            doubled - total,
+            "bonus",
+            passive,
+            weakest(labels),
+            f"passive doubles critical strike chance ({format_number(total)} x "
+            f"{CRIT_CHANCE_KIT_MULTIPLIER})",
+        )
+    )
+    excess = doubled - STATS["crit_chance"].cap
+    if excess > 0:
+        contributions["attack_damage"].append(
+            Contribution(
+                excess * EXCESS_CRIT_AD,
+                "bonus",
+                passive,
+                weakest(labels),
+                f"excess critical strike chance {format_number(excess)} x 0.5 per 1%",
+            )
+        )
+
+
 def build_stat_sheet(
     champion: ChampionData,
     level: int,
@@ -364,11 +399,13 @@ def build_stat_sheet(
         )
         notes.append(reason)
     if champion.id in CRIT_CHANCE_KITS:
-        reason = f"{champion.id}'s passive doubles critical strike chance; not modelled"
-        contributions["crit_chance"].append(
-            Contribution(Fraction(0), "bonus", CRIT_RULES, Label.PENDING, reason)
-        )
-        notes.append(reason)
+        if "crit_chance" in blocked:
+            blocked["attack_damage"] = (
+                f"{champion.id}'s passive converts excess crit chance into attack damage, "
+                "and crit chance is blocked"
+            )
+        else:
+            _crit_chance_passive(champion, contributions)
 
     for issue in applicable:
         if level == 1:

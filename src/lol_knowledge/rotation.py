@@ -42,6 +42,9 @@ RULES = (
 HOLDER_RANGES = frozenset({"melee", "ranged"})
 # Base critical strike multiplier of the patch notes (26.1); records that differ are flagged.
 PATCH_CRIT_MULTIPLIER = Fraction(2)
+# Passives that reduce total critical strike damage: "Critical Strike Damage Reduction:
+# -10% => -5%" for Yasuo and Yone in the 26.17 patch notes (critical-strike.md, C10).
+CRIT_DAMAGE_REDUCTIONS = {"Yasuo": Fraction(5, 100), "Yone": Fraction(5, 100)}
 # How strongly each evidence level of the object catalog backs a number.
 EVIDENCE_LABEL = {
     "official": Label.DERIVED,
@@ -511,8 +514,16 @@ class _Rotation:
                 )
             bonus = self.sheet["crit_damage_bonus"]
             multiplier = self.crit_base.value + bonus.total()
-            raw *= multiplier
             labels += [self.crit_base.label, bonus.label]
+            reduction = CRIT_DAMAGE_REDUCTIONS.get(self.sheet.champion.id)
+            if reduction is not None:
+                multiplier *= 1 - reduction
+                labels.append(Label.DERIVED)
+                notes.append(
+                    f"{self.sheet.champion.id}'s passive reduces total critical strike damage "
+                    f"by {format_number(reduction * 100)}%"
+                )
+            raw *= multiplier
             source += f" x critical multiplier {format_number(multiplier)}"
             if len(bonus.sources()) > 1:
                 labels.append(Label.PENDING)
