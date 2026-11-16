@@ -127,9 +127,18 @@ def _stat_line(stat_id: str, value: StatValue) -> str:
     if value.soft_capped:
         detail += f" (soft cap from {_shown(value.raw(), unit)})"
     line = f"  {stat_id}: {total}{detail} [{value.label.value}]"
-    notes = [item.note for item in value.contributions if "client" in item.note]
+    notes = [item.note for item in value.contributions if "; client " in item.note]
     if notes:
         line += f" ({notes[0].split('; ', 1)[1]})"
+    scenarios = sorted(
+        {
+            item.note.split("; ", 1)[0]
+            for item in value.contributions
+            if item.note.startswith("scenario:")
+        }
+    )
+    if scenarios:
+        line += f" ({', '.join(scenarios)})"
     return line
 
 

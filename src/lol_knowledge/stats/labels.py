@@ -12,6 +12,15 @@ class Label(StrEnum):
     PENDING = "Pendiente de verificación"
 
 
+# Label of a catalog effect by its evidence. Turning a description into a
+# formula is an interpretation, so even ``official`` evidence is derived.
+EVIDENCE_LABEL = {
+    "official": Label.DERIVED,
+    "corroborated": Label.DERIVED,
+    "secondary": Label.PENDING,
+    "unverified": Label.PENDING,
+}
+
 _STRENGTH = {Label.OFFICIAL: 2, Label.DERIVED: 1, Label.PENDING: 0}
 
 

@@ -13,13 +13,14 @@ from .data import (
 from .derived import DerivedRecords, load_records, parse_records
 from .growth import growth_multiplier
 from .issues import DataIssue, load_issues, parse_issues
-from .labels import Label, weakest
+from .labels import EVIDENCE_LABEL, Label, weakest
 from .metrics import Cooldowns, EffectiveHealth, ability_cooldowns, effective_health
 from .registry import STATS, Stacking, StatDef, Unit, stat
 from .report import format_text, to_dict
 from .sheet import Contribution, StatBlocked, StatSheet, StatValue, build_stat_sheet
 
 __all__ = [
+    "EVIDENCE_LABEL",
     "STATS",
     "ChampionData",
     "Contribution",

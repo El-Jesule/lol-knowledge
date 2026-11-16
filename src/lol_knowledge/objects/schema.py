@@ -119,6 +119,7 @@ EFFECT_KINDS = frozenset({"passive", "active"})
 TRIGGER_EVENTS = frozenset(
     {
         "always",
+        "on_attack",
         "on_hit",
         "taking_attack",
         "damaging_ability",
@@ -129,6 +130,10 @@ TRIGGER_EVENTS = frozenset(
         "unknown",
     }
 )
+# Declared assumptions under which an engine may apply an effect permanently.
+# ``max_stacks``: the components give the value with every stack gained, and
+# the stat sheet applies them as stats (lol-knowledge/objects/README.md).
+SCENARIOS = frozenset({"max_stacks"})
 TARGET_KINDS = frozenset(
     {"self", "enemy_champion", "enemy_unit", "attacker", "ally_champion", "area", "unknown"}
 )

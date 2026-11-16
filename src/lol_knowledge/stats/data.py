@@ -196,6 +196,9 @@ def items_from_model(model: Mapping[str, Any], item_ids: Sequence[str]) -> tuple
                 )
                 continue
             conversion = entry.get("unit_conversion")
+            notes = [f"unit converted: {conversion}"] if conversion else []
+            if entry.get("note"):
+                notes.append(str(entry["note"]))
             stats.append(
                 ItemStat(
                     stat=str(entry.get("id")),
@@ -203,7 +206,7 @@ def items_from_model(model: Mapping[str, Any], item_ids: Sequence[str]) -> tuple
                     value=_number(entry.get("value"), f"item {item_id}.{entry.get('id')}"),
                     source=source,
                     label=Label.DERIVED if conversion else Label.OFFICIAL,
-                    note=f"unit converted: {conversion}" if conversion else "",
+                    note="; ".join(notes),
                 )
             )
         selected.append(

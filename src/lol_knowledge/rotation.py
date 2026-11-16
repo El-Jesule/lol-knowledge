@@ -29,7 +29,7 @@ from .errors import KitError, RotationError
 from .formula import FormulaError, evaluate_formula
 from .kit import Kit, ability_damage, sheet_stats
 from .scenario import PENETRATION, Target, penetration_modifiers
-from .stats import ItemData, Label, StatSheet, weakest
+from .stats import EVIDENCE_LABEL, ItemData, Label, StatSheet, weakest
 
 RULES = (
     "lol-knowledge/mechanics/basic-attacks-and-on-hit.md",
@@ -45,13 +45,6 @@ PATCH_CRIT_MULTIPLIER = Fraction(2)
 # Passives that reduce total critical strike damage: "Critical Strike Damage Reduction:
 # -10% => -5%" for Yasuo and Yone in the 26.17 patch notes (critical-strike.md, C10).
 CRIT_DAMAGE_REDUCTIONS = {"Yasuo": Fraction(5, 100), "Yone": Fraction(5, 100)}
-# How strongly each evidence level of the object catalog backs a number.
-EVIDENCE_LABEL = {
-    "official": Label.DERIVED,
-    "corroborated": Label.DERIVED,
-    "secondary": Label.PENDING,
-    "unverified": Label.PENDING,
-}
 # Limit conditions of the catalog, as the target kinds they apply to.
 LIMIT_CONDITIONS = {"target is a minion or monster": frozenset({"minion", "monster"})}
 # Effect components that change the damage of a rotation when not applied.
@@ -266,6 +259,12 @@ def _effects(items: Sequence[ItemData], owner: str) -> tuple[list[_Effect], list
             )
             weakened = True
         for effect in item.effects:
+            if effect.get("scenario") is not None:
+                notes.append(
+                    f"{owner} {item.id} {effect.get('id')}: applied by the stat sheet "
+                    f"(scenario {effect.get('scenario')})"
+                )
+                continue
             status = effect.get("model_status")
             components = effect.get("components") or ()
             if status != "evaluable":
