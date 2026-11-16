@@ -1,6 +1,6 @@
 # Regeneración de vida y maná
 
-- **Ámbito:** regla general de la regeneración de vida (`health_regen`) y de maná (`mana_regen`) de un campeón: unidad, crecimiento por nivel y aportes planos y porcentuales.
+- **Ámbito:** regla general de la regeneración de vida (`health_regen`) y de maná (`mana_regen`) de un campeón: unidad, crecimiento por nivel y aportes planos y porcentuales. La usa la hoja de estadísticas (`python -m lol_knowledge stats`).
 - **Parche de referencia:** Data Dragon 16.22.1 (2026-11-16).
 - **Fecha de consulta:** 2026-11-16
 
@@ -38,6 +38,13 @@ por segundo = regeneración / 5
 - **Aportes planos** («5 de regeneración de vida cada 5 s»): se suman (R2).
 - **Briar:** no tiene regeneración de vida base (R1); Data Dragon le da 0.
 - **Maná:** solo para campeones de maná. Con otro recurso (energía, furia…), la regeneración de maná no se calcula.
+
+## Implementación (`Calculado`)
+
+- `src/lol_knowledge/stats/registry.py` declara `health_regen` y `mana_regen` como cantidades aditivas por cada 5 s con `percent_of_base`. Un objeto con `kind: percent` se convierte en cantidad: porcentaje × base del nivel (aportes `base` de la hoja), con la nota `125% of base 13.955`. Su etiqueta nunca es más fuerte que la de la base.
+- `src/lol_knowledge/objects/schema.py` multiplica `FlatHPRegenMod` por 5 y `src/lol_knowledge/objects/catalog.py` anota `unit_conversion` en la entrada. `src/lol_knowledge/stats/data.py` convierte esa anotación en un aporte `Derivado` con la nota `unit converted: …`.
+- Ejemplo calculado: Zaahen a nivel 10 con Renovación de piedra lunar (125 % de regeneración de maná básica): 8,15 + 0,75 × 7,74 = 13,955 de base, más 125 % = 17,44375; total 31,39875 por cada 5 s.
+- Pruebas: `tests/test_stats_regeneration.py` y `tests/test_objects_validator.py`.
 
 ## Fuera de alcance
 

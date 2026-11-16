@@ -18,6 +18,7 @@ from ..damage import to_fraction
 from ..ddragon import validate_champion_id
 from ..errors import DamageInputError, PayloadError, StatsError
 from ..objects import ObjectModelError, load_model
+from .labels import Label
 
 CURRENT = Path("data") / "current"
 OFFICIAL_ITEM_SOURCES = frozenset({"ddragon_stat", "ddragon_description"})
@@ -48,6 +49,9 @@ class ItemStat:
     kind: str
     value: Fraction
     source: str
+    # A Data Dragon value whose unit the model converted is derived, not official.
+    label: Label = Label.OFFICIAL
+    note: str = ""
 
 
 @dataclass(frozen=True)
@@ -176,12 +180,15 @@ def items_from_model(model: Mapping[str, Any], item_ids: Sequence[str]) -> tuple
             source = (entry.get("source") or {}).get("kind")
             if source not in OFFICIAL_ITEM_SOURCES:
                 raise StatsError(f"item {item_id}: unsupported stat source {source!r}")
+            conversion = entry.get("unit_conversion")
             stats.append(
                 ItemStat(
                     stat=str(entry.get("id")),
                     kind=str(entry.get("kind")),
                     value=_number(entry.get("value"), f"item {item_id}.{entry.get('id')}"),
                     source=source,
+                    label=Label.DERIVED if conversion else Label.OFFICIAL,
+                    note=f"unit converted: {conversion}" if conversion else "",
                 )
             )
         selected.append(

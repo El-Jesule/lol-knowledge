@@ -543,3 +543,20 @@ def test_tenacity_can_be_declared_from_the_description() -> None:
     assert any(
         "does not support kind 'flat'" in m for m in _messages(_catalog(stat=stat), snapshot)
     )
+
+
+@pytest.mark.parametrize(
+    ("stat_id", "kind", "value", "quote"),
+    [
+        ("health_regen", "percent", 100, "100% de regeneración de vida básica"),
+        ("health_regen", "flat", 5, "5 de regeneración de vida cada 5 s"),
+        ("mana_regen", "percent", 125, "125% de regeneración de maná básica"),
+        ("mana_regen", "flat", 7, "7 de regeneración de maná cada 5 s"),
+    ],
+)
+def test_regeneration_can_be_declared_flat_or_as_a_percent_of_base(
+    stat_id, kind, value, quote
+) -> None:
+    snapshot = _snapshot(description=quote)
+    stat = {"id": stat_id, "kind": kind, "value": value, "quote": quote}
+    assert _messages(_catalog(stat=stat), snapshot) == []

@@ -143,6 +143,16 @@ def _ungrouped_tenacity(extra: Contribution) -> Contribution:
     return replace(extra, label=Label.PENDING, note=f"{extra.note}; {note}" if extra.note else note)
 
 
+def _percent_of_base(
+    percent: Fraction, current: Sequence[Contribution], label: Label
+) -> tuple[Fraction, str, Label]:
+    """An item's percentage of the base (champion and growth) as an amount."""
+    base_items = [item for item in current if item.scope == "base"]
+    base = sum((item.value for item in base_items), start=Fraction(0))
+    note = f"{format_percent(percent)} of base {format_number(base)}"
+    return percent * base, note, weakest([label, *(item.label for item in base_items)])
+
+
 def _receiver(stat_id: str) -> StatDef:
     """The statistic that receives item and extra contributions declared as ``stat_id``."""
     definition = stat(stat_id)
@@ -375,7 +385,8 @@ def build_stat_sheet(
             definition = _receiver(entry.stat)
             if entry.kind not in {"flat", "percent"}:
                 raise StatsError(f"item {item.id}.{entry.stat}: unknown kind {entry.kind!r}")
-            if definition.resolvable and entry.kind != definition.item_kind:
+            of_base = definition.percent_of_base and entry.kind == "percent"
+            if definition.resolvable and entry.kind != definition.item_kind and not of_base:
                 raise StatsError(
                     f"item {item.id}.{entry.stat}: kind {entry.kind!r} is not supported "
                     f"for {definition.id}"
@@ -386,12 +397,17 @@ def build_stat_sheet(
             note = "percent" if entry.kind == "percent" and definition.unit is Unit.AMOUNT else ""
             if definition.id != entry.stat:
                 note = f"declared as {entry.stat}"
+            label = entry.label
+            if of_base:
+                value, note, label = _percent_of_base(value, contributions[definition.id], label)
+            if entry.note:
+                note = f"{note}; {entry.note}" if note else entry.note
             contributions[definition.id].append(
                 Contribution(
                     value,
                     "bonus",
                     f"data:item:{item.id} {entry.source} ({item.game_version})",
-                    Label.OFFICIAL,
+                    label,
                     note,
                 )
             )

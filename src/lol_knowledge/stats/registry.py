@@ -21,6 +21,7 @@ CRIT_RULES = f"{MECHANICS}/critical-strike.md"
 ATTACK_SPEED_RULES = f"{MECHANICS}/attack-speed.md"
 VAMP_RULES = f"{MECHANICS}/life-steal-and-omnivamp.md"
 TENACITY_RULES = f"{MECHANICS}/tenacity.md"
+REGEN_RULES = f"{MECHANICS}/regeneration.md"
 # Attacks per second; "Baseline Attack Speed Cap: 2.5 => 3.0" in the 25.S1.3 patch notes.
 ATTACK_SPEED_CAP = Fraction(3)
 CRIT_CHANCE_CAP = Fraction(1)  # 100 %; the excess stays visible in the scopes
@@ -47,6 +48,8 @@ class StatDef:
     cap: Fraction | None = None  # the total never exceeds it; scopes are uncapped
     # Item and extra contributions declared with this id are added to that stat instead.
     routes_to: str | None = None
+    # Items may also declare a percentage of the stat's base (scope "base") total.
+    percent_of_base: bool = False
 
     @property
     def resolvable(self) -> bool:
@@ -114,8 +117,23 @@ STATS: dict[str, StatDef] = {
             ATTACK_SPEED_RULES,
         ),
         _pending("move_speed", "Velocidad de movimiento", "límites suaves " + NO_RULE),
-        _pending("health_regen", "Regeneración de vida", "unidad por 5 s y aportes % " + NO_RULE),
-        _pending("mana_regen", "Regeneración de maná", "unidad por 5 s y aportes % " + NO_RULE),
+        # Per 5 seconds; items add flat amounts or a percentage of the base (regeneration.md).
+        StatDef(
+            "health_regen",
+            "Regeneración de vida",
+            Stacking.ADDITIVE,
+            Unit.AMOUNT,
+            REGEN_RULES,
+            percent_of_base=True,
+        ),
+        StatDef(
+            "mana_regen",
+            "Regeneración de maná",
+            Stacking.ADDITIVE,
+            Unit.AMOUNT,
+            REGEN_RULES,
+            percent_of_base=True,
+        ),
         StatDef(
             "crit_chance",
             "Probabilidad de crítico",
