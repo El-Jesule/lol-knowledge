@@ -86,16 +86,16 @@ def interval(*items):
 
 
 def test_a_burn_is_spread_over_the_steps_and_ends_the_rotation():
-    outcome = run("Q.first_hit attack attack", "6653")
-    step = interval("6653")
+    outcome = run("Q.first_hit attack attack", "2508")
+    step = interval("2508")
     assert [len(burns(outcome.steps[index])) for index in range(4)] == [0, 0, 1, 1]
     (second,) = burns(outcome.steps[2])
-    assert second.source == f"6653 torment (Tormento) from 0 s to {_n(step)} s"
-    assert second.raw == 60 * step
+    assert second.source == f"2508 ignite (Inflamar) from 0 s to {_n(step)} s"
+    assert second.raw == 5 * step
     last = outcome.steps[-1]
     assert (last.index, last.step.text, last.name) == (4, "burns", "burns until 3 s")
     assert last.time == 3
-    assert sum(part.raw for step in outcome.steps for part in burns(step)) == 180
+    assert sum(part.raw for step in outcome.steps for part in burns(step)) == 15
     assert outcome.duration == 3
     assert outcome.damage_per_second == outcome.total / 3
 
@@ -107,26 +107,26 @@ def _n(value):
 
 
 def test_applying_a_burn_again_restarts_its_duration():
-    outcome = run("Q.first_hit wait:2 E.edge", "6653")
-    assert sum(part.raw for step in outcome.steps for part in burns(step)) == 60 * 5
+    outcome = run("Q.first_hit wait:2 E.edge", "2508")
+    assert sum(part.raw for step in outcome.steps for part in burns(step)) == 5 * 5
     assert outcome.steps[-1].name == "burns until 5 s"
     assert outcome.duration == 5
 
 
 def test_waits_count_the_burn_damage_up_to_them():
-    outcome = run("Q.first_hit wait:1 wait:1", "6653")
+    outcome = run("Q.first_hit wait:1 wait:1", "2508")
     assert [step.name for step in outcome.steps] == ["Q La guja de los Oscuros rank 5", "wait",
                                                      "wait", "burns until 3 s"]  # fmt: skip
     assert burns(outcome.steps[1]) == []
     (part,) = burns(outcome.steps[2])
-    assert (part.raw, outcome.steps[2].time) == (60, 1)
+    assert (part.raw, outcome.steps[2].time) == (5, 1)
     assert outcome.steps[2].health_after == outcome.steps[2].health_before - part.damage
     (rest,) = burns(outcome.steps[3])
-    assert rest.raw == 120
+    assert rest.raw == 10
 
 
 def test_the_burn_damage_lands_before_the_step_reads_the_target_health():
-    outcome = run("Q.first_hit wait:1 attack", "6653")
+    outcome = run("Q.first_hit wait:1 attack", "2508")
     attack = outcome.steps[2]
     assert attack.parts[0].kind == "burn"
     assert attack.health_before == outcome.steps[1].health_after
@@ -134,9 +134,9 @@ def test_the_burn_damage_lands_before_the_step_reads_the_target_health():
 
 
 def test_a_burn_can_execute_on_the_final_step():
-    probe = run("Q.first_hit", "6653", "6676", health=3000)
+    probe = run("Q.first_hit", "2508", "6676", health=3000)
     hit = probe.steps[0].total
-    outcome = run("Q.first_hit", "6653", "6676", health=3000, current=hit + 250)
+    outcome = run("Q.first_hit", "2508", "6676", health=3000, current=hit + 160)
     final = outcome.steps[-1]
     assert final.name == "burns until 3 s"
     assert [part.kind for part in final.parts] == ["burn", "execute"]
@@ -145,9 +145,9 @@ def test_a_burn_can_execute_on_the_final_step():
 
 
 def test_without_the_timeline_burns_are_still_whole_and_once():
-    outcome = run("Q.first_hit E.edge", "6653", timeline=False)
+    outcome = run("Q.first_hit E.edge", "2508", timeline=False)
     assert [len(burns(step)) for step in outcome.steps] == [1, 0]
-    assert burns(outcome.steps[0])[0].raw == 180
+    assert burns(outcome.steps[0])[0].raw == 15
 
 
 # Timed effects
@@ -270,8 +270,10 @@ def test_with_bonus_adds_a_temporary_contribution():
     assert data["lethality"].total() == base["lethality"].total() + 15
     assert data["lethality"].contributions[-1].source == "test"
     assert base["lethality"].total() == 10
-    with pytest.raises(StatsError, match="only additive amounts"):
+    with pytest.raises(StatsError, match="feeds other stats"):
         with_bonus(base, "crit_chance", F(1, 10), "test", Label.DERIVED)
+    with pytest.raises(StatsError, match="is not a fraction 0..1"):
+        with_bonus(base, "armor_penetration_percent", F(2), "test", Label.DERIVED)
 
 
 def test_with_amplifier_uses_the_total_without_other_amplifiers():
@@ -339,14 +341,14 @@ def test_malformed_timed_effects_are_errors(item_id, effect_id, component, messa
 def test_cli_reports_the_final_burn_step(capsys):
     args = [
         "rotation", "--champion", "Zaahen", "--level", "16", "--learned", "Q=5",
-        "--item", "6653", "--steps", "Q.first_hit", "--timeline", "--target-armor", "0",
+        "--item", "2508", "--steps", "Q.first_hit", "--timeline", "--target-armor", "0",
         "--target-mr", "0", "--target-max-health", "3000", "--target-kind", "champion",
         "--root", str(ROOT),
     ]  # fmt: skip
     assert main(args) == 0
     out = capsys.readouterr().out
     assert "step 2 burns (burns until 3 s) at 3 s: health" in out
-    assert "(6653 torment (Tormento) from 0 s to 3 s)" in out
+    assert "(2508 ignite (Inflamar) from 0 s to 3 s)" in out
     assert "duration 3 s" in out
     assert main([*args, "--json"]) == 0
     report = json.loads(capsys.readouterr().out)
@@ -355,19 +357,19 @@ def test_cli_reports_the_final_burn_step(capsys):
 
 
 def test_a_burn_that_ended_between_steps_adds_nothing_more():
-    outcome = run("Q.first_hit wait:5 attack", "6653")
+    outcome = run("Q.first_hit wait:5 attack", "2508")
     assert outcome.steps[-1].step.text == "attack"
     assert [part.source.split(") ")[1] for part in burns(outcome.steps[-1])] == ["from 0 s to 3 s"]
     assert outcome.duration == 5
 
 
 def test_a_burn_starts_at_the_step_that_applies_it():
-    outcome = run("attack attack Q.first_hit attack", "6653")
+    outcome = run("attack attack Q.first_hit attack", "2508")
     start = outcome.steps[2].time
-    assert start == interval("6653")
+    assert start == interval("2508")
     (first,) = burns(outcome.steps[3])
     assert first.source.split(") ")[1].startswith(f"from {_n(start)} s")
-    assert sum(part.raw for step in outcome.steps for part in burns(step)) == 180
+    assert sum(part.raw for step in outcome.steps for part in burns(step)) == 15
 
 
 def test_the_execute_reads_the_health_before_the_step_burns():

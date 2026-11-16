@@ -130,14 +130,12 @@ def test_rabadon_amplifies_the_total_ability_power():
     assert ap.label is Label.DERIVED
 
 
-def test_terminus_penetration_and_guinsoo_attack_speed_at_full_stacks():
+def test_in_combat_stacks_of_terminus_and_guinsoo_are_not_sheet_stats():
     data = sheet(11, "3302", "3124")
-    assert data["armor_penetration_percent"].total() == F("0.3")
-    assert data["magic_penetration_percent"].total() == F("0.3")
-    assert data["armor"].scoped("bonus") == 21  # 3 light hits of 7 at level 11
-    assert data["armor"].contributions[-1].note == "scenario: maximum stacks"
-    stacks = data["attack_speed_bonus"].contributions[-1]
-    assert (stacks.value, stacks.note) == (F("0.32"), "scenario: maximum stacks")
+    assert data["armor_penetration_percent"].total() == 0
+    assert data["magic_penetration_percent"].total() == 0
+    assert data["armor"].scoped("bonus") == 0
+    assert all("stacks" not in item.note for item in data["attack_speed_bonus"].contributions)
 
 
 def test_on_hit_damage_of_the_new_items():
@@ -157,10 +155,8 @@ def test_on_hit_damage_of_the_new_items():
     assert outcome.label is not Label.PENDING
 
 
-def test_guinsoo_phantom_hits_are_applied_with_its_full_stacks():
+def test_guinsoo_stacks_are_computed_by_the_rotation():
     outcome = run("3124")
     assert "attacker 3124 phantom-hit: excluded, not applied" not in outcome.notes
-    assert "attacker 3124 seething-strike: applied by the stat sheet (scenario max_stacks)" in (
-        outcome.notes
-    )
+    assert not any("3124 seething-strike" in note for note in outcome.notes)
     assert outcome.label is not Label.PENDING

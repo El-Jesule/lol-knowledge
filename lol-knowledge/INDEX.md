@@ -32,6 +32,7 @@
 | Encadenar ataques, daño al impactar y vida del objetivo | [Ataques básicos y daño al impactar](mechanics/basic-attacks-and-on-hit.md) |
 | Calcular el golpe de Hoja encantada (Brillo, Trinidad, Liche…) | [Hoja encantada](mechanics/spellblade.md) |
 | Calcular efectos cada N ataques y de Vigor (Kraken, Guinsoo, Cañón…) | [Contadores de ataques y Vigor](mechanics/attack-counters.md) |
+| Calcular desde 0 las acumulaciones temporales de combate (Guinsoo, El final, Liandry, Disfraz encantado) | [Acumulaciones en combate](mechanics/combat-stacks.md) |
 | Calcular efectos según la vida del objetivo (Kraken, Llamasombría, Recaudadora) | [Vida del objetivo](mechanics/target-health.md) |
 | Calcular quemaduras y aumentos por tiempo en combate (Liandry, Antorcha…) | [Quemaduras](mechanics/burns.md) |
 | Dar tiempos a una rotación (ataques, enfriamientos, esperas) | [Línea de tiempo](mechanics/timeline.md) |

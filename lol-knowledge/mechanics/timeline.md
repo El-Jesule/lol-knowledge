@@ -7,7 +7,7 @@
 
 1. **Tiempos mixtos:** el motor encadena los pasos lo antes posible, y el usuario puede intercalar esperas (`wait:<segundos>`).
 2. **Enfriamientos:** lanzar una habilidad en enfriamiento es un **error**, no una espera automática.
-3. **Acumulaciones al máximo:** se mantendrán como opción para simular a mitad de partida cuando la línea de tiempo calcule las acumulaciones (fase posterior). Hoy los escenarios `max_stacks` siguen aplicándose al máximo.
+3. **Acumulaciones al máximo:** se mantienen como opción para simular a mitad de partida, pero solo para acumulaciones permanentes. Las temporales que solo existen en combate empiezan siempre en 0 (decisión de la fase 32, [`combat-stacks.md`](combat-stacks.md)).
 4. **Lo que no tiene datos se ignora** y queda declarado: tiempos de lanzamiento de las habilidades, la animación previa al golpe de los ataques y el viaje de los proyectiles.
 
 ## Decisiones del usuario (fase 30, 2026-11-16)
@@ -52,5 +52,4 @@
 
 ## Pendiente (fases siguientes)
 
-- Acumulaciones calculadas (Guinsoo, Liandry, Disfraz encantado, El final), con «al máximo» como opción.
 - Los impactos fantasma de Guinsoo como acumulación extra del Kraken (T5).

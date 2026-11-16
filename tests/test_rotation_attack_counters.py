@@ -75,13 +75,16 @@ def test_kraken_level_breakpoints_and_ranged_multiplier():
     assert ranged.raw == 150 * F("0.8") * (1 + F("0.75") * (1 - ranged_step.health_before / 5000))
 
 
-def test_guinsoo_repeats_the_on_hit_effects_on_every_third_attack():
-    outcome = run("attack attack attack attack attack attack", "3124", "3115")
-    third = outcome.steps[2]
-    repeated = [part for part in third.parts if "again by 3124 phantom-hit" in part.source]
+def test_guinsoo_repeats_the_on_hit_effects_every_third_attack_at_full_stacks():
+    # Stacks from 0: the 4th attack completes them and counts, so the 6th repeats.
+    outcome = run(" ".join(["attack"] * 9), "3124", "3115")
+    sixth = outcome.steps[5]
+    repeated = [part for part in sixth.parts if "again by 3124 phantom-hit" in part.source]
     assert [part.source.split(" (")[0] for part in repeated] == ["3124 wrath", "3115 icathian-bite"]
-    assert not any("again by" in part.source for part in outcome.steps[3].parts)
-    assert any("again by" in part.source for part in outcome.steps[5].parts)
+    assert all(part.label is Label.PENDING for part in repeated)
+    hits = [step.index for step in outcome.steps
+            if any("again by" in part.source for part in step.parts)]  # fmt: skip
+    assert hits == [6, 9]
     assert "attacker 3124 phantom-hit: excluded, not applied" not in outcome.notes
 
 
@@ -158,10 +161,11 @@ def test_a_condition_on_the_target_kind_limits_weakening():
     assert _could_apply({"conditions": [{"kind": "on_hit"}]}, "minion")
 
 
-def test_terminus_light_hits_by_level():
-    assert sheet("3302", level=11)["armor"].scoped("bonus") == 21
-    assert sheet("3302", level=14)["magic_resist"].scoped("bonus") == 24
-    assert sheet("3302", level=10)["armor"].scoped("bonus") == 18
+def test_terminus_stacks_are_left_out_of_the_stat_sheet():
+    assert sheet("3302", level=11)["armor"].scoped("bonus") == 0
+    assert sheet("3302", level=11)["armor_penetration_percent"].total() == (
+        sheet(level=11)["armor_penetration_percent"].total()
+    )
 
 
 def test_without_galvanize_an_ability_does_not_use_energized():

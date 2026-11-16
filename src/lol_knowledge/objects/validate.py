@@ -78,6 +78,7 @@ _EFFECT_KEYS = {
     "components",
     "cooldown_seconds",
     "cooldown_reduced_by_attacks",
+    "alternation",
     "stacks",
     "duration_seconds",
     "limits",
@@ -111,6 +112,7 @@ _LIMIT_KEYS = {"kind", "value", "unit", "condition"}
 _SCALAR_KEYS = {"status", "reason"}
 _STACK_KEYS = {"required", "window_seconds", "max_stacks"}
 _REFUND_KEYS = {"seconds", "critical_seconds"}
+_ALTERNATION_KEYS = {"group", "position", "of"}
 _SOURCE_KEYS = {"kind", "reference", "quote", "retrieved_at", "confidence", "note"}
 _SOURCE_CONFIDENCE = {
     "ddragon_description": {"official"},
@@ -224,7 +226,8 @@ def _effect_numbers(effect: Mapping[str, Any]) -> list[float]:
     if isinstance(stacks, Mapping):
         for key in ("required", "max_stacks", "window_seconds"):
             value = stacks.get(key)
-            if _is_number(value):
+            # ``required: 1`` is "every attack", which a description says without a number.
+            if _is_number(value) and not (key == "required" and value == 1):
                 numbers.append(float(value))
     return numbers
 
@@ -499,6 +502,8 @@ class _CatalogChecker:
                 self._check_component(component, f"{pointer}.components[{index}]")
         self._check_scalar(effect.get("cooldown_seconds"), f"{pointer}.cooldown_seconds")
         self._check_refund(effect, f"{pointer}.cooldown_reduced_by_attacks")
+        self._check_alternation(effect.get("alternation"), f"{pointer}.alternation")
+        self._check_stacking(effect, pointer)
         self._check_scalar(effect.get("duration_seconds"), f"{pointer}.duration_seconds")
         self._check_stacks(effect.get("stacks"), f"{pointer}.stacks")
         self._check_limits(effect.get("limits"), f"{pointer}.limits")
@@ -729,6 +734,12 @@ class _CatalogChecker:
                     f"{item_pointer}.kind",
                     f"condition kind must be one of {sorted(CONDITION_KINDS)}",
                 )
+            elif condition["kind"] == "stacks_full":
+                value = condition.get("value")
+                if not isinstance(value, str) or not value:
+                    self.fail(
+                        f"{item_pointer}.value", "stacks_full needs the id of a stacking effect"
+                    )
             elif condition["kind"] in {"target_health_below", "target_health_above"}:
                 value = condition.get("value")
                 if not _is_number(value) or not 0 < value < 100:
@@ -865,6 +876,43 @@ class _CatalogChecker:
             return
         if not _is_number(value) or value < 0:
             self.fail(pointer, "scalar must be null, a non-negative number or an unknown marker")
+
+    def _check_alternation(self, alternation: Any, pointer: str) -> None:
+        """Effects of one ``group`` take turns, attack by attack (Terminus, combat-stacks.md)."""
+        if alternation is None:
+            return
+        if not isinstance(alternation, Mapping) or set(alternation) != _ALTERNATION_KEYS:
+            self.fail(pointer, f"must be an object with exactly {sorted(_ALTERNATION_KEYS)}")
+            return
+        group, position, size = alternation["group"], alternation["position"], alternation["of"]
+        if not isinstance(group, str) or not group:
+            self.fail(f"{pointer}.group", "must be a non-empty string")
+        whole = all(
+            isinstance(value, int) and not isinstance(value, bool) for value in (position, size)
+        )
+        if not whole or size < 2 or not 1 <= position <= size:
+            self.fail(pointer, "position and of must be integers with 1 <= position <= of, of >= 2")
+
+    def _check_stacking(self, effect: Mapping[str, Any], pointer: str) -> None:
+        """Stacks gained one per attack need a maximum; seconds in combat need a cap."""
+        event = (
+            (effect.get("trigger") or {}).get("event")
+            if isinstance(effect.get("trigger"), Mapping)
+            else None
+        )
+        stacks = effect.get("stacks")
+        per_attack = isinstance(stacks, Mapping) and stacks.get("required") == 1
+        if per_attack and event == "on_attack" and not isinstance(stacks.get("max_stacks"), int):
+            self.fail(f"{pointer}.stacks.max_stacks", "stacks gained per attack need a maximum")
+        if event == "in_combat" and not any(
+            isinstance(limit, Mapping) and limit.get("kind") == "maximum"
+            for limit in effect.get("limits") or ()
+        ):
+            self.fail(f"{pointer}.limits", "an in_combat effect needs a maximum limit")
+        if "alternation" in effect and not (
+            isinstance(stacks, Mapping) and stacks.get("required") == 1
+        ):
+            self.fail(f"{pointer}.alternation", "only effects with stacks per attack alternate")
 
     def _check_refund(self, effect: Mapping[str, Any], pointer: str) -> None:
         """Seconds each basic attack (and a critical one) takes off the cooldown."""

@@ -18,6 +18,7 @@ already-loaded values; the CLI does the loading.
 
 from __future__ import annotations
 
+import math
 import re
 from collections.abc import Mapping, Sequence
 from dataclasses import dataclass, field, replace
@@ -321,8 +322,12 @@ class _Effect:
     # Cooldown once triggered, and seconds each attack hit (critical) takes off it.
     cooldown: Fraction | None = None
     refund: tuple[Fraction, Fraction] | None = None
-    # Seconds a counter's stacks last after the last attack (``stacks.window_seconds``).
+    # Seconds stacks last after the last attack (``stacks.window_seconds``).
     window: Fraction | None = None
+    # Stacks gained one per attack (``stacks.required`` 1): their maximum, and the
+    # turn they take with other effects of a group (``alternation``).
+    max_stacks: int | None = None
+    alternation: tuple[str, int, int] | None = None
 
     @property
     def title(self) -> str:
@@ -442,6 +447,8 @@ def _effects(
                         _seconds_of(effect.get("cooldown_seconds")),
                         _refund(effect),
                         _window(effect),
+                        _max_stacks(effect),
+                        _alternation(effect),
                     )
                 )
     return effects, notes, weakened
@@ -466,9 +473,30 @@ def _refund(effect: Mapping[str, Any]) -> tuple[Fraction, Fraction] | None:
 
 def _window(effect: Mapping[str, Any]) -> Fraction | None:
     stacks = effect.get("stacks")
-    if _every(effect) is None or not isinstance(stacks, Mapping):
+    if not isinstance(stacks, Mapping):
         return None
     return _seconds_of(stacks.get("window_seconds"))
+
+
+def _max_stacks(effect: Mapping[str, Any]) -> int | None:
+    """The maximum of stacks gained one per attack (combat-stacks.md)."""
+    stacks = effect.get("stacks")
+    if not isinstance(stacks, Mapping) or stacks.get("required") != 1:
+        return None
+    value = stacks.get("max_stacks")
+    return value if isinstance(value, int) and not isinstance(value, bool) else None
+
+
+def _alternation(effect: Mapping[str, Any]) -> tuple[str, int, int] | None:
+    entry = effect.get("alternation")
+    if not isinstance(entry, Mapping):
+        return None
+    return str(entry["group"]), int(entry["position"]), int(entry["of"])
+
+
+def _key(effect: _Effect) -> str:
+    """One stack count per effect component (an effect may change several stats)."""
+    return f"{effect.title}:{effect.component.get('stat')}"
 
 
 def _excluded(effect: _Effect, target_kind: str | None) -> bool:
@@ -571,6 +599,13 @@ class _Rotation:
         self.timed_ready: dict[str, Fraction] = {}  # cooldowns of timed effects
         self.last_counted: dict[str, Fraction] = {}  # last attack of each counter
         self.speed_changed = False  # a timed effect changed the attack speed
+        # Stacks gained per attack and seconds in combat, from 0 (combat-stacks.md).
+        self.stacked: list[_Effect] = []
+        self.combat: list[_Effect] = []
+        self.stacks: dict[str, int] = {}
+        self.stacked_at: dict[str, Fraction] = {}  # the last attack that added a stack
+        self.turns: dict[str, int] = {}  # attacks taken by each alternation group
+        self.now = Fraction(0)
         self.burning: dict[str, _Burn] = {}
         self.accrued = Fraction(0)
         self.active_dealt: list[_Window] = []
@@ -610,6 +645,10 @@ class _Rotation:
                 self.spellblade.append(effect)
             elif effect.trigger == "spellblade" and kind == "repeat_on_hit":
                 self.repeats.append(effect)
+            elif effect.trigger == "on_attack" and effect.max_stacks is not None:
+                self._stacking(effect)
+            elif effect.trigger == "in_combat":
+                self._in_combat(effect)
             elif effect.trigger == "always" and kind == "damage_modifier":
                 if effect.component.get("direction") != "dealt":
                     self._skip(effect, "damage taken by the attacker")
@@ -644,6 +683,89 @@ class _Rotation:
         self.notes.append(f"{owner} {effect.title}: {why} is not part of rotations, not applied")
         if effect.component.get("kind") in DAMAGE_KINDS and owner == "attacker":
             self.weakened = True
+
+    def _stacking(self, effect: _Effect) -> None:
+        component = effect.component
+        if (
+            component.get("kind") != "stat_modifier"
+            or effect.affects != "self"
+            or component.get("mode") != "flat"
+        ):
+            raise RotationError(f"{effect.title}: only flat stats of the attacker stack per attack")
+        self.stacked.append(effect)
+
+    def _in_combat(self, effect: _Effect) -> None:
+        component = effect.component
+        if (
+            component.get("kind") != "damage_modifier"
+            or component.get("direction") != "dealt"
+            or component.get("source") != "all"
+        ):
+            raise RotationError(f"{effect.title}: only dealt modifiers grow in combat")
+        self._mode(effect)
+        self._cap(effect)
+        if self.timeline is None:
+            self.notes.append(
+                f"attacker {effect.title}: grows each second in combat; without --timeline "
+                "it stays at 0"
+            )
+            self.weakened |= not _excluded(effect, self.target.kind)
+        self.combat.append(effect)
+
+    @staticmethod
+    def _cap(effect: _Effect) -> Fraction:
+        for limit in effect.limits:
+            if limit.get("kind") == "maximum":
+                return Fraction(str(limit["value"]))
+        raise RotationError(f"{effect.title}: an in-combat effect needs a maximum")
+
+    def _combat_value(self, effect: _Effect, target_stats: Mapping[str, Fraction]) -> Fraction:
+        """Per second x whole seconds in combat (from the start), up to the maximum.
+
+        Without the timeline the clock stays at 0, so the increase does too.
+        """
+        return min(self._cap(effect), self._percent(effect, target_stats) * math.floor(self.now))
+
+    def _stack(self, clock: Fraction, target_stats: Mapping[str, Fraction]) -> None:
+        """An attack adds a stack to each effect whose turn it is, up to its maximum."""
+        taken: set[str] = set()
+        for effect in self.stacked:
+            if not _conditions_hold(effect, self.target, "trigger", False, target_stats):
+                continue
+            if effect.alternation is not None:
+                group, position, size = effect.alternation
+                taken.add(group)
+                if self.turns.get(group, 0) % size + 1 != position:
+                    continue
+            key = _key(effect)
+            if self._expired(effect, clock):
+                self.stacks[key] = 0
+            assert effect.max_stacks is not None
+            self.stacks[key] = min(effect.max_stacks, self.stacks.get(key, 0) + 1)
+            self.stacked_at[key] = clock
+            if self.timeline is not None:
+                self.speed_changed |= str(effect.component.get("stat")) in ATTACK_SPEED_STATS
+        for group in taken:
+            self.turns[group] = self.turns.get(group, 0) + 1
+
+    def _expired(self, effect: _Effect, at: Fraction) -> bool:
+        """Whether the stacks of ``effect`` ran out by ``at`` (timeline only)."""
+        last = self.stacked_at.get(_key(effect))
+        return (
+            self.timeline is not None
+            and effect.window is not None
+            and last is not None
+            and at - last >= effect.window
+        )
+
+    def _full(self, item: str, effect_id: str) -> bool:
+        """Whether every component of an item's stacking effect is at its maximum."""
+        title = f"{item} {effect_id}"
+        effects = [effect for effect in self.stacked if effect.title == title]
+        if not effects:
+            raise RotationError(f"{title}: stacks_full refers to no stacking effect")
+        # ``_stack`` has already dropped expired stacks for this attack.
+        return all(self.stacks.get(_key(effect), 0) == effect.max_stacks for effect in effects)
 
     def _timed(self, effect: _Effect) -> None:
         """Keep a timed effect for the timeline, or note that it needs one."""
@@ -724,6 +846,12 @@ class _Rotation:
                 value, stat_labels = self._value(effect, target_stats)
                 dealt.append((effect.title, value))
                 labels += [effect.label, *stat_labels]
+        for effect in self.combat:
+            if _conditions_hold(effect, self.target, part_kind, crit, target_stats):
+                value = self._combat_value(effect, target_stats)
+                if value:
+                    dealt.append((effect.title, value))
+                    labels.append(effect.label)
         for window in self.active_dealt:
             types = window.effect.component.get("damage_types")
             if types is not None and damage_type.value not in types:
@@ -958,9 +1086,32 @@ class _Rotation:
         }
 
     def _set_moment(self, at: Fraction) -> None:
-        """Apply the timed effects in force at ``at``: stats, dealt damage, resistances."""
+        """Apply the timed effects in force at ``at``: stats, dealt damage, resistances.
+
+        Also the stacks gained per attack (combat-stacks.md), with or without the timeline.
+        """
         sheet = self.base_sheet
+        self.now = at
         self.active_dealt, self.shred = [], {}
+        for effect in self.stacked:
+            count = self.stacks.get(_key(effect), 0)
+            if not count or self._expired(effect, at):
+                continue
+            stat_id = str(effect.component.get("stat"))
+            per_stack, stat_labels = self._value(effect, self.target.stats)
+            labels = [effect.label, *stat_labels]
+            note = f"{count} stack{'' if count == 1 else 's'}"
+            if effect.alternation is not None:
+                labels.append(Label.PENDING)
+                note += "; light and dark hits alternate from a light one (not verified)"
+            sheet = with_bonus(
+                sheet,
+                stat_id,
+                effect_amount(stat_id, per_stack * count),
+                f"{effect.title} ({effect.name})",
+                weakest(labels),
+                note,
+            )
         for window in self.windows.values():
             if window.end <= at:
                 continue
@@ -1041,6 +1192,13 @@ class _Rotation:
             for end in [
                 *(burn.end for burn in self.burning.values()),
                 *(window.end for window in self.windows.values()),
+                *(
+                    self.stacked_at[_key(effect)] + effect.window
+                    for effect in self.stacked
+                    if effect.window is not None and _key(effect) in self.stacked_at
+                ),
+                # Seconds in combat change the in-combat increases on whole seconds.
+                *(Fraction(second) for second in range(math.ceil(until)) if self.combat),
             ]
             if start < end < until
         }
@@ -1189,6 +1347,9 @@ class _Rotation:
         """
         parts: list[Part] = []
         for effect in [*self.counted, *self.counted_repeats]:
+            needed = effect.condition_values.get("stacks_full")
+            if needed is not None and not self._full(effect.item, str(needed)):
+                continue  # phantom hits count only at full stacks (combat-stacks.md)
             if clock is not None and effect.window is not None:
                 last = self.last_counted.get(effect.title)
                 if counters[effect.title] and last is not None and clock - last >= effect.window:
@@ -1207,8 +1368,15 @@ class _Rotation:
                 continue
             counters[effect.title] = 0
             if effect.component.get("kind") == "repeat_on_hit":
+                label = effect.label
+                if needed is not None:
+                    label = Label.PENDING
+                    self.notes.append(
+                        f"{effect.title}: the attack that completes the stacks counts (user "
+                        "decision; an old Leaguepedia note), not verified"
+                    )
                 parts += self._on_hit(
-                    self.on_hit, step, target_stats, f" - again by {effect.title}", effect.label
+                    self.on_hit, step, target_stats, f" - again by {effect.title}", label
                 )
             else:
                 parts += self._on_hit([effect], step, target_stats)
@@ -1350,7 +1518,7 @@ class _Rotation:
             before = health
             if self.timeline is not None:
                 parts, health = self._accrue(clock, health)
-                self._set_moment(clock)
+            self._set_moment(clock)
             target_stats = self._target_stats(health)
             extra: list[Label] = []
             if step.slot is None:
@@ -1372,6 +1540,7 @@ class _Rotation:
                     if self._open("spellblade", clock, target_stats):
                         extra.append(Label.PENDING)
                 timed = self.timeline is not None
+                self._stack(clock, target_stats)
                 parts += self._counted(
                     step, target_stats, counters, clock if timed else None, extra
                 )
