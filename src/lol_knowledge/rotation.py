@@ -38,6 +38,8 @@ from .stats import (
     ability_cooldowns,
     sheet_effect_reason,
     weakest,
+    with_amplifier,
+    with_bonus,
 )
 
 RULES = (
@@ -65,6 +67,14 @@ LIMIT_CONDITIONS = {"target is a minion or monster": frozenset({"minion", "monst
 DAMAGE_KINDS = frozenset(
     {"damage", "damage_modifier", "stat_modifier", "burn", "execute", "repeat_on_hit"}
 )
+
+# Effects that last a while once triggered; only the timeline applies them (timeline.md).
+TIMED_KINDS = frozenset({"damage_modifier", "stat_modifier"})
+TIMED_TRIGGERS = frozenset({"spellblade", "energized", "damaging_ability"})
+# Triggers on a hit: whether that hit benefits from its own effect is not verified.
+UNCERTAIN_START_TRIGGERS = frozenset({"spellblade", "energized"})
+# Target resistances a timed effect can reduce, by the damage type they mitigate.
+RESISTANCE_STATS = {"armor": DamageType.PHYSICAL, "magic_resist": DamageType.MAGIC}
 
 # Kinds against which omnivamp drops to 33 % for pets, damage over time and area spells.
 REDUCED_OMNIVAMP_KINDS = frozenset({"minion", "monster"})
@@ -302,6 +312,9 @@ class _Effect:
     # Values of conditions that take one (``target_health_below``: a percentage).
     condition_values: Mapping[str, Any] = field(default_factory=dict)
     scenario: str | None = None
+    # Seconds the effect lasts once triggered (``duration_seconds``), and whom it affects.
+    duration: Fraction | None = None
+    affects: str | None = None
 
     @property
     def title(self) -> str:
@@ -316,6 +329,26 @@ TARGET_KIND_CONDITIONS = {
     "target_is_minion": "minion",
     "target_is_monster": "monster",
 }
+
+
+@dataclass(frozen=True)
+class _Window:
+    """A timed effect in force until ``end``, with its value when it was triggered."""
+
+    effect: _Effect
+    end: Fraction
+    value: Fraction
+    labels: tuple[Label, ...]
+
+
+@dataclass(frozen=True)
+class _Burn:
+    """A burn in progress: damage per second (as applied) until ``end``."""
+
+    effect: _Effect
+    end: Fraction
+    per_second: Fraction
+    labels: tuple[Label, ...]
 
 
 def _could_apply(effect: Mapping[str, Any], target_kind: str | None) -> bool:
@@ -396,9 +429,27 @@ def _effects(
                             if "value" in entry
                         },
                         effect.get("scenario"),
+                        _duration(effect),
+                        (effect.get("target") or {}).get("kind"),
                     )
                 )
     return effects, notes, weakened
+
+
+def _duration(effect: Mapping[str, Any]) -> Fraction | None:
+    value = effect.get("duration_seconds")
+    if isinstance(value, (int, float)) and not isinstance(value, bool) and value > 0:
+        return Fraction(str(value))
+    return None
+
+
+def _excluded(effect: _Effect, target_kind: str | None) -> bool:
+    """Whether a condition of ``effect`` on the target kind rules out ``target_kind``."""
+    return target_kind is not None and any(
+        TARGET_KIND_CONDITIONS[condition] != target_kind
+        for condition in effect.conditions
+        if condition in TARGET_KIND_CONDITIONS
+    )
 
 
 def _every(effect: Mapping[str, Any]) -> int | None:
@@ -466,6 +517,7 @@ class _Rotation:
         timeline: bool = False,
     ) -> None:
         self.kit, self.sheet, self.ranks, self.target = kit, sheet, ranks, target
+        self.base_sheet = sheet
         self.timeline = self._timeline() if timeline else None
         self.crit_base, self.holder_range, self.inputs = crit_base, holder_range, inputs
         self.stats, self.origin = sheet_stats(sheet)
@@ -485,6 +537,13 @@ class _Rotation:
         self.galvanize: list[_Effect] = []
         self.executes: list[_Effect] = []
         self.burns: list[_Effect] = []
+        self.timed: list[_Effect] = []
+        # Timeline state: timed effects and burns in force, and how far burns are counted.
+        self.windows: dict[str, _Window] = {}
+        self.burning: dict[str, _Burn] = {}
+        self.accrued = Fraction(0)
+        self.active_dealt: list[_Window] = []
+        self.shred: dict[DamageType, list[_Window]] = {}
         owners = sorted(
             {
                 item.id
@@ -530,6 +589,12 @@ class _Rotation:
                             f"attacker {effect.title}: applied at full stacks "
                             f"(scenario {effect.scenario})"
                         )
+            elif (
+                effect.duration is not None
+                and kind in TIMED_KINDS
+                and effect.trigger in TIMED_TRIGGERS
+            ):
+                self._timed(effect)
             else:
                 self._skip(effect, f"{effect.trigger} {kind}")
         if len({effect.item for effect in self.energized}) > 1:
@@ -549,7 +614,39 @@ class _Rotation:
         if effect.component.get("kind") in DAMAGE_KINDS and owner == "attacker":
             self.weakened = True
 
+    def _timed(self, effect: _Effect) -> None:
+        """Keep a timed effect for the timeline, or note that it needs one."""
+        assert effect.duration is not None
+        if self.timeline is None:
+            self.notes.append(
+                f"attacker {effect.title}: lasts {format_number(effect.duration)} s; "
+                "applied only with --timeline"
+            )
+            self.weakened |= not _excluded(effect, self.target.kind)
+            return
+        component = effect.component
+        kind = component.get("kind")
+        if kind == "damage_modifier":
+            if component.get("direction") != "dealt" or component.get("source") != "all":
+                raise RotationError(f"{effect.title}: only dealt modifiers of all damage are timed")
+            self._mode(effect)
+        elif effect.affects == "self":
+            mode = component.get("mode")
+            if mode not in {"flat", "percent"} or (
+                mode == "percent" and component.get("scope") != "total"
+            ):
+                raise RotationError(f"{effect.title}: only flat or total-percent stats are timed")
+        elif str(component.get("stat")) not in RESISTANCE_STATS or component.get("mode") != "flat":
+            raise RotationError(f"{effect.title}: only flat target resistance changes are timed")
+        self.timed.append(effect)
+
     def _percent(self, effect: _Effect, target_stats: Mapping[str, Fraction]) -> Fraction:
+        return self._value(effect, target_stats)[0]
+
+    def _value(
+        self, effect: _Effect, target_stats: Mapping[str, Fraction]
+    ) -> tuple[Fraction, list[Label]]:
+        """The effect's formula and the labels of the attacker stats it reads."""
         try:
             result = evaluate_formula(
                 effect.component.get("formula"),
@@ -560,7 +657,9 @@ class _Rotation:
             )
         except FormulaError as exc:
             raise RotationError(f"{effect.title}: {self._explain(exc)}") from exc
-        return result.exact
+        labels = [self.origin[key][1] for key in result.dependencies if key in self.origin]
+        assert result.exact is not None
+        return result.exact, labels
 
     @staticmethod
     def _explain(exc: FormulaError) -> str:
@@ -591,8 +690,16 @@ class _Rotation:
             ):
                 if effect.component.get("source") != "all":
                     raise RotationError(f"{effect.title}: source is not modelled")
-                dealt.append((effect.title, self._percent(effect, target_stats)))
-                labels.append(effect.label)
+                value, stat_labels = self._value(effect, target_stats)
+                dealt.append((effect.title, value))
+                labels += [effect.label, *stat_labels]
+        for window in self.active_dealt:
+            types = window.effect.component.get("damage_types")
+            if types is not None and damage_type.value not in types:
+                continue
+            if _conditions_hold(window.effect, self.target, part_kind, crit, target_stats):
+                dealt.append((window.effect.title, window.value))
+                labels += window.labels
         for effect in self.taken:
             if not (self._mode(effect) and _conditions_hold(effect, self.target, part_kind, crit)):
                 continue
@@ -627,12 +734,23 @@ class _Rotation:
         notes: Sequence[str] = (),
         life_steal_tag: Mapping[str, Any] | None = None,
     ) -> Part:
-        mitigation = mitigate(
-            raw,
-            damage_type,
-            self.target.resistance(damage_type),
-            penetration_modifiers(self.sheet, damage_type),
-        )
+        modifiers = penetration_modifiers(self.sheet, damage_type)
+        shred = self.shred.get(damage_type, [])
+        if shred:
+            modifiers = replace(
+                modifiers,
+                flat_reduction=(*modifiers.flat_reduction, *(-window.value for window in shred)),
+            )
+            labels = [*labels, *(label for window in shred for label in window.labels)]
+            notes = (
+                *notes,
+                *(
+                    f"{window.effect.title} ({window.effect.name}): target "
+                    f"{window.effect.component.get('stat')} {format_number(window.value)}"
+                    for window in shred
+                ),
+            )
+        mitigation = mitigate(raw, damage_type, self.target.resistance(damage_type), modifiers)
         if damage_type in PENETRATION:
             percent, flat = PENETRATION[damage_type]
             labels = [*labels, self.sheet[percent].label, self.sheet[flat].label]
@@ -765,29 +883,156 @@ class _Rotation:
         parts: Sequence[Part],
         target_stats: Mapping[str, Fraction],
         burned: set[str],
+        clock: Fraction = Fraction(0),
     ) -> list[Part]:
-        """Each burn's full duration, once, on the first ability step that starts it."""
+        """Each burn's full duration, once, on the first ability step that starts it.
+
+        With the timeline, the step (re)starts the burn instead; its damage is
+        counted as time passes (``_accrue``).
+        """
         result: list[Part] = []
         for effect in self.burns:
-            if effect.title in burned or (effect.trigger == "damaging_ability" and not parts):
+            if effect.trigger == "damaging_ability" and not parts:
+                continue
+            if self.timeline is None and effect.title in burned:
                 continue
             if not _conditions_hold(effect, self.target, "burn", False, target_stats, step.slot):
                 continue
             burned.add(effect.title)
             duration = Fraction(str(effect.component.get("duration_seconds")))
-            per_second = self._percent(effect, target_stats)
+            per_second, stat_labels = self._value(effect, target_stats)
+            if self.timeline is not None:
+                self.burning[effect.title] = _Burn(
+                    effect, clock + duration, per_second, (effect.label, *stat_labels)
+                )
+                continue
             result.append(
                 self._part(
                     "burn",
                     f"{effect.title} ({effect.name}) over {format_number(duration)} s",
                     DamageType(str(effect.component.get("damage_type"))),
                     per_second * duration,
-                    [effect.label],
+                    [effect.label, *stat_labels],
                     False,
                     target_stats,
                 )
             )
         return result
+
+    def _target_stats(self, health: Fraction) -> dict[str, Fraction]:
+        return {
+            **self.target.stats,
+            "current_health": health,
+            "missing_fraction_health": 1 - health / self.target.stats["max_health"],
+        }
+
+    def _set_moment(self, at: Fraction) -> None:
+        """Apply the timed effects in force at ``at``: stats, dealt damage, resistances."""
+        sheet = self.base_sheet
+        self.active_dealt, self.shred = [], {}
+        for window in self.windows.values():
+            if window.end <= at:
+                continue
+            effect = window.effect
+            component = effect.component
+            if component.get("kind") == "damage_modifier":
+                self.active_dealt.append(window)
+            elif effect.affects == "self":
+                source = f"{effect.title} ({effect.name}) until {format_number(window.end)} s"
+                label = weakest(window.labels)
+                if component.get("mode") == "flat":
+                    sheet = with_bonus(
+                        sheet, str(component.get("stat")), window.value, source, label
+                    )
+                else:
+                    sheet = with_amplifier(
+                        sheet, str(component.get("stat")), window.value, source, label
+                    )
+            else:
+                damage_type = RESISTANCE_STATS[str(component.get("stat"))]
+                self.shred.setdefault(damage_type, []).append(window)
+        if sheet is not self.sheet:
+            self.sheet = sheet
+            self.stats, self.origin = sheet_stats(sheet)
+
+    def _open(
+        self,
+        trigger: str,
+        clock: Fraction,
+        target_stats: Mapping[str, Fraction],
+        slot: str | None = None,
+    ) -> bool:
+        """(Re)start the timed effects of ``trigger``; True when one starts on a hit."""
+        uncertain = False
+        for effect in self.timed:
+            if effect.trigger != trigger:
+                continue
+            if not _conditions_hold(effect, self.target, "trigger", False, target_stats, slot):
+                continue
+            assert effect.duration is not None
+            value, labels = self._value(effect, target_stats)
+            self.windows[effect.title] = _Window(
+                effect, clock + effect.duration, value, (effect.label, *labels)
+            )
+            if trigger in UNCERTAIN_START_TRIGGERS:
+                uncertain = True
+                self.notes.append(
+                    f"{effect.title}: starts after the hit that triggers it; whether that hit "
+                    "benefits is not verified"
+                )
+        return uncertain
+
+    def _accrue(self, until: Fraction, health: Fraction) -> tuple[list[Part], Fraction]:
+        """Burn damage from the last count to ``until``, split where an effect ends.
+
+        Burns deal their damage per second continuously (burns.md); each piece
+        uses the timed effects in force during it.
+        """
+        start = self.accrued
+        if until <= start or not self.burning:
+            self.accrued = max(start, until)
+            return [], health
+        ends = {
+            end
+            for end in [
+                *(burn.end for burn in self.burning.values()),
+                *(window.end for window in self.windows.values()),
+            ]
+            if start < end < until
+        }
+        points = sorted({start, until, *ends})
+        parts: list[Part] = []
+        for begin, finish in zip(points, points[1:], strict=False):
+            self._set_moment(begin)
+            target_stats = self._target_stats(health)
+            for burn in self.burning.values():
+                if burn.end <= begin:
+                    continue
+                effect = burn.effect
+                labels = list(burn.labels)
+                notes: tuple[str, ...] = ()
+                if self._percent(effect, target_stats) != burn.per_second:
+                    labels.append(Label.PENDING)
+                    notes = (
+                        "its damage per second is the one when it was applied; the stats have "
+                        "changed since, and whether the game updates it is not verified",
+                    )
+                part = self._part(
+                    "burn",
+                    f"{effect.title} ({effect.name}) from {format_number(begin)} s to "
+                    f"{format_number(finish)} s",
+                    DamageType(str(effect.component.get("damage_type"))),
+                    burn.per_second * (finish - begin),
+                    labels,
+                    False,
+                    target_stats,
+                    notes,
+                )
+                parts.append(part)
+                health = max(Fraction(0), health - part.damage)
+        self.accrued = until
+        self.burning = {key: burn for key, burn in self.burning.items() if burn.end > until}
+        return parts, health
 
     def _timeline(self) -> Timeline:
         """Attack interval (1 / attack speed) and the checks the timeline needs."""
@@ -905,15 +1150,19 @@ class _Rotation:
         for effect in effects:
             if not _conditions_hold(effect, self.target, "on_hit", step.crit):
                 continue
-            value = self._limited(effect, self._percent(effect, target_stats))
+            value, stat_labels = self._value(effect, target_stats)
+            value = self._limited(effect, value)
             damage_type = DamageType(str(effect.component.get("damage_type")))
+            labels = [effect.label, *stat_labels]
+            if extra is not None:
+                labels.append(extra)
             parts.append(
                 self._part(
                     "on_hit",
                     f"{effect.title} ({effect.name}){suffix}",
                     damage_type,
                     value,
-                    [effect.label] if extra is None else [effect.label, extra],
+                    labels,
                     step.crit,
                     target_stats,
                     life_steal_tag=effect.component.get("applies_life_steal"),
@@ -968,6 +1217,23 @@ class _Rotation:
         ]
         return f"{ability.slot} {ability.name} rank {rank}", parts
 
+    def _burn_outcome(
+        self, index: int, step: Step, name: str, clock: Fraction, health: Fraction
+    ) -> StepOutcome:
+        """A step with no damage of its own: the burn damage up to ``clock``."""
+        parts, left = self._accrue(clock, health)
+        if parts:
+            parts += self._execute(parts, health, self._target_stats(left))
+        return StepOutcome(
+            index,
+            step,
+            name,
+            tuple(parts),
+            health,
+            weakest(part.label for part in parts),
+            clock,
+        )
+
     def run(self, steps: Sequence[Step]) -> RotationOutcome:
         if "max_health" not in self.target.stats:
             raise RotationError(
@@ -994,7 +1260,8 @@ class _Rotation:
             if step.wait is not None:
                 if self.timeline is None:
                     raise RotationError(f"step {step.text}: waits need the timeline (--timeline)")
-                outcomes.append(StepOutcome(index, step, "wait", (), health, Label.OFFICIAL, clock))
+                outcomes.append(self._burn_outcome(index, step, "wait", clock, health))
+                health = outcomes[-1].health_after
                 clock += step.wait
                 continue
             if self.timeline is not None and step.slot is None:
@@ -1002,31 +1269,45 @@ class _Rotation:
                 next_attack = clock + self.timeline.attack_interval
             elif self.timeline is not None:
                 self._cast(step, clock, ready, open_casts)
-            target_stats = {
-                **self.target.stats,
-                "current_health": health,
-                "missing_fraction_health": 1 - health / self.target.stats["max_health"],
-            }
+            parts: list[Part] = []
+            before = health
+            if self.timeline is not None:
+                parts, health = self._accrue(clock, health)
+                self._set_moment(clock)
+            target_stats = self._target_stats(health)
+            extra: list[Label] = []
             if step.slot is None:
                 empowered = charged and step.spellblade and bool(self.spellblade)
                 charged = False
                 name = "critical basic attack" if step.crit else "basic attack"
                 if empowered:
                     name += " with Spellblade"
-                parts = self._attack(step, target_stats, empowered)
+                parts += self._attack(step, target_stats, empowered)
                 if empowered and self.timeline is not None:
                     spellblade_ready = clock + self._spellblade_cooldown()
+                    if self._open("spellblade", clock, target_stats):
+                        extra.append(Label.PENDING)
                 parts += self._counted(step, target_stats, counters)
                 if energized:
                     energized = False
                     name += " (Energized)"
                     parts += self._on_hit(self.energized, step, target_stats)
+                    if self._open("energized", clock, target_stats):
+                        extra.append(Label.PENDING)
             else:
-                name, parts = self._ability(step, target_stats)
+                name, ability_parts = self._ability(step, target_stats)
+                parts += ability_parts
                 # An ability cast while Spellblade is on cooldown does not charge it.
                 charged = self.timeline is None or clock >= spellblade_ready
-                parts += self._burns(step, parts, target_stats, burned)
-                if energized and self.galvanize and parts and self.target.kind == "champion":
+                parts += self._burns(step, ability_parts, target_stats, burned, clock)
+                if ability_parts and self.timeline is not None:
+                    self._open("damaging_ability", clock, target_stats, step.slot)
+                if (
+                    energized
+                    and self.galvanize
+                    and ability_parts
+                    and self.target.kind == "champion"
+                ):
                     energized = False
                     name += " (Energized)"
                     parts += self._on_hit(self.energized, step, target_stats)
@@ -1034,18 +1315,31 @@ class _Rotation:
                         f"{self.galvanize[0].title}: the ability's damage to a champion "
                         "triggered Energized"
                     )
-            parts += self._execute(parts, health, target_stats)
+                    if self.timeline is not None and self._open("energized", clock, target_stats):
+                        extra.append(Label.PENDING)
+            parts += self._execute(parts, before, target_stats)
             outcome = StepOutcome(
                 index,
                 step,
                 name,
                 tuple(parts),
-                health,
-                weakest(part.label for part in parts),
+                before,
+                weakest([*(part.label for part in parts), *extra]),
                 None if self.timeline is None else clock,
             )
             outcomes.append(outcome)
             health = outcome.health_after
+        if self.burning:
+            end = max(burn.end for burn in self.burning.values())
+            outcomes.append(
+                self._burn_outcome(
+                    len(steps) + 1,
+                    Step("burns"),
+                    f"burns until {format_number(end)} s",
+                    end,
+                    health,
+                )
+            )
         if self.energized:
             self.notes.append(
                 "Energized starts ready and fires once; recharging by moving and attacking "
@@ -1055,6 +1349,17 @@ class _Rotation:
             self.notes.append("attack counters ignore their time windows (stacks expiring)")
         if self.timeline is not None:
             self.notes += self.timeline.notes
+            if self.burns:
+                self.notes.append(
+                    "timeline: a burn deals its damage per second continuously from the step "
+                    "that applies it until it ends; applying it again restarts its duration, and "
+                    "damage after the last step is counted (burns.md)"
+                )
+            if self.timed:
+                self.notes.append(
+                    "timeline: a timed effect starts after the damage of the step that triggers "
+                    "it and lasts its duration; triggering it again restarts it (timeline.md)"
+                )
         notes = list(dict.fromkeys(self.notes))
         passive = self.kit.abilities.get("P")
         if passive is not None and passive.not_modelled:

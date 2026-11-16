@@ -35,6 +35,7 @@
 | Calcular efectos según la vida del objetivo (Kraken, Llamasombría, Recaudadora) | [Vida del objetivo](mechanics/target-health.md) |
 | Calcular quemaduras y aumentos por tiempo en combate (Liandry, Antorcha…) | [Quemaduras](mechanics/burns.md) |
 | Dar tiempos a una rotación (ataques, enfriamientos, esperas) | [Línea de tiempo](mechanics/timeline.md) |
+| Repartir las quemaduras en el tiempo y aplicar efectos con duración (Tonada sanguina, Malignidad, Ciclovoltaica, Fuego negro) | [Línea de tiempo](mechanics/timeline.md), reglas 7 y 8 |
 | Ver las estadísticas base y por nivel extraídas del cliente | [champion-records.json](derived/champion-records.json) |
 | Ver los valores, cálculos y textos de los efectos de los objetos, del cliente | [item-effects.json](derived/item-effects.json) |
 | Ver el catálogo curado de objetos | [catalog.json](objects/catalog.json) |
