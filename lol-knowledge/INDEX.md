@@ -30,6 +30,7 @@
 | Calcular la velocidad de movimiento y sus límites suaves | [Velocidad de movimiento](mechanics/move-speed.md) |
 | Aplicar aumentos y reducciones de daño | [Modificadores de daño](mechanics/damage-modifiers.md) |
 | Encadenar ataques, daño al impactar y vida del objetivo | [Ataques básicos y daño al impactar](mechanics/basic-attacks-and-on-hit.md) |
+| Calcular el golpe de Hoja encantada (Brillo, Trinidad, Liche…) | [Hoja encantada](mechanics/spellblade.md) |
 | Ver las estadísticas base y por nivel extraídas del cliente | [champion-records.json](derived/champion-records.json) |
 | Ver los valores, cálculos y textos de los efectos de los objetos, del cliente | [item-effects.json](derived/item-effects.json) |
 | Ver el catálogo curado de objetos | [catalog.json](objects/catalog.json) |

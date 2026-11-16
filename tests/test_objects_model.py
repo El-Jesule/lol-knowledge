@@ -37,7 +37,7 @@ def _reverse_keys(value: Any) -> Any:
 def test_model_header_links_to_the_snapshot(object_model, object_snapshot) -> None:
     assert object_model["schema_version"] == 1
     assert object_model["kind"] == "lol-object-model"
-    assert object_model["catalog_version"] == 10
+    assert object_model["catalog_version"] == 11
     assert object_model["game_version"] == object_snapshot.patch
     assert object_model["source"]["items_sha256"] == object_snapshot.items_sha256
     assert object_model["source"]["catalog"] == "lol-knowledge/objects/catalog.json"
@@ -298,7 +298,13 @@ def test_no_snapshot_stats_are_unmapped(object_model) -> None:
 
 def test_formula_requirements_use_the_target_scope(object_model) -> None:
     requirements = formula_stat_requirements(object_model)
-    assert requirements["champion"] == ("ability_power", "bonus_armor", "bonus_attack_damage")
+    assert requirements["champion"] == (
+        "ability_power",
+        "base_attack_damage",
+        "bonus_armor",
+        "bonus_attack_damage",
+        "crit_chance",
+    )
     assert requirements["target"] == ("bonus_health", "current_health")
 
 

@@ -154,7 +154,13 @@ def test_attack_range_must_be_melee_or_ranged() -> None:
 def test_formula_requirements_separate_target_stats(object_model) -> None:
     requirements = formula_stat_requirements(object_model)
     assert requirements == {
-        "champion": ("ability_power", "bonus_armor", "bonus_attack_damage"),
+        "champion": (
+            "ability_power",
+            "base_attack_damage",
+            "bonus_armor",
+            "bonus_attack_damage",
+            "crit_chance",
+        ),
         "target": ("bonus_health", "current_health"),
     }
 

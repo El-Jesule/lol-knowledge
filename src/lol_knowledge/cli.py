@@ -218,7 +218,11 @@ def _add_rotation_parser(subparsers: argparse._SubParsersAction) -> None:
     rotation.add_argument(
         "--steps",
         required=True,
-        help='Steps in order, e.g. "attack, Q.first_hit, attack:crit, E.edge, R".',
+        help=(
+            'Steps in order, e.g. "attack, Q.first_hit, attack:crit, E.edge, R". '
+            "After an ability, the next attack gets Spellblade; attack:nospellblade "
+            "drops it."
+        ),
     )
     rotation.add_argument(
         "--learned",
