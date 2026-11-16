@@ -6,14 +6,17 @@ from fractions import Fraction as F
 
 import pytest
 
+from lol_knowledge.damage import format_percent
 from lol_knowledge.errors import StatsError
 from lol_knowledge.stats import (
     Label,
     StatBlocked,
     build_stat_sheet,
     champion_from_document,
+    format_text,
     growth_multiplier,
     items_from_model,
+    to_dict,
 )
 from stats_helpers import PATCH, ad_growth_issue, champion, champion_document, item
 
@@ -201,3 +204,17 @@ def test_item_sources_must_be_official():
     }
     with pytest.raises(StatsError, match="unsupported stat source"):
         items_from_model(model, ["1"])
+
+
+def test_text_shows_fractions_as_percentages_and_json_keeps_fractions():
+    assert format_percent(F("0.25")) == "25%"
+    assert format_percent(F("0.1935")) == "19.35%"
+    assert format_percent(F(0)) == "0%"
+    sheet = build_stat_sheet(
+        champion(), 1, [item("1", ("armor_penetration_percent", "percent", 35))]
+    )
+    text = format_text(sheet)
+    assert "  armor_penetration_percent: 35% [Oficial]" in text
+    assert "  armor: 36 [Oficial]" in text
+    report = to_dict(sheet)["stats"]["armor_penetration_percent"]
+    assert report["total"] == 0.35 and report["exact"] == "7/20"

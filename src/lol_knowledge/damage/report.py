@@ -28,6 +28,11 @@ def format_number(value: Fraction) -> str:
     return text
 
 
+def format_percent(value: Fraction) -> str:
+    """Render a fraction (0.25) as a percentage for people (25%)."""
+    return f"{format_number(value * 100)}%"
+
+
 def _floats(values: tuple[Fraction, ...]) -> list[float]:
     return [float(value) for value in values]
 
