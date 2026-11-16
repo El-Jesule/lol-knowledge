@@ -15,7 +15,7 @@
 ## Partes de un paso de ataque (`Derivado`, fuente comunitaria)
 
 1. **El ataque:** daño físico igual al daño de ataque total del atacante (A1). En `attack:crit`, multiplicado por el crítico ([`critical-strike.md`](critical-strike.md)).
-2. **Daño al impactar de los objetos del atacante:** cada efecto `on_hit` evaluable del catálogo, con su tipo de daño. No se multiplica por el crítico (A3).
+2. **Daño al impactar de los objetos del atacante:** cada efecto `on_hit` evaluable del catálogo, con su tipo de daño. No se multiplica por el crítico (A3). Desde la versión 10 del catálogo hay seis: Filo de la niebla (Hoja del rey arruinado), Arco curvo, Final del ingenio, Diente de Nashor, Hoja de furia de Guinsoo y El final ([catálogo](../objects/README.md)).
 3. Cada parte se mitiga por separado con la resistencia que le toca ([`damage-mitigation.md`](damage-mitigation.md)) y luego se le aplican los modificadores ([`damage-modifiers.md`](damage-modifiers.md)).
 
 ## Vida actual del objetivo

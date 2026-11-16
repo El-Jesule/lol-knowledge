@@ -3,8 +3,8 @@
 - **Parche del snapshot:** `16.22.1` (`data/current/manifest.json`). El catálogo se creó sobre 16.20.1; en 16.22.1 las estadísticas, el oro, las descripciones y las recetas de los 15 objetos son idénticos en Data Dragon (comprobado el 2026-11-15). Las notas de parche 26.21 y 26.22 no tocan ninguno de los 15 objetos, y las cifras secundarias se han contrastado con los datos del cliente 16.22 ([informe](../../research/reports/item-data-values-16.22.md)). Las Botas de mercurio (3111) y las Flechas de los Yun Tal (3032) se añadieron el 2026-11-16 directamente desde 16.22.1.
 - **Fuente:** Data Dragon (`https://ddragon.leagueoflegends.com`), locale `es_ES`.
 - **Fecha de consulta:** 2026-10-20.
-- **Estado:** estadísticas de los **218 objetos comprables de la Grieta del Invocador** (generadas); efectos curados en 17 objetos (12 efectos). Los efectos de los demás objetos **no** están modelados (`effect_review: pending`).
-- **Versión del catálogo:** `catalog_version: 9` (esquema `1`; la 3 solo cambió el parche; la 4 añade `subject: target` explícito a la vida actual de Filo de la niebla, para que el motor de rotaciones la lea del objetivo sin depender de la convención implícita; la 5 añade los datos del cliente 16.22 como fuente `client_data` y corrige la ralentización a distancia de Zarpazo sombrío; la 6 añade `applies_life_steal` a los componentes de daño y lo declara en Filo de la niebla; la 7 añade las Botas de mercurio por su tenacidad; la 8 traslada las estadísticas de la descripción al archivo generado; la 9 añade las Flechas de los Yun Tal, el disparador `on_attack`, el escenario `max_stacks` y los ceros confirmados).
+- **Estado:** estadísticas de los **218 objetos comprables de la Grieta del Invocador** (generadas); efectos curados en 22 objetos (21 efectos). Los efectos de los demás objetos **no** están modelados (`effect_review: pending`).
+- **Versión del catálogo:** `catalog_version: 10` (esquema `1`; la 3 solo cambió el parche; la 4 añade `subject: target` explícito a la vida actual de Filo de la niebla, para que el motor de rotaciones la lea del objetivo sin depender de la convención implícita; la 5 añade los datos del cliente 16.22 como fuente `client_data` y corrige la ralentización a distancia de Zarpazo sombrío; la 6 añade `applies_life_steal` a los componentes de daño y lo declara en Filo de la niebla; la 7 añade las Botas de mercurio por su tenacidad; la 8 traslada las estadísticas de la descripción al archivo generado; la 9 añade las Flechas de los Yun Tal, el disparador `on_attack`, el escenario `max_stacks` y los ceros confirmados; la 10 añade el daño al impactar de cinco objetos, la evidencia `derived` y la aplicación en la hoja de los efectos `always` de estadísticas).
 - **Código:** [`src/lol_knowledge/objects/`](../../src/lol_knowledge/objects/).
 - **Catálogo curado (efectos y revisión):** [`catalog.json`](catalog.json).
 - **Estadísticas generadas:** [`catalog-stats.json`](catalog-stats.json), con `src/lol_knowledge/objects/generate.py`. No se edita a mano: `validate` lo regenera y falla si no coincide.
@@ -185,9 +185,10 @@ Decisiones:
 - `stacks.required` y `stacks.max_stacks` son enteros; la ventana temporal puede ser desconocida.
 - `limits`: topes o umbrales conocidos aunque la curva no lo esté. Ejemplo: el 15 % de Lord Dominik con 1500 de vida adicional.
 - `scenario` (opcional, desde la versión 9): supuesto con el que un motor puede aplicar el efecto de forma permanente. Solo existe `max_stacks`: los componentes dan el valor con **todas las acumulaciones**, y la hoja de estadísticas los suma como estadísticas con la nota `scenario: maximum stacks`. Solo admite componentes `stat_modifier` con `mode: flat`, que suman su cantidad en la unidad del catálogo (puntos porcentuales para las estadísticas que son fracción: 25 → 0,25). `rotation` no los vuelve a aplicar: deja una nota `applied by the stat sheet`. Decisión del 2026-11-16: los escenarios se calculan con las acumulaciones al máximo, que es más sencillo aunque sobrestime los primeros compases de la partida.
+- **Efectos de estadísticas siempre activos** (desde la versión 10): un efecto con `trigger.event: always`, sin `conditions` y hecho solo de componentes `stat_modifier` también lo aplica la hoja. `flat` suma como en `max_stacks`; `percent` con `scope: total` amplifica el total de una estadística de cantidad (Obra mágica de Rabadon: +30 % del poder de habilidad total) y se aplica al final, sobre el total sin amplificar, sin componerse con otros amplificadores. `rotation` deja la nota `applied by the stat sheet (always)`.
 - `model_status` es la clasificación curada; `derived_status` se calcula desde las fórmulas. `validate` impide que `model_status` sea **más optimista** que `derived_status`.
 - `sources`: lista opcional de fuentes externas con `kind`, `reference`, `quote`, `retrieved_at`, `confidence` y `note` opcional. Se usa solo para cifras que Data Dragon no publica. La wiki comunitaria se marca `community_wiki` y `secondary`; una fuente comunitaria **no puede** marcarse `official`. Los valores de datos del cliente se marcan `client_data` (`secondary` o `corroborated`, nunca `official`); como el cliente guarda los porcentajes como fracciones, en sus citas el validador acepta también el número multiplicado por 100. `corroborated` exige al menos dos fuentes declaradas.
-- `evidence_confidence`: `official`, `corroborated`, `secondary` o `unverified`. Es independiente de `model_status`: una fórmula puede ser evaluable y, aun así, descansar en una fuente secundaria. `official` solo se admite cuando no hay `sources` (la descripción de Data Dragon es la fuente).
+- `evidence_confidence`: `official`, `corroborated`, `derived`, `secondary` o `unverified`. `derived` (desde la versión 10) es la cifra leída solo de los datos del cliente: exige una fuente `client_data` (que también puede marcarse `derived`) y da la etiqueta `Derivado`, como pide AGENTS.md para los datos del cliente; antes un único dato del cliente solo podía ser `secondary` (`Pendiente de verificación`). Es independiente de `model_status`: una fórmula puede ser evaluable y, aun así, descansar en una fuente secundaria. `official` solo se admite cuando no hay `sources` (la descripción de Data Dragon es la fuente).
 - Regla de números: **cada constante, duración, límite, enfriamiento, contador o ventana de acumulaciones debe aparecer en la descripción de Data Dragon o en la cita de alguna fuente declarada**. El validador rechaza un número huérfano.
 - Las fórmulas rechazan claves desconocidas: un `subjet` mal escrito no cae silenciosamente en la convención de campeón.
 - `effect_review` del objeto: `complete` si el catálogo modela todos los efectos de la descripción; `partial` si falta alguno; `pending` si no se ha revisado ninguno. El modelo lo conserva y `rotation` deja el resultado `Pendiente de verificación`, con una nota, cuando un objeto del atacante o del objetivo no está en `complete`.
@@ -233,7 +234,7 @@ El evaluador, compartido con los kits de campeón en [`src/lol_knowledge/formula
 10. **Sujeto de la estadística.** `subject` desambigua `bonus_health` del objetivo frente a `bonus_armor` del portador. Sin `subject` se conserva la convención anterior.
 11. **Rango del portador.** `ChampionState.attack_range` es obligatorio. Un efecto que depende de melee/ranged falla si falta; no se asume un valor.
 
-## 5. Objetos con efectos curados (17)
+## 5. Objetos con efectos curados (22)
 
 | Id | Objeto | Demuestra |
 |---|---|---|
@@ -254,14 +255,19 @@ El evaluador, compartido con los kits de campeón en [`src/lol_knowledge/formula
 | `data:item:6617` | Renovación de piedra lunar | Curación y escudo porcentuales de un efecto disparador (`evaluable`). |
 | `data:item:3111` | Botas de mercurio | Tenacidad (30 %) solo en prosa; resistencia mágica y velocidad de movimiento derivadas. |
 | `data:item:3032` | Flechas de los Yun Tal | Cero confirmado de crítico; crítico por acumulaciones hasta 25 % con el escenario `max_stacks`; Ráfaga `excluded`. |
+| `data:item:1043` | Arco curvo | Daño físico al impactar de la descripción (15). |
+| `data:item:3091` | Final del ingenio | Daño mágico al impactar que Data Dragon omite (45, cliente, `derived`). |
+| `data:item:3115` | Diente de Nashor | Daño mágico al impactar 15 + 15 % de AP (cliente, `derived`). |
+| `data:item:3124` | Hoja de furia de Guinsoo | Daño mágico al impactar (30); velocidad de ataque por acumulaciones al máximo (4 × 8 %); impactos fantasma `excluded`. |
+| `data:item:3302` | El final | Daño mágico al impactar 30 + 10 % de DA adicional + 10 % de AP (cliente, `derived`); 30 % de penetración al máximo; resistencias por nivel sin modelar. |
 
-Cobertura de efectos: **17 objetos curados**; los otros 201 objetos comprables de la Grieta solo tienen estadísticas, y 157 de ellos tienen efectos en la descripción sin modelar (`pending`). No se afirma nada sobre las variantes de otros modos. Las fuentes secundarias de las cifras nuevas están en [`research/reports/object-mechanics-2026-10-20.md`](../../research/reports/object-mechanics-2026-10-20.md).
+Cobertura de efectos: **22 objetos curados**; los otros 196 objetos comprables de la Grieta solo tienen estadísticas, y 152 de ellos tienen efectos en la descripción sin modelar (`pending`). No se afirma nada sobre las variantes de otros modos. Las fuentes secundarias de las cifras nuevas están en [`research/reports/object-mechanics-2026-10-20.md`](../../research/reports/object-mechanics-2026-10-20.md).
 
 ## 6. Efectos realmente modelados
 
 | Objeto | Efecto | Estado | Qué falta |
 |---|---|---|---|
-| Rabadon | Obra mágica: +30 % de AP total | `evaluable` | Nada para el modificador; el redondeo de la hoja final es del motor. |
+| Rabadon | Obra mágica: +30 % de AP total | `evaluable` | La hoja lo aplica desde la versión 10 (antes la rotación lo omitía y quedaba `Pendiente de verificación`). |
 | BotRK | Filo de la niebla: 9 %/6 % de vida actual como daño físico `on-hit`, cap 100 vs súbditos/monstruos | `evaluable` | Ratio y tope corroborados por el cliente 16.22; el cap es un límite declarado que el motor debe aplicar. |
 | BotRK | Zarpazo sombrío: slow 30 % (15 % a distancia)/1 s tras 3 ataques, ventana 6 s, enfriamiento 15 s | `partially_evaluable` | Persistencia de acumulaciones entre objetivos no publicada; las 3 acumulaciones solo vienen de la wiki. |
 | Lord Dominik | Verdugo de gigantes: 1 %/100 de vida adicional, tope 15 % a 1500 | `evaluable` | Tope y umbral corroborados por el cliente; la pendiente lineal sigue siendo de fuente secundaria. |
@@ -273,6 +279,15 @@ Cobertura de efectos: **17 objetos curados**; los otros 201 objetos comprables d
 | Moonstone | Gracia estelar: 30 % de la curación / 35 % del escudo a otro aliado | `evaluable` | La cantidad original es una entrada del motor. |
 | Yun Tal | La práctica hace al asesino: +25 % de crítico con todas las acumulaciones | `evaluable` (`max_stacks`) | El valor por ataque (0,4 cuerpo a cuerpo; ×0,5 a distancia) y los 63/125 ataques hasta el tope son datos del cliente 16.22 (`Derivado`), en la nota del efecto; no se modelan acumulaciones parciales. |
 | Yun Tal | Ráfaga: +30 % de velocidad de ataque 6 s, enfriamiento 30 s que reducen los ataques | `excluded` | Es una ventana temporal y las rotaciones no tienen línea de tiempo; con este objeto la rotación queda `Pendiente de verificación`. |
+| Arco curvo | Picadura: 15 de daño físico al impactar | `evaluable` | Nada. |
+| Final del ingenio | Refriega: 45 de daño mágico al impactar | `evaluable` (`derived`) | Data Dragon no da la cifra; el cálculo del cliente es fijo, sin escalado por nivel. |
+| Diente de Nashor | Mordisco de Icathia: 15 + 15 % de AP mágico al impactar | `evaluable` (`derived`) | La parte del AP no lleva `mStat`; que sea AP lo confirma el nombre `NashorsAPValue`. |
+| Guinsoo | Ira: 30 de daño mágico al impactar | `evaluable` | Nada. |
+| Guinsoo | Golpe furioso: +8 % de velocidad de ataque por acumulación, hasta 4 | `evaluable` (`max_stacks`) | Se aplica con las 4 acumulaciones (+32 %). |
+| Guinsoo | Impacto fantasma: cada tercer ataque aplica dos veces los efectos al impactar | `excluded` | Las rotaciones no cuentan ataques; con Guinsoo la rotación queda `Pendiente de verificación`. |
+| El final | Sombra: 30 + 10 % de DA adicional + 10 % de AP mágico al impactar | `evaluable` (`derived`) | Data Dragon muestra 0. En el cliente, `mStat` 2 con `mStatFormula` 2 es DA adicional y la parte sin `mStat` se toma como AP (como en Nashor); un historial secundario de 26.15 dice lo mismo. |
+| El final | Yuxtaposición, ataques sombríos: 10 % de penetración de armadura y mágica por ataque, hasta 30 % | `evaluable` (`max_stacks`, `derived`) | Se aplica al máximo (30 %, `PenMax` del cliente). |
+| El final | Yuxtaposición, ataques luminosos: armadura y resistencia mágica | `partially_evaluable` (`max_stacks`) | 6/7/8 por ataque según el nivel (1, 11, 14), hasta 3 ataques; las fórmulas de objeto no tienen valores por nivel, así que la hoja muestra armadura y resistencia mágica `Pendiente de verificación`. |
 
 ## 7. Inventario no soportado
 
