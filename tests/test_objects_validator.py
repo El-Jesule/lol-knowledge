@@ -570,3 +570,35 @@ def test_the_model_and_the_sheet_items_carry_a_partial_review() -> None:
     assert model["objects"][0]["effect_review"] == "partial"
     (item,) = items_from_model(model, ["9999"])
     assert item.effect_review == "partial"
+
+
+@pytest.mark.parametrize(
+    ("lines", "message"),
+    [
+        ([], "must be a non-empty list"),
+        ("x", "must be a non-empty list"),
+        ([{"quote": "10 de letalidad"}], "must be an object with quote and reason"),
+        ([{"quote": "otra cosa", "reason": "r"}], "quote is not in the item description"),
+        ([{"quote": "10 de letalidad", "reason": " "}], "reason must be a non-empty string"),
+    ],
+)
+def test_unmodelled_stat_lines_need_a_quote_and_a_reason(lines, message) -> None:
+    catalog = _catalog(_valid_stat())
+    catalog["objects"][0]["unmodelled_stats"] = lines
+    assert any(message in item for item in _messages(catalog))
+
+
+def test_unmodelled_stat_lines_reach_the_model() -> None:
+    catalog = _catalog(_valid_stat())
+    lines = [{"quote": "10 de letalidad", "reason": "r"}]
+    catalog["objects"][0]["unmodelled_stats"] = lines
+    assert _messages(catalog) == []
+    assert build_model(catalog, _snapshot())["objects"][0]["unmodelled_description_stats"] == lines
+
+
+@pytest.mark.parametrize(("review", "valid"), [("pending", True), ("todo", False)])
+def test_effect_reviews(review, valid) -> None:
+    catalog = _catalog(_valid_stat())
+    catalog["objects"][0]["effect_review"] = review
+    found = any("effect_review must be one of" in item for item in _messages(catalog))
+    assert found is not valid

@@ -174,14 +174,27 @@ def items_from_model(model: Mapping[str, Any], item_ids: Sequence[str]) -> tuple
         obj = objects.get(str(item_id))
         if obj is None:
             raise StatsError(
-                f"item {item_id!r} is not in the curated object catalog; "
-                "Data Dragon alone does not publish every item stat"
+                f"item {item_id!r} is not in the object catalog (purchasable Summoner's Rift "
+                "items and curated objects); mode variants are not modelled"
             )
         stats = []
         for entry in obj.get("stats") or []:
             source = (entry.get("source") or {}).get("kind")
             if source not in OFFICIAL_ITEM_SOURCES:
                 raise StatsError(f"item {item_id}: unsupported stat source {source!r}")
+            if entry.get("value") is None:
+                # Unknown in the source: a pending zero keeps the gap visible.
+                stats.append(
+                    ItemStat(
+                        stat=str(entry.get("id")),
+                        kind=str(entry.get("kind")),
+                        value=Fraction(0),
+                        source=source,
+                        label=Label.PENDING,
+                        note=f"value unknown: {entry.get('reason')}",
+                    )
+                )
+                continue
             conversion = entry.get("unit_conversion")
             stats.append(
                 ItemStat(

@@ -16,6 +16,7 @@ OBJECT_SCHEMA_VERSION = 1
 MODEL_KIND = "lol-object-model"
 CATALOG_KIND = "lol-object-model-catalog"
 CATALOG_RELATIVE_PATH = Path("lol-knowledge") / "objects" / "catalog.json"
+GENERATED_STATS_RELATIVE_PATH = Path("lol-knowledge") / "objects" / "catalog-stats.json"
 OBJECTS_DIRNAME = "objects"
 SNAPSHOT_RELATIVE_PATH = Path("data") / "current"
 ITEMS_FILENAME = "items.json"
@@ -88,6 +89,9 @@ VERIFICATION_STATES = frozenset(
         "unverified",
     }
 )
+# complete: every effect of the description is modelled; partial: some are;
+# pending: none reviewed yet (items that only have generated stats).
+EFFECT_REVIEWS = frozenset({"complete", "partial", "pending"})
 MODEL_STATUSES = frozenset({"evaluable", "partially_evaluable", "excluded"})
 MODEL_STATUS_RANK = {"excluded": 0, "partially_evaluable": 1, "evaluable": 2}
 BASIS_STATES = frozenset(

@@ -39,7 +39,7 @@
 
 Un campeón con análisis completo y datos oficiales de los 173 campeones en `data/current/`. La cobertura crece de uno en uno: cada campeón nuevo reutiliza esta estructura.
 
-El modelo mecánico de objetos cubre una muestra de **16 objetos** elegidos por diversidad mecánica; no es cobertura completa. Las cifras que Data Dragon no publica se registran con fuente citada y confianza secundaria. Los límites están en [Modelo de objetos](objects/README.md).
+El modelo de objetos tiene las estadísticas de los **218 objetos comprables de la Grieta**; los efectos están curados en **16 objetos** elegidos por diversidad mecánica, y el resto queda `pending`. Las cifras que Data Dragon no publica se registran con fuente citada y confianza secundaria. Los límites están en [Modelo de objetos](objects/README.md).
 
 ## Aviso de fuentes
 

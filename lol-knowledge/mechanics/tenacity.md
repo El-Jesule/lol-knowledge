@@ -34,7 +34,7 @@ duración del control = duración × (1 − tenacidad)
 
 - `src/lol_knowledge/stats/registry.py` declara `tenacity` como fracción **multiplicativa**: todas sus fuentes se tratan como grupo A, que es el grupo de todos los objetos según T1.
 - Los aportes que no vienen de objetos (por ejemplo, la pasiva de un kit) se multiplican también, pero quedan `Pendiente de verificación` con la nota `stacking group not declared`, porque su grupo no está documentado. El grupo B y la suma entre grupos no están modelados.
-- El [catálogo de objetos](../objects/catalog.json) admite `tenacity` (`kind: percent`) desde la descripción y declara las Botas de mercurio (3111) con su 30 %.
+- El modelo de objetos admite `tenacity` (`kind: percent`) desde la descripción; las estadísticas de los objetos de la Grieta, Botas de mercurio (3111, 30 %) incluidas, vienen del [archivo generado](../objects/catalog-stats.json).
 - Pruebas: `tests/test_stats_tenacity.py`, `tests/test_objects_model.py` y `tests/test_objects_validator.py`.
 
 ## Fuera de alcance

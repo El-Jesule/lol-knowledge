@@ -1,9 +1,9 @@
 {
   "schema_version": 1,
   "kind": "lol-object-model-catalog",
-  "catalog_version": 7,
+  "catalog_version": 8,
   "game_version": "16.22.1",
-  "notes": "Curated overlay for a mechanically diverse sample. Data Dragon derivatives (stats, gold, maps, recipes) are not repeated here; see lol-knowledge/objects/README.md. Numeric mechanics absent from Data Dragon carry declared sources and secondary confidence. Catalog version 3 (2026-11-15): moved to snapshot 16.22.1; stats, gold, descriptions and recipes of the 15 objects are identical to 16.20.1 in Data Dragon; the secondary evidence was not re-checked against the 16.21 and 16.22 patch notes. Catalog version 6 (2026-11-15): damage components may declare applies_life_steal with its own source; Mist's Edge declares it from the LoL Wiki (secondary). Catalog version 7 (2026-11-16): adds 3111 (Mercury's Treads) for its tenacity, declared from the 16.22.1 description.",
+  "notes": "Curated overlay for a mechanically diverse sample. Data Dragon derivatives (stats, gold, maps, recipes) are not repeated here; see lol-knowledge/objects/README.md. Numeric mechanics absent from Data Dragon carry declared sources and secondary confidence. Catalog version 3 (2026-11-15): moved to snapshot 16.22.1; stats, gold, descriptions and recipes of the 15 objects are identical to 16.20.1 in Data Dragon; the secondary evidence was not re-checked against the 16.21 and 16.22 patch notes. Catalog version 6 (2026-11-15): damage components may declare applies_life_steal with its own source; Mist's Edge declares it from the LoL Wiki (secondary). Catalog version 7 (2026-11-16): adds 3111 (Mercury's Treads) for its tenacity, declared from the 16.22.1 description. Catalog version 8 (2026-11-16): description stats of every Summoner's Rift item, curated ones included, come from catalog-stats.json (generated); this file keeps effects and reviews.",
   "objects": [
     {
       "id": "1036",
@@ -20,53 +20,25 @@
     {
       "id": "3020",
       "effect_review": "complete",
-      "stats": [
-        {
-          "id": "magic_penetration_flat",
-          "kind": "flat",
-          "value": 12,
-          "quote": "12 de penetración mágica"
-        }
-      ],
+      "stats": [],
       "effects": []
     },
     {
       "id": "3067",
       "effect_review": "complete",
-      "stats": [
-        {
-          "id": "ability_haste",
-          "kind": "flat",
-          "value": 10,
-          "quote": "10 de velocidad de habilidades"
-        }
-      ],
+      "stats": [],
       "effects": []
     },
     {
       "id": "3134",
       "effect_review": "complete",
-      "stats": [
-        {
-          "id": "lethality",
-          "kind": "flat",
-          "value": 10,
-          "quote": "10 de letalidad"
-        }
-      ],
+      "stats": [],
       "effects": []
     },
     {
       "id": "3135",
       "effect_review": "complete",
-      "stats": [
-        {
-          "id": "magic_penetration_percent",
-          "kind": "percent",
-          "value": 40,
-          "quote": "40% de penetración mágica"
-        }
-      ],
+      "stats": [],
       "effects": []
     },
     {
@@ -109,14 +81,7 @@
     {
       "id": "3031",
       "effect_review": "complete",
-      "stats": [
-        {
-          "id": "crit_damage_bonus",
-          "kind": "percent",
-          "value": 30,
-          "quote": "30% de daño de impacto crítico"
-        }
-      ],
+      "stats": [],
       "effects": []
     },
     {
@@ -287,14 +252,7 @@
     {
       "id": "3036",
       "effect_review": "complete",
-      "stats": [
-        {
-          "id": "armor_penetration_percent",
-          "kind": "percent",
-          "value": 35,
-          "quote": "35% de penetración de armadura"
-        }
-      ],
+      "stats": [],
       "effects": [
         {
           "id": "giant-slayer",
@@ -659,20 +617,7 @@
     {
       "id": "6617",
       "effect_review": "complete",
-      "stats": [
-        {
-          "id": "ability_haste",
-          "kind": "flat",
-          "value": 20,
-          "quote": "20 de velocidad de habilidades"
-        },
-        {
-          "id": "mana_regen",
-          "kind": "percent",
-          "value": 125,
-          "quote": "125% de regeneración de maná básica"
-        }
-      ],
+      "stats": [],
       "effects": [
         {
           "id": "stargrace",
@@ -722,14 +667,7 @@
     {
       "id": "3111",
       "effect_review": "complete",
-      "stats": [
-        {
-          "id": "tenacity",
-          "kind": "percent",
-          "value": 30,
-          "quote": "30% de tenacidad"
-        }
-      ],
+      "stats": [],
       "effects": []
     }
   ]
