@@ -46,6 +46,8 @@ probabilidad = min(base + crecimiento(n) + Σ objetos_i, 100 %)
 - **Yasuo y Yone (`Pendiente de verificación`):** su pasiva duplica la probabilidad del resto de fuentes (C9). No está modelada.
 - **Sin confirmación oficial reciente:** C7 es una declaración de Riot de hacia 2020. Las notas de 26.1 a 26.21 consultadas solo cambian habilidades que escalan con la probabilidad, no la regla.
 
+**Implementación (`Calculado`):** `src/lol_knowledge/stats/registry.py` declara `crit_chance` como fracción aditiva con `cap` 1. La hoja añade la base de Data Dragon como aporte `Oficial`; si `crit` o `critperlevel` dejaran de valer 0, la estadística se bloquea, porque su unidad no está documentada. El total respeta el tope y `bonus` conserva el exceso (el texto añade `(capped at 1)`). Yasuo y Yone quedan `Pendiente de verificación` con una nota. Pruebas: `tests/test_stats_crit_chance.py`.
+
 ## Fuera de alcance
 
 - **Valor esperado del crítico:** la rotación no usa la probabilidad. Cada paso dice si critica (`attack:crit`) o no (`attack`).

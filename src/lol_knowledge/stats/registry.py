@@ -22,6 +22,7 @@ ATTACK_SPEED_RULES = f"{MECHANICS}/attack-speed.md"
 VAMP_RULES = f"{MECHANICS}/life-steal-and-omnivamp.md"
 # Attacks per second; "Baseline Attack Speed Cap: 2.5 => 3.0" in the 25.S1.3 patch notes.
 ATTACK_SPEED_CAP = Fraction(3)
+CRIT_CHANCE_CAP = Fraction(1)  # 100 %; the excess stays visible in the scopes
 
 
 class Stacking(StrEnum):
@@ -114,7 +115,14 @@ STATS: dict[str, StatDef] = {
         _pending("move_speed", "Velocidad de movimiento", "límites suaves " + NO_RULE),
         _pending("health_regen", "Regeneración de vida", "unidad por 5 s y aportes % " + NO_RULE),
         _pending("mana_regen", "Regeneración de maná", "unidad por 5 s y aportes % " + NO_RULE),
-        _pending("crit_chance", "Probabilidad de crítico", "tope " + NO_RULE, Unit.FRACTION),
+        StatDef(
+            "crit_chance",
+            "Probabilidad de crítico",
+            Stacking.ADDITIVE,
+            Unit.FRACTION,
+            CRIT_RULES,
+            cap=CRIT_CHANCE_CAP,
+        ),
         StatDef(
             "crit_damage_bonus",
             "Daño crítico adicional",

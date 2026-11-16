@@ -14,7 +14,7 @@ from .derived import DerivedRecords
 from .growth import check_level, growth_multiplier
 from .issues import DataIssue
 from .labels import Label, weakest
-from .registry import ATTACK_SPEED_RULES, STATS, Stacking, StatDef, Unit, stat
+from .registry import ATTACK_SPEED_RULES, CRIT_RULES, STATS, Stacking, StatDef, Unit, stat
 
 # Data Dragon field names: (stat, base field, growth field or None)
 CHAMPION_FIELDS: tuple[tuple[str, str, str | None], ...] = (
@@ -33,6 +33,10 @@ ATTACK_SPEED_GROWTH = "attackspeedperlevel"  # percentage points per level
 ATTACK_SPEED_RATIO = "attackspeedratio"  # derived from the client; not in Data Dragon
 # Champions whose kit removes or changes the attack speed cap (attack-speed.md, V3).
 ATTACK_SPEED_CAP_KITS = frozenset({"Belveth", "Graves", "Jhin", "Sion", "Zeri"})
+# Data Dragon crit chance base and growth; 0 for every champion (critical-strike.md, C8).
+CRIT_FIELDS = ("crit", "critperlevel")
+# Champions whose passive doubles their critical strike chance (critical-strike.md, C9).
+CRIT_CHANCE_KITS = frozenset({"Yasuo", "Yone"})
 MANA_STATS = frozenset({"mana", "mana_regen"})
 MANA_RESOURCE = {"es_ES": "Maná", "en_US": "Mana"}
 
@@ -198,6 +202,25 @@ def _scaled_attack_speed(
     )
 
 
+def _crit_chance_base(champion: ChampionData) -> Contribution | str:
+    """The champion's own crit chance, or why it cannot be used.
+
+    Data Dragon publishes ``crit`` and ``critperlevel`` as 0 for every champion,
+    so their unit is unknown: a non-zero value blocks the statistic instead of
+    being guessed as a fraction or a percentage.
+    """
+    for field_name in CRIT_FIELDS:
+        if field_name not in champion.stats:
+            raise StatsError(f"{champion.id}: stats.{field_name} is missing")
+    nonzero = [name for name in CRIT_FIELDS if champion.stats[name]]
+    if nonzero:
+        return (
+            f"{champion.id} has non-zero stats.{nonzero[0]} in Data Dragon; its unit is not "
+            f"documented (see {CRIT_RULES})"
+        )
+    return Contribution(Fraction(0), "base", _source(champion, "crit"), Label.OFFICIAL)
+
+
 def build_stat_sheet(
     champion: ChampionData,
     level: int,
@@ -291,6 +314,11 @@ def build_stat_sheet(
         contributions["attack_speed_bonus"].append(
             _attack_speed_growth(champion, level, multiplier)
         )
+    crit_base = _crit_chance_base(champion)
+    if isinstance(crit_base, str):
+        blocked["crit_chance"] = crit_base
+    else:
+        contributions["crit_chance"].append(crit_base)
 
     for item in items:
         for entry in item.stats:
@@ -333,6 +361,12 @@ def build_stat_sheet(
         reason = f"{champion.id}'s kit changes the attack speed cap; not modelled"
         contributions["attack_speed"].append(
             Contribution(Fraction(0), "bonus", ATTACK_SPEED_RULES, Label.PENDING, reason)
+        )
+        notes.append(reason)
+    if champion.id in CRIT_CHANCE_KITS:
+        reason = f"{champion.id}'s passive doubles critical strike chance; not modelled"
+        contributions["crit_chance"].append(
+            Contribution(Fraction(0), "bonus", CRIT_RULES, Label.PENDING, reason)
         )
         notes.append(reason)
 

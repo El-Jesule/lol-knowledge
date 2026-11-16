@@ -33,6 +33,8 @@ BASE_STATS = {
     "movespeed": 345,
     "attackspeed": 0.625,
     "attackspeedperlevel": 2.5,
+    "crit": 0,
+    "critperlevel": 0,
 }
 
 
