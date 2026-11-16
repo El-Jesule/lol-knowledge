@@ -22,4 +22,4 @@
 ## Fuera de alcance
 
 - La vida a mitad de un paso (por ejemplo, entre el ataque y su daño al impactar).
-- El aumento de Llamasombría al daño a lo largo del tiempo: las rotaciones no lo tienen.
+- Desde la fase 28, las quemaduras son daño mágico y reciben el +20 % de Llamasombría como cualquier otra parte ([`burns.md`](burns.md)).

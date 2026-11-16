@@ -89,10 +89,6 @@ def test_the_passive_doubling_includes_the_stacks():
     [
         (effect(scenario="half_stacks"), "scenario 'half_stacks' is not modelled"),
         (
-            effect(components=[{"kind": "damage", "formula": {"op": "constant", "value": 1}}]),
-            "only stat modifiers can be sheet stats",
-        ),
-        (
             effect(
                 formula=None,
                 components=[
@@ -303,3 +299,19 @@ def test_a_scenario_cannot_amplify_a_total():
 
 def test_client_only_evidence_is_derived():
     assert EVIDENCE_LABEL["derived"] is Label.DERIVED
+
+
+def test_a_scenario_damage_modifier_is_left_to_rotations():
+    entry = effect(
+        components=[
+            {
+                "kind": "damage_modifier",
+                "direction": "dealt",
+                "source": "all",
+                "mode": "percent",
+                "formula": {"op": "constant", "value": 6},
+            }
+        ]
+    )
+    assert sheet_effect_reason(entry) is None
+    assert sheet(entry)["crit_chance"].total() == 0

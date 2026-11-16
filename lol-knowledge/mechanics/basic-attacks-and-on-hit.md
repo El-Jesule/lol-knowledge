@@ -19,7 +19,8 @@
 3. **Hoja encantada:** si una habilidad cargó el ataque, se añade el golpe del objeto como otra parte al impactar ([`spellblade.md`](spellblade.md)). `attack:nospellblade` lo descarta.
 4. **Cada N ataques y Vigor:** los efectos que cuentan ataques o salen con Vigor se añaden cuando toca ([`attack-counters.md`](attack-counters.md)).
 5. **Ejecución:** con Recaudadora, si un campeón queda por debajo del 5 % tras el paso, se añade una parte `execute` con su vida restante ([`target-health.md`](target-health.md)).
-6. Cada parte se mitiga por separado con la resistencia que le toca ([`damage-mitigation.md`](damage-mitigation.md)) y luego se le aplican los modificadores ([`damage-modifiers.md`](damage-modifiers.md)).
+6. **Quemaduras:** la primera habilidad que las inicia añade su daño completo como una parte `burn`, una vez por rotación ([`burns.md`](burns.md)).
+7. Cada parte se mitiga por separado con la resistencia que le toca ([`damage-mitigation.md`](damage-mitigation.md)) y luego se le aplican los modificadores ([`damage-modifiers.md`](damage-modifiers.md)).
 
 ## Vida actual del objetivo
 
