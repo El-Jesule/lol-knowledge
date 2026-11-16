@@ -48,6 +48,6 @@ por segundo = regeneración / 5
 
 ## Fuera de alcance
 
-- **Multiplicadores de regeneración** (poder de curación y escudos, Rostro espiritual): según R1 se suman entre sí y multiplican el total. No hay ninguno en el catálogo.
+- **Multiplicadores de regeneración** (poder de curación y escudos, Rostro espiritual): según R1 se suman entre sí y multiplican el total. Rostro espiritual (3065) está en el catálogo con sus estadísticas, pero su efecto no está modelado (`effect_review: pending`), y el poder de curaciones y escudos no es una estadística del motor.
 - Regeneración porcentual de la vida o el maná máximos (Armadura de Warmog, Abismo de los Lamentos), fuera de combate o en la fuente.
 - Regeneración de otros recursos (energía, furia).

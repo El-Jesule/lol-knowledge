@@ -37,15 +37,16 @@ def _reverse_keys(value: Any) -> Any:
 def test_model_header_links_to_the_snapshot(object_model, object_snapshot) -> None:
     assert object_model["schema_version"] == 1
     assert object_model["kind"] == "lol-object-model"
-    assert object_model["catalog_version"] == 7
+    assert object_model["catalog_version"] == 8
     assert object_model["game_version"] == object_snapshot.patch
     assert object_model["source"]["items_sha256"] == object_snapshot.items_sha256
     assert object_model["source"]["catalog"] == "lol-knowledge/objects/catalog.json"
+    assert object_model["source"]["generated_stats"] == "lol-knowledge/objects/catalog-stats.json"
 
 
-def test_sample_has_sixteen_objects(object_model) -> None:
+def test_model_has_every_purchasable_summoners_rift_item(object_model) -> None:
     ids = [item["id"] for item in object_model["objects"]]
-    assert len(ids) == 16
+    assert len(ids) == 218
     assert ids == sorted(ids, key=lambda value: int(value))
 
 

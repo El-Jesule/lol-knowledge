@@ -17,8 +17,10 @@ from .catalog import (
     description_text,
     load_catalog,
     load_snapshot,
+    merge_generated,
 )
 from .formula import classify_formula, formula_issues
+from .generate import dump_generated, generate_description_stats, load_generated
 from .schema import (
     BASIS_STATES,
     CANONICAL_STAT_KINDS,
@@ -28,8 +30,10 @@ from .schema import (
     CONDITION_KINDS,
     DAMAGE_TYPES,
     EFFECT_KINDS,
+    EFFECT_REVIEWS,
     EVIDENCE_CONFIDENCE,
     EVIDENCE_KINDS,
+    GENERATED_STATS_RELATIVE_PATH,
     HEALING_MODES,
     LIMIT_KINDS,
     MODEL_STATUS_RANK,
@@ -40,6 +44,7 @@ from .schema import (
     TRIGGER_EVENTS,
 )
 
+REGENERATE = "regenerate it with python -m lol_knowledge.objects --generate-stats"
 _NUMBER_PATTERN = re.compile(r"\d+(?:[.,]\d+)?")
 _TOP_LEVEL_KEYS = {
     "schema_version",
@@ -49,7 +54,7 @@ _TOP_LEVEL_KEYS = {
     "notes",
     "objects",
 }
-_OBJECT_KEYS = {"id", "notes", "effect_review", "stats", "effects"}
+_OBJECT_KEYS = {"id", "notes", "effect_review", "stats", "effects", "unmodelled_stats"}
 _STAT_KEYS = {"id", "kind", "value", "status", "reason", "quote"}
 _EFFECT_KEYS = {
     "id",
@@ -274,16 +279,17 @@ class _CatalogChecker:
         unknown = set(entry) - _OBJECT_KEYS
         if unknown:
             self.fail(pointer, f"unknown object keys: {sorted(unknown)}")
-        if entry.get("effect_review") not in {"complete", "partial"}:
+        if entry.get("effect_review") not in EFFECT_REVIEWS:
             self.fail(
                 f"{pointer}.effect_review",
-                "effect_review must be 'complete' or 'partial'",
+                f"effect_review must be one of {sorted(EFFECT_REVIEWS)}",
             )
         description = item.get("description")
         if not isinstance(description, str):
             self.fail(f"{pointer}.id", f"item {entry.get('id')!r} has no description")
             return
         text = description_text(description)
+        self._check_unmodelled(entry.get("unmodelled_stats"), text, f"{pointer}.unmodelled_stats")
         self._check_snapshot_references(entry, item, pointer)
         derived_stats, unmapped = derive_stats(item)
         for unknown_stat in unmapped:
@@ -310,6 +316,23 @@ class _CatalogChecker:
             effects = []
         for index, effect in enumerate(effects or []):
             self._check_effect(effect, text, seen_effects, f"{pointer}.effects[{index}]")
+
+    def _check_unmodelled(self, lines: Any, text: str, pointer: str) -> None:
+        """Description stat lines kept without a canonical stat, each with its reason."""
+        if lines is None:
+            return
+        if not isinstance(lines, Sequence) or isinstance(lines, (str, bytes)) or not lines:
+            self.fail(pointer, "unmodelled_stats must be a non-empty list")
+            return
+        for index, line in enumerate(lines):
+            item_pointer = f"{pointer}[{index}]"
+            if not isinstance(line, Mapping) or set(line) != {"quote", "reason"}:
+                self.fail(item_pointer, "must be an object with quote and reason")
+                continue
+            if not isinstance(line["quote"], str) or line["quote"] not in text:
+                self.fail(f"{item_pointer}.quote", "quote is not in the item description")
+            if not isinstance(line["reason"], str) or not line["reason"].strip():
+                self.fail(f"{item_pointer}.reason", "reason must be a non-empty string")
 
     def _check_snapshot_references(
         self,
@@ -828,9 +851,42 @@ def validate_object_catalog(root: Path) -> ObjectReport:
     try:
         snapshot = load_snapshot(root)
         catalog = load_catalog(root)
+        generated = load_generated(root)
     except ObjectModelError as exc:
         return ObjectReport(
             checked_files=1,
             violations=(ObjectViolation(catalog_path.as_posix(), str(exc)),),
         )
-    return validate_catalog_document(catalog, snapshot)
+    generated_violations = _generated_violations(catalog, generated, snapshot)
+    report = validate_catalog_document(merge_generated(catalog, generated), snapshot)
+    return ObjectReport(
+        checked_files=report.checked_files + (generated is not None),
+        violations=(*generated_violations, *report.violations),
+        skipped=report.skipped,
+    )
+
+
+def _generated_violations(
+    catalog: Mapping[str, Any], generated: Mapping[str, Any] | None, snapshot: Snapshot
+) -> tuple[ObjectViolation, ...]:
+    """The generated stats must exist, be current and be the only source of their stats."""
+    path = GENERATED_STATS_RELATIVE_PATH.as_posix()
+    if generated is None:
+        return (ObjectViolation(path, f"not found; {REGENERATE}"),)
+    try:
+        expected = generate_description_stats(snapshot)
+    except ObjectModelError as exc:
+        return (ObjectViolation(path, f"cannot be generated from the snapshot: {exc}"),)
+    violations = []
+    if dump_generated(generated) != dump_generated(expected):
+        violations.append(ObjectViolation(path, f"does not match the snapshot; {REGENERATE}"))
+    covered = {str(entry.get("id")) for entry in expected["objects"]}
+    for index, entry in enumerate(catalog.get("objects") or []):
+        if str(entry.get("id")) in covered and entry.get("stats"):
+            violations.append(
+                ObjectViolation(
+                    f"objects[{index}].stats",
+                    f"item {entry.get('id')} takes its description stats from {path}",
+                )
+            )
+    return tuple(violations)

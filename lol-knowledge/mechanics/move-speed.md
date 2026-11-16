@@ -34,9 +34,9 @@ velocidad = bruto                         si 220 ≤ bruto ≤ 415
 - `src/lol_knowledge/stats/registry.py` declara `move_speed` como cantidad aditiva con `percent_of: flat` y `soft_cap` (`move_speed_soft_cap`, con aritmética exacta: 0,8 = 4/5).
 - La hoja aplica los porcentajes al final, cuando ya conoce todos los aportes planos (base, objetos y efectos), así que el orden de los objetos no importa. Cada porcentaje se convierte en una cantidad con la nota `10% of flat 390` y una etiqueta que nunca es más fuerte que la de los aportes planos.
 - El total aplica el límite suave; `base` y `bonus` quedan en bruto. Si el límite cambia el total, el texto añade `(soft cap from 429)`, el JSON trae `raw` y `soft_capped`, y la etiqueta baja como mucho a `Derivado`, porque la regla viene de fuentes secundarias.
-- Pruebas: `tests/test_stats_move_speed.py`. Una de las mutaciones (`> 490` frente a `>= 490`) es equivalente: las dos fórmulas dan 475 justo en 490.
+- Pruebas: `tests/test_stats_move_speed.py` y, con objetos reales (Bailarín espectral: 10 % con Botas de mercurio), `tests/test_stats_real_items.py`. Una de las mutaciones (`> 490` frente a `>= 490`) es equivalente: las dos fórmulas dan 475 justo en 490.
 
 ## Fuera de alcance
 
-- **Aportes multiplicativos** (unos pocos efectos según M3) y **ralentizaciones** (solo cuenta la mayor y se reduce con la resistencia a ralentizaciones): no hay ninguno en el catálogo y el motor no aplica efectos al atacante.
+- **Aportes multiplicativos** (unos pocos efectos según M3) y **ralentizaciones** (solo cuenta la mayor y se reduce con la resistencia a ralentizaciones): ningún efecto curado del catálogo los tiene y el motor no aplica efectos al atacante.
 - Efectos que ignoran los límites suaves o fijan la velocidad, y bonificaciones condicionales o temporales (fuera de combate, por la jungla, activas).

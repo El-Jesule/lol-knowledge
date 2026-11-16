@@ -18,6 +18,7 @@ from .schema import (
     CATALOG_RELATIVE_PATH,
     DDRAGON_STAT_MAP,
     DDRAGON_UNIT_CONVERSIONS,
+    GENERATED_STATS_RELATIVE_PATH,
     ITEMS_FILENAME,
     MANIFEST_FILENAME,
     MODEL_KIND,
@@ -89,6 +90,43 @@ def load_catalog(root: Path) -> Mapping[str, Any]:
     if not isinstance(payload, Mapping):
         raise ObjectModelError("the object catalog must be a JSON object")
     return payload
+
+
+def merge_generated(
+    catalog: Mapping[str, Any], generated: Mapping[str, Any] | None
+) -> Mapping[str, Any]:
+    """The curated catalog with the generated description stats of every item.
+
+    A curated object keeps its effects and review and receives the generated
+    stats; an item only in the generated document gets ``effect_review``
+    ``pending`` when its description has effects, ``complete`` otherwise.
+    """
+    if generated is None:
+        return catalog
+    curated = {str(entry.get("id")): entry for entry in catalog.get("objects") or []}
+    objects: list[dict[str, Any]] = []
+    for generated_entry in generated.get("objects") or []:
+        item_id = str(generated_entry.get("id"))
+        base = curated.pop(item_id, None)
+        if base is None:
+            entry: dict[str, Any] = {
+                "id": item_id,
+                "effect_review": "pending"
+                if generated_entry.get("effects_in_description")
+                else "complete",
+                "stats": [],
+                "effects": [],
+            }
+        else:
+            entry = copy.deepcopy(dict(base))
+        entry["stats"] = [*(entry.get("stats") or []), *generated_entry.get("stats", [])]
+        if generated_entry.get("unmodelled_stats"):
+            entry["unmodelled_stats"] = list(generated_entry["unmodelled_stats"])
+        objects.append(entry)
+    objects += [copy.deepcopy(dict(entry)) for entry in curated.values()]
+    merged = dict(catalog)
+    merged["objects"] = objects
+    return merged
 
 
 def _id_key(value: Any) -> tuple[int, Any]:
@@ -252,6 +290,7 @@ def _build_object(entry: Mapping[str, Any], snapshot: Snapshot) -> dict[str, Any
         "tags": sorted(tags) if isinstance(tags, list) else [],
         "stats": stats,
         "unmapped_source_stats": unmapped,
+        "unmodelled_description_stats": list(entry.get("unmodelled_stats") or []),
         "effects": effects,
         "gold": {
             "total": gold.get("total"),
@@ -298,6 +337,7 @@ def build_model(catalog: Mapping[str, Any], snapshot: Snapshot) -> dict[str, Any
             "items_sha256": snapshot.items_sha256,
             "locale": snapshot.locale,
             "catalog": CATALOG_RELATIVE_PATH.as_posix(),
+            "generated_stats": GENERATED_STATS_RELATIVE_PATH.as_posix(),
         },
         "objects": objects,
     }
@@ -310,10 +350,11 @@ def dump_model(model: Mapping[str, Any]) -> str:
 
 def load_model(root: Path) -> tuple[dict[str, Any], str]:
     """Load, validate and build the model. Returns ``(model, serialized)``."""
+    from .generate import load_generated
     from .validate import validate_catalog_document
 
     snapshot = load_snapshot(root)
-    catalog = load_catalog(root)
+    catalog = merge_generated(load_catalog(root), load_generated(root))
     report = validate_catalog_document(catalog, snapshot)
     if report.violations:
         raise ObjectModelError(

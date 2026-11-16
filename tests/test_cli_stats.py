@@ -110,7 +110,7 @@ def test_json_report_structure(capsys):
         (["--champion", "Nobody", "--level", "1"], "is not in the snapshot"),
         (["--champion", "../Zaahen", "--level", "1"], "is not in the snapshot"),
         (["--champion", "Zaahen", "--level", "0"], "level must be between"),
-        (["--champion", "Zaahen", "--level", "1", "--item", "1001"], "curated object catalog"),
+        (["--champion", "Zaahen", "--level", "1", "--item", "221053"], "not in the object catalog"),
         (["--champion", "Zaahen", "--level", "5", "--assume", "x"], "FIELD=VALUE"),
         (["--champion", "Zaahen", "--level", "5", "--assume", "hp=1"], "open data issue"),
         (

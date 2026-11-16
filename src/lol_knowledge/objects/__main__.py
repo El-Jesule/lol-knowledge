@@ -7,7 +7,9 @@ import sys
 from pathlib import Path
 from typing import Any
 
-from .catalog import ObjectModelError, load_model
+from .catalog import ObjectModelError, load_model, load_snapshot
+from .generate import dump_generated, generate_description_stats
+from .schema import GENERATED_STATS_RELATIVE_PATH
 from .validate import validate_object_catalog
 
 
@@ -19,6 +21,11 @@ def build_parser() -> argparse.ArgumentParser:
     parser.add_argument("--root", type=Path, default=Path("."), help="Project root (default: .)")
     parser.add_argument("--json", action="store_true", help="Print the canonical model as JSON.")
     parser.add_argument("--validate", action="store_true", help="Validate the curated catalog.")
+    parser.add_argument(
+        "--generate-stats",
+        action="store_true",
+        help=f"Rewrite {GENERATED_STATS_RELATIVE_PATH.as_posix()} from the snapshot.",
+    )
     return parser
 
 
@@ -59,6 +66,18 @@ def main(argv: list[str] | None = None) -> int:
     if not root.is_dir():
         print(f"error: {root} is not a directory", file=sys.stderr)
         return 2
+
+    if args.generate_stats:
+        try:
+            document = generate_description_stats(load_snapshot(root))
+        except ObjectModelError as exc:
+            print(f"error: {exc}", file=sys.stderr)
+            return 2
+        path = root / GENERATED_STATS_RELATIVE_PATH
+        path.write_text(dump_generated(document), encoding="utf-8", newline="\n")
+        stats = sum(len(entry["stats"]) for entry in document["objects"])
+        print(f"wrote {path.as_posix()}: {len(document['objects'])} items, {stats} stats")
+        return 0
 
     if args.validate:
         report = validate_object_catalog(root)
