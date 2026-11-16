@@ -113,7 +113,7 @@ def test_a_scenario_effect_is_left_to_the_sheet_and_flurry_weakens_the_rotation(
         "attacker 3032 practice-makes-lethal: applied by the stat sheet (scenario max_stacks)"
         in outcome.notes
     )
-    assert "attacker 3032 flurry: excluded, not applied" in outcome.notes
+    assert "attacker 3032 flurry: lasts 6 s; applied only with --timeline" in outcome.notes
     assert outcome.label is Label.PENDING
 
 

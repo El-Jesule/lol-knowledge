@@ -77,6 +77,7 @@ _EFFECT_KEYS = {
     "conditions",
     "components",
     "cooldown_seconds",
+    "cooldown_reduced_by_attacks",
     "stacks",
     "duration_seconds",
     "limits",
@@ -109,6 +110,7 @@ _LIFE_STEAL_KEYS = {"value", "source"}
 _LIMIT_KEYS = {"kind", "value", "unit", "condition"}
 _SCALAR_KEYS = {"status", "reason"}
 _STACK_KEYS = {"required", "window_seconds", "max_stacks"}
+_REFUND_KEYS = {"seconds", "critical_seconds"}
 _SOURCE_KEYS = {"kind", "reference", "quote", "retrieved_at", "confidence", "note"}
 _SOURCE_CONFIDENCE = {
     "ddragon_description": {"official"},
@@ -212,6 +214,9 @@ def _effect_numbers(effect: Mapping[str, Any]) -> list[float]:
         value = effect.get(key)
         if _is_number(value):
             numbers.append(float(value))
+    refund = effect.get("cooldown_reduced_by_attacks")
+    if isinstance(refund, Mapping):
+        numbers += [float(value) for value in refund.values() if _is_number(value)]
     for limit in effect.get("limits") or []:
         if isinstance(limit, Mapping) and _is_number(limit.get("value")):
             numbers.append(float(limit["value"]))
@@ -493,6 +498,7 @@ class _CatalogChecker:
             for index, component in enumerate(components):
                 self._check_component(component, f"{pointer}.components[{index}]")
         self._check_scalar(effect.get("cooldown_seconds"), f"{pointer}.cooldown_seconds")
+        self._check_refund(effect, f"{pointer}.cooldown_reduced_by_attacks")
         self._check_scalar(effect.get("duration_seconds"), f"{pointer}.duration_seconds")
         self._check_stacks(effect.get("stacks"), f"{pointer}.stacks")
         self._check_limits(effect.get("limits"), f"{pointer}.limits")
@@ -859,6 +865,21 @@ class _CatalogChecker:
             return
         if not _is_number(value) or value < 0:
             self.fail(pointer, "scalar must be null, a non-negative number or an unknown marker")
+
+    def _check_refund(self, effect: Mapping[str, Any], pointer: str) -> None:
+        """Seconds each basic attack (and a critical one) takes off the cooldown."""
+        if "cooldown_reduced_by_attacks" not in effect:
+            return
+        refund = effect["cooldown_reduced_by_attacks"]
+        if not isinstance(refund, Mapping) or set(refund) != _REFUND_KEYS:
+            self.fail(pointer, f"must be an object with exactly {sorted(_REFUND_KEYS)}")
+            return
+        for key in sorted(_REFUND_KEYS):
+            value = refund[key]
+            if not _is_number(value) or value <= 0:
+                self.fail(f"{pointer}.{key}", "must be a positive number of seconds")
+        if not _is_number(effect.get("cooldown_seconds")):
+            self.fail(pointer, "needs a numeric cooldown_seconds")
 
     def _check_stacks(self, stacks: Any, pointer: str) -> None:
         if stacks is None:

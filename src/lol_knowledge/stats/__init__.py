@@ -18,17 +18,21 @@ from .metrics import Cooldowns, EffectiveHealth, ability_cooldowns, effective_he
 from .registry import STATS, Stacking, StatDef, Unit, stat
 from .report import format_text, to_dict
 from .sheet import (
+    AttackSpeedRatio,
     Contribution,
     StatBlocked,
     StatSheet,
     StatValue,
     build_stat_sheet,
+    effect_amount,
     sheet_effect_reason,
     with_amplifier,
     with_bonus,
 )
 
 __all__ = [
+    "AttackSpeedRatio",
+    "effect_amount",
     "EVIDENCE_LABEL",
     "STATS",
     "ChampionData",

@@ -10,7 +10,7 @@
 |---|---|---|---|
 | S1 | Data Dragon 16.22.1, descripciones de 3057, 3078, 3100, 3508, 6662, 2510 y 3877 | «Tras usar una habilidad, tu siguiente ataque inflige daño … adicional al impactar»; ninguna da la cifra | Oficial de Riot |
 | S2 | Cliente 16.22: [`../derived/item-effects.json`](../derived/item-effects.json), cálculo `SpellbladeDamage` y `SpellbladeCooldown` 1,5 de cada objeto | Fórmula de cada golpe | `Derivado` |
-| S3 | LoL Wiki, `Named_item_effect`, `Lich_Bane` y `Dusk_and_Dawn` (revisión 4015331), extractos del buscador consultados el 2026-11-16 | Efecto único compartido (solo cuenta una vez entre todos los objetos que lo tienen); «Limited to 1 Spellblade item»; el daño aplica robo de vida; Amanecer y anochecer vuelve a aplicar los efectos al impactar | Fuente comunitaria secundaria |
+| S3 | LoL Wiki, `Named_item_effect`, `Lich_Bane` y `Dusk_and_Dawn` (revisión 4015331), extractos del buscador consultados el 2026-11-16 | Efecto único compartido (solo cuenta una vez entre todos los objetos que lo tienen); «Limited to 1 Spellblade item»; la carga dura 10 s («your next basic attack within 10 seconds»); el daño aplica robo de vida; Amanecer y anochecer vuelve a aplicar los efectos al impactar | Fuente comunitaria secundaria |
 
 ## Cifras (S2; mStat 2 con mStatFormula 1 = daño de ataque base)
 
@@ -30,7 +30,7 @@ En Segador de esencia, `mStat 8` se toma como probabilidad de crítico, como dic
 
 1. **Activación automática:** una habilidad carga el siguiente ataque básico. Varias habilidades seguidas cargan un solo ataque.
 2. **`attack:nospellblade`:** ese ataque no se potencia y la carga se pierde (por ejemplo, si pasaron los 10 s o la recarga no estaba lista).
-3. **Recarga:** sin línea de tiempo, la recarga de 1,5 s se supone siempre lista; con `--timeline` se respeta ([`timeline.md`](timeline.md)).
+3. **Recarga y ventana:** sin línea de tiempo, la recarga de 1,5 s se supone siempre lista y la carga no caduca. Con `--timeline` se respeta la recarga, y la carga caduca si el ataque llega más de 10 s después de la última habilidad que la cargó (S3, en el catálogo como `duration_seconds`): ese ataque no se potencia y queda `Pendiente de verificación` ([`timeline.md`](timeline.md), regla 11).
 4. **Un solo objeto:** dos objetos con Hoja encantada en el atacante es un error (S3: «Limited to 1 Spellblade item»).
 5. **El daño del golpe** es una parte más al impactar: no se multiplica por el crítico y aplica robo de vida (S3).
 6. **Amanecer y anochecer:** los efectos al impactar de los objetos se aplican otra vez en ese ataque, con etiqueta `Pendiente de verificación` porque la fuente es secundaria y el texto en español está mal traducido. El propio daño de Hoja encantada no se repite (sin verificar).
@@ -38,6 +38,5 @@ En Segador de esencia, `mStat 8` se toma como probabilidad de crítico, como dic
 
 ## Fuera de alcance
 
-- La recarga real, la ventana de 10 s y el orden en el tiempo.
 - La curación, el maná, las ralentizaciones y la velocidad de movimiento de estos objetos.
 - Los efectos al impactar de las habilidades del campeón (no hay ninguno modelado).

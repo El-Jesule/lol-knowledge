@@ -36,6 +36,7 @@ from .stats import (
     StatBlocked,
     StatSheet,
     ability_cooldowns,
+    effect_amount,
     sheet_effect_reason,
     weakest,
     with_amplifier,
@@ -70,11 +71,13 @@ DAMAGE_KINDS = frozenset(
 
 # Effects that last a while once triggered; only the timeline applies them (timeline.md).
 TIMED_KINDS = frozenset({"damage_modifier", "stat_modifier"})
-TIMED_TRIGGERS = frozenset({"spellblade", "energized", "damaging_ability"})
+TIMED_TRIGGERS = frozenset({"spellblade", "energized", "damaging_ability", "on_attack"})
 # Triggers on a hit: whether that hit benefits from its own effect is not verified.
 UNCERTAIN_START_TRIGGERS = frozenset({"spellblade", "energized"})
 # Target resistances a timed effect can reduce, by the damage type they mitigate.
 RESISTANCE_STATS = {"armor": DamageType.PHYSICAL, "magic_resist": DamageType.MAGIC}
+# Stats whose timed change moves the attack timer.
+ATTACK_SPEED_STATS = frozenset({"attack_speed", "attack_speed_bonus"})
 
 # Kinds against which omnivamp drops to 33 % for pets, damage over time and area spells.
 REDUCED_OMNIVAMP_KINDS = frozenset({"minion", "monster"})
@@ -315,6 +318,11 @@ class _Effect:
     # Seconds the effect lasts once triggered (``duration_seconds``), and whom it affects.
     duration: Fraction | None = None
     affects: str | None = None
+    # Cooldown once triggered, and seconds each attack hit (critical) takes off it.
+    cooldown: Fraction | None = None
+    refund: tuple[Fraction, Fraction] | None = None
+    # Seconds a counter's stacks last after the last attack (``stacks.window_seconds``).
+    window: Fraction | None = None
 
     @property
     def title(self) -> str:
@@ -431,16 +439,36 @@ def _effects(
                         effect.get("scenario"),
                         _duration(effect),
                         (effect.get("target") or {}).get("kind"),
+                        _seconds_of(effect.get("cooldown_seconds")),
+                        _refund(effect),
+                        _window(effect),
                     )
                 )
     return effects, notes, weakened
 
 
-def _duration(effect: Mapping[str, Any]) -> Fraction | None:
-    value = effect.get("duration_seconds")
+def _seconds_of(value: Any) -> Fraction | None:
     if isinstance(value, (int, float)) and not isinstance(value, bool) and value > 0:
         return Fraction(str(value))
     return None
+
+
+def _duration(effect: Mapping[str, Any]) -> Fraction | None:
+    return _seconds_of(effect.get("duration_seconds"))
+
+
+def _refund(effect: Mapping[str, Any]) -> tuple[Fraction, Fraction] | None:
+    refund = effect.get("cooldown_reduced_by_attacks")
+    if not isinstance(refund, Mapping):
+        return None
+    return Fraction(str(refund["seconds"])), Fraction(str(refund["critical_seconds"]))
+
+
+def _window(effect: Mapping[str, Any]) -> Fraction | None:
+    stacks = effect.get("stacks")
+    if _every(effect) is None or not isinstance(stacks, Mapping):
+        return None
+    return _seconds_of(stacks.get("window_seconds"))
 
 
 def _excluded(effect: _Effect, target_kind: str | None) -> bool:
@@ -540,6 +568,9 @@ class _Rotation:
         self.timed: list[_Effect] = []
         # Timeline state: timed effects and burns in force, and how far burns are counted.
         self.windows: dict[str, _Window] = {}
+        self.timed_ready: dict[str, Fraction] = {}  # cooldowns of timed effects
+        self.last_counted: dict[str, Fraction] = {}  # last attack of each counter
+        self.speed_changed = False  # a timed effect changed the attack speed
         self.burning: dict[str, _Burn] = {}
         self.accrued = Fraction(0)
         self.active_dealt: list[_Window] = []
@@ -940,14 +971,12 @@ class _Rotation:
             elif effect.affects == "self":
                 source = f"{effect.title} ({effect.name}) until {format_number(window.end)} s"
                 label = weakest(window.labels)
+                stat_id = str(component.get("stat"))
                 if component.get("mode") == "flat":
-                    sheet = with_bonus(
-                        sheet, str(component.get("stat")), window.value, source, label
-                    )
+                    amount = effect_amount(stat_id, window.value)
+                    sheet = with_bonus(sheet, stat_id, amount, source, label)
                 else:
-                    sheet = with_amplifier(
-                        sheet, str(component.get("stat")), window.value, source, label
-                    )
+                    sheet = with_amplifier(sheet, stat_id, window.value, source, label)
             else:
                 damage_type = RESISTANCE_STATS[str(component.get("stat"))]
                 self.shred.setdefault(damage_type, []).append(window)
@@ -969,11 +998,17 @@ class _Rotation:
                 continue
             if not _conditions_hold(effect, self.target, "trigger", False, target_stats, slot):
                 continue
+            if effect.cooldown is not None:
+                if clock < self.timed_ready.get(effect.title, Fraction(0)):
+                    continue
+                self.timed_ready[effect.title] = clock + effect.cooldown
             assert effect.duration is not None
             value, labels = self._value(effect, target_stats)
             self.windows[effect.title] = _Window(
                 effect, clock + effect.duration, value, (effect.label, *labels)
             )
+            if effect.component.get("kind") == "stat_modifier" and effect.affects == "self":
+                self.speed_changed |= str(effect.component.get("stat")) in ATTACK_SPEED_STATS
             if trigger in UNCERTAIN_START_TRIGGERS:
                 uncertain = True
                 self.notes.append(
@@ -981,6 +1016,15 @@ class _Rotation:
                     "benefits is not verified"
                 )
         return uncertain
+
+    def _refund(self, clock: Fraction, crit: bool) -> None:
+        """An attack hit shortens the cooldowns that attacks reduce (Yun Tal's Flurry)."""
+        for effect in self.timed:
+            ready = self.timed_ready.get(effect.title)
+            if effect.refund is None or ready is None or ready <= clock:
+                continue
+            seconds = effect.refund[1] if crit else effect.refund[0]
+            self.timed_ready[effect.title] = max(clock, ready - seconds)
 
     def _accrue(self, until: Fraction, health: Fraction) -> tuple[list[Part], Fraction]:
         """Burn damage from the last count to ``until``, split where an effect ends.
@@ -1063,6 +1107,16 @@ class _Rotation:
                     return Fraction(str(effect["cooldown_seconds"]))
         raise RotationError("the Spellblade item declares no cooldown")
 
+    def _spellblade_window(self) -> Fraction | None:
+        """How long a Spellblade charge lasts (``duration_seconds``, 10 s from the wiki)."""
+        for item in self.sheet.items:
+            for effect in item.effects:
+                if (effect.get("trigger") or {}).get("event") == "spellblade":
+                    window = _duration(effect)
+                    if window is not None:
+                        return window
+        return None
+
     def _cast(
         self,
         step: Step,
@@ -1121,11 +1175,33 @@ class _Rotation:
         return []
 
     def _counted(
-        self, step: Step, target_stats: Mapping[str, Fraction], counters: dict[str, int]
+        self,
+        step: Step,
+        target_stats: Mapping[str, Fraction],
+        counters: dict[str, int],
+        clock: Fraction | None = None,
+        extra: list[Label] | None = None,
     ) -> list[Part]:
-        """Effects on every Nth attack: count this attack and fire those that reach N."""
+        """Effects on every Nth attack: count this attack and fire those that reach N.
+
+        With the timeline (``clock``), a counter with a stack window loses its
+        stacks when this attack comes the window or later after the last one.
+        """
         parts: list[Part] = []
         for effect in [*self.counted, *self.counted_repeats]:
+            if clock is not None and effect.window is not None:
+                last = self.last_counted.get(effect.title)
+                if counters[effect.title] and last is not None and clock - last >= effect.window:
+                    count = counters[effect.title]
+                    self.notes.append(
+                        f"{effect.title}: {count} stack{'' if count == 1 else 's'} expired "
+                        f"({format_number(effect.window)} s after the attack at "
+                        f"{format_number(last)} s)"
+                    )
+                    counters[effect.title] = 0
+                    if extra is not None:
+                        extra.append(Label.PENDING)
+                self.last_counted[effect.title] = clock
             counters[effect.title] += 1
             if counters[effect.title] < (effect.every or 0):
                 continue
@@ -1248,6 +1324,8 @@ class _Rotation:
         # Spellblade: an ability charges the next attack; that attack uses the charge
         # (or drops it with attack:nospellblade). Its cooldown is taken as ready.
         charged = False
+        charged_at = Fraction(0)  # when the charge was made, for its window (timeline)
+        window = self._spellblade_window() if self.timeline is not None else None
         # Attack counters start at zero; Energized starts ready (attack-counters.md).
         counters = {effect.title: 0 for effect in [*self.counted, *self.counted_repeats]}
         energized = bool(self.energized)
@@ -1266,7 +1344,6 @@ class _Rotation:
                 continue
             if self.timeline is not None and step.slot is None:
                 clock = max(clock, next_attack)
-                next_attack = clock + self.timeline.attack_interval
             elif self.timeline is not None:
                 self._cast(step, clock, ready, open_casts)
             parts: list[Part] = []
@@ -1277,6 +1354,13 @@ class _Rotation:
             target_stats = self._target_stats(health)
             extra: list[Label] = []
             if step.slot is None:
+                if charged and window is not None and clock - charged_at > window:
+                    charged = False
+                    extra.append(Label.PENDING)
+                    self.notes.append(
+                        f"Spellblade: the charge from {format_number(charged_at)} s expired "
+                        f"after {format_number(window)} s (LoL Wiki, secondary)"
+                    )
                 empowered = charged and step.spellblade and bool(self.spellblade)
                 charged = False
                 name = "critical basic attack" if step.crit else "basic attack"
@@ -1287,7 +1371,13 @@ class _Rotation:
                     spellblade_ready = clock + self._spellblade_cooldown()
                     if self._open("spellblade", clock, target_stats):
                         extra.append(Label.PENDING)
-                parts += self._counted(step, target_stats, counters)
+                timed = self.timeline is not None
+                parts += self._counted(
+                    step, target_stats, counters, clock if timed else None, extra
+                )
+                if timed:
+                    self._open("on_attack", clock, target_stats)
+                    self._refund(clock, step.crit)
                 if energized:
                     energized = False
                     name += " (Energized)"
@@ -1298,7 +1388,8 @@ class _Rotation:
                 name, ability_parts = self._ability(step, target_stats)
                 parts += ability_parts
                 # An ability cast while Spellblade is on cooldown does not charge it.
-                charged = self.timeline is None or clock >= spellblade_ready
+                if self.timeline is None or clock >= spellblade_ready:
+                    charged, charged_at = True, clock
                 parts += self._burns(step, ability_parts, target_stats, burned, clock)
                 if ability_parts and self.timeline is not None:
                     self._open("damaging_ability", clock, target_stats, step.slot)
@@ -1329,6 +1420,10 @@ class _Rotation:
             )
             outcomes.append(outcome)
             health = outcome.health_after
+            if self.timeline is not None and step.slot is None:
+                # The next attack: 1 / the attack speed just after this one (timeline.md).
+                self._set_moment(clock)
+                next_attack = clock + 1 / self.sheet["attack_speed"].total()
         if self.burning:
             end = max(burn.end for burn in self.burning.values())
             outcomes.append(
@@ -1345,8 +1440,26 @@ class _Rotation:
                 "Energized starts ready and fires once; recharging by moving and attacking "
                 "is not modelled"
             )
-        if counters:
+        if counters and self.timeline is None:
             self.notes.append("attack counters ignore their time windows (stacks expiring)")
+        elif counters:
+            self.notes += [
+                f"{effect.title}: no stack window declared; its count does not expire"
+                for effect in [*self.counted, *self.counted_repeats]
+                if effect.window is None
+            ]
+            if any(effect.window is not None for effect in [*self.counted, *self.counted_repeats]):
+                self.notes.append(
+                    "timeline: a counter's stacks expire when an attack comes its window or later "
+                    "after the previous one; every attack renews them (timeline.md)"
+                )
+        if self.speed_changed:
+            self.notes.append(
+                "timeline: the time to the next attack uses the attack speed just after each "
+                "attack; whether the game recomputes it when the attack speed changes before "
+                "the next attack is not verified"
+            )
+            self.weakened = True
         if self.timeline is not None:
             self.notes += self.timeline.notes
             if self.burns:
