@@ -684,3 +684,30 @@ def test_derived_evidence_needs_sources() -> None:
     assert "evidence_confidence 'derived' needs at least one source" in _messages(
         _catalog(effect=effect)
     )
+
+
+# Spellblade, repeated on-hit effects and patch notes
+
+
+def test_a_spellblade_effect_with_repeated_on_hits_is_accepted() -> None:
+    effect = _valid_effect()
+    effect["trigger"] = {"event": "spellblade"}
+    effect["components"].append({"kind": "repeat_on_hit", "target": {"kind": "enemy_unit"}})
+    assert _messages(_catalog(effect=effect)) == []
+
+
+def test_patch_notes_are_an_official_source() -> None:
+    effect = _external_effect()
+    effect["sources"].append(
+        {
+            "kind": "patch_notes",
+            "reference": "https://www.leagueoflegends.com/en-sg/news/game-updates/x/",
+            "quote": "1% per 100 bonus health",
+            "retrieved_at": "2026-11-16",
+            "confidence": "official",
+        }
+    )
+    effect["evidence_confidence"] = "corroborated"
+    assert _messages(_catalog(effect=effect)) == []
+    effect["sources"][1]["confidence"] = "secondary"
+    assert "source kind 'patch_notes' cannot be 'secondary'" in _messages(_catalog(effect=effect))

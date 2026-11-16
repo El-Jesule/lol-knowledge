@@ -115,6 +115,7 @@ _SOURCE_CONFIDENCE = {
     "community_dragon": {"secondary", "corroborated"},
     "in_game_measurement": {"secondary", "corroborated"},
     "client_data": {"secondary", "corroborated", "derived"},
+    "patch_notes": {"official", "corroborated"},
 }
 # Client data values store percentages as fractions (0.09 for 9 %).
 _FRACTION_SOURCES = frozenset({"client_data"})

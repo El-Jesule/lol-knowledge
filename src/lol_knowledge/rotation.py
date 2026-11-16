@@ -40,6 +40,7 @@ RULES = (
     "lol-knowledge/mechanics/life-steal-and-omnivamp.md",
 )
 HOLDER_RANGES = frozenset({"melee", "ranged"})
+ATTACK_MODIFIERS = frozenset({"crit", "nospellblade"})
 # Base critical strike multiplier of the patch notes (26.1); records that differ are flagged.
 PATCH_CRIT_MULTIPLIER = Fraction(2)
 # Passives that reduce total critical strike damage: "Critical Strike Damage Reduction:
@@ -64,26 +65,36 @@ class Step:
     slot: str | None = None
     case: str | None = None
     crit: bool = False
+    # False for ``attack:nospellblade``: the attack is not empowered (spellblade.md).
+    spellblade: bool = True
 
 
 def parse_steps(text: str) -> tuple[Step, ...]:
-    """Read ``attack``, ``attack:crit``, ``Q``, ``E.edge``… separated by commas or spaces."""
+    """Read ``attack``, ``attack:crit``, ``attack:nospellblade``, ``Q``, ``E.edge``…
+
+    Steps are separated by commas or spaces; an attack takes any of the
+    modifiers ``crit`` and ``nospellblade``, once each and in any order.
+    """
     tokens = [token for token in re.split(r"[,\s]+", text.strip()) if token]
     if not tokens:
         raise RotationError("the rotation has no steps")
     steps = []
     for token in tokens:
-        lowered = token.lower()
-        if lowered == "attack":
-            steps.append(Step(token))
-            continue
-        if lowered == "attack:crit":
-            steps.append(Step(token, crit=True))
+        head, *modifiers = token.lower().split(":")
+        if head == "attack":
+            if not set(modifiers) <= ATTACK_MODIFIERS or len(set(modifiers)) != len(modifiers):
+                raise RotationError(
+                    f"unknown step {token!r}: an attack takes crit and nospellblade, once each"
+                )
+            steps.append(
+                Step(token, crit="crit" in modifiers, spellblade="nospellblade" not in modifiers)
+            )
             continue
         match = _ABILITY_STEP.fullmatch(token[:1].upper() + token[1:])
         if match is None:
             raise RotationError(
-                f"unknown step {token!r}: use attack, attack:crit, Q, W, E, R or SLOT.case"
+                f"unknown step {token!r}: use attack, attack:crit, attack:nospellblade, "
+                "Q, W, E, R or SLOT.case"
             )
         steps.append(Step(token, match.group("slot"), match.group("case")))
     return tuple(steps)
@@ -341,10 +352,31 @@ class _Rotation:
         self.on_hit: list[_Effect] = []
         self.dealt: list[_Effect] = []
         self.taken: list[_Effect] = []
+        self.spellblade: list[_Effect] = []
+        self.repeats: list[_Effect] = []
+        owners = sorted(
+            {
+                item.id
+                for item in sheet.items
+                if any(
+                    (effect.get("trigger") or {}).get("event") == "spellblade"
+                    for effect in item.effects
+                )
+            }
+        )
+        if len(owners) > 1:
+            raise RotationError(
+                f"items {', '.join(owners)} all have Spellblade; a champion is limited to one "
+                "Spellblade item (spellblade.md)"
+            )
         for effect in attacker:
             kind = effect.component.get("kind")
             if effect.trigger == "on_hit" and kind == "damage":
                 self.on_hit.append(effect)
+            elif effect.trigger == "spellblade" and kind == "damage":
+                self.spellblade.append(effect)
+            elif effect.trigger == "spellblade" and kind == "repeat_on_hit":
+                self.repeats.append(effect)
             elif effect.trigger == "always" and kind == "damage_modifier":
                 if effect.component.get("direction") != "dealt":
                     self._skip(effect, "damage taken by the attacker")
@@ -505,7 +537,9 @@ class _Rotation:
             applied_life_steal, omnivamp, part.damage * rate, weakest(labels), tuple(notes)
         )
 
-    def _attack(self, step: Step, target_stats: Mapping[str, Fraction]) -> list[Part]:
+    def _attack(
+        self, step: Step, target_stats: Mapping[str, Fraction], empowered: bool = False
+    ) -> list[Part]:
         attack_damage = self.sheet["attack_damage"]
         raw = attack_damage.total()
         labels = [attack_damage.label]
@@ -545,7 +579,26 @@ class _Rotation:
                 "attack", source, DamageType.PHYSICAL, raw, labels, step.crit, target_stats, notes
             )
         ]
-        for effect in self.on_hit:
+        parts += self._on_hit(self.on_hit, step, target_stats)
+        if not empowered:
+            return parts
+        parts += self._on_hit(self.spellblade, step, target_stats)
+        for repeat in self.repeats:
+            parts += self._on_hit(
+                self.on_hit, step, target_stats, f" - again by {repeat.title}", repeat.label
+            )
+        return parts
+
+    def _on_hit(
+        self,
+        effects: Sequence[_Effect],
+        step: Step,
+        target_stats: Mapping[str, Fraction],
+        suffix: str = "",
+        extra: Label | None = None,
+    ) -> list[Part]:
+        parts = []
+        for effect in effects:
             if not _conditions_hold(effect, self.target, "on_hit", step.crit):
                 continue
             value = self._limited(effect, self._percent(effect, target_stats))
@@ -553,10 +606,10 @@ class _Rotation:
             parts.append(
                 self._part(
                     "on_hit",
-                    f"{effect.title} ({effect.name})",
+                    f"{effect.title} ({effect.name}){suffix}",
                     damage_type,
                     value,
-                    [effect.label],
+                    [effect.label] if extra is None else [effect.label, extra],
                     step.crit,
                     target_stats,
                     life_steal_tag=effect.component.get("applies_life_steal"),
@@ -622,13 +675,21 @@ class _Rotation:
         start = self.target.stats["current_health"]
         health = start
         outcomes = []
+        # Spellblade: an ability charges the next attack; that attack uses the charge
+        # (or drops it with attack:nospellblade). Its cooldown is taken as ready.
+        charged = False
         for index, step in enumerate(steps, start=1):
             target_stats = {**self.target.stats, "current_health": health}
             if step.slot is None:
+                empowered = charged and step.spellblade and bool(self.spellblade)
+                charged = False
                 name = "critical basic attack" if step.crit else "basic attack"
-                parts = self._attack(step, target_stats)
+                if empowered:
+                    name += " with Spellblade"
+                parts = self._attack(step, target_stats, empowered)
             else:
                 name, parts = self._ability(step, target_stats)
+                charged = True
             outcome = StepOutcome(
                 index, step, name, tuple(parts), health, weakest(part.label for part in parts)
             )

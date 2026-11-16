@@ -1,9 +1,9 @@
 {
   "schema_version": 1,
   "kind": "lol-object-model-catalog",
-  "catalog_version": 10,
+  "catalog_version": 11,
   "game_version": "16.22.1",
-  "notes": "Curated overlay for a mechanically diverse sample. Data Dragon derivatives (stats, gold, maps, recipes) are not repeated here; see lol-knowledge/objects/README.md. Numeric mechanics absent from Data Dragon carry declared sources and secondary confidence. Catalog version 3 (2026-11-15): moved to snapshot 16.22.1; stats, gold, descriptions and recipes of the 15 objects are identical to 16.20.1 in Data Dragon; the secondary evidence was not re-checked against the 16.21 and 16.22 patch notes. Catalog version 6 (2026-11-15): damage components may declare applies_life_steal with its own source; Mist's Edge declares it from the LoL Wiki (secondary). Catalog version 7 (2026-11-16): adds 3111 (Mercury's Treads) for its tenacity, declared from the 16.22.1 description. Catalog version 8 (2026-11-16): description stats of every Summoner's Rift item, curated ones included, come from catalog-stats.json (generated); this file keeps effects and reviews. Catalog version 9 (2026-11-16): adds 3032 (Yun Tal Wildarrows). Effects may declare scenario max_stacks (the stat sheet applies them at full stacks) and objects may confirm a generated 0 as a real zero (confirmed_zero_stats). Catalog version 10 (2026-11-16): adds the on-hit damage of 1043, 3091, 3115, 3124 and 3302, with client values (evidence derived) where Data Dragon omits them; stat effects that are always active (Rabadon) are applied by the stat sheet.",
+  "notes": "Curated overlay for a mechanically diverse sample. Data Dragon derivatives (stats, gold, maps, recipes) are not repeated here; see lol-knowledge/objects/README.md. Numeric mechanics absent from Data Dragon carry declared sources and secondary confidence. Catalog version 3 (2026-11-15): moved to snapshot 16.22.1; stats, gold, descriptions and recipes of the 15 objects are identical to 16.20.1 in Data Dragon; the secondary evidence was not re-checked against the 16.21 and 16.22 patch notes. Catalog version 6 (2026-11-15): damage components may declare applies_life_steal with its own source; Mist's Edge declares it from the LoL Wiki (secondary). Catalog version 7 (2026-11-16): adds 3111 (Mercury's Treads) for its tenacity, declared from the 16.22.1 description. Catalog version 8 (2026-11-16): description stats of every Summoner's Rift item, curated ones included, come from catalog-stats.json (generated); this file keeps effects and reviews. Catalog version 9 (2026-11-16): adds 3032 (Yun Tal Wildarrows). Effects may declare scenario max_stacks (the stat sheet applies them at full stacks) and objects may confirm a generated 0 as a real zero (confirmed_zero_stats). Catalog version 10 (2026-11-16): adds the on-hit damage of 1043, 3091, 3115, 3124 and 3302, with client values (evidence derived) where Data Dragon omits them; stat effects that are always active (Rabadon) are applied by the stat sheet. Catalog version 11 (2026-11-16): adds Spellblade (trigger spellblade) to Sheen, Trinity Force, Lich Bane, Essence Reaver, Iceborn Gauntlet, Dusk and Dawn and Bloodsong, the repeat_on_hit component and patch notes as a source kind (Terminus is now corroborated by the 26.15 notes).",
   "objects": [
     {
       "id": "1036",
@@ -1123,11 +1123,18 @@
               "quote": "OnHitDamage = 30 + StatByCoefficient(mStat 2, mStatFormula 2, 0.1) + StatByCoefficient(0.1); DamageType absent",
               "retrieved_at": "2026-11-16",
               "confidence": "derived"
+            },
+            {
+              "kind": "patch_notes",
+              "reference": "https://www.leagueoflegends.com/en-sg/news/game-updates/league-of-legends-patch-26-15-notes/",
+              "quote": "Unique - Shadow: 30 Magic Damage On-Hit ⇒ 30 (+10% bonus Attack Damage) (+10% Ability Power)",
+              "retrieved_at": "2026-11-16",
+              "confidence": "official"
             }
           ],
-          "evidence_confidence": "derived",
+          "evidence_confidence": "corroborated",
           "model_status": "evaluable",
-          "note": "Data Dragon shows 0 for the amount. In the client, mStat 2 with mStatFormula 2 is bonus attack damage; the part without mStat is ability power, as in Nashor's Tooth. A secondary changelog (riftpatchnotes.com, 26.15) also gives 10 % bonus AD and 10 % AP. The client calculation has no DamageType; the description says magic."
+          "note": "Data Dragon shows 0 for the amount. The client (mStat 2 with mStatFormula 2 is bonus attack damage; the part without mStat is ability power) and the official 26.15 patch notes agree. The old Fandom wiki still shows a flat 30, from before 26.15. The client calculation has no DamageType; the description says magic."
         },
         {
           "id": "juxtaposition-dark",
@@ -1242,6 +1249,770 @@
           "evidence_confidence": "derived",
           "model_status": "partially_evaluable",
           "note": "Not applied: the amount depends on level and item formulas have no level values; the stat sheet shows a pending 0 for armor and magic resist."
+        }
+      ]
+    },
+    {
+      "id": "3057",
+      "effect_review": "complete",
+      "stats": [],
+      "effects": [
+        {
+          "id": "spellblade",
+          "kind": "passive",
+          "name": "Hoja encantada",
+          "quote": "Tras usar una habilidad, tu siguiente ataque inflige de daño físico adicional al impactar",
+          "basis": "external_evidence_explicit",
+          "trigger": {
+            "event": "spellblade"
+          },
+          "target": {
+            "kind": "enemy_unit"
+          },
+          "conditions": [
+            {
+              "kind": "on_hit"
+            }
+          ],
+          "components": [
+            {
+              "kind": "damage",
+              "damage_type": "physical",
+              "target": {
+                "kind": "enemy_unit"
+              },
+              "conditions": [
+                {
+                  "kind": "on_hit"
+                }
+              ],
+              "formula": {
+                "op": "percent_of",
+                "percent": 100,
+                "stat": "attack_damage",
+                "scope": "base"
+              },
+              "applies_life_steal": {
+                "value": true,
+                "source": {
+                  "kind": "community_wiki",
+                  "reference": "https://wiki.leagueoflegends.com/en-us/Lich_Bane",
+                  "quote": "Spellblade's bonus damage applies life steal.",
+                  "retrieved_at": "2026-11-16",
+                  "confidence": "secondary",
+                  "note": "Leído en el extracto del buscador; la regla es común a todos los objetos con Hoja encantada."
+                }
+              }
+            }
+          ],
+          "cooldown_seconds": 1.5,
+          "stacks": null,
+          "duration_seconds": null,
+          "limits": [],
+          "sources": [
+            {
+              "kind": "client_data",
+              "reference": "Cliente 16.22.8348910+branch.releases-16-22.content.release: lol-knowledge/derived/item-effects.json → items.3057.calculations.SpellbladeDamage (research/reports/item-effects-16.22.md)",
+              "quote": "SpellbladeDamage = StatByCoefficient(mStat 2, mStatFormula 1, 1.0); SpellbladeCooldown = 1.5",
+              "retrieved_at": "2026-11-16",
+              "confidence": "derived"
+            }
+          ],
+          "evidence_confidence": "derived",
+          "model_status": "evaluable",
+          "note": "100 % of base attack damage. In the client, mStat 2 with mStatFormula 1 is base attack damage."
+        }
+      ]
+    },
+    {
+      "id": "3078",
+      "effect_review": "complete",
+      "stats": [],
+      "effects": [
+        {
+          "id": "spellblade",
+          "kind": "passive",
+          "name": "Hoja encantada",
+          "quote": "Tras usar una habilidad, tu siguiente ataque inflige daño físico adicional al impactar",
+          "basis": "external_evidence_explicit",
+          "trigger": {
+            "event": "spellblade"
+          },
+          "target": {
+            "kind": "enemy_unit"
+          },
+          "conditions": [
+            {
+              "kind": "on_hit"
+            }
+          ],
+          "components": [
+            {
+              "kind": "damage",
+              "damage_type": "physical",
+              "target": {
+                "kind": "enemy_unit"
+              },
+              "conditions": [
+                {
+                  "kind": "on_hit"
+                }
+              ],
+              "formula": {
+                "op": "percent_of",
+                "percent": 200,
+                "stat": "attack_damage",
+                "scope": "base"
+              },
+              "applies_life_steal": {
+                "value": true,
+                "source": {
+                  "kind": "community_wiki",
+                  "reference": "https://wiki.leagueoflegends.com/en-us/Lich_Bane",
+                  "quote": "Spellblade's bonus damage applies life steal.",
+                  "retrieved_at": "2026-11-16",
+                  "confidence": "secondary",
+                  "note": "Leído en el extracto del buscador; la regla es común a todos los objetos con Hoja encantada."
+                }
+              }
+            }
+          ],
+          "cooldown_seconds": 1.5,
+          "stacks": null,
+          "duration_seconds": null,
+          "limits": [],
+          "sources": [
+            {
+              "kind": "client_data",
+              "reference": "Cliente 16.22.8348910+branch.releases-16-22.content.release: lol-knowledge/derived/item-effects.json → items.3078.data_values (research/reports/item-effects-16.22.md)",
+              "quote": "SpellbladeDamage = StatByNamedDataValue(mStat 2, mStatFormula 1, SpellbladeMultiplier); SpellbladeMultiplier = 2; SpellbladeCooldown = 1.5",
+              "retrieved_at": "2026-11-16",
+              "confidence": "derived"
+            }
+          ],
+          "evidence_confidence": "derived",
+          "model_status": "evaluable",
+          "note": "200 % of base attack damage."
+        },
+        {
+          "id": "go",
+          "kind": "passive",
+          "name": "¡Adelante!",
+          "quote": "Los ataques otorgan 20 de velocidad de movimiento durante 2 s.",
+          "basis": "description_explicit",
+          "trigger": {
+            "event": "on_attack"
+          },
+          "target": {
+            "kind": "self"
+          },
+          "components": [
+            {
+              "kind": "status",
+              "effect": "move_speed",
+              "magnitude": {
+                "op": "constant",
+                "value": 20
+              },
+              "duration_seconds": 2
+            }
+          ],
+          "cooldown_seconds": null,
+          "stacks": null,
+          "duration_seconds": 2,
+          "limits": [],
+          "evidence_confidence": "official",
+          "model_status": "excluded",
+          "note": "Movement speed after attacking; rotations have no movement."
+        }
+      ]
+    },
+    {
+      "id": "3100",
+      "effect_review": "complete",
+      "stats": [],
+      "effects": [
+        {
+          "id": "spellblade",
+          "kind": "passive",
+          "name": "Hoja encantada",
+          "quote": "Tras usar una habilidad, tu siguiente ataque inflige daño mágico adicional al impactar",
+          "basis": "external_evidence_explicit",
+          "trigger": {
+            "event": "spellblade"
+          },
+          "target": {
+            "kind": "enemy_unit"
+          },
+          "conditions": [
+            {
+              "kind": "on_hit"
+            }
+          ],
+          "components": [
+            {
+              "kind": "damage",
+              "damage_type": "magic",
+              "target": {
+                "kind": "enemy_unit"
+              },
+              "conditions": [
+                {
+                  "kind": "on_hit"
+                }
+              ],
+              "formula": {
+                "op": "add",
+                "operands": [
+                  {
+                    "op": "percent_of",
+                    "percent": 75,
+                    "stat": "attack_damage",
+                    "scope": "base"
+                  },
+                  {
+                    "op": "percent_of",
+                    "percent": 45,
+                    "stat": "ability_power",
+                    "scope": "total"
+                  }
+                ]
+              },
+              "applies_life_steal": {
+                "value": true,
+                "source": {
+                  "kind": "community_wiki",
+                  "reference": "https://wiki.leagueoflegends.com/en-us/Lich_Bane",
+                  "quote": "Spellblade's bonus damage applies life steal.",
+                  "retrieved_at": "2026-11-16",
+                  "confidence": "secondary",
+                  "note": "Leído en el extracto del buscador; la regla es común a todos los objetos con Hoja encantada."
+                }
+              }
+            }
+          ],
+          "cooldown_seconds": 1.5,
+          "stacks": null,
+          "duration_seconds": null,
+          "limits": [],
+          "sources": [
+            {
+              "kind": "client_data",
+              "reference": "Cliente 16.22.8348910+branch.releases-16-22.content.release: lol-knowledge/derived/item-effects.json → items.3100.data_values (research/reports/item-effects-16.22.md)",
+              "quote": "SpellbladeDamage = StatByNamedDataValue(mStat 2, mStatFormula 1, SpellbladeADRatio) + StatByNamedDataValue(LichBaneAPValue); SpellbladeADRatio = 0.75; LichBaneAPValue = 0.45; SpellbladeCooldown = 1.5",
+              "retrieved_at": "2026-11-16",
+              "confidence": "derived"
+            }
+          ],
+          "evidence_confidence": "derived",
+          "model_status": "evaluable",
+          "note": "75 % of base attack damage + 45 % of ability power. The empowered attack also gains 50 % attack speed (SheenASBuff 0.5), which does not change a rotation without time."
+        }
+      ]
+    },
+    {
+      "id": "3508",
+      "effect_review": "complete",
+      "stats": [],
+      "effects": [
+        {
+          "id": "spellblade",
+          "kind": "passive",
+          "name": "Hoja encantada",
+          "quote": "Tras usar una habilidad, tu siguiente ataque inflige daño físico adicional y otorga maná al impactar",
+          "basis": "external_evidence_explicit",
+          "trigger": {
+            "event": "spellblade"
+          },
+          "target": {
+            "kind": "enemy_unit"
+          },
+          "conditions": [
+            {
+              "kind": "on_hit"
+            }
+          ],
+          "components": [
+            {
+              "kind": "damage",
+              "damage_type": "physical",
+              "target": {
+                "kind": "enemy_unit"
+              },
+              "conditions": [
+                {
+                  "kind": "on_hit"
+                }
+              ],
+              "formula": {
+                "op": "add",
+                "operands": [
+                  {
+                    "op": "percent_of",
+                    "percent": 125,
+                    "stat": "attack_damage",
+                    "scope": "base"
+                  },
+                  {
+                    "op": "mul",
+                    "operands": [
+                      {
+                        "op": "stat",
+                        "stat": "crit_chance",
+                        "scope": "total"
+                      },
+                      {
+                        "op": "constant",
+                        "value": 50
+                      }
+                    ]
+                  }
+                ]
+              },
+              "applies_life_steal": {
+                "value": true,
+                "source": {
+                  "kind": "community_wiki",
+                  "reference": "https://wiki.leagueoflegends.com/en-us/Lich_Bane",
+                  "quote": "Spellblade's bonus damage applies life steal.",
+                  "retrieved_at": "2026-11-16",
+                  "confidence": "secondary",
+                  "note": "Leído en el extracto del buscador; la regla es común a todos los objetos con Hoja encantada."
+                }
+              }
+            }
+          ],
+          "cooldown_seconds": 1.5,
+          "stacks": null,
+          "duration_seconds": null,
+          "limits": [],
+          "sources": [
+            {
+              "kind": "client_data",
+              "reference": "Cliente 16.22.8348910+branch.releases-16-22.content.release: lol-knowledge/derived/item-effects.json → items.3508.data_values (research/reports/item-effects-16.22.md)",
+              "quote": "SpellbladeDamage = StatByNamedDataValue(mStat 2, mStatFormula 1, BaseADRatio) + StatByNamedDataValue(mStat 8, CritChanceMultiplier); BaseADRatio = 1.25; CritChanceMultiplier = 50; TotalManaRefund = 0.5 × SpellbladeDamage; SpellbladeCooldown = 1.5",
+              "retrieved_at": "2026-11-16",
+              "confidence": "derived"
+            }
+          ],
+          "evidence_confidence": "derived",
+          "model_status": "evaluable",
+          "note": "125 % of base attack damage + 50 × crit chance (a fraction: 25 % crit adds 12.5). mStat 8 is taken as crit chance, as the value name says. The mana refund (50 % of the damage) is not modelled: rotations have no mana."
+        }
+      ]
+    },
+    {
+      "id": "6662",
+      "effect_review": "complete",
+      "stats": [],
+      "effects": [
+        {
+          "id": "spellblade",
+          "kind": "passive",
+          "name": "Hoja encantada",
+          "quote": "Tras usar una habilidad, tu siguiente ataque inflige daño físico adicional al impactar",
+          "basis": "external_evidence_explicit",
+          "trigger": {
+            "event": "spellblade"
+          },
+          "target": {
+            "kind": "enemy_unit"
+          },
+          "conditions": [
+            {
+              "kind": "on_hit"
+            }
+          ],
+          "components": [
+            {
+              "kind": "damage",
+              "damage_type": "physical",
+              "target": {
+                "kind": "enemy_unit"
+              },
+              "conditions": [
+                {
+                  "kind": "on_hit"
+                }
+              ],
+              "formula": {
+                "op": "percent_of",
+                "percent": 150,
+                "stat": "attack_damage",
+                "scope": "base"
+              },
+              "applies_life_steal": {
+                "value": true,
+                "source": {
+                  "kind": "community_wiki",
+                  "reference": "https://wiki.leagueoflegends.com/en-us/Lich_Bane",
+                  "quote": "Spellblade's bonus damage applies life steal.",
+                  "retrieved_at": "2026-11-16",
+                  "confidence": "secondary",
+                  "note": "Leído en el extracto del buscador; la regla es común a todos los objetos con Hoja encantada."
+                }
+              }
+            }
+          ],
+          "cooldown_seconds": 1.5,
+          "stacks": null,
+          "duration_seconds": null,
+          "limits": [],
+          "sources": [
+            {
+              "kind": "client_data",
+              "reference": "Cliente 16.22.8348910+branch.releases-16-22.content.release: lol-knowledge/derived/item-effects.json → items.6662.data_values (research/reports/item-effects-16.22.md)",
+              "quote": "SpellbladeDamage = StatByNamedDataValue(mStat 2, mStatFormula 1, SpellbladeMultiplier); SpellbladeMultiplier = 1.5; SpellbladeCooldown = 1.5",
+              "retrieved_at": "2026-11-16",
+              "confidence": "derived"
+            }
+          ],
+          "evidence_confidence": "derived",
+          "model_status": "evaluable",
+          "note": "150 % of base attack damage."
+        },
+        {
+          "id": "frost-field",
+          "kind": "passive",
+          "name": "Hoja encantada: campo de escarcha",
+          "quote": "crea un campo de escarcha durante 2 s que ralentiza",
+          "basis": "description_explicit",
+          "trigger": {
+            "event": "spellblade"
+          },
+          "target": {
+            "kind": "area"
+          },
+          "components": [
+            {
+              "kind": "crowd_control",
+              "effect": "slow",
+              "target": {
+                "kind": "area"
+              },
+              "magnitude": {
+                "op": "unknown",
+                "reason": "25 % (12.5 % ranged) in the client; crowd control is not part of rotations"
+              },
+              "duration_seconds": 2
+            }
+          ],
+          "cooldown_seconds": null,
+          "stacks": null,
+          "duration_seconds": 2,
+          "limits": [],
+          "evidence_confidence": "official",
+          "model_status": "excluded",
+          "note": "Slow field; rotations do not model crowd control."
+        }
+      ]
+    },
+    {
+      "id": "2510",
+      "effect_review": "complete",
+      "stats": [],
+      "effects": [
+        {
+          "id": "spellblade",
+          "kind": "passive",
+          "name": "Hoja encantada",
+          "quote": "Tras usar una habilidad, tu siguiente ataque inflige 0 de daño mágico adicional",
+          "basis": "external_evidence_explicit",
+          "trigger": {
+            "event": "spellblade"
+          },
+          "target": {
+            "kind": "enemy_unit"
+          },
+          "conditions": [
+            {
+              "kind": "on_hit"
+            }
+          ],
+          "components": [
+            {
+              "kind": "damage",
+              "damage_type": "magic",
+              "target": {
+                "kind": "enemy_unit"
+              },
+              "conditions": [
+                {
+                  "kind": "on_hit"
+                }
+              ],
+              "formula": {
+                "op": "add",
+                "operands": [
+                  {
+                    "op": "percent_of",
+                    "percent": 75,
+                    "stat": "attack_damage",
+                    "scope": "base"
+                  },
+                  {
+                    "op": "percent_of",
+                    "percent": 10,
+                    "stat": "ability_power",
+                    "scope": "total"
+                  }
+                ]
+              },
+              "applies_life_steal": {
+                "value": true,
+                "source": {
+                  "kind": "community_wiki",
+                  "reference": "https://wiki.leagueoflegends.com/en-us/Lich_Bane",
+                  "quote": "Spellblade's bonus damage applies life steal.",
+                  "retrieved_at": "2026-11-16",
+                  "confidence": "secondary",
+                  "note": "Leído en el extracto del buscador; la regla es común a todos los objetos con Hoja encantada."
+                }
+              }
+            }
+          ],
+          "cooldown_seconds": 1.5,
+          "stacks": null,
+          "duration_seconds": null,
+          "limits": [],
+          "sources": [
+            {
+              "kind": "client_data",
+              "reference": "Cliente 16.22.8348910+branch.releases-16-22.content.release: lol-knowledge/derived/item-effects.json → items.2510.calculations.SpellbladeDamage (research/reports/item-effects-16.22.md)",
+              "quote": "SpellbladeDamage = StatByCoefficient(mStat 2, mStatFormula 1, 0.75) + StatByCoefficient(0.1); SpellbladeCooldown = 1.5",
+              "retrieved_at": "2026-11-16",
+              "confidence": "derived"
+            }
+          ],
+          "evidence_confidence": "derived",
+          "model_status": "evaluable",
+          "note": "75 % of base attack damage + 10 % of ability power; Data Dragon shows 0."
+        },
+        {
+          "id": "dusk-heal",
+          "kind": "passive",
+          "name": "Hoja encantada: curación",
+          "quote": "te cura 0 de vida al impactar",
+          "basis": "description_partial",
+          "trigger": {
+            "event": "spellblade"
+          },
+          "target": {
+            "kind": "self"
+          },
+          "components": [
+            {
+              "kind": "healing",
+              "mode": "absolute",
+              "target": {
+                "kind": "self"
+              },
+              "formula": {
+                "op": "unknown",
+                "reason": "10 % of ability power + 3 % of bonus health in the client; rotations only heal by life steal and omnivamp"
+              }
+            }
+          ],
+          "cooldown_seconds": null,
+          "stacks": null,
+          "duration_seconds": null,
+          "limits": [],
+          "sources": [
+            {
+              "kind": "client_data",
+              "reference": "Cliente 16.22.8348910+branch.releases-16-22.content.release: lol-knowledge/derived/item-effects.json → items.2510.calculations.SpellbladeHealing (research/reports/item-effects-16.22.md)",
+              "quote": "SpellbladeHealing = StatByCoefficient(0.1) + StatByCoefficient(mStat 12, mStatFormula 2, 0.03)",
+              "retrieved_at": "2026-11-16",
+              "confidence": "derived"
+            }
+          ],
+          "evidence_confidence": "derived",
+          "model_status": "excluded",
+          "note": "Not applied: rotations only model healing from life steal and omnivamp."
+        },
+        {
+          "id": "dusk-repeat",
+          "kind": "passive",
+          "name": "Hoja encantada: efectos al impactar de nuevo",
+          "quote": "aplica efectos al impactar durante un periodo prolongado",
+          "basis": "external_evidence_explicit",
+          "trigger": {
+            "event": "spellblade"
+          },
+          "target": {
+            "kind": "enemy_unit"
+          },
+          "components": [
+            {
+              "kind": "repeat_on_hit",
+              "target": {
+                "kind": "enemy_unit"
+              }
+            }
+          ],
+          "cooldown_seconds": null,
+          "stacks": null,
+          "duration_seconds": null,
+          "limits": [],
+          "sources": [
+            {
+              "kind": "community_wiki",
+              "reference": "https://wiki.leagueoflegends.com/en-us/Dusk_and_Dawn?oldid=4015331",
+              "quote": "applies on-hit effects to the target again after a 0.2-second delay",
+              "retrieved_at": "2026-11-16",
+              "confidence": "secondary",
+              "note": "Revisión del 4 de mayo de 2026, leída en el extracto del buscador."
+            }
+          ],
+          "evidence_confidence": "secondary",
+          "model_status": "evaluable",
+          "note": "The Spanish text of Data Dragon and the client is garbled; the wiki says the empowered attack applies on-hit effects a second time. The engine repeats the items' on-hit effects once, not the Spellblade damage itself (not verified), and labels the repeated parts Pendiente de verificación."
+        }
+      ]
+    },
+    {
+      "id": "3877",
+      "effect_review": "complete",
+      "stats": [],
+      "effects": [
+        {
+          "id": "spellblade",
+          "kind": "passive",
+          "name": "Hoja encantada",
+          "quote": "Tras usar una habilidad, tu siguiente ataque inflige daño físico adicional al impactar",
+          "basis": "external_evidence_explicit",
+          "trigger": {
+            "event": "spellblade"
+          },
+          "target": {
+            "kind": "enemy_unit"
+          },
+          "conditions": [
+            {
+              "kind": "on_hit"
+            }
+          ],
+          "components": [
+            {
+              "kind": "damage",
+              "damage_type": "physical",
+              "target": {
+                "kind": "enemy_unit"
+              },
+              "conditions": [
+                {
+                  "kind": "on_hit"
+                }
+              ],
+              "formula": {
+                "op": "percent_of",
+                "percent": 100,
+                "stat": "attack_damage",
+                "scope": "base"
+              },
+              "applies_life_steal": {
+                "value": true,
+                "source": {
+                  "kind": "community_wiki",
+                  "reference": "https://wiki.leagueoflegends.com/en-us/Lich_Bane",
+                  "quote": "Spellblade's bonus damage applies life steal.",
+                  "retrieved_at": "2026-11-16",
+                  "confidence": "secondary",
+                  "note": "Leído en el extracto del buscador; la regla es común a todos los objetos con Hoja encantada."
+                }
+              }
+            }
+          ],
+          "cooldown_seconds": 1.5,
+          "stacks": null,
+          "duration_seconds": null,
+          "limits": [],
+          "sources": [
+            {
+              "kind": "client_data",
+              "reference": "Cliente 16.22.8348910+branch.releases-16-22.content.release: lol-knowledge/derived/item-effects.json → items.3877.data_values (research/reports/item-effects-16.22.md)",
+              "quote": "SpellbladeDamage = StatByNamedDataValue(mStat 2, mStatFormula 1, SheenMult); SheenMult = 1; SpellbladeCooldown = 1.5",
+              "retrieved_at": "2026-11-16",
+              "confidence": "derived"
+            }
+          ],
+          "evidence_confidence": "derived",
+          "model_status": "evaluable",
+          "note": "100 % of base attack damage."
+        },
+        {
+          "id": "bloodsong-mark",
+          "kind": "passive",
+          "name": "Hoja encantada: daño adicional",
+          "quote": "Si el objetivo es un campeón, recibe daño adicional durante 4 s.",
+          "basis": "description_explicit",
+          "trigger": {
+            "event": "spellblade"
+          },
+          "target": {
+            "kind": "enemy_unit"
+          },
+          "components": [
+            {
+              "kind": "damage_modifier",
+              "direction": "dealt",
+              "source": "all",
+              "mode": "percent",
+              "formula": {
+                "op": "by_holder_range",
+                "melee": {
+                  "op": "constant",
+                  "value": 8
+                },
+                "ranged": {
+                  "op": "constant",
+                  "value": 5
+                }
+              }
+            }
+          ],
+          "cooldown_seconds": null,
+          "stacks": null,
+          "duration_seconds": 4,
+          "limits": [],
+          "conditions": [
+            {
+              "kind": "target_is_champion"
+            }
+          ],
+          "sources": [
+            {
+              "kind": "client_data",
+              "reference": "Cliente 16.22.8348910+branch.releases-16-22.content.release: lol-knowledge/derived/item-effects.json → items.3877.data_values (research/reports/item-effects-16.22.md)",
+              "quote": "MeleeDamageAmp = 0.08; RangedDamageAmp = 0.05; DebuffDuration = 4",
+              "retrieved_at": "2026-11-16",
+              "confidence": "derived"
+            }
+          ],
+          "evidence_confidence": "derived",
+          "model_status": "excluded",
+          "note": "Decision of 2026-11-16: not applied, because it lasts 4 s and rotations have no time; a rotation with this item stays Pendiente de verificación."
+        },
+        {
+          "id": "ward",
+          "kind": "passive",
+          "name": "Activar: guardián",
+          "quote": "Coloca un guardián invisible que otorga visión.",
+          "basis": "description_explicit",
+          "trigger": {
+            "event": "cast"
+          },
+          "target": {
+            "kind": "self"
+          },
+          "components": [],
+          "cooldown_seconds": null,
+          "stacks": null,
+          "duration_seconds": null,
+          "limits": [],
+          "evidence_confidence": "official",
+          "model_status": "excluded",
+          "note": "Vision; not part of damage."
         }
       ]
     }

@@ -111,6 +111,7 @@ EVIDENCE_KINDS = frozenset(
         "community_dragon",
         "in_game_measurement",
         "client_data",
+        "patch_notes",
     }
 )
 # ``derived``: read from the client's data (``client_data``) and nowhere else.
@@ -122,6 +123,7 @@ TRIGGER_EVENTS = frozenset(
         "always",
         "on_attack",
         "on_hit",
+        "spellblade",
         "taking_attack",
         "damaging_ability",
         "on_heal_or_shield",
@@ -148,6 +150,7 @@ COMPONENT_KINDS = frozenset(
         "crowd_control",
         "status",
         "stasis",
+        "repeat_on_hit",
     }
 )
 DAMAGE_TYPES = frozenset({"physical", "magic", "true"})
