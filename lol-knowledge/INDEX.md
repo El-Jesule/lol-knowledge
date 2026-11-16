@@ -22,7 +22,7 @@
 | Entender enfriamientos y aceleración | [Aceleración de habilidades](mechanics/ability-haste.md) |
 | Entender la vida efectiva | [Vida efectiva](mechanics/effective-health.md) |
 | Saber qué datos oficiales son defectuosos | [Defectos conocidos de los datos](mechanics/known-data-issues.md) |
-| Calcular un impacto crítico | [Impacto crítico](mechanics/critical-strike.md) |
+| Calcular un impacto crítico o la probabilidad de crítico | [Impacto crítico](mechanics/critical-strike.md) |
 | Calcular la velocidad de ataque (base, ratio, crecimiento y tope) | [Velocidad de ataque](mechanics/attack-speed.md) |
 | Calcular la curación por robo de vida y omnivampirismo | [Robo de vida y omnivampirismo](mechanics/life-steal-and-omnivamp.md) |
 | Aplicar aumentos y reducciones de daño | [Modificadores de daño](mechanics/damage-modifiers.md) |
