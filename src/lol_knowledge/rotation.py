@@ -29,7 +29,16 @@ from .errors import KitError, RotationError
 from .formula import FormulaError, evaluate_formula
 from .kit import Kit, ability_damage, sheet_stats
 from .scenario import PENETRATION, Target, penetration_modifiers
-from .stats import EVIDENCE_LABEL, ItemData, Label, StatSheet, sheet_effect_reason, weakest
+from .stats import (
+    EVIDENCE_LABEL,
+    ItemData,
+    Label,
+    StatBlocked,
+    StatSheet,
+    ability_cooldowns,
+    sheet_effect_reason,
+    weakest,
+)
 
 RULES = (
     "lol-knowledge/mechanics/basic-attacks-and-on-hit.md",
@@ -60,6 +69,7 @@ DAMAGE_KINDS = frozenset(
 # Kinds against which omnivamp drops to 33 % for pets, damage over time and area spells.
 REDUCED_OMNIVAMP_KINDS = frozenset({"minion", "monster"})
 
+WAIT_SECONDS = re.compile(r"\d+(?:\.\d+)?")
 _ABILITY_STEP = re.compile(r"(?P<slot>[QWER])(?:\.(?P<case>[a-z0-9_]+))?")
 
 
@@ -73,6 +83,8 @@ class Step:
     crit: bool = False
     # False for ``attack:nospellblade``: the attack is not empowered (spellblade.md).
     spellblade: bool = True
+    # Seconds to wait, for ``wait:<seconds>`` (timeline only, timeline.md).
+    wait: Fraction | None = None
 
 
 def parse_steps(text: str) -> tuple[Step, ...]:
@@ -87,6 +99,9 @@ def parse_steps(text: str) -> tuple[Step, ...]:
     steps = []
     for token in tokens:
         head, *modifiers = token.lower().split(":")
+        if head == "wait":
+            steps.append(Step(token, wait=_seconds(token, modifiers)))
+            continue
         if head == "attack":
             if not set(modifiers) <= ATTACK_MODIFIERS or len(set(modifiers)) != len(modifiers):
                 raise RotationError(
@@ -104,6 +119,15 @@ def parse_steps(text: str) -> tuple[Step, ...]:
             )
         steps.append(Step(token, match.group("slot"), match.group("case")))
     return tuple(steps)
+
+
+def _seconds(token: str, modifiers: Sequence[str]) -> Fraction:
+    if len(modifiers) != 1 or WAIT_SECONDS.fullmatch(modifiers[0]) is None:
+        raise RotationError(f"unknown step {token!r}: use wait:<seconds>, e.g. wait:0.5")
+    seconds = Fraction(modifiers[0])
+    if seconds <= 0:
+        raise RotationError(f"step {token!r}: the wait must be longer than 0 s")
+    return seconds
 
 
 @dataclass(frozen=True)
@@ -168,6 +192,8 @@ class StepOutcome:
     parts: tuple[Part, ...]
     health_before: Fraction
     label: Label
+    # Seconds from the start of the rotation, with the timeline (timeline.md).
+    time: Fraction | None = None
 
     @property
     def total(self) -> Fraction:
@@ -204,6 +230,15 @@ class StepOutcome:
 
 
 @dataclass(frozen=True)
+class Timeline:
+    """What the timeline read from the sheet: attack interval and cooldowns."""
+
+    attack_interval: Fraction
+    label: Label
+    notes: tuple[str, ...] = ()
+
+
+@dataclass(frozen=True)
 class RotationOutcome:
     steps: tuple[StepOutcome, ...]
     max_health: Fraction
@@ -211,10 +246,25 @@ class RotationOutcome:
     holder_range: str | None
     label: Label
     notes: tuple[str, ...]
+    timeline: Timeline | None = None
 
     @property
     def total(self) -> Fraction:
         return sum((step.total for step in self.steps), start=Fraction(0))
+
+    @property
+    def duration(self) -> Fraction | None:
+        """Seconds from the first step to the last one, with the timeline."""
+        if self.timeline is None:
+            return None
+        return self.steps[-1].time
+
+    @property
+    def damage_per_second(self) -> Fraction | None:
+        duration = self.duration
+        if not duration:
+            return None
+        return self.total / duration
 
     @property
     def remaining_health(self) -> Fraction:
@@ -413,8 +463,10 @@ class _Rotation:
         crit_base: CritBase | None,
         holder_range: str | None,
         inputs: Mapping[str, Any],
+        timeline: bool = False,
     ) -> None:
         self.kit, self.sheet, self.ranks, self.target = kit, sheet, ranks, target
+        self.timeline = self._timeline() if timeline else None
         self.crit_base, self.holder_range, self.inputs = crit_base, holder_range, inputs
         self.stats, self.origin = sheet_stats(sheet)
         self.life_steal, self.omnivamp = sheet["life_steal"], sheet["omnivamp"]
@@ -737,6 +789,66 @@ class _Rotation:
             )
         return result
 
+    def _timeline(self) -> Timeline:
+        """Attack interval (1 / attack speed) and the checks the timeline needs."""
+        try:
+            attack_speed = self.sheet["attack_speed"].total()
+        except StatBlocked as exc:
+            raise RotationError(f"the timeline needs the attack speed: {exc}") from exc
+        cooldowns = ability_cooldowns(self.sheet)
+        if cooldowns.blocked is not None:
+            raise RotationError(f"the timeline needs the cooldowns: {cooldowns.blocked}")
+        self.cooldowns = {spell.slot: spell.effective for spell in cooldowns.spells}
+        return Timeline(
+            1 / attack_speed,
+            weakest([self.sheet["attack_speed"].label, cooldowns.label]),
+            (
+                "timeline: abilities are instant and attacks land when they start; cast "
+                "times, attack windups and projectile travel are not modelled (no data)",
+            ),
+        )
+
+    def _spellblade_cooldown(self) -> Fraction:
+        """The Spellblade item's cooldown from the catalog (1.5 s for every item today)."""
+        for item in self.sheet.items:
+            for effect in item.effects:
+                if (effect.get("trigger") or {}).get("event") == "spellblade" and isinstance(
+                    effect.get("cooldown_seconds"), (int, float)
+                ):
+                    return Fraction(str(effect["cooldown_seconds"]))
+        raise RotationError("the Spellblade item declares no cooldown")
+
+    def _cast(
+        self,
+        step: Step,
+        clock: Fraction,
+        ready: dict[str, Fraction],
+        open_casts: dict[str, Fraction],
+    ) -> None:
+        """Check a cast against the cooldown and recast rules of the timeline."""
+        assert step.slot is not None
+        ability = self.kit.ability(step.slot)
+        case = ability.case(step.case) if step.case is not None else ability.cases[0]
+        if case.recast:
+            opened = open_casts.pop(step.slot, None)
+            if opened is None:
+                raise RotationError(f"step {step.text}: {step.slot} has not been cast to recast it")
+            window = ability.recast_window
+            if window is not None and clock - opened > window:
+                raise RotationError(
+                    f"step {step.text}: the recast window ({format_number(window)} s) closed at "
+                    f"{format_number(opened + window)} s"
+                )
+            return
+        until = ready.get(step.slot, Fraction(0))
+        if clock < until:
+            raise RotationError(
+                f"step {step.text}: {step.slot} is on cooldown until {format_number(until)} s "
+                f"(now {format_number(clock)} s)"
+            )
+        ready[step.slot] = clock + self.cooldowns[step.slot][self.ranks[step.slot] - 1]
+        open_casts[step.slot] = clock
+
     def _execute(
         self, parts: Sequence[Part], health: Fraction, target_stats: Mapping[str, Fraction]
     ) -> list[Part]:
@@ -874,7 +986,22 @@ class _Rotation:
         counters = {effect.title: 0 for effect in [*self.counted, *self.counted_repeats]}
         energized = bool(self.energized)
         burned: set[str] = set()  # one full burn per effect and rotation (burns.md)
+        clock, next_attack = Fraction(0), Fraction(0)
+        spellblade_ready = Fraction(0)  # its cooldown, with the timeline
+        ready: dict[str, Fraction] = {}
+        open_casts: dict[str, Fraction] = {}
         for index, step in enumerate(steps, start=1):
+            if step.wait is not None:
+                if self.timeline is None:
+                    raise RotationError(f"step {step.text}: waits need the timeline (--timeline)")
+                outcomes.append(StepOutcome(index, step, "wait", (), health, Label.OFFICIAL, clock))
+                clock += step.wait
+                continue
+            if self.timeline is not None and step.slot is None:
+                clock = max(clock, next_attack)
+                next_attack = clock + self.timeline.attack_interval
+            elif self.timeline is not None:
+                self._cast(step, clock, ready, open_casts)
             target_stats = {
                 **self.target.stats,
                 "current_health": health,
@@ -887,6 +1014,8 @@ class _Rotation:
                 if empowered:
                     name += " with Spellblade"
                 parts = self._attack(step, target_stats, empowered)
+                if empowered and self.timeline is not None:
+                    spellblade_ready = clock + self._spellblade_cooldown()
                 parts += self._counted(step, target_stats, counters)
                 if energized:
                     energized = False
@@ -894,7 +1023,8 @@ class _Rotation:
                     parts += self._on_hit(self.energized, step, target_stats)
             else:
                 name, parts = self._ability(step, target_stats)
-                charged = True
+                # An ability cast while Spellblade is on cooldown does not charge it.
+                charged = self.timeline is None or clock >= spellblade_ready
                 parts += self._burns(step, parts, target_stats, burned)
                 if energized and self.galvanize and parts and self.target.kind == "champion":
                     energized = False
@@ -906,7 +1036,13 @@ class _Rotation:
                     )
             parts += self._execute(parts, health, target_stats)
             outcome = StepOutcome(
-                index, step, name, tuple(parts), health, weakest(part.label for part in parts)
+                index,
+                step,
+                name,
+                tuple(parts),
+                health,
+                weakest(part.label for part in parts),
+                None if self.timeline is None else clock,
             )
             outcomes.append(outcome)
             health = outcome.health_after
@@ -917,6 +1053,8 @@ class _Rotation:
             )
         if counters:
             self.notes.append("attack counters ignore their time windows (stacks expiring)")
+        if self.timeline is not None:
+            self.notes += self.timeline.notes
         notes = list(dict.fromkeys(self.notes))
         passive = self.kit.abilities.get("P")
         if passive is not None and passive.not_modelled:
@@ -931,6 +1069,7 @@ class _Rotation:
             self.holder_range,
             weakest(labels),
             tuple(notes),
+            self.timeline,
         )
 
 
@@ -944,14 +1083,17 @@ def evaluate_rotation(
     *,
     holder_range: str | None = None,
     inputs: Mapping[str, Any] | None = None,
+    timeline: bool = False,
 ) -> RotationOutcome:
     """Damage of every step against ``target``, carrying its current health forward.
 
     ``holder_range`` is the attacker's melee/ranged classification; it is only
     required by effects that branch on it and is never guessed. ``crit_base``
-    is only required by critical steps.
+    is only required by critical steps. With ``timeline`` every step gets a time:
+    attacks are spaced by 1 / attack speed, cooldowns and recast windows are
+    enforced and ``wait:<seconds>`` steps advance the clock (timeline.md).
     """
     if not steps:
         raise RotationError("the rotation has no steps")
-    rotation = _Rotation(kit, sheet, ranks, target, crit_base, holder_range, inputs or {})
+    rotation = _Rotation(kit, sheet, ranks, target, crit_base, holder_range, inputs or {}, timeline)
     return rotation.run(steps)

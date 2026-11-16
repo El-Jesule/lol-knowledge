@@ -21,8 +21,9 @@
       "tooltip": "spell_zaahenq_tooltip",
       "cases": [
         {"id": "first_hit", "name": "Primer golpe: daño adicional al ataque", "parts": [{"calculation": "InitialDamage"}]},
-        {"id": "recast", "name": "Reactivación: daño adicional al ataque", "parts": [{"calculation": "SecondHitDamage"}]}
+        {"id": "recast", "name": "Reactivación: daño adicional al ataque", "recast": true, "parts": [{"calculation": "SecondHitDamage"}]}
       ],
+      "recast_window_seconds": 4,
       "not_modelled": [
         "El daño del propio ataque básico: se suma aparte",
         "Daño contra monstruos (MonsterDamagePercent) y curación"

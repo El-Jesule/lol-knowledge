@@ -191,7 +191,10 @@ def compile_kit(
                         "damage_type_source": f"{tooltip_key} <{_tag(damage_type)}>",
                     }
                 )
-            cases.append({"id": case["id"], "name": case["name"], "parts": parts})
+            generated = {"id": case["id"], "name": case["name"], "parts": parts}
+            if case.get("recast"):
+                generated["recast"] = True
+            cases.append(generated)
         passive_stats = []
         for item in entry.get("passive_stats", []):
             if ability is None:
@@ -214,6 +217,8 @@ def compile_kit(
             "passive_stats": passive_stats,
             "not_modelled": list(entry.get("not_modelled", [])),
         }
+        if "recast_window_seconds" in entry:
+            abilities[slot]["recast_window_seconds"] = entry["recast_window_seconds"]
     return {
         "schema": KIT_SCHEMA,
         "champion": spec["champion"],

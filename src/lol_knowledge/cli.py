@@ -237,6 +237,14 @@ def _add_rotation_parser(subparsers: argparse._SubParsersAction) -> None:
         help="The attacker's melee/ranged classification, for effects that branch on it.",
     )
     rotation.add_argument("--item", action="append", default=[], metavar="ID")
+    rotation.add_argument(
+        "--timeline",
+        action="store_true",
+        help=(
+            "Give every step a time: attacks spaced by 1 / attack speed, cooldowns and recast "
+            "windows enforced, wait:<seconds> steps allowed (lol-knowledge/mechanics/timeline.md)."
+        ),
+    )
     rotation.add_argument("--assume", action="append", default=[], metavar="FIELD=VALUE")
     rotation.add_argument(
         "--input", action="append", default=[], metavar="NAME=VALUE", help="Scenario input."
@@ -479,6 +487,7 @@ def _run_rotation(args: argparse.Namespace) -> int:
             crit_base,
             holder_range=args.attacker_range,
             inputs=inputs,
+            timeline=args.timeline,
         )
     except (StatsError, KitError, DamageInputError, RotationError) as exc:
         print(f"error: {exc}", file=sys.stderr)

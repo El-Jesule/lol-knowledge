@@ -30,7 +30,7 @@ En Segador de esencia, `mStat 8` se toma como probabilidad de crítico, como dic
 
 1. **Activación automática:** una habilidad carga el siguiente ataque básico. Varias habilidades seguidas cargan un solo ataque.
 2. **`attack:nospellblade`:** ese ataque no se potencia y la carga se pierde (por ejemplo, si pasaron los 10 s o la recarga no estaba lista).
-3. **Recarga:** las rotaciones no tienen tiempo, así que la recarga de 1,5 s se supone siempre lista.
+3. **Recarga:** sin línea de tiempo, la recarga de 1,5 s se supone siempre lista; con `--timeline` se respeta ([`timeline.md`](timeline.md)).
 4. **Un solo objeto:** dos objetos con Hoja encantada en el atacante es un error (S3: «Limited to 1 Spellblade item»).
 5. **El daño del golpe** es una parte más al impactar: no se multiplica por el crítico y aplica robo de vida (S3).
 6. **Amanecer y anochecer:** los efectos al impactar de los objetos se aplican otra vez en ese ataque, con etiqueta `Pendiente de verificación` porque la fuente es secundaria y el texto en español está mal traducido. El propio daño de Hoja encantada no se repite (sin verificar).
