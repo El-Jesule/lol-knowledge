@@ -149,8 +149,15 @@ def _is_number(value: Any) -> bool:
     return isinstance(value, (int, float)) and not isinstance(value, bool) and math.isfinite(value)
 
 
+# Spanish ordinals that stand for a count in descriptions ("Cada tercer ataque").
+_ORDINALS = {"segundo": 2, "tercer": 3, "tercero": 3, "cuarto": 4, "quinto": 5, "sexto": 6}
+_ORDINAL_PATTERN = re.compile(r"\b(" + "|".join(_ORDINALS) + r")\b", re.IGNORECASE)
+
+
 def _quote_numbers(quote: str) -> set[float]:
-    numbers: set[float] = set()
+    numbers: set[float] = {
+        float(_ORDINALS[match.group(1).lower()]) for match in _ORDINAL_PATTERN.finditer(quote)
+    }
     for match in _NUMBER_PATTERN.finditer(quote):
         try:
             numbers.add(float(match.group(0).replace(",", ".")))

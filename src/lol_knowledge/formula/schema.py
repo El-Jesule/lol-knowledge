@@ -29,9 +29,11 @@ STAT_SCOPES_BY_STAT: dict[str, frozenset[str]] = {
     "magic_penetration_flat": frozenset({"total"}),
     "ability_haste": frozenset({"total"}),
 }
-# Operations allowed in the item catalog (unchanged since lol-object-model/1).
+# Operations allowed in the item catalog. ``by_level`` (one value per champion
+# level) was added in catalog version 12 for client level breakpoints.
 OBJECT_OPS = frozenset(
     {
+        "by_level",
         "constant",
         "stat",
         "percent_of",
@@ -44,5 +46,5 @@ OBJECT_OPS = frozenset(
     }
 )
 # Champion kits also need per-rank and per-level values and scenario inputs.
-ABILITY_OPS = OBJECT_OPS | {"by_rank", "by_level", "input"}
+ABILITY_OPS = OBJECT_OPS | {"by_rank", "input"}
 ALL_OPS = ABILITY_OPS

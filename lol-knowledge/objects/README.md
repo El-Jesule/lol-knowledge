@@ -3,8 +3,8 @@
 - **Parche del snapshot:** `16.22.1` (`data/current/manifest.json`). El catálogo se creó sobre 16.20.1; en 16.22.1 las estadísticas, el oro, las descripciones y las recetas de los 15 objetos son idénticos en Data Dragon (comprobado el 2026-11-15). Las notas de parche 26.21 y 26.22 no tocan ninguno de los 15 objetos, y las cifras secundarias se han contrastado con los datos del cliente 16.22 ([informe](../../research/reports/item-data-values-16.22.md)). Las Botas de mercurio (3111) y las Flechas de los Yun Tal (3032) se añadieron el 2026-11-16 directamente desde 16.22.1.
 - **Fuente:** Data Dragon (`https://ddragon.leagueoflegends.com`), locale `es_ES`.
 - **Fecha de consulta:** 2026-10-20.
-- **Estado:** estadísticas de los **218 objetos comprables de la Grieta del Invocador** (generadas); efectos curados en 29 objetos (34 efectos). Los efectos de los demás objetos **no** están modelados (`effect_review: pending`).
-- **Versión del catálogo:** `catalog_version: 11` (esquema `1`; la 3 solo cambió el parche; la 4 añade `subject: target` explícito a la vida actual de Filo de la niebla, para que el motor de rotaciones la lea del objetivo sin depender de la convención implícita; la 5 añade los datos del cliente 16.22 como fuente `client_data` y corrige la ralentización a distancia de Zarpazo sombrío; la 6 añade `applies_life_steal` a los componentes de daño y lo declara en Filo de la niebla; la 7 añade las Botas de mercurio por su tenacidad; la 8 traslada las estadísticas de la descripción al archivo generado; la 9 añade las Flechas de los Yun Tal, el disparador `on_attack`, el escenario `max_stacks` y los ceros confirmados; la 10 añade el daño al impactar de cinco objetos, la evidencia `derived` y la aplicación en la hoja de los efectos `always` de estadísticas; la 11 añade Hoja encantada (disparador `spellblade`), el componente `repeat_on_hit` y las notas de parche como fuente).
+- **Estado:** estadísticas de los **218 objetos comprables de la Grieta del Invocador** (generadas); efectos curados en 34 objetos (45 efectos). Los efectos de los demás objetos **no** están modelados (`effect_review: pending`).
+- **Versión del catálogo:** `catalog_version: 12` (esquema `1`; la 3 solo cambió el parche; la 4 añade `subject: target` explícito a la vida actual de Filo de la niebla, para que el motor de rotaciones la lea del objetivo sin depender de la convención implícita; la 5 añade los datos del cliente 16.22 como fuente `client_data` y corrige la ralentización a distancia de Zarpazo sombrío; la 6 añade `applies_life_steal` a los componentes de daño y lo declara en Filo de la niebla; la 7 añade las Botas de mercurio por su tenacidad; la 8 traslada las estadísticas de la descripción al archivo generado; la 9 añade las Flechas de los Yun Tal, el disparador `on_attack`, el escenario `max_stacks` y los ceros confirmados; la 10 añade el daño al impactar de cinco objetos, la evidencia `derived` y la aplicación en la hoja de los efectos `always` de estadísticas; la 11 añade Hoja encantada (disparador `spellblade`), el componente `repeat_on_hit` y las notas de parche como fuente; la 12 añade los contadores de ataques, el Vigor, las fórmulas `by_level` y la condición `target_is_structure`).
 - **Código:** [`src/lol_knowledge/objects/`](../../src/lol_knowledge/objects/).
 - **Catálogo curado (efectos y revisión):** [`catalog.json`](catalog.json).
 - **Estadísticas generadas:** [`catalog-stats.json`](catalog-stats.json), con `src/lol_knowledge/objects/generate.py`. No se edita a mano: `validate` lo regenera y falla si no coincide.
@@ -182,7 +182,11 @@ Decisiones:
 - `target.kind`: `self`, `enemy_champion`, `enemy_unit`, `attacker`, `ally_champion`, `area` o `unknown`.
 - `conditions`: lista de condiciones declarativas (`target_is_champion`, `damage_source_is_attack`, `critical_strike`, `stacks_at_least`, etc.). No son expresiones ejecutables.
 - `cooldown_seconds`, `duration_seconds`, `stacks.window_seconds`: número no negativo, `null` (no aplica) o `{"status": "unknown", "reason": "..."}`.
-- `stacks.required` y `stacks.max_stacks` son enteros; la ventana temporal puede ser desconocida.
+- `stacks.required` y `stacks.max_stacks` son enteros; la ventana temporal puede ser desconocida. Desde la versión 12, en un efecto `on_hit` u `on_attack`, `stacks.required` = N ≥ 2 significa «cada N ataques» y las rotaciones lo cuentan ([regla](../mechanics/attack-counters.md)).
+- Disparador `energized` y componente `trigger_energized` (desde la versión 12): el ataque con Vigor y el Galvanizado de la Espada ciclovoltaica.
+- Fórmula `by_level` (desde la versión 12): un valor por nivel del campeón (1 a 18), para los saltos por nivel del cliente (Kraken, ataques luminosos de El final). Sus valores no pasan la comprobación de números en citas: salen de aplicar los saltos del cliente, que sí se citan.
+- En las citas, los ordinales en español («tercer», «quinto»…) cuentan como números.
+- Condición `target_is_structure` (desde la versión 12). En las rotaciones, un efecto no aplicado cuya condición de tipo de objetivo no encaja con el objetivo (`target_is_champion` contra un súbdito, por ejemplo) ya no deja la rotación `Pendiente de verificación`.
 - `limits`: topes o umbrales conocidos aunque la curva no lo esté. Ejemplo: el 15 % de Lord Dominik con 1500 de vida adicional.
 - `scenario` (opcional, desde la versión 9): supuesto con el que un motor puede aplicar el efecto de forma permanente. Solo existe `max_stacks`: los componentes dan el valor con **todas las acumulaciones**, y la hoja de estadísticas los suma como estadísticas con la nota `scenario: maximum stacks`. Solo admite componentes `stat_modifier` con `mode: flat`, que suman su cantidad en la unidad del catálogo (puntos porcentuales para las estadísticas que son fracción: 25 → 0,25). `rotation` no los vuelve a aplicar: deja una nota `applied by the stat sheet`. Decisión del 2026-11-16: los escenarios se calculan con las acumulaciones al máximo, que es más sencillo aunque sobrestime los primeros compases de la partida.
 - **Efectos de estadísticas siempre activos** (desde la versión 10): un efecto con `trigger.event: always`, sin `conditions` y hecho solo de componentes `stat_modifier` también lo aplica la hoja. `flat` suma como en `max_stacks`; `percent` con `scope: total` amplifica el total de una estadística de cantidad (Obra mágica de Rabadon: +30 % del poder de habilidad total) y se aplica al final, sobre el total sin amplificar, sin componerse con otros amplificadores. `rotation` deja la nota `applied by the stat sheet (always)`.
@@ -236,7 +240,7 @@ El evaluador, compartido con los kits de campeón en [`src/lol_knowledge/formula
 10. **Sujeto de la estadística.** `subject` desambigua `bonus_health` del objetivo frente a `bonus_armor` del portador. Sin `subject` se conserva la convención anterior.
 11. **Rango del portador.** `ChampionState.attack_range` es obligatorio. Un efecto que depende de melee/ranged falla si falta; no se asume un valor.
 
-## 5. Objetos con efectos curados (29)
+## 5. Objetos con efectos curados (34)
 
 | Id | Objeto | Demuestra |
 |---|---|---|
@@ -262,9 +266,10 @@ El evaluador, compartido con los kits de campeón en [`src/lol_knowledge/formula
 | `data:item:3115` | Diente de Nashor | Daño mágico al impactar 15 + 15 % de AP (cliente, `derived`). |
 | `data:item:3124` | Hoja de furia de Guinsoo | Daño mágico al impactar (30); velocidad de ataque por acumulaciones al máximo (4 × 8 %); impactos fantasma `excluded`. |
 | `data:item:3057`, `3078`, `3100`, `3508`, `6662`, `2510`, `3877` | Brillo, Fuerza de trinidad, Perdición del liche, Segador de esencia, Guantelete de hielo, Amanecer y anochecer, Tonada sanguina | Hoja encantada con las cifras del cliente ([regla](../mechanics/spellblade.md)); sus efectos secundarios, declarados y sin aplicar salvo la repetición al impactar de Amanecer y anochecer. |
+| `data:item:6672`, `3094`, `3087`, `6699`, `3181` | Verdugo de krakens, Cañón de fuego rápido, Puñal de Statikk, Espada ciclovoltaica, Rompecascos | Cada N ataques y Vigor ([regla](../mechanics/attack-counters.md)). |
 | `data:item:3302` | El final | Daño mágico al impactar 30 + 10 % de DA adicional + 10 % de AP (cliente, `derived`); 30 % de penetración al máximo; resistencias por nivel sin modelar. |
 
-Cobertura de efectos: **29 objetos curados**; los otros 189 objetos comprables de la Grieta solo tienen estadísticas, y 145 de ellos tienen efectos en la descripción sin modelar (`pending`). No se afirma nada sobre las variantes de otros modos. Las fuentes secundarias de las cifras nuevas están en [`research/reports/object-mechanics-2026-10-20.md`](../../research/reports/object-mechanics-2026-10-20.md).
+Cobertura de efectos: **34 objetos curados**; los otros 184 objetos comprables de la Grieta solo tienen estadísticas, y 140 de ellos tienen efectos en la descripción sin modelar (`pending`). No se afirma nada sobre las variantes de otros modos. Las fuentes secundarias de las cifras nuevas están en [`research/reports/object-mechanics-2026-10-20.md`](../../research/reports/object-mechanics-2026-10-20.md).
 
 ## 6. Efectos realmente modelados
 
@@ -287,11 +292,12 @@ Cobertura de efectos: **29 objetos curados**; los otros 189 objetos comprables d
 | Diente de Nashor | Mordisco de Icathia: 15 + 15 % de AP mágico al impactar | `evaluable` (`derived`) | La parte del AP no lleva `mStat`; que sea AP lo confirma el nombre `NashorsAPValue`. |
 | Guinsoo | Ira: 30 de daño mágico al impactar | `evaluable` | Nada. |
 | Guinsoo | Golpe furioso: +8 % de velocidad de ataque por acumulación, hasta 4 | `evaluable` (`max_stacks`) | Se aplica con las 4 acumulaciones (+32 %). |
-| Guinsoo | Impacto fantasma: cada tercer ataque aplica dos veces los efectos al impactar | `excluded` | Las rotaciones no cuentan ataques; con Guinsoo la rotación queda `Pendiente de verificación`. |
+| Guinsoo | Impacto fantasma: cada tercer ataque aplica dos veces los efectos al impactar | `evaluable` | Desde la versión 12, cada tercer ataque de la rotación (contando desde cero) repite los efectos al impactar. |
 | El final | Sombra: 30 + 10 % de DA adicional + 10 % de AP mágico al impactar | `evaluable` (`corroborated`) | Data Dragon muestra 0. El cliente y las notas oficiales de 26.15 («30 Magic Damage On-Hit ⇒ 30 (+10% bonus Attack Damage) (+10% Ability Power)») coinciden. La wiki antigua de Fandom aún da 30 fijo, de antes de 26.15. |
 | Hoja encantada (7 objetos) | Golpe del primer ataque tras una habilidad | `evaluable` (`derived`) | Ver [`spellblade.md`](../mechanics/spellblade.md). |
 | El final | Yuxtaposición, ataques sombríos: 10 % de penetración de armadura y mágica por ataque, hasta 30 % | `evaluable` (`max_stacks`, `derived`) | Se aplica al máximo (30 %, `PenMax` del cliente). |
-| El final | Yuxtaposición, ataques luminosos: armadura y resistencia mágica | `partially_evaluable` (`max_stacks`) | 6/7/8 por ataque según el nivel (1, 11, 14), hasta 3 ataques; las fórmulas de objeto no tienen valores por nivel, así que la hoja muestra armadura y resistencia mágica `Pendiente de verificación`. |
+| El final | Yuxtaposición, ataques luminosos: armadura y resistencia mágica | `evaluable` (`max_stacks`, `derived`) | Desde la versión 12: 3 × (6/7/8 según el nivel: 1, 11, 14) con `by_level`. |
+| Kraken, Rompecascos, Cañón, Ciclovoltaica, Statikk | Cada N ataques y Vigor | Ver [`attack-counters.md`](../mechanics/attack-counters.md) | El aumento de Kraken por vida que falta, la letalidad de la Ciclovoltaica y el rayo de Statikk no se aplican. |
 
 ## 7. Inventario no soportado
 

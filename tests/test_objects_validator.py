@@ -711,3 +711,35 @@ def test_patch_notes_are_an_official_source() -> None:
     assert _messages(_catalog(effect=effect)) == []
     effect["sources"][1]["confidence"] = "secondary"
     assert "source kind 'patch_notes' cannot be 'secondary'" in _messages(_catalog(effect=effect))
+
+
+# Attack counters (catalog version 12)
+
+
+def _counted_effect(quote: str, required: int) -> dict:
+    effect = _valid_effect()
+    effect["quote"] = "30% de daño adicional"
+    effect["trigger"] = {"event": "on_hit"}
+    effect["stacks"] = {"required": required, "window_seconds": None, "max_stacks": None}
+    effect["components"][0]["formula"] = {
+        "op": "by_level",
+        "values": [30] * 18,
+    }
+    return effect
+
+
+def test_spanish_ordinals_count_as_numbers_in_quotes() -> None:
+    snapshot = _snapshot(description="Cada tercer ataque inflige 30% de daño adicional.")
+    effect = _counted_effect("", 3)
+    effect["quote"] = "Cada tercer ataque inflige 30% de daño adicional"
+    assert _messages(_catalog(effect=effect), snapshot) == []
+    effect["stacks"]["required"] = 4
+    found = _messages(_catalog(effect=effect), snapshot)
+    assert "number 4.0 is not present in any cited quote" in found
+
+
+def test_structure_condition_and_energized_trigger_are_known() -> None:
+    effect = _valid_effect()
+    effect["trigger"] = {"event": "energized"}
+    effect["conditions"] = [{"kind": "target_is_structure"}]
+    assert _messages(_catalog(effect=effect)) == []
