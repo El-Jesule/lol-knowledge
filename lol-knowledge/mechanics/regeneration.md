@@ -41,7 +41,7 @@ por segundo = regeneración / 5
 
 ## Implementación (`Calculado`)
 
-- `src/lol_knowledge/stats/registry.py` declara `health_regen` y `mana_regen` como cantidades aditivas por cada 5 s con `percent_of_base`. Un objeto con `kind: percent` se convierte en cantidad: porcentaje × base del nivel (aportes `base` de la hoja), con la nota `125% of base 13.955`. Su etiqueta nunca es más fuerte que la de la base.
+- `src/lol_knowledge/stats/registry.py` declara `health_regen` y `mana_regen` como cantidades aditivas por cada 5 s con `percent_of: base`. La hoja convierte los porcentajes al final, como en la [velocidad de movimiento](move-speed.md). Un objeto con `kind: percent` se convierte en cantidad: porcentaje × base del nivel (aportes `base` de la hoja), con la nota `125% of base 13.955`. Su etiqueta nunca es más fuerte que la de la base.
 - `src/lol_knowledge/objects/schema.py` multiplica `FlatHPRegenMod` por 5 y `src/lol_knowledge/objects/catalog.py` anota `unit_conversion` en la entrada. `src/lol_knowledge/stats/data.py` convierte esa anotación en un aporte `Derivado` con la nota `unit converted: …`.
 - Ejemplo calculado: Zaahen a nivel 10 con Renovación de piedra lunar (125 % de regeneración de maná básica): 8,15 + 0,75 × 7,74 = 13,955 de base, más 125 % = 17,44375; total 31,39875 por cada 5 s.
 - Pruebas: `tests/test_stats_regeneration.py` y `tests/test_objects_validator.py`.

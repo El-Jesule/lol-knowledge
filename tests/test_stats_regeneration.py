@@ -31,13 +31,13 @@ CONVERSION = DDRAGON_UNIT_CONVERSIONS["FlatHPRegenMod"]
 
 
 @pytest.mark.parametrize("stat_id", ["health_regen", "mana_regen"])
-def test_registry_declares_additive_amounts_with_percent_of_base(stat_id):
+def test_registry_declares_additive_amounts_with_a_percent_of_base(stat_id):
     definition = STATS[stat_id]
     assert definition.resolvable
     assert definition.stacking is Stacking.ADDITIVE
     assert definition.unit is Unit.AMOUNT
     assert definition.rules == RULES
-    assert definition.percent_of_base
+    assert definition.percent_of == "base"
     assert definition.item_kind == "flat"
 
 

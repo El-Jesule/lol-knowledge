@@ -9,8 +9,12 @@ import pytest
 from lol_knowledge.damage import format_percent
 from lol_knowledge.errors import StatsError
 from lol_knowledge.stats import (
+    STATS,
     Label,
+    Stacking,
     StatBlocked,
+    StatDef,
+    Unit,
     build_stat_sheet,
     champion_from_document,
     format_text,
@@ -110,13 +114,19 @@ def test_item_kind_must_match_a_resolvable_stat():
         build_stat_sheet(champion(), 1, [item("1", ("armor", "percent", 10))])
 
 
-def test_pending_stat_keeps_contributions_without_a_total():
-    sheet = build_stat_sheet(champion(), 1, [item("1", ("move_speed", "percent", 4))])
-    move_speed = sheet["move_speed"]
-    assert move_speed.status == "pending"
-    assert [c.value for c in move_speed.contributions] == [345, F(4, 100)]
+def test_pending_stat_keeps_contributions_without_a_total(monkeypatch):
+    # Every registered statistic has a rule now; a test-only one keeps the pending path covered.
+    pending = StatDef("test_pending", "Prueba", Stacking.ADDITIVE, Unit.AMOUNT, None, "sin regla")
+    monkeypatch.setitem(STATS, "test_pending", pending)
+    sheet = build_stat_sheet(champion(), 1, [item("1", ("test_pending", "percent", 4))])
+    value = sheet["test_pending"]
+    assert value.status == "pending"
+    assert [c.value for c in value.contributions] == [F(4, 100)]
     with pytest.raises(StatBlocked):
-        move_speed.total()
+        value.total()
+    assert "not modelled yet:\n  test_pending: sin regla" in format_text(sheet)
+    report = to_dict(sheet)["stats"]["test_pending"]
+    assert report["status"] == "pending" and report["reason"] == "sin regla"
 
 
 @pytest.mark.parametrize(

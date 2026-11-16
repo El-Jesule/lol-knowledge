@@ -9,7 +9,7 @@ import pytest
 
 from lol_knowledge.errors import KitError
 from lol_knowledge.kit import load_kit, parse_kit
-from lol_knowledge.stats import Label
+from lol_knowledge.stats import STATS, Label, Stacking, StatDef, Unit
 
 ROOT = Path(__file__).resolve().parents[1]
 FORMULA = {
@@ -79,7 +79,7 @@ def test_parses_a_valid_kit():
         (["abilities", "R", "cases", 0, "parts", 0, "damage_type"], "fire", "damage_type"),
         (["abilities", "R", "cases", 0, "parts", 0, "source"], "", "source"),
         (["abilities", "R", "cases", 0, "parts", 0, "formula"], {"op": "nope"}, "invalid formula"),
-        (["abilities", "R", "passive_stats", 0, "stat"], "move_speed", "resolvable"),
+        (["abilities", "R", "passive_stats", 0, "stat"], "charisma", "resolvable"),
         (["abilities", "R", "not_modelled"], [""], "not_modelled"),
     ],
 )
@@ -120,3 +120,11 @@ def test_kit_must_match_its_directory(tmp_path):
     path.write_text(json.dumps(KIT), encoding="utf-8")
     with pytest.raises(KitError, match="is for 'Testchamp'"):
         load_kit(tmp_path, "Other")
+
+
+def test_passive_stats_must_be_resolvable(monkeypatch):
+    # Every registered statistic has a rule now; a test-only pending one covers the check.
+    pending = StatDef("test_pending", "Prueba", Stacking.ADDITIVE, Unit.AMOUNT, None, "sin regla")
+    monkeypatch.setitem(STATS, "test_pending", pending)
+    with pytest.raises(KitError, match="'test_pending' is not a resolvable stat"):
+        parse_kit(kit_with(["abilities", "R", "passive_stats", 0, "stat"], "test_pending"))

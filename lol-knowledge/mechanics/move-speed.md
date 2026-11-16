@@ -1,6 +1,6 @@
 # Velocidad de movimiento
 
-- **Ámbito:** regla general de la velocidad de movimiento de un campeón: base, aportes planos y porcentuales, y límites suaves.
+- **Ámbito:** regla general de la velocidad de movimiento de un campeón: base, aportes planos y porcentuales, y límites suaves. La usa la hoja de estadísticas (`python -m lol_knowledge stats`).
 - **Parche de referencia:** Data Dragon 16.22.1 (2026-11-16).
 - **Fecha de consulta:** 2026-11-16
 
@@ -28,6 +28,13 @@ velocidad = bruto                         si 220 ≤ bruto ≤ 415
 - **Límites suaves:** los tramos se encadenan. 600 en bruto: 415 + 75 × 0,8 + 110 × 0,5 = 530 (M1). Las fórmulas simplificadas de M2 dan lo mismo: 600 × 0,5 + 230 = 530.
 - **Por debajo de 220:** solo con ralentizaciones; sin ellas, ninguna base de Data Dragon baja de 315.
 - **Cassiopeia (`Pendiente de verificación`):** su pasiva aumenta la eficacia de todos los aumentos de velocidad (M5). No está modelada.
+
+## Implementación (`Calculado`)
+
+- `src/lol_knowledge/stats/registry.py` declara `move_speed` como cantidad aditiva con `percent_of: flat` y `soft_cap` (`move_speed_soft_cap`, con aritmética exacta: 0,8 = 4/5).
+- La hoja aplica los porcentajes al final, cuando ya conoce todos los aportes planos (base, objetos y efectos), así que el orden de los objetos no importa. Cada porcentaje se convierte en una cantidad con la nota `10% of flat 390` y una etiqueta que nunca es más fuerte que la de los aportes planos.
+- El total aplica el límite suave; `base` y `bonus` quedan en bruto. Si el límite cambia el total, el texto añade `(soft cap from 429)`, el JSON trae `raw` y `soft_capped`, y la etiqueta baja como mucho a `Derivado`, porque la regla viene de fuentes secundarias.
+- Pruebas: `tests/test_stats_move_speed.py`. Una de las mutaciones (`> 490` frente a `>= 490`) es equivalente: las dos fórmulas dan 475 justo en 490.
 
 ## Fuera de alcance
 

@@ -43,6 +43,8 @@ def _stat_dict(value: StatValue) -> dict[str, Any]:
         result["total"] = float(value.total())
         result["exact"] = str(value.total())
         result["capped"] = value.capped
+        result["soft_capped"] = value.soft_capped
+        result["raw"] = float(value.raw())
         if definition.stacking is Stacking.ADDITIVE:
             result["base"] = float(value.scoped("base"))
             result["bonus"] = float(value.scoped("bonus"))
@@ -122,6 +124,8 @@ def _stat_line(stat_id: str, value: StatValue) -> str:
         )
     if value.capped:
         detail += f" (capped at {_shown(value.definition.cap, unit)})"
+    if value.soft_capped:
+        detail += f" (soft cap from {_shown(value.raw(), unit)})"
     line = f"  {stat_id}: {total}{detail} [{value.label.value}]"
     notes = [item.note for item in value.contributions if "client" in item.note]
     if notes:
@@ -147,7 +151,7 @@ def format_text(sheet: StatSheet) -> str:
     pending = [(k, v) for k, v in sheet.values.items() if v.status == "pending"]
     lines.append("stats:")
     lines += [_stat_line(stat_id, value) for stat_id, value in resolved]
-    lines.append("not modelled yet:")
+    lines.append("not modelled yet:" if pending else "not modelled yet: none")
     lines += [f"  {stat_id}: {value.definition.pending}" for stat_id, value in pending]
     lines.append("effective health:")
     for kind in EHP_TYPES:
