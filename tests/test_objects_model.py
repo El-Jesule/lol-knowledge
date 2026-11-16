@@ -37,15 +37,15 @@ def _reverse_keys(value: Any) -> Any:
 def test_model_header_links_to_the_snapshot(object_model, object_snapshot) -> None:
     assert object_model["schema_version"] == 1
     assert object_model["kind"] == "lol-object-model"
-    assert object_model["catalog_version"] == 6
+    assert object_model["catalog_version"] == 7
     assert object_model["game_version"] == object_snapshot.patch
     assert object_model["source"]["items_sha256"] == object_snapshot.items_sha256
     assert object_model["source"]["catalog"] == "lol-knowledge/objects/catalog.json"
 
 
-def test_sample_has_fifteen_objects(object_model) -> None:
+def test_sample_has_sixteen_objects(object_model) -> None:
     ids = [item["id"] for item in object_model["objects"]]
-    assert len(ids) == 15
+    assert len(ids) == 16
     assert ids == sorted(ids, key=lambda value: int(value))
 
 
@@ -330,3 +330,10 @@ def test_mists_edge_declares_life_steal_with_a_secondary_source(object_model) ->
     assert declaration["value"] is True
     assert declaration["source"]["confidence"] == "secondary"
     assert "benefits from life steal" in declaration["source"]["quote"]
+
+
+def test_mercurys_treads_declare_tenacity_from_the_description(object_model) -> None:
+    treads = _object(object_model, "3111")
+    assert _stat(treads, "tenacity")["value"] == 30.0
+    assert _stat(treads, "tenacity")["kind"] == "percent"
+    assert treads["effects"] == []

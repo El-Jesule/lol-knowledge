@@ -79,7 +79,7 @@ def test_parses_a_valid_kit():
         (["abilities", "R", "cases", 0, "parts", 0, "damage_type"], "fire", "damage_type"),
         (["abilities", "R", "cases", 0, "parts", 0, "source"], "", "source"),
         (["abilities", "R", "cases", 0, "parts", 0, "formula"], {"op": "nope"}, "invalid formula"),
-        (["abilities", "R", "passive_stats", 0, "stat"], "tenacity", "resolvable"),
+        (["abilities", "R", "passive_stats", 0, "stat"], "move_speed", "resolvable"),
         (["abilities", "R", "not_modelled"], [""], "not_modelled"),
     ],
 )

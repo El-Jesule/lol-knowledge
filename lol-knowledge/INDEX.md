@@ -25,6 +25,7 @@
 | Calcular un impacto crítico o la probabilidad de crítico | [Impacto crítico](mechanics/critical-strike.md) |
 | Calcular la velocidad de ataque (base, ratio, crecimiento y tope) | [Velocidad de ataque](mechanics/attack-speed.md) |
 | Calcular la curación por robo de vida y omnivampirismo | [Robo de vida y omnivampirismo](mechanics/life-steal-and-omnivamp.md) |
+| Calcular la tenacidad y cómo se combinan sus fuentes | [Tenacidad](mechanics/tenacity.md) |
 | Aplicar aumentos y reducciones de daño | [Modificadores de daño](mechanics/damage-modifiers.md) |
 | Encadenar ataques, daño al impactar y vida del objetivo | [Ataques básicos y daño al impactar](mechanics/basic-attacks-and-on-hit.md) |
 | Ver las estadísticas base y por nivel extraídas del cliente | [champion-records.json](derived/champion-records.json) |
@@ -36,7 +37,7 @@
 
 Un campeón con análisis completo y datos oficiales de los 173 campeones en `data/current/`. La cobertura crece de uno en uno: cada campeón nuevo reutiliza esta estructura.
 
-El modelo mecánico de objetos cubre una muestra de **15 objetos** elegidos por diversidad mecánica; no es cobertura completa. Las cifras que Data Dragon no publica se registran con fuente citada y confianza secundaria. Los límites están en [Modelo de objetos](objects/README.md).
+El modelo mecánico de objetos cubre una muestra de **16 objetos** elegidos por diversidad mecánica; no es cobertura completa. Las cifras que Data Dragon no publica se registran con fuente citada y confianza secundaria. Los límites están en [Modelo de objetos](objects/README.md).
 
 ## Aviso de fuentes
 
