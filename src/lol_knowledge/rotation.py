@@ -43,6 +43,8 @@ HOLDER_RANGES = frozenset({"melee", "ranged"})
 ATTACK_MODIFIERS = frozenset({"crit", "nospellblade"})
 # Triggers whose ``stacks.required`` counts basic attacks (attack-counters.md).
 COUNTED_TRIGGERS = frozenset({"on_hit", "on_attack"})
+# A burn starts when an ability deals damage, or when one is cast (burns.md).
+BURN_TRIGGERS = frozenset({"damaging_ability", "cast"})
 # Base critical strike multiplier of the patch notes (26.1); records that differ are flagged.
 PATCH_CRIT_MULTIPLIER = Fraction(2)
 # Passives that reduce total critical strike damage: "Critical Strike Damage Reduction:
@@ -51,7 +53,9 @@ CRIT_DAMAGE_REDUCTIONS = {"Yasuo": Fraction(5, 100), "Yone": Fraction(5, 100)}
 # Limit conditions of the catalog, as the target kinds they apply to.
 LIMIT_CONDITIONS = {"target is a minion or monster": frozenset({"minion", "monster"})}
 # Effect components that change the damage of a rotation when not applied.
-DAMAGE_KINDS = frozenset({"damage", "damage_modifier", "stat_modifier"})
+DAMAGE_KINDS = frozenset(
+    {"damage", "damage_modifier", "stat_modifier", "burn", "execute", "repeat_on_hit"}
+)
 
 # Kinds against which omnivamp drops to 33 % for pets, damage over time and area spells.
 REDUCED_OMNIVAMP_KINDS = frozenset({"minion", "monster"})
@@ -127,7 +131,7 @@ NO_HEALING = Healing(Fraction(0), Fraction(0), Fraction(0), Label.OFFICIAL)
 
 @dataclass(frozen=True)
 class Part:
-    kind: str  # "attack", "on_hit", "ability" or "execute"
+    kind: str  # "attack", "on_hit", "ability", "burn" or "execute"
     source: str
     damage_type: DamageType
     raw: Fraction
@@ -247,6 +251,7 @@ class _Effect:
     every: int | None = None
     # Values of conditions that take one (``target_health_below``: a percentage).
     condition_values: Mapping[str, Any] = field(default_factory=dict)
+    scenario: str | None = None
 
     @property
     def title(self) -> str:
@@ -255,7 +260,12 @@ class _Effect:
 
 # Effect conditions on the target kind: a skipped effect whose condition rules
 # out the rotation's target cannot change its damage.
-TARGET_KIND_CONDITIONS = {"target_is_champion": "champion", "target_is_structure": "structure"}
+TARGET_KIND_CONDITIONS = {
+    "target_is_champion": "champion",
+    "target_is_structure": "structure",
+    "target_is_minion": "minion",
+    "target_is_monster": "monster",
+}
 
 
 def _could_apply(effect: Mapping[str, Any], target_kind: str | None) -> bool:
@@ -335,6 +345,7 @@ def _effects(
                             ]
                             if "value" in entry
                         },
+                        effect.get("scenario"),
                     )
                 )
     return effects, notes, weakened
@@ -363,6 +374,7 @@ def _conditions_hold(
     part_kind: str,
     crit: bool,
     target_stats: Mapping[str, Fraction] | None = None,
+    slot: str | None = None,
 ) -> bool:
     for condition in effect.conditions:
         if condition in TARGET_KIND_CONDITIONS:
@@ -376,6 +388,9 @@ def _conditions_hold(
                 return False
         elif condition == "damage_source_is_attack":
             if part_kind != "attack":
+                return False
+        elif condition == "ultimate_ability":
+            if slot != "R":
                 return False
         elif condition == "target_health_below":
             if target_stats is None:
@@ -417,6 +432,7 @@ class _Rotation:
         self.energized: list[_Effect] = []
         self.galvanize: list[_Effect] = []
         self.executes: list[_Effect] = []
+        self.burns: list[_Effect] = []
         owners = sorted(
             {
                 item.id
@@ -444,6 +460,8 @@ class _Rotation:
                 self.energized.append(effect)
             elif kind == "execute":
                 self.executes.append(effect)
+            elif effect.trigger in BURN_TRIGGERS and kind == "burn":
+                self.burns.append(effect)
             elif effect.trigger == "damaging_ability" and kind == "trigger_energized":
                 self.galvanize.append(effect)
             elif effect.trigger == "spellblade" and kind == "damage":
@@ -455,6 +473,11 @@ class _Rotation:
                     self._skip(effect, "damage taken by the attacker")
                 else:
                     self.dealt.append(effect)
+                    if effect.scenario is not None:
+                        self.notes.append(
+                            f"attacker {effect.title}: applied at full stacks "
+                            f"(scenario {effect.scenario})"
+                        )
             else:
                 self._skip(effect, f"{effect.trigger} {kind}")
         if len({effect.item for effect in self.energized}) > 1:
@@ -604,6 +627,8 @@ class _Rotation:
             elif part.kind == "on_hit":
                 labels.append(Label.PENDING)
                 notes.append("the catalog does not declare whether it applies life steal")
+            elif part.kind == "burn":
+                pass  # life steal comes from attacks; an item burn is not one (burns.md)
             else:
                 labels.append(Label.PENDING)
                 notes.append("the kit does not declare whether it applies life steal")
@@ -611,7 +636,10 @@ class _Rotation:
                 labels.append(self.life_steal.label)
         if omnivamp:
             labels.append(self.omnivamp.label)
-            if part.kind == "ability":
+            if part.kind == "burn" and self.target.kind in REDUCED_OMNIVAMP_KINDS:
+                omnivamp /= 3
+                notes.append(f"omnivamp from damage over time against a {self.target.kind}: 33%")
+            elif part.kind == "ability":
                 kind = _target_kind(self.target, "omnivamp healing from an ability")
                 if kind in REDUCED_OMNIVAMP_KINDS:
                     labels.append(Label.PENDING)
@@ -678,6 +706,36 @@ class _Rotation:
                 self.on_hit, step, target_stats, f" - again by {repeat.title}", repeat.label
             )
         return parts
+
+    def _burns(
+        self,
+        step: Step,
+        parts: Sequence[Part],
+        target_stats: Mapping[str, Fraction],
+        burned: set[str],
+    ) -> list[Part]:
+        """Each burn's full duration, once, on the first ability step that starts it."""
+        result: list[Part] = []
+        for effect in self.burns:
+            if effect.title in burned or (effect.trigger == "damaging_ability" and not parts):
+                continue
+            if not _conditions_hold(effect, self.target, "burn", False, target_stats, step.slot):
+                continue
+            burned.add(effect.title)
+            duration = Fraction(str(effect.component.get("duration_seconds")))
+            per_second = self._percent(effect, target_stats)
+            result.append(
+                self._part(
+                    "burn",
+                    f"{effect.title} ({effect.name}) over {format_number(duration)} s",
+                    DamageType(str(effect.component.get("damage_type"))),
+                    per_second * duration,
+                    [effect.label],
+                    False,
+                    target_stats,
+                )
+            )
+        return result
 
     def _execute(
         self, parts: Sequence[Part], health: Fraction, target_stats: Mapping[str, Fraction]
@@ -815,6 +873,7 @@ class _Rotation:
         # Attack counters start at zero; Energized starts ready (attack-counters.md).
         counters = {effect.title: 0 for effect in [*self.counted, *self.counted_repeats]}
         energized = bool(self.energized)
+        burned: set[str] = set()  # one full burn per effect and rotation (burns.md)
         for index, step in enumerate(steps, start=1):
             target_stats = {
                 **self.target.stats,
@@ -836,6 +895,7 @@ class _Rotation:
             else:
                 name, parts = self._ability(step, target_stats)
                 charged = True
+                parts += self._burns(step, parts, target_stats, burned)
                 if energized and self.galvanize and parts and self.target.kind == "champion":
                     energized = False
                     name += " (Energized)"

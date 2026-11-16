@@ -3,8 +3,8 @@
 - **Parche del snapshot:** `16.22.1` (`data/current/manifest.json`). El catálogo se creó sobre 16.20.1; en 16.22.1 las estadísticas, el oro, las descripciones y las recetas de los 15 objetos son idénticos en Data Dragon (comprobado el 2026-11-15). Las notas de parche 26.21 y 26.22 no tocan ninguno de los 15 objetos, y las cifras secundarias se han contrastado con los datos del cliente 16.22 ([informe](../../research/reports/item-data-values-16.22.md)). Las Botas de mercurio (3111) y las Flechas de los Yun Tal (3032) se añadieron el 2026-11-16 directamente desde 16.22.1.
 - **Fuente:** Data Dragon (`https://ddragon.leagueoflegends.com`), locale `es_ES`.
 - **Fecha de consulta:** 2026-10-20.
-- **Estado:** estadísticas de los **218 objetos comprables de la Grieta del Invocador** (generadas); efectos curados en 36 objetos (47 efectos). Los efectos de los demás objetos **no** están modelados (`effect_review: pending`).
-- **Versión del catálogo:** `catalog_version: 13` (esquema `1`; la 3 solo cambió el parche; la 4 añade `subject: target` explícito a la vida actual de Filo de la niebla, para que el motor de rotaciones la lea del objetivo sin depender de la convención implícita; la 5 añade los datos del cliente 16.22 como fuente `client_data` y corrige la ralentización a distancia de Zarpazo sombrío; la 6 añade `applies_life_steal` a los componentes de daño y lo declara en Filo de la niebla; la 7 añade las Botas de mercurio por su tenacidad; la 8 traslada las estadísticas de la descripción al archivo generado; la 9 añade las Flechas de los Yun Tal, el disparador `on_attack`, el escenario `max_stacks` y los ceros confirmados; la 10 añade el daño al impactar de cinco objetos, la evidencia `derived` y la aplicación en la hoja de los efectos `always` de estadísticas; la 11 añade Hoja encantada (disparador `spellblade`), el componente `repeat_on_hit` y las notas de parche como fuente; la 12 añade los contadores de ataques, el Vigor, las fórmulas `by_level` y la condición `target_is_structure`; la 13 añade la vida que le falta al objetivo, los umbrales de vida, `damage_types` y la ejecución).
+- **Estado:** estadísticas de los **218 objetos comprables de la Grieta del Invocador** (generadas); efectos curados en 42 objetos (64 efectos). Los efectos de los demás objetos **no** están modelados (`effect_review: pending`).
+- **Versión del catálogo:** `catalog_version: 14` (esquema `1`; la 3 solo cambió el parche; la 4 añade `subject: target` explícito a la vida actual de Filo de la niebla, para que el motor de rotaciones la lea del objetivo sin depender de la convención implícita; la 5 añade los datos del cliente 16.22 como fuente `client_data` y corrige la ralentización a distancia de Zarpazo sombrío; la 6 añade `applies_life_steal` a los componentes de daño y lo declara en Filo de la niebla; la 7 añade las Botas de mercurio por su tenacidad; la 8 traslada las estadísticas de la descripción al archivo generado; la 9 añade las Flechas de los Yun Tal, el disparador `on_attack`, el escenario `max_stacks` y los ceros confirmados; la 10 añade el daño al impactar de cinco objetos, la evidencia `derived` y la aplicación en la hoja de los efectos `always` de estadísticas; la 11 añade Hoja encantada (disparador `spellblade`), el componente `repeat_on_hit` y las notas de parche como fuente; la 12 añade los contadores de ataques, el Vigor, las fórmulas `by_level` y la condición `target_is_structure`; la 13 añade la vida que le falta al objetivo, los umbrales de vida, `damage_types` y la ejecución; la 14 añade las quemaduras, el disparador `cast` para ellas, la condición `ultimate_ability` y los amplificadores de daño con el escenario `max_stacks`).
 - **Código:** [`src/lol_knowledge/objects/`](../../src/lol_knowledge/objects/).
 - **Catálogo curado (efectos y revisión):** [`catalog.json`](catalog.json).
 - **Estadísticas generadas:** [`catalog-stats.json`](catalog-stats.json), con `src/lol_knowledge/objects/generate.py`. No se edita a mano: `validate` lo regenera y falla si no coincide.
@@ -186,6 +186,7 @@ Decisiones:
 - Disparador `energized` y componente `trigger_energized` (desde la versión 12): el ataque con Vigor y el Galvanizado de la Espada ciclovoltaica.
 - Fórmula `by_level` (desde la versión 12): un valor por nivel del campeón (1 a 18), para los saltos por nivel del cliente (Kraken, ataques luminosos de El final). Sus valores no pasan la comprobación de números en citas: salen de aplicar los saltos del cliente, que sí se citan.
 - Desde la versión 13 ([regla](../mechanics/target-health.md)): `scope: missing_fraction` de `health` (con `subject: target`) es la fracción de vida que le falta al objetivo; la condición `target_health_below` lleva `value` (porcentaje de 0 a 100) y las rotaciones la evalúan; un `damage_modifier` puede limitarse con `damage_types`; el componente `execute` lleva como fórmula el umbral en porcentaje de la vida máxima.
+- Desde la versión 14 ([regla](../mechanics/burns.md)): componente `burn` (`damage_type`, `duration_seconds` y una fórmula de daño por segundo), con disparador `damaging_ability` o `cast`; condición `ultimate_ability`; el escenario `max_stacks` admite también `damage_modifier` con `direction: dealt`, que aplican las rotaciones (la hoja solo aplica los efectos hechos solo de estadísticas). Las condiciones `target_is_minion` y `target_is_monster` cuentan para no debilitar rotaciones contra otro tipo de objetivo.
 - En las citas, los ordinales en español («tercer», «quinto»…) cuentan como números.
 - Condición `target_is_structure` (desde la versión 12). En las rotaciones, un efecto no aplicado cuya condición de tipo de objetivo no encaja con el objetivo (`target_is_champion` contra un súbdito, por ejemplo) ya no deja la rotación `Pendiente de verificación`.
 - `limits`: topes o umbrales conocidos aunque la curva no lo esté. Ejemplo: el 15 % de Lord Dominik con 1500 de vida adicional.
@@ -241,7 +242,7 @@ El evaluador, compartido con los kits de campeón en [`src/lol_knowledge/formula
 10. **Sujeto de la estadística.** `subject` desambigua `bonus_health` del objetivo frente a `bonus_armor` del portador. Sin `subject` se conserva la convención anterior.
 11. **Rango del portador.** `ChampionState.attack_range` es obligatorio. Un efecto que depende de melee/ranged falla si falta; no se asume un valor.
 
-## 5. Objetos con efectos curados (36)
+## 5. Objetos con efectos curados (42)
 
 | Id | Objeto | Demuestra |
 |---|---|---|
@@ -269,9 +270,10 @@ El evaluador, compartido con los kits de campeón en [`src/lol_knowledge/formula
 | `data:item:3057`, `3078`, `3100`, `3508`, `6662`, `2510`, `3877` | Brillo, Fuerza de trinidad, Perdición del liche, Segador de esencia, Guantelete de hielo, Amanecer y anochecer, Tonada sanguina | Hoja encantada con las cifras del cliente ([regla](../mechanics/spellblade.md)); sus efectos secundarios, declarados y sin aplicar salvo la repetición al impactar de Amanecer y anochecer. |
 | `data:item:6672`, `3094`, `3087`, `6699`, `3181` | Verdugo de krakens, Cañón de fuego rápido, Puñal de Statikk, Espada ciclovoltaica, Rompecascos | Cada N ataques y Vigor ([regla](../mechanics/attack-counters.md)). |
 | `data:item:4645`, `6676` | Llamasombría, Recaudadora | Umbral de vida del objetivo y ejecución ([regla](../mechanics/target-health.md)). |
+| `data:item:6653`, `2503`, `2508`, `3118`, `3050`, `3147` | Tormento de Liandry, Antorcha de fuego negro, Cenizas predestinadas, Malignidad, Convergencia de Zeke, Disfraz encantado | Quemaduras y amplificadores por tiempo en combate ([regla](../mechanics/burns.md)). |
 | `data:item:3302` | El final | Daño mágico al impactar 30 + 10 % de DA adicional + 10 % de AP (cliente, `derived`); 30 % de penetración al máximo; resistencias por nivel sin modelar. |
 
-Cobertura de efectos: **36 objetos curados**; los otros 182 objetos comprables de la Grieta solo tienen estadísticas, y 138 de ellos tienen efectos en la descripción sin modelar (`pending`). No se afirma nada sobre las variantes de otros modos. Las fuentes secundarias de las cifras nuevas están en [`research/reports/object-mechanics-2026-10-20.md`](../../research/reports/object-mechanics-2026-10-20.md).
+Cobertura de efectos: **42 objetos curados**; los otros 176 objetos comprables de la Grieta solo tienen estadísticas, y 132 de ellos tienen efectos en la descripción sin modelar (`pending`). No se afirma nada sobre las variantes de otros modos. Las fuentes secundarias de las cifras nuevas están en [`research/reports/object-mechanics-2026-10-20.md`](../../research/reports/object-mechanics-2026-10-20.md).
 
 ## 6. Efectos realmente modelados
 
@@ -302,6 +304,8 @@ Cobertura de efectos: **36 objetos curados**; los otros 182 objetos comprables d
 | Kraken, Rompecascos, Cañón, Ciclovoltaica, Statikk | Cada N ataques y Vigor | Ver [`attack-counters.md`](../mechanics/attack-counters.md) | La letalidad de la Ciclovoltaica y el rayo de Statikk no se aplican; el aumento de Kraken por la vida que falta, sí (versión 13). |
 | Llamasombría | Florascua: +20 % al daño mágico y verdadero contra objetivos por debajo del 40 % | `evaluable` | Ver [`target-health.md`](../mechanics/target-health.md). |
 | Recaudadora | Muerte: ejecuta a campeones por debajo del 5 % | `evaluable` | Ver [`target-health.md`](../mechanics/target-health.md). |
+| Liandry, Antorcha, Cenizas, Malignidad, Zeke | Quemaduras | `evaluable` (salvo Liandry contra monstruos) | Ver [`burns.md`](../mechanics/burns.md); Fuego negro y la reducción de RM de Malignidad no se aplican. |
+| Liandry, Disfraz encantado | +6 % de daño a campeones al máximo | `evaluable` (`max_stacks`) | Ver [`burns.md`](../mechanics/burns.md). |
 
 ## 7. Inventario no soportado
 

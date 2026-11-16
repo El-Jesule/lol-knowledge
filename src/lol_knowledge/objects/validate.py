@@ -599,10 +599,15 @@ class _CatalogChecker:
         for index, component in enumerate(components):
             if not isinstance(component, Mapping):
                 continue
-            if component.get("kind") != "stat_modifier" or component.get("mode") != "flat":
+            stat = component.get("kind") == "stat_modifier" and component.get("mode") == "flat"
+            dealt = (
+                component.get("kind") == "damage_modifier" and component.get("direction") == "dealt"
+            )
+            if not (stat or dealt):
                 self.fail(
                     f"{pointer[: -len('.scenario')]}.components[{index}]",
-                    "a max_stacks effect may only have flat stat_modifier components",
+                    "a max_stacks effect may only have flat stat_modifier or dealt "
+                    "damage_modifier components",
                 )
 
     def _check_confirmed_zeros(self, entries: Any, pointer: str) -> None:
@@ -776,6 +781,16 @@ class _CatalogChecker:
                 self.fail(f"{pointer}.mode", "stat_modifier mode must be 'flat' or 'percent'")
             if "formula" not in component:
                 self.fail(f"{pointer}.formula", "stat_modifier components need a formula")
+        elif kind == "burn":
+            if component.get("damage_type") not in DAMAGE_TYPES:
+                self.fail(
+                    f"{pointer}.damage_type", f"damage_type must be one of {sorted(DAMAGE_TYPES)}"
+                )
+            if "formula" not in component:
+                self.fail(f"{pointer}.formula", "burn components need a per-second formula")
+            duration = component.get("duration_seconds")
+            if not _is_number(duration) or duration <= 0:
+                self.fail(f"{pointer}.duration_seconds", "a burn needs a positive duration")
         elif kind == "execute":
             if "formula" not in component:
                 self.fail(f"{pointer}.formula", "execute components need a threshold formula")

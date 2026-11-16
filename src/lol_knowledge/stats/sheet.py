@@ -197,14 +197,16 @@ def sheet_effect_reason(effect: Mapping[str, Any]) -> str | None:
     The sheet takes effects declared under a scenario and unconditional
     (``always``) effects made only of stat modifiers. Rotations leave both to it.
     """
-    if effect.get("scenario") is not None:
-        return f"scenario {effect['scenario']}"
     components = effect.get("components") or ()
+    stats_only = bool(components) and all(
+        component.get("kind") == "stat_modifier" for component in components
+    )
+    if effect.get("scenario") is not None and stats_only:
+        return f"scenario {effect['scenario']}"
     if (
         (effect.get("trigger") or {}).get("event") == "always"
         and not effect.get("conditions")
-        and components
-        and all(component.get("kind") == "stat_modifier" for component in components)
+        and stats_only
     ):
         return "always"
     return None

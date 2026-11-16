@@ -33,6 +33,7 @@
 | Calcular el golpe de Hoja encantada (Brillo, Trinidad, Liche…) | [Hoja encantada](mechanics/spellblade.md) |
 | Calcular efectos cada N ataques y de Vigor (Kraken, Guinsoo, Cañón…) | [Contadores de ataques y Vigor](mechanics/attack-counters.md) |
 | Calcular efectos según la vida del objetivo (Kraken, Llamasombría, Recaudadora) | [Vida del objetivo](mechanics/target-health.md) |
+| Calcular quemaduras y aumentos por tiempo en combate (Liandry, Antorcha…) | [Quemaduras](mechanics/burns.md) |
 | Ver las estadísticas base y por nivel extraídas del cliente | [champion-records.json](derived/champion-records.json) |
 | Ver los valores, cálculos y textos de los efectos de los objetos, del cliente | [item-effects.json](derived/item-effects.json) |
 | Ver el catálogo curado de objetos | [catalog.json](objects/catalog.json) |

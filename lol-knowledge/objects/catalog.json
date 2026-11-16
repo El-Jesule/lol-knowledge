@@ -1,9 +1,9 @@
 {
   "schema_version": 1,
   "kind": "lol-object-model-catalog",
-  "catalog_version": 13,
+  "catalog_version": 14,
   "game_version": "16.22.1",
-  "notes": "Curated overlay for a mechanically diverse sample. Data Dragon derivatives (stats, gold, maps, recipes) are not repeated here; see lol-knowledge/objects/README.md. Numeric mechanics absent from Data Dragon carry declared sources and secondary confidence. Catalog version 3 (2026-11-15): moved to snapshot 16.22.1; stats, gold, descriptions and recipes of the 15 objects are identical to 16.20.1 in Data Dragon; the secondary evidence was not re-checked against the 16.21 and 16.22 patch notes. Catalog version 6 (2026-11-15): damage components may declare applies_life_steal with its own source; Mist's Edge declares it from the LoL Wiki (secondary). Catalog version 7 (2026-11-16): adds 3111 (Mercury's Treads) for its tenacity, declared from the 16.22.1 description. Catalog version 8 (2026-11-16): description stats of every Summoner's Rift item, curated ones included, come from catalog-stats.json (generated); this file keeps effects and reviews. Catalog version 9 (2026-11-16): adds 3032 (Yun Tal Wildarrows). Effects may declare scenario max_stacks (the stat sheet applies them at full stacks) and objects may confirm a generated 0 as a real zero (confirmed_zero_stats). Catalog version 10 (2026-11-16): adds the on-hit damage of 1043, 3091, 3115, 3124 and 3302, with client values (evidence derived) where Data Dragon omits them; stat effects that are always active (Rabadon) are applied by the stat sheet. Catalog version 11 (2026-11-16): adds Spellblade (trigger spellblade) to Sheen, Trinity Force, Lich Bane, Essence Reaver, Iceborn Gauntlet, Dusk and Dawn and Bloodsong, the repeat_on_hit component and patch notes as a source kind (Terminus is now corroborated by the 26.15 notes). Catalog version 12 (2026-11-16): attack counters (stacks.required on on-hit effects), the energized trigger and trigger_energized component, by_level formulas for client level breakpoints and the target_is_structure condition; adds Kraken Slayer, Rapid Firecannon, Statikk Shiv, Voltaic Cyclosword and Hullbreaker, applies Guinsoo's phantom hits and Terminus's light-hit resistances. Catalog version 13 (2026-11-16): the target's missing health in formulas (scope missing_fraction), target_health_below in rotations, damage_types on damage modifiers and the execute component; Kraken Slayer's missing-health increase, Shadowflame and The Collector.",
+  "notes": "Curated overlay for a mechanically diverse sample. Data Dragon derivatives (stats, gold, maps, recipes) are not repeated here; see lol-knowledge/objects/README.md. Numeric mechanics absent from Data Dragon carry declared sources and secondary confidence. Catalog version 3 (2026-11-15): moved to snapshot 16.22.1; stats, gold, descriptions and recipes of the 15 objects are identical to 16.20.1 in Data Dragon; the secondary evidence was not re-checked against the 16.21 and 16.22 patch notes. Catalog version 6 (2026-11-15): damage components may declare applies_life_steal with its own source; Mist's Edge declares it from the LoL Wiki (secondary). Catalog version 7 (2026-11-16): adds 3111 (Mercury's Treads) for its tenacity, declared from the 16.22.1 description. Catalog version 8 (2026-11-16): description stats of every Summoner's Rift item, curated ones included, come from catalog-stats.json (generated); this file keeps effects and reviews. Catalog version 9 (2026-11-16): adds 3032 (Yun Tal Wildarrows). Effects may declare scenario max_stacks (the stat sheet applies them at full stacks) and objects may confirm a generated 0 as a real zero (confirmed_zero_stats). Catalog version 10 (2026-11-16): adds the on-hit damage of 1043, 3091, 3115, 3124 and 3302, with client values (evidence derived) where Data Dragon omits them; stat effects that are always active (Rabadon) are applied by the stat sheet. Catalog version 11 (2026-11-16): adds Spellblade (trigger spellblade) to Sheen, Trinity Force, Lich Bane, Essence Reaver, Iceborn Gauntlet, Dusk and Dawn and Bloodsong, the repeat_on_hit component and patch notes as a source kind (Terminus is now corroborated by the 26.15 notes). Catalog version 12 (2026-11-16): attack counters (stacks.required on on-hit effects), the energized trigger and trigger_energized component, by_level formulas for client level breakpoints and the target_is_structure condition; adds Kraken Slayer, Rapid Firecannon, Statikk Shiv, Voltaic Cyclosword and Hullbreaker, applies Guinsoo's phantom hits and Terminus's light-hit resistances. Catalog version 13 (2026-11-16): the target's missing health in formulas (scope missing_fraction), target_health_below in rotations, damage_types on damage modifiers and the execute component; Kraken Slayer's missing-health increase, Shadowflame and The Collector. Catalog version 14 (2026-11-16): burns (component burn, triggers damaging_ability and cast, condition ultimate_ability), applied once per rotation for their full duration; max_stacks damage modifiers; adds Liandry's Torment, Blackfire Torch, Fated Ashes, Malignance, Zeke's Convergence and Haunting Guise.",
   "objects": [
     {
       "id": "1036",
@@ -2870,6 +2870,821 @@
           "evidence_confidence": "official",
           "model_status": "excluded",
           "note": "Gold; not part of damage."
+        }
+      ]
+    },
+    {
+      "id": "6653",
+      "effect_review": "complete",
+      "stats": [],
+      "effects": [
+        {
+          "id": "torment",
+          "kind": "passive",
+          "name": "Tormento",
+          "quote": "Lanzar habilidades de daño quema a tus enemigos, lo que inflige un 2% de daño mágico en función de la vida máxima por segundo a lo largo de 3 s.",
+          "basis": "description_explicit",
+          "trigger": {
+            "event": "damaging_ability"
+          },
+          "target": {
+            "kind": "enemy_unit"
+          },
+          "conditions": [
+            {
+              "kind": "target_is_champion"
+            }
+          ],
+          "components": [
+            {
+              "kind": "burn",
+              "damage_type": "magic",
+              "target": {
+                "kind": "enemy_unit"
+              },
+              "duration_seconds": 3,
+              "formula": {
+                "op": "percent_of",
+                "percent": 2,
+                "stat": "health",
+                "scope": "max",
+                "subject": "target"
+              }
+            }
+          ],
+          "cooldown_seconds": null,
+          "stacks": null,
+          "duration_seconds": 3,
+          "limits": [],
+          "evidence_confidence": "official",
+          "model_status": "evaluable"
+        },
+        {
+          "id": "torment-minions",
+          "kind": "passive",
+          "name": "Tormento (súbditos)",
+          "quote": "Lanzar habilidades de daño quema a tus enemigos, lo que inflige un 2% de daño mágico en función de la vida máxima por segundo a lo largo de 3 s.",
+          "basis": "description_explicit",
+          "trigger": {
+            "event": "damaging_ability"
+          },
+          "target": {
+            "kind": "enemy_unit"
+          },
+          "conditions": [
+            {
+              "kind": "target_is_minion"
+            }
+          ],
+          "components": [
+            {
+              "kind": "burn",
+              "damage_type": "magic",
+              "target": {
+                "kind": "enemy_unit"
+              },
+              "duration_seconds": 3,
+              "formula": {
+                "op": "percent_of",
+                "percent": 2,
+                "stat": "health",
+                "scope": "max",
+                "subject": "target"
+              }
+            }
+          ],
+          "cooldown_seconds": null,
+          "stacks": null,
+          "duration_seconds": 3,
+          "limits": [],
+          "evidence_confidence": "official",
+          "model_status": "evaluable"
+        },
+        {
+          "id": "torment-monsters",
+          "kind": "passive",
+          "name": "Tormento (monstruos)",
+          "quote": "Lanzar habilidades de daño quema a tus enemigos, lo que inflige un 2% de daño mágico en función de la vida máxima por segundo a lo largo de 3 s.",
+          "basis": "description_partial",
+          "trigger": {
+            "event": "damaging_ability"
+          },
+          "target": {
+            "kind": "enemy_unit"
+          },
+          "conditions": [
+            {
+              "kind": "target_is_monster"
+            }
+          ],
+          "components": [
+            {
+              "kind": "burn",
+              "damage_type": "magic",
+              "target": {
+                "kind": "enemy_unit"
+              },
+              "duration_seconds": 3,
+              "formula": {
+                "op": "unknown",
+                "reason": "capped against monsters (MonsterDamageCap 40); whether per tick or per second is not verified"
+              }
+            }
+          ],
+          "cooldown_seconds": null,
+          "stacks": null,
+          "duration_seconds": 3,
+          "limits": [],
+          "sources": [
+            {
+              "kind": "client_data",
+              "reference": "Cliente 16.22.8348910+branch.releases-16-22.content.release: lol-knowledge/derived/item-effects.json → items.6653.data_values (research/reports/item-effects-16.22.md)",
+              "quote": "BurnPercentHealthDamage = 0.02; BurnDuration = 3; MonsterDamageCap = 40; TickFrequency = 0.5",
+              "retrieved_at": "2026-11-16",
+              "confidence": "derived"
+            }
+          ],
+          "evidence_confidence": "derived",
+          "model_status": "excluded",
+          "note": "Not applied against monsters: the cap's unit is not verified."
+        },
+        {
+          "id": "suffering",
+          "kind": "passive",
+          "name": "Sufrimiento",
+          "quote": "Por cada segundo en combate contra campeones enemigos, infliges un 2% de daño adicional (6% como máximo).",
+          "basis": "description_explicit",
+          "trigger": {
+            "event": "always"
+          },
+          "target": {
+            "kind": "enemy_champion"
+          },
+          "conditions": [
+            {
+              "kind": "target_is_champion"
+            }
+          ],
+          "components": [
+            {
+              "kind": "damage_modifier",
+              "direction": "dealt",
+              "source": "all",
+              "mode": "percent",
+              "formula": {
+                "op": "constant",
+                "value": 6
+              }
+            }
+          ],
+          "cooldown_seconds": null,
+          "stacks": null,
+          "duration_seconds": null,
+          "limits": [],
+          "scenario": "max_stacks",
+          "evidence_confidence": "official",
+          "model_status": "evaluable",
+          "note": "Applied at full stacks (scenario max_stacks): the maximum after enough seconds in combat with champions."
+        }
+      ]
+    },
+    {
+      "id": "3147",
+      "effect_review": "complete",
+      "stats": [],
+      "effects": [
+        {
+          "id": "madness",
+          "kind": "passive",
+          "name": "Locura",
+          "quote": "Inflige un 2% de daño adicional (un 6% como máximo) por cada segundo en combate contra campeones enemigos.",
+          "basis": "description_explicit",
+          "trigger": {
+            "event": "always"
+          },
+          "target": {
+            "kind": "enemy_champion"
+          },
+          "conditions": [
+            {
+              "kind": "target_is_champion"
+            }
+          ],
+          "components": [
+            {
+              "kind": "damage_modifier",
+              "direction": "dealt",
+              "source": "all",
+              "mode": "percent",
+              "formula": {
+                "op": "constant",
+                "value": 6
+              }
+            }
+          ],
+          "cooldown_seconds": null,
+          "stacks": null,
+          "duration_seconds": null,
+          "limits": [],
+          "scenario": "max_stacks",
+          "evidence_confidence": "official",
+          "model_status": "evaluable",
+          "note": "Applied at full stacks (scenario max_stacks): the maximum after enough seconds in combat with champions."
+        }
+      ]
+    },
+    {
+      "id": "2503",
+      "effect_review": "complete",
+      "stats": [],
+      "effects": [
+        {
+          "id": "baleful-blaze",
+          "kind": "passive",
+          "name": "Llamarada maligna",
+          "quote": "Lanzar habilidades de daño inflige daño mágico adicional durante 3 s.",
+          "basis": "external_evidence_explicit",
+          "trigger": {
+            "event": "damaging_ability"
+          },
+          "target": {
+            "kind": "enemy_unit"
+          },
+          "conditions": [
+            {
+              "kind": "target_is_champion"
+            }
+          ],
+          "components": [
+            {
+              "kind": "burn",
+              "damage_type": "magic",
+              "target": {
+                "kind": "enemy_unit"
+              },
+              "duration_seconds": 3,
+              "formula": {
+                "op": "add",
+                "operands": [
+                  {
+                    "op": "constant",
+                    "value": 20
+                  },
+                  {
+                    "op": "percent_of",
+                    "percent": 2,
+                    "stat": "ability_power",
+                    "scope": "total"
+                  }
+                ]
+              }
+            }
+          ],
+          "cooldown_seconds": null,
+          "stacks": null,
+          "duration_seconds": 3,
+          "limits": [],
+          "sources": [
+            {
+              "kind": "client_data",
+              "reference": "Cliente 16.22.8348910+branch.releases-16-22.content.release: lol-knowledge/derived/item-effects.json → items.2503.data_values (research/reports/item-effects-16.22.md)",
+              "quote": "BurnFlatDamagePerSecond = 20; APRatio = 0.02; MonsterDPS = 40; MonsterAP = 0.02; MinionDPS = 20; MinionAP = 0.02; BurnDuration = 3; APPerStack = 0.04",
+              "retrieved_at": "2026-11-16",
+              "confidence": "derived"
+            }
+          ],
+          "evidence_confidence": "derived",
+          "model_status": "evaluable",
+          "note": "20 + 2 % of ability power per second against champions and minions; 40 + 2 % against monsters."
+        },
+        {
+          "id": "baleful-blaze-minions",
+          "kind": "passive",
+          "name": "Llamarada maligna (súbditos)",
+          "quote": "Lanzar habilidades de daño inflige daño mágico adicional durante 3 s.",
+          "basis": "external_evidence_explicit",
+          "trigger": {
+            "event": "damaging_ability"
+          },
+          "target": {
+            "kind": "enemy_unit"
+          },
+          "conditions": [
+            {
+              "kind": "target_is_minion"
+            }
+          ],
+          "components": [
+            {
+              "kind": "burn",
+              "damage_type": "magic",
+              "target": {
+                "kind": "enemy_unit"
+              },
+              "duration_seconds": 3,
+              "formula": {
+                "op": "add",
+                "operands": [
+                  {
+                    "op": "constant",
+                    "value": 20
+                  },
+                  {
+                    "op": "percent_of",
+                    "percent": 2,
+                    "stat": "ability_power",
+                    "scope": "total"
+                  }
+                ]
+              }
+            }
+          ],
+          "cooldown_seconds": null,
+          "stacks": null,
+          "duration_seconds": 3,
+          "limits": [],
+          "sources": [
+            {
+              "kind": "client_data",
+              "reference": "Cliente 16.22.8348910+branch.releases-16-22.content.release: lol-knowledge/derived/item-effects.json → items.2503.data_values (research/reports/item-effects-16.22.md)",
+              "quote": "BurnFlatDamagePerSecond = 20; APRatio = 0.02; MonsterDPS = 40; MonsterAP = 0.02; MinionDPS = 20; MinionAP = 0.02; BurnDuration = 3; APPerStack = 0.04",
+              "retrieved_at": "2026-11-16",
+              "confidence": "derived"
+            }
+          ],
+          "evidence_confidence": "derived",
+          "model_status": "evaluable"
+        },
+        {
+          "id": "baleful-blaze-monsters",
+          "kind": "passive",
+          "name": "Llamarada maligna (monstruos)",
+          "quote": "Lanzar habilidades de daño inflige daño mágico adicional durante 3 s.",
+          "basis": "external_evidence_explicit",
+          "trigger": {
+            "event": "damaging_ability"
+          },
+          "target": {
+            "kind": "enemy_unit"
+          },
+          "conditions": [
+            {
+              "kind": "target_is_monster"
+            }
+          ],
+          "components": [
+            {
+              "kind": "burn",
+              "damage_type": "magic",
+              "target": {
+                "kind": "enemy_unit"
+              },
+              "duration_seconds": 3,
+              "formula": {
+                "op": "add",
+                "operands": [
+                  {
+                    "op": "constant",
+                    "value": 40
+                  },
+                  {
+                    "op": "percent_of",
+                    "percent": 2,
+                    "stat": "ability_power",
+                    "scope": "total"
+                  }
+                ]
+              }
+            }
+          ],
+          "cooldown_seconds": null,
+          "stacks": null,
+          "duration_seconds": 3,
+          "limits": [],
+          "sources": [
+            {
+              "kind": "client_data",
+              "reference": "Cliente 16.22.8348910+branch.releases-16-22.content.release: lol-knowledge/derived/item-effects.json → items.2503.data_values (research/reports/item-effects-16.22.md)",
+              "quote": "BurnFlatDamagePerSecond = 20; APRatio = 0.02; MonsterDPS = 40; MonsterAP = 0.02; MinionDPS = 20; MinionAP = 0.02; BurnDuration = 3; APPerStack = 0.04",
+              "retrieved_at": "2026-11-16",
+              "confidence": "derived"
+            }
+          ],
+          "evidence_confidence": "derived",
+          "model_status": "evaluable"
+        },
+        {
+          "id": "blackfire",
+          "kind": "passive",
+          "name": "Fuego negro",
+          "quote": "Por cada campeón enemigo, monstruo épico o monstruo gigante que se vea afectado por tu Llamarada maligna , obtienes un 4% de poder de habilidad .",
+          "basis": "description_explicit",
+          "trigger": {
+            "event": "damaging_ability"
+          },
+          "target": {
+            "kind": "self"
+          },
+          "conditions": [
+            {
+              "kind": "target_is_champion"
+            }
+          ],
+          "components": [
+            {
+              "kind": "stat_modifier",
+              "stat": "ability_power",
+              "scope": "total",
+              "mode": "percent",
+              "formula": {
+                "op": "constant",
+                "value": 4
+              }
+            }
+          ],
+          "cooldown_seconds": null,
+          "stacks": null,
+          "duration_seconds": null,
+          "limits": [],
+          "evidence_confidence": "official",
+          "model_status": "excluded",
+          "note": "Not applied: +4 % ability power only while the burn lasts; rotations have no time. A rotation with this item against a champion stays Pendiente de verificación."
+        }
+      ]
+    },
+    {
+      "id": "2508",
+      "effect_review": "complete",
+      "stats": [],
+      "effects": [
+        {
+          "id": "ignite",
+          "kind": "passive",
+          "name": "Inflamar",
+          "quote": "Las habilidades de daño infligen 15 de daño mágico adicional durante 3 s.",
+          "basis": "external_evidence_explicit",
+          "trigger": {
+            "event": "damaging_ability"
+          },
+          "target": {
+            "kind": "enemy_unit"
+          },
+          "conditions": [
+            {
+              "kind": "target_is_champion"
+            }
+          ],
+          "components": [
+            {
+              "kind": "burn",
+              "damage_type": "magic",
+              "target": {
+                "kind": "enemy_unit"
+              },
+              "duration_seconds": 3,
+              "formula": {
+                "op": "constant",
+                "value": 5
+              }
+            }
+          ],
+          "cooldown_seconds": null,
+          "stacks": null,
+          "duration_seconds": 3,
+          "limits": [],
+          "sources": [
+            {
+              "kind": "client_data",
+              "reference": "Cliente 16.22.8348910+branch.releases-16-22.content.release: lol-knowledge/derived/item-effects.json → items.2508.data_values (research/reports/item-effects-16.22.md)",
+              "quote": "BurnFlatDamagePerSecond = 5; BurnDuration = 3; MonsterDamageBonus = 15",
+              "retrieved_at": "2026-11-16",
+              "confidence": "derived"
+            }
+          ],
+          "evidence_confidence": "derived",
+          "model_status": "evaluable",
+          "note": "5 per second against champions and minions (15 in total); against monsters, 15 per second (45 in total)."
+        },
+        {
+          "id": "ignite-minions",
+          "kind": "passive",
+          "name": "Inflamar (súbditos)",
+          "quote": "Las habilidades de daño infligen 15 de daño mágico adicional durante 3 s.",
+          "basis": "external_evidence_explicit",
+          "trigger": {
+            "event": "damaging_ability"
+          },
+          "target": {
+            "kind": "enemy_unit"
+          },
+          "conditions": [
+            {
+              "kind": "target_is_minion"
+            }
+          ],
+          "components": [
+            {
+              "kind": "burn",
+              "damage_type": "magic",
+              "target": {
+                "kind": "enemy_unit"
+              },
+              "duration_seconds": 3,
+              "formula": {
+                "op": "constant",
+                "value": 5
+              }
+            }
+          ],
+          "cooldown_seconds": null,
+          "stacks": null,
+          "duration_seconds": 3,
+          "limits": [],
+          "sources": [
+            {
+              "kind": "client_data",
+              "reference": "Cliente 16.22.8348910+branch.releases-16-22.content.release: lol-knowledge/derived/item-effects.json → items.2508.data_values (research/reports/item-effects-16.22.md)",
+              "quote": "BurnFlatDamagePerSecond = 5; BurnDuration = 3",
+              "retrieved_at": "2026-11-16",
+              "confidence": "derived"
+            }
+          ],
+          "evidence_confidence": "derived",
+          "model_status": "evaluable"
+        },
+        {
+          "id": "ignite-monsters",
+          "kind": "passive",
+          "name": "Inflamar (monstruos)",
+          "quote": "Inflige 45 de daño mágico adicional a los monstruos.",
+          "basis": "external_evidence_explicit",
+          "trigger": {
+            "event": "damaging_ability"
+          },
+          "target": {
+            "kind": "enemy_unit"
+          },
+          "conditions": [
+            {
+              "kind": "target_is_monster"
+            }
+          ],
+          "components": [
+            {
+              "kind": "burn",
+              "damage_type": "magic",
+              "target": {
+                "kind": "enemy_unit"
+              },
+              "duration_seconds": 3,
+              "formula": {
+                "op": "constant",
+                "value": 15
+              }
+            }
+          ],
+          "cooldown_seconds": null,
+          "stacks": null,
+          "duration_seconds": 3,
+          "limits": [],
+          "sources": [
+            {
+              "kind": "client_data",
+              "reference": "Cliente 16.22.8348910+branch.releases-16-22.content.release: lol-knowledge/derived/item-effects.json → items.2508.data_values (research/reports/item-effects-16.22.md)",
+              "quote": "MonsterDamageBonus = 15; BurnDuration = 3",
+              "retrieved_at": "2026-11-16",
+              "confidence": "derived"
+            }
+          ],
+          "evidence_confidence": "derived",
+          "model_status": "evaluable"
+        }
+      ]
+    },
+    {
+      "id": "3118",
+      "effect_review": "complete",
+      "stats": [],
+      "effects": [
+        {
+          "id": "disdain",
+          "kind": "passive",
+          "name": "Desdén",
+          "quote": "Obtienes 20 de velocidad de habilidad definitiva.",
+          "basis": "description_explicit",
+          "trigger": {
+            "event": "always"
+          },
+          "target": {
+            "kind": "self"
+          },
+          "components": [],
+          "cooldown_seconds": null,
+          "stacks": null,
+          "duration_seconds": null,
+          "limits": [],
+          "evidence_confidence": "official",
+          "model_status": "excluded",
+          "note": "Ultimate haste is not a stat of the engine."
+        },
+        {
+          "id": "hatefog",
+          "kind": "passive",
+          "name": "Niebla del odio",
+          "quote": "Al infligir daño a un campeón con tu definitiva, quemas el suelo a sus pies durante 3 s, lo que le inflige daño mágico por segundo",
+          "basis": "external_evidence_explicit",
+          "trigger": {
+            "event": "damaging_ability"
+          },
+          "target": {
+            "kind": "enemy_unit"
+          },
+          "conditions": [
+            {
+              "kind": "target_is_champion"
+            },
+            {
+              "kind": "ultimate_ability"
+            }
+          ],
+          "components": [
+            {
+              "kind": "burn",
+              "damage_type": "magic",
+              "target": {
+                "kind": "enemy_unit"
+              },
+              "duration_seconds": 3,
+              "formula": {
+                "op": "add",
+                "operands": [
+                  {
+                    "op": "constant",
+                    "value": 60
+                  },
+                  {
+                    "op": "percent_of",
+                    "percent": 5,
+                    "stat": "ability_power",
+                    "scope": "total"
+                  }
+                ]
+              }
+            }
+          ],
+          "cooldown_seconds": null,
+          "stacks": null,
+          "duration_seconds": 3,
+          "limits": [],
+          "sources": [
+            {
+              "kind": "client_data",
+              "reference": "Cliente 16.22.8348910+branch.releases-16-22.content.release: lol-knowledge/derived/item-effects.json → items.3118.calculations.GroundBurnDamagePerTickTooltipOnly (research/reports/item-effects-16.22.md)",
+              "quote": "GroundBurnDamagePerTickTooltipOnly = BaseDamage + APRatio × AP; BaseDamage = 60; APRatio = 0.05; GroundDuration = 3",
+              "retrieved_at": "2026-11-16",
+              "confidence": "derived"
+            }
+          ],
+          "evidence_confidence": "derived",
+          "model_status": "evaluable",
+          "note": "60 + 5 % of ability power per second for 3 s, once per rotation, when the ultimate damages a champion. The active (Explosión ixtalí) is in the client tooltip but not in the Data Dragon description."
+        },
+        {
+          "id": "hatefog-shred",
+          "kind": "passive",
+          "name": "Niebla del odio: resistencia mágica",
+          "quote": "y reduce su resistencia mágica .",
+          "basis": "description_explicit",
+          "trigger": {
+            "event": "damaging_ability"
+          },
+          "target": {
+            "kind": "enemy_champion"
+          },
+          "conditions": [
+            {
+              "kind": "target_is_champion"
+            },
+            {
+              "kind": "ultimate_ability"
+            }
+          ],
+          "components": [
+            {
+              "kind": "stat_modifier",
+              "stat": "magic_resist",
+              "scope": "total",
+              "mode": "flat",
+              "formula": {
+                "op": "constant",
+                "value": -10
+              }
+            }
+          ],
+          "cooldown_seconds": null,
+          "stacks": null,
+          "duration_seconds": null,
+          "limits": [],
+          "sources": [
+            {
+              "kind": "client_data",
+              "reference": "Cliente 16.22.8348910+branch.releases-16-22.content.release: lol-knowledge/derived/item-effects.json → items.3118.calculations.MagicResistanceShred (research/reports/item-effects-16.22.md)",
+              "quote": "MagicResistanceShred = NumberCalculationPart 10",
+              "retrieved_at": "2026-11-16",
+              "confidence": "derived"
+            }
+          ],
+          "evidence_confidence": "derived",
+          "model_status": "excluded",
+          "note": "Not applied: the target loses 10 magic resist while it stands in the fog; rotations have no time. A rotation with this item against a champion stays Pendiente de verificación."
+        }
+      ]
+    },
+    {
+      "id": "3050",
+      "effect_review": "complete",
+      "stats": [],
+      "effects": [
+        {
+          "id": "frostfire-tempest",
+          "kind": "passive",
+          "name": "Tempestad de fuego escarchado",
+          "quote": "Al lanzar tu habilidad definitiva, se desata una tormenta a tu alrededor durante 5 s. La tormenta inflige 30 de daño mágico por segundo a los campeones enemigos y los ralentiza un 30%.",
+          "basis": "description_explicit",
+          "trigger": {
+            "event": "cast"
+          },
+          "target": {
+            "kind": "enemy_unit"
+          },
+          "conditions": [
+            {
+              "kind": "target_is_champion"
+            },
+            {
+              "kind": "ultimate_ability"
+            }
+          ],
+          "components": [
+            {
+              "kind": "burn",
+              "damage_type": "magic",
+              "target": {
+                "kind": "enemy_unit"
+              },
+              "duration_seconds": 5,
+              "formula": {
+                "op": "constant",
+                "value": 30
+              }
+            }
+          ],
+          "cooldown_seconds": null,
+          "stacks": null,
+          "duration_seconds": 5,
+          "limits": [],
+          "evidence_confidence": "official",
+          "model_status": "evaluable",
+          "note": "30 per second for 5 s when the ultimate is cast, once per rotation; assumes the attacker reaches the champion."
+        },
+        {
+          "id": "frostfire-slow",
+          "kind": "passive",
+          "name": "Tempestad de fuego escarchado: ralentización",
+          "quote": "Al lanzar tu habilidad definitiva, se desata una tormenta a tu alrededor durante 5 s. La tormenta inflige 30 de daño mágico por segundo a los campeones enemigos y los ralentiza un 30%.",
+          "basis": "description_explicit",
+          "trigger": {
+            "event": "cast"
+          },
+          "target": {
+            "kind": "enemy_champion"
+          },
+          "conditions": [
+            {
+              "kind": "ultimate_ability"
+            }
+          ],
+          "components": [
+            {
+              "kind": "crowd_control",
+              "effect": "slow",
+              "target": {
+                "kind": "enemy_champion"
+              },
+              "magnitude": {
+                "op": "constant",
+                "value": 30
+              },
+              "duration_seconds": 5
+            }
+          ],
+          "cooldown_seconds": null,
+          "stacks": null,
+          "duration_seconds": null,
+          "limits": [],
+          "evidence_confidence": "official",
+          "model_status": "excluded",
+          "note": "Crowd control is not part of rotations."
         }
       ]
     }

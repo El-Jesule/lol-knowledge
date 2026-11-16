@@ -627,7 +627,10 @@ def test_an_unknown_scenario_is_reported() -> None:
 
 def test_a_max_stacks_effect_needs_flat_stat_modifiers() -> None:
     found = _messages(_catalog(effect=_scenario_effect(mode="percent")))
-    assert "a max_stacks effect may only have flat stat_modifier components" in found
+    assert (
+        "a max_stacks effect may only have flat stat_modifier or dealt damage_modifier components"
+        in found
+    )
 
 
 def test_confirmed_zero_stats_are_checked() -> None:
@@ -773,3 +776,17 @@ def test_an_execute_needs_a_threshold() -> None:
     effect = _valid_effect()
     effect["components"] = [{"kind": "execute", "target": {"kind": "enemy_champion"}}]
     assert "execute components need a threshold formula" in _messages(_catalog(effect=effect))
+
+
+# Burns (catalog version 14)
+
+
+def test_a_burn_needs_a_type_a_formula_and_a_duration() -> None:
+    effect = _valid_effect()
+    effect["trigger"] = {"event": "damaging_ability"}
+    effect["conditions"] = [{"kind": "ultimate_ability"}]
+    effect["components"] = [{"kind": "burn", "damage_type": "fire", "duration_seconds": 0}]
+    found = _messages(_catalog(effect=effect))
+    assert "damage_type must be one of ['magic', 'physical', 'true']" in found
+    assert "burn components need a per-second formula" in found
+    assert "a burn needs a positive duration" in found
