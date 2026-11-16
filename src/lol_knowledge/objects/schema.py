@@ -32,10 +32,20 @@ DDRAGON_STAT_MAP: dict[str, tuple[str, str, float]] = {
     "FlatSpellBlockMod": ("magic_resist", "flat", 1.0),
     "FlatMovementSpeedMod": ("move_speed", "flat", 1.0),
     "PercentMovementSpeedMod": ("move_speed", "percent", 100.0),
-    "FlatHPRegenMod": ("health_regen", "flat", 1.0),
+    # Per second in Data Dragon; the model uses per 5 s (see DDRAGON_UNIT_CONVERSIONS).
+    "FlatHPRegenMod": ("health_regen", "flat", 5.0),
     "FlatCritChanceMod": ("crit_chance", "percent", 100.0),
     "PercentAttackSpeedMod": ("attack_speed", "percent", 100.0),
     "PercentLifeStealMod": ("life_steal", "percent", 100.0),
+}
+
+# Factors that change the unit, not only the notation. The converted value is
+# derived, so the model records why (lol-knowledge/mechanics/regeneration.md).
+DDRAGON_UNIT_CONVERSIONS: dict[str, str] = {
+    "FlatHPRegenMod": (
+        "Data Dragon gives it per second; item descriptions show 5x per 5 s "
+        "(lol-knowledge/mechanics/regeneration.md)"
+    ),
 }
 
 # Stats that Data Dragon does not encode in ``stats`` and the catalog may
@@ -49,8 +59,9 @@ CANONICAL_STAT_KINDS: dict[str, frozenset[str]] = {
     "armor": frozenset({"flat"}),
     "magic_resist": frozenset({"flat"}),
     "move_speed": frozenset({"flat", "percent"}),
-    "health_regen": frozenset({"flat"}),
-    "mana_regen": frozenset({"percent"}),
+    # Regeneration: flat per 5 s, or a percentage of the base regeneration.
+    "health_regen": frozenset({"flat", "percent"}),
+    "mana_regen": frozenset({"flat", "percent"}),
     "crit_chance": frozenset({"percent"}),
     "crit_damage_bonus": frozenset({"percent"}),
     "attack_speed": frozenset({"percent"}),

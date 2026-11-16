@@ -17,6 +17,7 @@ from .formula import classify_formula
 from .schema import (
     CATALOG_RELATIVE_PATH,
     DDRAGON_STAT_MAP,
+    DDRAGON_UNIT_CONVERSIONS,
     ITEMS_FILENAME,
     MANIFEST_FILENAME,
     MODEL_KIND,
@@ -133,16 +134,17 @@ def derive_stats(item: Mapping[str, Any]) -> tuple[list[dict[str, Any]], list[di
         value = float(raw_value) * factor
         if kind == "percent":
             value = round(value, 6)
-        stats.append(
-            {
-                "id": stat_id,
-                "kind": kind,
-                "value": value,
-                "raw_value": raw_value,
-                "source": {"kind": "ddragon_stat", "key": key},
-                "verification": "official_field",
-            }
-        )
+        entry = {
+            "id": stat_id,
+            "kind": kind,
+            "value": value,
+            "raw_value": raw_value,
+            "source": {"kind": "ddragon_stat", "key": key},
+            "verification": "official_field",
+        }
+        if key in DDRAGON_UNIT_CONVERSIONS:
+            entry["unit_conversion"] = DDRAGON_UNIT_CONVERSIONS[key]
+        stats.append(entry)
     return stats, unmapped
 
 

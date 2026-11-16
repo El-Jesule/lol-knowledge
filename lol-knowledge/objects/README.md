@@ -121,6 +121,8 @@ El modelo canónico no contiene timestamps ni rutas absolutas. Dos ejecuciones s
 Decisiones:
 
 - `kind` es `flat` o `percent`. Los porcentajes se normalizan a **puntos porcentuales**: `0.25` de Data Dragon se publica como `25.0`. El valor bruto queda en `raw_value`.
+- **Cambio de unidad (desde 2026-11-16):** `FlatHPRegenMod` va por segundo en Data Dragon y el modelo lo publica por cada 5 s (×5), como los campeones y las descripciones. La entrada lleva `unit_conversion` con el motivo, y la hoja de estadísticas trata ese valor como `Derivado`. Ver [Regeneración](../mechanics/regeneration.md).
+- `health_regen` y `mana_regen` admiten `flat` (por cada 5 s) y `percent` (porcentaje de la regeneración base, «100% de regeneración de vida básica»).
 - Solo se declaran en el catálogo las estadísticas que Data Dragon **no** estructura: letalidad, aceleración de habilidades, penetraciones (porcentuales y plana mágica) y daño crítico adicional. Las planas y porcentuales que sí están en `stats` se derivan y no se repiten.
 - `magic_penetration_flat` es una estadística canónica nueva de esta fase (Botas de hechicero). No se confunde con `magic_penetration_percent` (Bastón del Vacío).
 - `tenacity` (`kind: percent`) es canónica desde 2026-11-16, por el mismo motivo que `omnivamp`: Data Dragon solo la trae en la descripción. Ver [Tenacidad](../mechanics/tenacity.md).
@@ -337,7 +339,7 @@ assert not validate_request(request)
 
 | Dato | Etiqueta AGENTS | Verificación en JSON |
 |---|---|---|
-| Estadística de `items.json` | `Oficial` | `official_field` |
+| Estadística de `items.json` | `Oficial` (`Derivado` si lleva `unit_conversion`) | `official_field` |
 | Número copiado de la descripción y citado | `Oficial` | `description_quote_verified` |
 | Mapeo del número a una estadística canónica o a un efecto | `Derivado` | `curated` en la documentación; el JSON conserva `source.quote` |
 | Fórmula deducida de prosa explícita | `Derivado` | `basis: description_explicit` |
