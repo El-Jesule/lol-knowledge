@@ -94,7 +94,7 @@ def test_json_report_structure(capsys):
     pen = report["stats"]["armor_penetration_percent"]
     assert pen["total"] == pytest.approx(0.35)
     assert pen["contributions"][0]["source"].startswith("data:item:3036")
-    assert report["stats"]["tenacity"]["status"] == "pending"
+    assert report["stats"]["move_speed"]["status"] == "pending"
     ehp = report["metrics"]["effective_health"]
     assert ehp["physical"]["value"] == pytest.approx(640 * 1.36)
     assert ehp["true"]["value"] == 640

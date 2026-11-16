@@ -1,10 +1,10 @@
 # Modelo mecánico de objetos — `lol-object-model/1`
 
-- **Parche del snapshot:** `16.22.1` (`data/current/manifest.json`). El catálogo se creó sobre 16.20.1; en 16.22.1 las estadísticas, el oro, las descripciones y las recetas de los 15 objetos son idénticos en Data Dragon (comprobado el 2026-11-15). Las notas de parche 26.21 y 26.22 no tocan ninguno de los 15 objetos, y las cifras secundarias se han contrastado con los datos del cliente 16.22 ([informe](../../research/reports/item-data-values-16.22.md)).
+- **Parche del snapshot:** `16.22.1` (`data/current/manifest.json`). El catálogo se creó sobre 16.20.1; en 16.22.1 las estadísticas, el oro, las descripciones y las recetas de los 15 objetos son idénticos en Data Dragon (comprobado el 2026-11-15). Las notas de parche 26.21 y 26.22 no tocan ninguno de los 15 objetos, y las cifras secundarias se han contrastado con los datos del cliente 16.22 ([informe](../../research/reports/item-data-values-16.22.md)). Las Botas de mercurio (3111) se añadieron el 2026-11-16 directamente desde 16.22.1.
 - **Fuente:** Data Dragon (`https://ddragon.leagueoflegends.com`), locale `es_ES`.
 - **Fecha de consulta:** 2026-10-20.
-- **Estado:** muestra curada de 15 objetos y 10 efectos; **no** es cobertura completa.
-- **Versión del catálogo:** `catalog_version: 6` (esquema `1`; la 3 solo cambió el parche; la 4 añade `subject: target` explícito a la vida actual de Filo de la niebla, para que el motor de rotaciones la lea del objetivo sin depender de la convención implícita; la 5 añade los datos del cliente 16.22 como fuente `client_data` y corrige la ralentización a distancia de Zarpazo sombrío; la 6 añade `applies_life_steal` a los componentes de daño y lo declara en Filo de la niebla).
+- **Estado:** muestra curada de 16 objetos y 10 efectos; **no** es cobertura completa.
+- **Versión del catálogo:** `catalog_version: 7` (esquema `1`; la 3 solo cambió el parche; la 4 añade `subject: target` explícito a la vida actual de Filo de la niebla, para que el motor de rotaciones la lea del objetivo sin depender de la convención implícita; la 5 añade los datos del cliente 16.22 como fuente `client_data` y corrige la ralentización a distancia de Zarpazo sombrío; la 6 añade `applies_life_steal` a los componentes de daño y lo declara en Filo de la niebla; la 7 añade las Botas de mercurio por su tenacidad).
 - **Código:** [`src/lol_knowledge/objects/`](../../src/lol_knowledge/objects/).
 - **Catálogo curado:** [`catalog.json`](catalog.json).
 - **Auditoría previa del extractor:** [`research/reports/agent-d-extractor-audit.md`](../../research/reports/agent-d-extractor-audit.md).
@@ -123,6 +123,7 @@ Decisiones:
 - `kind` es `flat` o `percent`. Los porcentajes se normalizan a **puntos porcentuales**: `0.25` de Data Dragon se publica como `25.0`. El valor bruto queda en `raw_value`.
 - Solo se declaran en el catálogo las estadísticas que Data Dragon **no** estructura: letalidad, aceleración de habilidades, penetraciones (porcentuales y plana mágica) y daño crítico adicional. Las planas y porcentuales que sí están en `stats` se derivan y no se repiten.
 - `magic_penetration_flat` es una estadística canónica nueva de esta fase (Botas de hechicero). No se confunde con `magic_penetration_percent` (Bastón del Vacío).
+- `tenacity` (`kind: percent`) es canónica desde 2026-11-16, por el mismo motivo que `omnivamp`: Data Dragon solo la trae en la descripción. Ver [Tenacidad](../mechanics/tenacity.md).
 - `omnivamp` (`kind: percent`) es canónica desde 2026-11-15. Data Dragon no la trae en `stats`, así que solo se declara con la cita de la descripción («omnisucción»). Ver [Robo de vida y omnivampirismo](../mechanics/life-steal-and-omnivamp.md).
 - Un valor desconocido se declara con `"value": null`, `"status": "unknown"` y `"reason"`. Un cero real se declara con `"value": 0` y `"status": "declared"`.
 - `source.kind` distingue `ddragon_stat` (campo estructurado) de `ddragon_description` (prosa). En el segundo caso la cita debe existir en la descripción normalizada y el número declarado debe aparecer en la cita; `validate` lo comprueba.
@@ -230,8 +231,9 @@ El evaluador, compartido con los kits de campeón en [`src/lol_knowledge/formula
 | `data:item:3157` | Reloj de arena de Zhonya | Estasis 2,5 s y enfriamiento de activa 120 s (`evaluable`). |
 | `data:item:3075` | Malla de espinas | Reflejo 20 + 10 % de armadura adicional + heridas graves 40 %/3 s (`evaluable`). |
 | `data:item:6617` | Renovación de piedra lunar | Curación y escudo porcentuales de un efecto disparador (`evaluable`). |
+| `data:item:3111` | Botas de mercurio | Tenacidad (30 %) solo en prosa; resistencia mágica y velocidad de movimiento derivadas. |
 
-Cobertura real: **15 objetos de los 600+ del snapshot**. No se afirma nada sobre el resto. Las fuentes secundarias de las cifras nuevas están en [`research/reports/object-mechanics-2026-10-20.md`](../../research/reports/object-mechanics-2026-10-20.md).
+Cobertura real: **16 objetos de los 600+ del snapshot**. No se afirma nada sobre el resto. Las fuentes secundarias de las cifras nuevas están en [`research/reports/object-mechanics-2026-10-20.md`](../../research/reports/object-mechanics-2026-10-20.md).
 
 ## 6. Efectos realmente modelados
 
@@ -345,7 +347,7 @@ assert not validate_request(request)
 
 ## 10. Límites declarados
 
-- La muestra es pequeña (15 objetos) y elegida por diversidad mecánica, no por frecuencia de compra.
+- La muestra es pequeña (16 objetos) y elegida por diversidad mecánica, no por frecuencia de compra.
 - Data Dragon no publica modos de juego; `availability.modes` es desconocido.
 - Data Dragon no publica el enfriamiento de los activos. Cuando se conoce por una fuente citada, se registra con su confianza (Zhonya y Randuin: wiki y cliente, `corroborated`); si no, se marca desconocido.
 - Los ratios y curvas que solo aparecen como «un porcentaje» o «hasta» se resuelven únicamente si existe una fuente citada y verificable; en caso contrario quedan desconocidos. No se interpolan extremos sin evidencia.

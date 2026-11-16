@@ -533,3 +533,13 @@ def test_only_damage_components_declare_life_steal() -> None:
 
 def _violations(effect: dict) -> list:
     return list(validate_catalog_document(_catalog(effect=effect), _snapshot()).violations)
+
+
+def test_tenacity_can_be_declared_from_the_description() -> None:
+    snapshot = _snapshot(description="30% de tenacidad")
+    stat = {"id": "tenacity", "kind": "percent", "value": 30, "quote": "30% de tenacidad"}
+    assert _messages(_catalog(stat=stat), snapshot) == []
+    stat["kind"] = "flat"
+    assert any(
+        "does not support kind 'flat'" in m for m in _messages(_catalog(stat=stat), snapshot)
+    )

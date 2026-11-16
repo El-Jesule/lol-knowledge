@@ -20,6 +20,7 @@ MITIGATION_RULES = f"{MECHANICS}/damage-mitigation.md"
 CRIT_RULES = f"{MECHANICS}/critical-strike.md"
 ATTACK_SPEED_RULES = f"{MECHANICS}/attack-speed.md"
 VAMP_RULES = f"{MECHANICS}/life-steal-and-omnivamp.md"
+TENACITY_RULES = f"{MECHANICS}/tenacity.md"
 # Attacks per second; "Baseline Attack Speed Cap: 2.5 => 3.0" in the 25.S1.3 patch notes.
 ATTACK_SPEED_CAP = Fraction(3)
 CRIT_CHANCE_CAP = Fraction(1)  # 100 %; the excess stays visible in the scopes
@@ -132,7 +133,8 @@ STATS: dict[str, StatDef] = {
         ),
         StatDef("life_steal", "Robo de vida", Stacking.ADDITIVE, Unit.FRACTION, VAMP_RULES),
         StatDef("omnivamp", "Omnivampirismo", Stacking.ADDITIVE, Unit.FRACTION, VAMP_RULES),
-        _pending("tenacity", "Tenacidad", "apilamiento " + NO_RULE, Unit.FRACTION),
+        # Group A sources (every item) multiply; other groups add up (tenacity.md).
+        StatDef("tenacity", "Tenacidad", Stacking.MULTIPLICATIVE, Unit.FRACTION, TENACITY_RULES),
     )
 }
 

@@ -4,7 +4,7 @@ from __future__ import annotations
 
 import math
 from collections.abc import Mapping, Sequence
-from dataclasses import dataclass, field
+from dataclasses import dataclass, field, replace
 from fractions import Fraction
 
 from ..damage import format_number, format_percent, to_fraction
@@ -14,7 +14,16 @@ from .derived import DerivedRecords
 from .growth import check_level, growth_multiplier
 from .issues import DataIssue
 from .labels import Label, weakest
-from .registry import ATTACK_SPEED_RULES, CRIT_RULES, STATS, Stacking, StatDef, Unit, stat
+from .registry import (
+    ATTACK_SPEED_RULES,
+    CRIT_RULES,
+    STATS,
+    TENACITY_RULES,
+    Stacking,
+    StatDef,
+    Unit,
+    stat,
+)
 
 # Data Dragon field names: (stat, base field, growth field or None)
 CHAMPION_FIELDS: tuple[tuple[str, str, str | None], ...] = (
@@ -126,6 +135,12 @@ class StatSheet:
             return self.values[stat_id]
         except KeyError as exc:
             raise StatsError(f"unknown stat {stat_id!r}") from exc
+
+
+def _ungrouped_tenacity(extra: Contribution) -> Contribution:
+    """Non-item tenacity: its stacking group is unknown, so it is stacked as group A."""
+    note = f"stacking group not declared; multiplied with items as group A (see {TENACITY_RULES})"
+    return replace(extra, label=Label.PENDING, note=f"{extra.note}; {note}" if extra.note else note)
 
 
 def _receiver(stat_id: str) -> StatDef:
@@ -385,6 +400,8 @@ def build_stat_sheet(
         definition = _receiver(stat_id)
         if definition.unit is Unit.FRACTION and not 0 <= extra.value <= 1:
             raise StatsError(f"extra {stat_id}: {extra.value} is not a fraction 0..1")
+        if definition.id == "tenacity":
+            extra = _ungrouped_tenacity(extra)
         contributions[definition.id].append(extra)
 
     scaled = _scaled_attack_speed(champion, contributions["attack_speed_bonus"], derived)

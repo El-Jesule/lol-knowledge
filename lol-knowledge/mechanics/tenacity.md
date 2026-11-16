@@ -1,6 +1,6 @@
 # Tenacidad
 
-- **Ámbito:** regla general de la tenacidad de un campeón: qué reduce, cómo se combinan sus fuentes y su tope.
+- **Ámbito:** regla general de la tenacidad de un campeón: qué reduce, cómo se combinan sus fuentes y su tope. La usa la hoja de estadísticas (`python -m lol_knowledge stats`).
 - **Parche de referencia:** Data Dragon 16.22.1 (2026-11-16).
 - **Fecha de consulta:** 2026-11-16
 
@@ -29,6 +29,13 @@ duración del control = duración × (1 − tenacidad)
 - **Tope:** 100 % según T4. Con fuentes del grupo A entre 0 y 100 %, el producto nunca lo supera.
 - **Qué no reduce (T2):** aire (empujes, derribos, atracciones), reducción de velocidad de ataque y supresión. Las guías de T4 añaden somnolencia, visión reducida y estasis.
 - **Duración mínima:** 0,3 s según T4. No afecta a la estadística.
+
+## Implementación (`Calculado`)
+
+- `src/lol_knowledge/stats/registry.py` declara `tenacity` como fracción **multiplicativa**: todas sus fuentes se tratan como grupo A, que es el grupo de todos los objetos según T1.
+- Los aportes que no vienen de objetos (por ejemplo, la pasiva de un kit) se multiplican también, pero quedan `Pendiente de verificación` con la nota `stacking group not declared`, porque su grupo no está documentado. El grupo B y la suma entre grupos no están modelados.
+- El [catálogo de objetos](../objects/catalog.json) admite `tenacity` (`kind: percent`) desde la descripción y declara las Botas de mercurio (3111) con su 30 %.
+- Pruebas: `tests/test_stats_tenacity.py`, `tests/test_objects_model.py` y `tests/test_objects_validator.py`.
 
 ## Fuera de alcance
 
