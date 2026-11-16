@@ -34,7 +34,7 @@ def test_attack_speed_scales_growth_and_items_by_the_client_ratio(capsys):
     assert code == 0, captured.err
     out = captured.out
     # 2.5 % x 9 x (0.7025 + 0.0175 x 9) = 19.35 % growth + 25 % from the item, x ratio 0.625.
-    assert "  attack_speed_bonus: 0.4435 (base 0.1935 + bonus 0.25) [Derivado]" in out
+    assert "  attack_speed_bonus: 44.35% (base 19.35% + bonus 25%) [Derivado]" in out
     assert "  attack_speed: 0.902188 (base 0.625 + bonus 0.277187) [Derivado]" in out
     code, captured = run(
         capsys, "--champion", "Zaahen", "--level", "10", "--item", "3153", "--json"

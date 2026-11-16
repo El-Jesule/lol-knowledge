@@ -7,7 +7,7 @@ from collections.abc import Mapping, Sequence
 from dataclasses import dataclass, field
 from fractions import Fraction
 
-from ..damage import format_number, to_fraction
+from ..damage import format_number, format_percent, to_fraction
 from ..errors import DamageInputError, StatsError
 from .data import ChampionData, ItemData
 from .derived import DerivedRecords
@@ -190,7 +190,7 @@ def _scaled_attack_speed(
             f"which Data Dragon does not publish, and the derived records have no "
             f"{champion.id}.{ATTACK_SPEED_RATIO} (see {ATTACK_SPEED_RULES})"
         )
-    note = f"ratio {format_number(ratio)} x bonus {format_number(total_bonus)}"
+    note = f"ratio {format_number(ratio)} x bonus {format_percent(total_bonus)}"
     label = Label.DERIVED
     if not derived.matches_patch(champion.patch):
         label = Label.PENDING
@@ -239,7 +239,7 @@ def _crit_chance_passive(
             "bonus",
             passive,
             weakest(labels),
-            f"passive doubles critical strike chance ({format_number(total)} x "
+            f"passive doubles critical strike chance ({format_percent(total)} x "
             f"{CRIT_CHANCE_KIT_MULTIPLIER})",
         )
     )
@@ -251,7 +251,7 @@ def _crit_chance_passive(
                 "bonus",
                 passive,
                 weakest(labels),
-                f"excess critical strike chance {format_number(excess)} x 0.5 per 1%",
+                f"excess critical strike chance {format_percent(excess)} x 0.5 per 1%",
             )
         )
 

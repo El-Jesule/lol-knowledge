@@ -5,7 +5,7 @@ from __future__ import annotations
 from fractions import Fraction
 from typing import Any
 
-from .damage import format_number
+from .damage import format_number, format_percent
 from .rotation import RULES, CritBase, Healing, Part, RotationOutcome
 from .scenario import Target
 from .stats import StatSheet
@@ -18,7 +18,7 @@ def _percent_list(entries: tuple[tuple[str, Fraction], ...]) -> str:
 
 
 def _percent(rate: Fraction) -> str:
-    return f"{format_number(rate * 100)}%"
+    return format_percent(rate)
 
 
 def _heal_lines(healing: Healing) -> list[str]:

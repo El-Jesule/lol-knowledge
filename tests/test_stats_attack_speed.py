@@ -90,7 +90,7 @@ def test_wiki_example_with_a_ratio_different_from_the_base():
     assert round(float(speed.total()), 7) == 1.2587485
     scaled = speed.contributions[-1]
     assert scaled.label is Label.DERIVED
-    assert scaled.note == "ratio 0.651 x bonus 0.9735"
+    assert scaled.note == "ratio 0.651 x bonus 97.35%"
     assert "Testchamp.attackspeedratio (16.20.1+test) x attack_speed_bonus" in scaled.source
 
 

@@ -11,7 +11,7 @@ from .mitigation import (
     mitigate,
     to_fraction,
 )
-from .report import format_number, format_text, to_dict
+from .report import format_number, format_percent, format_text, to_dict
 
 __all__ = [
     "NO_MODIFIERS",
@@ -22,6 +22,7 @@ __all__ = [
     "damage_multiplier",
     "effective_resistance",
     "format_number",
+    "format_percent",
     "format_text",
     "mitigate",
     "to_dict",

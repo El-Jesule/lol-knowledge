@@ -65,7 +65,9 @@ def test_total_is_capped_at_one_and_the_excess_stays_in_the_scope():
     assert crit.total() == 1
     assert crit.scoped("bonus") == F("1.1")
     assert crit.capped
-    assert "  crit_chance: 1 (base 0 + bonus 1.1) (capped at 1) [Oficial]" in format_text(sheet)
+    assert "  crit_chance: 100% (base 0% + bonus 110%) (capped at 100%) [Oficial]" in format_text(
+        sheet
+    )
     report = to_dict(sheet)["stats"]["crit_chance"]
     assert report["cap"] == 1.0 and report["capped"] is True and report["bonus"] == 1.1
     stats, _ = sheet_stats(sheet)
@@ -114,7 +116,7 @@ def test_passives_double_crit_chance(champion_id):
     doubled = crit.contributions[-1]
     assert doubled.value == F("0.3")
     assert doubled.source == PASSIVE.format(champion_id)
-    assert doubled.note == "passive doubles critical strike chance (0.3 x 2)"
+    assert doubled.note == "passive doubles critical strike chance (30% x 2)"
     assert sheet["attack_damage"].scoped("bonus") == 0
     assert sheet.notes == ()
 
@@ -128,7 +130,7 @@ def test_excess_crit_chance_becomes_half_an_attack_damage_per_percent(champion_i
     (converted,) = [c for c in attack_damage.contributions if c.scope == "bonus"]
     assert converted.value == 10  # 20 % excess x 0.5
     assert converted.source == PASSIVE.format(champion_id)
-    assert converted.note == "excess critical strike chance 0.2 x 0.5 per 1%"
+    assert converted.note == "excess critical strike chance 20% x 0.5 per 1%"
     assert converted.label is Label.DERIVED
     assert attack_damage.total() == 63 + 10
 
@@ -170,7 +172,7 @@ def test_stats_command_with_infinity_edge(capsys):
     )
     out = capsys.readouterr().out
     assert code == 0
-    assert "  crit_chance: 0.25 (base 0 + bonus 0.25) [Oficial]" in out
+    assert "  crit_chance: 25% (base 0% + bonus 25%) [Oficial]" in out
     assert "  crit_chance: pending" not in out
 
 
@@ -180,4 +182,4 @@ def test_stats_command_doubles_yasuo_crit_chance(capsys):
     )
     out = capsys.readouterr().out
     assert code == 0
-    assert "  crit_chance: 0.5 (base 0 + bonus 0.5) [Derivado]" in out
+    assert "  crit_chance: 50% (base 0% + bonus 50%) [Derivado]" in out

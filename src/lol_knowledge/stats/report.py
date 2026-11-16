@@ -5,9 +5,9 @@ from __future__ import annotations
 from fractions import Fraction
 from typing import Any
 
-from ..damage import DamageType, format_number
+from ..damage import DamageType, format_number, format_percent
 from .metrics import Cooldowns, EffectiveHealth, ability_cooldowns, effective_health
-from .registry import Stacking
+from .registry import Stacking, Unit
 from .sheet import StatSheet, StatValue
 
 RESULT_LABEL = "Calculado"
@@ -103,19 +103,25 @@ def to_dict(sheet: StatSheet) -> dict[str, Any]:
     }
 
 
+def _shown(value: Fraction, unit: Unit) -> str:
+    """Fractions are shown as percentages in text; JSON keeps the fraction."""
+    return format_percent(value) if unit is Unit.FRACTION else format_number(value)
+
+
 def _stat_line(stat_id: str, value: StatValue) -> str:
     if value.status != "resolved":
         reason = value.blocked if value.status == "blocked" else value.definition.pending
         return f"  {stat_id}: {value.status}: {reason}"
-    total = format_number(value.total())
+    unit = value.definition.unit
+    total = _shown(value.total(), unit)
     detail = ""
     if value.definition.stacking is Stacking.ADDITIVE and value.scoped("bonus"):
         detail = (
-            f" (base {format_number(value.scoped('base'))}"
-            f" + bonus {format_number(value.scoped('bonus'))})"
+            f" (base {_shown(value.scoped('base'), unit)}"
+            f" + bonus {_shown(value.scoped('bonus'), unit)})"
         )
     if value.capped:
-        detail += f" (capped at {format_number(value.definition.cap)})"
+        detail += f" (capped at {_shown(value.definition.cap, unit)})"
     line = f"  {stat_id}: {total}{detail} [{value.label.value}]"
     notes = [item.note for item in value.contributions if "client" in item.note]
     if notes:
