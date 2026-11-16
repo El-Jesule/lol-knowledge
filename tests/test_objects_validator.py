@@ -13,6 +13,7 @@ from lol_knowledge.objects import (
     validate_object_catalog,
 )
 from lol_knowledge.objects.schema import CATALOG_KIND
+from lol_knowledge.stats import items_from_model
 from lol_knowledge.validate import validate_project
 
 DESCRIPTION = "10 de letalidad y 30% de daño adicional."
@@ -560,3 +561,12 @@ def test_regeneration_can_be_declared_flat_or_as_a_percent_of_base(
     snapshot = _snapshot(description=quote)
     stat = {"id": stat_id, "kind": kind, "value": value, "quote": quote}
     assert _messages(_catalog(stat=stat), snapshot) == []
+
+
+def test_the_model_and_the_sheet_items_carry_a_partial_review() -> None:
+    catalog = _catalog(_valid_stat())
+    catalog["objects"][0]["effect_review"] = "partial"
+    model = build_model(catalog, _snapshot())
+    assert model["objects"][0]["effect_review"] == "partial"
+    (item,) = items_from_model(model, ["9999"])
+    assert item.effect_review == "partial"

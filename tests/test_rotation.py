@@ -3,6 +3,7 @@
 from __future__ import annotations
 
 import json
+from dataclasses import replace
 from fractions import Fraction as F
 from pathlib import Path
 
@@ -466,3 +467,38 @@ def test_the_reduction_is_derived_even_when_every_input_is_official():
     (part,) = run(attacker, manual(), "attack:crit", crit=official, ranks={}).steps[0].parts
     assert attacker["attack_damage"].label is Label.OFFICIAL
     assert part.label is Label.DERIVED
+
+
+# Items whose effects are not fully reviewed
+
+
+def partial(item_id, review="partial"):
+    return ItemData(item_id, f"test {item_id}", "16.22.1", (), (), review)
+
+
+@pytest.mark.parametrize("review", ["partial", "pending"])
+def test_attacker_items_without_a_complete_effect_review_make_the_result_pending(review):
+    attacker = sheet(extra_items=(partial("9001", review),))
+    outcome = run(attacker, manual(), "attack")
+    assert outcome.label is Label.PENDING
+    assert (
+        f"attacker 9001: effect review {review}; effects missing from the catalog are not applied"
+        in outcome.notes
+    )
+
+
+def test_target_items_without_a_complete_effect_review_make_the_result_pending():
+    outcome = run(sheet(), replace(manual(), items=(partial("9002"),)), "attack")
+    assert outcome.label is Label.PENDING
+    assert any(note.startswith("target 9002: effect review partial") for note in outcome.notes)
+
+
+def test_complete_reviews_do_not_weaken_the_result():
+    outcome = run(sheet(extra_items=(partial("9003", "complete"),)), manual(), "attack")
+    assert outcome.label is not Label.PENDING
+    assert not any("effect review" in note for note in outcome.notes)
+
+
+def test_the_model_carries_the_effect_review_to_the_items():
+    (blade,) = load_items(ROOT, ["3153"])
+    assert blade.effect_review == "complete"

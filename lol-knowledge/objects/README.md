@@ -172,6 +172,7 @@ Decisiones:
 - `evidence_confidence`: `official`, `corroborated`, `secondary` o `unverified`. Es independiente de `model_status`: una fórmula puede ser evaluable y, aun así, descansar en una fuente secundaria. `official` solo se admite cuando no hay `sources` (la descripción de Data Dragon es la fuente).
 - Regla de números: **cada constante, duración, límite, enfriamiento, contador o ventana de acumulaciones debe aparecer en la descripción de Data Dragon o en la cita de alguna fuente declarada**. El validador rechaza un número huérfano.
 - Las fórmulas rechazan claves desconocidas: un `subjet` mal escrito no cae silenciosamente en la convención de campeón.
+- `effect_review` del objeto: `complete` si el catálogo modela todos los efectos de la descripción; `partial` si falta alguno. El modelo lo conserva y `rotation` deja el resultado `Pendiente de verificación`, con una nota, cuando un objeto del atacante o del objetivo no está en `complete`.
 - `verification` del objeto: `official_field` (solo datos estructurados), `description_quote_verified` (prosa oficial) o `secondary_source_verified` (algún efecto usa fuentes externas).
 
 ### 3.5 Componentes y fórmulas
