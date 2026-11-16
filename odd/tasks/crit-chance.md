@@ -12,7 +12,7 @@
 
 1. **Reutilizar el `cap` del registro** (fase 16): el total se limita a 1 y `bonus` conserva el exceso, que aprovechan Senna, Yasuo o Yone.
 2. **La base de Data Dragon entra como aporte `Oficial` 0.** Si algún campeón tuviera un valor distinto de 0, la estadística se bloquea: con todo a 0 no se puede saber si la unidad es fracción o porcentaje.
-3. **Yasuo y Yone** duplican su probabilidad con la pasiva (wiki, 2026): quedan `Pendiente de verificación` con una nota.
+3. **Yasuo y Yone** duplican su probabilidad con la pasiva (wiki, 2026): quedaron `Pendiente de verificación` con una nota. Desde la rama `feat/yasuo-yone-passive` la pasiva está modelada (ver «Pasivas de Yasuo y Yone»).
 4. **Rotaciones sin cambios:** cada paso sigue diciendo si critica; la probabilidad no se usa para valores esperados.
 
 ## Pruebas
@@ -22,6 +22,12 @@
 
 ## Limitaciones
 
-- La pasiva de Yasuo y Yone (duplicar y convertir el exceso en daño de ataque) no está modelada.
 - No hay confirmación del tope en notas de parche recientes; la fuente más directa es un comentario de Riot de hacia 2020.
 - El cliente no se ha consultado: no hay campo de probabilidad base en los registros derivados.
+
+## Pasivas de Yasuo y Yone (rama `feat/yasuo-yone-passive`)
+
+- **Objetivo:** modelar lo que el usuario confirmó el 2026-11-16 y las notas de 26.17 corroboran: duplicación de la probabilidad, 0,5 de daño de ataque por cada 1 % de exceso y −5 % de daño crítico total.
+- **Decisiones:** la hoja añade la duplicación como aporte propio y el exceso como daño de ataque adicional, ambos `Derivado` (regla de la wiki), y nunca más fuertes que sus fuentes. Si la probabilidad está bloqueada, también se bloquea su daño de ataque. La reducción del daño crítico se aplica en `rotation` al multiplicador total, con una nota. Ambas pasivas viven como constantes en el motor, no en un kit, porque solo Zaahen tiene kit.
+- **Pruebas:** 8 nuevas en `tests/test_stats_crit_chance.py`, que sustituyen a las 2 de «pendiente», y 4 en `tests/test_rotation.py`. 16 mutaciones, todas eliminadas; dos sobrevivieron al principio (un aporte de 0 al llegar exactamente al 100 % y la etiqueta de la reducción) y ahora tienen prueba.
+- **Limitación:** la rotación de Yasuo o Yone sigue sin kit; la reducción solo se aplica a ataques básicos.

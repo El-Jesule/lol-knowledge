@@ -13,6 +13,7 @@ from lol_knowledge.errors import StatsError
 from lol_knowledge.kit import sheet_stats
 from lol_knowledge.stats import (
     STATS,
+    Contribution,
     Label,
     Stacking,
     StatBlocked,
@@ -101,22 +102,66 @@ def test_a_missing_data_dragon_field_is_an_error(field_name):
         build_stat_sheet(replace(base, stats=stats), 1)
 
 
+PASSIVE = f"{RULES} ({{}} passive)"
+
+
 @pytest.mark.parametrize("champion_id", ["Yasuo", "Yone"])
-def test_passives_that_double_crit_chance_are_pending(champion_id):
+def test_passives_double_crit_chance(champion_id):
     sheet = build_stat_sheet(champion(champion_id), 1, crit_items(30))
     crit = sheet["crit_chance"]
-    assert crit.total() == F("0.3")
-    assert crit.label is Label.PENDING
-    reason = f"{champion_id}'s passive doubles critical strike chance; not modelled"
-    assert crit.contributions[-1].note == reason
-    assert crit.contributions[-1].value == 0
-    assert reason in sheet.notes
-
-
-def test_other_champions_are_not_flagged():
-    sheet = build_stat_sheet(champion("Zaahen"), 1, crit_items(30))
-    assert sheet["crit_chance"].label is Label.OFFICIAL
+    assert crit.total() == F("0.6")
+    assert crit.label is Label.DERIVED
+    doubled = crit.contributions[-1]
+    assert doubled.value == F("0.3")
+    assert doubled.source == PASSIVE.format(champion_id)
+    assert doubled.note == "passive doubles critical strike chance (0.3 x 2)"
+    assert sheet["attack_damage"].scoped("bonus") == 0
     assert sheet.notes == ()
+
+
+@pytest.mark.parametrize("champion_id", ["Yasuo", "Yone"])
+def test_excess_crit_chance_becomes_half_an_attack_damage_per_percent(champion_id):
+    sheet = build_stat_sheet(champion(champion_id), 1, crit_items(35, 25))
+    crit = sheet["crit_chance"]
+    assert crit.total() == 1 and crit.capped and crit.scoped("bonus") == F("1.2")
+    attack_damage = sheet["attack_damage"]
+    (converted,) = [c for c in attack_damage.contributions if c.scope == "bonus"]
+    assert converted.value == 10  # 20 % excess x 0.5
+    assert converted.source == PASSIVE.format(champion_id)
+    assert converted.note == "excess critical strike chance 0.2 x 0.5 per 1%"
+    assert converted.label is Label.DERIVED
+    assert attack_damage.total() == 63 + 10
+
+
+def test_reaching_exactly_one_hundred_percent_converts_nothing():
+    sheet = build_stat_sheet(champion("Yasuo"), 1, crit_items(50))
+    assert sheet["crit_chance"].total() == 1
+    assert sheet["attack_damage"].scoped("bonus") == 0
+    assert [c.source for c in sheet["attack_damage"].contributions] == [
+        f"data:champion:Yasuo stats.attackdamage ({PATCH})"
+    ]
+
+
+def test_a_pending_source_weakens_the_passive():
+    pending = Contribution(F("0.6"), "bonus", "assumption", Label.PENDING)
+    sheet = build_stat_sheet(champion("Yone"), 1, extras=[("crit_chance", pending)])
+    assert sheet["crit_chance"].contributions[-1].label is Label.PENDING
+    assert sheet["attack_damage"].label is Label.PENDING
+
+
+def test_blocked_crit_chance_blocks_the_converted_attack_damage():
+    sheet = build_stat_sheet(champion("Yasuo", stats={"crit": 5}), 1)
+    assert sheet["crit_chance"].status == "blocked"
+    assert sheet["attack_damage"].blocked == (
+        "Yasuo's passive converts excess crit chance into attack damage, and crit chance is blocked"
+    )
+
+
+def test_other_champions_are_not_doubled():
+    sheet = build_stat_sheet(champion("Zaahen"), 1, crit_items(60))
+    assert sheet["crit_chance"].total() == F("0.6")
+    assert sheet["crit_chance"].label is Label.OFFICIAL
+    assert sheet["attack_damage"].scoped("bonus") == 0
 
 
 def test_stats_command_with_infinity_edge(capsys):
@@ -127,3 +172,12 @@ def test_stats_command_with_infinity_edge(capsys):
     assert code == 0
     assert "  crit_chance: 0.25 (base 0 + bonus 0.25) [Oficial]" in out
     assert "  crit_chance: pending" not in out
+
+
+def test_stats_command_doubles_yasuo_crit_chance(capsys):
+    code = main(
+        ["stats", "--root", str(ROOT), "--champion", "Yasuo", "--level", "1", "--item", "3031"]
+    )
+    out = capsys.readouterr().out
+    assert code == 0
+    assert "  crit_chance: 0.5 (base 0 + bonus 0.5) [Derivado]" in out

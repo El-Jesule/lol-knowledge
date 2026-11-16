@@ -437,3 +437,32 @@ def test_rotation_command_reports_missing_inputs(capsys):
     )
     assert code == 2
     assert "--attacker-range" in capsys.readouterr().err
+
+
+# Critical strike damage reductions of passives (critical-strike.md, C10)
+
+
+@pytest.mark.parametrize("champion_id", ["Yasuo", "Yone"])
+def test_passive_reduces_total_crit_damage_by_five_percent(champion_id):
+    attacker = sheet(champion_id, 18, ["3031"], ranks={})
+    (part,) = run(attacker, manual(), "attack:crit", ranks={}).steps[0].parts
+    multiplier = (2 + F("0.3")) * F("0.95")
+    assert part.raw == attacker["attack_damage"].total() * multiplier
+    assert "x critical multiplier 2.185" in part.source
+    assert f"{champion_id}'s passive reduces total critical strike damage by 5%" in part.notes
+    assert part.label is Label.DERIVED
+
+
+def test_the_reduction_does_not_touch_normal_attacks():
+    attacker = sheet("Yasuo", 18, ["3031"], ranks={})
+    (part,) = run(attacker, manual(), "attack", ranks={}).steps[0].parts
+    assert part.raw == attacker["attack_damage"].total()
+    assert part.notes == ()
+
+
+def test_the_reduction_is_derived_even_when_every_input_is_official():
+    attacker = sheet("Yasuo", 1, ["3031"], ranks={})
+    official = CritBase(F(2), Label.OFFICIAL, "test record")
+    (part,) = run(attacker, manual(), "attack:crit", crit=official, ranks={}).steps[0].parts
+    assert attacker["attack_damage"].label is Label.OFFICIAL
+    assert part.label is Label.DERIVED
