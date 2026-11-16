@@ -17,6 +17,7 @@ from .labels import Label, weakest
 from .registry import (
     ATTACK_SPEED_RULES,
     CRIT_RULES,
+    MOVE_SPEED_RULES,
     STATS,
     TENACITY_RULES,
     Stacking,
@@ -44,6 +45,8 @@ ATTACK_SPEED_RATIO = "attackspeedratio"  # derived from the client; not in Data 
 ATTACK_SPEED_CAP_KITS = frozenset({"Belveth", "Graves", "Jhin", "Sion", "Zeri"})
 # Data Dragon crit chance base and growth; 0 for every champion (critical-strike.md, C8).
 CRIT_FIELDS = ("crit", "critperlevel")
+# Cassiopeia's passive increases the effectiveness of movement speed bonuses (move-speed.md, M5).
+MOVE_SPEED_KITS = frozenset({"Cassiopeia"})
 # Yasuo's and Yone's passives (critical-strike.md, C9): their crit chance from every
 # other source is doubled, and each 1 % above 100 % becomes 0.5 bonus attack damage.
 CRIT_CHANCE_KITS = frozenset({"Yasuo", "Yone"})
@@ -80,7 +83,10 @@ class StatValue:
 
     @property
     def label(self) -> Label:
-        return weakest(item.label for item in self.contributions)
+        labels = [item.label for item in self.contributions]
+        if self.soft_capped:
+            labels.append(Label.DERIVED)  # the soft cap rule comes from secondary sources
+        return weakest(labels)
 
     def _check(self) -> None:
         if self.blocked:
@@ -98,7 +104,23 @@ class StatValue:
     def total(self) -> Fraction:
         total = self._uncapped()
         cap = self.definition.cap
-        return total if cap is None else min(total, cap)
+        if cap is not None:
+            total = min(total, cap)
+        soft_cap = self.definition.soft_cap
+        return total if soft_cap is None else soft_cap(total)
+
+    def raw(self) -> Fraction:
+        """The total before any cap or soft cap."""
+        return self._uncapped()
+
+    @property
+    def soft_capped(self) -> bool:
+        """Whether a soft cap changed the total."""
+        soft_cap = self.definition.soft_cap
+        if soft_cap is None or self.status != "resolved":
+            return False
+        total = self._uncapped()
+        return soft_cap(total) != total
 
     @property
     def capped(self) -> bool:
@@ -143,14 +165,24 @@ def _ungrouped_tenacity(extra: Contribution) -> Contribution:
     return replace(extra, label=Label.PENDING, note=f"{extra.note}; {note}" if extra.note else note)
 
 
-def _percent_of_base(
-    percent: Fraction, current: Sequence[Contribution], label: Label
-) -> tuple[Fraction, str, Label]:
-    """An item's percentage of the base (champion and growth) as an amount."""
-    base_items = [item for item in current if item.scope == "base"]
-    base = sum((item.value for item in base_items), start=Fraction(0))
-    note = f"{format_percent(percent)} of base {format_number(base)}"
-    return percent * base, note, weakest([label, *(item.label for item in base_items)])
+def _percent_amount(
+    definition: StatDef, percent: Contribution, current: Sequence[Contribution]
+) -> Contribution:
+    """An item's percentage as an amount: of the base, or of every flat contribution."""
+    if definition.percent_of == "base":
+        reference = [item for item in current if item.scope == "base"]
+    else:
+        reference = list(current)
+    total = sum((item.value for item in reference), start=Fraction(0))
+    note = f"{format_percent(percent.value)} of {definition.percent_of} {format_number(total)}"
+    if percent.note:
+        note += f"; {percent.note}"
+    return replace(
+        percent,
+        value=percent.value * total,
+        label=weakest([percent.label, *(item.label for item in reference)]),
+        note=note,
+    )
 
 
 def _receiver(stat_id: str) -> StatDef:
@@ -315,6 +347,7 @@ def build_stat_sheet(
             )
 
     contributions: dict[str, list[Contribution]] = {stat_id: [] for stat_id in STATS}
+    percents: dict[str, list[Contribution]] = {}
     blocked: dict[str, str] = {}
     notes: list[str] = []
     mana_resource = MANA_RESOURCE.get(champion.locale)
@@ -385,8 +418,8 @@ def build_stat_sheet(
             definition = _receiver(entry.stat)
             if entry.kind not in {"flat", "percent"}:
                 raise StatsError(f"item {item.id}.{entry.stat}: unknown kind {entry.kind!r}")
-            of_base = definition.percent_of_base and entry.kind == "percent"
-            if definition.resolvable and entry.kind != definition.item_kind and not of_base:
+            deferred = definition.percent_of is not None and entry.kind == "percent"
+            if definition.resolvable and entry.kind != definition.item_kind and not deferred:
                 raise StatsError(
                     f"item {item.id}.{entry.stat}: kind {entry.kind!r} is not supported "
                     f"for {definition.id}"
@@ -397,20 +430,19 @@ def build_stat_sheet(
             note = "percent" if entry.kind == "percent" and definition.unit is Unit.AMOUNT else ""
             if definition.id != entry.stat:
                 note = f"declared as {entry.stat}"
-            label = entry.label
-            if of_base:
-                value, note, label = _percent_of_base(value, contributions[definition.id], label)
+            if deferred:
+                note = ""
             if entry.note:
                 note = f"{note}; {entry.note}" if note else entry.note
-            contributions[definition.id].append(
-                Contribution(
-                    value,
-                    "bonus",
-                    f"data:item:{item.id} {entry.source} ({item.game_version})",
-                    label,
-                    note,
-                )
+            contribution = Contribution(
+                value,
+                "bonus",
+                f"data:item:{item.id} {entry.source} ({item.game_version})",
+                entry.label,
+                note,
             )
+            target = percents if deferred else contributions
+            target.setdefault(definition.id, []).append(contribution)
 
     for stat_id, extra in extras:
         definition = _receiver(stat_id)
@@ -419,6 +451,19 @@ def build_stat_sheet(
         if definition.id == "tenacity":
             extra = _ungrouped_tenacity(extra)
         contributions[definition.id].append(extra)
+
+    # Percentages last, once every flat amount is known (regeneration.md, move-speed.md).
+    for stat_id, pending in percents.items():
+        reference = list(contributions[stat_id])
+        contributions[stat_id] += [
+            _percent_amount(STATS[stat_id], percent, reference) for percent in pending
+        ]
+    if champion.id in MOVE_SPEED_KITS:
+        reason = f"{champion.id}'s passive changes the effectiveness of movement speed bonuses"
+        contributions["move_speed"].append(
+            Contribution(Fraction(0), "bonus", MOVE_SPEED_RULES, Label.PENDING, reason)
+        )
+        notes.append(reason)
 
     scaled = _scaled_attack_speed(champion, contributions["attack_speed_bonus"], derived)
     if isinstance(scaled, str):

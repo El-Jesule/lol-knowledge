@@ -7,6 +7,7 @@ still listed, with its contributions, but its total is not computed.
 
 from __future__ import annotations
 
+from collections.abc import Callable
 from dataclasses import dataclass
 from enum import StrEnum
 from fractions import Fraction
@@ -22,6 +23,7 @@ ATTACK_SPEED_RULES = f"{MECHANICS}/attack-speed.md"
 VAMP_RULES = f"{MECHANICS}/life-steal-and-omnivamp.md"
 TENACITY_RULES = f"{MECHANICS}/tenacity.md"
 REGEN_RULES = f"{MECHANICS}/regeneration.md"
+MOVE_SPEED_RULES = f"{MECHANICS}/move-speed.md"
 # Attacks per second; "Baseline Attack Speed Cap: 2.5 => 3.0" in the 25.S1.3 patch notes.
 ATTACK_SPEED_CAP = Fraction(3)
 CRIT_CHANCE_CAP = Fraction(1)  # 100 %; the excess stays visible in the scopes
@@ -48,8 +50,11 @@ class StatDef:
     cap: Fraction | None = None  # the total never exceeds it; scopes are uncapped
     # Item and extra contributions declared with this id are added to that stat instead.
     routes_to: str | None = None
-    # Items may also declare a percentage of the stat's base (scope "base") total.
-    percent_of_base: bool = False
+    # Items may also declare a percentage: of the base contributions ("base") or of
+    # every non-percentage contribution ("flat"). It becomes an amount at the end.
+    percent_of: str | None = None
+    # Applied to the total after the cap; the scopes stay raw (e.g. movement speed).
+    soft_cap: Callable[[Fraction], Fraction] | None = None
 
     @property
     def resolvable(self) -> bool:
@@ -60,6 +65,17 @@ class StatDef:
         if self.routes_to is not None:
             return STATS[self.routes_to].item_kind
         return "percent" if self.unit is Unit.FRACTION else "flat"
+
+
+def move_speed_soft_cap(raw: Fraction) -> Fraction:
+    """Movement speed soft caps (move-speed.md): 80 % above 415, 50 % above 490 and below 220."""
+    if raw > 490:
+        return raw / 2 + 230
+    if raw > 415:
+        return raw * Fraction(4, 5) + 83
+    if raw < 220:
+        return max(raw, Fraction(0)) / 2 + 110
+    return raw
 
 
 def _amount(stat_id: str, name: str, rules: str | None = None) -> StatDef:
@@ -116,7 +132,15 @@ STATS: dict[str, StatDef] = {
             Unit.FRACTION,
             ATTACK_SPEED_RULES,
         ),
-        _pending("move_speed", "Velocidad de movimiento", "límites suaves " + NO_RULE),
+        StatDef(
+            "move_speed",
+            "Velocidad de movimiento",
+            Stacking.ADDITIVE,
+            Unit.AMOUNT,
+            MOVE_SPEED_RULES,
+            percent_of="flat",
+            soft_cap=move_speed_soft_cap,
+        ),
         # Per 5 seconds; items add flat amounts or a percentage of the base (regeneration.md).
         StatDef(
             "health_regen",
@@ -124,7 +148,7 @@ STATS: dict[str, StatDef] = {
             Stacking.ADDITIVE,
             Unit.AMOUNT,
             REGEN_RULES,
-            percent_of_base=True,
+            percent_of="base",
         ),
         StatDef(
             "mana_regen",
@@ -132,7 +156,7 @@ STATS: dict[str, StatDef] = {
             Stacking.ADDITIVE,
             Unit.AMOUNT,
             REGEN_RULES,
-            percent_of_base=True,
+            percent_of="base",
         ),
         StatDef(
             "crit_chance",
