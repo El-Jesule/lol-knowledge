@@ -65,6 +65,9 @@ class Contribution:
     source: str
     label: Label
     note: str = ""
+    # True for a share of a total (Rabadon's Deathcap); other amplifiers use the
+    # total without it, since amplifiers do not compound.
+    amplifier: bool = False
 
 
 class StatBlocked(StatsError):
@@ -287,7 +290,57 @@ def _amplified(amplifier: _Amplifier, current: Sequence[Contribution]) -> Contri
         amplifier.source,
         weakest([amplifier.label, *(item.label for item in current)]),
         f"{format_number(amplifier.percent)}% of the total",
+        amplifier=True,
     )
+
+
+# Statistics that feed others when the sheet is built; a bonus added afterwards
+# would not reach them.
+_FEEDING_STATS = frozenset({"attack_speed", "attack_speed_bonus", "crit_chance"})
+
+
+def _added(sheet: StatSheet, stat_id: str, contribution: Contribution) -> StatSheet:
+    definition = _receiver(stat_id)
+    if (
+        definition.id in _FEEDING_STATS
+        or definition.stacking is not Stacking.ADDITIVE
+        or definition.unit is not Unit.AMOUNT
+    ):
+        raise StatsError(f"{definition.id}: only additive amounts take a temporary bonus")
+    value = sheet[definition.id]
+    values = dict(sheet.values)
+    values[definition.id] = replace(value, contributions=(*value.contributions, contribution))
+    return replace(sheet, values=values)
+
+
+def with_bonus(
+    sheet: StatSheet, stat_id: str, amount: Fraction, source: str, label: Label, note: str = ""
+) -> StatSheet:
+    """``sheet`` with a temporary flat bonus to an additive amount (rotations)."""
+    return _added(sheet, stat_id, Contribution(amount, "bonus", source, label, note))
+
+
+def with_amplifier(
+    sheet: StatSheet, stat_id: str, percent: Fraction, source: str, label: Label
+) -> StatSheet:
+    """``sheet`` with a temporary ``percent`` % of a stat's total (rotations).
+
+    The share is of the total without other amplifiers, as the sheet does for
+    its own; with another amplifier on the stat that is not verified.
+    """
+    current = sheet[_receiver(stat_id).id].contributions
+    contribution = _amplified(
+        _Amplifier(stat_id, percent, source, label),
+        [item for item in current if not item.amplifier],
+    )
+    if any(item.amplifier for item in current):
+        contribution = replace(
+            contribution,
+            label=Label.PENDING,
+            note=f"{contribution.note}; added to another amplifier of the same total, "
+            "which is not verified",
+        )
+    return _added(sheet, stat_id, contribution)
 
 
 def _receiver(stat_id: str) -> StatDef:

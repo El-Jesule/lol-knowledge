@@ -29,7 +29,7 @@
 | Hoja de furia de Guinsoo (3124) | Cada tercer ataque repite los efectos al impactar | Aplicado |
 | Rompecascos (3181) | Cada quinto ataque contra campeones: 120 % del DA base + 5 % de la vida máxima (×0,7 a distancia) | Aplicado contra campeones; contra estructuras, no |
 | Cañón de fuego rápido (3094) | Ataque con Vigor: 40 mágico | Aplicado |
-| Espada ciclovoltaica (6699) | Ataque con Vigor: 9 % / 7 % de la vida actual del objetivo, físico (tope 200 contra súbditos y monstruos) | Aplicado; la letalidad de 4 s no |
+| Espada ciclovoltaica (6699) | Ataque con Vigor: 9 % / 7 % de la vida actual del objetivo, físico (tope 200 contra súbditos y monstruos) | Aplicado; la letalidad de 4 s, solo con `--timeline` ([`timeline.md`](timeline.md)) |
 | Puñal de Statikk (3087) | Ataque con Vigor: rayo de 60 mágico | No aplicado: no consta si el objetivo atacado lo recibe |
 
 ## Fuera de alcance

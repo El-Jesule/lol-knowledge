@@ -15,7 +15,7 @@
 ## Regla del motor (`Calculado`; decisiones del usuario del 2026-11-16)
 
 1. **Quemadura entera:** el daño por segundo × la duración se suma como una sola parte `burn` en el paso que la inicia, con su tipo de daño, su mitigación y los modificadores de daño (Llamasombría incluida).
-2. **Una por rotación:** reaplicar una quemadura reinicia su duración en el juego; sin tiempo, se cuenta **una sola quemadura completa por efecto y rotación** (decisión del usuario).
+2. **Una por rotación:** reaplicar una quemadura reinicia su duración en el juego; sin tiempo, se cuenta **una sola quemadura completa por efecto y rotación** (decisión del usuario). Con `--timeline`, la quemadura se reparte en el tiempo y cada aplicación reinicia su duración ([`timeline.md`](timeline.md), regla 7).
 3. **Disparadores:** `damaging_ability` (la primera habilidad que hace daño en el paso) y `cast` (la primera habilidad lanzada, haga o no daño). La condición `ultimate_ability` exige que sea la R.
 4. **Tipos de objetivo:** cuando el efecto cambia contra súbditos o monstruos, el catálogo declara un efecto por tipo de objetivo. El tope de Liandry contra monstruos no se aplica porque no está claro si es por tic o por segundo; contra un monstruo, la rotación queda `Pendiente de verificación`.
 5. **Curación:** las quemaduras no aplican robo de vida; el omnivampirismo cura un 33 % contra súbditos y monstruos y un 100 % contra campeones.
@@ -23,6 +23,6 @@
 
 ## Sin aplicar
 
-- Fuego negro de la Antorcha (+4 % de AP mientras dura la quemadura) y la reducción de resistencia mágica de Malignidad: dependen del tiempo; con un campeón como objetivo, la rotación queda `Pendiente de verificación`.
+- Sin línea de tiempo: Fuego negro de la Antorcha (+4 % de AP mientras dura la quemadura, 3 s del cliente) y la reducción de resistencia mágica de Malignidad (−10 durante los 3 s de la niebla, `GroundDuration` del cliente). Con un campeón como objetivo, la rotación queda `Pendiente de verificación`. Con `--timeline` se aplican como efectos con duración ([`timeline.md`](timeline.md), regla 8).
 - Las ralentizaciones y la activa de Malignidad (está en el texto del cliente, no en la descripción de Data Dragon).
 - Las auras que queman alrededor (Égida de fuego solar, Rescoldo de Bami, Fulgor vano): pendientes.

@@ -146,9 +146,9 @@ def test_dusk_and_dawn_repeats_the_on_hit_effects_as_pending():
     assert "attacker 2510 dusk-heal: excluded, not applied" in outcome.notes
 
 
-def test_bloodsong_mark_is_not_applied_and_weakens_the_rotation():
+def test_bloodsong_mark_needs_the_timeline_and_weakens_the_rotation():
     outcome = run("Q.first_hit attack", "3877")
-    assert "attacker 3877 bloodsong-mark: excluded, not applied" in outcome.notes
+    assert "attacker 3877 bloodsong-mark: lasts 4 s; applied only with --timeline" in outcome.notes
     assert outcome.label is Label.PENDING
 
 

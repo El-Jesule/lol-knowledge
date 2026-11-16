@@ -24,6 +24,8 @@ from .sheet import (
     StatValue,
     build_stat_sheet,
     sheet_effect_reason,
+    with_amplifier,
+    with_bonus,
 )
 
 __all__ = [
@@ -62,4 +64,6 @@ __all__ = [
     "stat",
     "to_dict",
     "weakest",
+    "with_amplifier",
+    "with_bonus",
 ]

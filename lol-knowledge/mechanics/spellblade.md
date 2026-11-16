@@ -22,7 +22,7 @@
 | Segador de esencia (3508) | 125 % del DA base + 50 × probabilidad de crítico, físico | Devuelve maná: 50 % del daño (no se aplica: no hay maná) |
 | Guantelete de hielo (6662) | 150 % del DA base, físico | Campo de escarcha que ralentiza 2 s (no se aplica) |
 | Amanecer y anochecer (2510) | 75 % del DA base + 10 % del AP, mágico | Cura 10 % del AP + 3 % de la vida adicional (no se aplica); vuelve a aplicar los efectos al impactar (S3, sí se aplica) |
-| Tonada sanguina (3877) | 100 % del DA base, físico | El campeón recibe un 8 % más de daño (5 % a distancia) durante 4 s (no se aplica) |
+| Tonada sanguina (3877) | 100 % del DA base, físico | El campeón recibe un 8 % más de daño (5 % a distancia) durante 4 s (solo con `--timeline`) |
 
 En Segador de esencia, `mStat 8` se toma como probabilidad de crítico, como dice el nombre del valor (`CritChanceMultiplier`); con 25 % de crítico suma 12,5.
 
@@ -34,7 +34,7 @@ En Segador de esencia, `mStat 8` se toma como probabilidad de crítico, como dic
 4. **Un solo objeto:** dos objetos con Hoja encantada en el atacante es un error (S3: «Limited to 1 Spellblade item»).
 5. **El daño del golpe** es una parte más al impactar: no se multiplica por el crítico y aplica robo de vida (S3).
 6. **Amanecer y anochecer:** los efectos al impactar de los objetos se aplican otra vez en ese ataque, con etiqueta `Pendiente de verificación` porque la fuente es secundaria y el texto en español está mal traducido. El propio daño de Hoja encantada no se repite (sin verificar).
-7. **Tonada sanguina:** el 8 % / 5 % no se aplica; la rotación queda `Pendiente de verificación`.
+7. **Tonada sanguina:** sin línea de tiempo, el 8 % / 5 % no se aplica y la rotación contra un campeón queda `Pendiente de verificación`. Con `--timeline` se aplica durante 4 s a partir del paso siguiente al golpe, como efecto con duración ([`timeline.md`](timeline.md)); el paso del golpe queda `Pendiente de verificación`, porque no se sabe si ese golpe ya se beneficia.
 
 ## Fuera de alcance
 
