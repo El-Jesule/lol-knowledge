@@ -17,6 +17,7 @@ class Label(StrEnum):
 EVIDENCE_LABEL = {
     "official": Label.DERIVED,
     "corroborated": Label.DERIVED,
+    "derived": Label.DERIVED,
     "secondary": Label.PENDING,
     "unverified": Label.PENDING,
 }

@@ -114,7 +114,7 @@ _SOURCE_CONFIDENCE = {
     "community_wiki": {"secondary", "corroborated"},
     "community_dragon": {"secondary", "corroborated"},
     "in_game_measurement": {"secondary", "corroborated"},
-    "client_data": {"secondary", "corroborated"},
+    "client_data": {"secondary", "corroborated", "derived"},
 }
 # Client data values store percentages as fractions (0.09 for 9 %).
 _FRACTION_SOURCES = frozenset({"client_data"})
@@ -500,7 +500,7 @@ class _CatalogChecker:
                 f"{pointer}.evidence_confidence",
                 "effects with sources need an explicit evidence_confidence",
             )
-        if confidence in {"secondary", "corroborated", "unverified"} and not sources:
+        if confidence in {"secondary", "corroborated", "derived", "unverified"} and not sources:
             self.fail(
                 f"{pointer}.sources",
                 f"evidence_confidence {confidence!r} needs at least one source",
@@ -509,6 +509,13 @@ class _CatalogChecker:
             self.fail(
                 f"{pointer}.evidence_confidence",
                 "official evidence must come from the Data Dragon description, not sources",
+            )
+        if confidence == "derived" and not any(
+            source.get("kind") == "client_data" for source in sources
+        ):
+            self.fail(
+                f"{pointer}.evidence_confidence",
+                "derived evidence needs a client_data source",
             )
         if confidence == "corroborated" and len(sources) < 2:
             self.fail(

@@ -1,9 +1,9 @@
 {
   "schema_version": 1,
   "kind": "lol-object-model-catalog",
-  "catalog_version": 9,
+  "catalog_version": 10,
   "game_version": "16.22.1",
-  "notes": "Curated overlay for a mechanically diverse sample. Data Dragon derivatives (stats, gold, maps, recipes) are not repeated here; see lol-knowledge/objects/README.md. Numeric mechanics absent from Data Dragon carry declared sources and secondary confidence. Catalog version 3 (2026-11-15): moved to snapshot 16.22.1; stats, gold, descriptions and recipes of the 15 objects are identical to 16.20.1 in Data Dragon; the secondary evidence was not re-checked against the 16.21 and 16.22 patch notes. Catalog version 6 (2026-11-15): damage components may declare applies_life_steal with its own source; Mist's Edge declares it from the LoL Wiki (secondary). Catalog version 7 (2026-11-16): adds 3111 (Mercury's Treads) for its tenacity, declared from the 16.22.1 description. Catalog version 8 (2026-11-16): description stats of every Summoner's Rift item, curated ones included, come from catalog-stats.json (generated); this file keeps effects and reviews. Catalog version 9 (2026-11-16): adds 3032 (Yun Tal Wildarrows). Effects may declare scenario max_stacks (the stat sheet applies them at full stacks) and objects may confirm a generated 0 as a real zero (confirmed_zero_stats).",
+  "notes": "Curated overlay for a mechanically diverse sample. Data Dragon derivatives (stats, gold, maps, recipes) are not repeated here; see lol-knowledge/objects/README.md. Numeric mechanics absent from Data Dragon carry declared sources and secondary confidence. Catalog version 3 (2026-11-15): moved to snapshot 16.22.1; stats, gold, descriptions and recipes of the 15 objects are identical to 16.20.1 in Data Dragon; the secondary evidence was not re-checked against the 16.21 and 16.22 patch notes. Catalog version 6 (2026-11-15): damage components may declare applies_life_steal with its own source; Mist's Edge declares it from the LoL Wiki (secondary). Catalog version 7 (2026-11-16): adds 3111 (Mercury's Treads) for its tenacity, declared from the 16.22.1 description. Catalog version 8 (2026-11-16): description stats of every Summoner's Rift item, curated ones included, come from catalog-stats.json (generated); this file keeps effects and reviews. Catalog version 9 (2026-11-16): adds 3032 (Yun Tal Wildarrows). Effects may declare scenario max_stacks (the stat sheet applies them at full stacks) and objects may confirm a generated 0 as a real zero (confirmed_zero_stats). Catalog version 10 (2026-11-16): adds the on-hit damage of 1043, 3091, 3115, 3124 and 3302, with client values (evidence derived) where Data Dragon omits them; stat effects that are always active (Rabadon) are applied by the stat sheet.",
   "objects": [
     {
       "id": "1036",
@@ -751,6 +751,497 @@
           "evidence_confidence": "official",
           "model_status": "excluded",
           "note": "A timed window whose cooldown attacks and critical strikes shorten (1 s and 2 s); rotations have no timeline, so it is not applied."
+        }
+      ]
+    },
+    {
+      "id": "1043",
+      "effect_review": "complete",
+      "stats": [],
+      "effects": [
+        {
+          "id": "sting",
+          "kind": "passive",
+          "name": "Picadura",
+          "quote": "Los ataques infligen 15 de daño físico adicional al impactar",
+          "basis": "description_explicit",
+          "trigger": {
+            "event": "on_hit"
+          },
+          "target": {
+            "kind": "enemy_unit"
+          },
+          "conditions": [
+            {
+              "kind": "on_hit"
+            }
+          ],
+          "components": [
+            {
+              "kind": "damage",
+              "damage_type": "physical",
+              "target": {
+                "kind": "enemy_unit"
+              },
+              "conditions": [
+                {
+                  "kind": "on_hit"
+                }
+              ],
+              "formula": {
+                "op": "constant",
+                "value": 15
+              }
+            }
+          ],
+          "cooldown_seconds": null,
+          "stacks": null,
+          "duration_seconds": null,
+          "limits": [],
+          "evidence_confidence": "official",
+          "model_status": "evaluable"
+        }
+      ]
+    },
+    {
+      "id": "3091",
+      "effect_review": "complete",
+      "stats": [],
+      "effects": [
+        {
+          "id": "fray",
+          "kind": "passive",
+          "name": "Refriega",
+          "quote": "Los ataques infligen daño mágico adicional al impactar",
+          "basis": "external_evidence_explicit",
+          "trigger": {
+            "event": "on_hit"
+          },
+          "target": {
+            "kind": "enemy_unit"
+          },
+          "conditions": [
+            {
+              "kind": "on_hit"
+            }
+          ],
+          "components": [
+            {
+              "kind": "damage",
+              "damage_type": "magic",
+              "target": {
+                "kind": "enemy_unit"
+              },
+              "conditions": [
+                {
+                  "kind": "on_hit"
+                }
+              ],
+              "formula": {
+                "op": "constant",
+                "value": 45
+              }
+            }
+          ],
+          "cooldown_seconds": null,
+          "stacks": null,
+          "duration_seconds": null,
+          "limits": [],
+          "sources": [
+            {
+              "kind": "client_data",
+              "reference": "Cliente 16.22.8348910+branch.releases-16-22.content.release: lol-knowledge/derived/item-effects.json → items.3091.calculations.OnHitDamage (research/reports/item-effects-16.22.md)",
+              "quote": "OnHitDamage: NumberCalculationPart mNumber = 45; DamageType = 1 (magic)",
+              "retrieved_at": "2026-11-16",
+              "confidence": "derived"
+            }
+          ],
+          "evidence_confidence": "derived",
+          "model_status": "evaluable",
+          "note": "Data Dragon omits the amount; the client calculation is a flat 45, with no level scaling."
+        }
+      ]
+    },
+    {
+      "id": "3115",
+      "effect_review": "complete",
+      "stats": [],
+      "effects": [
+        {
+          "id": "icathian-bite",
+          "kind": "passive",
+          "name": "Mordisco de Icathia",
+          "quote": "Los ataques infligen daño mágico adicional al impactar",
+          "basis": "external_evidence_explicit",
+          "trigger": {
+            "event": "on_hit"
+          },
+          "target": {
+            "kind": "enemy_unit"
+          },
+          "conditions": [
+            {
+              "kind": "on_hit"
+            }
+          ],
+          "components": [
+            {
+              "kind": "damage",
+              "damage_type": "magic",
+              "target": {
+                "kind": "enemy_unit"
+              },
+              "conditions": [
+                {
+                  "kind": "on_hit"
+                }
+              ],
+              "formula": {
+                "op": "add",
+                "operands": [
+                  {
+                    "op": "constant",
+                    "value": 15
+                  },
+                  {
+                    "op": "percent_of",
+                    "percent": 15,
+                    "stat": "ability_power",
+                    "scope": "total"
+                  }
+                ]
+              }
+            }
+          ],
+          "cooldown_seconds": null,
+          "stacks": null,
+          "duration_seconds": null,
+          "limits": [],
+          "sources": [
+            {
+              "kind": "client_data",
+              "reference": "Cliente 16.22.8348910+branch.releases-16-22.content.release: lol-knowledge/derived/item-effects.json → items.3115.calculations.TotalOnHitDamage (research/reports/item-effects-16.22.md)",
+              "quote": "TotalOnHitDamage = NashorsBaseValue + StatByNamedDataValue(NashorsAPValue); NashorsBaseValue = 15; NashorsAPValue = 0.15; DamageType = 1 (magic)",
+              "retrieved_at": "2026-11-16",
+              "confidence": "derived"
+            }
+          ],
+          "evidence_confidence": "derived",
+          "model_status": "evaluable",
+          "note": "The ratio part has no mStat; the client's default stat is ability power, which the value name NashorsAPValue confirms."
+        }
+      ]
+    },
+    {
+      "id": "3124",
+      "effect_review": "complete",
+      "stats": [],
+      "effects": [
+        {
+          "id": "wrath",
+          "kind": "passive",
+          "name": "Ira",
+          "quote": "Los ataques infligen 30 de daño mágico adicional al impactar",
+          "basis": "description_explicit",
+          "trigger": {
+            "event": "on_hit"
+          },
+          "target": {
+            "kind": "enemy_unit"
+          },
+          "conditions": [
+            {
+              "kind": "on_hit"
+            }
+          ],
+          "components": [
+            {
+              "kind": "damage",
+              "damage_type": "magic",
+              "target": {
+                "kind": "enemy_unit"
+              },
+              "conditions": [
+                {
+                  "kind": "on_hit"
+                }
+              ],
+              "formula": {
+                "op": "constant",
+                "value": 30
+              }
+            }
+          ],
+          "cooldown_seconds": null,
+          "stacks": null,
+          "duration_seconds": null,
+          "limits": [],
+          "evidence_confidence": "official",
+          "model_status": "evaluable"
+        },
+        {
+          "id": "seething-strike",
+          "kind": "passive",
+          "name": "Golpe furioso",
+          "quote": "Los ataques otorgan un 8% de velocidad de ataque durante 4 s (se acumula hasta 4 veces).",
+          "basis": "description_explicit",
+          "trigger": {
+            "event": "on_attack"
+          },
+          "target": {
+            "kind": "self"
+          },
+          "components": [
+            {
+              "kind": "stat_modifier",
+              "stat": "attack_speed",
+              "scope": "total",
+              "mode": "flat",
+              "formula": {
+                "op": "mul",
+                "operands": [
+                  {
+                    "op": "constant",
+                    "value": 8
+                  },
+                  {
+                    "op": "constant",
+                    "value": 4
+                  }
+                ]
+              }
+            }
+          ],
+          "cooldown_seconds": null,
+          "stacks": null,
+          "duration_seconds": 4,
+          "limits": [],
+          "scenario": "max_stacks",
+          "evidence_confidence": "official",
+          "model_status": "evaluable",
+          "note": "Applied at full stacks (scenario max_stacks): 4 stacks of 8 % bonus attack speed."
+        },
+        {
+          "id": "phantom-hit",
+          "kind": "passive",
+          "name": "Golpe furioso: impacto fantasma",
+          "quote": "Con el máximo de acumulaciones, cada tercer ataque aplica dos veces los efectos al impactar",
+          "basis": "description_partial",
+          "trigger": {
+            "event": "on_attack"
+          },
+          "target": {
+            "kind": "enemy_unit"
+          },
+          "components": [
+            {
+              "kind": "damage_modifier",
+              "direction": "dealt",
+              "source": "attack",
+              "mode": "percent",
+              "formula": {
+                "op": "unknown",
+                "reason": "every third attack applies on-hit effects twice; rotations do not count attacks"
+              }
+            }
+          ],
+          "cooldown_seconds": null,
+          "stacks": null,
+          "duration_seconds": null,
+          "limits": [],
+          "evidence_confidence": "official",
+          "model_status": "excluded",
+          "note": "Not applied: rotations have no attack counter, so a rotation with this item stays Pendiente de verificación."
+        }
+      ]
+    },
+    {
+      "id": "3302",
+      "effect_review": "complete",
+      "stats": [],
+      "effects": [
+        {
+          "id": "shadow",
+          "kind": "passive",
+          "name": "Sombra",
+          "quote": "Los ataques infligen 0 de daño mágico adicional al impactar",
+          "basis": "external_evidence_explicit",
+          "trigger": {
+            "event": "on_hit"
+          },
+          "target": {
+            "kind": "enemy_unit"
+          },
+          "conditions": [
+            {
+              "kind": "on_hit"
+            }
+          ],
+          "components": [
+            {
+              "kind": "damage",
+              "damage_type": "magic",
+              "target": {
+                "kind": "enemy_unit"
+              },
+              "conditions": [
+                {
+                  "kind": "on_hit"
+                }
+              ],
+              "formula": {
+                "op": "add",
+                "operands": [
+                  {
+                    "op": "constant",
+                    "value": 30
+                  },
+                  {
+                    "op": "percent_of",
+                    "percent": 10,
+                    "stat": "attack_damage",
+                    "scope": "bonus"
+                  },
+                  {
+                    "op": "percent_of",
+                    "percent": 10,
+                    "stat": "ability_power",
+                    "scope": "total"
+                  }
+                ]
+              }
+            }
+          ],
+          "cooldown_seconds": null,
+          "stacks": null,
+          "duration_seconds": null,
+          "limits": [],
+          "sources": [
+            {
+              "kind": "client_data",
+              "reference": "Cliente 16.22.8348910+branch.releases-16-22.content.release: lol-knowledge/derived/item-effects.json → items.3302.calculations.OnHitDamage (research/reports/item-effects-16.22.md)",
+              "quote": "OnHitDamage = 30 + StatByCoefficient(mStat 2, mStatFormula 2, 0.1) + StatByCoefficient(0.1); DamageType absent",
+              "retrieved_at": "2026-11-16",
+              "confidence": "derived"
+            }
+          ],
+          "evidence_confidence": "derived",
+          "model_status": "evaluable",
+          "note": "Data Dragon shows 0 for the amount. In the client, mStat 2 with mStatFormula 2 is bonus attack damage; the part without mStat is ability power, as in Nashor's Tooth. A secondary changelog (riftpatchnotes.com, 26.15) also gives 10 % bonus AD and 10 % AP. The client calculation has no DamageType; the description says magic."
+        },
+        {
+          "id": "juxtaposition-dark",
+          "kind": "passive",
+          "name": "Yuxtaposición: ataques sombríos",
+          "quote": "Los ataques sombríos otorgan un 10% de penetración de armadura y penetración mágica durante 5 s.",
+          "basis": "external_evidence_explicit",
+          "trigger": {
+            "event": "on_attack"
+          },
+          "target": {
+            "kind": "self"
+          },
+          "conditions": [
+            {
+              "kind": "target_is_champion"
+            }
+          ],
+          "components": [
+            {
+              "kind": "stat_modifier",
+              "stat": "armor_penetration_percent",
+              "scope": "total",
+              "mode": "flat",
+              "formula": {
+                "op": "constant",
+                "value": 30
+              }
+            },
+            {
+              "kind": "stat_modifier",
+              "stat": "magic_penetration_percent",
+              "scope": "total",
+              "mode": "flat",
+              "formula": {
+                "op": "constant",
+                "value": 30
+              }
+            }
+          ],
+          "cooldown_seconds": null,
+          "stacks": null,
+          "duration_seconds": 5,
+          "limits": [],
+          "scenario": "max_stacks",
+          "sources": [
+            {
+              "kind": "client_data",
+              "reference": "Cliente 16.22.8348910+branch.releases-16-22.content.release: lol-knowledge/derived/item-effects.json → items.3302.data_values (research/reports/item-effects-16.22.md)",
+              "quote": "PenPerHit = 0.1; PenMax = 0.3; BuffDuration = 5",
+              "retrieved_at": "2026-11-16",
+              "confidence": "derived"
+            }
+          ],
+          "evidence_confidence": "derived",
+          "model_status": "evaluable",
+          "note": "Applied at full stacks (scenario max_stacks): 30 % armor and magic penetration (PenMax, client)."
+        },
+        {
+          "id": "juxtaposition-light",
+          "kind": "passive",
+          "name": "Yuxtaposición: ataques luminosos",
+          "quote": "Los ataques luminosos otorgan armadura y resistencia mágica durante 5 s.",
+          "basis": "description_partial",
+          "trigger": {
+            "event": "on_attack"
+          },
+          "target": {
+            "kind": "self"
+          },
+          "conditions": [
+            {
+              "kind": "target_is_champion"
+            }
+          ],
+          "components": [
+            {
+              "kind": "stat_modifier",
+              "stat": "armor",
+              "scope": "bonus",
+              "mode": "flat",
+              "formula": {
+                "op": "unknown",
+                "reason": "6 per light attack, 7 from level 11 and 8 from level 14, up to 3 attacks (client); item formulas have no level values"
+              }
+            },
+            {
+              "kind": "stat_modifier",
+              "stat": "magic_resist",
+              "scope": "bonus",
+              "mode": "flat",
+              "formula": {
+                "op": "unknown",
+                "reason": "same as armor"
+              }
+            }
+          ],
+          "cooldown_seconds": null,
+          "stacks": null,
+          "duration_seconds": 5,
+          "limits": [],
+          "scenario": "max_stacks",
+          "sources": [
+            {
+              "kind": "client_data",
+              "reference": "Cliente 16.22.8348910+branch.releases-16-22.content.release: lol-knowledge/derived/item-effects.json → items.3302.calculations.ARMRPerHitScaling (research/reports/item-effects-16.22.md)",
+              "quote": "ARMRPerHitScaling: level 1 = 6, +1 at level 11, +1 at level 14; ARMRMaxScaling = 3 × ARMRPerHitScaling; BuffDuration = 5",
+              "retrieved_at": "2026-11-16",
+              "confidence": "derived"
+            }
+          ],
+          "evidence_confidence": "derived",
+          "model_status": "partially_evaluable",
+          "note": "Not applied: the amount depends on level and item formulas have no level values; the stat sheet shows a pending 0 for armor and magic resist."
         }
       ]
     }

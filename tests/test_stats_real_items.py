@@ -115,3 +115,54 @@ def test_a_scenario_effect_is_left_to_the_sheet_and_flurry_weakens_the_rotation(
     )
     assert "attacker 3032 flurry: excluded, not applied" in outcome.notes
     assert outcome.label is Label.PENDING
+
+
+# Damage effects of the catalog (phase 24)
+
+
+def test_rabadon_amplifies_the_total_ability_power():
+    ap = sheet(1, "3089", "3115")["ability_power"]
+    flat = 130 + 80
+    assert ap.total() == flat * F("1.3")
+    amplifier = ap.contributions[-1]
+    assert (amplifier.value, amplifier.note) == (flat * F("0.3"), "30% of the total")
+    assert amplifier.source == "data:item:3089 effect magic-orb (16.22.1)"
+    assert ap.label is Label.DERIVED
+
+
+def test_terminus_penetration_and_guinsoo_attack_speed_at_full_stacks():
+    data = sheet(11, "3302", "3124")
+    assert data["armor_penetration_percent"].total() == F("0.3")
+    assert data["magic_penetration_percent"].total() == F("0.3")
+    assert data["armor"].label is Label.PENDING
+    assert data["armor"].contributions[-1].note == (
+        "scenario: maximum stacks; effect partially_evaluable, not applied"
+    )
+    stacks = data["attack_speed_bonus"].contributions[-1]
+    assert (stacks.value, stacks.note) == (F("0.32"), "scenario: maximum stacks")
+
+
+def test_on_hit_damage_of_the_new_items():
+    outcome = run("1043", "3115", "3302", "3091")
+    attack, *on_hits = outcome.steps[0].parts
+    raw = {part.source.split(" (")[0]: part.raw for part in on_hits}
+    stats = sheet(16, "1043", "3115", "3302", "3091")
+    ap = stats["ability_power"].total()
+    bonus_ad = stats["attack_damage"].scoped("bonus")
+    assert raw == {
+        "1043 sting": 15,
+        "3115 icathian-bite": 15 + ap * F("0.15"),
+        "3302 shadow": 30 + bonus_ad / 10 + ap / 10,
+        "3091 fray": 45,
+    }
+    assert [part.damage_type.value for part in on_hits] == ["physical", "magic", "magic", "magic"]
+    assert outcome.label is not Label.PENDING
+
+
+def test_guinsoo_phantom_hits_make_the_rotation_pending():
+    outcome = run("3124")
+    assert "attacker 3124 phantom-hit: excluded, not applied" in outcome.notes
+    assert "attacker 3124 seething-strike: applied by the stat sheet (scenario max_stacks)" in (
+        outcome.notes
+    )
+    assert outcome.label is Label.PENDING

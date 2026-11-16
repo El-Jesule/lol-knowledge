@@ -113,7 +113,8 @@ EVIDENCE_KINDS = frozenset(
         "client_data",
     }
 )
-EVIDENCE_CONFIDENCE = frozenset({"official", "corroborated", "secondary", "unverified"})
+# ``derived``: read from the client's data (``client_data``) and nowhere else.
+EVIDENCE_CONFIDENCE = frozenset({"official", "corroborated", "derived", "secondary", "unverified"})
 HOLDER_RANGES = frozenset({"melee", "ranged"})
 EFFECT_KINDS = frozenset({"passive", "active"})
 TRIGGER_EVENTS = frozenset(
