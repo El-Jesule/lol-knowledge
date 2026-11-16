@@ -19,7 +19,7 @@
 3. **Disparadores:** `damaging_ability` (la primera habilidad que hace daño en el paso) y `cast` (la primera habilidad lanzada, haga o no daño). La condición `ultimate_ability` exige que sea la R.
 4. **Tipos de objetivo:** cuando el efecto cambia contra súbditos o monstruos, el catálogo declara un efecto por tipo de objetivo. El tope de Liandry contra monstruos no se aplica porque no está claro si es por tic o por segundo; contra un monstruo, la rotación queda `Pendiente de verificación`.
 5. **Curación:** las quemaduras no aplican robo de vida; el omnivampirismo cura un 33 % contra súbditos y monstruos y un 100 % contra campeones.
-6. **Amplificadores por tiempo en combate** (Sufrimiento de Liandry, Locura del Disfraz encantado): se aplican **al máximo** (+6 %) contra campeones, como el resto de acumulaciones (escenario `max_stacks`).
+6. **Amplificadores por tiempo en combate** (Sufrimiento de Liandry, Locura del Disfraz encantado): desde la fase 32 empiezan en 0 y suben un 2 % por segundo completo en combate, hasta un 6 %; sin línea de tiempo se quedan en 0 ([`combat-stacks.md`](combat-stacks.md)).
 
 ## Sin aplicar
 

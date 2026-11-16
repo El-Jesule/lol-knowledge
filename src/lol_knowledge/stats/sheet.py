@@ -321,12 +321,10 @@ def effect_amount(stat_id: str, value: Fraction) -> Fraction:
 def _added(sheet: StatSheet, stat_id: str, contribution: Contribution) -> StatSheet:
     definition = _receiver(stat_id)
     speed = definition.id == "attack_speed_bonus"
-    if (
-        definition.id in _FEEDING_STATS
-        or definition.stacking is not Stacking.ADDITIVE
-        or (definition.unit is not Unit.AMOUNT and not speed)
-    ):
-        raise StatsError(f"{definition.id}: only additive amounts take a temporary bonus")
+    if definition.id in _FEEDING_STATS:
+        raise StatsError(f"{definition.id}: feeds other stats; it takes no temporary bonus")
+    if definition.unit is Unit.FRACTION and not 0 <= contribution.value <= 1:
+        raise StatsError(f"{definition.id}: {contribution.value} is not a fraction 0..1")
     value = sheet[definition.id]
     values = dict(sheet.values)
     values[definition.id] = replace(value, contributions=(*value.contributions, contribution))

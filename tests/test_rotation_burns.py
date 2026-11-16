@@ -87,12 +87,15 @@ def test_ultimate_burns_need_the_ultimate():
     assert outcome.label is Label.PENDING  # the magic resist shred is not applied
 
 
-def test_full_stack_amplifiers_apply_to_champions_only():
+def test_in_combat_amplifiers_stay_at_zero_without_the_timeline():
     outcome = run("attack", "3147")
     (attack,) = outcome.steps[0].parts
-    assert attack.dealt == (("3147 madness", 6),)
-    assert "attacker 3147 madness: applied at full stacks (scenario max_stacks)" in outcome.notes
-    assert run("attack", "3147", kind="minion").steps[0].parts[0].dealt == ()
+    assert attack.dealt == ()
+    note = "attacker 3147 madness: grows each second in combat; without --timeline it stays at 0"
+    assert note in outcome.notes
+    assert outcome.label is Label.PENDING
+    minion = run("attack", "3147", kind="minion")
+    assert minion.label is not Label.PENDING
 
 
 def test_burns_take_damage_modifiers_and_heal_like_damage_over_time():

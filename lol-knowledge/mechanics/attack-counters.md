@@ -19,14 +19,14 @@
 3. **Vigor:** empieza **listo** (como si llegaras corriendo) y salta una vez, en el primer ataque. No se recarga dentro de la rotación: la recarga depende del movimiento, que no se modela.
 4. **Galvanizado (Espada ciclovoltaica):** si una habilidad hace daño a un campeón antes del primer ataque, ella consume el Vigor.
 5. **Varios objetos de Vigor:** se aplican todos, pero no está verificado si se acumulan, así que la rotación queda `Pendiente de verificación`.
-6. **Impactos fantasma de Guinsoo:** cada tercer ataque repite los efectos al impactar de los objetos; se aplican porque la hoja ya supone Guinsoo con las acumulaciones al máximo.
+6. **Impactos fantasma de Guinsoo:** con Golpe furioso al máximo, cada tercer ataque repite los efectos al impactar de los objetos. Desde la fase 32 las acumulaciones empiezan en 0 y solo cuentan los ataques hechos al máximo, así que el primero cae en el 6.º ataque ([`combat-stacks.md`](combat-stacks.md)).
 
 ## Objetos
 
 | Objeto | Efecto | Estado |
 |---|---|---|
 | Verdugo de krakens (6672) | Cada tercer ataque: 150-200 físico según el nivel (×0,8 a distancia) | Aplicado, con el aumento por la vida que le falta al objetivo (hasta ×1,75) desde la fase 27 ([`target-health.md`](target-health.md)) |
-| Hoja de furia de Guinsoo (3124) | Cada tercer ataque repite los efectos al impactar | Aplicado |
+| Hoja de furia de Guinsoo (3124) | Con las acumulaciones al máximo, cada tercer ataque repite los efectos al impactar | Aplicado, con las acumulaciones desde 0 |
 | Rompecascos (3181) | Cada quinto ataque contra campeones: 120 % del DA base + 5 % de la vida máxima (×0,7 a distancia) | Aplicado contra campeones; contra estructuras, no |
 | Cañón de fuego rápido (3094) | Ataque con Vigor: 40 mágico | Aplicado |
 | Espada ciclovoltaica (6699) | Ataque con Vigor: 9 % / 7 % de la vida actual del objetivo, físico (tope 200 contra súbditos y monstruos) | Aplicado; la letalidad de 4 s, solo con `--timeline` ([`timeline.md`](timeline.md)) |

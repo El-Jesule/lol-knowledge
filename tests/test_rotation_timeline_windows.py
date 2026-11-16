@@ -89,7 +89,7 @@ def test_bonus_attack_speed_is_rescaled_by_the_ratio():
         with_bonus(
             replace(data, attack_speed_ratio=None), "attack_speed", F(1, 10), "t", Label.DERIVED
         )  # noqa: E501
-    with pytest.raises(StatsError, match="only additive amounts"):
+    with pytest.raises(StatsError, match="feeds other stats"):
         with_bonus(data, "crit_chance", F(1, 10), "test", Label.DERIVED)
 
 
@@ -188,12 +188,13 @@ def test_hullbreaker_stacks_last_ten_seconds():
 
 
 def test_counters_without_a_window_never_expire():
-    outcome = run("attack attack wait:30 attack", "3124")
+    # Phantom stacks from attacks 4 and 5 survive the wait; Seething Strike starts over.
+    outcome = run(" ".join(["attack"] * 5 + ["wait:30"] + ["attack"] * 4), "3124")
     assert "3124 phantom-hit: no stack window declared; its count does not expire" in outcome.notes
     suffix = " - again by 3124 phantom-hit"
     repeats = [step.index for step in outcome.steps
                if any(part.source.endswith(suffix) for part in step.parts)]  # fmt: skip
-    assert repeats == [4]
+    assert repeats == [10]
 
 
 def test_without_the_timeline_windows_are_ignored():

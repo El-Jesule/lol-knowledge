@@ -1,9 +1,9 @@
 {
   "schema_version": 1,
   "kind": "lol-object-model-catalog",
-  "catalog_version": 16,
+  "catalog_version": 17,
   "game_version": "16.22.1",
-  "notes": "Curated overlay for a mechanically diverse sample. Data Dragon derivatives (stats, gold, maps, recipes) are not repeated here; see lol-knowledge/objects/README.md. Numeric mechanics absent from Data Dragon carry declared sources and secondary confidence. Catalog version 3 (2026-11-15): moved to snapshot 16.22.1; stats, gold, descriptions and recipes of the 15 objects are identical to 16.20.1 in Data Dragon; the secondary evidence was not re-checked against the 16.21 and 16.22 patch notes. Catalog version 6 (2026-11-15): damage components may declare applies_life_steal with its own source; Mist's Edge declares it from the LoL Wiki (secondary). Catalog version 7 (2026-11-16): adds 3111 (Mercury's Treads) for its tenacity, declared from the 16.22.1 description. Catalog version 8 (2026-11-16): description stats of every Summoner's Rift item, curated ones included, come from catalog-stats.json (generated); this file keeps effects and reviews. Catalog version 9 (2026-11-16): adds 3032 (Yun Tal Wildarrows). Effects may declare scenario max_stacks (the stat sheet applies them at full stacks) and objects may confirm a generated 0 as a real zero (confirmed_zero_stats). Catalog version 10 (2026-11-16): adds the on-hit damage of 1043, 3091, 3115, 3124 and 3302, with client values (evidence derived) where Data Dragon omits them; stat effects that are always active (Rabadon) are applied by the stat sheet. Catalog version 11 (2026-11-16): adds Spellblade (trigger spellblade) to Sheen, Trinity Force, Lich Bane, Essence Reaver, Iceborn Gauntlet, Dusk and Dawn and Bloodsong, the repeat_on_hit component and patch notes as a source kind (Terminus is now corroborated by the 26.15 notes). Catalog version 12 (2026-11-16): attack counters (stacks.required on on-hit effects), the energized trigger and trigger_energized component, by_level formulas for client level breakpoints and the target_is_structure condition; adds Kraken Slayer, Rapid Firecannon, Statikk Shiv, Voltaic Cyclosword and Hullbreaker, applies Guinsoo's phantom hits and Terminus's light-hit resistances. Catalog version 13 (2026-11-16): the target's missing health in formulas (scope missing_fraction), target_health_below in rotations, damage_types on damage modifiers and the execute component; Kraken Slayer's missing-health increase, Shadowflame and The Collector. Catalog version 14 (2026-11-16): burns (component burn, triggers damaging_ability and cast, condition ultimate_ability), applied once per rotation for their full duration; max_stacks damage modifiers; adds Liandry's Torment, Blackfire Torch, Fated Ashes, Malignance, Zeke's Convergence and Haunting Guise. Catalog version 15 (2026-11-16): timed effects (duration_seconds with a damage or stat modifier on a spellblade, energized or damaging_ability trigger) are applied by the rotation timeline only; Bloodsong's mark, Voltaic Cyclosword's lethality, Blackfire Torch's ability power and Malignance's magic resist reduction become evaluable, and burns under the timeline deal their damage continuously and restart when applied again. Catalog version 16 (2026-11-16): Spellblade effects declare their 10-second window (LoL Wiki, secondary) as duration_seconds; effects may declare cooldown_reduced_by_attacks (seconds per attack hit and per critical hit); Yun Tal Wildarrows's Flurry becomes evaluable as a timed attack speed effect (trigger on_attack); stack windows (stacks.window_seconds) are applied by the rotation timeline.",
+  "notes": "Curated overlay for a mechanically diverse sample. Data Dragon derivatives (stats, gold, maps, recipes) are not repeated here; see lol-knowledge/objects/README.md. Numeric mechanics absent from Data Dragon carry declared sources and secondary confidence. Catalog version 3 (2026-11-15): moved to snapshot 16.22.1; stats, gold, descriptions and recipes of the 15 objects are identical to 16.20.1 in Data Dragon; the secondary evidence was not re-checked against the 16.21 and 16.22 patch notes. Catalog version 6 (2026-11-15): damage components may declare applies_life_steal with its own source; Mist's Edge declares it from the LoL Wiki (secondary). Catalog version 7 (2026-11-16): adds 3111 (Mercury's Treads) for its tenacity, declared from the 16.22.1 description. Catalog version 8 (2026-11-16): description stats of every Summoner's Rift item, curated ones included, come from catalog-stats.json (generated); this file keeps effects and reviews. Catalog version 9 (2026-11-16): adds 3032 (Yun Tal Wildarrows). Effects may declare scenario max_stacks (the stat sheet applies them at full stacks) and objects may confirm a generated 0 as a real zero (confirmed_zero_stats). Catalog version 10 (2026-11-16): adds the on-hit damage of 1043, 3091, 3115, 3124 and 3302, with client values (evidence derived) where Data Dragon omits them; stat effects that are always active (Rabadon) are applied by the stat sheet. Catalog version 11 (2026-11-16): adds Spellblade (trigger spellblade) to Sheen, Trinity Force, Lich Bane, Essence Reaver, Iceborn Gauntlet, Dusk and Dawn and Bloodsong, the repeat_on_hit component and patch notes as a source kind (Terminus is now corroborated by the 26.15 notes). Catalog version 12 (2026-11-16): attack counters (stacks.required on on-hit effects), the energized trigger and trigger_energized component, by_level formulas for client level breakpoints and the target_is_structure condition; adds Kraken Slayer, Rapid Firecannon, Statikk Shiv, Voltaic Cyclosword and Hullbreaker, applies Guinsoo's phantom hits and Terminus's light-hit resistances. Catalog version 13 (2026-11-16): the target's missing health in formulas (scope missing_fraction), target_health_below in rotations, damage_types on damage modifiers and the execute component; Kraken Slayer's missing-health increase, Shadowflame and The Collector. Catalog version 14 (2026-11-16): burns (component burn, triggers damaging_ability and cast, condition ultimate_ability), applied once per rotation for their full duration; max_stacks damage modifiers; adds Liandry's Torment, Blackfire Torch, Fated Ashes, Malignance, Zeke's Convergence and Haunting Guise. Catalog version 15 (2026-11-16): timed effects (duration_seconds with a damage or stat modifier on a spellblade, energized or damaging_ability trigger) are applied by the rotation timeline only; Bloodsong's mark, Voltaic Cyclosword's lethality, Blackfire Torch's ability power and Malignance's magic resist reduction become evaluable, and burns under the timeline deal their damage continuously and restart when applied again. Catalog version 16 (2026-11-16): Spellblade effects declare their 10-second window (LoL Wiki, secondary) as duration_seconds; effects may declare cooldown_reduced_by_attacks (seconds per attack hit and per critical hit); Yun Tal Wildarrows's Flurry becomes evaluable as a timed attack speed effect (trigger on_attack); stack windows (stacks.window_seconds) are applied by the rotation timeline. Catalog version 17 (2026-11-16): stacks that expire in combat never start at maximum (user decision): Guinsoo's Seething Strike, Terminus's Juxtaposition (alternation, light first) and the per-second increases of Liandry's Torment and Haunting Guise (trigger in_combat with a maximum limit) are computed by rotations from 0; stacks.required 1 means one stack per attack; Guinsoo's phantom hits need full stacks (condition stacks_full). The max_stacks scenario stays for permanent stacks (Yun Tal's critical strike chance).",
   "objects": [
     {
       "id": "1036",
@@ -1011,28 +1011,22 @@
               "scope": "total",
               "mode": "flat",
               "formula": {
-                "op": "mul",
-                "operands": [
-                  {
-                    "op": "constant",
-                    "value": 8
-                  },
-                  {
-                    "op": "constant",
-                    "value": 4
-                  }
-                ]
+                "op": "constant",
+                "value": 8
               }
             }
           ],
           "cooldown_seconds": null,
-          "stacks": null,
+          "stacks": {
+            "required": 1,
+            "window_seconds": 4,
+            "max_stacks": 4
+          },
           "duration_seconds": 4,
           "limits": [],
-          "scenario": "max_stacks",
           "evidence_confidence": "official",
           "model_status": "evaluable",
-          "note": "Applied at full stacks (scenario max_stacks): 4 stacks of 8 % bonus attack speed."
+          "note": "Computed in rotations from 0 (decision of 2026-11-16: stacks that expire in combat never start at maximum): each attack adds 8 % bonus attack speed, up to 4 stacks; with the timeline they expire 4 s after the last attack. The stat sheet does not apply them."
         },
         {
           "id": "phantom-hit",
@@ -1064,7 +1058,13 @@
           "limits": [],
           "evidence_confidence": "official",
           "model_status": "evaluable",
-          "note": "Every third attack, counted from zero, applies the items' on-hit effects again. Applied together with the max_stacks scenario of Seething Strike (Guinsoo assumed at full stacks)."
+          "note": "Every third attack, counted from zero, applies the items' on-hit effects again. Applied together with the max_stacks scenario of Seething Strike (Guinsoo assumed at full stacks). Only attacks made with Seething Strike at full stacks count, the one that completes them included (decision of 2026-11-16; an old Leaguepedia note says that attack benefits).",
+          "conditions": [
+            {
+              "kind": "stacks_full",
+              "value": "seething-strike"
+            }
+          ]
         }
       ]
     },
@@ -1174,7 +1174,7 @@
               "mode": "flat",
               "formula": {
                 "op": "constant",
-                "value": 30
+                "value": 10
               }
             },
             {
@@ -1184,15 +1184,23 @@
               "mode": "flat",
               "formula": {
                 "op": "constant",
-                "value": 30
+                "value": 10
               }
             }
           ],
           "cooldown_seconds": null,
-          "stacks": null,
+          "stacks": {
+            "required": 1,
+            "window_seconds": 5,
+            "max_stacks": 3
+          },
+          "alternation": {
+            "group": "juxtaposition",
+            "position": 2,
+            "of": 2
+          },
           "duration_seconds": 5,
           "limits": [],
-          "scenario": "max_stacks",
           "sources": [
             {
               "kind": "client_data",
@@ -1200,11 +1208,19 @@
               "quote": "PenPerHit = 0.1; PenMax = 0.3; BuffDuration = 5",
               "retrieved_at": "2026-11-16",
               "confidence": "derived"
+            },
+            {
+              "kind": "community_wiki",
+              "reference": "https://lol.fandom.com/wiki/Terminus",
+              "quote": "Juxtaposition Stack Cap: 5 each (10 total) ⇒ 3 each (6 total)",
+              "retrieved_at": "2026-11-16",
+              "confidence": "secondary",
+              "note": "Leaguepedia, historial del objeto (extracto del buscador); el tope de 3 por tipo coincide con PenMax / PenPerHit del cliente."
             }
           ],
           "evidence_confidence": "derived",
           "model_status": "evaluable",
-          "note": "Applied at full stacks (scenario max_stacks): 30 % armor and magic penetration (PenMax, client)."
+          "note": "Computed in rotations from 0 (decision of 2026-11-16): dark hits alternate with light hits against champions, starting with light (user decision, Pendiente de verificación); each dark hit adds 10 % armor and magic penetration for 5 s, up to 3 stacks (PenMax / PenPerHit, client)."
         },
         {
           "id": "juxtaposition-light",
@@ -1230,35 +1246,26 @@
               "scope": "bonus",
               "mode": "flat",
               "formula": {
-                "op": "mul",
-                "operands": [
-                  {
-                    "op": "by_level",
-                    "values": [
-                      6,
-                      6,
-                      6,
-                      6,
-                      6,
-                      6,
-                      6,
-                      6,
-                      6,
-                      6,
-                      7,
-                      7,
-                      7,
-                      8,
-                      8,
-                      8,
-                      8,
-                      8
-                    ]
-                  },
-                  {
-                    "op": "constant",
-                    "value": 3
-                  }
+                "op": "by_level",
+                "values": [
+                  6,
+                  6,
+                  6,
+                  6,
+                  6,
+                  6,
+                  6,
+                  6,
+                  6,
+                  6,
+                  7,
+                  7,
+                  7,
+                  8,
+                  8,
+                  8,
+                  8,
+                  8
                 ]
               }
             },
@@ -1268,44 +1275,43 @@
               "scope": "bonus",
               "mode": "flat",
               "formula": {
-                "op": "mul",
-                "operands": [
-                  {
-                    "op": "by_level",
-                    "values": [
-                      6,
-                      6,
-                      6,
-                      6,
-                      6,
-                      6,
-                      6,
-                      6,
-                      6,
-                      6,
-                      7,
-                      7,
-                      7,
-                      8,
-                      8,
-                      8,
-                      8,
-                      8
-                    ]
-                  },
-                  {
-                    "op": "constant",
-                    "value": 3
-                  }
+                "op": "by_level",
+                "values": [
+                  6,
+                  6,
+                  6,
+                  6,
+                  6,
+                  6,
+                  6,
+                  6,
+                  6,
+                  6,
+                  7,
+                  7,
+                  7,
+                  8,
+                  8,
+                  8,
+                  8,
+                  8
                 ]
               }
             }
           ],
           "cooldown_seconds": null,
-          "stacks": null,
+          "stacks": {
+            "required": 1,
+            "window_seconds": 5,
+            "max_stacks": 3
+          },
+          "alternation": {
+            "group": "juxtaposition",
+            "position": 1,
+            "of": 2
+          },
           "duration_seconds": 5,
           "limits": [],
-          "scenario": "max_stacks",
           "sources": [
             {
               "kind": "client_data",
@@ -1317,7 +1323,7 @@
           ],
           "evidence_confidence": "derived",
           "model_status": "evaluable",
-          "note": "Applied at full stacks (scenario max_stacks): 3 light hits of 6 (levels 1-10), 7 (11-13) or 8 (14-18) armor and magic resist, from the client breakpoints."
+          "note": "Computed in rotations from 0 (decision of 2026-11-16): light hits come first, then alternate with dark hits against champions (user decision, Pendiente de verificación); each light hit adds 6 (levels 1-10), 7 (11-13) or 8 (14-18) armor and magic resist for 5 s, up to 3 stacks (client breakpoints)."
         }
       ]
     },
@@ -3084,7 +3090,7 @@
           "quote": "Por cada segundo en combate contra campeones enemigos, infliges un 2% de daño adicional (6% como máximo).",
           "basis": "description_explicit",
           "trigger": {
-            "event": "always"
+            "event": "in_combat"
           },
           "target": {
             "kind": "enemy_champion"
@@ -3102,18 +3108,32 @@
               "mode": "percent",
               "formula": {
                 "op": "constant",
-                "value": 6
+                "value": 2
               }
             }
           ],
           "cooldown_seconds": null,
           "stacks": null,
           "duration_seconds": null,
-          "limits": [],
-          "scenario": "max_stacks",
-          "evidence_confidence": "official",
+          "limits": [
+            {
+              "kind": "maximum",
+              "value": 6,
+              "unit": "percent"
+            }
+          ],
+          "evidence_confidence": "derived",
           "model_status": "evaluable",
-          "note": "Applied at full stacks (scenario max_stacks): the maximum after enough seconds in combat with champions."
+          "note": "Computed in rotations from 0 (decision of 2026-11-16): +2 % per whole second in combat with champions, up to 6 %, counting from the start of the rotation (the user's reading: combat began when the champion took damage). Only the timeline has seconds; without it the increase stays at 0.",
+          "sources": [
+            {
+              "kind": "client_data",
+              "reference": "Cliente 16.22.8348910+branch.releases-16-22.content.release: lol-knowledge/derived/item-effects.json → items.6653.data_values (research/reports/item-effects-16.22.md)",
+              "quote": "DamageIncreasePerSecond = 0.02; DamageIncreaseMax = 0.06; MaxStackNumber = 3",
+              "retrieved_at": "2026-11-16",
+              "confidence": "derived"
+            }
+          ]
         }
       ]
     },
@@ -3129,7 +3149,7 @@
           "quote": "Inflige un 2% de daño adicional (un 6% como máximo) por cada segundo en combate contra campeones enemigos.",
           "basis": "description_explicit",
           "trigger": {
-            "event": "always"
+            "event": "in_combat"
           },
           "target": {
             "kind": "enemy_champion"
@@ -3147,18 +3167,32 @@
               "mode": "percent",
               "formula": {
                 "op": "constant",
-                "value": 6
+                "value": 2
               }
             }
           ],
           "cooldown_seconds": null,
           "stacks": null,
           "duration_seconds": null,
-          "limits": [],
-          "scenario": "max_stacks",
-          "evidence_confidence": "official",
+          "limits": [
+            {
+              "kind": "maximum",
+              "value": 6,
+              "unit": "percent"
+            }
+          ],
+          "evidence_confidence": "derived",
           "model_status": "evaluable",
-          "note": "Applied at full stacks (scenario max_stacks): the maximum after enough seconds in combat with champions."
+          "note": "Computed in rotations from 0 (decision of 2026-11-16): +2 % per whole second in combat with champions, up to 6 %, counting from the start of the rotation (the user's reading: combat began when the champion took damage). Only the timeline has seconds; without it the increase stays at 0.",
+          "sources": [
+            {
+              "kind": "client_data",
+              "reference": "Cliente 16.22.8348910+branch.releases-16-22.content.release: lol-knowledge/derived/item-effects.json → items.3147.data_values (research/reports/item-effects-16.22.md)",
+              "quote": "DamageIncreasePerSecond = 0.02; DamageIncreaseMax = 0.06",
+              "retrieved_at": "2026-11-16",
+              "confidence": "derived"
+            }
+          ]
         }
       ]
     },

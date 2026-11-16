@@ -790,3 +790,80 @@ def test_a_burn_needs_a_type_a_formula_and_a_duration() -> None:
     assert "damage_type must be one of ['magic', 'physical', 'true']" in found
     assert "burn components need a per-second formula" in found
     assert "a burn needs a positive duration" in found
+
+
+# Cooldown refunds (catalog version 16)
+
+
+def test_cooldown_refunds_are_checked() -> None:
+    effect = _valid_effect()
+    effect["quote"] = "30% de daño adicional"
+    effect["cooldown_reduced_by_attacks"] = {"seconds": 0, "extra": 1}
+    found = _messages(_catalog(effect=effect))
+    assert "must be an object with exactly ['critical_seconds', 'seconds']" in found
+    assert "needs a numeric cooldown_seconds" not in found
+    effect["cooldown_reduced_by_attacks"] = {"seconds": -1, "critical_seconds": "2"}
+    found = _messages(_catalog(effect=effect))
+    assert found.count("must be a positive number of seconds") == 2
+    assert "needs a numeric cooldown_seconds" in found
+    effect["cooldown_reduced_by_attacks"] = {"seconds": 30, "critical_seconds": 30}
+    effect["cooldown_seconds"] = 30
+    assert _messages(_catalog(effect=effect)) == []
+
+
+# Stacks gained in combat (catalog version 17)
+
+
+def _per_attack(**changes) -> dict:
+    effect = _valid_effect()
+    effect.update(
+        quote="30% de daño adicional",
+        trigger={"event": "on_attack"},
+        components=[
+            {
+                "kind": "stat_modifier",
+                "stat": "attack_speed",
+                "scope": "total",
+                "mode": "flat",
+                "formula": {"op": "constant", "value": 30},
+            }
+        ],
+        stacks={"required": 1, "window_seconds": None, "max_stacks": None},
+    )
+    effect.update(changes)
+    return effect
+
+
+def test_stacks_per_attack_need_a_maximum_but_no_cited_one() -> None:
+    found = _messages(_catalog(effect=_per_attack()))
+    assert found == ["stacks gained per attack need a maximum"]
+    stacks = {"required": 1, "window_seconds": None, "max_stacks": 30}
+    assert _messages(_catalog(effect=_per_attack(stacks=stacks))) == []
+
+
+def test_alternation_is_checked() -> None:
+    stacks = {"required": 1, "window_seconds": None, "max_stacks": 30}
+    for alternation in ({"group": "", "position": 1, "of": 2}, {"group": "g", "of": 2}):
+        effect = _per_attack(stacks=stacks, alternation=alternation)
+        assert _messages(_catalog(effect=effect))
+    for position, size in ((3, 2), (1, 1), (0, 2), (True, 2)):
+        alternation = {"group": "g", "position": position, "of": size}
+        found = _messages(_catalog(effect=_per_attack(stacks=stacks, alternation=alternation)))
+        assert "position and of must be integers with 1 <= position <= of, of >= 2" in found
+    effect = _per_attack(stacks=stacks, alternation={"group": "g", "position": 2, "of": 2})
+    assert _messages(_catalog(effect=effect)) == []
+    effect = _valid_effect()
+    effect["alternation"] = {"group": "g", "position": 1, "of": 2}
+    assert "only effects with stacks per attack alternate" in _messages(_catalog(effect=effect))
+
+
+def test_in_combat_effects_need_a_maximum_and_stacks_full_an_effect_id() -> None:
+    effect = _valid_effect()
+    effect["trigger"] = {"event": "in_combat"}
+    assert "an in_combat effect needs a maximum limit" in _messages(_catalog(effect=effect))
+    effect["limits"] = [{"kind": "maximum", "value": 30, "unit": "percent"}]
+    assert _messages(_catalog(effect=effect)) == []
+    effect["conditions"] = [{"kind": "stacks_full", "value": 3}]
+    assert "stacks_full needs the id of a stacking effect" in _messages(_catalog(effect=effect))
+    effect["conditions"] = [{"kind": "stacks_full", "value": "other"}]
+    assert _messages(_catalog(effect=effect)) == []

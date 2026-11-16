@@ -129,6 +129,8 @@ TRIGGER_EVENTS = frozenset(
         "damaging_ability",
         "on_heal_or_shield",
         "cast",
+        # Each whole second in combat with champions (Liandry's Suffering).
+        "in_combat",
         "on_kill",
         "periodic",
         "unknown",
@@ -136,7 +138,8 @@ TRIGGER_EVENTS = frozenset(
 )
 # Declared assumptions under which an engine may apply an effect permanently.
 # ``max_stacks``: the components give the value with every stack gained, and
-# the stat sheet applies them as stats (lol-knowledge/objects/README.md).
+# the stat sheet applies them as stats (lol-knowledge/objects/README.md). Only
+# for permanent stacks: stacks that expire in combat start at 0 (combat-stacks.md).
 SCENARIOS = frozenset({"max_stacks"})
 TARGET_KINDS = frozenset(
     {"self", "enemy_champion", "enemy_unit", "attacker", "ally_champion", "area", "unknown"}
@@ -175,6 +178,8 @@ CONDITION_KINDS = frozenset(
         "on_hit",
         "ability_hit",
         "stacks_at_least",
+        # ``value``: the id of an effect of the same item whose stacks are at maximum.
+        "stacks_full",
         "ultimate_ability",
     }
 )
