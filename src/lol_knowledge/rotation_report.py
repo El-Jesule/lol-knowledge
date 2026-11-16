@@ -96,8 +96,9 @@ def format_text(
             f"{_percent(sheet['omnivamp'].total())} [{sheet['omnivamp'].label.value}]"
         )
     for step in outcome.steps:
+        at = "" if step.time is None else f" at {format_number(step.time)} s"
         lines.append(
-            f"step {step.index} {step.step.text} ({step.name}): "
+            f"step {step.index} {step.step.text} ({step.name}){at}: "
             f"health {format_number(step.health_before)}"
         )
         for part in step.parts:
@@ -114,6 +115,13 @@ def format_text(
             f"total heal: {format_number(outcome.healing)} [{outcome.healing_label.value}]"
         )
     lines.append(f"remaining health: {format_number(outcome.remaining_health)}")
+    if outcome.timeline is not None:
+        lines.append(
+            f"timeline: attack every {format_number(outcome.timeline.attack_interval)} s "
+            f"[{outcome.timeline.label.value}]; duration {format_number(outcome.duration)} s"
+        )
+        if outcome.damage_per_second is not None:
+            lines.append(f"damage per second: {format_number(outcome.damage_per_second)}")
     if outcome.lethal_step is not None:
         lines.append(f"lethal at step {outcome.lethal_step}")
     for note in outcome.notes:
@@ -190,6 +198,7 @@ def to_dict(
                 "index": step.index,
                 "step": step.step.text,
                 "name": step.name,
+                "time": None if step.time is None else float(step.time),
                 "health_before": float(step.health_before),
                 "total": float(step.total),
                 "exact_total": str(step.total),
@@ -206,6 +215,16 @@ def to_dict(
         "total": float(outcome.total),
         "exact_total": str(outcome.total),
         "remaining_health": float(outcome.remaining_health),
+        "timeline": None
+        if outcome.timeline is None
+        else {
+            "attack_interval": float(outcome.timeline.attack_interval),
+            "label": outcome.timeline.label.value,
+            "duration": float(outcome.duration or 0),
+            "damage_per_second": None
+            if outcome.damage_per_second is None
+            else float(outcome.damage_per_second),
+        },
         "lethal_step": outcome.lethal_step,
         "healing": float(outcome.healing),
         "exact_healing": str(outcome.healing),

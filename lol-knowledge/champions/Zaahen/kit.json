@@ -118,14 +118,16 @@
               "source": "Characters/Zaahen/Spells/ZaahenQAbility/ZaahenQ.mSpellCalculations.SecondHitDamage (16.20.8248524+branch.releases-16-20.content.release)",
               "damage_type_source": "spell_zaahenq_tooltip <physicalDamage>"
             }
-          ]
+          ],
+          "recast": true
         }
       ],
       "passive_stats": [],
       "not_modelled": [
         "El daño del propio ataque básico: se suma aparte",
         "Daño contra monstruos (MonsterDamagePercent) y curación"
-      ]
+      ],
+      "recast_window_seconds": 4
     },
     "W": {
       "name": "Hendidura del retorno",

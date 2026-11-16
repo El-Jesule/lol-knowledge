@@ -12,6 +12,7 @@ import json
 import re
 from collections.abc import Mapping, Sequence
 from dataclasses import dataclass
+from fractions import Fraction
 from pathlib import Path
 from typing import Any
 
@@ -41,6 +42,8 @@ class CaseSpec:
     id: str
     name: str
     parts: tuple[DamagePartSpec, ...]
+    # A recast of an ability already cast: it starts no cooldown (timeline.md).
+    recast: bool = False
 
 
 @dataclass(frozen=True)
@@ -60,6 +63,8 @@ class AbilitySpec:
     cases: tuple[CaseSpec, ...]
     passive_stats: tuple[PassiveStatSpec, ...]
     not_modelled: tuple[str, ...]
+    # Seconds after the first cast within which a recast case is allowed.
+    recast_window: Fraction | None = None
 
     def case(self, case_id: str) -> CaseSpec:
         for case in self.cases:
@@ -166,7 +171,10 @@ def _ability(slot: str, record: Any) -> AbilitySpec:
                     _text(part, "damage_type_source", part_context),
                 )
             )
-        cases.append(CaseSpec(case_id, _text(case, "name", case_context), tuple(parts)))
+        recast = case.get("recast", False)
+        if not isinstance(recast, bool):
+            raise KitError(f"{case_context}: recast must be true or false")
+        cases.append(CaseSpec(case_id, _text(case, "name", case_context), tuple(parts), recast))
     passive_stats = []
     for index, entry in enumerate(_list(record, "passive_stats", context)):
         entry_context = f"{context}.passive_stats[{index}]"
@@ -188,6 +196,13 @@ def _ability(slot: str, record: Any) -> AbilitySpec:
     not_modelled = _list(record, "not_modelled", context)
     if not all(isinstance(item, str) and item.strip() for item in not_modelled):
         raise KitError(f"{context}: not_modelled must list non-empty strings")
+    window = record.get("recast_window_seconds")
+    if window is not None and (
+        isinstance(window, bool) or not isinstance(window, (int, float)) or window <= 0
+    ):
+        raise KitError(f"{context}: recast_window_seconds must be a positive number")
+    if window is not None and not any(case.recast for case in cases):
+        raise KitError(f"{context}: recast_window_seconds needs a recast case")
     return AbilitySpec(
         slot,
         _text(record, "name", context),
@@ -195,6 +210,7 @@ def _ability(slot: str, record: Any) -> AbilitySpec:
         tuple(cases),
         tuple(passive_stats),
         tuple(not_modelled),
+        None if window is None else Fraction(str(window)),
     )
 
 
