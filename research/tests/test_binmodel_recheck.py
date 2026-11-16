@@ -134,3 +134,11 @@ def test_ambiguous_rank_alignment_is_diagnosed():
     result = ranked_values([1.0, 2.0, 3.0, 4.0, 5.0], 5, "probe", diagnostics)
     assert result is None
     assert [item.code for item in diagnostics] == ["ambiguous_rank_alignment"]
+
+
+def test_a_missing_mstat_is_the_class_default_ability_power():
+    missing = stat_ref(None, None)
+    assert (missing["mStat"], missing["stat"], missing["formula"]) == (0, "ability_power", "total")
+    assert missing["confidence"] == "corroborated"
+    assert stat_ref(0, 2)["stat"] == "ability_power"
+    assert stat_ref("x", 0)["resolved"] is False

@@ -13,6 +13,8 @@
 | Calcular el daño de sus habilidades | [Kit de Zaahen](champions/Zaahen/kit.json) y `python -m lol_knowledge ability` ([uso](../README.md)) |
 | Comprobar las fuentes | [Fuentes de Zaahen](champions/Zaahen/sources.md) |
 | Leer el dato crudo | [Zaahen.json](../data/current/champions/Zaahen.json) |
+| Entender a Ahri y sus habilidades | [Resumen de Ahri](champions/Ahri/overview.md) y [habilidades](champions/Ahri/abilities.md) |
+| Calcular el daño de Ahri | [Kit de Ahri](champions/Ahri/kit.json); fuentes en [sources.md](champions/Ahri/sources.md) |
 | Comprobar el snapshot | [manifest.json](../data/current/manifest.json) |
 | Entender el modelo mecánico de objetos | [Modelo de objetos](objects/README.md) |
 | Saber cómo se mitiga el daño (armadura, RM, reducción, penetración) | [Mitigación de daño](mechanics/damage-mitigation.md) |

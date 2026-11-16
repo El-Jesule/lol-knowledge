@@ -27,6 +27,7 @@ Nada de `research/` modifica `data/current/`, `src/lol_knowledge/` ni `lol-knowl
 | Ver los registros de estadísticas extraídos del cliente 16.22 | [`reports/champion-records-16.22.md`](reports/champion-records-16.22.md) |
 | Ver los datos de efectos de objetos extraídos del cliente 16.22 | [`reports/item-effects-16.22.md`](reports/item-effects-16.22.md) |
 | Ver la especificación del kit de Zaahen | [`kits/Zaahen.spec.json`](kits/Zaahen.spec.json) |
+| Ver cómo se hizo el kit de Ahri desde el bin del cliente | [`reports/ahri-kit-16.22.md`](reports/ahri-kit-16.22.md) |
 | Entender el modelo mecánico de objetos | [`../lol-knowledge/objects/README.md`](../lol-knowledge/objects/README.md) |
 | Saber qué fuentes se consultaron y qué límites tienen | [`evidence/usage-conditions.md`](evidence/usage-conditions.md) |
 | Ver el estado del campeón en la base de conocimiento | [`../lol-knowledge/champions/Zaahen/overview.md`](../lol-knowledge/champions/Zaahen/overview.md) |
@@ -134,6 +135,10 @@ $env:PYTHONPATH="research"
   --tooltips research\fixtures\zaahen_tooltips_es_es.json `
   --spec research\kits\Zaahen.spec.json --output lol-knowledge\champions\Zaahen\kit.json
 ```
+
+## Fase 33 — kits desde el bin del cliente (Ahri)
+
+`python -m binmodel.bin2json` convierte el bin de un campeón del cliente instalado al formato de los exports de CommunityDragon, con las listas de hashes locales y los marcadores de los tooltips. Así el extractor y `kitgen` funcionan sin acceso a CommunityDragon. Se comprobó regenerando el kit de Zaahen desde su bin 16.22 (sale idéntico) y se usó para el kit de Ahri. Detalle, evidencia de `mStat` 0 = poder de habilidad y comandos en [`reports/ahri-kit-16.22.md`](reports/ahri-kit-16.22.md).
 
 ## Fase 10 — registros de estadísticas de todos los campeones
 
