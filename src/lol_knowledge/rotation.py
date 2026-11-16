@@ -1280,22 +1280,38 @@ class _Rotation:
         step: Step,
         clock: Fraction,
         ready: dict[str, Fraction],
-        open_casts: dict[str, Fraction],
+        open_casts: dict[str, tuple[Fraction, int, Fraction]],
     ) -> None:
-        """Check a cast against the cooldown and recast rules of the timeline."""
+        """Check a cast against the cooldown and recast rules of the timeline.
+
+        ``open_casts`` holds, per slot, when it was cast, the recasts used since
+        and the time of the last of them.
+        """
         assert step.slot is not None
         ability = self.kit.ability(step.slot)
         case = ability.case(step.case) if step.case is not None else ability.cases[0]
         if case.recast:
-            opened = open_casts.pop(step.slot, None)
-            if opened is None:
+            if step.slot not in open_casts:
                 raise RotationError(f"step {step.text}: {step.slot} has not been cast to recast it")
+            opened, used, last = open_casts[step.slot]
             window = ability.recast_window
             if window is not None and clock - opened > window:
                 raise RotationError(
                     f"step {step.text}: the recast window ({format_number(window)} s) closed at "
                     f"{format_number(opened + window)} s"
                 )
+            if used >= ability.max_recasts:
+                raise RotationError(
+                    f"step {step.text}: {step.slot} has no recast left "
+                    f"({ability.max_recasts} per cast)"
+                )
+            interval = ability.recast_interval
+            if interval is not None and clock - last < interval:
+                raise RotationError(
+                    f"step {step.text}: the next {step.slot} is available at "
+                    f"{format_number(last + interval)} s (now {format_number(clock)} s)"
+                )
+            open_casts[step.slot] = (opened, used + 1, clock)
             return
         until = ready.get(step.slot, Fraction(0))
         if clock < until:
@@ -1304,7 +1320,7 @@ class _Rotation:
                 f"(now {format_number(clock)} s)"
             )
         ready[step.slot] = clock + self.cooldowns[step.slot][self.ranks[step.slot] - 1]
-        open_casts[step.slot] = clock
+        open_casts[step.slot] = (clock, 0, clock)
 
     def _execute(
         self, parts: Sequence[Part], health: Fraction, target_stats: Mapping[str, Fraction]
@@ -1501,7 +1517,7 @@ class _Rotation:
         clock, next_attack = Fraction(0), Fraction(0)
         spellblade_ready = Fraction(0)  # its cooldown, with the timeline
         ready: dict[str, Fraction] = {}
-        open_casts: dict[str, Fraction] = {}
+        open_casts: dict[str, tuple[Fraction, int, Fraction]] = {}
         for index, step in enumerate(steps, start=1):
             if step.wait is not None:
                 if self.timeline is None:

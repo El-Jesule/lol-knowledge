@@ -42,13 +42,28 @@ class KitGenError(Exception):
     """The kit cannot be compiled without guessing."""
 
 
-def tooltip_damage_type(tooltip: str, reference: str) -> str:
-    """Damage type of the tag that wraps ``@reference@`` (or ``@reference*…@``)."""
-    found = {
+def tooltip_damage_types(tooltip: str, reference: str) -> set[str]:
+    """Damage types of the tags that wrap ``@reference@`` (or ``@reference*…@``)."""
+    return {
         DAMAGE_TAGS[tag]
         for tag, inner in TAG_PATTERN.findall(tooltip)
         if re.search(rf"@{re.escape(reference)}(?:[*][^@]*)?@", inner)
     }
+
+
+def tooltip_damage_type(tooltip: str, reference: str, declared: str | None = None) -> str:
+    """The damage type of ``@reference@``: the one tag that wraps it, or ``declared``.
+
+    A value shown under two tags (Ahri's Q: magic on the way out, true on the
+    way back) needs a declared type, and the tooltip must show it under that tag.
+    """
+    found = tooltip_damage_types(tooltip, reference)
+    if declared is not None and len(found) > 1:
+        if declared not in found:
+            raise KitGenError(
+                f"declared {declared!r}, tooltip wraps @{reference}@ in {sorted(found)}"
+            )
+        return declared
     if len(found) != 1:
         raise KitGenError(
             f"tooltip wraps @{reference}@ in {sorted(found) or 'no'} damage tags; need exactly one"
@@ -175,8 +190,8 @@ def compile_kit(
                     source = f"{ability.record['path']} · {part['source_note']}"
                 if not tooltip:
                     raise KitGenError(f"{context}: tooltip {tooltip_key!r} not found")
-                damage_type = tooltip_damage_type(tooltip, reference)
                 declared = part.get("damage_type")
+                damage_type = tooltip_damage_type(tooltip, reference, declared)
                 if declared is not None and declared != damage_type:
                     raise KitGenError(
                         f"{context}.{case['id']}: declared {declared!r}, "
@@ -217,8 +232,9 @@ def compile_kit(
             "passive_stats": passive_stats,
             "not_modelled": list(entry.get("not_modelled", [])),
         }
-        if "recast_window_seconds" in entry:
-            abilities[slot]["recast_window_seconds"] = entry["recast_window_seconds"]
+        for key in ("recast_window_seconds", "max_recasts", "recast_interval_seconds"):
+            if key in entry:
+                abilities[slot][key] = _setting(ability, entry[key], f"{context}.{key}")
     return {
         "schema": KIT_SCHEMA,
         "champion": spec["champion"],
@@ -232,6 +248,18 @@ def compile_kit(
         ),
         "abilities": abilities,
     }
+
+
+def _setting(ability: _Ability | None, value: Any, context: str) -> Any:
+    """A literal, or ``{"data_value": name}`` read from the bin (a constant over ranks)."""
+    if not isinstance(value, Mapping):
+        return value
+    if ability is None:
+        raise KitGenError(f"{context}: no bin data for this ability")
+    resolved = ability.data_value(str(value["data_value"]))
+    if resolved.get("op") != "constant":
+        raise KitGenError(f"{context}: {value['data_value']} changes with the rank")
+    return resolved["value"]
 
 
 def _tag(damage_type: str) -> str:

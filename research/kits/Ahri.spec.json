@@ -1,0 +1,69 @@
+{
+  "champion": "Ahri",
+  "game_version": "16.22",
+  "verified_against": {
+    "content_version": "16.22.8348910+branch.releases-16-22.content.release",
+    "bin_sha256": "121997c9c4ef2ff0f671b659d64d2e22cb71208216ddcc3c4f552a17f196d2cb",
+    "evidence": "research/reports/ahri-kit-16.22.md",
+    "result": "Bin del cliente 16.22 leído directamente (python -m binmodel.bin2json) y comparado con fuentes secundarias de las cifras"
+  },
+  "abilities": {
+    "P": {
+      "name": "Robo de esencias",
+      "max_rank": 1,
+      "not_modelled": [
+        "Curación tras 9 súbditos o monstruos (MinionHeal) o tras derribar a un campeón (ChampionHeal): no es daño",
+        "Ampliar la ventana de la R y sumar una reactivación al derribar a un campeón (PDurationExtension)"
+      ]
+    },
+    "Q": {
+      "name": "Orbe del engaño",
+      "tooltip": "spell_ahriorbofdeception_tooltip",
+      "cases": [
+        {"id": "out", "name": "Ida: daño mágico", "parts": [{"calculation": "TotalDamage", "damage_type": "magic"}]},
+        {"id": "back", "name": "Vuelta: daño verdadero", "parts": [{"calculation": "TotalDamage", "damage_type": "true"}]},
+        {"id": "both", "name": "Ida y vuelta sobre el mismo objetivo", "parts": [{"calculation": "TotalDamage", "damage_type": "magic"}, {"calculation": "TotalDamage", "damage_type": "true"}]}
+      ],
+      "not_modelled": [
+        "Que el objetivo reciba la ida y la vuelta depende de la posición: el caso «both» lo supone"
+      ]
+    },
+    "W": {
+      "name": "Fuego zorruno",
+      "tooltip": "spell_ahrifoxfire_tooltip",
+      "cases": [
+        {"id": "one", "name": "Un fuego", "parts": [{"calculation": "SingleFireDamage"}]},
+        {"id": "all", "name": "Los tres fuegos en el mismo objetivo", "parts": [{"calculation": "SingleFireDamage"}, {"calculation": "MultiFireDamage"}, {"calculation": "MultiFireDamage"}]}
+      ],
+      "not_modelled": [
+        "Velocidad de movimiento (MovementSpeed, 40 % que decae en 2 s)",
+        "Daño doble a súbditos por debajo del 20 % de vida (MinionBonusDamageMultiplier, MinionBonusDamageThreshold)"
+      ]
+    },
+    "E": {
+      "name": "Hechizar",
+      "tooltip": "spell_ahriseduce_tooltip",
+      "cases": [
+        {"id": "hit", "name": "Beso", "parts": [{"calculation": "TotalDamage"}]}
+      ],
+      "not_modelled": [
+        "Hechizo (CharmDuration) y ralentización (SlowPercent)"
+      ]
+    },
+    "R": {
+      "name": "Impulso espiritual",
+      "tooltip": "spell_ahritumble_tooltip",
+      "cases": [
+        {"id": "dash", "name": "Impulso: un rayo al objetivo", "parts": [{"calculation": "RCalculatedDamage"}]},
+        {"id": "recast", "name": "Reactivación: un rayo al objetivo", "recast": true, "parts": [{"calculation": "RCalculatedDamage"}]}
+      ],
+      "recast_window_seconds": {"data_value": "RRecastWindow"},
+      "max_recasts": 2,
+      "recast_interval_seconds": {"data_value": "RDashCooldown"},
+      "not_modelled": [
+        "Cada impulso dispara 3 rayos a enemigos distintos (RMaxTargetsPerCast): un único objetivo recibe uno por impulso",
+        "Reactivaciones extra al derribar campeones (Robo de esencias, RMaxCasts)"
+      ]
+    }
+  }
+}

@@ -65,6 +65,9 @@ class AbilitySpec:
     not_modelled: tuple[str, ...]
     # Seconds after the first cast within which a recast case is allowed.
     recast_window: Fraction | None = None
+    # Recasts allowed per cast (Ahri's R: 2), and the least time between two casts.
+    max_recasts: int = 1
+    recast_interval: Fraction | None = None
 
     def case(self, case_id: str) -> CaseSpec:
         for case in self.cases:
@@ -203,6 +206,17 @@ def _ability(slot: str, record: Any) -> AbilitySpec:
         raise KitError(f"{context}: recast_window_seconds must be a positive number")
     if window is not None and not any(case.recast for case in cases):
         raise KitError(f"{context}: recast_window_seconds needs a recast case")
+    max_recasts = record.get("max_recasts", 1)
+    if isinstance(max_recasts, bool) or not isinstance(max_recasts, int) or max_recasts < 1:
+        raise KitError(f"{context}: max_recasts must be a positive integer")
+    interval = record.get("recast_interval_seconds")
+    if interval is not None and (
+        isinstance(interval, bool) or not isinstance(interval, (int, float)) or interval <= 0
+    ):
+        raise KitError(f"{context}: recast_interval_seconds must be a positive number")
+    recasts = "max_recasts" in record or interval is not None
+    if recasts and not any(case.recast for case in cases):
+        raise KitError(f"{context}: max_recasts and recast_interval_seconds need a recast case")
     return AbilitySpec(
         slot,
         _text(record, "name", context),
@@ -211,6 +225,8 @@ def _ability(slot: str, record: Any) -> AbilitySpec:
         tuple(passive_stats),
         tuple(not_modelled),
         None if window is None else Fraction(str(window)),
+        max_recasts,
+        None if interval is None else Fraction(str(interval)),
     )
 
 

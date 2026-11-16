@@ -8,6 +8,14 @@ from typing import Any
 # mStat values observed in shipped champion bins. The names are corroborated by
 # data-value names in several champions; see research/reports/agent-b-bin-structures.md.
 STAT_NAMES: dict[int, tuple[str, str, str]] = {
+    # A part with no mStat holds the class default, 0 (a bin omits default values).
+    0: (
+        "ability_power",
+        "corroborated",
+        "Ahri Q/W/E match the AP ratios of secondary sources (50/40/85 %), W/E are named "
+        "APRatio and R RAPCoefficient; Nashor's Tooth NashorsAPValue "
+        "(research/reports/ahri-kit-16.22.md)",
+    ),
     1: ("armor", "corroborated", "Malphite W / Rammus W / Poppy W armor ratios"),
     2: ("attack_damage", "corroborated", "Kha'Zix Q BonusADRatio, Garen Q tADRatio"),
     4: ("attack_speed", "inferred", "Jhin passive attack-speed conversion"),
@@ -27,7 +35,7 @@ STAT_FORMULAS: dict[int, tuple[str, str, str]] = {
 def stat_ref(m_stat: Any, m_stat_formula: Any) -> dict[str, Any]:
     """Describe a ``mStat`` / ``mStatFormula`` pair without guessing."""
     try:
-        stat_number = int(m_stat)
+        stat_number = int(m_stat) if m_stat is not None else 0
     except TypeError, ValueError:
         stat_number = None
     try:

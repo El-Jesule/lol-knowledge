@@ -109,7 +109,8 @@ def test_project_kit_loads():
     assert kit is not None
     assert [case.id for case in kit.ability("E").cases] == ["center", "edge"]
     assert kit.ability("R").max_rank == 3
-    assert load_kit(ROOT, "Ahri") is None
+    assert load_kit(ROOT, "Lux") is None
+    assert load_kit(ROOT, "Ahri").ability("R").max_recasts == 2
 
 
 def test_kit_must_match_its_directory(tmp_path):

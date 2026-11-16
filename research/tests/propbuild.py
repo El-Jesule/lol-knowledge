@@ -16,6 +16,7 @@ PRIM = {
     T.U32: "<I",
     T.F32: "<f",
     T.VEC3: "<3f",
+    T.MTX44: "<16f",
     T.RGBA: "<4B",
     T.HASH: "<I",
     T.FILE: "<Q",

@@ -132,7 +132,7 @@ def test_a_recast_needs_a_cast_and_its_window():
         run("Q.recast")
     with pytest.raises(RotationError, match=r"the recast window \(4 s\) closed at 4 s"):
         run("Q.first_hit wait:4.5 Q.recast")
-    with pytest.raises(RotationError, match="has not been cast to recast it"):
+    with pytest.raises(RotationError, match=r"Q has no recast left \(1 per cast\)"):
         run("Q.first_hit Q.recast Q.recast")
 
 

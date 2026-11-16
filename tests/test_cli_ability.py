@@ -179,8 +179,8 @@ def test_invalid_requests_exit_2(capsys, args, message):
 
 def test_champion_without_kit(capsys):
     code = main(
-        ["ability", "--root", str(ROOT), "--champion", "Ahri", "--level", "1", "--ability", "Q",
+        ["ability", "--root", str(ROOT), "--champion", "Lux", "--level", "1", "--ability", "Q",
          "--rank", "1", "--target-armor", "1", "--target-mr", "1"]
     )  # fmt: skip
     assert code == 2
-    assert "Ahri has no kit yet" in capsys.readouterr().err
+    assert "Lux has no kit yet" in capsys.readouterr().err

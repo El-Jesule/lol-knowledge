@@ -1,0 +1,519 @@
+{
+  "schema": "lol-champion-kit/1",
+  "champion": "Ahri",
+  "label": "Derivado",
+  "game_version": "16.22",
+  "content_version": "16.22.8348910+branch.releases-16-22.content.release",
+  "verified_against": {
+    "content_version": "16.22.8348910+branch.releases-16-22.content.release",
+    "bin_sha256": "121997c9c4ef2ff0f671b659d64d2e22cb71208216ddcc3c4f552a17f196d2cb",
+    "evidence": "research/reports/ahri-kit-16.22.md",
+    "result": "Bin del cliente 16.22 leído directamente (python -m binmodel.bin2json) y comparado con fuentes secundarias de las cifras"
+  },
+  "source": "Árboles de cálculo del bin del cliente (python -m binmodel) y marcado de los tooltips del cliente; estructura de casos curada en research/kits/",
+  "abilities": {
+    "P": {
+      "name": "Robo de esencias",
+      "max_rank": 1,
+      "cases": [],
+      "passive_stats": [],
+      "not_modelled": [
+        "Curación tras 9 súbditos o monstruos (MinionHeal) o tras derribar a un campeón (ChampionHeal): no es daño",
+        "Ampliar la ventana de la R y sumar una reactivación al derribar a un campeón (PDurationExtension)"
+      ]
+    },
+    "Q": {
+      "name": "Orbe del engaño",
+      "max_rank": 5,
+      "cases": [
+        {
+          "id": "out",
+          "name": "Ida: daño mágico",
+          "parts": [
+            {
+              "damage_type": "magic",
+              "formula": {
+                "op": "add",
+                "operands": [
+                  {
+                    "op": "by_rank",
+                    "values": [
+                      35,
+                      60,
+                      85,
+                      110,
+                      135
+                    ]
+                  },
+                  {
+                    "op": "mul",
+                    "operands": [
+                      {
+                        "op": "constant",
+                        "value": 0.5
+                      },
+                      {
+                        "op": "stat",
+                        "stat": "ability_power",
+                        "scope": "total"
+                      }
+                    ]
+                  }
+                ]
+              },
+              "label": "Derivado",
+              "source": "Characters/Ahri/Spells/AhriQAbility/AhriQ.mSpellCalculations.TotalDamage (16.22.8348910+branch.releases-16-22.content.release)",
+              "damage_type_source": "spell_ahriorbofdeception_tooltip <magicDamage>"
+            }
+          ]
+        },
+        {
+          "id": "back",
+          "name": "Vuelta: daño verdadero",
+          "parts": [
+            {
+              "damage_type": "true",
+              "formula": {
+                "op": "add",
+                "operands": [
+                  {
+                    "op": "by_rank",
+                    "values": [
+                      35,
+                      60,
+                      85,
+                      110,
+                      135
+                    ]
+                  },
+                  {
+                    "op": "mul",
+                    "operands": [
+                      {
+                        "op": "constant",
+                        "value": 0.5
+                      },
+                      {
+                        "op": "stat",
+                        "stat": "ability_power",
+                        "scope": "total"
+                      }
+                    ]
+                  }
+                ]
+              },
+              "label": "Derivado",
+              "source": "Characters/Ahri/Spells/AhriQAbility/AhriQ.mSpellCalculations.TotalDamage (16.22.8348910+branch.releases-16-22.content.release)",
+              "damage_type_source": "spell_ahriorbofdeception_tooltip <trueDamage>"
+            }
+          ]
+        },
+        {
+          "id": "both",
+          "name": "Ida y vuelta sobre el mismo objetivo",
+          "parts": [
+            {
+              "damage_type": "magic",
+              "formula": {
+                "op": "add",
+                "operands": [
+                  {
+                    "op": "by_rank",
+                    "values": [
+                      35,
+                      60,
+                      85,
+                      110,
+                      135
+                    ]
+                  },
+                  {
+                    "op": "mul",
+                    "operands": [
+                      {
+                        "op": "constant",
+                        "value": 0.5
+                      },
+                      {
+                        "op": "stat",
+                        "stat": "ability_power",
+                        "scope": "total"
+                      }
+                    ]
+                  }
+                ]
+              },
+              "label": "Derivado",
+              "source": "Characters/Ahri/Spells/AhriQAbility/AhriQ.mSpellCalculations.TotalDamage (16.22.8348910+branch.releases-16-22.content.release)",
+              "damage_type_source": "spell_ahriorbofdeception_tooltip <magicDamage>"
+            },
+            {
+              "damage_type": "true",
+              "formula": {
+                "op": "add",
+                "operands": [
+                  {
+                    "op": "by_rank",
+                    "values": [
+                      35,
+                      60,
+                      85,
+                      110,
+                      135
+                    ]
+                  },
+                  {
+                    "op": "mul",
+                    "operands": [
+                      {
+                        "op": "constant",
+                        "value": 0.5
+                      },
+                      {
+                        "op": "stat",
+                        "stat": "ability_power",
+                        "scope": "total"
+                      }
+                    ]
+                  }
+                ]
+              },
+              "label": "Derivado",
+              "source": "Characters/Ahri/Spells/AhriQAbility/AhriQ.mSpellCalculations.TotalDamage (16.22.8348910+branch.releases-16-22.content.release)",
+              "damage_type_source": "spell_ahriorbofdeception_tooltip <trueDamage>"
+            }
+          ]
+        }
+      ],
+      "passive_stats": [],
+      "not_modelled": [
+        "Que el objetivo reciba la ida y la vuelta depende de la posición: el caso «both» lo supone"
+      ]
+    },
+    "W": {
+      "name": "Fuego zorruno",
+      "max_rank": 5,
+      "cases": [
+        {
+          "id": "one",
+          "name": "Un fuego",
+          "parts": [
+            {
+              "damage_type": "magic",
+              "formula": {
+                "op": "add",
+                "operands": [
+                  {
+                    "op": "by_rank",
+                    "values": [
+                      40,
+                      60,
+                      80,
+                      100,
+                      120
+                    ]
+                  },
+                  {
+                    "op": "mul",
+                    "operands": [
+                      {
+                        "op": "constant",
+                        "value": 0.4
+                      },
+                      {
+                        "op": "stat",
+                        "stat": "ability_power",
+                        "scope": "total"
+                      }
+                    ]
+                  }
+                ]
+              },
+              "label": "Derivado",
+              "source": "Characters/Ahri/Spells/AhriWAbility/AhriW.mSpellCalculations.SingleFireDamage (16.22.8348910+branch.releases-16-22.content.release)",
+              "damage_type_source": "spell_ahrifoxfire_tooltip <magicDamage>"
+            }
+          ]
+        },
+        {
+          "id": "all",
+          "name": "Los tres fuegos en el mismo objetivo",
+          "parts": [
+            {
+              "damage_type": "magic",
+              "formula": {
+                "op": "add",
+                "operands": [
+                  {
+                    "op": "by_rank",
+                    "values": [
+                      40,
+                      60,
+                      80,
+                      100,
+                      120
+                    ]
+                  },
+                  {
+                    "op": "mul",
+                    "operands": [
+                      {
+                        "op": "constant",
+                        "value": 0.4
+                      },
+                      {
+                        "op": "stat",
+                        "stat": "ability_power",
+                        "scope": "total"
+                      }
+                    ]
+                  }
+                ]
+              },
+              "label": "Derivado",
+              "source": "Characters/Ahri/Spells/AhriWAbility/AhriW.mSpellCalculations.SingleFireDamage (16.22.8348910+branch.releases-16-22.content.release)",
+              "damage_type_source": "spell_ahrifoxfire_tooltip <magicDamage>"
+            },
+            {
+              "damage_type": "magic",
+              "formula": {
+                "op": "mul",
+                "operands": [
+                  {
+                    "op": "add",
+                    "operands": [
+                      {
+                        "op": "by_rank",
+                        "values": [
+                          40,
+                          60,
+                          80,
+                          100,
+                          120
+                        ]
+                      },
+                      {
+                        "op": "mul",
+                        "operands": [
+                          {
+                            "op": "constant",
+                            "value": 0.4
+                          },
+                          {
+                            "op": "stat",
+                            "stat": "ability_power",
+                            "scope": "total"
+                          }
+                        ]
+                      }
+                    ]
+                  },
+                  {
+                    "op": "constant",
+                    "value": 0.4
+                  }
+                ]
+              },
+              "label": "Derivado",
+              "source": "Characters/Ahri/Spells/AhriWAbility/AhriW.mSpellCalculations.MultiFireDamage (16.22.8348910+branch.releases-16-22.content.release)",
+              "damage_type_source": "spell_ahrifoxfire_tooltip <magicDamage>"
+            },
+            {
+              "damage_type": "magic",
+              "formula": {
+                "op": "mul",
+                "operands": [
+                  {
+                    "op": "add",
+                    "operands": [
+                      {
+                        "op": "by_rank",
+                        "values": [
+                          40,
+                          60,
+                          80,
+                          100,
+                          120
+                        ]
+                      },
+                      {
+                        "op": "mul",
+                        "operands": [
+                          {
+                            "op": "constant",
+                            "value": 0.4
+                          },
+                          {
+                            "op": "stat",
+                            "stat": "ability_power",
+                            "scope": "total"
+                          }
+                        ]
+                      }
+                    ]
+                  },
+                  {
+                    "op": "constant",
+                    "value": 0.4
+                  }
+                ]
+              },
+              "label": "Derivado",
+              "source": "Characters/Ahri/Spells/AhriWAbility/AhriW.mSpellCalculations.MultiFireDamage (16.22.8348910+branch.releases-16-22.content.release)",
+              "damage_type_source": "spell_ahrifoxfire_tooltip <magicDamage>"
+            }
+          ]
+        }
+      ],
+      "passive_stats": [],
+      "not_modelled": [
+        "Velocidad de movimiento (MovementSpeed, 40 % que decae en 2 s)",
+        "Daño doble a súbditos por debajo del 20 % de vida (MinionBonusDamageMultiplier, MinionBonusDamageThreshold)"
+      ]
+    },
+    "E": {
+      "name": "Hechizar",
+      "max_rank": 5,
+      "cases": [
+        {
+          "id": "hit",
+          "name": "Beso",
+          "parts": [
+            {
+              "damage_type": "magic",
+              "formula": {
+                "op": "add",
+                "operands": [
+                  {
+                    "op": "by_rank",
+                    "values": [
+                      80,
+                      120,
+                      160,
+                      200,
+                      240
+                    ]
+                  },
+                  {
+                    "op": "mul",
+                    "operands": [
+                      {
+                        "op": "constant",
+                        "value": 0.85
+                      },
+                      {
+                        "op": "stat",
+                        "stat": "ability_power",
+                        "scope": "total"
+                      }
+                    ]
+                  }
+                ]
+              },
+              "label": "Derivado",
+              "source": "Characters/Ahri/Spells/AhriEAbility/AhriE.mSpellCalculations.TotalDamage (16.22.8348910+branch.releases-16-22.content.release)",
+              "damage_type_source": "spell_ahriseduce_tooltip <magicDamage>"
+            }
+          ]
+        }
+      ],
+      "passive_stats": [],
+      "not_modelled": [
+        "Hechizo (CharmDuration) y ralentización (SlowPercent)"
+      ]
+    },
+    "R": {
+      "name": "Impulso espiritual",
+      "max_rank": 3,
+      "cases": [
+        {
+          "id": "dash",
+          "name": "Impulso: un rayo al objetivo",
+          "parts": [
+            {
+              "damage_type": "magic",
+              "formula": {
+                "op": "add",
+                "operands": [
+                  {
+                    "op": "by_rank",
+                    "values": [
+                      75,
+                      125,
+                      175
+                    ]
+                  },
+                  {
+                    "op": "mul",
+                    "operands": [
+                      {
+                        "op": "constant",
+                        "value": 0.35
+                      },
+                      {
+                        "op": "stat",
+                        "stat": "ability_power",
+                        "scope": "total"
+                      }
+                    ]
+                  }
+                ]
+              },
+              "label": "Derivado",
+              "source": "Characters/Ahri/Spells/AhriRAbility/AhriR.mSpellCalculations.RCalculatedDamage (16.22.8348910+branch.releases-16-22.content.release)",
+              "damage_type_source": "spell_ahritumble_tooltip <magicDamage>"
+            }
+          ]
+        },
+        {
+          "id": "recast",
+          "name": "Reactivación: un rayo al objetivo",
+          "parts": [
+            {
+              "damage_type": "magic",
+              "formula": {
+                "op": "add",
+                "operands": [
+                  {
+                    "op": "by_rank",
+                    "values": [
+                      75,
+                      125,
+                      175
+                    ]
+                  },
+                  {
+                    "op": "mul",
+                    "operands": [
+                      {
+                        "op": "constant",
+                        "value": 0.35
+                      },
+                      {
+                        "op": "stat",
+                        "stat": "ability_power",
+                        "scope": "total"
+                      }
+                    ]
+                  }
+                ]
+              },
+              "label": "Derivado",
+              "source": "Characters/Ahri/Spells/AhriRAbility/AhriR.mSpellCalculations.RCalculatedDamage (16.22.8348910+branch.releases-16-22.content.release)",
+              "damage_type_source": "spell_ahritumble_tooltip <magicDamage>"
+            }
+          ],
+          "recast": true
+        }
+      ],
+      "passive_stats": [],
+      "not_modelled": [
+        "Cada impulso dispara 3 rayos a enemigos distintos (RMaxTargetsPerCast): un único objetivo recibe uno por impulso",
+        "Reactivaciones extra al derribar campeones (Robo de esencias, RMaxCasts)"
+      ],
+      "recast_window_seconds": 15,
+      "max_recasts": 2,
+      "recast_interval_seconds": 1
+    }
+  }
+}

@@ -1,0 +1,1480 @@
+{
+  "_provenance": {
+    "source": "communitydragon",
+    "url": "client:Ahri.wad.client/data/characters/ahri/ahri.bin via binmodel.bin2json",
+    "content_version": "16.22.8348910+branch.releases-16-22.content.release",
+    "source_sha256": "8444de3b34a3dd41b7be3523d4265842ccbfbf2ef1fe78a6f9f4c9dbf6ad578d",
+    "selection": "Root stat fields and spell lists; passive/Q/W/E/R spell objects with DataValues, mode overrides, mSpellCalculations, cooldown/mana/range vectors and tooltip level lists; ability objects with root/child spells. BotData, buffs, animations and skins are omitted."
+  },
+  "Characters/Ahri/CharacterRecords/Root": {
+    "mCharacterName": "Ahri",
+    "baseHPModifiable": {
+      "baseValue": 590.0,
+      "__type": "ModifiableFloat"
+    },
+    "hpPerLevelModifiable": {
+      "baseValue": 104.0,
+      "__type": "ModifiableFloat"
+    },
+    "baseStaticHPRegenModifiable": {
+      "baseValue": 0.5,
+      "__type": "ModifiableFloat"
+    },
+    "hpRegenPerLevelModifiable": {
+      "baseValue": 0.11999999731779099,
+      "__type": "ModifiableFloat"
+    },
+    "baseDamageModifiable": {
+      "baseValue": 53.0,
+      "__type": "ModifiableFloat"
+    },
+    "damagePerLevelModifiable": {
+      "baseValue": 3.0,
+      "__type": "ModifiableFloat"
+    },
+    "baseArmorModifiable": {
+      "baseValue": 21.0,
+      "__type": "ModifiableFloat"
+    },
+    "armorPerLevelModifiable": {
+      "baseValue": 4.199999809265137,
+      "__type": "ModifiableFloat"
+    },
+    "baseMR": {
+      "baseValue": 30.0,
+      "__type": "ModifiableFloat"
+    },
+    "mrPerLevel": {
+      "baseValue": 1.2999999523162842,
+      "__type": "ModifiableFloat"
+    },
+    "baseMoveSpeedModifiable": {
+      "baseValue": 330.0,
+      "__type": "ModifiableFloat"
+    },
+    "attackRangeModifiable": {
+      "baseValue": 550.0,
+      "__type": "ModifiableFloat"
+    },
+    "attackSpeedModifiable": {
+      "baseValue": 0.6679999828338623,
+      "__type": "ModifiableFloat"
+    },
+    "attackSpeedRatioModifiable": {
+      "baseValue": 0.625,
+      "__type": "ModifiableFloat"
+    },
+    "attackSpeedPerLevelModifiable": {
+      "baseValue": 2.200000047683716,
+      "__type": "ModifiableFloat"
+    },
+    "spells": [
+      "Characters/Ahri/Spells/AhriQAbility/AhriQ",
+      "Characters/Ahri/Spells/AhriWAbility/AhriW",
+      "Characters/Ahri/Spells/AhriEAbility/AhriE",
+      "Characters/Ahri/Spells/AhriRAbility/AhriR"
+    ],
+    "mAbilities": [
+      "Characters/Ahri/Spells/AhriRAbility",
+      "Characters/Ahri/Spells/AhriQAbility",
+      "Characters/Ahri/Spells/AhriWAbility",
+      "Characters/Ahri/Spells/AhriEAbility",
+      "Characters/Ahri/Spells/AhriPassiveAbility"
+    ],
+    "mCharacterPassiveSpell": "Characters/Ahri/Spells/AhriPassiveAbility/AhriPassive",
+    "passiveName": "game_character_passiveName_Ahri",
+    "passiveToolTip": "game_character_passiveDescription_Ahri",
+    "__type": "CharacterRecord"
+  },
+  "Characters/Ahri/Spells/AhriPassiveAbility/AhriPassive": {
+    "ObjectName": "AhriPassive",
+    "objectPath": "Characters/Ahri/Spells/AhriPassiveAbility/AhriPassive",
+    "mScriptName": "AhriPassive",
+    "__type": "SpellObject",
+    "mSpell": {
+      "DataValues": [
+        {
+          "name": "TakedownWindow",
+          "values": [
+            3.0,
+            3.0,
+            3.0,
+            3.0,
+            3.0,
+            3.0,
+            3.0
+          ],
+          "__type": "SpellDataValue"
+        },
+        {
+          "name": "MaxStacks",
+          "values": [
+            9.0,
+            9.0,
+            9.0,
+            9.0,
+            9.0,
+            9.0,
+            9.0
+          ],
+          "__type": "SpellDataValue"
+        }
+      ],
+      "mSpellCalculations": {
+        "ChampionHeal": {
+          "mFormulaParts": [
+            {
+              "mStartValue": 75.0,
+              "mEndValue": 165.0,
+              "__type": "ByCharLevelInterpolationCalculationPart"
+            },
+            {
+              "mCoefficient": 0.30000001192092896,
+              "__type": "StatByCoefficientCalculationPart"
+            }
+          ],
+          "__type": "GameCalculation"
+        },
+        "MinionHeal": {
+          "mFormulaParts": [
+            {
+              "mStartValue": 35.0,
+              "mEndValue": 95.0,
+              "__type": "ByCharLevelInterpolationCalculationPart"
+            },
+            {
+              "mCoefficient": 0.20000000298023224,
+              "__type": "StatByCoefficientCalculationPart"
+            }
+          ],
+          "__type": "GameCalculation"
+        }
+      },
+      "Cooldown": {
+        "values": [
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "{0a3e0478}": 0.0,
+        "__type": "{0a0eddc9}"
+      },
+      "cooldownTime": [
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0
+      ],
+      "castRange": [
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0
+      ],
+      "castRangeValues": {
+        "values": [
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "{0a3e0478}": 0.0,
+        "__type": "{0a0eddc9}"
+      },
+      "mClientData": {
+        "__type": "SpellDataResourceClient",
+        "mTooltipData": {
+          "mObjectName": "AhriPassive",
+          "mFormat": "{476ec0b8}",
+          "mLocKeys": {
+            "keyName": "Buff_AhriP_Name",
+            "keyTooltip": "Buff_AhriP_Tooltip",
+            "keySummary": "Buff_AhriP_TooltipSimple"
+          },
+          "mLists": null,
+          "__type": "TooltipInstanceSpell"
+        }
+      }
+    }
+  },
+  "Characters/Ahri/Spells/AhriQAbility/AhriQ": {
+    "ObjectName": "AhriQ",
+    "objectPath": "Characters/Ahri/Spells/AhriQAbility/AhriQ",
+    "mScriptName": "AhriQ",
+    "__type": "SpellObject",
+    "mSpell": {
+      "DataValues": [
+        {
+          "name": "BaseDamage",
+          "values": [
+            10.0,
+            35.0,
+            60.0,
+            85.0,
+            110.0,
+            135.0,
+            160.0
+          ],
+          "__type": "SpellDataValue"
+        }
+      ],
+      "mSpellCalculations": {
+        "TotalDamage": {
+          "mSimpleTooltipCalculationDisplay": 6,
+          "mFormulaParts": [
+            {
+              "mDataValue": "BaseDamage",
+              "__type": "NamedDataValueCalculationPart"
+            },
+            {
+              "mCoefficient": 0.5,
+              "__type": "StatByCoefficientCalculationPart"
+            }
+          ],
+          "__type": "GameCalculation"
+        }
+      },
+      "Cooldown": {
+        "values": [
+          7.0,
+          7.0,
+          7.0,
+          7.0,
+          7.0,
+          7.0,
+          7.0
+        ],
+        "{0a3e0478}": 7.0,
+        "__type": "{0a0eddc9}"
+      },
+      "cooldownTime": [
+        7.0,
+        7.0,
+        7.0,
+        7.0,
+        7.0,
+        7.0,
+        7.0
+      ],
+      "mana": [
+        55.0,
+        65.0,
+        75.0,
+        85.0,
+        95.0,
+        95.0
+      ],
+      "manaValues": {
+        "values": [
+          55.0,
+          65.0,
+          75.0,
+          85.0,
+          95.0,
+          95.0
+        ],
+        "__type": "{630af303}"
+      },
+      "castRange": [
+        25000.0,
+        25000.0,
+        25000.0,
+        25000.0,
+        25000.0,
+        25000.0,
+        25000.0
+      ],
+      "castRangeValues": {
+        "values": [
+          25000.0,
+          25000.0,
+          25000.0,
+          25000.0,
+          25000.0,
+          25000.0,
+          25000.0
+        ],
+        "{0a3e0478}": 25000.0,
+        "__type": "{0a0eddc9}"
+      },
+      "mClientData": {
+        "__type": "SpellDataResourceClient",
+        "mTooltipData": {
+          "mObjectName": "AhriQ",
+          "mFormat": "{d7c27163}",
+          "mLocKeys": {
+            "keyName": "Spell_AhriOrbofDeception_Name",
+            "keySummary": "Spell_AhriOrbofDeception_Summary",
+            "keyTooltip": "Spell_AhriOrbofDeception_Tooltip",
+            "keyTooltipSimple": "Spell_AhriQ_TooltipSimple"
+          },
+          "mLists": {
+            "LevelUp": {
+              "levelCount": 5,
+              "Elements": [
+                {
+                  "type": "Cost",
+                  "__type": "TooltipInstanceListElement"
+                },
+                {
+                  "type": "BaseDamage",
+                  "typeIndex": 1,
+                  "nameOverride": "Spell_ListType_Damage",
+                  "__type": "TooltipInstanceListElement"
+                }
+              ],
+              "__type": "TooltipInstanceList"
+            }
+          },
+          "__type": "TooltipInstanceSpell"
+        }
+      }
+    }
+  },
+  "Characters/Ahri/Spells/AhriWAbility/AhriW": {
+    "ObjectName": "AhriW",
+    "objectPath": "Characters/Ahri/Spells/AhriWAbility/AhriW",
+    "mScriptName": "AhriW",
+    "__type": "SpellObject",
+    "mSpell": {
+      "DataValues": [
+        {
+          "name": "MovementSpeed",
+          "values": [
+            0.4000000059604645,
+            0.4000000059604645,
+            0.4000000059604645,
+            0.4000000059604645,
+            0.4000000059604645,
+            0.4000000059604645,
+            0.4000000059604645
+          ],
+          "__type": "SpellDataValue"
+        },
+        {
+          "name": "MovementSpeedDuration",
+          "values": [
+            2.0,
+            2.0,
+            2.0,
+            2.0,
+            2.0,
+            2.0,
+            2.0
+          ],
+          "__type": "SpellDataValue"
+        },
+        {
+          "name": "MinionBonusDamageMultiplier",
+          "values": [
+            2.0,
+            2.0,
+            2.0,
+            2.0,
+            2.0,
+            2.0,
+            2.0
+          ],
+          "__type": "SpellDataValue"
+        },
+        {
+          "name": "MinionBonusDamageThreshold",
+          "values": [
+            0.20000000298023224,
+            0.20000000298023224,
+            0.20000000298023224,
+            0.20000000298023224,
+            0.20000000298023224,
+            0.20000000298023224,
+            0.20000000298023224
+          ],
+          "__type": "SpellDataValue"
+        },
+        {
+          "name": "BaseDamage",
+          "values": [
+            20.0,
+            40.0,
+            60.0,
+            80.0,
+            100.0,
+            120.0,
+            140.0
+          ],
+          "__type": "SpellDataValue"
+        },
+        {
+          "name": "RepeatDamageMod",
+          "values": [
+            0.4000000059604645,
+            0.4000000059604645,
+            0.4000000059604645,
+            0.4000000059604645,
+            0.4000000059604645,
+            0.4000000059604645,
+            0.4000000059604645
+          ],
+          "__type": "SpellDataValue"
+        },
+        {
+          "name": "AcquisitionRange",
+          "values": [
+            550.0,
+            550.0,
+            550.0,
+            550.0,
+            550.0,
+            550.0,
+            550.0
+          ],
+          "__type": "SpellDataValue"
+        },
+        {
+          "name": "BonusAcquisitionRange",
+          "values": [
+            725.0,
+            725.0,
+            725.0,
+            725.0,
+            725.0,
+            725.0,
+            725.0
+          ],
+          "__type": "SpellDataValue"
+        },
+        {
+          "name": "InitialDelay",
+          "values": [
+            0.25,
+            0.25,
+            0.25,
+            0.25,
+            0.25,
+            0.25,
+            0.25
+          ],
+          "__type": "SpellDataValue"
+        },
+        {
+          "name": "SecondaryDelay",
+          "values": [
+            0.4000000059604645,
+            0.4000000059604645,
+            0.4000000059604645,
+            0.4000000059604645,
+            0.4000000059604645,
+            0.4000000059604645,
+            0.4000000059604645
+          ],
+          "__type": "SpellDataValue"
+        },
+        {
+          "name": "FlameDuration",
+          "values": [
+            2.5,
+            2.5,
+            2.5,
+            2.5,
+            2.5,
+            2.5,
+            2.5
+          ],
+          "__type": "SpellDataValue"
+        },
+        {
+          "name": "OrbitRadius",
+          "values": [
+            150.0,
+            150.0,
+            150.0,
+            150.0,
+            150.0,
+            150.0,
+            150.0
+          ],
+          "__type": "SpellDataValue"
+        },
+        {
+          "name": "APRatio",
+          "values": [
+            0.4000000059604645,
+            0.4000000059604645,
+            0.4000000059604645,
+            0.4000000059604645,
+            0.4000000059604645,
+            0.4000000059604645,
+            0.4000000059604645
+          ],
+          "__type": "SpellDataValue"
+        }
+      ],
+      "mSpellCalculations": {
+        "SingleFireDamage": {
+          "mSimpleTooltipCalculationDisplay": 6,
+          "mFormulaParts": [
+            {
+              "mDataValue": "BaseDamage",
+              "__type": "NamedDataValueCalculationPart"
+            },
+            {
+              "mDataValue": "APRatio",
+              "__type": "StatByNamedDataValueCalculationPart"
+            }
+          ],
+          "__type": "GameCalculation"
+        },
+        "MultiFireDamage": {
+          "mMultiplier": {
+            "mDataValue": "RepeatDamageMod",
+            "__type": "NamedDataValueCalculationPart"
+          },
+          "mSimpleTooltipCalculationDisplay": 6,
+          "mModifiedGameCalculation": "SingleFireDamage",
+          "__type": "GameCalculationModified"
+        }
+      },
+      "Cooldown": {
+        "values": [
+          9.0,
+          9.0,
+          8.0,
+          7.0,
+          6.0,
+          5.0,
+          4.0
+        ],
+        "__type": "{0a0eddc9}"
+      },
+      "cooldownTime": [
+        9.0,
+        9.0,
+        8.0,
+        7.0,
+        6.0,
+        5.0,
+        4.0
+      ],
+      "mana": [
+        30.0,
+        30.0,
+        30.0,
+        30.0,
+        30.0,
+        30.0
+      ],
+      "manaValues": {
+        "values": [
+          30.0,
+          30.0,
+          30.0,
+          30.0,
+          30.0,
+          30.0
+        ],
+        "{0a3e0478}": 30.0,
+        "__type": "{630af303}"
+      },
+      "castRange": [
+        600.0,
+        600.0,
+        600.0,
+        600.0,
+        600.0,
+        600.0,
+        600.0
+      ],
+      "castRangeValues": {
+        "values": [
+          600.0,
+          600.0,
+          600.0,
+          600.0,
+          600.0,
+          600.0,
+          600.0
+        ],
+        "{0a3e0478}": 600.0,
+        "__type": "{0a0eddc9}"
+      },
+      "mClientData": {
+        "__type": "SpellDataResourceClient",
+        "mTooltipData": {
+          "mObjectName": "AhriW",
+          "mFormat": "{d7c27163}",
+          "mLocKeys": {
+            "keyName": "Spell_AhriFoxFire_Name",
+            "keySummary": "Spell_AhriFoxFire_Summary",
+            "keyTooltip": "Spell_AhriFoxFire_Tooltip",
+            "keyTooltipSimple": "Spell_AhriW_TooltipSimple",
+            "keyTooltipExtendedBelowLine": "Spell_AhriFoxFire_TooltipExtendedBelowLine"
+          },
+          "mLists": {
+            "LevelUp": {
+              "levelCount": 5,
+              "Elements": [
+                {
+                  "type": "BaseDamage",
+                  "typeIndex": 1,
+                  "nameOverride": "Spell_ListType_Damage",
+                  "__type": "TooltipInstanceListElement"
+                },
+                {
+                  "type": "Cooldown",
+                  "__type": "TooltipInstanceListElement"
+                }
+              ],
+              "__type": "TooltipInstanceList"
+            }
+          },
+          "__type": "TooltipInstanceSpell"
+        }
+      }
+    }
+  },
+  "Characters/Ahri/Spells/AhriEAbility/AhriE": {
+    "ObjectName": "AhriE",
+    "objectPath": "Characters/Ahri/Spells/AhriEAbility/AhriE",
+    "mScriptName": "AhriE",
+    "__type": "SpellObject",
+    "mSpell": {
+      "DataValues": [
+        {
+          "name": "BaseDamage",
+          "values": [
+            40.0,
+            80.0,
+            120.0,
+            160.0,
+            200.0,
+            240.0,
+            280.0
+          ],
+          "__type": "SpellDataValue"
+        },
+        {
+          "name": "SlowPercent",
+          "values": [
+            -0.6499999761581421,
+            -0.6499999761581421,
+            -0.6499999761581421,
+            -0.6499999761581421,
+            -0.6499999761581421,
+            -0.6499999761581421,
+            -0.6499999761581421
+          ],
+          "__type": "SpellDataValue"
+        },
+        {
+          "name": "CharmDuration",
+          "values": [
+            1.0499999523162842,
+            1.2000000476837158,
+            1.350000023841858,
+            1.5,
+            1.649999976158142,
+            1.7999999523162842,
+            1.9500000476837158
+          ],
+          "__type": "SpellDataValue"
+        },
+        {
+          "name": "APRatio",
+          "values": [
+            0.8500000238418579,
+            0.8500000238418579,
+            0.8500000238418579,
+            0.8500000238418579,
+            0.8500000238418579,
+            0.8500000238418579,
+            0.8500000238418579
+          ],
+          "__type": "SpellDataValue"
+        }
+      ],
+      "mSpellCalculations": {
+        "TotalDamage": {
+          "mSimpleTooltipCalculationDisplay": 6,
+          "mFormulaParts": [
+            {
+              "mDataValue": "BaseDamage",
+              "__type": "NamedDataValueCalculationPart"
+            },
+            {
+              "mDataValue": "APRatio",
+              "__type": "StatByNamedDataValueCalculationPart"
+            }
+          ],
+          "__type": "GameCalculation"
+        }
+      },
+      "Cooldown": {
+        "values": [
+          12.0,
+          12.0,
+          12.0,
+          12.0,
+          12.0,
+          12.0,
+          12.0
+        ],
+        "{0a3e0478}": 12.0,
+        "__type": "{0a0eddc9}"
+      },
+      "cooldownTime": [
+        12.0,
+        12.0,
+        12.0,
+        12.0,
+        12.0,
+        12.0,
+        12.0
+      ],
+      "mana": [
+        60.0,
+        60.0,
+        60.0,
+        60.0,
+        60.0,
+        60.0
+      ],
+      "manaValues": {
+        "values": [
+          60.0,
+          60.0,
+          60.0,
+          60.0,
+          60.0,
+          60.0
+        ],
+        "{0a3e0478}": 60.0,
+        "__type": "{630af303}"
+      },
+      "castRange": [
+        10000.0,
+        10000.0,
+        10000.0,
+        10000.0,
+        10000.0,
+        10000.0,
+        10000.0
+      ],
+      "castRangeValues": {
+        "values": [
+          10000.0,
+          10000.0,
+          10000.0,
+          10000.0,
+          10000.0,
+          10000.0,
+          10000.0
+        ],
+        "{0a3e0478}": 10000.0,
+        "__type": "{0a0eddc9}"
+      },
+      "mClientData": {
+        "__type": "SpellDataResourceClient",
+        "mTooltipData": {
+          "mObjectName": "AhriE",
+          "mFormat": "{d7c27163}",
+          "mLocKeys": {
+            "keyName": "Spell_AhriSeduce_Name",
+            "keySummary": "Spell_AhriSeduce_Summary",
+            "keyTooltip": "Spell_AhriSeduce_Tooltip",
+            "keyTooltipSimple": "Spell_AhriE_TooltipSimple",
+            "keyTooltipExtendedBelowLine": "Spell_AhriSeduce_TooltipExtendedBelowLine"
+          },
+          "mLists": {
+            "LevelUp": {
+              "levelCount": 5,
+              "Elements": [
+                {
+                  "type": "BaseDamage",
+                  "typeIndex": 1,
+                  "nameOverride": "Spell_ListType_Damage",
+                  "__type": "TooltipInstanceListElement"
+                },
+                {
+                  "type": "CharmDuration",
+                  "typeIndex": 2,
+                  "nameOverride": "Spell_ListType_Duration",
+                  "__type": "TooltipInstanceListElement"
+                }
+              ],
+              "__type": "TooltipInstanceList"
+            }
+          },
+          "__type": "TooltipInstanceSpell"
+        }
+      }
+    }
+  },
+  "Characters/Ahri/Spells/AhriRAbility/AhriR": {
+    "ObjectName": "AhriR",
+    "objectPath": "Characters/Ahri/Spells/AhriRAbility/AhriR",
+    "mScriptName": "AhriR",
+    "__type": "SpellObject",
+    "mSpell": {
+      "DataValues": [
+        {
+          "name": "RBaseDamage",
+          "values": [
+            25.0,
+            75.0,
+            125.0,
+            175.0,
+            225.0,
+            275.0,
+            325.0
+          ],
+          "__type": "SpellDataValue"
+        },
+        {
+          "name": "RMaxTargetsPerCast",
+          "values": [
+            3.0,
+            3.0,
+            3.0,
+            3.0,
+            3.0,
+            3.0,
+            3.0
+          ],
+          "__type": "SpellDataValue"
+        },
+        {
+          "name": "RMaxCasts",
+          "values": [
+            3.0,
+            3.0,
+            3.0,
+            3.0,
+            3.0,
+            3.0,
+            3.0
+          ],
+          "__type": "SpellDataValue"
+        },
+        {
+          "name": "RDashDistance",
+          "values": [
+            500.0,
+            500.0,
+            500.0,
+            500.0,
+            500.0,
+            500.0,
+            500.0
+          ],
+          "__type": "SpellDataValue"
+        },
+        {
+          "name": "RBaseDashSpeed",
+          "values": [
+            1200.0,
+            1200.0,
+            1200.0,
+            1200.0,
+            1200.0,
+            1200.0,
+            1200.0
+          ],
+          "__type": "SpellDataValue"
+        },
+        {
+          "name": "RRecastWindow",
+          "values": [
+            15.0,
+            15.0,
+            15.0,
+            15.0,
+            15.0,
+            15.0,
+            15.0
+          ],
+          "__type": "SpellDataValue"
+        },
+        {
+          "name": "RAcquisitionRange",
+          "values": [
+            600.0,
+            600.0,
+            600.0,
+            600.0,
+            600.0,
+            600.0,
+            600.0
+          ],
+          "__type": "SpellDataValue"
+        },
+        {
+          "name": "RDashCooldown",
+          "values": [
+            1.0,
+            1.0,
+            1.0,
+            1.0,
+            1.0,
+            1.0,
+            1.0
+          ],
+          "__type": "SpellDataValue"
+        },
+        {
+          "name": "RAPCoefficient",
+          "values": [
+            0.3499999940395355,
+            0.3499999940395355,
+            0.3499999940395355,
+            0.3499999940395355,
+            0.3499999940395355,
+            0.3499999940395355,
+            0.3499999940395355
+          ],
+          "__type": "SpellDataValue"
+        },
+        {
+          "name": "RResetCasts",
+          "values": [
+            1.0,
+            1.0,
+            1.0,
+            1.0,
+            1.0,
+            1.0,
+            1.0
+          ],
+          "__type": "SpellDataValue"
+        },
+        {
+          "name": "PDurationExtension",
+          "values": [
+            10.0,
+            10.0,
+            10.0,
+            10.0,
+            10.0,
+            10.0,
+            10.0
+          ],
+          "__type": "SpellDataValue"
+        }
+      ],
+      "DataValuesModeOverride": {
+        "cherry": {
+          "SpellDataValues": [
+            {
+              "name": "RResetCasts",
+              "values": [
+                2.0,
+                2.0,
+                2.0,
+                2.0,
+                2.0,
+                2.0,
+                2.0
+              ],
+              "__type": "SpellDataValue"
+            }
+          ],
+          "__type": "SpellDataValueVector"
+        }
+      },
+      "mSpellCalculations": {
+        "RCalculatedDamage": {
+          "mFormulaParts": [
+            {
+              "mDataValue": "RBaseDamage",
+              "__type": "NamedDataValueCalculationPart"
+            },
+            {
+              "mDataValue": "RAPCoefficient",
+              "__type": "StatByNamedDataValueCalculationPart"
+            }
+          ],
+          "__type": "GameCalculation"
+        }
+      },
+      "Cooldown": {
+        "values": [
+          140.0,
+          140.0,
+          120.0,
+          100.0,
+          100.0,
+          100.0,
+          100.0
+        ],
+        "__type": "{0a0eddc9}"
+      },
+      "cooldownTime": [
+        140.0,
+        140.0,
+        120.0,
+        100.0,
+        100.0,
+        100.0,
+        100.0
+      ],
+      "mana": [
+        100.0,
+        100.0,
+        100.0,
+        100.0,
+        100.0,
+        100.0
+      ],
+      "manaValues": {
+        "values": [
+          100.0,
+          100.0,
+          100.0,
+          100.0,
+          100.0,
+          100.0
+        ],
+        "{0a3e0478}": 100.0,
+        "__type": "{630af303}"
+      },
+      "castRange": [
+        25000.0,
+        25000.0,
+        25000.0,
+        25000.0,
+        25000.0,
+        25000.0,
+        25000.0
+      ],
+      "castRangeValues": {
+        "values": [
+          25000.0,
+          25000.0,
+          25000.0,
+          25000.0,
+          25000.0,
+          25000.0,
+          25000.0
+        ],
+        "{0a3e0478}": 25000.0,
+        "__type": "{0a0eddc9}"
+      },
+      "mClientData": {
+        "__type": "SpellDataResourceClient",
+        "mTooltipData": {
+          "mObjectName": "AhriR",
+          "mFormat": "{d7c27163}",
+          "mLocKeys": {
+            "keyName": "Spell_AhriTumble_Name",
+            "keySummary": "Spell_AhriTumble_Summary",
+            "keyTooltip": "Spell_AhriTumble_Tooltip",
+            "keyTooltipSimple": "Spell_AhriR_TooltipSimple"
+          },
+          "mLists": {
+            "LevelUp": {
+              "levelCount": 3,
+              "Elements": [
+                {
+                  "type": "RBaseDamage",
+                  "typeIndex": 1,
+                  "nameOverride": "Spell_ListType_Damage",
+                  "__type": "TooltipInstanceListElement"
+                },
+                {
+                  "type": "Cooldown",
+                  "__type": "TooltipInstanceListElement"
+                }
+              ],
+              "__type": "TooltipInstanceList"
+            }
+          },
+          "__type": "TooltipInstanceSpell"
+        }
+      }
+    }
+  },
+  "Characters/Ahri/Spells/AhriRAbility": {
+    "mRootSpell": "Characters/Ahri/Spells/AhriRAbility/AhriR",
+    "mChildSpells": [
+      "Characters/Ahri/Spells/AhriRAbility/AhriR",
+      "Characters/Ahri/Spells/AhriRAbility/AhriRMissile"
+    ],
+    "mName": "AhriRAbility",
+    "__type": "AbilityObject"
+  },
+  "Characters/Ahri/Spells/AhriQAbility": {
+    "mRootSpell": "Characters/Ahri/Spells/AhriQAbility/AhriQ",
+    "mChildSpells": [
+      "Characters/Ahri/Spells/AhriQAbility/AhriQ",
+      "Characters/Ahri/Spells/AhriQAbility/AhriQMissile",
+      "Characters/Ahri/Spells/AhriQAbility/AhriQReturnMissile"
+    ],
+    "mName": "AhriQAbility",
+    "__type": "AbilityObject"
+  },
+  "Characters/Ahri/Spells/AhriWAbility": {
+    "mRootSpell": "Characters/Ahri/Spells/AhriWAbility/AhriW",
+    "mChildSpells": [
+      "Characters/Ahri/Spells/AhriWAbility/AhriW",
+      "Characters/Ahri/Spells/AhriWAbility/AhriWDamageMissile",
+      "Characters/Ahri/Spells/AhriWAbility/AhriWMissile"
+    ],
+    "mName": "AhriWAbility",
+    "__type": "AbilityObject"
+  },
+  "Characters/Ahri/Spells/AhriEAbility": {
+    "mRootSpell": "Characters/Ahri/Spells/AhriEAbility/AhriE",
+    "mChildSpells": [
+      "Characters/Ahri/Spells/AhriEAbility/AhriE",
+      "Characters/Ahri/Spells/AhriEAbility/AhriEMissile"
+    ],
+    "mName": "AhriEAbility",
+    "__type": "AbilityObject"
+  },
+  "Characters/Ahri/Spells/AhriPassiveAbility": {
+    "mRootSpell": "Characters/Ahri/Spells/AhriPassiveAbility/AhriPassive",
+    "mChildSpells": [
+      "Characters/Ahri/Spells/AhriPassiveAbility/AhriPassive"
+    ],
+    "mName": "AhriPassiveAbility",
+    "__type": "AbilityObject"
+  },
+  "Characters/Ahri/Spells/AhriRAbility/AhriRMissile": {
+    "ObjectName": "AhriRMissile",
+    "objectPath": "Characters/Ahri/Spells/AhriRAbility/AhriRMissile",
+    "mScriptName": "AhriRMissile",
+    "__type": "SpellObject",
+    "mSpell": {
+      "Cooldown": {
+        "values": [
+          11.0,
+          10.0,
+          9.0,
+          8.0,
+          7.0,
+          6.0,
+          6.0
+        ],
+        "__type": "{0a0eddc9}"
+      },
+      "cooldownTime": [
+        11.0,
+        10.0,
+        9.0,
+        8.0,
+        7.0,
+        6.0,
+        6.0
+      ],
+      "castRange": [
+        800.0,
+        800.0,
+        800.0,
+        800.0,
+        800.0,
+        800.0,
+        800.0
+      ],
+      "castRangeValues": {
+        "values": [
+          800.0,
+          800.0,
+          800.0,
+          800.0,
+          800.0,
+          800.0,
+          800.0
+        ],
+        "{0a3e0478}": 800.0,
+        "__type": "{0a0eddc9}"
+      },
+      "mClientData": {
+        "__type": "SpellDataResourceClient"
+      }
+    }
+  },
+  "Characters/Ahri/Spells/AhriQAbility/AhriQMissile": {
+    "ObjectName": "AhriQMissile",
+    "objectPath": "Characters/Ahri/Spells/AhriQAbility/AhriQMissile",
+    "mScriptName": "AhriQMissile",
+    "__type": "SpellObject",
+    "mSpell": {
+      "Cooldown": {
+        "values": [
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "{0a3e0478}": 0.0,
+        "__type": "{0a0eddc9}"
+      },
+      "cooldownTime": [
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0
+      ],
+      "castRange": [
+        1000.0,
+        1000.0,
+        1000.0,
+        1000.0,
+        1000.0,
+        1000.0,
+        1000.0
+      ],
+      "castRangeValues": {
+        "values": [
+          1000.0,
+          1000.0,
+          1000.0,
+          1000.0,
+          1000.0,
+          1000.0,
+          1000.0
+        ],
+        "{0a3e0478}": 1000.0,
+        "__type": "{0a0eddc9}"
+      },
+      "mClientData": {
+        "__type": "SpellDataResourceClient"
+      }
+    }
+  },
+  "Characters/Ahri/Spells/AhriQAbility/AhriQReturnMissile": {
+    "ObjectName": "AhriQReturnMissile",
+    "objectPath": "Characters/Ahri/Spells/AhriQAbility/AhriQReturnMissile",
+    "mScriptName": "AhriQReturnMissile",
+    "__type": "SpellObject",
+    "mSpell": {
+      "Cooldown": {
+        "values": [
+          11.0,
+          11.0,
+          11.0,
+          11.0,
+          11.0,
+          11.0,
+          11.0
+        ],
+        "{0a3e0478}": 11.0,
+        "__type": "{0a0eddc9}"
+      },
+      "cooldownTime": [
+        11.0,
+        11.0,
+        11.0,
+        11.0,
+        11.0,
+        11.0,
+        11.0
+      ],
+      "castRange": [
+        25000.0,
+        25000.0,
+        25000.0,
+        25000.0,
+        25000.0,
+        25000.0,
+        25000.0
+      ],
+      "castRangeValues": {
+        "values": [
+          25000.0,
+          25000.0,
+          25000.0,
+          25000.0,
+          25000.0,
+          25000.0,
+          25000.0
+        ],
+        "{0a3e0478}": 25000.0,
+        "__type": "{0a0eddc9}"
+      },
+      "mClientData": {
+        "__type": "SpellDataResourceClient"
+      }
+    }
+  },
+  "Characters/Ahri/Spells/AhriWAbility/AhriWDamageMissile": {
+    "ObjectName": "AhriWDamageMissile",
+    "objectPath": "Characters/Ahri/Spells/AhriWAbility/AhriWDamageMissile",
+    "mScriptName": "AhriWDamageMissile",
+    "__type": "SpellObject",
+    "mSpell": {
+      "Cooldown": {
+        "values": [
+          11.0,
+          10.0,
+          9.0,
+          8.0,
+          7.0,
+          6.0,
+          6.0
+        ],
+        "__type": "{0a0eddc9}"
+      },
+      "cooldownTime": [
+        11.0,
+        10.0,
+        9.0,
+        8.0,
+        7.0,
+        6.0,
+        6.0
+      ],
+      "castRange": [
+        25000.0,
+        25000.0,
+        25000.0,
+        25000.0,
+        25000.0,
+        25000.0,
+        25000.0
+      ],
+      "castRangeValues": {
+        "values": [
+          25000.0,
+          25000.0,
+          25000.0,
+          25000.0,
+          25000.0,
+          25000.0,
+          25000.0
+        ],
+        "{0a3e0478}": 25000.0,
+        "__type": "{0a0eddc9}"
+      },
+      "mClientData": {
+        "__type": "SpellDataResourceClient"
+      }
+    }
+  },
+  "Characters/Ahri/Spells/AhriWAbility/AhriWMissile": {
+    "ObjectName": "AhriWMissile",
+    "objectPath": "Characters/Ahri/Spells/AhriWAbility/AhriWMissile",
+    "mScriptName": "AhriWMissile",
+    "__type": "SpellObject",
+    "mSpell": {
+      "Cooldown": {
+        "values": [
+          10.0,
+          9.0,
+          8.0,
+          7.0,
+          6.0,
+          5.0,
+          5.0
+        ],
+        "__type": "{0a0eddc9}"
+      },
+      "cooldownTime": [
+        10.0,
+        9.0,
+        8.0,
+        7.0,
+        6.0,
+        5.0,
+        5.0
+      ],
+      "castRange": [
+        300.0,
+        300.0,
+        300.0,
+        300.0,
+        300.0,
+        300.0,
+        300.0
+      ],
+      "castRangeValues": {
+        "values": [
+          300.0,
+          300.0,
+          300.0,
+          300.0,
+          300.0,
+          300.0,
+          300.0
+        ],
+        "{0a3e0478}": 300.0,
+        "__type": "{0a0eddc9}"
+      },
+      "mClientData": {
+        "__type": "SpellDataResourceClient"
+      }
+    }
+  },
+  "Characters/Ahri/Spells/AhriEAbility/AhriEMissile": {
+    "ObjectName": "AhriEMissile",
+    "objectPath": "Characters/Ahri/Spells/AhriEAbility/AhriEMissile",
+    "mScriptName": "AhriEMissile",
+    "__type": "SpellObject",
+    "mSpell": {
+      "Cooldown": {
+        "values": [
+          12.0,
+          12.0,
+          12.0,
+          12.0,
+          12.0,
+          12.0,
+          12.0
+        ],
+        "{0a3e0478}": 12.0,
+        "__type": "{0a0eddc9}"
+      },
+      "cooldownTime": [
+        12.0,
+        12.0,
+        12.0,
+        12.0,
+        12.0,
+        12.0,
+        12.0
+      ],
+      "castRange": [
+        1000.0,
+        1000.0,
+        1000.0,
+        1000.0,
+        1000.0,
+        1000.0,
+        1000.0
+      ],
+      "castRangeValues": {
+        "values": [
+          1000.0,
+          1000.0,
+          1000.0,
+          1000.0,
+          1000.0,
+          1000.0,
+          1000.0
+        ],
+        "{0a3e0478}": 1000.0,
+        "__type": "{0a0eddc9}"
+      },
+      "mClientData": {
+        "__type": "SpellDataResourceClient"
+      }
+    }
+  }
+}
