@@ -25,6 +25,7 @@ Nada de `research/` modifica `data/current/`, `src/lol_knowledge/` ni `lol-knowl
 | Ver qué cambió en el bin de Zaahen entre 16.20 y 16.22 | [`reports/zaahen-bin-diff-16.22.md`](reports/zaahen-bin-diff-16.22.md) |
 | Ver la penetración de armadura de la R de Zaahen | [`reports/zaahen-r-armor-pen.md`](reports/zaahen-r-armor-pen.md) |
 | Ver los registros de estadísticas extraídos del cliente 16.22 | [`reports/champion-records-16.22.md`](reports/champion-records-16.22.md) |
+| Ver los datos de efectos de objetos extraídos del cliente 16.22 | [`reports/item-effects-16.22.md`](reports/item-effects-16.22.md) |
 | Ver la especificación del kit de Zaahen | [`kits/Zaahen.spec.json`](kits/Zaahen.spec.json) |
 | Entender el modelo mecánico de objetos | [`../lol-knowledge/objects/README.md`](../lol-knowledge/objects/README.md) |
 | Saber qué fuentes se consultaron y qué límites tienen | [`evidence/usage-conditions.md`](evidence/usage-conditions.md) |
@@ -139,6 +140,21 @@ $env:PYTHONPATH="research"
 `python -m binmodel.records` lee `CharacterRecords/Root` del bin de cada campeón en el cliente instalado y publica una tabla `Derivado` en `lol-knowledge/derived/champion-records.json`. Sustituye el crecimiento de DA que Data Dragon publica a 0. Detalle, diferencias con Data Dragon y comando en [`reports/champion-records-16.22.md`](reports/champion-records-16.22.md).
 
 `binmodel/wad.py` lee ahora solo el índice y la entrada pedida, no el archivo entero.
+
+## Fase 23 — datos de efectos de todos los objetos
+
+`python -m binmodel.item_effects` lee, para cada objeto de `lol-knowledge/objects/catalog-stats.json`, los valores, cálculos y variantes de su registro `Items/<id>` y sus textos es_ES, y publica una tabla `Derivado` en `lol-knowledge/derived/item-effects.json`. Detalle, resultados y límites en [`reports/item-effects-16.22.md`](reports/item-effects-16.22.md).
+
+```powershell
+$env:PYTHONPATH="research"
+.\.venv\Scripts\python.exe -m binmodel.item_effects `
+  --wad "<Game>\DATA\FINAL\Global.wad.client" `
+  --strings "<Game>\DATA\FINAL\Localized\Global.es_ES.wad.client" `
+  --rst-hashes <hashes.rst.xxh3.txt de CommunityDragon/Data> `
+  --ids-from lol-knowledge\objects\catalog-stats.json `
+  --content-version <version de Game\content-metadata.json> --retrieved-at <fecha> `
+  --output lol-knowledge\derived\item-effects.json
+```
 
 ## Fase 7 — lectura directa del bin del cliente
 

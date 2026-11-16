@@ -48,11 +48,6 @@ Otros valores que confirman lo que ya decía Data Dragon: Adaptabilidad de Randu
 - **Contraste en internet (secundario):** los agregadores no coinciden. Uno atribuye al parche 26.15 un 0,4 % por ataque para todos los portadores; un datamine del PBE de 2025 ya describía 0,4 % cuerpo a cuerpo y 0,2 % a distancia, que es lo que tiene el cliente 16.22. Se sigue al cliente.
 - **Uso:** el catálogo modela la pasiva con el escenario `max_stacks` (+25 %), y estos valores quedan en la nota del efecto. Ráfaga queda `excluded`.
 
-## Cobertura de los tooltips, consultado el 2026-11-16
+## Cobertura de los tooltips
 
-Método: para los 218 objetos comprables de la Grieta, se compararon los marcadores `@Nombre@` de `item_<id>_tooltip` (es_ES, tras expandir `{{ … }}` una vez) con lo que guarda `Items/<id>`: `mDataValues`, `mEffectAmount` (`EffectNAmount`), y las claves de `mItemCalculations` y `StringCalculations` (FNV-1a del nombre). Script de un solo uso, no versionado; se versionará si se genera un archivo de efectos.
-
-- **138 objetos:** todos sus marcadores se resuelven en su propio registro. `StringCalculations` guarda las variantes cuerpo a cuerpo / distancia (Espada ciclovoltaica: 9 % / 7 % de vida actual).
-- **71 sin marcadores:** 55 con el tooltip vacío (solo estadísticas o componentes) y 16 con efectos sin cifras (Bailarín espectral: «Te vuelves fantasmal»).
-- **9 con algún marcador sin resolver:** cinco parecen nombres de estadísticas del propio objeto (Escudo de Doran, Armadura lunar alada, Brisa de éter, Ídolo prohibido, Sable-pistola hextech; sin comprobar); `f2` de la Armadura de Warmog se calcula en partida; Espada de Doran (`HealMultiplier`, `HealingReduction`), Daga dentada (`Effect1Amount`) y Carcaj del mediodía (`MinionDamage`) no tienen el valor en su registro.
-- **Límite:** los valores dicen cuánto; cómo se aplican está en los scripts del juego, que no se leen. Por eso cada efecto sigue necesitando un modelo curado.
+El recuento hecho aquí con un script de un solo uso queda sustituido por el archivo publicado y su informe: [`item-effects-16.22.md`](item-effects-16.22.md).
