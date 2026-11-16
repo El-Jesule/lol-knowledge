@@ -259,6 +259,12 @@ def _effects(items: Sequence[ItemData], owner: str) -> tuple[list[_Effect], list
                 f"{owner} item {item.id} is listed twice; unique effects of copies are not modelled"
             )
         seen.add(item.id)
+        if item.effect_review != "complete":
+            notes.append(
+                f"{owner} {item.id}: effect review {item.effect_review}; "
+                "effects missing from the catalog are not applied"
+            )
+            weakened = True
         for effect in item.effects:
             status = effect.get("model_status")
             components = effect.get("components") or ()

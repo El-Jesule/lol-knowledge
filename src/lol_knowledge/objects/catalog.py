@@ -247,6 +247,8 @@ def _build_object(entry: Mapping[str, Any], snapshot: Snapshot) -> dict[str, Any
         "name": item.get("name"),
         "game_version": snapshot.patch,
         "verification": verification,
+        # Whether the curator modelled every effect in the description.
+        "effect_review": entry.get("effect_review"),
         "tags": sorted(tags) if isinstance(tags, list) else [],
         "stats": stats,
         "unmapped_source_stats": unmapped,

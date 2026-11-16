@@ -63,6 +63,8 @@ class ItemData:
     game_version: str
     stats: tuple[ItemStat, ...]
     effects: tuple[Mapping[str, Any], ...] = field(default=(), compare=False, hash=False)
+    # "complete" when every effect of the description is in ``effects``.
+    effect_review: str = "complete"
 
 
 def _number(value: Any, context: str) -> Fraction:
@@ -198,6 +200,7 @@ def items_from_model(model: Mapping[str, Any], item_ids: Sequence[str]) -> tuple
                 str(game_version),
                 tuple(stats),
                 tuple(obj.get("effects") or ()),
+                str(obj.get("effect_review")),
             )
         )
     return tuple(selected)
