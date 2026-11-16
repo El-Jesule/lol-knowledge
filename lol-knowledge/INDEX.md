@@ -27,6 +27,7 @@
 | Calcular la curación por robo de vida y omnivampirismo | [Robo de vida y omnivampirismo](mechanics/life-steal-and-omnivamp.md) |
 | Calcular la tenacidad y cómo se combinan sus fuentes | [Tenacidad](mechanics/tenacity.md) |
 | Calcular la regeneración de vida y maná | [Regeneración](mechanics/regeneration.md) |
+| Calcular la velocidad de movimiento y sus límites suaves | [Velocidad de movimiento](mechanics/move-speed.md) |
 | Aplicar aumentos y reducciones de daño | [Modificadores de daño](mechanics/damage-modifiers.md) |
 | Encadenar ataques, daño al impactar y vida del objetivo | [Ataques básicos y daño al impactar](mechanics/basic-attacks-and-on-hit.md) |
 | Ver las estadísticas base y por nivel extraídas del cliente | [champion-records.json](derived/champion-records.json) |
