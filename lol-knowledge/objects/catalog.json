@@ -1,9 +1,9 @@
 {
   "schema_version": 1,
   "kind": "lol-object-model-catalog",
-  "catalog_version": 15,
+  "catalog_version": 16,
   "game_version": "16.22.1",
-  "notes": "Curated overlay for a mechanically diverse sample. Data Dragon derivatives (stats, gold, maps, recipes) are not repeated here; see lol-knowledge/objects/README.md. Numeric mechanics absent from Data Dragon carry declared sources and secondary confidence. Catalog version 3 (2026-11-15): moved to snapshot 16.22.1; stats, gold, descriptions and recipes of the 15 objects are identical to 16.20.1 in Data Dragon; the secondary evidence was not re-checked against the 16.21 and 16.22 patch notes. Catalog version 6 (2026-11-15): damage components may declare applies_life_steal with its own source; Mist's Edge declares it from the LoL Wiki (secondary). Catalog version 7 (2026-11-16): adds 3111 (Mercury's Treads) for its tenacity, declared from the 16.22.1 description. Catalog version 8 (2026-11-16): description stats of every Summoner's Rift item, curated ones included, come from catalog-stats.json (generated); this file keeps effects and reviews. Catalog version 9 (2026-11-16): adds 3032 (Yun Tal Wildarrows). Effects may declare scenario max_stacks (the stat sheet applies them at full stacks) and objects may confirm a generated 0 as a real zero (confirmed_zero_stats). Catalog version 10 (2026-11-16): adds the on-hit damage of 1043, 3091, 3115, 3124 and 3302, with client values (evidence derived) where Data Dragon omits them; stat effects that are always active (Rabadon) are applied by the stat sheet. Catalog version 11 (2026-11-16): adds Spellblade (trigger spellblade) to Sheen, Trinity Force, Lich Bane, Essence Reaver, Iceborn Gauntlet, Dusk and Dawn and Bloodsong, the repeat_on_hit component and patch notes as a source kind (Terminus is now corroborated by the 26.15 notes). Catalog version 12 (2026-11-16): attack counters (stacks.required on on-hit effects), the energized trigger and trigger_energized component, by_level formulas for client level breakpoints and the target_is_structure condition; adds Kraken Slayer, Rapid Firecannon, Statikk Shiv, Voltaic Cyclosword and Hullbreaker, applies Guinsoo's phantom hits and Terminus's light-hit resistances. Catalog version 13 (2026-11-16): the target's missing health in formulas (scope missing_fraction), target_health_below in rotations, damage_types on damage modifiers and the execute component; Kraken Slayer's missing-health increase, Shadowflame and The Collector. Catalog version 14 (2026-11-16): burns (component burn, triggers damaging_ability and cast, condition ultimate_ability), applied once per rotation for their full duration; max_stacks damage modifiers; adds Liandry's Torment, Blackfire Torch, Fated Ashes, Malignance, Zeke's Convergence and Haunting Guise. Catalog version 15 (2026-11-16): timed effects (duration_seconds with a damage or stat modifier on a spellblade, energized or damaging_ability trigger) are applied by the rotation timeline only; Bloodsong's mark, Voltaic Cyclosword's lethality, Blackfire Torch's ability power and Malignance's magic resist reduction become evaluable, and burns under the timeline deal their damage continuously and restart when applied again.",
+  "notes": "Curated overlay for a mechanically diverse sample. Data Dragon derivatives (stats, gold, maps, recipes) are not repeated here; see lol-knowledge/objects/README.md. Numeric mechanics absent from Data Dragon carry declared sources and secondary confidence. Catalog version 3 (2026-11-15): moved to snapshot 16.22.1; stats, gold, descriptions and recipes of the 15 objects are identical to 16.20.1 in Data Dragon; the secondary evidence was not re-checked against the 16.21 and 16.22 patch notes. Catalog version 6 (2026-11-15): damage components may declare applies_life_steal with its own source; Mist's Edge declares it from the LoL Wiki (secondary). Catalog version 7 (2026-11-16): adds 3111 (Mercury's Treads) for its tenacity, declared from the 16.22.1 description. Catalog version 8 (2026-11-16): description stats of every Summoner's Rift item, curated ones included, come from catalog-stats.json (generated); this file keeps effects and reviews. Catalog version 9 (2026-11-16): adds 3032 (Yun Tal Wildarrows). Effects may declare scenario max_stacks (the stat sheet applies them at full stacks) and objects may confirm a generated 0 as a real zero (confirmed_zero_stats). Catalog version 10 (2026-11-16): adds the on-hit damage of 1043, 3091, 3115, 3124 and 3302, with client values (evidence derived) where Data Dragon omits them; stat effects that are always active (Rabadon) are applied by the stat sheet. Catalog version 11 (2026-11-16): adds Spellblade (trigger spellblade) to Sheen, Trinity Force, Lich Bane, Essence Reaver, Iceborn Gauntlet, Dusk and Dawn and Bloodsong, the repeat_on_hit component and patch notes as a source kind (Terminus is now corroborated by the 26.15 notes). Catalog version 12 (2026-11-16): attack counters (stacks.required on on-hit effects), the energized trigger and trigger_energized component, by_level formulas for client level breakpoints and the target_is_structure condition; adds Kraken Slayer, Rapid Firecannon, Statikk Shiv, Voltaic Cyclosword and Hullbreaker, applies Guinsoo's phantom hits and Terminus's light-hit resistances. Catalog version 13 (2026-11-16): the target's missing health in formulas (scope missing_fraction), target_health_below in rotations, damage_types on damage modifiers and the execute component; Kraken Slayer's missing-health increase, Shadowflame and The Collector. Catalog version 14 (2026-11-16): burns (component burn, triggers damaging_ability and cast, condition ultimate_ability), applied once per rotation for their full duration; max_stacks damage modifiers; adds Liandry's Torment, Blackfire Torch, Fated Ashes, Malignance, Zeke's Convergence and Haunting Guise. Catalog version 15 (2026-11-16): timed effects (duration_seconds with a damage or stat modifier on a spellblade, energized or damaging_ability trigger) are applied by the rotation timeline only; Bloodsong's mark, Voltaic Cyclosword's lethality, Blackfire Torch's ability power and Malignance's magic resist reduction become evaluable, and burns under the timeline deal their damage continuously and restart when applied again. Catalog version 16 (2026-11-16): Spellblade effects declare their 10-second window (LoL Wiki, secondary) as duration_seconds; effects may declare cooldown_reduced_by_attacks (seconds per attack hit and per critical hit); Yun Tal Wildarrows's Flurry becomes evaluable as a timed attack speed effect (trigger on_attack); stack windows (stacks.window_seconds) are applied by the rotation timeline.",
   "objects": [
     {
       "id": "1036",
@@ -745,12 +745,25 @@
             }
           ],
           "cooldown_seconds": 30,
+          "cooldown_reduced_by_attacks": {
+            "seconds": 1,
+            "critical_seconds": 2
+          },
           "stacks": null,
           "duration_seconds": 6,
           "limits": [],
-          "evidence_confidence": "official",
-          "model_status": "excluded",
-          "note": "A timed window whose cooldown attacks and critical strikes shorten (1 s and 2 s); rotations have no timeline, so it is not applied."
+          "evidence_confidence": "derived",
+          "model_status": "evaluable",
+          "note": "Timed: applied only by the rotation timeline (--timeline). +30 % bonus attack speed for 6 s when an attack is launched at a champion; 30 s cooldown from that moment, which every attack hit while it runs shortens by 1 s (2 s on a critical strike), the triggering attack included (the 26.15 text: «reduced by 1 second on-hit»). Without the timeline it is not applied and a rotation against a champion stays Pendiente de verificación.",
+          "sources": [
+            {
+              "kind": "client_data",
+              "reference": "Cliente 16.22.8348910+branch.releases-16-22.content.release: lol-knowledge/derived/item-effects.json → items.3032.data_values and texts.tooltip (research/reports/item-effects-16.22.md)",
+              "quote": "ASMod = 0.3; ASDuration = 6; Cooldown = 30; AACDR = 1; CritCDR = 2 («Los ataques reducen este enfriamiento en @AACDR@ s, que aumenta hasta @CritCDR@ s en el caso de los impactos críticos»)",
+              "retrieved_at": "2026-11-16",
+              "confidence": "derived"
+            }
+          ]
         }
       ]
     },
@@ -1363,7 +1376,7 @@
           ],
           "cooldown_seconds": 1.5,
           "stacks": null,
-          "duration_seconds": null,
+          "duration_seconds": 10,
           "limits": [],
           "sources": [
             {
@@ -1372,6 +1385,14 @@
               "quote": "SpellbladeDamage = StatByCoefficient(mStat 2, mStatFormula 1, 1.0); SpellbladeCooldown = 1.5",
               "retrieved_at": "2026-11-16",
               "confidence": "derived"
+            },
+            {
+              "kind": "community_wiki",
+              "reference": "https://wiki.leagueoflegends.com/en-us/Dusk_and_Dawn?oldid=4015331",
+              "quote": "After using an ability, your next basic attack within 10 seconds",
+              "retrieved_at": "2026-11-16",
+              "confidence": "secondary",
+              "note": "Revisión del 4 de mayo de 2026 (S3 de spellblade.md); la ventana es la misma para todos los objetos con Hoja encantada."
             }
           ],
           "evidence_confidence": "derived",
@@ -1435,7 +1456,7 @@
           ],
           "cooldown_seconds": 1.5,
           "stacks": null,
-          "duration_seconds": null,
+          "duration_seconds": 10,
           "limits": [],
           "sources": [
             {
@@ -1444,6 +1465,14 @@
               "quote": "SpellbladeDamage = StatByNamedDataValue(mStat 2, mStatFormula 1, SpellbladeMultiplier); SpellbladeMultiplier = 2; SpellbladeCooldown = 1.5",
               "retrieved_at": "2026-11-16",
               "confidence": "derived"
+            },
+            {
+              "kind": "community_wiki",
+              "reference": "https://wiki.leagueoflegends.com/en-us/Dusk_and_Dawn?oldid=4015331",
+              "quote": "After using an ability, your next basic attack within 10 seconds",
+              "retrieved_at": "2026-11-16",
+              "confidence": "secondary",
+              "note": "Revisión del 4 de mayo de 2026 (S3 de spellblade.md); la ventana es la misma para todos los objetos con Hoja encantada."
             }
           ],
           "evidence_confidence": "derived",
@@ -1549,7 +1578,7 @@
           ],
           "cooldown_seconds": 1.5,
           "stacks": null,
-          "duration_seconds": null,
+          "duration_seconds": 10,
           "limits": [],
           "sources": [
             {
@@ -1558,6 +1587,14 @@
               "quote": "SpellbladeDamage = StatByNamedDataValue(mStat 2, mStatFormula 1, SpellbladeADRatio) + StatByNamedDataValue(LichBaneAPValue); SpellbladeADRatio = 0.75; LichBaneAPValue = 0.45; SpellbladeCooldown = 1.5",
               "retrieved_at": "2026-11-16",
               "confidence": "derived"
+            },
+            {
+              "kind": "community_wiki",
+              "reference": "https://wiki.leagueoflegends.com/en-us/Dusk_and_Dawn?oldid=4015331",
+              "quote": "After using an ability, your next basic attack within 10 seconds",
+              "retrieved_at": "2026-11-16",
+              "confidence": "secondary",
+              "note": "Revisión del 4 de mayo de 2026 (S3 de spellblade.md); la ventana es la misma para todos los objetos con Hoja encantada."
             }
           ],
           "evidence_confidence": "derived",
@@ -1640,7 +1677,7 @@
           ],
           "cooldown_seconds": 1.5,
           "stacks": null,
-          "duration_seconds": null,
+          "duration_seconds": 10,
           "limits": [],
           "sources": [
             {
@@ -1649,6 +1686,14 @@
               "quote": "SpellbladeDamage = StatByNamedDataValue(mStat 2, mStatFormula 1, BaseADRatio) + StatByNamedDataValue(mStat 8, CritChanceMultiplier); BaseADRatio = 1.25; CritChanceMultiplier = 50; TotalManaRefund = 0.5 × SpellbladeDamage; SpellbladeCooldown = 1.5",
               "retrieved_at": "2026-11-16",
               "confidence": "derived"
+            },
+            {
+              "kind": "community_wiki",
+              "reference": "https://wiki.leagueoflegends.com/en-us/Dusk_and_Dawn?oldid=4015331",
+              "quote": "After using an ability, your next basic attack within 10 seconds",
+              "retrieved_at": "2026-11-16",
+              "confidence": "secondary",
+              "note": "Revisión del 4 de mayo de 2026 (S3 de spellblade.md); la ventana es la misma para todos los objetos con Hoja encantada."
             }
           ],
           "evidence_confidence": "derived",
@@ -1712,7 +1757,7 @@
           ],
           "cooldown_seconds": 1.5,
           "stacks": null,
-          "duration_seconds": null,
+          "duration_seconds": 10,
           "limits": [],
           "sources": [
             {
@@ -1721,6 +1766,14 @@
               "quote": "SpellbladeDamage = StatByNamedDataValue(mStat 2, mStatFormula 1, SpellbladeMultiplier); SpellbladeMultiplier = 1.5; SpellbladeCooldown = 1.5",
               "retrieved_at": "2026-11-16",
               "confidence": "derived"
+            },
+            {
+              "kind": "community_wiki",
+              "reference": "https://wiki.leagueoflegends.com/en-us/Dusk_and_Dawn?oldid=4015331",
+              "quote": "After using an ability, your next basic attack within 10 seconds",
+              "retrieved_at": "2026-11-16",
+              "confidence": "secondary",
+              "note": "Revisión del 4 de mayo de 2026 (S3 de spellblade.md); la ventana es la misma para todos los objetos con Hoja encantada."
             }
           ],
           "evidence_confidence": "derived",
@@ -1829,7 +1882,7 @@
           ],
           "cooldown_seconds": 1.5,
           "stacks": null,
-          "duration_seconds": null,
+          "duration_seconds": 10,
           "limits": [],
           "sources": [
             {
@@ -1838,6 +1891,14 @@
               "quote": "SpellbladeDamage = StatByCoefficient(mStat 2, mStatFormula 1, 0.75) + StatByCoefficient(0.1); SpellbladeCooldown = 1.5",
               "retrieved_at": "2026-11-16",
               "confidence": "derived"
+            },
+            {
+              "kind": "community_wiki",
+              "reference": "https://wiki.leagueoflegends.com/en-us/Dusk_and_Dawn?oldid=4015331",
+              "quote": "After using an ability, your next basic attack within 10 seconds",
+              "retrieved_at": "2026-11-16",
+              "confidence": "secondary",
+              "note": "Revisión del 4 de mayo de 2026 (S3 de spellblade.md); la ventana es la misma para todos los objetos con Hoja encantada."
             }
           ],
           "evidence_confidence": "derived",
@@ -1981,7 +2042,7 @@
           ],
           "cooldown_seconds": 1.5,
           "stacks": null,
-          "duration_seconds": null,
+          "duration_seconds": 10,
           "limits": [],
           "sources": [
             {
@@ -1990,6 +2051,14 @@
               "quote": "SpellbladeDamage = StatByNamedDataValue(mStat 2, mStatFormula 1, SheenMult); SheenMult = 1; SpellbladeCooldown = 1.5",
               "retrieved_at": "2026-11-16",
               "confidence": "derived"
+            },
+            {
+              "kind": "community_wiki",
+              "reference": "https://wiki.leagueoflegends.com/en-us/Dusk_and_Dawn?oldid=4015331",
+              "quote": "After using an ability, your next basic attack within 10 seconds",
+              "retrieved_at": "2026-11-16",
+              "confidence": "secondary",
+              "note": "Revisión del 4 de mayo de 2026 (S3 de spellblade.md); la ventana es la misma para todos los objetos con Hoja encantada."
             }
           ],
           "evidence_confidence": "derived",

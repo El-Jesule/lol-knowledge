@@ -68,6 +68,8 @@ class Contribution:
     # True for a share of a total (Rabadon's Deathcap); other amplifiers use the
     # total without it, since amplifiers do not compound.
     amplifier: bool = False
+    # True for the attack speed share of bonus attack speed (ratio x bonus).
+    scaled: bool = False
 
 
 class StatBlocked(StatsError):
@@ -149,6 +151,16 @@ class StatValue:
 
 
 @dataclass(frozen=True)
+class AttackSpeedRatio:
+    """The client ratio that turns bonus attack speed into attack speed."""
+
+    value: Fraction
+    label: Label
+    source: str
+    note: str = ""
+
+
+@dataclass(frozen=True)
 class StatSheet:
     champion: ChampionData
     level: int
@@ -156,6 +168,8 @@ class StatSheet:
     assumptions: Mapping[str, Fraction]
     values: Mapping[str, StatValue]
     notes: tuple[str, ...] = field(default=())
+    # The champion's attack speed ratio, to rescale a temporary bonus (rotations).
+    attack_speed_ratio: AttackSpeedRatio | None = None
 
     def __getitem__(self, stat_id: str) -> StatValue:
         try:
@@ -274,7 +288,7 @@ def _sheet_effects(
             if mode == "percent":
                 amplifiers.append(_Amplifier(definition.id, amount, source, label))
                 continue
-            value = amount / 100 if definition.unit is Unit.FRACTION else amount
+            value = effect_amount(definition.id, amount)
             if definition.unit is Unit.FRACTION and not 0 <= value <= 1:
                 raise StatsError(f"{title}: {value} is not a fraction 0..1")
             flat.append((definition.id, Contribution(value, "bonus", source, label, note)))
@@ -295,22 +309,42 @@ def _amplified(amplifier: _Amplifier, current: Sequence[Contribution]) -> Contri
 
 
 # Statistics that feed others when the sheet is built; a bonus added afterwards
-# would not reach them.
-_FEEDING_STATS = frozenset({"attack_speed", "attack_speed_bonus", "crit_chance"})
+# would not reach them (bonus attack speed is rescaled by ``with_bonus``).
+_FEEDING_STATS = frozenset({"attack_speed", "crit_chance"})
+
+
+def effect_amount(stat_id: str, value: Fraction) -> Fraction:
+    """A catalog amount in the stat's unit: percentage points for fraction stats."""
+    return value / 100 if _receiver(stat_id).unit is Unit.FRACTION else value
 
 
 def _added(sheet: StatSheet, stat_id: str, contribution: Contribution) -> StatSheet:
     definition = _receiver(stat_id)
+    speed = definition.id == "attack_speed_bonus"
     if (
         definition.id in _FEEDING_STATS
         or definition.stacking is not Stacking.ADDITIVE
-        or definition.unit is not Unit.AMOUNT
+        or (definition.unit is not Unit.AMOUNT and not speed)
     ):
         raise StatsError(f"{definition.id}: only additive amounts take a temporary bonus")
     value = sheet[definition.id]
     values = dict(sheet.values)
     values[definition.id] = replace(value, contributions=(*value.contributions, contribution))
+    if speed:
+        values["attack_speed"] = _rescaled(sheet, values[definition.id].contributions)
     return replace(sheet, values=values)
+
+
+def _rescaled(sheet: StatSheet, bonus: Sequence[Contribution]) -> StatValue:
+    """Attack speed again from a changed bonus attack speed."""
+    current = sheet["attack_speed"]
+    if current.blocked:
+        raise StatsError(f"attack_speed: {current.blocked}")
+    scaled = _scaled_attack_speed(sheet.champion, bonus, sheet.attack_speed_ratio)
+    if isinstance(scaled, str):
+        raise StatsError(f"attack_speed: {scaled}")
+    kept = tuple(item for item in current.contributions if not item.scaled)
+    return replace(current, contributions=kept if scaled is None else (*kept, scaled))
 
 
 def with_bonus(
@@ -388,8 +422,22 @@ def _attack_speed_growth(champion: ChampionData, level: int, multiplier: Fractio
     )
 
 
+def _attack_speed_ratio(
+    champion: ChampionData, derived: DerivedRecords | None
+) -> AttackSpeedRatio | None:
+    ratio = derived.value(champion.id, ATTACK_SPEED_RATIO) if derived else None
+    if derived is None or ratio is None:
+        return None
+    label, note = Label.DERIVED, ""
+    if not derived.matches_patch(champion.patch):
+        label = Label.PENDING
+        note = f"; client {derived.game_version} record used with snapshot {champion.patch}"
+    source = f"{derived.path} {champion.id}.{ATTACK_SPEED_RATIO} ({derived.content_version})"
+    return AttackSpeedRatio(ratio, label, source, note)
+
+
 def _scaled_attack_speed(
-    champion: ChampionData, bonus: Sequence[Contribution], derived: DerivedRecords | None
+    champion: ChampionData, bonus: Sequence[Contribution], ratio: AttackSpeedRatio | None
 ) -> Contribution | str | None:
     """Bonus attack speed times the champion's ratio, or why it cannot be computed.
 
@@ -398,25 +446,19 @@ def _scaled_attack_speed(
     total_bonus = sum((item.value for item in bonus), start=Fraction(0))
     if not total_bonus:
         return None
-    ratio = derived.value(champion.id, ATTACK_SPEED_RATIO) if derived else None
-    if derived is None or ratio is None:
+    if ratio is None:
         return (
             f"bonus attack speed {format_number(total_bonus)} needs the attack speed ratio, "
             f"which Data Dragon does not publish, and the derived records have no "
             f"{champion.id}.{ATTACK_SPEED_RATIO} (see {ATTACK_SPEED_RULES})"
         )
-    note = f"ratio {format_number(ratio)} x bonus {format_percent(total_bonus)}"
-    label = Label.DERIVED
-    if not derived.matches_patch(champion.patch):
-        label = Label.PENDING
-        note += f"; client {derived.game_version} record used with snapshot {champion.patch}"
     return Contribution(
-        ratio * total_bonus,
+        ratio.value * total_bonus,
         "bonus",
-        f"{derived.path} {champion.id}.{ATTACK_SPEED_RATIO} ({derived.content_version})"
-        " x attack_speed_bonus",
-        weakest([label, *(item.label for item in bonus)]),
-        note,
+        f"{ratio.source} x attack_speed_bonus",
+        weakest([ratio.label, *(item.label for item in bonus)]),
+        f"ratio {format_number(ratio.value)} x bonus {format_percent(total_bonus)}{ratio.note}",
+        scaled=True,
     )
 
 
@@ -632,7 +674,8 @@ def build_stat_sheet(
         )
         notes.append(reason)
 
-    scaled = _scaled_attack_speed(champion, contributions["attack_speed_bonus"], derived)
+    ratio = _attack_speed_ratio(champion, derived)
+    scaled = _scaled_attack_speed(champion, contributions["attack_speed_bonus"], ratio)
     if isinstance(scaled, str):
         blocked["attack_speed"] = scaled
     elif scaled is not None:
@@ -660,4 +703,4 @@ def build_stat_sheet(
         stat_id: StatValue(STATS[stat_id], tuple(contributions[stat_id]), blocked.get(stat_id))
         for stat_id in STATS
     }
-    return StatSheet(champion, level, tuple(items), assumed, values, tuple(notes))
+    return StatSheet(champion, level, tuple(items), assumed, values, tuple(notes), ratio)

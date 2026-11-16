@@ -15,7 +15,7 @@
 ## Regla del motor (`Calculado`; decisiones del usuario del 2026-11-16)
 
 1. **Cada N ataques:** cada efecto cuenta los ataques básicos de la rotación **desde cero** y salta en el ataque N (el 3.º, el 6.º…). Las habilidades no cuentan. En el catálogo, un efecto `on_hit` u `on_attack` con `stacks.required` = N ≥ 2.
-2. **Ventanas de tiempo:** las acumulaciones que caducan (4 s en Kraken, 10 s en Rompecascos) no se tienen en cuenta, porque las rotaciones no tienen tiempo.
+2. **Ventanas de tiempo:** sin `--timeline`, las acumulaciones que caducan (4 s en Kraken, 10 s en Rompecascos, `stacks.window_seconds` del cliente) no se tienen en cuenta. Con `--timeline`, el contador vuelve a cero si el ataque llega esa ventana o más tarde después del anterior ([`timeline.md`](timeline.md), regla 10).
 3. **Vigor:** empieza **listo** (como si llegaras corriendo) y salta una vez, en el primer ataque. No se recarga dentro de la rotación: la recarga depende del movimiento, que no se modela.
 4. **Galvanizado (Espada ciclovoltaica):** si una habilidad hace daño a un campeón antes del primer ataque, ella consume el Vigor.
 5. **Varios objetos de Vigor:** se aplican todos, pero no está verificado si se acumulan, así que la rotación queda `Pendiente de verificación`.
@@ -34,4 +34,4 @@
 
 ## Fuera de alcance
 
-- La recarga del Vigor y cualquier ventana de tiempo.
+- La recarga del Vigor.

@@ -1,7 +1,7 @@
 # Línea de tiempo de las rotaciones
 
 - **Ámbito:** `python -m lol_knowledge rotation --timeline`: cada paso tiene un momento, en segundos desde el inicio de la rotación.
-- **Fecha:** 2026-11-16 (fase 29, primera de la línea de tiempo; fase 30, quemaduras en el tiempo y efectos con duración).
+- **Fecha:** 2026-11-16 (fase 29, primera de la línea de tiempo; fase 30, quemaduras en el tiempo y efectos con duración; fase 31, Ráfaga de Yun Tal y ventanas de acumulaciones y de Hoja encantada).
 
 ## Decisiones del usuario (2026-11-16)
 
@@ -16,9 +16,24 @@
 6. **El daño posterior cuenta:** la rotación termina cuando se apaga la última quemadura; la duración y el daño por segundo lo incluyen.
 7. **Efectos con duración de esta fase:** la marca de Tonada sanguina, la reducción de resistencia mágica de Malignidad, la letalidad de la Espada ciclovoltaica y Fuego negro de la Antorcha. La Ráfaga de Yun Tal queda para otra fase: cambia la velocidad de ataque y su enfriamiento se reduce al atacar.
 
+## Fuentes de la fase 31
+
+| Id | Fuente | Qué cubre | Naturaleza |
+|---|---|---|---|
+| T1 | Data Dragon 16.22.1, Flechas de los Yun Tal: «Al atacar a un campeón enemigo, obtienes un 30% de velocidad de ataque durante 6 s (30 s de enfriamiento).» | Ráfaga | Oficial de Riot |
+| T2 | Cliente 16.22, [`../derived/item-effects.json`](../derived/item-effects.json), objeto 3032: `ASMod` 0,3, `ASDuration` 6, `Cooldown` 30, `AACDR` 1, `CritCDR` 2 («Los ataques reducen este enfriamiento en 1 s, que aumenta hasta 2 s en el caso de los impactos críticos») | Reducción del enfriamiento | `Derivado` |
+| T3 | Notas recopiladas de 26.15 (riftpatchnotes.com, Yun Tal Wildarrows): «Launching a basic attack against an enemy champion grants you 30% bonus attack speed for 6 seconds (30 second cooldown, reduced by 1 second on-hit and 2 seconds if the attack critically strikes)» | La Ráfaga se activa al lanzar el ataque y la reducción llega al impactar | Fuente secundaria |
+| T4 | Cliente 16.22, objetos 6672 y 3181: `BuffDuration` 4 (Kraken) y la ventana de 10 s de Rompecascos, ya en el catálogo (`stacks.window_seconds`) | Ventanas de acumulaciones | `Derivado` |
+| T5 | LoL Wiki, `Kraken_Slayer` (consulta del 2026-11-16): las acumulaciones se renuevan al atacar estructuras; no dice si se renuevan contra campeones. Su texto (3 s, 2 acumulaciones) es anterior al cliente 16.22 | Renovación de las acumulaciones | Fuente secundaria |
+| T6 | LoL Wiki, `Dusk_and_Dawn`, revisión 4015331: «your next basic attack within 10 seconds» | Ventana de Hoja encantada | Fuente secundaria |
+
+## Decisiones del usuario (fase 31, 2026-11-16)
+
+8. Implementar la Ráfaga de Yun Tal, la ventana de acumulaciones de Kraken y la ventana de 10 s de Hoja encantada. La regla de las ventanas es la misma para todos los contadores que declaran `stacks.window_seconds`, así que también se aplica a Rompecascos.
+
 ## Regla (`Calculado`)
 
-1. **Ataques:** un ataque empieza en cuanto el reloj llega al siguiente ataque disponible; el siguiente queda disponible 1 / velocidad de ataque después (velocidad de ataque de la hoja, [`attack-speed.md`](attack-speed.md)). El daño del ataque cae en ese mismo instante.
+1. **Ataques:** un ataque empieza en cuanto el reloj llega al siguiente ataque disponible; el siguiente queda disponible 1 / velocidad de ataque después ([`attack-speed.md`](attack-speed.md)), con la velocidad en vigor justo después del ataque (la de la hoja, más la Ráfaga si está activa). El daño del ataque cae en ese mismo instante. El informe da el intervalo con la velocidad de la hoja.
 2. **Habilidades:** son instantáneas: no avanzan el reloj ni esperan al ataque. Su enfriamiento empieza al lanzarlas y vale lo que da la hoja con la aceleración de habilidades ([`ability-haste.md`](ability-haste.md)) para el rango aprendido.
 3. **Reactivaciones:** un caso del kit marcado `recast` no inicia enfriamiento; exige un lanzamiento previo sin reactivar y, si el kit declara `recast_window_seconds`, que no haya pasado esa ventana (Zaahen Q: 4 s, de [`../champions/Zaahen/abilities.md`](../champions/Zaahen/abilities.md)).
 4. **Esperas:** `wait:<segundos>` avanza el reloj; sin `--timeline` es un error.
@@ -31,9 +46,11 @@
    - Sobre el objetivo (Malignidad): una reducción plana de su resistencia, que se aplica antes de la penetración ([`damage-mitigation.md`](damage-mitigation.md)). Se supone que el objetivo se queda en la niebla, como ya se supone para su quemadura.
    - Si el disparador es un golpe (Hoja encantada, Vigor), no se sabe si ese golpe ya se beneficia: el paso que lo dispara queda `Pendiente de verificación`.
    - Sin `--timeline`, estos efectos no se aplican; se listan y, si pueden afectar al objetivo, la rotación queda `Pendiente de verificación`.
+9. **Ráfaga de Yun Tal** (T1-T3): al lanzar un ataque contra un campeón, +30 % de velocidad de ataque adicional durante 6 s, multiplicada por el ratio de velocidad de ataque del campeón como cualquier bonificación ([`attack-speed.md`](attack-speed.md)). El enfriamiento de 30 s empieza al activarse; cada ataque que impacta mientras corre le resta 1 s (2 s si es crítico), **incluido el que la activó**, porque su impacto llega después del lanzamiento (T3). No se reactiva mientras dura el enfriamiento. Como no consta si el juego recalcula el tiempo hasta el siguiente ataque cuando cambia la velocidad de ataque entre dos ataques, una rotación en la que la Ráfaga se activa queda `Pendiente de verificación`.
+10. **Ventanas de acumulaciones** (T4, T5): un contador con `stacks.window_seconds` vuelve a cero si el ataque llega esa ventana o más tarde después del ataque anterior (4 s en Kraken, 10 s en Rompecascos); cada ataque renueva las acumulaciones, como da a entender T5. El paso en el que caducan queda `Pendiente de verificación`. Los contadores sin ventana (impactos fantasma de Guinsoo) no caducan.
+11. **Ventana de Hoja encantada** (T6): la carga dura 10 s desde la última habilidad que la cargó; un ataque posterior no se potencia, pierde la carga y queda `Pendiente de verificación`. Lanzar otra habilidad mientras hay carga la renueva.
 
 ## Pendiente (fases siguientes)
 
-- La Ráfaga de Yun Tal (velocidad de ataque temporal con enfriamiento que reducen los ataques).
-- Ventanas de acumulaciones (Kraken, Rompecascos) y la ventana de 10 s de Hoja encantada.
 - Acumulaciones calculadas (Guinsoo, Liandry, Disfraz encantado, El final), con «al máximo» como opción.
+- Los impactos fantasma de Guinsoo como acumulación extra del Kraken (T5).

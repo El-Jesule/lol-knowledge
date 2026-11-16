@@ -271,8 +271,6 @@ def test_with_bonus_adds_a_temporary_contribution():
     assert data["lethality"].contributions[-1].source == "test"
     assert base["lethality"].total() == 10
     with pytest.raises(StatsError, match="only additive amounts"):
-        with_bonus(base, "attack_speed_bonus", F(1, 10), "test", Label.DERIVED)
-    with pytest.raises(StatsError, match="only additive amounts"):
         with_bonus(base, "crit_chance", F(1, 10), "test", Label.DERIVED)
 
 
