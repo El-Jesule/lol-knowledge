@@ -3,16 +3,17 @@
 from __future__ import annotations
 
 STAT_SUBJECTS = frozenset({"champion", "target"})
-STAT_SCOPES = frozenset({"base", "bonus", "total", "current", "max"})
+STAT_SCOPES = frozenset({"base", "bonus", "total", "current", "max", "missing_fraction"})
 MAX_FORMULA_DEPTH = 32
 
 # Which scopes make sense for each stat. The engine resolves ``total`` to the
 # bare key, ``base``/``bonus`` to ``<scope>_<stat>`` and ``current``/``max`` to
-# ``<scope>_<stat>`` (for example ``current_health``).
+# ``<scope>_<stat>`` (for example ``current_health``). ``missing_fraction`` is the
+# target's missing health over its maximum, 0 to 1 (``missing_fraction_health``).
 STAT_SCOPES_BY_STAT: dict[str, frozenset[str]] = {
     "attack_damage": frozenset({"base", "bonus", "total"}),
     "ability_power": frozenset({"total"}),
-    "health": frozenset({"base", "bonus", "total", "current", "max"}),
+    "health": frozenset({"base", "bonus", "total", "current", "max", "missing_fraction"}),
     "mana": frozenset({"base", "bonus", "total"}),
     "armor": frozenset({"base", "bonus", "total"}),
     "magic_resist": frozenset({"base", "bonus", "total"}),

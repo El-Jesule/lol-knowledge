@@ -162,7 +162,7 @@ def test_formula_requirements_separate_target_stats(object_model) -> None:
             "crit_chance",
             "health",
         ),
-        "target": ("bonus_health", "current_health"),
+        "target": ("bonus_health", "current_health", "missing_fraction_health"),
     }
 
 

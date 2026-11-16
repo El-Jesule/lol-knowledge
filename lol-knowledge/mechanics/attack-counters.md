@@ -25,7 +25,7 @@
 
 | Objeto | Efecto | Estado |
 |---|---|---|
-| Verdugo de krakens (6672) | Cada tercer ataque: 150-200 físico según el nivel (×0,8 a distancia) | Aplicado; el aumento por la vida que le falta al objetivo (hasta ×1,75) no, así que la rotación queda `Pendiente de verificación` |
+| Verdugo de krakens (6672) | Cada tercer ataque: 150-200 físico según el nivel (×0,8 a distancia) | Aplicado, con el aumento por la vida que le falta al objetivo (hasta ×1,75) desde la fase 27 ([`target-health.md`](target-health.md)) |
 | Hoja de furia de Guinsoo (3124) | Cada tercer ataque repite los efectos al impactar | Aplicado |
 | Rompecascos (3181) | Cada quinto ataque contra campeones: 120 % del DA base + 5 % de la vida máxima (×0,7 a distancia) | Aplicado contra campeones; contra estructuras, no |
 | Cañón de fuego rápido (3094) | Ataque con Vigor: 40 mágico | Aplicado |
@@ -35,4 +35,3 @@
 ## Fuera de alcance
 
 - La recarga del Vigor y cualquier ventana de tiempo.
-- El daño que crece con la vida que le falta al objetivo (Kraken): será la siguiente mecánica.

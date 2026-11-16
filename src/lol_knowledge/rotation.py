@@ -20,7 +20,7 @@ from __future__ import annotations
 
 import re
 from collections.abc import Mapping, Sequence
-from dataclasses import dataclass, replace
+from dataclasses import dataclass, field, replace
 from fractions import Fraction
 from typing import Any
 
@@ -127,7 +127,7 @@ NO_HEALING = Healing(Fraction(0), Fraction(0), Fraction(0), Label.OFFICIAL)
 
 @dataclass(frozen=True)
 class Part:
-    kind: str  # "attack", "on_hit" or "ability"
+    kind: str  # "attack", "on_hit", "ability" or "execute"
     source: str
     damage_type: DamageType
     raw: Fraction
@@ -245,6 +245,8 @@ class _Effect:
     limits: tuple[Mapping[str, Any], ...]
     # Fires on every Nth basic attack (``stacks.required``), counted from zero.
     every: int | None = None
+    # Values of conditions that take one (``target_health_below``: a percentage).
+    condition_values: Mapping[str, Any] = field(default_factory=dict)
 
     @property
     def title(self) -> str:
@@ -325,6 +327,14 @@ def _effects(
                         component,
                         tuple(effect.get("limits") or ()),
                         _every(effect),
+                        {
+                            str(entry.get("kind")): entry["value"]
+                            for entry in [
+                                *(effect.get("conditions") or ()),
+                                *(component.get("conditions") or ()),
+                            ]
+                            if "value" in entry
+                        },
                     )
                 )
     return effects, notes, weakened
@@ -347,7 +357,13 @@ def _target_kind(target: Target, why: str) -> str:
     return target.kind
 
 
-def _conditions_hold(effect: _Effect, target: Target, part_kind: str, crit: bool) -> bool:
+def _conditions_hold(
+    effect: _Effect,
+    target: Target,
+    part_kind: str,
+    crit: bool,
+    target_stats: Mapping[str, Fraction] | None = None,
+) -> bool:
     for condition in effect.conditions:
         if condition in TARGET_KIND_CONDITIONS:
             if _target_kind(target, effect.title) != TARGET_KIND_CONDITIONS[condition]:
@@ -360,6 +376,12 @@ def _conditions_hold(effect: _Effect, target: Target, part_kind: str, crit: bool
                 return False
         elif condition == "damage_source_is_attack":
             if part_kind != "attack":
+                return False
+        elif condition == "target_health_below":
+            if target_stats is None:
+                raise RotationError(f"{effect.title}: needs the target's health")
+            threshold = Fraction(str(effect.condition_values[condition])) / 100
+            if target_stats["current_health"] >= threshold * target_stats["max_health"]:
                 return False
         else:
             raise RotationError(f"{effect.title}: condition {condition!r} is not modelled")
@@ -394,6 +416,7 @@ class _Rotation:
         self.counted_repeats: list[_Effect] = []
         self.energized: list[_Effect] = []
         self.galvanize: list[_Effect] = []
+        self.executes: list[_Effect] = []
         owners = sorted(
             {
                 item.id
@@ -419,6 +442,8 @@ class _Rotation:
                 self.on_hit.append(effect)
             elif effect.trigger == "energized" and kind == "damage":
                 self.energized.append(effect)
+            elif kind == "execute":
+                self.executes.append(effect)
             elif effect.trigger == "damaging_ability" and kind == "trigger_energized":
                 self.galvanize.append(effect)
             elif effect.trigger == "spellblade" and kind == "damage":
@@ -472,14 +497,23 @@ class _Rotation:
         return detail
 
     def _modifiers(
-        self, part_kind: str, crit: bool, target_stats: Mapping[str, Fraction]
+        self,
+        part_kind: str,
+        crit: bool,
+        target_stats: Mapping[str, Fraction],
+        damage_type: DamageType,
     ) -> tuple[list[tuple[str, Fraction]], list[tuple[str, Fraction]], list[Label], list[str]]:
         dealt: list[tuple[str, Fraction]] = []
         taken: list[tuple[str, Fraction]] = []
         labels: list[Label] = []
         notes: list[str] = []
         for effect in self.dealt:
-            if self._mode(effect) and _conditions_hold(effect, self.target, part_kind, crit):
+            types = effect.component.get("damage_types")
+            if types is not None and damage_type.value not in types:
+                continue
+            if self._mode(effect) and _conditions_hold(
+                effect, self.target, part_kind, crit, target_stats
+            ):
                 if effect.component.get("source") != "all":
                     raise RotationError(f"{effect.title}: source is not modelled")
                 dealt.append((effect.title, self._percent(effect, target_stats)))
@@ -527,7 +561,9 @@ class _Rotation:
         if damage_type in PENETRATION:
             percent, flat = PENETRATION[damage_type]
             labels = [*labels, self.sheet[percent].label, self.sheet[flat].label]
-        dealt, taken, modifier_labels, modifier_notes = self._modifiers(kind, crit, target_stats)
+        dealt, taken, modifier_labels, modifier_notes = self._modifiers(
+            kind, crit, target_stats, damage_type
+        )
         part = Part(
             kind,
             source,
@@ -643,6 +679,32 @@ class _Rotation:
             )
         return parts
 
+    def _execute(
+        self, parts: Sequence[Part], health: Fraction, target_stats: Mapping[str, Fraction]
+    ) -> list[Part]:
+        """An execute: the target's remaining health as true damage (execute.md)."""
+        left = health - sum((part.damage for part in parts), start=Fraction(0))
+        for effect in self.executes:
+            if left <= 0 or not parts:
+                return []
+            if not _conditions_hold(effect, self.target, "execute", False, target_stats):
+                continue
+            threshold = self._percent(effect, target_stats) / 100
+            if left < threshold * target_stats["max_health"]:
+                return [
+                    Part(
+                        "execute",
+                        f"{effect.title} ({effect.name})",
+                        DamageType.TRUE,
+                        left,
+                        mitigate(left, DamageType.TRUE),
+                        (),
+                        (),
+                        effect.label,
+                    )
+                ]
+        return []
+
     def _counted(
         self, step: Step, target_stats: Mapping[str, Fraction], counters: dict[str, int]
     ) -> list[Part]:
@@ -754,7 +816,11 @@ class _Rotation:
         counters = {effect.title: 0 for effect in [*self.counted, *self.counted_repeats]}
         energized = bool(self.energized)
         for index, step in enumerate(steps, start=1):
-            target_stats = {**self.target.stats, "current_health": health}
+            target_stats = {
+                **self.target.stats,
+                "current_health": health,
+                "missing_fraction_health": 1 - health / self.target.stats["max_health"],
+            }
             if step.slot is None:
                 empowered = charged and step.spellblade and bool(self.spellblade)
                 charged = False
@@ -778,6 +844,7 @@ class _Rotation:
                         f"{self.galvanize[0].title}: the ability's damage to a champion "
                         "triggered Energized"
                     )
+            parts += self._execute(parts, health, target_stats)
             outcome = StepOutcome(
                 index, step, name, tuple(parts), health, weakest(part.label for part in parts)
             )
