@@ -124,6 +124,7 @@ TRIGGER_EVENTS = frozenset(
         "on_attack",
         "on_hit",
         "spellblade",
+        "energized",
         "taking_attack",
         "damaging_ability",
         "on_heal_or_shield",
@@ -151,6 +152,7 @@ COMPONENT_KINDS = frozenset(
         "status",
         "stasis",
         "repeat_on_hit",
+        "trigger_energized",
     }
 )
 DAMAGE_TYPES = frozenset({"physical", "magic", "true"})
@@ -159,6 +161,7 @@ LIMIT_KINDS = frozenset({"maximum", "minimum", "threshold", "cap"})
 CONDITION_KINDS = frozenset(
     {
         "target_is_champion",
+        "target_is_structure",
         "target_is_monster",
         "target_is_minion",
         "target_health_below",

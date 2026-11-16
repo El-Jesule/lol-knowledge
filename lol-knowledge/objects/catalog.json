@@ -1,9 +1,9 @@
 {
   "schema_version": 1,
   "kind": "lol-object-model-catalog",
-  "catalog_version": 11,
+  "catalog_version": 12,
   "game_version": "16.22.1",
-  "notes": "Curated overlay for a mechanically diverse sample. Data Dragon derivatives (stats, gold, maps, recipes) are not repeated here; see lol-knowledge/objects/README.md. Numeric mechanics absent from Data Dragon carry declared sources and secondary confidence. Catalog version 3 (2026-11-15): moved to snapshot 16.22.1; stats, gold, descriptions and recipes of the 15 objects are identical to 16.20.1 in Data Dragon; the secondary evidence was not re-checked against the 16.21 and 16.22 patch notes. Catalog version 6 (2026-11-15): damage components may declare applies_life_steal with its own source; Mist's Edge declares it from the LoL Wiki (secondary). Catalog version 7 (2026-11-16): adds 3111 (Mercury's Treads) for its tenacity, declared from the 16.22.1 description. Catalog version 8 (2026-11-16): description stats of every Summoner's Rift item, curated ones included, come from catalog-stats.json (generated); this file keeps effects and reviews. Catalog version 9 (2026-11-16): adds 3032 (Yun Tal Wildarrows). Effects may declare scenario max_stacks (the stat sheet applies them at full stacks) and objects may confirm a generated 0 as a real zero (confirmed_zero_stats). Catalog version 10 (2026-11-16): adds the on-hit damage of 1043, 3091, 3115, 3124 and 3302, with client values (evidence derived) where Data Dragon omits them; stat effects that are always active (Rabadon) are applied by the stat sheet. Catalog version 11 (2026-11-16): adds Spellblade (trigger spellblade) to Sheen, Trinity Force, Lich Bane, Essence Reaver, Iceborn Gauntlet, Dusk and Dawn and Bloodsong, the repeat_on_hit component and patch notes as a source kind (Terminus is now corroborated by the 26.15 notes).",
+  "notes": "Curated overlay for a mechanically diverse sample. Data Dragon derivatives (stats, gold, maps, recipes) are not repeated here; see lol-knowledge/objects/README.md. Numeric mechanics absent from Data Dragon carry declared sources and secondary confidence. Catalog version 3 (2026-11-15): moved to snapshot 16.22.1; stats, gold, descriptions and recipes of the 15 objects are identical to 16.20.1 in Data Dragon; the secondary evidence was not re-checked against the 16.21 and 16.22 patch notes. Catalog version 6 (2026-11-15): damage components may declare applies_life_steal with its own source; Mist's Edge declares it from the LoL Wiki (secondary). Catalog version 7 (2026-11-16): adds 3111 (Mercury's Treads) for its tenacity, declared from the 16.22.1 description. Catalog version 8 (2026-11-16): description stats of every Summoner's Rift item, curated ones included, come from catalog-stats.json (generated); this file keeps effects and reviews. Catalog version 9 (2026-11-16): adds 3032 (Yun Tal Wildarrows). Effects may declare scenario max_stacks (the stat sheet applies them at full stacks) and objects may confirm a generated 0 as a real zero (confirmed_zero_stats). Catalog version 10 (2026-11-16): adds the on-hit damage of 1043, 3091, 3115, 3124 and 3302, with client values (evidence derived) where Data Dragon omits them; stat effects that are always active (Rabadon) are applied by the stat sheet. Catalog version 11 (2026-11-16): adds Spellblade (trigger spellblade) to Sheen, Trinity Force, Lich Bane, Essence Reaver, Iceborn Gauntlet, Dusk and Dawn and Bloodsong, the repeat_on_hit component and patch notes as a source kind (Terminus is now corroborated by the 26.15 notes). Catalog version 12 (2026-11-16): attack counters (stacks.required on on-hit effects), the energized trigger and trigger_energized component, by_level formulas for client level breakpoints and the target_is_structure condition; adds Kraken Slayer, Rapid Firecannon, Statikk Shiv, Voltaic Cyclosword and Hullbreaker, applies Guinsoo's phantom hits and Terminus's light-hit resistances.",
   "objects": [
     {
       "id": "1036",
@@ -1026,7 +1026,7 @@
           "kind": "passive",
           "name": "Golpe furioso: impacto fantasma",
           "quote": "Con el máximo de acumulaciones, cada tercer ataque aplica dos veces los efectos al impactar",
-          "basis": "description_partial",
+          "basis": "description_explicit",
           "trigger": {
             "event": "on_attack"
           },
@@ -1035,23 +1035,23 @@
           },
           "components": [
             {
-              "kind": "damage_modifier",
-              "direction": "dealt",
-              "source": "attack",
-              "mode": "percent",
-              "formula": {
-                "op": "unknown",
-                "reason": "every third attack applies on-hit effects twice; rotations do not count attacks"
+              "kind": "repeat_on_hit",
+              "target": {
+                "kind": "enemy_unit"
               }
             }
           ],
           "cooldown_seconds": null,
-          "stacks": null,
+          "stacks": {
+            "required": 3,
+            "window_seconds": null,
+            "max_stacks": null
+          },
           "duration_seconds": null,
           "limits": [],
           "evidence_confidence": "official",
-          "model_status": "excluded",
-          "note": "Not applied: rotations have no attack counter, so a rotation with this item stays Pendiente de verificación."
+          "model_status": "evaluable",
+          "note": "Every third attack, counted from zero, applies the items' on-hit effects again. Applied together with the max_stacks scenario of Seething Strike (Guinsoo assumed at full stacks)."
         }
       ]
     },
@@ -1198,7 +1198,7 @@
           "kind": "passive",
           "name": "Yuxtaposición: ataques luminosos",
           "quote": "Los ataques luminosos otorgan armadura y resistencia mágica durante 5 s.",
-          "basis": "description_partial",
+          "basis": "external_evidence_explicit",
           "trigger": {
             "event": "on_attack"
           },
@@ -1217,8 +1217,36 @@
               "scope": "bonus",
               "mode": "flat",
               "formula": {
-                "op": "unknown",
-                "reason": "6 per light attack, 7 from level 11 and 8 from level 14, up to 3 attacks (client); item formulas have no level values"
+                "op": "mul",
+                "operands": [
+                  {
+                    "op": "by_level",
+                    "values": [
+                      6,
+                      6,
+                      6,
+                      6,
+                      6,
+                      6,
+                      6,
+                      6,
+                      6,
+                      6,
+                      7,
+                      7,
+                      7,
+                      8,
+                      8,
+                      8,
+                      8,
+                      8
+                    ]
+                  },
+                  {
+                    "op": "constant",
+                    "value": 3
+                  }
+                ]
               }
             },
             {
@@ -1227,8 +1255,36 @@
               "scope": "bonus",
               "mode": "flat",
               "formula": {
-                "op": "unknown",
-                "reason": "same as armor"
+                "op": "mul",
+                "operands": [
+                  {
+                    "op": "by_level",
+                    "values": [
+                      6,
+                      6,
+                      6,
+                      6,
+                      6,
+                      6,
+                      6,
+                      6,
+                      6,
+                      6,
+                      7,
+                      7,
+                      7,
+                      8,
+                      8,
+                      8,
+                      8,
+                      8
+                    ]
+                  },
+                  {
+                    "op": "constant",
+                    "value": 3
+                  }
+                ]
               }
             }
           ],
@@ -1247,8 +1303,8 @@
             }
           ],
           "evidence_confidence": "derived",
-          "model_status": "partially_evaluable",
-          "note": "Not applied: the amount depends on level and item formulas have no level values; the stat sheet shows a pending 0 for armor and magic resist."
+          "model_status": "evaluable",
+          "note": "Applied at full stacks (scenario max_stacks): 3 light hits of 6 (levels 1-10), 7 (11-13) or 8 (14-18) armor and magic resist, from the client breakpoints."
         }
       ]
     },
@@ -2013,6 +2069,637 @@
           "evidence_confidence": "official",
           "model_status": "excluded",
           "note": "Vision; not part of damage."
+        }
+      ]
+    },
+    {
+      "id": "6672",
+      "effect_review": "complete",
+      "stats": [],
+      "effects": [
+        {
+          "id": "bring-it-down",
+          "kind": "passive",
+          "name": "Abatir",
+          "quote": "Cada tercer ataque inflige daño físico adicional al impactar",
+          "basis": "external_evidence_explicit",
+          "trigger": {
+            "event": "on_hit"
+          },
+          "target": {
+            "kind": "enemy_unit"
+          },
+          "conditions": [
+            {
+              "kind": "on_hit"
+            }
+          ],
+          "components": [
+            {
+              "kind": "damage",
+              "damage_type": "physical",
+              "target": {
+                "kind": "enemy_unit"
+              },
+              "conditions": [
+                {
+                  "kind": "on_hit"
+                }
+              ],
+              "formula": {
+                "op": "by_holder_range",
+                "melee": {
+                  "op": "by_level",
+                  "values": [
+                    150,
+                    150,
+                    150,
+                    150,
+                    150,
+                    150,
+                    150,
+                    150,
+                    155,
+                    160,
+                    165,
+                    170,
+                    175,
+                    180,
+                    185,
+                    190,
+                    195,
+                    200
+                  ]
+                },
+                "ranged": {
+                  "op": "mul",
+                  "operands": [
+                    {
+                      "op": "by_level",
+                      "values": [
+                        150,
+                        150,
+                        150,
+                        150,
+                        150,
+                        150,
+                        150,
+                        150,
+                        155,
+                        160,
+                        165,
+                        170,
+                        175,
+                        180,
+                        185,
+                        190,
+                        195,
+                        200
+                      ]
+                    },
+                    {
+                      "op": "constant",
+                      "value": 0.8
+                    }
+                  ]
+                }
+              }
+            }
+          ],
+          "cooldown_seconds": null,
+          "stacks": {
+            "required": 3,
+            "window_seconds": 4,
+            "max_stacks": 3
+          },
+          "duration_seconds": null,
+          "limits": [],
+          "sources": [
+            {
+              "kind": "client_data",
+              "reference": "Cliente 16.22.8348910+branch.releases-16-22.content.release: lol-knowledge/derived/item-effects.json → items.6672.calculations.DamageAmount (research/reports/item-effects-16.22.md)",
+              "quote": "DamageAmount: level 1 = 150, +5 per level from level 9 (ByCharLevelBreakpoints); ranged × RangedDamageMultiplier = 0.8; AttackCount = 3; BuffDuration = 4",
+              "retrieved_at": "2026-11-16",
+              "confidence": "derived"
+            }
+          ],
+          "evidence_confidence": "derived",
+          "model_status": "evaluable",
+          "note": "Every third attack, counted from zero in a rotation. The level values are the client breakpoints: 150 up to level 8, then +5 per level (200 at 18)."
+        },
+        {
+          "id": "bring-it-down-missing-health",
+          "kind": "passive",
+          "name": "Abatir: vida que falta",
+          "quote": "que aumenta en función de la vida que le falte",
+          "basis": "description_partial",
+          "trigger": {
+            "event": "on_hit"
+          },
+          "target": {
+            "kind": "enemy_unit"
+          },
+          "components": [
+            {
+              "kind": "damage_modifier",
+              "direction": "dealt",
+              "source": "attack",
+              "mode": "percent",
+              "formula": {
+                "op": "unknown",
+                "reason": "up to MaxAmpNumber 1.75 × the damage by the target's missing health; the curve is not modelled"
+              }
+            }
+          ],
+          "cooldown_seconds": null,
+          "stacks": null,
+          "duration_seconds": null,
+          "limits": [],
+          "sources": [
+            {
+              "kind": "client_data",
+              "reference": "Cliente 16.22.8348910+branch.releases-16-22.content.release: lol-knowledge/derived/item-effects.json → items.6672.calculations.MaximumDamage (research/reports/item-effects-16.22.md)",
+              "quote": "MaximumDamage = DamageAmount × MaxAmpNumber; MaxAmpNumber = 1.75",
+              "retrieved_at": "2026-11-16",
+              "confidence": "derived"
+            }
+          ],
+          "evidence_confidence": "derived",
+          "model_status": "excluded",
+          "note": "Not applied: needs formulas on the target's missing health (next mechanic). A rotation with this item stays Pendiente de verificación."
+        }
+      ]
+    },
+    {
+      "id": "3094",
+      "effect_review": "complete",
+      "stats": [],
+      "effects": [
+        {
+          "id": "sharpshooter",
+          "kind": "passive",
+          "name": "Francotirador",
+          "quote": "Tus ataques con vigor infligen 40 de daño mágico adicional",
+          "basis": "description_explicit",
+          "trigger": {
+            "event": "energized"
+          },
+          "target": {
+            "kind": "enemy_unit"
+          },
+          "conditions": [
+            {
+              "kind": "on_hit"
+            }
+          ],
+          "components": [
+            {
+              "kind": "damage",
+              "damage_type": "magic",
+              "target": {
+                "kind": "enemy_unit"
+              },
+              "conditions": [
+                {
+                  "kind": "on_hit"
+                }
+              ],
+              "formula": {
+                "op": "constant",
+                "value": 40
+              }
+            }
+          ],
+          "cooldown_seconds": null,
+          "stacks": null,
+          "duration_seconds": null,
+          "limits": [],
+          "evidence_confidence": "official",
+          "model_status": "evaluable",
+          "note": "The extra attack range does not change a rotation."
+        }
+      ]
+    },
+    {
+      "id": "3087",
+      "effect_review": "complete",
+      "stats": [],
+      "effects": [
+        {
+          "id": "electrospark",
+          "kind": "passive",
+          "name": "Electrochispa",
+          "quote": "Tus ataques con vigor emiten rayos que rebotan y aplican efectos de impacto , lo que inflige daño mágico a los objetivos cercanos.",
+          "basis": "external_evidence_explicit",
+          "trigger": {
+            "event": "energized"
+          },
+          "target": {
+            "kind": "enemy_unit"
+          },
+          "conditions": [
+            {
+              "kind": "on_hit"
+            }
+          ],
+          "components": [
+            {
+              "kind": "damage",
+              "damage_type": "magic",
+              "target": {
+                "kind": "enemy_unit"
+              },
+              "conditions": [
+                {
+                  "kind": "on_hit"
+                }
+              ],
+              "formula": {
+                "op": "constant",
+                "value": 60
+              }
+            }
+          ],
+          "cooldown_seconds": null,
+          "stacks": null,
+          "duration_seconds": null,
+          "limits": [],
+          "sources": [
+            {
+              "kind": "client_data",
+              "reference": "Cliente 16.22.8348910+branch.releases-16-22.content.release: lol-knowledge/derived/item-effects.json → items.3087.data_values (research/reports/item-effects-16.22.md)",
+              "quote": "ChainDamage = 60; NonChampChainDamage = 90; BounceRange = 500",
+              "retrieved_at": "2026-11-16",
+              "confidence": "derived"
+            }
+          ],
+          "evidence_confidence": "derived",
+          "model_status": "excluded",
+          "note": "Not applied: the text says the lightning hits nearby targets and no source says whether the attacked target also takes it. A rotation with this item stays Pendiente de verificación."
+        },
+        {
+          "id": "electroshock",
+          "kind": "passive",
+          "name": "Electrochoque",
+          "quote": "Los ataques básicos otorgan acumulaciones de vigor adicionales.",
+          "basis": "description_explicit",
+          "trigger": {
+            "event": "on_attack"
+          },
+          "target": {
+            "kind": "self"
+          },
+          "components": [],
+          "cooldown_seconds": null,
+          "stacks": null,
+          "duration_seconds": null,
+          "limits": [],
+          "evidence_confidence": "official",
+          "model_status": "excluded",
+          "note": "Faster Energized recharge; recharge is not modelled (Energized fires once per rotation)."
+        }
+      ]
+    },
+    {
+      "id": "6699",
+      "effect_review": "complete",
+      "stats": [],
+      "effects": [
+        {
+          "id": "galvanize",
+          "kind": "passive",
+          "name": "Galvanizado",
+          "quote": "Infligir daño a campeones enemigos con una habilidad activa los efectos de vigor si están listos.",
+          "basis": "description_explicit",
+          "trigger": {
+            "event": "damaging_ability"
+          },
+          "target": {
+            "kind": "enemy_champion"
+          },
+          "conditions": [
+            {
+              "kind": "target_is_champion"
+            }
+          ],
+          "components": [
+            {
+              "kind": "trigger_energized",
+              "target": {
+                "kind": "enemy_champion"
+              }
+            }
+          ],
+          "cooldown_seconds": null,
+          "stacks": null,
+          "duration_seconds": null,
+          "limits": [],
+          "evidence_confidence": "official",
+          "model_status": "evaluable"
+        },
+        {
+          "id": "firmament",
+          "kind": "passive",
+          "name": "Firmamento",
+          "quote": "Tus ataques con vigor infligen un % de la vida actual del objetivo como daño físico adicional",
+          "basis": "external_evidence_explicit",
+          "trigger": {
+            "event": "energized"
+          },
+          "target": {
+            "kind": "enemy_unit"
+          },
+          "conditions": [
+            {
+              "kind": "on_hit"
+            }
+          ],
+          "components": [
+            {
+              "kind": "damage",
+              "damage_type": "physical",
+              "target": {
+                "kind": "enemy_unit"
+              },
+              "conditions": [
+                {
+                  "kind": "on_hit"
+                }
+              ],
+              "formula": {
+                "op": "by_holder_range",
+                "melee": {
+                  "op": "percent_of",
+                  "percent": 9,
+                  "stat": "health",
+                  "scope": "current",
+                  "subject": "target"
+                },
+                "ranged": {
+                  "op": "percent_of",
+                  "percent": 7,
+                  "stat": "health",
+                  "scope": "current",
+                  "subject": "target"
+                }
+              }
+            }
+          ],
+          "cooldown_seconds": null,
+          "stacks": null,
+          "duration_seconds": null,
+          "limits": [
+            {
+              "kind": "maximum",
+              "value": 200,
+              "unit": "flat",
+              "condition": "target is a minion or monster"
+            }
+          ],
+          "sources": [
+            {
+              "kind": "client_data",
+              "reference": "Cliente 16.22.8348910+branch.releases-16-22.content.release: lol-knowledge/derived/item-effects.json → items.6699.data_values (research/reports/item-effects-16.22.md)",
+              "quote": "PercentCurrentHPMelee = 9; PercentCurrentHPRanged = 7; NonChampCap = 200",
+              "retrieved_at": "2026-11-16",
+              "confidence": "derived"
+            }
+          ],
+          "evidence_confidence": "derived",
+          "model_status": "evaluable",
+          "note": "Melee 9 %, ranged 7 % of the target's current health; at most 200 against minions and monsters."
+        },
+        {
+          "id": "firmament-lethality",
+          "kind": "passive",
+          "name": "Firmamento: letalidad",
+          "quote": "te otorga letalidad adicional durante 4 s.",
+          "basis": "external_evidence_explicit",
+          "trigger": {
+            "event": "energized"
+          },
+          "target": {
+            "kind": "self"
+          },
+          "components": [
+            {
+              "kind": "stat_modifier",
+              "stat": "lethality",
+              "scope": "total",
+              "mode": "flat",
+              "formula": {
+                "op": "by_holder_range",
+                "melee": {
+                  "op": "constant",
+                  "value": 15
+                },
+                "ranged": {
+                  "op": "constant",
+                  "value": 12
+                }
+              }
+            }
+          ],
+          "cooldown_seconds": null,
+          "stacks": null,
+          "duration_seconds": 4,
+          "limits": [],
+          "sources": [
+            {
+              "kind": "client_data",
+              "reference": "Cliente 16.22.8348910+branch.releases-16-22.content.release: lol-knowledge/derived/item-effects.json → items.6699.data_values (research/reports/item-effects-16.22.md)",
+              "quote": "LethalityBonusModMelee = 15; LethalityBonusModRanged = 12; LethalityBonusDuration = 4",
+              "retrieved_at": "2026-11-16",
+              "confidence": "derived"
+            }
+          ],
+          "evidence_confidence": "derived",
+          "model_status": "excluded",
+          "note": "Not applied: a 4-second buff after the Energized hit; rotations have no time. A rotation with this item stays Pendiente de verificación."
+        }
+      ]
+    },
+    {
+      "id": "3181",
+      "effect_review": "complete",
+      "stats": [],
+      "effects": [
+        {
+          "id": "skipper",
+          "kind": "passive",
+          "name": "Cabecilla",
+          "quote": "Cada quinto ataque contra campeones y monstruos épicos inflige daño físico adicional",
+          "basis": "external_evidence_explicit",
+          "trigger": {
+            "event": "on_hit"
+          },
+          "target": {
+            "kind": "enemy_unit"
+          },
+          "conditions": [
+            {
+              "kind": "on_hit"
+            },
+            {
+              "kind": "target_is_champion"
+            }
+          ],
+          "components": [
+            {
+              "kind": "damage",
+              "damage_type": "physical",
+              "target": {
+                "kind": "enemy_unit"
+              },
+              "conditions": [
+                {
+                  "kind": "on_hit"
+                },
+                {
+                  "kind": "target_is_champion"
+                }
+              ],
+              "formula": {
+                "op": "by_holder_range",
+                "melee": {
+                  "op": "add",
+                  "operands": [
+                    {
+                      "op": "percent_of",
+                      "percent": 120,
+                      "stat": "attack_damage",
+                      "scope": "base"
+                    },
+                    {
+                      "op": "percent_of",
+                      "percent": 5,
+                      "stat": "health",
+                      "scope": "total"
+                    }
+                  ]
+                },
+                "ranged": {
+                  "op": "mul",
+                  "operands": [
+                    {
+                      "op": "add",
+                      "operands": [
+                        {
+                          "op": "percent_of",
+                          "percent": 120,
+                          "stat": "attack_damage",
+                          "scope": "base"
+                        },
+                        {
+                          "op": "percent_of",
+                          "percent": 5,
+                          "stat": "health",
+                          "scope": "total"
+                        }
+                      ]
+                    },
+                    {
+                      "op": "constant",
+                      "value": 0.7
+                    }
+                  ]
+                }
+              }
+            }
+          ],
+          "cooldown_seconds": null,
+          "stacks": {
+            "required": 5,
+            "window_seconds": 10,
+            "max_stacks": 5
+          },
+          "duration_seconds": null,
+          "limits": [],
+          "sources": [
+            {
+              "kind": "client_data",
+              "reference": "Cliente 16.22.8348910+branch.releases-16-22.content.release: lol-knowledge/derived/item-effects.json → items.3181.calculations.MaxStackDamage (research/reports/item-effects-16.22.md)",
+              "quote": "MaxStackDamage = StatByNamedDataValue(mStat 2, mStatFormula 1, SkipperADRatio) + StatByNamedDataValue(mStat 12, MaxStackDamageHPRatio); SkipperADRatio = 1.2; MaxStackDamageHPRatio = 0.05; mRangedMultiplier = 0.7; SkipperStackDuration = 10",
+              "retrieved_at": "2026-11-16",
+              "confidence": "derived"
+            }
+          ],
+          "evidence_confidence": "derived",
+          "model_status": "evaluable",
+          "note": "Every fifth attack against a champion: 120 % of base attack damage + 5 % of the holder's maximum health (mStat 12 = health), ×0.7 for ranged holders. Epic monsters also count; against them the damage is not modelled."
+        },
+        {
+          "id": "skipper-structures",
+          "kind": "passive",
+          "name": "Cabecilla: estructuras",
+          "quote": "que aumenta contra estructuras.",
+          "basis": "description_partial",
+          "trigger": {
+            "event": "on_hit"
+          },
+          "target": {
+            "kind": "enemy_unit"
+          },
+          "conditions": [
+            {
+              "kind": "target_is_structure"
+            }
+          ],
+          "components": [
+            {
+              "kind": "damage",
+              "damage_type": "physical",
+              "target": {
+                "kind": "enemy_unit"
+              },
+              "conditions": [
+                {
+                  "kind": "on_hit"
+                }
+              ],
+              "formula": {
+                "op": "unknown",
+                "reason": "300 % of base attack damage + 10 % of maximum health against structures (client); structures are not modelled for this effect"
+              }
+            }
+          ],
+          "cooldown_seconds": null,
+          "stacks": null,
+          "duration_seconds": null,
+          "limits": [],
+          "sources": [
+            {
+              "kind": "client_data",
+              "reference": "Cliente 16.22.8348910+branch.releases-16-22.content.release: lol-knowledge/derived/item-effects.json → items.3181.calculations.MaxStackDamageVSStructures (research/reports/item-effects-16.22.md)",
+              "quote": "SkipperADRatioVSStructures = 3; MaxStackDamageVSStructuresHPRatio = 0.1",
+              "retrieved_at": "2026-11-16",
+              "confidence": "derived"
+            }
+          ],
+          "evidence_confidence": "derived",
+          "model_status": "excluded",
+          "note": "Not applied against structures; it does not affect rotations against other targets."
+        },
+        {
+          "id": "boarding-party",
+          "kind": "passive",
+          "name": "Grupo de abordaje",
+          "quote": "Los súbditos de asedio y supersúbditos aliados cercanos obtienen armadura y resistencia mágica .",
+          "basis": "description_explicit",
+          "trigger": {
+            "event": "always"
+          },
+          "target": {
+            "kind": "area"
+          },
+          "components": [],
+          "cooldown_seconds": null,
+          "stacks": null,
+          "duration_seconds": null,
+          "limits": [],
+          "evidence_confidence": "official",
+          "model_status": "excluded",
+          "note": "Aura for allied minions; not part of champion damage."
         }
       ]
     }

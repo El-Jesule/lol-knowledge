@@ -41,6 +41,8 @@ RULES = (
 )
 HOLDER_RANGES = frozenset({"melee", "ranged"})
 ATTACK_MODIFIERS = frozenset({"crit", "nospellblade"})
+# Triggers whose ``stacks.required`` counts basic attacks (attack-counters.md).
+COUNTED_TRIGGERS = frozenset({"on_hit", "on_attack"})
 # Base critical strike multiplier of the patch notes (26.1); records that differ are flagged.
 PATCH_CRIT_MULTIPLIER = Fraction(2)
 # Passives that reduce total critical strike damage: "Critical Strike Damage Reduction:
@@ -241,17 +243,37 @@ class _Effect:
     conditions: tuple[str, ...]
     component: Mapping[str, Any]
     limits: tuple[Mapping[str, Any], ...]
+    # Fires on every Nth basic attack (``stacks.required``), counted from zero.
+    every: int | None = None
 
     @property
     def title(self) -> str:
         return f"{self.item} {self.id}"
 
 
-def _effects(items: Sequence[ItemData], owner: str) -> tuple[list[_Effect], list[str], bool]:
+# Effect conditions on the target kind: a skipped effect whose condition rules
+# out the rotation's target cannot change its damage.
+TARGET_KIND_CONDITIONS = {"target_is_champion": "champion", "target_is_structure": "structure"}
+
+
+def _could_apply(effect: Mapping[str, Any], target_kind: str | None) -> bool:
+    if target_kind is None:
+        return True
+    return all(
+        TARGET_KIND_CONDITIONS[kind] == target_kind
+        for kind in (str(entry.get("kind")) for entry in effect.get("conditions") or ())
+        if kind in TARGET_KIND_CONDITIONS
+    )
+
+
+def _effects(
+    items: Sequence[ItemData], owner: str, target_kind: str | None = None
+) -> tuple[list[_Effect], list[str], bool]:
     """Split item effects into evaluable components and notes on the rest.
 
     Returns the components, the notes and whether a skipped effect could have
-    changed the damage (which weakens the result).
+    changed the damage (which weakens the result). A skipped effect whose
+    conditions exclude ``target_kind`` does not weaken it.
     """
     seen: set[str] = set()
     effects: list[_Effect] = []
@@ -280,7 +302,9 @@ def _effects(items: Sequence[ItemData], owner: str) -> tuple[list[_Effect], list
             components = effect.get("components") or ()
             if status != "evaluable":
                 notes.append(f"{owner} {item.id} {effect.get('id')}: {status}, not applied")
-                weakened |= any(c.get("kind") in DAMAGE_KINDS for c in components)
+                weakened |= _could_apply(effect, target_kind) and any(
+                    c.get("kind") in DAMAGE_KINDS for c in components
+                )
                 continue
             label = EVIDENCE_LABEL.get(str(effect.get("evidence_confidence")), Label.DERIVED)
             for component in components:
@@ -300,9 +324,21 @@ def _effects(items: Sequence[ItemData], owner: str) -> tuple[list[_Effect], list
                         ),
                         component,
                         tuple(effect.get("limits") or ()),
+                        _every(effect),
                     )
                 )
     return effects, notes, weakened
+
+
+def _every(effect: Mapping[str, Any]) -> int | None:
+    """``N`` for an effect on every Nth attack, from ``stacks.required`` (N >= 2)."""
+    stacks = effect.get("stacks")
+    required = stacks.get("required") if isinstance(stacks, Mapping) else None
+    if (effect.get("trigger") or {}).get("event") not in COUNTED_TRIGGERS:
+        return None
+    if isinstance(required, int) and not isinstance(required, bool) and required >= 2:
+        return required
+    return None
 
 
 def _target_kind(target: Target, why: str) -> str:
@@ -313,8 +349,8 @@ def _target_kind(target: Target, why: str) -> str:
 
 def _conditions_hold(effect: _Effect, target: Target, part_kind: str, crit: bool) -> bool:
     for condition in effect.conditions:
-        if condition == "target_is_champion":
-            if _target_kind(target, effect.title) != "champion":
+        if condition in TARGET_KIND_CONDITIONS:
+            if _target_kind(target, effect.title) != TARGET_KIND_CONDITIONS[condition]:
                 return False
         elif condition == "on_hit":
             if part_kind != "on_hit":
@@ -345,7 +381,7 @@ class _Rotation:
         self.crit_base, self.holder_range, self.inputs = crit_base, holder_range, inputs
         self.stats, self.origin = sheet_stats(sheet)
         self.life_steal, self.omnivamp = sheet["life_steal"], sheet["omnivamp"]
-        attacker, notes, weakened = _effects(sheet.items, "attacker")
+        attacker, notes, weakened = _effects(sheet.items, "attacker", target.kind)
         defender, target_notes, target_weakened = _effects(target.items, "target")
         self.notes = notes + target_notes
         self.weakened = weakened or target_weakened
@@ -354,6 +390,10 @@ class _Rotation:
         self.taken: list[_Effect] = []
         self.spellblade: list[_Effect] = []
         self.repeats: list[_Effect] = []
+        self.counted: list[_Effect] = []
+        self.counted_repeats: list[_Effect] = []
+        self.energized: list[_Effect] = []
+        self.galvanize: list[_Effect] = []
         owners = sorted(
             {
                 item.id
@@ -371,8 +411,16 @@ class _Rotation:
             )
         for effect in attacker:
             kind = effect.component.get("kind")
-            if effect.trigger == "on_hit" and kind == "damage":
+            if effect.every is not None and kind == "damage":
+                self.counted.append(effect)
+            elif effect.every is not None and kind == "repeat_on_hit":
+                self.counted_repeats.append(effect)
+            elif effect.trigger == "on_hit" and kind == "damage":
                 self.on_hit.append(effect)
+            elif effect.trigger == "energized" and kind == "damage":
+                self.energized.append(effect)
+            elif effect.trigger == "damaging_ability" and kind == "trigger_energized":
+                self.galvanize.append(effect)
             elif effect.trigger == "spellblade" and kind == "damage":
                 self.spellblade.append(effect)
             elif effect.trigger == "spellblade" and kind == "repeat_on_hit":
@@ -384,6 +432,11 @@ class _Rotation:
                     self.dealt.append(effect)
             else:
                 self._skip(effect, f"{effect.trigger} {kind}")
+        if len({effect.item for effect in self.energized}) > 1:
+            self.notes.append(
+                "several Energized items: whether their Energized effects stack is not verified"
+            )
+            self.weakened = True
         for effect in defender:
             kind = effect.component.get("kind")
             if kind == "damage_modifier" and effect.component.get("direction") == "taken":
@@ -402,6 +455,7 @@ class _Rotation:
                 effect.component.get("formula"),
                 self.stats,
                 holder_range=self.holder_range,
+                level=self.sheet.level,
                 target_stats=target_stats,
             )
         except FormulaError as exc:
@@ -589,6 +643,24 @@ class _Rotation:
             )
         return parts
 
+    def _counted(
+        self, step: Step, target_stats: Mapping[str, Fraction], counters: dict[str, int]
+    ) -> list[Part]:
+        """Effects on every Nth attack: count this attack and fire those that reach N."""
+        parts: list[Part] = []
+        for effect in [*self.counted, *self.counted_repeats]:
+            counters[effect.title] += 1
+            if counters[effect.title] < (effect.every or 0):
+                continue
+            counters[effect.title] = 0
+            if effect.component.get("kind") == "repeat_on_hit":
+                parts += self._on_hit(
+                    self.on_hit, step, target_stats, f" - again by {effect.title}", effect.label
+                )
+            else:
+                parts += self._on_hit([effect], step, target_stats)
+        return parts
+
     def _on_hit(
         self,
         effects: Sequence[_Effect],
@@ -678,6 +750,9 @@ class _Rotation:
         # Spellblade: an ability charges the next attack; that attack uses the charge
         # (or drops it with attack:nospellblade). Its cooldown is taken as ready.
         charged = False
+        # Attack counters start at zero; Energized starts ready (attack-counters.md).
+        counters = {effect.title: 0 for effect in [*self.counted, *self.counted_repeats]}
+        energized = bool(self.energized)
         for index, step in enumerate(steps, start=1):
             target_stats = {**self.target.stats, "current_health": health}
             if step.slot is None:
@@ -687,14 +762,34 @@ class _Rotation:
                 if empowered:
                     name += " with Spellblade"
                 parts = self._attack(step, target_stats, empowered)
+                parts += self._counted(step, target_stats, counters)
+                if energized:
+                    energized = False
+                    name += " (Energized)"
+                    parts += self._on_hit(self.energized, step, target_stats)
             else:
                 name, parts = self._ability(step, target_stats)
                 charged = True
+                if energized and self.galvanize and parts and self.target.kind == "champion":
+                    energized = False
+                    name += " (Energized)"
+                    parts += self._on_hit(self.energized, step, target_stats)
+                    self.notes.append(
+                        f"{self.galvanize[0].title}: the ability's damage to a champion "
+                        "triggered Energized"
+                    )
             outcome = StepOutcome(
                 index, step, name, tuple(parts), health, weakest(part.label for part in parts)
             )
             outcomes.append(outcome)
             health = outcome.health_after
+        if self.energized:
+            self.notes.append(
+                "Energized starts ready and fires once; recharging by moving and attacking "
+                "is not modelled"
+            )
+        if counters:
+            self.notes.append("attack counters ignore their time windows (stacks expiring)")
         notes = list(dict.fromkeys(self.notes))
         passive = self.kit.abilities.get("P")
         if passive is not None and passive.not_modelled:

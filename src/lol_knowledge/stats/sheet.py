@@ -220,7 +220,9 @@ class _Amplifier:
     label: Label
 
 
-def _sheet_effects(item: ItemData) -> tuple[list[tuple[str, Contribution]], list[_Amplifier]]:
+def _sheet_effects(
+    item: ItemData, level: int
+) -> tuple[list[tuple[str, Contribution]], list[_Amplifier]]:
     """Stats from the effects of ``item`` that the sheet applies (``sheet_effect_reason``).
 
     A ``flat`` component adds its amount in the catalog unit: percentage points
@@ -261,7 +263,7 @@ def _sheet_effects(item: ItemData) -> tuple[list[tuple[str, Contribution]], list
                 )
                 continue
             try:
-                amount = evaluate_formula(component.get("formula"), {}).exact
+                amount = evaluate_formula(component.get("formula"), {}, level=level).exact
             except FormulaError as exc:
                 raise StatsError(f"{title}: {exc}") from exc
             if mode == "percent":
@@ -545,7 +547,7 @@ def build_stat_sheet(
             )
             target = percents if deferred else contributions
             target.setdefault(definition.id, []).append(contribution)
-        effect_stats, item_amplifiers = _sheet_effects(item)
+        effect_stats, item_amplifiers = _sheet_effects(item, level)
         for stat_id, contribution in effect_stats:
             contributions[stat_id].append(contribution)
         amplifiers += item_amplifiers
