@@ -293,9 +293,22 @@ def test_unmodelled_conditions_are_refused():
 
 
 def test_effects_that_could_change_damage_weaken_the_result():
-    outcome = run(sheet(items=("3089",)), manual(), "R")
+    on_kill = {
+        **dealt_modifier("execute", 10),
+        "trigger": {"event": "on_kill"},
+    }
+    outcome = run(sheet(extra_items=(item("9005", on_kill),)), manual(), "R")
     assert outcome.label is Label.PENDING
-    assert any("magic-orb" in note for note in outcome.notes)
+    assert (
+        "attacker 9005 execute: on_kill damage_modifier is not part of rotations, not applied"
+        in outcome.notes
+    )
+
+
+def test_stat_effects_are_left_to_the_sheet():
+    outcome = run(sheet(items=("3089",)), manual(), "R")
+    assert "attacker 3089 magic-orb: applied by the stat sheet (always)" in outcome.notes
+    assert not any("magic-orb" in note and "not applied" in note for note in outcome.notes)
 
 
 def test_duplicate_items_are_refused():

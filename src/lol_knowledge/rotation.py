@@ -29,7 +29,7 @@ from .errors import KitError, RotationError
 from .formula import FormulaError, evaluate_formula
 from .kit import Kit, ability_damage, sheet_stats
 from .scenario import PENETRATION, Target, penetration_modifiers
-from .stats import EVIDENCE_LABEL, ItemData, Label, StatSheet, weakest
+from .stats import EVIDENCE_LABEL, ItemData, Label, StatSheet, sheet_effect_reason, weakest
 
 RULES = (
     "lol-knowledge/mechanics/basic-attacks-and-on-hit.md",
@@ -259,10 +259,10 @@ def _effects(items: Sequence[ItemData], owner: str) -> tuple[list[_Effect], list
             )
             weakened = True
         for effect in item.effects:
-            if effect.get("scenario") is not None:
+            reason = sheet_effect_reason(effect)
+            if reason is not None:
                 notes.append(
-                    f"{owner} {item.id} {effect.get('id')}: applied by the stat sheet "
-                    f"(scenario {effect.get('scenario')})"
+                    f"{owner} {item.id} {effect.get('id')}: applied by the stat sheet ({reason})"
                 )
                 continue
             status = effect.get("model_status")

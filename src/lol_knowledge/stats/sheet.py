@@ -6,6 +6,7 @@ import math
 from collections.abc import Mapping, Sequence
 from dataclasses import dataclass, field, replace
 from fractions import Fraction
+from typing import Any
 
 from ..damage import format_number, format_percent, to_fraction
 from ..errors import DamageInputError, StatsError
@@ -190,46 +191,99 @@ def _percent_amount(
 SCENARIO_NOTES = {"max_stacks": "scenario: maximum stacks"}
 
 
-def _scenario_contributions(item: ItemData) -> list[tuple[str, Contribution]]:
-    """Stats from effects the catalog declares under a scenario assumption.
+def sheet_effect_reason(effect: Mapping[str, Any]) -> str | None:
+    """Why the stat sheet applies ``effect`` as stats, or ``None`` if it does not.
 
-    A ``flat`` component adds its amount in the catalog unit: percentage
-    points for fraction stats (25 -> 0.25), the stat's own unit otherwise.
+    The sheet takes effects declared under a scenario and unconditional
+    (``always``) effects made only of stat modifiers. Rotations leave both to it.
     """
-    result: list[tuple[str, Contribution]] = []
+    if effect.get("scenario") is not None:
+        return f"scenario {effect['scenario']}"
+    components = effect.get("components") or ()
+    if (
+        (effect.get("trigger") or {}).get("event") == "always"
+        and not effect.get("conditions")
+        and components
+        and all(component.get("kind") == "stat_modifier" for component in components)
+    ):
+        return "always"
+    return None
+
+
+@dataclass(frozen=True)
+class _Amplifier:
+    """``percent`` % of a stat's total, added once every other amount is known."""
+
+    stat: str
+    percent: Fraction
+    source: str
+    label: Label
+
+
+def _sheet_effects(item: ItemData) -> tuple[list[tuple[str, Contribution]], list[_Amplifier]]:
+    """Stats from the effects of ``item`` that the sheet applies (``sheet_effect_reason``).
+
+    A ``flat`` component adds its amount in the catalog unit: percentage points
+    for fraction stats (25 -> 0.25), the stat's own unit otherwise. A
+    ``percent`` component with scope ``total`` amplifies the total of an amount
+    stat (Rabadon's Deathcap: +30 % ability power).
+    """
+    flat: list[tuple[str, Contribution]] = []
+    amplifiers: list[_Amplifier] = []
     for effect in item.effects:
-        scenario = effect.get("scenario")
-        if scenario is None:
+        reason = sheet_effect_reason(effect)
+        if reason is None:
             continue
         title = f"item {item.id} {effect.get('id')}"
-        note = SCENARIO_NOTES.get(str(scenario))
+        scenario = effect.get("scenario")
+        note = "" if scenario is None else SCENARIO_NOTES.get(str(scenario))
         if note is None:
             raise StatsError(f"{title}: scenario {scenario!r} is not modelled")
         source = f"data:item:{item.id} effect {effect.get('id')} ({item.game_version})"
         status = effect.get("model_status")
         label = EVIDENCE_LABEL.get(str(effect.get("evidence_confidence")), Label.DERIVED)
         for component in effect.get("components") or ():
-            if component.get("kind") != "stat_modifier" or component.get("mode") != "flat":
-                raise StatsError(f"{title}: only flat stat modifiers can be scenario stats")
+            mode = component.get("mode")
+            if component.get("kind") != "stat_modifier" or mode not in {"flat", "percent"}:
+                raise StatsError(f"{title}: only stat modifiers can be sheet stats")
             definition = _receiver(str(component.get("stat")))
+            if mode == "percent" and (
+                scenario is not None
+                or component.get("scope") != "total"
+                or definition.unit is not Unit.AMOUNT
+            ):
+                raise StatsError(f"{title}: only always effects amplify a total amount")
             if status != "evaluable":
-                reason = f"{note}; effect {status}, not applied"
-                result.append(
-                    (
-                        definition.id,
-                        Contribution(Fraction(0), "bonus", source, Label.PENDING, reason),
-                    )
+                why = f"effect {status}, not applied"
+                why = f"{note}; {why}" if note else why
+                flat.append(
+                    (definition.id, Contribution(Fraction(0), "bonus", source, Label.PENDING, why))
                 )
                 continue
             try:
                 amount = evaluate_formula(component.get("formula"), {}).exact
             except FormulaError as exc:
                 raise StatsError(f"{title}: {exc}") from exc
+            if mode == "percent":
+                amplifiers.append(_Amplifier(definition.id, amount, source, label))
+                continue
             value = amount / 100 if definition.unit is Unit.FRACTION else amount
             if definition.unit is Unit.FRACTION and not 0 <= value <= 1:
                 raise StatsError(f"{title}: {value} is not a fraction 0..1")
-            result.append((definition.id, Contribution(value, "bonus", source, label, note)))
-    return result
+            flat.append((definition.id, Contribution(value, "bonus", source, label, note)))
+    return flat, amplifiers
+
+
+def _amplified(amplifier: _Amplifier, current: Sequence[Contribution]) -> Contribution:
+    """The amplifier's share of the total of ``current`` (amplifiers do not compound)."""
+    total = sum((item.value for item in current), start=Fraction(0))
+    return Contribution(
+        total * amplifier.percent / 100,
+        "bonus",
+        amplifier.source,
+        weakest([amplifier.label, *(item.label for item in current)]),
+        f"{format_number(amplifier.percent)}% of the total",
+    )
 
 
 def _receiver(stat_id: str) -> StatDef:
@@ -395,6 +449,7 @@ def build_stat_sheet(
 
     contributions: dict[str, list[Contribution]] = {stat_id: [] for stat_id in STATS}
     percents: dict[str, list[Contribution]] = {}
+    amplifiers: list[_Amplifier] = []
     blocked: dict[str, str] = {}
     notes: list[str] = []
     mana_resource = MANA_RESOURCE.get(champion.locale)
@@ -490,8 +545,10 @@ def build_stat_sheet(
             )
             target = percents if deferred else contributions
             target.setdefault(definition.id, []).append(contribution)
-        for stat_id, contribution in _scenario_contributions(item):
+        effect_stats, item_amplifiers = _sheet_effects(item)
+        for stat_id, contribution in effect_stats:
             contributions[stat_id].append(contribution)
+        amplifiers += item_amplifiers
 
     for stat_id, extra in extras:
         definition = _receiver(stat_id)
@@ -507,6 +564,10 @@ def build_stat_sheet(
         contributions[stat_id] += [
             _percent_amount(STATS[stat_id], percent, reference) for percent in pending
         ]
+    # Amplifiers of a total last, all on the same total (only Rabadon's Deathcap today).
+    reference = {amplifier.stat: list(contributions[amplifier.stat]) for amplifier in amplifiers}
+    for amplifier in amplifiers:
+        contributions[amplifier.stat].append(_amplified(amplifier, reference[amplifier.stat]))
     if champion.id in MOVE_SPEED_KITS:
         reason = f"{champion.id}'s passive changes the effectiveness of movement speed bonuses"
         contributions["move_speed"].append(

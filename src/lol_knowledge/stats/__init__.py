@@ -17,7 +17,14 @@ from .labels import EVIDENCE_LABEL, Label, weakest
 from .metrics import Cooldowns, EffectiveHealth, ability_cooldowns, effective_health
 from .registry import STATS, Stacking, StatDef, Unit, stat
 from .report import format_text, to_dict
-from .sheet import Contribution, StatBlocked, StatSheet, StatValue, build_stat_sheet
+from .sheet import (
+    Contribution,
+    StatBlocked,
+    StatSheet,
+    StatValue,
+    build_stat_sheet,
+    sheet_effect_reason,
+)
 
 __all__ = [
     "EVIDENCE_LABEL",
@@ -39,6 +46,7 @@ __all__ = [
     "StatValue",
     "Unit",
     "ability_cooldowns",
+    "sheet_effect_reason",
     "build_stat_sheet",
     "champion_from_document",
     "effective_health",

@@ -644,3 +644,43 @@ def test_confirmed_zero_stats_are_checked() -> None:
     assert "must be an object with id, kind and reason" in found
     entry["confirmed_zero_stats"] = []
     assert "confirmed_zero_stats must be a non-empty list" in _messages(catalog)
+
+
+# Evidence read only from the client
+
+
+def _derived_effect(kind: str = "client_data", confidence: str = "derived") -> dict:
+    effect = _external_effect()
+    effect["sources"] = [
+        {
+            "kind": kind,
+            "reference": "lol-knowledge/derived/item-effects.json → items.9999",
+            "quote": "Ratio = 0.01",
+            "retrieved_at": "2026-11-16",
+            "confidence": confidence,
+        }
+    ]
+    effect["evidence_confidence"] = "derived"
+    return effect
+
+
+def test_derived_evidence_from_the_client_is_accepted() -> None:
+    assert _messages(_catalog(effect=_derived_effect())) == []
+
+
+def test_derived_evidence_needs_a_client_source() -> None:
+    found = _messages(_catalog(effect=_derived_effect("community_wiki", "secondary")))
+    assert "derived evidence needs a client_data source" in found
+
+
+def test_only_client_sources_can_be_derived() -> None:
+    found = _messages(_catalog(effect=_derived_effect("community_wiki")))
+    assert "source kind 'community_wiki' cannot be 'derived'" in found
+
+
+def test_derived_evidence_needs_sources() -> None:
+    effect = _derived_effect()
+    del effect["sources"]
+    assert "evidence_confidence 'derived' needs at least one source" in _messages(
+        _catalog(effect=effect)
+    )
