@@ -1,10 +1,10 @@
 # Modelo mecánico de objetos — `lol-object-model/1`
 
-- **Parche del snapshot:** `16.22.1` (`data/current/manifest.json`). El catálogo se creó sobre 16.20.1; en 16.22.1 las estadísticas, el oro, las descripciones y las recetas de los 15 objetos son idénticos en Data Dragon (comprobado el 2026-11-15). Las notas de parche 26.21 y 26.22 no tocan ninguno de los 15 objetos, y las cifras secundarias se han contrastado con los datos del cliente 16.22 ([informe](../../research/reports/item-data-values-16.22.md)). Las Botas de mercurio (3111) se añadieron el 2026-11-16 directamente desde 16.22.1.
+- **Parche del snapshot:** `16.22.1` (`data/current/manifest.json`). El catálogo se creó sobre 16.20.1; en 16.22.1 las estadísticas, el oro, las descripciones y las recetas de los 15 objetos son idénticos en Data Dragon (comprobado el 2026-11-15). Las notas de parche 26.21 y 26.22 no tocan ninguno de los 15 objetos, y las cifras secundarias se han contrastado con los datos del cliente 16.22 ([informe](../../research/reports/item-data-values-16.22.md)). Las Botas de mercurio (3111) y las Flechas de los Yun Tal (3032) se añadieron el 2026-11-16 directamente desde 16.22.1.
 - **Fuente:** Data Dragon (`https://ddragon.leagueoflegends.com`), locale `es_ES`.
 - **Fecha de consulta:** 2026-10-20.
-- **Estado:** estadísticas de los **218 objetos comprables de la Grieta del Invocador** (generadas); efectos curados en 16 objetos (10 efectos). Los efectos de los demás objetos **no** están modelados (`effect_review: pending`).
-- **Versión del catálogo:** `catalog_version: 8` (esquema `1`; la 3 solo cambió el parche; la 4 añade `subject: target` explícito a la vida actual de Filo de la niebla, para que el motor de rotaciones la lea del objetivo sin depender de la convención implícita; la 5 añade los datos del cliente 16.22 como fuente `client_data` y corrige la ralentización a distancia de Zarpazo sombrío; la 6 añade `applies_life_steal` a los componentes de daño y lo declara en Filo de la niebla; la 7 añade las Botas de mercurio por su tenacidad; la 8 traslada las estadísticas de la descripción al archivo generado).
+- **Estado:** estadísticas de los **218 objetos comprables de la Grieta del Invocador** (generadas); efectos curados en 17 objetos (12 efectos). Los efectos de los demás objetos **no** están modelados (`effect_review: pending`).
+- **Versión del catálogo:** `catalog_version: 9` (esquema `1`; la 3 solo cambió el parche; la 4 añade `subject: target` explícito a la vida actual de Filo de la niebla, para que el motor de rotaciones la lea del objetivo sin depender de la convención implícita; la 5 añade los datos del cliente 16.22 como fuente `client_data` y corrige la ralentización a distancia de Zarpazo sombrío; la 6 añade `applies_life_steal` a los componentes de daño y lo declara en Filo de la niebla; la 7 añade las Botas de mercurio por su tenacidad; la 8 traslada las estadísticas de la descripción al archivo generado; la 9 añade las Flechas de los Yun Tal, el disparador `on_attack`, el escenario `max_stacks` y los ceros confirmados).
 - **Código:** [`src/lol_knowledge/objects/`](../../src/lol_knowledge/objects/).
 - **Catálogo curado (efectos y revisión):** [`catalog.json`](catalog.json).
 - **Estadísticas generadas:** [`catalog-stats.json`](catalog-stats.json), con `src/lol_knowledge/objects/generate.py`. No se edita a mano: `validate` lo regenera y falla si no coincide.
@@ -44,7 +44,8 @@ El modelo canónico no contiene timestamps ni rutas absolutas. Dos ejecuciones s
 - **Selección:** objetos con `maps['11']` verdadero, `gold.purchasable` verdadero e id numérico de hasta 4 cifras; los de más cifras son variantes de otros modos (ARAM, Arena…). En 16.22.1 son 218.
 - **Lectura:** cada línea del bloque `<stats>` de la descripción («10 de letalidad», «30% de tenacidad») se traduce con una tabla de frases `es_ES` a una estadística canónica y se guarda con su cita literal. Una línea que no encaje es un error, no se omite.
 - **Lo que Data Dragon ya trae en `stats`** no se duplica, pero el generador comprueba que el número de la descripción coincida (en 16.22.1 coinciden todos).
-- **Un `0` no es un cero real:** Data Dragon usa `0` para cantidades no publicadas. La línea se guarda como `status: unknown` (Flechas de los Yun Tal: «0% de probabilidad de impacto crítico») y la hoja la trata como aporte 0 `Pendiente de verificación`.
+- **Un `0` no es un cero real por defecto:** Data Dragon usa `0` para cantidades no publicadas. La línea se guarda como `status: unknown` y la hoja la trata como aporte 0 `Pendiente de verificación`.
+- **Cero confirmado (`confirmed_zero_stats`, desde la versión 9):** el objeto curado puede declarar que ese `0` es real, con `id`, `kind` y el motivo. La fusión lo convierte en valor `0` con la nota `confirmed zero: …`, que la hoja muestra como `Oficial`. `validate` falla si el archivo generado no tiene esa línea como `unknown` en ese objeto. Único caso en 16.22.1: Flechas de los Yun Tal, «0% de probabilidad de impacto crítico». El objeto no tiene estadística de crítico (el registro `Items/3032` del cliente 16.22 no tiene campo de crítico, `Derivado`); su crítico viene de la pasiva.
 - **Líneas sin estadística del motor** (poder de curaciones y escudos, oro cada 10 s) se guardan en `unmodelled_stats` con el motivo, y el modelo las publica en `unmodelled_description_stats`.
 - **Fusión con el catálogo curado:** un objeto curado conserva sus efectos y su `effect_review` y recibe las estadísticas generadas; no puede declararlas también a mano. Un objeto solo generado queda `effect_review: pending` si su descripción tiene `<passive>` o `<active>`, y `complete` si no tiene efectos.
 
@@ -176,12 +177,13 @@ Decisiones:
 
 - `kind`: `passive` o `active`.
 - `basis`: `description_explicit` (la prosa fija la operación), `description_partial` (faltan ratios o ventanas), `description_silent` (el efecto se reconoce pero la prosa no da fórmula) o `external_evidence_explicit` (la fórmula viene de una fuente declarada, no de la prosa de Data Dragon; exige `sources` y fórmulas evaluables).
-- `trigger.event`: `always`, `on_hit`, `taking_attack`, `damaging_ability`, `on_heal_or_shield`, `cast`, `on_kill`, `periodic` o `unknown`.
+- `trigger.event`: `always`, `on_attack` (al atacar, antes de impactar), `on_hit`, `taking_attack`, `damaging_ability`, `on_heal_or_shield`, `cast`, `on_kill`, `periodic` o `unknown`.
 - `target.kind`: `self`, `enemy_champion`, `enemy_unit`, `attacker`, `ally_champion`, `area` o `unknown`.
 - `conditions`: lista de condiciones declarativas (`target_is_champion`, `damage_source_is_attack`, `critical_strike`, `stacks_at_least`, etc.). No son expresiones ejecutables.
 - `cooldown_seconds`, `duration_seconds`, `stacks.window_seconds`: número no negativo, `null` (no aplica) o `{"status": "unknown", "reason": "..."}`.
 - `stacks.required` y `stacks.max_stacks` son enteros; la ventana temporal puede ser desconocida.
 - `limits`: topes o umbrales conocidos aunque la curva no lo esté. Ejemplo: el 15 % de Lord Dominik con 1500 de vida adicional.
+- `scenario` (opcional, desde la versión 9): supuesto con el que un motor puede aplicar el efecto de forma permanente. Solo existe `max_stacks`: los componentes dan el valor con **todas las acumulaciones**, y la hoja de estadísticas los suma como estadísticas con la nota `scenario: maximum stacks`. Solo admite componentes `stat_modifier` con `mode: flat`, que suman su cantidad en la unidad del catálogo (puntos porcentuales para las estadísticas que son fracción: 25 → 0,25). `rotation` no los vuelve a aplicar: deja una nota `applied by the stat sheet`. Decisión del 2026-11-16: los escenarios se calculan con las acumulaciones al máximo, que es más sencillo aunque sobrestime los primeros compases de la partida.
 - `model_status` es la clasificación curada; `derived_status` se calcula desde las fórmulas. `validate` impide que `model_status` sea **más optimista** que `derived_status`.
 - `sources`: lista opcional de fuentes externas con `kind`, `reference`, `quote`, `retrieved_at`, `confidence` y `note` opcional. Se usa solo para cifras que Data Dragon no publica. La wiki comunitaria se marca `community_wiki` y `secondary`; una fuente comunitaria **no puede** marcarse `official`. Los valores de datos del cliente se marcan `client_data` (`secondary` o `corroborated`, nunca `official`); como el cliente guarda los porcentajes como fracciones, en sus citas el validador acepta también el número multiplicado por 100. `corroborated` exige al menos dos fuentes declaradas.
 - `evidence_confidence`: `official`, `corroborated`, `secondary` o `unverified`. Es independiente de `model_status`: una fórmula puede ser evaluable y, aun así, descansar en una fuente secundaria. `official` solo se admite cuando no hay `sources` (la descripción de Data Dragon es la fuente).
@@ -230,7 +232,7 @@ El evaluador, compartido con los kits de campeón en [`src/lol_knowledge/formula
 10. **Sujeto de la estadística.** `subject` desambigua `bonus_health` del objetivo frente a `bonus_armor` del portador. Sin `subject` se conserva la convención anterior.
 11. **Rango del portador.** `ChampionState.attack_range` es obligatorio. Un efecto que depende de melee/ranged falla si falta; no se asume un valor.
 
-## 5. Objetos con efectos curados (16)
+## 5. Objetos con efectos curados (17)
 
 | Id | Objeto | Demuestra |
 |---|---|---|
@@ -250,8 +252,9 @@ El evaluador, compartido con los kits de campeón en [`src/lol_knowledge/formula
 | `data:item:3075` | Malla de espinas | Reflejo 20 + 10 % de armadura adicional + heridas graves 40 %/3 s (`evaluable`). |
 | `data:item:6617` | Renovación de piedra lunar | Curación y escudo porcentuales de un efecto disparador (`evaluable`). |
 | `data:item:3111` | Botas de mercurio | Tenacidad (30 %) solo en prosa; resistencia mágica y velocidad de movimiento derivadas. |
+| `data:item:3032` | Flechas de los Yun Tal | Cero confirmado de crítico; crítico por acumulaciones hasta 25 % con el escenario `max_stacks`; Ráfaga `excluded`. |
 
-Cobertura de efectos: **16 objetos curados**; los otros 202 objetos comprables de la Grieta solo tienen estadísticas, y 158 de ellos tienen efectos en la descripción sin modelar (`pending`). No se afirma nada sobre las variantes de otros modos. Las fuentes secundarias de las cifras nuevas están en [`research/reports/object-mechanics-2026-10-20.md`](../../research/reports/object-mechanics-2026-10-20.md).
+Cobertura de efectos: **17 objetos curados**; los otros 201 objetos comprables de la Grieta solo tienen estadísticas, y 157 de ellos tienen efectos en la descripción sin modelar (`pending`). No se afirma nada sobre las variantes de otros modos. Las fuentes secundarias de las cifras nuevas están en [`research/reports/object-mechanics-2026-10-20.md`](../../research/reports/object-mechanics-2026-10-20.md).
 
 ## 6. Efectos realmente modelados
 
@@ -267,6 +270,8 @@ Cobertura de efectos: **16 objetos curados**; los otros 202 objetos comprables d
 | Zhonya | Tiempo detenido: estasis 2,5 s, enfriamiento 120 s | `evaluable` | La interacción con item haste se documenta, no se formula. |
 | Malla de espinas | Espinas: 20 + 10 % de armadura adicional, mágico; heridas graves 40 %/3 s | `evaluable` | La mitigación por RM del atacante la aplica el motor. |
 | Moonstone | Gracia estelar: 30 % de la curación / 35 % del escudo a otro aliado | `evaluable` | La cantidad original es una entrada del motor. |
+| Yun Tal | La práctica hace al asesino: +25 % de crítico con todas las acumulaciones | `evaluable` (`max_stacks`) | El valor por ataque (0,4 cuerpo a cuerpo; ×0,5 a distancia) y los 63/125 ataques hasta el tope son datos del cliente 16.22 (`Derivado`), en la nota del efecto; no se modelan acumulaciones parciales. |
+| Yun Tal | Ráfaga: +30 % de velocidad de ataque 6 s, enfriamiento 30 s que reducen los ataques | `excluded` | Es una ventana temporal y las rotaciones no tienen línea de tiempo; con este objeto la rotación queda `Pendiente de verificación`. |
 
 ## 7. Inventario no soportado
 
