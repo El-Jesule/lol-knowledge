@@ -226,3 +226,5 @@ Condiciones de uso y cuestiones pendientes: [`research/evidence/usage-conditions
 ## Flujo de trabajo
 
 Las reglas de ramas, commits, pruebas y etiquetado de fuentes están en [`AGENTS.md`](AGENTS.md).
+
+Lo que falta para terminar el proyecto, con prioridades y el orden propuesto, está en [`odd/roadmap.md`](odd/roadmap.md).
