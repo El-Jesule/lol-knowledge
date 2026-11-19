@@ -37,6 +37,7 @@ KNOWN_FIELDS = frozenset(
         "attackspeedratio",
         "attackspeedperlevel",
         "critdamagemultiplier",
+        "adaptiveforceapweight",
     }
 )
 

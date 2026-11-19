@@ -1,0 +1,4084 @@
+{
+  "schema": "lol-derived-runes/1",
+  "label": "Derivado",
+  "content_version": "16.23.8399929+branch.releases-16-23.content.release",
+  "game_version": "16.23",
+  "retrieved_at": "2026-11-19",
+  "locale": "es_ES",
+  "source": "Cliente local: DATA/FINAL/Global.wad.client → perks → PerkStyle, PerkSlot, Perk; DATA/FINAL/Localized/Global.es_ES.wad.client → claves de texto de cada runa",
+  "bin_sha256": "b17c7331fb54215c998ed5288a5c77767df8ef3493cf20db990b97b5697bc26c",
+  "strings_sha256": "5adbf08b8ad771c30b815a5ef457a2e6032e783d8940db317ee2ec331c679bed",
+  "method": "research/binmodel/perks.py: lector PROP estricto; float32 escrito como el decimal más corto equivalente; nombres de valores y cálculos solo cuando su FNV-1a coincide con un marcador @…@ de los textos; claves RST con hashes.rst.xxh3.txt",
+  "styles": {
+    "8000": {
+      "key": "Precision",
+      "name": "Precisión",
+      "allowed_secondary": [
+        8200,
+        8400,
+        8300,
+        8100
+      ],
+      "slots": [
+        {
+          "type": 0,
+          "label": null,
+          "perks": [
+            8005,
+            8008,
+            8021,
+            8010
+          ]
+        },
+        {
+          "type": 3,
+          "label": "Heroísmo",
+          "perks": [
+            9101,
+            9111,
+            8009
+          ]
+        },
+        {
+          "type": 3,
+          "label": "Leyenda",
+          "perks": [
+            9104,
+            9105,
+            9103
+          ]
+        },
+        {
+          "type": 3,
+          "label": "Combate",
+          "perks": [
+            8014,
+            8017,
+            8299
+          ]
+        }
+      ],
+      "secondary_bonus": {
+        "8100": 8016,
+        "8200": 8004,
+        "8300": 8007,
+        "8400": 8006
+      }
+    },
+    "8100": {
+      "key": "Domination",
+      "name": "Dominación",
+      "allowed_secondary": [
+        8300,
+        8400,
+        8200,
+        8000
+      ],
+      "slots": [
+        {
+          "type": 0,
+          "label": null,
+          "perks": [
+            8112,
+            8128,
+            9923
+          ]
+        },
+        {
+          "type": 3,
+          "label": "Malicia",
+          "perks": [
+            8126,
+            8139,
+            8143
+          ]
+        },
+        {
+          "type": 3,
+          "label": "Seguimiento",
+          "perks": [
+            8137,
+            8140,
+            8141
+          ]
+        },
+        {
+          "type": 3,
+          "label": "Cazador",
+          "perks": [
+            8135,
+            8105,
+            8106
+          ]
+        }
+      ],
+      "secondary_bonus": {
+        "8000": 8127,
+        "8200": 8115,
+        "8300": 8109,
+        "8400": 8114
+      }
+    },
+    "8200": {
+      "key": "Sorcery",
+      "name": "Brujería",
+      "allowed_secondary": [
+        8000,
+        8300,
+        8400,
+        8100
+      ],
+      "slots": [
+        {
+          "type": 0,
+          "label": null,
+          "perks": [
+            8214,
+            8229,
+            8230,
+            8992
+          ]
+        },
+        {
+          "type": 3,
+          "label": "Artefacto",
+          "perks": [
+            8224,
+            8226,
+            8275
+          ]
+        },
+        {
+          "type": 3,
+          "label": "Prestigio",
+          "perks": [
+            8210,
+            8234,
+            8233
+          ]
+        },
+        {
+          "type": 3,
+          "label": "Poder",
+          "perks": [
+            8237,
+            8232,
+            8236
+          ]
+        }
+      ],
+      "secondary_bonus": {
+        "8000": 8205,
+        "8100": 8220,
+        "8300": 8207,
+        "8400": 8208
+      }
+    },
+    "8300": {
+      "key": "Inspiration",
+      "name": "Inspiración",
+      "allowed_secondary": [
+        8100,
+        8200,
+        8400,
+        8000
+      ],
+      "slots": [
+        {
+          "type": 0,
+          "label": null,
+          "perks": [
+            8351,
+            8360,
+            8369
+          ]
+        },
+        {
+          "type": 3,
+          "label": "Artilugios",
+          "perks": [
+            8306,
+            8304,
+            8321
+          ]
+        },
+        {
+          "type": 3,
+          "label": "Mañana",
+          "perks": [
+            8313,
+            8352,
+            8345
+          ]
+        },
+        {
+          "type": 3,
+          "label": "Más allá",
+          "perks": [
+            8347,
+            8410,
+            8316
+          ]
+        }
+      ],
+      "secondary_bonus": {
+        "8000": 8344,
+        "8100": 8318,
+        "8200": 8319,
+        "8400": 8320
+      }
+    },
+    "8400": {
+      "key": "Resolve",
+      "name": "Valor",
+      "allowed_secondary": [
+        8000,
+        8100,
+        8200,
+        8300
+      ],
+      "slots": [
+        {
+          "type": 0,
+          "label": null,
+          "perks": [
+            8437,
+            8439,
+            8465
+          ]
+        },
+        {
+          "type": 3,
+          "label": "Fuerza",
+          "perks": [
+            8446,
+            8463,
+            8401
+          ]
+        },
+        {
+          "type": 3,
+          "label": "Resistencia",
+          "perks": [
+            8429,
+            8444,
+            8473
+          ]
+        },
+        {
+          "type": 3,
+          "label": "Vitalidad",
+          "perks": [
+            8451,
+            8453,
+            8242
+          ]
+        }
+      ],
+      "secondary_bonus": {
+        "8000": 8414,
+        "8100": 8454,
+        "8200": 8415,
+        "8300": 8416
+      }
+    }
+  },
+  "shard_slots": [
+    {
+      "type": 5,
+      "label": "Ataque",
+      "perks": [
+        5008,
+        5005,
+        5007
+      ]
+    },
+    {
+      "type": 5,
+      "label": "Flexible",
+      "perks": [
+        5008,
+        5010,
+        5001
+      ]
+    },
+    {
+      "type": 5,
+      "label": "Defensa",
+      "perks": [
+        5011,
+        5013,
+        5001
+      ]
+    }
+  ],
+  "perks": {
+    "5001": {
+      "key": "HealthScaling",
+      "enabled": null,
+      "stackable": true,
+      "script": "ASSETS/Perks/StatMods/StatModHealthScaling.lua",
+      "effect_amounts": {
+        "StatGainMax": 180.0,
+        "StatGainMin": 10.0
+      },
+      "mode_overrides": {},
+      "calculations": {},
+      "texts": {
+        "name": "Progresión de vida",
+        "tooltip": "<scaleHealth>+@f1@ de vida</scaleHealth> (según el nivel)",
+        "short_desc": "+@StatGainMin@-@StatGainMax@ de vida (según el nivel)",
+        "long_desc": "+@StatGainMin@-@StatGainMax@ de vida (según el nivel)"
+      },
+      "placeholders": {
+        "StatGainMax": "effect_amount",
+        "StatGainMin": "effect_amount",
+        "f1": "runtime"
+      }
+    },
+    "5005": {
+      "key": "AttackSpeed",
+      "enabled": null,
+      "stackable": null,
+      "script": "ASSETS/Perks/StatMods/StatModAttackSpeed.lua",
+      "effect_amounts": {
+        "StatGain": 10.0
+      },
+      "mode_overrides": {},
+      "calculations": {},
+      "texts": {
+        "name": "Velocidad de ataque",
+        "tooltip": "+@StatGain@% de velocidad de ataque",
+        "short_desc": "+@StatGain@% de velocidad de ataque",
+        "long_desc": "+@StatGain@% de velocidad de ataque"
+      },
+      "placeholders": {
+        "StatGain": "effect_amount"
+      }
+    },
+    "5007": {
+      "key": "CDRScaling",
+      "enabled": null,
+      "stackable": null,
+      "script": "ASSETS/Perks/StatMods/StatModCDRScaling.lua",
+      "effect_amounts": {
+        "HasteGain": 8.0
+      },
+      "mode_overrides": {},
+      "calculations": {},
+      "texts": {
+        "name": "Velocidad de habilidades",
+        "tooltip": "<attention>+@HasteGain@ de velocidad de habilidades</attention>",
+        "short_desc": "+@HasteGain@ <lol-uikit-tooltipped-keyword key='LinkTooltip_Description_CDR'>de velocidad de habilidades</lol-uikit-tooltipped-keyword> ",
+        "long_desc": "+@HasteGain@ <lol-uikit-tooltipped-keyword key='LinkTooltip_Description_CDR'>de velocidad de habilidades</lol-uikit-tooltipped-keyword> "
+      },
+      "placeholders": {
+        "HasteGain": "effect_amount"
+      }
+    },
+    "5008": {
+      "key": "Adaptive",
+      "enabled": null,
+      "stackable": true,
+      "script": "ASSETS/Perks/StatMods/StatModAdaptive.lua",
+      "effect_amounts": {
+        "StatGain1": 5.4,
+        "StatGain2": 9.0
+      },
+      "mode_overrides": {},
+      "calculations": {},
+      "texts": {
+        "name": "Fuerza adaptable",
+        "tooltip": "{{perk_tooltip_dynamic_StatModAdaptive_@f1@}}",
+        "short_desc": "+@StatGain2@ de <lol-uikit-tooltipped-keyword key='LinkTooltip_Description_Adaptive'><font color='#48C4B7'>fuerza adaptable</font></lol-uikit-tooltipped-keyword>",
+        "long_desc": "+@StatGain2@ de <lol-uikit-tooltipped-keyword key='LinkTooltip_Description_Adaptive'><font color='#48C4B7'>fuerza adaptable</font></lol-uikit-tooltipped-keyword>"
+      },
+      "placeholders": {
+        "StatGain2": "effect_amount",
+        "f1": "runtime"
+      }
+    },
+    "5010": {
+      "key": "MovementSpeed",
+      "enabled": null,
+      "stackable": null,
+      "script": "ASSETS/Perks/StatMods/StatModMovementSpeed.lua",
+      "effect_amounts": {
+        "StatGain1": 2.5
+      },
+      "mode_overrides": {},
+      "calculations": {},
+      "texts": {
+        "name": "Velocidad de movimiento",
+        "tooltip": "<speed>+@StatGain1@% de velocidad de movimiento</speed>",
+        "short_desc": "+@StatGain1@% de <lol-uikit-tooltipped-keyword key='LinkTooltip_Description_MS'>velocidad de movimiento</lol-uikit-tooltipped-keyword>",
+        "long_desc": "+@StatGain1@% de <lol-uikit-tooltipped-keyword key='LinkTooltip_Description_MS'>velocidad de movimiento</lol-uikit-tooltipped-keyword>"
+      },
+      "placeholders": {
+        "StatGain1": "effect_amount"
+      }
+    },
+    "5011": {
+      "key": "Health",
+      "enabled": null,
+      "stackable": null,
+      "script": "ASSETS/Perks/StatMods/StatModHealth.lua",
+      "effect_amounts": {
+        "StatGain": 65.0
+      },
+      "mode_overrides": {},
+      "calculations": {},
+      "texts": {
+        "name": "Vida",
+        "tooltip": "<scaleHealth>+@StatGain@ de vida</scaleHealth>",
+        "short_desc": "+@StatGain@ de vida",
+        "long_desc": "+@StatGain@ de vida"
+      },
+      "placeholders": {
+        "StatGain": "effect_amount"
+      }
+    },
+    "5013": {
+      "key": "Tenacity",
+      "enabled": null,
+      "stackable": null,
+      "script": "ASSETS/Perks/StatMods/StatModTenacity.lua",
+      "effect_amounts": {
+        "StatGain": 15.0
+      },
+      "mode_overrides": {},
+      "calculations": {},
+      "texts": {
+        "name": "Tenacidad y resistencia a las ralentizaciones",
+        "tooltip": "+@StatGain@% de tenacidad y resistencia a las ralentizaciones",
+        "short_desc": "+@StatGain@% de tenacidad y resistencia a las ralentizaciones",
+        "long_desc": "+@StatGain@% de tenacidad y resistencia a las ralentizaciones"
+      },
+      "placeholders": {
+        "StatGain": "effect_amount"
+      }
+    },
+    "8004": {
+      "key": "PreSorSetBonus",
+      "enabled": null,
+      "stackable": null,
+      "script": "ASSETS/Perks/Styles/Precision/PreSorSetBonus/PreSorSetBonus.lua",
+      "effect_amounts": {
+        "AdaptiveForce": 0.0,
+        "AttackSpeed": 0.0,
+        "{8298075e}": 0.0,
+        "{969826da}": 0.0
+      },
+      "mode_overrides": {},
+      "calculations": {},
+      "texts": {
+        "name": "El perfecto descarado",
+        "tooltip": "<pathPrecision>Precisión</pathPrecision> + <pathSorcery>Brujería</pathSorcery><br>+@AttackSpeed*100@% de velocidad de ataque<br>+@AdaptiveForce.0*0.6@ de daño de ataque o +@AdaptiveForce@ de poder de habilidad, <lol-uikit-tooltipped-keyword key='LinkTooltip_Description_Adaptive'><font color='#48C4B7'>adaptable</font></lol-uikit-tooltipped-keyword><br>{{ adaptive_force_tip_bonus_@f2@ }}",
+        "short_desc": "<pathBonus><pathPrecision>Precisión</pathPrecision> + <pathSorcery>Brujería</pathSorcery> Bonificación de conjunto</pathBonus>",
+        "long_desc": "+@AttackSpeed*100@% de velocidad de ataque<br>+@AdaptiveForce.0*0.6@ de daño de ataque o +@AdaptiveForce@ de poder de habilidad, <lol-uikit-tooltipped-keyword key='LinkTooltip_Description_Adaptive'><font color='#48C4B7'>adaptable</font></lol-uikit-tooltipped-keyword>"
+      },
+      "placeholders": {
+        "AdaptiveForce": "effect_amount",
+        "AdaptiveForce.0": "effect_amount",
+        "AttackSpeed": "effect_amount",
+        "f2": "runtime"
+      }
+    },
+    "8005": {
+      "key": "PressTheAttack",
+      "enabled": null,
+      "stackable": null,
+      "script": "ASSETS/Perks/Styles/Precision/PressTheAttack/PressTheAttack.lua",
+      "effect_amounts": {
+        "APRatio": 0.0,
+        "BonusADRatio": 0.0,
+        "BonusPercentDamage": 0.08,
+        "Cooldown": 6.0,
+        "HitsRequired": 3.0,
+        "MaxDamage": 160.0,
+        "MinDamage": 40.0,
+        "{1de0007c}": 0.0,
+        "{75ba08eb}": 0.08,
+        "{7923dbb9}": 5.0,
+        "{a38bdcc6}": 4.0,
+        "{ae481e05}": 0.08,
+        "{bea5d3ef}": 5.0,
+        "{d9ac2d86}": 0.08,
+        "{f0adfe0c}": 0.08
+      },
+      "mode_overrides": {},
+      "calculations": {},
+      "texts": {
+        "name": "Ataque intensificado",
+        "tooltip": "Al asestar @HitsRequired@ ataques básicos consecutivos a un campeón enemigo, le inflige <scaleLevel>@f4@</scaleLevel> de <lol-uikit-tooltipped-keyword key='LinkTooltip_Description_AdaptiveDmg'><font color='#48C4B7'>daño adaptable</font></lol-uikit-tooltipped-keyword> adicional (según el nivel) y potencia el daño que infliges un @BonusPercentDamage*100@% hasta que abandonas el combate con campeones.<br><hr><br>Daño adicional infligido: <scaleAD>@f2@</scaleAD><br>Enfriamiento de 3 golpes: @Cooldown@ s",
+        "short_desc": "Golpear a un campeón enemigo @HitsRequired@ veces consecutivas inflige daño adicional y potencia tu daño hasta que abandonas el combate con campeones.",
+        "long_desc": "Al asestar @HitsRequired@ ataques básicos consecutivos a un campeón enemigo, le inflige @MinDamage@-@MaxDamage@ de <lol-uikit-tooltipped-keyword key='LinkTooltip_Description_AdaptiveDmg'><font color='#48C4B7'>daño adaptable</font></lol-uikit-tooltipped-keyword> adicional (según el nivel) y potencia el daño que infliges un @BonusPercentDamage*100@% hasta que abandonas el combate con campeones."
+      },
+      "placeholders": {
+        "BonusPercentDamage": "effect_amount",
+        "Cooldown": "effect_amount",
+        "HitsRequired": "effect_amount",
+        "MaxDamage": "effect_amount",
+        "MinDamage": "effect_amount",
+        "f2": "runtime",
+        "f4": "runtime"
+      }
+    },
+    "8006": {
+      "key": "PreResSetBonus",
+      "enabled": null,
+      "stackable": null,
+      "script": "ASSETS/Perks/Styles/Precision/PreResSetBonus/PreResSetBonus.lua",
+      "effect_amounts": {
+        "AttackSpeed": 0.0,
+        "Health": 0.0,
+        "HealthAtEighteen": 0.0,
+        "{71515e3c}": 0.0
+      },
+      "mode_overrides": {},
+      "calculations": {},
+      "texts": {
+        "name": "El campeón eterno",
+        "tooltip": "<pathPrecision>Precisión</pathPrecision> + <pathResolve>Valor</pathResolve><br>+@AttackSpeed*100@% de velocidad de ataque.<br>+@Health@-@HealthAtEighteen@ de vida según el nivel.",
+        "short_desc": "<pathBonus><pathPrecision>Precisión</pathPrecision> + <pathResolve>Valor</pathResolve> Bonificación de conjunto</pathBonus>",
+        "long_desc": "+@AttackSpeed*100@% de velocidad de ataque.<br>+@Health@-@HealthAtEighteen@ de vida según el nivel."
+      },
+      "placeholders": {
+        "AttackSpeed": "effect_amount",
+        "Health": "effect_amount",
+        "HealthAtEighteen": "effect_amount"
+      }
+    },
+    "8007": {
+      "key": "PreInsSetBonus",
+      "enabled": null,
+      "stackable": null,
+      "script": "ASSETS/Perks/Styles/Precision/PreInsSetBonus/PreInsSetBonus.lua",
+      "effect_amounts": {
+        "AttackSpeed": 0.0
+      },
+      "mode_overrides": {},
+      "calculations": {},
+      "texts": {
+        "name": "El erudito",
+        "tooltip": "<pathPrecision>Precisión</pathPrecision> + <pathInspiration>Inspiración</pathInspiration><br>+@AttackSpeed*100@% de velocidad de ataque",
+        "short_desc": "<pathBonus><pathPrecision>Precisión</pathPrecision> + <pathInspiration>Inspiración</pathInspiration> Bonificación de conjunto</pathBonus>",
+        "long_desc": "+@AttackSpeed*100@% de velocidad de ataque"
+      },
+      "placeholders": {
+        "AttackSpeed": "effect_amount"
+      }
+    },
+    "8008": {
+      "key": "LethalTempo",
+      "enabled": null,
+      "stackable": null,
+      "script": "ASSETS/Perks/Styles/Precision/LethalTempo/LethalTempo.lua",
+      "effect_amounts": {
+        "Duration": 6.0,
+        "MaxStacks": 6.0,
+        "PerfectlyTimedForgivance": 0.25,
+        "TTASPerStackMelee": 0.06,
+        "TTASPerStackRanged": 0.04,
+        "TTMaxNoteDamageMelee": 30.0,
+        "TTMaxNoteDamageRanged": 24.0,
+        "TTMinNoteDamageMelee": 9.0,
+        "TTMinNoteDamageRanged": 6.0
+      },
+      "mode_overrides": {},
+      "calculations": {
+        "ASPerStack": {
+          "class": "{e9a3c91d}",
+          "mFormulaParts": [
+            {
+              "class": "NumberCalculationPart",
+              "mNumber": 0.06
+            }
+          ],
+          "mDisplayAsPercent": true,
+          "mPrecision": 1,
+          "mRangedMultiplier": {
+            "class": "NumberCalculationPart",
+            "mNumber": 0.8
+          }
+        },
+        "NoteDamage": {
+          "class": "{e9a3c91d}",
+          "mMultiplier": {
+            "class": "SumOfSubPartsCalculationPart",
+            "mSubparts": [
+              {
+                "class": "NumberCalculationPart",
+                "mNumber": 1.0
+              },
+              {
+                "class": "StatByCoefficientCalculationPart",
+                "mStat": 4,
+                "mStatFormula": 2,
+                "mCoefficient": 1.0
+              }
+            ]
+          },
+          "mFormulaParts": [
+            {
+              "class": "ByCharLevelInterpolationCalculationPart",
+              "mStartValue": 9.0,
+              "mEndValue": 30.0
+            }
+          ],
+          "mPrecision": 1,
+          "mRangedMultiplier": {
+            "class": "NumberCalculationPart",
+            "mNumber": 0.667
+          }
+        }
+      },
+      "texts": {
+        "name": "Compás letal",
+        "tooltip": "Atacar a un campeón enemigo te otorga un %i:scaleAS%@ASPerStack@ de velocidad de ataque durante @Duration@&nbsp;s, hasta un máximo de @MaxStacks@ acumulaciones. Con el máximo de acumulaciones, inflige @NoteDamage@ (%i:scaleAS%) <lol-uikit-tooltipped-keyword key='LinkTooltip_Description_AdaptiveDmg'><font color='#48C4B7'>de daño adaptable adicional</font></lol-uikit-tooltipped-keyword> %i:OnHit% <OnHit>al atacar</OnHit>.<br><br>Duración máxima de las acumulaciones: @f1@ s<br>Daño infligido: @f2@<br><br>Daño infligido: Esta runa también calcula el porcentaje de ataques básicos contra campeones que lanzas durante los @PerfectlyTimedForgivance.2@ s posteriores a tener listo el ataque tras haber atacado a un campeón: @f3@% (@f4@ de @f5@)",
+        "short_desc": "Atacar a un campeón enemigo te otorga velocidad de ataque, hasta @MaxStacks@ acumulaciones. Con el máximo de acumulaciones, inflige <lol-uikit-tooltipped-keyword key='LinkTooltip_Description_AdaptiveDmg'><font color='#48C4B7'>daño adaptable adicional</font></lol-uikit-tooltipped-keyword> al atacar.",
+        "long_desc": "Atacar a un campeón enemigo te otorga [@TTASPerStackMelee*100@% para campeones cuerpo a cuerpo || @TTASPerStackRanged*100@% para campeones a distancia] de velocidad de ataque durante @Duration@ s, hasta @MaxStacks@ acumulaciones. Con el máximo de acumulaciones, inflige [@TTMinNoteDamageMelee@ - @TTMaxNoteDamageMelee@ para campeones cuerpo a cuerpo || @TTMinNoteDamageRanged@ - @TTMaxNoteDamageRanged@ para campeones a distancia] <lol-uikit-tooltipped-keyword key='LinkTooltip_Description_AdaptiveDmg'>de daño adaptable adicional al atacar, que aumenta un 1% por cada 1% de velocidad de ataque adicional</lol-uikit-tooltipped-keyword>."
+      },
+      "placeholders": {
+        "ASPerStack": "calculation",
+        "Duration": "effect_amount",
+        "MaxStacks": "effect_amount",
+        "NoteDamage": "calculation",
+        "PerfectlyTimedForgivance.2": "effect_amount",
+        "TTASPerStackMelee": "effect_amount",
+        "TTASPerStackRanged": "effect_amount",
+        "TTMaxNoteDamageMelee": "effect_amount",
+        "TTMaxNoteDamageRanged": "effect_amount",
+        "TTMinNoteDamageMelee": "effect_amount",
+        "TTMinNoteDamageRanged": "effect_amount",
+        "f1": "runtime",
+        "f2": "runtime",
+        "f3": "runtime",
+        "f4": "runtime",
+        "f5": "runtime"
+      }
+    },
+    "8009": {
+      "key": "PresenceOfMind",
+      "enabled": null,
+      "stackable": null,
+      "script": "ASSETS/Perks/Styles/Precision/PresenceOfMind/PresenceOfMind.lua",
+      "effect_amounts": {
+        "CooldownDuration": 8.0,
+        "EnergyRestore": 6.0,
+        "MaxFlatRestore": 50.0,
+        "MinFlatRestore": 6.0,
+        "PercentManaRestore": 0.15
+      },
+      "mode_overrides": {
+        "ARAM": {
+          "PercentManaRestore": 0.1
+        },
+        "{9e03f6c0}": {
+          "PercentManaRestore": 0.1
+        }
+      },
+      "calculations": {
+        "{47582016}": {
+          "class": "GameCalculation",
+          "mFormulaParts": [
+            {
+              "class": "{2421b258}",
+              "{34474c3b}": [
+                6.0,
+                6.0,
+                6.8,
+                7.6,
+                8.4,
+                9.2,
+                10.0,
+                12.0,
+                14.0,
+                16.0,
+                18.0,
+                20.0,
+                23.2,
+                26.4,
+                29.6,
+                32.8,
+                36.0,
+                40.0,
+                44.0,
+                52.0,
+                56.0,
+                60.0,
+                60.0,
+                60.0,
+                60.0,
+                60.0,
+                60.0,
+                60.0,
+                60.0,
+                60.0,
+                60.0
+              ]
+            }
+          ],
+          "mPrecision": 1
+        }
+      },
+      "texts": {
+        "name": "Claridad mental",
+        "tooltip": "Infligir daño a un campeón enemigo restaura @MinFlatRestore@-@MaxFlatRestore@ de maná (un 80% para campeones a distancia) o @EnergyRestore@ de energía.<br><br>Los asesinatos y asistencias restauran un @PercentManaRestore*100@% de tu maná o energía máximos.<br><br>Enfriamiento de restauración por daño: @CooldownDuration@ s<br><hr><br>Recurso restaurado: @f1@<br>",
+        "short_desc": "Restaura una pequeña cantidad de maná o energía al infligir daño a un campeón enemigo. Los asesinatos o asistencias restauran maná o energía.",
+        "long_desc": "Infligir daño a un campeón enemigo restaura @MinFlatRestore@-@MaxFlatRestore@ de maná (un 80% para campeones a distancia) o @EnergyRestore@ de energía.<br><br>Los asesinatos y asistencias restauran un @PercentManaRestore*100@% de tu maná o energía máximos.<br><br>Enfriamiento de restauración por daño: @CooldownDuration@ s"
+      },
+      "placeholders": {
+        "CooldownDuration": "effect_amount",
+        "EnergyRestore": "effect_amount",
+        "MaxFlatRestore": "effect_amount",
+        "MinFlatRestore": "effect_amount",
+        "PercentManaRestore": "effect_amount",
+        "f1": "runtime"
+      }
+    },
+    "8010": {
+      "key": "Conqueror",
+      "enabled": null,
+      "stackable": null,
+      "script": "ASSETS/Perks/Styles/Precision/Conqueror/Conqueror.lua",
+      "effect_amounts": {
+        "BuffDuration": 5.0,
+        "HealingPercent": 0.08,
+        "MaxAdaptivePerStack": 4.0,
+        "MaxStacks": 12.0,
+        "MinAdaptivePerStack": 1.8,
+        "RangedHealingPercent": 0.05,
+        "{bc639869}": 4.0
+      },
+      "mode_overrides": {},
+      "calculations": {},
+      "texts": {
+        "name": "Conquistador",
+        "tooltip": "Los ataques básicos o hechizos que infligen daño a un campeón enemigo otorgan 2 acumulaciones de Conquistador durante @BuffDuration@ s, que otorga {{perk_substring_ConquerorAdaptive_@f4@}} por acumulación. Se acumula hasta @MaxStacks@ veces. Los campeones a distancia solo obtienen 1 acumulación por ataque básico.<br><br>Con el máximo de acumulaciones, cura un @HealingPercent*100@% del daño que infliges a campeones (un @RangedHealingPercent*100@% en el caso de campeones a distancia).<br><br>Curación total: @f1@",
+        "short_desc": "Otorga acumulaciones de fuerza adaptable al atacar a campeones enemigos. Tras conseguir @MaxStacks@ acumulaciones, te curas una porción del daño que inflijas a campeones.",
+        "long_desc": "Los ataques básicos o hechizos que inflijan daño a un campeón enemigo otorgan 2 acumulaciones de Conquistador durante @BuffDuration@ s, lo que otorga @MinAdaptivePerStack@-@MaxAdaptivePerStack@ <lol-uikit-tooltipped-keyword key='LinkTooltip_Description_Adaptive'><font color='#48C4B7'>de fuerza adaptable</font></lol-uikit-tooltipped-keyword> por acumulación. Se acumula hasta @MaxStacks@ veces. Los campeones a distancia solo obtienen 1 acumulación por ataque básico.<br><br>Con el máximo de acumulaciones, cura un @HealingPercent*100@% del daño que infliges a campeones (un @RangedHealingPercent*100@% en el caso de campeones a distancia)."
+      },
+      "placeholders": {
+        "BuffDuration": "effect_amount",
+        "HealingPercent": "effect_amount",
+        "MaxAdaptivePerStack": "effect_amount",
+        "MaxStacks": "effect_amount",
+        "MinAdaptivePerStack": "effect_amount",
+        "RangedHealingPercent": "effect_amount",
+        "f1": "runtime",
+        "f4": "runtime"
+      }
+    },
+    "8014": {
+      "key": "CoupDeGrace",
+      "enabled": null,
+      "stackable": null,
+      "script": "ASSETS/Perks/Styles/Precision/CoupDeGrace/CoupDeGrace.lua",
+      "effect_amounts": {
+        "BonusPercentDamage": 0.08,
+        "EnemyHealthPercentageThreshold": 0.4
+      },
+      "mode_overrides": {},
+      "calculations": {},
+      "texts": {
+        "name": "Golpe de gracia",
+        "tooltip": "Infliges un @BonusPercentDamage.0 *100@% más de daño a los campeones que estén por debajo del @EnemyHealthPercentageThreshold*100@% de vida.<br><hr><br>Daño adicional infligido total: <scaleAD>@f1@</scaleAD>",
+        "short_desc": "Infliges más daño a los campeones enemigos con poca vida.",
+        "long_desc": "Infliges un @BonusPercentDamage.0 *100@% más de daño a los campeones que estén por debajo del @EnemyHealthPercentageThreshold*100@% de vida."
+      },
+      "placeholders": {
+        "BonusPercentDamage.0": "effect_amount",
+        "EnemyHealthPercentageThreshold": "effect_amount",
+        "f1": "runtime"
+      }
+    },
+    "8016": {
+      "key": "PreDomSetBonus",
+      "enabled": null,
+      "stackable": null,
+      "script": "ASSETS/Perks/Styles/Precision/PreDomSetBonus/PreDomSetBonus.lua",
+      "effect_amounts": {
+        "AdaptiveForce": 0.0,
+        "AttackSpeed": 0.0,
+        "{8298075e}": 0.0,
+        "{969826da}": 0.0
+      },
+      "mode_overrides": {},
+      "calculations": {},
+      "texts": {
+        "name": "El élite despiadado",
+        "tooltip": "<pathPrecision>Precisión</pathPrecision> + <pathDomination>Dominación</pathDomination><br>+@AttackSpeed*100@% de velocidad de ataque<br>+@AdaptiveForce.0*0.6@ de daño de ataque o +@AdaptiveForce@ de poder de habilidad, <lol-uikit-tooltipped-keyword key='LinkTooltip_Description_Adaptive'><font color='#48C4B7'>adaptable</font></lol-uikit-tooltipped-keyword><br>{{ adaptive_force_tip_bonus_@f2@ }}",
+        "short_desc": "<pathBonus><pathPrecision>Precisión</pathPrecision> + <pathDomination>Dominación</pathDomination> Bonificación de conjunto</pathBonus>",
+        "long_desc": "+@AttackSpeed*100@% de velocidad de ataque<br>+@AdaptiveForce.0*0.6@ de daño de ataque o +@AdaptiveForce@ de poder de habilidad, <lol-uikit-tooltipped-keyword key='LinkTooltip_Description_Adaptive'><font color='#48C4B7'>adaptable</font></lol-uikit-tooltipped-keyword>"
+      },
+      "placeholders": {
+        "AdaptiveForce": "effect_amount",
+        "AdaptiveForce.0": "effect_amount",
+        "AttackSpeed": "effect_amount",
+        "f2": "runtime"
+      }
+    },
+    "8017": {
+      "key": "CutDown",
+      "enabled": null,
+      "stackable": null,
+      "script": "ASSETS/Perks/Styles/Precision/CutDown/CutDown.lua",
+      "effect_amounts": {
+        "BonusPercentDamage": 0.08,
+        "EnemyHealthPercentageThreshold": 0.6,
+        "MaxBonusDamagePercent": 0.15,
+        "MinBonusDamagePercent": 0.05,
+        "{016801c6}": 0.1,
+        "{bea956d4}": 1.0
+      },
+      "mode_overrides": {},
+      "calculations": {},
+      "texts": {
+        "name": "Derribado",
+        "tooltip": "Infliges un @BonusPercentDamage*100@% más de daño a los campeones que estén por encima del @EnemyHealthPercentageThreshold*100@% de vida.<br><hr><br>Daño adicional total: <scaleAD>@f1@</scaleAD>",
+        "short_desc": "Infliges más daño a los campeones enemigos con mucha vida.",
+        "long_desc": "Infliges un @BonusPercentDamage*100@% más de daño a los campeones que estén por encima del @EnemyHealthPercentageThreshold*100@% de vida."
+      },
+      "placeholders": {
+        "BonusPercentDamage": "effect_amount",
+        "EnemyHealthPercentageThreshold": "effect_amount",
+        "f1": "runtime"
+      }
+    },
+    "8021": {
+      "key": "FleetFootwork",
+      "enabled": null,
+      "stackable": null,
+      "script": "ASSETS/Perks/Styles/Precision/FleetFootwork/FleetFootwork.lua",
+      "effect_amounts": {
+        "HealAPRatio": 0.05,
+        "HealBase": 15.0,
+        "HealBonusADRatio": 0.1,
+        "HealMax": 160.0,
+        "MSBuff": 0.2,
+        "MSDuration": 1.0,
+        "MinionHealMod": 0.15,
+        "RangedHealMod": 0.6,
+        "RangedMSMod": 0.75
+      },
+      "mode_overrides": {},
+      "calculations": {
+        "HealAmount": {
+          "class": "{e9a3c91d}",
+          "mSimpleTooltipCalculationDisplay": 4,
+          "mFormulaParts": [
+            {
+              "class": "ByCharLevelInterpolationCalculationPart",
+              "mStartValue": 15.0,
+              "mEndValue": 160.0,
+              "{7fe8e3b3}": true
+            },
+            {
+              "class": "StatByNamedDataValueCalculationPart",
+              "mStat": 2,
+              "mStatFormula": 2,
+              "mDataValue": "HealBonusADRatio"
+            },
+            {
+              "class": "StatByNamedDataValueCalculationPart",
+              "mDataValue": "HealAPRatio"
+            }
+          ],
+          "mRangedMultiplier": {
+            "class": "NamedDataValueCalculationPart",
+            "mDataValue": "RangedHealMod"
+          }
+        },
+        "MoveSpeedCalc": {
+          "class": "{e9a3c91d}",
+          "mFormulaParts": [
+            {
+              "class": "NamedDataValueCalculationPart",
+              "mDataValue": "MSBuff"
+            }
+          ],
+          "mDisplayAsPercent": true,
+          "mRangedMultiplier": {
+            "class": "NamedDataValueCalculationPart",
+            "mDataValue": "RangedMSMod"
+          }
+        },
+        "{ad820ad4}": {
+          "class": "GameCalculation",
+          "mFormulaParts": [
+            {
+              "class": "ByCharLevelInterpolationCalculationPart",
+              "mStartValue": 5.0,
+              "mEndValue": 100.0,
+              "{7fe8e3b3}": true
+            }
+          ]
+        }
+      },
+      "texts": {
+        "name": "Pies veloces",
+        "tooltip": "Atacar y moverse genera acumulaciones de energía. Con 100 acumulaciones, tu siguiente ataque será con vigor.<br><br>Los ataques con vigor te curan <healing>@HealAmount@ de vida</healing> y te otorgan <speed>@MoveSpeedCalc@ de velocidad de movimiento</speed> durante @MSDuration@ s.<br><rules><br>La curación recibida de súbditos tiene una efectividad del @MinionHealMod*100@%.<br></rules><hr><br>Curación total: @f1@",
+        "short_desc": "Atacar y moverse genera acumulaciones de energía. A las 100 acumulaciones, tu siguiente ataque te cura y te otorga <lol-uikit-tooltipped-keyword key='LinkTooltip_Description_MS'>velocidad de movimiento</lol-uikit-tooltipped-keyword> adicional.",
+        "long_desc": "Atacar y moverse genera acumulaciones de energía. A las 100 acumulaciones, tu siguiente ataque será con vigor.<br><br>Los ataques con vigor te curan @HealBase@-@HealMax@ (+@HealBonusADRatio.-1@ del DA adicional, +@HealAPRatio.-1@ del PH) de vida y te otorgan un <speed>@MSBuff*100@% de velocidad de movimiento</speed> durante @MSDuration.0@ s.<br><br>La curación recibida tiene una efectividad del @RangedHealMod*100@% en campeones a distancia y la velocidad de movimiento, del @RangedMSMod*100@%. Toda curación tiene una efectividad del @MinionHealMod*100@% contra súbditos."
+      },
+      "placeholders": {
+        "HealAPRatio.-1": "effect_amount",
+        "HealAmount": "calculation",
+        "HealBase": "effect_amount",
+        "HealBonusADRatio.-1": "effect_amount",
+        "HealMax": "effect_amount",
+        "MSBuff": "effect_amount",
+        "MSDuration": "effect_amount",
+        "MSDuration.0": "effect_amount",
+        "MinionHealMod": "effect_amount",
+        "MoveSpeedCalc": "calculation",
+        "RangedHealMod": "effect_amount",
+        "RangedMSMod": "effect_amount",
+        "f1": "runtime"
+      }
+    },
+    "8105": {
+      "key": "RelentlessHunter",
+      "enabled": null,
+      "stackable": null,
+      "script": "ASSETS/Perks/Styles/Domination/RelentlessHunter/RelentlessHunter.lua",
+      "effect_amounts": {
+        "OOCMS": 8.0,
+        "{36c17bb0}": 0.0
+      },
+      "mode_overrides": {},
+      "calculations": {},
+      "texts": {
+        "name": "Cazador incesante",
+        "tooltip": "Obtienes <speed>@OOCMS.0@ de velocidad de movimiento</speed> fuera de combate por cada acumulación de <i>Cazarrecompensas</i>. Las acumulaciones de <i>Cazarrecompensas</i> se consiguen la primera vez que logres un asesinato o asistencia de cada campeón enemigo.<br><br>Aumento actual de Cazador incesante: <speed>@f3@ de velocidad de movimiento</speed><br><br>{{ bountyHunter_bountyBoard_@f16@ }}",
+        "short_desc": "Los <lol-uikit-tooltipped-keyword key='LinkTooltip_Description_Takedown'>asesinatos o asistencias</lol-uikit-tooltipped-keyword> <b>únicos</b> otorgan <b> <lol-uikit-tooltipped-keyword key='LinkTooltip_Description_MS'>velocidad de movimiento</lol-uikit-tooltipped-keyword></b> fuera de combate de forma permanente. ",
+        "long_desc": "Obtienes <speed>@OOCMS.0@ de velocidad de movimiento</speed> fuera de combate por cada acumulación de <i>Cazarrecompensas</i>. Las acumulaciones de <i>Cazarrecompensas</i> se consiguen la primera vez que logres un asesinato o asistencia de cada campeón enemigo."
+      },
+      "placeholders": {
+        "OOCMS.0": "effect_amount",
+        "f16": "runtime",
+        "f3": "runtime"
+      }
+    },
+    "8106": {
+      "key": "UltimateHunter",
+      "enabled": null,
+      "stackable": null,
+      "script": "ASSETS/Perks/Styles/Domination/UltimateHunter/UltimateHunter.lua",
+      "effect_amounts": {
+        "AdditionalUltAH": 5.0,
+        "StartingUltAH": 6.0
+      },
+      "mode_overrides": {},
+      "calculations": {},
+      "texts": {
+        "name": "Cazador definitivo",
+        "tooltip": "Tu definitiva obtiene <attention>@StartingUltAH@</attention> de velocidad de habilidades y <attention>@AdditionalUltAH.0@</attention> de velocidad de habilidades adicional por acumulación de <i>Cazarrecompensas</i>. Las acumulaciones de <i>Cazarrecompensas</i> se consiguen la primera vez que logres un asesinato o asistencia de cada campeón enemigo.<br><br>Aumento de Cazador definitivo actual: <attention>@f3@ de velocidad de habilidad definitiva</attention><br><br>{{ bountyHunter_bountyBoard_@f16@ }}",
+        "short_desc": "Los <lol-uikit-tooltipped-keyword key='LinkTooltip_Description_Takedown'>asesinatos y asistencias</lol-uikit-tooltipped-keyword> <b>únicas</b> otorgan reducción de enfriamiento permanente a tu definitiva. ",
+        "long_desc": "Tu definitiva obtiene <attention>@StartingUltAH@</attention> de velocidad de habilidades y <attention>@AdditionalUltAH.0@</attention> de velocidad de habilidades adicional por acumulación de <i>Cazarrecompensas</i>. Las acumulaciones de <i>Cazarrecompensas</i> se consiguen la primera vez que logres un asesinato o asistencia de cada campeón enemigo."
+      },
+      "placeholders": {
+        "AdditionalUltAH.0": "effect_amount",
+        "StartingUltAH": "effect_amount",
+        "f16": "runtime",
+        "f3": "runtime"
+      }
+    },
+    "8109": {
+      "key": "DomInsSetBonus",
+      "enabled": null,
+      "stackable": null,
+      "script": "ASSETS/Perks/Styles/Domination/DomInsSetBonus/DomInsSetBonus.lua",
+      "effect_amounts": {
+        "AdaptiveForce": 0.0,
+        "{8298075e}": 0.0,
+        "{969826da}": 0.0
+      },
+      "mode_overrides": {},
+      "calculations": {},
+      "texts": {
+        "name": "El maestro maligno ",
+        "tooltip": "<pathDomination>Dominación</pathDomination> + <pathInspiration>Inspiración</pathInspiration><br>+@AdaptiveForce.0*0.6@ de daño de ataque o +@AdaptiveForce@ de poder de habilidad, <lol-uikit-tooltipped-keyword key='LinkTooltip_Description_Adaptive'><font color='#48C4B7'>adaptable</font></lol-uikit-tooltipped-keyword><br>{{ adaptive_force_tip_bonus_@f2@ }}.",
+        "short_desc": "<pathBonus><pathDomination>Dominación</pathDomination> + <pathInspiration>Inspiración</pathInspiration> Bonificación de conjunto</pathBonus>",
+        "long_desc": "+@AdaptiveForce.0*0.6@ de daño de ataque o +@AdaptiveForce@ de poder de habilidad, <lol-uikit-tooltipped-keyword key='LinkTooltip_Description_Adaptive'><font color='#48C4B7'>adaptable</font></lol-uikit-tooltipped-keyword>"
+      },
+      "placeholders": {
+        "AdaptiveForce": "effect_amount",
+        "AdaptiveForce.0": "effect_amount",
+        "f2": "runtime"
+      }
+    },
+    "8112": {
+      "key": "Electrocute",
+      "enabled": null,
+      "stackable": null,
+      "script": "ASSETS/Perks/Styles/Domination/Electrocute/Electrocute.lua",
+      "effect_amounts": {
+        "APRatio": 0.05,
+        "BonusADRatio": 0.1,
+        "Cooldown": 20.0,
+        "DamageBase": 70.0,
+        "DamageMax": 240.0,
+        "WindowDuration": 3.0,
+        "{beb41f04}": 20.0
+      },
+      "mode_overrides": {
+        "ARAM": {
+          "APRatio": 0.1,
+          "BonusADRatio": 0.15,
+          "Cooldown": 15.0,
+          "DamageBase": 65.0,
+          "DamageMax": 250.0,
+          "{beb41f04}": 10.0
+        },
+        "URF": {
+          "Cooldown": 10.0,
+          "{beb41f04}": 10.0
+        },
+        "{48eea983}": {
+          "Cooldown": 20.0,
+          "{beb41f04}": 15.0
+        },
+        "{9e03f6c0}": {
+          "Cooldown": 15.0,
+          "{beb41f04}": 10.0
+        }
+      },
+      "calculations": {
+        "TotalDamage": {
+          "class": "GameCalculation",
+          "mSimpleTooltipCalculationDisplay": 4,
+          "mFormulaParts": [
+            {
+              "class": "ByCharLevelInterpolationCalculationPart",
+              "mStartValue": 70.0,
+              "mEndValue": 240.0
+            },
+            {
+              "class": "StatByNamedDataValueCalculationPart",
+              "mDataValue": "APRatio"
+            },
+            {
+              "class": "StatByNamedDataValueCalculationPart",
+              "mStat": 2,
+              "mStatFormula": 2,
+              "mDataValue": "BonusADRatio"
+            }
+          ]
+        }
+      },
+      "texts": {
+        "name": "Electrocutar",
+        "tooltip": "Golpear a un campeón con 3 ataques o habilidades <b>diferentes</b> en un margen de @WindowDuration@ s hace que inflijas <font color='#48C4B7'>@TotalDamage@</font><lol-uikit-tooltipped-keyword key='LinkTooltip_Description_AdaptiveDmg'><font color='#48C4B7'> de daño adaptable</font> adicional</lol-uikit-tooltipped-keyword>.<br>Enfriamiento: @Cooldown@ s<br><hr><br>Daño total infligido: <scaleAD>@f1@</scaleAD>",
+        "short_desc": "Golpear a un campeón con 3 ataques o habilidades <b>diferentes</b> en un margen de @WindowDuration@ s hace que inflijas <lol-uikit-tooltipped-keyword key='LinkTooltip_Description_AdaptiveDmg'>daño adaptable</lol-uikit-tooltipped-keyword> adicional.",
+        "long_desc": "Golpear a un campeón con 3 ataques o habilidades <b>diferentes</b> en un margen de @WindowDuration@ s hace que inflijas <lol-uikit-tooltipped-keyword key='LinkTooltip_Description_AdaptiveDmg'><font color='#48C4B7'>daño adaptable</font></lol-uikit-tooltipped-keyword> adicional.<br><br>Daño: @DamageBase@-@DamageMax@ (+@BonusADRatio.-1@ de DA adicional, +@APRatio.-1@ de PH) de daño.<br>Enfriamiento: @Cooldown@ s<br><br><i>''Lo llamamos 'Señor del trueno' porque hablar de sus rayos era llamar al desastre''.</i>"
+      },
+      "placeholders": {
+        "APRatio.-1": "effect_amount",
+        "BonusADRatio.-1": "effect_amount",
+        "Cooldown": "effect_amount",
+        "DamageBase": "effect_amount",
+        "DamageMax": "effect_amount",
+        "TotalDamage": "calculation",
+        "WindowDuration": "effect_amount",
+        "f1": "runtime"
+      }
+    },
+    "8114": {
+      "key": "DomResSetBonus",
+      "enabled": null,
+      "stackable": null,
+      "script": "ASSETS/Perks/Styles/Domination/DomResSetBonus/DomResSetBonus.lua",
+      "effect_amounts": {
+        "AdaptiveForce": 0.0,
+        "Health": 0.0,
+        "HealthAtEighteen": 0.0,
+        "{71515e3c}": 0.0,
+        "{8298075e}": 0.0,
+        "{969826da}": 0.0
+      },
+      "mode_overrides": {},
+      "calculations": {},
+      "texts": {
+        "name": "El carnicero inmortal",
+        "tooltip": "<pathDomination>Dominación</pathDomination> + <pathResolve>Valor</pathResolve><br>+@AdaptiveForce.0*0.6@ de daño de ataque o +@AdaptiveForce@ de poder de habilidad, <lol-uikit-tooltipped-keyword key='LinkTooltip_Description_Adaptive'><font color='#48C4B7'>adaptable</font></lol-uikit-tooltipped-keyword>.<br>{{ adaptive_force_tip_bonus_@f2@ }}<br>+@Health@-@HealthAtEighteen@ de vida según el nivel.",
+        "short_desc": "<pathBonus>Bonificación de conjunto de <pathDomination>Dominación</pathDomination> + <pathResolve>Valor</pathResolve></pathBonus>",
+        "long_desc": "+@AdaptiveForce.0*0.6@ de daño de ataque o +@AdaptiveForce@ de poder de habilidad, <lol-uikit-tooltipped-keyword key='LinkTooltip_Description_Adaptive'><font color='#48C4B7'>adaptable</font></lol-uikit-tooltipped-keyword><br>+@Health@-@HealthAtEighteen@ de vida según el nivel."
+      },
+      "placeholders": {
+        "AdaptiveForce": "effect_amount",
+        "AdaptiveForce.0": "effect_amount",
+        "Health": "effect_amount",
+        "HealthAtEighteen": "effect_amount",
+        "f2": "runtime"
+      }
+    },
+    "8115": {
+      "key": "DomSorSetBonus",
+      "enabled": null,
+      "stackable": null,
+      "script": "ASSETS/Perks/Styles/Domination/DomSorSetBonus/DomSorSetBonus.lua",
+      "effect_amounts": {
+        "AdaptiveForce": 0.0,
+        "{8298075e}": 0.0,
+        "{969826da}": 0.0
+      },
+      "mode_overrides": {},
+      "calculations": {},
+      "texts": {
+        "name": "La cuchilla de éter",
+        "tooltip": "<pathDomination>Dominación</pathDomination> + <pathSorcery>Brujería</pathSorcery><br>+@AdaptiveForce.0*0.6@ de daño de ataque o +@AdaptiveForce@ de poder de habilidad, <lol-uikit-tooltipped-keyword key='LinkTooltip_Description_Adaptive'><font color='#48C4B7'>adaptable</font></lol-uikit-tooltipped-keyword><br>{{ adaptive_force_tip_bonus_@f2@ }}.",
+        "short_desc": "<pathBonus><pathDomination>Dominación</pathDomination> + <pathSorcery>Brujería</pathSorcery> Bonificación de conjunto</pathBonus>",
+        "long_desc": "+@AdaptiveForce.0*0.6@ de daño de ataque o +@AdaptiveForce@ de poder de habilidad, <lol-uikit-tooltipped-keyword key='LinkTooltip_Description_Adaptive'><font color='#48C4B7'>adaptable</font></lol-uikit-tooltipped-keyword>"
+      },
+      "placeholders": {
+        "AdaptiveForce": "effect_amount",
+        "AdaptiveForce.0": "effect_amount",
+        "f2": "runtime"
+      }
+    },
+    "8126": {
+      "key": "CheapShot",
+      "enabled": null,
+      "stackable": null,
+      "script": "ASSETS/Perks/Styles/Domination/CheapShot/CheapShot.lua",
+      "effect_amounts": {
+        "Cooldown": 4.0,
+        "DamageIncMax": 45.0,
+        "DamageIncMin": 10.0
+      },
+      "mode_overrides": {},
+      "calculations": {
+        "DamageCalc": {
+          "class": "GameCalculation",
+          "mSimpleTooltipCalculationDisplay": 4,
+          "mFormulaParts": [
+            {
+              "class": "ByCharLevelInterpolationCalculationPart",
+              "mStartValue": 10.0,
+              "mEndValue": 45.0
+            }
+          ]
+        }
+      },
+      "texts": {
+        "name": "Golpe bajo",
+        "tooltip": "Dañar a campeones con <b>reducción de movimiento o de acciones</b> inflige <trueDamage>@DamageCalc@ de daño verdadero adicional</trueDamage>.<br>Enfriamiento: @Cooldown@ s<br><rules>Se activa con el daño de después de la inmovilización.</rules><br><br>Daño adicional infligido total: @f1@",
+        "short_desc": "Infliges daño verdadero adicional a los campeones enemigos con <lol-uikit-tooltipped-keyword key='LinkTooltip_Description_ImpairAct'>movimiento o acciones debilitadas</lol-uikit-tooltipped-keyword>. ",
+        "long_desc": "Dañar a campeones con <b>acciones o movimiento reducidos</b> inflige @DamageIncMin@-@DamageIncMax@ de daño verdadero adicional (según el nivel).<br><br>Enfriamiento: @Cooldown@ s<br><rules>Se activa con el daño de después de la inmovilización.</rules>"
+      },
+      "placeholders": {
+        "Cooldown": "effect_amount",
+        "DamageCalc": "calculation",
+        "DamageIncMax": "effect_amount",
+        "DamageIncMin": "effect_amount",
+        "f1": "runtime"
+      }
+    },
+    "8127": {
+      "key": "DomPreSetBonus",
+      "enabled": null,
+      "stackable": null,
+      "script": "ASSETS/Perks/Styles/Domination/DomPreSetBonus/DomPreSetBonus.lua",
+      "effect_amounts": {
+        "AdaptiveForce": 0.0,
+        "AttackSpeed": 0.0,
+        "{8298075e}": 0.0,
+        "{969826da}": 0.0
+      },
+      "mode_overrides": {},
+      "calculations": {},
+      "texts": {
+        "name": "El cirujano retorcido",
+        "tooltip": "<pathDomination>Dominación</pathDomination> + <pathPrecision>Precisión</pathPrecision><br>+@AdaptiveForce.0*0.6@ de daño de ataque o +@AdaptiveForce@ de poder de habilidad, <lol-uikit-tooltipped-keyword key='LinkTooltip_Description_Adaptive'><font color='#48C4B7'>adaptable</font></lol-uikit-tooltipped-keyword><br>{{ adaptive_force_tip_bonus_@f2@ }}<br>+@AttackSpeed*100@% de velocidad de ataque",
+        "short_desc": "<pathBonus><pathDomination>Dominación</pathDomination> + <pathPrecision>Precisión</pathPrecision> Bonificación de conjunto</pathBonus>",
+        "long_desc": "+@AdaptiveForce.0*0.6@ de daño de ataque o +@AdaptiveForce@ de poder de habilidad, <lol-uikit-tooltipped-keyword key='LinkTooltip_Description_Adaptive'><font color='#48C4B7'>adaptable</font></lol-uikit-tooltipped-keyword><br>+@AttackSpeed*100@% de velocidad de ataque"
+      },
+      "placeholders": {
+        "AdaptiveForce": "effect_amount",
+        "AdaptiveForce.0": "effect_amount",
+        "AttackSpeed": "effect_amount",
+        "f2": "runtime"
+      }
+    },
+    "8128": {
+      "key": "DarkHarvest",
+      "enabled": null,
+      "stackable": null,
+      "script": "ASSETS/Perks/Styles/Domination/DarkHarvest/DarkHarvest.lua",
+      "effect_amounts": {
+        "ADRatio": 0.1,
+        "APRatio": 0.05,
+        "BaseDamage": 30.0,
+        "Cooldown": 35.0,
+        "CooldownResetValue": 1.0,
+        "DamagePerSoulEssence": 11.0,
+        "HarvestThreshold": 0.5
+      },
+      "mode_overrides": {
+        "ARAM": {
+          "DamagePerSoulEssence": 5.0
+        },
+        "URF": {
+          "ADRatio": 0.2,
+          "APRatio": 0.1,
+          "BaseDamage": 10.0,
+          "Cooldown": 12.0,
+          "DamagePerSoulEssence": 2.0
+        },
+        "{48eea983}": {
+          "BaseDamage": 15.0,
+          "DamagePerSoulEssence": 2.0
+        }
+      },
+      "calculations": {
+        "TotalDamage": {
+          "class": "GameCalculation",
+          "mSimpleTooltipCalculationDisplay": 4,
+          "mFormulaParts": [
+            {
+              "class": "NamedDataValueCalculationPart",
+              "mDataValue": "BaseDamage"
+            },
+            {
+              "class": "StatByNamedDataValueCalculationPart",
+              "mDataValue": "APRatio"
+            },
+            {
+              "class": "StatByNamedDataValueCalculationPart",
+              "mStat": 2,
+              "mStatFormula": 2,
+              "mDataValue": "ADRatio"
+            }
+          ]
+        }
+      },
+      "texts": {
+        "name": "Cosecha oscura",
+        "tooltip": "Al dañar a un campeón por debajo del @HarvestThreshold*100@% de vida, le infliges {{perk_substring_DarkHarvestadaptive_@f2@}} y cosechas su alma, lo que incrementa permanentemente el daño de Cosecha oscura en <font color='#fc314e'>@DamagePerSoulEssence@</font>. Enfriamiento: @Cooldown@ s (se reinicia a @CooldownResetValue.01@ s al conseguir un asesinato o asistencia)<br><br>Almas cosechadas: <font color='#fc314e'>@f5@</font><br>Daño actual: @TotalDamage@ <font color='#fc314e'>(+@f6@)</font><br>Daño total infligido: @f9@",
+        "short_desc": "Dañar a un campeón con poca vida inflige <lol-uikit-tooltipped-keyword key='LinkTooltip_Description_AdaptiveDmg'>daño adaptable</lol-uikit-tooltipped-keyword> y cosecha una alma de la víctima.",
+        "long_desc": "Al dañar a un campeón por debajo del @HarvestThreshold*100@% de vida, le infliges <lol-uikit-tooltipped-keyword key='LinkTooltip_Description_AdaptiveDmg'>daño adaptable</lol-uikit-tooltipped-keyword> y cosechas su alma, lo que incrementa permanentemente el daño de Cosecha oscura en @DamagePerSoulEssence@.<br><br>Cosecha oscura de daño: @BaseDamage@ (+@DamagePerSoulEssence@ de daño por alma) (+@ADRatio.-1@ de DA adicional) (+@APRatio.-1@ de PH)<br>Enfriamiento: @Cooldown@ s (se reinicia a @CooldownResetValue.01@ s al conseguir un asesinato o asistencia)."
+      },
+      "placeholders": {
+        "ADRatio.-1": "effect_amount",
+        "APRatio.-1": "effect_amount",
+        "BaseDamage": "effect_amount",
+        "Cooldown": "effect_amount",
+        "CooldownResetValue.01": "effect_amount",
+        "DamagePerSoulEssence": "effect_amount",
+        "HarvestThreshold": "effect_amount",
+        "TotalDamage": "calculation",
+        "f2": "runtime",
+        "f5": "runtime",
+        "f6": "runtime",
+        "f9": "runtime"
+      }
+    },
+    "8135": {
+      "key": "TreasureHunter",
+      "enabled": null,
+      "stackable": null,
+      "script": "ASSETS/Perks/Styles/Domination/TreasureHunter/TreasureHunter.lua",
+      "effect_amounts": {
+        "BaseGoldAmount": 50.0,
+        "GoldGrowth": 20.0,
+        "TOOLTIPMaxGoldAmount": 130.0
+      },
+      "mode_overrides": {},
+      "calculations": {},
+      "texts": {
+        "name": "Cazador de tesoros",
+        "tooltip": "Obtienes <gold>@BaseGoldAmount@ de oro</gold> adicional la próxima vez que obtengas una acumulación de <i>Cazarrecompensas</i>. Aumenta el oro obtenido en <gold>@GoldGrowth@</gold> por cada acumulación de <i>Cazarrecompensas</i>, hasta <gold>@TOOLTIPMaxGoldAmount@ de oro</gold>.<br><br>Las acumulaciones de <i>Cazarrecompensas</i> se consiguen la primera vez que participes en la eliminación de cada campeón enemigo.<br><br>Recompensa actual disponible: <gold>@f15@ de oro</gold><br>Oro adicional conseguido: <gold>@f3@ de oro</gold><br><hr><br>{{ bountyHunter_bountyBoard_@f16@ }}",
+        "short_desc": "<b>Único</b> Los <lol-uikit-tooltipped-keyword key='LinkTooltip_Description_Takedown'>asesinatos y asistencias</lol-uikit-tooltipped-keyword> otorgan oro adicional la primera vez que se consiguen. ",
+        "long_desc": "Obtienes <gold>@BaseGoldAmount@ de oro</gold> adicional la próxima vez que obtengas una acumulación de <i>Cazarrecompensas</i>. Aumenta el oro obtenido en <gold>@GoldGrowth@</gold> por cada acumulación de <i>Cazarrecompensas</i>, hasta <gold>@TOOLTIPMaxGoldAmount@ de oro</gold>.<br><br>Las acumulaciones de <i>Cazarrecompensas</i> se consiguen la primera vez que participes en la eliminación de cada campeón enemigo."
+      },
+      "placeholders": {
+        "BaseGoldAmount": "effect_amount",
+        "GoldGrowth": "effect_amount",
+        "TOOLTIPMaxGoldAmount": "effect_amount",
+        "f15": "runtime",
+        "f16": "runtime",
+        "f3": "runtime"
+      }
+    },
+    "8137": {
+      "key": "SixthSense",
+      "enabled": null,
+      "stackable": null,
+      "script": "ASSETS/Perks/Styles/Domination/SixthSense/SixthSense_SEASONAL.lua",
+      "effect_amounts": {
+        "LevelThreshold": 11.0,
+        "MeleeItemCalcValue": 250.0,
+        "RevealDuration": 10.0,
+        "{3b00d8b1}": 250.0,
+        "{d3bd04a2}": 900.0
+      },
+      "mode_overrides": {},
+      "calculations": {
+        "{06387172}": {
+          "class": "GameCalculation",
+          "mFormulaParts": [
+            {
+              "class": "NumberCalculationPart",
+              "mNumber": 2.0
+            }
+          ]
+        },
+        "{56b3f555}": {
+          "class": "GameCalculationConditional",
+          "mSimpleTooltipCalculationDisplay": 5,
+          "mExpandedTooltipCalculationDisplay": 5,
+          "mDefaultGameCalculation": "{792cf56b}",
+          "mConditionalGameCalculation": "{06387172}",
+          "mConditionalCalculationRequirements": {
+            "class": "IsRangedCastRequirement"
+          }
+        },
+        "{792cf56b}": {
+          "class": "GameCalculation",
+          "mFormulaParts": [
+            {
+              "class": "NumberCalculationPart",
+              "mNumber": 1.0
+            }
+          ]
+        }
+      },
+      "texts": {
+        "name": "Sexto sentido",
+        "tooltip": "Sientes de forma automática un guardián enemigo cercano sin marcar y que no hayas visto, y lo marcas para el equipo. <br><br>Nivel @LevelThreshold@: Además, revelas el guardián durante @RevealDuration@ s.<br><br>Este efecto tiene @MeleeItemCalcValue@ s de enfriamiento.<br><hr><br>Guardianes detectados: @f1@",
+        "short_desc": "Tras un largo enfriamiento, sientes de forma automática un guardián enemigo cercano sin marcar y que no hayas visto, y lo marcas para el equipo. <br><br>Nivel @LevelThreshold@: Además, revelas el guardián durante @RevealDuration@ s.",
+        "long_desc": "Sientes de forma automática un guardián enemigo cercano sin marcar y que no hayas visto, y lo marcas para el equipo. <br><br>Nivel @LevelThreshold@: Además, revelas el guardián durante @RevealDuration@ s.<br><br>Este efecto tiene @MeleeItemCalcValue@ s de enfriamiento."
+      },
+      "placeholders": {
+        "LevelThreshold": "effect_amount",
+        "MeleeItemCalcValue": "effect_amount",
+        "RevealDuration": "effect_amount",
+        "f1": "runtime"
+      }
+    },
+    "8139": {
+      "key": "TasteOfBlood",
+      "enabled": null,
+      "stackable": null,
+      "script": "ASSETS/Perks/Styles/Domination/TasteOfBlood/TasteOfBloodTemp.lua",
+      "effect_amounts": {
+        "ADRatio": 0.1,
+        "APRatio": 0.05,
+        "Cooldown": 20.0,
+        "HealAmount": 16.0,
+        "HealAmountMax": 40.0,
+        "{06c09c26}": 4.0
+      },
+      "mode_overrides": {
+        "ARAM": {
+          "Cooldown": 15.0
+        },
+        "URF": {
+          "Cooldown": 10.0
+        },
+        "{48eea983}": {
+          "Cooldown": 10.0
+        },
+        "{9e03f6c0}": {
+          "Cooldown": 15.0
+        }
+      },
+      "calculations": {
+        "HealCalc": {
+          "class": "GameCalculation",
+          "mSimpleTooltipCalculationDisplay": 4,
+          "mFormulaParts": [
+            {
+              "class": "ByCharLevelInterpolationCalculationPart",
+              "mStartValue": 16.0,
+              "mEndValue": 40.0
+            },
+            {
+              "class": "StatByNamedDataValueCalculationPart",
+              "mDataValue": "APRatio"
+            },
+            {
+              "class": "StatByNamedDataValueCalculationPart",
+              "mStat": 2,
+              "mStatFormula": 2,
+              "mDataValue": "ADRatio"
+            }
+          ]
+        }
+      },
+      "texts": {
+        "name": "Sabor a sangre",
+        "tooltip": "Te curas <healing>@HealCalc@ de vida</healing> cuando infliges daño a un campeón enemigo.<br>Enfriamiento: @Cooldown@ s<br><br>Curación total: @f1@",
+        "short_desc": "Recuperas vida cuando dañas a un campeón enemigo.",
+        "long_desc": "Te curas cuando dañas a un campeón enemigo.<br><br>Curación: @HealAmount@-@HealAmountMax@ (+@ADRatio.-1@ de DA adicional, +@APRatio.-1@ de PH) de vida (según el nivel)<br><br>Enfriamiento: @Cooldown@ s"
+      },
+      "placeholders": {
+        "ADRatio.-1": "effect_amount",
+        "APRatio.-1": "effect_amount",
+        "Cooldown": "effect_amount",
+        "HealAmount": "effect_amount",
+        "HealAmountMax": "effect_amount",
+        "HealCalc": "calculation",
+        "f1": "runtime"
+      }
+    },
+    "8140": {
+      "key": "GrislyMementos",
+      "enabled": null,
+      "stackable": null,
+      "script": "ASSETS/Perks/Styles/Domination/GrislyMementos/GrislyMementos.lua",
+      "effect_amounts": {
+        "MaxStacks": 18.0,
+        "StacksPerTakedown": 1.0,
+        "SummonerAH": 3.0,
+        "TrinketAH": 6.0
+      },
+      "mode_overrides": {},
+      "calculations": {},
+      "texts": {
+        "name": "Recuerdo macabro",
+        "tooltip": "Reúne @StacksPerTakedown@ recuerdo(s) por cada<lol-uikit-tooltipped-keyword key='LinkTooltip_Description_Takedown'>eliminación de campeón</lol-uikit-tooltipped-keyword> (hasta @MaxStacks@ en total).<br><br>Obtienes @TrinketAH@ de velocidad de habilidades de talismán por cada recuerdo. En los modos de juego en los que no existan los talismanes de visión, estos otorgan @SummonerAH@ de velocidad de hechizos de invocador.<br><hr><br>Recuerdos reunidos: @f1@ (máx. @MaxStacks@)",
+        "short_desc": "Reúne @StacksPerTakedown@ recuerdo(s) por cada<lol-uikit-tooltipped-keyword key='LinkTooltip_Description_Takedown'>eliminación de campeón</lol-uikit-tooltipped-keyword> (hasta @MaxStacks@ en total).<br><br>Obtienes @TrinketAH@ de velocidad de habilidades de talismán por cada recuerdo.",
+        "long_desc": "Reúne @StacksPerTakedown@ recuerdo(s) por cada<lol-uikit-tooltipped-keyword key='LinkTooltip_Description_Takedown'>eliminación de campeón</lol-uikit-tooltipped-keyword> (hasta @MaxStacks@ en total).<br><br>Obtienes @TrinketAH@ de velocidad de habilidades de talismán por cada recuerdo. En los modos de juego en los que no existan los talismanes de visión, estos otorgan @SummonerAH@ de velocidad de hechizos de invocador."
+      },
+      "placeholders": {
+        "MaxStacks": "effect_amount",
+        "StacksPerTakedown": "effect_amount",
+        "SummonerAH": "effect_amount",
+        "TrinketAH": "effect_amount",
+        "f1": "runtime"
+      }
+    },
+    "8141": {
+      "key": "DeepWard",
+      "enabled": null,
+      "stackable": null,
+      "script": "ASSETS/Perks/Styles/Domination/DeepWard/DeepWard.lua",
+      "effect_amounts": {
+        "ExtraHealth": 1.0,
+        "LevelThreshold": 9.0,
+        "TTDurationIncreaseMax": 45.0,
+        "TTDurationIncreaseMin": 30.0,
+        "TTTrinketDurationIncreaseMax": 150.0,
+        "TTTrinketDurationIncreaseMin": 45.0
+      },
+      "mode_overrides": {},
+      "calculations": {
+        "DurationIncrease": {
+          "class": "GameCalculation",
+          "mFormulaParts": [
+            {
+              "class": "ByCharLevelInterpolationCalculationPart",
+              "mStartValue": 30.0,
+              "mEndValue": 45.0
+            }
+          ]
+        },
+        "TrinketDurationIncrease": {
+          "class": "GameCalculation",
+          "mFormulaParts": [
+            {
+              "class": "ByCharLevelInterpolationCalculationPart",
+              "mStartValue": 45.0,
+              "mEndValue": 150.0
+            }
+          ]
+        }
+      },
+      "texts": {
+        "name": "Guardián de profundidad",
+        "tooltip": "Los guardianes que coloques en la jungla enemiga se consideran <keywordMajor>de profundidad</keywordMajor>. Los guardianes <keywordMajor>de profundidad</keywordMajor> obtienen @ExtraHealth@ de vida adicional y su duración aumenta en @DurationIncrease@ s (+@TrinketDurationIncrease@ s para los guardianes invisibles de los amuletos).<br><br>Nivel @LevelThreshold@: Los guardianes del río también se consideran <keywordMajor>de profundidad</keywordMajor>.<br><hr><br>Guardianes de profundidad: @f1@",
+        "short_desc": "Los guardianes que coloques en la jungla enemiga se consideran <keywordMajor>de profundidad</keywordMajor> y obtienen vida y una mayor duración.<br><br>Nivel @LevelThreshold@: Los guardianes del río también se consideran <keywordMajor>de profundidad</keywordMajor>.",
+        "long_desc": "Los guardianes que coloques en la jungla enemiga se consideran <keywordMajor>de profundidad</keywordMajor>. Los guardianes <keywordMajor>de profundidad</keywordMajor> obtienen +@ExtraHealth@ de vida adicional y su duración aumenta en +@TTDurationIncreaseMin@ - @TTDurationIncreaseMax@ s (+@TTTrinketDurationIncreaseMin@ - @TTTrinketDurationIncreaseMax@ s para los guardianes invisibles).<br><br>Nivel @LevelThreshold@: Los guardianes del río también se consideran <keywordMajor>de profundidad</keywordMajor>."
+      },
+      "placeholders": {
+        "DurationIncrease": "calculation",
+        "ExtraHealth": "effect_amount",
+        "LevelThreshold": "effect_amount",
+        "TTDurationIncreaseMax": "effect_amount",
+        "TTDurationIncreaseMin": "effect_amount",
+        "TTTrinketDurationIncreaseMax": "effect_amount",
+        "TTTrinketDurationIncreaseMin": "effect_amount",
+        "TrinketDurationIncrease": "calculation",
+        "f1": "runtime"
+      }
+    },
+    "8143": {
+      "key": "SuddenImpact",
+      "enabled": null,
+      "stackable": null,
+      "script": "ASSETS/Perks/Styles/Domination/SuddenImpact/SuddenImpact.lua",
+      "effect_amounts": {
+        "ArmedDuration": 4.0,
+        "Cooldown": 10.0,
+        "MaxDamageTooltip": 80.0,
+        "MinDamageTooltip": 20.0
+      },
+      "mode_overrides": {},
+      "calculations": {
+        "BaseDamage": {
+          "class": "GameCalculation",
+          "mSimpleTooltipCalculationDisplay": 4,
+          "mFormulaParts": [
+            {
+              "class": "ByCharLevelInterpolationCalculationPart",
+              "mStartValue": 20.0,
+              "mEndValue": 80.0
+            }
+          ]
+        }
+      },
+      "texts": {
+        "name": "Impacto repentino",
+        "tooltip": "Infligir daño con ataques básicos y habilidades inflige <trueDamage>@BaseDamage@ de daño verdadero</trueDamage> adicional a campeones enemigos después de usar algún deslizamiento, salto, teleportación, teleportación instantánea o al salir de sigilo.<br>Debe usarse durante los próximos @ArmedDuration@ s.<br>Enfriamiento: @Cooldown@ s<br><br>Daño total infligido: <trueDamage>@f1@</trueDamage>",
+        "short_desc": "Infligir daño con ataques básicos y habilidades inflige daño verdadero adicional a campeones enemigos después de usar algún deslizamiento, salto, teleportación, teleportación instantánea o al salir de sigilo.",
+        "long_desc": "Infligir daño con ataques básicos y habilidades inflige <trueDamage>@MinDamageTooltip@-@MaxDamageTooltip@ de daño verdadero</trueDamage> adicional según el nivel a campeones enemigos después de usar algún deslizamiento, salto, teleportación, teleportación instantánea o al salir de sigilo durante @ArmedDuration@ s.<br><br>Enfriamiento: @Cooldown@ s"
+      },
+      "placeholders": {
+        "ArmedDuration": "effect_amount",
+        "BaseDamage": "calculation",
+        "Cooldown": "effect_amount",
+        "MaxDamageTooltip": "effect_amount",
+        "MinDamageTooltip": "effect_amount",
+        "f1": "runtime"
+      }
+    },
+    "8205": {
+      "key": "SorPreSetBonus",
+      "enabled": null,
+      "stackable": null,
+      "script": "ASSETS/Perks/Styles/Sorcery/SorPreSetBonus/SorPreSetBonus.lua",
+      "effect_amounts": {
+        "AdaptiveForce": 0.0,
+        "AttackSpeed": 0.0,
+        "{8298075e}": 0.0,
+        "{969826da}": 0.0
+      },
+      "mode_overrides": {},
+      "calculations": {},
+      "texts": {
+        "name": "El lanzahechizos indiscutible",
+        "tooltip": "<pathSorcery>Brujería</pathSorcery> + <pathPrecision>Precisión</pathPrecision><br>+@AdaptiveForce.0*0.6@ de daño de ataque o +@AdaptiveForce@ de poder de habilidad, <lol-uikit-tooltipped-keyword key='LinkTooltip_Description_Adaptive'><font color='#48C4B7'>adaptable</font></lol-uikit-tooltipped-keyword><br>{{ adaptive_force_tip_bonus_@f2@ }}<br>+@AttackSpeed*100@% de velocidad de ataque",
+        "short_desc": "<pathBonus><pathSorcery>Brujería</pathSorcery> + <pathPrecision>Precisión</pathPrecision> Bonificación de conjunto</pathBonus>",
+        "long_desc": "+@AdaptiveForce.0*0.6@ de daño de ataque o +@AdaptiveForce@ de poder de habilidad, <lol-uikit-tooltipped-keyword key='LinkTooltip_Description_Adaptive'><font color='#48C4B7'>adaptable</font></lol-uikit-tooltipped-keyword><br>+@AttackSpeed*100@% de velocidad de ataque"
+      },
+      "placeholders": {
+        "AdaptiveForce": "effect_amount",
+        "AdaptiveForce.0": "effect_amount",
+        "AttackSpeed": "effect_amount",
+        "f2": "runtime"
+      }
+    },
+    "8207": {
+      "key": "SorInsSetBonus",
+      "enabled": null,
+      "stackable": null,
+      "script": "ASSETS/Perks/Styles/Sorcery/SorInsSetBonus/SorInsSetBonus.lua",
+      "effect_amounts": {
+        "AdaptiveForce": 0.0,
+        "{8298075e}": 0.0,
+        "{969826da}": 0.0
+      },
+      "mode_overrides": {},
+      "calculations": {},
+      "texts": {
+        "name": "El enigmático",
+        "tooltip": "<pathSorcery>Brujería</pathSorcery> + <pathInspiration>Inspiración</pathInspiration><br>+@AdaptiveForce.0*0.6@ de daño de ataque o +@AdaptiveForce@ de poder de habilidad, <lol-uikit-tooltipped-keyword key='LinkTooltip_Description_Adaptive'><font color='#48C4B7'>adaptable</font></lol-uikit-tooltipped-keyword><br>{{ adaptive_force_tip_bonus_@f2@ }}.",
+        "short_desc": "<pathBonus><pathSorcery>Brujería</pathSorcery> + <pathInspiration>Inspiración</pathInspiration> Bonificación de conjunto</pathBonus>",
+        "long_desc": "+@AdaptiveForce.0*0.6@ de daño de ataque o +@AdaptiveForce@ de poder de habilidad, <lol-uikit-tooltipped-keyword key='LinkTooltip_Description_Adaptive'><font color='#48C4B7'>adaptable</font></lol-uikit-tooltipped-keyword>"
+      },
+      "placeholders": {
+        "AdaptiveForce": "effect_amount",
+        "AdaptiveForce.0": "effect_amount",
+        "f2": "runtime"
+      }
+    },
+    "8208": {
+      "key": "SorResSetBonus",
+      "enabled": null,
+      "stackable": null,
+      "script": "ASSETS/Perks/Styles/Sorcery/SorResSetBonus/SorResSetBonus.lua",
+      "effect_amounts": {
+        "AdaptiveForce": 0.0,
+        "Health": 0.0,
+        "HealthAtEighteen": 0.0,
+        "{71515e3c}": 0.0,
+        "{8298075e}": 0.0,
+        "{969826da}": 0.0
+      },
+      "mode_overrides": {},
+      "calculations": {},
+      "texts": {
+        "name": "El anciano",
+        "tooltip": "<pathSorcery>Brujería</pathSorcery> + <pathResolve>Valor</pathResolve><br>+@AdaptiveForce.0*0.6@ de daño de ataque o +@AdaptiveForce@ de poder de habilidad, <lol-uikit-tooltipped-keyword key='LinkTooltip_Description_Adaptive'><font color='#48C4B7'>adaptable</font></lol-uikit-tooltipped-keyword><br>{{ adaptive_force_tip_bonus_@f2@ }}<br>+@Health@-@HealthAtEighteen@ de vida según el nivel.",
+        "short_desc": "<pathBonus><pathSorcery>Brujería</pathSorcery> + <pathResolve>Valor</pathResolve> Bonificación de conjunto</pathBonus>",
+        "long_desc": "+@AdaptiveForce.0*0.6@ de daño de ataque o +@AdaptiveForce@ de poder de habilidad, <lol-uikit-tooltipped-keyword key='LinkTooltip_Description_Adaptive'><font color='#48C4B7'>adaptable</font></lol-uikit-tooltipped-keyword><br>+@Health@-@HealthAtEighteen@ de vida según el nivel."
+      },
+      "placeholders": {
+        "AdaptiveForce": "effect_amount",
+        "AdaptiveForce.0": "effect_amount",
+        "Health": "effect_amount",
+        "HealthAtEighteen": "effect_amount",
+        "f2": "runtime"
+      }
+    },
+    "8210": {
+      "key": "Transcendence",
+      "enabled": null,
+      "stackable": null,
+      "script": "ASSETS/Perks/Styles/Sorcery/Transcendence/Transcendence.lua",
+      "effect_amounts": {
+        "HasteBonus1": 0.05,
+        "HasteBonus2": 0.05,
+        "KillCooldownRefund": 0.2,
+        "LevelToTurnOn": 5.0,
+        "LevelToTurnOn2": 8.0,
+        "LevelToTurnOn3": 11.0
+      },
+      "mode_overrides": {
+        "URF": {
+          "LevelToTurnOn": 5.0
+        },
+        "{48eea983}": {
+          "LevelToTurnOn": 5.0
+        }
+      },
+      "calculations": {},
+      "texts": {
+        "name": "Trascendencia",
+        "tooltip": "Obtienes bonificaciones al alcanzar los siguientes niveles:<br>Nivel @LevelToTurnOn@: +@HasteBonus1*100@ <lol-uikit-tooltipped-keyword key='LinkTooltip_Description_CDR'>de velocidad de habilidades</lol-uikit-tooltipped-keyword> <br>Nivel @LevelToTurnOn2@: +@HasteBonus2*100@ <lol-uikit-tooltipped-keyword key='LinkTooltip_Description_CDR'>de velocidad de habilidades</lol-uikit-tooltipped-keyword> <br>Nivel @LevelToTurnOn3@: Al conseguir un asesinato o asistencia, se reduce el enfriamiento restante de las habilidades básicas un @KillCooldownRefund*100@%.<br><hr><br>Velocidad de habilidades adicional: +@f4*100@<br>Segundos recuperados: @f3@",
+        "short_desc": "Obtienes bonificaciones al alcanzar los siguientes niveles:<br>Nivel @LevelToTurnOn@: +@HasteBonus1*100@ <lol-uikit-tooltipped-keyword key='LinkTooltip_Description_CDR'>de velocidad de habilidades</lol-uikit-tooltipped-keyword> <br>Nivel @LevelToTurnOn2@: +@HasteBonus2*100@ <lol-uikit-tooltipped-keyword key='LinkTooltip_Description_CDR'>de velocidad de habilidades</lol-uikit-tooltipped-keyword> <br>Nivel @LevelToTurnOn3@: al conseguir un asesinato o asistencia, se reduce el enfriamiento restante de las habilidades básicas un @KillCooldownRefund*100@%.",
+        "long_desc": "Obtienes bonificaciones al alcanzar los siguientes niveles:<br>Nivel @LevelToTurnOn@: +@HasteBonus1*100@ <lol-uikit-tooltipped-keyword key='LinkTooltip_Description_CDR'>de velocidad de habilidades</lol-uikit-tooltipped-keyword> <br>Nivel @LevelToTurnOn2@: +@HasteBonus2*100@ <lol-uikit-tooltipped-keyword key='LinkTooltip_Description_CDR'>de velocidad de habilidades</lol-uikit-tooltipped-keyword> <br>Nivel @LevelToTurnOn3@: Al conseguir un asesinato o asistencia, se reduce el enfriamiento restante de las habilidades básicas un @KillCooldownRefund*100@%."
+      },
+      "placeholders": {
+        "HasteBonus1": "effect_amount",
+        "HasteBonus2": "effect_amount",
+        "KillCooldownRefund": "effect_amount",
+        "LevelToTurnOn": "effect_amount",
+        "LevelToTurnOn2": "effect_amount",
+        "LevelToTurnOn3": "effect_amount",
+        "f3": "runtime",
+        "f4": "runtime"
+      }
+    },
+    "8214": {
+      "key": "SummonAery",
+      "enabled": null,
+      "stackable": null,
+      "script": "ASSETS/Perks/Styles/Sorcery/SummonAery/SummonAery.lua",
+      "effect_amounts": {
+        "DamageADRatio": 0.1,
+        "DamageAPRatio": 0.05,
+        "DamageBase": 10.0,
+        "DamageMax": 50.0,
+        "ShieldBase": 20.0,
+        "ShieldDuration": 2.5,
+        "ShieldMax": 100.0,
+        "ShieldRatio": 0.05,
+        "ShieldRatioAD": 0.1
+      },
+      "mode_overrides": {},
+      "calculations": {
+        "DamageCalc": {
+          "class": "GameCalculation",
+          "mSimpleTooltipCalculationDisplay": 4,
+          "mFormulaParts": [
+            {
+              "class": "ByCharLevelInterpolationCalculationPart",
+              "mStartValue": 10.0,
+              "mEndValue": 50.0
+            },
+            {
+              "class": "StatByNamedDataValueCalculationPart",
+              "mDataValue": "DamageAPRatio"
+            },
+            {
+              "class": "StatByNamedDataValueCalculationPart",
+              "mStat": 2,
+              "mStatFormula": 2,
+              "mDataValue": "DamageADRatio"
+            }
+          ]
+        },
+        "ShieldCalc": {
+          "class": "GameCalculation",
+          "mSimpleTooltipCalculationDisplay": 4,
+          "mFormulaParts": [
+            {
+              "class": "ByCharLevelInterpolationCalculationPart",
+              "mStartValue": 20.0,
+              "mEndValue": 100.0
+            },
+            {
+              "class": "StatByNamedDataValueCalculationPart",
+              "mDataValue": "ShieldRatio"
+            },
+            {
+              "class": "StatByNamedDataValueCalculationPart",
+              "mStat": 2,
+              "mStatFormula": 2,
+              "mDataValue": "ShieldRatioAD"
+            }
+          ]
+        }
+      },
+      "texts": {
+        "name": "Invocar a Aery",
+        "tooltip": "Infligir daño a campeones enemigos con ataques básicos o habilidades envía a Aery hacia ellos, lo que inflige <font color='#48C4B7'>@DamageCalc@</font> de <lol-uikit-tooltipped-keyword key='LinkTooltip_Description_AdaptiveDmg'><font color='#48C4B7'>daño adaptable</font></lol-uikit-tooltipped-keyword> adicional.<br><br>Potenciar o proteger a aliados con habilidades envía a Aery hacia ellos, lo que les otorga un escudo de <shield>@ShieldCalc@</shield>.<br><br>No se puede enviar a Aery de nuevo hasta que vuelva a ti.<br><br>Aery ha atacado a los enemigos <font color='#FFFFFF'>@f1@</font> veces y ha causado un total de <font color='#FFFFFF'>@f3@</font> de daño.<br>Aery ha ayudado a aliados <font color='#FFFFFF'>@f2@</font> veces bloqueando <font color='#FFFFFF'>@f4@</font> de daño en total.",
+        "short_desc": "Tus ataques y habilidades envían a Aery a un objetivo para dañar a los enemigos u otorgar un escudo a los aliados.",
+        "long_desc": "Infligir daño a campeones enemigos con ataques básicos o habilidades envía a Aery contra ellos, lo que inflige @DamageBase@ - @DamageMax@ según el nivel (+<scaleAP>@DamageAPRatio.-1@ de PH</scaleAP>) (+<scaleAD>@DamageADRatio.-1@ de DA adicional</scaleAD>).<br><br>Potenciar o proteger a aliados con habilidades envía a Aery hacia ellos, lo que les otorga un escudo de @ShieldBase@ - @ShieldMax@ según el nivel (+<scaleAP>@ShieldRatio.-1@ de PH</scaleAP>) (+<scaleAD>@ShieldRatioAD.-1@ de DA adicional</scaleAD>).<br><br>No se puede enviar a Aery de nuevo hasta que vuelva a ti."
+      },
+      "placeholders": {
+        "DamageADRatio.-1": "effect_amount",
+        "DamageAPRatio.-1": "effect_amount",
+        "DamageBase": "effect_amount",
+        "DamageCalc": "calculation",
+        "DamageMax": "effect_amount",
+        "ShieldBase": "effect_amount",
+        "ShieldCalc": "calculation",
+        "ShieldMax": "effect_amount",
+        "ShieldRatio.-1": "effect_amount",
+        "ShieldRatioAD.-1": "effect_amount",
+        "f1": "runtime",
+        "f2": "runtime",
+        "f3": "runtime",
+        "f4": "runtime"
+      }
+    },
+    "8220": {
+      "key": "SorDomSetBonus",
+      "enabled": null,
+      "stackable": null,
+      "script": "ASSETS/Perks/Styles/Sorcery/SorDomSetBonus/SorDomSetBonus.lua",
+      "effect_amounts": {
+        "AdaptiveForce": 0.0,
+        "{8298075e}": 0.0,
+        "{969826da}": 0.0
+      },
+      "mode_overrides": {},
+      "calculations": {},
+      "texts": {
+        "name": "La calamidad",
+        "tooltip": "<pathSorcery>Brujería</pathSorcery> + <pathDomination>Dominación</pathDomination><br>+@AdaptiveForce.0*0.6@ de daño de ataque o +@AdaptiveForce@ de poder de habilidad, <lol-uikit-tooltipped-keyword key='LinkTooltip_Description_Adaptive'><font color='#48C4B7'>adaptable</font></lol-uikit-tooltipped-keyword><br>{{ adaptive_force_tip_bonus_@f2@ }}.",
+        "short_desc": "<pathBonus><pathSorcery>Brujería</pathSorcery> + <pathDomination>Dominación</pathDomination> Bonificación de conjunto</pathBonus>",
+        "long_desc": "+@AdaptiveForce.0*0.6@ de daño de ataque o +@AdaptiveForce@ de poder de habilidad, <lol-uikit-tooltipped-keyword key='LinkTooltip_Description_Adaptive'><font color='#48C4B7'>adaptable</font></lol-uikit-tooltipped-keyword>"
+      },
+      "placeholders": {
+        "AdaptiveForce": "effect_amount",
+        "AdaptiveForce.0": "effect_amount",
+        "f2": "runtime"
+      }
+    },
+    "8224": {
+      "key": "NullifyingOrb",
+      "enabled": null,
+      "stackable": null,
+      "script": "ASSETS/Perks/Styles/Sorcery/NullifyingOrb/AxiomArcanist.lua",
+      "effect_amounts": {
+        "AOEAmp": 0.08,
+        "DamageAmp": 0.12,
+        "UltimateRefundBase": 7.0
+      },
+      "mode_overrides": {},
+      "calculations": {},
+      "texts": {
+        "name": "Arcanólogo axiomático",
+        "tooltip": "Tu habilidad definitiva obtiene un @DamageAmp*100@% de daño y poder de curación y escudos adicionales.<br>El aumento del daño en área se reduce un @AOEAmp*100@%.<br><br>Conseguir una eliminación de un campeón enemigo reduce el enfriamiento actual de la definitiva un @UltimateRefundBase@%.<br><br>Reducción del enfriamiento de la definitiva: @f1@ s<br>Daño, curación y escudos adicionales de la definitiva a campeones: @f2@",
+        "short_desc": "Tu habilidad definitiva obtiene daño y poder de curación y escudos adicionales. Conseguir una eliminación de un campeón enemigo reduce el enfriamiento actual de la definitiva.",
+        "long_desc": "Tu habilidad definitiva obtiene un @DamageAmp*100@% de daño, curación y escudos adicionales. <br>El aumento del daño en área se reduce un @AOEAmp*100@%.<br><br>Conseguir una eliminación de un campeón enemigo reduce el enfriamiento actual de la definitiva un @UltimateRefundBase@%."
+      },
+      "placeholders": {
+        "AOEAmp": "effect_amount",
+        "DamageAmp": "effect_amount",
+        "UltimateRefundBase": "effect_amount",
+        "f1": "runtime",
+        "f2": "runtime"
+      }
+    },
+    "8226": {
+      "key": "ManaflowBand",
+      "enabled": null,
+      "stackable": null,
+      "script": "ASSETS/Perks/Styles/Sorcery/ManaflowBand/ManaflowBand.lua",
+      "effect_amounts": {
+        "Cooldown": 15.0,
+        "ManaIncrease": 25.0,
+        "MaxManaIncrease": 250.0,
+        "PercentManaRestore": 0.01,
+        "PercentManaRestoreCooldown": 5.0,
+        "{2cde474e}": 0.4,
+        "{2f748280}": 0.1
+      },
+      "mode_overrides": {},
+      "calculations": {},
+      "texts": {
+        "name": "Banda de maná",
+        "tooltip": "Golpear a un campeón enemigo con una habilidad aumenta permanentemente tu maná máximo en @ManaIncrease@, hasta @MaxManaIncrease@ de maná.<br><br>Tras llegar a @MaxManaIncrease@ de maná adicional, restauras un @PercentManaRestore*100@% del maná que te falte cada @PercentManaRestoreCooldown@ s.<br><br>Enfriamiento: @Cooldown.0@ s<br><hr><br>Maná adicional total: @f1@<br>Maná restaurado total: @f2@",
+        "short_desc": "Golpear a un campeón enemigo con una habilidad aumenta permanentemente tu maná máximo en @ManaIncrease@, hasta @MaxManaIncrease@ de maná.<br><br>Tras llegar a @MaxManaIncrease@ de maná adicional, recuperas un @PercentManaRestore*100@% del maná que te falte cada @PercentManaRestoreCooldown@ s.",
+        "long_desc": "Golpear a un campeón enemigo con una habilidad aumenta permanentemente tu maná máximo en @ManaIncrease@, hasta @MaxManaIncrease@ de maná.<br><br>Tras llegar a @MaxManaIncrease@ de maná adicional, restauras un @PercentManaRestore*100@% del maná que te falte cada @PercentManaRestoreCooldown@ s.<br><br>Enfriamiento: @Cooldown.0@ s"
+      },
+      "placeholders": {
+        "Cooldown.0": "effect_amount",
+        "ManaIncrease": "effect_amount",
+        "MaxManaIncrease": "effect_amount",
+        "PercentManaRestore": "effect_amount",
+        "PercentManaRestoreCooldown": "effect_amount",
+        "f1": "runtime",
+        "f2": "runtime"
+      }
+    },
+    "8229": {
+      "key": "ArcaneComet",
+      "enabled": null,
+      "stackable": null,
+      "script": "ASSETS/Perks/Styles/Sorcery/ArcaneComet/ArcaneCometSnipe.lua",
+      "effect_amounts": {
+        "ADRatio": 0.1,
+        "APRatio": 0.05,
+        "DamageBase": 15.0,
+        "DamageMax": 100.0,
+        "MaxDamageAmp": 1.0,
+        "MaxRange": 750.0,
+        "PercentRefund": 0.2,
+        "RechargeTime": 20.0,
+        "RechargeTimeMin": 8.0,
+        "{c71688c3}": 0.05,
+        "{de273f67}": 0.1
+      },
+      "mode_overrides": {
+        "ARAM": {
+          "RechargeTime": 15.0
+        }
+      },
+      "calculations": {
+        "CooldownCalc": {
+          "class": "GameCalculation",
+          "mFormulaParts": [
+            {
+              "class": "ClampSubPartsCalculationPart",
+              "mCeiling": 20.0,
+              "mFloor": 0.3,
+              "mSubparts": [
+                {
+                  "class": "ByCharLevelInterpolationCalculationPart",
+                  "mStartValue": 20.0,
+                  "mEndValue": 8.0
+                }
+              ]
+            }
+          ]
+        },
+        "DamageCalc": {
+          "class": "GameCalculation",
+          "mSimpleTooltipCalculationDisplay": 4,
+          "mFormulaParts": [
+            {
+              "class": "ByCharLevelInterpolationCalculationPart",
+              "mStartValue": 15.0,
+              "mEndValue": 100.0
+            },
+            {
+              "class": "StatByNamedDataValueCalculationPart",
+              "mDataValue": "APRatio"
+            },
+            {
+              "class": "StatByNamedDataValueCalculationPart",
+              "mStat": 2,
+              "mStatFormula": 2,
+              "mDataValue": "ADRatio"
+            }
+          ]
+        }
+      },
+      "texts": {
+        "name": "Cometa arcano",
+        "tooltip": "Infligir daño con una habilidad a un campeón proyecta un cometa hacia su ubicación, lo que inflige daño adicional según la distancia a la que se encuentre.<br><br>Daño: @DamageCalc@<br>Enfriamiento: @CooldownCalc@ s<br><rules><br>La amplificación de daño aumenta hasta un @MaxDamageAmp*100@% a @MaxRange@ de alcance.<br></rules><br>Has acertado un @f3@% de los cometas lanzados, lo que ha infligido @f1@ de daño a campeones en total.",
+        "short_desc": "Infligir daño a un campeón con una habilidad proyecta un cometa dañino hacia su ubicación.",
+        "long_desc": "Infligir daño con una habilidad a un campeón proyecta un cometa hacia su ubicación, lo que inflige daño adicional según la distancia.<br><br><lol-uikit-tooltipped-keyword key='LinkTooltip_Description_AdaptiveDmg'><font color='#48C4B7'>Daño adaptable</font></lol-uikit-tooltipped-keyword>: @DamageBase@ - @DamageMax@ según el nivel (<scaleAP>+@APRatio.-1@ de PH</scaleAP> y <scaleAD>+@ADRatio.-1@ de DA adicional</scaleAD>)<br>Enfriamiento: @RechargeTime@ - @RechargeTimeMin@ s<br><rules><br>La amplificación de daño aumenta hasta un @MaxDamageAmp*100@% a @MaxRange@ de alcance.<br></rules>"
+      },
+      "placeholders": {
+        "ADRatio.-1": "effect_amount",
+        "APRatio.-1": "effect_amount",
+        "CooldownCalc": "calculation",
+        "DamageBase": "effect_amount",
+        "DamageCalc": "calculation",
+        "DamageMax": "effect_amount",
+        "MaxDamageAmp": "effect_amount",
+        "MaxRange": "effect_amount",
+        "RechargeTime": "effect_amount",
+        "RechargeTimeMin": "effect_amount",
+        "f1": "runtime",
+        "f3": "runtime"
+      }
+    },
+    "8230": {
+      "key": "PhaseRush",
+      "enabled": null,
+      "stackable": null,
+      "script": "ASSETS/Perks/Styles/Sorcery/PhaseRush/StormraidersSurge.lua",
+      "effect_amounts": {
+        "DamageThreshold": 0.25,
+        "Duration": 4.0,
+        "HasteMax": 0.48,
+        "MaxCooldown": 20.0,
+        "MinCooldown": 10.0,
+        "RangedEffectiveness": 0.75,
+        "SlowResist": 0.5,
+        "Window": 3.0
+      },
+      "mode_overrides": {
+        "URF": {
+          "MaxCooldown": 10.0,
+          "MinCooldown": 10.0
+        }
+      },
+      "calculations": {
+        "CooldownCalc": {
+          "class": "GameCalculation",
+          "mSimpleTooltipCalculationDisplay": 4,
+          "mFormulaParts": [
+            {
+              "class": "ByCharLevelInterpolationCalculationPart",
+              "mStartValue": 20.0,
+              "mEndValue": 10.0
+            }
+          ]
+        },
+        "MoveSpeedCalc": {
+          "class": "{e9a3c91d}",
+          "mSimpleTooltipCalculationDisplay": 4,
+          "mFormulaParts": [
+            {
+              "class": "ByCharLevelInterpolationCalculationPart",
+              "mStartValue": 0.48,
+              "mEndValue": 0.48
+            }
+          ],
+          "mDisplayAsPercent": true,
+          "mRangedMultiplier": {
+            "class": "NamedDataValueCalculationPart",
+            "mDataValue": "RangedEffectiveness"
+          }
+        }
+      },
+      "texts": {
+        "name": "Tensión del saqueador de tormentas",
+        "tooltip": "Infligir un @DamageThreshold*100@% de la vida máxima de un campeón en un plazo de @Window@ s otorga un <speed>@MoveSpeedCalc@ de velocidad de movimiento</speed> y un <status>@SlowResist*100@% de resistencia a ralentizaciones</status> durante @Duration@ s.<br><br>Enfriamiento: <attention>@CooldownCalc@ s</attention><br><br>Activaciones totales: <attention>@f1@</attention>",
+        "short_desc": "Infligir un @DamageThreshold*100@% de la vida máxima de un campeón otorga <lol-uikit-tooltipped-keyword key='LinkTooltip_Description_MS'>velocidad de movimiento</lol-uikit-tooltipped-keyword> y resistencia a ralentizaciones adicionales. ",
+        "long_desc": "Infligir un @DamageThreshold*100@% de la vida máxima de un campeón en un plazo de @Window@ s otorga un <speed>@HasteMax*100@% de velocidad de movimiento</speed> y un <status>@SlowResist*100@% de resistencia a ralentizaciones</status> durante @Duration@ s. La velocidad de movimiento tiene un @RangedEffectiveness*100@% de efectividad en campeones a distancia.<br>Enfriamiento: @MaxCooldown@ s - @MinCooldown@ s"
+      },
+      "placeholders": {
+        "CooldownCalc": "calculation",
+        "DamageThreshold": "effect_amount",
+        "Duration": "effect_amount",
+        "HasteMax": "effect_amount",
+        "MaxCooldown": "effect_amount",
+        "MinCooldown": "effect_amount",
+        "MoveSpeedCalc": "calculation",
+        "RangedEffectiveness": "effect_amount",
+        "SlowResist": "effect_amount",
+        "Window": "effect_amount",
+        "f1": "runtime"
+      }
+    },
+    "8232": {
+      "key": "Waterwalking",
+      "enabled": null,
+      "stackable": null,
+      "script": "ASSETS/Perks/Styles/Sorcery/Waterwalking/Waterwalking.lua",
+      "effect_amounts": {
+        "MaxAdaptive": 30.0,
+        "MinAdaptive": 13.0,
+        "MovementSpeed": 10.0,
+        "{6f2f0d30}": 1.0
+      },
+      "mode_overrides": {},
+      "calculations": {
+        "AdaptiveForceCalc": {
+          "class": "GameCalculation",
+          "mSimpleTooltipCalculationDisplay": 4,
+          "mFormulaParts": [
+            {
+              "class": "ByCharLevelInterpolationCalculationPart",
+              "mStartValue": 13.0,
+              "mEndValue": 30.0
+            }
+          ]
+        }
+      },
+      "texts": {
+        "name": "Caminar sobre agua",
+        "tooltip": "Mientras estás en el río, obtienes <speed>@MovementSpeed@ de velocidad de movimiento</speed> y <lol-uikit-tooltipped-keyword key='LinkTooltip_Description_Adaptive'><font color='#48C4B7'>@AdaptiveForceCalc@ de fuerza adaptable</font></lol-uikit-tooltipped-keyword>.<br><br>{{ adaptive_force_tip_bonus_@f2@ }}",
+        "short_desc": "Obtienes <lol-uikit-tooltipped-keyword key='LinkTooltip_Description_MS'>velocidad de movimiento</lol-uikit-tooltipped-keyword> y PH o DA <lol-uikit-tooltipped-keyword key='LinkTooltip_Description_Adaptive'>adaptable</lol-uikit-tooltipped-keyword> cuando estás en el río.",
+        "long_desc": "Obtienes <speed>@MovementSpeed@ de velocidad de movimiento</speed> y <lol-uikit-tooltipped-keyword key='LinkTooltip_Description_Adaptive'><font color='#48C4B7'>@MinAdaptive@ - @MaxAdaptive@ de fuerza adaptable</font></lol-uikit-tooltipped-keyword> (en función del nivel) cuando estás en el río.<br><br><i>Sé tan veloz como un arroyo y tan ágil como un Escurridizo de la Grieta asustado.</i>"
+      },
+      "placeholders": {
+        "AdaptiveForceCalc": "calculation",
+        "MaxAdaptive": "effect_amount",
+        "MinAdaptive": "effect_amount",
+        "MovementSpeed": "effect_amount",
+        "f2": "runtime"
+      }
+    },
+    "8233": {
+      "key": "AbsoluteFocus",
+      "enabled": null,
+      "stackable": null,
+      "script": "ASSETS/Perks/Styles/Sorcery/AbsoluteFocus/AbsoluteFocus.lua",
+      "effect_amounts": {
+        "HealthPercent": 0.7,
+        "MaxAdaptive": 30.0,
+        "MinAdaptive": 3.0
+      },
+      "mode_overrides": {},
+      "calculations": {
+        "AdaptiveForceCalc": {
+          "class": "GameCalculation",
+          "mSimpleTooltipCalculationDisplay": 4,
+          "mFormulaParts": [
+            {
+              "class": "ByCharLevelInterpolationCalculationPart",
+              "mStartValue": 3.0,
+              "mEndValue": 30.0
+            }
+          ]
+        }
+      },
+      "texts": {
+        "name": "Concentración absoluta",
+        "tooltip": "Mientras estés por encima del @HealthPercent*100@% de vida, obtienes <lol-uikit-tooltipped-keyword key='LinkTooltip_Description_Adaptive'><font color='#48C4B7'>@AdaptiveForceCalc@ de fuerza adaptable</font></lol-uikit-tooltipped-keyword>.<br><br>{{ adaptive_force_tip_bonus_@f2@ }}",
+        "short_desc": "Mientras estés por encima del @HealthPercent*100@% de vida, obtienes <lol-uikit-tooltipped-keyword key='LinkTooltip_Description_AdaptiveDmg'>daño adaptable</lol-uikit-tooltipped-keyword> adicional.",
+        "long_desc": "Mientras estés por encima del @HealthPercent*100@% de vida, obtienes una bonificación <lol-uikit-tooltipped-keyword key='LinkTooltip_Description_Adaptive'><font color='#48C4B7'>adaptable</font></lol-uikit-tooltipped-keyword> de hasta @MaxAdaptive.-1*0.6@ de daño de ataque o @MaxAdaptive@ de poder de habilidad (según el nivel). <br><br>Otorga @MinAdaptive.-1*0.6@ de daño de ataque o @MinAdaptive@ de poder de habilidad a nivel 1. "
+      },
+      "placeholders": {
+        "AdaptiveForceCalc": "calculation",
+        "HealthPercent": "effect_amount",
+        "MaxAdaptive": "effect_amount",
+        "MaxAdaptive.-1": "effect_amount",
+        "MinAdaptive": "effect_amount",
+        "MinAdaptive.-1": "effect_amount",
+        "f2": "runtime"
+      }
+    },
+    "8234": {
+      "key": "Celerity",
+      "enabled": null,
+      "stackable": null,
+      "script": "ASSETS/Perks/Styles/Sorcery/Celerity/Celerity.lua",
+      "effect_amounts": {
+        "PercentHasteMod": 0.07,
+        "PercentMS": 0.01
+      },
+      "mode_overrides": {},
+      "calculations": {},
+      "texts": {
+        "name": "Celeridad",
+        "tooltip": "Todas las bonificaciones de movimiento son un @PercentHasteMod*100@% más efectivas sobre ti y tu <speed>velocidad de movimiento</speed> aumenta un @PercentMS*100@%.<br><br>Aumento actual: <speed>@f1@ de velocidad de movimiento</speed><br>Distancia adicional recorrida: @f2@",
+        "short_desc": "Todas las bonificaciones de <speed>velocidad de movimiento</speed> son un @PercentHasteMod*100@% más efectivas sobre ti y tu <speed>velocidad de movimiento</speed> aumenta un @PercentMS*100@%.",
+        "long_desc": "Todas las bonificaciones de movimiento son un @PercentHasteMod*100@% más efectivas sobre ti y tu <speed>velocidad de movimiento</speed> aumenta un @PercentMS*100@%."
+      },
+      "placeholders": {
+        "PercentHasteMod": "effect_amount",
+        "PercentMS": "effect_amount",
+        "f1": "runtime",
+        "f2": "runtime"
+      }
+    },
+    "8236": {
+      "key": "GatheringStorm",
+      "enabled": null,
+      "stackable": null,
+      "script": "ASSETS/Perks/Styles/Sorcery/GatheringStorm/GatheringStorm.lua",
+      "effect_amounts": {
+        "UpdateAfterMinutes": 10.0,
+        "{8298075e}": 6.0,
+        "{969826da}": 8.0,
+        "{c5d14564}": 8.0
+      },
+      "mode_overrides": {
+        "ARAM": {
+          "UpdateAfterMinutes": 6.0
+        },
+        "URF": {
+          "UpdateAfterMinutes": 6.0
+        },
+        "{1c14db4d}": {
+          "UpdateAfterMinutes": 4.0
+        },
+        "{48eea983}": {
+          "UpdateAfterMinutes": 4.5
+        },
+        "{9e03f6c0}": {
+          "UpdateAfterMinutes": 6.0
+        },
+        "{a110bc47}": {
+          "UpdateAfterMinutes": 4.0
+        },
+        "{aecea60c}": {
+          "UpdateAfterMinutes": 4.0
+        },
+        "{afcea79f}": {
+          "UpdateAfterMinutes": 4.0
+        },
+        "{b0cea932}": {
+          "UpdateAfterMinutes": 4.0
+        },
+        "{d0f8a37a}": {
+          "UpdateAfterMinutes": 7.0
+        }
+      },
+      "calculations": {},
+      "texts": {
+        "name": "Se avecina tormenta",
+        "tooltip": "Cada @UpdateAfterMinutes@ min obtiene PH o DA <lol-uikit-tooltipped-keyword key='LinkTooltip_Description_Adaptive'><font color='#48C4B7'>adaptable</font></lol-uikit-tooltipped-keyword>.<br><br><i>@UpdateAfterMinutes@ min</i>: + 8 de PH o 5 de DA. <br><i>@UpdateAfterMinutes*2@ min</i>: + 24 de PH o 14 de DA.<br><i>@UpdateAfterMinutes*3@ min</i>: + 48 de PH o 29 de DA.<br><i>@UpdateAfterMinutes*4@ min</i>: + 80 de PH o 48 de DA.<br><i>@UpdateAfterMinutes*5@ min</i>: + 120 de PH o 72 de DA.<br><i>@UpdateAfterMinutes*6@ min</i>: + 168 de PH o 101 de DA.<br>etc.<br><hr><br>{{ adaptive_force_tip_bonus_@f2@ }}",
+        "short_desc": "Obtienes cada vez más DA o PH <lol-uikit-tooltipped-keyword key='LinkTooltip_Description_Adaptive'>adaptable</lol-uikit-tooltipped-keyword> durante el transcurso de la partida.",
+        "long_desc": "Cada @UpdateAfterMinutes@ min obtiene PH o DA <lol-uikit-tooltipped-keyword key='LinkTooltip_Description_Adaptive'><font color='#48C4B7'>adaptable</font></lol-uikit-tooltipped-keyword>.<br><br><i>@UpdateAfterMinutes@ min</i>: + 8 de PH o 5 de DA. <br><i>@UpdateAfterMinutes*2@ min</i>: + 24 de PH o 14 de DA.<br><i>@UpdateAfterMinutes*3@ min</i>: + 48 de PH o 29 de DA.<br><i>@UpdateAfterMinutes*4@ min</i>: + 80 de PH o 48 de DA.<br><i>@UpdateAfterMinutes*5@ min</i>: + 120 de PH o 72 de DA.<br><i>@UpdateAfterMinutes*6@ min</i>: + 168 de PH o 101 de DA.<br>etc."
+      },
+      "placeholders": {
+        "UpdateAfterMinutes": "effect_amount",
+        "f2": "runtime"
+      }
+    },
+    "8237": {
+      "key": "Scorch",
+      "enabled": null,
+      "stackable": null,
+      "script": "ASSETS/Perks/Styles/Sorcery/Scorch/Scorch.lua",
+      "effect_amounts": {
+        "BurnlockoutDuration": 10.0,
+        "damage": 20.0,
+        "damagemax": 40.0,
+        "dotduration": 1.0,
+        "{12632e91}": 0.0,
+        "{89367404}": 0.1
+      },
+      "mode_overrides": {},
+      "calculations": {
+        "DamageCalc": {
+          "class": "GameCalculation",
+          "mSimpleTooltipCalculationDisplay": 4,
+          "mFormulaParts": [
+            {
+              "class": "ByCharLevelInterpolationCalculationPart",
+              "mStartValue": 20.0,
+              "mEndValue": 40.0
+            }
+          ]
+        }
+      },
+      "texts": {
+        "name": "Piroláser",
+        "tooltip": "Tu siguiente habilidad ofensiva prende fuego a los campeones e inflige <magicDamage>@DamageCalc@ de daño mágico adicional</magicDamage> tras @dotduration@ s.<br>Enfriamiento: @BurnlockoutDuration@ s<br><br>Daño infligido total: @f1@",
+        "short_desc": "La primera habilidad con daño que aciertes cada @BurnlockoutDuration@ s prende fuego a los campeones.",
+        "long_desc": "Tu siguiente habilidad con daño prende fuego a los campeones e inflige @damage@-@damagemax@ de daño mágico adicional (según el nivel) tras @dotduration@ s.<br><br>Enfriamiento: @BurnlockoutDuration@ s"
+      },
+      "placeholders": {
+        "BurnlockoutDuration": "effect_amount",
+        "DamageCalc": "calculation",
+        "damage": "effect_amount",
+        "damagemax": "effect_amount",
+        "dotduration": "effect_amount",
+        "f1": "runtime"
+      }
+    },
+    "8242": {
+      "key": "Unflinching",
+      "enabled": null,
+      "stackable": null,
+      "script": "ASSETS/Perks/Styles/Resolve/UnflinchingResists/UnflinchingResists.lua",
+      "effect_amounts": {
+        "Duration": 2.0,
+        "ResistMax": 10.0,
+        "{49eee791}": 10.0
+      },
+      "mode_overrides": {},
+      "calculations": {},
+      "texts": {
+        "name": "Inquebrantable",
+        "tooltip": "Obtienes <scaleLevel>@f1@</scaleLevel> de <scaleArmor>armadura</scaleArmor> y de <scaleMR>resistencia mágica</scaleMR> al recibir efectos de control de adversario y durante @Duration@ s después.<br><br>Tiempo de combate total con resistencias adicionales: @f6@ s",
+        "short_desc": "Obtienes armadura y resistencia mágica al recibir efectos de control de adversario.",
+        "long_desc": "Obtienes @ResistMax@ de armadura y de resistencia mágica (según el nivel) al recibir efectos de control de adversario y durante @Duration@ s después."
+      },
+      "placeholders": {
+        "Duration": "effect_amount",
+        "ResistMax": "effect_amount",
+        "f1": "runtime",
+        "f6": "runtime"
+      }
+    },
+    "8275": {
+      "key": "NimbusCloak",
+      "enabled": null,
+      "stackable": null,
+      "script": "ASSETS/Perks/Styles/Sorcery/NimbusCloak/NimbusCloak.lua",
+      "effect_amounts": {
+        "Duration": 2.0,
+        "HighCDMSBoost": 0.45,
+        "LowCDMSBoost": 0.15,
+        "{1c32110c}": 0.35,
+        "{2fd68801}": 100.0,
+        "{b0d06764}": 250.0
+      },
+      "mode_overrides": {
+        "ARAM": {
+          "{2fd68801}": 60.0,
+          "{b0d06764}": 150.0
+        },
+        "URF": {
+          "{2fd68801}": 20.0,
+          "{b0d06764}": 50.0
+        },
+        "{9e03f6c0}": {
+          "{2fd68801}": 60.0,
+          "{b0d06764}": 150.0
+        },
+        "{e1bc2b5b}": {
+          "{2fd68801}": 60.0,
+          "{b0d06764}": 150.0
+        }
+      },
+      "calculations": {},
+      "texts": {
+        "name": "Capa del nimbo",
+        "tooltip": "Después de lanzar un hechizo de invocador, obtienes un aumento de <speed>velocidad de movimiento</speed> que dura @Duration@ s y te permite atravesar unidades.<br><hr><br>Aumento: <speed>@LowCDMSBoost*100@-@HighCDMSBoost*100@% de velocidad de movimiento</speed> según el enfriamiento del hechizo de invocador (cuanto más largo sea el enfriamiento, más <speed>velocidad de movimiento</speed> se obtiene). <br><hr><br>Veces que se ha activado: @f1@",
+        "short_desc": "Después de lanzar un hechizo de invocador, obtienes un breve aumento de <speed>velocidad de movimiento</speed> que te permite atravesar unidades.",
+        "long_desc": "Después de lanzar un hechizo de invocador, obtienes un aumento de <speed>velocidad de movimiento</speed> que dura @Duration@ s y te permite atravesar unidades.<br><br>Aumento: <speed>@LowCDMSBoost*100@-@HighCDMSBoost*100@% de velocidad de movimiento</speed> según el enfriamiento del hechizo de invocador (cuanto más largo sea el enfriamiento, más <speed>velocidad de movimiento</speed> se obtiene). "
+      },
+      "placeholders": {
+        "Duration": "effect_amount",
+        "HighCDMSBoost": "effect_amount",
+        "LowCDMSBoost": "effect_amount",
+        "f1": "runtime"
+      }
+    },
+    "8299": {
+      "key": "LastStand",
+      "enabled": null,
+      "stackable": null,
+      "script": "ASSETS/Perks/Styles/Sorcery/LastStand/LastStand.lua",
+      "effect_amounts": {
+        "HealthThresholdEnd": 0.3,
+        "HealthThresholdStart": 0.6,
+        "MaxBonusDamagePercent": 0.11,
+        "MinBonusDamagePercent": 0.05
+      },
+      "mode_overrides": {},
+      "calculations": {},
+      "texts": {
+        "name": "Último esfuerzo",
+        "tooltip": "Infliges un @MinBonusDamagePercent.0*100@-@MaxBonusDamagePercent.0*100@% más de daño a los campeones mientras estés por debajo del @HealthThresholdStart.0*100@% de vida. El daño máximo se consigue al llegar al @HealthThresholdEnd.0*100@% de vida.<br><br><rules>La bonificación mínima es un @MinBonusDamagePercent*100@%.<br>La bonificación máxima se otorga al estar por debajo del @HealthThresholdEnd*100@% de vida.</rules><br><hr><br>Daño adicional total: <scaleAD>@f1@</scaleAD>",
+        "short_desc": "Infliges más daño a campeones cuando tienes poca vida.",
+        "long_desc": "Infliges un @MinBonusDamagePercent.0*100@-@MaxBonusDamagePercent.0*100@% más de daño a los campeones mientras estés por debajo del @HealthThresholdStart.0*100@% de vida. El daño máximo se consigue al llegar al @HealthThresholdEnd.0*100@% de vida."
+      },
+      "placeholders": {
+        "HealthThresholdEnd": "effect_amount",
+        "HealthThresholdEnd.0": "effect_amount",
+        "HealthThresholdStart.0": "effect_amount",
+        "MaxBonusDamagePercent.0": "effect_amount",
+        "MinBonusDamagePercent": "effect_amount",
+        "MinBonusDamagePercent.0": "effect_amount",
+        "f1": "runtime"
+      }
+    },
+    "8304": {
+      "key": "MagicalFootwear",
+      "enabled": null,
+      "stackable": null,
+      "script": "ASSETS/Perks/Styles/Inspiration/MagicalFootwear/MagicalFootwear.lua",
+      "effect_amounts": {
+        "AdditionalMovementSpeed": 10.0,
+        "GiveBootsAtMinute": 12.0,
+        "SecondsSoonerPerTakedown": 45.0,
+        "{c07791e4}": 300.0
+      },
+      "mode_overrides": {
+        "ARAM": {
+          "GiveBootsAtMinute": 8.0,
+          "SecondsSoonerPerTakedown": 30.0
+        },
+        "URF": {
+          "GiveBootsAtMinute": 6.0,
+          "SecondsSoonerPerTakedown": 30.0
+        },
+        "{1c14db4d}": {
+          "GiveBootsAtMinute": 6.0
+        },
+        "{48eea983}": {
+          "GiveBootsAtMinute": 6.0,
+          "SecondsSoonerPerTakedown": 30.0
+        },
+        "{9e03f6c0}": {
+          "GiveBootsAtMinute": 8.0,
+          "SecondsSoonerPerTakedown": 30.0
+        },
+        "{a110bc47}": {
+          "GiveBootsAtMinute": 6.0,
+          "SecondsSoonerPerTakedown": 20.0
+        },
+        "{aecea60c}": {
+          "GiveBootsAtMinute": 6.0
+        },
+        "{afcea79f}": {
+          "GiveBootsAtMinute": 6.0
+        },
+        "{b0cea932}": {
+          "GiveBootsAtMinute": 6.0
+        },
+        "{d0f8a37a}": {
+          "GiveBootsAtMinute": 8.0,
+          "SecondsSoonerPerTakedown": 30.0
+        },
+        "{e1bc2b5b}": {
+          "GiveBootsAtMinute": 6.0,
+          "SecondsSoonerPerTakedown": 30.0
+        }
+      },
+      "calculations": {},
+      "texts": {
+        "name": "Calzado mágico",
+        "tooltip": "A los @GiveBootsAtMinute@ min, recibes {{ Item_2422_Name }} gratis. No puedes comprar botas antes. Por cada asesinato o asistencia, recibes las botas @SecondsSoonerPerTakedown@ s antes.<br><br>{{ Item_2422_Name }} te otorga <speed>@AdditionalMovementSpeed@ de velocidad de movimiento</speed> adicional.<br><hr><br><scaleAD>Tiempo de llegada de botas:</scaleAD> @f1@:@f2@@f3@",
+        "short_desc": "A los @GiveBootsAtMinute@ min, recibes unas botas gratis. No puedes comprar botas antes. Cada <lol-uikit-tooltipped-keyword key='LinkTooltip_Description_Takedown'>asesinato o asistencia</lol-uikit-tooltipped-keyword> que consigues hace que tus botas aparezcan @SecondsSoonerPerTakedown@ s antes.",
+        "long_desc": "A los @GiveBootsAtMinute@ min, recibes Calzado ligeramente mágico gratis. No puedes comprar botas antes. Por cada asesinato o asistencia, recibes las botas @SecondsSoonerPerTakedown@ s antes.<br><br>Calzado ligeramente mágico te otorga <speed>@AdditionalMovementSpeed@ de velocidad de movimiento</speed> adicional."
+      },
+      "placeholders": {
+        "AdditionalMovementSpeed": "effect_amount",
+        "GiveBootsAtMinute": "effect_amount",
+        "SecondsSoonerPerTakedown": "effect_amount",
+        "f1": "runtime",
+        "f2": "runtime",
+        "f3": "runtime"
+      }
+    },
+    "8306": {
+      "key": "HextechFlashtraption",
+      "enabled": null,
+      "stackable": null,
+      "script": "ASSETS/Perks/Styles/Inspiration/HextechFlashtraption/HextechFlashtraption.lua",
+      "effect_amounts": {
+        "ChampionCombatCooldown": 10.0,
+        "ChannelDuration": 2.0,
+        "CooldownTime": 20.0,
+        "{0ca0336a}": 1.0,
+        "{c85ef93c}": 10.0,
+        "{d6487c09}": 0.5
+      },
+      "mode_overrides": {},
+      "calculations": {},
+      "texts": {
+        "name": "Destello hextech",
+        "tooltip": "Cuando Destello está en enfriamiento, se reemplaza por <i>Hextello</i>.<br><br><i>Hextello</i>: tras @ChannelDuration@ s de canalización, te trasladas a una ubicación nueva.<br><br>Enfriamiento: @CooldownTime@ s. Pasa a @ChampionCombatCooldown@ s de enfriamiento al entrar en combate con campeones.",
+        "short_desc": "Cuando Destello está en enfriamiento, se reemplaza por <i>Hextello</i>.<br><br><i>Hextello</i>: Tras una canalización, te trasladas a una ubicación nueva.",
+        "long_desc": "Cuando Destello está en enfriamiento, se reemplaza por <i>Hextello</i>.<br><br><i>Hextello</i>: tras @ChannelDuration@ s de canalización, te trasladas a una ubicación nueva.<br><br>Enfriamiento: @CooldownTime@ s. Pasa a @ChampionCombatCooldown@ s de enfriamiento al entrar en combate con campeones."
+      },
+      "placeholders": {
+        "ChampionCombatCooldown": "effect_amount",
+        "ChannelDuration": "effect_amount",
+        "CooldownTime": "effect_amount"
+      }
+    },
+    "8313": {
+      "key": "PerfectTiming",
+      "enabled": null,
+      "stackable": null,
+      "script": "ASSETS/Perks/Styles/Inspiration/TillGottenGains/TillGottenGains.lua",
+      "effect_amounts": {
+        "FirstElixirLevel": 3.0,
+        "SecondElixirLevel": 6.0,
+        "ThirdElixirLevel": 9.0
+      },
+      "mode_overrides": {
+        "ARAM": {
+          "{1e76b496}": 4.0
+        },
+        "URF": {
+          "{1e76b496}": 4.0
+        },
+        "{48eea983}": {
+          "{1e76b496}": 4.0
+        },
+        "{9e03f6c0}": {
+          "{1e76b496}": 4.0
+        }
+      },
+      "calculations": {},
+      "texts": {
+        "name": "Tónico triple",
+        "tooltip": "Al subir al nivel @FirstElixirLevel@, obtienes un Elixir de la avaricia.<br>Al subir al nivel @SecondElixirLevel@, obtienes un Elixir de fuerza.<br>Al subir al nivel @ThirdElixirLevel@, obtienes un Elixir de habilidad. <br><br>Objetos obtenidos: @f1@",
+        "short_desc": "Al subir al nivel @FirstElixirLevel@, obtienes un Elixir de la avaricia.<br>Al subir al nivel @SecondElixirLevel@, obtienes un Elixir de fuerza.<br>Al subir al nivel @ThirdElixirLevel@, obtienes un Elixir de habilidad. ",
+        "long_desc": "Al subir al nivel @FirstElixirLevel@, obtienes un Elixir de la avaricia.<br>Al subir al nivel @SecondElixirLevel@, obtienes un Elixir de fuerza.<br>Al subir al nivel @ThirdElixirLevel@, obtienes un Elixir de habilidad. "
+      },
+      "placeholders": {
+        "FirstElixirLevel": "effect_amount",
+        "SecondElixirLevel": "effect_amount",
+        "ThirdElixirLevel": "effect_amount",
+        "f1": "runtime"
+      }
+    },
+    "8316": {
+      "key": "JackOfAllTrades",
+      "enabled": null,
+      "stackable": null,
+      "script": "ASSETS/Perks/Styles/Inspiration/JackOfAllTrades/JackOfAllTrades.lua",
+      "effect_amounts": {
+        "Adaptive10": 20.0,
+        "Adaptive5": 8.0,
+        "HasteperStack": 1.0
+      },
+      "mode_overrides": {},
+      "calculations": {},
+      "texts": {
+        "name": "Manitas",
+        "tooltip": "Por cada estadística distinta obtenida de objetos, consigue una acumulación de Manitas. Cada acumulación te otorga <speed>@HasteperStack@ de velocidad de habilidades</speed>.<br><br>Obtienes @Adaptive5@ o @Adaptive10@ de <lol-uikit-tooltipped-keyword key='LinkTooltip_Description_Adaptive'>fuerza adaptable</lol-uikit-tooltipped-keyword> adicional con 5 y 10 acumulaciones, respectivamente.<br><hr><br>Estadísticas distintas: @f1@<br>Fuerza adaptable adicional: +@f2@",
+        "short_desc": "Por cada estadística distinta obtenida de objetos, consigue una acumulación de Manitas. Cada acumulación te otorga <speed>@HasteperStack@ de velocidad de habilidades</speed>.<br><br>Obtienes <lol-uikit-tooltipped-keyword key='LinkTooltip_Description_Adaptive'>Fuerza adaptable</lol-uikit-tooltipped-keyword> adicional con 5 y 10 acumulaciones.",
+        "long_desc": "Por cada estadística distinta obtenida de objetos, consigue una acumulación de Manitas. Cada acumulación te otorga <speed>@HasteperStack@ de velocidad de habilidades</speed>.<br><br>Obtienes @Adaptive5@ o @Adaptive10@ de <lol-uikit-tooltipped-keyword key='LinkTooltip_Description_Adaptive'>fuerza adaptable</lol-uikit-tooltipped-keyword> adicional con 5 y 10 acumulaciones, respectivamente."
+      },
+      "placeholders": {
+        "Adaptive10": "effect_amount",
+        "Adaptive5": "effect_amount",
+        "HasteperStack": "effect_amount",
+        "f1": "runtime",
+        "f2": "runtime"
+      }
+    },
+    "8318": {
+      "key": "InsDomSetBonus",
+      "enabled": null,
+      "stackable": null,
+      "script": "ASSETS/Perks/Styles/Inspiration/InsDomSetBonus/InsDomSetBonus.lua",
+      "effect_amounts": {
+        "AdaptiveForce": 0.0,
+        "{38d2ce32}": 0.0,
+        "{8298075e}": 0.0,
+        "{969826da}": 0.0
+      },
+      "mode_overrides": {},
+      "calculations": {},
+      "texts": {
+        "name": "El visionario implacable",
+        "tooltip": "<pathInspiration>Inspiración</pathInspiration> + <pathDomination>Dominación</pathDomination><br>+@AdaptiveForce.0*0.6@ de daño de ataque o +@AdaptiveForce@ de poder de habilidad, <lol-uikit-tooltipped-keyword key='LinkTooltip_Description_Adaptive'><font color='#48C4B7'>adaptable</font></lol-uikit-tooltipped-keyword><br>{{ adaptive_force_tip_bonus_@f2@ }}",
+        "short_desc": "<pathBonus><pathInspiration>Inspiración</pathInspiration> + <pathDomination>Dominación</pathDomination> Bonificación de conjunto</pathBonus>",
+        "long_desc": "+@AdaptiveForce.0*0.6@ de daño de ataque o +@AdaptiveForce@ de poder de habilidad, <lol-uikit-tooltipped-keyword key='LinkTooltip_Description_Adaptive'><font color='#48C4B7'>adaptable</font></lol-uikit-tooltipped-keyword>"
+      },
+      "placeholders": {
+        "AdaptiveForce": "effect_amount",
+        "AdaptiveForce.0": "effect_amount",
+        "f2": "runtime"
+      }
+    },
+    "8319": {
+      "key": "InsSorSetBonus",
+      "enabled": null,
+      "stackable": null,
+      "script": "ASSETS/Perks/Styles/Inspiration/InsSorSetBonus/InsSorSetBonus.lua",
+      "effect_amounts": {
+        "AdaptiveForce": 0.0,
+        "{38d2ce32}": 0.0,
+        "{8298075e}": 0.0,
+        "{969826da}": 0.0
+      },
+      "mode_overrides": {},
+      "calculations": {},
+      "texts": {
+        "name": "El soñador",
+        "tooltip": "<pathInspiration>Inspiración</pathInspiration> + <pathSorcery>Brujería</pathSorcery><br>+@AdaptiveForce.0*0.6@ de daño de ataque o +@AdaptiveForce@ de poder de habilidad, <lol-uikit-tooltipped-keyword key='LinkTooltip_Description_Adaptive'><font color='#48C4B7'>adaptable</font></lol-uikit-tooltipped-keyword><br>{{ adaptive_force_tip_bonus_@f2@ }}",
+        "short_desc": "<pathBonus><pathInspiration>Inspiración</pathInspiration> + <pathSorcery>Brujería</pathSorcery> Bonificación de conjunto</pathBonus>",
+        "long_desc": "+@AdaptiveForce.0*0.6@ de daño de ataque o +@AdaptiveForce@ de poder de habilidad, <lol-uikit-tooltipped-keyword key='LinkTooltip_Description_Adaptive'><font color='#48C4B7'>adaptable</font></lol-uikit-tooltipped-keyword>"
+      },
+      "placeholders": {
+        "AdaptiveForce": "effect_amount",
+        "AdaptiveForce.0": "effect_amount",
+        "f2": "runtime"
+      }
+    },
+    "8320": {
+      "key": "InsResSetBonus",
+      "enabled": null,
+      "stackable": null,
+      "script": "ASSETS/Perks/Styles/Inspiration/InsResSetBonus/InsResSetBonus.lua",
+      "effect_amounts": {
+        "Health": 0.0,
+        "HealthAtEighteen": 0.0,
+        "{38d2ce32}": 0.0,
+        "{71515e3c}": 0.0
+      },
+      "mode_overrides": {},
+      "calculations": {},
+      "texts": {
+        "name": "El atemporal",
+        "tooltip": "<pathInspiration>Inspiración</pathInspiration> + <pathResolve>Valor</pathResolve>.<br>+@Health@-@HealthAtEighteen@ de vida según el nivel.",
+        "short_desc": "<pathBonus><pathInspiration>Inspiración</pathInspiration> + <pathResolve>Valor</pathResolve> Bonificación de conjunto</pathBonus>",
+        "long_desc": "+@Health@-@HealthAtEighteen@ de vida según el nivel."
+      },
+      "placeholders": {
+        "Health": "effect_amount",
+        "HealthAtEighteen": "effect_amount"
+      }
+    },
+    "8321": {
+      "key": "CashBack",
+      "enabled": null,
+      "stackable": null,
+      "script": "ASSETS/Perks/Styles/Inspiration/CashBack/CashBack.lua",
+      "effect_amounts": {
+        "DebtAccumulationStartsAtMinute": 2.0,
+        "PercentRefund": 0.075,
+        "{7957e8a3}": 20.0,
+        "{872e74ef}": 8.0,
+        "{8d08b1b5}": 0.0,
+        "{b70595b3}": 50.0,
+        "{c0de5a7f}": 8.0,
+        "{ca7ee03c}": 100.0,
+        "{d856a8af}": 0.0,
+        "{ebbc116e}": -150.0,
+        "{fa03b4f1}": 150.0
+      },
+      "mode_overrides": {},
+      "calculations": {},
+      "texts": {
+        "name": "Reembolso",
+        "tooltip": "Recupera un @PercentRefund*100@% de oro al comprar objetos legendarios.",
+        "short_desc": "Recuperas algo de oro al comprar objetos legendarios.",
+        "long_desc": "Recupera un @PercentRefund*100@% de oro al comprar objetos legendarios."
+      },
+      "placeholders": {
+        "PercentRefund": "effect_amount"
+      }
+    },
+    "8344": {
+      "key": "InsPreSetBonus",
+      "enabled": null,
+      "stackable": null,
+      "script": "ASSETS/Perks/Styles/Inspiration/InsPreSetBonus/InsPreSetBonus.lua",
+      "effect_amounts": {
+        "AttackSpeed": 0.0,
+        "{38d2ce32}": 0.0
+      },
+      "mode_overrides": {},
+      "calculations": {},
+      "texts": {
+        "name": "El duelista elegante ",
+        "tooltip": "<pathInspiration>Inspiración</pathInspiration> + <pathPrecision>Precisión</pathPrecision><br>+@AttackSpeed*100@% de velocidad de ataque",
+        "short_desc": "<pathBonus><pathInspiration>Inspiración</pathInspiration> + <pathPrecision>Precisión</pathPrecision> Bonificación de conjunto</pathBonus>",
+        "long_desc": "+@AttackSpeed*100@% de velocidad de ataque"
+      },
+      "placeholders": {
+        "AttackSpeed": "effect_amount"
+      }
+    },
+    "8345": {
+      "key": "BiscuitDelivery",
+      "enabled": null,
+      "stackable": null,
+      "script": "ASSETS/Perks/Styles/Inspiration/BiscuitDelivery/BiscuitDelivery.lua",
+      "effect_amounts": {
+        "BiscuitMinuteInterval": 2.0,
+        "FlatHeal": 20.0,
+        "HealthHealPercent": 0.015,
+        "MaximumHealIncrease": 1.0,
+        "PermanentHP": 30.0,
+        "SwapOverMinute": 6.0,
+        "{45035bf1}": 5.0,
+        "{936e8fc2}": 0.3
+      },
+      "mode_overrides": {
+        "URF": {
+          "BiscuitMinuteInterval": 1.5
+        },
+        "{48eea983}": {
+          "BiscuitMinuteInterval": 1.5
+        }
+      },
+      "calculations": {},
+      "texts": {
+        "name": "Entrega de galletas",
+        "tooltip": "Entrega de galletas: Obtienes 1 {{game_item_displayname_2010}} cada @BiscuitMinuteInterval@ min, hasta el minuto @SwapOverMinute@.<br><br>Las galletas restauran @FlatHeal@ + @HealthHealPercent.0*100@% de tu vida máxima, que aumenta hasta un @MaximumHealIncrease*100@% según la vida que te falte. Al consumir o vender una galleta, tu vida máxima aumenta permanentemente en @PermanentHP@. <br><hr><br>Galletas obtenidas: @f1@/@f2@<br>Curación de galletas: @f3@",
+        "short_desc": "Consigues una galleta gratis cada @BiscuitMinuteInterval@ min hasta el minuto @SwapOverMinute@. Consumir o vender una galleta aumenta de forma permanente tu vida máxima y restaura vida.",
+        "long_desc": "Entrega de galletas: Obtienes 1 Galleta de la voluntad eterna cada @BiscuitMinuteInterval@ min, hasta el minuto @SwapOverMinute@.<br><br>Las galletas restauran @FlatHeal@ + @HealthHealPercent.0*100@% de tu vida máxima, que aumenta hasta un @MaximumHealIncrease*100@% según la vida que te falte. Al consumir o vender una galleta, tu vida máxima aumenta permanentemente en @PermanentHP@. "
+      },
+      "placeholders": {
+        "BiscuitMinuteInterval": "effect_amount",
+        "FlatHeal": "effect_amount",
+        "HealthHealPercent.0": "effect_amount",
+        "MaximumHealIncrease": "effect_amount",
+        "PermanentHP": "effect_amount",
+        "SwapOverMinute": "effect_amount",
+        "f1": "runtime",
+        "f2": "runtime",
+        "f3": "runtime"
+      }
+    },
+    "8347": {
+      "key": "CosmicInsight",
+      "enabled": null,
+      "stackable": null,
+      "script": "ASSETS/Perks/Styles/Inspiration/CosmicInsight/CosmicInsight.lua",
+      "effect_amounts": {
+        "ItemHaste": 10.0,
+        "SummonerHaste": 18.0
+      },
+      "mode_overrides": {},
+      "calculations": {},
+      "texts": {
+        "name": "Perspicacia cósmica",
+        "tooltip": "+<attention>@SummonerHaste@</attention> de velocidad de hechizos de invocador<br>+<attention>@ItemHaste@</attention> de velocidad de objetos",
+        "short_desc": "+<attention>@SummonerHaste@</attention> de velocidad de hechizos de invocador<br>+<attention>@ItemHaste@</attention> de velocidad de objetos",
+        "long_desc": "+<attention>@SummonerHaste@</attention> de velocidad de hechizos de invocador<br>+<attention>@ItemHaste@</attention> de velocidad de objetos"
+      },
+      "placeholders": {
+        "ItemHaste": "effect_amount",
+        "SummonerHaste": "effect_amount"
+      }
+    },
+    "8351": {
+      "key": "GlacialAugment",
+      "enabled": null,
+      "stackable": null,
+      "script": "ASSETS/Perks/Styles/Inspiration/GlacialAugment/GlacialAugment.lua",
+      "effect_amounts": {
+        "Cooldown": 25.0,
+        "DmgReduction": 0.15,
+        "RayCount": 3.0,
+        "SlowZoneDuration": 3.0,
+        "SlowZoneSlowAPRatio": 0.06,
+        "SlowZoneSlowBase": 20.0,
+        "SlowZoneSlowHealShieldRatio": 90.0,
+        "SlowZoneSlowbADRatio": 0.07,
+        "{139c028a}": 80.0,
+        "{42a02846}": 100.0,
+        "{86969d8f}": 100.0,
+        "{b9b0b98a}": 700.0
+      },
+      "mode_overrides": {
+        "URF": {
+          "Cooldown": 15.0
+        }
+      },
+      "calculations": {
+        "SlowZoneCalc": {
+          "class": "GameCalculation",
+          "mMultiplier": {
+            "class": "NumberCalculationPart",
+            "mNumber": 0.01
+          },
+          "mSimpleTooltipCalculationDisplay": 4,
+          "mFormulaParts": [
+            {
+              "class": "NamedDataValueCalculationPart",
+              "mDataValue": "SlowZoneSlowBase"
+            },
+            {
+              "class": "StatByNamedDataValueCalculationPart",
+              "mDataValue": "SlowZoneSlowAPRatio"
+            },
+            {
+              "class": "StatByNamedDataValueCalculationPart",
+              "mStat": 2,
+              "mStatFormula": 2,
+              "mDataValue": "SlowZoneSlowbADRatio"
+            },
+            {
+              "class": "StatByNamedDataValueCalculationPart",
+              "mStat": 34,
+              "mDataValue": "SlowZoneSlowHealShieldRatio"
+            }
+          ],
+          "mDisplayAsPercent": true,
+          "mPrecision": 1
+        }
+      },
+      "texts": {
+        "name": "Mejora glacial",
+        "tooltip": "Inmovilizar a un campeón enemigo hará que @RayCount@ rayos glaciales emanen desde el objetivo hacia ti y hacia otros campeones cercanos, que crean zonas congeladas durante @SlowZoneDuration@ (+ la duración del efecto de inmovilización) s.<br><br>Las zonas congeladas <status>ralentizan</status> a los enemigos un <status>@SlowZoneCalc@</status> y reducen un @DmgReduction*100@% el daño que infligen a tus aliados (no se aplica al portador).<br>Enfriamiento: @Cooldown@ s.<br><br>Duración de la ralentización de los campeones enemigos: @f1@ s<br>Daño reducido: @f2@",
+        "short_desc": "Inmovilizar a un campeón enemigo genera @RayCount@ rayos glaciales que ralentizan a los enemigos cercanos y reduce el daño que infligen a tus aliados.",
+        "long_desc": "Inmovilizar a un campeón enemigo hará que @RayCount@ rayos glaciales emanen desde el objetivo hacia ti y hacia otros campeones cercanos, lo que crea zonas congeladas durante @SlowZoneDuration@ (+ la duración del efecto de inmovilización) s que ralentizan a los enemigos un @SlowZoneSlowBase@% (+@SlowZoneSlowHealShieldRatio@% por cada 100% de poder de curaciones y escudos) (+@SlowZoneSlowAPRatio*100@% por cada 100 de poder de habilidad) (+@SlowZoneSlowbADRatio*100@% por cada 100 de daño de ataque adicional) y reducen un @DmgReduction*100@% el daño que infligen a tus aliados (no se aplica al portador).<br><br>Enfriamiento: @Cooldown@ s"
+      },
+      "placeholders": {
+        "Cooldown": "effect_amount",
+        "DmgReduction": "effect_amount",
+        "RayCount": "effect_amount",
+        "SlowZoneCalc": "calculation",
+        "SlowZoneDuration": "effect_amount",
+        "SlowZoneSlowAPRatio": "effect_amount",
+        "SlowZoneSlowBase": "effect_amount",
+        "SlowZoneSlowHealShieldRatio": "effect_amount",
+        "SlowZoneSlowbADRatio": "effect_amount",
+        "f1": "runtime",
+        "f2": "runtime"
+      }
+    },
+    "8352": {
+      "key": "TimeWarpTonic",
+      "enabled": null,
+      "stackable": null,
+      "script": "ASSETS/Perks/Styles/Inspiration/TimeWarpTonic/TimeWarpTonic_SRI.lua",
+      "effect_amounts": {
+        "Cooldown": 20.0,
+        "RestorationPercentage": 0.4,
+        "{c9a72b68}": 0.0
+      },
+      "mode_overrides": {},
+      "calculations": {},
+      "texts": {
+        "name": "Tónico de distorsión temporal",
+        "tooltip": "Consumir una poción concede un @RestorationPercentage*100@% de la restauración de vida al instante.<br><hr><br>Vida total restaurada al instante: @f2@",
+        "short_desc": "Las pociones proporcionan algo de restauración inmediata.",
+        "long_desc": "Consumir una poción concede un @RestorationPercentage*100@% de la restauración de vida al instante."
+      },
+      "placeholders": {
+        "RestorationPercentage": "effect_amount",
+        "f2": "runtime"
+      }
+    },
+    "8360": {
+      "key": "UnsealedSpellbook",
+      "enabled": null,
+      "stackable": null,
+      "script": "ASSETS/Perks/Styles/Inspiration/UnsealedSpellbook/UnsealedSpellbook.lua",
+      "effect_amounts": {
+        "NumSummonersBeforeRepeat": 3.0,
+        "ShardFirstMinutes": 6.0,
+        "ShardRechargeReductionSeconds": 25.0,
+        "{0bb7b933}": 6.0,
+        "{0f920874}": 1.0,
+        "{93e92337}": 4.5,
+        "{9a847429}": 0.0,
+        "{9d01feeb}": 5.0,
+        "{a8402a49}": 10.0,
+        "{b7e0131f}": 5.0,
+        "{ea768132}": 1.0
+      },
+      "mode_overrides": {
+        "ARAM": {
+          "ShardFirstMinutes": 3.0,
+          "ShardRechargeReductionSeconds": 20.0,
+          "{93e92337}": 2.5
+        },
+        "{a110bc47}": {
+          "ShardFirstMinutes": 2.0,
+          "ShardRechargeReductionSeconds": 15.0,
+          "{93e92337}": 1.5
+        }
+      },
+      "calculations": {},
+      "texts": {
+        "name": "Libro de hechizos",
+        "tooltip": "Cambia uno de los hechizos de invocador que tienes equipado por uno nuevo de un solo uso. Cada hechizo de invocador único que cambies permanentemente reduce el enfriamiento del cambio de hechizos en @ShardRechargeReductionSeconds@ s (el enfriamiento inicial es de @f3@ s).<br><br>El primer cambio está disponible a los @ShardFirstMinutes@ min. <br><rules><br>Los hechizos de invocador solo pueden cambiarse fuera de combate. <br>Después de usar un hechizo de invocador cambiado, has de cambiar @NumSummonersBeforeRepeat@ veces más antes de poder volver a seleccionar el primero.<br>Aumenta el daño de Aplastar cuando se cambian dos hechizos de invocador. </rules><hr><br>Hechizos de invocador únicos usados: @f4@/@f8@<br>Enfriamiento actual de cambio: @f3@ s",
+        "short_desc": "Cambia hechizos de invocador fuera de combate. Cambiar a hechizos de invocador únicos aumenta el ritmo al que puedes cambiar hechizos en el futuro.",
+        "long_desc": "Cambia uno de los hechizos de invocador que tienes equipado por uno nuevo de un solo uso. Cada hechizo de invocador único que cambies permanentemente reduce el enfriamiento del cambio de hechizos en @ShardRechargeReductionSeconds@ s (el enfriamiento inicial es de @f3@ s).<br><br>El primer cambio está disponible a los @ShardFirstMinutes@ min. <br><rules><br>Los hechizos de invocador solo pueden cambiarse fuera de combate. <br>Después de usar un hechizo de invocador cambiado, has de cambiar @NumSummonersBeforeRepeat@ veces más antes de poder volver a seleccionar el primero.<br>Aumenta el daño de Aplastar cuando se cambian dos hechizos de invocador. </rules>"
+      },
+      "placeholders": {
+        "NumSummonersBeforeRepeat": "effect_amount",
+        "ShardFirstMinutes": "effect_amount",
+        "ShardRechargeReductionSeconds": "effect_amount",
+        "f3": "runtime",
+        "f4": "runtime",
+        "f8": "runtime"
+      }
+    },
+    "8369": {
+      "key": "FirstStrike",
+      "enabled": null,
+      "stackable": null,
+      "script": "ASSETS/Perks/Styles/Inspiration/FirstStrike/FirstStrike.lua",
+      "effect_amounts": {
+        "DamageAmp": 0.07,
+        "Duration": 3.0,
+        "GoldPercentBonus": 0.5,
+        "GoldPercentBonusRanged": 0.35,
+        "GoldProcBonus": 10.0,
+        "GraceWindow": 0.25,
+        "TooltipOnlyCooldownEndAmount": 15.0,
+        "TooltipOnlyCooldownStartAmount": 25.0,
+        "{12632e91}": 10.0,
+        "{23a79ffc}": 1500.0,
+        "{47f8d27e}": 3.0,
+        "{7563bf99}": 0.7,
+        "{b50bc5ec}": 0.5,
+        "{e367b19b}": 1.0
+      },
+      "mode_overrides": {
+        "ARAM": {
+          "GoldPercentBonus": 0.6,
+          "GoldPercentBonusRanged": 0.45,
+          "GoldProcBonus": 15.0,
+          "{b50bc5ec}": 0.6
+        },
+        "URF": {
+          "{e367b19b}": 0.6
+        }
+      },
+      "calculations": {
+        "ChampRange": {
+          "class": "GameCalculationConditional",
+          "mSimpleTooltipCalculationDisplay": 5,
+          "mExpandedTooltipCalculationDisplay": 5,
+          "mDefaultGameCalculation": "{792cf56b}",
+          "mConditionalGameCalculation": "{06387172}",
+          "mConditionalCalculationRequirements": {
+            "class": "IsRangedCastRequirement"
+          }
+        },
+        "Cooldown": {
+          "class": "GameCalculation",
+          "mFormulaParts": [
+            {
+              "class": "ProductOfSubPartsCalculationPart",
+              "mPart1": {
+                "class": "ByCharLevelInterpolationCalculationPart",
+                "mStartValue": 25.0,
+                "mEndValue": 15.0,
+                "{a331f6bf}": false
+              },
+              "mPart2": {
+                "class": "NamedDataValueCalculationPart",
+                "mDataValue": "{e367b19b}"
+              }
+            }
+          ]
+        },
+        "MeleeItemCalcValue": {
+          "class": "GameCalculation",
+          "mSimpleTooltipCalculationDisplay": 6,
+          "mExpandedTooltipCalculationDisplay": 6,
+          "mFormulaParts": [
+            {
+              "class": "NamedDataValueCalculationPart",
+              "mDataValue": "{b50bc5ec}"
+            }
+          ],
+          "mDisplayAsPercent": true
+        },
+        "{06387172}": {
+          "class": "GameCalculation",
+          "mFormulaParts": [
+            {
+              "class": "NumberCalculationPart",
+              "mNumber": 2.0
+            }
+          ]
+        },
+        "{3b00d8b1}": {
+          "class": "GameCalculationModified",
+          "mMultiplier": {
+            "class": "NamedDataValueCalculationPart",
+            "mDataValue": "{7563bf99}"
+          },
+          "mModifiedGameCalculation": "MeleeItemCalcValue"
+        },
+        "{792cf56b}": {
+          "class": "GameCalculation",
+          "mFormulaParts": [
+            {
+              "class": "NumberCalculationPart",
+              "mNumber": 1.0
+            }
+          ]
+        }
+      },
+      "texts": {
+        "name": "Primer golpe",
+        "tooltip": "Los ataques o habilidades que afecten a un campeón enemigo durante los @GraceWindow.2@ s posteriores a entrar en combate con un campeón otorgan @GoldProcBonus@ de oro y <b>Primer golpe</b> durante @Duration@ s, lo que te hará infligir un <truedamage>@DamageAmp*100@%</truedamage> de <truedamage>daño verdadero</truedamage> adicional contra campeones y te otorgará <gold>{{ Item_Range_Mod_@ChampRange@ }}</gold> del daño infligido como <gold>oro</gold>.<br><br>Enfriamiento: <scaleLevel>@Cooldown@</scaleLevel> s<br><hr><br>Daño infligido: @f1@<br>Oro obtenido: @f2@",
+        "short_desc": "Al iniciar un combate con un campeón, infliges un @DamageAmp*100@% de daño adicional durante @Duration@ s y obtienes oro en base al daño infligido.",
+        "long_desc": "Los ataques o habilidades que afecten a un campeón enemigo durante los @GraceWindow@ s posteriores a entrar en combate con un campeón otorgan @GoldProcBonus@ de oro y <b>Primer golpe</b> durante @Duration@ s, lo que te hará infligir un <truedamage>@DamageAmp*100@%</truedamage> de <truedamage>daño verdadero</truedamage> adicional contra campeones y te otorgará un <gold>@GoldPercentBonus*100@% (@GoldPercentBonusRanged*100@% para campeones a distancia)</gold> del daño adicional infligido como <gold>oro</gold>.<br><br>Enfriamiento: <scaleLevel>@TooltipOnlyCooldownStartAmount@-@TooltipOnlyCooldownEndAmount@</scaleLevel> s"
+      },
+      "placeholders": {
+        "ChampRange": "calculation",
+        "Cooldown": "calculation",
+        "DamageAmp": "effect_amount",
+        "Duration": "effect_amount",
+        "GoldPercentBonus": "effect_amount",
+        "GoldPercentBonusRanged": "effect_amount",
+        "GoldProcBonus": "effect_amount",
+        "GraceWindow": "effect_amount",
+        "GraceWindow.2": "effect_amount",
+        "TooltipOnlyCooldownEndAmount": "effect_amount",
+        "TooltipOnlyCooldownStartAmount": "effect_amount",
+        "f1": "runtime",
+        "f2": "runtime"
+      }
+    },
+    "8401": {
+      "key": "ShieldBash",
+      "enabled": null,
+      "stackable": null,
+      "script": "ASSETS/Perks/Styles/Resolve/ShieldBash/ShieldBash.lua",
+      "effect_amounts": {
+        "BonusHealthRatio": 2.5,
+        "ProcBaseMax": 30.0,
+        "ProcBaseMin": 5.0,
+        "ProcDuration": 2.0,
+        "ShieldRatio": 15.0,
+        "{98b04fef}": 0.1
+      },
+      "mode_overrides": {},
+      "calculations": {},
+      "texts": {
+        "name": "Golpe de escudo",
+        "tooltip": "Siempre que obtengas un nuevo escudo, tu siguiente ataque básico contra un campeón inflige <scaleLevel>@f4@</scaleLevel> <scaleHealth>(+@f2@)</scaleHealth> <scaleMana>(+@ShieldRatio.1@% de la cantidad del escudo nuevo)</scaleMana> de {{perk_substring_shieldbashadaptive_@f5@}} adicional.<br><br>Puedes usar este efecto hasta @ProcDuration@ s después de que el escudo se agote.<br><hr><br>Daño total infligido: @f1@",
+        "short_desc": "Siempre que obtengas un escudo, tu siguiente ataque básico contra un campeón inflige daño <lol-uikit-tooltipped-keyword key='LinkTooltip_Description_Adaptive'><font color='#48C4B7'>adaptable</font></lol-uikit-tooltipped-keyword> adicional.",
+        "long_desc": "Siempre que obtengas un nuevo escudo, tu siguiente ataque básico contra un campeón inflige <scaleLevel>@ProcBaseMin@ - @ProcBaseMax@</scaleLevel> <scaleHealth>(+@BonusHealthRatio.1@% de vida adicional)</scaleHealth> <scaleMana>(+@ShieldRatio.1@% de la cantidad del escudo nuevo)</scaleMana> de daño <lol-uikit-tooltipped-keyword key='LinkTooltip_Description_Adaptive'><font color='#48C4B7'>adaptable</font></lol-uikit-tooltipped-keyword> adicional.<br><br>Puedes usar este efecto hasta @ProcDuration@ s después de que el escudo se agote."
+      },
+      "placeholders": {
+        "BonusHealthRatio.1": "effect_amount",
+        "ProcBaseMax": "effect_amount",
+        "ProcBaseMin": "effect_amount",
+        "ProcDuration": "effect_amount",
+        "ShieldRatio.1": "effect_amount",
+        "f1": "runtime",
+        "f2": "runtime",
+        "f4": "runtime",
+        "f5": "runtime"
+      }
+    },
+    "8410": {
+      "key": "ApproachVelocity",
+      "enabled": null,
+      "stackable": null,
+      "script": "ASSETS/Perks/Styles/Resolve/ApproachVelocity/ApproachVelocity.lua",
+      "effect_amounts": {
+        "ActivationDistance": 1000.0,
+        "MovementSpeedPercentBonus": 0.15
+      },
+      "mode_overrides": {},
+      "calculations": {},
+      "texts": {
+        "name": "Velocidad de acercamiento",
+        "tooltip": "Obtienes un <speed>@MovementSpeedPercentBonus*50@% de velocidad de movimiento</speed> hacia enemigos cercanos con movimiento reducido. Esta bonificación aumenta hasta un <speed>@MovementSpeedPercentBonus.0*100@% de velocidad de movimiento</speed> por cada campeón enemigo al que hayas aplicado efectos de reducción de movimiento. <br><br>Alcance de activación para efectos de control de adversario de aliados: @ActivationDistance@<br><hr><br>Tiempo en Prisa: @f1@ s",
+        "short_desc": "Obtienes <lol-uikit-tooltipped-keyword key='LinkTooltip_Description_MS'>velocidad de movimiento</lol-uikit-tooltipped-keyword> adicional hacia campeones enemigos cercanos con <lol-uikit-tooltipped-keyword key='LinkTooltip_Description_ImpairMov'>movimiento reducido</lol-uikit-tooltipped-keyword>, que aumenta hacia campeones enemigos a los que les hayas aplicado efectos de reducción de movimiento.",
+        "long_desc": "Obtienes un <speed>@MovementSpeedPercentBonus*50@% de velocidad de movimiento</speed> hacia enemigos cercanos con movimiento reducido. Esta bonificación aumenta hasta un <speed>@MovementSpeedPercentBonus.0*100@% de velocidad de movimiento</speed> por cada campeón enemigo al que hayas aplicado efectos de reducción de movimiento. <br><br>Alcance de activación para efectos de control de adversario de aliados: @ActivationDistance@"
+      },
+      "placeholders": {
+        "ActivationDistance": "effect_amount",
+        "MovementSpeedPercentBonus": "effect_amount",
+        "MovementSpeedPercentBonus.0": "effect_amount",
+        "f1": "runtime"
+      }
+    },
+    "8414": {
+      "key": "ResPreSetBonus",
+      "enabled": null,
+      "stackable": null,
+      "script": "ASSETS/Perks/Styles/Resolve/ResPreSetBonus/ResPreSetBonus.lua",
+      "effect_amounts": {
+        "AttackSpeed": 0.0,
+        "Health": 0.0,
+        "HealthAtEighteen": 0.0,
+        "{71515e3c}": 0.0
+      },
+      "mode_overrides": {},
+      "calculations": {},
+      "texts": {
+        "name": "El mastodonte",
+        "tooltip": "<pathResolve>Valor</pathResolve> + <pathPrecision>Precisión</pathPrecision> <br>+@Health@-@HealthAtEighteen@ de vida según el nivel<br>+@AttackSpeed.0*100@% de velocidad de ataque",
+        "short_desc": "<pathBonus><pathResolve>Valor</pathResolve> + <pathPrecision>Precisión</pathPrecision> Bonificación de conjunto</pathBonus>",
+        "long_desc": "+@Health@-@HealthAtEighteen@ de vida según el nivel.<br>+@AttackSpeed.0*100@% de velocidad de ataque."
+      },
+      "placeholders": {
+        "AttackSpeed.0": "effect_amount",
+        "Health": "effect_amount",
+        "HealthAtEighteen": "effect_amount"
+      }
+    },
+    "8415": {
+      "key": "ResSorSetBonus",
+      "enabled": null,
+      "stackable": null,
+      "script": "ASSETS/Perks/Styles/Resolve/ResSorSetBonus/ResSorSetBonus.lua",
+      "effect_amounts": {
+        "AdaptiveForce": 0.0,
+        "Health": 0.0,
+        "HealthAtEighteen": 0.0,
+        "{71515e3c}": 0.0,
+        "{8298075e}": 0.0,
+        "{969826da}": 0.0
+      },
+      "mode_overrides": {},
+      "calculations": {},
+      "texts": {
+        "name": "El coloso arcano",
+        "tooltip": "<pathResolve>Valor</pathResolve> + <pathSorcery>Brujería</pathSorcery>. <br>+@Health@-@HealthAtEighteen@ de vida según el nivel.<br>+@AdaptiveForce.0*0.6@ de daño de ataque o +@AdaptiveForce@ de poder de habilidad, <lol-uikit-tooltipped-keyword key='LinkTooltip_Description_Adaptive'><font color='#48C4B7'>adaptable</font></lol-uikit-tooltipped-keyword><br>{{ adaptive_force_tip_bonus_@f2@ }}",
+        "short_desc": "<pathBonus><pathResolve>Valor</pathResolve> + <pathSorcery>Brujería</pathSorcery> Bonificación de conjunto</pathBonus>",
+        "long_desc": "+@Health@-@HealthAtEighteen@ de vida según el nivel.<br>+@AdaptiveForce.0*0.6@ de daño de ataque o +@AdaptiveForce@ de poder de habilidad, <lol-uikit-tooltipped-keyword key='LinkTooltip_Description_Adaptive'><font color='#48C4B7'>adaptable</font></lol-uikit-tooltipped-keyword>"
+      },
+      "placeholders": {
+        "AdaptiveForce": "effect_amount",
+        "AdaptiveForce.0": "effect_amount",
+        "Health": "effect_amount",
+        "HealthAtEighteen": "effect_amount",
+        "f2": "runtime"
+      }
+    },
+    "8416": {
+      "key": "ResInsSetBonus",
+      "enabled": null,
+      "stackable": null,
+      "script": "ASSETS/Perks/Styles/Resolve/ResInsSetBonus/ResInsSetBonus.lua",
+      "effect_amounts": {
+        "Health": 0.0,
+        "HealthAtEighteen": 0.0,
+        "{71515e3c}": 0.0
+      },
+      "mode_overrides": {},
+      "calculations": {},
+      "texts": {
+        "name": "El titán iluminado",
+        "tooltip": "<pathResolve>Valor</pathResolve> + <pathInspiration>Inspiración</pathInspiration>.<br>+@Health@-@HealthAtEighteen@ de vida según el nivel.",
+        "short_desc": "<pathBonus><pathResolve>Valor</pathResolve> + <pathInspiration>Inspiración</pathInspiration> Bonificación de conjunto</pathBonus>",
+        "long_desc": "+@Health@-@HealthAtEighteen@ de vida según el nivel."
+      },
+      "placeholders": {
+        "Health": "effect_amount",
+        "HealthAtEighteen": "effect_amount"
+      }
+    },
+    "8429": {
+      "key": "Conditioning",
+      "enabled": null,
+      "stackable": null,
+      "script": "ASSETS/Perks/Styles/Resolve/Conditioning/Conditioning.lua",
+      "effect_amounts": {
+        "ArmorBase": 8.0,
+        "ExtraResist": 0.03,
+        "MRBase": 8.0,
+        "MinutesRequired": 12.0,
+        "Range": 800.0
+      },
+      "mode_overrides": {
+        "ARAM": {
+          "MinutesRequired": 8.0
+        },
+        "URF": {
+          "MinutesRequired": 6.0
+        },
+        "{48eea983}": {
+          "MinutesRequired": 6.0
+        },
+        "{9e03f6c0}": {
+          "MinutesRequired": 8.0
+        },
+        "{d0f8a37a}": {
+          "MinutesRequired": 8.0
+        }
+      },
+      "calculations": {
+        "ArmorCalcTooltip": {
+          "class": "GameCalculation",
+          "mSimpleTooltipCalculationDisplay": 4,
+          "mFormulaParts": [
+            {
+              "class": "NamedDataValueCalculationPart",
+              "mDataValue": "ArmorBase"
+            },
+            {
+              "class": "StatByNamedDataValueCalculationPart",
+              "mStat": 1,
+              "mDataValue": "ExtraResist"
+            }
+          ]
+        },
+        "MagicResistCalcTooltip": {
+          "class": "GameCalculation",
+          "mSimpleTooltipCalculationDisplay": 4,
+          "mFormulaParts": [
+            {
+              "class": "NamedDataValueCalculationPart",
+              "mDataValue": "MRBase"
+            },
+            {
+              "class": "StatByNamedDataValueCalculationPart",
+              "mStat": 6,
+              "mDataValue": "ExtraResist"
+            }
+          ]
+        }
+      },
+      "texts": {
+        "name": "Condicionamiento",
+        "tooltip": "Tras @MinutesRequired@ min, otorga <scaleArmor>@ArmorCalcTooltip@ de armadura</scaleArmor> y <scaleMR>@MagicResistCalcTooltip@ de resistencia mágica</scaleMR>.",
+        "short_desc": "Pasados @MinutesRequired@ min, obtienes +@ArmorBase@ de armadura y +@MRBase@ de resistencia mágica. Además, tu armadura y resistencia mágica aumentan un @ExtraResist*100@ %.",
+        "long_desc": "Pasados @MinutesRequired@ min, obtienes +@ArmorBase@ de armadura y +@MRBase@ de resistencia mágica. Además, tu armadura y resistencia mágica aumentan un @ExtraResist*100@ %."
+      },
+      "placeholders": {
+        "ArmorBase": "effect_amount",
+        "ArmorCalcTooltip": "calculation",
+        "ExtraResist": "effect_amount",
+        "MRBase": "effect_amount",
+        "MagicResistCalcTooltip": "calculation",
+        "MinutesRequired": "effect_amount"
+      }
+    },
+    "8437": {
+      "key": "GraspOfTheUndying",
+      "enabled": null,
+      "stackable": null,
+      "script": "ASSETS/Perks/Styles/Resolve/GraspOfTheUndying/GraspOfTheUndying.lua",
+      "effect_amounts": {
+        "MaxHealthPerProc": 5.0,
+        "PercentHealthDamage": 0.035,
+        "PercentHealthHeal": 0.013,
+        "RangedHealthPerProc": 2.0,
+        "RangedPenaltyMod": 0.4,
+        "TriggerTime": 4.0,
+        "Window": 5.0,
+        "{8ba71576}": 0.0
+      },
+      "mode_overrides": {
+        "ARAM": {
+          "MaxHealthPerProc": 10.0,
+          "RangedHealthPerProc": 4.0
+        },
+        "URF": {
+          "MaxHealthPerProc": 15.0,
+          "RangedHealthPerProc": 6.0
+        },
+        "{48eea983}": {
+          "MaxHealthPerProc": 15.0,
+          "RangedHealthPerProc": 6.0
+        },
+        "{9e03f6c0}": {
+          "MaxHealthPerProc": 10.0,
+          "RangedHealthPerProc": 4.0
+        }
+      },
+      "calculations": {
+        "DamageCalc": {
+          "class": "{e9a3c91d}",
+          "mSimpleTooltipCalculationDisplay": 4,
+          "mFormulaParts": [
+            {
+              "class": "StatByNamedDataValueCalculationPart",
+              "mStat": 12,
+              "mDataValue": "PercentHealthDamage"
+            }
+          ],
+          "mRangedMultiplier": {
+            "class": "NamedDataValueCalculationPart",
+            "mDataValue": "RangedPenaltyMod"
+          }
+        },
+        "HealCalc": {
+          "class": "{e9a3c91d}",
+          "mSimpleTooltipCalculationDisplay": 4,
+          "mFormulaParts": [
+            {
+              "class": "StatByNamedDataValueCalculationPart",
+              "mStat": 12,
+              "mDataValue": "PercentHealthHeal"
+            }
+          ],
+          "mRangedMultiplier": {
+            "class": "NamedDataValueCalculationPart",
+            "mDataValue": "RangedPenaltyMod"
+          }
+        }
+      },
+      "texts": {
+        "name": "Garras del inmortal",
+        "tooltip": "Cada @TriggerTime@ s en combate, tu siguiente ataque básico a un campeón hará que:<li>Inflijas <magicDamage>@DamageCalc@ de daño mágico adicional</magicDamage>.<li>Te cure <healing>@HealCalc@ de vida</healing>.<li>Aumente tu vida en <healing>@MaxHealthPerProc@</healing> de forma permanente para campeones cuerpo a cuerpo y <healing>@RangedHealthPerProc@</healing> para campeones a distancia.<br><br>Vida máxima ganada: <scaleHealth>@f4@</scaleHealth><br>Daño a campeones: <scaleHealth>@f1@</scaleHealth><br>Curación total: <scaleHealth>@f2@</scaleHealth><br>Veces usado: @f3@",
+        "short_desc": "Cada @TriggerTime@ s, tu siguiente ataque a un campeón inflige daño mágico adicional, te cura y aumenta tu vida permanentemente.",
+        "long_desc": "Cada @TriggerTime@ s en combate, tu siguiente ataque básico a un campeón hará que:<li>Inflijas daño mágico adicional equivalente al @PercentHealthDamage.1*100@% de tu vida máxima.<li>Te cure un @PercentHealthHeal.1*100@% de tu vida máxima.<li>Aumente tu vida en @MaxHealthPerProc@ de forma permanente.<br><rules><i>Campeones a distancia:</i> El daño, la curación y la vida permanente obtenida tienen una efectividad del @RangedPenaltyMod*100@%.</rules>"
+      },
+      "placeholders": {
+        "DamageCalc": "calculation",
+        "HealCalc": "calculation",
+        "MaxHealthPerProc": "effect_amount",
+        "PercentHealthDamage.1": "effect_amount",
+        "PercentHealthHeal.1": "effect_amount",
+        "RangedHealthPerProc": "effect_amount",
+        "RangedPenaltyMod": "effect_amount",
+        "TriggerTime": "effect_amount",
+        "f1": "runtime",
+        "f2": "runtime",
+        "f3": "runtime",
+        "f4": "runtime"
+      }
+    },
+    "8439": {
+      "key": "Aftershock",
+      "enabled": null,
+      "stackable": null,
+      "script": "ASSETS/Perks/Styles/Resolve/VeteranAftershock/VeteranAftershock.lua",
+      "effect_amounts": {
+        "BonusResistMax": 150.0,
+        "BonusResistMin": 80.0,
+        "Cooldown": 20.0,
+        "DelayBeforeBurst": 2.5,
+        "FlatResists": 45.0,
+        "HealthRatio": 0.08,
+        "MaxBaseDamage": 120.0,
+        "PercentBonusResist": 0.75,
+        "StartingBaseDamage": 25.0,
+        "{b68798a6}": 350.0
+      },
+      "mode_overrides": {
+        "URF": {
+          "Cooldown": 15.0
+        }
+      },
+      "calculations": {
+        "ArmorBuff": {
+          "class": "GameCalculation",
+          "mSimpleTooltipCalculationDisplay": 2,
+          "mFormulaParts": [
+            {
+              "class": "NamedDataValueCalculationPart",
+              "mDataValue": "FlatResists"
+            },
+            {
+              "class": "StatByNamedDataValueCalculationPart",
+              "mStat": 1,
+              "mStatFormula": 2,
+              "mDataValue": "PercentBonusResist"
+            }
+          ]
+        },
+        "DamageCalc": {
+          "class": "GameCalculation",
+          "mSimpleTooltipCalculationDisplay": 4,
+          "mFormulaParts": [
+            {
+              "class": "ByCharLevelInterpolationCalculationPart",
+              "mStartValue": 25.0,
+              "mEndValue": 120.0
+            },
+            {
+              "class": "StatByNamedDataValueCalculationPart",
+              "mStat": 12,
+              "mStatFormula": 2,
+              "mDataValue": "HealthRatio"
+            }
+          ]
+        },
+        "MagicResistBuff": {
+          "class": "GameCalculation",
+          "mSimpleTooltipCalculationDisplay": 2,
+          "mFormulaParts": [
+            {
+              "class": "NamedDataValueCalculationPart",
+              "mDataValue": "FlatResists"
+            },
+            {
+              "class": "StatByNamedDataValueCalculationPart",
+              "mStat": 6,
+              "mStatFormula": 2,
+              "mDataValue": "PercentBonusResist"
+            }
+          ]
+        },
+        "MaxResistCalc": {
+          "class": "GameCalculation",
+          "mSimpleTooltipCalculationDisplay": 4,
+          "mFormulaParts": [
+            {
+              "class": "ByCharLevelInterpolationCalculationPart",
+              "mStartValue": 80.0,
+              "mEndValue": 150.0
+            }
+          ]
+        }
+      },
+      "texts": {
+        "name": "Reverberacción",
+        "tooltip": "Tras inmovilizar a un campeón enemigo, obtienes <scaleArmor>@ArmorBuff@ de armadura</scaleArmor> y <scaleMR>@MagicResistBuff@ de resistencia mágica</scaleMR> durante @DelayBeforeBurst.1@ s. Después explotas e infliges <magicDamage>@DamageCalc@ de daño mágico</magicDamage> a los enemigos cercanos.<br>Enfriamiento: @Cooldown@ s<br><rules><i>Límite de obtención de resistencias: @MaxResistCalc@</i></rules><br><br>Daño infligido total: <magicDamage>@f1@</magicDamage><br>Daño mitigado total: <scaleHealth>@f9@</scaleHealth>",
+        "short_desc": "Al <lol-uikit-tooltipped-keyword key='LinkTooltip_Description_Immobilize'>inmovilizar</lol-uikit-tooltipped-keyword> a un campeón enemigo, aumentan tus resistencias y, luego, infliges daño mágico explosivo a tu alrededor.",
+        "long_desc": "Tras inmovilizar a un campeón enemigo, tu armadura y resistencia mágica aumentan en @FlatResists@ + @PercentBonusResist*100@% de tus resistencias adicionales durante @DelayBeforeBurst.1@ s. Después, explotas e infliges daño mágico a los enemigos cercanos.<br><br>Daño: @StartingBaseDamage@-@MaxBaseDamage@ (+@HealthRatio*100@% de la vida adicional).<br>Enfriamiento: @Cooldown@ s.<br><br>La resistencia adicional de Reverberacción tiene un límite de @BonusResistMin@-@BonusResistMax@ (según el nivel).<br>"
+      },
+      "placeholders": {
+        "ArmorBuff": "calculation",
+        "BonusResistMax": "effect_amount",
+        "BonusResistMin": "effect_amount",
+        "Cooldown": "effect_amount",
+        "DamageCalc": "calculation",
+        "DelayBeforeBurst.1": "effect_amount",
+        "FlatResists": "effect_amount",
+        "HealthRatio": "effect_amount",
+        "MagicResistBuff": "calculation",
+        "MaxBaseDamage": "effect_amount",
+        "MaxResistCalc": "calculation",
+        "PercentBonusResist": "effect_amount",
+        "StartingBaseDamage": "effect_amount",
+        "f1": "runtime",
+        "f9": "runtime"
+      }
+    },
+    "8444": {
+      "key": "SecondWind",
+      "enabled": null,
+      "stackable": null,
+      "script": "ASSETS/Perks/Styles/Resolve/SecondWind/SecondWind.lua",
+      "effect_amounts": {
+        "RegenPercentMax": 0.04,
+        "RegenSeconds": 10.0,
+        "{ab4f74ad}": 0.0
+      },
+      "mode_overrides": {},
+      "calculations": {},
+      "texts": {
+        "name": "Fuerzas renovadas",
+        "tooltip": "Tras recibir daño de un campeón enemigo, te curas un @RegenPercentMax.0*100@% de la vida que te falte a lo largo de @RegenSeconds@ s.<br><hr><br><scaleAD>Curación total: @f1@</scaleAD>",
+        "short_desc": "Tras recibir daño de un campeón enemigo, recuperas algo de la vida que te falte a lo largo del tiempo. ",
+        "long_desc": "Tras recibir daño de un campeón enemigo, te curas un @RegenPercentMax.0*100@% de la vida que te falte a lo largo de @RegenSeconds@ s."
+      },
+      "placeholders": {
+        "RegenPercentMax.0": "effect_amount",
+        "RegenSeconds": "effect_amount",
+        "f1": "runtime"
+      }
+    },
+    "8446": {
+      "key": "Demolish",
+      "enabled": null,
+      "stackable": null,
+      "script": "ASSETS/Perks/Styles/Resolve/Demolish/Demolish_SEASONAL.lua",
+      "effect_amounts": {
+        "BaseDamageMelee": 85.0,
+        "BaseDamageRanged": 50.0,
+        "CooldownSeconds": 30.0,
+        "HPRatioMelee": 0.28,
+        "HPRatioRanged": 0.2,
+        "{8d810998}": 8.0,
+        "{97664ba4}": 3.0
+      },
+      "mode_overrides": {
+        "ARAM": {
+          "{2678049c}": 50.0,
+          "{58937909}": 0.2
+        },
+        "URF": {
+          "CooldownSeconds": 30.0
+        },
+        "{48eea983}": {
+          "CooldownSeconds": 30.0
+        },
+        "{9e03f6c0}": {
+          "{2678049c}": 50.0,
+          "{58937909}": 0.2
+        },
+        "{e1bc2b5b}": {
+          "{2678049c}": 35.0,
+          "{58937909}": 0.1
+        }
+      },
+      "calculations": {
+        "DamageCalc": {
+          "class": "GameCalculationConditional",
+          "mSimpleTooltipCalculationDisplay": 4,
+          "mDefaultGameCalculation": "{4e3f20aa}",
+          "mConditionalGameCalculation": "{5fecac03}",
+          "mConditionalCalculationRequirements": {
+            "class": "{10f4d0bf}"
+          }
+        },
+        "{4e3f20aa}": {
+          "class": "GameCalculation",
+          "mSimpleTooltipCalculationDisplay": 4,
+          "DamageType": 0,
+          "mFormulaParts": [
+            {
+              "class": "NamedDataValueCalculationPart",
+              "mDataValue": "BaseDamageRanged"
+            },
+            {
+              "class": "StatByNamedDataValueCalculationPart",
+              "mStat": 12,
+              "mDataValue": "HPRatioRanged"
+            }
+          ]
+        },
+        "{5fecac03}": {
+          "class": "GameCalculation",
+          "mSimpleTooltipCalculationDisplay": 4,
+          "DamageType": 0,
+          "mFormulaParts": [
+            {
+              "class": "NamedDataValueCalculationPart",
+              "mDataValue": "BaseDamageMelee"
+            },
+            {
+              "class": "StatByNamedDataValueCalculationPart",
+              "mStat": 12,
+              "mDataValue": "HPRatioMelee"
+            }
+          ]
+        }
+      },
+      "texts": {
+        "name": "Demoler",
+        "tooltip": "Tu tercer ataque contra torretas inflige <scaleAD>@DamageCalc@</scaleAD> de daño físico adicional.<br><br>Daño adicional total: <scaleAD>@f1@</scaleAD><br>Activaciones totales: <scaleAD>@f2@</scaleAD><br>Enfriamiento: @CooldownSeconds@ s",
+        "short_desc": "Tu tercer ataque contra torretas inflige daño adicional.",
+        "long_desc": "Tu tercer ataque contra torretas inflige [@BaseDamageMelee@ (+@HPRatioMelee.0 * 100@% de la vida máxima) cuerpo a cuerpo || @BaseDamageRanged@ (+@HPRatioRanged.0 * 100@% de la vida máxima) a distancia] de daño físico adicional.<br><br>Enfriamiento: @CooldownSeconds@ s"
+      },
+      "placeholders": {
+        "BaseDamageMelee": "effect_amount",
+        "BaseDamageRanged": "effect_amount",
+        "CooldownSeconds": "effect_amount",
+        "DamageCalc": "calculation",
+        "HPRatioMelee.0": "effect_amount",
+        "HPRatioRanged.0": "effect_amount",
+        "f1": "runtime",
+        "f2": "runtime"
+      }
+    },
+    "8451": {
+      "key": "Overgrowth",
+      "enabled": null,
+      "stackable": null,
+      "script": "ASSETS/Perks/Styles/Resolve/Overgrowth/Overgrowth.lua",
+      "effect_amounts": {
+        "FlatHealthPerTier": 3.0,
+        "Range": 1400.0,
+        "ThresholdMaxHealthRatio": 0.035,
+        "ThresholdUnits": 120.0,
+        "UnitsPerTier": 8.0,
+        "{1663f8e7}": 0.75,
+        "{ca029a2b}": 2.0
+      },
+      "mode_overrides": {
+        "ARAM": {
+          "FlatHealthPerTier": 5.0,
+          "ThresholdUnits": 80.0
+        },
+        "{48eea983}": {
+          "FlatHealthPerTier": 5.0,
+          "ThresholdUnits": 80.0
+        },
+        "{9e03f6c0}": {
+          "FlatHealthPerTier": 5.0,
+          "ThresholdUnits": 80.0
+        },
+        "{a110bc47}": {
+          "FlatHealthPerTier": 12.0,
+          "ThresholdUnits": 40.0
+        }
+      },
+      "calculations": {},
+      "texts": {
+        "name": "Sobrecrecimiento",
+        "tooltip": "Absorbes esencia vital de monstruos o súbditos enemigos que mueran cerca de ti, por lo que obtienes de forma permanente @FlatHealthPerTier@ de vida máxima por cada @UnitsPerTier@.<br><br>Cuando hayas absorbido a @ThresholdUnits@ monstruos o súbditos enemigos, obtendrás un @ThresholdMaxHealthRatio*100@% de vida máxima adicional.<br><hr><br>Vida máxima total obtenida: <scaleHealth>@f1@</scaleHealth><br>Enemigos a los que has absorbido: <passiveText>@f2@</passiveText>",
+        "short_desc": "Obtienes vida máxima permanente cuando súbditos o monstruos mueren cerca de ti.",
+        "long_desc": "Absorbes esencia vital de monstruos o súbditos enemigos que mueran cerca de ti, por lo que obtienes de forma permanente @FlatHealthPerTier@ de vida máxima por cada @UnitsPerTier@.<br><br>Cuando hayas absorbido a @ThresholdUnits@ monstruos o súbditos enemigos, obtendrás un @ThresholdMaxHealthRatio*100@% de vida máxima adicional."
+      },
+      "placeholders": {
+        "FlatHealthPerTier": "effect_amount",
+        "ThresholdMaxHealthRatio": "effect_amount",
+        "ThresholdUnits": "effect_amount",
+        "UnitsPerTier": "effect_amount",
+        "f1": "runtime",
+        "f2": "runtime"
+      }
+    },
+    "8453": {
+      "key": "Revitalize",
+      "enabled": null,
+      "stackable": null,
+      "script": "ASSETS/Perks/Styles/Resolve/Revitalize/Revitalize.lua",
+      "effect_amounts": {
+        "ExtraAmp": 10.0,
+        "HealShieldPower": 0.05,
+        "HealthCutoff": 40.0
+      },
+      "mode_overrides": {},
+      "calculations": {},
+      "texts": {
+        "name": "Revitalizar",
+        "tooltip": "Obtienes un @HealShieldPower*100@% de poder de curaciones y escudos.<br><br>Las curaciones y los escudos que lanzas o recibes son un @ExtraAmp.0@% más potentes para objetivos que se encuentren por debajo del @HealthCutoff.0@% de vida.<br><hr><br><scaleAD>Curación adicional</scaleAD>: @f1@<br><scaleAD>Escudo adicional</scaleAD>: @f2@<br><scaleAD>Poder de curaciones y escudos totales</scaleAD>: @f4@%",
+        "short_desc": "Obtienes un @HealShieldPower*100@% de poder de curaciones y escudos.<br><br>Las curaciones y los escudos que lanzas o recibes son un @ExtraAmp.0@% más potentes para objetivos que se encuentren por debajo del @HealthCutoff.0@% de vida.",
+        "long_desc": "Obtienes un @HealShieldPower*100@% de poder de curaciones y escudos.<br><br>Las curaciones y los escudos que lanzas o recibes son un @ExtraAmp.0@% más potentes para objetivos que se encuentren por debajo del @HealthCutoff.0@% de vida."
+      },
+      "placeholders": {
+        "ExtraAmp.0": "effect_amount",
+        "HealShieldPower": "effect_amount",
+        "HealthCutoff.0": "effect_amount",
+        "f1": "runtime",
+        "f2": "runtime",
+        "f4": "runtime"
+      }
+    },
+    "8454": {
+      "key": "ResDomSetBonus",
+      "enabled": null,
+      "stackable": null,
+      "script": "ASSETS/Perks/Styles/Resolve/ResDomSetBonus/ResDomSetBonus.lua",
+      "effect_amounts": {
+        "AdaptiveForce": 0.0,
+        "Health": 0.0,
+        "HealthAtEighteen": 0.0,
+        "{71515e3c}": 0.0,
+        "{8298075e}": 0.0,
+        "{969826da}": 0.0
+      },
+      "mode_overrides": {},
+      "calculations": {},
+      "texts": {
+        "name": "El leviatán",
+        "tooltip": "<pathResolve>Valor</pathResolve> + <pathDomination>Dominación</pathDomination>. <br>+@Health@-@HealthAtEighteen@ de vida según el nivel.<br>+@AdaptiveForce.0*0.6@ de daño de ataque o +@AdaptiveForce@ de poder de habilidad, <lol-uikit-tooltipped-keyword key='LinkTooltip_Description_Adaptive'><font color='#48C4B7'>adaptable</font></lol-uikit-tooltipped-keyword><br>{{ adaptive_force_tip_bonus_@f2@ }}",
+        "short_desc": "<pathBonus><pathResolve>Valor</pathResolve> + <pathDomination>Dominación</pathDomination> Bonificación de conjunto</pathBonus>",
+        "long_desc": "+@Health@-@HealthAtEighteen@ de vida según el nivel.<br>+@AdaptiveForce.0*0.6@ de daño de ataque o +@AdaptiveForce@ de poder de habilidad, <lol-uikit-tooltipped-keyword key='LinkTooltip_Description_Adaptive'><font color='#48C4B7'>adaptable</font></lol-uikit-tooltipped-keyword>"
+      },
+      "placeholders": {
+        "AdaptiveForce": "effect_amount",
+        "AdaptiveForce.0": "effect_amount",
+        "Health": "effect_amount",
+        "HealthAtEighteen": "effect_amount",
+        "f2": "runtime"
+      }
+    },
+    "8463": {
+      "key": "FontOfLife",
+      "enabled": null,
+      "stackable": null,
+      "script": "ASSETS/Perks/Styles/Resolve/FontOfLife/FontOfLife.lua",
+      "effect_amounts": {
+        "Cooldown": 20.0,
+        "RangedMod": 0.7
+      },
+      "mode_overrides": {},
+      "calculations": {
+        "BaseHeal": {
+          "class": "{e9a3c91d}",
+          "mSimpleTooltipCalculationDisplay": 4,
+          "mFormulaParts": [
+            {
+              "class": "ByCharLevelInterpolationCalculationPart",
+              "mStartValue": 10.0,
+              "mEndValue": 50.0
+            }
+          ],
+          "mRangedMultiplier": {
+            "class": "NamedDataValueCalculationPart",
+            "mDataValue": "RangedMod"
+          }
+        }
+      },
+      "texts": {
+        "name": "Fuente de vida",
+        "tooltip": "Reducir la movilidad de un campeón enemigo te cura <healing>@BaseHeal@ de vida</healing> a ti y al campeón aliado cercano con menos vida.<br>Enfriamiento: @Cooldown@ s<br><br>Curación total: <healing>@f1@</healing>",
+        "short_desc": "<lol-uikit-tooltipped-keyword key='LinkTooltip_Description_ImpairMov'>Reducir</lol-uikit-tooltipped-keyword> la movilidad de un campeón enemigo cura a los campeones aliados cercanos. ",
+        "long_desc": "Reducir la movilidad de un campeón enemigo te cura <healing>@BaseHeal@ de vida</healing> a ti y al campeón aliado cercano con menos vida.<br><br>Un @RangedMod*100@% de efecto para campeones a distancia.<br><br>Enfriamiento: @Cooldown@ s"
+      },
+      "placeholders": {
+        "BaseHeal": "calculation",
+        "Cooldown": "effect_amount",
+        "RangedMod": "effect_amount",
+        "f1": "runtime"
+      }
+    },
+    "8465": {
+      "key": "Guardian",
+      "enabled": null,
+      "stackable": null,
+      "script": "ASSETS/Perks/Styles/Resolve/Guardian/Guardian.lua",
+      "effect_amounts": {
+        "APRatio": 0.2,
+        "Cooldown": 75.0,
+        "CooldownMaxLevel": 40.0,
+        "GuardDuration": 2.5,
+        "HPRatio": 0.06,
+        "ShieldBase": 40.0,
+        "ShieldDuration": 1.5,
+        "ShieldMax": 150.0,
+        "SnuggleRange": 350.0,
+        "ThresholdMax": 165.0,
+        "ThresholdMin": 50.0
+      },
+      "mode_overrides": {
+        "ARAM": {
+          "Cooldown": 60.0,
+          "CooldownMaxLevel": 30.0
+        }
+      },
+      "calculations": {
+        "CooldownCalc": {
+          "class": "GameCalculation",
+          "mSimpleTooltipCalculationDisplay": 4,
+          "mFormulaParts": [
+            {
+              "class": "ByCharLevelInterpolationCalculationPart",
+              "mStartValue": 75.0,
+              "mEndValue": 40.0
+            }
+          ]
+        },
+        "ShieldCalc": {
+          "class": "GameCalculation",
+          "mSimpleTooltipCalculationDisplay": 4,
+          "mFormulaParts": [
+            {
+              "class": "ByCharLevelInterpolationCalculationPart",
+              "mStartValue": 40.0,
+              "mEndValue": 150.0
+            },
+            {
+              "class": "StatByNamedDataValueCalculationPart",
+              "mStatFormula": 2,
+              "mDataValue": "APRatio"
+            },
+            {
+              "class": "StatByNamedDataValueCalculationPart",
+              "mStat": 12,
+              "mStatFormula": 2,
+              "mDataValue": "HPRatio"
+            }
+          ]
+        },
+        "ThresholdCalc": {
+          "class": "GameCalculation",
+          "mSimpleTooltipCalculationDisplay": 4,
+          "mFormulaParts": [
+            {
+              "class": "ByCharLevelInterpolationCalculationPart",
+              "mStartValue": 40.0,
+              "mEndValue": 150.0
+            }
+          ]
+        }
+      },
+      "texts": {
+        "name": "Protector",
+        "tooltip": "<i>Protege</i> a los aliados que se encuentren a @SnuggleRange@ unidades de ti y a los aliados a los que lanzas hechizos durante @GuardDuration@ s. Si a lo largo de su duración tu aliado o tú recibís más que una pequeña cantidad de daño, ambos obtenéis un escudo durante @ShieldDuration@ s.<br><br>Fuerza: <shield>@ShieldCalc@ de escudo</shield>.<br>Umbral de daño: <scaleAD>@ThresholdCalc@</scaleAD> de daño posmitigación.<br>Enfriamiento: @CooldownCalc@ s.<br>Daño bloqueado total: <healing>@f1@</healing>.",
+        "short_desc": "Protege a los aliados sobre los que has lanzado un hechizo y a aquellos que están muy cerca. Si tú o un campeón aliado protegido cercano recibís daño según el nivel, ambos obtenéis un escudo.",
+        "long_desc": "<i>Protege</i> a los aliados que se encuentren a @SnuggleRange@ unidades de ti y a los aliados a los que lanzas hechizos durante @GuardDuration@ s. Si a lo largo de su duración tu aliado o tú recibís más que una pequeña cantidad de daño, ambos obtenéis un escudo durante @ShieldDuration@ s.<br><br>Enfriamiento: <scaleLevel>@Cooldown@-@CooldownMaxLevel@</scaleLevel> s<br>Escudo: <scaleLevel>@ShieldBase@-@ShieldMax@</scaleLevel> + <scaleAP>@APRatio*100@%</scaleAP> del poder de habilidad + <scalehealth>@HPRatio.0*100@%</scalehealth> de la vida adicional<br>Umbral de activación: <scaleLevel>@ThresholdMin@ - @ThresholdMax@</scaleLevel> de daño posmitigación"
+      },
+      "placeholders": {
+        "APRatio": "effect_amount",
+        "Cooldown": "effect_amount",
+        "CooldownCalc": "calculation",
+        "CooldownMaxLevel": "effect_amount",
+        "GuardDuration": "effect_amount",
+        "HPRatio.0": "effect_amount",
+        "ShieldBase": "effect_amount",
+        "ShieldCalc": "calculation",
+        "ShieldDuration": "effect_amount",
+        "ShieldMax": "effect_amount",
+        "SnuggleRange": "effect_amount",
+        "ThresholdCalc": "calculation",
+        "ThresholdMax": "effect_amount",
+        "ThresholdMin": "effect_amount",
+        "f1": "runtime"
+      }
+    },
+    "8473": {
+      "key": "BonePlating",
+      "enabled": null,
+      "stackable": null,
+      "script": "ASSETS/Perks/Styles/Resolve/BonePlating/BonePlating.lua",
+      "effect_amounts": {
+        "BlockBase": 30.0,
+        "BlockCount": 3.0,
+        "BlockDuration": 1.5,
+        "BlockMax": 60.0,
+        "Cooldown": 55.0
+      },
+      "mode_overrides": {
+        "ARAM": {
+          "Cooldown": 40.0
+        }
+      },
+      "calculations": {
+        "BlockCalc": {
+          "class": "GameCalculation",
+          "mSimpleTooltipCalculationDisplay": 4,
+          "mFormulaParts": [
+            {
+              "class": "ByCharLevelInterpolationCalculationPart",
+              "mStartValue": 30.0,
+              "mEndValue": 60.0
+            }
+          ]
+        }
+      },
+      "texts": {
+        "name": "Revestimiento de huesos",
+        "tooltip": "Tras recibir daño de un campeón enemigo, los siguientes @BlockCount@ hechizos o ataques dirigidos a ti infligen @BlockCalc@ menos de daño.<br>Duración: @BlockDuration.1@ s<br>Enfriamiento: @Cooldown@ s<br><br>Daño reducido total: <scaleLevel>@f1@</scaleLevel>",
+        "short_desc": "Tras recibir daño de un campeón enemigo, los siguientes @BlockCount@ hechizos o ataques dirigidos a ti infligen @BlockBase@-@BlockMax@ menos de daño (en función del nivel).<br><br>Duración: @BlockDuration@ s<br>Enfriamiento: @Cooldown@ s",
+        "long_desc": "Tras recibir daño de un campeón enemigo, los siguientes @BlockCount@ hechizos o ataques dirigidos a ti infligen @BlockBase@-@BlockMax@ menos de daño (en función del nivel).<br><br>Duración: @BlockDuration@ s<br>Enfriamiento: @Cooldown@ s"
+      },
+      "placeholders": {
+        "BlockBase": "effect_amount",
+        "BlockCalc": "calculation",
+        "BlockCount": "effect_amount",
+        "BlockDuration": "effect_amount",
+        "BlockDuration.1": "effect_amount",
+        "BlockMax": "effect_amount",
+        "Cooldown": "effect_amount",
+        "f1": "runtime"
+      }
+    },
+    "8992": {
+      "key": "DeathfireTouch",
+      "enabled": null,
+      "stackable": null,
+      "script": "ASSETS/Perks/Styles/Sorcery/DeathfireTouch/DeathfireTouchManager.lua",
+      "effect_amounts": {
+        "ADRatio": 0.07,
+        "ADRatioTT": 7.0,
+        "APRatio": 0.025,
+        "APRatioTT": 2.5,
+        "AoEDuration": 2.0,
+        "DamageMultiplier": 0.75,
+        "DotDuration": 1.0,
+        "Duration": 4.0,
+        "Level18DamageTOOLTIP": 12.0,
+        "Level1DamageTOOLTIP": 3.0,
+        "TimeToAmp": 3.0,
+        "{6df27940}": 2.0
+      },
+      "mode_overrides": {},
+      "calculations": {
+        "DamageCalc": {
+          "class": "GameCalculation",
+          "mSimpleTooltipCalculationDisplay": 4,
+          "mFormulaParts": [
+            {
+              "class": "ByCharLevelInterpolationCalculationPart",
+              "mStartValue": 3.0,
+              "mEndValue": 12.0
+            },
+            {
+              "class": "StatByNamedDataValueCalculationPart",
+              "mDataValue": "APRatio"
+            },
+            {
+              "class": "StatByNamedDataValueCalculationPart",
+              "mStat": 2,
+              "mStatFormula": 2,
+              "mDataValue": "ADRatio"
+            }
+          ]
+        }
+      },
+      "texts": {
+        "name": "Toque de muerte ígnea",
+        "tooltip": "Al infligir daño a un campeón con una habilidad, lo quemas y le infliges <magicDamage>@DamageCalc@ de daño mágico</magicDamage> por segundo. Tras arder durante @TimeToAmp@ s, el daño de la quemadura aumenta un @DamageMultiplier*100@% mientras siga ardiendo.<br><rules><br>Duración:<br>Objetivo único: @Duration@ s.<br>Área de efecto: @AoEDuration@ s.<br>Daño prolongado: @DotDuration@ s.<br></rules><br>Has infligido @f1@ de daño a campeones con la quemadura de Toque de muerte ígnea.",
+        "short_desc": "Al infligir daño a un campeón con una habilidad, lo quemas y le infliges daño prolongado.",
+        "long_desc": "Al infligir daño a un campeón con una habilidad, lo quemas y le infliges @Level1DamageTOOLTIP@ - @Level18DamageTOOLTIP@ según el nivel (+<scaleAP>@APRatioTT.1@% del PH</scaleAP>) (+<scaleAD>@ADRatioTT@% del DA adicional</scaleAD>) de daño mágico por segundo. Tras arder durante @TimeToAmp@ s, el daño de la quemadura aumenta un @DamageMultiplier*100@% mientras siga ardiendo.<br><rules><br>Duración:<br>Objetivo único: @Duration@ s.<br>Área de efecto: @AoEDuration@ s.<br>Daño prolongado: @DotDuration@ s.<br></rules>"
+      },
+      "placeholders": {
+        "ADRatioTT": "effect_amount",
+        "APRatioTT.1": "effect_amount",
+        "AoEDuration": "effect_amount",
+        "DamageCalc": "calculation",
+        "DamageMultiplier": "effect_amount",
+        "DotDuration": "effect_amount",
+        "Duration": "effect_amount",
+        "Level18DamageTOOLTIP": "effect_amount",
+        "Level1DamageTOOLTIP": "effect_amount",
+        "TimeToAmp": "effect_amount",
+        "f1": "runtime"
+      }
+    },
+    "9101": {
+      "key": "AbsorbLife",
+      "enabled": null,
+      "stackable": null,
+      "script": "ASSETS/Perks/Styles/Precision/AbsorbLife/AbsorbLife.lua",
+      "effect_amounts": {
+        "{51327936}": 1.0,
+        "{f7664300}": 23.0
+      },
+      "mode_overrides": {},
+      "calculations": {
+        "HealAmount": {
+          "class": "GameCalculation",
+          "mFormulaParts": [
+            {
+              "class": "ByCharLevelBreakpointsCalculationPart",
+              "mLevel1Value": 1.0,
+              "mInitialBonusPerLevel": 0.25,
+              "mBreakpoints": [
+                {
+                  "class": "Breakpoint",
+                  "mLevel": 6,
+                  "mBonusPerLevelAtAndAfter": 1.0
+                },
+                {
+                  "class": "Breakpoint",
+                  "mLevel": 11,
+                  "mBonusPerLevelAtAndAfter": 2.0
+                }
+              ]
+            }
+          ]
+        }
+      },
+      "texts": {
+        "name": "Absorber vida",
+        "tooltip": "Asesinar a un objetivo te cura @HealAmount@ de vida.<br><br><b>Curación total: <scaleAD>@f1@</scaleAD></b>",
+        "short_desc": "Asesinar a un objetivo te cura.",
+        "long_desc": "Asesinar a un objetivo te cura @HealAmount@ de vida."
+      },
+      "placeholders": {
+        "HealAmount": "calculation",
+        "f1": "runtime"
+      }
+    },
+    "9103": {
+      "key": "LegendBloodline",
+      "enabled": null,
+      "stackable": null,
+      "script": "ASSETS/Perks/Styles/Precision/LegendBloodline/LegendBloodline.lua",
+      "effect_amounts": {
+        "BonusHealth": 85.0,
+        "LifeStealPerStack": 0.45,
+        "MaxLegendStacks": 15.0,
+        "{3e1fdd4a}": 100.0,
+        "{5b3692cf}": 0.0,
+        "{86fde0bf}": 25.0,
+        "{8fb410e2}": 100.0,
+        "{9ba42830}": 4.0,
+        "{f6570baa}": 100.0
+      },
+      "mode_overrides": {},
+      "calculations": {},
+      "texts": {
+        "name": "Leyenda: Linaje",
+        "tooltip": "Obtienes un <scaleAD>@LifeStealPerStack.2@% de robo de vida</scaleAD> por cada acumulación de <i>Leyenda</i> (<statGood>acumulaciones máximas: @MaxLegendStacks@</statGood>). Con el máximo de acumulaciones de <i>Leyenda</i>, obtienes <scaleHealth>@BonusHealth@ de vida máxima</scaleHealth>.<br><br>Consigues acumulaciones de <i>Leyenda</i> con asistencias o asesinatos de campeones y monstruos épicos, y por asesinatos de monstruos gigantes y de súbditos.<br><hr><br>Robo de vida otorgado en total: <scaleAD>@f1*100@%</scaleAD> (<statGood>@f3@ de @MaxLegendStacks@</statGood>){{ perk_legend_next_stack_@f4@ }}<br>",
+        "short_desc": "Los <lol-uikit-tooltipped-keyword key='LinkTooltip_Description_Takedown'>asesinatos y asistencias</lol-uikit-tooltipped-keyword> otorgan <b>robo de vida</b> permanente, hasta un máximo. Cuando lo alcanzas, aumenta tu vida máxima. Es más débil al principio, pero más fuerte que otras runas de Leyenda cuando avanza la partida.",
+        "long_desc": "Obtienes un <scaleAD>@LifeStealPerStack.2@% de robo de vida</scaleAD> por cada acumulación de <i>Leyenda</i> (<statGood>acumulaciones máximas: @MaxLegendStacks@</statGood>). Con el máximo de acumulaciones de <i>Leyenda</i>, obtienes <scaleHealth>@BonusHealth@ de vida máxima</scaleHealth>.<br><br>Consigues acumulaciones de <i>Leyenda</i> con asistencias o asesinatos de campeones y monstruos épicos, y por asesinatos de monstruos gigantes y de súbditos."
+      },
+      "placeholders": {
+        "BonusHealth": "effect_amount",
+        "LifeStealPerStack.2": "effect_amount",
+        "MaxLegendStacks": "effect_amount",
+        "f1": "runtime",
+        "f3": "runtime",
+        "f4": "runtime"
+      }
+    },
+    "9104": {
+      "key": "LegendAlacrity",
+      "enabled": null,
+      "stackable": null,
+      "script": "ASSETS/Perks/Styles/Precision/LegendAlacrity/LegendAlacrity.lua",
+      "effect_amounts": {
+        "AttackSpeedBase": 0.03,
+        "AttackSpeedPerStack": 0.015,
+        "MaxLegendStacks": 10.0,
+        "{3e1fdd4a}": 100.0,
+        "{86fde0bf}": 25.0,
+        "{8fb410e2}": 100.0,
+        "{9ba42830}": 4.0,
+        "{f6570baa}": 100.0
+      },
+      "mode_overrides": {},
+      "calculations": {},
+      "texts": {
+        "name": "Leyenda: Presteza",
+        "tooltip": "Obtienes un @AttackSpeedBase*100@% de velocidad de ataque y un @AttackSpeedPerStack*100@% adicional por cada acumulación de <i>Leyenda</i> (<statGood>@MaxLegendStacks@ acumulaciones como máximo</statGood>).<br><br>Consigue acumulaciones de <i>Leyenda</i> con asesinatos o asistencias de campeones y monstruos épicos, y por eliminaciones de monstruos grandes y de súbditos.<br><hr><br>Total de velocidad de ataque añadida: <scaleAD>@f1*100@%</scaleAD> (<statGood>@f3@ de @MaxLegendStacks@</statGood>){{ perk_legend_next_stack_@f4@ }}",
+        "short_desc": "Los <lol-uikit-tooltipped-keyword key='LinkTooltip_Description_Takedown'>asesinatos y asistencias</lol-uikit-tooltipped-keyword> otorgan <b>velocidad de ataque</b> permanente. ",
+        "long_desc": "Obtienes un @AttackSpeedBase*100@% de velocidad de ataque y un @AttackSpeedPerStack*100@% adicional por cada acumulación de <i>Leyenda</i> (<statGood>@MaxLegendStacks@ acumulaciones como máximo</statGood>).<br><br>Consigue acumulaciones de <i>Leyenda</i> con asesinatos o asistencias de campeones y monstruos épicos, y por eliminaciones de monstruos grandes y de súbditos."
+      },
+      "placeholders": {
+        "AttackSpeedBase": "effect_amount",
+        "AttackSpeedPerStack": "effect_amount",
+        "MaxLegendStacks": "effect_amount",
+        "f1": "runtime",
+        "f3": "runtime",
+        "f4": "runtime"
+      }
+    },
+    "9105": {
+      "key": "LegendHaste",
+      "enabled": null,
+      "stackable": null,
+      "script": "ASSETS/Perks/Styles/Precision/LegendHaste/LegendHaste.lua",
+      "effect_amounts": {
+        "HasteBase": 0.0,
+        "HasteperStack": 1.5,
+        "MaxLegendStacks": 10.0,
+        "{3e1fdd4a}": 100.0,
+        "{86fde0bf}": 25.0,
+        "{8fb410e2}": 100.0,
+        "{9ba42830}": 4.0,
+        "{f6570baa}": 100.0
+      },
+      "mode_overrides": {},
+      "calculations": {},
+      "texts": {
+        "name": "Leyenda: Velocidad",
+        "tooltip": "Obtienes 1,5 de velocidad de habilidades básica por cada acumulación de <i>Leyenda</i> (<statGood>@MaxLegendStacks@ acumulaciones como máximo</statGood>).<br><br>Consigue acumulaciones de <i>Leyenda</i> con asesinatos o asistencias de campeones y monstruos épicos, y por asesinatos de monstruos gigantes y de súbditos.<br><hr><br>Velocidad de habilidades básica otorgada en total: <scaleAD>@f1.1@</scaleAD> (<statGood>@f3@ de @MaxLegendStacks@</statGood>){{ perk_legend_next_stack_@f4@ }}",
+        "short_desc": "Los <lol-uikit-tooltipped-keyword key='LinkTooltip_Description_Takedown'>asesinatos y asistencias</lol-uikit-tooltipped-keyword> otorgan <b>velocidad</b> de habilidades básica permanente. ",
+        "long_desc": "Obtienes 1,5 de velocidad de habilidades básica por cada acumulación de <i>Leyenda</i> (<statGood>@MaxLegendStacks@ acumulaciones como máximo</statGood>).<br><br>Consigue acumulaciones de <i>Leyenda</i> con asesinatos o asistencias de campeones y monstruos épicos, y por asesinatos de monstruos gigantes y de súbditos."
+      },
+      "placeholders": {
+        "MaxLegendStacks": "effect_amount",
+        "f1.1": null,
+        "f3": "runtime",
+        "f4": "runtime"
+      }
+    },
+    "9111": {
+      "key": "Triumph",
+      "enabled": null,
+      "stackable": null,
+      "script": "ASSETS/Perks/Styles/Precision/Triumph.lua",
+      "effect_amounts": {
+        "BonusGold": 20.0,
+        "MissingHealthRestored": 0.05,
+        "TriumphMaxHealthRestored": 0.025
+      },
+      "mode_overrides": {
+        "ARAM": {
+          "BonusGold": 10.0,
+          "MissingHealthRestored": 0.03,
+          "TriumphMaxHealthRestored": 0.015
+        },
+        "{9e03f6c0}": {
+          "BonusGold": 10.0,
+          "MissingHealthRestored": 0.06
+        }
+      },
+      "calculations": {
+        "MaxHealthCalc": {
+          "class": "GameCalculation",
+          "mSimpleTooltipCalculationDisplay": 4,
+          "mFormulaParts": [
+            {
+              "class": "StatByNamedDataValueCalculationPart",
+              "mStat": 12,
+              "mDataValue": "TriumphMaxHealthRestored"
+            }
+          ]
+        }
+      },
+      "texts": {
+        "name": "Triunfo",
+        "tooltip": "Los asesinatos y asistencias <healing>restauran @MaxHealthCalc@ más un @MissingHealthRestored*100@% de la vida que te falte</healing> y otorgan <gold>@BonusGold@ de oro adicional</gold>.<br><br>Vida restaurada total: <healing>@f1@</healing><br>Oro adicional total obtenido: <gold>@f2@</gold>",
+        "short_desc": "Los <lol-uikit-tooltipped-keyword key='LinkTooltip_Description_Takedown'>asesinatos y asistencias</lol-uikit-tooltipped-keyword> restauran un @MissingHealthRestored.0*100@% de la vida que te falte y otorgan @BonusGold@ de oro adicional. ",
+        "long_desc": "Los asesinatos y asistencias restauran un @MissingHealthRestored*100@% de la vida que te falte, un @TriumphMaxHealthRestored*100@% de tu vida máxima y otorgan otros @BonusGold@ de oro. <br><br><hr><br><i>''El juego más peligroso es el que otorga mayor gloria''. <br>— Justiciero noxiano.</i>"
+      },
+      "placeholders": {
+        "BonusGold": "effect_amount",
+        "MaxHealthCalc": "calculation",
+        "MissingHealthRestored": "effect_amount",
+        "MissingHealthRestored.0": "effect_amount",
+        "TriumphMaxHealthRestored": "effect_amount",
+        "f1": "runtime",
+        "f2": "runtime"
+      }
+    },
+    "9923": {
+      "key": "HailOfBlades",
+      "enabled": null,
+      "stackable": null,
+      "script": "ASSETS/Perks/Styles/Domination/HailOfBlades/HailOfBlades.lua",
+      "effect_amounts": {
+        "APRatio": 0.1,
+        "ASBoost": 0.9,
+        "ASBoostRanged": 0.6,
+        "BonusADRatio": 0.12,
+        "BonusDamageMax": 20.0,
+        "BonusDamageMin": 2.0,
+        "Cooldown": 10.0,
+        "Duration": 3.0,
+        "MaxBonusHits": 2.0,
+        "NumHits": 3.0
+      },
+      "mode_overrides": {
+        "ARAM": {
+          "ASBoost": 1.2,
+          "ASBoostRanged": 0.8
+        }
+      },
+      "calculations": {
+        "BonusDamage": {
+          "class": "GameCalculation",
+          "mFormulaParts": [
+            {
+              "class": "{ee18a47b}",
+              "{0589a59c}": "BonusDamageMin",
+              "{0b65bc23}": "BonusDamageMax"
+            },
+            {
+              "class": "StatByNamedDataValueCalculationPart",
+              "mDataValue": "APRatio"
+            },
+            {
+              "class": "StatByNamedDataValueCalculationPart",
+              "mStat": 2,
+              "mStatFormula": 2,
+              "mDataValue": "BonusADRatio"
+            }
+          ]
+        },
+        "ChampRange": {
+          "class": "GameCalculationConditional",
+          "mDefaultGameCalculation": "{792cf56b}",
+          "mConditionalGameCalculation": "{06387172}",
+          "mConditionalCalculationRequirements": {
+            "class": "IsRangedCastRequirement"
+          }
+        },
+        "MeleeItemCalcValue": {
+          "class": "GameCalculation",
+          "mMultiplier": {
+            "class": "NumberCalculationPart",
+            "mNumber": 100.0
+          },
+          "mFormulaParts": [
+            {
+              "class": "NamedDataValueCalculationPart",
+              "mDataValue": "ASBoost"
+            }
+          ]
+        },
+        "{06387172}": {
+          "class": "GameCalculation",
+          "mFormulaParts": [
+            {
+              "class": "NumberCalculationPart",
+              "mNumber": 2.0
+            }
+          ]
+        },
+        "{3b00d8b1}": {
+          "class": "GameCalculation",
+          "mMultiplier": {
+            "class": "NumberCalculationPart",
+            "mNumber": 100.0
+          },
+          "mFormulaParts": [
+            {
+              "class": "NamedDataValueCalculationPart",
+              "mDataValue": "ASBoostRanged"
+            }
+          ]
+        },
+        "{792cf56b}": {
+          "class": "GameCalculation",
+          "mFormulaParts": [
+            {
+              "class": "NumberCalculationPart",
+              "mNumber": 1.0
+            }
+          ]
+        }
+      },
+      "texts": {
+        "name": "Lluvia de cuchillas",
+        "tooltip": "Al atacar a un campeón enemigo, obtienes un {{ Item_Range_Mod_@ChampRange@ }}% de velocidad de ataque e infliges <font color='#48C4B7'>@BonusDamage@</font> de <trueDamage>daño verdadero adicional</trueDamage> en un máximo de @NumHits@ ataques.<br><br>Enfriamiento: @Cooldown@ s<br><hr><br>Ataques de Lluvia de cuchillas: @f1@<br>Daño infligido: @f2@<br>Porcentaje de ataques acertados con Lluvia de cuchillas: @f3@%<br><br><rules>Los reinicios de los ataques básicos aumentan el límite de ataques en +1, hasta un máximo de +@MaxBonusHits@.<br>Permite sobrepasar el límite de velocidad de ataque temporalmente.</rules>",
+        "short_desc": "Obtienes una gran cantidad de velocidad de ataque y <trueDamage>daño verdadero</trueDamage> adicional en los @NumHits@ primeros ataques contra campeones enemigos.",
+        "long_desc": "Al atacar a un campeón enemigo, obtienes un @ASBoost*100@% (@ASBoostRanged*100@% para campeones a distancia) de velocidad de ataque y <trueDamage>daño verdadero adicional</trueDamage> en un máximo de @NumHits@ ataques.<br><br>Si transcurren más de @Duration@ s entre ataques, el efecto se detendrá.<br><br>Enfriamiento: @Cooldown@ s<br>Daño de impacto: @BonusDamageMin@ - @BonusDamageMax@ (+@BonusADRatio.-1@ de DA adicional, +@APRatio.-1@ de PH) de daño<br><br><rules>Los reinicios de los ataques aumentan el límite de ataques en 1.<br>Permite sobrepasar el límite de velocidad de ataque temporalmente.</rules>"
+      },
+      "placeholders": {
+        "APRatio.-1": "effect_amount",
+        "ASBoost": "effect_amount",
+        "ASBoostRanged": "effect_amount",
+        "BonusADRatio.-1": "effect_amount",
+        "BonusDamage": "calculation",
+        "BonusDamageMax": "effect_amount",
+        "BonusDamageMin": "effect_amount",
+        "ChampRange": "calculation",
+        "Cooldown": "effect_amount",
+        "Duration": "effect_amount",
+        "MaxBonusHits": "effect_amount",
+        "NumHits": "effect_amount",
+        "f1": "runtime",
+        "f2": "runtime",
+        "f3": "runtime"
+      }
+    }
+  }
+}

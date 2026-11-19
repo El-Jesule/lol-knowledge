@@ -20,7 +20,8 @@
     "attackSpeedModifiable": "attackspeed",
     "attackSpeedRatioModifiable": "attackspeedratio",
     "attackSpeedPerLevelModifiable": "attackspeedperlevel",
-    "critDamageMultiplier": "critdamagemultiplier"
+    "critDamageMultiplier": "critdamagemultiplier",
+    "mAdaptiveForceToAbilityPowerWeight": "adaptiveforceapweight"
   },
   "champions": {
     "Aatrox": {
@@ -43,13 +44,16 @@
         "spellblock": 32.0,
         "spellblockperlevel": 2.05
       },
-      "absent": []
+      "absent": [
+        "adaptiveforceapweight"
+      ]
     },
     "Ahri": {
       "wad": "Ahri.wad.client",
       "bin": "data/characters/ahri/ahri.bin",
       "bin_sha256": "63bbd039c33e3a477293af0f8c1162065c683266e561684cbeabbec58b6bdfb4",
       "fields": {
+        "adaptiveforceapweight": 1.0,
         "armor": 21.0,
         "armorperlevel": 4.2,
         "attackdamage": 53.0,
@@ -87,7 +91,9 @@
         "spellblock": 37.0,
         "spellblockperlevel": 2.05
       },
-      "absent": []
+      "absent": [
+        "adaptiveforceapweight"
+      ]
     },
     "Akshan": {
       "wad": "Akshan.wad.client",
@@ -109,13 +115,16 @@
         "spellblock": 33.0,
         "spellblockperlevel": 1.1
       },
-      "absent": []
+      "absent": [
+        "adaptiveforceapweight"
+      ]
     },
     "Alistar": {
       "wad": "Alistar.wad.client",
       "bin": "data/characters/alistar/alistar.bin",
       "bin_sha256": "302541cae7e6d358afbce91cd94d2b2c0b6fe5ff9a947ea0909073e0ea1d7809",
       "fields": {
+        "adaptiveforceapweight": 1.0,
         "armor": 40.0,
         "armorperlevel": 4.7,
         "attackdamage": 62.0,
@@ -153,13 +162,16 @@
         "spellblock": 32.0,
         "spellblockperlevel": 2.05
       },
-      "absent": []
+      "absent": [
+        "adaptiveforceapweight"
+      ]
     },
     "Amumu": {
       "wad": "Amumu.wad.client",
       "bin": "data/characters/amumu/amumu.bin",
       "bin_sha256": "56031f03c570d35b7c472251acfcd794ae2a2bd6d2ab32195fe99f19b656e49b",
       "fields": {
+        "adaptiveforceapweight": 1.0,
         "armor": 33.0,
         "armorperlevel": 4.0,
         "attackdamage": 57.0,
@@ -182,6 +194,7 @@
       "bin": "data/characters/anivia/anivia.bin",
       "bin_sha256": "9609c2278929602fe0da1173147380c5e9419d4b03ee5d9f5a4364e413a93457",
       "fields": {
+        "adaptiveforceapweight": 1.0,
         "armor": 19.0,
         "armorperlevel": 4.1,
         "attackdamage": 51.0,
@@ -204,6 +217,7 @@
       "bin": "data/characters/annie/annie.bin",
       "bin_sha256": "e36fdb0ecaf87d1b85f0957462e6591bab70bdb88f04eaa9cb4ee61b60beb912",
       "fields": {
+        "adaptiveforceapweight": 1.0,
         "armor": 23.0,
         "armorperlevel": 4.0,
         "attackdamage": 50.0,
@@ -241,7 +255,9 @@
         "spellblock": 33.0,
         "spellblockperlevel": 1.1
       },
-      "absent": []
+      "absent": [
+        "adaptiveforceapweight"
+      ]
     },
     "Ashe": {
       "wad": "Ashe.wad.client",
@@ -263,13 +279,16 @@
         "spellblock": 33.0,
         "spellblockperlevel": 1.1
       },
-      "absent": []
+      "absent": [
+        "adaptiveforceapweight"
+      ]
     },
     "AurelionSol": {
       "wad": "AurelionSol.wad.client",
       "bin": "data/characters/aurelionsol/aurelionsol.bin",
       "bin_sha256": "67a656b0d262bfd4232fb869c701b6c3b9ce59539e736fb5675511d39479703a",
       "fields": {
+        "adaptiveforceapweight": 1.0,
         "armor": 22.0,
         "armorperlevel": 4.0,
         "attackdamage": 58.0,
@@ -292,6 +311,7 @@
       "bin": "data/characters/aurora/aurora.bin",
       "bin_sha256": "42df24abc049bbbed6733b8654858ecd186f74302c2f369f7b5507e4283ddbf2",
       "fields": {
+        "adaptiveforceapweight": 1.0,
         "armor": 23.0,
         "armorperlevel": 4.5,
         "attackdamage": 53.0,
@@ -314,6 +334,7 @@
       "bin": "data/characters/azir/azir.bin",
       "bin_sha256": "2464330a09b0a0625c19fec10c81b9b1c97f6c1fa8b10dbb801616a1e8edcde9",
       "fields": {
+        "adaptiveforceapweight": 1.0,
         "armor": 25.0,
         "armorperlevel": 5.0,
         "attackdamage": 56.0,
@@ -336,6 +357,7 @@
       "bin": "data/characters/bard/bard.bin",
       "bin_sha256": "3645f05d9c3aa8a0984cf65a6d37132caca2d356c430bdc54f757c37ea82a0e9",
       "fields": {
+        "adaptiveforceapweight": 1.0,
         "armor": 32.0,
         "armorperlevel": 4.7,
         "attackdamage": 52.0,
@@ -373,6 +395,7 @@
         "spellblockperlevel": 2.05
       },
       "absent": [
+        "adaptiveforceapweight",
         "attackspeedperlevel"
       ]
     },
@@ -396,13 +419,16 @@
         "spellblock": 32.0,
         "spellblockperlevel": 2.05
       },
-      "absent": []
+      "absent": [
+        "adaptiveforceapweight"
+      ]
     },
     "Brand": {
       "wad": "Brand.wad.client",
       "bin": "data/characters/brand/brand.bin",
       "bin_sha256": "89c562d8aebf2dc9e2288441e813b046484261df2cb86b0bd8d412193aa1c751",
       "fields": {
+        "adaptiveforceapweight": 1.0,
         "armor": 24.0,
         "armorperlevel": 4.2,
         "attackdamage": 57.0,
@@ -440,7 +466,9 @@
         "spellblock": 32.0,
         "spellblockperlevel": 2.05
       },
-      "absent": []
+      "absent": [
+        "adaptiveforceapweight"
+      ]
     },
     "Briar": {
       "wad": "Briar.wad.client",
@@ -462,7 +490,9 @@
         "spellblock": 32.0,
         "spellblockperlevel": 2.05
       },
-      "absent": []
+      "absent": [
+        "adaptiveforceapweight"
+      ]
     },
     "Caitlyn": {
       "wad": "Caitlyn.wad.client",
@@ -484,7 +514,9 @@
         "spellblock": 33.0,
         "spellblockperlevel": 1.1
       },
-      "absent": []
+      "absent": [
+        "adaptiveforceapweight"
+      ]
     },
     "Camille": {
       "wad": "Camille.wad.client",
@@ -506,13 +538,16 @@
         "spellblock": 32.0,
         "spellblockperlevel": 2.05
       },
-      "absent": []
+      "absent": [
+        "adaptiveforceapweight"
+      ]
     },
     "Cassiopeia": {
       "wad": "Cassiopeia.wad.client",
       "bin": "data/characters/cassiopeia/cassiopeia.bin",
       "bin_sha256": "a2eff3dd2f31832c08f886e8492fe1432b4fe422e6bdfa11207b7db7b2ee0d96",
       "fields": {
+        "adaptiveforceapweight": 1.0,
         "armor": 18.0,
         "armorperlevel": 4.7,
         "attackdamage": 53.0,
@@ -535,6 +570,7 @@
       "bin": "data/characters/chogath/chogath.bin",
       "bin_sha256": "4f238a4cd522e77e18654f9d107e4fcfa1adc1c84472659fc218c6b7632b9de3",
       "fields": {
+        "adaptiveforceapweight": 1.0,
         "armor": 38.0,
         "armorperlevel": 4.5,
         "attackdamage": 69.0,
@@ -572,7 +608,9 @@
         "spellblock": 33.0,
         "spellblockperlevel": 1.1
       },
-      "absent": []
+      "absent": [
+        "adaptiveforceapweight"
+      ]
     },
     "Darius": {
       "wad": "Darius.wad.client",
@@ -594,13 +632,16 @@
         "spellblock": 32.0,
         "spellblockperlevel": 2.05
       },
-      "absent": []
+      "absent": [
+        "adaptiveforceapweight"
+      ]
     },
     "Diana": {
       "wad": "Diana.wad.client",
       "bin": "data/characters/diana/diana.bin",
       "bin_sha256": "7da0740c3be54b1fa805f0d4ed554981eb2cc3c6ae3fb0f8e86aaaeb31513044",
       "fields": {
+        "adaptiveforceapweight": 1.0,
         "armor": 31.0,
         "armorperlevel": 4.2999997,
         "attackdamage": 57.0,
@@ -638,7 +679,9 @@
         "spellblock": 29.0,
         "spellblockperlevel": 2.3
       },
-      "absent": []
+      "absent": [
+        "adaptiveforceapweight"
+      ]
     },
     "Draven": {
       "wad": "Draven.wad.client",
@@ -660,13 +703,16 @@
         "spellblock": 33.0,
         "spellblockperlevel": 1.1
       },
-      "absent": []
+      "absent": [
+        "adaptiveforceapweight"
+      ]
     },
     "Ekko": {
       "wad": "Ekko.wad.client",
       "bin": "data/characters/ekko/ekko.bin",
       "bin_sha256": "681c215a58d98aa10c4854ce5c5fc7aeb707bec531399de32efd13a99cccab69",
       "fields": {
+        "adaptiveforceapweight": 1.0,
         "armor": 32.0,
         "armorperlevel": 4.2,
         "attackdamage": 58.0,
@@ -689,6 +735,7 @@
       "bin": "data/characters/elise/elise.bin",
       "bin_sha256": "0b5d75f12f867a8ace14a88e73bfe097ca56cc22254939008709f4e1e015a390",
       "fields": {
+        "adaptiveforceapweight": 1.0,
         "armor": 30.0,
         "armorperlevel": 4.5,
         "attackdamage": 55.0,
@@ -711,6 +758,7 @@
       "bin": "data/characters/evelynn/evelynn.bin",
       "bin_sha256": "c74965360dea108be4e9ae0f97b52f11ccd9dfa2b795e0207ade6805b540a850",
       "fields": {
+        "adaptiveforceapweight": 1.0,
         "armor": 37.0,
         "armorperlevel": 4.7,
         "attackdamage": 61.0,
@@ -748,13 +796,16 @@
         "spellblock": 33.0,
         "spellblockperlevel": 1.1
       },
-      "absent": []
+      "absent": [
+        "adaptiveforceapweight"
+      ]
     },
     "Fiddlesticks": {
       "wad": "FiddleSticks.wad.client",
       "bin": "data/characters/fiddlesticks/fiddlesticks.bin",
       "bin_sha256": "11d87daed7b109cec29357b24e341ae0d3c584344c08508c49eb2ef56687cc04",
       "fields": {
+        "adaptiveforceapweight": 1.0,
         "armor": 34.0,
         "armorperlevel": 4.7,
         "attackdamage": 55.0,
@@ -792,13 +843,16 @@
         "spellblock": 32.0,
         "spellblockperlevel": 2.05
       },
-      "absent": []
+      "absent": [
+        "adaptiveforceapweight"
+      ]
     },
     "Fizz": {
       "wad": "Fizz.wad.client",
       "bin": "data/characters/fizz/fizz.bin",
       "bin_sha256": "8be835281ec7d06232c7795568e29248729161d52a3555a1104dc613173cc36e",
       "fields": {
+        "adaptiveforceapweight": 1.0,
         "armor": 26.0,
         "armorperlevel": 4.6,
         "attackdamage": 58.0,
@@ -821,6 +875,7 @@
       "bin": "data/characters/galio/galio.bin",
       "bin_sha256": "c4f0ce2b51f9db97cf3b92d5b3cb7db407d58df683ee22ff826962c961f97002",
       "fields": {
+        "adaptiveforceapweight": 1.0,
         "armor": 24.0,
         "armorperlevel": 4.7,
         "attackdamage": 59.0,
@@ -858,7 +913,9 @@
         "spellblock": 32.0,
         "spellblockperlevel": 2.05
       },
-      "absent": []
+      "absent": [
+        "adaptiveforceapweight"
+      ]
     },
     "Garen": {
       "wad": "Garen.wad.client",
@@ -880,7 +937,9 @@
         "spellblock": 32.0,
         "spellblockperlevel": 1.55
       },
-      "absent": []
+      "absent": [
+        "adaptiveforceapweight"
+      ]
     },
     "Gnar": {
       "wad": "Gnar.wad.client",
@@ -902,13 +961,16 @@
         "spellblock": 30.0,
         "spellblockperlevel": 1.3
       },
-      "absent": []
+      "absent": [
+        "adaptiveforceapweight"
+      ]
     },
     "Gragas": {
       "wad": "Gragas.wad.client",
       "bin": "data/characters/gragas/gragas.bin",
       "bin_sha256": "041a82e18e3f15f4e812886c44ffc032931855022193034d830b973c84a97252",
       "fields": {
+        "adaptiveforceapweight": 1.0,
         "armor": 38.0,
         "armorperlevel": 5.0,
         "attackdamage": 64.0,
@@ -946,13 +1008,16 @@
         "spellblock": 33.0,
         "spellblockperlevel": 1.1
       },
-      "absent": []
+      "absent": [
+        "adaptiveforceapweight"
+      ]
     },
     "Gwen": {
       "wad": "Gwen.wad.client",
       "bin": "data/characters/gwen/gwen.bin",
       "bin_sha256": "72ba731baa0828e35ef50854e64118136ebd1e840980cfc2ef68243236defa3d",
       "fields": {
+        "adaptiveforceapweight": 1.0,
         "armor": 39.0,
         "armorperlevel": 4.9,
         "attackdamage": 63.0,
@@ -990,13 +1055,16 @@
         "spellblock": 32.0,
         "spellblockperlevel": 2.05
       },
-      "absent": []
+      "absent": [
+        "adaptiveforceapweight"
+      ]
     },
     "Heimerdinger": {
       "wad": "Heimerdinger.wad.client",
       "bin": "data/characters/heimerdinger/heimerdinger.bin",
       "bin_sha256": "eec638a80642c4defc34a12205db270088f177c5867b42ec8c2514ba43e95d94",
       "fields": {
+        "adaptiveforceapweight": 1.0,
         "armor": 19.0,
         "armorperlevel": 4.2,
         "attackdamage": 56.0,
@@ -1019,6 +1087,7 @@
       "bin": "data/characters/hwei/hwei.bin",
       "bin_sha256": "bd8a88b24514a83b3828753f82c691433369800fb8a1d1fcfe03d88ad0bee099",
       "fields": {
+        "adaptiveforceapweight": 1.0,
         "armor": 21.0,
         "armorperlevel": 4.7,
         "attackdamage": 54.0,
@@ -1056,7 +1125,9 @@
         "spellblock": 32.0,
         "spellblockperlevel": 2.05
       },
-      "absent": []
+      "absent": [
+        "adaptiveforceapweight"
+      ]
     },
     "Irelia": {
       "wad": "Irelia.wad.client",
@@ -1078,13 +1149,16 @@
         "spellblock": 30.0,
         "spellblockperlevel": 2.05
       },
-      "absent": []
+      "absent": [
+        "adaptiveforceapweight"
+      ]
     },
     "Ivern": {
       "wad": "Ivern.wad.client",
       "bin": "data/characters/ivern/ivern.bin",
       "bin_sha256": "e5901444f1c8d0811925c5c2de5f39348b71ef05fba7641e37b213d463c7a726",
       "fields": {
+        "adaptiveforceapweight": 1.0,
         "armor": 27.0,
         "armorperlevel": 4.7,
         "attackdamage": 50.0,
@@ -1107,6 +1181,7 @@
       "bin": "data/characters/janna/janna.bin",
       "bin_sha256": "0f4a601874840d8decd2970a07600b76d99c62b586bb40b61e70fa93e3fa4e37",
       "fields": {
+        "adaptiveforceapweight": 1.0,
         "armor": 28.0,
         "armorperlevel": 4.5,
         "attackdamage": 47.0,
@@ -1144,7 +1219,9 @@
         "spellblock": 32.0,
         "spellblockperlevel": 2.05
       },
-      "absent": []
+      "absent": [
+        "adaptiveforceapweight"
+      ]
     },
     "Jax": {
       "wad": "Jax.wad.client",
@@ -1166,7 +1243,9 @@
         "spellblock": 32.0,
         "spellblockperlevel": 2.05
       },
-      "absent": []
+      "absent": [
+        "adaptiveforceapweight"
+      ]
     },
     "Jayce": {
       "wad": "Jayce.wad.client",
@@ -1188,7 +1267,9 @@
         "spellblock": 30.0,
         "spellblockperlevel": 1.3
       },
-      "absent": []
+      "absent": [
+        "adaptiveforceapweight"
+      ]
     },
     "Jhin": {
       "wad": "Jhin.wad.client",
@@ -1210,6 +1291,7 @@
         "spellblockperlevel": 1.1
       },
       "absent": [
+        "adaptiveforceapweight",
         "attackspeedperlevel"
       ]
     },
@@ -1233,7 +1315,9 @@
         "spellblock": 33.0,
         "spellblockperlevel": 1.1
       },
-      "absent": []
+      "absent": [
+        "adaptiveforceapweight"
+      ]
     },
     "KSante": {
       "wad": "KSante.wad.client",
@@ -1255,7 +1339,9 @@
         "spellblock": 30.0,
         "spellblockperlevel": 2.1
       },
-      "absent": []
+      "absent": [
+        "adaptiveforceapweight"
+      ]
     },
     "Kaisa": {
       "wad": "Kaisa.wad.client",
@@ -1277,7 +1363,9 @@
         "spellblock": 33.0,
         "spellblockperlevel": 1.1
       },
-      "absent": []
+      "absent": [
+        "adaptiveforceapweight"
+      ]
     },
     "Kalista": {
       "wad": "Kalista.wad.client",
@@ -1299,13 +1387,16 @@
         "spellblock": 33.0,
         "spellblockperlevel": 1.1
       },
-      "absent": []
+      "absent": [
+        "adaptiveforceapweight"
+      ]
     },
     "Karma": {
       "wad": "Karma.wad.client",
       "bin": "data/characters/karma/karma.bin",
       "bin_sha256": "6f9cedf5ce00a2373c35cbda097a0bcc21dcf8ad5b86ae9f6d978ddf55f59968",
       "fields": {
+        "adaptiveforceapweight": 1.0,
         "armor": 28.0,
         "armorperlevel": 5.0,
         "attackdamage": 49.0,
@@ -1328,6 +1419,7 @@
       "bin": "data/characters/karthus/karthus.bin",
       "bin_sha256": "9daa799618c11927514f8e2a941d9a4d99cb4348108f1562d2c9ac8fe22a374a",
       "fields": {
+        "adaptiveforceapweight": 1.0,
         "armor": 21.0,
         "armorperlevel": 4.7,
         "attackdamage": 46.0,
@@ -1350,6 +1442,7 @@
       "bin": "data/characters/kassadin/kassadin.bin",
       "bin_sha256": "b6edee11ce2c97377d7fbc92fc82917c8425668b009026d721546d412d5d193e",
       "fields": {
+        "adaptiveforceapweight": 1.0,
         "armor": 21.0,
         "armorperlevel": 4.0,
         "attackdamage": 59.0,
@@ -1372,6 +1465,7 @@
       "bin": "data/characters/katarina/katarina.bin",
       "bin_sha256": "322ea45b4146ccafe3875b283ed57c51ef1b2111d91ff817dd6ae5a5ea3af5fd",
       "fields": {
+        "adaptiveforceapweight": 1.0,
         "armor": 32.0,
         "armorperlevel": 4.7,
         "attackdamage": 58.0,
@@ -1409,7 +1503,9 @@
         "spellblock": 22.0,
         "spellblockperlevel": 1.3
       },
-      "absent": []
+      "absent": [
+        "adaptiveforceapweight"
+      ]
     },
     "Kayn": {
       "wad": "Kayn.wad.client",
@@ -1431,13 +1527,16 @@
         "spellblock": 32.0,
         "spellblockperlevel": 2.05
       },
-      "absent": []
+      "absent": [
+        "adaptiveforceapweight"
+      ]
     },
     "Kennen": {
       "wad": "Kennen.wad.client",
       "bin": "data/characters/kennen/kennen.bin",
       "bin_sha256": "73f5b74bde0ba446aff0cb5fa6e4bc73e618edfaca2b304a125411ba941c4660",
       "fields": {
+        "adaptiveforceapweight": 1.0,
         "armor": 29.0,
         "armorperlevel": 4.95,
         "attackdamage": 48.0,
@@ -1475,7 +1574,9 @@
         "spellblock": 32.0,
         "spellblockperlevel": 2.05
       },
-      "absent": []
+      "absent": [
+        "adaptiveforceapweight"
+      ]
     },
     "Kindred": {
       "wad": "Kindred.wad.client",
@@ -1497,7 +1598,9 @@
         "spellblock": 33.0,
         "spellblockperlevel": 1.1
       },
-      "absent": []
+      "absent": [
+        "adaptiveforceapweight"
+      ]
     },
     "Kled": {
       "wad": "Kled.wad.client",
@@ -1519,7 +1622,9 @@
         "spellblock": 28.0,
         "spellblockperlevel": 2.05
       },
-      "absent": []
+      "absent": [
+        "adaptiveforceapweight"
+      ]
     },
     "KogMaw": {
       "wad": "KogMaw.wad.client",
@@ -1541,13 +1646,16 @@
         "spellblock": 33.0,
         "spellblockperlevel": 1.1
       },
-      "absent": []
+      "absent": [
+        "adaptiveforceapweight"
+      ]
     },
     "Leblanc": {
       "wad": "Leblanc.wad.client",
       "bin": "data/characters/leblanc/leblanc.bin",
       "bin_sha256": "a53de8d351c7c4523dad00bbd4dd207a2d8c423e2241554638dfcb0ffdf42c6f",
       "fields": {
+        "adaptiveforceapweight": 1.0,
         "armor": 22.0,
         "armorperlevel": 4.2,
         "attackdamage": 55.0,
@@ -1585,7 +1693,9 @@
         "spellblock": 32.0,
         "spellblockperlevel": 2.05
       },
-      "absent": []
+      "absent": [
+        "adaptiveforceapweight"
+      ]
     },
     "Leona": {
       "wad": "Leona.wad.client",
@@ -1607,13 +1717,16 @@
         "spellblock": 32.0,
         "spellblockperlevel": 2.05
       },
-      "absent": []
+      "absent": [
+        "adaptiveforceapweight"
+      ]
     },
     "Lillia": {
       "wad": "Lillia.wad.client",
       "bin": "data/characters/lillia/lillia.bin",
       "bin_sha256": "3d32ba798e17d9963ec99809c52c33494806b9fd4c5190ce426aefb0085adc09",
       "fields": {
+        "adaptiveforceapweight": 1.0,
         "armor": 24.0,
         "armorperlevel": 4.5,
         "attackdamage": 61.0,
@@ -1636,6 +1749,7 @@
       "bin": "data/characters/lissandra/lissandra.bin",
       "bin_sha256": "4e5601ee80e934f1520e745761fa3b17a946eccf82d86ff992f1e47424d4671e",
       "fields": {
+        "adaptiveforceapweight": 1.0,
         "armor": 22.0,
         "armorperlevel": 4.2,
         "attackdamage": 55.0,
@@ -1658,6 +1772,7 @@
       "bin": "data/characters/locke/locke.bin",
       "bin_sha256": "613253694a3001c4ea943d03cb59281703ac05f4866d07c50d0303ed2fb8d8b0",
       "fields": {
+        "adaptiveforceapweight": 1.0,
         "armor": 32.0,
         "armorperlevel": 4.2,
         "attackdamage": 58.0,
@@ -1695,13 +1810,16 @@
         "spellblock": 33.0,
         "spellblockperlevel": 1.1
       },
-      "absent": []
+      "absent": [
+        "adaptiveforceapweight"
+      ]
     },
     "Lulu": {
       "wad": "Lulu.wad.client",
       "bin": "data/characters/lulu/lulu.bin",
       "bin_sha256": "d0c75264acdf50d0d201d188ba3703f4303759b33b2c1dfbfe254f65e9e5cc89",
       "fields": {
+        "adaptiveforceapweight": 1.0,
         "armor": 26.0,
         "armorperlevel": 4.6,
         "attackdamage": 47.0,
@@ -1724,6 +1842,7 @@
       "bin": "data/characters/lux/lux.bin",
       "bin_sha256": "dee4e794af8329d2bf8187ec035de05d6cf207f7aa7f10fcbe49fe6e09d6e9c8",
       "fields": {
+        "adaptiveforceapweight": 1.0,
         "armor": 21.0,
         "armorperlevel": 5.2,
         "attackdamage": 54.0,
@@ -1746,6 +1865,7 @@
       "bin": "data/characters/malphite/malphite.bin",
       "bin_sha256": "a450af2bfb8413ee9141b19e5f36a54689798110df1ade0bc669560b0a368ba0",
       "fields": {
+        "adaptiveforceapweight": 1.0,
         "armor": 40.0,
         "armorperlevel": 4.95,
         "attackdamage": 62.0,
@@ -1768,6 +1888,7 @@
       "bin": "data/characters/malzahar/malzahar.bin",
       "bin_sha256": "f6f4e14ea1969017639f9ed59a1884d12f2161c3efde073c7476510a5fdf8c3a",
       "fields": {
+        "adaptiveforceapweight": 1.0,
         "armor": 18.0,
         "armorperlevel": 4.7,
         "attackdamage": 55.0,
@@ -1790,6 +1911,7 @@
       "bin": "data/characters/maokai/maokai.bin",
       "bin_sha256": "b6d9a1f03f96018c40a3f3d4da2345983ebbe3e15c1c0d934a1bc4dd62e46b8d",
       "fields": {
+        "adaptiveforceapweight": 1.0,
         "armor": 35.0,
         "armorperlevel": 5.2,
         "attackdamage": 64.0,
@@ -1827,13 +1949,16 @@
         "spellblock": 32.0,
         "spellblockperlevel": 2.05
       },
-      "absent": []
+      "absent": [
+        "adaptiveforceapweight"
+      ]
     },
     "Mel": {
       "wad": "Mel.wad.client",
       "bin": "data/characters/mel/mel.bin",
       "bin_sha256": "1074d59d2ece8a0aeea4ea7cb0a01c1c5e00bf42e5e39bed57e8ad0569024d20",
       "fields": {
+        "adaptiveforceapweight": 1.0,
         "armor": 21.0,
         "armorperlevel": 5.4,
         "attackdamage": 52.0,
@@ -1856,6 +1981,7 @@
       "bin": "data/characters/milio/milio.bin",
       "bin_sha256": "e3d13a18da25388f2b6dc50a44a89a07cba212dee64c9e44cfcd30b02b9cf47b",
       "fields": {
+        "adaptiveforceapweight": 1.0,
         "armor": 26.0,
         "armorperlevel": 4.6,
         "attackdamage": 48.0,
@@ -1893,7 +2019,9 @@
         "spellblock": 33.0,
         "spellblockperlevel": 1.1
       },
-      "absent": []
+      "absent": [
+        "adaptiveforceapweight"
+      ]
     },
     "MonkeyKing": {
       "wad": "MonkeyKing.wad.client",
@@ -1915,13 +2043,16 @@
         "spellblock": 28.0,
         "spellblockperlevel": 2.05
       },
-      "absent": []
+      "absent": [
+        "adaptiveforceapweight"
+      ]
     },
     "Mordekaiser": {
       "wad": "Mordekaiser.wad.client",
       "bin": "data/characters/mordekaiser/mordekaiser.bin",
       "bin_sha256": "59df2c462e15d2c6c8e188241bf5d79979e89f09010628fc064fd1826f4a63d9",
       "fields": {
+        "adaptiveforceapweight": 1.0,
         "armor": 37.0,
         "armorperlevel": 4.2,
         "attackdamage": 61.0,
@@ -1944,6 +2075,7 @@
       "bin": "data/characters/morgana/morgana.bin",
       "bin_sha256": "7b0aefc6e23ed9d5966184593aedd55bd2831c48840622ec96146ba69b3a7ecc",
       "fields": {
+        "adaptiveforceapweight": 1.0,
         "armor": 25.0,
         "armorperlevel": 4.2,
         "attackdamage": 56.0,
@@ -1981,13 +2113,16 @@
         "spellblock": 32.0,
         "spellblockperlevel": 2.05
       },
-      "absent": []
+      "absent": [
+        "adaptiveforceapweight"
+      ]
     },
     "Nami": {
       "wad": "Nami.wad.client",
       "bin": "data/characters/nami/nami.bin",
       "bin_sha256": "546626366470b247f52ae76b37c19ea20692091c71e5e7b899206ddd32859ba6",
       "fields": {
+        "adaptiveforceapweight": 1.0,
         "armor": 29.0,
         "armorperlevel": 5.2,
         "attackdamage": 54.0,
@@ -2025,13 +2160,16 @@
         "spellblock": 32.0,
         "spellblockperlevel": 2.05
       },
-      "absent": []
+      "absent": [
+        "adaptiveforceapweight"
+      ]
     },
     "Nautilus": {
       "wad": "Nautilus.wad.client",
       "bin": "data/characters/nautilus/nautilus.bin",
       "bin_sha256": "7d3de93d01f79bc0837813aab2f3aa2dd40f9ea578bc2255a87e9d1257b0a08e",
       "fields": {
+        "adaptiveforceapweight": 1.0,
         "armor": 39.0,
         "armorperlevel": 4.95,
         "attackdamage": 58.0,
@@ -2054,6 +2192,7 @@
       "bin": "data/characters/neeko/neeko.bin",
       "bin_sha256": "562f902efa5814625ed88976b4dd271ba50ec6664291cb59635a9918f1a42085",
       "fields": {
+        "adaptiveforceapweight": 1.0,
         "armor": 21.0,
         "armorperlevel": 5.2,
         "attackdamage": 48.0,
@@ -2076,6 +2215,7 @@
       "bin": "data/characters/nidalee/nidalee.bin",
       "bin_sha256": "e6cba8765110c0dabccac4b3edf978ac5568cf1b0af54150b2c8a3cce389e1fe",
       "fields": {
+        "adaptiveforceapweight": 1.0,
         "armor": 32.0,
         "armorperlevel": 5.0,
         "attackdamage": 58.0,
@@ -2113,7 +2253,9 @@
         "spellblock": 32.0,
         "spellblockperlevel": 2.05
       },
-      "absent": []
+      "absent": [
+        "adaptiveforceapweight"
+      ]
     },
     "Nocturne": {
       "wad": "Nocturne.wad.client",
@@ -2135,13 +2277,16 @@
         "spellblock": 32.0,
         "spellblockperlevel": 1.55
       },
-      "absent": []
+      "absent": [
+        "adaptiveforceapweight"
+      ]
     },
     "Nunu": {
       "wad": "Nunu.wad.client",
       "bin": "data/characters/nunu/nunu.bin",
       "bin_sha256": "3680741f716b7b0201d4dfcbd876cc15423ece39cd061ac79efe12b6d1bc7070",
       "fields": {
+        "adaptiveforceapweight": 1.0,
         "armor": 29.0,
         "armorperlevel": 4.2,
         "attackdamage": 61.0,
@@ -2179,13 +2324,16 @@
         "spellblock": 32.0,
         "spellblockperlevel": 2.05
       },
-      "absent": []
+      "absent": [
+        "adaptiveforceapweight"
+      ]
     },
     "Orianna": {
       "wad": "Orianna.wad.client",
       "bin": "data/characters/orianna/orianna.bin",
       "bin_sha256": "a6988e7b216cc2ed2d4283ff28733369afd31ebdccd49a417886843334d269ed",
       "fields": {
+        "adaptiveforceapweight": 1.0,
         "armor": 20.0,
         "armorperlevel": 4.2,
         "attackdamage": 44.0,
@@ -2223,7 +2371,9 @@
         "spellblock": 32.0,
         "spellblockperlevel": 2.05
       },
-      "absent": []
+      "absent": [
+        "adaptiveforceapweight"
+      ]
     },
     "Pantheon": {
       "wad": "Pantheon.wad.client",
@@ -2245,7 +2395,9 @@
         "spellblock": 28.0,
         "spellblockperlevel": 2.05
       },
-      "absent": []
+      "absent": [
+        "adaptiveforceapweight"
+      ]
     },
     "Poppy": {
       "wad": "Poppy.wad.client",
@@ -2267,7 +2419,9 @@
         "spellblock": 32.0,
         "spellblockperlevel": 2.05
       },
-      "absent": []
+      "absent": [
+        "adaptiveforceapweight"
+      ]
     },
     "Pyke": {
       "wad": "Pyke.wad.client",
@@ -2289,7 +2443,9 @@
         "spellblock": 32.0,
         "spellblockperlevel": 2.05
       },
-      "absent": []
+      "absent": [
+        "adaptiveforceapweight"
+      ]
     },
     "Qiyana": {
       "wad": "Qiyana.wad.client",
@@ -2311,7 +2467,9 @@
         "spellblock": 32.0,
         "spellblockperlevel": 2.05
       },
-      "absent": []
+      "absent": [
+        "adaptiveforceapweight"
+      ]
     },
     "Quinn": {
       "wad": "Quinn.wad.client",
@@ -2333,13 +2491,16 @@
         "spellblock": 33.0,
         "spellblockperlevel": 1.1
       },
-      "absent": []
+      "absent": [
+        "adaptiveforceapweight"
+      ]
     },
     "Rakan": {
       "wad": "Rakan.wad.client",
       "bin": "data/characters/rakan/rakan.bin",
       "bin_sha256": "718dbc5031d8453b0411adea26117cc0b92a04c4c222ba07817f7363e5d85ed5",
       "fields": {
+        "adaptiveforceapweight": 1.0,
         "armor": 30.0,
         "armorperlevel": 4.9,
         "attackdamage": 62.0,
@@ -2377,7 +2538,9 @@
         "spellblock": 32.0,
         "spellblockperlevel": 2.05
       },
-      "absent": []
+      "absent": [
+        "adaptiveforceapweight"
+      ]
     },
     "RekSai": {
       "wad": "RekSai.wad.client",
@@ -2399,13 +2562,16 @@
         "spellblock": 32.0,
         "spellblockperlevel": 2.05
       },
-      "absent": []
+      "absent": [
+        "adaptiveforceapweight"
+      ]
     },
     "Rell": {
       "wad": "Rell.wad.client",
       "bin": "data/characters/rell/rell.bin",
       "bin_sha256": "cef65540cca7d9fc1e222d1800ffb17b29c88a11c370c284900f195706683020",
       "fields": {
+        "adaptiveforceapweight": 1.0,
         "armor": 30.0,
         "armorperlevel": 4.0,
         "attackdamage": 55.0,
@@ -2428,6 +2594,7 @@
       "bin": "data/characters/renata/renata.bin",
       "bin_sha256": "34fdc83fef94d8a71a23bec0724f1633c61469ac9ad23149b09b03f102dde369",
       "fields": {
+        "adaptiveforceapweight": 1.0,
         "armor": 27.0,
         "armorperlevel": 4.7,
         "attackdamage": 49.0,
@@ -2465,7 +2632,9 @@
         "spellblock": 28.0,
         "spellblockperlevel": 2.05
       },
-      "absent": []
+      "absent": [
+        "adaptiveforceapweight"
+      ]
     },
     "Rengar": {
       "wad": "Rengar.wad.client",
@@ -2487,7 +2656,9 @@
         "spellblock": 32.0,
         "spellblockperlevel": 2.05
       },
-      "absent": []
+      "absent": [
+        "adaptiveforceapweight"
+      ]
     },
     "Riven": {
       "wad": "Riven.wad.client",
@@ -2509,13 +2680,16 @@
         "spellblock": 32.0,
         "spellblockperlevel": 2.05
       },
-      "absent": []
+      "absent": [
+        "adaptiveforceapweight"
+      ]
     },
     "Rumble": {
       "wad": "Rumble.wad.client",
       "bin": "data/characters/rumble/rumble.bin",
       "bin_sha256": "69c883db5813262e56e5fc9a9138c6d9b52eb1f4382400e5ee3ffa6704149f4b",
       "fields": {
+        "adaptiveforceapweight": 1.0,
         "armor": 36.0,
         "armorperlevel": 4.7,
         "attackdamage": 64.0,
@@ -2538,6 +2712,7 @@
       "bin": "data/characters/ryze/ryze.bin",
       "bin_sha256": "edb3ee342f3161ec0e4f1651c5490828393d1042de16a677f2efd7a6cf049623",
       "fields": {
+        "adaptiveforceapweight": 1.0,
         "armor": 22.0,
         "armorperlevel": 4.7,
         "attackdamage": 55.0,
@@ -2575,13 +2750,16 @@
         "spellblock": 33.0,
         "spellblockperlevel": 1.1
       },
-      "absent": []
+      "absent": [
+        "adaptiveforceapweight"
+      ]
     },
     "Sejuani": {
       "wad": "Sejuani.wad.client",
       "bin": "data/characters/sejuani/sejuani.bin",
       "bin_sha256": "ffb79c365dca7187d4d00c9e550fa28cfc0f2ae3dda46a2331af3fe9bdd26675",
       "fields": {
+        "adaptiveforceapweight": 1.0,
         "armor": 34.0,
         "armorperlevel": 5.45,
         "attackdamage": 66.0,
@@ -2619,6 +2797,7 @@
         "spellblockperlevel": 1.1
       },
       "absent": [
+        "adaptiveforceapweight",
         "attackdamageperlevel"
       ]
     },
@@ -2627,6 +2806,7 @@
       "bin": "data/characters/seraphine/seraphine.bin",
       "bin_sha256": "331b119059aa01d88238033c25558d82e51b6939a39e3fbf075a81113a473cce",
       "fields": {
+        "adaptiveforceapweight": 1.0,
         "armor": 26.0,
         "armorperlevel": 4.2,
         "attackdamage": 50.0,
@@ -2664,7 +2844,9 @@
         "spellblock": 28.0,
         "spellblockperlevel": 2.05
       },
-      "absent": []
+      "absent": [
+        "adaptiveforceapweight"
+      ]
     },
     "Shaco": {
       "wad": "Shaco.wad.client",
@@ -2686,7 +2868,9 @@
         "spellblock": 32.0,
         "spellblockperlevel": 2.05
       },
-      "absent": []
+      "absent": [
+        "adaptiveforceapweight"
+      ]
     },
     "Shen": {
       "wad": "Shen.wad.client",
@@ -2708,7 +2892,9 @@
         "spellblock": 32.0,
         "spellblockperlevel": 2.05
       },
-      "absent": []
+      "absent": [
+        "adaptiveforceapweight"
+      ]
     },
     "Shyvana": {
       "wad": "Shyvana.wad.client",
@@ -2730,13 +2916,16 @@
         "spellblock": 32.0,
         "spellblockperlevel": 2.05
       },
-      "absent": []
+      "absent": [
+        "adaptiveforceapweight"
+      ]
     },
     "Singed": {
       "wad": "Singed.wad.client",
       "bin": "data/characters/singed/singed.bin",
       "bin_sha256": "f655e0879316998bacfeec57de806325b9f4ee95ae0416c5280d8920f99ee22b",
       "fields": {
+        "adaptiveforceapweight": 1.0,
         "armor": 34.0,
         "armorperlevel": 4.2,
         "attackdamage": 63.0,
@@ -2774,7 +2963,9 @@
         "spellblock": 32.0,
         "spellblockperlevel": 2.05
       },
-      "absent": []
+      "absent": [
+        "adaptiveforceapweight"
+      ]
     },
     "Sivir": {
       "wad": "Sivir.wad.client",
@@ -2796,7 +2987,9 @@
         "spellblock": 33.0,
         "spellblockperlevel": 1.1
       },
-      "absent": []
+      "absent": [
+        "adaptiveforceapweight"
+      ]
     },
     "Skarner": {
       "wad": "Skarner.wad.client",
@@ -2818,7 +3011,9 @@
         "spellblock": 32.0,
         "spellblockperlevel": 2.05
       },
-      "absent": []
+      "absent": [
+        "adaptiveforceapweight"
+      ]
     },
     "Smolder": {
       "wad": "Smolder.wad.client",
@@ -2840,13 +3035,16 @@
         "spellblock": 33.0,
         "spellblockperlevel": 1.1
       },
-      "absent": []
+      "absent": [
+        "adaptiveforceapweight"
+      ]
     },
     "Sona": {
       "wad": "Sona.wad.client",
       "bin": "data/characters/sona/sona.bin",
       "bin_sha256": "fac3cd68b312d5421a772129d6b4a6f0459388804f0fb43dd894bf2458659679",
       "fields": {
+        "adaptiveforceapweight": 1.0,
         "armor": 26.0,
         "armorperlevel": 4.2,
         "attackdamage": 49.0,
@@ -2869,6 +3067,7 @@
       "bin": "data/characters/soraka/soraka.bin",
       "bin_sha256": "05bd2d086669d0354f42f4be6de16db91b0544731e053b794b6cbf4e343f3be0",
       "fields": {
+        "adaptiveforceapweight": 1.0,
         "armor": 32.0,
         "armorperlevel": 5.0,
         "attackdamage": 50.0,
@@ -2891,6 +3090,7 @@
       "bin": "data/characters/swain/swain.bin",
       "bin_sha256": "34fc3f0672a1fb945c67796185cdcd20e1cb5c8e15e18c7fc807ecf7e1e6b6cf",
       "fields": {
+        "adaptiveforceapweight": 1.0,
         "armor": 23.0,
         "armorperlevel": 4.7,
         "attackdamage": 58.0,
@@ -2913,6 +3113,7 @@
       "bin": "data/characters/sylas/sylas.bin",
       "bin_sha256": "8d1fca72d2dbbab77c42699e0094fad1d9c926ffbe2557ee699131fb5215bc83",
       "fields": {
+        "adaptiveforceapweight": 1.0,
         "armor": 29.0,
         "armorperlevel": 5.2,
         "attackdamage": 61.0,
@@ -2935,6 +3136,7 @@
       "bin": "data/characters/syndra/syndra.bin",
       "bin_sha256": "f1acb5ae49c91cf5589957696d6d9948d8345864758e572c2aacd09cfd2061ff",
       "fields": {
+        "adaptiveforceapweight": 1.0,
         "armor": 25.0,
         "armorperlevel": 4.0,
         "attackdamage": 54.0,
@@ -2972,13 +3174,16 @@
         "spellblock": 32.0,
         "spellblockperlevel": 2.05
       },
-      "absent": []
+      "absent": [
+        "adaptiveforceapweight"
+      ]
     },
     "Taliyah": {
       "wad": "Taliyah.wad.client",
       "bin": "data/characters/taliyah/taliyah.bin",
       "bin_sha256": "8f126f20980448fa67ee668c6b546a1d98e8edb20f494d1d7439cad821d36e1a",
       "fields": {
+        "adaptiveforceapweight": 1.0,
         "armor": 18.0,
         "armorperlevel": 4.7,
         "attackdamage": 58.0,
@@ -3016,7 +3221,9 @@
         "spellblock": 36.0,
         "spellblockperlevel": 2.05
       },
-      "absent": []
+      "absent": [
+        "adaptiveforceapweight"
+      ]
     },
     "Taric": {
       "wad": "Taric.wad.client",
@@ -3038,13 +3245,16 @@
         "spellblock": 28.0,
         "spellblockperlevel": 2.05
       },
-      "absent": []
+      "absent": [
+        "adaptiveforceapweight"
+      ]
     },
     "Teemo": {
       "wad": "Teemo.wad.client",
       "bin": "data/characters/teemo/teemo.bin",
       "bin_sha256": "cb045f4640fabe83b1373e900f8d6bef0f733c64cc318493403650a4410dacbc",
       "fields": {
+        "adaptiveforceapweight": 1.0,
         "armor": 24.0,
         "armorperlevel": 4.5,
         "attackdamage": 54.0,
@@ -3082,6 +3292,7 @@
         "spellblockperlevel": 1.55
       },
       "absent": [
+        "adaptiveforceapweight",
         "armorperlevel"
       ]
     },
@@ -3105,7 +3316,9 @@
         "spellblock": 33.0,
         "spellblockperlevel": 1.1
       },
-      "absent": []
+      "absent": [
+        "adaptiveforceapweight"
+      ]
     },
     "Trundle": {
       "wad": "Trundle.wad.client",
@@ -3127,7 +3340,9 @@
         "spellblock": 32.0,
         "spellblockperlevel": 2.05
       },
-      "absent": []
+      "absent": [
+        "adaptiveforceapweight"
+      ]
     },
     "Tryndamere": {
       "wad": "Tryndamere.wad.client",
@@ -3149,13 +3364,16 @@
         "spellblock": 32.0,
         "spellblockperlevel": 2.05
       },
-      "absent": []
+      "absent": [
+        "adaptiveforceapweight"
+      ]
     },
     "TwistedFate": {
       "wad": "TwistedFate.wad.client",
       "bin": "data/characters/twistedfate/twistedfate.bin",
       "bin_sha256": "a9377f5bd3808f1a0af321a9b3efdb5a55678c300b3cf29b07a504d3180cad61",
       "fields": {
+        "adaptiveforceapweight": 1.0,
         "armor": 24.0,
         "armorperlevel": 4.35,
         "attackdamage": 52.0,
@@ -3193,7 +3411,9 @@
         "spellblock": 33.0,
         "spellblockperlevel": 1.1
       },
-      "absent": []
+      "absent": [
+        "adaptiveforceapweight"
+      ]
     },
     "Udyr": {
       "wad": "Udyr.wad.client",
@@ -3215,7 +3435,9 @@
         "spellblock": 32.0,
         "spellblockperlevel": 2.05
       },
-      "absent": []
+      "absent": [
+        "adaptiveforceapweight"
+      ]
     },
     "Urgot": {
       "wad": "Urgot.wad.client",
@@ -3237,7 +3459,9 @@
         "spellblock": 32.0,
         "spellblockperlevel": 2.05
       },
-      "absent": []
+      "absent": [
+        "adaptiveforceapweight"
+      ]
     },
     "Varus": {
       "wad": "Varus.wad.client",
@@ -3259,7 +3483,9 @@
         "spellblock": 33.0,
         "spellblockperlevel": 1.1
       },
-      "absent": []
+      "absent": [
+        "adaptiveforceapweight"
+      ]
     },
     "Vayne": {
       "wad": "Vayne.wad.client",
@@ -3281,13 +3507,16 @@
         "spellblock": 33.0,
         "spellblockperlevel": 1.1
       },
-      "absent": []
+      "absent": [
+        "adaptiveforceapweight"
+      ]
     },
     "Veigar": {
       "wad": "Veigar.wad.client",
       "bin": "data/characters/veigar/veigar.bin",
       "bin_sha256": "b05997d66a2cb2f446244026f4a2aa829c4c6f4f7c10de440ea1bc6461cc904d",
       "fields": {
+        "adaptiveforceapweight": 1.0,
         "armor": 18.0,
         "armorperlevel": 5.2,
         "attackdamage": 52.0,
@@ -3310,6 +3539,7 @@
       "bin": "data/characters/velkoz/velkoz.bin",
       "bin_sha256": "cb46b8bc9614ab554a254a81cf3be55cddd8fe9c87af45c5a4f7b8e67c43697a",
       "fields": {
+        "adaptiveforceapweight": 1.0,
         "armor": 22.0,
         "armorperlevel": 4.7,
         "attackdamage": 55.0,
@@ -3332,6 +3562,7 @@
       "bin": "data/characters/vex/vex.bin",
       "bin_sha256": "6b60807ce10414dc8bd779b8622d24a3a005fd5e45b896e3d75579562f6eb5da",
       "fields": {
+        "adaptiveforceapweight": 1.0,
         "armor": 23.0,
         "armorperlevel": 4.45,
         "attackdamage": 54.0,
@@ -3369,7 +3600,9 @@
         "spellblock": 32.0,
         "spellblockperlevel": 2.05
       },
-      "absent": []
+      "absent": [
+        "adaptiveforceapweight"
+      ]
     },
     "Viego": {
       "wad": "Viego.wad.client",
@@ -3391,13 +3624,16 @@
         "spellblock": 32.0,
         "spellblockperlevel": 2.05
       },
-      "absent": []
+      "absent": [
+        "adaptiveforceapweight"
+      ]
     },
     "Viktor": {
       "wad": "Viktor.wad.client",
       "bin": "data/characters/viktor/viktor.bin",
       "bin_sha256": "aa99bdd28c77f4c254faf21f083efa987a3a3a94faaff957317eb41ddd756edf",
       "fields": {
+        "adaptiveforceapweight": 1.0,
         "armor": 23.0,
         "armorperlevel": 4.4,
         "attackdamage": 53.0,
@@ -3420,6 +3656,7 @@
       "bin": "data/characters/vladimir/vladimir.bin",
       "bin_sha256": "b3daaf1ad44f0af0f729d38765b45549a073e27656bab932358c0326a5ea08b4",
       "fields": {
+        "adaptiveforceapweight": 1.0,
         "armor": 24.0,
         "armorperlevel": 4.5,
         "attackdamage": 55.0,
@@ -3457,7 +3694,9 @@
         "spellblock": 32.0,
         "spellblockperlevel": 2.05
       },
-      "absent": []
+      "absent": [
+        "adaptiveforceapweight"
+      ]
     },
     "Warwick": {
       "wad": "Warwick.wad.client",
@@ -3479,7 +3718,9 @@
         "spellblock": 32.0,
         "spellblockperlevel": 2.05
       },
-      "absent": []
+      "absent": [
+        "adaptiveforceapweight"
+      ]
     },
     "Xayah": {
       "wad": "Xayah.wad.client",
@@ -3501,13 +3742,16 @@
         "spellblock": 33.0,
         "spellblockperlevel": 1.1
       },
-      "absent": []
+      "absent": [
+        "adaptiveforceapweight"
+      ]
     },
     "Xerath": {
       "wad": "Xerath.wad.client",
       "bin": "data/characters/xerath/xerath.bin",
       "bin_sha256": "daa7334fd44351996e886c0d84f256f95a0bf6085d652d972a7a6c9e33081c0a",
       "fields": {
+        "adaptiveforceapweight": 1.0,
         "armor": 22.0,
         "armorperlevel": 4.7,
         "attackdamage": 55.0,
@@ -3545,7 +3789,9 @@
         "spellblock": 32.0,
         "spellblockperlevel": 2.05
       },
-      "absent": []
+      "absent": [
+        "adaptiveforceapweight"
+      ]
     },
     "Yasuo": {
       "wad": "Yasuo.wad.client",
@@ -3567,7 +3813,9 @@
         "spellblock": 32.0,
         "spellblockperlevel": 2.05
       },
-      "absent": []
+      "absent": [
+        "adaptiveforceapweight"
+      ]
     },
     "Yone": {
       "wad": "Yone.wad.client",
@@ -3589,7 +3837,9 @@
         "spellblock": 32.0,
         "spellblockperlevel": 2.05
       },
-      "absent": []
+      "absent": [
+        "adaptiveforceapweight"
+      ]
     },
     "Yorick": {
       "wad": "Yorick.wad.client",
@@ -3611,7 +3861,9 @@
         "spellblock": 32.0,
         "spellblockperlevel": 2.05
       },
-      "absent": []
+      "absent": [
+        "adaptiveforceapweight"
+      ]
     },
     "Yunara": {
       "wad": "Yunara.wad.client",
@@ -3633,13 +3885,16 @@
         "spellblock": 33.0,
         "spellblockperlevel": 1.1
       },
-      "absent": []
+      "absent": [
+        "adaptiveforceapweight"
+      ]
     },
     "Yuumi": {
       "wad": "Yuumi.wad.client",
       "bin": "data/characters/yuumi/yuumi.bin",
       "bin_sha256": "c373a7cb11a699a057649ff7a521178a821657e4d42dce6aadc2b2310bf67cf4",
       "fields": {
+        "adaptiveforceapweight": 1.0,
         "armor": 25.0,
         "armorperlevel": 4.2,
         "attackdamage": 49.0,
@@ -3677,13 +3932,16 @@
         "spellblock": 32.0,
         "spellblockperlevel": 2.05
       },
-      "absent": []
+      "absent": [
+        "adaptiveforceapweight"
+      ]
     },
     "Zac": {
       "wad": "Zac.wad.client",
       "bin": "data/characters/zac/zac.bin",
       "bin_sha256": "47e3f47b1da6c9b6c3f4a9632e82419056514a3012908292e66a38f403e836bc",
       "fields": {
+        "adaptiveforceapweight": 1.0,
         "armor": 33.0,
         "armorperlevel": 5.2,
         "attackdamage": 60.0,
@@ -3721,7 +3979,9 @@
         "spellblock": 29.0,
         "spellblockperlevel": 2.05
       },
-      "absent": []
+      "absent": [
+        "adaptiveforceapweight"
+      ]
     },
     "Zeri": {
       "wad": "Zeri.wad.client",
@@ -3743,13 +4003,16 @@
         "spellblock": 33.0,
         "spellblockperlevel": 1.1
       },
-      "absent": []
+      "absent": [
+        "adaptiveforceapweight"
+      ]
     },
     "Ziggs": {
       "wad": "Ziggs.wad.client",
       "bin": "data/characters/ziggs/ziggs.bin",
       "bin_sha256": "fb5ede0d6f322d4bffaad14eba7931c8b6b639c77a769e247e35a97372a9eb5c",
       "fields": {
+        "adaptiveforceapweight": 1.0,
         "armor": 21.0,
         "armorperlevel": 4.7,
         "attackdamage": 55.0,
@@ -3772,6 +4035,7 @@
       "bin": "data/characters/zilean/zilean.bin",
       "bin_sha256": "c5ad16fd929d7751e1a2dda126cd1fef9b8237ac62a99fd693405efe01dfa9cd",
       "fields": {
+        "adaptiveforceapweight": 1.0,
         "armor": 24.0,
         "armorperlevel": 5.0,
         "attackdamage": 52.0,
@@ -3794,6 +4058,7 @@
       "bin": "data/characters/zoe/zoe.bin",
       "bin_sha256": "013b46ddb2d658d54394fe477ca044a5d162b65738a6680b268b459a08b313f6",
       "fields": {
+        "adaptiveforceapweight": 1.0,
         "armor": 21.0,
         "armorperlevel": 4.7,
         "attackdamage": 58.0,
@@ -3816,6 +4081,7 @@
       "bin": "data/characters/zyra/zyra.bin",
       "bin_sha256": "21e50b9544b2d979b0c856cf094d25132c7cb2a6148473177081e28fc366dc91",
       "fields": {
+        "adaptiveforceapweight": 1.0,
         "armor": 29.0,
         "armorperlevel": 4.2,
         "attackdamage": 53.0,
