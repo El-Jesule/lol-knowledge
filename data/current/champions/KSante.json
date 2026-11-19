@@ -381,12 +381,12 @@
       "cooldownBurn": "14/13/12/11/10",
       "cost": [
         45,
-        50,
-        55,
-        60,
-        65
+        45,
+        45,
+        45,
+        45
       ],
-      "costBurn": "45/50/55/60/65",
+      "costBurn": "45",
       "costType": " {{ abilityresourcename }}",
       "datavalues": {},
       "description": "K'Sante carga y recibe daño reducido. Luego, se desliza, empujando y aturdiendo a los enemigos.<br><br>En forma Órdago, inflige daño adicional, pero no empuja ni aturde.",
@@ -489,13 +489,11 @@
       "leveltip": {
         "effect": [
           "{{ basedamage }} -> {{ basedamageNL }}",
-          "{{ cooldown }} -> {{ cooldownNL }}",
-          "{{ cost }} -> {{ costNL }}"
+          "{{ cooldown }} -> {{ cooldownNL }}"
         ],
         "label": [
           "Daño",
-          "Enfriamiento",
-          "Coste de @AbilityResourceName@"
+          "Enfriamiento"
         ]
       },
       "maxammo": "-1",

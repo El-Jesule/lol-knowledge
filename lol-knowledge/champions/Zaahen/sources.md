@@ -1,8 +1,8 @@
 # Zaahen — Fuentes
 
-- **Parche:** 16.22.1 (datos oficiales; los derivados de CommunityDragon son de 16.20 y se han contrastado con el cliente 16.22)
+- **Parche:** 16.23.1 (datos oficiales; los derivados de CommunityDragon son de 16.20 y se han contrastado con los clientes 16.22 y 16.23, [revisión 16.23](../../../research/reports/client-16.23.md))
 - **Locale:** `es_ES`
-- **Fecha de consulta:** 2026-10-18; snapshot 16.22.1 descargado el 2026-11-15
+- **Fecha de consulta:** 2026-10-18; snapshot 16.23.1 descargado el 2026-11-19
 - **Snapshot:** [`data/current/manifest.json`](../../../data/current/manifest.json), con `sha256` por archivo.
 
 ## Fuentes oficiales (`Oficial`)
@@ -10,9 +10,9 @@
 | Fuente | Uso | Cobertura | Limitación |
 |---|---|---|---|
 | `https://ddragon.leagueoflegends.com/api/versions.json` | Detectar el parche vigente | Lista de versiones | Solo versiones publicadas |
-| `https://ddragon.leagueoflegends.com/cdn/16.22.1/data/es_ES/champion/Zaahen.json` | Identidad, estadísticas, pasiva y textos de habilidades | Completo en nombres, costes, enfriamientos y rangos | Sin valores numéricos de efectos |
-| `https://ddragon.leagueoflegends.com/cdn/16.22.1/data/es_ES/item.json` | Catálogo de objetos del parche | Nombres, costes y mapas | Sin datos de rendimiento |
-| `https://ddragon.leagueoflegends.com/cdn/16.22.1/data/es_ES/runesReforged.json` | Árboles y runas del parche | Nombres e identificadores | Sin datos de rendimiento |
+| `https://ddragon.leagueoflegends.com/cdn/16.23.1/data/es_ES/champion/Zaahen.json` | Identidad, estadísticas, pasiva y textos de habilidades | Completo en nombres, costes, enfriamientos y rangos | Sin valores numéricos de efectos |
+| `https://ddragon.leagueoflegends.com/cdn/16.23.1/data/es_ES/item.json` | Catálogo de objetos del parche | Nombres, costes y mapas | Sin datos de rendimiento |
+| `https://ddragon.leagueoflegends.com/cdn/16.23.1/data/es_ES/runesReforged.json` | Árboles y runas del parche | Nombres e identificadores | Sin datos de rendimiento |
 
 ## Fuente derivada (`Derivado`)
 
@@ -95,7 +95,7 @@ Condiciones de uso investigadas y cuestiones pendientes: [`../../../research/evi
 ## Reproducibilidad
 
 ```powershell
-.\.venv\Scripts\python.exe -m lol_knowledge update --patch 16.22.1
+.\.venv\Scripts\python.exe -m lol_knowledge update --patch 16.23.1
 .\.venv\Scripts\python.exe -m lol_knowledge validate
 ```
 

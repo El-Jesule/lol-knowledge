@@ -837,21 +837,21 @@
     },
     {
       "cooldown": [
-        15,
-        15,
-        15,
-        15,
+        17,
+        16.5,
+        16,
+        15.5,
         15
       ],
-      "cooldownBurn": "15",
+      "cooldownBurn": "17/16.5/16/15.5/15",
       "cost": [
-        50,
-        50,
-        50,
-        50,
-        50
+        60,
+        60,
+        60,
+        60,
+        60
       ],
-      "costBurn": "50",
+      "costBurn": "60",
       "costType": " {{ abilityresourcename }}",
       "datavalues": {},
       "description": "Syndra empuja a los enemigos y las Esferas oscuras e inflige daño mágico. Los enemigos impactados por las Esferas oscuras quedan aturdidos.",
@@ -953,10 +953,12 @@
       },
       "leveltip": {
         "effect": [
-          "{{ basedamage }} -> {{ basedamageNL }}"
+          "{{ basedamage }} -> {{ basedamageNL }}",
+          "{{ cooldown }} -> {{ cooldownNL }}"
         ],
         "label": [
-          "Daño"
+          "Daño",
+          "Enfriamiento"
         ]
       },
       "maxammo": "-1",

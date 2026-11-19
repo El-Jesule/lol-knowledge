@@ -1,11 +1,11 @@
 {
   "champion": "Zaahen",
-  "game_version": "16.22",
+  "game_version": "16.23",
   "verified_against": {
-    "content_version": "16.22.8348910+branch.releases-16-22.content.release",
-    "bin_sha256": "44e0d68c38fc1d715926a8d721d48321acc1b1ff08d844c9955e0fef6b70db75",
-    "evidence": "research/reports/zaahen-bin-diff-16.22.md",
-    "result": "Sin cambios en los DataValues ni en los cálculos usados aquí entre 16.20 y 16.22"
+    "content_version": "16.23.8399929+branch.releases-16-23.content.release",
+    "bin_sha256": "2cc61b2795de2afc53c1ee463666ae8fc69426fd3d329f3135c371f1afb4152b",
+    "evidence": "research/reports/client-16.23.md",
+    "result": "Bin del cliente 16.23 convertido con python -m binmodel.bin2json y compilado con esta especificación: mismo kit salvo la versión de las fuentes, que siguen citando el bin del que se extrajeron las cifras"
   },
   "abilities": {
     "P": {

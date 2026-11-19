@@ -38,8 +38,8 @@ Encontrados en esta revisión. Ninguno cambia cálculos, pero contradicen el est
 
 ## 3. Datos y snapshot
 
-- [ ] **DAT-01 (P1)** Actualizar al parche vigente. El snapshot, el catálogo, los registros y los kits son de 16.22.1; `validate` impide aplicar el catálogo a otro parche. Cada actualización exige: `update`, regenerar `catalog-stats.json`, `champion-records.json` e `item-effects.json` desde el cliente, regenerar los kits y revisar los efectos curados contra las notas del parche ([`odd/tasks/snapshot-16-22.md`](tasks/snapshot-16-22.md)).
-- [ ] **DAT-02 (P1)** Convertir DAT-01 en un procedimiento repetible y documentado (un comando o un guion con pasos y comprobaciones), porque hoy es manual.
+- [x] **DAT-01 (P1)** *Hecho en la fase 35: snapshot 16.23.1 y cliente 16.23 ([revisión](../research/reports/client-16.23.md)).* Actualizar al parche vigente. El snapshot, el catálogo, los registros y los kits son de 16.22.1; `validate` impide aplicar el catálogo a otro parche. Cada actualización exige: `update`, regenerar `catalog-stats.json`, `champion-records.json` e `item-effects.json` desde el cliente, regenerar los kits y revisar los efectos curados contra las notas del parche ([`odd/tasks/snapshot-16-22.md`](tasks/snapshot-16-22.md)).
+- [x] **DAT-02 (P1)** *Hecho en la fase 35: [procedimiento](procedures/patch-update.md) y `research/tools/refresh_patch.py`.* Convertir DAT-01 en un procedimiento repetible y documentado (un comando o un guion con pasos y comprobaciones), porque hoy es manual.
 - [ ] **DAT-03 (P2)** Registros del cliente sin maná ni regeneración: `champion-records.json` solo trae vida, DA, armadura, RM, velocidad de movimiento, alcance, velocidad de ataque, ratio, crecimientos y multiplicador de crítico ([`odd/tasks/client-records.md`](tasks/client-records.md)). Las regeneraciones del bin van en otra unidad (por segundo).
 - [ ] **DAT-04 (P2)** Senna: no tiene el campo de crecimiento de DA en el bin y su DA queda bloqueado por encima del nivel 1 ([`README.md`](../README.md)).
 - [ ] **DAT-05 (P3)** Locale: el generador de estadísticas de objetos solo entiende `es_ES` ([`odd/tasks/item-stats.md`](tasks/item-stats.md)).

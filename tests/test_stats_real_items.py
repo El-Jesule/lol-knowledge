@@ -41,7 +41,7 @@ def test_dorans_blade_gives_omnivamp_from_its_description():
     omnivamp = sheet(1, "1055")["omnivamp"]
     assert omnivamp.total() == F("0.025")
     assert omnivamp.label is Label.OFFICIAL
-    assert omnivamp.contributions[0].source == "data:item:1055 ddragon_description (16.22.1)"
+    assert omnivamp.contributions[0].source == "data:item:1055 ddragon_description (16.23.1)"
 
 
 def test_spirit_visage_doubles_base_health_regeneration():
@@ -73,7 +73,7 @@ def test_yun_tal_has_a_confirmed_zero_and_full_stacks():
         Label.DERIVED,
         "scenario: maximum stacks",
     )
-    assert stacks.source == "data:item:3032 effect practice-makes-lethal (16.22.1)"
+    assert stacks.source == "data:item:3032 effect practice-makes-lethal (16.23.1)"
     lines = format_text(sheet(1, "3032")).splitlines()
     assert "  crit_chance: 25% (base 0% + bonus 25%) [Derivado] (scenario: maximum stacks)" in lines
 
@@ -126,7 +126,7 @@ def test_rabadon_amplifies_the_total_ability_power():
     assert ap.total() == flat * F("1.3")
     amplifier = ap.contributions[-1]
     assert (amplifier.value, amplifier.note) == (flat * F("0.3"), "30% of the total")
-    assert amplifier.source == "data:item:3089 effect magic-orb (16.22.1)"
+    assert amplifier.source == "data:item:3089 effect magic-orb (16.23.1)"
     assert ap.label is Label.DERIVED
 
 

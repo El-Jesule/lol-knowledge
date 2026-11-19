@@ -21,7 +21,7 @@ def test_level_one_text_report(capsys):
     code, captured = run(capsys, "--champion", "zaahen", "--level", "1")
     assert code == 0, captured.err
     out = captured.out
-    assert "champion: Zaahen (Zaahen), patch 16.22.1, level 1" in out
+    assert "champion: Zaahen (Zaahen), patch 16.23.1, level 1" in out
     assert "  health: 640 [Oficial]" in out
     assert "  attack_damage: 63 [Oficial]" in out
     assert "note: ddragon-attack-damage-growth does not affect level 1" in out
@@ -43,7 +43,7 @@ def test_attack_speed_scales_growth_and_items_by_the_client_ratio(capsys):
     assert speed["exact"] == "2887/3200"
     assert speed["capped"] is False and speed["cap"] == 3.0
     assert speed["contributions"][1]["source"].startswith(
-        "lol-knowledge/derived/champion-records.json Zaahen.attackspeedratio (16.22."
+        "lol-knowledge/derived/champion-records.json Zaahen.attackspeedratio (16.23."
     )
 
 
@@ -89,7 +89,7 @@ def test_json_report_structure(capsys):
     assert code == 0, captured.err
     report = json.loads(captured.out)
     assert report["label"] == "Calculado"
-    assert report["patch"] == "16.22.1"
+    assert report["patch"] == "16.23.1"
     assert report["items"] == [{"id": "3036", "name": "Recuerdos de lord Dominik"}]
     pen = report["stats"]["armor_penetration_percent"]
     assert pen["total"] == pytest.approx(0.35)
