@@ -2,6 +2,7 @@
 
 - **Fecha:** 2026-11-18
 - **Estado de partida:** fase 33 (kit de Ahri), `dev` en `b363a1b`, parche 16.22.1.
+- **Avance del 2026-11-19:** fases 34 a 37 (documentación, parche 16.23 con procedimiento repetible, legalidad de builds, runas y fragmentos); `dev` en `85fc4be`, parche 16.23.1. Siguiente según la sección 12: resto de RUN-04 (piedras angulares), después CH-02 y CH-03.
 - **Método:** revisión de `README.md`, `lol-knowledge/` (fichas, reglas de `mechanics/`, `objects/README.md`), `odd/tasks/`, `research/`, los dos `kit.json` (campo `not_modelled`), el catálogo de objetos y los registros derivados. Cada punto cita el archivo donde consta. Si un punto procede de una tarea antigua y no se ha comprobado que siga vigente, se dice.
 - **Objetivo final** (descripción del proyecto): a partir de una petición en lenguaje natural («la build de Jax que maximice su burst con AP»), una IA prepara el escenario, el motor determinista calcula y la IA explica el resultado, para cualquier campeón, objeto y runa, con todas las cifras trazables.
 
