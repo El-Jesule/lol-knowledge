@@ -1,8 +1,8 @@
 # Ahri — Habilidades
 
-- **Parche:** 16.22.1 (datos oficiales)
+- **Parche:** 16.23.1 (datos oficiales; sin cambios respecto a 16.22.1)
 - **Fuente oficial:** [`data/current/champions/Ahri.json`](../../../data/current/champions/Ahri.json) (Data Dragon, `es_ES`)
-- **Valores derivados:** bin del cliente 16.22 (`Ahri.wad.client`, `data/characters/ahri/ahri.bin`), leído directamente; fuente **no oficial**. Detalle en [`sources.md`](sources.md).
+- **Valores derivados:** bin del cliente 16.22 (`Ahri.wad.client`, `data/characters/ahri/ahri.bin`), leído directamente y sin cambios en el bin 16.23 ([revisión 16.23](../../../research/reports/client-16.23.md)); fuente **no oficial**. Detalle en [`sources.md`](sources.md).
 - **Fecha de consulta:** 2026-11-16
 - **Limitación:** las cifras en code spans son oficiales; las cifras en texto plano son `Derivado` y no sustituyen a una fuente oficial de Riot.
 

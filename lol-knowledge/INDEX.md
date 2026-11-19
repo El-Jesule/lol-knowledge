@@ -1,6 +1,6 @@
 # Índice de la base de conocimiento
 
-- **Parche:** 16.22.1
+- **Parche:** 16.23.1
 - **Última actualización:** 2026-11-19
 
 ## Por intención
@@ -54,4 +54,4 @@ El modelo de objetos tiene las estadísticas de los **218 objetos comprables de 
 
 ## Aviso de fuentes
 
-Los valores marcados `Derivado` proceden de datos del cliente, **no** de una API oficial de Riot: los de Zaahen, de los archivos del cliente 16.20 publicados por CommunityDragon ([Fuentes de Zaahen](champions/Zaahen/sources.md)); los de Ahri ([Fuentes de Ahri](champions/Ahri/sources.md)), los registros de campeones y los efectos de objetos de `derived/`, del cliente instalado 16.22. Se incluyen con atribución y aviso de no afiliación. El aviso completo está en [`../README.md`](../README.md).
+Los valores marcados `Derivado` proceden de datos del cliente, **no** de una API oficial de Riot: los de Zaahen, de los archivos del cliente 16.20 publicados por CommunityDragon ([Fuentes de Zaahen](champions/Zaahen/sources.md)); los de Ahri ([Fuentes de Ahri](champions/Ahri/sources.md)), los registros de campeones y los efectos de objetos de `derived/`, del cliente instalado 16.23. Se incluyen con atribución y aviso de no afiliación. El aviso completo está en [`../README.md`](../README.md).

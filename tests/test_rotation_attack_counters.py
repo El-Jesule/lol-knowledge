@@ -20,6 +20,8 @@ from lol_knowledge.stats import (
 
 ROOT = Path(__file__).resolve().parents[1]
 KIT = load_kit(ROOT, "Zaahen")
+# Synthetic items must share the snapshot patch, or the stat sheet rejects them.
+PATCH = load_champion(ROOT, "Zaahen").patch
 RANKS = {"Q": 5, "W": 1, "E": 5, "R": 3}
 CRIT = CritBase(F(2), Label.DERIVED, "test record")
 
@@ -126,7 +128,7 @@ def test_cyclosword_ability_damage_triggers_energized_against_champions():
     first = outcome.steps[0]
     assert first.name.endswith("(Energized)")
     (part,) = parts(first, "6699 firmament")
-    assert part.raw == 4000 * F("0.09")
+    assert part.raw == 4000 * F("0.08")  # 8 % melee since 16.23 (9 % until 16.22)
     assert not parts(outcome.steps[1], "6699")
     assert "6699 galvanize: the ability's damage to a champion triggered Energized" in (
         outcome.notes
@@ -195,7 +197,7 @@ def test_only_on_hit_and_on_attack_effects_count_attacks():
     data = build_stat_sheet(
         load_champion(ROOT, "Zaahen"),
         16,
-        (ItemData("9100", "test", "16.22.1", (), (energized,)),),
+        (ItemData("9100", "test", PATCH, (), (energized,)),),
         load_issues(ROOT),
         {},
         load_records(ROOT),

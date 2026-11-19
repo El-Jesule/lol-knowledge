@@ -32,6 +32,8 @@ from lol_knowledge.stats import (
 
 ROOT = Path(__file__).resolve().parents[1]
 KIT = load_kit(ROOT, "Zaahen")
+# Synthetic items must share the snapshot patch, or the stat sheet rejects them.
+PATCH = load_champion(ROOT, "Zaahen").patch
 RANKS = {"Q": 5, "W": 1, "E": 5, "R": 3}
 CRIT = CritBase(F(2), Label.DERIVED, "test record")
 
@@ -61,7 +63,7 @@ def run(attacker, target, steps, *, crit=CRIT, holder="melee", ranks=RANKS):
 
 
 def item(item_id, *effects):
-    return ItemData(item_id, f"test {item_id}", "16.22.1", (), tuple(effects))
+    return ItemData(item_id, f"test {item_id}", PATCH, (), tuple(effects))
 
 
 def dealt_modifier(effect_id, percent, conditions=()):
@@ -147,7 +149,7 @@ def test_a_record_multiplier_other_than_the_patch_is_flagged():
 
 
 def test_several_crit_damage_sources_are_pending():
-    extra = ItemData("9001", "test", "16.22.1", load_items(ROOT, ["3031"])[0].stats)
+    extra = ItemData("9001", "test", PATCH, load_items(ROOT, ["3031"])[0].stats)
     attacker = sheet(items=("3031",), extra_items=(extra,))
     (step,) = run(attacker, manual(armor=0), "attack:crit").steps
     assert step.parts[0].raw == attacker["attack_damage"].total() * F(26, 10)
@@ -486,7 +488,7 @@ def test_the_reduction_is_derived_even_when_every_input_is_official():
 
 
 def partial(item_id, review="partial"):
-    return ItemData(item_id, f"test {item_id}", "16.22.1", (), (), review)
+    return ItemData(item_id, f"test {item_id}", PATCH, (), (), review)
 
 
 @pytest.mark.parametrize("review", ["partial", "pending"])

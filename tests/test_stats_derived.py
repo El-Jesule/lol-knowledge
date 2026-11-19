@@ -111,7 +111,7 @@ def test_rejects_malformed_records(changes, message):
 def test_project_records_cover_the_snapshot():
     project = load_records(ROOT)
     assert project is not None
-    assert project.game_version == "16.22"
+    assert project.game_version == "16.23"
     assert project.value("Zaahen", "attackdamageperlevel") == 4
     assert project.value("Senna", "attackdamageperlevel") is None
     assert len(project.champions) == 173

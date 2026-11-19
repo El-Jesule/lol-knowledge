@@ -1,9 +1,9 @@
 # Zaahen — Habilidades
 
-- **Parche:** 16.22.1 (datos oficiales; antes 16.20.1)
+- **Parche:** 16.23.1 (datos oficiales; antes 16.22.1 y 16.20.1)
 - **Fuente oficial:** [`data/current/champions/Zaahen.json`](../../../data/current/champions/Zaahen.json) (Data Dragon, `es_ES`)
-- **Valores derivados:** CommunityDragon, build `16.20.8248524` (fuente **no oficial**), comprobados contra el bin del cliente 16.22 sin cambios en los valores publicados aquí ([diferencias 16.20 → 16.22](../../../research/reports/zaahen-bin-diff-16.22.md)). Detalle y trazabilidad en [`sources.md`](sources.md).
-- **Fecha de consulta:** 2026-10-18; snapshot 16.22.1 revisado el 2026-11-15
+- **Valores derivados:** CommunityDragon, build `16.20.8248524` (fuente **no oficial**), comprobados contra los bins del cliente 16.22 y 16.23 sin cambios en los valores publicados aquí ([diferencias 16.20 → 16.22](../../../research/reports/zaahen-bin-diff-16.22.md), [revisión 16.23](../../../research/reports/client-16.23.md)). Detalle y trazabilidad en [`sources.md`](sources.md).
+- **Fecha de consulta:** 2026-10-18; snapshot 16.23.1 revisado el 2026-11-19
 - **Limitación:** Data Dragon no publica los valores numéricos de los efectos de este campeón. Las cifras en code spans son oficiales; las cifras en texto plano son `Derivado` y no sustituyen a una fuente oficial de Riot.
 
 ## Pasiva — Florescencia de la guerra (`Oficial` + `Derivado`)

@@ -1,6 +1,6 @@
 # Ahri — La Mujer Zorro de nueve Colas
 
-- **Parche:** 16.22.1 (datos oficiales); cliente 16.22 para los valores derivados
+- **Parche:** 16.23.1 (datos oficiales); cliente 16.22 para los valores derivados, sin cambios en el cliente 16.23 ([revisión 16.23](../../../research/reports/client-16.23.md))
 - **Fuente:** [`data/current/champions/Ahri.json`](../../../data/current/champions/Ahri.json) (Data Dragon, `es_ES`)
 - **Fecha de consulta:** 2026-11-16
 - **Limitación principal:** Data Dragon no publica los valores numéricos de las habilidades. Los valores derivados del bin del cliente, marcados `Derivado`, están en [`abilities.md`](abilities.md), con su trazabilidad en [`sources.md`](sources.md). El motor los usa a través de [`kit.json`](kit.json).

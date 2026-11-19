@@ -1,6 +1,6 @@
 # Ahri — Fuentes
 
-- **Parche:** 16.22.1 (datos oficiales); cliente 16.22 para los derivados
+- **Parche:** 16.23.1 (datos oficiales); cliente 16.22 para los derivados, comprobados sin cambios en el cliente 16.23 ([revisión 16.23](../../../research/reports/client-16.23.md))
 - **Locale:** `es_ES`
 - **Fecha de consulta:** 2026-11-16
 - **Snapshot:** [`data/current/manifest.json`](../../../data/current/manifest.json), con `sha256` por archivo.
@@ -9,7 +9,7 @@
 
 | Fuente | Uso | Limitación |
 |---|---|---|
-| `https://ddragon.leagueoflegends.com/cdn/16.22.1/data/es_ES/champion/Ahri.json` | Identidad, estadísticas, textos, costes, enfriamientos y alcances | Sin valores numéricos de los efectos |
+| `https://ddragon.leagueoflegends.com/cdn/16.23.1/data/es_ES/champion/Ahri.json` | Identidad, estadísticas, textos, costes, enfriamientos y alcances | Sin valores numéricos de los efectos |
 
 ## Fuente derivada (`Derivado`)
 

@@ -2,13 +2,13 @@
   "schema": "lol-champion-kit/1",
   "champion": "Ahri",
   "label": "Derivado",
-  "game_version": "16.22",
+  "game_version": "16.23",
   "content_version": "16.22.8348910+branch.releases-16-22.content.release",
   "verified_against": {
-    "content_version": "16.22.8348910+branch.releases-16-22.content.release",
-    "bin_sha256": "121997c9c4ef2ff0f671b659d64d2e22cb71208216ddcc3c4f552a17f196d2cb",
-    "evidence": "research/reports/ahri-kit-16.22.md",
-    "result": "Bin del cliente 16.22 leído directamente (python -m binmodel.bin2json) y comparado con fuentes secundarias de las cifras"
+    "content_version": "16.23.8399929+branch.releases-16-23.content.release",
+    "bin_sha256": "63bbd039c33e3a477293af0f8c1162065c683266e561684cbeabbec58b6bdfb4",
+    "evidence": "research/reports/client-16.23.md",
+    "result": "Bin del cliente 16.23 convertido con python -m binmodel.bin2json y compilado con esta especificación: mismo kit salvo la versión de las fuentes, que siguen citando el bin del que se extrajeron las cifras"
   },
   "source": "Árboles de cálculo del bin del cliente (python -m binmodel) y marcado de los tooltips del cliente; estructura de casos curada en research/kits/",
   "abilities": {

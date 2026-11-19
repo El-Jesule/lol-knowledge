@@ -37,7 +37,7 @@ def _reverse_keys(value: Any) -> Any:
 def test_model_header_links_to_the_snapshot(object_model, object_snapshot) -> None:
     assert object_model["schema_version"] == 1
     assert object_model["kind"] == "lol-object-model"
-    assert object_model["catalog_version"] == 17
+    assert object_model["catalog_version"] == 18
     assert object_model["game_version"] == object_snapshot.patch
     assert object_model["source"]["items_sha256"] == object_snapshot.items_sha256
     assert object_model["source"]["catalog"] == "lol-knowledge/objects/catalog.json"
@@ -231,7 +231,7 @@ def test_secondary_sources_are_explicit_and_preserved(object_model) -> None:
         assert wiki["retrieved_at"] == "2026-10-20"
         assert client["kind"] == "client_data"
         assert f"Items/{item_id}.mDataValues" in client["reference"]
-        assert client["retrieved_at"] == "2026-11-15"
+        assert client["retrieved_at"] == "2026-11-19"
         assert all(source["quote"] for source in effect["sources"])
 
 

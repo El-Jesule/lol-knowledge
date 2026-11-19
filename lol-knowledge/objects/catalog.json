@@ -1,9 +1,9 @@
 {
   "schema_version": 1,
   "kind": "lol-object-model-catalog",
-  "catalog_version": 17,
-  "game_version": "16.22.1",
-  "notes": "Curated overlay for a mechanically diverse sample. Data Dragon derivatives (stats, gold, maps, recipes) are not repeated here; see lol-knowledge/objects/README.md. Numeric mechanics absent from Data Dragon carry declared sources and secondary confidence. Catalog version 3 (2026-11-15): moved to snapshot 16.22.1; stats, gold, descriptions and recipes of the 15 objects are identical to 16.20.1 in Data Dragon; the secondary evidence was not re-checked against the 16.21 and 16.22 patch notes. Catalog version 6 (2026-11-15): damage components may declare applies_life_steal with its own source; Mist's Edge declares it from the LoL Wiki (secondary). Catalog version 7 (2026-11-16): adds 3111 (Mercury's Treads) for its tenacity, declared from the 16.22.1 description. Catalog version 8 (2026-11-16): description stats of every Summoner's Rift item, curated ones included, come from catalog-stats.json (generated); this file keeps effects and reviews. Catalog version 9 (2026-11-16): adds 3032 (Yun Tal Wildarrows). Effects may declare scenario max_stacks (the stat sheet applies them at full stacks) and objects may confirm a generated 0 as a real zero (confirmed_zero_stats). Catalog version 10 (2026-11-16): adds the on-hit damage of 1043, 3091, 3115, 3124 and 3302, with client values (evidence derived) where Data Dragon omits them; stat effects that are always active (Rabadon) are applied by the stat sheet. Catalog version 11 (2026-11-16): adds Spellblade (trigger spellblade) to Sheen, Trinity Force, Lich Bane, Essence Reaver, Iceborn Gauntlet, Dusk and Dawn and Bloodsong, the repeat_on_hit component and patch notes as a source kind (Terminus is now corroborated by the 26.15 notes). Catalog version 12 (2026-11-16): attack counters (stacks.required on on-hit effects), the energized trigger and trigger_energized component, by_level formulas for client level breakpoints and the target_is_structure condition; adds Kraken Slayer, Rapid Firecannon, Statikk Shiv, Voltaic Cyclosword and Hullbreaker, applies Guinsoo's phantom hits and Terminus's light-hit resistances. Catalog version 13 (2026-11-16): the target's missing health in formulas (scope missing_fraction), target_health_below in rotations, damage_types on damage modifiers and the execute component; Kraken Slayer's missing-health increase, Shadowflame and The Collector. Catalog version 14 (2026-11-16): burns (component burn, triggers damaging_ability and cast, condition ultimate_ability), applied once per rotation for their full duration; max_stacks damage modifiers; adds Liandry's Torment, Blackfire Torch, Fated Ashes, Malignance, Zeke's Convergence and Haunting Guise. Catalog version 15 (2026-11-16): timed effects (duration_seconds with a damage or stat modifier on a spellblade, energized or damaging_ability trigger) are applied by the rotation timeline only; Bloodsong's mark, Voltaic Cyclosword's lethality, Blackfire Torch's ability power and Malignance's magic resist reduction become evaluable, and burns under the timeline deal their damage continuously and restart when applied again. Catalog version 16 (2026-11-16): Spellblade effects declare their 10-second window (LoL Wiki, secondary) as duration_seconds; effects may declare cooldown_reduced_by_attacks (seconds per attack hit and per critical hit); Yun Tal Wildarrows's Flurry becomes evaluable as a timed attack speed effect (trigger on_attack); stack windows (stacks.window_seconds) are applied by the rotation timeline. Catalog version 17 (2026-11-16): stacks that expire in combat never start at maximum (user decision): Guinsoo's Seething Strike, Terminus's Juxtaposition (alternation, light first) and the per-second increases of Liandry's Torment and Haunting Guise (trigger in_combat with a maximum limit) are computed by rotations from 0; stacks.required 1 means one stack per attack; Guinsoo's phantom hits need full stacks (condition stacks_full). The max_stacks scenario stays for permanent stacks (Yun Tal's critical strike chance).",
+  "catalog_version": 18,
+  "game_version": "16.23.1",
+  "notes": "Curated overlay for a mechanically diverse sample. Data Dragon derivatives (stats, gold, maps, recipes) are not repeated here; see lol-knowledge/objects/README.md. Numeric mechanics absent from Data Dragon carry declared sources and secondary confidence. Catalog version 3 (2026-11-15): moved to snapshot 16.22.1; stats, gold, descriptions and recipes of the 15 objects are identical to 16.20.1 in Data Dragon; the secondary evidence was not re-checked against the 16.21 and 16.22 patch notes. Catalog version 6 (2026-11-15): damage components may declare applies_life_steal with its own source; Mist's Edge declares it from the LoL Wiki (secondary). Catalog version 7 (2026-11-16): adds 3111 (Mercury's Treads) for its tenacity, declared from the 16.22.1 description. Catalog version 8 (2026-11-16): description stats of every Summoner's Rift item, curated ones included, come from catalog-stats.json (generated); this file keeps effects and reviews. Catalog version 9 (2026-11-16): adds 3032 (Yun Tal Wildarrows). Effects may declare scenario max_stacks (the stat sheet applies them at full stacks) and objects may confirm a generated 0 as a real zero (confirmed_zero_stats). Catalog version 10 (2026-11-16): adds the on-hit damage of 1043, 3091, 3115, 3124 and 3302, with client values (evidence derived) where Data Dragon omits them; stat effects that are always active (Rabadon) are applied by the stat sheet. Catalog version 11 (2026-11-16): adds Spellblade (trigger spellblade) to Sheen, Trinity Force, Lich Bane, Essence Reaver, Iceborn Gauntlet, Dusk and Dawn and Bloodsong, the repeat_on_hit component and patch notes as a source kind (Terminus is now corroborated by the 26.15 notes). Catalog version 12 (2026-11-16): attack counters (stacks.required on on-hit effects), the energized trigger and trigger_energized component, by_level formulas for client level breakpoints and the target_is_structure condition; adds Kraken Slayer, Rapid Firecannon, Statikk Shiv, Voltaic Cyclosword and Hullbreaker, applies Guinsoo's phantom hits and Terminus's light-hit resistances. Catalog version 13 (2026-11-16): the target's missing health in formulas (scope missing_fraction), target_health_below in rotations, damage_types on damage modifiers and the execute component; Kraken Slayer's missing-health increase, Shadowflame and The Collector. Catalog version 14 (2026-11-16): burns (component burn, triggers damaging_ability and cast, condition ultimate_ability), applied once per rotation for their full duration; max_stacks damage modifiers; adds Liandry's Torment, Blackfire Torch, Fated Ashes, Malignance, Zeke's Convergence and Haunting Guise. Catalog version 15 (2026-11-16): timed effects (duration_seconds with a damage or stat modifier on a spellblade, energized or damaging_ability trigger) are applied by the rotation timeline only; Bloodsong's mark, Voltaic Cyclosword's lethality, Blackfire Torch's ability power and Malignance's magic resist reduction become evaluable, and burns under the timeline deal their damage continuously and restart when applied again. Catalog version 16 (2026-11-16): Spellblade effects declare their 10-second window (LoL Wiki, secondary) as duration_seconds; effects may declare cooldown_reduced_by_attacks (seconds per attack hit and per critical hit); Yun Tal Wildarrows's Flurry becomes evaluable as a timed attack speed effect (trigger on_attack); stack windows (stacks.window_seconds) are applied by the rotation timeline. Catalog version 17 (2026-11-16): stacks that expire in combat never start at maximum (user decision): Guinsoo's Seething Strike, Terminus's Juxtaposition (alternation, light first) and the per-second increases of Liandry's Torment and Haunting Guise (trigger in_combat with a maximum limit) are computed by rotations from 0; stacks.required 1 means one stack per attack; Guinsoo's phantom hits need full stacks (condition stacks_full). The max_stacks scenario stays for permanent stacks (Yun Tal's critical strike chance). Catalog version 18 (2026-11-19): moved to snapshot 16.23.1. Data Dragon stats, gold, descriptions and recipes of the curated objects are identical to 16.22.1, and the client item data of the 218 items is identical except Voltaic Cyclosword's Firmament (9 % / 7 % ⇒ 8 % / 6 % of current health, also in the 26.23 patch notes); client_data sources now cite client 16.23 (research/reports/client-16.23.md).",
   "objects": [
     {
       "id": "1036",
@@ -169,9 +169,9 @@
             },
             {
               "kind": "client_data",
-              "reference": "Cliente 16.22.8348910+branch.releases-16-22.content.release: DATA/FINAL/Global.wad.client → items → Items/3153.mDataValues (research/reports/item-data-values-16.22.md)",
+              "reference": "Cliente 16.23.8399929+branch.releases-16-23.content.release: DATA/FINAL/Global.wad.client → items → Items/3153.mDataValues (research/reports/item-data-values-16.22.md)",
               "quote": "MeleeValue = 0.09; RangedValue = 0.06; MonsterDamageCap = 100",
-              "retrieved_at": "2026-11-15",
+              "retrieved_at": "2026-11-19",
               "confidence": "corroborated",
               "note": "Valores por defecto; la Grieta del Invocador no tiene sobrescritura por modo."
             }
@@ -236,9 +236,9 @@
             },
             {
               "kind": "client_data",
-              "reference": "Cliente 16.22.8348910+branch.releases-16-22.content.release: DATA/FINAL/Global.wad.client → items → Items/3153.mDataValues (research/reports/item-data-values-16.22.md)",
+              "reference": "Cliente 16.23.8399929+branch.releases-16-23.content.release: DATA/FINAL/Global.wad.client → items → Items/3153.mDataValues (research/reports/item-data-values-16.22.md)",
               "quote": "MoveSpeedMod = -0.3; RangedMoveSpeedMod = -0.15; MoveSpeedDuration = 1; AttackCounterDuration = 6; Cooldown = 15",
-              "retrieved_at": "2026-11-15",
+              "retrieved_at": "2026-11-19",
               "confidence": "corroborated",
               "note": "Valores por defecto; la Grieta del Invocador no tiene sobrescritura por modo."
             }
@@ -319,9 +319,9 @@
             },
             {
               "kind": "client_data",
-              "reference": "Cliente 16.22.8348910+branch.releases-16-22.content.release: DATA/FINAL/Global.wad.client → items → Items/3036.mDataValues (research/reports/item-data-values-16.22.md)",
+              "reference": "Cliente 16.23.8399929+branch.releases-16-23.content.release: DATA/FINAL/Global.wad.client → items → Items/3036.mDataValues (research/reports/item-data-values-16.22.md)",
               "quote": "MaxBonusDamagePercent = 0.15; MaxBonusHealth = 1500",
-              "retrieved_at": "2026-11-15",
+              "retrieved_at": "2026-11-19",
               "confidence": "corroborated",
               "note": "Valores por defecto; la Grieta del Invocador no tiene sobrescritura por modo."
             }
@@ -410,9 +410,9 @@
             },
             {
               "kind": "client_data",
-              "reference": "Cliente 16.22.8348910+branch.releases-16-22.content.release: DATA/FINAL/Global.wad.client → items → Items/3157.mDataValues (research/reports/item-data-values-16.22.md)",
+              "reference": "Cliente 16.23.8399929+branch.releases-16-23.content.release: DATA/FINAL/Global.wad.client → items → Items/3157.mDataValues (research/reports/item-data-values-16.22.md)",
               "quote": "Cooldown = 120; Duration = 2.5",
-              "retrieved_at": "2026-11-15",
+              "retrieved_at": "2026-11-19",
               "confidence": "corroborated",
               "note": "Valores por defecto; la Grieta del Invocador no tiene sobrescritura por modo."
             }
@@ -507,9 +507,9 @@
             },
             {
               "kind": "client_data",
-              "reference": "Cliente 16.22.8348910+branch.releases-16-22.content.release: DATA/FINAL/Global.wad.client → items → Items/3075.mDataValues (research/reports/item-data-values-16.22.md)",
+              "reference": "Cliente 16.23.8399929+branch.releases-16-23.content.release: DATA/FINAL/Global.wad.client → items → Items/3075.mDataValues (research/reports/item-data-values-16.22.md)",
               "quote": "BaseDamage = 20; BonusArmorDamageRatio = 0.1; GrievousAmount = 0.4; GrievousDuration = 3",
-              "retrieved_at": "2026-11-15",
+              "retrieved_at": "2026-11-19",
               "confidence": "corroborated",
               "note": "Valores por defecto; la Grieta del Invocador no tiene sobrescritura por modo."
             }
@@ -601,9 +601,9 @@
             },
             {
               "kind": "client_data",
-              "reference": "Cliente 16.22.8348910+branch.releases-16-22.content.release: DATA/FINAL/Global.wad.client → items → Items/3143.mDataValues (research/reports/item-data-values-16.22.md)",
+              "reference": "Cliente 16.23.8399929+branch.releases-16-23.content.release: DATA/FINAL/Global.wad.client → items → Items/3143.mDataValues (research/reports/item-data-values-16.22.md)",
               "quote": "SlowAmount = 0.7; SlowDuration = 2; Radius = 500; Cooldown = 90",
-              "retrieved_at": "2026-11-15",
+              "retrieved_at": "2026-11-19",
               "confidence": "corroborated",
               "note": "Valores por defecto; la Grieta del Invocador no tiene sobrescritura por modo."
             }
@@ -758,9 +758,9 @@
           "sources": [
             {
               "kind": "client_data",
-              "reference": "Cliente 16.22.8348910+branch.releases-16-22.content.release: lol-knowledge/derived/item-effects.json → items.3032.data_values and texts.tooltip (research/reports/item-effects-16.22.md)",
+              "reference": "Cliente 16.23.8399929+branch.releases-16-23.content.release: lol-knowledge/derived/item-effects.json → items.3032.data_values and texts.tooltip (research/reports/client-16.23.md)",
               "quote": "ASMod = 0.3; ASDuration = 6; Cooldown = 30; AACDR = 1; CritCDR = 2 («Los ataques reducen este enfriamiento en @AACDR@ s, que aumenta hasta @CritCDR@ s en el caso de los impactos críticos»)",
-              "retrieved_at": "2026-11-16",
+              "retrieved_at": "2026-11-19",
               "confidence": "derived"
             }
           ]
@@ -863,9 +863,9 @@
           "sources": [
             {
               "kind": "client_data",
-              "reference": "Cliente 16.22.8348910+branch.releases-16-22.content.release: lol-knowledge/derived/item-effects.json → items.3091.calculations.OnHitDamage (research/reports/item-effects-16.22.md)",
+              "reference": "Cliente 16.23.8399929+branch.releases-16-23.content.release: lol-knowledge/derived/item-effects.json → items.3091.calculations.OnHitDamage (research/reports/client-16.23.md)",
               "quote": "OnHitDamage: NumberCalculationPart mNumber = 45; DamageType = 1 (magic)",
-              "retrieved_at": "2026-11-16",
+              "retrieved_at": "2026-11-19",
               "confidence": "derived"
             }
           ],
@@ -933,9 +933,9 @@
           "sources": [
             {
               "kind": "client_data",
-              "reference": "Cliente 16.22.8348910+branch.releases-16-22.content.release: lol-knowledge/derived/item-effects.json → items.3115.calculations.TotalOnHitDamage (research/reports/item-effects-16.22.md)",
+              "reference": "Cliente 16.23.8399929+branch.releases-16-23.content.release: lol-knowledge/derived/item-effects.json → items.3115.calculations.TotalOnHitDamage (research/reports/client-16.23.md)",
               "quote": "TotalOnHitDamage = NashorsBaseValue + StatByNamedDataValue(NashorsAPValue); NashorsBaseValue = 15; NashorsAPValue = 0.15; DamageType = 1 (magic)",
-              "retrieved_at": "2026-11-16",
+              "retrieved_at": "2026-11-19",
               "confidence": "derived"
             }
           ],
@@ -1132,9 +1132,9 @@
           "sources": [
             {
               "kind": "client_data",
-              "reference": "Cliente 16.22.8348910+branch.releases-16-22.content.release: lol-knowledge/derived/item-effects.json → items.3302.calculations.OnHitDamage (research/reports/item-effects-16.22.md)",
+              "reference": "Cliente 16.23.8399929+branch.releases-16-23.content.release: lol-knowledge/derived/item-effects.json → items.3302.calculations.OnHitDamage (research/reports/client-16.23.md)",
               "quote": "OnHitDamage = 30 + StatByCoefficient(mStat 2, mStatFormula 2, 0.1) + StatByCoefficient(0.1); DamageType absent",
-              "retrieved_at": "2026-11-16",
+              "retrieved_at": "2026-11-19",
               "confidence": "derived"
             },
             {
@@ -1204,9 +1204,9 @@
           "sources": [
             {
               "kind": "client_data",
-              "reference": "Cliente 16.22.8348910+branch.releases-16-22.content.release: lol-knowledge/derived/item-effects.json → items.3302.data_values (research/reports/item-effects-16.22.md)",
+              "reference": "Cliente 16.23.8399929+branch.releases-16-23.content.release: lol-knowledge/derived/item-effects.json → items.3302.data_values (research/reports/client-16.23.md)",
               "quote": "PenPerHit = 0.1; PenMax = 0.3; BuffDuration = 5",
-              "retrieved_at": "2026-11-16",
+              "retrieved_at": "2026-11-19",
               "confidence": "derived"
             },
             {
@@ -1315,9 +1315,9 @@
           "sources": [
             {
               "kind": "client_data",
-              "reference": "Cliente 16.22.8348910+branch.releases-16-22.content.release: lol-knowledge/derived/item-effects.json → items.3302.calculations.ARMRPerHitScaling (research/reports/item-effects-16.22.md)",
+              "reference": "Cliente 16.23.8399929+branch.releases-16-23.content.release: lol-knowledge/derived/item-effects.json → items.3302.calculations.ARMRPerHitScaling (research/reports/client-16.23.md)",
               "quote": "ARMRPerHitScaling: level 1 = 6, +1 at level 11, +1 at level 14; ARMRMaxScaling = 3 × ARMRPerHitScaling; BuffDuration = 5",
-              "retrieved_at": "2026-11-16",
+              "retrieved_at": "2026-11-19",
               "confidence": "derived"
             }
           ],
@@ -1387,9 +1387,9 @@
           "sources": [
             {
               "kind": "client_data",
-              "reference": "Cliente 16.22.8348910+branch.releases-16-22.content.release: lol-knowledge/derived/item-effects.json → items.3057.calculations.SpellbladeDamage (research/reports/item-effects-16.22.md)",
+              "reference": "Cliente 16.23.8399929+branch.releases-16-23.content.release: lol-knowledge/derived/item-effects.json → items.3057.calculations.SpellbladeDamage (research/reports/client-16.23.md)",
               "quote": "SpellbladeDamage = StatByCoefficient(mStat 2, mStatFormula 1, 1.0); SpellbladeCooldown = 1.5",
-              "retrieved_at": "2026-11-16",
+              "retrieved_at": "2026-11-19",
               "confidence": "derived"
             },
             {
@@ -1467,9 +1467,9 @@
           "sources": [
             {
               "kind": "client_data",
-              "reference": "Cliente 16.22.8348910+branch.releases-16-22.content.release: lol-knowledge/derived/item-effects.json → items.3078.data_values (research/reports/item-effects-16.22.md)",
+              "reference": "Cliente 16.23.8399929+branch.releases-16-23.content.release: lol-knowledge/derived/item-effects.json → items.3078.data_values (research/reports/client-16.23.md)",
               "quote": "SpellbladeDamage = StatByNamedDataValue(mStat 2, mStatFormula 1, SpellbladeMultiplier); SpellbladeMultiplier = 2; SpellbladeCooldown = 1.5",
-              "retrieved_at": "2026-11-16",
+              "retrieved_at": "2026-11-19",
               "confidence": "derived"
             },
             {
@@ -1589,9 +1589,9 @@
           "sources": [
             {
               "kind": "client_data",
-              "reference": "Cliente 16.22.8348910+branch.releases-16-22.content.release: lol-knowledge/derived/item-effects.json → items.3100.data_values (research/reports/item-effects-16.22.md)",
+              "reference": "Cliente 16.23.8399929+branch.releases-16-23.content.release: lol-knowledge/derived/item-effects.json → items.3100.data_values (research/reports/client-16.23.md)",
               "quote": "SpellbladeDamage = StatByNamedDataValue(mStat 2, mStatFormula 1, SpellbladeADRatio) + StatByNamedDataValue(LichBaneAPValue); SpellbladeADRatio = 0.75; LichBaneAPValue = 0.45; SpellbladeCooldown = 1.5",
-              "retrieved_at": "2026-11-16",
+              "retrieved_at": "2026-11-19",
               "confidence": "derived"
             },
             {
@@ -1688,9 +1688,9 @@
           "sources": [
             {
               "kind": "client_data",
-              "reference": "Cliente 16.22.8348910+branch.releases-16-22.content.release: lol-knowledge/derived/item-effects.json → items.3508.data_values (research/reports/item-effects-16.22.md)",
+              "reference": "Cliente 16.23.8399929+branch.releases-16-23.content.release: lol-knowledge/derived/item-effects.json → items.3508.data_values (research/reports/client-16.23.md)",
               "quote": "SpellbladeDamage = StatByNamedDataValue(mStat 2, mStatFormula 1, BaseADRatio) + StatByNamedDataValue(mStat 8, CritChanceMultiplier); BaseADRatio = 1.25; CritChanceMultiplier = 50; TotalManaRefund = 0.5 × SpellbladeDamage; SpellbladeCooldown = 1.5",
-              "retrieved_at": "2026-11-16",
+              "retrieved_at": "2026-11-19",
               "confidence": "derived"
             },
             {
@@ -1768,9 +1768,9 @@
           "sources": [
             {
               "kind": "client_data",
-              "reference": "Cliente 16.22.8348910+branch.releases-16-22.content.release: lol-knowledge/derived/item-effects.json → items.6662.data_values (research/reports/item-effects-16.22.md)",
+              "reference": "Cliente 16.23.8399929+branch.releases-16-23.content.release: lol-knowledge/derived/item-effects.json → items.6662.data_values (research/reports/client-16.23.md)",
               "quote": "SpellbladeDamage = StatByNamedDataValue(mStat 2, mStatFormula 1, SpellbladeMultiplier); SpellbladeMultiplier = 1.5; SpellbladeCooldown = 1.5",
-              "retrieved_at": "2026-11-16",
+              "retrieved_at": "2026-11-19",
               "confidence": "derived"
             },
             {
@@ -1893,9 +1893,9 @@
           "sources": [
             {
               "kind": "client_data",
-              "reference": "Cliente 16.22.8348910+branch.releases-16-22.content.release: lol-knowledge/derived/item-effects.json → items.2510.calculations.SpellbladeDamage (research/reports/item-effects-16.22.md)",
+              "reference": "Cliente 16.23.8399929+branch.releases-16-23.content.release: lol-knowledge/derived/item-effects.json → items.2510.calculations.SpellbladeDamage (research/reports/client-16.23.md)",
               "quote": "SpellbladeDamage = StatByCoefficient(mStat 2, mStatFormula 1, 0.75) + StatByCoefficient(0.1); SpellbladeCooldown = 1.5",
-              "retrieved_at": "2026-11-16",
+              "retrieved_at": "2026-11-19",
               "confidence": "derived"
             },
             {
@@ -1943,9 +1943,9 @@
           "sources": [
             {
               "kind": "client_data",
-              "reference": "Cliente 16.22.8348910+branch.releases-16-22.content.release: lol-knowledge/derived/item-effects.json → items.2510.calculations.SpellbladeHealing (research/reports/item-effects-16.22.md)",
+              "reference": "Cliente 16.23.8399929+branch.releases-16-23.content.release: lol-knowledge/derived/item-effects.json → items.2510.calculations.SpellbladeHealing (research/reports/client-16.23.md)",
               "quote": "SpellbladeHealing = StatByCoefficient(0.1) + StatByCoefficient(mStat 12, mStatFormula 2, 0.03)",
-              "retrieved_at": "2026-11-16",
+              "retrieved_at": "2026-11-19",
               "confidence": "derived"
             }
           ],
@@ -2053,9 +2053,9 @@
           "sources": [
             {
               "kind": "client_data",
-              "reference": "Cliente 16.22.8348910+branch.releases-16-22.content.release: lol-knowledge/derived/item-effects.json → items.3877.data_values (research/reports/item-effects-16.22.md)",
+              "reference": "Cliente 16.23.8399929+branch.releases-16-23.content.release: lol-knowledge/derived/item-effects.json → items.3877.data_values (research/reports/client-16.23.md)",
               "quote": "SpellbladeDamage = StatByNamedDataValue(mStat 2, mStatFormula 1, SheenMult); SheenMult = 1; SpellbladeCooldown = 1.5",
-              "retrieved_at": "2026-11-16",
+              "retrieved_at": "2026-11-19",
               "confidence": "derived"
             },
             {
@@ -2114,9 +2114,9 @@
           "sources": [
             {
               "kind": "client_data",
-              "reference": "Cliente 16.22.8348910+branch.releases-16-22.content.release: lol-knowledge/derived/item-effects.json → items.3877.data_values (research/reports/item-effects-16.22.md)",
+              "reference": "Cliente 16.23.8399929+branch.releases-16-23.content.release: lol-knowledge/derived/item-effects.json → items.3877.data_values (research/reports/client-16.23.md)",
               "quote": "MeleeDamageAmp = 0.08; RangedDamageAmp = 0.05; DebuffDuration = 4",
-              "retrieved_at": "2026-11-16",
+              "retrieved_at": "2026-11-19",
               "confidence": "derived"
             }
           ],
@@ -2341,9 +2341,9 @@
           "sources": [
             {
               "kind": "client_data",
-              "reference": "Cliente 16.22.8348910+branch.releases-16-22.content.release: lol-knowledge/derived/item-effects.json → items.6672.calculations.DamageAmount (research/reports/item-effects-16.22.md)",
+              "reference": "Cliente 16.23.8399929+branch.releases-16-23.content.release: lol-knowledge/derived/item-effects.json → items.6672.calculations.DamageAmount (research/reports/client-16.23.md)",
               "quote": "DamageAmount: level 1 = 150, +5 per level from level 9 (ByCharLevelBreakpoints); ranged × RangedDamageMultiplier = 0.8; AttackCount = 3; BuffDuration = 4",
-              "retrieved_at": "2026-11-16",
+              "retrieved_at": "2026-11-19",
               "confidence": "derived"
             },
             {
@@ -2458,9 +2458,9 @@
           "sources": [
             {
               "kind": "client_data",
-              "reference": "Cliente 16.22.8348910+branch.releases-16-22.content.release: lol-knowledge/derived/item-effects.json → items.3087.data_values (research/reports/item-effects-16.22.md)",
+              "reference": "Cliente 16.23.8399929+branch.releases-16-23.content.release: lol-knowledge/derived/item-effects.json → items.3087.data_values (research/reports/client-16.23.md)",
               "quote": "ChainDamage = 60; NonChampChainDamage = 90; BounceRange = 500",
-              "retrieved_at": "2026-11-16",
+              "retrieved_at": "2026-11-19",
               "confidence": "derived"
             }
           ],
@@ -2561,14 +2561,14 @@
                 "op": "by_holder_range",
                 "melee": {
                   "op": "percent_of",
-                  "percent": 9,
+                  "percent": 8,
                   "stat": "health",
                   "scope": "current",
                   "subject": "target"
                 },
                 "ranged": {
                   "op": "percent_of",
-                  "percent": 7,
+                  "percent": 6,
                   "stat": "health",
                   "scope": "current",
                   "subject": "target"
@@ -2590,15 +2590,22 @@
           "sources": [
             {
               "kind": "client_data",
-              "reference": "Cliente 16.22.8348910+branch.releases-16-22.content.release: lol-knowledge/derived/item-effects.json → items.6699.data_values (research/reports/item-effects-16.22.md)",
-              "quote": "PercentCurrentHPMelee = 9; PercentCurrentHPRanged = 7; NonChampCap = 200",
-              "retrieved_at": "2026-11-16",
+              "reference": "Cliente 16.23.8399929+branch.releases-16-23.content.release: lol-knowledge/derived/item-effects.json → items.6699.data_values (research/reports/client-16.23.md)",
+              "quote": "PercentCurrentHPMelee = 8; PercentCurrentHPRanged = 6; NonChampCap = 200",
+              "retrieved_at": "2026-11-19",
               "confidence": "derived"
+            },
+            {
+              "kind": "patch_notes",
+              "reference": "https://www.leagueoflegends.com/en-us/news/game-updates/league-of-legends-patch-26-23-notes/",
+              "quote": "Bonus Damage: [9% || 7%] target's current HP ⇒ [8% || 6%] target's current HP",
+              "retrieved_at": "2026-11-19",
+              "confidence": "official"
             }
           ],
           "evidence_confidence": "derived",
           "model_status": "evaluable",
-          "note": "Melee 9 %, ranged 7 % of the target's current health; at most 200 against minions and monsters."
+          "note": "Melee 8 %, ranged 6 % (9 % / 7 % until 16.22) of the target's current health; at most 200 against minions and monsters."
         },
         {
           "id": "firmament-lethality",
@@ -2638,9 +2645,9 @@
           "sources": [
             {
               "kind": "client_data",
-              "reference": "Cliente 16.22.8348910+branch.releases-16-22.content.release: lol-knowledge/derived/item-effects.json → items.6699.data_values (research/reports/item-effects-16.22.md)",
+              "reference": "Cliente 16.23.8399929+branch.releases-16-23.content.release: lol-knowledge/derived/item-effects.json → items.6699.data_values (research/reports/client-16.23.md)",
               "quote": "LethalityBonusModMelee = 15; LethalityBonusModRanged = 12; LethalityBonusDuration = 4",
-              "retrieved_at": "2026-11-16",
+              "retrieved_at": "2026-11-19",
               "confidence": "derived"
             }
           ],
@@ -2749,9 +2756,9 @@
           "sources": [
             {
               "kind": "client_data",
-              "reference": "Cliente 16.22.8348910+branch.releases-16-22.content.release: lol-knowledge/derived/item-effects.json → items.3181.calculations.MaxStackDamage (research/reports/item-effects-16.22.md)",
+              "reference": "Cliente 16.23.8399929+branch.releases-16-23.content.release: lol-knowledge/derived/item-effects.json → items.3181.calculations.MaxStackDamage (research/reports/client-16.23.md)",
               "quote": "MaxStackDamage = StatByNamedDataValue(mStat 2, mStatFormula 1, SkipperADRatio) + StatByNamedDataValue(mStat 12, MaxStackDamageHPRatio); SkipperADRatio = 1.2; MaxStackDamageHPRatio = 0.05; mRangedMultiplier = 0.7; SkipperStackDuration = 10",
-              "retrieved_at": "2026-11-16",
+              "retrieved_at": "2026-11-19",
               "confidence": "derived"
             }
           ],
@@ -2801,9 +2808,9 @@
           "sources": [
             {
               "kind": "client_data",
-              "reference": "Cliente 16.22.8348910+branch.releases-16-22.content.release: lol-knowledge/derived/item-effects.json → items.3181.calculations.MaxStackDamageVSStructures (research/reports/item-effects-16.22.md)",
+              "reference": "Cliente 16.23.8399929+branch.releases-16-23.content.release: lol-knowledge/derived/item-effects.json → items.3181.calculations.MaxStackDamageVSStructures (research/reports/client-16.23.md)",
               "quote": "SkipperADRatioVSStructures = 3; MaxStackDamageVSStructuresHPRatio = 0.1",
-              "retrieved_at": "2026-11-16",
+              "retrieved_at": "2026-11-19",
               "confidence": "derived"
             }
           ],
@@ -3073,9 +3080,9 @@
           "sources": [
             {
               "kind": "client_data",
-              "reference": "Cliente 16.22.8348910+branch.releases-16-22.content.release: lol-knowledge/derived/item-effects.json → items.6653.data_values (research/reports/item-effects-16.22.md)",
+              "reference": "Cliente 16.23.8399929+branch.releases-16-23.content.release: lol-knowledge/derived/item-effects.json → items.6653.data_values (research/reports/client-16.23.md)",
               "quote": "BurnPercentHealthDamage = 0.02; BurnDuration = 3; MonsterDamageCap = 40; TickFrequency = 0.5",
-              "retrieved_at": "2026-11-16",
+              "retrieved_at": "2026-11-19",
               "confidence": "derived"
             }
           ],
@@ -3128,9 +3135,9 @@
           "sources": [
             {
               "kind": "client_data",
-              "reference": "Cliente 16.22.8348910+branch.releases-16-22.content.release: lol-knowledge/derived/item-effects.json → items.6653.data_values (research/reports/item-effects-16.22.md)",
+              "reference": "Cliente 16.23.8399929+branch.releases-16-23.content.release: lol-knowledge/derived/item-effects.json → items.6653.data_values (research/reports/client-16.23.md)",
               "quote": "DamageIncreasePerSecond = 0.02; DamageIncreaseMax = 0.06; MaxStackNumber = 3",
-              "retrieved_at": "2026-11-16",
+              "retrieved_at": "2026-11-19",
               "confidence": "derived"
             }
           ]
@@ -3187,9 +3194,9 @@
           "sources": [
             {
               "kind": "client_data",
-              "reference": "Cliente 16.22.8348910+branch.releases-16-22.content.release: lol-knowledge/derived/item-effects.json → items.3147.data_values (research/reports/item-effects-16.22.md)",
+              "reference": "Cliente 16.23.8399929+branch.releases-16-23.content.release: lol-knowledge/derived/item-effects.json → items.3147.data_values (research/reports/client-16.23.md)",
               "quote": "DamageIncreasePerSecond = 0.02; DamageIncreaseMax = 0.06",
-              "retrieved_at": "2026-11-16",
+              "retrieved_at": "2026-11-19",
               "confidence": "derived"
             }
           ]
@@ -3250,9 +3257,9 @@
           "sources": [
             {
               "kind": "client_data",
-              "reference": "Cliente 16.22.8348910+branch.releases-16-22.content.release: lol-knowledge/derived/item-effects.json → items.2503.data_values (research/reports/item-effects-16.22.md)",
+              "reference": "Cliente 16.23.8399929+branch.releases-16-23.content.release: lol-knowledge/derived/item-effects.json → items.2503.data_values (research/reports/client-16.23.md)",
               "quote": "BurnFlatDamagePerSecond = 20; APRatio = 0.02; MonsterDPS = 40; MonsterAP = 0.02; MinionDPS = 20; MinionAP = 0.02; BurnDuration = 3; APPerStack = 0.04",
-              "retrieved_at": "2026-11-16",
+              "retrieved_at": "2026-11-19",
               "confidence": "derived"
             }
           ],
@@ -3309,9 +3316,9 @@
           "sources": [
             {
               "kind": "client_data",
-              "reference": "Cliente 16.22.8348910+branch.releases-16-22.content.release: lol-knowledge/derived/item-effects.json → items.2503.data_values (research/reports/item-effects-16.22.md)",
+              "reference": "Cliente 16.23.8399929+branch.releases-16-23.content.release: lol-knowledge/derived/item-effects.json → items.2503.data_values (research/reports/client-16.23.md)",
               "quote": "BurnFlatDamagePerSecond = 20; APRatio = 0.02; MonsterDPS = 40; MonsterAP = 0.02; MinionDPS = 20; MinionAP = 0.02; BurnDuration = 3; APPerStack = 0.04",
-              "retrieved_at": "2026-11-16",
+              "retrieved_at": "2026-11-19",
               "confidence": "derived"
             }
           ],
@@ -3367,9 +3374,9 @@
           "sources": [
             {
               "kind": "client_data",
-              "reference": "Cliente 16.22.8348910+branch.releases-16-22.content.release: lol-knowledge/derived/item-effects.json → items.2503.data_values (research/reports/item-effects-16.22.md)",
+              "reference": "Cliente 16.23.8399929+branch.releases-16-23.content.release: lol-knowledge/derived/item-effects.json → items.2503.data_values (research/reports/client-16.23.md)",
               "quote": "BurnFlatDamagePerSecond = 20; APRatio = 0.02; MonsterDPS = 40; MonsterAP = 0.02; MinionDPS = 20; MinionAP = 0.02; BurnDuration = 3; APPerStack = 0.04",
-              "retrieved_at": "2026-11-16",
+              "retrieved_at": "2026-11-19",
               "confidence": "derived"
             }
           ],
@@ -3415,9 +3422,9 @@
           "sources": [
             {
               "kind": "client_data",
-              "reference": "Cliente 16.22.8348910+branch.releases-16-22.content.release: lol-knowledge/derived/item-effects.json → items.2503.data_values (research/reports/item-effects-16.22.md)",
+              "reference": "Cliente 16.23.8399929+branch.releases-16-23.content.release: lol-knowledge/derived/item-effects.json → items.2503.data_values (research/reports/client-16.23.md)",
               "quote": "APPerStack = 0.04; BurnDuration = 3",
-              "retrieved_at": "2026-11-16",
+              "retrieved_at": "2026-11-19",
               "confidence": "derived"
             }
           ]
@@ -3467,9 +3474,9 @@
           "sources": [
             {
               "kind": "client_data",
-              "reference": "Cliente 16.22.8348910+branch.releases-16-22.content.release: lol-knowledge/derived/item-effects.json → items.2508.data_values (research/reports/item-effects-16.22.md)",
+              "reference": "Cliente 16.23.8399929+branch.releases-16-23.content.release: lol-knowledge/derived/item-effects.json → items.2508.data_values (research/reports/client-16.23.md)",
               "quote": "BurnFlatDamagePerSecond = 5; BurnDuration = 3; MonsterDamageBonus = 15",
-              "retrieved_at": "2026-11-16",
+              "retrieved_at": "2026-11-19",
               "confidence": "derived"
             }
           ],
@@ -3515,9 +3522,9 @@
           "sources": [
             {
               "kind": "client_data",
-              "reference": "Cliente 16.22.8348910+branch.releases-16-22.content.release: lol-knowledge/derived/item-effects.json → items.2508.data_values (research/reports/item-effects-16.22.md)",
+              "reference": "Cliente 16.23.8399929+branch.releases-16-23.content.release: lol-knowledge/derived/item-effects.json → items.2508.data_values (research/reports/client-16.23.md)",
               "quote": "BurnFlatDamagePerSecond = 5; BurnDuration = 3",
-              "retrieved_at": "2026-11-16",
+              "retrieved_at": "2026-11-19",
               "confidence": "derived"
             }
           ],
@@ -3562,9 +3569,9 @@
           "sources": [
             {
               "kind": "client_data",
-              "reference": "Cliente 16.22.8348910+branch.releases-16-22.content.release: lol-knowledge/derived/item-effects.json → items.2508.data_values (research/reports/item-effects-16.22.md)",
+              "reference": "Cliente 16.23.8399929+branch.releases-16-23.content.release: lol-knowledge/derived/item-effects.json → items.2508.data_values (research/reports/client-16.23.md)",
               "quote": "MonsterDamageBonus = 15; BurnDuration = 3",
-              "retrieved_at": "2026-11-16",
+              "retrieved_at": "2026-11-19",
               "confidence": "derived"
             }
           ],
@@ -3651,9 +3658,9 @@
           "sources": [
             {
               "kind": "client_data",
-              "reference": "Cliente 16.22.8348910+branch.releases-16-22.content.release: lol-knowledge/derived/item-effects.json → items.3118.calculations.GroundBurnDamagePerTickTooltipOnly (research/reports/item-effects-16.22.md)",
+              "reference": "Cliente 16.23.8399929+branch.releases-16-23.content.release: lol-knowledge/derived/item-effects.json → items.3118.calculations.GroundBurnDamagePerTickTooltipOnly (research/reports/client-16.23.md)",
               "quote": "GroundBurnDamagePerTickTooltipOnly = BaseDamage + APRatio × AP; BaseDamage = 60; APRatio = 0.05; GroundDuration = 3",
-              "retrieved_at": "2026-11-16",
+              "retrieved_at": "2026-11-19",
               "confidence": "derived"
             }
           ],
@@ -3700,9 +3707,9 @@
           "sources": [
             {
               "kind": "client_data",
-              "reference": "Cliente 16.22.8348910+branch.releases-16-22.content.release: lol-knowledge/derived/item-effects.json → items.3118.calculations.MagicResistanceShred and items.3118.data_values (research/reports/item-effects-16.22.md)",
+              "reference": "Cliente 16.23.8399929+branch.releases-16-23.content.release: lol-knowledge/derived/item-effects.json → items.3118.calculations.MagicResistanceShred and items.3118.data_values (research/reports/client-16.23.md)",
               "quote": "MagicResistanceShred = NumberCalculationPart 10; GroundDuration = 3",
-              "retrieved_at": "2026-11-16",
+              "retrieved_at": "2026-11-19",
               "confidence": "derived"
             }
           ],

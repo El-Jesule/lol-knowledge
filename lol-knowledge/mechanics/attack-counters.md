@@ -1,7 +1,7 @@
 # Contadores de ataques y Vigor (Energized)
 
 - **Ámbito:** efectos que saltan cada N ataques básicos y efectos de Vigor. Los usa `python -m lol_knowledge rotation`.
-- **Parche de referencia:** cliente 16.22 y Data Dragon 16.22.1.
+- **Parche de referencia:** cliente 16.22 y Data Dragon 16.22.1; revisado contra el cliente 16.23 y Data Dragon 16.23.1 el 2026-11-19 (solo cambia la Espada ciclovoltaica).
 - **Fecha de consulta:** 2026-11-16
 
 ## Fuentes
@@ -29,7 +29,7 @@
 | Hoja de furia de Guinsoo (3124) | Con las acumulaciones al máximo, cada tercer ataque repite los efectos al impactar | Aplicado, con las acumulaciones desde 0 |
 | Rompecascos (3181) | Cada quinto ataque contra campeones: 120 % del DA base + 5 % de la vida máxima (×0,7 a distancia) | Aplicado contra campeones; contra estructuras, no |
 | Cañón de fuego rápido (3094) | Ataque con Vigor: 40 mágico | Aplicado |
-| Espada ciclovoltaica (6699) | Ataque con Vigor: 9 % / 7 % de la vida actual del objetivo, físico (tope 200 contra súbditos y monstruos) | Aplicado; la letalidad de 4 s, solo con `--timeline` ([`timeline.md`](timeline.md)) |
+| Espada ciclovoltaica (6699) | Ataque con Vigor: 8 % / 6 % de la vida actual del objetivo (9 % / 7 % hasta 16.22; cliente 16.23 y notas del parche 26.23), físico (tope 200 contra súbditos y monstruos) | Aplicado; la letalidad de 4 s, solo con `--timeline` ([`timeline.md`](timeline.md)) |
 | Puñal de Statikk (3087) | Ataque con Vigor: rayo de 60 mágico | No aplicado: no consta si el objetivo atacado lo recibe |
 
 ## Fuera de alcance

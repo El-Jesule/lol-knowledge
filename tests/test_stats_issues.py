@@ -39,10 +39,10 @@ def test_project_issues_load_and_block_ad_growth():
     issues = load_issues(ROOT)
     issue = next(item for item in issues if item.field == "attackdamageperlevel")
     assert issue.status == "open"
-    assert issue.patches == ("16.20.1", "16.22.1")
-    assert issue.applies_to("Zaahen", "16.22.1")
+    assert issue.patches == ("16.20.1", "16.22.1", "16.23.1")
+    assert issue.applies_to("Zaahen", "16.23.1")
     assert issue.applies_to("Ahri", "16.20.1")
-    assert not issue.applies_to("Zaahen", "16.23.1")
+    assert not issue.applies_to("Zaahen", "16.24.1")
     assert (ROOT / issue.documentation).is_file()
 
 

@@ -65,4 +65,4 @@ def test_blade_of_the_ruined_king_life_steal_is_official():
     life_steal = sheet["life_steal"]
     assert life_steal.total() == F("0.1")
     assert life_steal.label is Label.OFFICIAL
-    assert life_steal.contributions[0].source == "data:item:3153 ddragon_stat (16.22.1)"
+    assert life_steal.contributions[0].source == "data:item:3153 ddragon_stat (16.23.1)"
