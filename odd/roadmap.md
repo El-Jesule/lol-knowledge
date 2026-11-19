@@ -135,10 +135,10 @@ El motor debe servir también para vida, resistencias, curación y supervivencia
 
 ## 7. Runas y fragmentos
 
-- [ ] **RUN-01 (P1)** Modelo de runas: no hay ninguno. El snapshot trae los 5 árboles de Data Dragon (62 runas), pero solo con descripciones, sin cifras estructuradas.
-- [ ] **RUN-02 (P1)** Cifras de las runas desde el cliente, con el mismo método que `item-effects.json` (bin + textos), etiquetadas `Derivado`.
-- [ ] **RUN-03 (P1)** Fragmentos de estadísticas: no están en `runes.json` de Data Dragon; hacen falta fuente y modelo.
-- [ ] **RUN-04 (P1)** Piedras angulares en la rotación (Electrocutar, Conquistador, Cometa, Primer golpe…) y runas menores en la hoja; legalidad de la página (árbol principal y secundario, una por fila).
+- [x] **RUN-01 (P1)** *Hecho en la fase 37: [`runes.json`](../lol-knowledge/derived/runes.json) y [`runes.md`](../lol-knowledge/mechanics/runes.md).* Modelo de runas: no hay ninguno. El snapshot trae los 5 árboles de Data Dragon (62 runas), pero solo con descripciones, sin cifras estructuradas.
+- [x] **RUN-02 (P1)** *Hecho en la fase 37: `binmodel.perks`, valores con nombre cuando un texto lo da (332 de 463).* Cifras de las runas desde el cliente, con el mismo método que `item-effects.json` (bin + textos), etiquetadas `Derivado`.
+- [x] **RUN-03 (P1)** *Hecho en la fase 37: los fragmentos salen del cliente y se aplican en la hoja; progresión de vida lineal y empates de la fuerza adaptable, `Pendiente de verificación`.* Fragmentos de estadísticas: no están en `runes.json` de Data Dragon; hacen falta fuente y modelo.
+- [ ] **RUN-04 (P1)** *Parcial (fase 37): legalidad de la página hecha; faltan las piedras angulares en la rotación y las runas menores en la hoja.* Piedras angulares en la rotación (Electrocutar, Conquistador, Cometa, Primer golpe…) y runas menores en la hoja; legalidad de la página (árbol principal y secundario, una por fila).
 
 ## 8. Optimizador de builds
 

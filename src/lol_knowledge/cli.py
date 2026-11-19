@@ -6,6 +6,7 @@ import argparse
 import json
 import logging
 import sys
+from fractions import Fraction
 from pathlib import Path
 
 from . import __version__
@@ -24,6 +25,13 @@ from .objects.legality import ITEM_GROUPS_PATH, check_build, load_item_groups
 from .rotation import CritBase, evaluate_rotation, parse_steps
 from .rotation_report import format_text as format_rotation_text
 from .rotation_report import to_dict as rotation_to_dict
+from .runes import (
+    adaptive_stat,
+    check_page,
+    load_runes,
+    shard_contributions,
+    tree_rune_notes,
+)
 from .scenario import evaluate_ability, target_from_sheet, target_from_values
 from .scenario_report import format_text as format_ability_text
 from .scenario_report import to_dict as ability_to_dict
@@ -206,6 +214,23 @@ def _add_target_options(command: argparse.ArgumentParser) -> None:
 
 def _add_build_option(command: argparse.ArgumentParser) -> None:
     command.add_argument(
+        "--rune",
+        action="append",
+        default=[],
+        metavar="ID",
+        help=(
+            "Tree rune of the page (repeat 6 times: keystone, 3 primary, 2 secondary); "
+            "their effects are not modelled yet (lol-knowledge/mechanics/runes.md)."
+        ),
+    )
+    command.add_argument(
+        "--shard",
+        action="append",
+        default=[],
+        metavar="ID",
+        help="Stat shard (repeat 3 times, in order: offense, flex, defense).",
+    )
+    command.add_argument(
         "--allow-illegal-build",
         action="store_true",
         help=(
@@ -238,6 +263,67 @@ def _check_build(root: Path, item_ids: list[str], champion, *, allow: bool, who:
             "(--allow-illegal-build calculates it anyway)"
         )
     print(f"warning: {who} build is not legal [{report.label}]: {problems}", file=sys.stderr)
+
+
+def _rune_ids(values: list[str], option: str) -> list[int]:
+    try:
+        return [int(value) for value in values]
+    except ValueError as exc:
+        raise StatsError(f"{option} expects numeric rune ids, got {values}") from exc
+
+
+def _build_sheet(args, root: Path, champion, items, issues, assumptions, derived, extras=()):
+    """The attacker's stat sheet, with the rune page of ``--rune``/``--shard`` if any."""
+    runes, shards = _rune_ids(args.rune, "--rune"), _rune_ids(args.shard, "--shard")
+    if not runes and not shards:
+        return build_stat_sheet(champion, args.level, items, issues, assumptions, derived, extras)
+    data = load_runes(root)
+    if data is None:
+        raise StatsError("lol-knowledge/derived/runes.json is missing; runes cannot be used")
+    report = check_page(runes, shards, data, patch=champion.patch)
+    if report.label is Label.PENDING:
+        print(
+            f"note: runes are from client {data.game_version}, the snapshot is {champion.patch}",
+            file=sys.stderr,
+        )
+    if not report.legal:
+        problems = "; ".join(report.violations)
+        if not args.allow_illegal_build:
+            raise StatsError(
+                f"rune page is not legal [{report.label}]: {problems} "
+                "(--allow-illegal-build calculates it anyway)"
+            )
+        print(f"warning: rune page is not legal [{report.label}]: {problems}", file=sys.stderr)
+    adaptive, label, note = None, Label.DERIVED, ""
+    if any(data.runes.get(shard) and data.runes[shard].key == "Adaptive" for shard in shards):
+        before = build_stat_sheet(champion, args.level, items, issues, assumptions, derived, extras)
+        bonus_ad = sum(
+            (part.value for part in before["attack_damage"].contributions if part.scope == "bonus"),
+            start=Fraction(0),
+        )
+        power = sum((part.value for part in before["ability_power"].contributions), Fraction(0))
+        weight = derived.value(champion.id, "adaptiveforceapweight") if derived else None
+        adaptive, label, note = adaptive_stat(bonus_ad, power, weight)
+    flats, percents = shard_contributions(
+        shards,
+        data,
+        level=args.level,
+        patch=champion.patch,
+        adaptive=adaptive,
+        adaptive_label=label,
+        adaptive_note=note,
+    )
+    return build_stat_sheet(
+        champion,
+        args.level,
+        items,
+        issues,
+        assumptions,
+        derived,
+        (*extras, *flats),
+        percents,
+        tree_rune_notes(runes, data),
+    )
 
 
 def _add_rotation_parser(subparsers: argparse._SubParsersAction) -> None:
@@ -450,9 +536,10 @@ def _run_ability(args: argparse.Namespace) -> int:
             )
         issues = load_issues(root)
         derived = load_records(root)
-        sheet = build_stat_sheet(
+        sheet = _build_sheet(
+            args,
+            root,
             champion,
-            args.level,
             load_items(root, args.item),
             issues,
             assumptions,
@@ -509,9 +596,10 @@ def _run_rotation(args: argparse.Namespace) -> int:
             )
         issues = load_issues(root)
         derived = load_records(root)
-        sheet = build_stat_sheet(
+        sheet = _build_sheet(
+            args,
+            root,
             champion,
-            args.level,
             load_items(root, args.item),
             issues,
             assumptions,
@@ -557,7 +645,7 @@ def _run_stats(args: argparse.Namespace) -> int:
         _check_build(root, args.item, champion, allow=args.allow_illegal_build, who="champion")
         issues = load_issues(root)
         derived = load_records(root)
-        sheet = build_stat_sheet(champion, args.level, items, issues, assumptions, derived)
+        sheet = _build_sheet(args, root, champion, items, issues, assumptions, derived)
     except StatsError as exc:
         print(f"error: {exc}", file=sys.stderr)
         return 2

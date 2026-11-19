@@ -35,8 +35,8 @@ SCHEMA = "lol-derived-champion-records/1"
 CONTENT_VERSION = re.compile(r"(\d+)\.(\d+)\.\d+\+.+")
 BASE_VALUE = fnv1a32("baseValue")
 
-# Bin field name -> Data Dragon stats key. "attackspeedratio" and "critdamagemultiplier"
-# have no Data Dragon twin.
+# Bin field name -> Data Dragon stats key. "attackspeedratio", "critdamagemultiplier" and
+# "adaptiveforceapweight" (which stat adaptive force favours, runes.md) have no Data Dragon twin.
 FIELD_MAP: dict[str, str] = {
     "baseHPModifiable": "hp",
     "hpPerLevelModifiable": "hpperlevel",
@@ -52,6 +52,7 @@ FIELD_MAP: dict[str, str] = {
     "attackSpeedRatioModifiable": "attackspeedratio",
     "attackSpeedPerLevelModifiable": "attackspeedperlevel",
     "critDamageMultiplier": "critdamagemultiplier",
+    "mAdaptiveForceToAbilityPowerWeight": "adaptiveforceapweight",
 }
 FIELD_HASHES = {fnv1a32(name): name for name in FIELD_MAP}
 

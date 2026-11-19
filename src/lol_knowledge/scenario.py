@@ -169,7 +169,8 @@ def evaluate_ability(
     """Raw damage of each part from the kit, mitigated by the target's matching resistance."""
     ability = kit.ability(slot)
     parts = ability_damage(kit, slot, rank, sheet, case=case, target=target.stats, inputs=inputs)
-    labels = [target.label]
+    # Unmodelled sources on the sheet (tree runes) could change the damage.
+    labels = [target.label, *([Label.PENDING] if sheet.pending_effects else [])]
     by_case: dict[str, list[PartOutcome]] = {}
     for part in parts:
         resistance = target.resistance(part.damage_type)
