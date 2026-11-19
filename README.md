@@ -2,7 +2,7 @@
 
 Base de conocimiento verificable de League of Legends: datos oficiales de Riot (Data Dragon), análisis con fuente declarada y una CLI en Python que ingesta, valida y calcula de forma reproducible.
 
-Estado actual: **fase 36**. Existen la ingesta, el validador de integridad, dos campeones con kit (Zaahen y Ahri), el extractor de cálculos y el lector del bin del cliente en `research/`, un modelo mecánico de objetos versionado (estadísticas de los 218 objetos comprables de la Grieta, efectos curados en 42, entre ellos el daño al impactar de seis objetos, Hoja encantada de siete, efectos cada N ataques y de Vigor, efectos según la vida del objetivo, quemaduras y el amplificador de Rabadon; las acumulaciones permanentes se calculan al máximo y las temporales de combate, desde 0 en las rotaciones; valores, cálculos y textos del cliente de los 218 en `lol-knowledge/derived/item-effects.json`), el núcleo del motor de daño (mitigación por resistencias), la hoja de estadísticas de campeón (todas sus estadísticas resueltas, incluidas la velocidad de ataque con el ratio del cliente, la probabilidad de crítico, la tenacidad, la regeneración y la velocidad de movimiento) con sus primeras métricas (vida efectiva y enfriamientos) y una tabla de estadísticas base y por nivel extraída del cliente para los 173 campeones. El primer kit de habilidades (Zaahen) se evalúa con `python -m lol_knowledge ability`, que encadena hoja de estadísticas, habilidad y mitigación contra un objetivo. `python -m lol_knowledge rotation` encadena ataques básicos, críticos y habilidades con los efectos de objeto evaluables (daño al impactar, aumentos y reducciones de daño) y lleva la vida del objetivo de un paso a otro, con la curación del atacante por robo de vida y omnivampirismo.
+Estado actual: **fase 37**. Existen la ingesta, el validador de integridad, dos campeones con kit (Zaahen y Ahri), el extractor de cálculos y el lector del bin del cliente en `research/`, un modelo mecánico de objetos versionado (estadísticas de los 218 objetos comprables de la Grieta, efectos curados en 42, entre ellos el daño al impactar de seis objetos, Hoja encantada de siete, efectos cada N ataques y de Vigor, efectos según la vida del objetivo, quemaduras y el amplificador de Rabadon; las acumulaciones permanentes se calculan al máximo y las temporales de combate, desde 0 en las rotaciones; valores, cálculos y textos del cliente de los 218 en `lol-knowledge/derived/item-effects.json`), el núcleo del motor de daño (mitigación por resistencias), la hoja de estadísticas de campeón (todas sus estadísticas resueltas, incluidas la velocidad de ataque con el ratio del cliente, la probabilidad de crítico, la tenacidad, la regeneración y la velocidad de movimiento) con sus primeras métricas (vida efectiva y enfriamientos) y una tabla de estadísticas base y por nivel extraída del cliente para los 173 campeones. El primer kit de habilidades (Zaahen) se evalúa con `python -m lol_knowledge ability`, que encadena hoja de estadísticas, habilidad y mitigación contra un objetivo. `python -m lol_knowledge rotation` encadena ataques básicos, críticos y habilidades con los efectos de objeto evaluables (daño al impactar, aumentos y reducciones de daño) y lleva la vida del objetivo de un paso a otro, con la curación del atacante por robo de vida y omnivampirismo.
 
 ## Requisitos
 
@@ -124,6 +124,21 @@ Códigos de salida: `0` hoja calculada (aunque alguna estadística esté bloquea
 - Una build ilegal sale con código `2` y la lista de violaciones. `--allow-illegal-build` calcula igualmente y las escribe como aviso en la salida de errores.
 - Las notas (un objeto sin `maxStack` en el bin, datos de otro parche, un objeto de campeón sin saber quién lo lleva) también van a la salida de errores.
 
+## Runas y fragmentos
+
+`stats`, `ability` y `rotation` aceptan una página: `--rune` seis veces (piedra angular, tres runas del árbol principal y dos del secundario) y `--shard` tres veces (ataque, flexible, defensa). Los datos salen del cliente ([`lol-knowledge/derived/runes.json`](lol-knowledge/derived/runes.json), `Derivado`, comprobado contra Data Dragon) y la regla está en [`lol-knowledge/mechanics/runes.md`](lol-knowledge/mechanics/runes.md).
+
+```powershell
+# Ahri con Electrocutar / Brujería y dos fragmentos adaptables
+.\.venv\Scripts\python.exe -m lol_knowledge stats --champion Ahri --level 11 --item 3089 `
+  --rune 8112 --rune 8143 --rune 8137 --rune 8106 --rune 8226 --rune 8210 `
+  --shard 5008 --shard 5008 --shard 5001
+```
+
+- La página debe ser legal (código 2 si no; `--allow-illegal-build` la calcula con aviso).
+- Los fragmentos se aplican en la hoja. La fuerza adaptable elige DA o PH según los objetos; en un empate decide el campeón, `Pendiente de verificación`.
+- Los efectos de las runas de los árboles no se modelan todavía: se listan en las notas y el daño queda `Pendiente de verificación`.
+
 ## Kits de campeón
 
 Hay kits de Zaahen y de Ahri. Un kit (`lol-knowledge/champions/<Id>/kit.json`, esquema `lol-champion-kit/1`) describe el daño de cada habilidad como *casos* alternativos con *partes* de daño (fórmula, tipo, etiqueta y fuente), y las estadísticas que una habilidad concede pasivamente. Las fórmulas usan el evaluador compartido con `by_rank` (valor por rango), `by_level` e `input` (dato del escenario, nunca 0 por defecto).
@@ -206,6 +221,7 @@ Comprueba el snapshot y la estructura de la base de conocimiento:
 - Registro de defectos de datos (`lol-knowledge/data-issues.json`): esquema, campos de Data Dragon conocidos, ids de campeón y documentación existente.
 - Registros derivados del cliente (`lol-knowledge/derived/champion-records.json`): esquema, etiqueta, versiones coherentes, campos conocidos con valores no negativos e ids de campeón del snapshot.
 - Kits de campeón (`lol-knowledge/champions/<Id>/kit.json`): esquema, fórmulas, campeón del directorio y rangos máximos frente a Data Dragon.
+- Runas del cliente (`lol-knowledge/derived/runes.json`): esquema, parche, referencias entre árboles, filas y runas, y árboles, filas e ids iguales a los de Data Dragon.
 - Grupos de objetos del cliente (`lol-knowledge/derived/item-groups.json`): esquema, enlaces a grupos existentes, parche igual al del snapshot y cobertura de los objetos del catálogo.
 
 Códigos de salida: `0` todo coherente, `1` violaciones (se listan con archivo y motivo), `2` problema de entorno. Si `lol-knowledge/` aún no existe, las comprobaciones de enlaces y referencias se informan como omitidas, no como superadas.
@@ -226,7 +242,7 @@ Condiciones de uso y cuestiones pendientes: [`research/evidence/usage-conditions
 - No hay estadísticas comunitarias (tasa de victorias, builds populares). Los valores derivados del cliente se marcan `Derivado` y llevan atribución.
 - No hay CI: las validaciones se ejecutan a mano.
 - Data Dragon (16.20.1, 16.22.1 y 16.23.1) publica `attackdamageperlevel = 0` para todos los campeones. Se sustituye por el crecimiento del cliente 16.23, `Derivado` porque cliente y snapshot coinciden. Senna no tiene el campo en el bin y su DA queda bloqueado por encima del nivel 1.
-- La hoja de estadísticas no incluye runas ni pasivas de campeón; de los efectos de objeto solo aplica los de estadística permanentes (`always`) y las acumulaciones permanentes al máximo. Antes de calcular comprueba que los objetos puedan llevarse a la vez (ver «Legalidad de la build»).
+- La hoja de estadísticas aplica los fragmentos de runas, pero no los efectos de las runas de los árboles ni las pasivas de campeón; de los efectos de objeto solo aplica los de estadística permanentes (`always`) y las acumulaciones permanentes al máximo. Antes de calcular comprueba que los objetos puedan llevarse a la vez (ver «Legalidad de la build»).
 - `ability` calcula un lanzamiento sin efectos de objeto ni tiempo; para críticos, efectos de objeto y tiempo está `rotation`, cuya línea de tiempo (`--timeline`) separa los ataques por la velocidad de ataque, respeta los enfriamientos y aplica los efectos con duración. No hay tiempos de lanzamiento, animaciones ni viaje de proyectiles. Ninguno de los dos admite reducciones de resistencia de habilidades ni escudos; `rotation` informa la curación por robo de vida y omnivampirismo, pero no la vida del atacante ni los costes de maná. Solo Zaahen y Ahri tienen kit.
 - El núcleo de mitigación trata una instancia; `rotation` añade críticos y modificadores porcentuales de daño. No se modelan escudos, reducciones planas de daño, la penetración de armadura adicional ni el redondeo del juego.
 - Data Dragon no publica valores numéricos de las habilidades de Zaahen; los valores derivados están documentados y las discrepancias abiertas siguen como pendientes.

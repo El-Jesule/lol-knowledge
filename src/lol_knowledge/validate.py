@@ -17,6 +17,7 @@ from .objects.client_effects import ITEM_EFFECTS_PATH, item_effects_problems
 from .objects.legality import ITEM_GROUPS_PATH, item_groups_problems
 from .objects.schema import GENERATED_STATS_RELATIVE_PATH
 from .objects.validate import validate_object_catalog
+from .runes import RUNES_PATH, runes_problems
 from .snapshot import (
     CHAMPION_INDEX_FILENAME,
     CHAMPIONS_DIRNAME,
@@ -106,6 +107,7 @@ class _Validator:
         self._check_derived_records()
         self._check_item_effects()
         self._check_item_groups()
+        self._check_rune_data()
         self._check_kits()
         return ValidationReport(
             checked_files=self.checked_files,
@@ -469,6 +471,26 @@ class _Validator:
             return
         for problem in item_groups_problems(
             document, patch=self.snapshot_patch, item_ids=self._catalog_item_ids()
+        ):
+            self.fail(path, problem)
+
+    def _check_rune_data(self) -> None:
+        path = self.root / RUNES_PATH
+        if not path.is_file():
+            self.skipped.append(
+                f"{RUNES_PATH.as_posix()} is not present; rune data checks were skipped"
+            )
+            return
+        self.checked_files += 1
+        document = self._read_json(path)
+        if document is None:
+            return
+        official_path = self.root / "data" / "current" / "runes.json"
+        official = self._read_json(official_path) if official_path.is_file() else None
+        for problem in runes_problems(
+            document,
+            patch=self.snapshot_patch,
+            official=official if isinstance(official, list) else None,
         ):
             self.fail(path, problem)
 

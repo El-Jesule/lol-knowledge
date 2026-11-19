@@ -580,8 +580,8 @@ class _Rotation:
         self.life_steal, self.omnivamp = sheet["life_steal"], sheet["omnivamp"]
         attacker, notes, weakened = _effects(sheet.items, "attacker", target.kind)
         defender, target_notes, target_weakened = _effects(target.items, "target")
-        self.notes = notes + target_notes
-        self.weakened = weakened or target_weakened
+        self.notes = notes + target_notes + list(sheet.pending_effects)
+        self.weakened = weakened or target_weakened or bool(sheet.pending_effects)
         self.on_hit: list[_Effect] = []
         self.dealt: list[_Effect] = []
         self.taken: list[_Effect] = []

@@ -70,6 +70,8 @@ class Contribution:
     amplifier: bool = False
     # True for the attack speed share of bonus attack speed (ratio x bonus).
     scaled: bool = False
+    # Tenacity stacking group when a non-item source declares it (tenacity.md).
+    tenacity_group: str | None = None
 
 
 class StatBlocked(StatsError):
@@ -170,6 +172,9 @@ class StatSheet:
     notes: tuple[str, ...] = field(default=())
     # The champion's attack speed ratio, to rescale a temporary bonus (rotations).
     attack_speed_ratio: AttackSpeedRatio | None = None
+    # Sources given to the sheet whose effects are not modelled (tree runes): they
+    # weaken any damage computed from the sheet.
+    pending_effects: tuple[str, ...] = ()
 
     def __getitem__(self, stat_id: str) -> StatValue:
         try:
@@ -519,6 +524,8 @@ def build_stat_sheet(
     assumptions: Mapping[str, object] | None = None,
     derived: DerivedRecords | None = None,
     extras: Sequence[tuple[str, Contribution]] = (),
+    percent_extras: Sequence[tuple[str, Contribution]] = (),
+    pending_effects: Sequence[str] = (),
 ) -> StatSheet:
     """Resolve the champion's statistics at ``level`` with ``items``.
 
@@ -528,7 +535,10 @@ def build_stat_sheet(
     ``Pendiente de verificación``). With neither, the statistic is blocked.
 
     ``extras`` adds further contributions, such as stats an ability grants
-    passively (see ``lol_knowledge.kit.passive_contributions``).
+    passively (see ``lol_knowledge.kit.passive_contributions``) or stat shards;
+    ``percent_extras`` adds percentages (a fraction, like an item's ``percent``)
+    of a stat that accepts them. ``pending_effects`` lists given sources whose
+    effects are not modelled; they become notes and weaken damage built on the sheet.
 
     Attack speed is ``base + ratio x attack_speed_bonus``, capped. The bonus
     holds the level growth and every item or extra declared as attack speed;
@@ -651,9 +661,14 @@ def build_stat_sheet(
         definition = _receiver(stat_id)
         if definition.unit is Unit.FRACTION and not 0 <= extra.value <= 1:
             raise StatsError(f"extra {stat_id}: {extra.value} is not a fraction 0..1")
-        if definition.id == "tenacity":
+        if definition.id == "tenacity" and extra.tenacity_group is None:
             extra = _ungrouped_tenacity(extra)
         contributions[definition.id].append(extra)
+    for stat_id, extra in percent_extras:
+        definition = _receiver(stat_id)
+        if definition.percent_of is None:
+            raise StatsError(f"extra {stat_id}: the stat takes no percentage")
+        percents.setdefault(definition.id, []).append(extra)
 
     # Percentages last, once every flat amount is known (regeneration.md, move-speed.md).
     for stat_id, pending in percents.items():
@@ -696,9 +711,12 @@ def build_stat_sheet(
     for issue in applicable:
         if level == 1:
             notes.append(f"{issue.id} does not affect level 1 (no growth applies)")
+    notes += list(pending_effects)
 
     values = {
         stat_id: StatValue(STATS[stat_id], tuple(contributions[stat_id]), blocked.get(stat_id))
         for stat_id in STATS
     }
-    return StatSheet(champion, level, tuple(items), assumed, values, tuple(notes), ratio)
+    return StatSheet(
+        champion, level, tuple(items), assumed, values, tuple(notes), ratio, tuple(pending_effects)
+    )
