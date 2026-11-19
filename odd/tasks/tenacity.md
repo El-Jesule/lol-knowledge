@@ -22,5 +22,7 @@
 
 ## Limitaciones
 
+> **Nota (2026-11-19):** esta lista refleja el estado al cerrar la fase. Lo que sigue abierto, con su prioridad, está en la [hoja de ruta](../roadmap.md); lo resuelto después se marca abajo con la fase que lo resolvió.
+
 - La regla de grupos viene de un extracto de la wiki; la página completa no se pudo abrir y el grupo B no está identificado.
 - Tenacidad condicional (Calibrador de Sterak, Final del ingenio), runas, elixires y resistencia a ralentizaciones: no modelados.

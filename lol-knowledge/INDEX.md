@@ -1,7 +1,7 @@
 # Índice de la base de conocimiento
 
 - **Parche:** 16.22.1
-- **Última actualización:** 2026-11-15
+- **Última actualización:** 2026-11-19
 
 ## Por intención
 
@@ -48,10 +48,10 @@
 
 ## Cobertura actual
 
-Un campeón con análisis completo y datos oficiales de los 173 campeones en `data/current/`. La cobertura crece de uno en uno: cada campeón nuevo reutiliza esta estructura.
+Dos campeones con kit calculable (Zaahen, con análisis completo, y Ahri), datos oficiales de los 173 campeones en `data/current/` y sus estadísticas base y por nivel del cliente en [champion-records.json](derived/champion-records.json). La cobertura de kits crece de uno en uno: cada campeón nuevo reutiliza esta estructura.
 
-El modelo de objetos tiene las estadísticas de los **218 objetos comprables de la Grieta**; los efectos están curados en **16 objetos** elegidos por diversidad mecánica, y el resto queda `pending`. Las cifras que Data Dragon no publica se registran con fuente citada y confianza secundaria. Los límites están en [Modelo de objetos](objects/README.md).
+El modelo de objetos tiene las estadísticas de los **218 objetos comprables de la Grieta**; los efectos están curados en **42 objetos** (64 efectos), elegidos por mecánica, y el resto queda `pending`. Las cifras que Data Dragon no publica se registran con fuente citada: la wiki (`secondary`) o los datos del cliente 16.22 (`derived`, `corroborated` si coinciden). Los límites están en [Modelo de objetos](objects/README.md).
 
 ## Aviso de fuentes
 
-Los valores marcados `Derivado` proceden de datos del cliente publicados por CommunityDragon, **no** de una API oficial de Riot. Se incluyen con atribución y aviso de no afiliación; el detalle está en [Fuentes de Zaahen](champions/Zaahen/sources.md). El aviso completo está en [`../README.md`](../README.md).
+Los valores marcados `Derivado` proceden de datos del cliente, **no** de una API oficial de Riot: los de Zaahen, de los archivos del cliente 16.20 publicados por CommunityDragon ([Fuentes de Zaahen](champions/Zaahen/sources.md)); los de Ahri ([Fuentes de Ahri](champions/Ahri/sources.md)), los registros de campeones y los efectos de objetos de `derived/`, del cliente instalado 16.22. Se incluyen con atribución y aviso de no afiliación. El aviso completo está en [`../README.md`](../README.md).

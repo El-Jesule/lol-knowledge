@@ -23,6 +23,8 @@
 
 ## Limitaciones
 
+> **Nota (2026-11-19):** esta lista refleja el estado al cerrar la fase. Lo que sigue abierto, con su prioridad, está en la [hoja de ruta](../roadmap.md); lo resuelto después se marca abajo con la fase que lo resolvió.
+
 - No hay comando que encadene hoja, habilidad y mitigación: es el siguiente paso.
 - La pasiva de Zaahen no está modelada (curva de interpolación sin medir).
 - No se modelan curaciones, escudos, bonificaciones contra monstruos ni condiciones de impacto.

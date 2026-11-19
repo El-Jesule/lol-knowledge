@@ -33,6 +33,8 @@ Cuatro pasos en orden: reducción plana (puede bajar de 0), reducción porcentua
 
 ## Limitaciones
 
+> **Nota (2026-11-19):** esta lista refleja el estado al cerrar la fase. Lo que sigue abierto, con su prioridad, está en la [hoja de ruta](../roadmap.md); lo resuelto después se marca abajo con la fase que lo resolvió.
+
 - Una instancia de daño por llamada; no hay rotaciones, tiempo ni DPS.
 - No modela amplificaciones o reducciones de daño, escudos, críticos ni efectos al impacto.
 - No modela la penetración porcentual de armadura *adicional*.

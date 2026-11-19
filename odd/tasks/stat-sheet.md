@@ -34,6 +34,8 @@ Data Dragon 16.20.1 publica `attackdamageperlevel = 0` para los 173 campeones. L
 
 ## Limitaciones
 
+> **Nota (2026-11-19):** esta lista refleja el estado al cerrar la fase. Lo que sigue abierto, con su prioridad, está en la [hoja de ruta](../roadmap.md); lo resuelto después se marca abajo con la fase que lo resolvió.
+
 - No hay runas, efectos de objeto, pasivas de campeón ni buffs.
 - La velocidad de ataque, la de movimiento, la regeneración, los críticos, el robo de vida, el omnivampirismo y la tenacidad se listan sin total hasta tener regla documentada.
 - Solo se modela el maná como recurso; otros recursos bloquean las estadísticas de maná.

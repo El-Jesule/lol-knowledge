@@ -16,7 +16,7 @@ Cada punto lleva un identificador para poder citarlo en tareas y commits. Priori
 
 ## 1. Operativo y repositorio
 
-- [ ] **OP-01 (P0)** Publicar el trabajo local: `dev` va 8 commits por delante de `origin/dev` e `integration` 125 por delante de `origin/integration`. El entorno del agente no puede hacer push (403); lo hace el usuario con `git push origin dev integration`.
+- [x] **OP-01 (P0)** *Hecho: el 2026-11-19 `dev` e `integration` coinciden con `origin`.* Publicar el trabajo local: `dev` va 8 commits por delante de `origin/dev` e `integration` 125 por delante de `origin/integration`. El entorno del agente no puede hacer push (403); lo hace el usuario con `git push origin dev integration`.
 - [ ] **OP-02 (P0)** Ejecutar las cuatro validaciones de [`AGENTS.md`](../AGENTS.md) §5 en Windows con `.\.venv\Scripts\python.exe`. Desde la fase 30 solo se han ejecutado en el shell Linux del agente; en Windows constan como no ejecutadas.
 - [ ] **OP-03 (P2)** Integración continua: no hay CI ([`README.md`](../README.md), «Limitaciones conocidas»). Un flujo de GitHub Actions con las cuatro validaciones evitaría depender de ejecuciones manuales.
 - [ ] **OP-04 (P3)** Limpiar las ramas de tarea ya integradas (hay más de 40 locales). Solo con autorización: borrar ramas no está en el flujo de `AGENTS.md`.
@@ -24,15 +24,17 @@ Cada punto lleva un identificador para poder citarlo en tareas y commits. Priori
 
 ## 2. Deuda de documentación (textos desactualizados)
 
+*Hecho en la fase 34 (rama `docs/refresh-stale-texts`).*
+
 Encontrados en esta revisión. Ninguno cambia cálculos, pero contradicen el estado real.
 
-- [ ] **DOC-01 (P1)** [`README.md`](../README.md), sección «Kits de campeón»: dice «Solo existe el kit de Zaahen».
-- [ ] **DOC-02 (P1)** [`README.md`](../README.md), «Limitaciones conocidas»: dice que `ability` y `rotation` no simulan tiempo ni velocidad de ataque (existe `--timeline` desde la fase 30), «Solo Zaahen tiene kit» y que los efectos están curados en 16 objetos (son 42).
-- [ ] **DOC-03 (P1)** [`README.md`](../README.md), «Aviso legal», y [`lol-knowledge/INDEX.md`](../lol-knowledge/INDEX.md), «Aviso de fuentes»: atribuyen los valores `Derivado` solo a CommunityDragon y a Zaahen; los de Ahri y los registros de 16.22 salen del cliente instalado.
-- [ ] **DOC-04 (P1)** [`lol-knowledge/INDEX.md`](../lol-knowledge/INDEX.md), «Cobertura actual»: «un campeón con análisis completo» y «16 objetos».
-- [ ] **DOC-05 (P1)** [`lol-knowledge/objects/README.md`](../lol-knowledge/objects/README.md) §1, §8 y §10: «simular tiempo», «no hay simulación todavía» y «16 objetos».
-- [ ] **DOC-06 (P2)** [`lol-knowledge/champions/Zaahen/build.md`](../lol-knowledge/champions/Zaahen/build.md): «Mientras no exista calculadora…». La calculadora existe; lo que falta es resolver sus datos pendientes (CH-Z-01 a CH-Z-03).
-- [ ] **DOC-07 (P2)** Las tareas antiguas de `odd/tasks/` conservan listas de pendientes ya resueltos (Rabadon, Hoja encantada con tiempo, Kraken por vida perdida…). Basta con una nota «resuelto en fase N» o con remitir a esta hoja de ruta.
+- [x] **DOC-01 (P1)** [`README.md`](../README.md), sección «Kits de campeón»: dice «Solo existe el kit de Zaahen».
+- [x] **DOC-02 (P1)** [`README.md`](../README.md), «Limitaciones conocidas»: dice que `ability` y `rotation` no simulan tiempo ni velocidad de ataque (existe `--timeline` desde la fase 30), «Solo Zaahen tiene kit» y que los efectos están curados en 16 objetos (son 42).
+- [x] **DOC-03 (P1)** [`README.md`](../README.md), «Aviso legal», y [`lol-knowledge/INDEX.md`](../lol-knowledge/INDEX.md), «Aviso de fuentes»: atribuyen los valores `Derivado` solo a CommunityDragon y a Zaahen; los de Ahri y los registros de 16.22 salen del cliente instalado.
+- [x] **DOC-04 (P1)** [`lol-knowledge/INDEX.md`](../lol-knowledge/INDEX.md), «Cobertura actual»: «un campeón con análisis completo» y «16 objetos».
+- [x] **DOC-05 (P1)** [`lol-knowledge/objects/README.md`](../lol-knowledge/objects/README.md) §1, §8 y §10: «simular tiempo», «no hay simulación todavía» y «16 objetos».
+- [x] **DOC-06 (P2)** [`lol-knowledge/champions/Zaahen/build.md`](../lol-knowledge/champions/Zaahen/build.md): «Mientras no exista calculadora…». La calculadora existe; lo que falta es resolver sus datos pendientes (CH-Z-01 a CH-Z-03).
+- [x] **DOC-07 (P2)** Las tareas antiguas de `odd/tasks/` conservan listas de pendientes ya resueltos (Rabadon, Hoja encantada con tiempo, Kraken por vida perdida…). Basta con una nota «resuelto en fase N» o con remitir a esta hoja de ruta.
 
 ## 3. Datos y snapshot
 

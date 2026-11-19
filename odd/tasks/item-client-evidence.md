@@ -24,5 +24,7 @@ El daño al impactar de Filo de la niebla pasa a `Derivado`. Verdugo de gigantes
 
 ## Limitaciones
 
+> **Nota (2026-11-19):** esta lista refleja el estado al cerrar la fase. Lo que sigue abierto, con su prioridad, está en la [hoja de ruta](../roadmap.md); lo resuelto después se marca abajo con la fase que lo resolvió.
+
 - El código que aplica los valores (scripts del juego) no se lee: la forma de la curva de Verdugo de gigantes sigue sin fuente oficial.
 - Los 10 registros ilegibles del bin no son objetos del catálogo, pero su formato no está entendido.

@@ -28,6 +28,8 @@
 
 ## Limitaciones
 
+> **Nota (2026-11-19):** esta lista refleja el estado al cerrar la fase. Lo que sigue abierto, con su prioridad, está en la [hoja de ruta](../roadmap.md); lo resuelto después se marca abajo con la fase que lo resolvió.
+
 - Solo el locale `es_ES`: con otro, el generador se niega en vez de adivinar las frases.
 - Efectos: 16 objetos curados; 158 objetos con efectos en la descripción siguen `pending`.
 - Variantes de otros modos y objetos no comprables (mejoras de Ornn, transformaciones): fuera.

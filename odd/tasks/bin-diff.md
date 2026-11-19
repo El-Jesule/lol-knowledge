@@ -29,6 +29,8 @@ Ver `research/reports/zaahen-bin-diff-16.22.md`: tres cambios (enfriamiento de l
 
 ## Limitaciones
 
+> **Nota (2026-11-19):** esta lista refleja el estado al cerrar la fase. Lo que sigue abierto, con su prioridad, está en la [hoja de ruta](../roadmap.md); lo resuelto después se marca abajo con la fase que lo resolvió.
+
 - `skin0.bin` de Zaahen 16.22 se rechaza por un tipo `0xb5` sin documentar.
 - `tools/extract_rst.py` sigue saltándose en silencio las entradas de tipo 4 del WAD.
 - Data Dragon 16.22 no se ha descargado: CommunityDragon está bloqueado en este entorno y no se ha comprobado Data Dragon.

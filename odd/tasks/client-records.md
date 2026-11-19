@@ -19,6 +19,8 @@
 
 ## Limitaciones
 
+> **Nota (2026-11-19):** esta lista refleja el estado al cerrar la fase. Lo que sigue abierto, con su prioridad, está en la [hoja de ruta](../roadmap.md); lo resuelto después se marca abajo con la fase que lo resolvió.
+
 - Cliente 16.22 frente a snapshot 16.20.1 hasta que se ejecute `update` con red.
 - La tabla solo cubre estadísticas base y por nivel; el maná y la regeneración no se extraen todavía.
 - Las regeneraciones del bin están en otra unidad (Zaahen: 1,5 por segundo frente a 7,5 cada 5 s en Data Dragon) y no se publican.

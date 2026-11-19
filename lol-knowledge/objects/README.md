@@ -18,7 +18,7 @@ Este documento explica el esquema, las decisiones, lo que está modelado y lo qu
 
 Resuelve: representar de forma versionada y verificable la identidad, las estadísticas y los efectos de un objeto, distinguiendo lo que Data Dragon publica de forma estructurada, lo que solo aparece en prosa y lo que no se sabe.
 
-Las rotaciones con sus efectos evaluables se calculan con `python -m lol_knowledge rotation` (ver el README del repositorio). No resuelve todavía: buscar builds, simular tiempo, modelar todos los objetos ni interpretar efectos que dependen de estado del juego no publicado. Tampoco convierte una fuente secundaria en oficial: cada cifra externa conserva su cita y su nivel de confianza.
+Las rotaciones con sus efectos evaluables se calculan con `python -m lol_knowledge rotation` (ver el README del repositorio). Con `--timeline` sigue el tiempo (velocidad de ataque, enfriamientos, duraciones). No resuelve todavía: buscar builds, modelar todos los objetos, tiempos de lanzamiento ni interpretar efectos que dependen de estado del juego no publicado. Tampoco convierte una fuente secundaria en oficial: cada cifra externa conserva su cita y su nivel de confianza.
 
 ## 2. Ejecutar
 
@@ -326,7 +326,7 @@ Data Dragon además renderiza placeholders que parecen números reales. Ejemplo:
 
 ## 8. Interfaz del motor de daño
 
-El contrato está en [`interface.py`](../../src/lol_knowledge/objects/interface.py). No implementa daño, búsqueda de builds ni simulación temporal.
+El contrato está en [`interface.py`](../../src/lol_knowledge/objects/interface.py). El contrato no implementa daño, búsqueda de builds ni simulación temporal; el daño y el tiempo los calculan `damage/` y `rotation.py`.
 
 ### 8.1 Entradas de una evaluación de daño explosivo
 
@@ -407,10 +407,10 @@ assert not validate_request(request)
 
 ## 10. Límites declarados
 
-- Los efectos curados son una muestra pequeña (16 objetos) elegida por diversidad mecánica, no por frecuencia de compra. Las estadísticas sí cubren los 218 objetos comprables de la Grieta.
+- Los efectos curados cubren 42 objetos (64 efectos), elegidos por mecánica y no por frecuencia de compra; los demás siguen `pending`. Las estadísticas sí cubren los 218 objetos comprables de la Grieta.
 - Data Dragon no publica modos de juego; `availability.modes` es desconocido.
 - Data Dragon no publica el enfriamiento de los activos. Cuando se conoce por una fuente citada, se registra con su confianza (Zhonya y Randuin: wiki y cliente, `corroborated`); si no, se marca desconocido.
 - Los ratios y curvas que solo aparecen como «un porcentaje» o «hasta» se resuelven únicamente si existe una fuente citada y verificable; en caso contrario quedan desconocidos. No se interpolan extremos sin evidencia.
 - La evidencia secundaria no es oficial de Riot. La coincidencia de estadísticas/oro con Data Dragon corrobora el estado de balance, no la exactitud de cada cifra.
 - El modelo no sustituye al extractor de campeones: los objetos describen efectos; el daño de habilidades sigue viniendo de `research/binmodel`.
-- La conexión con el motor es conceptual y de contrato; no hay simulación todavía. El orden de mitigaciones y el pipeline de daño quedan para la siguiente fase.
+- La conexión con el motor existe: `rotation` aplica los efectos evaluables, con el orden de mitigaciones de [`damage-mitigation.md`](../mechanics/damage-mitigation.md) y, con `--timeline`, el tiempo ([`timeline.md`](../mechanics/timeline.md)). Faltan escudos, curaciones de efectos, auras, activas y lo listado en el §7.

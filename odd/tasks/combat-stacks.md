@@ -33,4 +33,6 @@
 
 ## Siguientes fases
 
+> **Nota (2026-11-19):** esta lista refleja el estado al cerrar la fase. Lo que sigue abierto, con su prioridad, está en la [hoja de ruta](../roadmap.md); lo resuelto después se marca abajo con la fase que lo resolvió.
+
 Impactos fantasma como acumulación extra del Kraken; tiempos de lanzamiento cuando haya datos; informes por ventana de tiempo.

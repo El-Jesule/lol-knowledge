@@ -19,5 +19,7 @@
 
 ## Limitaciones
 
+> **Nota (2026-11-19):** esta lista refleja el estado al cerrar la fase. Lo que sigue abierto, con su prioridad, está en la [hoja de ruta](../roadmap.md); lo resuelto después se marca abajo con la fase que lo resolvió.
+
 - La vida a mitad de un paso no se sigue.
 - El aumento de Llamasombría al daño a lo largo del tiempo no aplica: no hay daño a lo largo del tiempo en las rotaciones.

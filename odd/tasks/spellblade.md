@@ -23,5 +23,7 @@
 
 ## Limitaciones
 
-- Sin tiempo: ni recarga real ni ventana de 10 s.
+> **Nota (2026-11-19):** esta lista refleja el estado al cerrar la fase. Lo que sigue abierto, con su prioridad, está en la [hoja de ruta](../roadmap.md); lo resuelto después se marca abajo con la fase que lo resolvió.
+
+- Sin tiempo: ni recarga real ni ventana de 10 s. *Resuelto en las fases 29 (enfriamiento) y 31 (ventana de 10 s).*
 - Curación, maná, ralentizaciones y velocidad de movimiento de estos objetos: declarados, no aplicados.
