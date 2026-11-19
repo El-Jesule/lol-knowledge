@@ -161,6 +161,18 @@ $env:PYTHONPATH="research"
   --output lol-knowledge\derived\item-effects.json
 ```
 
+## Fase 36 — grupos de objetos para la legalidad de la build
+
+`python -m binmodel.item_groups` lee, para cada objeto de `lol-knowledge/objects/catalog-stats.json`, sus grupos (`mItemGroups`), su `maxStack` y su `mRequiredChampion`, y de cada grupo su máximo (`mMaxGroupOwnable`) y su hueco fijo (`mInventorySlotMin`/`Max`). Publica una tabla `Derivado` en `lol-knowledge/derived/item-groups.json`; la regla está en [`../lol-knowledge/mechanics/build-legality.md`](../lol-knowledge/mechanics/build-legality.md). `research/tools/refresh_patch.py` la regenera con los demás datos del cliente.
+
+```powershell
+$env:PYTHONPATH="research"
+.\.venv\Scripts\python.exe -m binmodel.item_groups --wad "<Game>\DATA\FINAL\Global.wad.client" `
+  --ids-from lol-knowledge\objects\catalog-stats.json --entry-names <hashes.binentries.txt> `
+  --content-version <version de Game\content-metadata.json> --retrieved-at <fecha> `
+  --output lol-knowledge\derived\item-groups.json
+```
+
 ## Fase 7 — lectura directa del bin del cliente
 
 Lee el bin binario (`PROP`) desde el `*.wad.client` instalado y lo compara campo a campo con un export `.bin.json` de CommunityDragon. Sirve para saber, en cada parche, qué valores derivados siguen vigentes sin depender de que CommunityDragon sea accesible.
