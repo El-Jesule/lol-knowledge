@@ -7,12 +7,13 @@ compares each result with the committed file (odd/procedures/patch-update.md):
 1. ``lol-knowledge/objects/catalog-stats.json`` (``lol_knowledge.objects --generate-stats``);
 2. ``lol-knowledge/derived/champion-records.json`` (``binmodel.records``);
 3. ``lol-knowledge/derived/item-effects.json`` (``binmodel.item_effects``);
-4. each committed champion kit, rebuilt from the client bin (``binmodel.bin2json`` →
+4. ``lol-knowledge/derived/item-groups.json`` (``binmodel.item_groups``), for build legality;
+5. each committed champion kit, rebuilt from the client bin (``binmodel.bin2json`` →
    ``binmodel`` → ``binmodel.kitgen``) and compared without its provenance fields.
 
 Without ``--write`` nothing in the repository changes: the results go to a
 temporary directory and only the report is printed. With ``--write`` the files
-of steps 1–3 replace the committed ones; kits are never written, because a kit
+of steps 1–4 replace the committed ones; kits are never written, because a kit
 keeps citing the bin its numbers were first extracted from (a change in a kit
 is a curation task, not a refresh).
 
@@ -44,6 +45,7 @@ from typing import Any
 ROOT = Path(__file__).resolve().parents[2]
 RECORDS = Path("lol-knowledge/derived/champion-records.json")
 ITEM_EFFECTS = Path("lol-knowledge/derived/item-effects.json")
+ITEM_GROUPS = Path("lol-knowledge/derived/item-groups.json")
 CATALOG_STATS = Path("lol-knowledge/objects/catalog-stats.json")
 HASH_LISTS = (
     "hashes.binentries.txt",
@@ -152,7 +154,7 @@ def _report(name: str, old_path: Path, new_path: Path, limit: int = 40) -> list[
 
 def refresh(root: Path, game: Path, hashes: Path, retrieved_at: str, *, write: bool) -> int:
     # Imported here so that --help works without PYTHONPATH.
-    from binmodel import bin2json, item_effects, kitgen, records
+    from binmodel import bin2json, item_effects, item_groups, kitgen, records
     from binmodel import cli as extract_cli
     from tools import extract_rst
 
@@ -192,6 +194,13 @@ def refresh(root: Path, game: Path, hashes: Path, retrieved_at: str, *, write: b
                 ["--wad", str(final / "Global.wad.client"),
                  "--strings", str(final / "Localized/Global.es_ES.wad.client"),
                  "--rst-hashes", str(hashes / "hashes.rst.xxh3.txt"),
+                 "--ids-from", str(root / CATALOG_STATS)],
+            ),
+            (
+                ITEM_GROUPS,
+                item_groups.main,
+                ["--wad", str(final / "Global.wad.client"),
+                 "--entry-names", str(hashes / "hashes.binentries.txt"),
                  "--ids-from", str(root / CATALOG_STATS)],
             ),
         )  # fmt: skip

@@ -20,6 +20,7 @@ from .errors import (
     StatsError,
 )
 from .kit import load_kit, passive_contributions
+from .objects.legality import ITEM_GROUPS_PATH, check_build, load_item_groups
 from .rotation import CritBase, evaluate_rotation, parse_steps
 from .rotation_report import format_text as format_rotation_text
 from .rotation_report import to_dict as rotation_to_dict
@@ -143,6 +144,7 @@ def _add_stats_parser(subparsers: argparse._SubParsersAction) -> None:
         metavar="FIELD=VALUE",
         help="Value for a Data Dragon field with an open data issue (repeat).",
     )
+    _add_build_option(stats)
     stats.add_argument(
         "--root", type=Path, default=Path("."), help="Project root (default: current directory)."
     )
@@ -179,6 +181,7 @@ def _add_ability_parser(subparsers: argparse._SubParsersAction) -> None:
         "--input", action="append", default=[], metavar="NAME=VALUE", help="Scenario input."
     )
     _add_target_options(ability)
+    _add_build_option(ability)
     ability.add_argument("--root", type=Path, default=Path("."))
     ability.add_argument("--json", action="store_true", help="Print a JSON report.")
 
@@ -199,6 +202,42 @@ def _add_target_options(command: argparse.ArgumentParser) -> None:
         help="What the manual target is; effects that depend on it need it.",
     )
     command.add_argument("--target-current-health", help="Target current health.")
+
+
+def _add_build_option(command: argparse.ArgumentParser) -> None:
+    command.add_argument(
+        "--allow-illegal-build",
+        action="store_true",
+        help=(
+            "Calculate even when the items cannot be held together (unique groups, boots, "
+            "slots; lol-knowledge/mechanics/build-legality.md). The violations are printed."
+        ),
+    )
+
+
+def _check_build(root: Path, item_ids: list[str], champion, *, allow: bool, who: str) -> None:
+    """Refuse items one inventory cannot hold, unless ``allow``; notes go to stderr."""
+    if not item_ids:
+        return
+    data = load_item_groups(root)
+    if data is None:
+        print(
+            f"note: {who} build legality not checked: {ITEM_GROUPS_PATH.as_posix()} is missing",
+            file=sys.stderr,
+        )
+        return
+    report = check_build(item_ids, data, patch=champion.patch, champion=champion.id)
+    for note in report.notes:
+        print(f"note: {who} build: {note}", file=sys.stderr)
+    if report.legal:
+        return
+    problems = "; ".join(violation.message for violation in report.violations)
+    if not allow:
+        raise StatsError(
+            f"{who} build is not legal [{report.label}]: {problems} "
+            "(--allow-illegal-build calculates it anyway)"
+        )
+    print(f"warning: {who} build is not legal [{report.label}]: {problems}", file=sys.stderr)
 
 
 def _add_rotation_parser(subparsers: argparse._SubParsersAction) -> None:
@@ -250,6 +289,7 @@ def _add_rotation_parser(subparsers: argparse._SubParsersAction) -> None:
         "--input", action="append", default=[], metavar="NAME=VALUE", help="Scenario input."
     )
     _add_target_options(rotation)
+    _add_build_option(rotation)
     rotation.add_argument("--root", type=Path, default=Path("."))
     rotation.add_argument("--json", action="store_true", help="Print a JSON report.")
 
@@ -372,6 +412,7 @@ def _ability_target(args: argparse.Namespace, root: Path, issues, derived):
         sheet = build_stat_sheet(
             champion, args.target_level, load_items(root, args.target_item), issues, {}, derived
         )
+        _check_build(root, args.target_item, champion, allow=args.allow_illegal_build, who="target")
         current = _number(args.target_current_health, "--target-current-health")
         return target_from_sheet(sheet, current_health=current)
     if args.target_level is not None or args.target_item:
@@ -418,6 +459,7 @@ def _run_ability(args: argparse.Namespace) -> int:
             derived,
             passive_contributions(kit, ranks),
         )
+        _check_build(root, args.item, champion, allow=args.allow_illegal_build, who="attacker")
         target = _ability_target(args, root, issues, derived)
         outcome = evaluate_ability(
             kit, sheet, slot, args.rank, target, case=args.case, inputs=inputs
@@ -476,6 +518,7 @@ def _run_rotation(args: argparse.Namespace) -> int:
             derived,
             passive_contributions(kit, ranks),
         )
+        _check_build(root, args.item, champion, allow=args.allow_illegal_build, who="attacker")
         target = _ability_target(args, root, issues, derived)
         crit_base = _crit_base(champion.id, champion.patch, derived)
         outcome = evaluate_rotation(
@@ -511,6 +554,7 @@ def _run_stats(args: argparse.Namespace) -> int:
         assumptions = _parse_assume(args.assume)
         champion = load_champion(root, args.champion)
         items = load_items(root, args.item)
+        _check_build(root, args.item, champion, allow=args.allow_illegal_build, who="champion")
         issues = load_issues(root)
         derived = load_records(root)
         sheet = build_stat_sheet(champion, args.level, items, issues, assumptions, derived)
