@@ -29,6 +29,8 @@ python -m venv .venv
 
 La suite incluye pruebas de integración que ejecutan `python -m lol_knowledge` en un subproceso. La CLI escribe siempre en UTF-8, aunque la consola use otra codificación (en Windows, cp1252 cuando la salida va a una tubería); hay pruebas que fuerzan cp1252 para comprobarlo. Requieren el paquete instalado en modo editable (`pip install -e .`); si falta esa instalación, fallan de forma visible y no se saltan en silencio.
 
+El flujo de GitHub Actions ([`.github/workflows/ci.yml`](.github/workflows/ci.yml)) ejecuta estas cuatro validaciones junto con `pytest research/tests -q` en Linux y Windows con Python 3.14.
+
 ## Estructura
 
 | Ruta | Contenido |
@@ -240,7 +242,6 @@ Condiciones de uso y cuestiones pendientes: [`research/evidence/usage-conditions
 
 - No hay integración con la Riot API ni claves de API.
 - No hay estadísticas comunitarias (tasa de victorias, builds populares). Los valores derivados del cliente se marcan `Derivado` y llevan atribución.
-- No hay CI: las validaciones se ejecutan a mano.
 - Data Dragon (16.20.1, 16.22.1 y 16.23.1) publica `attackdamageperlevel = 0` para todos los campeones. Se sustituye por el crecimiento del cliente 16.23, `Derivado` porque cliente y snapshot coinciden. Senna no tiene el campo en el bin y su DA queda bloqueado por encima del nivel 1.
 - La hoja de estadísticas aplica los fragmentos de runas, pero no los efectos de las runas de los árboles ni las pasivas de campeón; de los efectos de objeto solo aplica los de estadística permanentes (`always`) y las acumulaciones permanentes al máximo. Antes de calcular comprueba que los objetos puedan llevarse a la vez (ver «Legalidad de la build»).
 - `ability` calcula un lanzamiento sin efectos de objeto ni tiempo; para críticos, efectos de objeto y tiempo está `rotation`, cuya línea de tiempo (`--timeline`) separa los ataques por la velocidad de ataque, respeta los enfriamientos y aplica los efectos con duración. No hay tiempos de lanzamiento, animaciones ni viaje de proyectiles. Ninguno de los dos admite reducciones de resistencia de habilidades ni escudos; `rotation` informa la curación por robo de vida y omnivampirismo, pero no la vida del atacante ni los costes de maná. Solo Zaahen y Ahri tienen kit.
