@@ -22,6 +22,8 @@
 
 ## Limitaciones
 
+> **Nota (2026-11-19):** esta lista refleja el estado al cerrar la fase. Lo que sigue abierto, con su prioridad, está en la [hoja de ruta](../roadmap.md); lo resuelto después se marca abajo con la fase que lo resolvió.
+
 - No hay confirmación del tope en notas de parche recientes; la fuente más directa es un comentario de Riot de hacia 2020.
 - El cliente no se ha consultado: no hay campo de probabilidad base en los registros derivados.
 

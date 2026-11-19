@@ -18,6 +18,8 @@
 
 ## Limitaciones
 
+> **Nota (2026-11-19):** esta lista refleja el estado al cerrar la fase. Lo que sigue abierto, con su prioridad, está en la [hoja de ruta](../roadmap.md); lo resuelto después se marca abajo con la fase que lo resolvió.
+
 - Un lanzamiento: sin rotaciones, tiempo, críticos ni efectos de objeto al impactar.
 - No admite reducciones de resistencia del objetivo (el comando `damage` sí).
-- Solo Zaahen tiene kit.
+- Solo Zaahen tiene kit. *Superado en la fase 33: también Ahri.*

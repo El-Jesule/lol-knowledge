@@ -33,7 +33,9 @@
 
 ## Limitaciones
 
-- Sin tiempo: ni enfriamientos, ni velocidad de ataque, ni duraciones.
+> **Nota (2026-11-19):** esta lista refleja el estado al cerrar la fase. Lo que sigue abierto, con su prioridad, está en la [hoja de ruta](../roadmap.md); lo resuelto después se marca abajo con la fase que lo resolvió.
+
+- Sin tiempo: ni enfriamientos, ni velocidad de ataque, ni duraciones. *Resuelto en las fases 29 y 30, con `--timeline`.*
 - Los ataques potenciados por habilidades (Q de Zaahen) se escriben como la habilidad más un `attack`; no consta si aplican los efectos al impactar.
-- Sin escudos, curación, reducciones planas de daño ni modificadores de estadística porcentual (Rabadon). Desde la fase 16 se informa la curación por robo de vida y omnivampirismo ([`attack-speed-and-vamp.md`](attack-speed-and-vamp.md)).
-- Solo Zaahen tiene kit.
+- Sin escudos, curación, reducciones planas de daño ni modificadores de estadística porcentual (Rabadon; *resuelto en la fase 24*). Desde la fase 16 se informa la curación por robo de vida y omnivampirismo ([`attack-speed-and-vamp.md`](attack-speed-and-vamp.md)).
+- Solo Zaahen tiene kit. *Superado en la fase 33: también Ahri.*

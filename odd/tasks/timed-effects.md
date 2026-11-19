@@ -29,4 +29,6 @@
 
 ## Siguientes fases
 
+> **Nota (2026-11-19):** esta lista refleja el estado al cerrar la fase. Lo que sigue abierto, con su prioridad, está en la [hoja de ruta](../roadmap.md); lo resuelto después se marca abajo con la fase que lo resolvió.
+
 Ráfaga de Yun Tal; ventanas de acumulaciones (Kraken, Rompecascos, los 10 s de Hoja encantada); acumulaciones calculadas con «al máximo» como opción; tiempos de lanzamiento cuando haya datos; informes por ventana de tiempo.

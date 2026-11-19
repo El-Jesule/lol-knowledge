@@ -34,7 +34,9 @@
 
 ## Limitaciones
 
-- Sin tiempo: la velocidad de ataque no cambia cuántos ataques caben en una rotación.
+> **Nota (2026-11-19):** esta lista refleja el estado al cerrar la fase. Lo que sigue abierto, con su prioridad, está en la [hoja de ruta](../roadmap.md); lo resuelto después se marca abajo con la fase que lo resolvió.
+
+- Sin tiempo: la velocidad de ataque no cambia cuántos ataques caben en una rotación. *Resuelto en la fase 29, con `--timeline`.*
 - Reducciones de velocidad de ataque, suelo de 0,2 y kits que cambian el tope o el ratio: no modelados.
 - La curación no está limitada por la vida perdida del atacante, ni reducida por Heridas graves.
 - La declaración de Filo de la niebla es secundaria y de 2024 (revisión de la wiki leída en el extracto del buscador).

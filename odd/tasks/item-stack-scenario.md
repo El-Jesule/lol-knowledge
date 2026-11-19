@@ -27,6 +27,8 @@
 
 ## Limitaciones
 
+> **Nota (2026-11-19):** esta lista refleja el estado al cerrar la fase. Lo que sigue abierto, con su prioridad, está en la [hoja de ruta](../roadmap.md); lo resuelto después se marca abajo con la fase que lo resolvió.
+
 - No hay acumulaciones parciales ni otros escenarios; `SCENARIOS` solo admite `max_stacks`.
-- Solo componentes `stat_modifier` planos. El +30 % de AP de Rabadon (`always`, porcentual) sigue sin aplicarse en la hoja.
-- Siguiente paso propuesto: generar un archivo de efectos con los valores del cliente para los 218 objetos y curar efectos sobre él.
+- Solo componentes `stat_modifier` planos. El +30 % de AP de Rabadon (`always`, porcentual) sigue sin aplicarse en la hoja. *Resuelto en la fase 24.*
+- Siguiente paso propuesto: generar un archivo de efectos con los valores del cliente para los 218 objetos y curar efectos sobre él. *Hecho en la fase 23 (`item-effects.json`).*

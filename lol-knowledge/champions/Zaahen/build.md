@@ -6,7 +6,7 @@
 
 ## Cálculo determinista (`Calculado`)
 
-El daño de cada habilidad contra un objetivo se calcula con `python -m lol_knowledge ability` a partir del [kit](kit.json), la hoja de estadísticas y las reglas de [mitigación](../../mechanics/damage-mitigation.md). Todavía no existe una calculadora de eficiencia de objetos ni una búsqueda de builds, así que esta página no afirma qué build es mejor. Hay bases y ratios derivados publicados en [`abilities.md`](abilities.md), pero aquí no se afirma daño final, oro por estadística ni umbral de penetración.
+El daño de cada habilidad contra un objetivo se calcula con `python -m lol_knowledge ability` a partir del [kit](kit.json), la hoja de estadísticas y las reglas de [mitigación](../../mechanics/damage-mitigation.md). `python -m lol_knowledge rotation` combina habilidades, ataques y efectos de objeto, pero todavía no existe una búsqueda de builds, así que esta página no afirma qué build es mejor. Hay bases y ratios derivados publicados en [`abilities.md`](abilities.md), pero aquí no se afirma daño final, oro por estadística ni umbral de penetración.
 
 ## Insumos disponibles (`Derivado`)
 
@@ -16,7 +16,7 @@ El daño de cada habilidad contra un objetivo se calcula con `python -m lol_know
 - R: 250/400/550 (+200 % de DA adicional); 10/20/30 % de penetración de armadura.
 - Pasiva: 1,5–2,8 % de DA por acumulación, duplicado al máximo.
 
-Son datos del cliente, no de una API oficial de Riot. La calculadora que los combine sigue pendiente.
+Son datos del cliente, no de una API oficial de Riot. El [kit](kit.json) los usa en `ability` y `rotation`; la pasiva queda fuera del cálculo hasta resolver su DA por acumulación (CH-Z-01 en la [hoja de ruta](../../../odd/roadmap.md)).
 
 ## Criterio estratégico (`Recomendación`)
 
@@ -37,7 +37,7 @@ Estas son hipótesis de trabajo, no conclusiones. Cualquier build concreta exige
 - Rendimiento por rango y región.
 - Medición en partida de los valores derivados.
 
-Mientras no exista calculadora y no se resuelvan esos puntos, no se publica una build cuantificada: un cálculo con entradas no verificadas produciría cifras que parecen dato y no lo son. El estado de la investigación está en [`../../../research/zaahen-research-handoff.md`](../../../research/zaahen-research-handoff.md).
+La calculadora existe, pero mientras no se resuelvan esos puntos (CH-Z-01 a CH-Z-03 en la [hoja de ruta](../../../odd/roadmap.md)) no se publica una build cuantificada: un cálculo con entradas no verificadas produciría cifras que parecen dato y no lo son. El estado de la investigación está en [`../../../research/zaahen-research-handoff.md`](../../../research/zaahen-research-handoff.md).
 
 ## Política de fuentes
 

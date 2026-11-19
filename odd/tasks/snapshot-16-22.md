@@ -25,5 +25,7 @@
 
 ## Limitaciones
 
+> **Nota (2026-11-19):** esta lista refleja el estado al cerrar la fase. Lo que sigue abierto, con su prioridad, está en la [hoja de ruta](../roadmap.md); lo resuelto después se marca abajo con la fase que lo resolvió.
+
 - El catálogo de objetos solo se ha contrastado con Data Dragon; los efectos con fuente secundaria podrían haber cambiado en 16.21–16.22 sin reflejo en las descripciones.
 - Otros campeones con cambios en 16.22.1 no tienen documentación en la base de conocimiento, así que no hay nada más que actualizar.

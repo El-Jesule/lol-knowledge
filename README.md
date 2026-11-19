@@ -2,7 +2,7 @@
 
 Base de conocimiento verificable de League of Legends: datos oficiales de Riot (Data Dragon), análisis con fuente declarada y una CLI en Python que ingesta, valida y calcula de forma reproducible.
 
-Estado actual: **fase 33**. Existen la ingesta, el validador de integridad, dos campeones con kit (Zaahen y Ahri), el extractor de cálculos y el lector del bin del cliente en `research/`, un modelo mecánico de objetos versionado (estadísticas de los 218 objetos comprables de la Grieta, efectos curados en 29, entre ellos el daño al impactar de seis objetos, Hoja encantada de siete, efectos cada N ataques y de Vigor, efectos según la vida del objetivo, quemaduras y el amplificador de Rabadon; las acumulaciones permanentes se calculan al máximo y las temporales de combate, desde 0 en las rotaciones; valores, cálculos y textos del cliente de los 218 en `lol-knowledge/derived/item-effects.json`), el núcleo del motor de daño (mitigación por resistencias), la hoja de estadísticas de campeón (todas sus estadísticas resueltas, incluidas la velocidad de ataque con el ratio del cliente, la probabilidad de crítico, la tenacidad, la regeneración y la velocidad de movimiento) con sus primeras métricas (vida efectiva y enfriamientos) y una tabla de estadísticas base y por nivel extraída del cliente para los 173 campeones. El primer kit de habilidades (Zaahen) se evalúa con `python -m lol_knowledge ability`, que encadena hoja de estadísticas, habilidad y mitigación contra un objetivo. `python -m lol_knowledge rotation` encadena ataques básicos, críticos y habilidades con los efectos de objeto evaluables (daño al impactar, aumentos y reducciones de daño) y lleva la vida del objetivo de un paso a otro, con la curación del atacante por robo de vida y omnivampirismo.
+Estado actual: **fase 34**. Existen la ingesta, el validador de integridad, dos campeones con kit (Zaahen y Ahri), el extractor de cálculos y el lector del bin del cliente en `research/`, un modelo mecánico de objetos versionado (estadísticas de los 218 objetos comprables de la Grieta, efectos curados en 42, entre ellos el daño al impactar de seis objetos, Hoja encantada de siete, efectos cada N ataques y de Vigor, efectos según la vida del objetivo, quemaduras y el amplificador de Rabadon; las acumulaciones permanentes se calculan al máximo y las temporales de combate, desde 0 en las rotaciones; valores, cálculos y textos del cliente de los 218 en `lol-knowledge/derived/item-effects.json`), el núcleo del motor de daño (mitigación por resistencias), la hoja de estadísticas de campeón (todas sus estadísticas resueltas, incluidas la velocidad de ataque con el ratio del cliente, la probabilidad de crítico, la tenacidad, la regeneración y la velocidad de movimiento) con sus primeras métricas (vida efectiva y enfriamientos) y una tabla de estadísticas base y por nivel extraída del cliente para los 173 campeones. El primer kit de habilidades (Zaahen) se evalúa con `python -m lol_knowledge ability`, que encadena hoja de estadísticas, habilidad y mitigación contra un objetivo. `python -m lol_knowledge rotation` encadena ataques básicos, críticos y habilidades con los efectos de objeto evaluables (daño al impactar, aumentos y reducciones de daño) y lleva la vida del objetivo de un paso a otro, con la curación del atacante por robo de vida y omnivampirismo.
 
 ## Requisitos
 
@@ -130,7 +130,7 @@ parts = ability_damage(kit, "E", 5, sheet, case="edge", target={"max_health": 25
 
 - El kit se genera con `python -m binmodel.kitgen` desde los árboles del bin y el marcado de los tooltips; la estructura de casos se cura en `research/kits/<Id>.spec.json`.
 - `validate` comprueba el esquema, el campeón y que el número de rangos coincida con Data Dragon.
-- Solo existe el kit de Zaahen.
+- Hay kit de Zaahen y de Ahri; los demás campeones no tienen kit todavía ([hoja de ruta](odd/roadmap.md), CH-01).
 
 ## Daño de una habilidad contra un objetivo
 
@@ -204,7 +204,7 @@ Los checksums dependen de los bytes exactos: `.gitattributes` fija `eol=lf` para
 
 ## Aviso legal
 
-Este proyecto es una base de conocimiento no comercial. Incluye datos oficiales de Data Dragon y, para Zaahen, valores derivados de los datos del cliente publicados por CommunityDragon, marcados como `Derivado`. No se redistribuyen archivos originales del cliente.
+Este proyecto es una base de conocimiento no comercial. Incluye datos oficiales de Data Dragon y valores derivados de los datos del cliente, marcados `Derivado`: los de Zaahen, de los archivos del cliente 16.20 publicados por CommunityDragon; los de Ahri, los registros de estadísticas de los 173 campeones ([`champion-records.json`](lol-knowledge/derived/champion-records.json)) y los efectos de los objetos ([`item-effects.json`](lol-knowledge/derived/item-effects.json)), del cliente instalado 16.22, leído con `research/binmodel`. No se redistribuyen archivos originales del cliente.
 
 > LoL-Knowledge isn't endorsed by Riot Games and doesn't reflect the views or opinions of Riot Games or anyone officially involved in producing or managing Riot Games properties. Riot Games, and all associated properties are trademarks or registered trademarks of Riot Games, Inc.
 
@@ -213,15 +213,15 @@ Condiciones de uso y cuestiones pendientes: [`research/evidence/usage-conditions
 ## Limitaciones conocidas
 
 - No hay integración con la Riot API ni claves de API.
-- No hay estadísticas comunitarias; para Zaahen se publican valores derivados de datos del cliente, marcados `Derivado` y con atribución.
-- No hay CI ni publicación remota.
+- No hay estadísticas comunitarias (tasa de victorias, builds populares). Los valores derivados del cliente se marcan `Derivado` y llevan atribución.
+- No hay CI: las validaciones se ejecutan a mano.
 - Data Dragon (16.20.1 y 16.22.1) publica `attackdamageperlevel = 0` para todos los campeones. Se sustituye por el crecimiento del cliente 16.22, `Derivado` porque cliente y snapshot coinciden. Senna no tiene el campo en el bin y su DA queda bloqueado por encima del nivel 1.
-- La hoja de estadísticas no incluye runas, efectos de objeto ni pasivas de campeón, y no valida la legalidad de una build (objetos únicos, botas).
-- `ability` calcula un lanzamiento sin efectos de objeto; para críticos y efectos de objeto está `rotation`. Ninguno de los dos simula tiempo, velocidad de ataque, reducciones de resistencia del objetivo ni escudos; `rotation` informa la curación por robo de vida y omnivampirismo, pero no la vida del atacante. Solo Zaahen tiene kit.
+- La hoja de estadísticas no incluye runas ni pasivas de campeón; de los efectos de objeto solo aplica los de estadística permanentes (`always`) y las acumulaciones permanentes al máximo. No valida la legalidad de una build (objetos únicos, botas).
+- `ability` calcula un lanzamiento sin efectos de objeto ni tiempo; para críticos, efectos de objeto y tiempo está `rotation`, cuya línea de tiempo (`--timeline`) separa los ataques por la velocidad de ataque, respeta los enfriamientos y aplica los efectos con duración. No hay tiempos de lanzamiento, animaciones ni viaje de proyectiles. Ninguno de los dos admite reducciones de resistencia de habilidades ni escudos; `rotation` informa la curación por robo de vida y omnivampirismo, pero no la vida del atacante ni los costes de maná. Solo Zaahen y Ahri tienen kit.
 - El núcleo de mitigación trata una instancia; `rotation` añade críticos y modificadores porcentuales de daño. No se modelan escudos, reducciones planas de daño, la penetración de armadura adicional ni el redondeo del juego.
 - Data Dragon no publica valores numéricos de las habilidades de Zaahen; los valores derivados están documentados y las discrepancias abiertas siguen como pendientes.
 - La cobertura de campeones empieza por un caso representativo y crece de forma incremental.
-- El modelo de objetos tiene las estadísticas de los 218 objetos comprables de la Grieta, generadas desde la descripción con `python -m lol_knowledge.objects --generate-stats`; los efectos solo están curados en 16 objetos, y una rotación con un objeto sin efectos revisados queda `Pendiente de verificación`. Las cifras que Data Dragon no publica solo se incorporan con una fuente citada: la wiki (`secondary`) y, cuando coinciden, los datos del cliente 16.22 (`corroborated`). Lo no verificado se marca como desconocido o parcial, no se inventa.
+- El modelo de objetos tiene las estadísticas de los 218 objetos comprables de la Grieta, generadas desde la descripción con `python -m lol_knowledge.objects --generate-stats`; los efectos solo están curados en 42 objetos, y una rotación con un objeto sin efectos revisados queda `Pendiente de verificación`. Las cifras que Data Dragon no publica solo se incorporan con una fuente citada: la wiki (`secondary`) y, cuando coinciden, los datos del cliente 16.22 (`corroborated`). Lo no verificado se marca como desconocido o parcial, no se inventa.
 
 ## Flujo de trabajo
 

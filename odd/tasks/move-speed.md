@@ -22,5 +22,7 @@
 
 ## Limitaciones
 
+> **Nota (2026-11-19):** esta lista refleja el estado al cerrar la fase. Lo que sigue abierto, con su prioridad, está en la [hoja de ruta](../roadmap.md); lo resuelto después se marca abajo con la fase que lo resolvió.
+
 - Aportes multiplicativos, ralentizaciones y resistencia a ralentizaciones: no modelados; no hay ninguno en el catálogo.
 - Ningún objeto del catálogo da velocidad porcentual; ese camino solo está probado con objetos sintéticos.

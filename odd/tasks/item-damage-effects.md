@@ -34,6 +34,8 @@ Los efectos que encajan en lo que el motor ya aplica (daño al impactar, estadí
 
 ## Limitaciones
 
+> **Nota (2026-11-19):** esta lista refleja el estado al cerrar la fase. Lo que sigue abierto, con su prioridad, está en la [hoja de ruta](../roadmap.md); lo resuelto después se marca abajo con la fase que lo resolvió.
+
 - Valores por nivel en fórmulas de objeto: no existen todavía (resistencias de El final).
 - Las rotaciones no cuentan ataques ni tiempo: Hoja encantada, cada tercer ataque y Ráfaga siguen fuera.
 - 152 objetos con efectos siguen `pending`.

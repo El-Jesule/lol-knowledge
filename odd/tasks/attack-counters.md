@@ -25,6 +25,8 @@
 
 ## Limitaciones
 
-- Kraken: falta el aumento por la vida que le falta al objetivo (siguiente mecánica).
+> **Nota (2026-11-19):** esta lista refleja el estado al cerrar la fase. Lo que sigue abierto, con su prioridad, está en la [hoja de ruta](../roadmap.md); lo resuelto después se marca abajo con la fase que lo resolvió.
+
+- Kraken: falta el aumento por la vida que le falta al objetivo (siguiente mecánica). *Resuelto en la fase 27.*
 - Statikk: el rayo no se aplica (no consta si alcanza al objetivo atacado).
-- Ventanas de tiempo y recarga del Vigor, sin modelar.
+- Ventanas de tiempo y recarga del Vigor, sin modelar. *Ventanas resueltas en las fases 29 a 31; la recarga del Vigor sigue abierta (OBJ-04).*

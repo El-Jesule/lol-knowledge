@@ -23,6 +23,8 @@
 
 ## Limitaciones
 
+> **Nota (2026-11-19):** esta lista refleja el estado al cerrar la fase. Lo que sigue abierto, con su prioridad, está en la [hoja de ruta](../roadmap.md); lo resuelto después se marca abajo con la fase que lo resolvió.
+
 - Las cifras no dicen cómo se aplican; cada efecto sigue necesitando un modelo curado.
 - Varias activas leen sus valores de otro registro, que no se sigue.
 - Hay que regenerarlo en cada parche desde el cliente.

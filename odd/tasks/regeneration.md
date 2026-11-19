@@ -26,5 +26,7 @@
 
 ## Limitaciones
 
+> **Nota (2026-11-19):** esta lista refleja el estado al cerrar la fase. Lo que sigue abierto, con su prioridad, está en la [hoja de ruta](../roadmap.md); lo resuelto después se marca abajo con la fase que lo resolvió.
+
 - Multiplicadores de regeneración (poder de curación y escudos, Rostro espiritual), regeneración por vida o maná máximos, y regeneración de otros recursos: no modelados.
 - La unidad de `FlatHPRegenMod` es una deducción de los datos (`Derivado`); ninguna fuente de Riot la documenta.
