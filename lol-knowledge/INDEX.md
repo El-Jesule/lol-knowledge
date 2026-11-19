@@ -43,6 +43,7 @@
 | Ver las estadísticas base y por nivel extraídas del cliente | [champion-records.json](derived/champion-records.json) |
 | Ver los valores, cálculos y textos de los efectos de los objetos, del cliente | [item-effects.json](derived/item-effects.json) |
 | Ver el catálogo curado de objetos | [catalog.json](objects/catalog.json) |
+| Saber si unos objetos pueden ir juntos (únicos, botas, grupos exclusivos, huecos) | [Legalidad de la build](mechanics/build-legality.md) y [item-groups.json](derived/item-groups.json) |
 | Ver la evidencia de las mecánicas de objetos | [Informe de mecánicas](../research/reports/object-mechanics-2026-10-20.md) |
 | Continuar la investigación de datos de Zaahen | [Documento de continuidad](../research/zaahen-research-handoff.md) |
 

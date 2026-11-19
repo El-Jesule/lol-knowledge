@@ -109,7 +109,7 @@ El motor debe servir también para vida, resistencias, curación y supervivencia
 - [ ] **OBJ-10 (P2)** Inicio de la alternancia de El final (se supone luminoso) y si las acumulaciones de Kraken se renuevan con cada golpe al campeón ([`combat-stacks.md`](../lol-knowledge/mechanics/combat-stacks.md), [`timeline.md`](../lol-knowledge/mechanics/timeline.md)).
 - [ ] **OBJ-11 (P2)** Pendiente lineal de Verdugo de gigantes: solo hay fuente secundaria ([`damage-modifiers.md`](../lol-knowledge/mechanics/damage-modifiers.md)).
 - [ ] **OBJ-12 (P3)** Consumibles, centinelas, trinkets, generación de oro, compañeros de jungla, mejoras de Ornn y variantes de otros modos: fuera de alcance declarado; decidir si entran.
-- [ ] **OBJ-13 (P1)** Legalidad de la build: objetos únicos, un solo par de botas, grupos exclusivos y número de huecos. La hoja no lo valida ([`README.md`](../README.md)). Es imprescindible para el optimizador.
+- [x] **OBJ-13 (P1)** *Hecho en la fase 36: grupos del cliente en `item-groups.json`, regla en [`build-legality.md`](../lol-knowledge/mechanics/build-legality.md) y comprobación en `stats`, `ability` y `rotation`.* Legalidad de la build: objetos únicos, un solo par de botas, grupos exclusivos y número de huecos. La hoja no lo valida ([`README.md`](../README.md)). Es imprescindible para el optimizador.
 
 ## 6. Campeones
 
