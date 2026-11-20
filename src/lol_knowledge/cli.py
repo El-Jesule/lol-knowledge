@@ -220,6 +220,13 @@ def _add_target_options(command: argparse.ArgumentParser) -> None:
         help="What the manual target is; effects that depend on it need it.",
     )
     command.add_argument("--target-current-health", help="Target current health.")
+    command.add_argument("--target-shield", help="Target shield amount (rotation).")
+    command.add_argument(
+        "--target-shield-type",
+        choices=("normal", "physical", "magic"),
+        default="normal",
+        help="Target shield type: normal (all damage), physical or magic.",
+    )
 
 
 def _add_build_option(command: argparse.ArgumentParser) -> None:
@@ -551,7 +558,10 @@ def _ability_target(args: argparse.Namespace, root: Path, issues, derived):
         )
         _check_build(root, args.target_item, champion, allow=args.allow_illegal_build, who="target")
         current = _number(args.target_current_health, "--target-current-health")
-        return target_from_sheet(sheet, current_health=current)
+        shield = _number(args.target_shield, "--target-shield")
+        return target_from_sheet(
+            sheet, current_health=current, shield=shield, shield_type=args.target_shield_type
+        )
     if args.target_level is not None or args.target_item:
         raise StatsError("--target-level and --target-item need --target-champion")
     if args.target_armor is None or args.target_mr is None:
@@ -563,6 +573,8 @@ def _ability_target(args: argparse.Namespace, root: Path, issues, derived):
         current_health=_number(args.target_current_health, "--target-current-health"),
         bonus_health=_number(args.target_bonus_health, "--target-bonus-health"),
         kind=args.target_kind,
+        shield=_number(args.target_shield, "--target-shield"),
+        shield_type=args.target_shield_type,
     )
 
 

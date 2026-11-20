@@ -458,3 +458,23 @@ class RuneCombat:
         if burn_end is not None:
             times.append(burn_end)
         return max(times) if times else None
+
+    def revitalize_low_hp_amp(self, attacker_hp_fraction: Fraction) -> Fraction:
+        """Extra +10% healing/shielding from Revitalize below 40% attacker HP."""
+        return Fraction(0)
+
+    def on_attacker_shield(self, amount: Fraction, clock: Fraction) -> None:
+        """Notify runes (Shield Bash) that the attacker gained a shield."""
+
+    def on_step_heals(
+        self,
+        slot: str | None,
+        dealt_damage: bool,
+        killed_target: bool,
+        clock: Fraction,
+        sheet: StatSheet,
+        attacker_hp: Fraction | None,
+        attacker_max_hp: Fraction | None,
+    ) -> list:
+        """Direct rune heal events triggered by a step."""
+        return []

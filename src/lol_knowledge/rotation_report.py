@@ -9,6 +9,7 @@ from .damage import format_number, format_percent
 from .rotation import RULES, CritBase, Healing, Part, RotationOutcome
 from .scenario import Target
 from .stats import StatSheet
+from .survival import HealEvent, ShieldEvent
 
 RESULT_LABEL = "Calculado"
 
@@ -69,6 +70,32 @@ def _part_line(part: Part, heals: bool) -> list[str]:
     return lines
 
 
+def _heal_event_dict(event: HealEvent) -> dict[str, Any]:
+    return {
+        "source": event.source,
+        "raw": float(event.raw),
+        "amount": float(event.amount),
+        "exact_amount": str(event.amount),
+        "uses_hsp": event.uses_hsp,
+        "grievous_applied": event.grievous_applied,
+        "label": event.label.value,
+        "notes": list(event.notes),
+    }
+
+
+def _shield_event_dict(event: ShieldEvent) -> dict[str, Any]:
+    return {
+        "source": event.source,
+        "raw": float(event.raw),
+        "amount": float(event.amount),
+        "exact_amount": str(event.amount),
+        "shield_type": event.shield_type,
+        "duration": None if event.duration is None else float(event.duration),
+        "label": event.label.value,
+        "notes": list(event.notes),
+    }
+
+
 def format_text(
     outcome: RotationOutcome, sheet: StatSheet, target: Target, crit_base: CritBase | None
 ) -> str:
@@ -83,37 +110,85 @@ def format_text(
         f"target health: {format_number(outcome.start_health)} / "
         f"{format_number(outcome.max_health)}",
     ]
+    if outcome.start_shield > 0:
+        lines.append(
+            f"target shield: {format_number(outcome.start_shield)} ({outcome.shield_type})"
+        )
     if crit_base is not None and any(step.step.crit for step in outcome.steps):
         lines.append(
             f"critical multiplier: {format_number(crit_base.value)} [{crit_base.label.value}] "
             f"({crit_base.source})"
         )
     heals = bool(sheet["life_steal"].total() or sheet["omnivamp"].total() or outcome.healing)
-    if heals:
+    hsp = sheet["heal_and_shield_power"]
+    if heals or hsp.total() or outcome.total_shield_granted:
+        extra_hsp = (
+            f", heal & shield power: {_percent(hsp.total())} [{hsp.label.value}]"
+            if hsp.total()
+            else ""
+        )
         lines.append(
             f"life steal: {_percent(sheet['life_steal'].total())} "
             f"[{sheet['life_steal'].label.value}], omnivamp: "
-            f"{_percent(sheet['omnivamp'].total())} [{sheet['omnivamp'].label.value}]"
+            f"{_percent(sheet['omnivamp'].total())} [{sheet['omnivamp'].label.value}]{extra_hsp}"
         )
+    if outcome.grievous_wounds_applied:
+        lines.append("grievous wounds: applied (-40% healing)")
     for step in outcome.steps:
         at = "" if step.time is None else f" at {format_number(step.time)} s"
+        shield_str = (
+            f", shield {format_number(step.shield_before)}" if outcome.start_shield > 0 else ""
+        )
         lines.append(
             f"step {step.index} {step.step.text} ({step.name}){at}: "
-            f"health {format_number(step.health_before)}"
+            f"health {format_number(step.health_before)}{shield_str}"
         )
         for part in step.parts:
             lines += _part_line(part, heals)
+        for event in step.heal_events:
+            lines.append(
+                f"    effect heal: {format_number(event.amount)} [{event.label.value}] "
+                f"({event.source})"
+            )
+            lines += [f"      heal note: {note}" for note in event.notes]
+        for event in step.shield_events:
+            lines.append(
+                f"    attacker shield: {format_number(event.amount)} ({event.shield_type}) "
+                f"[{event.label.value}] ({event.source})"
+            )
+            lines += [f"      shield note: {note}" for note in event.notes]
+        absorbed_str = (
+            f" (shield absorbed {format_number(step.shield_absorbed)} -> "
+            f"shield {format_number(step.shield_after)})"
+            if outcome.start_shield > 0
+            else ""
+        )
         lines.append(
-            f"  step total {format_number(step.total)} -> health {format_number(step.health_after)}"
+            f"  step total {format_number(step.total)}{absorbed_str} -> "
+            f"health {format_number(step.health_after)}"
         )
         if heals:
             lines.append(f"  step heal {format_number(step.healing)} [{step.healing_label.value}]")
             lines += [f"  heal note: {note}" for note in step.healing_notes]
     lines.append(f"total: {format_number(outcome.total)}")
+    if outcome.start_shield > 0:
+        lines.append(
+            f"shield absorbed: {format_number(outcome.total_shield_absorbed)}, "
+            f"remaining shield: {format_number(outcome.remaining_shield)}"
+        )
     if heals:
         lines.append(
             f"total heal: {format_number(outcome.healing)} [{outcome.healing_label.value}]"
         )
+    if outcome.effective_healing is not None and outcome.attacker_max_health is not None:
+        lines.append(
+            f"effective heal: {format_number(outcome.effective_healing)} "
+            f"(attacker health {format_number(outcome.attacker_start_health or 0)} -> "
+            f"{format_number(outcome.attacker_remaining_health or 0)} / "
+            f"{format_number(outcome.attacker_max_health)})"
+        )
+    if outcome.total_shield_granted > 0:
+        lines.append(f"total attacker shield: {format_number(outcome.total_shield_granted)}")
     lines.append(f"remaining health: {format_number(outcome.remaining_health)}")
     if outcome.timeline is not None:
         lines.append(
@@ -176,6 +251,10 @@ def to_dict(
                 "value": float(sheet["omnivamp"].total()),
                 "label": sheet["omnivamp"].label.value,
             },
+            "heal_and_shield_power": {
+                "value": float(sheet["heal_and_shield_power"].total()),
+                "label": sheet["heal_and_shield_power"].label.value,
+            },
             "critical_multiplier": None
             if crit_base is None
             else {
@@ -190,6 +269,8 @@ def to_dict(
             "armor": float(target.armor),
             "magic_resist": float(target.magic_resist),
             "stats": {key: float(value) for key, value in target.stats.items()},
+            "shield": float(target.shield),
+            "shield_type": target.shield_type,
             "items": [item.id for item in target.items],
             "label": target.label.value,
         },
@@ -200,6 +281,9 @@ def to_dict(
                 "name": step.name,
                 "time": None if step.time is None else float(step.time),
                 "health_before": float(step.health_before),
+                "shield_before": float(step.shield_before),
+                "shield_absorbed": float(step.shield_absorbed),
+                "shield_after": float(step.shield_after),
                 "total": float(step.total),
                 "exact_total": str(step.total),
                 "health_after": float(step.health_after),
@@ -208,6 +292,8 @@ def to_dict(
                 "exact_healing": str(step.healing),
                 "healing_label": step.healing_label.value,
                 "healing_notes": list(step.healing_notes),
+                "heal_events": [_heal_event_dict(ev) for ev in step.heal_events],
+                "shield_events": [_shield_event_dict(ev) for ev in step.shield_events],
                 "parts": [_part_dict(part) for part in step.parts],
             }
             for step in outcome.steps
@@ -215,6 +301,20 @@ def to_dict(
         "total": float(outcome.total),
         "exact_total": str(outcome.total),
         "remaining_health": float(outcome.remaining_health),
+        "shield_absorbed": float(outcome.total_shield_absorbed),
+        "remaining_shield": float(outcome.remaining_shield),
+        "total_shield_granted": float(outcome.total_shield_granted),
+        "grievous_wounds_applied": outcome.grievous_wounds_applied,
+        "effective_healing": None
+        if outcome.effective_healing is None
+        else float(outcome.effective_healing),
+        "attacker_health": None
+        if outcome.attacker_max_health is None
+        else {
+            "start": float(outcome.attacker_start_health or 0),
+            "remaining": float(outcome.attacker_remaining_health or 0),
+            "max": float(outcome.attacker_max_health),
+        },
         "timeline": None
         if outcome.timeline is None
         else {

@@ -143,7 +143,10 @@ def test_dusk_and_dawn_repeats_the_on_hit_effects_as_pending():
     data = sheet("2510", "3115")
     expected = data["attack_damage"].scoped("base") * F("0.75")
     assert spellblade_part(step).raw == expected + data["ability_power"].total() / 10
-    assert "attacker 2510 dusk-heal: excluded, not applied" in outcome.notes
+    expected_heal = data["ability_power"].total() / 10 + data["health"].scoped("bonus") * F(3, 100)
+    assert len(step.heal_events) == 1
+    assert step.heal_events[0].amount == expected_heal
+    assert step.heal_events[0].label is Label.DERIVED
 
 
 def test_bloodsong_mark_needs_the_timeline_and_weakens_the_rotation():
