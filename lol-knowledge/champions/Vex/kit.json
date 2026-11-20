@@ -1,0 +1,309 @@
+{
+  "schema": "lol-champion-kit/1",
+  "champion": "Vex",
+  "label": "Derivado",
+  "game_version": "16.23",
+  "content_version": "16.23.8406595+branch.releases-16-23.content.release",
+  "verified_against": {
+    "content_version": "16.23.8406595+branch.releases-16-23.content.release",
+    "bin_sha256": "6b60807ce10414dc8bd779b8622d24a3a005fd5e45b896e3d75579562f6eb5da",
+    "evidence": "odd/tasks/champion-kits-wave-2.md",
+    "result": "Bin del cliente 16.23 convertido con python -m binmodel.batch_kits y compilado con esta especificación curada (CH-01 oleada 2)"
+  },
+  "source": "Árboles de cálculo del bin del cliente (python -m binmodel) y marcado de los tooltips del cliente; estructura de casos curada en research/kits/",
+  "abilities": {
+    "P": {
+      "name": "Miseria y pesimismo",
+      "max_rank": 1,
+      "cases": [
+        {
+          "id": "gloom",
+          "name": "Consumo de marca de Pesimismo",
+          "parts": [
+            {
+              "damage_type": "magic",
+              "formula": {
+                "op": "add",
+                "operands": [
+                  {
+                    "op": "linear_by_level",
+                    "min": 40,
+                    "max": 150
+                  },
+                  {
+                    "op": "mul",
+                    "operands": [
+                      {
+                        "op": "constant",
+                        "value": 0.25
+                      },
+                      {
+                        "op": "stat",
+                        "stat": "ability_power",
+                        "scope": "total"
+                      }
+                    ]
+                  }
+                ]
+              },
+              "label": "Derivado",
+              "source": "Characters/Vex/Spells/VexPAbility/VexP.mSpellCalculations.GloomProcCalc (16.23.8406595+branch.releases-16-23.content.release)",
+              "damage_type_source": "spell_vexp_tooltip <magicDamage>"
+            }
+          ]
+        }
+      ],
+      "passive_stats": [],
+      "not_modelled": [
+        "Terror de Fatalidad (FearDuration, DoomCD) y reducción contra súbditos (GloomMinionMod)"
+      ]
+    },
+    "Q": {
+      "name": "Proyectil mistral",
+      "max_rank": 5,
+      "cases": [
+        {
+          "id": "bolt",
+          "name": "Oleada de niebla",
+          "parts": [
+            {
+              "damage_type": "magic",
+              "formula": {
+                "op": "add",
+                "operands": [
+                  {
+                    "op": "by_rank",
+                    "values": [
+                      70,
+                      115,
+                      160,
+                      205,
+                      250
+                    ]
+                  },
+                  {
+                    "op": "mul",
+                    "operands": [
+                      {
+                        "op": "constant",
+                        "value": 0.7
+                      },
+                      {
+                        "op": "stat",
+                        "stat": "ability_power",
+                        "scope": "total"
+                      }
+                    ]
+                  }
+                ]
+              },
+              "label": "Derivado",
+              "source": "Characters/Vex/Spells/VexQAbility/VexQ.mSpellCalculations.QDamageCalc (16.23.8406595+branch.releases-16-23.content.release)",
+              "damage_type_source": "spell_vexq_tooltip <magicDamage>"
+            }
+          ]
+        }
+      ],
+      "passive_stats": [],
+      "not_modelled": []
+    },
+    "W": {
+      "name": "Espacio personal",
+      "max_rank": 5,
+      "cases": [
+        {
+          "id": "pulse",
+          "name": "Onda de choque",
+          "parts": [
+            {
+              "damage_type": "magic",
+              "formula": {
+                "op": "add",
+                "operands": [
+                  {
+                    "op": "by_rank",
+                    "values": [
+                      80,
+                      120,
+                      160,
+                      200,
+                      240
+                    ]
+                  },
+                  {
+                    "op": "mul",
+                    "operands": [
+                      {
+                        "op": "constant",
+                        "value": 0.3
+                      },
+                      {
+                        "op": "stat",
+                        "stat": "ability_power",
+                        "scope": "total"
+                      }
+                    ]
+                  }
+                ]
+              },
+              "label": "Derivado",
+              "source": "Characters/Vex/Spells/VexWAbility/VexW.mSpellCalculations.WDamageCalc (16.23.8406595+branch.releases-16-23.content.release)",
+              "damage_type_source": "spell_vexw_tooltip <magicDamage>"
+            }
+          ]
+        }
+      ],
+      "passive_stats": [],
+      "not_modelled": [
+        "Escudo (ShieldCalc)"
+      ]
+    },
+    "E": {
+      "name": "Oscuridad amenazante",
+      "max_rank": 5,
+      "cases": [
+        {
+          "id": "zone",
+          "name": "Explosión en área",
+          "parts": [
+            {
+              "damage_type": "magic",
+              "formula": {
+                "op": "add",
+                "operands": [
+                  {
+                    "op": "by_rank",
+                    "values": [
+                      50,
+                      70,
+                      90,
+                      110,
+                      130
+                    ]
+                  },
+                  {
+                    "op": "mul",
+                    "operands": [
+                      {
+                        "op": "by_rank",
+                        "values": [
+                          0.4,
+                          0.45,
+                          0.5,
+                          0.55,
+                          0.6
+                        ]
+                      },
+                      {
+                        "op": "stat",
+                        "stat": "ability_power",
+                        "scope": "total"
+                      }
+                    ]
+                  }
+                ]
+              },
+              "label": "Derivado",
+              "source": "Characters/Vex/Spells/VexEAbility/VexE.mSpellCalculations.EDamageCalc (16.23.8406595+branch.releases-16-23.content.release)",
+              "damage_type_source": "spell_vexe_tooltip <magicDamage>"
+            }
+          ]
+        }
+      ],
+      "passive_stats": [],
+      "not_modelled": [
+        "Ralentización y aplicación de Pesimismo"
+      ]
+    },
+    "R": {
+      "name": "Estallido sombrío",
+      "max_rank": 3,
+      "cases": [
+        {
+          "id": "bolt",
+          "name": "Proyectil inicial (R1)",
+          "parts": [
+            {
+              "damage_type": "magic",
+              "formula": {
+                "op": "add",
+                "operands": [
+                  {
+                    "op": "by_rank",
+                    "values": [
+                      75,
+                      125,
+                      175
+                    ]
+                  },
+                  {
+                    "op": "mul",
+                    "operands": [
+                      {
+                        "op": "constant",
+                        "value": 0.2
+                      },
+                      {
+                        "op": "stat",
+                        "stat": "ability_power",
+                        "scope": "total"
+                      }
+                    ]
+                  }
+                ]
+              },
+              "label": "Derivado",
+              "source": "Characters/Vex/Spells/VexRAbility/VexR.mSpellCalculations.RDamageCalc (16.23.8406595+branch.releases-16-23.content.release)",
+              "damage_type_source": "spell_vexr_tooltip <magicDamage>"
+            }
+          ]
+        },
+        {
+          "id": "recast",
+          "name": "Reactivación: deslizamiento (R2)",
+          "parts": [
+            {
+              "damage_type": "magic",
+              "formula": {
+                "op": "add",
+                "operands": [
+                  {
+                    "op": "by_rank",
+                    "values": [
+                      150,
+                      250,
+                      350
+                    ]
+                  },
+                  {
+                    "op": "mul",
+                    "operands": [
+                      {
+                        "op": "constant",
+                        "value": 0.5
+                      },
+                      {
+                        "op": "stat",
+                        "stat": "ability_power",
+                        "scope": "total"
+                      }
+                    ]
+                  }
+                ]
+              },
+              "label": "Derivado",
+              "source": "Characters/Vex/Spells/VexRAbility/VexR.mSpellCalculations.RecastDamageCalc (16.23.8406595+branch.releases-16-23.content.release)",
+              "damage_type_source": "spell_vexr_tooltip <magicDamage>"
+            }
+          ],
+          "recast": true
+        }
+      ],
+      "passive_stats": [],
+      "not_modelled": [
+        "Reinicio temporal del enfriamiento al derribar al campeón marcado"
+      ],
+      "recast_window_seconds": 4
+    }
+  }
+}

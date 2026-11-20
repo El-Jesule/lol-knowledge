@@ -1,0 +1,118 @@
+{
+  "champion": "Fizz",
+  "game_version": "16.23",
+  "verified_against": {
+    "content_version": "16.23.8406595+branch.releases-16-23.content.release",
+    "bin_sha256": "8be835281ec7d06232c7795568e29248729161d52a3555a1104dc613173cc36e",
+    "evidence": "odd/tasks/champion-kits-wave-2.md",
+    "result": "Bin del cliente 16.23 convertido con python -m binmodel.batch_kits y compilado con esta especificación curada (CH-01 oleada 2)"
+  },
+  "abilities": {
+    "P": {
+      "name": "Luchador ágil",
+      "max_rank": 1,
+      "not_modelled": [
+        "Reducción plana de daño recibido (DamageReductionCalc) y movimiento fantasmal"
+      ]
+    },
+    "Q": {
+      "name": "Golpe de erizo de mar",
+      "tooltip": "spell_fizzq_tooltip",
+      "cases": [
+        {
+          "id": "physical_part",
+          "name": "Parte física (100 % DA)",
+          "parts": [
+            {
+              "calculation": "TotalDamage"
+            }
+          ]
+        }
+      ],
+      "not_modelled": [
+        "Parte mágica adicional (QDamage usa EffectValueCalculationPart en el bin) y aplicación de efectos al impactar"
+      ]
+    },
+    "W": {
+      "name": "Tridente piedramar",
+      "tooltip": "spell_fizzw_tooltip",
+      "cases": [
+        {
+          "id": "bleed",
+          "name": "Pasiva: sangrado completo (3 s)",
+          "parts": [
+            {
+              "calculation": "DoTDamage"
+            }
+          ]
+        },
+        {
+          "id": "active",
+          "name": "Activa: siguiente ataque",
+          "parts": [
+            {
+              "calculation": "ActiveDamage"
+            }
+          ]
+        },
+        {
+          "id": "on_hit",
+          "name": "Daño mágico al impactar (5 s)",
+          "parts": [
+            {
+              "calculation": "OnHitBuffDamage"
+            }
+          ]
+        }
+      ],
+      "not_modelled": [
+        "Devolución de maná y enfriamiento al matar con la activa"
+      ]
+    },
+    "E": {
+      "name": "Juguetón / Gamberro",
+      "tooltip": "spell_fizze_tooltip",
+      "cases": [
+        {
+          "id": "splash",
+          "name": "Caída",
+          "parts": [
+            {
+              "calculation": "EDamage"
+            }
+          ]
+        }
+      ],
+      "not_modelled": [
+        "Inalcanzabilidad y ralentización (solo sin reactivar)"
+      ]
+    },
+    "R": {
+      "name": "Carnaza para tiburones",
+      "tooltip": "spell_fizzr_tooltip",
+      "cases": [
+        {
+          "id": "small",
+          "name": "Tiburón pequeño (corta distancia)",
+          "parts": [
+            {
+              "calculation": "SmallSharkDamage"
+            }
+          ]
+        },
+        {
+          "id": "big",
+          "name": "Tiburón grande (larga distancia)",
+          "parts": [
+            {
+              "calculation": "BigSharkDamage"
+            }
+          ]
+        }
+      ],
+      "not_modelled": [
+        "Tiburón mediano, ralentización y lanzamiento por los aires"
+      ]
+    }
+  }
+}

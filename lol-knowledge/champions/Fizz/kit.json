@@ -1,0 +1,342 @@
+{
+  "schema": "lol-champion-kit/1",
+  "champion": "Fizz",
+  "label": "Derivado",
+  "game_version": "16.23",
+  "content_version": "16.23.8406595+branch.releases-16-23.content.release",
+  "verified_against": {
+    "content_version": "16.23.8406595+branch.releases-16-23.content.release",
+    "bin_sha256": "8be835281ec7d06232c7795568e29248729161d52a3555a1104dc613173cc36e",
+    "evidence": "odd/tasks/champion-kits-wave-2.md",
+    "result": "Bin del cliente 16.23 convertido con python -m binmodel.batch_kits y compilado con esta especificación curada (CH-01 oleada 2)"
+  },
+  "source": "Árboles de cálculo del bin del cliente (python -m binmodel) y marcado de los tooltips del cliente; estructura de casos curada en research/kits/",
+  "abilities": {
+    "P": {
+      "name": "Luchador ágil",
+      "max_rank": 1,
+      "cases": [],
+      "passive_stats": [],
+      "not_modelled": [
+        "Reducción plana de daño recibido (DamageReductionCalc) y movimiento fantasmal"
+      ]
+    },
+    "Q": {
+      "name": "Golpe de erizo de mar",
+      "max_rank": 5,
+      "cases": [
+        {
+          "id": "physical_part",
+          "name": "Parte física (100 % DA)",
+          "parts": [
+            {
+              "damage_type": "physical",
+              "formula": {
+                "op": "mul",
+                "operands": [
+                  {
+                    "op": "constant",
+                    "value": 1
+                  },
+                  {
+                    "op": "stat",
+                    "stat": "attack_damage",
+                    "scope": "total"
+                  }
+                ]
+              },
+              "label": "Derivado",
+              "source": "Characters/Fizz/Spells/FizzQAbility/FizzQ.mSpellCalculations.TotalDamage (16.23.8406595+branch.releases-16-23.content.release)",
+              "damage_type_source": "spell_fizzq_tooltip <physicalDamage>"
+            }
+          ]
+        }
+      ],
+      "passive_stats": [],
+      "not_modelled": [
+        "Parte mágica adicional (QDamage usa EffectValueCalculationPart en el bin) y aplicación de efectos al impactar"
+      ]
+    },
+    "W": {
+      "name": "Tridente piedramar",
+      "max_rank": 5,
+      "cases": [
+        {
+          "id": "bleed",
+          "name": "Pasiva: sangrado completo (3 s)",
+          "parts": [
+            {
+              "damage_type": "magic",
+              "formula": {
+                "op": "add",
+                "operands": [
+                  {
+                    "op": "by_rank",
+                    "values": [
+                      30,
+                      45,
+                      60,
+                      75,
+                      90
+                    ]
+                  },
+                  {
+                    "op": "mul",
+                    "operands": [
+                      {
+                        "op": "constant",
+                        "value": 0.25
+                      },
+                      {
+                        "op": "stat",
+                        "stat": "ability_power",
+                        "scope": "total"
+                      }
+                    ]
+                  }
+                ]
+              },
+              "label": "Derivado",
+              "source": "Characters/Fizz/Spells/FizzWAbility/FizzW.mSpellCalculations.DoTDamage (16.23.8406595+branch.releases-16-23.content.release)",
+              "damage_type_source": "spell_fizzw_tooltip <magicDamage>"
+            }
+          ]
+        },
+        {
+          "id": "active",
+          "name": "Activa: siguiente ataque",
+          "parts": [
+            {
+              "damage_type": "magic",
+              "formula": {
+                "op": "add",
+                "operands": [
+                  {
+                    "op": "by_rank",
+                    "values": [
+                      50,
+                      75,
+                      100,
+                      125,
+                      150
+                    ]
+                  },
+                  {
+                    "op": "mul",
+                    "operands": [
+                      {
+                        "op": "constant",
+                        "value": 0.45
+                      },
+                      {
+                        "op": "stat",
+                        "stat": "ability_power",
+                        "scope": "total"
+                      }
+                    ]
+                  }
+                ]
+              },
+              "label": "Derivado",
+              "source": "Characters/Fizz/Spells/FizzWAbility/FizzW.mSpellCalculations.ActiveDamage (16.23.8406595+branch.releases-16-23.content.release)",
+              "damage_type_source": "spell_fizzw_tooltip <magicDamage>"
+            }
+          ]
+        },
+        {
+          "id": "on_hit",
+          "name": "Daño mágico al impactar (5 s)",
+          "parts": [
+            {
+              "damage_type": "magic",
+              "formula": {
+                "op": "add",
+                "operands": [
+                  {
+                    "op": "by_rank",
+                    "values": [
+                      20,
+                      25,
+                      30,
+                      35,
+                      40
+                    ]
+                  },
+                  {
+                    "op": "mul",
+                    "operands": [
+                      {
+                        "op": "constant",
+                        "value": 0.3
+                      },
+                      {
+                        "op": "stat",
+                        "stat": "ability_power",
+                        "scope": "total"
+                      }
+                    ]
+                  }
+                ]
+              },
+              "label": "Derivado",
+              "source": "Characters/Fizz/Spells/FizzWAbility/FizzW.mSpellCalculations.OnHitBuffDamage (16.23.8406595+branch.releases-16-23.content.release)",
+              "damage_type_source": "spell_fizzw_tooltip <magicDamage>"
+            }
+          ]
+        }
+      ],
+      "passive_stats": [],
+      "not_modelled": [
+        "Devolución de maná y enfriamiento al matar con la activa"
+      ]
+    },
+    "E": {
+      "name": "Juguetón / Gamberro",
+      "max_rank": 5,
+      "cases": [
+        {
+          "id": "splash",
+          "name": "Caída",
+          "parts": [
+            {
+              "damage_type": "magic",
+              "formula": {
+                "op": "add",
+                "operands": [
+                  {
+                    "op": "by_rank",
+                    "values": [
+                      80,
+                      130,
+                      180,
+                      230,
+                      280
+                    ]
+                  },
+                  {
+                    "op": "mul",
+                    "operands": [
+                      {
+                        "op": "constant",
+                        "value": 0.95
+                      },
+                      {
+                        "op": "stat",
+                        "stat": "ability_power",
+                        "scope": "total"
+                      }
+                    ]
+                  }
+                ]
+              },
+              "label": "Derivado",
+              "source": "Characters/Fizz/Spells/FizzEAbility/FizzE.mSpellCalculations.EDamage (16.23.8406595+branch.releases-16-23.content.release)",
+              "damage_type_source": "spell_fizze_tooltip <magicDamage>"
+            }
+          ]
+        }
+      ],
+      "passive_stats": [],
+      "not_modelled": [
+        "Inalcanzabilidad y ralentización (solo sin reactivar)"
+      ]
+    },
+    "R": {
+      "name": "Carnaza para tiburones",
+      "max_rank": 3,
+      "cases": [
+        {
+          "id": "small",
+          "name": "Tiburón pequeño (corta distancia)",
+          "parts": [
+            {
+              "damage_type": "magic",
+              "formula": {
+                "op": "add",
+                "operands": [
+                  {
+                    "op": "by_rank",
+                    "values": [
+                      180,
+                      300,
+                      420
+                    ]
+                  },
+                  {
+                    "op": "mul",
+                    "operands": [
+                      {
+                        "op": "constant",
+                        "value": 0.6
+                      },
+                      {
+                        "op": "stat",
+                        "stat": "ability_power",
+                        "scope": "total"
+                      }
+                    ]
+                  }
+                ]
+              },
+              "label": "Derivado",
+              "source": "Characters/Fizz/Spells/FizzRAbility/FizzR.mSpellCalculations.SmallSharkDamage (16.23.8406595+branch.releases-16-23.content.release)",
+              "damage_type_source": "spell_fizzr_tooltip <magicDamage>"
+            }
+          ]
+        },
+        {
+          "id": "big",
+          "name": "Tiburón grande (larga distancia)",
+          "parts": [
+            {
+              "damage_type": "magic",
+              "formula": {
+                "op": "mul",
+                "operands": [
+                  {
+                    "op": "add",
+                    "operands": [
+                      {
+                        "op": "by_rank",
+                        "values": [
+                          180,
+                          300,
+                          420
+                        ]
+                      },
+                      {
+                        "op": "mul",
+                        "operands": [
+                          {
+                            "op": "constant",
+                            "value": 0.6
+                          },
+                          {
+                            "op": "stat",
+                            "stat": "ability_power",
+                            "scope": "total"
+                          }
+                        ]
+                      }
+                    ]
+                  },
+                  {
+                    "op": "constant",
+                    "value": 1.5
+                  }
+                ]
+              },
+              "label": "Derivado",
+              "source": "Characters/Fizz/Spells/FizzRAbility/FizzR.mSpellCalculations.BigSharkDamage (16.23.8406595+branch.releases-16-23.content.release)",
+              "damage_type_source": "spell_fizzr_tooltip <magicDamage>"
+            }
+          ]
+        }
+      ],
+      "passive_stats": [],
+      "not_modelled": [
+        "Tiburón mediano, ralentización y lanzamiento por los aires"
+      ]
+    }
+  }
+}

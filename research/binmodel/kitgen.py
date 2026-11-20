@@ -43,11 +43,11 @@ class KitGenError(Exception):
 
 
 def tooltip_damage_types(tooltip: str, reference: str) -> set[str]:
-    """Damage types of the tags that wrap ``@reference@`` (or ``@reference*…@``)."""
+    """Damage types of the tags that wrap ``@reference@`` (or ``@spell.X:reference*…@``)."""
     return {
         DAMAGE_TAGS[tag]
         for tag, inner in TAG_PATTERN.findall(tooltip)
-        if re.search(rf"@{re.escape(reference)}(?:[*][^@]*)?@", inner)
+        if re.search(rf"@(?:[A-Za-z0-9_.]+:)?{re.escape(reference)}(?:[*][^@]*)?@", inner)
     }
 
 

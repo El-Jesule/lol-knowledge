@@ -1,0 +1,119 @@
+{
+  "champion": "Swain",
+  "game_version": "16.23",
+  "verified_against": {
+    "content_version": "16.23.8406595+branch.releases-16-23.content.release",
+    "bin_sha256": "34fc3f0672a1fb945c67796185cdcd20e1cb5c8e15e18c7fc807ecf7e1e6b6cf",
+    "evidence": "odd/tasks/champion-kits-wave-2.md",
+    "result": "Bin del cliente 16.23 convertido con python -m binmodel.batch_kits y compilado con esta especificación curada (CH-01 oleada 2)"
+  },
+  "abilities": {
+    "P": {
+      "name": "Bandada de cuervos",
+      "max_rank": 1,
+      "not_modelled": [
+        "Curación del 6 % de vida máxima por fragmento de alma y vida máxima permanente (MaxHealthGained)"
+      ]
+    },
+    "Q": {
+      "name": "La mano de la muerte",
+      "tooltip": "spell_swainq_tooltip",
+      "cases": [
+        {
+          "id": "one_bolt",
+          "name": "Un rayo",
+          "parts": [
+            {
+              "calculation": "InitialDamage"
+            }
+          ]
+        },
+        {
+          "id": "extra_bolt",
+          "name": "Por rayo adicional",
+          "parts": [
+            {
+              "calculation": "ExtraBoltDamage"
+            }
+          ]
+        },
+        {
+          "id": "max_5_bolts",
+          "name": "Los 5 rayos (máximo)",
+          "parts": [
+            {
+              "calculation": "MaxDamage"
+            }
+          ]
+        }
+      ]
+    },
+    "W": {
+      "name": "Visión del imperio",
+      "tooltip": "spell_swainw_tooltip",
+      "cases": [
+        {
+          "id": "eye",
+          "name": "Explosión",
+          "parts": [
+            {
+              "calculation": "TotalDamage"
+            }
+          ]
+        }
+      ],
+      "not_modelled": [
+        "Ralentización, revelación y daño reducido a súbditos (MinionDamage)"
+      ]
+    },
+    "E": {
+      "name": "Paralizar",
+      "tooltip": "spell_swaine_tooltip",
+      "cases": [
+        {
+          "id": "detonate",
+          "name": "Explosión al regresar",
+          "parts": [
+            {
+              "calculation": "SecondaryDamage"
+            }
+          ]
+        }
+      ],
+      "not_modelled": [
+        "Inmovilización y atracción al reactivar"
+      ]
+    },
+    "R": {
+      "name": "Ascensión demoníaca",
+      "tooltip": "spell_swainr_tooltip",
+      "cases": [
+        {
+          "id": "per_second",
+          "name": "Drenaje por segundo",
+          "parts": [
+            {
+              "calculation": "DamageCalc"
+            }
+          ]
+        },
+        {
+          "id": "demonflare",
+          "name": "Reactivación: Alma ígnea",
+          "recast": true,
+          "parts": [
+            {
+              "calculation": "DemonflareDamageTotal"
+            }
+          ]
+        }
+      ],
+      "recast_interval_seconds": {
+        "data_value": "DemonflareCastDelay"
+      },
+      "not_modelled": [
+        "Curación por segundo (HealingCalc) y ralentización de Alma ígnea"
+      ]
+    }
+  }
+}

@@ -1,0 +1,110 @@
+{
+  "champion": "Velkoz",
+  "game_version": "16.23",
+  "verified_against": {
+    "content_version": "16.23.8406595+branch.releases-16-23.content.release",
+    "bin_sha256": "cb46b8bc9614ab554a254a81cf3be55cddd8fe9c87af45c5a4f7b8e67c43697a",
+    "evidence": "odd/tasks/champion-kits-wave-2.md",
+    "result": "Bin del cliente 16.23 convertido con python -m binmodel.batch_kits y compilado con esta especificación curada (CH-01 oleada 2)"
+  },
+  "abilities": {
+    "P": {
+      "name": "Deconstrucción orgánica",
+      "tooltip": "spell_velkozpassive_tooltip",
+      "max_rank": 1,
+      "cases": [
+        {
+          "id": "proc",
+          "name": "3 acumulaciones (daño verdadero)",
+          "parts": [
+            {
+              "calculation": "TotalDamage"
+            }
+          ]
+        }
+      ]
+    },
+    "Q": {
+      "name": "Fisión de plasma",
+      "tooltip": "spell_velkozq_tooltip",
+      "cases": [
+        {
+          "id": "bolt",
+          "name": "Rayo de plasma",
+          "parts": [
+            {
+              "calculation": "TotalDamage"
+            }
+          ]
+        }
+      ],
+      "not_modelled": [
+        "Ralentización y devolución de maná al matar unidades"
+      ]
+    },
+    "W": {
+      "name": "Grieta del Vacío",
+      "tooltip": "spell_velkozw_tooltip",
+      "cases": [
+        {
+          "id": "initial",
+          "name": "Grieta inicial",
+          "parts": [
+            {
+              "calculation": "InitialDamage"
+            }
+          ]
+        },
+        {
+          "id": "detonate",
+          "name": "Erupción posterior",
+          "parts": [
+            {
+              "calculation": "SecondaryDamage"
+            }
+          ]
+        },
+        {
+          "id": "both",
+          "name": "Grieta + erupción",
+          "parts": [
+            {
+              "calculation": "InitialDamage"
+            },
+            {
+              "calculation": "SecondaryDamage"
+            }
+          ]
+        }
+      ],
+      "not_modelled": [
+        "Sistema de 2 cargas"
+      ]
+    },
+    "E": {
+      "name": "Perturbación tectónica",
+      "tooltip": "spell_velkoze_tooltip",
+      "cases": [
+        {
+          "id": "disrupt",
+          "name": "Explosión",
+          "parts": [
+            {
+              "calculation": "TotalDamage"
+            }
+          ]
+        }
+      ],
+      "not_modelled": [
+        "Lanzamiento por los aires y empuje cercano"
+      ]
+    },
+    "R": {
+      "name": "Rayo desintegrador de seres vivos",
+      "tooltip": "spell_velkozr_tooltip",
+      "not_modelled": [
+        "TotalDamage usa EffectValueCalculationPart en el bin; conversión a daño verdadero sobre investigados y ralentización"
+      ]
+    }
+  }
+}

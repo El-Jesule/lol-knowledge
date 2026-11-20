@@ -1,0 +1,136 @@
+{
+  "champion": "Nunu",
+  "game_version": "16.23",
+  "verified_against": {
+    "content_version": "16.23.8406595+branch.releases-16-23.content.release",
+    "bin_sha256": "3680741f716b7b0201d4dfcbd876cc15423ece39cd061ac79efe12b6d1bc7070",
+    "evidence": "odd/tasks/champion-kits-wave-2.md",
+    "result": "Bin del cliente 16.23 convertido con python -m binmodel.batch_kits y compilado con esta especificación curada (CH-01 oleada 2)"
+  },
+  "abilities": {
+    "P": {
+      "name": "Llamada de Freljord",
+      "tooltip": "spell_nunupassive_tooltip",
+      "max_rank": 1,
+      "cases": [
+        {
+          "id": "cleave",
+          "name": "Daño en área de ataques",
+          "parts": [
+            {
+              "calculation": "CleaveDamage"
+            }
+          ]
+        }
+      ],
+      "not_modelled": [
+        "Velocidad de ataque y movimiento propia y a un aliado cercano"
+      ]
+    },
+    "Q": {
+      "name": "Voracidad",
+      "tooltip": "spell_nunuq_tooltip",
+      "cases": [
+        {
+          "id": "champion",
+          "name": "Contra campeones (daño mágico)",
+          "parts": [
+            {
+              "calculation": "TotalChampionDamage"
+            }
+          ]
+        },
+        {
+          "id": "minion_monster",
+          "name": "Contra súbditos y monstruos (daño verdadero)",
+          "parts": [
+            {
+              "tooltip_reference": "MonsterMinionDamage",
+              "damage_type": "true",
+              "source_note": "DataValues.MonsterMinionDamage",
+              "formula": {
+                "op": "data_value",
+                "name": "MonsterMinionDamage"
+              }
+            }
+          ]
+        }
+      ],
+      "not_modelled": [
+        "Curación contra campeones y monstruos (ChampionHealing, MonsterHealing)"
+      ]
+    },
+    "W": {
+      "name": "¡La bola más grande de la historia!",
+      "tooltip": "spell_nunuw_tooltip",
+      "cases": [
+        {
+          "id": "min",
+          "name": "Mínimo",
+          "parts": [
+            {
+              "calculation": "NoImpactSnowballDamage"
+            }
+          ]
+        },
+        {
+          "id": "max",
+          "name": "Tamaño máximo",
+          "parts": [
+            {
+              "calculation": "MaximumSnowballDamage"
+            }
+          ]
+        }
+      ],
+      "not_modelled": [
+        "Lanzamiento por los aires y aturdimiento escalado (MaximumStunDuration)"
+      ]
+    },
+    "E": {
+      "name": "Alud de bolas",
+      "tooltip": "spell_nunue_tooltip",
+      "cases": [
+        {
+          "id": "snowball",
+          "name": "Una bola de nieve",
+          "parts": [
+            {
+              "calculation": "TotalSnowballDamage"
+            }
+          ]
+        },
+        {
+          "id": "snare",
+          "name": "Explosión final de inmovilización",
+          "parts": [
+            {
+              "calculation": "TotalRootDamage"
+            }
+          ]
+        }
+      ],
+      "not_modelled": [
+        "Hasta 9 bolas en 3 ráfagas, ralentización e inmovilización (RootDuration)"
+      ]
+    },
+    "R": {
+      "name": "Cero absoluto",
+      "tooltip": "spell_nunur_tooltip",
+      "cases": [
+        {
+          "id": "max_channel",
+          "name": "Canalización completa (3 s)",
+          "parts": [
+            {
+              "calculation": "MaximumDamage"
+            }
+          ]
+        }
+      ],
+      "not_modelled": [
+        "Escudo (TotalShieldAmount), ralentización creciente y daño parcial por interrupción"
+      ]
+    }
+  }
+}

@@ -1,0 +1,372 @@
+{
+  "schema": "lol-champion-kit/1",
+  "champion": "Sion",
+  "label": "Derivado",
+  "game_version": "16.23",
+  "content_version": "16.23.8406595+branch.releases-16-23.content.release",
+  "verified_against": {
+    "content_version": "16.23.8406595+branch.releases-16-23.content.release",
+    "bin_sha256": "3919d03ca2fc621db1bcfecdc8878ad0cac61091a3324885099ff2184a87ffd9",
+    "evidence": "odd/tasks/champion-kits-wave-2.md",
+    "result": "Bin del cliente 16.23 convertido con python -m binmodel.batch_kits y compilado con esta especificación curada (CH-01 oleada 2)"
+  },
+  "source": "Árboles de cálculo del bin del cliente (python -m binmodel) y marcado de los tooltips del cliente; estructura de casos curada en research/kits/",
+  "abilities": {
+    "P": {
+      "name": "Gloria en la muerte",
+      "max_rank": 1,
+      "cases": [
+        {
+          "id": "hit",
+          "name": "Daño adicional por ataque reanimado (10 % vida máxima)",
+          "parts": [
+            {
+              "damage_type": "physical",
+              "formula": {
+                "op": "mul",
+                "operands": [
+                  {
+                    "op": "constant",
+                    "value": 0.1
+                  },
+                  {
+                    "op": "stat",
+                    "stat": "health",
+                    "scope": "max",
+                    "subject": "target"
+                  }
+                ]
+              },
+              "label": "Derivado",
+              "source": "Characters/Sion/Spells/SionPassiveAbility/SionPassive · DataValues.PercentMaxHP × vida máxima del objetivo (16.23.8406595+branch.releases-16-23.content.release)",
+              "damage_type_source": "spell_sionpassive_tooltip <physicalDamage>"
+            }
+          ]
+        }
+      ],
+      "passive_stats": [],
+      "not_modelled": [
+        "Reanimación tras morir, robo de vida (Lifesteal) y velocidad de ataque fija"
+      ]
+    },
+    "Q": {
+      "name": "Impacto aniquilador",
+      "max_rank": 5,
+      "cases": [
+        {
+          "id": "min",
+          "name": "Sin cargar",
+          "parts": [
+            {
+              "damage_type": "physical",
+              "formula": {
+                "op": "add",
+                "operands": [
+                  {
+                    "op": "by_rank",
+                    "values": [
+                      30,
+                      45,
+                      60,
+                      75,
+                      90
+                    ]
+                  },
+                  {
+                    "op": "mul",
+                    "operands": [
+                      {
+                        "op": "by_rank",
+                        "values": [
+                          0.4,
+                          0.5,
+                          0.6,
+                          0.7,
+                          0.8
+                        ]
+                      },
+                      {
+                        "op": "stat",
+                        "stat": "attack_damage",
+                        "scope": "total"
+                      }
+                    ]
+                  }
+                ]
+              },
+              "label": "Derivado",
+              "source": "Characters/Sion/Spells/SionQAbility/SionQ.mSpellCalculations.MinDamageTotal (16.23.8406595+branch.releases-16-23.content.release)",
+              "damage_type_source": "spell_sionq_tooltip <physicalDamage>"
+            }
+          ]
+        },
+        {
+          "id": "max",
+          "name": "Carga completa (2 s)",
+          "parts": [
+            {
+              "damage_type": "physical",
+              "formula": {
+                "op": "add",
+                "operands": [
+                  {
+                    "op": "by_rank",
+                    "values": [
+                      90,
+                      155,
+                      220,
+                      285,
+                      350
+                    ]
+                  },
+                  {
+                    "op": "mul",
+                    "operands": [
+                      {
+                        "op": "by_rank",
+                        "values": [
+                          1.2,
+                          1.5,
+                          1.8,
+                          2.1,
+                          2.4
+                        ]
+                      },
+                      {
+                        "op": "stat",
+                        "stat": "attack_damage",
+                        "scope": "total"
+                      }
+                    ]
+                  }
+                ]
+              },
+              "label": "Derivado",
+              "source": "Characters/Sion/Spells/SionQAbility/SionQ.mSpellCalculations.MaxDamageTotal (16.23.8406595+branch.releases-16-23.content.release)",
+              "damage_type_source": "spell_sionq_tooltip <physicalDamage>"
+            }
+          ]
+        }
+      ],
+      "passive_stats": [],
+      "not_modelled": [
+        "Ralentización y lanzamiento por los aires tras 1 s de carga"
+      ]
+    },
+    "W": {
+      "name": "Horno del alma",
+      "max_rank": 5,
+      "cases": [
+        {
+          "id": "detonate",
+          "name": "Explosión del escudo (+ 14 % vida máxima)",
+          "parts": [
+            {
+              "damage_type": "magic",
+              "formula": {
+                "op": "add",
+                "operands": [
+                  {
+                    "op": "by_rank",
+                    "values": [
+                      40,
+                      65,
+                      90,
+                      115,
+                      140
+                    ]
+                  },
+                  {
+                    "op": "mul",
+                    "operands": [
+                      {
+                        "op": "constant",
+                        "value": 0.4
+                      },
+                      {
+                        "op": "stat",
+                        "stat": "ability_power",
+                        "scope": "total"
+                      }
+                    ]
+                  }
+                ]
+              },
+              "label": "Derivado",
+              "source": "Characters/Sion/Spells/SionWAbility/SionW.mSpellCalculations.TotalDamage (16.23.8406595+branch.releases-16-23.content.release)",
+              "damage_type_source": "spell_sionw_tooltip <magicDamage>"
+            },
+            {
+              "damage_type": "magic",
+              "formula": {
+                "op": "mul",
+                "operands": [
+                  {
+                    "op": "constant",
+                    "value": 14
+                  },
+                  {
+                    "op": "constant",
+                    "value": 0.01
+                  },
+                  {
+                    "op": "stat",
+                    "stat": "health",
+                    "scope": "max",
+                    "subject": "target"
+                  }
+                ]
+              },
+              "label": "Derivado",
+              "source": "Characters/Sion/Spells/SionWAbility/SionW · DataValues.MaxHPDamageRatio % × vida máxima del objetivo (16.23.8406595+branch.releases-16-23.content.release)",
+              "damage_type_source": "spell_sionw_tooltip <magicDamage>"
+            }
+          ]
+        }
+      ],
+      "passive_stats": [],
+      "not_modelled": [
+        "Vida máxima permanente por asesinatos (HPPerKill, HPPerChampKill) y escudo (TotalShield)"
+      ]
+    },
+    "E": {
+      "name": "Rugido del asesino",
+      "max_rank": 5,
+      "cases": [
+        {
+          "id": "roar",
+          "name": "Onda de choque",
+          "parts": [
+            {
+              "damage_type": "magic",
+              "formula": {
+                "op": "add",
+                "operands": [
+                  {
+                    "op": "by_rank",
+                    "values": [
+                      65,
+                      100,
+                      135,
+                      170,
+                      205
+                    ]
+                  },
+                  {
+                    "op": "mul",
+                    "operands": [
+                      {
+                        "op": "constant",
+                        "value": 0.55
+                      },
+                      {
+                        "op": "stat",
+                        "stat": "ability_power",
+                        "scope": "total"
+                      }
+                    ]
+                  }
+                ]
+              },
+              "label": "Derivado",
+              "source": "Characters/Sion/Spells/SionEAbility/SionE.mSpellCalculations.TotalDamage (16.23.8406595+branch.releases-16-23.content.release)",
+              "damage_type_source": "spell_sione_tooltip <magicDamage>"
+            }
+          ]
+        }
+      ],
+      "passive_stats": [],
+      "not_modelled": [
+        "Ralentización, reducción del 20 % de armadura (ArmorShred) y empuje de súbditos"
+      ]
+    },
+    "R": {
+      "name": "Embestida imparable",
+      "max_rank": 3,
+      "cases": [
+        {
+          "id": "min",
+          "name": "Impacto a corta distancia",
+          "parts": [
+            {
+              "damage_type": "physical",
+              "formula": {
+                "op": "add",
+                "operands": [
+                  {
+                    "op": "by_rank",
+                    "values": [
+                      150,
+                      300,
+                      450
+                    ]
+                  },
+                  {
+                    "op": "mul",
+                    "operands": [
+                      {
+                        "op": "constant",
+                        "value": 0.4
+                      },
+                      {
+                        "op": "stat",
+                        "stat": "attack_damage",
+                        "scope": "bonus"
+                      }
+                    ]
+                  }
+                ]
+              },
+              "label": "Derivado",
+              "source": "Characters/Sion/Spells/SionRAbility/SionR.mSpellCalculations.MinDamageTotal (16.23.8406595+branch.releases-16-23.content.release)",
+              "damage_type_source": "spell_sionr_tooltip <physicalDamage>"
+            }
+          ]
+        },
+        {
+          "id": "max",
+          "name": "Impacto a distancia máxima",
+          "parts": [
+            {
+              "damage_type": "physical",
+              "formula": {
+                "op": "add",
+                "operands": [
+                  {
+                    "op": "by_rank",
+                    "values": [
+                      450,
+                      900,
+                      1350
+                    ]
+                  },
+                  {
+                    "op": "mul",
+                    "operands": [
+                      {
+                        "op": "constant",
+                        "value": 1.2
+                      },
+                      {
+                        "op": "stat",
+                        "stat": "attack_damage",
+                        "scope": "bonus"
+                      }
+                    ]
+                  }
+                ]
+              },
+              "label": "Derivado",
+              "source": "Characters/Sion/Spells/SionRAbility/SionR.mSpellCalculations.MaxDamageTotal (16.23.8406595+branch.releases-16-23.content.release)",
+              "damage_type_source": "spell_sionr_tooltip <physicalDamage>"
+            }
+          ]
+        }
+      ],
+      "passive_stats": [],
+      "not_modelled": [
+        "Imparabilidad y aturdimiento escalado con distancia"
+      ]
+    }
+  }
+}

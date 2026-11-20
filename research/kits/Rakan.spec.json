@@ -1,0 +1,80 @@
+{
+  "champion": "Rakan",
+  "game_version": "16.23",
+  "verified_against": {
+    "content_version": "16.23.8406595+branch.releases-16-23.content.release",
+    "bin_sha256": "718dbc5031d8453b0411adea26117cc0b92a04c4c222ba07817f7363e5d85ed5",
+    "evidence": "odd/tasks/champion-kits-wave-2.md",
+    "result": "Bin del cliente 16.23 convertido con python -m binmodel.batch_kits y compilado con esta especificación curada (CH-01 oleada 2)"
+  },
+  "abilities": {
+    "P": {
+      "name": "Plumas encantadas",
+      "max_rank": 1,
+      "not_modelled": [
+        "Escudo periódico (TotalShield, ShieldCooldown)"
+      ]
+    },
+    "Q": {
+      "name": "Péndola reluciente",
+      "tooltip": "spell_rakanq_tooltip",
+      "cases": [
+        {
+          "id": "quill",
+          "name": "Pluma mágica",
+          "parts": [
+            {
+              "calculation": "TotalDamage"
+            }
+          ]
+        }
+      ],
+      "not_modelled": [
+        "Curación propia y aliada al golpear campeones o monstruos épicos (TotalHeal)"
+      ]
+    },
+    "W": {
+      "name": "Entrada grandiosa",
+      "tooltip": "spell_rakanw_tooltip",
+      "cases": [
+        {
+          "id": "knockup",
+          "name": "Impacto en área",
+          "parts": [
+            {
+              "calculation": "TotalDamage"
+            }
+          ]
+        }
+      ],
+      "not_modelled": [
+        "Lanzamiento por los aires (KnockupDuration)"
+      ]
+    },
+    "E": {
+      "name": "Danza de batalla",
+      "tooltip": "spell_rakane_tooltip",
+      "not_modelled": [
+        "Desplazamiento a aliado y escudo con reactivación (TotalShield)"
+      ]
+    },
+    "R": {
+      "name": "La premura",
+      "tooltip": "spell_rakanr_tooltip",
+      "cases": [
+        {
+          "id": "touch",
+          "name": "Impacto por campeón tocado",
+          "parts": [
+            {
+              "calculation": "TotalDamageTooltip"
+            }
+          ]
+        }
+      ],
+      "not_modelled": [
+        "Velocidad de movimiento y hechizo (CharmDuration)"
+      ]
+    }
+  }
+}

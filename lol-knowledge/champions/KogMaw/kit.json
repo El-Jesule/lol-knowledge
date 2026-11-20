@@ -1,0 +1,359 @@
+{
+  "schema": "lol-champion-kit/1",
+  "champion": "KogMaw",
+  "label": "Derivado",
+  "game_version": "16.23",
+  "content_version": "16.23.8406595+branch.releases-16-23.content.release",
+  "verified_against": {
+    "content_version": "16.23.8406595+branch.releases-16-23.content.release",
+    "bin_sha256": "ef0ffaf806aff13294153bdc99bf2ddc8dca389d6138e8b59fe0c01c72a2e5bd",
+    "evidence": "odd/tasks/champion-kits-wave-2.md",
+    "result": "Bin del cliente 16.23 convertido con python -m binmodel.batch_kits y compilado con esta especificación curada (CH-01 oleada 2)"
+  },
+  "source": "Árboles de cálculo del bin del cliente (python -m binmodel) y marcado de los tooltips del cliente; estructura de casos curada en research/kits/",
+  "abilities": {
+    "P": {
+      "name": "Sorpresa de Icathia",
+      "max_rank": 1,
+      "cases": [
+        {
+          "id": "explode",
+          "name": "Explosión tras morir (daño verdadero)",
+          "parts": [
+            {
+              "damage_type": "true",
+              "formula": {
+                "op": "linear_by_level",
+                "min": 140,
+                "max": 650
+              },
+              "label": "Derivado",
+              "source": "Characters/KogMaw/Spells/KogMawIcathianSurpriseReadyAbility/KogMawIcathianSurpriseReady.mSpellCalculations.PassiveDamage (16.23.8406595+branch.releases-16-23.content.release)",
+              "damage_type_source": "spell_kogmawicathiansurprise_tooltip <trueDamage>"
+            }
+          ]
+        }
+      ],
+      "passive_stats": [],
+      "not_modelled": []
+    },
+    "Q": {
+      "name": "Baba cáustica",
+      "max_rank": 5,
+      "cases": [
+        {
+          "id": "spit",
+          "name": "Proyectil",
+          "parts": [
+            {
+              "damage_type": "magic",
+              "formula": {
+                "op": "add",
+                "operands": [
+                  {
+                    "op": "by_rank",
+                    "values": [
+                      80,
+                      125,
+                      170,
+                      215,
+                      260
+                    ]
+                  },
+                  {
+                    "op": "mul",
+                    "operands": [
+                      {
+                        "op": "constant",
+                        "value": 0.9
+                      },
+                      {
+                        "op": "stat",
+                        "stat": "ability_power",
+                        "scope": "total"
+                      }
+                    ]
+                  }
+                ]
+              },
+              "label": "Derivado",
+              "source": "Characters/KogMaw/Spells/KogMawQAbility/KogMawQ.mSpellCalculations.TotalDamage (16.23.8406595+branch.releases-16-23.content.release)",
+              "damage_type_source": "spell_kogmawq_tooltip <magicDamage>"
+            }
+          ]
+        }
+      ],
+      "passive_stats": [
+        {
+          "stat": "attack_speed_bonus",
+          "formula": {
+            "op": "by_rank",
+            "values": [
+              0.05,
+              0.1,
+              0.15,
+              0.2,
+              0.25
+            ]
+          },
+          "label": "Derivado",
+          "source": "Characters/KogMaw/Spells/KogMawQAbility/KogMawQ.DataValues.AttackSpeed (16.23.8406595+branch.releases-16-23.content.release)",
+          "condition": "pasiva de la Q: activa con la Q aprendida, también en enfriamiento"
+        }
+      ],
+      "not_modelled": [
+        "Reducción porcentual de armadura y RM del objetivo"
+      ]
+    },
+    "W": {
+      "name": "Andanada bioarcana",
+      "max_rank": 5,
+      "cases": [
+        {
+          "id": "on_hit",
+          "name": "Daño mágico al impactar (% vida máxima)",
+          "parts": [
+            {
+              "damage_type": "magic",
+              "formula": {
+                "op": "mul",
+                "operands": [
+                  {
+                    "op": "add",
+                    "operands": [
+                      {
+                        "op": "by_rank",
+                        "values": [
+                          3,
+                          3.75,
+                          4.5,
+                          5.25,
+                          6
+                        ]
+                      },
+                      {
+                        "op": "mul",
+                        "operands": [
+                          {
+                            "op": "constant",
+                            "value": 0.015
+                          },
+                          {
+                            "op": "stat",
+                            "stat": "ability_power",
+                            "scope": "total"
+                          }
+                        ]
+                      }
+                    ]
+                  },
+                  {
+                    "op": "constant",
+                    "value": 0.01
+                  },
+                  {
+                    "op": "stat",
+                    "stat": "health",
+                    "scope": "max",
+                    "subject": "target"
+                  }
+                ]
+              },
+              "label": "Derivado",
+              "source": "Characters/KogMaw/Spells/KogMawBioArcaneBarrageAbility/KogMawBioArcaneBarrage · (TotalHealthDamage %) × vida máxima del objetivo (16.23.8406595+branch.releases-16-23.content.release)",
+              "damage_type_source": "spell_kogmawbioarcanebarrage_tooltip <magicDamage>"
+            }
+          ]
+        }
+      ],
+      "passive_stats": [],
+      "not_modelled": [
+        "Alcance de ataque adicional (Range) y tope contra monstruos"
+      ]
+    },
+    "E": {
+      "name": "Vacío rezumante",
+      "max_rank": 5,
+      "cases": [
+        {
+          "id": "ooze",
+          "name": "Bilis",
+          "parts": [
+            {
+              "damage_type": "magic",
+              "formula": {
+                "op": "add",
+                "operands": [
+                  {
+                    "op": "by_rank",
+                    "values": [
+                      70,
+                      110,
+                      150,
+                      190,
+                      230
+                    ]
+                  },
+                  {
+                    "op": "mul",
+                    "operands": [
+                      {
+                        "op": "constant",
+                        "value": 0.65
+                      },
+                      {
+                        "op": "stat",
+                        "stat": "ability_power",
+                        "scope": "total"
+                      }
+                    ]
+                  }
+                ]
+              },
+              "label": "Derivado",
+              "source": "Characters/KogMaw/Spells/KogMawVoidOozeAbility/KogMawVoidOoze.mSpellCalculations.TotalDamage (16.23.8406595+branch.releases-16-23.content.release)",
+              "damage_type_source": "spell_kogmawvoidooze_tooltip <magicDamage>"
+            }
+          ]
+        }
+      ],
+      "passive_stats": [],
+      "not_modelled": [
+        "Ralentización del rastro"
+      ]
+    },
+    "R": {
+      "name": "Artillería viviente",
+      "max_rank": 3,
+      "cases": [
+        {
+          "id": "base",
+          "name": "Objetivo al 100 % vida",
+          "parts": [
+            {
+              "damage_type": "magic",
+              "formula": {
+                "op": "add",
+                "operands": [
+                  {
+                    "op": "by_rank",
+                    "values": [
+                      100,
+                      140,
+                      180
+                    ]
+                  },
+                  {
+                    "op": "mul",
+                    "operands": [
+                      {
+                        "op": "by_rank",
+                        "values": [
+                          0.35,
+                          0.4,
+                          0.45
+                        ]
+                      },
+                      {
+                        "op": "stat",
+                        "stat": "ability_power",
+                        "scope": "total"
+                      }
+                    ]
+                  },
+                  {
+                    "op": "mul",
+                    "operands": [
+                      {
+                        "op": "constant",
+                        "value": 0.75
+                      },
+                      {
+                        "op": "stat",
+                        "stat": "attack_damage",
+                        "scope": "bonus"
+                      }
+                    ]
+                  }
+                ]
+              },
+              "label": "Derivado",
+              "source": "Characters/KogMaw/Spells/KogMawLivingArtilleryAbility/KogMawLivingArtillery.mSpellCalculations.BaseDamageCalc (16.23.8406595+branch.releases-16-23.content.release)",
+              "damage_type_source": "spell_kogmawlivingartillery_tooltip <magicDamage>"
+            }
+          ]
+        },
+        {
+          "id": "execute_below_40",
+          "name": "Objetivo < 40 % vida (daño doble)",
+          "parts": [
+            {
+              "damage_type": "magic",
+              "formula": {
+                "op": "mul",
+                "operands": [
+                  {
+                    "op": "add",
+                    "operands": [
+                      {
+                        "op": "by_rank",
+                        "values": [
+                          100,
+                          140,
+                          180
+                        ]
+                      },
+                      {
+                        "op": "mul",
+                        "operands": [
+                          {
+                            "op": "by_rank",
+                            "values": [
+                              0.35,
+                              0.4,
+                              0.45
+                            ]
+                          },
+                          {
+                            "op": "stat",
+                            "stat": "ability_power",
+                            "scope": "total"
+                          }
+                        ]
+                      },
+                      {
+                        "op": "mul",
+                        "operands": [
+                          {
+                            "op": "constant",
+                            "value": 0.75
+                          },
+                          {
+                            "op": "stat",
+                            "stat": "attack_damage",
+                            "scope": "bonus"
+                          }
+                        ]
+                      }
+                    ]
+                  },
+                  {
+                    "op": "constant",
+                    "value": 2
+                  }
+                ]
+              },
+              "label": "Derivado",
+              "source": "Characters/KogMaw/Spells/KogMawLivingArtilleryAbility/KogMawLivingArtillery.mSpellCalculations.MaxDamageCalc (16.23.8406595+branch.releases-16-23.content.release)",
+              "damage_type_source": "spell_kogmawlivingartillery_tooltip <magicDamage>"
+            }
+          ]
+        }
+      ],
+      "passive_stats": [],
+      "not_modelled": [
+        "Interpolación continua entre 100 % y 40 % de vida y aumento de coste de maná en lanzamientos sucesivos"
+      ]
+    }
+  }
+}

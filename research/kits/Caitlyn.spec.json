@@ -1,0 +1,97 @@
+{
+  "champion": "Caitlyn",
+  "game_version": "16.23",
+  "verified_against": {
+    "content_version": "16.23.8406595+branch.releases-16-23.content.release",
+    "bin_sha256": "a9ee373a5d7fc8533ca9fbd6d3af986731695e071beae0fd238c1ee611990ccf",
+    "evidence": "odd/tasks/champion-kits-wave-2.md",
+    "result": "Bin del cliente 16.23 convertido con python -m binmodel.batch_kits y compilado con esta especificación curada (CH-01 oleada 2)"
+  },
+  "abilities": {
+    "P": {
+      "name": "Disparo a la cabeza",
+      "max_rank": 1,
+      "not_modelled": [
+        "Daño adicional de Disparo a la cabeza cada 6 ataques (HeadshotBonusDamage depende de crítico)"
+      ]
+    },
+    "Q": {
+      "name": "Pacificadora de Piltover",
+      "tooltip": "spell_caitlynpiltoverpeacemaker_tooltip",
+      "cases": [
+        {
+          "id": "first",
+          "name": "Primer objetivo o objetivo atrapado",
+          "parts": [
+            {
+              "calculation": "InitialDamage"
+            }
+          ]
+        },
+        {
+          "id": "passthrough",
+          "name": "Objetivos sucesivos (60 %)",
+          "parts": [
+            {
+              "calculation": "SecondaryDamage"
+            }
+          ]
+        }
+      ]
+    },
+    "W": {
+      "name": "Trampa para yordles",
+      "tooltip": "spell_caitlynyordletrap_tooltip",
+      "cases": [
+        {
+          "id": "headshot_bonus",
+          "name": "Daño adicional de Disparo a la cabeza en trampa",
+          "parts": [
+            {
+              "calculation": "HeadshotBonusDamage"
+            }
+          ]
+        }
+      ],
+      "not_modelled": [
+        "Inmovilización, visión verdadera y daño base del Disparo a la cabeza aparte"
+      ]
+    },
+    "E": {
+      "name": "Red de calibre 90",
+      "tooltip": "spell_caitlynentrapment_tooltip",
+      "cases": [
+        {
+          "id": "net",
+          "name": "Red",
+          "parts": [
+            {
+              "calculation": "NetDamage"
+            }
+          ]
+        }
+      ],
+      "not_modelled": [
+        "Ralentización, retroceso y marca de Disparo a la cabeza"
+      ]
+    },
+    "R": {
+      "name": "As en la manga",
+      "tooltip": "spell_caitlynaceinthehole_tooltip",
+      "cases": [
+        {
+          "id": "shot",
+          "name": "Disparo (sin bonificación de crítico)",
+          "parts": [
+            {
+              "calculation": "RTotalDamage"
+            }
+          ]
+        }
+      ],
+      "not_modelled": [
+        "Escalado adicional con probabilidad de crítico e intercepción por campeones enemigos"
+      ]
+    }
+  }
+}

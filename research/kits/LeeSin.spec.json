@@ -1,0 +1,103 @@
+{
+  "champion": "LeeSin",
+  "game_version": "16.23",
+  "verified_against": {
+    "content_version": "16.23.8406595+branch.releases-16-23.content.release",
+    "bin_sha256": "b03c14cf3c08a2690bebb155b272d6b4f612e28ba5c2f60b64747c1bc3cd8362",
+    "evidence": "odd/tasks/champion-kits-wave-2.md",
+    "result": "Bin del cliente 16.23 convertido con python -m binmodel.batch_kits y compilado con esta especificación curada (CH-01 oleada 2)"
+  },
+  "abilities": {
+    "P": {
+      "name": "Ráfaga",
+      "max_rank": 1,
+      "not_modelled": [
+        "Velocidad de ataque durante 2 ataques y restauración de energía (TTFirstHitEnergy, EnergyReturn)"
+      ]
+    },
+    "Q": {
+      "name": "Onda sónica / Golpe resonante",
+      "tooltip": "spell_blindmonkqone_tooltip",
+      "cases": [
+        {
+          "id": "sonic_wave",
+          "name": "Onda sónica (Q1)",
+          "parts": [
+            {
+              "calculation": "InitialDamage"
+            }
+          ]
+        },
+        {
+          "id": "resonating_min",
+          "name": "Golpe resonante (Q2 mínimo)",
+          "recast": true,
+          "parts": [
+            {
+              "calculation": "RecastDamage"
+            }
+          ]
+        },
+        {
+          "id": "resonating_max",
+          "name": "Golpe resonante (Q2 máximo)",
+          "recast": true,
+          "parts": [
+            {
+              "calculation": "EmpoweredDamage"
+            }
+          ]
+        }
+      ],
+      "recast_window_seconds": {
+        "data_value": "ReactivateTime"
+      },
+      "not_modelled": [
+        "Interpolación continua de Q2 según vida que falta y visión verdadera"
+      ]
+    },
+    "W": {
+      "name": "Salvaguarda / Voluntad de hierro",
+      "tooltip": "spell_blindmonkwone_tooltip",
+      "not_modelled": [
+        "Escudo (ShieldAmount), robo de vida y omnivampirismo temporales (LifestealAndSpellVamp)"
+      ]
+    },
+    "E": {
+      "name": "Tempestad / Incapacitar",
+      "tooltip": "spell_blindmonkeone_tooltip",
+      "cases": [
+        {
+          "id": "tempest",
+          "name": "Tempestad (E1)",
+          "parts": [
+            {
+              "calculation": "InitialDamage"
+            }
+          ]
+        }
+      ],
+      "not_modelled": [
+        "Revelación y ralentización de Incapacitar (E2)"
+      ]
+    },
+    "R": {
+      "name": "Ira del dragón",
+      "tooltip": "spell_blindmonkrkick_tooltip",
+      "cases": [
+        {
+          "id": "kick",
+          "name": "Patada sobre objetivo principal",
+          "parts": [
+            {
+              "calculation": "Damage"
+            }
+          ]
+        }
+      ],
+      "not_modelled": [
+        "Daño adicional por vida adicional del objetivo pateado a enemigos secundarios (PercentHPCarryThrough)"
+      ]
+    }
+  }
+}

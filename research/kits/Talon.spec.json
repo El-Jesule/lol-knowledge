@@ -1,0 +1,122 @@
+{
+  "champion": "Talon",
+  "game_version": "16.23",
+  "verified_against": {
+    "content_version": "16.23.8406595+branch.releases-16-23.content.release",
+    "bin_sha256": "3f25fb039f215170a66f5bce65ac3621a44c84da44d1feb0b99c06859422ed45",
+    "evidence": "odd/tasks/champion-kits-wave-2.md",
+    "result": "Bin del cliente 16.23 convertido con python -m binmodel.batch_kits y compilado con esta especificación curada (CH-01 oleada 2)"
+  },
+  "abilities": {
+    "P": {
+      "name": "Final de la hoja",
+      "tooltip": "game_buff_tooltip_talonpassive",
+      "max_rank": 1,
+      "cases": [
+        {
+          "id": "bleed",
+          "name": "Sangrado completo (3 marcas)",
+          "parts": [
+            {
+              "calculation": "BleedDamage"
+            }
+          ]
+        }
+      ]
+    },
+    "Q": {
+      "name": "Diplomacia noxiana",
+      "tooltip": "spell_talonq_tooltip",
+      "cases": [
+        {
+          "id": "leap",
+          "name": "A distancia (salto)",
+          "parts": [
+            {
+              "calculation": "LeapDamage"
+            }
+          ]
+        }
+      ],
+      "not_modelled": [
+        "Golpe crítico cuerpo a cuerpo (CriticalDamage) y curación/devolución de CD al matar"
+      ]
+    },
+    "W": {
+      "name": "Rastrillar",
+      "tooltip": "spell_talonw_tooltip",
+      "cases": [
+        {
+          "id": "out",
+          "name": "Ida",
+          "parts": [
+            {
+              "calculation": "TotalInitialDamage"
+            }
+          ]
+        },
+        {
+          "id": "back",
+          "name": "Vuelta",
+          "parts": [
+            {
+              "calculation": "TotalReturnDamage"
+            }
+          ]
+        },
+        {
+          "id": "both",
+          "name": "Ida y vuelta",
+          "parts": [
+            {
+              "calculation": "TotalInitialDamage"
+            },
+            {
+              "calculation": "TotalReturnDamage"
+            }
+          ]
+        }
+      ],
+      "not_modelled": [
+        "Ralentización en la vuelta"
+      ]
+    },
+    "E": {
+      "name": "Camino del asesino",
+      "tooltip": "spell_talone_tooltip",
+      "not_modelled": [
+        "Salto sobre muros y enfriamiento por terreno"
+      ]
+    },
+    "R": {
+      "name": "Asalto de sombra",
+      "tooltip": "spell_talonr_tooltip",
+      "cases": [
+        {
+          "id": "ring",
+          "name": "Una pasada (ida o convergencia)",
+          "parts": [
+            {
+              "calculation": "Damage"
+            }
+          ]
+        },
+        {
+          "id": "both",
+          "name": "Ida y convergencia",
+          "parts": [
+            {
+              "calculation": "Damage"
+            },
+            {
+              "calculation": "Damage"
+            }
+          ]
+        }
+      ],
+      "not_modelled": [
+        "Invisibilidad y velocidad de movimiento"
+      ]
+    }
+  }
+}

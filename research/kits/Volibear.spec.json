@@ -1,0 +1,141 @@
+{
+  "champion": "Volibear",
+  "game_version": "16.23",
+  "verified_against": {
+    "content_version": "16.23.8406595+branch.releases-16-23.content.release",
+    "bin_sha256": "15c01ae174494944c99cad46e4808482dc717a5c1a2c0862f670db2354ba0b3e",
+    "evidence": "odd/tasks/champion-kits-wave-2.md",
+    "result": "Bin del cliente 16.23 convertido con python -m binmodel.batch_kits y compilado con esta especificación curada (CH-01 oleada 2)"
+  },
+  "abilities": {
+    "P": {
+      "name": "Tormenta incesante",
+      "tooltip": "spell_volibearp_tooltip",
+      "max_rank": 1,
+      "cases": [
+        {
+          "id": "lightning",
+          "name": "Relámpago al impactar (5 cargas)",
+          "parts": [
+            {
+              "calculation": "ChainLightningDamage"
+            }
+          ]
+        }
+      ],
+      "not_modelled": [
+        "Velocidad de ataque acumulable hasta 5 cargas (AttackSpeedCalc)"
+      ]
+    },
+    "Q": {
+      "name": "Impacto atronador",
+      "tooltip": "spell_volibearq_tooltip",
+      "cases": [
+        {
+          "id": "strike",
+          "name": "Daño físico adicional",
+          "parts": [
+            {
+              "calculation": "CalculatedDamage"
+            }
+          ]
+        }
+      ],
+      "not_modelled": [
+        "Velocidad de movimiento (MinSpeedCalc, MaxSpeedCalc), aturdimiento y ataque básico aparte"
+      ]
+    },
+    "W": {
+      "name": "Acometida frenética",
+      "tooltip": "spell_volibearw_tooltip",
+      "cases": [
+        {
+          "id": "base",
+          "name": "Primer mordisco",
+          "parts": [
+            {
+              "calculation": "TotalDamage"
+            }
+          ]
+        },
+        {
+          "id": "wounded",
+          "name": "Objetivo marcado (+50 %)",
+          "parts": [
+            {
+              "calculation": "EmpoweredDamage"
+            }
+          ]
+        }
+      ],
+      "not_modelled": [
+        "Curación del segundo mordisco (BaseHeal, PercentMissingHealthHealingRatio)"
+      ]
+    },
+    "E": {
+      "name": "Rompecielos",
+      "tooltip": "spell_volibeare_tooltip",
+      "cases": [
+        {
+          "id": "strike",
+          "name": "Rayo (+ % vida máxima)",
+          "parts": [
+            {
+              "calculation": "TotalDamageTooltip"
+            },
+            {
+              "tooltip_reference": "PercentDamage",
+              "damage_type": "magic",
+              "source_note": "DataValues.PercentDamage × vida máxima del objetivo",
+              "formula": {
+                "op": "mul",
+                "operands": [
+                  {
+                    "op": "data_value",
+                    "name": "PercentDamage"
+                  },
+                  {
+                    "op": "stat",
+                    "stat": "health",
+                    "scope": "max",
+                    "subject": "target"
+                  }
+                ]
+              }
+            }
+          ]
+        }
+      ],
+      "not_modelled": [
+        "Ralentización, escudo propio y tope contra monstruos (MonsterDamageCap)"
+      ]
+    },
+    "R": {
+      "name": "Heraldo de la tormenta",
+      "tooltip": "spell_volibearr_tooltip",
+      "cases": [
+        {
+          "id": "impact",
+          "name": "Impacto central (campeones)",
+          "parts": [
+            {
+              "calculation": "SweetSpotDamageTooltip"
+            }
+          ]
+        },
+        {
+          "id": "tower",
+          "name": "Contra torretas",
+          "parts": [
+            {
+              "calculation": "TowerDamageTooltip"
+            }
+          ]
+        }
+      ],
+      "not_modelled": [
+        "Vida adicional temporal (HealthAmount), alcance extra, desactivación de torretas y ralentización"
+      ]
+    }
+  }
+}

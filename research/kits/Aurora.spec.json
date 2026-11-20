@@ -1,0 +1,119 @@
+{
+  "champion": "Aurora",
+  "game_version": "16.23",
+  "verified_against": {
+    "content_version": "16.23.8406595+branch.releases-16-23.content.release",
+    "bin_sha256": "42df24abc049bbbed6733b8654858ecd186f74302c2f369f7b5507e4283ddbf2",
+    "evidence": "odd/tasks/champion-kits-wave-2.md",
+    "result": "Bin del cliente 16.23 convertido con python -m binmodel.batch_kits y compilado con esta especificación curada (CH-01 oleada 2)"
+  },
+  "abilities": {
+    "P": {
+      "name": "Abjuración espiritual",
+      "tooltip": "buff_aurorap_tooltip",
+      "max_rank": 1,
+      "cases": [
+        {
+          "id": "proc",
+          "name": "Exorcismo (3 impactos, % vida máxima)",
+          "parts": [
+            {
+              "tooltip_reference": "ProcDamage",
+              "damage_type": "magic",
+              "source_note": "ProcDamage × vida máxima del objetivo",
+              "formula": {
+                "op": "mul",
+                "operands": [
+                  {
+                    "op": "calculation",
+                    "name": "ProcDamage"
+                  },
+                  {
+                    "op": "stat",
+                    "stat": "health",
+                    "scope": "max",
+                    "subject": "target"
+                  }
+                ]
+              }
+            }
+          ]
+        }
+      ],
+      "not_modelled": [
+        "Curación de espíritus (HealCalc) y velocidad de movimiento de Brincarreinos"
+      ]
+    },
+    "Q": {
+      "name": "Ánimas malditas",
+      "tooltip": "spell_auroraq_tooltip",
+      "cases": [
+        {
+          "id": "cast",
+          "name": "Lanzamiento inicial (Q1)",
+          "parts": [
+            {
+              "calculation": "damage"
+            }
+          ]
+        },
+        {
+          "id": "recast_max",
+          "name": "Reactivación: daño máximo por vida perdida (Q2)",
+          "recast": true,
+          "parts": [
+            {
+              "calculation": "Q2DamageMax"
+            }
+          ]
+        }
+      ],
+      "not_modelled": [
+        "Interpolación de Q2 según vida que falta y daño reducido tras el primer objetivo"
+      ]
+    },
+    "W": {
+      "name": "A través del velo",
+      "tooltip": "spell_auroraw_tooltip",
+      "not_modelled": [
+        "Invisibilidad, velocidad de movimiento y reinicio por derribo"
+      ]
+    },
+    "E": {
+      "name": "Estallido espectral",
+      "tooltip": "spell_aurorae_tooltip",
+      "cases": [
+        {
+          "id": "blast",
+          "name": "Estallido",
+          "parts": [
+            {
+              "calculation": "DamageCalc"
+            }
+          ]
+        }
+      ],
+      "not_modelled": [
+        "Ralentización y brinco hacia atrás"
+      ]
+    },
+    "R": {
+      "name": "Entre mundos",
+      "tooltip": "spell_aurorar_tooltip",
+      "cases": [
+        {
+          "id": "pulse",
+          "name": "Pulso espiritual",
+          "parts": [
+            {
+              "calculation": "DamageCalc"
+            }
+          ]
+        }
+      ],
+      "not_modelled": [
+        "Ralentización y área de teletransporte"
+      ]
+    }
+  }
+}

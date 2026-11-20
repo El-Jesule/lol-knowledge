@@ -1,0 +1,381 @@
+{
+  "schema": "lol-champion-kit/1",
+  "champion": "Nunu",
+  "label": "Derivado",
+  "game_version": "16.23",
+  "content_version": "16.23.8406595+branch.releases-16-23.content.release",
+  "verified_against": {
+    "content_version": "16.23.8406595+branch.releases-16-23.content.release",
+    "bin_sha256": "3680741f716b7b0201d4dfcbd876cc15423ece39cd061ac79efe12b6d1bc7070",
+    "evidence": "odd/tasks/champion-kits-wave-2.md",
+    "result": "Bin del cliente 16.23 convertido con python -m binmodel.batch_kits y compilado con esta especificación curada (CH-01 oleada 2)"
+  },
+  "source": "Árboles de cálculo del bin del cliente (python -m binmodel) y marcado de los tooltips del cliente; estructura de casos curada en research/kits/",
+  "abilities": {
+    "P": {
+      "name": "Llamada de Freljord",
+      "max_rank": 1,
+      "cases": [
+        {
+          "id": "cleave",
+          "name": "Daño en área de ataques",
+          "parts": [
+            {
+              "damage_type": "physical",
+              "formula": {
+                "op": "mul",
+                "operands": [
+                  {
+                    "op": "constant",
+                    "value": 0.3
+                  },
+                  {
+                    "op": "stat",
+                    "stat": "attack_damage",
+                    "scope": "total"
+                  }
+                ]
+              },
+              "label": "Derivado",
+              "source": "Characters/Nunu/Spells/NunuPassiveAbility/NunuPassive.mSpellCalculations.CleaveDamage (16.23.8406595+branch.releases-16-23.content.release)",
+              "damage_type_source": "spell_nunupassive_tooltip <physicalDamage>"
+            }
+          ]
+        }
+      ],
+      "passive_stats": [],
+      "not_modelled": [
+        "Velocidad de ataque y movimiento propia y a un aliado cercano"
+      ]
+    },
+    "Q": {
+      "name": "Voracidad",
+      "max_rank": 5,
+      "cases": [
+        {
+          "id": "champion",
+          "name": "Contra campeones (daño mágico)",
+          "parts": [
+            {
+              "damage_type": "magic",
+              "formula": {
+                "op": "add",
+                "operands": [
+                  {
+                    "op": "by_rank",
+                    "values": [
+                      60,
+                      100,
+                      140,
+                      180,
+                      220
+                    ]
+                  },
+                  {
+                    "op": "mul",
+                    "operands": [
+                      {
+                        "op": "constant",
+                        "value": 0.05
+                      },
+                      {
+                        "op": "stat",
+                        "stat": "health",
+                        "scope": "bonus"
+                      }
+                    ]
+                  },
+                  {
+                    "op": "mul",
+                    "operands": [
+                      {
+                        "op": "constant",
+                        "value": 0.65
+                      },
+                      {
+                        "op": "stat",
+                        "stat": "ability_power",
+                        "scope": "total"
+                      }
+                    ]
+                  }
+                ]
+              },
+              "label": "Derivado",
+              "source": "Characters/Nunu/Spells/NunuQAbility/NunuQ.mSpellCalculations.TotalChampionDamage (16.23.8406595+branch.releases-16-23.content.release)",
+              "damage_type_source": "spell_nunuq_tooltip <magicDamage>"
+            }
+          ]
+        },
+        {
+          "id": "minion_monster",
+          "name": "Contra súbditos y monstruos (daño verdadero)",
+          "parts": [
+            {
+              "damage_type": "true",
+              "formula": {
+                "op": "by_rank",
+                "values": [
+                  400,
+                  600,
+                  800,
+                  1000,
+                  1200
+                ]
+              },
+              "label": "Derivado",
+              "source": "Characters/Nunu/Spells/NunuQAbility/NunuQ · DataValues.MonsterMinionDamage (16.23.8406595+branch.releases-16-23.content.release)",
+              "damage_type_source": "spell_nunuq_tooltip <trueDamage>"
+            }
+          ]
+        }
+      ],
+      "passive_stats": [],
+      "not_modelled": [
+        "Curación contra campeones y monstruos (ChampionHealing, MonsterHealing)"
+      ]
+    },
+    "W": {
+      "name": "¡La bola más grande de la historia!",
+      "max_rank": 5,
+      "cases": [
+        {
+          "id": "min",
+          "name": "Mínimo",
+          "parts": [
+            {
+              "damage_type": "magic",
+              "formula": {
+                "op": "mul",
+                "operands": [
+                  {
+                    "op": "add",
+                    "operands": [
+                      {
+                        "op": "by_rank",
+                        "values": [
+                          180,
+                          225,
+                          270,
+                          315,
+                          360
+                        ]
+                      },
+                      {
+                        "op": "mul",
+                        "operands": [
+                          {
+                            "op": "constant",
+                            "value": 1.5
+                          },
+                          {
+                            "op": "stat",
+                            "stat": "ability_power",
+                            "scope": "total"
+                          }
+                        ]
+                      }
+                    ]
+                  },
+                  {
+                    "op": "constant",
+                    "value": 0.333
+                  }
+                ]
+              },
+              "label": "Derivado",
+              "source": "Characters/Nunu/Spells/NunuWAbility/NunuW.mSpellCalculations.NoImpactSnowballDamage (16.23.8406595+branch.releases-16-23.content.release)",
+              "damage_type_source": "spell_nunuw_tooltip <magicDamage>"
+            }
+          ]
+        },
+        {
+          "id": "max",
+          "name": "Tamaño máximo",
+          "parts": [
+            {
+              "damage_type": "magic",
+              "formula": {
+                "op": "add",
+                "operands": [
+                  {
+                    "op": "by_rank",
+                    "values": [
+                      180,
+                      225,
+                      270,
+                      315,
+                      360
+                    ]
+                  },
+                  {
+                    "op": "mul",
+                    "operands": [
+                      {
+                        "op": "constant",
+                        "value": 1.5
+                      },
+                      {
+                        "op": "stat",
+                        "stat": "ability_power",
+                        "scope": "total"
+                      }
+                    ]
+                  }
+                ]
+              },
+              "label": "Derivado",
+              "source": "Characters/Nunu/Spells/NunuWAbility/NunuW.mSpellCalculations.MaximumSnowballDamage (16.23.8406595+branch.releases-16-23.content.release)",
+              "damage_type_source": "spell_nunuw_tooltip <magicDamage>"
+            }
+          ]
+        }
+      ],
+      "passive_stats": [],
+      "not_modelled": [
+        "Lanzamiento por los aires y aturdimiento escalado (MaximumStunDuration)"
+      ]
+    },
+    "E": {
+      "name": "Alud de bolas",
+      "max_rank": 5,
+      "cases": [
+        {
+          "id": "snowball",
+          "name": "Una bola de nieve",
+          "parts": [
+            {
+              "damage_type": "magic",
+              "formula": {
+                "op": "add",
+                "operands": [
+                  {
+                    "op": "by_rank",
+                    "values": [
+                      15,
+                      22.5,
+                      30,
+                      37.5,
+                      45
+                    ]
+                  },
+                  {
+                    "op": "mul",
+                    "operands": [
+                      {
+                        "op": "constant",
+                        "value": 0.12
+                      },
+                      {
+                        "op": "stat",
+                        "stat": "ability_power",
+                        "scope": "total"
+                      }
+                    ]
+                  }
+                ]
+              },
+              "label": "Derivado",
+              "source": "Characters/Nunu/Spells/NunuEAbility/NunuE.mSpellCalculations.TotalSnowballDamage (16.23.8406595+branch.releases-16-23.content.release)",
+              "damage_type_source": "spell_nunue_tooltip <magicDamage>"
+            }
+          ]
+        },
+        {
+          "id": "snare",
+          "name": "Explosión final de inmovilización",
+          "parts": [
+            {
+              "damage_type": "magic",
+              "formula": {
+                "op": "add",
+                "operands": [
+                  {
+                    "op": "by_rank",
+                    "values": [
+                      20,
+                      30,
+                      40,
+                      50,
+                      60
+                    ]
+                  },
+                  {
+                    "op": "mul",
+                    "operands": [
+                      {
+                        "op": "constant",
+                        "value": 0.8
+                      },
+                      {
+                        "op": "stat",
+                        "stat": "ability_power",
+                        "scope": "total"
+                      }
+                    ]
+                  }
+                ]
+              },
+              "label": "Derivado",
+              "source": "Characters/Nunu/Spells/NunuEAbility/NunuE.mSpellCalculations.TotalRootDamage (16.23.8406595+branch.releases-16-23.content.release)",
+              "damage_type_source": "spell_nunue_tooltip <magicDamage>"
+            }
+          ]
+        }
+      ],
+      "passive_stats": [],
+      "not_modelled": [
+        "Hasta 9 bolas en 3 ráfagas, ralentización e inmovilización (RootDuration)"
+      ]
+    },
+    "R": {
+      "name": "Cero absoluto",
+      "max_rank": 3,
+      "cases": [
+        {
+          "id": "max_channel",
+          "name": "Canalización completa (3 s)",
+          "parts": [
+            {
+              "damage_type": "magic",
+              "formula": {
+                "op": "add",
+                "operands": [
+                  {
+                    "op": "by_rank",
+                    "values": [
+                      750,
+                      1100,
+                      1450
+                    ]
+                  },
+                  {
+                    "op": "mul",
+                    "operands": [
+                      {
+                        "op": "constant",
+                        "value": 3
+                      },
+                      {
+                        "op": "stat",
+                        "stat": "ability_power",
+                        "scope": "total"
+                      }
+                    ]
+                  }
+                ]
+              },
+              "label": "Derivado",
+              "source": "Characters/Nunu/Spells/NunuRAbility/NunuR.mSpellCalculations.MaximumDamage (16.23.8406595+branch.releases-16-23.content.release)",
+              "damage_type_source": "spell_nunur_tooltip <magicDamage>"
+            }
+          ]
+        }
+      ],
+      "passive_stats": [],
+      "not_modelled": [
+        "Escudo (TotalShieldAmount), ralentización creciente y daño parcial por interrupción"
+      ]
+    }
+  }
+}

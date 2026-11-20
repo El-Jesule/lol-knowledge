@@ -1,0 +1,170 @@
+{
+  "champion": "Fiddlesticks",
+  "game_version": "16.23",
+  "verified_against": {
+    "content_version": "16.23.8406595+branch.releases-16-23.content.release",
+    "bin_sha256": "11d87daed7b109cec29357b24e341ae0d3c584344c08508c49eb2ef56687cc04",
+    "evidence": "odd/tasks/champion-kits-wave-2.md",
+    "result": "Bin del cliente 16.23 convertido con python -m binmodel.batch_kits y compilado con esta especificación curada (CH-01 oleada 2)"
+  },
+  "abilities": {
+    "P": {
+      "name": "Un simple espantapájaros",
+      "max_rank": 1,
+      "not_modelled": [
+        "Figuras de espantapájaros (sustituyen al talismán)"
+      ]
+    },
+    "Q": {
+      "name": "Terror",
+      "tooltip": "spell_fiddlesticksq_tooltip",
+      "cases": [
+        {
+          "id": "normal",
+          "name": "Objetivo sin terror reciente (% vida actual)",
+          "parts": [
+            {
+              "tooltip_reference": "TotalPercentHealthDamage",
+              "damage_type": "magic",
+              "source_note": "TotalPercentHealthDamage × vida actual del objetivo",
+              "formula": {
+                "op": "mul",
+                "operands": [
+                  {
+                    "op": "calculation",
+                    "name": "TotalPercentHealthDamage"
+                  },
+                  {
+                    "op": "stat",
+                    "stat": "health",
+                    "scope": "current",
+                    "subject": "target"
+                  }
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "id": "feared",
+          "name": "Objetivo aterrorizado recientemente (daño doble)",
+          "parts": [
+            {
+              "tooltip_reference": "TotalPercentHealthDamageFeared",
+              "damage_type": "magic",
+              "source_note": "TotalPercentHealthDamageFeared × vida actual del objetivo",
+              "formula": {
+                "op": "mul",
+                "operands": [
+                  {
+                    "op": "calculation",
+                    "name": "TotalPercentHealthDamageFeared"
+                  },
+                  {
+                    "op": "stat",
+                    "stat": "health",
+                    "scope": "current",
+                    "subject": "target"
+                  }
+                ]
+              }
+            }
+          ]
+        }
+      ],
+      "not_modelled": [
+        "Terror (FearDuration), suelo mínimo de daño y tope contra monstruos"
+      ]
+    },
+    "W": {
+      "name": "Cosecha abundante",
+      "tooltip": "spell_fiddlesticksw_tooltip",
+      "cases": [
+        {
+          "id": "drain_per_second",
+          "name": "Drenaje por segundo",
+          "parts": [
+            {
+              "calculation": "DrainDamageCalc"
+            }
+          ]
+        },
+        {
+          "id": "final_tick",
+          "name": "Pulso final (% vida que falta)",
+          "parts": [
+            {
+              "tooltip_reference": "PercentForTooltip",
+              "damage_type": "magic",
+              "source_note": "DataValues.PercentForTooltip % × vida que falta del objetivo",
+              "formula": {
+                "op": "mul",
+                "operands": [
+                  {
+                    "op": "data_value",
+                    "name": "PercentForTooltip"
+                  },
+                  {
+                    "op": "constant",
+                    "value": 0.01
+                  },
+                  {
+                    "op": "stat",
+                    "stat": "health",
+                    "scope": "max",
+                    "subject": "target"
+                  },
+                  {
+                    "op": "stat",
+                    "stat": "health",
+                    "scope": "missing_fraction",
+                    "subject": "target"
+                  }
+                ]
+              }
+            }
+          ]
+        }
+      ],
+      "not_modelled": [
+        "Curación porcentual del daño infligido y devolución del 60 % de enfriamiento al terminar"
+      ]
+    },
+    "E": {
+      "name": "Segar",
+      "tooltip": "spell_fiddlestickse_tooltip",
+      "cases": [
+        {
+          "id": "reap",
+          "name": "Guadaña",
+          "parts": [
+            {
+              "calculation": "Damage"
+            }
+          ]
+        }
+      ],
+      "not_modelled": [
+        "Ralentización y silencio en el centro"
+      ]
+    },
+    "R": {
+      "name": "Tormenta de cuervos",
+      "tooltip": "spell_fiddlesticksr_tooltip",
+      "cases": [
+        {
+          "id": "full",
+          "name": "Daño total (5 s)",
+          "parts": [
+            {
+              "calculation": "TotalDamage"
+            }
+          ]
+        }
+      ],
+      "not_modelled": [
+        "Canalización de 1,5 s y teletransporte"
+      ]
+    }
+  }
+}

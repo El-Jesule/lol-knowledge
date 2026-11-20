@@ -1,0 +1,286 @@
+{
+  "schema": "lol-champion-kit/1",
+  "champion": "MonkeyKing",
+  "label": "Derivado",
+  "game_version": "16.23",
+  "content_version": "16.23.8406595+branch.releases-16-23.content.release",
+  "verified_against": {
+    "content_version": "16.23.8406595+branch.releases-16-23.content.release",
+    "bin_sha256": "7e00afa193107de102bb89e3904fe76e0427f8502afdc366c9b6f8019c233fff",
+    "evidence": "odd/tasks/champion-kits-wave-2.md",
+    "result": "Bin del cliente 16.23 convertido con python -m binmodel.batch_kits y compilado con esta especificación curada (CH-01 oleada 2)"
+  },
+  "source": "Árboles de cálculo del bin del cliente (python -m binmodel) y marcado de los tooltips del cliente; estructura de casos curada en research/kits/",
+  "abilities": {
+    "P": {
+      "name": "Piel de piedra",
+      "max_rank": 1,
+      "cases": [],
+      "passive_stats": [],
+      "not_modelled": [
+        "Armadura (BonusArmor) y regeneración acumulables en combate hasta 5 cargas"
+      ]
+    },
+    "Q": {
+      "name": "Golpe aplastante",
+      "max_rank": 5,
+      "cases": [
+        {
+          "id": "strike",
+          "name": "Daño físico adicional",
+          "parts": [
+            {
+              "damage_type": "physical",
+              "formula": {
+                "op": "add",
+                "operands": [
+                  {
+                    "op": "by_rank",
+                    "values": [
+                      20,
+                      45,
+                      70,
+                      95,
+                      120
+                    ]
+                  },
+                  {
+                    "op": "mul",
+                    "operands": [
+                      {
+                        "op": "constant",
+                        "value": 0.5
+                      },
+                      {
+                        "op": "stat",
+                        "stat": "attack_damage",
+                        "scope": "bonus"
+                      }
+                    ]
+                  }
+                ]
+              },
+              "label": "Derivado",
+              "source": "Characters/MonkeyKing/Spells/MonkeyKingDoubleAttackAbility/MonkeyKingDoubleAttack.mSpellCalculations.BonusDamageTT (16.23.8406595+branch.releases-16-23.content.release)",
+              "damage_type_source": "spell_monkeykingdoubleattack_tooltip <physicalDamage>"
+            }
+          ]
+        }
+      ],
+      "passive_stats": [],
+      "not_modelled": [
+        "Reducción porcentual de armadura (ArmorShredPercent), alcance extra y ataque básico aparte"
+      ]
+    },
+    "W": {
+      "name": "Guerrero pícaro",
+      "max_rank": 5,
+      "cases": [],
+      "passive_stats": [],
+      "not_modelled": [
+        "Invisibilidad y daño del clon"
+      ]
+    },
+    "E": {
+      "name": "Golpe de nimbo",
+      "max_rank": 5,
+      "cases": [
+        {
+          "id": "nimbus",
+          "name": "Impacto",
+          "parts": [
+            {
+              "damage_type": "magic",
+              "formula": {
+                "op": "add",
+                "operands": [
+                  {
+                    "op": "by_rank",
+                    "values": [
+                      80,
+                      120,
+                      160,
+                      200,
+                      240
+                    ]
+                  },
+                  {
+                    "op": "mul",
+                    "operands": [
+                      {
+                        "op": "constant",
+                        "value": 1
+                      },
+                      {
+                        "op": "stat",
+                        "stat": "ability_power",
+                        "scope": "total"
+                      }
+                    ]
+                  }
+                ]
+              },
+              "label": "Derivado",
+              "source": "Characters/MonkeyKing/Spells/MonkeyKingNimbusAbility/MonkeyKingNimbus.mSpellCalculations.TotalDamage (16.23.8406595+branch.releases-16-23.content.release)",
+              "damage_type_source": "spell_monkeykingnimbus_tooltip <magicDamage>"
+            }
+          ]
+        }
+      ],
+      "passive_stats": [],
+      "not_modelled": [
+        "Velocidad de ataque temporal tras el salto"
+      ]
+    },
+    "R": {
+      "name": "Ciclón",
+      "max_rank": 3,
+      "cases": [
+        {
+          "id": "full_spin",
+          "name": "Primer giro completo (2 s, + % vida máxima)",
+          "parts": [
+            {
+              "damage_type": "physical",
+              "formula": {
+                "op": "mul",
+                "operands": [
+                  {
+                    "op": "mul",
+                    "operands": [
+                      {
+                        "op": "constant",
+                        "value": 1.375
+                      },
+                      {
+                        "op": "stat",
+                        "stat": "attack_damage",
+                        "scope": "total"
+                      }
+                    ]
+                  },
+                  {
+                    "op": "constant",
+                    "value": 2
+                  }
+                ]
+              },
+              "label": "Derivado",
+              "source": "Characters/MonkeyKing/Spells/MonkeyKingSpinToWinAbility/MonkeyKingSpinToWin.mSpellCalculations.TotalDamageTT (16.23.8406595+branch.releases-16-23.content.release)",
+              "damage_type_source": "spell_monkeykingspintowin_tooltip <physicalDamage>"
+            },
+            {
+              "damage_type": "physical",
+              "formula": {
+                "op": "mul",
+                "operands": [
+                  {
+                    "op": "mul",
+                    "operands": [
+                      {
+                        "op": "by_rank",
+                        "values": [
+                          0.04,
+                          0.06,
+                          0.08
+                        ]
+                      },
+                      {
+                        "op": "constant",
+                        "value": 2
+                      }
+                    ]
+                  },
+                  {
+                    "op": "stat",
+                    "stat": "health",
+                    "scope": "max",
+                    "subject": "target"
+                  }
+                ]
+              },
+              "label": "Derivado",
+              "source": "Characters/MonkeyKing/Spells/MonkeyKingSpinToWinAbility/MonkeyKingSpinToWin · PercentHPDamageTT × vida máxima del objetivo (16.23.8406595+branch.releases-16-23.content.release)",
+              "damage_type_source": "spell_monkeykingspintowin_tooltip <physicalDamage>"
+            }
+          ]
+        },
+        {
+          "id": "recast_spin",
+          "name": "Reactivación: segundo giro completo (2 s)",
+          "parts": [
+            {
+              "damage_type": "physical",
+              "formula": {
+                "op": "mul",
+                "operands": [
+                  {
+                    "op": "mul",
+                    "operands": [
+                      {
+                        "op": "constant",
+                        "value": 1.375
+                      },
+                      {
+                        "op": "stat",
+                        "stat": "attack_damage",
+                        "scope": "total"
+                      }
+                    ]
+                  },
+                  {
+                    "op": "constant",
+                    "value": 2
+                  }
+                ]
+              },
+              "label": "Derivado",
+              "source": "Characters/MonkeyKing/Spells/MonkeyKingSpinToWinAbility/MonkeyKingSpinToWin.mSpellCalculations.TotalDamageTT (16.23.8406595+branch.releases-16-23.content.release)",
+              "damage_type_source": "spell_monkeykingspintowin_tooltip <physicalDamage>"
+            },
+            {
+              "damage_type": "physical",
+              "formula": {
+                "op": "mul",
+                "operands": [
+                  {
+                    "op": "mul",
+                    "operands": [
+                      {
+                        "op": "by_rank",
+                        "values": [
+                          0.04,
+                          0.06,
+                          0.08
+                        ]
+                      },
+                      {
+                        "op": "constant",
+                        "value": 2
+                      }
+                    ]
+                  },
+                  {
+                    "op": "stat",
+                    "stat": "health",
+                    "scope": "max",
+                    "subject": "target"
+                  }
+                ]
+              },
+              "label": "Derivado",
+              "source": "Characters/MonkeyKing/Spells/MonkeyKingSpinToWinAbility/MonkeyKingSpinToWin · PercentHPDamageTT × vida máxima del objetivo (16.23.8406595+branch.releases-16-23.content.release)",
+              "damage_type_source": "spell_monkeykingspintowin_tooltip <physicalDamage>"
+            }
+          ],
+          "recast": true
+        }
+      ],
+      "passive_stats": [],
+      "not_modelled": [
+        "Lanzamiento por los aires, velocidad de movimiento y tope contra monstruos (MonsterCapTT)"
+      ],
+      "recast_window_seconds": 8
+    }
+  }
+}

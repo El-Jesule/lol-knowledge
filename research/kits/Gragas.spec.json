@@ -1,0 +1,124 @@
+{
+  "champion": "Gragas",
+  "game_version": "16.23",
+  "verified_against": {
+    "content_version": "16.23.8406595+branch.releases-16-23.content.release",
+    "bin_sha256": "041a82e18e3f15f4e812886c44ffc032931855022193034d830b973c84a97252",
+    "evidence": "odd/tasks/champion-kits-wave-2.md",
+    "result": "Bin del cliente 16.23 convertido con python -m binmodel.batch_kits y compilado con esta especificación curada (CH-01 oleada 2)"
+  },
+  "abilities": {
+    "P": {
+      "name": "Hora feliz",
+      "max_rank": 1,
+      "not_modelled": [
+        "Curación al lanzar habilidad (HealAmount, HealCooldown)"
+      ]
+    },
+    "Q": {
+      "name": "Barril rodante",
+      "tooltip": "spell_gragasq_tooltip",
+      "cases": [
+        {
+          "id": "min",
+          "name": "Explosión inmediata",
+          "parts": [
+            {
+              "calculation": "MinDamage"
+            }
+          ]
+        },
+        {
+          "id": "max",
+          "name": "Fermentación completa (2 s, 150 %)",
+          "parts": [
+            {
+              "calculation": "MaxDamage"
+            }
+          ]
+        }
+      ],
+      "not_modelled": [
+        "Ralentización escalada con fermentación"
+      ]
+    },
+    "W": {
+      "name": "Furia ebria",
+      "tooltip": "spell_gragasw_tooltip",
+      "cases": [
+        {
+          "id": "strike",
+          "name": "Ataque potenciado (+ 7 % vida máxima)",
+          "parts": [
+            {
+              "calculation": "TotalDamage"
+            },
+            {
+              "tooltip_reference": "MaxHPPercentDamage",
+              "damage_type": "magic",
+              "source_note": "DataValues.MaxHPPercentDamage % × vida máxima del objetivo",
+              "formula": {
+                "op": "mul",
+                "operands": [
+                  {
+                    "op": "data_value",
+                    "name": "MaxHPPercentDamage"
+                  },
+                  {
+                    "op": "constant",
+                    "value": 0.01
+                  },
+                  {
+                    "op": "stat",
+                    "stat": "health",
+                    "scope": "max",
+                    "subject": "target"
+                  }
+                ]
+              }
+            }
+          ]
+        }
+      ],
+      "not_modelled": [
+        "Reducción de daño recibido (DamageReduction) y ataque básico aparte"
+      ]
+    },
+    "E": {
+      "name": "Barrigazo",
+      "tooltip": "spell_gragase_tooltip",
+      "cases": [
+        {
+          "id": "slam",
+          "name": "Impacto",
+          "parts": [
+            {
+              "calculation": "TotalDamage"
+            }
+          ]
+        }
+      ],
+      "not_modelled": [
+        "Lanzamiento por los aires y reducción de enfriamiento al golpear"
+      ]
+    },
+    "R": {
+      "name": "Tonel explosivo",
+      "tooltip": "spell_gragasr_tooltip",
+      "cases": [
+        {
+          "id": "cask",
+          "name": "Explosión",
+          "parts": [
+            {
+              "calculation": "DamageDone"
+            }
+          ]
+        }
+      ],
+      "not_modelled": [
+        "Empuje desde el centro de la explosión"
+      ]
+    }
+  }
+}

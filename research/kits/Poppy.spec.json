@@ -1,0 +1,208 @@
+{
+  "champion": "Poppy",
+  "game_version": "16.23",
+  "verified_against": {
+    "content_version": "16.23.8406595+branch.releases-16-23.content.release",
+    "bin_sha256": "ca4e8bf80139acec4b18be64479398a131e50ce0164dfe655805111a94ac85f7",
+    "evidence": "odd/tasks/champion-kits-wave-2.md",
+    "result": "Bin del cliente 16.23 convertido con python -m binmodel.batch_kits y compilado con esta especificación curada (CH-01 oleada 2)"
+  },
+  "abilities": {
+    "P": {
+      "name": "Embajadora de hierro",
+      "tooltip": "spell_poppypassive_tooltip",
+      "max_rank": 1,
+      "cases": [
+        {
+          "id": "buckler",
+          "name": "Daño mágico adicional del broquel",
+          "parts": [
+            {
+              "calculation": "TotalDamage"
+            }
+          ]
+        }
+      ],
+      "not_modelled": [
+        "Escudo al recoger el broquel (ShieldValue) y alcance adicional"
+      ]
+    },
+    "Q": {
+      "name": "Impacto de martillo",
+      "tooltip": "spell_poppyq_tooltip",
+      "cases": [
+        {
+          "id": "slam",
+          "name": "Un golpe (impacto o explosión)",
+          "parts": [
+            {
+              "calculation": "BaseDamage"
+            },
+            {
+              "tooltip_reference": "HealthDamagePercent",
+              "damage_type": "physical",
+              "source_note": "DataValues.HealthDamagePercent % × vida máxima del objetivo",
+              "formula": {
+                "op": "mul",
+                "operands": [
+                  {
+                    "op": "data_value",
+                    "name": "HealthDamagePercent"
+                  },
+                  {
+                    "op": "constant",
+                    "value": 0.01
+                  },
+                  {
+                    "op": "stat",
+                    "stat": "health",
+                    "scope": "max",
+                    "subject": "target"
+                  }
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "id": "both",
+          "name": "Impacto inicial + explosión",
+          "parts": [
+            {
+              "calculation": "BaseDamage"
+            },
+            {
+              "tooltip_reference": "HealthDamagePercent",
+              "damage_type": "physical",
+              "source_note": "DataValues.HealthDamagePercent % × vida máxima del objetivo",
+              "formula": {
+                "op": "mul",
+                "operands": [
+                  {
+                    "op": "data_value",
+                    "name": "HealthDamagePercent"
+                  },
+                  {
+                    "op": "constant",
+                    "value": 0.01
+                  },
+                  {
+                    "op": "stat",
+                    "stat": "health",
+                    "scope": "max",
+                    "subject": "target"
+                  }
+                ]
+              }
+            },
+            {
+              "calculation": "BaseDamage"
+            },
+            {
+              "tooltip_reference": "HealthDamagePercent",
+              "damage_type": "physical",
+              "source_note": "DataValues.HealthDamagePercent % × vida máxima del objetivo",
+              "formula": {
+                "op": "mul",
+                "operands": [
+                  {
+                    "op": "data_value",
+                    "name": "HealthDamagePercent"
+                  },
+                  {
+                    "op": "constant",
+                    "value": 0.01
+                  },
+                  {
+                    "op": "stat",
+                    "stat": "health",
+                    "scope": "max",
+                    "subject": "target"
+                  }
+                ]
+              }
+            }
+          ]
+        }
+      ],
+      "not_modelled": [
+        "Ralentización de la zona (MoveSpeedMod) y tope contra monstruos"
+      ]
+    },
+    "W": {
+      "name": "Entereza inalterable",
+      "tooltip": "spell_poppyw_tooltip",
+      "cases": [
+        {
+          "id": "interrupt",
+          "name": "Interrupción de desplazamiento",
+          "parts": [
+            {
+              "calculation": "InterruptDamage"
+            }
+          ]
+        }
+      ],
+      "not_modelled": [
+        "Pasiva porcentual de armadura y RM (BonusArmor, BonusMR, duplicada bajo 40 % vida) y velocidad de movimiento"
+      ]
+    },
+    "E": {
+      "name": "Carga heroica",
+      "tooltip": "spell_poppye_tooltip",
+      "cases": [
+        {
+          "id": "tackle",
+          "name": "Sin muro",
+          "parts": [
+            {
+              "calculation": "TackleDamage"
+            }
+          ]
+        },
+        {
+          "id": "wall_stun",
+          "name": "Contra muro (daño doble)",
+          "parts": [
+            {
+              "calculation": "TackleDamage"
+            },
+            {
+              "calculation": "TackleDamage"
+            }
+          ]
+        }
+      ],
+      "not_modelled": [
+        "Empuje y aturdimiento contra terreno (StunDuration)"
+      ]
+    },
+    "R": {
+      "name": "Veredicto de la guardiana",
+      "tooltip": "spell_poppyr_tooltip",
+      "cases": [
+        {
+          "id": "tap",
+          "name": "Lanzamiento instantáneo (50 %)",
+          "parts": [
+            {
+              "calculation": "HalfDamage"
+            }
+          ]
+        },
+        {
+          "id": "charged",
+          "name": "Carga completa",
+          "parts": [
+            {
+              "calculation": "Damage"
+            }
+          ]
+        }
+      ],
+      "not_modelled": [
+        "Lanzamiento por los aires y empuje hacia la base enemiga"
+      ]
+    }
+  }
+}

@@ -1,0 +1,287 @@
+{
+  "schema": "lol-champion-kit/1",
+  "champion": "Caitlyn",
+  "label": "Derivado",
+  "game_version": "16.23",
+  "content_version": "16.23.8406595+branch.releases-16-23.content.release",
+  "verified_against": {
+    "content_version": "16.23.8406595+branch.releases-16-23.content.release",
+    "bin_sha256": "a9ee373a5d7fc8533ca9fbd6d3af986731695e071beae0fd238c1ee611990ccf",
+    "evidence": "odd/tasks/champion-kits-wave-2.md",
+    "result": "Bin del cliente 16.23 convertido con python -m binmodel.batch_kits y compilado con esta especificación curada (CH-01 oleada 2)"
+  },
+  "source": "Árboles de cálculo del bin del cliente (python -m binmodel) y marcado de los tooltips del cliente; estructura de casos curada en research/kits/",
+  "abilities": {
+    "P": {
+      "name": "Disparo a la cabeza",
+      "max_rank": 1,
+      "cases": [],
+      "passive_stats": [],
+      "not_modelled": [
+        "Daño adicional de Disparo a la cabeza cada 6 ataques (HeadshotBonusDamage depende de crítico)"
+      ]
+    },
+    "Q": {
+      "name": "Pacificadora de Piltover",
+      "max_rank": 5,
+      "cases": [
+        {
+          "id": "first",
+          "name": "Primer objetivo o objetivo atrapado",
+          "parts": [
+            {
+              "damage_type": "physical",
+              "formula": {
+                "op": "add",
+                "operands": [
+                  {
+                    "op": "by_rank",
+                    "values": [
+                      50,
+                      95,
+                      140,
+                      185,
+                      230
+                    ]
+                  },
+                  {
+                    "op": "mul",
+                    "operands": [
+                      {
+                        "op": "by_rank",
+                        "values": [
+                          1.25,
+                          1.45,
+                          1.65,
+                          1.85,
+                          2.05
+                        ]
+                      },
+                      {
+                        "op": "stat",
+                        "stat": "attack_damage",
+                        "scope": "total"
+                      }
+                    ]
+                  }
+                ]
+              },
+              "label": "Derivado",
+              "source": "Characters/Caitlyn/Spells/CaitlynQAbility/CaitlynQ.mSpellCalculations.InitialDamage (16.23.8406595+branch.releases-16-23.content.release)",
+              "damage_type_source": "spell_caitlynpiltoverpeacemaker_tooltip <physicalDamage>"
+            }
+          ]
+        },
+        {
+          "id": "passthrough",
+          "name": "Objetivos sucesivos (60 %)",
+          "parts": [
+            {
+              "damage_type": "physical",
+              "formula": {
+                "op": "mul",
+                "operands": [
+                  {
+                    "op": "add",
+                    "operands": [
+                      {
+                        "op": "by_rank",
+                        "values": [
+                          50,
+                          95,
+                          140,
+                          185,
+                          230
+                        ]
+                      },
+                      {
+                        "op": "mul",
+                        "operands": [
+                          {
+                            "op": "by_rank",
+                            "values": [
+                              1.25,
+                              1.45,
+                              1.65,
+                              1.85,
+                              2.05
+                            ]
+                          },
+                          {
+                            "op": "stat",
+                            "stat": "attack_damage",
+                            "scope": "total"
+                          }
+                        ]
+                      }
+                    ]
+                  },
+                  {
+                    "op": "constant",
+                    "value": 0.6
+                  }
+                ]
+              },
+              "label": "Derivado",
+              "source": "Characters/Caitlyn/Spells/CaitlynQAbility/CaitlynQ.mSpellCalculations.SecondaryDamage (16.23.8406595+branch.releases-16-23.content.release)",
+              "damage_type_source": "spell_caitlynpiltoverpeacemaker_tooltip <physicalDamage>"
+            }
+          ]
+        }
+      ],
+      "passive_stats": [],
+      "not_modelled": []
+    },
+    "W": {
+      "name": "Trampa para yordles",
+      "max_rank": 5,
+      "cases": [
+        {
+          "id": "headshot_bonus",
+          "name": "Daño adicional de Disparo a la cabeza en trampa",
+          "parts": [
+            {
+              "damage_type": "physical",
+              "formula": {
+                "op": "add",
+                "operands": [
+                  {
+                    "op": "by_rank",
+                    "values": [
+                      35,
+                      80,
+                      125,
+                      170,
+                      215
+                    ]
+                  },
+                  {
+                    "op": "mul",
+                    "operands": [
+                      {
+                        "op": "constant",
+                        "value": 0.3
+                      },
+                      {
+                        "op": "stat",
+                        "stat": "attack_damage",
+                        "scope": "bonus"
+                      }
+                    ]
+                  }
+                ]
+              },
+              "label": "Derivado",
+              "source": "Characters/Caitlyn/Spells/CaitlynWAbility/CaitlynW.mSpellCalculations.HeadshotBonusDamage (16.23.8406595+branch.releases-16-23.content.release)",
+              "damage_type_source": "spell_caitlynyordletrap_tooltip <physicalDamage>"
+            }
+          ]
+        }
+      ],
+      "passive_stats": [],
+      "not_modelled": [
+        "Inmovilización, visión verdadera y daño base del Disparo a la cabeza aparte"
+      ]
+    },
+    "E": {
+      "name": "Red de calibre 90",
+      "max_rank": 5,
+      "cases": [
+        {
+          "id": "net",
+          "name": "Red",
+          "parts": [
+            {
+              "damage_type": "magic",
+              "formula": {
+                "op": "add",
+                "operands": [
+                  {
+                    "op": "by_rank",
+                    "values": [
+                      80,
+                      130,
+                      180,
+                      230,
+                      280
+                    ]
+                  },
+                  {
+                    "op": "mul",
+                    "operands": [
+                      {
+                        "op": "constant",
+                        "value": 0.8
+                      },
+                      {
+                        "op": "stat",
+                        "stat": "ability_power",
+                        "scope": "total"
+                      }
+                    ]
+                  }
+                ]
+              },
+              "label": "Derivado",
+              "source": "Characters/Caitlyn/Spells/CaitlynEAbility/CaitlynE.mSpellCalculations.NetDamage (16.23.8406595+branch.releases-16-23.content.release)",
+              "damage_type_source": "spell_caitlynentrapment_tooltip <magicDamage>"
+            }
+          ]
+        }
+      ],
+      "passive_stats": [],
+      "not_modelled": [
+        "Ralentización, retroceso y marca de Disparo a la cabeza"
+      ]
+    },
+    "R": {
+      "name": "As en la manga",
+      "max_rank": 3,
+      "cases": [
+        {
+          "id": "shot",
+          "name": "Disparo (sin bonificación de crítico)",
+          "parts": [
+            {
+              "damage_type": "physical",
+              "formula": {
+                "op": "add",
+                "operands": [
+                  {
+                    "op": "by_rank",
+                    "values": [
+                      300,
+                      475,
+                      650
+                    ]
+                  },
+                  {
+                    "op": "mul",
+                    "operands": [
+                      {
+                        "op": "constant",
+                        "value": 1
+                      },
+                      {
+                        "op": "stat",
+                        "stat": "attack_damage",
+                        "scope": "bonus"
+                      }
+                    ]
+                  }
+                ]
+              },
+              "label": "Derivado",
+              "source": "Characters/Caitlyn/Spells/CaitlynRAbility/CaitlynR.mSpellCalculations.RTotalDamage (16.23.8406595+branch.releases-16-23.content.release)",
+              "damage_type_source": "spell_caitlynaceinthehole_tooltip <physicalDamage>"
+            }
+          ]
+        }
+      ],
+      "passive_stats": [],
+      "not_modelled": [
+        "Escalado adicional con probabilidad de crítico e intercepción por campeones enemigos"
+      ]
+    }
+  }
+}

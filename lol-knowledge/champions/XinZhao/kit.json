@@ -1,0 +1,602 @@
+{
+  "schema": "lol-champion-kit/1",
+  "champion": "XinZhao",
+  "label": "Derivado",
+  "game_version": "16.23",
+  "content_version": "16.23.8406595+branch.releases-16-23.content.release",
+  "verified_against": {
+    "content_version": "16.23.8406595+branch.releases-16-23.content.release",
+    "bin_sha256": "1c4e811bef2c6021e17eab425cee7884d311a0c11535fe01a41de5f07236d14b",
+    "evidence": "odd/tasks/champion-kits-wave-2.md",
+    "result": "Bin del cliente 16.23 convertido con python -m binmodel.batch_kits y compilado con esta especificación curada (CH-01 oleada 2)"
+  },
+  "source": "Árboles de cálculo del bin del cliente (python -m binmodel) y marcado de los tooltips del cliente; estructura de casos curada en research/kits/",
+  "abilities": {
+    "P": {
+      "name": "Determinación",
+      "max_rank": 1,
+      "cases": [
+        {
+          "id": "third_hit",
+          "name": "Cada tercer golpe",
+          "parts": [
+            {
+              "damage_type": "physical",
+              "formula": {
+                "op": "add",
+                "operands": [
+                  {
+                    "op": "mul",
+                    "operands": [
+                      {
+                        "op": "by_level",
+                        "values": [
+                          0.15,
+                          0.15,
+                          0.15,
+                          0.15,
+                          0.15,
+                          0.3,
+                          0.3,
+                          0.3,
+                          0.3,
+                          0.3,
+                          0.45,
+                          0.45,
+                          0.45,
+                          0.45,
+                          0.45,
+                          0.6,
+                          0.6,
+                          0.6
+                        ]
+                      },
+                      {
+                        "op": "stat",
+                        "stat": "attack_damage",
+                        "scope": "total"
+                      }
+                    ]
+                  },
+                  {
+                    "op": "mul",
+                    "operands": [
+                      {
+                        "op": "by_level",
+                        "values": [
+                          0.05,
+                          0.05,
+                          0.05,
+                          0.05,
+                          0.05,
+                          0.1,
+                          0.1,
+                          0.1,
+                          0.1,
+                          0.1,
+                          0.15,
+                          0.15,
+                          0.15,
+                          0.15,
+                          0.15,
+                          0.2,
+                          0.2,
+                          0.2
+                        ]
+                      },
+                      {
+                        "op": "stat",
+                        "stat": "ability_power",
+                        "scope": "total"
+                      }
+                    ]
+                  }
+                ]
+              },
+              "label": "Derivado",
+              "source": "Characters/XinZhao/Spells/XinZhaoPAbility/XinZhaoP.mSpellCalculations.TotalDamage (16.23.8406595+branch.releases-16-23.content.release)",
+              "damage_type_source": "spell_xinzhaop_tooltip <physicalDamage>"
+            }
+          ]
+        }
+      ],
+      "passive_stats": [],
+      "not_modelled": [
+        "Curación cada tercer golpe (TotalHealing)"
+      ]
+    },
+    "Q": {
+      "name": "Golpe de tres garras",
+      "max_rank": 5,
+      "cases": [
+        {
+          "id": "bonus_hit",
+          "name": "Daño adicional por golpe",
+          "parts": [
+            {
+              "damage_type": "physical",
+              "formula": {
+                "op": "add",
+                "operands": [
+                  {
+                    "op": "by_rank",
+                    "values": [
+                      15,
+                      30,
+                      45,
+                      60,
+                      75
+                    ]
+                  },
+                  {
+                    "op": "mul",
+                    "operands": [
+                      {
+                        "op": "constant",
+                        "value": 0.45
+                      },
+                      {
+                        "op": "stat",
+                        "stat": "attack_damage",
+                        "scope": "bonus"
+                      }
+                    ]
+                  }
+                ]
+              },
+              "label": "Derivado",
+              "source": "Characters/XinZhao/Spells/XinZhaoQAbility/XinZhaoQ.mSpellCalculations.BonusDamage (16.23.8406595+branch.releases-16-23.content.release)",
+              "damage_type_source": "spell_xinzhaoq_tooltip <physicalDamage>"
+            }
+          ]
+        },
+        {
+          "id": "all_three",
+          "name": "Los tres golpes potenciados",
+          "parts": [
+            {
+              "damage_type": "physical",
+              "formula": {
+                "op": "add",
+                "operands": [
+                  {
+                    "op": "by_rank",
+                    "values": [
+                      15,
+                      30,
+                      45,
+                      60,
+                      75
+                    ]
+                  },
+                  {
+                    "op": "mul",
+                    "operands": [
+                      {
+                        "op": "constant",
+                        "value": 0.45
+                      },
+                      {
+                        "op": "stat",
+                        "stat": "attack_damage",
+                        "scope": "bonus"
+                      }
+                    ]
+                  }
+                ]
+              },
+              "label": "Derivado",
+              "source": "Characters/XinZhao/Spells/XinZhaoQAbility/XinZhaoQ.mSpellCalculations.BonusDamage (16.23.8406595+branch.releases-16-23.content.release)",
+              "damage_type_source": "spell_xinzhaoq_tooltip <physicalDamage>"
+            },
+            {
+              "damage_type": "physical",
+              "formula": {
+                "op": "add",
+                "operands": [
+                  {
+                    "op": "by_rank",
+                    "values": [
+                      15,
+                      30,
+                      45,
+                      60,
+                      75
+                    ]
+                  },
+                  {
+                    "op": "mul",
+                    "operands": [
+                      {
+                        "op": "constant",
+                        "value": 0.45
+                      },
+                      {
+                        "op": "stat",
+                        "stat": "attack_damage",
+                        "scope": "bonus"
+                      }
+                    ]
+                  }
+                ]
+              },
+              "label": "Derivado",
+              "source": "Characters/XinZhao/Spells/XinZhaoQAbility/XinZhaoQ.mSpellCalculations.BonusDamage (16.23.8406595+branch.releases-16-23.content.release)",
+              "damage_type_source": "spell_xinzhaoq_tooltip <physicalDamage>"
+            },
+            {
+              "damage_type": "physical",
+              "formula": {
+                "op": "add",
+                "operands": [
+                  {
+                    "op": "by_rank",
+                    "values": [
+                      15,
+                      30,
+                      45,
+                      60,
+                      75
+                    ]
+                  },
+                  {
+                    "op": "mul",
+                    "operands": [
+                      {
+                        "op": "constant",
+                        "value": 0.45
+                      },
+                      {
+                        "op": "stat",
+                        "stat": "attack_damage",
+                        "scope": "bonus"
+                      }
+                    ]
+                  }
+                ]
+              },
+              "label": "Derivado",
+              "source": "Characters/XinZhao/Spells/XinZhaoQAbility/XinZhaoQ.mSpellCalculations.BonusDamage (16.23.8406595+branch.releases-16-23.content.release)",
+              "damage_type_source": "spell_xinzhaoq_tooltip <physicalDamage>"
+            }
+          ]
+        }
+      ],
+      "passive_stats": [],
+      "not_modelled": [
+        "Reducción de 1 s de enfriamientos por golpe, levantamiento en el 3.er golpe y ataques básicos aparte"
+      ]
+    },
+    "W": {
+      "name": "El viento se convierte en rayo",
+      "max_rank": 5,
+      "cases": [
+        {
+          "id": "slash",
+          "name": "Tajo inicial",
+          "parts": [
+            {
+              "damage_type": "physical",
+              "formula": {
+                "op": "add",
+                "operands": [
+                  {
+                    "op": "by_rank",
+                    "values": [
+                      30,
+                      40,
+                      50,
+                      60,
+                      70
+                    ]
+                  },
+                  {
+                    "op": "mul",
+                    "operands": [
+                      {
+                        "op": "constant",
+                        "value": 0.3
+                      },
+                      {
+                        "op": "stat",
+                        "stat": "attack_damage",
+                        "scope": "total"
+                      }
+                    ]
+                  }
+                ]
+              },
+              "label": "Derivado",
+              "source": "Characters/XinZhao/Spells/XinZhaoWAbility/XinZhaoW.mSpellCalculations.SlashDamage (16.23.8406595+branch.releases-16-23.content.release)",
+              "damage_type_source": "spell_xinzhaow_tooltip <physicalDamage>"
+            }
+          ]
+        },
+        {
+          "id": "thrust",
+          "name": "Estocada",
+          "parts": [
+            {
+              "damage_type": "physical",
+              "formula": {
+                "op": "add",
+                "operands": [
+                  {
+                    "op": "by_rank",
+                    "values": [
+                      50,
+                      85,
+                      120,
+                      155,
+                      190
+                    ]
+                  },
+                  {
+                    "op": "mul",
+                    "operands": [
+                      {
+                        "op": "constant",
+                        "value": 0.9
+                      },
+                      {
+                        "op": "stat",
+                        "stat": "attack_damage",
+                        "scope": "total"
+                      }
+                    ]
+                  },
+                  {
+                    "op": "mul",
+                    "operands": [
+                      {
+                        "op": "constant",
+                        "value": 0.65
+                      },
+                      {
+                        "op": "stat",
+                        "stat": "ability_power",
+                        "scope": "total"
+                      }
+                    ]
+                  }
+                ]
+              },
+              "label": "Derivado",
+              "source": "Characters/XinZhao/Spells/XinZhaoWAbility/XinZhaoW.mSpellCalculations.ThrustDamage (16.23.8406595+branch.releases-16-23.content.release)",
+              "damage_type_source": "spell_xinzhaow_tooltip <physicalDamage>"
+            }
+          ]
+        },
+        {
+          "id": "both",
+          "name": "Tajo + estocada",
+          "parts": [
+            {
+              "damage_type": "physical",
+              "formula": {
+                "op": "add",
+                "operands": [
+                  {
+                    "op": "by_rank",
+                    "values": [
+                      30,
+                      40,
+                      50,
+                      60,
+                      70
+                    ]
+                  },
+                  {
+                    "op": "mul",
+                    "operands": [
+                      {
+                        "op": "constant",
+                        "value": 0.3
+                      },
+                      {
+                        "op": "stat",
+                        "stat": "attack_damage",
+                        "scope": "total"
+                      }
+                    ]
+                  }
+                ]
+              },
+              "label": "Derivado",
+              "source": "Characters/XinZhao/Spells/XinZhaoWAbility/XinZhaoW.mSpellCalculations.SlashDamage (16.23.8406595+branch.releases-16-23.content.release)",
+              "damage_type_source": "spell_xinzhaow_tooltip <physicalDamage>"
+            },
+            {
+              "damage_type": "physical",
+              "formula": {
+                "op": "add",
+                "operands": [
+                  {
+                    "op": "by_rank",
+                    "values": [
+                      50,
+                      85,
+                      120,
+                      155,
+                      190
+                    ]
+                  },
+                  {
+                    "op": "mul",
+                    "operands": [
+                      {
+                        "op": "constant",
+                        "value": 0.9
+                      },
+                      {
+                        "op": "stat",
+                        "stat": "attack_damage",
+                        "scope": "total"
+                      }
+                    ]
+                  },
+                  {
+                    "op": "mul",
+                    "operands": [
+                      {
+                        "op": "constant",
+                        "value": 0.65
+                      },
+                      {
+                        "op": "stat",
+                        "stat": "ability_power",
+                        "scope": "total"
+                      }
+                    ]
+                  }
+                ]
+              },
+              "label": "Derivado",
+              "source": "Characters/XinZhao/Spells/XinZhaoWAbility/XinZhaoW.mSpellCalculations.ThrustDamage (16.23.8406595+branch.releases-16-23.content.release)",
+              "damage_type_source": "spell_xinzhaow_tooltip <physicalDamage>"
+            }
+          ]
+        }
+      ],
+      "passive_stats": [],
+      "not_modelled": [
+        "Ralentización, marca Desafiado y escalado con probabilidad de crítico (CritChanceAmp)"
+      ]
+    },
+    "E": {
+      "name": "Carga audaz",
+      "max_rank": 5,
+      "cases": [
+        {
+          "id": "charge",
+          "name": "Impacto",
+          "parts": [
+            {
+              "damage_type": "magic",
+              "formula": {
+                "op": "add",
+                "operands": [
+                  {
+                    "op": "by_rank",
+                    "values": [
+                      50,
+                      75,
+                      100,
+                      125,
+                      150
+                    ]
+                  },
+                  {
+                    "op": "mul",
+                    "operands": [
+                      {
+                        "op": "constant",
+                        "value": 1.2
+                      },
+                      {
+                        "op": "stat",
+                        "stat": "ability_power",
+                        "scope": "total"
+                      }
+                    ]
+                  }
+                ]
+              },
+              "label": "Derivado",
+              "source": "Characters/XinZhao/Spells/XinZhaoEAbility/XinZhaoE.mSpellCalculations.ChargeDamage (16.23.8406595+branch.releases-16-23.content.release)",
+              "damage_type_source": "spell_xinzhaoe_tooltip <magicDamage>"
+            }
+          ]
+        }
+      ],
+      "passive_stats": [],
+      "not_modelled": [
+        "Ralentización y velocidad de ataque temporal"
+      ]
+    },
+    "R": {
+      "name": "Guardia de media luna",
+      "max_rank": 3,
+      "cases": [
+        {
+          "id": "sweep",
+          "name": "Barrido (+ 15 % vida actual)",
+          "parts": [
+            {
+              "damage_type": "physical",
+              "formula": {
+                "op": "add",
+                "operands": [
+                  {
+                    "op": "by_rank",
+                    "values": [
+                      75,
+                      175,
+                      275
+                    ]
+                  },
+                  {
+                    "op": "mul",
+                    "operands": [
+                      {
+                        "op": "constant",
+                        "value": 1
+                      },
+                      {
+                        "op": "stat",
+                        "stat": "attack_damage",
+                        "scope": "bonus"
+                      }
+                    ]
+                  },
+                  {
+                    "op": "mul",
+                    "operands": [
+                      {
+                        "op": "constant",
+                        "value": 1.1
+                      },
+                      {
+                        "op": "stat",
+                        "stat": "ability_power",
+                        "scope": "total"
+                      }
+                    ]
+                  }
+                ]
+              },
+              "label": "Derivado",
+              "source": "Characters/XinZhao/Spells/XinZhaoRAbility/XinZhaoR.mSpellCalculations.TotalDamage (16.23.8406595+branch.releases-16-23.content.release)",
+              "damage_type_source": "spell_xinzhaor_tooltip <physicalDamage>"
+            },
+            {
+              "damage_type": "physical",
+              "formula": {
+                "op": "mul",
+                "operands": [
+                  {
+                    "op": "constant",
+                    "value": 0.15
+                  },
+                  {
+                    "op": "stat",
+                    "stat": "health",
+                    "scope": "current",
+                    "subject": "target"
+                  }
+                ]
+              },
+              "label": "Derivado",
+              "source": "Characters/XinZhao/Spells/XinZhaoRAbility/XinZhaoR · DataValues.PercentCurrentHealthDamage × vida actual del objetivo (16.23.8406595+branch.releases-16-23.content.release)",
+              "damage_type_source": "spell_xinzhaor_tooltip <physicalDamage>"
+            }
+          ]
+        }
+      ],
+      "passive_stats": [],
+      "not_modelled": [
+        "Empuje de objetivos no desafiados e invulnerabilidad al daño exterior"
+      ]
+    }
+  }
+}

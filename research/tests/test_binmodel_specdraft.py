@@ -475,3 +475,16 @@ def test_kitgen_custom_calculation_scaled_passive_stat_and_percent_guard(zaahen_
     }
     assert zaahen_extract["champion"]["name"] == "Zaahen"
     assert isinstance(tooltips, dict)
+
+
+def test_colon_scoped_tooltip_placeholders_resolve_in_bin2json_and_kitgen():
+    from binmodel.bin2json import placeholders
+    from binmodel.kitgen import tooltip_damage_types
+
+    text = (
+        "Inflige <magicDamage>@spell.VexR:RDamageCalc@</magicDamage> y "
+        "<physicalDamage>@spell.X:Hit*100@</physicalDamage>."
+    )
+    assert placeholders([text]) == ["RDamageCalc", "Hit"]
+    assert tooltip_damage_types(text, "RDamageCalc") == {"magic"}
+    assert tooltip_damage_types(text, "Hit") == {"physical"}

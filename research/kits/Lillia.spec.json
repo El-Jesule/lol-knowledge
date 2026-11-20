@@ -1,0 +1,138 @@
+{
+  "champion": "Lillia",
+  "game_version": "16.23",
+  "verified_against": {
+    "content_version": "16.23.8406595+branch.releases-16-23.content.release",
+    "bin_sha256": "3d32ba798e17d9963ec99809c52c33494806b9fd4c5190ce426aefb0085adc09",
+    "evidence": "odd/tasks/champion-kits-wave-2.md",
+    "result": "Bin del cliente 16.23 convertido con python -m binmodel.batch_kits y compilado con esta especificación curada (CH-01 oleada 2)"
+  },
+  "abilities": {
+    "P": {
+      "name": "Rama de los sueños",
+      "tooltip": "spell_lilliap_tooltip",
+      "max_rank": 1,
+      "cases": [
+        {
+          "id": "burn",
+          "name": "Polvo de los sueños (3 s, % vida máxima)",
+          "parts": [
+            {
+              "tooltip_reference": "DotPercentTooltip",
+              "damage_type": "magic",
+              "source_note": "DotPercentTooltip × vida máxima del objetivo",
+              "formula": {
+                "op": "mul",
+                "operands": [
+                  {
+                    "op": "calculation",
+                    "name": "DotPercentTooltip"
+                  },
+                  {
+                    "op": "stat",
+                    "stat": "health",
+                    "scope": "max",
+                    "subject": "target"
+                  }
+                ]
+              }
+            }
+          ]
+        }
+      ],
+      "not_modelled": [
+        "Curación contra campeones y monstruos (ChampionHealTT, MonsterHealTT) y tope a monstruos"
+      ]
+    },
+    "Q": {
+      "name": "Golpes florecientes",
+      "tooltip": "spell_lilliaq_tooltip",
+      "cases": [
+        {
+          "id": "inner",
+          "name": "Zona interior (solo daño mágico)",
+          "parts": [
+            {
+              "calculation": "TotalDamage"
+            }
+          ]
+        },
+        {
+          "id": "outer",
+          "name": "Borde exterior (mágico + verdadero)",
+          "parts": [
+            {
+              "calculation": "TotalDamage"
+            },
+            {
+              "calculation": "BonusTrueDamage"
+            }
+          ]
+        }
+      ],
+      "not_modelled": [
+        "Velocidad de movimiento acumulable de Pingo (PranceSpeed, hasta 4 cargas)"
+      ]
+    },
+    "W": {
+      "name": "¡Cuidado! ¡Yip!",
+      "tooltip": "spell_lilliaw_tooltip",
+      "cases": [
+        {
+          "id": "outer",
+          "name": "Zona exterior",
+          "parts": [
+            {
+              "calculation": "FlatDamage"
+            }
+          ]
+        },
+        {
+          "id": "center",
+          "name": "Centro potenciado",
+          "parts": [
+            {
+              "calculation": "FlatDamageSweetSpot"
+            }
+          ]
+        }
+      ]
+    },
+    "E": {
+      "name": "Semilla rodante",
+      "tooltip": "spell_lilliae_tooltip",
+      "cases": [
+        {
+          "id": "seed",
+          "name": "Impacto",
+          "parts": [
+            {
+              "calculation": "ImpactDamageTotal"
+            }
+          ]
+        }
+      ],
+      "not_modelled": [
+        "Ralentización y revelación"
+      ]
+    },
+    "R": {
+      "name": "Nana rítmica",
+      "tooltip": "spell_lilliar_tooltip",
+      "cases": [
+        {
+          "id": "wake_up",
+          "name": "Daño al despertar",
+          "parts": [
+            {
+              "calculation": "TotalDamage"
+            }
+          ]
+        }
+      ],
+      "not_modelled": [
+        "Letargo y sueño sobre enemigos con Polvo de los sueños"
+      ]
+    }
+  }
+}

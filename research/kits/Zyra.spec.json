@@ -1,0 +1,92 @@
+{
+  "champion": "Zyra",
+  "game_version": "16.23",
+  "verified_against": {
+    "content_version": "16.23.8406595+branch.releases-16-23.content.release",
+    "bin_sha256": "21e50b9544b2d979b0c856cf094d25132c7cb2a6148473177081e28fc366dc91",
+    "evidence": "odd/tasks/champion-kits-wave-2.md",
+    "result": "Bin del cliente 16.23 convertido con python -m binmodel.batch_kits y compilado con esta especificación curada (CH-01 oleada 2)"
+  },
+  "abilities": {
+    "P": {
+      "name": "Jardín de espinas",
+      "tooltip": "game_buff_tooltip_zyrap",
+      "max_rank": 1,
+      "cases": [
+        {
+          "id": "plant_hit",
+          "name": "Un ataque de planta",
+          "parts": [
+            {
+              "calculation": "PlantDamage"
+            }
+          ]
+        }
+      ],
+      "not_modelled": [
+        "Generación de semillas (SeedCooldown), daño reducido por plantas múltiples y bonificación a monstruos"
+      ]
+    },
+    "Q": {
+      "name": "Espinas mortales",
+      "tooltip": "spell_zyraq_tooltip",
+      "cases": [
+        {
+          "id": "spines",
+          "name": "Explosión",
+          "parts": [
+            {
+              "calculation": "InitialDamage"
+            }
+          ]
+        }
+      ],
+      "not_modelled": [
+        "Invocación de Escupespinas sobre semillas"
+      ]
+    },
+    "W": {
+      "name": "Crecimiento desenfrenado",
+      "tooltip": "spell_zyraw_tooltip",
+      "not_modelled": [
+        "Colocación de semillas (2 cargas) y recarga al matar unidades"
+      ]
+    },
+    "E": {
+      "name": "Raíces atenazadoras",
+      "tooltip": "spell_zyrae_tooltip",
+      "cases": [
+        {
+          "id": "roots",
+          "name": "Vides",
+          "parts": [
+            {
+              "calculation": "TotalDamage"
+            }
+          ]
+        }
+      ],
+      "not_modelled": [
+        "Inmovilización (RootDuration) e invocación de Azotavides"
+      ]
+    },
+    "R": {
+      "name": "Tuercespinas",
+      "tooltip": "spell_zyrar_tooltip",
+      "cases": [
+        {
+          "id": "stranglethorns",
+          "name": "Matorral",
+          "parts": [
+            {
+              "calculation": "TotalDamage"
+            }
+          ]
+        }
+      ],
+      "not_modelled": [
+        "Lanzamiento por los aires tras 2 s y enfurecimiento de plantas"
+      ]
+    }
+  }
+}

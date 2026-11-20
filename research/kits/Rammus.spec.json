@@ -1,0 +1,91 @@
+{
+  "champion": "Rammus",
+  "game_version": "16.23",
+  "verified_against": {
+    "content_version": "16.23.8406595+branch.releases-16-23.content.release",
+    "bin_sha256": "308a8907a7f13e746b089ed12a4b88cd77ddf02a14c904bb293b2c3e050ee411",
+    "evidence": "odd/tasks/champion-kits-wave-2.md",
+    "result": "Bin del cliente 16.23 convertido con python -m binmodel.batch_kits y compilado con esta especificación curada (CH-01 oleada 2)"
+  },
+  "abilities": {
+    "P": {
+      "name": "Armazón de pinchos",
+      "max_rank": 1,
+      "not_modelled": [
+        "DA adicional en función de armadura y resistencia mágica (TotalDamage)"
+      ]
+    },
+    "Q": {
+      "name": "Bola de poder",
+      "tooltip": "spell_powerball_tooltip",
+      "cases": [
+        {
+          "id": "impact",
+          "name": "Choque",
+          "parts": [
+            {
+              "calculation": "PowerBallDamage"
+            }
+          ]
+        }
+      ],
+      "not_modelled": [
+        "Velocidad de movimiento creciente (MinimumMoveSpeed, MaximumMoveSpeed), empuje y ralentización"
+      ]
+    },
+    "W": {
+      "name": "Posición defensiva",
+      "tooltip": "spell_defensiveballcurl_tooltip",
+      "cases": [
+        {
+          "id": "reflect",
+          "name": "Daño mágico reflejado por ataque recibido",
+          "parts": [
+            {
+              "calculation": "ReturnDamageCalc"
+            }
+          ]
+        }
+      ],
+      "not_modelled": [
+        "Armadura y RM activas (BonusArmorTooltip, BonusMRTooltip)"
+      ]
+    },
+    "E": {
+      "name": "Provocación frenética",
+      "tooltip": "spell_puncturingtaunt_tooltip",
+      "cases": [
+        {
+          "id": "monster",
+          "name": "Contra monstruos",
+          "parts": [
+            {
+              "calculation": "MonsterDamageCalc"
+            }
+          ]
+        }
+      ],
+      "not_modelled": [
+        "Provocación a campeones y monstruos (Duration)"
+      ]
+    },
+    "R": {
+      "name": "Golpe veloz",
+      "tooltip": "spell_tremors2_tooltip",
+      "cases": [
+        {
+          "id": "impact",
+          "name": "Impacto inicial",
+          "parts": [
+            {
+              "calculation": "InitialDamageCalc"
+            }
+          ]
+        }
+      ],
+      "not_modelled": [
+        "Réplicas posteriores, ralentización y daño extra combinado con Bola de poder"
+      ]
+    }
+  }
+}

@@ -1,0 +1,160 @@
+{
+  "champion": "Samira",
+  "game_version": "16.23",
+  "verified_against": {
+    "content_version": "16.23.8406595+branch.releases-16-23.content.release",
+    "bin_sha256": "ba2a11d8fb2889dc76211dab7c43dfc696a8ffa70fa3d0c4e6cc4ef201c415cb",
+    "evidence": "odd/tasks/champion-kits-wave-2.md",
+    "result": "Bin del cliente 16.23 convertido con python -m binmodel.batch_kits y compilado con esta especificación curada (CH-01 oleada 2)"
+  },
+  "abilities": {
+    "P": {
+      "name": "Impulso temerario",
+      "tooltip": "spell_samirapassive_tooltip",
+      "max_rank": 1,
+      "cases": [
+        {
+          "id": "melee_min",
+          "name": "Daño mágico cuerpo a cuerpo (mínimo)",
+          "parts": [
+            {
+              "calculation": "BonusMeleeDamage"
+            }
+          ]
+        },
+        {
+          "id": "melee_max",
+          "name": "Daño mágico cuerpo a cuerpo (máximo por vida perdida)",
+          "parts": [
+            {
+              "calculation": "EmpoweredMeleeDamageTooltip"
+            }
+          ]
+        }
+      ],
+      "not_modelled": [
+        "Grados de estilo E–S, velocidad de movimiento (MSBonusNew) y extensión de derribos"
+      ]
+    },
+    "Q": {
+      "name": "Clase",
+      "tooltip": "spell_samiraq_tooltip",
+      "cases": [
+        {
+          "id": "shot",
+          "name": "Disparo o tajo (sin crítico)",
+          "parts": [
+            {
+              "calculation": "DamageCalc"
+            }
+          ]
+        }
+      ],
+      "not_modelled": [
+        "Golpes críticos de Q (CriticalDamageCalc) y aplicación parcial de robo de vida (LifestealMod)"
+      ]
+    },
+    "W": {
+      "name": "Giro de espada",
+      "tooltip": "spell_samiraw_tooltip",
+      "cases": [
+        {
+          "id": "one_slash",
+          "name": "Un corte",
+          "parts": [
+            {
+              "calculation": "DamageCalc"
+            }
+          ]
+        },
+        {
+          "id": "both_slashes",
+          "name": "Ambos cortes",
+          "parts": [
+            {
+              "calculation": "DamageCalc"
+            },
+            {
+              "calculation": "DamageCalc"
+            }
+          ]
+        }
+      ],
+      "not_modelled": [
+        "Destrucción de proyectiles enemigos"
+      ]
+    },
+    "E": {
+      "name": "Carrera salvaje",
+      "tooltip": "spell_samirae_tooltip",
+      "cases": [
+        {
+          "id": "dash",
+          "name": "Deslizamiento",
+          "parts": [
+            {
+              "calculation": "DashDamage"
+            }
+          ]
+        }
+      ],
+      "not_modelled": [
+        "Velocidad de ataque temporal y reinicio de enfriamiento por derribo"
+      ]
+    },
+    "R": {
+      "name": "Gatillo infernal",
+      "tooltip": "spell_samirar_tooltip",
+      "cases": [
+        {
+          "id": "per_shot",
+          "name": "Un disparo (sin crítico)",
+          "parts": [
+            {
+              "calculation": "DamageCalc"
+            }
+          ]
+        },
+        {
+          "id": "full_10_shots",
+          "name": "Los 10 disparos (sin crítico)",
+          "parts": [
+            {
+              "calculation": "DamageCalc"
+            },
+            {
+              "calculation": "DamageCalc"
+            },
+            {
+              "calculation": "DamageCalc"
+            },
+            {
+              "calculation": "DamageCalc"
+            },
+            {
+              "calculation": "DamageCalc"
+            },
+            {
+              "calculation": "DamageCalc"
+            },
+            {
+              "calculation": "DamageCalc"
+            },
+            {
+              "calculation": "DamageCalc"
+            },
+            {
+              "calculation": "DamageCalc"
+            },
+            {
+              "calculation": "DamageCalc"
+            }
+          ]
+        }
+      ],
+      "not_modelled": [
+        "Requisito de grado S, golpes críticos de R (CriticalDamageCalc) y robo de vida parcial (LifestealMod)"
+      ]
+    }
+  }
+}

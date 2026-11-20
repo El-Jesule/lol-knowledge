@@ -1,0 +1,189 @@
+{
+  "schema": "lol-champion-kit/1",
+  "champion": "Blitzcrank",
+  "label": "Derivado",
+  "game_version": "16.23",
+  "content_version": "16.23.8406595+branch.releases-16-23.content.release",
+  "verified_against": {
+    "content_version": "16.23.8406595+branch.releases-16-23.content.release",
+    "bin_sha256": "92e182cb79a761b35ecd70e9e79ecc932792e09b6c7a7ac09651454aeae70482",
+    "evidence": "odd/tasks/champion-kits-wave-2.md",
+    "result": "Bin del cliente 16.23 convertido con python -m binmodel.batch_kits y compilado con esta especificación curada (CH-01 oleada 2)"
+  },
+  "source": "Árboles de cálculo del bin del cliente (python -m binmodel) y marcado de los tooltips del cliente; estructura de casos curada en research/kits/",
+  "abilities": {
+    "P": {
+      "name": "Barrera de maná",
+      "max_rank": 1,
+      "cases": [],
+      "passive_stats": [],
+      "not_modelled": [
+        "Escudo por maná máximo al caer por debajo del 30 % de vida (ShieldAmount)"
+      ]
+    },
+    "Q": {
+      "name": "Agarre misil",
+      "max_rank": 5,
+      "cases": [
+        {
+          "id": "grab",
+          "name": "Agarre",
+          "parts": [
+            {
+              "damage_type": "magic",
+              "formula": {
+                "op": "add",
+                "operands": [
+                  {
+                    "op": "by_rank",
+                    "values": [
+                      110,
+                      160,
+                      210,
+                      260,
+                      310
+                    ]
+                  },
+                  {
+                    "op": "mul",
+                    "operands": [
+                      {
+                        "op": "constant",
+                        "value": 1.2
+                      },
+                      {
+                        "op": "stat",
+                        "stat": "ability_power",
+                        "scope": "total"
+                      }
+                    ]
+                  }
+                ]
+              },
+              "label": "Derivado",
+              "source": "Characters/Blitzcrank/Spells/RocketGrabAbility/RocketGrab.mSpellCalculations.TotalDamage (16.23.8406595+branch.releases-16-23.content.release)",
+              "damage_type_source": "spell_rocketgrab_tooltip <magicDamage>"
+            }
+          ]
+        }
+      ],
+      "passive_stats": [],
+      "not_modelled": [
+        "Atracción y aturdimiento"
+      ]
+    },
+    "W": {
+      "name": "Sobrecarga",
+      "max_rank": 5,
+      "cases": [],
+      "passive_stats": [],
+      "not_modelled": [
+        "Velocidad de movimiento, velocidad de ataque y autorralentización posterior"
+      ]
+    },
+    "E": {
+      "name": "Puño de poder",
+      "max_rank": 5,
+      "cases": [
+        {
+          "id": "fist",
+          "name": "Ataque potenciado",
+          "parts": [
+            {
+              "damage_type": "physical",
+              "formula": {
+                "op": "add",
+                "operands": [
+                  {
+                    "op": "mul",
+                    "operands": [
+                      {
+                        "op": "constant",
+                        "value": 2
+                      },
+                      {
+                        "op": "stat",
+                        "stat": "attack_damage",
+                        "scope": "total"
+                      }
+                    ]
+                  },
+                  {
+                    "op": "mul",
+                    "operands": [
+                      {
+                        "op": "constant",
+                        "value": 0.25
+                      },
+                      {
+                        "op": "stat",
+                        "stat": "ability_power",
+                        "scope": "total"
+                      }
+                    ]
+                  }
+                ]
+              },
+              "label": "Derivado",
+              "source": "Characters/Blitzcrank/Spells/PowerFistAbility/PowerFist.mSpellCalculations.TotalDamage (16.23.8406595+branch.releases-16-23.content.release)",
+              "damage_type_source": "spell_powerfist_tooltip <physicalDamage>"
+            }
+          ]
+        }
+      ],
+      "passive_stats": [],
+      "not_modelled": [
+        "Lanzamiento por los aires (CCDuration)"
+      ]
+    },
+    "R": {
+      "name": "Campo estático",
+      "max_rank": 3,
+      "cases": [
+        {
+          "id": "active",
+          "name": "Activa en área",
+          "parts": [
+            {
+              "damage_type": "magic",
+              "formula": {
+                "op": "add",
+                "operands": [
+                  {
+                    "op": "by_rank",
+                    "values": [
+                      275,
+                      400,
+                      525
+                    ]
+                  },
+                  {
+                    "op": "mul",
+                    "operands": [
+                      {
+                        "op": "constant",
+                        "value": 1
+                      },
+                      {
+                        "op": "stat",
+                        "stat": "ability_power",
+                        "scope": "total"
+                      }
+                    ]
+                  }
+                ]
+              },
+              "label": "Derivado",
+              "source": "Characters/Blitzcrank/Spells/StaticFieldAbility/StaticField.mSpellCalculations.ActiveDamage (16.23.8406595+branch.releases-16-23.content.release)",
+              "damage_type_source": "spell_staticfield_tooltip <magicDamage>"
+            }
+          ]
+        }
+      ],
+      "passive_stats": [],
+      "not_modelled": [
+        "Descarga pasiva (PassiveDamage usa nodo unresolved en el bin), destrucción de escudos y silencio"
+      ]
+    }
+  }
+}

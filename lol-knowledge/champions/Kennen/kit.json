@@ -1,0 +1,284 @@
+{
+  "schema": "lol-champion-kit/1",
+  "champion": "Kennen",
+  "label": "Derivado",
+  "game_version": "16.23",
+  "content_version": "16.23.8406595+branch.releases-16-23.content.release",
+  "verified_against": {
+    "content_version": "16.23.8406595+branch.releases-16-23.content.release",
+    "bin_sha256": "73f5b74bde0ba446aff0cb5fa6e4bc73e618edfaca2b304a125411ba941c4660",
+    "evidence": "odd/tasks/champion-kits-wave-2.md",
+    "result": "Bin del cliente 16.23 convertido con python -m binmodel.batch_kits y compilado con esta especificación curada (CH-01 oleada 2)"
+  },
+  "source": "Árboles de cálculo del bin del cliente (python -m binmodel) y marcado de los tooltips del cliente; estructura de casos curada en research/kits/",
+  "abilities": {
+    "P": {
+      "name": "Marca de la tormenta",
+      "max_rank": 1,
+      "cases": [],
+      "passive_stats": [],
+      "not_modelled": [
+        "Aturdimiento a 3 marcas (StunDuration) y restauración de energía (EnergyRestore)"
+      ]
+    },
+    "Q": {
+      "name": "Shuriken atronador",
+      "max_rank": 5,
+      "cases": [
+        {
+          "id": "shuriken",
+          "name": "Impacto",
+          "parts": [
+            {
+              "damage_type": "magic",
+              "formula": {
+                "op": "add",
+                "operands": [
+                  {
+                    "op": "by_rank",
+                    "values": [
+                      75,
+                      125,
+                      175,
+                      225,
+                      275
+                    ]
+                  },
+                  {
+                    "op": "mul",
+                    "operands": [
+                      {
+                        "op": "constant",
+                        "value": 0.75
+                      },
+                      {
+                        "op": "stat",
+                        "stat": "ability_power",
+                        "scope": "total"
+                      }
+                    ]
+                  }
+                ]
+              },
+              "label": "Derivado",
+              "source": "Characters/Kennen/Spells/KennenShurikenHurlMissile1Ability/KennenShurikenHurlMissile1.mSpellCalculations.TotalDamage (16.23.8406595+branch.releases-16-23.content.release)",
+              "damage_type_source": "spell_kennenshurikenhurlmissile1_tooltip <magicDamage>"
+            }
+          ]
+        }
+      ],
+      "passive_stats": [],
+      "not_modelled": []
+    },
+    "W": {
+      "name": "Tensión eléctrica",
+      "max_rank": 5,
+      "cases": [
+        {
+          "id": "passive_5th",
+          "name": "Pasiva: cada 5.º ataque",
+          "parts": [
+            {
+              "damage_type": "magic",
+              "formula": {
+                "op": "add",
+                "operands": [
+                  {
+                    "op": "by_rank",
+                    "values": [
+                      35,
+                      45,
+                      55,
+                      65,
+                      75
+                    ]
+                  },
+                  {
+                    "op": "mul",
+                    "operands": [
+                      {
+                        "op": "constant",
+                        "value": 0.35
+                      },
+                      {
+                        "op": "stat",
+                        "stat": "ability_power",
+                        "scope": "total"
+                      }
+                    ]
+                  },
+                  {
+                    "op": "mul",
+                    "operands": [
+                      {
+                        "op": "by_rank",
+                        "values": [
+                          0.8,
+                          0.9,
+                          1,
+                          1.1,
+                          1.2
+                        ]
+                      },
+                      {
+                        "op": "stat",
+                        "stat": "attack_damage",
+                        "scope": "bonus"
+                      }
+                    ]
+                  }
+                ]
+              },
+              "label": "Derivado",
+              "source": "Characters/Kennen/Spells/KennenBringTheLightAbility/KennenBringTheLight.mSpellCalculations.TotalDamagePassive (16.23.8406595+branch.releases-16-23.content.release)",
+              "damage_type_source": "spell_kennenbringthelight_tooltip <magicDamage>"
+            }
+          ]
+        },
+        {
+          "id": "active",
+          "name": "Activa sobre objetivos marcados",
+          "parts": [
+            {
+              "damage_type": "magic",
+              "formula": {
+                "op": "add",
+                "operands": [
+                  {
+                    "op": "by_rank",
+                    "values": [
+                      70,
+                      95,
+                      120,
+                      145,
+                      170
+                    ]
+                  },
+                  {
+                    "op": "mul",
+                    "operands": [
+                      {
+                        "op": "constant",
+                        "value": 0.8
+                      },
+                      {
+                        "op": "stat",
+                        "stat": "ability_power",
+                        "scope": "total"
+                      }
+                    ]
+                  }
+                ]
+              },
+              "label": "Derivado",
+              "source": "Characters/Kennen/Spells/KennenBringTheLightAbility/KennenBringTheLight.mSpellCalculations.TotalDamageActive (16.23.8406595+branch.releases-16-23.content.release)",
+              "damage_type_source": "spell_kennenbringthelight_tooltip <magicDamage>"
+            }
+          ]
+        }
+      ],
+      "passive_stats": [],
+      "not_modelled": []
+    },
+    "E": {
+      "name": "Ataque del rayo",
+      "max_rank": 5,
+      "cases": [
+        {
+          "id": "rush",
+          "name": "Impacto al atravesar",
+          "parts": [
+            {
+              "damage_type": "magic",
+              "formula": {
+                "op": "add",
+                "operands": [
+                  {
+                    "op": "by_rank",
+                    "values": [
+                      80,
+                      120,
+                      160,
+                      200,
+                      240
+                    ]
+                  },
+                  {
+                    "op": "mul",
+                    "operands": [
+                      {
+                        "op": "constant",
+                        "value": 0.8
+                      },
+                      {
+                        "op": "stat",
+                        "stat": "ability_power",
+                        "scope": "total"
+                      }
+                    ]
+                  }
+                ]
+              },
+              "label": "Derivado",
+              "source": "Characters/Kennen/Spells/KennenLightningRushAbility/KennenLightningRush.mSpellCalculations.TotalDamage (16.23.8406595+branch.releases-16-23.content.release)",
+              "damage_type_source": "spell_kennenlightningrush_tooltip <magicDamage>"
+            }
+          ]
+        }
+      ],
+      "passive_stats": [],
+      "not_modelled": [
+        "Velocidad de movimiento, velocidad de ataque al salir y devolución de energía"
+      ]
+    },
+    "R": {
+      "name": "Tempestad cercenante",
+      "max_rank": 3,
+      "cases": [
+        {
+          "id": "tick",
+          "name": "Un pulso de la tormenta",
+          "parts": [
+            {
+              "damage_type": "magic",
+              "formula": {
+                "op": "add",
+                "operands": [
+                  {
+                    "op": "by_rank",
+                    "values": [
+                      40,
+                      80,
+                      120
+                    ]
+                  },
+                  {
+                    "op": "mul",
+                    "operands": [
+                      {
+                        "op": "constant",
+                        "value": 0.25
+                      },
+                      {
+                        "op": "stat",
+                        "stat": "ability_power",
+                        "scope": "total"
+                      }
+                    ]
+                  }
+                ]
+              },
+              "label": "Derivado",
+              "source": "Characters/Kennen/Spells/KennenShurikenStormAbility/KennenShurikenStorm.mSpellCalculations.PerTickDamageCalculated (16.23.8406595+branch.releases-16-23.content.release)",
+              "damage_type_source": "spell_kennenshurikenstorm_tooltip <magicDamage>"
+            }
+          ]
+        }
+      ],
+      "passive_stats": [],
+      "not_modelled": [
+        "Armadura y RM temporales (KennenRDefenses) y 6 pulsos totales a lo largo de 3 s"
+      ]
+    }
+  }
+}

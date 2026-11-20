@@ -1,0 +1,366 @@
+{
+  "schema": "lol-champion-kit/1",
+  "champion": "Swain",
+  "label": "Derivado",
+  "game_version": "16.23",
+  "content_version": "16.23.8406595+branch.releases-16-23.content.release",
+  "verified_against": {
+    "content_version": "16.23.8406595+branch.releases-16-23.content.release",
+    "bin_sha256": "34fc3f0672a1fb945c67796185cdcd20e1cb5c8e15e18c7fc807ecf7e1e6b6cf",
+    "evidence": "odd/tasks/champion-kits-wave-2.md",
+    "result": "Bin del cliente 16.23 convertido con python -m binmodel.batch_kits y compilado con esta especificación curada (CH-01 oleada 2)"
+  },
+  "source": "Árboles de cálculo del bin del cliente (python -m binmodel) y marcado de los tooltips del cliente; estructura de casos curada en research/kits/",
+  "abilities": {
+    "P": {
+      "name": "Bandada de cuervos",
+      "max_rank": 1,
+      "cases": [],
+      "passive_stats": [],
+      "not_modelled": [
+        "Curación del 6 % de vida máxima por fragmento de alma y vida máxima permanente (MaxHealthGained)"
+      ]
+    },
+    "Q": {
+      "name": "La mano de la muerte",
+      "max_rank": 5,
+      "cases": [
+        {
+          "id": "one_bolt",
+          "name": "Un rayo",
+          "parts": [
+            {
+              "damage_type": "magic",
+              "formula": {
+                "op": "add",
+                "operands": [
+                  {
+                    "op": "by_rank",
+                    "values": [
+                      60,
+                      90,
+                      120,
+                      150,
+                      180
+                    ]
+                  },
+                  {
+                    "op": "mul",
+                    "operands": [
+                      {
+                        "op": "constant",
+                        "value": 0.45
+                      },
+                      {
+                        "op": "stat",
+                        "stat": "ability_power",
+                        "scope": "total"
+                      }
+                    ]
+                  }
+                ]
+              },
+              "label": "Derivado",
+              "source": "Characters/Swain/Spells/SwainQAbility/SwainQ.mSpellCalculations.InitialDamage (16.23.8406595+branch.releases-16-23.content.release)",
+              "damage_type_source": "spell_swainq_tooltip <magicDamage>"
+            }
+          ]
+        },
+        {
+          "id": "extra_bolt",
+          "name": "Por rayo adicional",
+          "parts": [
+            {
+              "damage_type": "magic",
+              "formula": {
+                "op": "mul",
+                "operands": [
+                  {
+                    "op": "add",
+                    "operands": [
+                      {
+                        "op": "by_rank",
+                        "values": [
+                          60,
+                          90,
+                          120,
+                          150,
+                          180
+                        ]
+                      },
+                      {
+                        "op": "mul",
+                        "operands": [
+                          {
+                            "op": "constant",
+                            "value": 0.45
+                          },
+                          {
+                            "op": "stat",
+                            "stat": "ability_power",
+                            "scope": "total"
+                          }
+                        ]
+                      }
+                    ]
+                  },
+                  {
+                    "op": "constant",
+                    "value": 0.25
+                  }
+                ]
+              },
+              "label": "Derivado",
+              "source": "Characters/Swain/Spells/SwainQAbility/SwainQ.mSpellCalculations.ExtraBoltDamage (16.23.8406595+branch.releases-16-23.content.release)",
+              "damage_type_source": "spell_swainq_tooltip <magicDamage>"
+            }
+          ]
+        },
+        {
+          "id": "max_5_bolts",
+          "name": "Los 5 rayos (máximo)",
+          "parts": [
+            {
+              "damage_type": "magic",
+              "formula": {
+                "op": "mul",
+                "operands": [
+                  {
+                    "op": "add",
+                    "operands": [
+                      {
+                        "op": "by_rank",
+                        "values": [
+                          60,
+                          90,
+                          120,
+                          150,
+                          180
+                        ]
+                      },
+                      {
+                        "op": "mul",
+                        "operands": [
+                          {
+                            "op": "constant",
+                            "value": 0.45
+                          },
+                          {
+                            "op": "stat",
+                            "stat": "ability_power",
+                            "scope": "total"
+                          }
+                        ]
+                      }
+                    ]
+                  },
+                  {
+                    "op": "constant",
+                    "value": 2
+                  }
+                ]
+              },
+              "label": "Derivado",
+              "source": "Characters/Swain/Spells/SwainQAbility/SwainQ.mSpellCalculations.MaxDamage (16.23.8406595+branch.releases-16-23.content.release)",
+              "damage_type_source": "spell_swainq_tooltip <magicDamage>"
+            }
+          ]
+        }
+      ],
+      "passive_stats": [],
+      "not_modelled": []
+    },
+    "W": {
+      "name": "Visión del imperio",
+      "max_rank": 5,
+      "cases": [
+        {
+          "id": "eye",
+          "name": "Explosión",
+          "parts": [
+            {
+              "damage_type": "magic",
+              "formula": {
+                "op": "add",
+                "operands": [
+                  {
+                    "op": "by_rank",
+                    "values": [
+                      70,
+                      115,
+                      160,
+                      205,
+                      250
+                    ]
+                  },
+                  {
+                    "op": "mul",
+                    "operands": [
+                      {
+                        "op": "constant",
+                        "value": 0.6
+                      },
+                      {
+                        "op": "stat",
+                        "stat": "ability_power",
+                        "scope": "total"
+                      }
+                    ]
+                  }
+                ]
+              },
+              "label": "Derivado",
+              "source": "Characters/Swain/Spells/SwainWAbility/SwainW.mSpellCalculations.TotalDamage (16.23.8406595+branch.releases-16-23.content.release)",
+              "damage_type_source": "spell_swainw_tooltip <magicDamage>"
+            }
+          ]
+        }
+      ],
+      "passive_stats": [],
+      "not_modelled": [
+        "Ralentización, revelación y daño reducido a súbditos (MinionDamage)"
+      ]
+    },
+    "E": {
+      "name": "Paralizar",
+      "max_rank": 5,
+      "cases": [
+        {
+          "id": "detonate",
+          "name": "Explosión al regresar",
+          "parts": [
+            {
+              "damage_type": "magic",
+              "formula": {
+                "op": "add",
+                "operands": [
+                  {
+                    "op": "by_rank",
+                    "values": [
+                      90,
+                      130,
+                      170,
+                      210,
+                      250
+                    ]
+                  },
+                  {
+                    "op": "mul",
+                    "operands": [
+                      {
+                        "op": "constant",
+                        "value": 0.7
+                      },
+                      {
+                        "op": "stat",
+                        "stat": "ability_power",
+                        "scope": "total"
+                      }
+                    ]
+                  }
+                ]
+              },
+              "label": "Derivado",
+              "source": "Characters/Swain/Spells/SwainEAbility/SwainE.mSpellCalculations.SecondaryDamage (16.23.8406595+branch.releases-16-23.content.release)",
+              "damage_type_source": "spell_swaine_tooltip <magicDamage>"
+            }
+          ]
+        }
+      ],
+      "passive_stats": [],
+      "not_modelled": [
+        "Inmovilización y atracción al reactivar"
+      ]
+    },
+    "R": {
+      "name": "Ascensión demoníaca",
+      "max_rank": 3,
+      "cases": [
+        {
+          "id": "per_second",
+          "name": "Drenaje por segundo",
+          "parts": [
+            {
+              "damage_type": "magic",
+              "formula": {
+                "op": "add",
+                "operands": [
+                  {
+                    "op": "by_rank",
+                    "values": [
+                      15,
+                      25,
+                      35
+                    ]
+                  },
+                  {
+                    "op": "mul",
+                    "operands": [
+                      {
+                        "op": "constant",
+                        "value": 0.04
+                      },
+                      {
+                        "op": "stat",
+                        "stat": "ability_power",
+                        "scope": "total"
+                      }
+                    ]
+                  }
+                ]
+              },
+              "label": "Derivado",
+              "source": "Characters/Swain/Spells/SwainRAbility/SwainR.mSpellCalculations.DamageCalc (16.23.8406595+branch.releases-16-23.content.release)",
+              "damage_type_source": "spell_swainr_tooltip <magicDamage>"
+            }
+          ]
+        },
+        {
+          "id": "demonflare",
+          "name": "Reactivación: Alma ígnea",
+          "parts": [
+            {
+              "damage_type": "magic",
+              "formula": {
+                "op": "add",
+                "operands": [
+                  {
+                    "op": "by_rank",
+                    "values": [
+                      150,
+                      250,
+                      350
+                    ]
+                  },
+                  {
+                    "op": "mul",
+                    "operands": [
+                      {
+                        "op": "constant",
+                        "value": 0.4
+                      },
+                      {
+                        "op": "stat",
+                        "stat": "ability_power",
+                        "scope": "total"
+                      }
+                    ]
+                  }
+                ]
+              },
+              "label": "Derivado",
+              "source": "Characters/Swain/Spells/SwainRAbility/SwainR.mSpellCalculations.DemonflareDamageTotal (16.23.8406595+branch.releases-16-23.content.release)",
+              "damage_type_source": "spell_swainr_tooltip <magicDamage>"
+            }
+          ],
+          "recast": true
+        }
+      ],
+      "passive_stats": [],
+      "not_modelled": [
+        "Curación por segundo (HealingCalc) y ralentización de Alma ígnea"
+      ],
+      "recast_interval_seconds": 2
+    }
+  }
+}

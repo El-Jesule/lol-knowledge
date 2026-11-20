@@ -1,0 +1,137 @@
+{
+  "champion": "KogMaw",
+  "game_version": "16.23",
+  "verified_against": {
+    "content_version": "16.23.8406595+branch.releases-16-23.content.release",
+    "bin_sha256": "ef0ffaf806aff13294153bdc99bf2ddc8dca389d6138e8b59fe0c01c72a2e5bd",
+    "evidence": "odd/tasks/champion-kits-wave-2.md",
+    "result": "Bin del cliente 16.23 convertido con python -m binmodel.batch_kits y compilado con esta especificación curada (CH-01 oleada 2)"
+  },
+  "abilities": {
+    "P": {
+      "name": "Sorpresa de Icathia",
+      "tooltip": "spell_kogmawicathiansurprise_tooltip",
+      "max_rank": 1,
+      "cases": [
+        {
+          "id": "explode",
+          "name": "Explosión tras morir (daño verdadero)",
+          "parts": [
+            {
+              "calculation": "PassiveDamage"
+            }
+          ]
+        }
+      ]
+    },
+    "Q": {
+      "name": "Baba cáustica",
+      "tooltip": "spell_kogmawq_tooltip",
+      "cases": [
+        {
+          "id": "spit",
+          "name": "Proyectil",
+          "parts": [
+            {
+              "calculation": "TotalDamage"
+            }
+          ]
+        }
+      ],
+      "passive_stats": [
+        {
+          "stat": "attack_speed_bonus",
+          "data_value": "AttackSpeed",
+          "condition": "pasiva de la Q: activa con la Q aprendida, también en enfriamiento"
+        }
+      ],
+      "not_modelled": [
+        "Reducción porcentual de armadura y RM del objetivo"
+      ]
+    },
+    "W": {
+      "name": "Andanada bioarcana",
+      "tooltip": "spell_kogmawbioarcanebarrage_tooltip",
+      "cases": [
+        {
+          "id": "on_hit",
+          "name": "Daño mágico al impactar (% vida máxima)",
+          "parts": [
+            {
+              "tooltip_reference": "TotalHealthDamage",
+              "damage_type": "magic",
+              "source_note": "(TotalHealthDamage %) × vida máxima del objetivo",
+              "formula": {
+                "op": "mul",
+                "operands": [
+                  {
+                    "op": "calculation",
+                    "name": "TotalHealthDamage"
+                  },
+                  {
+                    "op": "constant",
+                    "value": 0.01
+                  },
+                  {
+                    "op": "stat",
+                    "stat": "health",
+                    "scope": "max",
+                    "subject": "target"
+                  }
+                ]
+              }
+            }
+          ]
+        }
+      ],
+      "not_modelled": [
+        "Alcance de ataque adicional (Range) y tope contra monstruos"
+      ]
+    },
+    "E": {
+      "name": "Vacío rezumante",
+      "tooltip": "spell_kogmawvoidooze_tooltip",
+      "cases": [
+        {
+          "id": "ooze",
+          "name": "Bilis",
+          "parts": [
+            {
+              "calculation": "TotalDamage"
+            }
+          ]
+        }
+      ],
+      "not_modelled": [
+        "Ralentización del rastro"
+      ]
+    },
+    "R": {
+      "name": "Artillería viviente",
+      "tooltip": "spell_kogmawlivingartillery_tooltip",
+      "cases": [
+        {
+          "id": "base",
+          "name": "Objetivo al 100 % vida",
+          "parts": [
+            {
+              "calculation": "BaseDamageCalc"
+            }
+          ]
+        },
+        {
+          "id": "execute_below_40",
+          "name": "Objetivo < 40 % vida (daño doble)",
+          "parts": [
+            {
+              "calculation": "MaxDamageCalc"
+            }
+          ]
+        }
+      ],
+      "not_modelled": [
+        "Interpolación continua entre 100 % y 40 % de vida y aumento de coste de maná en lanzamientos sucesivos"
+      ]
+    }
+  }
+}

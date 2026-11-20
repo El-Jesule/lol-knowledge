@@ -76,9 +76,9 @@ def _target(
     )
 
 
-def test_published_kits_count_reaches_wave_1_target():
+def test_published_kits_count_reaches_wave_2_target():
     ids = _published_kit_ids()
-    assert len(ids) >= 40
+    assert len(ids) >= 85
     for expected in (
         "Ahri",
         "Zaahen",
@@ -96,6 +96,15 @@ def test_published_kits_count_reaches_wave_1_target():
         "Vayne",
         "Leona",
         "Nautilus",
+        "Vladimir",
+        "KogMaw",
+        "Lillia",
+        "Vex",
+        "Gwen",
+        "LeeSin",
+        "Akali",
+        "Caitlyn",
+        "TahmKench",
     ):
         assert expected in ids
 
@@ -259,3 +268,81 @@ def test_true_damage_and_percent_hp_spot_checks_darius_garen_vayne_syndra():
     syndra_w = ability_damage(syndra_kit, "W", 5, _sheet("Syndra", 18, ("1058",)), case="evolved")
     assert [part.damage_type for part in syndra_w] == ["magic", "true"]
     assert all(part.raw > 0 for part in syndra_w)
+
+
+def test_wave_2_spot_checks_vladimir_kogmaw_lillia_vex_fiddlesticks_nunu_kayle():
+    # Vladimir E has an 8% max-health cost applied in rotation (MEC-01)
+    vlad_kit = load_kit(ROOT, "Vladimir")
+    assert vlad_kit is not None
+    vlad_sheet = _sheet("Vladimir", 18, ("1058",))
+    vlad_hp = vlad_sheet["health"].total()
+    vlad_rot = evaluate_rotation(
+        vlad_kit,
+        vlad_sheet,
+        {"E": 5},
+        _target(mr=F(0), max_health=F(2000), current_health=F(2000)),
+        parse_steps("E.max"),
+        CATALOG,
+        inputs={"attacker_health_percent": F(1)},
+    )
+    assert vlad_rot.steps[0].resource_cost is not None
+    assert vlad_rot.steps[0].resource_cost.resource == "health"
+    assert vlad_rot.steps[0].resource_cost.amount == vlad_hp * F(2, 25)  # 8% max HP
+
+    # KogMaw Q passive grants +25% attack_speed_bonus at rank 5; W deals 6% + 1.5%/100 AP max HP
+    kog_base = _sheet("KogMaw", 18)
+    kog_q5 = _sheet("KogMaw", 18, learned={"Q": 5})
+    assert kog_q5["attack_speed_bonus"].total() - kog_base["attack_speed_bonus"].total() == F(1, 4)
+    kog_kit = load_kit(ROOT, "KogMaw")
+    assert kog_kit is not None
+    kog_w = ability_damage(
+        kog_kit, "W", 5, kog_base, case="on_hit", target={"max_health": F(2000)}
+    )[0]
+    assert kog_w.damage_type == "magic"
+    assert kog_w.raw == F(120)  # 6% of 2000
+
+    # Lillia Q outer edge deals both magic and true damage
+    lillia_kit = load_kit(ROOT, "Lillia")
+    assert lillia_kit is not None
+    lillia_q = ability_damage(lillia_kit, "Q", 5, _sheet("Lillia", 18, ("1058",)), case="outer")
+    assert [part.damage_type for part in lillia_q] == ["magic", "true"]
+
+    # Vex R has R1 + R2 recast compiled via colon-scoped tooltip placeholders
+    vex_kit = load_kit(ROOT, "Vex")
+    assert vex_kit is not None
+    assert [c.id for c in vex_kit.ability("R").cases] == ["bolt", "recast"]
+    assert vex_kit.ability("R").case("recast").recast is True
+
+    # Fiddlesticks Q scales with target current_health and doubles when feared
+    fiddle_kit = load_kit(ROOT, "Fiddlesticks")
+    assert fiddle_kit is not None
+    fiddle_sheet = _sheet("Fiddlesticks", 18)
+    f_norm = ability_damage(
+        fiddle_kit, "Q", 5, fiddle_sheet, case="normal", target={"current_health": F(1000)}
+    )[0]
+    f_fear = ability_damage(
+        fiddle_kit, "Q", 5, fiddle_sheet, case="feared", target={"current_health": F(1000)}
+    )[0]
+    assert f_norm.raw == F(60)  # 6% of 1000 current HP
+    assert f_fear.raw == F(120)  # 12% of 1000 current HP
+
+    # Nunu Q deals 1200 true damage to minions/monsters at rank 5
+    nunu_kit = load_kit(ROOT, "Nunu")
+    assert nunu_kit is not None
+    nunu_q = ability_damage(nunu_kit, "Q", 5, _sheet("Nunu", 18), case="minion_monster")[0]
+    assert nunu_q.damage_type == "true"
+    assert nunu_q.raw == F(1200)
+
+    # Kayle E active execute includes missing-health magic damage
+    kayle_kit = load_kit(ROOT, "Kayle")
+    assert kayle_kit is not None
+    kayle_e = ability_damage(
+        kayle_kit,
+        "E",
+        5,
+        _sheet("Kayle", 18),
+        case="active_execute",
+        target={"max_health": F(2000), "missing_fraction_health": F(1, 2)},
+    )
+    assert len(kayle_e) == 2
+    assert kayle_e[1].raw == F(100)  # 10% of 1000 missing HP at 0 AP

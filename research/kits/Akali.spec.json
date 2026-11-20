@@ -1,0 +1,125 @@
+{
+  "champion": "Akali",
+  "game_version": "16.23",
+  "verified_against": {
+    "content_version": "16.23.8406595+branch.releases-16-23.content.release",
+    "bin_sha256": "82f2e95bb5e424c09e468a32eee8856578a83d0e1eba483d34e781bcc8344cdf",
+    "evidence": "odd/tasks/champion-kits-wave-2.md",
+    "result": "Bin del cliente 16.23 convertido con python -m binmodel.batch_kits y compilado con esta especificación curada (CH-01 oleada 2)"
+  },
+  "abilities": {
+    "P": {
+      "name": "Marca del asesino",
+      "tooltip": "spell_akalip_tooltip",
+      "max_rank": 1,
+      "cases": [
+        {
+          "id": "ring_attack",
+          "name": "Ataque potenciado tras cruzar el anillo",
+          "parts": [
+            {
+              "calculation": "Damage"
+            }
+          ]
+        }
+      ],
+      "not_modelled": [
+        "Velocidad de movimiento (PassiveSpeedBonus), alcance doble y ataque básico aparte"
+      ]
+    },
+    "Q": {
+      "name": "Pleno de cinco puntas",
+      "tooltip": "spell_akaliqalt_tooltip",
+      "cases": [
+        {
+          "id": "kunai",
+          "name": "Impacto",
+          "parts": [
+            {
+              "calculation": "Damage"
+            }
+          ]
+        }
+      ],
+      "not_modelled": [
+        "Ralentización en el borde exterior"
+      ]
+    },
+    "W": {
+      "name": "Velo del crepúsculo",
+      "tooltip": "spell_akaliw_tooltip",
+      "not_modelled": [
+        "Invisibilidad, velocidad de movimiento y aumento temporal de +80 energía máxima"
+      ]
+    },
+    "E": {
+      "name": "Voltereta shuriken",
+      "tooltip": "spell_akalie_tooltipsimple",
+      "cases": [
+        {
+          "id": "shuriken",
+          "name": "Shuriken inicial (E1)",
+          "parts": [
+            {
+              "calculation": "E1Damage"
+            }
+          ]
+        },
+        {
+          "id": "dash",
+          "name": "Reactivación: acometida (E2)",
+          "recast": true,
+          "parts": [
+            {
+              "calculation": "E2DamageCalc"
+            }
+          ]
+        }
+      ],
+      "not_modelled": [
+        "Desplazamiento hacia atrás en E1"
+      ]
+    },
+    "R": {
+      "name": "Ejecución perfecta",
+      "tooltip": "spell_akalir_tooltip",
+      "cases": [
+        {
+          "id": "first_cast",
+          "name": "Primer salto (R1)",
+          "parts": [
+            {
+              "calculation": "Cast1Damage"
+            }
+          ]
+        },
+        {
+          "id": "recast_min",
+          "name": "Reactivación: mínimo (R2)",
+          "recast": true,
+          "parts": [
+            {
+              "calculation": "Cast2DamageMin"
+            }
+          ]
+        },
+        {
+          "id": "recast_max",
+          "name": "Reactivación: máximo <= 30 % vida (R2)",
+          "recast": true,
+          "parts": [
+            {
+              "calculation": "Cast2DamageMax"
+            }
+          ]
+        }
+      ],
+      "recast_interval_seconds": {
+        "data_value": "CooldownBetweenCasts"
+      },
+      "not_modelled": [
+        "Interpolación continua de R2 según vida que falta"
+      ]
+    }
+  }
+}

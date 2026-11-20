@@ -1,0 +1,103 @@
+{
+  "champion": "Cassiopeia",
+  "game_version": "16.23",
+  "verified_against": {
+    "content_version": "16.23.8406595+branch.releases-16-23.content.release",
+    "bin_sha256": "a2eff3dd2f31832c08f886e8492fe1432b4fe422e6bdfa11207b7db7b2ee0d96",
+    "evidence": "odd/tasks/champion-kits-wave-2.md",
+    "result": "Bin del cliente 16.23 convertido con python -m binmodel.batch_kits y compilado con esta especificación curada (CH-01 oleada 2)"
+  },
+  "abilities": {
+    "P": {
+      "name": "Elegancia serpentina",
+      "max_rank": 1,
+      "not_modelled": [
+        "Aumento porcentual de bonificaciones de velocidad de movimiento (PercentHasteMod, CH-04)"
+      ]
+    },
+    "Q": {
+      "name": "Explosión perjudicial",
+      "tooltip": "spell_cassiopeiaq_tooltip",
+      "cases": [
+        {
+          "id": "poison",
+          "name": "Veneno completo (3 s)",
+          "parts": [
+            {
+              "calculation": "TooltipTotalDamage"
+            }
+          ]
+        }
+      ],
+      "not_modelled": [
+        "Velocidad de movimiento al golpear campeones (ChampHitMSBonus)"
+      ]
+    },
+    "W": {
+      "name": "Miasma",
+      "tooltip": "spell_cassiopeiaw_tooltip",
+      "cases": [
+        {
+          "id": "per_second",
+          "name": "Por segundo en el área",
+          "parts": [
+            {
+              "calculation": "DamagePerSecond"
+            }
+          ]
+        }
+      ],
+      "not_modelled": [
+        "Anclaje y ralentización"
+      ]
+    },
+    "E": {
+      "name": "Colmillo doble",
+      "tooltip": "spell_cassiopeiae_tooltip",
+      "cases": [
+        {
+          "id": "base",
+          "name": "Objetivo sin veneno",
+          "parts": [
+            {
+              "calculation": "BasicDamage"
+            }
+          ]
+        },
+        {
+          "id": "poisoned",
+          "name": "Objetivo envenenado",
+          "parts": [
+            {
+              "calculation": "BasicDamage"
+            },
+            {
+              "calculation": "BonusPoisonedDamage"
+            }
+          ]
+        }
+      ],
+      "not_modelled": [
+        "Curación contra objetivos envenenados (HealCalc) y devolución de maná al matar"
+      ]
+    },
+    "R": {
+      "name": "Mirada petrificante",
+      "tooltip": "spell_cassiopeiar_tooltip",
+      "cases": [
+        {
+          "id": "gaze",
+          "name": "Impacto en cono",
+          "parts": [
+            {
+              "calculation": "RDamage"
+            }
+          ]
+        }
+      ],
+      "not_modelled": [
+        "Aturdimiento de frente o ralentización de espaldas"
+      ]
+    }
+  }
+}

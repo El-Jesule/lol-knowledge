@@ -1,0 +1,133 @@
+{
+  "champion": "MonkeyKing",
+  "game_version": "16.23",
+  "verified_against": {
+    "content_version": "16.23.8406595+branch.releases-16-23.content.release",
+    "bin_sha256": "7e00afa193107de102bb89e3904fe76e0427f8502afdc366c9b6f8019c233fff",
+    "evidence": "odd/tasks/champion-kits-wave-2.md",
+    "result": "Bin del cliente 16.23 convertido con python -m binmodel.batch_kits y compilado con esta especificación curada (CH-01 oleada 2)"
+  },
+  "abilities": {
+    "P": {
+      "name": "Piel de piedra",
+      "max_rank": 1,
+      "not_modelled": [
+        "Armadura (BonusArmor) y regeneración acumulables en combate hasta 5 cargas"
+      ]
+    },
+    "Q": {
+      "name": "Golpe aplastante",
+      "tooltip": "spell_monkeykingdoubleattack_tooltip",
+      "cases": [
+        {
+          "id": "strike",
+          "name": "Daño físico adicional",
+          "parts": [
+            {
+              "calculation": "BonusDamageTT"
+            }
+          ]
+        }
+      ],
+      "not_modelled": [
+        "Reducción porcentual de armadura (ArmorShredPercent), alcance extra y ataque básico aparte"
+      ]
+    },
+    "W": {
+      "name": "Guerrero pícaro",
+      "tooltip": "spell_monkeykingdecoy_tooltip",
+      "not_modelled": [
+        "Invisibilidad y daño del clon"
+      ]
+    },
+    "E": {
+      "name": "Golpe de nimbo",
+      "tooltip": "spell_monkeykingnimbus_tooltip",
+      "cases": [
+        {
+          "id": "nimbus",
+          "name": "Impacto",
+          "parts": [
+            {
+              "calculation": "TotalDamage"
+            }
+          ]
+        }
+      ],
+      "not_modelled": [
+        "Velocidad de ataque temporal tras el salto"
+      ]
+    },
+    "R": {
+      "name": "Ciclón",
+      "tooltip": "spell_monkeykingspintowin_tooltip",
+      "cases": [
+        {
+          "id": "full_spin",
+          "name": "Primer giro completo (2 s, + % vida máxima)",
+          "parts": [
+            {
+              "calculation": "TotalDamageTT"
+            },
+            {
+              "tooltip_reference": "PercentHPDamageTT",
+              "damage_type": "physical",
+              "source_note": "PercentHPDamageTT × vida máxima del objetivo",
+              "formula": {
+                "op": "mul",
+                "operands": [
+                  {
+                    "op": "calculation",
+                    "name": "PercentHPDamageTT"
+                  },
+                  {
+                    "op": "stat",
+                    "stat": "health",
+                    "scope": "max",
+                    "subject": "target"
+                  }
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "id": "recast_spin",
+          "name": "Reactivación: segundo giro completo (2 s)",
+          "recast": true,
+          "parts": [
+            {
+              "calculation": "TotalDamageTT"
+            },
+            {
+              "tooltip_reference": "PercentHPDamageTT",
+              "damage_type": "physical",
+              "source_note": "PercentHPDamageTT × vida máxima del objetivo",
+              "formula": {
+                "op": "mul",
+                "operands": [
+                  {
+                    "op": "calculation",
+                    "name": "PercentHPDamageTT"
+                  },
+                  {
+                    "op": "stat",
+                    "stat": "health",
+                    "scope": "max",
+                    "subject": "target"
+                  }
+                ]
+              }
+            }
+          ]
+        }
+      ],
+      "recast_window_seconds": {
+        "data_value": "RecastWindow"
+      },
+      "not_modelled": [
+        "Lanzamiento por los aires, velocidad de movimiento y tope contra monstruos (MonsterCapTT)"
+      ]
+    }
+  }
+}
