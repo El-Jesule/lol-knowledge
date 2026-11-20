@@ -1,0 +1,79 @@
+{
+  "champion": "Janna",
+  "game_version": "16.23",
+  "verified_against": {
+    "content_version": "16.23.8406595+branch.releases-16-23.content.release",
+    "bin_sha256": "0f4a601874840d8decd2970a07600b76d99c62b586bb40b61e70fa93e3fa4e37",
+    "evidence": "odd/tasks/champion-kits-wave-3.md",
+    "result": "Bin del cliente 16.23 convertido con python -m binmodel.batch_kits y compilado con esta especificación curada (CH-01 oleada 3)"
+  },
+  "abilities": {
+    "P": {
+      "name": "Empuje",
+      "tooltip": "spell_tailwindself_tooltip",
+      "max_rank": 1,
+      "not_modelled": [
+        "Velocidad de movimiento de aliados hacia Janna (6 %) y daño mágico al impactar equivalente al 30 % de su velocidad de movimiento adicional (BonusDamage usa stat no modelado en hoja de stats)"
+      ]
+    },
+    "Q": {
+      "name": "Temporal",
+      "tooltip": "spell_howlinggale_tooltip",
+      "cases": [
+        {
+          "id": "min",
+          "name": "Tornado instantáneo",
+          "parts": [
+            {
+              "calculation": "MinimumDamage"
+            }
+          ]
+        },
+        {
+          "id": "max",
+          "name": "Tornado cargado (3 s)",
+          "parts": [
+            {
+              "calculation": "MaxDamage"
+            }
+          ]
+        }
+      ],
+      "not_modelled": [
+        "Lanzamiento por los aires escalado hasta 1,25 s (MaxKnockup)"
+      ]
+    },
+    "W": {
+      "name": "Céfiro",
+      "tooltip": "spell_sowthewind_tooltip",
+      "cases": [
+        {
+          "id": "hit",
+          "name": "Impacto de Céfiro",
+          "parts": [
+            {
+              "calculation": "TotalDamage"
+            }
+          ]
+        }
+      ],
+      "not_modelled": [
+        "Velocidad de movimiento pasiva (TotalMS), efecto fantasmal y ralentización activa (TotalSlow)"
+      ]
+    },
+    "E": {
+      "name": "Ojo de la tormenta",
+      "tooltip": "spell_eyeofthestorm_tooltip",
+      "not_modelled": [
+        "Escudo a aliado o torreta (TotalShield), DA adicional otorgado (TotalAD) y reducción de enfriamiento al aplicar CC"
+      ]
+    },
+    "R": {
+      "name": "Monzón",
+      "tooltip": "spell_reapthewhirlwind_tooltip",
+      "not_modelled": [
+        "Empuje hacia atrás y curación canalizada en área (TotalHeal)"
+      ]
+    }
+  }
+}

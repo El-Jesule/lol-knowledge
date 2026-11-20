@@ -1,0 +1,235 @@
+{
+  "schema": "lol-champion-kit/1",
+  "champion": "Yorick",
+  "label": "Derivado",
+  "game_version": "16.23",
+  "content_version": "16.23.8406595+branch.releases-16-23.content.release",
+  "verified_against": {
+    "content_version": "16.23.8406595+branch.releases-16-23.content.release",
+    "bin_sha256": "c430569ff5f7cedd7512cf719fd1adf77e19f6a5ef92edf0e0eb0eba7db20423",
+    "evidence": "odd/tasks/champion-kits-wave-3.md",
+    "result": "Bin del cliente 16.23 convertido con python -m binmodel.batch_kits y compilado con esta especificación curada (CH-01 oleada 3)"
+  },
+  "source": "Árboles de cálculo del bin del cliente (python -m binmodel) y marcado de los tooltips del cliente; estructura de casos curada en research/kits/",
+  "abilities": {
+    "P": {
+      "name": "Pastor de Almas",
+      "max_rank": 1,
+      "cases": [],
+      "passive_stats": [],
+      "not_modelled": [
+        "Invocación y ataques de Seres de la Niebla (YorickPassiveGhoulHealth)"
+      ]
+    },
+    "Q": {
+      "name": "Ritos funerarios",
+      "max_rank": 5,
+      "cases": [
+        {
+          "id": "hit",
+          "name": "Daño físico adicional",
+          "parts": [
+            {
+              "damage_type": "physical",
+              "formula": {
+                "op": "add",
+                "operands": [
+                  {
+                    "op": "by_rank",
+                    "values": [
+                      30,
+                      50,
+                      70,
+                      90,
+                      110
+                    ]
+                  },
+                  {
+                    "op": "mul",
+                    "operands": [
+                      {
+                        "op": "constant",
+                        "value": 0.5
+                      },
+                      {
+                        "op": "stat",
+                        "stat": "attack_damage",
+                        "scope": "total"
+                      }
+                    ]
+                  }
+                ]
+              },
+              "label": "Derivado",
+              "source": "Characters/Yorick/Spells/YorickQAbility/YorickQ.mSpellCalculations.BonusDamage (16.23.8406595+branch.releases-16-23.content.release)",
+              "damage_type_source": "spell_yorickq_tooltip <physicalDamage>"
+            }
+          ]
+        }
+      ],
+      "passive_stats": [],
+      "not_modelled": [
+        "Curación al golpear (QHeal), creación de tumbas y reactivación Despertar"
+      ]
+    },
+    "W": {
+      "name": "Cortejo oscuro",
+      "max_rank": 5,
+      "cases": [],
+      "passive_stats": [],
+      "not_modelled": [
+        "Muro destructible circular de 4 s"
+      ]
+    },
+    "E": {
+      "name": "Niebla de luto",
+      "max_rank": 5,
+      "cases": [
+        {
+          "id": "mist",
+          "name": "Niebla (% vida máxima)",
+          "parts": [
+            {
+              "damage_type": "magic",
+              "formula": {
+                "op": "mul",
+                "operands": [
+                  {
+                    "op": "add",
+                    "operands": [
+                      {
+                        "op": "by_rank",
+                        "values": [
+                          6,
+                          6.5,
+                          7,
+                          7.5,
+                          8
+                        ]
+                      },
+                      {
+                        "op": "mul",
+                        "operands": [
+                          {
+                            "op": "constant",
+                            "value": 0.03
+                          },
+                          {
+                            "op": "stat",
+                            "stat": "ability_power",
+                            "scope": "total"
+                          }
+                        ]
+                      }
+                    ]
+                  },
+                  {
+                    "op": "constant",
+                    "value": 0.01
+                  },
+                  {
+                    "op": "stat",
+                    "stat": "health",
+                    "scope": "max",
+                    "subject": "target"
+                  }
+                ]
+              },
+              "label": "Derivado",
+              "source": "Characters/Yorick/Spells/YorickEAbility/YorickE · mSpellCalculations.Calc_HealthDamage % × vida máxima del objetivo (16.23.8406595+branch.releases-16-23.content.release)",
+              "damage_type_source": "spell_yoricke_tooltip <magicDamage>"
+            }
+          ]
+        }
+      ],
+      "passive_stats": [],
+      "not_modelled": [
+        "Daño mínimo contra súbditos (Calc_MinimumDamage), tope contra monstruos, ralentización (Calc_Slow), reducción de armadura (ArmorShred) y salto de caminantes"
+      ]
+    },
+    "R": {
+      "name": "Panegírico de las Islas",
+      "max_rank": 3,
+      "cases": [
+        {
+          "id": "maiden_hit",
+          "name": "Ataque de la Dama",
+          "parts": [
+            {
+              "damage_type": "magic",
+              "formula": {
+                "op": "add",
+                "operands": [
+                  {
+                    "op": "by_rank",
+                    "values": [
+                      50,
+                      75,
+                      100
+                    ]
+                  },
+                  {
+                    "op": "mul",
+                    "operands": [
+                      {
+                        "op": "constant",
+                        "value": 0.3
+                      },
+                      {
+                        "op": "stat",
+                        "stat": "attack_damage",
+                        "scope": "bonus"
+                      }
+                    ]
+                  }
+                ]
+              },
+              "label": "Derivado",
+              "source": "Characters/Yorick/Spells/YorickRAbility/YorickR.mSpellCalculations.YorickBigGhoulDamage (16.23.8406595+branch.releases-16-23.content.release)",
+              "damage_type_source": "spell_yorickr_tooltip <magicDamage>"
+            }
+          ]
+        },
+        {
+          "id": "mark_proc",
+          "name": "Detonación de marca de la Dama (% vida máxima)",
+          "parts": [
+            {
+              "damage_type": "magic",
+              "formula": {
+                "op": "mul",
+                "operands": [
+                  {
+                    "op": "by_rank",
+                    "values": [
+                      2,
+                      2.5,
+                      3
+                    ]
+                  },
+                  {
+                    "op": "constant",
+                    "value": 0.01
+                  },
+                  {
+                    "op": "stat",
+                    "stat": "health",
+                    "scope": "max",
+                    "subject": "target"
+                  }
+                ]
+              },
+              "label": "Derivado",
+              "source": "Characters/Yorick/Spells/YorickRAbility/YorickR · DataValues.RMarkDamagePercent % × vida máxima del objetivo (16.23.8406595+branch.releases-16-23.content.release)",
+              "damage_type_source": "spell_yorickr_tooltip <magicDamage>"
+            }
+          ]
+        }
+      ],
+      "passive_stats": [],
+      "not_modelled": [
+        "Estadísticas de la Dama (YorickBigGhoulHealth, YorickMaidenResists) e invocación continua de caminantes"
+      ]
+    }
+  }
+}

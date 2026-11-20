@@ -1,0 +1,101 @@
+{
+  "champion": "Thresh",
+  "game_version": "16.23",
+  "verified_against": {
+    "content_version": "16.23.8406595+branch.releases-16-23.content.release",
+    "bin_sha256": "1a40c12025e241bfa91409fefcb4c79af5f4b89018bde0c98cee33871847e583",
+    "evidence": "odd/tasks/champion-kits-wave-3.md",
+    "result": "Bin del cliente 16.23 convertido con python -m binmodel.batch_kits y compilado con esta especificación curada (CH-01 oleada 3)"
+  },
+  "abilities": {
+    "P": {
+      "name": "Condenación",
+      "tooltip": "spell_threshpassivesouls_tooltip",
+      "max_rank": 1,
+      "passive_effects": [
+        {
+          "id": "damnation_armor",
+          "name": "Condenación (Armadura por alma)",
+          "kind": "stat_bonus",
+          "stat": "armor",
+          "mode": "flat",
+          "data_value": "StatValuePerSoul",
+          "input_name": "souls",
+          "condition": "Armadura permanente por alma recogida (--input souls)"
+        },
+        {
+          "id": "damnation_ap",
+          "name": "Condenación (PH por alma)",
+          "kind": "stat_bonus",
+          "stat": "ability_power",
+          "mode": "flat",
+          "data_value": "StatValuePerSoul",
+          "input_name": "souls",
+          "condition": "Poder de habilidad permanente por alma recogida (--input souls)"
+        }
+      ],
+      "not_modelled": []
+    },
+    "Q": {
+      "name": "Sentencia de muerte",
+      "tooltip": "spell_threshq_tooltip",
+      "cases": [
+        {
+          "id": "hook",
+          "name": "Impacto de gancho",
+          "parts": [
+            {
+              "calculation": "TotalDamage"
+            }
+          ]
+        }
+      ],
+      "not_modelled": [
+        "Aturdimiento de 1,5 s, dos tirones, reactivación para desplazarse y reducción de enfriamiento al acertar"
+      ]
+    },
+    "W": {
+      "name": "Camino oscuro",
+      "tooltip": "spell_threshw_tooltip",
+      "not_modelled": [
+        "Farol de desplazamiento aliado y escudo (TotalShield)"
+      ]
+    },
+    "E": {
+      "name": "Despellejar",
+      "tooltip": "spell_threshe_tooltip",
+      "cases": [
+        {
+          "id": "flay",
+          "name": "Barrido activo",
+          "parts": [
+            {
+              "calculation": "TotalDamage"
+            }
+          ]
+        }
+      ],
+      "not_modelled": [
+        "Desplazamiento, ralentización y daño mágico pasivo cargado en ataques básicos por almas + DA"
+      ]
+    },
+    "R": {
+      "name": "La caja",
+      "tooltip": "spell_threshrpenta_tooltip",
+      "cases": [
+        {
+          "id": "wall",
+          "name": "Rotura del primer muro",
+          "parts": [
+            {
+              "calculation": "TotalDamage"
+            }
+          ]
+        }
+      ],
+      "not_modelled": [
+        "Ralentización del 99 % durante 2 s y muros adicionales sin daño"
+      ]
+    }
+  }
+}

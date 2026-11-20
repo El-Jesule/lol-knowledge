@@ -1,0 +1,293 @@
+{
+  "schema": "lol-champion-kit/1",
+  "champion": "Sona",
+  "label": "Derivado",
+  "game_version": "16.23",
+  "content_version": "16.23.8406595+branch.releases-16-23.content.release",
+  "verified_against": {
+    "content_version": "16.23.8406595+branch.releases-16-23.content.release",
+    "bin_sha256": "fac3cd68b312d5421a772129d6b4a6f0459388804f0fb43dd894bf2458659679",
+    "evidence": "odd/tasks/champion-kits-wave-3.md",
+    "result": "Bin del cliente 16.23 convertido con python -m binmodel.batch_kits y compilado con esta especificación curada (CH-01 oleada 3)"
+  },
+  "source": "Árboles de cálculo del bin del cliente (python -m binmodel) y marcado de los tooltips del cliente; estructura de casos curada en research/kits/",
+  "abilities": {
+    "P": {
+      "name": "Energía acorde",
+      "max_rank": 1,
+      "cases": [
+        {
+          "id": "power_chord",
+          "name": "Energía acorde (3.er hechizo)",
+          "parts": [
+            {
+              "damage_type": "magic",
+              "formula": {
+                "op": "add",
+                "operands": [
+                  {
+                    "op": "by_level",
+                    "values": [
+                      20,
+                      30,
+                      40,
+                      50,
+                      60,
+                      70,
+                      80,
+                      90,
+                      100,
+                      115,
+                      130,
+                      145,
+                      160,
+                      175,
+                      190,
+                      205,
+                      220,
+                      235
+                    ]
+                  },
+                  {
+                    "op": "mul",
+                    "operands": [
+                      {
+                        "op": "constant",
+                        "value": 0.2
+                      },
+                      {
+                        "op": "stat",
+                        "stat": "ability_power",
+                        "scope": "total"
+                      }
+                    ]
+                  }
+                ]
+              },
+              "label": "Derivado",
+              "source": "Characters/Sona/Spells/SonaPassiveAbility/SonaPassive.mSpellCalculations.PowerChordDamage (16.23.8406595+branch.releases-16-23.content.release)",
+              "damage_type_source": "spell_sonapassive_tooltip <magicDamage>"
+            }
+          ]
+        }
+      ],
+      "passive_stats": [],
+      "not_modelled": [
+        "Aceleración de habilidad permanente de Accelerando (AccelerandoAHCurrent) y efectos de W/E en Energía acorde"
+      ]
+    },
+    "Q": {
+      "name": "Himno del valor",
+      "max_rank": 5,
+      "cases": [
+        {
+          "id": "bolt",
+          "name": "Rayo de Himno",
+          "parts": [
+            {
+              "damage_type": "magic",
+              "formula": {
+                "op": "add",
+                "operands": [
+                  {
+                    "op": "by_rank",
+                    "values": [
+                      50,
+                      85,
+                      120,
+                      155,
+                      190
+                    ]
+                  },
+                  {
+                    "op": "mul",
+                    "operands": [
+                      {
+                        "op": "constant",
+                        "value": 0.4
+                      },
+                      {
+                        "op": "stat",
+                        "stat": "ability_power",
+                        "scope": "total"
+                      }
+                    ]
+                  }
+                ]
+              },
+              "label": "Derivado",
+              "source": "Characters/Sona/Spells/SonaQAbility/SonaQ.mSpellCalculations.TotalDamage (16.23.8406595+branch.releases-16-23.content.release)",
+              "damage_type_source": "spell_sonaq_tooltip <magicDamage>"
+            }
+          ]
+        },
+        {
+          "id": "aura_on_hit",
+          "name": "Daño mágico al impactar del aura",
+          "parts": [
+            {
+              "damage_type": "magic",
+              "formula": {
+                "op": "add",
+                "operands": [
+                  {
+                    "op": "by_rank",
+                    "values": [
+                      10,
+                      15,
+                      20,
+                      25,
+                      30
+                    ]
+                  },
+                  {
+                    "op": "mul",
+                    "operands": [
+                      {
+                        "op": "constant",
+                        "value": 0.1
+                      },
+                      {
+                        "op": "stat",
+                        "stat": "ability_power",
+                        "scope": "total"
+                      }
+                    ]
+                  }
+                ]
+              },
+              "label": "Derivado",
+              "source": "Characters/Sona/Spells/SonaQAbility/SonaQ.mSpellCalculations.TotalOnHitDamage (16.23.8406595+branch.releases-16-23.content.release)",
+              "damage_type_source": "spell_sonaq_tooltip <magicDamage>"
+            }
+          ]
+        },
+        {
+          "id": "staccato",
+          "name": "Energía acorde — Staccato (+40 %)",
+          "parts": [
+            {
+              "damage_type": "magic",
+              "formula": {
+                "op": "add",
+                "operands": [
+                  {
+                    "op": "by_level",
+                    "values": [
+                      30,
+                      45,
+                      60,
+                      75,
+                      90,
+                      105,
+                      120,
+                      135,
+                      150,
+                      172.5,
+                      195,
+                      217.5,
+                      240,
+                      262.5,
+                      285,
+                      307.5,
+                      330,
+                      352.5
+                    ]
+                  },
+                  {
+                    "op": "mul",
+                    "operands": [
+                      {
+                        "op": "constant",
+                        "value": 0.3
+                      },
+                      {
+                        "op": "stat",
+                        "stat": "ability_power",
+                        "scope": "total"
+                      }
+                    ]
+                  }
+                ]
+              },
+              "label": "Derivado",
+              "source": "Characters/Sona/Spells/SonaQAbility/SonaQ.mSpellCalculations.TotalStaccatoDamage (16.23.8406595+branch.releases-16-23.content.release)",
+              "damage_type_source": "spell_sonaq_tooltip <magicDamage>"
+            }
+          ]
+        }
+      ],
+      "passive_stats": [],
+      "not_modelled": [
+        "Generación de cargas de Accelerando"
+      ]
+    },
+    "W": {
+      "name": "Aria de la perseverancia",
+      "max_rank": 5,
+      "cases": [],
+      "passive_stats": [],
+      "not_modelled": [
+        "Curación (TotalHeal), escudo en aura (TotalShield) y reducción de daño de Diminuendo"
+      ]
+    },
+    "E": {
+      "name": "Canción de la celeridad",
+      "max_rank": 5,
+      "cases": [],
+      "passive_stats": [],
+      "not_modelled": [
+        "Velocidad de movimiento propia/aliada (TotalSelfMovementSpeed, TotalAllyMovementSpeed) y ralentización Tempo"
+      ]
+    },
+    "R": {
+      "name": "Crescendo",
+      "max_rank": 3,
+      "cases": [
+        {
+          "id": "wave",
+          "name": "Onda sónica",
+          "parts": [
+            {
+              "damage_type": "magic",
+              "formula": {
+                "op": "add",
+                "operands": [
+                  {
+                    "op": "by_rank",
+                    "values": [
+                      150,
+                      250,
+                      350
+                    ]
+                  },
+                  {
+                    "op": "mul",
+                    "operands": [
+                      {
+                        "op": "constant",
+                        "value": 0.5
+                      },
+                      {
+                        "op": "stat",
+                        "stat": "ability_power",
+                        "scope": "total"
+                      }
+                    ]
+                  }
+                ]
+              },
+              "label": "Derivado",
+              "source": "Characters/Sona/Spells/SonaRAbility/SonaR.mSpellCalculations.TotalDamage (16.23.8406595+branch.releases-16-23.content.release)",
+              "damage_type_source": "spell_sonar_tooltip <magicDamage>"
+            }
+          ]
+        }
+      ],
+      "passive_stats": [],
+      "not_modelled": [
+        "Aturdimiento de 1,5 s"
+      ]
+    }
+  }
+}

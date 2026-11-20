@@ -1,0 +1,246 @@
+{
+  "schema": "lol-champion-kit/1",
+  "champion": "Azir",
+  "label": "Derivado",
+  "game_version": "16.23",
+  "content_version": "16.23.8406595+branch.releases-16-23.content.release",
+  "verified_against": {
+    "content_version": "16.23.8406595+branch.releases-16-23.content.release",
+    "bin_sha256": "2464330a09b0a0625c19fec10c81b9b1c97f6c1fa8b10dbb801616a1e8edcde9",
+    "evidence": "odd/tasks/champion-kits-wave-3.md",
+    "result": "Bin del cliente 16.23 convertido con python -m binmodel.batch_kits y compilado con esta especificación curada (CH-01 oleada 3)"
+  },
+  "source": "Árboles de cálculo del bin del cliente (python -m binmodel) y marcado de los tooltips del cliente; estructura de casos curada en research/kits/",
+  "abilities": {
+    "P": {
+      "name": "Legado de Shurima",
+      "max_rank": 1,
+      "cases": [
+        {
+          "id": "sun_disc",
+          "name": "Disparo del Disco solar",
+          "parts": [
+            {
+              "damage_type": "magic",
+              "formula": {
+                "op": "add",
+                "operands": [
+                  {
+                    "op": "by_level",
+                    "values": [
+                      230,
+                      230,
+                      230,
+                      230,
+                      230,
+                      230,
+                      230,
+                      245,
+                      260,
+                      275,
+                      290,
+                      305,
+                      320,
+                      335,
+                      350,
+                      365,
+                      380,
+                      395
+                    ]
+                  },
+                  {
+                    "op": "mul",
+                    "operands": [
+                      {
+                        "op": "constant",
+                        "value": 0.4
+                      },
+                      {
+                        "op": "stat",
+                        "stat": "ability_power",
+                        "scope": "total"
+                      }
+                    ]
+                  }
+                ]
+              },
+              "label": "Derivado",
+              "source": "Characters/Azir/Spells/AzirPassiveAbility/AzirPassive.mSpellCalculations.TowerDamage (16.23.8406595+branch.releases-16-23.content.release)",
+              "damage_type_source": "spell_azirpassive_tooltip <magicDamage>"
+            }
+          ]
+        }
+      ],
+      "passive_stats": [],
+      "not_modelled": [
+        "Estadísticas defensivas del Disco solar (BonusResists) y decaimiento de vida"
+      ]
+    },
+    "Q": {
+      "name": "Arenas conquistadoras",
+      "max_rank": 5,
+      "cases": [
+        {
+          "id": "hit",
+          "name": "Embestida de soldados",
+          "parts": [
+            {
+              "damage_type": "magic",
+              "formula": {
+                "op": "add",
+                "operands": [
+                  {
+                    "op": "by_rank",
+                    "values": [
+                      75,
+                      95,
+                      115,
+                      135,
+                      155
+                    ]
+                  },
+                  {
+                    "op": "mul",
+                    "operands": [
+                      {
+                        "op": "by_rank",
+                        "values": [
+                          0.35,
+                          0.4,
+                          0.45,
+                          0.5,
+                          0.55
+                        ]
+                      },
+                      {
+                        "op": "stat",
+                        "stat": "ability_power",
+                        "scope": "total"
+                      }
+                    ]
+                  }
+                ]
+              },
+              "label": "Derivado",
+              "source": "Characters/Azir/Spells/AzirQWrapperAbility/AzirQWrapper.mSpellCalculations.TotalDamage (16.23.8406595+branch.releases-16-23.content.release)",
+              "damage_type_source": "spell_azirqwrapper_tooltip <magicDamage>"
+            }
+          ]
+        }
+      ],
+      "passive_stats": [],
+      "not_modelled": [
+        "Ralentización de 1 s y reposicionamiento de soldados"
+      ]
+    },
+    "W": {
+      "name": "¡Alzaos!",
+      "max_rank": 5,
+      "cases": [],
+      "passive_stats": [],
+      "not_modelled": [
+        "Ataque de soldado de arena (W.TotalDamage en el bin usa breakpoints sin level1_value) y daño reducido a objetivos secundarios (SecondaryTargetDamageMod)"
+      ]
+    },
+    "E": {
+      "name": "Arenas movedizas",
+      "max_rank": 5,
+      "cases": [
+        {
+          "id": "hit",
+          "name": "Colisión al deslizarse",
+          "parts": [
+            {
+              "damage_type": "magic",
+              "formula": {
+                "op": "add",
+                "operands": [
+                  {
+                    "op": "by_rank",
+                    "values": [
+                      70,
+                      110,
+                      150,
+                      190,
+                      230
+                    ]
+                  },
+                  {
+                    "op": "mul",
+                    "operands": [
+                      {
+                        "op": "constant",
+                        "value": 0.6
+                      },
+                      {
+                        "op": "stat",
+                        "stat": "ability_power",
+                        "scope": "total"
+                      }
+                    ]
+                  }
+                ]
+              },
+              "label": "Derivado",
+              "source": "Characters/Azir/Spells/AzirEWrapperAbility/AzirEWrapper.mSpellCalculations.TotalDamage (16.23.8406595+branch.releases-16-23.content.release)",
+              "damage_type_source": "spell_azirewrapper_tooltip <magicDamage>"
+            }
+          ]
+        }
+      ],
+      "passive_stats": [],
+      "not_modelled": [
+        "Escudo (TotalShield) y recarga de soldado al golpear campeón"
+      ]
+    },
+    "R": {
+      "name": "Falange imperial",
+      "max_rank": 3,
+      "cases": [
+        {
+          "id": "wall",
+          "name": "Carga de la falange",
+          "parts": [
+            {
+              "damage_type": "magic",
+              "formula": {
+                "op": "add",
+                "operands": [
+                  {
+                    "op": "by_rank",
+                    "values": [
+                      200,
+                      400,
+                      600
+                    ]
+                  },
+                  {
+                    "op": "mul",
+                    "operands": [
+                      {
+                        "op": "constant",
+                        "value": 0.75
+                      },
+                      {
+                        "op": "stat",
+                        "stat": "ability_power",
+                        "scope": "total"
+                      }
+                    ]
+                  }
+                ]
+              },
+              "label": "Derivado",
+              "source": "Characters/Azir/Spells/AzirRAbility/AzirR.mSpellCalculations.TotalDamage (16.23.8406595+branch.releases-16-23.content.release)",
+              "damage_type_source": "spell_azirr_tooltip <magicDamage>"
+            }
+          ]
+        }
+      ],
+      "passive_stats": [],
+      "not_modelled": [
+        "Empuje hacia atrás y muro infranqueable de 5 s"
+      ]
+    }
+  }
+}

@@ -1,0 +1,107 @@
+{
+  "champion": "Aatrox",
+  "game_version": "16.23",
+  "verified_against": {
+    "content_version": "16.23.8406595+branch.releases-16-23.content.release",
+    "bin_sha256": "b2deb766a83f8f862e2deaba715b915892be3cd2f4c22a65a7865eacf33420b0",
+    "evidence": "odd/tasks/champion-kits-wave-3.md",
+    "result": "Bin del cliente 16.23 convertido con python -m binmodel.batch_kits y compilado con esta especificación curada (CH-01 oleada 3)"
+  },
+  "abilities": {
+    "P": {
+      "name": "Aspecto de la muerte",
+      "tooltip": "passive_aatroxpassive_tooltip",
+      "max_rank": 1,
+      "cases": [
+        {
+          "id": "strike",
+          "name": "Golpe potenciado (% vida máxima)",
+          "parts": [
+            {
+              "tooltip_reference": "PDamage",
+              "damage_type": "magic",
+              "source_note": "mSpellCalculations.PDamage × vida máxima del objetivo",
+              "formula": {
+                "op": "mul",
+                "operands": [
+                  {
+                    "op": "calculation",
+                    "name": "PDamage"
+                  },
+                  {
+                    "op": "stat",
+                    "stat": "health",
+                    "scope": "max",
+                    "subject": "target"
+                  }
+                ]
+              }
+            }
+          ]
+        }
+      ],
+      "not_modelled": [
+        "Curación sobre el daño adicional, alcance extra (+50), tope contra monstruos (MonsterDamageCap) y reducción de enfriamiento"
+      ]
+    },
+    "Q": {
+      "name": "La Espada de los Oscuros",
+      "tooltip": "spell_aatroxq_tooltip",
+      "cases": [
+        {
+          "id": "hit",
+          "name": "Primer golpe (base)",
+          "parts": [
+            {
+              "calculation": "QDamage"
+            }
+          ]
+        },
+        {
+          "id": "sweetspot",
+          "name": "Primer golpe (filo, +60 %)",
+          "parts": [
+            {
+              "calculation": "QEdgeDamage"
+            }
+          ]
+        }
+      ],
+      "not_modelled": [
+        "Escalado de Q2 (+25 %) y Q3 (+50 %), levantamiento en el filo y modificador contra súbditos (QMinionDamage)"
+      ]
+    },
+    "W": {
+      "name": "Cadenas infernales",
+      "tooltip": "spell_aatroxw_tooltip",
+      "cases": [
+        {
+          "id": "hit",
+          "name": "Impacto inicial (o tirón al cerrarse)",
+          "parts": [
+            {
+              "calculation": "WDamage"
+            }
+          ]
+        }
+      ],
+      "not_modelled": [
+        "Ralentización, tirón al centro si no sale de la zona y doble daño contra súbditos"
+      ]
+    },
+    "E": {
+      "name": "Deslizamiento sombrío",
+      "tooltip": "spell_aatroxe_tooltip",
+      "not_modelled": [
+        "Deslizamiento y curación pasiva por daño a campeones (TotalEVamp)"
+      ]
+    },
+    "R": {
+      "name": "El Aniquilador de mundos",
+      "tooltip": "spell_aatroxr_tooltip",
+      "not_modelled": [
+        "Bonificación porcentual de DA total, amplificación de curación, velocidad de movimiento y extensión por bajas"
+      ]
+    }
+  }
+}

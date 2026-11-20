@@ -1,0 +1,228 @@
+{
+  "schema": "lol-champion-kit/1",
+  "champion": "Yuumi",
+  "label": "Derivado",
+  "game_version": "16.23",
+  "content_version": "16.23.8406595+branch.releases-16-23.content.release",
+  "verified_against": {
+    "content_version": "16.23.8406595+branch.releases-16-23.content.release",
+    "bin_sha256": "c373a7cb11a699a057649ff7a521178a821657e4d42dce6aadc2b2310bf67cf4",
+    "evidence": "odd/tasks/champion-kits-wave-3.md",
+    "result": "Bin del cliente 16.23 convertido con python -m binmodel.batch_kits y compilado con esta especificación curada (CH-01 oleada 3)"
+  },
+  "source": "Árboles de cálculo del bin del cliente (python -m binmodel) y marcado de los tooltips del cliente; estructura de casos curada en research/kits/",
+  "abilities": {
+    "P": {
+      "name": "Amistad felina",
+      "max_rank": 1,
+      "cases": [],
+      "passive_stats": [],
+      "not_modelled": [
+        "Curación periódica al golpear campeones (HealAmount, PassiveCooldown)"
+      ]
+    },
+    "Q": {
+      "name": "Misil acechador",
+      "max_rank": 6,
+      "cases": [
+        {
+          "id": "normal",
+          "name": "Misil sin potenciar",
+          "parts": [
+            {
+              "damage_type": "magic",
+              "formula": {
+                "op": "add",
+                "operands": [
+                  {
+                    "op": "by_rank",
+                    "values": [
+                      60,
+                      95,
+                      130,
+                      165,
+                      200,
+                      235
+                    ]
+                  },
+                  {
+                    "op": "mul",
+                    "operands": [
+                      {
+                        "op": "constant",
+                        "value": 0.2
+                      },
+                      {
+                        "op": "stat",
+                        "stat": "ability_power",
+                        "scope": "total"
+                      }
+                    ]
+                  }
+                ]
+              },
+              "label": "Derivado",
+              "source": "Characters/Yuumi/Spells/YuumiQAbility/YuumiQ.mSpellCalculations.TotalMissileDamage (16.23.8406595+branch.releases-16-23.content.release)",
+              "damage_type_source": "spell_yuumimagicmissile_tooltip <magicDamage>"
+            }
+          ]
+        },
+        {
+          "id": "empowered",
+          "name": "Misil potenciado (vinculada)",
+          "parts": [
+            {
+              "damage_type": "magic",
+              "formula": {
+                "op": "add",
+                "operands": [
+                  {
+                    "op": "by_rank",
+                    "values": [
+                      80,
+                      135,
+                      190,
+                      245,
+                      300,
+                      355
+                    ]
+                  },
+                  {
+                    "op": "mul",
+                    "operands": [
+                      {
+                        "op": "constant",
+                        "value": 0.3
+                      },
+                      {
+                        "op": "stat",
+                        "stat": "ability_power",
+                        "scope": "total"
+                      }
+                    ]
+                  }
+                ]
+              },
+              "label": "Derivado",
+              "source": "Characters/Yuumi/Spells/YuumiQAbility/YuumiQ.mSpellCalculations.TotalMissileDamageEmpowered (16.23.8406595+branch.releases-16-23.content.release)",
+              "damage_type_source": "spell_yuumimagicmissile_tooltip <magicDamage>"
+            }
+          ]
+        },
+        {
+          "id": "ally_on_hit",
+          "name": "Daño mágico al impactar otorgado al aliado",
+          "parts": [
+            {
+              "damage_type": "magic",
+              "formula": {
+                "op": "add",
+                "operands": [
+                  {
+                    "op": "mul",
+                    "operands": [
+                      {
+                        "op": "constant",
+                        "value": 0.05
+                      },
+                      {
+                        "op": "stat",
+                        "stat": "ability_power",
+                        "scope": "total"
+                      }
+                    ]
+                  },
+                  {
+                    "op": "by_rank",
+                    "values": [
+                      10,
+                      12,
+                      14,
+                      16,
+                      18,
+                      20
+                    ]
+                  }
+                ]
+              },
+              "label": "Derivado",
+              "source": "Characters/Yuumi/Spells/YuumiQAbility/YuumiQ.mSpellCalculations.OnHitDamageCalc (16.23.8406595+branch.releases-16-23.content.release)",
+              "damage_type_source": "spell_yuumimagicmissile_tooltip <magicDamage>"
+            }
+          ]
+        }
+      ],
+      "passive_stats": [],
+      "not_modelled": [
+        "Ralentización y aumento con probabilidad de crítico del aliado vinculado"
+      ]
+    },
+    "W": {
+      "name": "¡Yupi!",
+      "max_rank": 5,
+      "cases": [],
+      "passive_stats": [],
+      "not_modelled": [
+        "Vinculación a aliado, poder de curación/escudo adicional con Mejor Amigo y curación al impactar (HealthOnHit)"
+      ]
+    },
+    "E": {
+      "name": "Presteza gatuna",
+      "max_rank": 5,
+      "cases": [],
+      "passive_stats": [],
+      "not_modelled": [
+        "Escudo (TotalShielding), velocidad de ataque (TotalAttackSpeed), velocidad de movimiento y restauración de maná (ManaRestore)"
+      ]
+    },
+    "R": {
+      "name": "Capítulo final",
+      "max_rank": 3,
+      "cases": [
+        {
+          "id": "wave",
+          "name": "Una oleada",
+          "parts": [
+            {
+              "damage_type": "magic",
+              "formula": {
+                "op": "add",
+                "operands": [
+                  {
+                    "op": "by_rank",
+                    "values": [
+                      75,
+                      125,
+                      175
+                    ]
+                  },
+                  {
+                    "op": "mul",
+                    "operands": [
+                      {
+                        "op": "constant",
+                        "value": 0.25
+                      },
+                      {
+                        "op": "stat",
+                        "stat": "ability_power",
+                        "scope": "total"
+                      }
+                    ]
+                  }
+                ]
+              },
+              "label": "Derivado",
+              "source": "Characters/Yuumi/Spells/YuumiRAbility/YuumiR.mSpellCalculations.TotalMissileDamage (16.23.8406595+branch.releases-16-23.content.release)",
+              "damage_type_source": "spell_yuumir_tooltip <magicDamage>"
+            }
+          ]
+        }
+      ],
+      "passive_stats": [],
+      "not_modelled": [
+        "5 oleadas con reducción en impactos múltiples (TotalSingleTargetDamage, MultiMissileTotal), ralentización y curación a aliados"
+      ]
+    }
+  }
+}

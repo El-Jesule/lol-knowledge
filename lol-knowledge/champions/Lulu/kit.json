@@ -1,0 +1,232 @@
+{
+  "schema": "lol-champion-kit/1",
+  "champion": "Lulu",
+  "label": "Derivado",
+  "game_version": "16.23",
+  "content_version": "16.23.8406595+branch.releases-16-23.content.release",
+  "verified_against": {
+    "content_version": "16.23.8406595+branch.releases-16-23.content.release",
+    "bin_sha256": "d0c75264acdf50d0d201d188ba3703f4303759b33b2c1dfbfe254f65e9e5cc89",
+    "evidence": "odd/tasks/champion-kits-wave-3.md",
+    "result": "Bin del cliente 16.23 convertido con python -m binmodel.batch_kits y compilado con esta especificación curada (CH-01 oleada 3)"
+  },
+  "source": "Árboles de cálculo del bin del cliente (python -m binmodel) y marcado de los tooltips del cliente; estructura de casos curada en research/kits/",
+  "abilities": {
+    "P": {
+      "name": "Pix, el hada compañera",
+      "max_rank": 1,
+      "cases": [
+        {
+          "id": "three_bolts",
+          "name": "Tres rayos de Pix (combinados)",
+          "parts": [
+            {
+              "damage_type": "magic",
+              "formula": {
+                "op": "mul",
+                "operands": [
+                  {
+                    "op": "add",
+                    "operands": [
+                      {
+                        "op": "linear_by_level",
+                        "min": 5,
+                        "max": 39
+                      },
+                      {
+                        "op": "mul",
+                        "operands": [
+                          {
+                            "op": "constant",
+                            "value": 0.05
+                          },
+                          {
+                            "op": "stat",
+                            "stat": "ability_power",
+                            "scope": "total"
+                          }
+                        ]
+                      }
+                    ]
+                  },
+                  {
+                    "op": "constant",
+                    "value": 3
+                  }
+                ]
+              },
+              "label": "Derivado",
+              "source": "Characters/Lulu/Spells/LuluPassiveAbility/LuluPassive.mSpellCalculations.CombinedDamage (16.23.8406595+branch.releases-16-23.content.release)",
+              "damage_type_source": "spell_lulupassive_tooltip <magicDamage>"
+            }
+          ]
+        }
+      ],
+      "passive_stats": [],
+      "not_modelled": [
+        "Transferencia de Pix a aliados y bloqueo de rayos por unidades interpuestas"
+      ]
+    },
+    "Q": {
+      "name": "Lanza reluciente",
+      "max_rank": 5,
+      "cases": [
+        {
+          "id": "bolt",
+          "name": "Un rayo",
+          "parts": [
+            {
+              "damage_type": "magic",
+              "formula": {
+                "op": "add",
+                "operands": [
+                  {
+                    "op": "by_rank",
+                    "values": [
+                      60,
+                      95,
+                      130,
+                      165,
+                      200
+                    ]
+                  },
+                  {
+                    "op": "mul",
+                    "operands": [
+                      {
+                        "op": "constant",
+                        "value": 0.5
+                      },
+                      {
+                        "op": "stat",
+                        "stat": "ability_power",
+                        "scope": "total"
+                      }
+                    ]
+                  }
+                ]
+              },
+              "label": "Derivado",
+              "source": "Characters/Lulu/Spells/LuluQAbility/LuluQ.mSpellCalculations.TotalDamage (16.23.8406595+branch.releases-16-23.content.release)",
+              "damage_type_source": "spell_luluq_tooltip <magicDamage>"
+            }
+          ]
+        },
+        {
+          "id": "second_bolt",
+          "name": "Segundo rayo adicional (25 %)",
+          "parts": [
+            {
+              "damage_type": "magic",
+              "formula": {
+                "op": "add",
+                "operands": [
+                  {
+                    "op": "by_rank",
+                    "values": [
+                      60,
+                      95,
+                      130,
+                      165,
+                      200
+                    ]
+                  },
+                  {
+                    "op": "mul",
+                    "operands": [
+                      {
+                        "op": "constant",
+                        "value": 0.5
+                      },
+                      {
+                        "op": "stat",
+                        "stat": "ability_power",
+                        "scope": "total"
+                      }
+                    ]
+                  }
+                ]
+              },
+              "label": "Derivado",
+              "source": "Characters/Lulu/Spells/LuluQAbility/LuluQ.mSpellCalculations.BonusMissileDamage (16.23.8406595+branch.releases-16-23.content.release)",
+              "damage_type_source": "spell_luluq_tooltip <magicDamage>"
+            }
+          ]
+        }
+      ],
+      "passive_stats": [],
+      "not_modelled": [
+        "Ralentización del 80 % decreciente"
+      ]
+    },
+    "W": {
+      "name": "Banal",
+      "max_rank": 5,
+      "cases": [],
+      "passive_stats": [],
+      "not_modelled": [
+        "Polimorfia sobre enemigos o velocidad de movimiento (TotalMS) y ataque sobre aliados"
+      ]
+    },
+    "E": {
+      "name": "¡Ayuda, Pix!",
+      "max_rank": 5,
+      "cases": [
+        {
+          "id": "enemy",
+          "name": "Lanzamiento sobre enemigo",
+          "parts": [
+            {
+              "damage_type": "magic",
+              "formula": {
+                "op": "add",
+                "operands": [
+                  {
+                    "op": "by_rank",
+                    "values": [
+                      70,
+                      110,
+                      150,
+                      190,
+                      230
+                    ]
+                  },
+                  {
+                    "op": "mul",
+                    "operands": [
+                      {
+                        "op": "constant",
+                        "value": 0.5
+                      },
+                      {
+                        "op": "stat",
+                        "stat": "ability_power",
+                        "scope": "total"
+                      }
+                    ]
+                  }
+                ]
+              },
+              "label": "Derivado",
+              "source": "Characters/Lulu/Spells/LuluEAbility/LuluE.mSpellCalculations.TotalDamage (16.23.8406595+branch.releases-16-23.content.release)",
+              "damage_type_source": "spell_lulue_tooltip <magicDamage>"
+            }
+          ]
+        }
+      ],
+      "passive_stats": [],
+      "not_modelled": [
+        "Visión verdadera sobre enemigo y escudo sobre aliado (TotalShield)"
+      ]
+    },
+    "R": {
+      "name": "Crecimiento salvaje",
+      "max_rank": 3,
+      "cases": [],
+      "passive_stats": [],
+      "not_modelled": [
+        "Vida adicional temporal (TotalBonusHealth), lanzamiento por los aires y aura de ralentización"
+      ]
+    }
+  }
+}

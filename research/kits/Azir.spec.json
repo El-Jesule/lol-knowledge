@@ -1,0 +1,92 @@
+{
+  "champion": "Azir",
+  "game_version": "16.23",
+  "verified_against": {
+    "content_version": "16.23.8406595+branch.releases-16-23.content.release",
+    "bin_sha256": "2464330a09b0a0625c19fec10c81b9b1c97f6c1fa8b10dbb801616a1e8edcde9",
+    "evidence": "odd/tasks/champion-kits-wave-3.md",
+    "result": "Bin del cliente 16.23 convertido con python -m binmodel.batch_kits y compilado con esta especificación curada (CH-01 oleada 3)"
+  },
+  "abilities": {
+    "P": {
+      "name": "Legado de Shurima",
+      "tooltip": "spell_azirpassive_tooltip",
+      "max_rank": 1,
+      "cases": [
+        {
+          "id": "sun_disc",
+          "name": "Disparo del Disco solar",
+          "parts": [
+            {
+              "calculation": "TowerDamage"
+            }
+          ]
+        }
+      ],
+      "not_modelled": [
+        "Estadísticas defensivas del Disco solar (BonusResists) y decaimiento de vida"
+      ]
+    },
+    "Q": {
+      "name": "Arenas conquistadoras",
+      "tooltip": "spell_azirqwrapper_tooltip",
+      "cases": [
+        {
+          "id": "hit",
+          "name": "Embestida de soldados",
+          "parts": [
+            {
+              "calculation": "TotalDamage"
+            }
+          ]
+        }
+      ],
+      "not_modelled": [
+        "Ralentización de 1 s y reposicionamiento de soldados"
+      ]
+    },
+    "W": {
+      "name": "¡Alzaos!",
+      "tooltip": "spell_azirw_tooltip",
+      "not_modelled": [
+        "Ataque de soldado de arena (W.TotalDamage en el bin usa breakpoints sin level1_value) y daño reducido a objetivos secundarios (SecondaryTargetDamageMod)"
+      ]
+    },
+    "E": {
+      "name": "Arenas movedizas",
+      "tooltip": "spell_azirewrapper_tooltip",
+      "cases": [
+        {
+          "id": "hit",
+          "name": "Colisión al deslizarse",
+          "parts": [
+            {
+              "calculation": "TotalDamage"
+            }
+          ]
+        }
+      ],
+      "not_modelled": [
+        "Escudo (TotalShield) y recarga de soldado al golpear campeón"
+      ]
+    },
+    "R": {
+      "name": "Falange imperial",
+      "tooltip": "spell_azirr_tooltip",
+      "cases": [
+        {
+          "id": "wall",
+          "name": "Carga de la falange",
+          "parts": [
+            {
+              "calculation": "TotalDamage"
+            }
+          ]
+        }
+      ],
+      "not_modelled": [
+        "Empuje hacia atrás y muro infranqueable de 5 s"
+      ]
+    }
+  }
+}

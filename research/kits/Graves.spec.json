@@ -1,0 +1,119 @@
+{
+  "champion": "Graves",
+  "game_version": "16.23",
+  "verified_against": {
+    "content_version": "16.23.8406595+branch.releases-16-23.content.release",
+    "bin_sha256": "91d98b836e0fe117a1511153b7edab244fae68803928630c984f11ac6fa62a9e",
+    "evidence": "odd/tasks/champion-kits-wave-3.md",
+    "result": "Bin del cliente 16.23 convertido con python -m binmodel.batch_kits y compilado con esta especificación curada (CH-01 oleada 3)"
+  },
+  "abilities": {
+    "P": {
+      "name": "Nuevo destino",
+      "tooltip": "spell_gravespassive_tooltip",
+      "max_rank": 1,
+      "cases": [
+        {
+          "id": "one_pellet",
+          "name": "Un perdigón",
+          "parts": [
+            {
+              "calculation": "SingleBulletDamage"
+            }
+          ]
+        },
+        {
+          "id": "four_pellets",
+          "name": "Cuatro perdigones (cercano)",
+          "parts": [
+            {
+              "calculation": "MultiBulletDamage"
+            }
+          ]
+        }
+      ],
+      "not_modelled": [
+        "Sistema de 2 cartuchos/recarga y 6 perdigones en golpe crítico (CritDamageMult)"
+      ]
+    },
+    "Q": {
+      "name": "Fin de trayecto",
+      "tooltip": "spell_gravesqlinespell_tooltip",
+      "cases": [
+        {
+          "id": "initial",
+          "name": "Disparo inicial",
+          "parts": [
+            {
+              "calculation": "TotalDamage"
+            }
+          ]
+        },
+        {
+          "id": "detonation",
+          "name": "Detonación de vuelta",
+          "parts": [
+            {
+              "calculation": "TotalDetonationDamage"
+            }
+          ]
+        }
+      ],
+      "not_modelled": [
+        "Detonación acelerada al chocar contra terreno"
+      ]
+    },
+    "W": {
+      "name": "Pantalla de humo",
+      "tooltip": "spell_gravessmokegrenade_tooltip",
+      "cases": [
+        {
+          "id": "impact",
+          "name": "Impacto de granada",
+          "parts": [
+            {
+              "calculation": "ImpactDamage"
+            }
+          ]
+        }
+      ],
+      "not_modelled": [
+        "Miopía (reducción de visión) y ralentización en área"
+      ]
+    },
+    "E": {
+      "name": "Disparo veloz",
+      "tooltip": "spell_gravesmove_tooltip",
+      "not_modelled": [
+        "Recarga de 1 cartucho y cargas acumulables de Valor (armadura y RM: MRGrant)"
+      ]
+    },
+    "R": {
+      "name": "Daño colateral",
+      "tooltip": "spell_graveschargeshot_tooltip",
+      "cases": [
+        {
+          "id": "direct",
+          "name": "Impacto directo",
+          "parts": [
+            {
+              "calculation": "Damage"
+            }
+          ]
+        },
+        {
+          "id": "cone",
+          "name": "Cono de metralla posterior",
+          "parts": [
+            {
+              "calculation": "FalloffDamage"
+            }
+          ]
+        }
+      ],
+      "not_modelled": [
+        "Retroceso propio al disparar"
+      ]
+    }
+  }
+}

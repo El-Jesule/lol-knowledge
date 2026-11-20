@@ -1,0 +1,277 @@
+{
+  "schema": "lol-champion-kit/1",
+  "champion": "Hecarim",
+  "label": "Derivado",
+  "game_version": "16.23",
+  "content_version": "16.23.8406595+branch.releases-16-23.content.release",
+  "verified_against": {
+    "content_version": "16.23.8406595+branch.releases-16-23.content.release",
+    "bin_sha256": "72f4e6c368bfc12335c9749b3902e4d92d67cac107ba5a4ed2d441d08a096906",
+    "evidence": "odd/tasks/champion-kits-wave-3.md",
+    "result": "Bin del cliente 16.23 convertido con python -m binmodel.batch_kits y compilado con esta especificación curada (CH-01 oleada 3)"
+  },
+  "source": "Árboles de cálculo del bin del cliente (python -m binmodel) y marcado de los tooltips del cliente; estructura de casos curada en research/kits/",
+  "abilities": {
+    "P": {
+      "name": "Sendero de guerra",
+      "max_rank": 1,
+      "cases": [],
+      "passive_stats": [],
+      "not_modelled": [
+        "Conversión de velocidad de movimiento adicional en DA (BonusAD usa stat no corroborado en bin)"
+      ]
+    },
+    "Q": {
+      "name": "Alboroto",
+      "max_rank": 5,
+      "cases": [
+        {
+          "id": "base",
+          "name": "Tajo (0 cargas)",
+          "parts": [
+            {
+              "damage_type": "physical",
+              "formula": {
+                "op": "add",
+                "operands": [
+                  {
+                    "op": "by_rank",
+                    "values": [
+                      60,
+                      90,
+                      120,
+                      150,
+                      180
+                    ]
+                  },
+                  {
+                    "op": "mul",
+                    "operands": [
+                      {
+                        "op": "constant",
+                        "value": 0.9
+                      },
+                      {
+                        "op": "stat",
+                        "stat": "attack_damage",
+                        "scope": "bonus"
+                      }
+                    ]
+                  }
+                ]
+              },
+              "label": "Derivado",
+              "source": "Characters/Hecarim/Spells/HecarimRapidSlashAbility/HecarimRapidSlash.mSpellCalculations.Damage (16.23.8406595+branch.releases-16-23.content.release)",
+              "damage_type_source": "spell_hecarimrapidslash_tooltip <physicalDamage>"
+            }
+          ]
+        }
+      ],
+      "passive_stats": [],
+      "not_modelled": [
+        "Acumulación de daño y reducción de enfriamiento hasta 3 cargas (RampageBonusDamagePerc) y modificador contra súbditos"
+      ]
+    },
+    "W": {
+      "name": "Espíritu de pavor",
+      "max_rank": 5,
+      "cases": [
+        {
+          "id": "total",
+          "name": "Aura completa (4 s)",
+          "parts": [
+            {
+              "damage_type": "magic",
+              "formula": {
+                "op": "add",
+                "operands": [
+                  {
+                    "op": "by_rank",
+                    "values": [
+                      80,
+                      120,
+                      160,
+                      200,
+                      240
+                    ]
+                  },
+                  {
+                    "op": "mul",
+                    "operands": [
+                      {
+                        "op": "constant",
+                        "value": 0.8
+                      },
+                      {
+                        "op": "stat",
+                        "stat": "ability_power",
+                        "scope": "total"
+                      }
+                    ]
+                  }
+                ]
+              },
+              "label": "Derivado",
+              "source": "Characters/Hecarim/Spells/HecarimWAbility/HecarimW.mSpellCalculations.TotalDamage (16.23.8406595+branch.releases-16-23.content.release)",
+              "damage_type_source": "spell_hecarimw_tooltip <magicDamage>"
+            }
+          ]
+        }
+      ],
+      "passive_stats": [],
+      "not_modelled": [
+        "Armadura/RM activas (ResistAmount) y curación por daño recibido por enemigos (LeechAmount)"
+      ]
+    },
+    "E": {
+      "name": "Carga devastadora",
+      "max_rank": 5,
+      "cases": [
+        {
+          "id": "min",
+          "name": "Impacto a distancia mínima",
+          "parts": [
+            {
+              "damage_type": "physical",
+              "formula": {
+                "op": "add",
+                "operands": [
+                  {
+                    "op": "by_rank",
+                    "values": [
+                      30,
+                      45,
+                      60,
+                      75,
+                      90
+                    ]
+                  },
+                  {
+                    "op": "mul",
+                    "operands": [
+                      {
+                        "op": "constant",
+                        "value": 0.5
+                      },
+                      {
+                        "op": "stat",
+                        "stat": "attack_damage",
+                        "scope": "bonus"
+                      }
+                    ]
+                  }
+                ]
+              },
+              "label": "Derivado",
+              "source": "Characters/Hecarim/Spells/HecarimRampAbility/HecarimRamp.mSpellCalculations.MinDamage (16.23.8406595+branch.releases-16-23.content.release)",
+              "damage_type_source": "spell_hecarimramp_tooltip <physicalDamage>"
+            }
+          ]
+        },
+        {
+          "id": "max",
+          "name": "Impacto a distancia máxima",
+          "parts": [
+            {
+              "damage_type": "physical",
+              "formula": {
+                "op": "mul",
+                "operands": [
+                  {
+                    "op": "add",
+                    "operands": [
+                      {
+                        "op": "by_rank",
+                        "values": [
+                          30,
+                          45,
+                          60,
+                          75,
+                          90
+                        ]
+                      },
+                      {
+                        "op": "mul",
+                        "operands": [
+                          {
+                            "op": "constant",
+                            "value": 0.5
+                          },
+                          {
+                            "op": "stat",
+                            "stat": "attack_damage",
+                            "scope": "bonus"
+                          }
+                        ]
+                      }
+                    ]
+                  },
+                  {
+                    "op": "constant",
+                    "value": 2
+                  }
+                ]
+              },
+              "label": "Derivado",
+              "source": "Characters/Hecarim/Spells/HecarimRampAbility/HecarimRamp.mSpellCalculations.MaxDamage (16.23.8406595+branch.releases-16-23.content.release)",
+              "damage_type_source": "spell_hecarimramp_tooltip <physicalDamage>"
+            }
+          ]
+        }
+      ],
+      "passive_stats": [],
+      "not_modelled": [
+        "Velocidad de movimiento progresiva, efecto fantasmal y empuje según distancia"
+      ]
+    },
+    "R": {
+      "name": "Envite de sombras",
+      "max_rank": 3,
+      "cases": [
+        {
+          "id": "charge",
+          "name": "Jinetes espectrales",
+          "parts": [
+            {
+              "damage_type": "magic",
+              "formula": {
+                "op": "add",
+                "operands": [
+                  {
+                    "op": "by_rank",
+                    "values": [
+                      150,
+                      250,
+                      350
+                    ]
+                  },
+                  {
+                    "op": "mul",
+                    "operands": [
+                      {
+                        "op": "constant",
+                        "value": 1
+                      },
+                      {
+                        "op": "stat",
+                        "stat": "ability_power",
+                        "scope": "total"
+                      }
+                    ]
+                  }
+                ]
+              },
+              "label": "Derivado",
+              "source": "Characters/Hecarim/Spells/HecarimUltAbility/HecarimUlt.mSpellCalculations.DamageDone (16.23.8406595+branch.releases-16-23.content.release)",
+              "damage_type_source": "spell_hecarimult_tooltip <magicDamage>"
+            }
+          ]
+        }
+      ],
+      "passive_stats": [],
+      "not_modelled": [
+        "Imparabilidad y miedo de 0,75-1,5 s según distancia"
+      ]
+    }
+  }
+}

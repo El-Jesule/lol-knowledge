@@ -1,0 +1,101 @@
+{
+  "champion": "Hecarim",
+  "game_version": "16.23",
+  "verified_against": {
+    "content_version": "16.23.8406595+branch.releases-16-23.content.release",
+    "bin_sha256": "72f4e6c368bfc12335c9749b3902e4d92d67cac107ba5a4ed2d441d08a096906",
+    "evidence": "odd/tasks/champion-kits-wave-3.md",
+    "result": "Bin del cliente 16.23 convertido con python -m binmodel.batch_kits y compilado con esta especificación curada (CH-01 oleada 3)"
+  },
+  "abilities": {
+    "P": {
+      "name": "Sendero de guerra",
+      "tooltip": "spell_hecarimpassive_tooltip",
+      "max_rank": 1,
+      "not_modelled": [
+        "Conversión de velocidad de movimiento adicional en DA (BonusAD usa stat no corroborado en bin)"
+      ]
+    },
+    "Q": {
+      "name": "Alboroto",
+      "tooltip": "spell_hecarimrapidslash_tooltip",
+      "cases": [
+        {
+          "id": "base",
+          "name": "Tajo (0 cargas)",
+          "parts": [
+            {
+              "calculation": "Damage"
+            }
+          ]
+        }
+      ],
+      "not_modelled": [
+        "Acumulación de daño y reducción de enfriamiento hasta 3 cargas (RampageBonusDamagePerc) y modificador contra súbditos"
+      ]
+    },
+    "W": {
+      "name": "Espíritu de pavor",
+      "tooltip": "spell_hecarimw_tooltip",
+      "cases": [
+        {
+          "id": "total",
+          "name": "Aura completa (4 s)",
+          "parts": [
+            {
+              "calculation": "TotalDamage"
+            }
+          ]
+        }
+      ],
+      "not_modelled": [
+        "Armadura/RM activas (ResistAmount) y curación por daño recibido por enemigos (LeechAmount)"
+      ]
+    },
+    "E": {
+      "name": "Carga devastadora",
+      "tooltip": "spell_hecarimramp_tooltip",
+      "cases": [
+        {
+          "id": "min",
+          "name": "Impacto a distancia mínima",
+          "parts": [
+            {
+              "calculation": "MinDamage"
+            }
+          ]
+        },
+        {
+          "id": "max",
+          "name": "Impacto a distancia máxima",
+          "parts": [
+            {
+              "calculation": "MaxDamage"
+            }
+          ]
+        }
+      ],
+      "not_modelled": [
+        "Velocidad de movimiento progresiva, efecto fantasmal y empuje según distancia"
+      ]
+    },
+    "R": {
+      "name": "Envite de sombras",
+      "tooltip": "spell_hecarimult_tooltip",
+      "cases": [
+        {
+          "id": "charge",
+          "name": "Jinetes espectrales",
+          "parts": [
+            {
+              "calculation": "DamageDone"
+            }
+          ]
+        }
+      ],
+      "not_modelled": [
+        "Imparabilidad y miedo de 0,75-1,5 s según distancia"
+      ]
+    }
+  }
+}

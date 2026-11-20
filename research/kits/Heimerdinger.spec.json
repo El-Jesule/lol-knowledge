@@ -1,0 +1,126 @@
+{
+  "champion": "Heimerdinger",
+  "game_version": "16.23",
+  "verified_against": {
+    "content_version": "16.23.8406595+branch.releases-16-23.content.release",
+    "bin_sha256": "eec638a80642c4defc34a12205db270088f177c5867b42ec8c2514ba43e95d94",
+    "evidence": "odd/tasks/champion-kits-wave-3.md",
+    "result": "Bin del cliente 16.23 convertido con python -m binmodel.batch_kits y compilado con esta especificación curada (CH-01 oleada 3)"
+  },
+  "abilities": {
+    "P": {
+      "name": "Afinidad hextech",
+      "tooltip": "spell_heimerdingerpassive_tooltip",
+      "max_rank": 1,
+      "not_modelled": [
+        "Velocidad de movimiento del 20 % cerca de torretas"
+      ]
+    },
+    "Q": {
+      "name": "Torreta evolucionada H-28 G",
+      "tooltip": "spell_heimerdingerq_tooltip",
+      "not_modelled": [
+        "Los disparos (Damage) y el rayo (DamageBeam) de la torreta usan referencias internas no expuestas como casos planos en el tooltip principal; vida de torreta (TurretHealth)"
+      ]
+    },
+    "W": {
+      "name": "Microcohetes hextech",
+      "tooltip": "spell_heimerdingerw_tooltip",
+      "cases": [
+        {
+          "id": "first_rocket",
+          "name": "Primer cohete",
+          "parts": [
+            {
+              "calculation": "Damage"
+            }
+          ]
+        },
+        {
+          "id": "all_rockets",
+          "name": "Los 5 cohetes sobre un campeón",
+          "parts": [
+            {
+              "calculation": "TotalDamage"
+            }
+          ]
+        }
+      ],
+      "not_modelled": [
+        "Daño por cohete adicional aislado (ExtraHitDamage) y carga del rayo de torretas"
+      ]
+    },
+    "E": {
+      "name": "Granada de tormenta de electrones CH-2",
+      "tooltip": "spell_heimerdingere_tooltip",
+      "cases": [
+        {
+          "id": "hit",
+          "name": "Impacto de granada",
+          "parts": [
+            {
+              "calculation": "Damage"
+            }
+          ]
+        }
+      ],
+      "not_modelled": [
+        "Ralentización en borde y aturdimiento en el centro"
+      ]
+    },
+    "R": {
+      "name": "¡MEJORA!",
+      "tooltip": "spell_heimerdingerr_tooltip",
+      "cases": [
+        {
+          "id": "rq_shot",
+          "name": "R+Q Torreta ápice (cañón)",
+          "parts": [
+            {
+              "calculation": "QUltDamage"
+            }
+          ]
+        },
+        {
+          "id": "rq_beam",
+          "name": "R+Q Torreta ápice (rayo)",
+          "parts": [
+            {
+              "calculation": "QUltDamageBeam"
+            }
+          ]
+        },
+        {
+          "id": "rw_rocket",
+          "name": "R+W Enjambre de cohetes (primer cohete)",
+          "parts": [
+            {
+              "calculation": "WUltDamage"
+            }
+          ]
+        },
+        {
+          "id": "rw_total",
+          "name": "R+W Enjambre de cohetes (total)",
+          "parts": [
+            {
+              "calculation": "WUltTotalDamage"
+            }
+          ]
+        },
+        {
+          "id": "re_bounce",
+          "name": "R+E Granada relámpago (por bote)",
+          "parts": [
+            {
+              "calculation": "EUltDamage"
+            }
+          ]
+        }
+      ],
+      "not_modelled": [
+        "Vida y resistencias de la Torreta ápice (QUltTurretHealth)"
+      ]
+    }
+  }
+}

@@ -1,0 +1,274 @@
+{
+  "schema": "lol-champion-kit/1",
+  "champion": "Shen",
+  "label": "Derivado",
+  "game_version": "16.23",
+  "content_version": "16.23.8406595+branch.releases-16-23.content.release",
+  "verified_against": {
+    "content_version": "16.23.8406595+branch.releases-16-23.content.release",
+    "bin_sha256": "0ae5a0171a91722b48e12b0d295319721ccb812680f651be42a4877a7faea3af",
+    "evidence": "odd/tasks/champion-kits-wave-3.md",
+    "result": "Bin del cliente 16.23 convertido con python -m binmodel.batch_kits y compilado con esta especificación curada (CH-01 oleada 3)"
+  },
+  "source": "Árboles de cálculo del bin del cliente (python -m binmodel) y marcado de los tooltips del cliente; estructura de casos curada en research/kits/",
+  "abilities": {
+    "P": {
+      "name": "Barrera ki",
+      "max_rank": 1,
+      "cases": [],
+      "passive_stats": [],
+      "not_modelled": [
+        "Escudo al lanzar habilidades (ShieldValue) y reducción de enfriamiento al afectar campeones"
+      ]
+    },
+    "Q": {
+      "name": "Asalto del crepúsculo",
+      "max_rank": 5,
+      "cases": [
+        {
+          "id": "base_hit",
+          "name": "Ataque base (plano + % vida máxima)",
+          "parts": [
+            {
+              "damage_type": "magic",
+              "formula": {
+                "op": "by_level",
+                "values": [
+                  10,
+                  10,
+                  10,
+                  16,
+                  16,
+                  16,
+                  22,
+                  22,
+                  22,
+                  28,
+                  28,
+                  28,
+                  34,
+                  34,
+                  34,
+                  40,
+                  40,
+                  40
+                ]
+              },
+              "label": "Derivado",
+              "source": "Characters/Shen/Spells/ShenQAbility/ShenQ.mSpellCalculations.BaseFlatDamage (16.23.8406595+branch.releases-16-23.content.release)",
+              "damage_type_source": "spell_shenq_tooltip <magicDamage>"
+            },
+            {
+              "damage_type": "magic",
+              "formula": {
+                "op": "mul",
+                "operands": [
+                  {
+                    "op": "add",
+                    "operands": [
+                      {
+                        "op": "by_rank",
+                        "values": [
+                          2,
+                          2.5,
+                          3,
+                          3.5,
+                          4
+                        ]
+                      },
+                      {
+                        "op": "mul",
+                        "operands": [
+                          {
+                            "op": "constant",
+                            "value": 0.015
+                          },
+                          {
+                            "op": "stat",
+                            "stat": "ability_power",
+                            "scope": "total"
+                          }
+                        ]
+                      }
+                    ]
+                  },
+                  {
+                    "op": "constant",
+                    "value": 0.01
+                  },
+                  {
+                    "op": "stat",
+                    "stat": "health",
+                    "scope": "max",
+                    "subject": "target"
+                  }
+                ]
+              },
+              "label": "Derivado",
+              "source": "Characters/Shen/Spells/ShenQAbility/ShenQ · mSpellCalculations.BasePercentHealth % × vida máxima del objetivo (16.23.8406595+branch.releases-16-23.content.release)",
+              "damage_type_source": "spell_shenq_tooltip <magicDamage>"
+            }
+          ]
+        },
+        {
+          "id": "empowered_hit",
+          "name": "Ataque potenciado tras atravesar campeón (plano + % vida máxima)",
+          "parts": [
+            {
+              "damage_type": "magic",
+              "formula": {
+                "op": "by_level",
+                "values": [
+                  10,
+                  10,
+                  10,
+                  16,
+                  16,
+                  16,
+                  22,
+                  22,
+                  22,
+                  28,
+                  28,
+                  28,
+                  34,
+                  34,
+                  34,
+                  40,
+                  40,
+                  40
+                ]
+              },
+              "label": "Derivado",
+              "source": "Characters/Shen/Spells/ShenQAbility/ShenQ.mSpellCalculations.BaseFlatDamage (16.23.8406595+branch.releases-16-23.content.release)",
+              "damage_type_source": "spell_shenq_tooltip <magicDamage>"
+            },
+            {
+              "damage_type": "magic",
+              "formula": {
+                "op": "mul",
+                "operands": [
+                  {
+                    "op": "add",
+                    "operands": [
+                      {
+                        "op": "by_rank",
+                        "values": [
+                          5,
+                          5.5,
+                          6,
+                          6.5,
+                          7
+                        ]
+                      },
+                      {
+                        "op": "mul",
+                        "operands": [
+                          {
+                            "op": "constant",
+                            "value": 0.02
+                          },
+                          {
+                            "op": "stat",
+                            "stat": "ability_power",
+                            "scope": "total"
+                          }
+                        ]
+                      }
+                    ]
+                  },
+                  {
+                    "op": "constant",
+                    "value": 0.01
+                  },
+                  {
+                    "op": "stat",
+                    "stat": "health",
+                    "scope": "max",
+                    "subject": "target"
+                  }
+                ]
+              },
+              "label": "Derivado",
+              "source": "Characters/Shen/Spells/ShenQAbility/ShenQ · mSpellCalculations.EmpPercentHealth % × vida máxima del objetivo (16.23.8406595+branch.releases-16-23.content.release)",
+              "damage_type_source": "spell_shenq_tooltip <magicDamage>"
+            }
+          ]
+        }
+      ],
+      "passive_stats": [],
+      "not_modelled": [
+        "Velocidad de ataque del 50 % potenciada, ralentización y daño a torretas/monstruos"
+      ]
+    },
+    "W": {
+      "name": "Refugio espiritual",
+      "max_rank": 5,
+      "cases": [],
+      "passive_stats": [],
+      "not_modelled": [
+        "Zona de esquiva de ataques básicos durante 1,75 s"
+      ]
+    },
+    "E": {
+      "name": "Movimiento de sombra",
+      "max_rank": 5,
+      "cases": [
+        {
+          "id": "taunt",
+          "name": "Impacto de provocación",
+          "parts": [
+            {
+              "damage_type": "physical",
+              "formula": {
+                "op": "add",
+                "operands": [
+                  {
+                    "op": "by_rank",
+                    "values": [
+                      60,
+                      85,
+                      110,
+                      135,
+                      160
+                    ]
+                  },
+                  {
+                    "op": "mul",
+                    "operands": [
+                      {
+                        "op": "constant",
+                        "value": 0.11
+                      },
+                      {
+                        "op": "stat",
+                        "stat": "health",
+                        "scope": "bonus"
+                      }
+                    ]
+                  }
+                ]
+              },
+              "label": "Derivado",
+              "source": "Characters/Shen/Spells/ShenEAbility/ShenE.mSpellCalculations.TauntDamage (16.23.8406595+branch.releases-16-23.content.release)",
+              "damage_type_source": "spell_shene_tooltip <physicalDamage>"
+            }
+          ]
+        }
+      ],
+      "passive_stats": [],
+      "not_modelled": [
+        "Provocación de 1,5 s y recuperación pasiva de energía (EnergyRefund)"
+      ]
+    },
+    "R": {
+      "name": "Mantenerse unidos",
+      "max_rank": 3,
+      "cases": [],
+      "passive_stats": [],
+      "not_modelled": [
+        "Escudo global sobre aliado (Shield / MaxShield) y teletransporte"
+      ]
+    }
+  }
+}

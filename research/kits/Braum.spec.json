@@ -1,0 +1,90 @@
+{
+  "champion": "Braum",
+  "game_version": "16.23",
+  "verified_against": {
+    "content_version": "16.23.8406595+branch.releases-16-23.content.release",
+    "bin_sha256": "ad93d834eac3a79a49df75479ada33f144009c5336909f843ceb87cb51660c34",
+    "evidence": "odd/tasks/champion-kits-wave-3.md",
+    "result": "Bin del cliente 16.23 convertido con python -m binmodel.batch_kits y compilado con esta especificación curada (CH-01 oleada 3)"
+  },
+  "abilities": {
+    "P": {
+      "name": "Golpes conmocionantes",
+      "tooltip": "spell_braumpassive_tooltip",
+      "max_rank": 1,
+      "cases": [
+        {
+          "id": "stun_proc",
+          "name": "Detonación a las 4 cargas",
+          "parts": [
+            {
+              "calculation": "TotalDamage"
+            }
+          ]
+        },
+        {
+          "id": "on_hit_post_stun",
+          "name": "Ataques adicionales mientras dura la inmunidad",
+          "parts": [
+            {
+              "calculation": "OnHitDamage"
+            }
+          ]
+        }
+      ],
+      "not_modelled": [
+        "Aturdimiento (StunDuration), enfriamiento por objetivo (StunCD) y acumulación con aliados"
+      ]
+    },
+    "Q": {
+      "name": "Mordisco invernal",
+      "tooltip": "spell_braumq_tooltip",
+      "cases": [
+        {
+          "id": "hit",
+          "name": "Proyectil de hielo",
+          "parts": [
+            {
+              "calculation": "TotalDamage"
+            }
+          ]
+        }
+      ],
+      "not_modelled": [
+        "Ralentización del 70 % decreciente y aplicación de 1 carga de Golpes conmocionantes"
+      ]
+    },
+    "W": {
+      "name": "Detrás de mí",
+      "tooltip": "spell_braumw_tooltip",
+      "not_modelled": [
+        "Salto hacia aliado y bonificación temporal de armadura/RM (GrantedAllyArmor/MR, GrantedBraumArmor/MR)"
+      ]
+    },
+    "E": {
+      "name": "Inquebrantable",
+      "tooltip": "spell_braume_tooltip",
+      "not_modelled": [
+        "Intercepción de proyectiles, anulación del primero, reducción de daño y velocidad de movimiento"
+      ]
+    },
+    "R": {
+      "name": "Fisura glacial",
+      "tooltip": "spell_braumrwrapper_tooltip",
+      "cases": [
+        {
+          "id": "fissure",
+          "name": "Impacto de la fisura",
+          "parts": [
+            {
+              "calculation": "TotalDamage"
+            }
+          ]
+        }
+      ],
+      "not_modelled": [
+        "Lanzamiento por los aires y campo de ralentización de 4 s"
+      ]
+    }
+  }
+}

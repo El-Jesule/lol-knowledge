@@ -1,0 +1,223 @@
+{
+  "schema": "lol-champion-kit/1",
+  "champion": "Braum",
+  "label": "Derivado",
+  "game_version": "16.23",
+  "content_version": "16.23.8406595+branch.releases-16-23.content.release",
+  "verified_against": {
+    "content_version": "16.23.8406595+branch.releases-16-23.content.release",
+    "bin_sha256": "ad93d834eac3a79a49df75479ada33f144009c5336909f843ceb87cb51660c34",
+    "evidence": "odd/tasks/champion-kits-wave-3.md",
+    "result": "Bin del cliente 16.23 convertido con python -m binmodel.batch_kits y compilado con esta especificación curada (CH-01 oleada 3)"
+  },
+  "source": "Árboles de cálculo del bin del cliente (python -m binmodel) y marcado de los tooltips del cliente; estructura de casos curada en research/kits/",
+  "abilities": {
+    "P": {
+      "name": "Golpes conmocionantes",
+      "max_rank": 1,
+      "cases": [
+        {
+          "id": "stun_proc",
+          "name": "Detonación a las 4 cargas",
+          "parts": [
+            {
+              "damage_type": "magic",
+              "formula": {
+                "op": "by_level",
+                "values": [
+                  26,
+                  36,
+                  46,
+                  56,
+                  66,
+                  76,
+                  86,
+                  96,
+                  106,
+                  116,
+                  126,
+                  136,
+                  146,
+                  156,
+                  166,
+                  176,
+                  186,
+                  196
+                ]
+              },
+              "label": "Derivado",
+              "source": "Characters/Braum/Spells/BraumPassiveAbility/BraumPassive.mSpellCalculations.TotalDamage (16.23.8406595+branch.releases-16-23.content.release)",
+              "damage_type_source": "spell_braumpassive_tooltip <magicDamage>"
+            }
+          ]
+        },
+        {
+          "id": "on_hit_post_stun",
+          "name": "Ataques adicionales mientras dura la inmunidad",
+          "parts": [
+            {
+              "damage_type": "magic",
+              "formula": {
+                "op": "mul",
+                "operands": [
+                  {
+                    "op": "by_level",
+                    "values": [
+                      26,
+                      36,
+                      46,
+                      56,
+                      66,
+                      76,
+                      86,
+                      96,
+                      106,
+                      116,
+                      126,
+                      136,
+                      146,
+                      156,
+                      166,
+                      176,
+                      186,
+                      196
+                    ]
+                  },
+                  {
+                    "op": "constant",
+                    "value": 0.4
+                  }
+                ]
+              },
+              "label": "Derivado",
+              "source": "Characters/Braum/Spells/BraumPassiveAbility/BraumPassive.mSpellCalculations.OnHitDamage (16.23.8406595+branch.releases-16-23.content.release)",
+              "damage_type_source": "spell_braumpassive_tooltip <magicDamage>"
+            }
+          ]
+        }
+      ],
+      "passive_stats": [],
+      "not_modelled": [
+        "Aturdimiento (StunDuration), enfriamiento por objetivo (StunCD) y acumulación con aliados"
+      ]
+    },
+    "Q": {
+      "name": "Mordisco invernal",
+      "max_rank": 5,
+      "cases": [
+        {
+          "id": "hit",
+          "name": "Proyectil de hielo",
+          "parts": [
+            {
+              "damage_type": "magic",
+              "formula": {
+                "op": "add",
+                "operands": [
+                  {
+                    "op": "by_rank",
+                    "values": [
+                      75,
+                      120,
+                      165,
+                      210,
+                      255
+                    ]
+                  },
+                  {
+                    "op": "mul",
+                    "operands": [
+                      {
+                        "op": "constant",
+                        "value": 0.025
+                      },
+                      {
+                        "op": "stat",
+                        "stat": "health",
+                        "scope": "total"
+                      }
+                    ]
+                  }
+                ]
+              },
+              "label": "Derivado",
+              "source": "Characters/Braum/Spells/BraumQAbility/BraumQ.mSpellCalculations.TotalDamage (16.23.8406595+branch.releases-16-23.content.release)",
+              "damage_type_source": "spell_braumq_tooltip <magicDamage>"
+            }
+          ]
+        }
+      ],
+      "passive_stats": [],
+      "not_modelled": [
+        "Ralentización del 70 % decreciente y aplicación de 1 carga de Golpes conmocionantes"
+      ]
+    },
+    "W": {
+      "name": "Detrás de mí",
+      "max_rank": 5,
+      "cases": [],
+      "passive_stats": [],
+      "not_modelled": [
+        "Salto hacia aliado y bonificación temporal de armadura/RM (GrantedAllyArmor/MR, GrantedBraumArmor/MR)"
+      ]
+    },
+    "E": {
+      "name": "Inquebrantable",
+      "max_rank": 5,
+      "cases": [],
+      "passive_stats": [],
+      "not_modelled": [
+        "Intercepción de proyectiles, anulación del primero, reducción de daño y velocidad de movimiento"
+      ]
+    },
+    "R": {
+      "name": "Fisura glacial",
+      "max_rank": 3,
+      "cases": [
+        {
+          "id": "fissure",
+          "name": "Impacto de la fisura",
+          "parts": [
+            {
+              "damage_type": "magic",
+              "formula": {
+                "op": "add",
+                "operands": [
+                  {
+                    "op": "by_rank",
+                    "values": [
+                      150,
+                      250,
+                      350
+                    ]
+                  },
+                  {
+                    "op": "mul",
+                    "operands": [
+                      {
+                        "op": "constant",
+                        "value": 0.6
+                      },
+                      {
+                        "op": "stat",
+                        "stat": "ability_power",
+                        "scope": "total"
+                      }
+                    ]
+                  }
+                ]
+              },
+              "label": "Derivado",
+              "source": "Characters/Braum/Spells/BraumRWrapperAbility/BraumRWrapper.mSpellCalculations.TotalDamage (16.23.8406595+branch.releases-16-23.content.release)",
+              "damage_type_source": "spell_braumrwrapper_tooltip <magicDamage>"
+            }
+          ]
+        }
+      ],
+      "passive_stats": [],
+      "not_modelled": [
+        "Lanzamiento por los aires y campo de ralentización de 4 s"
+      ]
+    }
+  }
+}

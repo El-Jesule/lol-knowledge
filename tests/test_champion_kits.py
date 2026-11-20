@@ -76,9 +76,9 @@ def _target(
     )
 
 
-def test_published_kits_count_reaches_wave_2_target():
+def test_published_kits_count_reaches_wave_3_target():
     ids = _published_kit_ids()
-    assert len(ids) >= 85
+    assert len(ids) >= 129
     for expected in (
         "Ahri",
         "Zaahen",
@@ -105,6 +105,21 @@ def test_published_kits_count_reaches_wave_2_target():
         "Akali",
         "Caitlyn",
         "TahmKench",
+        "Aatrox",
+        "Fiora",
+        "DrMundo",
+        "KSante",
+        "Nasus",
+        "Briar",
+        "Shyvana",
+        "Viego",
+        "JarvanIV",
+        "Mel",
+        "Hwei",
+        "Naafiri",
+        "Twitch",
+        "Thresh",
+        "Renata",
     ):
         assert expected in ids
 
@@ -154,7 +169,8 @@ def test_every_published_kit_evaluates_all_cases_and_timeline_rotation(champion_
         non_recast = [case for case in ability.cases if not case.recast]
         if non_recast:
             step_tokens.append(f"{slot}.{non_recast[0].id}")
-    assert len(step_tokens) >= 3
+    # Kits with one active damage spell (e.g. Twitch: E + passive P) yield 2 steps.
+    assert len(step_tokens) >= 2
     out = evaluate_rotation(
         kit,
         sheet18,
@@ -346,3 +362,117 @@ def test_wave_2_spot_checks_vladimir_kogmaw_lillia_vex_fiddlesticks_nunu_kayle()
     )
     assert len(kayle_e) == 2
     assert kayle_e[1].raw == F(100)  # 10% of 1000 missing HP at 0 AP
+
+
+def test_wave_3_spot_checks_fiora_drmundo_nasus_jarvaniv_thresh_shyvana_viego_twitch_hwei_renata():
+    # Fiora P deals 3% + 4%/100 bonus AD max HP true damage; 4 vitals = 4x
+    fiora_kit = load_kit(ROOT, "Fiora")
+    assert fiora_kit is not None
+    fiora_sheet = _sheet("Fiora", 18, ("1038",))  # B.F. Sword = +40 bonus AD -> 4.6% max HP
+    vital = ability_damage(
+        fiora_kit, "P", 1, fiora_sheet, case="vital", target={"max_health": F(2000)}
+    )[0]
+    four_vitals = ability_damage(
+        fiora_kit, "P", 1, fiora_sheet, case="r_four_vitals", target={"max_health": F(2000)}
+    )[0]
+    assert vital.damage_type == "true"
+    assert vital.raw == F(92)  # (0.03 + 0.0004 * 40) * 2000 = 0.046 * 2000 = 92
+    assert four_vitals.damage_type == "true"
+    assert four_vitals.raw == vital.raw * 4
+
+    # DrMundo Q & E declare flat health costs; Q deals 30% target current HP magic at rank 5
+    mundo_kit = load_kit(ROOT, "DrMundo")
+    assert mundo_kit is not None
+    mundo_sheet = _sheet("DrMundo", 18)
+    mundo_rot = evaluate_rotation(
+        mundo_kit,
+        mundo_sheet,
+        {"Q": 5, "E": 5},
+        _target(mr=F(0), max_health=F(2000), current_health=F(1000)),
+        parse_steps("Q.cleaver, E.hit"),
+        CATALOG,
+    )
+    assert mundo_rot.steps[0].resource_cost is not None
+    assert mundo_rot.steps[0].resource_cost.resource == "health"
+    assert mundo_rot.steps[0].resource_cost.amount == F(90)
+    assert mundo_rot.steps[0].parts[0].raw == F(300)  # 30% of 1000 current HP
+    assert mundo_rot.steps[1].resource_cost is not None
+    assert mundo_rot.steps[1].resource_cost.resource == "health"
+    assert mundo_rot.steps[1].resource_cost.amount == F(70)
+
+    # Nasus P grants 10/15/20% passive life steal at levels 1/7/13; R aura deals 5% max HP/s at 0 AP
+    assert _sheet("Nasus", 1)["life_steal"].total() == F(1, 10)
+    assert _sheet("Nasus", 7)["life_steal"].total() == F(3, 20)
+    assert _sheet("Nasus", 13)["life_steal"].total() == F(1, 5)
+    nasus_kit = load_kit(ROOT, "Nasus")
+    assert nasus_kit is not None
+    nasus_r = ability_damage(
+        nasus_kit, "R", 3, _sheet("Nasus", 18), case="aura_dps", target={"max_health": F(2000)}
+    )[0]
+    assert nasus_r.damage_type == "magic"
+    assert nasus_r.raw == F(100)  # 5% of 2000
+
+    # JarvanIV E grants +30% passive attack speed at rank 5; P deals 8% current HP physical
+    j4_base = _sheet("JarvanIV", 18)
+    j4_e5 = _sheet("JarvanIV", 18, learned={"E": 5})
+    assert j4_e5["attack_speed_bonus"].total() - j4_base["attack_speed_bonus"].total() == F(3, 10)
+    j4_kit = load_kit(ROOT, "JarvanIV")
+    assert j4_kit is not None
+    j4_p = ability_damage(
+        j4_kit, "P", 1, j4_base, case="strike", target={"current_health": F(1000)}
+    )[0]
+    assert j4_p.damage_type == "physical"
+    assert j4_p.raw == F(80)
+
+    # Thresh P grants +1 armor and +1 AP per soul (--input souls)
+    thresh0 = _sheet("Thresh", 18, inputs={"souls": F(0)})
+    thresh50 = _sheet("Thresh", 18, inputs={"souls": F(50)})
+    assert thresh50["armor"].total() - thresh0["armor"].total() == F(50)
+    assert thresh50["ability_power"].total() - thresh0["ability_power"].total() == F(50)
+
+    # Shyvana P grants +0.3 armor and +0.3 MR per stack (--input passive_stacks)
+    shyv0 = _sheet("Shyvana", 18, inputs={"passive_stacks": F(0)})
+    shyv10 = _sheet("Shyvana", 18, inputs={"passive_stacks": F(10)})
+    assert shyv10["armor"].total() - shyv0["armor"].total() == F(3)
+    assert shyv10["magic_resist"].total() - shyv0["magic_resist"].total() == F(3)
+
+    # Viego R combines flat physical AD + % missing health physical
+    viego_kit = load_kit(ROOT, "Viego")
+    assert viego_kit is not None
+    viego_r = ability_damage(
+        viego_kit,
+        "R",
+        3,
+        _sheet("Viego", 18),
+        case="strike",
+        target={"max_health": F(2000), "missing_fraction_health": F(1, 2)},
+    )
+    assert [p.damage_type for p in viego_r] == ["physical", "physical"]
+    assert viego_r[1].raw == F(200)  # 20% of 1000 missing HP at 0 bonus AD
+
+    # Twitch E max_stacks deals both physical and magic damage
+    twitch_kit = load_kit(ROOT, "Twitch")
+    assert twitch_kit is not None
+    twitch_e = ability_damage(
+        twitch_kit, "E", 5, _sheet("Twitch", 18, ("1058", "1038")), case="max_stacks"
+    )
+    assert [p.damage_type for p in twitch_e] == ["physical", "magic"]
+    assert all(p.raw > 0 for p in twitch_e)
+
+    # Hwei Q QQ deals flat magic + 7% target max HP magic at rank 5
+    hwei_kit = load_kit(ROOT, "Hwei")
+    assert hwei_kit is not None
+    hwei_qq = ability_damage(
+        hwei_kit, "Q", 5, _sheet("Hwei", 18), case="qq", target={"max_health": F(2000)}
+    )
+    assert [p.damage_type for p in hwei_qq] == ["magic", "magic"]
+    assert hwei_qq[1].raw == F(140)  # 7% of 2000
+
+    # Renata P applies % max HP magic damage
+    renata_kit = load_kit(ROOT, "Renata")
+    assert renata_kit is not None
+    renata_p = ability_damage(
+        renata_kit, "P", 1, _sheet("Renata", 18), case="mark_apply", target={"max_health": F(2000)}
+    )[0]
+    assert renata_p.damage_type == "magic"
+    assert renata_p.raw > F(40)

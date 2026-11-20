@@ -1,0 +1,172 @@
+{
+  "champion": "KSante",
+  "game_version": "16.23",
+  "verified_against": {
+    "content_version": "16.23.8406595+branch.releases-16-23.content.release",
+    "bin_sha256": "828c71f9666ec6b6c9e46bb318463d5efe62416f8f42f79565b5bef8a1c44935",
+    "evidence": "odd/tasks/champion-kits-wave-3.md",
+    "result": "Bin del cliente 16.23 convertido con python -m binmodel.batch_kits y compilado con esta especificación curada (CH-01 oleada 3)"
+  },
+  "abilities": {
+    "P": {
+      "name": "Instinto intrépido",
+      "tooltip": "spell_ksantep_tooltip",
+      "max_rank": 1,
+      "cases": [
+        {
+          "id": "mark",
+          "name": "Detonación de marca (base + % vida máxima)",
+          "parts": [
+            {
+              "tooltip_reference": "FlatDamage",
+              "damage_type": "physical",
+              "source_note": "DataValues.FlatDamage + mSpellCalculations.PercentHealthDamage × vida máxima del objetivo",
+              "formula": {
+                "op": "add",
+                "operands": [
+                  {
+                    "op": "data_value",
+                    "name": "FlatDamage"
+                  },
+                  {
+                    "op": "mul",
+                    "operands": [
+                      {
+                        "op": "calculation",
+                        "name": "PercentHealthDamage"
+                      },
+                      {
+                        "op": "stat",
+                        "stat": "health",
+                        "scope": "max",
+                        "subject": "target"
+                      }
+                    ]
+                  }
+                ]
+              }
+            }
+          ]
+        }
+      ],
+      "not_modelled": [
+        "Conversión a daño verdadero y daño adicional en forma Órdago (MaxHealthDamagePercent)"
+      ]
+    },
+    "Q": {
+      "name": "Golpes de ntofo",
+      "tooltip": "spell_ksanteq_tooltip",
+      "recast_window_seconds": {
+        "data_value": "RecastWindow"
+      },
+      "cases": [
+        {
+          "id": "hit",
+          "name": "Impacto de ntofo",
+          "parts": [
+            {
+              "calculation": "BaseDamage"
+            }
+          ]
+        },
+        {
+          "id": "recast",
+          "name": "Tercer golpe / onda de choque (recast)",
+          "recast": true,
+          "parts": [
+            {
+              "calculation": "BaseDamage"
+            }
+          ]
+        }
+      ],
+      "not_modelled": [
+        "Ralentización, atracción en Q3 y reducción de enfriamiento/tiempo de lanzamiento por resistencias"
+      ]
+    },
+    "W": {
+      "name": "Pionero",
+      "tooltip": "spell_ksantew_tooltip",
+      "cases": [
+        {
+          "id": "charge",
+          "name": "Embestida (base + % vida máxima)",
+          "parts": [
+            {
+              "tooltip_reference": "BaseDamage",
+              "damage_type": "physical",
+              "source_note": "DataValues.BaseDamage + mSpellCalculations.TotalMaxHealthDamage × vida máxima del objetivo",
+              "formula": {
+                "op": "add",
+                "operands": [
+                  {
+                    "op": "data_value",
+                    "name": "BaseDamage"
+                  },
+                  {
+                    "op": "mul",
+                    "operands": [
+                      {
+                        "op": "calculation",
+                        "name": "TotalMaxHealthDamage"
+                      },
+                      {
+                        "op": "stat",
+                        "stat": "health",
+                        "scope": "max",
+                        "subject": "target"
+                      }
+                    ]
+                  }
+                ]
+              }
+            }
+          ]
+        }
+      ],
+      "not_modelled": [
+        "Reducción de daño durante la carga (DamageReduction), aturdimiento, daño verdadero extra en Órdago y topes contra súbditos/monstruos"
+      ]
+    },
+    "E": {
+      "name": "Juego de pies",
+      "tooltip": "spell_ksantee_tooltip",
+      "not_modelled": [
+        "Deslizamiento y escudo propio o a aliado (TotalShield)"
+      ]
+    },
+    "R": {
+      "name": "Órdago",
+      "tooltip": "spell_ksanter_tooltip",
+      "cases": [
+        {
+          "id": "initial",
+          "name": "Empujón inicial",
+          "parts": [
+            {
+              "tooltip_reference": "BaseDamage",
+              "damage_type": "physical",
+              "source_note": "DataValues.BaseDamage",
+              "formula": {
+                "op": "data_value",
+                "name": "BaseDamage"
+              }
+            }
+          ]
+        },
+        {
+          "id": "wall_slam",
+          "name": "Impacto a través de muro",
+          "parts": [
+            {
+              "calculation": "TotalDamageSlamDown"
+            }
+          ]
+        }
+      ],
+      "not_modelled": [
+        "Transformación Órdago (pérdida de vida/resistencias a cambio de velocidad de ataque, penetración de armadura y omnisucción)"
+      ]
+    }
+  }
+}

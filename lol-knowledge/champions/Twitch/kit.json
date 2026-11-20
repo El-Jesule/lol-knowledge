@@ -1,0 +1,296 @@
+{
+  "schema": "lol-champion-kit/1",
+  "champion": "Twitch",
+  "label": "Derivado",
+  "game_version": "16.23",
+  "content_version": "16.23.8406595+branch.releases-16-23.content.release",
+  "verified_against": {
+    "content_version": "16.23.8406595+branch.releases-16-23.content.release",
+    "bin_sha256": "d89344e639b19fd1a9beeb444ba4706f609889d608a076d03f74155cee66ad85",
+    "evidence": "odd/tasks/champion-kits-wave-3.md",
+    "result": "Bin del cliente 16.23 convertido con python -m binmodel.batch_kits y compilado con esta especificación curada (CH-01 oleada 3)"
+  },
+  "source": "Árboles de cálculo del bin del cliente (python -m binmodel) y marcado de los tooltips del cliente; estructura de casos curada en research/kits/",
+  "abilities": {
+    "P": {
+      "name": "Veneno mortal",
+      "max_rank": 1,
+      "cases": [
+        {
+          "id": "dps_1",
+          "name": "Veneno por segundo (1 carga, daño verdadero)",
+          "parts": [
+            {
+              "damage_type": "true",
+              "formula": {
+                "op": "add",
+                "operands": [
+                  {
+                    "op": "by_level",
+                    "values": [
+                      1,
+                      1,
+                      1,
+                      1,
+                      2,
+                      2,
+                      2,
+                      2,
+                      3,
+                      3,
+                      3,
+                      3,
+                      4,
+                      4,
+                      4,
+                      4,
+                      5,
+                      5
+                    ]
+                  },
+                  {
+                    "op": "mul",
+                    "operands": [
+                      {
+                        "op": "constant",
+                        "value": 0.03
+                      },
+                      {
+                        "op": "stat",
+                        "stat": "ability_power",
+                        "scope": "total"
+                      }
+                    ]
+                  }
+                ]
+              },
+              "label": "Derivado",
+              "source": "Characters/Twitch/Spells/TwitchDeadlyVenomMarkerAbility/TwitchDeadlyVenomMarker.mSpellCalculations.DamagePerSecond (16.23.8406595+branch.releases-16-23.content.release)",
+              "damage_type_source": "spell_twitchdeadlyvenommarker_tooltip <trueDamage>"
+            }
+          ]
+        }
+      ],
+      "passive_stats": [],
+      "not_modelled": [
+        "Acumulación hasta 6 cargas (DamagePerSecondMax) y duración de 6 s"
+      ]
+    },
+    "Q": {
+      "name": "Emboscada",
+      "max_rank": 5,
+      "cases": [],
+      "passive_stats": [],
+      "not_modelled": [
+        "Camuflaje, velocidad de movimiento, velocidad de ataque al salir y reinicio por bajas"
+      ]
+    },
+    "W": {
+      "name": "Tonel de veneno",
+      "max_rank": 5,
+      "cases": [],
+      "passive_stats": [],
+      "not_modelled": [
+        "Zona de ralentización (TotalSlowAmount) y aplicación de cargas de Veneno mortal"
+      ]
+    },
+    "E": {
+      "name": "Contaminar",
+      "max_rank": 5,
+      "cases": [
+        {
+          "id": "base_only",
+          "name": "Daño base físico (0 cargas adicionales)",
+          "parts": [
+            {
+              "damage_type": "physical",
+              "formula": {
+                "op": "by_rank",
+                "values": [
+                  20,
+                  30,
+                  40,
+                  50,
+                  60
+                ]
+              },
+              "label": "Derivado",
+              "source": "Characters/Twitch/Spells/TwitchExpungeAbility/TwitchExpunge · DataValues.BaseDamage (16.23.8406595+branch.releases-16-23.content.release)",
+              "damage_type_source": "spell_twitchexpunge_tooltip <physicalDamage>"
+            }
+          ]
+        },
+        {
+          "id": "per_stack",
+          "name": "Daño adicional por carga (físico + mágico)",
+          "parts": [
+            {
+              "damage_type": "physical",
+              "formula": {
+                "op": "add",
+                "operands": [
+                  {
+                    "op": "by_rank",
+                    "values": [
+                      15,
+                      20,
+                      25,
+                      30,
+                      35
+                    ]
+                  },
+                  {
+                    "op": "mul",
+                    "operands": [
+                      {
+                        "op": "constant",
+                        "value": 0.35
+                      },
+                      {
+                        "op": "stat",
+                        "stat": "attack_damage",
+                        "scope": "bonus"
+                      }
+                    ]
+                  }
+                ]
+              },
+              "label": "Derivado",
+              "source": "Characters/Twitch/Spells/TwitchExpungeAbility/TwitchExpunge.mSpellCalculations.PhysicalDamagePerStack (16.23.8406595+branch.releases-16-23.content.release)",
+              "damage_type_source": "spell_twitchexpunge_tooltip <physicalDamage>"
+            },
+            {
+              "damage_type": "magic",
+              "formula": {
+                "op": "mul",
+                "operands": [
+                  {
+                    "op": "constant",
+                    "value": 0.35
+                  },
+                  {
+                    "op": "stat",
+                    "stat": "ability_power",
+                    "scope": "total"
+                  }
+                ]
+              },
+              "label": "Derivado",
+              "source": "Characters/Twitch/Spells/TwitchExpungeAbility/TwitchExpunge.mSpellCalculations.MagicDamagePerStack (16.23.8406595+branch.releases-16-23.content.release)",
+              "damage_type_source": "spell_twitchexpunge_tooltip <magicDamage>"
+            }
+          ]
+        },
+        {
+          "id": "max_stacks",
+          "name": "Máximo de 6 cargas (base + físico + mágico)",
+          "parts": [
+            {
+              "damage_type": "physical",
+              "formula": {
+                "op": "add",
+                "operands": [
+                  {
+                    "op": "by_rank",
+                    "values": [
+                      20,
+                      30,
+                      40,
+                      50,
+                      60
+                    ]
+                  },
+                  {
+                    "op": "mul",
+                    "operands": [
+                      {
+                        "op": "constant",
+                        "value": 6
+                      },
+                      {
+                        "op": "by_rank",
+                        "values": [
+                          15,
+                          20,
+                          25,
+                          30,
+                          35
+                        ]
+                      }
+                    ]
+                  },
+                  {
+                    "op": "mul",
+                    "operands": [
+                      {
+                        "op": "mul",
+                        "operands": [
+                          {
+                            "op": "constant",
+                            "value": 0.35
+                          },
+                          {
+                            "op": "constant",
+                            "value": 6
+                          }
+                        ]
+                      },
+                      {
+                        "op": "stat",
+                        "stat": "attack_damage",
+                        "scope": "bonus"
+                      }
+                    ]
+                  }
+                ]
+              },
+              "label": "Derivado",
+              "source": "Characters/Twitch/Spells/TwitchExpungeAbility/TwitchExpunge.mSpellCalculations.MaxPhysicalDamage (16.23.8406595+branch.releases-16-23.content.release)",
+              "damage_type_source": "spell_twitchexpunge_tooltip <physicalDamage>"
+            },
+            {
+              "damage_type": "magic",
+              "formula": {
+                "op": "mul",
+                "operands": [
+                  {
+                    "op": "mul",
+                    "operands": [
+                      {
+                        "op": "constant",
+                        "value": 0.35
+                      },
+                      {
+                        "op": "stat",
+                        "stat": "ability_power",
+                        "scope": "total"
+                      }
+                    ]
+                  },
+                  {
+                    "op": "constant",
+                    "value": 6
+                  }
+                ]
+              },
+              "label": "Derivado",
+              "source": "Characters/Twitch/Spells/TwitchExpungeAbility/TwitchExpunge.mSpellCalculations.MaxMagicDamage (16.23.8406595+branch.releases-16-23.content.release)",
+              "damage_type_source": "spell_twitchexpunge_tooltip <magicDamage>"
+            }
+          ]
+        }
+      ],
+      "passive_stats": [],
+      "not_modelled": []
+    },
+    "R": {
+      "name": "Vacía el cargador",
+      "max_rank": 3,
+      "cases": [],
+      "passive_stats": [],
+      "not_modelled": [
+        "Alcance adicional (+300), DA adicional temporal y flechas perforantes con caída de daño"
+      ]
+    }
+  }
+}

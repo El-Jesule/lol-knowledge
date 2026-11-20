@@ -1,0 +1,87 @@
+{
+  "champion": "Trundle",
+  "game_version": "16.23",
+  "verified_against": {
+    "content_version": "16.23.8406595+branch.releases-16-23.content.release",
+    "bin_sha256": "a52f3f0627ff12fe8d4c77f5405eefdbc5200f9362d973f4d98846896633c4ea",
+    "evidence": "odd/tasks/champion-kits-wave-3.md",
+    "result": "Bin del cliente 16.23 convertido con python -m binmodel.batch_kits y compilado con esta especificación curada (CH-01 oleada 3)"
+  },
+  "abilities": {
+    "P": {
+      "name": "Tributo al rey",
+      "tooltip": "spell_trundlediseaseoverseer_tooltip",
+      "max_rank": 1,
+      "not_modelled": [
+        "Curación porcentual por la vida máxima de enemigos cercanos que mueren (RegenPercent)"
+      ]
+    },
+    "Q": {
+      "name": "Mascar",
+      "tooltip": "spell_trundletrollsmash_tooltip",
+      "cases": [
+        {
+          "id": "chomp",
+          "name": "Mordisco",
+          "parts": [
+            {
+              "calculation": "TotalDamage"
+            }
+          ]
+        }
+      ],
+      "not_modelled": [
+        "Ralentización breve, DA ganado (BonusAD) y DA robado al objetivo (SappedAD)"
+      ]
+    },
+    "W": {
+      "name": "Reino helado",
+      "tooltip": "spell_trundledesecrate_tooltip",
+      "not_modelled": [
+        "Zona de velocidad de movimiento, velocidad de ataque y amplificación de curaciones"
+      ]
+    },
+    "E": {
+      "name": "Pilar de hielo",
+      "tooltip": "spell_trundlecircle_tooltip",
+      "not_modelled": [
+        "Terreno temporal, desplazamiento y ralentización en área"
+      ]
+    },
+    "R": {
+      "name": "Subyugar",
+      "tooltip": "spell_trundlepain_tooltip",
+      "cases": [
+        {
+          "id": "drain_total",
+          "name": "Drenaje completo (% vida máxima)",
+          "parts": [
+            {
+              "tooltip_reference": "TotalPercentHPDamage",
+              "damage_type": "magic",
+              "source_note": "mSpellCalculations.TotalPercentHPDamage × vida máxima del objetivo",
+              "formula": {
+                "op": "mul",
+                "operands": [
+                  {
+                    "op": "calculation",
+                    "name": "TotalPercentHPDamage"
+                  },
+                  {
+                    "op": "stat",
+                    "stat": "health",
+                    "scope": "max",
+                    "subject": "target"
+                  }
+                ]
+              }
+            }
+          ]
+        }
+      ],
+      "not_modelled": [
+        "Curación equivalente al daño infligido y robo del 40 % de armadura y RM durante 4 s"
+      ]
+    }
+  }
+}

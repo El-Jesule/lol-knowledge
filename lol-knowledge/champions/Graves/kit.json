@@ -1,0 +1,371 @@
+{
+  "schema": "lol-champion-kit/1",
+  "champion": "Graves",
+  "label": "Derivado",
+  "game_version": "16.23",
+  "content_version": "16.23.8406595+branch.releases-16-23.content.release",
+  "verified_against": {
+    "content_version": "16.23.8406595+branch.releases-16-23.content.release",
+    "bin_sha256": "91d98b836e0fe117a1511153b7edab244fae68803928630c984f11ac6fa62a9e",
+    "evidence": "odd/tasks/champion-kits-wave-3.md",
+    "result": "Bin del cliente 16.23 convertido con python -m binmodel.batch_kits y compilado con esta especificación curada (CH-01 oleada 3)"
+  },
+  "source": "Árboles de cálculo del bin del cliente (python -m binmodel) y marcado de los tooltips del cliente; estructura de casos curada en research/kits/",
+  "abilities": {
+    "P": {
+      "name": "Nuevo destino",
+      "max_rank": 1,
+      "cases": [
+        {
+          "id": "one_pellet",
+          "name": "Un perdigón",
+          "parts": [
+            {
+              "damage_type": "physical",
+              "formula": {
+                "op": "mul",
+                "operands": [
+                  {
+                    "op": "by_level",
+                    "values": [
+                      0.700002,
+                      0.711298,
+                      0.723388,
+                      0.736273,
+                      0.749951,
+                      0.764424,
+                      0.779692,
+                      0.795753,
+                      0.812609,
+                      0.830259,
+                      0.848703,
+                      0.867941,
+                      0.887974,
+                      0.908801,
+                      0.930422,
+                      0.952838,
+                      0.976048,
+                      1.000052
+                    ]
+                  },
+                  {
+                    "op": "stat",
+                    "stat": "attack_damage",
+                    "scope": "total"
+                  }
+                ]
+              },
+              "label": "Derivado",
+              "source": "Characters/Graves/Spells/GravesPassiveAbility/GravesPassive.mSpellCalculations.SingleBulletDamage (16.23.8406595+branch.releases-16-23.content.release)",
+              "damage_type_source": "spell_gravespassive_tooltip <physicalDamage>"
+            }
+          ]
+        },
+        {
+          "id": "four_pellets",
+          "name": "Cuatro perdigones (cercano)",
+          "parts": [
+            {
+              "damage_type": "physical",
+              "formula": {
+                "op": "mul",
+                "operands": [
+                  {
+                    "op": "mul",
+                    "operands": [
+                      {
+                        "op": "by_level",
+                        "values": [
+                          0.700002,
+                          0.711298,
+                          0.723388,
+                          0.736273,
+                          0.749951,
+                          0.764424,
+                          0.779692,
+                          0.795753,
+                          0.812609,
+                          0.830259,
+                          0.848703,
+                          0.867941,
+                          0.887974,
+                          0.908801,
+                          0.930422,
+                          0.952838,
+                          0.976048,
+                          1.000052
+                        ]
+                      },
+                      {
+                        "op": "stat",
+                        "stat": "attack_damage",
+                        "scope": "total"
+                      }
+                    ]
+                  },
+                  {
+                    "op": "constant",
+                    "value": 0.333
+                  }
+                ]
+              },
+              "label": "Derivado",
+              "source": "Characters/Graves/Spells/GravesPassiveAbility/GravesPassive.mSpellCalculations.MultiBulletDamage (16.23.8406595+branch.releases-16-23.content.release)",
+              "damage_type_source": "spell_gravespassive_tooltip <physicalDamage>"
+            }
+          ]
+        }
+      ],
+      "passive_stats": [],
+      "not_modelled": [
+        "Sistema de 2 cartuchos/recarga y 6 perdigones en golpe crítico (CritDamageMult)"
+      ]
+    },
+    "Q": {
+      "name": "Fin de trayecto",
+      "max_rank": 5,
+      "cases": [
+        {
+          "id": "initial",
+          "name": "Disparo inicial",
+          "parts": [
+            {
+              "damage_type": "physical",
+              "formula": {
+                "op": "add",
+                "operands": [
+                  {
+                    "op": "by_rank",
+                    "values": [
+                      50,
+                      75,
+                      100,
+                      125,
+                      150
+                    ]
+                  },
+                  {
+                    "op": "mul",
+                    "operands": [
+                      {
+                        "op": "constant",
+                        "value": 0.55
+                      },
+                      {
+                        "op": "stat",
+                        "stat": "attack_damage",
+                        "scope": "bonus"
+                      }
+                    ]
+                  }
+                ]
+              },
+              "label": "Derivado",
+              "source": "Characters/Graves/Spells/GravesQLineSpellAbility/GravesQLineSpell.mSpellCalculations.TotalDamage (16.23.8406595+branch.releases-16-23.content.release)",
+              "damage_type_source": "spell_gravesqlinespell_tooltip <physicalDamage>"
+            }
+          ]
+        },
+        {
+          "id": "detonation",
+          "name": "Detonación de vuelta",
+          "parts": [
+            {
+              "damage_type": "physical",
+              "formula": {
+                "op": "add",
+                "operands": [
+                  {
+                    "op": "by_rank",
+                    "values": [
+                      80,
+                      125,
+                      170,
+                      215,
+                      260
+                    ]
+                  },
+                  {
+                    "op": "mul",
+                    "operands": [
+                      {
+                        "op": "by_rank",
+                        "values": [
+                          0.45,
+                          0.6,
+                          0.75,
+                          0.9,
+                          1.05
+                        ]
+                      },
+                      {
+                        "op": "stat",
+                        "stat": "attack_damage",
+                        "scope": "bonus"
+                      }
+                    ]
+                  }
+                ]
+              },
+              "label": "Derivado",
+              "source": "Characters/Graves/Spells/GravesQLineSpellAbility/GravesQLineSpell.mSpellCalculations.TotalDetonationDamage (16.23.8406595+branch.releases-16-23.content.release)",
+              "damage_type_source": "spell_gravesqlinespell_tooltip <physicalDamage>"
+            }
+          ]
+        }
+      ],
+      "passive_stats": [],
+      "not_modelled": [
+        "Detonación acelerada al chocar contra terreno"
+      ]
+    },
+    "W": {
+      "name": "Pantalla de humo",
+      "max_rank": 5,
+      "cases": [
+        {
+          "id": "impact",
+          "name": "Impacto de granada",
+          "parts": [
+            {
+              "damage_type": "magic",
+              "formula": {
+                "op": "add",
+                "operands": [
+                  {
+                    "op": "by_rank",
+                    "values": [
+                      60,
+                      110,
+                      160,
+                      210,
+                      260
+                    ]
+                  },
+                  {
+                    "op": "mul",
+                    "operands": [
+                      {
+                        "op": "constant",
+                        "value": 0.6
+                      },
+                      {
+                        "op": "stat",
+                        "stat": "ability_power",
+                        "scope": "total"
+                      }
+                    ]
+                  }
+                ]
+              },
+              "label": "Derivado",
+              "source": "Characters/Graves/Spells/GravesSmokeGrenadeAbility/GravesSmokeGrenade.mSpellCalculations.ImpactDamage (16.23.8406595+branch.releases-16-23.content.release)",
+              "damage_type_source": "spell_gravessmokegrenade_tooltip <magicDamage>"
+            }
+          ]
+        }
+      ],
+      "passive_stats": [],
+      "not_modelled": [
+        "Miopía (reducción de visión) y ralentización en área"
+      ]
+    },
+    "E": {
+      "name": "Disparo veloz",
+      "max_rank": 5,
+      "cases": [],
+      "passive_stats": [],
+      "not_modelled": [
+        "Recarga de 1 cartucho y cargas acumulables de Valor (armadura y RM: MRGrant)"
+      ]
+    },
+    "R": {
+      "name": "Daño colateral",
+      "max_rank": 3,
+      "cases": [
+        {
+          "id": "direct",
+          "name": "Impacto directo",
+          "parts": [
+            {
+              "damage_type": "physical",
+              "formula": {
+                "op": "add",
+                "operands": [
+                  {
+                    "op": "by_rank",
+                    "values": [
+                      275,
+                      425,
+                      575
+                    ]
+                  },
+                  {
+                    "op": "mul",
+                    "operands": [
+                      {
+                        "op": "constant",
+                        "value": 1.5
+                      },
+                      {
+                        "op": "stat",
+                        "stat": "attack_damage",
+                        "scope": "bonus"
+                      }
+                    ]
+                  }
+                ]
+              },
+              "label": "Derivado",
+              "source": "Characters/Graves/Spells/GravesChargeShotAbility/GravesChargeShot.mSpellCalculations.Damage (16.23.8406595+branch.releases-16-23.content.release)",
+              "damage_type_source": "spell_graveschargeshot_tooltip <physicalDamage>"
+            }
+          ]
+        },
+        {
+          "id": "cone",
+          "name": "Cono de metralla posterior",
+          "parts": [
+            {
+              "damage_type": "physical",
+              "formula": {
+                "op": "add",
+                "operands": [
+                  {
+                    "op": "by_rank",
+                    "values": [
+                      200,
+                      320,
+                      440
+                    ]
+                  },
+                  {
+                    "op": "mul",
+                    "operands": [
+                      {
+                        "op": "constant",
+                        "value": 1.2
+                      },
+                      {
+                        "op": "stat",
+                        "stat": "attack_damage",
+                        "scope": "bonus"
+                      }
+                    ]
+                  }
+                ]
+              },
+              "label": "Derivado",
+              "source": "Characters/Graves/Spells/GravesChargeShotAbility/GravesChargeShot.mSpellCalculations.FalloffDamage (16.23.8406595+branch.releases-16-23.content.release)",
+              "damage_type_source": "spell_graveschargeshot_tooltip <physicalDamage>"
+            }
+          ]
+        }
+      ],
+      "passive_stats": [],
+      "not_modelled": [
+        "Retroceso propio al disparar"
+      ]
+    }
+  }
+}

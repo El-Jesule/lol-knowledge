@@ -1,0 +1,124 @@
+{
+  "champion": "Fiora",
+  "game_version": "16.23",
+  "verified_against": {
+    "content_version": "16.23.8406595+branch.releases-16-23.content.release",
+    "bin_sha256": "e9828a99c4277dacd88dd6b079115986754a8a6863b2c4acc1e54b85cb0c5621",
+    "evidence": "odd/tasks/champion-kits-wave-3.md",
+    "result": "Bin del cliente 16.23 convertido con python -m binmodel.batch_kits y compilado con esta especificación curada (CH-01 oleada 3)"
+  },
+  "abilities": {
+    "P": {
+      "name": "Baile de duelista",
+      "tooltip": "spell_fiorapassive_tooltip",
+      "max_rank": 1,
+      "cases": [
+        {
+          "id": "vital",
+          "name": "Punto vital (% vida máxima verdadero)",
+          "parts": [
+            {
+              "tooltip_reference": "PassiveDamageTotal",
+              "damage_type": "true",
+              "source_note": "mSpellCalculations.PassiveDamageTotal × vida máxima del objetivo",
+              "formula": {
+                "op": "mul",
+                "operands": [
+                  {
+                    "op": "calculation",
+                    "name": "PassiveDamageTotal"
+                  },
+                  {
+                    "op": "stat",
+                    "stat": "health",
+                    "scope": "max",
+                    "subject": "target"
+                  }
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "id": "r_four_vitals",
+          "name": "Cuatro puntos vitales de R (% vida máxima verdadero)",
+          "parts": [
+            {
+              "tooltip_reference": "PassiveDamageTotal",
+              "damage_type": "true",
+              "source_note": "mSpellCalculations.RDamageTotal (4 × PassiveDamageTotal) × vida máxima del objetivo",
+              "formula": {
+                "op": "mul",
+                "operands": [
+                  {
+                    "op": "calculation",
+                    "name": "RDamageTotal"
+                  },
+                  {
+                    "op": "stat",
+                    "stat": "health",
+                    "scope": "max",
+                    "subject": "target"
+                  }
+                ]
+              }
+            }
+          ]
+        }
+      ],
+      "not_modelled": [
+        "Curación al golpear punto vital (PassiveHealAmount) y velocidad de movimiento"
+      ]
+    },
+    "Q": {
+      "name": "Embestida",
+      "tooltip": "spell_fioraq_tooltip",
+      "cases": [
+        {
+          "id": "lunge",
+          "name": "Estocada",
+          "parts": [
+            {
+              "calculation": "TotalDamage"
+            }
+          ]
+        }
+      ],
+      "not_modelled": [
+        "Aplicación de efectos de impacto y reducción del 50 % de enfriamiento al acertar"
+      ]
+    },
+    "W": {
+      "name": "Réplica",
+      "tooltip": "spell_fioraw_tooltip",
+      "cases": [
+        {
+          "id": "rip",
+          "name": "Estocada de réplica",
+          "parts": [
+            {
+              "calculation": "StabDamage"
+            }
+          ]
+        }
+      ],
+      "not_modelled": [
+        "Inmunidad durante 0,75 s, ralentización de velocidad de movimiento/ataque y aturdimiento al bloquear CC"
+      ]
+    },
+    "E": {
+      "name": "Esgrima",
+      "tooltip": "spell_fiorae_tooltip",
+      "not_modelled": [
+        "Velocidad de ataque en 2 golpes, ralentización en el primero y crítico garantizado en el segundo"
+      ]
+    },
+    "R": {
+      "name": "Duelo excelso",
+      "tooltip": "spell_fiorar_tooltip",
+      "not_modelled": [
+        "Los 4 puntos vitales se evalúan en P (r_four_vitals); zona curativa en área (HealPerSecondCalc)"
+      ]
+    }
+  }
+}

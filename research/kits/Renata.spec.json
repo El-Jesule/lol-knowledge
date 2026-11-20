@@ -1,0 +1,124 @@
+{
+  "champion": "Renata",
+  "game_version": "16.23",
+  "verified_against": {
+    "content_version": "16.23.8406595+branch.releases-16-23.content.release",
+    "bin_sha256": "34fdc83fef94d8a71a23bec0724f1633c61469ac9ad23149b09b03f102dde369",
+    "evidence": "odd/tasks/champion-kits-wave-3.md",
+    "result": "Bin del cliente 16.23 convertido con python -m binmodel.batch_kits y compilado con esta especificación curada (CH-01 oleada 3)"
+  },
+  "abilities": {
+    "P": {
+      "name": "Ventaja",
+      "tooltip": "spell_renatapassive_tooltip",
+      "max_rank": 1,
+      "cases": [
+        {
+          "id": "mark_apply",
+          "name": "Ataque de Renata (% vida máxima)",
+          "parts": [
+            {
+              "tooltip_reference": "PercentAmpCalcSelf",
+              "damage_type": "magic",
+              "source_note": "mSpellCalculations.PercentAmpCalcSelf × vida máxima del objetivo",
+              "formula": {
+                "op": "mul",
+                "operands": [
+                  {
+                    "op": "calculation",
+                    "name": "PercentAmpCalcSelf"
+                  },
+                  {
+                    "op": "stat",
+                    "stat": "health",
+                    "scope": "max",
+                    "subject": "target"
+                  }
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "id": "mark_detonate",
+          "name": "Detonación de marca por aliado (% vida máxima)",
+          "parts": [
+            {
+              "tooltip_reference": "PercentAmpCalc",
+              "damage_type": "magic",
+              "source_note": "mSpellCalculations.PercentAmpCalc × vida máxima del objetivo",
+              "formula": {
+                "op": "mul",
+                "operands": [
+                  {
+                    "op": "calculation",
+                    "name": "PercentAmpCalc"
+                  },
+                  {
+                    "op": "stat",
+                    "stat": "health",
+                    "scope": "max",
+                    "subject": "target"
+                  }
+                ]
+              }
+            }
+          ]
+        }
+      ],
+      "not_modelled": [
+        "Tope de 150 de daño contra monstruos (MonsterDamageCap)"
+      ]
+    },
+    "Q": {
+      "name": "Apretón de manos",
+      "tooltip": "spell_renataq_tooltip",
+      "cases": [
+        {
+          "id": "grab",
+          "name": "Impacto (o lanzamiento contra otro enemigo)",
+          "parts": [
+            {
+              "calculation": "TotalDamage"
+            }
+          ]
+        }
+      ],
+      "not_modelled": [
+        "Inmovilización de 1 s, lanzamiento direccional y aturdimiento por colisión"
+      ]
+    },
+    "W": {
+      "name": "Rescate financiero",
+      "tooltip": "spell_renataw_tooltip",
+      "not_modelled": [
+        "Velocidad de ataque y movimiento crecientes (ASCalc, MSCalc, FinalASCalc, FinalMSCalc) y resurrección condicionada tras baja"
+      ]
+    },
+    "E": {
+      "name": "Programa de lealtad",
+      "tooltip": "spell_renatae_tooltip",
+      "cases": [
+        {
+          "id": "rocket",
+          "name": "Impacto de cohetes",
+          "parts": [
+            {
+              "calculation": "TotalDamage"
+            }
+          ]
+        }
+      ],
+      "not_modelled": [
+        "Escudo a aliados (ShieldCalc) y ralentización del 30 %"
+      ]
+    },
+    "R": {
+      "name": "Adquisición hostil",
+      "tooltip": "spell_renatar_tooltip",
+      "not_modelled": [
+        "Estado Frenesí (los enemigos se atacan entre sí con +100 % velocidad de ataque)"
+      ]
+    }
+  }
+}

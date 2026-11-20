@@ -1,0 +1,99 @@
+{
+  "champion": "Sona",
+  "game_version": "16.23",
+  "verified_against": {
+    "content_version": "16.23.8406595+branch.releases-16-23.content.release",
+    "bin_sha256": "fac3cd68b312d5421a772129d6b4a6f0459388804f0fb43dd894bf2458659679",
+    "evidence": "odd/tasks/champion-kits-wave-3.md",
+    "result": "Bin del cliente 16.23 convertido con python -m binmodel.batch_kits y compilado con esta especificación curada (CH-01 oleada 3)"
+  },
+  "abilities": {
+    "P": {
+      "name": "Energía acorde",
+      "tooltip": "spell_sonapassive_tooltip",
+      "max_rank": 1,
+      "cases": [
+        {
+          "id": "power_chord",
+          "name": "Energía acorde (3.er hechizo)",
+          "parts": [
+            {
+              "calculation": "PowerChordDamage"
+            }
+          ]
+        }
+      ],
+      "not_modelled": [
+        "Aceleración de habilidad permanente de Accelerando (AccelerandoAHCurrent) y efectos de W/E en Energía acorde"
+      ]
+    },
+    "Q": {
+      "name": "Himno del valor",
+      "tooltip": "spell_sonaq_tooltip",
+      "cases": [
+        {
+          "id": "bolt",
+          "name": "Rayo de Himno",
+          "parts": [
+            {
+              "calculation": "TotalDamage"
+            }
+          ]
+        },
+        {
+          "id": "aura_on_hit",
+          "name": "Daño mágico al impactar del aura",
+          "parts": [
+            {
+              "calculation": "TotalOnHitDamage"
+            }
+          ]
+        },
+        {
+          "id": "staccato",
+          "name": "Energía acorde — Staccato (+40 %)",
+          "parts": [
+            {
+              "calculation": "TotalStaccatoDamage"
+            }
+          ]
+        }
+      ],
+      "not_modelled": [
+        "Generación de cargas de Accelerando"
+      ]
+    },
+    "W": {
+      "name": "Aria de la perseverancia",
+      "tooltip": "spell_sonaw_tooltip",
+      "not_modelled": [
+        "Curación (TotalHeal), escudo en aura (TotalShield) y reducción de daño de Diminuendo"
+      ]
+    },
+    "E": {
+      "name": "Canción de la celeridad",
+      "tooltip": "spell_sonae_tooltip",
+      "not_modelled": [
+        "Velocidad de movimiento propia/aliada (TotalSelfMovementSpeed, TotalAllyMovementSpeed) y ralentización Tempo"
+      ]
+    },
+    "R": {
+      "name": "Crescendo",
+      "tooltip": "spell_sonar_tooltip",
+      "cases": [
+        {
+          "id": "wave",
+          "name": "Onda sónica",
+          "parts": [
+            {
+              "calculation": "TotalDamage"
+            }
+          ]
+        }
+      ],
+      "not_modelled": [
+        "Aturdimiento de 1,5 s"
+      ]
+    }
+  }
+}

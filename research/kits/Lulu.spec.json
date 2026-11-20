@@ -1,0 +1,90 @@
+{
+  "champion": "Lulu",
+  "game_version": "16.23",
+  "verified_against": {
+    "content_version": "16.23.8406595+branch.releases-16-23.content.release",
+    "bin_sha256": "d0c75264acdf50d0d201d188ba3703f4303759b33b2c1dfbfe254f65e9e5cc89",
+    "evidence": "odd/tasks/champion-kits-wave-3.md",
+    "result": "Bin del cliente 16.23 convertido con python -m binmodel.batch_kits y compilado con esta especificación curada (CH-01 oleada 3)"
+  },
+  "abilities": {
+    "P": {
+      "name": "Pix, el hada compañera",
+      "tooltip": "spell_lulupassive_tooltip",
+      "max_rank": 1,
+      "cases": [
+        {
+          "id": "three_bolts",
+          "name": "Tres rayos de Pix (combinados)",
+          "parts": [
+            {
+              "calculation": "CombinedDamage"
+            }
+          ]
+        }
+      ],
+      "not_modelled": [
+        "Transferencia de Pix a aliados y bloqueo de rayos por unidades interpuestas"
+      ]
+    },
+    "Q": {
+      "name": "Lanza reluciente",
+      "tooltip": "spell_luluq_tooltip",
+      "cases": [
+        {
+          "id": "bolt",
+          "name": "Un rayo",
+          "parts": [
+            {
+              "calculation": "TotalDamage"
+            }
+          ]
+        },
+        {
+          "id": "second_bolt",
+          "name": "Segundo rayo adicional (25 %)",
+          "parts": [
+            {
+              "calculation": "BonusMissileDamage"
+            }
+          ]
+        }
+      ],
+      "not_modelled": [
+        "Ralentización del 80 % decreciente"
+      ]
+    },
+    "W": {
+      "name": "Banal",
+      "tooltip": "spell_luluw_tooltip",
+      "not_modelled": [
+        "Polimorfia sobre enemigos o velocidad de movimiento (TotalMS) y ataque sobre aliados"
+      ]
+    },
+    "E": {
+      "name": "¡Ayuda, Pix!",
+      "tooltip": "spell_lulue_tooltip",
+      "cases": [
+        {
+          "id": "enemy",
+          "name": "Lanzamiento sobre enemigo",
+          "parts": [
+            {
+              "calculation": "TotalDamage"
+            }
+          ]
+        }
+      ],
+      "not_modelled": [
+        "Visión verdadera sobre enemigo y escudo sobre aliado (TotalShield)"
+      ]
+    },
+    "R": {
+      "name": "Crecimiento salvaje",
+      "tooltip": "spell_lulur_tooltip",
+      "not_modelled": [
+        "Vida adicional temporal (TotalBonusHealth), lanzamiento por los aires y aura de ralentización"
+      ]
+    }
+  }
+}

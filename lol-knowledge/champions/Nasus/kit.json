@@ -1,0 +1,228 @@
+{
+  "schema": "lol-champion-kit/1",
+  "champion": "Nasus",
+  "label": "Derivado",
+  "game_version": "16.23",
+  "content_version": "16.23.8406595+branch.releases-16-23.content.release",
+  "verified_against": {
+    "content_version": "16.23.8406595+branch.releases-16-23.content.release",
+    "bin_sha256": "2b4d3184d0c81ee65d6c45a7e28b7d2db72f83806e01b9b8eca1d840784f6224",
+    "evidence": "odd/tasks/champion-kits-wave-3.md",
+    "result": "Bin del cliente 16.23 convertido con python -m binmodel.batch_kits y compilado con esta especificación curada (CH-01 oleada 3)"
+  },
+  "source": "Árboles de cálculo del bin del cliente (python -m binmodel) y marcado de los tooltips del cliente; estructura de casos curada en research/kits/",
+  "abilities": {
+    "P": {
+      "name": "Devorador de almas",
+      "max_rank": 1,
+      "cases": [],
+      "passive_stats": [],
+      "not_modelled": [],
+      "passive_effects": [
+        {
+          "id": "soul_eater_lifesteal",
+          "name": "Robo de vida pasivo",
+          "kind": "stat_bonus",
+          "formula": {
+            "op": "by_level",
+            "values": [
+              10,
+              10,
+              10,
+              10,
+              10,
+              10,
+              15,
+              15,
+              15,
+              15,
+              15,
+              15,
+              20,
+              20,
+              20,
+              20,
+              20,
+              20
+            ]
+          },
+          "label": "Derivado",
+          "source": "Characters/Nasus/Spells/NasusPassiveAbility/NasusPassive.mSpellCalculations.LifestealTooltip (16.23.8406595+branch.releases-16-23.content.release)",
+          "stat": "life_steal",
+          "mode": "flat",
+          "condition": "Robo de vida permanente escalado a niveles 1, 7 y 13 (10/15/20 %)"
+        }
+      ]
+    },
+    "Q": {
+      "name": "Golpe absorbente",
+      "max_rank": 5,
+      "cases": [],
+      "passive_stats": [],
+      "not_modelled": [
+        "Daño base + acumulaciones infinitas de Golpe absorbente (el cálculo en el bin referencia el contador dinámico de cargas)"
+      ]
+    },
+    "W": {
+      "name": "Marchitar",
+      "max_rank": 5,
+      "cases": [],
+      "passive_stats": [],
+      "not_modelled": [
+        "Ralentización creciente de velocidad de movimiento y velocidad de ataque durante 5 s"
+      ]
+    },
+    "E": {
+      "name": "Fuego espiritual",
+      "max_rank": 5,
+      "cases": [
+        {
+          "id": "initial",
+          "name": "Impacto inicial",
+          "parts": [
+            {
+              "damage_type": "magic",
+              "formula": {
+                "op": "add",
+                "operands": [
+                  {
+                    "op": "by_rank",
+                    "values": [
+                      50,
+                      80,
+                      110,
+                      140,
+                      170
+                    ]
+                  },
+                  {
+                    "op": "mul",
+                    "operands": [
+                      {
+                        "op": "constant",
+                        "value": 0.6
+                      },
+                      {
+                        "op": "stat",
+                        "stat": "ability_power",
+                        "scope": "total"
+                      }
+                    ]
+                  }
+                ]
+              },
+              "label": "Derivado",
+              "source": "Characters/Nasus/Spells/NasusEAbility/NasusE.mSpellCalculations.InitialDamage (16.23.8406595+branch.releases-16-23.content.release)",
+              "damage_type_source": "spell_nasuse_tooltip <magicDamage>"
+            }
+          ]
+        },
+        {
+          "id": "dot_total",
+          "name": "Zona completa (5 s)",
+          "parts": [
+            {
+              "damage_type": "magic",
+              "formula": {
+                "op": "add",
+                "operands": [
+                  {
+                    "op": "by_rank",
+                    "values": [
+                      10,
+                      16,
+                      22,
+                      28,
+                      34
+                    ]
+                  },
+                  {
+                    "op": "mul",
+                    "operands": [
+                      {
+                        "op": "constant",
+                        "value": 0.12
+                      },
+                      {
+                        "op": "stat",
+                        "stat": "ability_power",
+                        "scope": "total"
+                      }
+                    ]
+                  }
+                ]
+              },
+              "label": "Derivado",
+              "source": "Characters/Nasus/Spells/NasusEAbility/NasusE.mSpellCalculations.TotalDotDamage (16.23.8406595+branch.releases-16-23.content.release)",
+              "damage_type_source": "spell_nasuse_tooltip <magicDamage>"
+            }
+          ]
+        }
+      ],
+      "passive_stats": [],
+      "not_modelled": [
+        "Reducción porcentual de armadura dentro del área"
+      ]
+    },
+    "R": {
+      "name": "Furia de las arenas",
+      "max_rank": 3,
+      "cases": [
+        {
+          "id": "aura_dps",
+          "name": "Aura por segundo (% vida máxima)",
+          "parts": [
+            {
+              "damage_type": "magic",
+              "formula": {
+                "op": "mul",
+                "operands": [
+                  {
+                    "op": "add",
+                    "operands": [
+                      {
+                        "op": "by_rank",
+                        "values": [
+                          0.03,
+                          0.04,
+                          0.05
+                        ]
+                      },
+                      {
+                        "op": "mul",
+                        "operands": [
+                          {
+                            "op": "constant",
+                            "value": 0.0001
+                          },
+                          {
+                            "op": "stat",
+                            "stat": "ability_power",
+                            "scope": "total"
+                          }
+                        ]
+                      }
+                    ]
+                  },
+                  {
+                    "op": "stat",
+                    "stat": "health",
+                    "scope": "max",
+                    "subject": "target"
+                  }
+                ]
+              },
+              "label": "Derivado",
+              "source": "Characters/Nasus/Spells/NasusRAbility/NasusR · mSpellCalculations.DamageCalc × vida máxima del objetivo (16.23.8406595+branch.releases-16-23.content.release)",
+              "damage_type_source": "spell_nasusr_tooltip <magicDamage>"
+            }
+          ]
+        }
+      ],
+      "passive_stats": [],
+      "not_modelled": [
+        "Vida máxima temporal (BonusHealth), armadura/RM adicionales, tope de 240 DPS (MaxDamageCap) y 50 % menos enfriamiento en Q"
+      ]
+    }
+  }
+}

@@ -1,0 +1,170 @@
+{
+  "champion": "Rumble",
+  "game_version": "16.23",
+  "verified_against": {
+    "content_version": "16.23.8406595+branch.releases-16-23.content.release",
+    "bin_sha256": "69c883db5813262e56e5fc9a9138c6d9b52eb1f4382400e5ee3ffa6704149f4b",
+    "evidence": "odd/tasks/champion-kits-wave-3.md",
+    "result": "Bin del cliente 16.23 convertido con python -m binmodel.batch_kits y compilado con esta especificación curada (CH-01 oleada 3)"
+  },
+  "abilities": {
+    "P": {
+      "name": "Titán del desguace",
+      "tooltip": "spell_rumbleheatsystem_tooltip",
+      "max_rank": 1,
+      "cases": [
+        {
+          "id": "overheat_hit",
+          "name": "Ataque sobrecalentado (plano + 4 % vida máxima)",
+          "parts": [
+            {
+              "calculation": "TotalBaseDamage"
+            },
+            {
+              "tooltip_reference": "OverheatPercBonusDamage",
+              "damage_type": "magic",
+              "source_note": "DataValues.OverheatPercBonusDamage × vida máxima del objetivo",
+              "formula": {
+                "op": "mul",
+                "operands": [
+                  {
+                    "op": "data_value",
+                    "name": "OverheatPercBonusDamage"
+                  },
+                  {
+                    "op": "stat",
+                    "stat": "health",
+                    "scope": "max",
+                    "subject": "target"
+                  }
+                ]
+              }
+            }
+          ]
+        }
+      ],
+      "not_modelled": [
+        "Gestión de Calor (Zona de peligro / Sobrecalentamiento), velocidad de ataque sobrecalentado (OverheatAS) y tope contra monstruos"
+      ]
+    },
+    "Q": {
+      "name": "Escupellamas",
+      "tooltip": "spell_rumbleflamethrower_tooltip",
+      "cases": [
+        {
+          "id": "normal",
+          "name": "Normal (3 s completos + % vida máxima)",
+          "parts": [
+            {
+              "calculation": "FlatDamage"
+            },
+            {
+              "tooltip_reference": "HealthDamage",
+              "damage_type": "magic",
+              "source_note": "DataValues.HealthDamage × vida máxima del objetivo",
+              "formula": {
+                "op": "mul",
+                "operands": [
+                  {
+                    "op": "data_value",
+                    "name": "HealthDamage"
+                  },
+                  {
+                    "op": "stat",
+                    "stat": "health",
+                    "scope": "max",
+                    "subject": "target"
+                  }
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "id": "danger_zone",
+          "name": "Zona de peligro (+50 % daño plano + % vida máxima)",
+          "parts": [
+            {
+              "calculation": "EmpoweredDamage"
+            },
+            {
+              "tooltip_reference": "EmpoweredHealth",
+              "damage_type": "magic",
+              "source_note": "mSpellCalculations.EmpoweredHealth × vida máxima del objetivo",
+              "formula": {
+                "op": "mul",
+                "operands": [
+                  {
+                    "op": "calculation",
+                    "name": "EmpoweredHealth"
+                  },
+                  {
+                    "op": "stat",
+                    "stat": "health",
+                    "scope": "max",
+                    "subject": "target"
+                  }
+                ]
+              }
+            }
+          ]
+        }
+      ],
+      "not_modelled": [
+        "Reducción de daño contra súbditos (MinionMod) y tope contra monstruos (MonsterCap)"
+      ]
+    },
+    "W": {
+      "name": "Escudo de restos",
+      "tooltip": "spell_rumbleshield_tooltip",
+      "not_modelled": [
+        "Escudo (TotalShield / EmpoweredShield) y velocidad de movimiento (EmpoweredMS)"
+      ]
+    },
+    "E": {
+      "name": "Arpón eléctrico",
+      "tooltip": "spell_rumblegrenade_tooltip",
+      "cases": [
+        {
+          "id": "normal",
+          "name": "Un arpón (normal)",
+          "parts": [
+            {
+              "calculation": "TotalDamage"
+            }
+          ]
+        },
+        {
+          "id": "danger_zone",
+          "name": "Un arpón (Zona de peligro)",
+          "parts": [
+            {
+              "calculation": "EmpDamage"
+            }
+          ]
+        }
+      ],
+      "not_modelled": [
+        "Sistema de 2 cargas, ralentización y reducción de resistencia mágica acumulable"
+      ]
+    },
+    "R": {
+      "name": "Equilibrador",
+      "tooltip": "spell_rumblecarpetbomb_tooltip",
+      "cases": [
+        {
+          "id": "dps",
+          "name": "Daño por segundo en la zona",
+          "parts": [
+            {
+              "calculation": "DamagePerSecond"
+            }
+          ]
+        }
+      ],
+      "not_modelled": [
+        "Daño total de 5 s (TotalDamage no traducible si depende de multiplicador) y ralentización"
+      ]
+    }
+  }
+}

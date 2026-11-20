@@ -1,0 +1,290 @@
+{
+  "schema": "lol-champion-kit/1",
+  "champion": "MasterYi",
+  "label": "Derivado",
+  "game_version": "16.23",
+  "content_version": "16.23.8406595+branch.releases-16-23.content.release",
+  "verified_against": {
+    "content_version": "16.23.8406595+branch.releases-16-23.content.release",
+    "bin_sha256": "648253b4c2c55983c397834584c924498a4530269777b092c3bdb10f72e264d6",
+    "evidence": "odd/tasks/champion-kits-wave-3.md",
+    "result": "Bin del cliente 16.23 convertido con python -m binmodel.batch_kits y compilado con esta especificación curada (CH-01 oleada 3)"
+  },
+  "source": "Árboles de cálculo del bin del cliente (python -m binmodel) y marcado de los tooltips del cliente; estructura de casos curada en research/kits/",
+  "abilities": {
+    "P": {
+      "name": "Golpe doble",
+      "max_rank": 1,
+      "cases": [
+        {
+          "id": "second_strike",
+          "name": "Segundo golpe adicional (50 % DA)",
+          "parts": [
+            {
+              "damage_type": "physical",
+              "formula": {
+                "op": "mul",
+                "operands": [
+                  {
+                    "op": "constant",
+                    "value": 0.5
+                  },
+                  {
+                    "op": "stat",
+                    "stat": "attack_damage",
+                    "scope": "total"
+                  }
+                ]
+              },
+              "label": "Derivado",
+              "source": "Characters/MasterYi/Spells/MasterYiPassiveAbility/MasterYiPassive.mSpellCalculations.TotalDamage (16.23.8406595+branch.releases-16-23.content.release)",
+              "damage_type_source": "passive_masteryipassive_tooltip <physicalDamage>"
+            }
+          ]
+        }
+      ],
+      "passive_stats": [],
+      "not_modelled": [
+        "Disparo cada 4 ataques y aplicación de efectos de impacto en el segundo golpe"
+      ]
+    },
+    "Q": {
+      "name": "Golpe fulgurante",
+      "max_rank": 5,
+      "cases": [
+        {
+          "id": "first_hit",
+          "name": "Primer impacto",
+          "parts": [
+            {
+              "damage_type": "physical",
+              "formula": {
+                "op": "add",
+                "operands": [
+                  {
+                    "op": "by_rank",
+                    "values": [
+                      20,
+                      40,
+                      60,
+                      80,
+                      100
+                    ]
+                  },
+                  {
+                    "op": "mul",
+                    "operands": [
+                      {
+                        "op": "constant",
+                        "value": 0.6
+                      },
+                      {
+                        "op": "stat",
+                        "stat": "attack_damage",
+                        "scope": "total"
+                      }
+                    ]
+                  }
+                ]
+              },
+              "label": "Derivado",
+              "source": "Characters/MasterYi/Spells/AlphaStrikeAbility/AlphaStrike.mSpellCalculations.TotalDamage (16.23.8406595+branch.releases-16-23.content.release)",
+              "damage_type_source": "spell_alphastrike_tooltip <physicalDamage>"
+            }
+          ]
+        },
+        {
+          "id": "subsequent",
+          "name": "Cada impacto adicional al mismo objetivo",
+          "parts": [
+            {
+              "damage_type": "physical",
+              "formula": {
+                "op": "add",
+                "operands": [
+                  {
+                    "op": "by_rank",
+                    "values": [
+                      20,
+                      40,
+                      60,
+                      80,
+                      100
+                    ]
+                  },
+                  {
+                    "op": "mul",
+                    "operands": [
+                      {
+                        "op": "constant",
+                        "value": 0.6
+                      },
+                      {
+                        "op": "stat",
+                        "stat": "attack_damage",
+                        "scope": "total"
+                      }
+                    ]
+                  }
+                ]
+              },
+              "label": "Derivado",
+              "source": "Characters/MasterYi/Spells/AlphaStrikeAbility/AlphaStrike.mSpellCalculations.SubesquentDamage (16.23.8406595+branch.releases-16-23.content.release)",
+              "damage_type_source": "spell_alphastrike_tooltip <physicalDamage>"
+            }
+          ]
+        },
+        {
+          "id": "single_target",
+          "name": "Objetivo aislado (4 impactos sin crítico)",
+          "parts": [
+            {
+              "damage_type": "physical",
+              "formula": {
+                "op": "mul",
+                "operands": [
+                  {
+                    "op": "add",
+                    "operands": [
+                      {
+                        "op": "by_rank",
+                        "values": [
+                          20,
+                          40,
+                          60,
+                          80,
+                          100
+                        ]
+                      },
+                      {
+                        "op": "mul",
+                        "operands": [
+                          {
+                            "op": "constant",
+                            "value": 0.6
+                          },
+                          {
+                            "op": "stat",
+                            "stat": "attack_damage",
+                            "scope": "total"
+                          }
+                        ]
+                      }
+                    ]
+                  },
+                  {
+                    "op": "add",
+                    "operands": [
+                      {
+                        "op": "constant",
+                        "value": 1
+                      },
+                      {
+                        "op": "mul",
+                        "operands": [
+                          {
+                            "op": "constant",
+                            "value": 0.25
+                          },
+                          {
+                            "op": "add",
+                            "operands": [
+                              {
+                                "op": "constant",
+                                "value": -1
+                              },
+                              {
+                                "op": "constant",
+                                "value": 4
+                              }
+                            ]
+                          }
+                        ]
+                      }
+                    ]
+                  }
+                ]
+              },
+              "label": "Derivado",
+              "source": "Characters/MasterYi/Spells/AlphaStrikeAbility/AlphaStrike.mSpellCalculations.SingleTotalDamage (16.23.8406595+branch.releases-16-23.content.release)",
+              "damage_type_source": "spell_alphastrike_tooltip <physicalDamage>"
+            }
+          ]
+        }
+      ],
+      "passive_stats": [],
+      "not_modelled": [
+        "Inalcanzabilidad, daño crítico adicional (CritBonus, SingleCritTotalDamage) y efectos de impacto"
+      ]
+    },
+    "W": {
+      "name": "Meditar",
+      "max_rank": 5,
+      "cases": [],
+      "passive_stats": [],
+      "not_modelled": [
+        "Canalización de curación (TotalHeal) y reducción de daño (InitialDR)"
+      ]
+    },
+    "E": {
+      "name": "Estilo Wuju",
+      "max_rank": 5,
+      "cases": [
+        {
+          "id": "on_hit",
+          "name": "Daño verdadero al impactar",
+          "parts": [
+            {
+              "damage_type": "true",
+              "formula": {
+                "op": "add",
+                "operands": [
+                  {
+                    "op": "by_rank",
+                    "values": [
+                      20,
+                      25,
+                      30,
+                      35,
+                      40
+                    ]
+                  },
+                  {
+                    "op": "mul",
+                    "operands": [
+                      {
+                        "op": "constant",
+                        "value": 0.35
+                      },
+                      {
+                        "op": "stat",
+                        "stat": "attack_damage",
+                        "scope": "bonus"
+                      }
+                    ]
+                  }
+                ]
+              },
+              "label": "Derivado",
+              "source": "Characters/MasterYi/Spells/WujuStyleAbility/WujuStyle.mSpellCalculations.TotalDamage (16.23.8406595+branch.releases-16-23.content.release)",
+              "damage_type_source": "spell_wujustyle_tooltip <trueDamage>"
+            }
+          ]
+        }
+      ],
+      "passive_stats": [],
+      "not_modelled": [
+        "Duración activa de 5 s"
+      ]
+    },
+    "R": {
+      "name": "Imparable",
+      "max_rank": 3,
+      "cases": [],
+      "passive_stats": [],
+      "not_modelled": [
+        "Inmunidad a ralentizaciones, velocidad de movimiento/ataque, reducción de enfriamientos por bajas y extensión de duración"
+      ]
+    }
+  }
+}

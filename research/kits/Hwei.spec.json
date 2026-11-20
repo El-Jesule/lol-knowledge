@@ -1,0 +1,190 @@
+{
+  "champion": "Hwei",
+  "game_version": "16.23",
+  "verified_against": {
+    "content_version": "16.23.8406595+branch.releases-16-23.content.release",
+    "bin_sha256": "bd8a88b24514a83b3828753f82c691433369800fb8a1d1fcfe03d88ad0bee099",
+    "evidence": "odd/tasks/champion-kits-wave-3.md",
+    "result": "Bin del cliente 16.23 convertido con python -m binmodel.batch_kits y compilado con esta especificación curada (CH-01 oleada 3)"
+  },
+  "abilities": {
+    "P": {
+      "name": "Firma del Visionario",
+      "tooltip": "spell_hweipassive_tooltip",
+      "max_rank": 1,
+      "cases": [
+        {
+          "id": "detonate",
+          "name": "Explosión de marca",
+          "parts": [
+            {
+              "calculation": "TotalDamage"
+            }
+          ]
+        }
+      ],
+      "not_modelled": [
+        "Requiere golpear con dos habilidades de daño en 4 s"
+      ]
+    },
+    "Q": {
+      "name": "Temática: Desastres",
+      "tooltip": "spell_hweiq_tooltip",
+      "cases": [
+        {
+          "id": "qq",
+          "name": "QQ Fuego devastador (base + % vida máxima)",
+          "parts": [
+            {
+              "calculation": "Tooltip_QQDamage"
+            },
+            {
+              "tooltip_reference": "Tooltip_QQBonusDamage",
+              "damage_type": "magic",
+              "source_note": "DataValues.Tooltip_QQBonusDamage % × vida máxima del objetivo",
+              "formula": {
+                "op": "mul",
+                "operands": [
+                  {
+                    "op": "data_value",
+                    "name": "Tooltip_QQBonusDamage"
+                  },
+                  {
+                    "op": "constant",
+                    "value": 0.01
+                  },
+                  {
+                    "op": "stat",
+                    "stat": "health",
+                    "scope": "max",
+                    "subject": "target"
+                  }
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "id": "qw_base",
+          "name": "QW Rayo escindente (base)",
+          "parts": [
+            {
+              "calculation": "Tooltip_QWDamage"
+            }
+          ]
+        },
+        {
+          "id": "qw_isolated_max",
+          "name": "QW Rayo escindente (máximo aislado/inmovilizado)",
+          "parts": [
+            {
+              "calculation": "Tooltip_QWBonusDamage"
+            }
+          ]
+        },
+        {
+          "id": "qe_initial",
+          "name": "QE Fisura fundida (impacto)",
+          "parts": [
+            {
+              "calculation": "Tooltip_QEDamage"
+            }
+          ]
+        },
+        {
+          "id": "qe_dps",
+          "name": "QE Fisura fundida (daño por segundo)",
+          "parts": [
+            {
+              "calculation": "Tooltip_QEDamagePerSecond"
+            }
+          ]
+        }
+      ],
+      "not_modelled": [
+        "Escalado intermedio por vida faltante de QW y ralentización de la fisura QE"
+      ]
+    },
+    "W": {
+      "name": "Temática: Serenidades",
+      "tooltip": "spell_hweiw_tooltip",
+      "cases": [
+        {
+          "id": "we_hit",
+          "name": "WE Luces fugaces (1 carga)",
+          "parts": [
+            {
+              "calculation": "Tooltip_WEOnHitDamage"
+            }
+          ]
+        }
+      ],
+      "not_modelled": [
+        "WQ velocidad de movimiento (Tooltip_WQMoveSpeed), WW escudo (Tooltip_WWShieldAmount) y restauración de maná de WE (3 cargas)"
+      ]
+    },
+    "E": {
+      "name": "Temática: Tormentos",
+      "tooltip": "spell_hweie_tooltip",
+      "cases": [
+        {
+          "id": "eq",
+          "name": "EQ Rostro espeluznante (miedo)",
+          "parts": [
+            {
+              "calculation": "Tooltip_EQDamage"
+            }
+          ]
+        },
+        {
+          "id": "ew",
+          "name": "EW Mirada del abismo (inmovilización)",
+          "parts": [
+            {
+              "calculation": "Tooltip_EWDamage"
+            }
+          ]
+        },
+        {
+          "id": "ee",
+          "name": "EE Fauces aplastantes (atracción)",
+          "parts": [
+            {
+              "calculation": "Tooltip_EEDamage"
+            }
+          ]
+        }
+      ],
+      "not_modelled": [
+        "Efectos de control de masas de EQ (miedo), EW (raíz) y EE (atracción + ralentización)"
+      ]
+    },
+    "R": {
+      "name": "Vórtice del dolor",
+      "tooltip": "spell_hweir_tooltip",
+      "cases": [
+        {
+          "id": "dps",
+          "name": "Zona en expansión (daño por segundo)",
+          "parts": [
+            {
+              "calculation": "DamageOverTime"
+            }
+          ]
+        },
+        {
+          "id": "shatter",
+          "name": "Explosión final",
+          "parts": [
+            {
+              "calculation": "Damage"
+            }
+          ]
+        }
+      ],
+      "not_modelled": [
+        "Ralentización acumulativa y suma combinada de zona + explosión (TotalMaxDamage)"
+      ]
+    }
+  }
+}

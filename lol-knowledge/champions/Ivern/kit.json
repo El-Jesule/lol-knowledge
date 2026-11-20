@@ -1,0 +1,268 @@
+{
+  "schema": "lol-champion-kit/1",
+  "champion": "Ivern",
+  "label": "Derivado",
+  "game_version": "16.23",
+  "content_version": "16.23.8406595+branch.releases-16-23.content.release",
+  "verified_against": {
+    "content_version": "16.23.8406595+branch.releases-16-23.content.release",
+    "bin_sha256": "e5901444f1c8d0811925c5c2de5f39348b71ef05fba7641e37b213d463c7a726",
+    "evidence": "odd/tasks/champion-kits-wave-3.md",
+    "result": "Bin del cliente 16.23 convertido con python -m binmodel.batch_kits y compilado con esta especificación curada (CH-01 oleada 3)"
+  },
+  "source": "Árboles de cálculo del bin del cliente (python -m binmodel) y marcado de los tooltips del cliente; estructura de casos curada en research/kits/",
+  "abilities": {
+    "P": {
+      "name": "Amigo del Bosque",
+      "max_rank": 1,
+      "cases": [],
+      "passive_stats": [],
+      "not_modelled": [
+        "Liberación pacífica de campamentos, coste de vida/maná y mejora compartida de beneficios"
+      ]
+    },
+    "Q": {
+      "name": "Lanzarraíces",
+      "max_rank": 5,
+      "cases": [
+        {
+          "id": "root",
+          "name": "Raíz",
+          "parts": [
+            {
+              "damage_type": "magic",
+              "formula": {
+                "op": "add",
+                "operands": [
+                  {
+                    "op": "by_rank",
+                    "values": [
+                      80,
+                      125,
+                      170,
+                      215,
+                      260
+                    ]
+                  },
+                  {
+                    "op": "mul",
+                    "operands": [
+                      {
+                        "op": "constant",
+                        "value": 0.7
+                      },
+                      {
+                        "op": "stat",
+                        "stat": "ability_power",
+                        "scope": "total"
+                      }
+                    ]
+                  }
+                ]
+              },
+              "label": "Derivado",
+              "source": "Characters/Ivern/Spells/IvernQAbility/IvernQ.mSpellCalculations.TotalDamage (16.23.8406595+branch.releases-16-23.content.release)",
+              "damage_type_source": "spell_ivernq_tooltip <magicDamage>"
+            }
+          ]
+        }
+      ],
+      "passive_stats": [],
+      "not_modelled": [
+        "Inmovilización y desplazamiento aliado hacia el objetivo"
+      ]
+    },
+    "W": {
+      "name": "Creamaleza",
+      "max_rank": 5,
+      "cases": [
+        {
+          "id": "on_hit_self",
+          "name": "Daño mágico al impactar (Ivern)",
+          "parts": [
+            {
+              "damage_type": "magic",
+              "formula": {
+                "op": "add",
+                "operands": [
+                  {
+                    "op": "by_rank",
+                    "values": [
+                      20,
+                      27.5,
+                      35,
+                      42.5,
+                      50
+                    ]
+                  },
+                  {
+                    "op": "mul",
+                    "operands": [
+                      {
+                        "op": "constant",
+                        "value": 0.2
+                      },
+                      {
+                        "op": "stat",
+                        "stat": "ability_power",
+                        "scope": "total"
+                      }
+                    ]
+                  }
+                ]
+              },
+              "label": "Derivado",
+              "source": "Characters/Ivern/Spells/IvernWAbility/IvernW.mSpellCalculations.TotalDamage (16.23.8406595+branch.releases-16-23.content.release)",
+              "damage_type_source": "spell_ivernw_tooltip <magicDamage>"
+            }
+          ]
+        },
+        {
+          "id": "on_hit_ally",
+          "name": "Daño mágico al impactar (aliado)",
+          "parts": [
+            {
+              "damage_type": "magic",
+              "formula": {
+                "op": "add",
+                "operands": [
+                  {
+                    "op": "by_rank",
+                    "values": [
+                      10,
+                      15,
+                      20,
+                      25,
+                      30
+                    ]
+                  },
+                  {
+                    "op": "mul",
+                    "operands": [
+                      {
+                        "op": "constant",
+                        "value": 0.1
+                      },
+                      {
+                        "op": "stat",
+                        "stat": "ability_power",
+                        "scope": "total"
+                      }
+                    ]
+                  }
+                ]
+              },
+              "label": "Derivado",
+              "source": "Characters/Ivern/Spells/IvernWAbility/IvernW.mSpellCalculations.TotalAllyDamage (16.23.8406595+branch.releases-16-23.content.release)",
+              "damage_type_source": "spell_ivernw_tooltip <magicDamage>"
+            }
+          ]
+        }
+      ],
+      "passive_stats": [],
+      "not_modelled": [
+        "Creación de maleza y visión temporal"
+      ]
+    },
+    "E": {
+      "name": "Semilla de relojería",
+      "max_rank": 5,
+      "cases": [
+        {
+          "id": "detonate",
+          "name": "Explosión del escudo",
+          "parts": [
+            {
+              "damage_type": "magic",
+              "formula": {
+                "op": "add",
+                "operands": [
+                  {
+                    "op": "by_rank",
+                    "values": [
+                      70,
+                      90,
+                      110,
+                      130,
+                      150
+                    ]
+                  },
+                  {
+                    "op": "mul",
+                    "operands": [
+                      {
+                        "op": "constant",
+                        "value": 0.8
+                      },
+                      {
+                        "op": "stat",
+                        "stat": "ability_power",
+                        "scope": "total"
+                      }
+                    ]
+                  }
+                ]
+              },
+              "label": "Derivado",
+              "source": "Characters/Ivern/Spells/IvernEAbility/IvernE.mSpellCalculations.TotalDamage (16.23.8406595+branch.releases-16-23.content.release)",
+              "damage_type_source": "spell_iverne_tooltip <magicDamage>"
+            }
+          ]
+        }
+      ],
+      "passive_stats": [],
+      "not_modelled": [
+        "Escudo (TotalShield), segundo escudo si no golpea campeones y ralentización"
+      ]
+    },
+    "R": {
+      "name": "¡Margarita!",
+      "max_rank": 3,
+      "cases": [
+        {
+          "id": "shockwave",
+          "name": "Onda de choque (tercer golpe)",
+          "parts": [
+            {
+              "damage_type": "magic",
+              "formula": {
+                "op": "add",
+                "operands": [
+                  {
+                    "op": "by_rank",
+                    "values": [
+                      90,
+                      140,
+                      190
+                    ]
+                  },
+                  {
+                    "op": "mul",
+                    "operands": [
+                      {
+                        "op": "constant",
+                        "value": 0.5
+                      },
+                      {
+                        "op": "stat",
+                        "stat": "ability_power",
+                        "scope": "total"
+                      }
+                    ]
+                  }
+                ]
+              },
+              "label": "Derivado",
+              "source": "Characters/Ivern/Spells/IvernRAbility/IvernR.mSpellCalculations.TotalShockwaveDamage (16.23.8406595+branch.releases-16-23.content.release)",
+              "damage_type_source": "spell_ivernr_tooltip <magicDamage>"
+            }
+          ]
+        }
+      ],
+      "passive_stats": [],
+      "not_modelled": [
+        "Ataques básicos y estadísticas de Margarita (TotalDaisyHP, TotalDaisyAD, TotalBonusResists) y derribo"
+      ]
+    }
+  }
+}

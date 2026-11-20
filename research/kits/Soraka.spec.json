@@ -1,0 +1,70 @@
+{
+  "champion": "Soraka",
+  "game_version": "16.23",
+  "verified_against": {
+    "content_version": "16.23.8406595+branch.releases-16-23.content.release",
+    "bin_sha256": "05bd2d086669d0354f42f4be6de16db91b0544731e053b794b6cbf4e343f3be0",
+    "evidence": "odd/tasks/champion-kits-wave-3.md",
+    "result": "Bin del cliente 16.23 convertido con python -m binmodel.batch_kits y compilado con esta especificación curada (CH-01 oleada 3)"
+  },
+  "abilities": {
+    "P": {
+      "name": "Salvación",
+      "tooltip": "spell_consecration_self_tooltip",
+      "max_rank": 1,
+      "not_modelled": [
+        "Velocidad de movimiento adicional hacia aliados con menos del 40 % de vida"
+      ]
+    },
+    "Q": {
+      "name": "Invocación estelar",
+      "tooltip": "spell_sorakaq_tooltip",
+      "cases": [
+        {
+          "id": "star",
+          "name": "Caída de estrella",
+          "parts": [
+            {
+              "calculation": "TotalDamage"
+            }
+          ]
+        }
+      ],
+      "not_modelled": [
+        "Ralentización, curación sobre el tiempo Rejuvenecimiento (TotalHoT) y velocidad de movimiento"
+      ]
+    },
+    "W": {
+      "name": "Inyección astral",
+      "tooltip": "spell_sorakaw_tooltip",
+      "not_modelled": [
+        "Curación a aliado (TotalHeal), coste del 10 % de vida máxima (reducido con Rejuvenecimiento) y límite mínimo de vida"
+      ]
+    },
+    "E": {
+      "name": "Equinoccio",
+      "tooltip": "spell_sorakae_tooltip",
+      "cases": [
+        {
+          "id": "zone",
+          "name": "Impacto inicial (o detonación al inmovilizar)",
+          "parts": [
+            {
+              "calculation": "TotalDamage"
+            }
+          ]
+        }
+      ],
+      "not_modelled": [
+        "Zona de silencio durante 1,5 s e inmovilización al expirar"
+      ]
+    },
+    "R": {
+      "name": "Plegaria",
+      "tooltip": "spell_sorakar_tooltip",
+      "not_modelled": [
+        "Curación global a todos los aliados (HealingCalc / AmpedHealing bajo 40 % vida)"
+      ]
+    }
+  }
+}

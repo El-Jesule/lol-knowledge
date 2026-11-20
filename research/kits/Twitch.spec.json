@@ -1,0 +1,98 @@
+{
+  "champion": "Twitch",
+  "game_version": "16.23",
+  "verified_against": {
+    "content_version": "16.23.8406595+branch.releases-16-23.content.release",
+    "bin_sha256": "d89344e639b19fd1a9beeb444ba4706f609889d608a076d03f74155cee66ad85",
+    "evidence": "odd/tasks/champion-kits-wave-3.md",
+    "result": "Bin del cliente 16.23 convertido con python -m binmodel.batch_kits y compilado con esta especificación curada (CH-01 oleada 3)"
+  },
+  "abilities": {
+    "P": {
+      "name": "Veneno mortal",
+      "tooltip": "spell_twitchdeadlyvenommarker_tooltip",
+      "max_rank": 1,
+      "cases": [
+        {
+          "id": "dps_1",
+          "name": "Veneno por segundo (1 carga, daño verdadero)",
+          "parts": [
+            {
+              "calculation": "DamagePerSecond"
+            }
+          ]
+        }
+      ],
+      "not_modelled": [
+        "Acumulación hasta 6 cargas (DamagePerSecondMax) y duración de 6 s"
+      ]
+    },
+    "Q": {
+      "name": "Emboscada",
+      "tooltip": "spell_twitchhideinshadows_tooltip",
+      "not_modelled": [
+        "Camuflaje, velocidad de movimiento, velocidad de ataque al salir y reinicio por bajas"
+      ]
+    },
+    "W": {
+      "name": "Tonel de veneno",
+      "tooltip": "spell_twitchvenomcask_tooltip",
+      "not_modelled": [
+        "Zona de ralentización (TotalSlowAmount) y aplicación de cargas de Veneno mortal"
+      ]
+    },
+    "E": {
+      "name": "Contaminar",
+      "tooltip": "spell_twitchexpunge_tooltip",
+      "cases": [
+        {
+          "id": "base_only",
+          "name": "Daño base físico (0 cargas adicionales)",
+          "parts": [
+            {
+              "tooltip_reference": "BaseDamage",
+              "damage_type": "physical",
+              "source_note": "DataValues.BaseDamage",
+              "formula": {
+                "op": "data_value",
+                "name": "BaseDamage"
+              }
+            }
+          ]
+        },
+        {
+          "id": "per_stack",
+          "name": "Daño adicional por carga (físico + mágico)",
+          "parts": [
+            {
+              "calculation": "PhysicalDamagePerStack"
+            },
+            {
+              "calculation": "MagicDamagePerStack"
+            }
+          ]
+        },
+        {
+          "id": "max_stacks",
+          "name": "Máximo de 6 cargas (base + físico + mágico)",
+          "parts": [
+            {
+              "calculation": "MaxPhysicalDamage"
+            },
+            {
+              "calculation": "MaxMagicDamage"
+            }
+          ]
+        }
+      ],
+      "not_modelled": []
+    },
+    "R": {
+      "name": "Vacía el cargador",
+      "tooltip": "spell_twitchfullautomatic_tooltip",
+      "not_modelled": [
+        "Alcance adicional (+300), DA adicional temporal y flechas perforantes con caída de daño"
+      ]
+    }
+  }
+}

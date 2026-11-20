@@ -1,0 +1,160 @@
+{
+  "champion": "Briar",
+  "game_version": "16.23",
+  "verified_against": {
+    "content_version": "16.23.8406595+branch.releases-16-23.content.release",
+    "bin_sha256": "73827ff9936f2a252bf08bf0622ebb68cad245479f287cb905d19760d501f031",
+    "evidence": "odd/tasks/champion-kits-wave-3.md",
+    "result": "Bin del cliente 16.23 convertido con python -m binmodel.batch_kits y compilado con esta especificación curada (CH-01 oleada 3)"
+  },
+  "abilities": {
+    "P": {
+      "name": "Maldición carmesí",
+      "tooltip": "spell_briarp_tooltip",
+      "max_rank": 1,
+      "cases": [
+        {
+          "id": "bleed_1",
+          "name": "Sangrado completo (1 carga)",
+          "parts": [
+            {
+              "calculation": "BleedDamageOverDurationTooltip"
+            }
+          ]
+        },
+        {
+          "id": "bleed_max",
+          "name": "Sangrado completo (máximo de cargas)",
+          "parts": [
+            {
+              "calculation": "BleedMaxDamageOverDurationTooltip"
+            }
+          ]
+        }
+      ],
+      "not_modelled": [
+        "Ausencia de regeneración base de vida, curación por sangrado y aumento de curación según vida faltante"
+      ]
+    },
+    "Q": {
+      "name": "A la yugular",
+      "tooltip": "spell_briarq_tooltip",
+      "cases": [
+        {
+          "id": "leap",
+          "name": "Salto con aturdimiento",
+          "parts": [
+            {
+              "calculation": "TotalDamage"
+            }
+          ]
+        }
+      ],
+      "not_modelled": [
+        "Coste porcentual de vida actual, aturdimiento de 0,85 s y reducción de armadura/RM (ShredPercent)"
+      ]
+    },
+    "W": {
+      "name": "Frenesí sanguinario / Otro mordisquito",
+      "tooltip": "spell_briarw_tooltip",
+      "cases": [
+        {
+          "id": "frenzy_cleave",
+          "name": "Daño en área por ataque en Frenesí",
+          "parts": [
+            {
+              "calculation": "TotalAoEDamage"
+            }
+          ]
+        },
+        {
+          "id": "snack_attack",
+          "name": "Otro mordisquito (base + % vida faltante)",
+          "parts": [
+            {
+              "calculation": "TotalAttackBonusDamage"
+            },
+            {
+              "tooltip_reference": "TotalAttackPercentMissingHealth",
+              "damage_type": "physical",
+              "source_note": "mSpellCalculations.TotalAttackPercentMissingHealth % × vida faltante del objetivo",
+              "formula": {
+                "op": "mul",
+                "operands": [
+                  {
+                    "op": "calculation",
+                    "name": "TotalAttackPercentMissingHealth"
+                  },
+                  {
+                    "op": "constant",
+                    "value": 0.01
+                  },
+                  {
+                    "op": "stat",
+                    "stat": "health",
+                    "scope": "max",
+                    "subject": "target"
+                  },
+                  {
+                    "op": "stat",
+                    "stat": "health",
+                    "scope": "missing_fraction",
+                    "subject": "target"
+                  }
+                ]
+              }
+            }
+          ]
+        }
+      ],
+      "not_modelled": [
+        "Coste porcentual de vida actual, Frenesí sanguinario (velocidad de ataque/movimiento), curación de Otro mordisquito (AttackMaxHPHeal) y tope contra monstruos"
+      ]
+    },
+    "E": {
+      "name": "Alarido escalofriante",
+      "tooltip": "spell_briare_tooltip",
+      "cases": [
+        {
+          "id": "scream",
+          "name": "Alarido cargado",
+          "parts": [
+            {
+              "calculation": "Damage"
+            }
+          ]
+        },
+        {
+          "id": "wall_hit",
+          "name": "Choque contra muro (adicional)",
+          "parts": [
+            {
+              "calculation": "WallHitDamage"
+            }
+          ]
+        }
+      ],
+      "not_modelled": [
+        "Reducción de daño del 35 % durante la canalización, curación (PercentMaxHPHeal), ralentización y aturdimiento contra muro"
+      ]
+    },
+    "R": {
+      "name": "Final sangriento",
+      "tooltip": "spell_briarr_tooltip",
+      "cases": [
+        {
+          "id": "impact",
+          "name": "Impacto al aterrizar",
+          "parts": [
+            {
+              "calculation": "Damage"
+            }
+          ]
+        }
+      ],
+      "not_modelled": [
+        "Coste porcentual de vida actual, miedo en área, Frenesí potenciado con resistencias (TotalResists), robo de vida y velocidad de movimiento"
+      ]
+    }
+  }
+}

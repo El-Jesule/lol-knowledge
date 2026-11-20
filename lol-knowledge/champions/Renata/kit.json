@@ -1,0 +1,276 @@
+{
+  "schema": "lol-champion-kit/1",
+  "champion": "Renata",
+  "label": "Derivado",
+  "game_version": "16.23",
+  "content_version": "16.23.8406595+branch.releases-16-23.content.release",
+  "verified_against": {
+    "content_version": "16.23.8406595+branch.releases-16-23.content.release",
+    "bin_sha256": "34fdc83fef94d8a71a23bec0724f1633c61469ac9ad23149b09b03f102dde369",
+    "evidence": "odd/tasks/champion-kits-wave-3.md",
+    "result": "Bin del cliente 16.23 convertido con python -m binmodel.batch_kits y compilado con esta especificación curada (CH-01 oleada 3)"
+  },
+  "source": "Árboles de cálculo del bin del cliente (python -m binmodel) y marcado de los tooltips del cliente; estructura de casos curada en research/kits/",
+  "abilities": {
+    "P": {
+      "name": "Ventaja",
+      "max_rank": 1,
+      "cases": [
+        {
+          "id": "mark_apply",
+          "name": "Ataque de Renata (% vida máxima)",
+          "parts": [
+            {
+              "damage_type": "magic",
+              "formula": {
+                "op": "mul",
+                "operands": [
+                  {
+                    "op": "add",
+                    "operands": [
+                      {
+                        "op": "by_level",
+                        "values": [
+                          0.01,
+                          0.0112,
+                          0.0124,
+                          0.0136,
+                          0.0148,
+                          0.016,
+                          0.0173,
+                          0.0186,
+                          0.0212,
+                          0.0225,
+                          0.0238,
+                          0.0251,
+                          0.0264,
+                          0.0277,
+                          0.029,
+                          0.0303,
+                          0.0316,
+                          0.0329
+                        ]
+                      },
+                      {
+                        "op": "mul",
+                        "operands": [
+                          {
+                            "op": "constant",
+                            "value": 0.0002
+                          },
+                          {
+                            "op": "stat",
+                            "stat": "ability_power",
+                            "scope": "total"
+                          }
+                        ]
+                      }
+                    ]
+                  },
+                  {
+                    "op": "stat",
+                    "stat": "health",
+                    "scope": "max",
+                    "subject": "target"
+                  }
+                ]
+              },
+              "label": "Derivado",
+              "source": "Characters/Renata/Spells/RenataPassiveAbility/RenataPassive · mSpellCalculations.PercentAmpCalcSelf × vida máxima del objetivo (16.23.8406595+branch.releases-16-23.content.release)",
+              "damage_type_source": "spell_renatapassive_tooltip <magicDamage>"
+            }
+          ]
+        },
+        {
+          "id": "mark_detonate",
+          "name": "Detonación de marca por aliado (% vida máxima)",
+          "parts": [
+            {
+              "damage_type": "magic",
+              "formula": {
+                "op": "mul",
+                "operands": [
+                  {
+                    "op": "add",
+                    "operands": [
+                      {
+                        "op": "by_level",
+                        "values": [
+                          0.01,
+                          0.0112,
+                          0.0124,
+                          0.0136,
+                          0.0148,
+                          0.016,
+                          0.0173,
+                          0.0186,
+                          0.0212,
+                          0.0225,
+                          0.0238,
+                          0.0251,
+                          0.0264,
+                          0.0277,
+                          0.029,
+                          0.0303,
+                          0.0316,
+                          0.0329
+                        ]
+                      },
+                      {
+                        "op": "mul",
+                        "operands": [
+                          {
+                            "op": "constant",
+                            "value": 0.0002
+                          },
+                          {
+                            "op": "stat",
+                            "stat": "ability_power",
+                            "scope": "total"
+                          }
+                        ]
+                      }
+                    ]
+                  },
+                  {
+                    "op": "stat",
+                    "stat": "health",
+                    "scope": "max",
+                    "subject": "target"
+                  }
+                ]
+              },
+              "label": "Derivado",
+              "source": "Characters/Renata/Spells/RenataPassiveAbility/RenataPassive · mSpellCalculations.PercentAmpCalc × vida máxima del objetivo (16.23.8406595+branch.releases-16-23.content.release)",
+              "damage_type_source": "spell_renatapassive_tooltip <magicDamage>"
+            }
+          ]
+        }
+      ],
+      "passive_stats": [],
+      "not_modelled": [
+        "Tope de 150 de daño contra monstruos (MonsterDamageCap)"
+      ]
+    },
+    "Q": {
+      "name": "Apretón de manos",
+      "max_rank": 5,
+      "cases": [
+        {
+          "id": "grab",
+          "name": "Impacto (o lanzamiento contra otro enemigo)",
+          "parts": [
+            {
+              "damage_type": "magic",
+              "formula": {
+                "op": "add",
+                "operands": [
+                  {
+                    "op": "by_rank",
+                    "values": [
+                      80,
+                      125,
+                      170,
+                      215,
+                      260
+                    ]
+                  },
+                  {
+                    "op": "mul",
+                    "operands": [
+                      {
+                        "op": "constant",
+                        "value": 0.8
+                      },
+                      {
+                        "op": "stat",
+                        "stat": "ability_power",
+                        "scope": "total"
+                      }
+                    ]
+                  }
+                ]
+              },
+              "label": "Derivado",
+              "source": "Characters/Renata/Spells/RenataQAbility/RenataQ.mSpellCalculations.TotalDamage (16.23.8406595+branch.releases-16-23.content.release)",
+              "damage_type_source": "spell_renataq_tooltip <magicDamage>"
+            }
+          ]
+        }
+      ],
+      "passive_stats": [],
+      "not_modelled": [
+        "Inmovilización de 1 s, lanzamiento direccional y aturdimiento por colisión"
+      ]
+    },
+    "W": {
+      "name": "Rescate financiero",
+      "max_rank": 5,
+      "cases": [],
+      "passive_stats": [],
+      "not_modelled": [
+        "Velocidad de ataque y movimiento crecientes (ASCalc, MSCalc, FinalASCalc, FinalMSCalc) y resurrección condicionada tras baja"
+      ]
+    },
+    "E": {
+      "name": "Programa de lealtad",
+      "max_rank": 5,
+      "cases": [
+        {
+          "id": "rocket",
+          "name": "Impacto de cohetes",
+          "parts": [
+            {
+              "damage_type": "magic",
+              "formula": {
+                "op": "add",
+                "operands": [
+                  {
+                    "op": "by_rank",
+                    "values": [
+                      65,
+                      95,
+                      125,
+                      155,
+                      185
+                    ]
+                  },
+                  {
+                    "op": "mul",
+                    "operands": [
+                      {
+                        "op": "constant",
+                        "value": 0.55
+                      },
+                      {
+                        "op": "stat",
+                        "stat": "ability_power",
+                        "scope": "total"
+                      }
+                    ]
+                  }
+                ]
+              },
+              "label": "Derivado",
+              "source": "Characters/Renata/Spells/RenataEAbility/RenataE.mSpellCalculations.TotalDamage (16.23.8406595+branch.releases-16-23.content.release)",
+              "damage_type_source": "spell_renatae_tooltip <magicDamage>"
+            }
+          ]
+        }
+      ],
+      "passive_stats": [],
+      "not_modelled": [
+        "Escudo a aliados (ShieldCalc) y ralentización del 30 %"
+      ]
+    },
+    "R": {
+      "name": "Adquisición hostil",
+      "max_rank": 3,
+      "cases": [],
+      "passive_stats": [],
+      "not_modelled": [
+        "Estado Frenesí (los enemigos se atacan entre sí con +100 % velocidad de ataque)"
+      ]
+    }
+  }
+}

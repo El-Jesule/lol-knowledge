@@ -1,0 +1,150 @@
+{
+  "champion": "Viego",
+  "game_version": "16.23",
+  "verified_against": {
+    "content_version": "16.23.8406595+branch.releases-16-23.content.release",
+    "bin_sha256": "4a454661a326aa864eb02e734a52e4c8fa12a2eab591e6e63bf99e196bdf3a5b",
+    "evidence": "odd/tasks/champion-kits-wave-3.md",
+    "result": "Bin del cliente 16.23 convertido con python -m binmodel.batch_kits y compilado con esta especificación curada (CH-01 oleada 3)"
+  },
+  "abilities": {
+    "P": {
+      "name": "Dominación soberana",
+      "tooltip": "spell_viegopassive_tooltip",
+      "max_rank": 1,
+      "not_modelled": [
+        "Posesión de campeones enemigos caídos y curación al poseer (PercentHealthHeal)"
+      ]
+    },
+    "Q": {
+      "name": "Hoja del rey arruinado",
+      "tooltip": "spell_viegoq_tooltip",
+      "cases": [
+        {
+          "id": "thrust",
+          "name": "Estocada activa",
+          "parts": [
+            {
+              "calculation": "TotalDamage"
+            }
+          ]
+        },
+        {
+          "id": "double_strike",
+          "name": "Segundo golpe de marca",
+          "parts": [
+            {
+              "calculation": "SecondAttackDamage"
+            }
+          ]
+        },
+        {
+          "id": "on_hit",
+          "name": "Pasiva al impactar (% vida actual)",
+          "parts": [
+            {
+              "tooltip_reference": "TotalPercentHealthOnHit",
+              "damage_type": "physical",
+              "source_note": "mSpellCalculations.TotalPercentHealthOnHit % × vida actual del objetivo",
+              "formula": {
+                "op": "mul",
+                "operands": [
+                  {
+                    "op": "calculation",
+                    "name": "TotalPercentHealthOnHit"
+                  },
+                  {
+                    "op": "constant",
+                    "value": 0.01
+                  },
+                  {
+                    "op": "stat",
+                    "stat": "health",
+                    "scope": "current",
+                    "subject": "target"
+                  }
+                ]
+              }
+            }
+          ]
+        }
+      ],
+      "not_modelled": [
+        "Escalado con probabilidad de crítico (HealthCritDamage) y curación del segundo golpe"
+      ]
+    },
+    "W": {
+      "name": "Fauces espectrales",
+      "tooltip": "spell_viegow_tooltip",
+      "cases": [
+        {
+          "id": "blast",
+          "name": "Descarga de niebla",
+          "parts": [
+            {
+              "calculation": "TotalDamage"
+            }
+          ]
+        }
+      ],
+      "not_modelled": [
+        "Aturdimiento escalado con carga y deslizamiento"
+      ]
+    },
+    "E": {
+      "name": "Camino del tormento",
+      "tooltip": "spell_viegoe_tooltip",
+      "not_modelled": [
+        "Camuflaje en la Niebla, velocidad de movimiento (TotalMoveSpeed) y velocidad de ataque"
+      ]
+    },
+    "R": {
+      "name": "Rompecorazones",
+      "tooltip": "spell_viegor_tooltip",
+      "cases": [
+        {
+          "id": "strike",
+          "name": "Impacto principal (DA + % vida faltante)",
+          "parts": [
+            {
+              "calculation": "TotalDamage"
+            },
+            {
+              "tooltip_reference": "TotalPercentHealth",
+              "damage_type": "physical",
+              "source_note": "mSpellCalculations.TotalPercentHealth % × vida faltante del objetivo",
+              "formula": {
+                "op": "mul",
+                "operands": [
+                  {
+                    "op": "calculation",
+                    "name": "TotalPercentHealth"
+                  },
+                  {
+                    "op": "constant",
+                    "value": 0.01
+                  },
+                  {
+                    "op": "stat",
+                    "stat": "health",
+                    "scope": "max",
+                    "subject": "target"
+                  },
+                  {
+                    "op": "stat",
+                    "stat": "health",
+                    "scope": "missing_fraction",
+                    "subject": "target"
+                  }
+                ]
+              }
+            }
+          ]
+        }
+      ],
+      "not_modelled": [
+        "Ralentización del 99 % durante 0,25 s, empuje a objetivos secundarios y escalado crítico"
+      ]
+    }
+  }
+}

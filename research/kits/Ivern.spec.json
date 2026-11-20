@@ -1,0 +1,101 @@
+{
+  "champion": "Ivern",
+  "game_version": "16.23",
+  "verified_against": {
+    "content_version": "16.23.8406595+branch.releases-16-23.content.release",
+    "bin_sha256": "e5901444f1c8d0811925c5c2de5f39348b71ef05fba7641e37b213d463c7a726",
+    "evidence": "odd/tasks/champion-kits-wave-3.md",
+    "result": "Bin del cliente 16.23 convertido con python -m binmodel.batch_kits y compilado con esta especificación curada (CH-01 oleada 3)"
+  },
+  "abilities": {
+    "P": {
+      "name": "Amigo del Bosque",
+      "tooltip": "spell_ivernp_tooltip",
+      "max_rank": 1,
+      "not_modelled": [
+        "Liberación pacífica de campamentos, coste de vida/maná y mejora compartida de beneficios"
+      ]
+    },
+    "Q": {
+      "name": "Lanzarraíces",
+      "tooltip": "spell_ivernq_tooltip",
+      "cases": [
+        {
+          "id": "root",
+          "name": "Raíz",
+          "parts": [
+            {
+              "calculation": "TotalDamage"
+            }
+          ]
+        }
+      ],
+      "not_modelled": [
+        "Inmovilización y desplazamiento aliado hacia el objetivo"
+      ]
+    },
+    "W": {
+      "name": "Creamaleza",
+      "tooltip": "spell_ivernw_tooltip",
+      "cases": [
+        {
+          "id": "on_hit_self",
+          "name": "Daño mágico al impactar (Ivern)",
+          "parts": [
+            {
+              "calculation": "TotalDamage"
+            }
+          ]
+        },
+        {
+          "id": "on_hit_ally",
+          "name": "Daño mágico al impactar (aliado)",
+          "parts": [
+            {
+              "calculation": "TotalAllyDamage"
+            }
+          ]
+        }
+      ],
+      "not_modelled": [
+        "Creación de maleza y visión temporal"
+      ]
+    },
+    "E": {
+      "name": "Semilla de relojería",
+      "tooltip": "spell_iverne_tooltip",
+      "cases": [
+        {
+          "id": "detonate",
+          "name": "Explosión del escudo",
+          "parts": [
+            {
+              "calculation": "TotalDamage"
+            }
+          ]
+        }
+      ],
+      "not_modelled": [
+        "Escudo (TotalShield), segundo escudo si no golpea campeones y ralentización"
+      ]
+    },
+    "R": {
+      "name": "¡Margarita!",
+      "tooltip": "spell_ivernr_tooltip",
+      "cases": [
+        {
+          "id": "shockwave",
+          "name": "Onda de choque (tercer golpe)",
+          "parts": [
+            {
+              "calculation": "TotalShockwaveDamage"
+            }
+          ]
+        }
+      ],
+      "not_modelled": [
+        "Ataques básicos y estadísticas de Margarita (TotalDaisyHP, TotalDaisyAD, TotalBonusResists) y derribo"
+      ]
+    }
+  }
+}

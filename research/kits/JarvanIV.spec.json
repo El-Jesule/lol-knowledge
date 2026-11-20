@@ -1,0 +1,105 @@
+{
+  "champion": "JarvanIV",
+  "game_version": "16.23",
+  "verified_against": {
+    "content_version": "16.23.8406595+branch.releases-16-23.content.release",
+    "bin_sha256": "c4858e0355a07a66c96d222aeabd238c20ca7bb94e34639d4d7c197a4a905c58",
+    "evidence": "odd/tasks/champion-kits-wave-3.md",
+    "result": "Bin del cliente 16.23 convertido con python -m binmodel.batch_kits y compilado con esta especificación curada (CH-01 oleada 3)"
+  },
+  "abilities": {
+    "P": {
+      "name": "Cadencia marcial",
+      "tooltip": "spell_jarvanivmartialcadence_tooltip",
+      "max_rank": 1,
+      "cases": [
+        {
+          "id": "strike",
+          "name": "Primer ataque (% vida actual)",
+          "parts": [
+            {
+              "tooltip_reference": "TooltipCurrentHealthDamage",
+              "damage_type": "physical",
+              "source_note": "DataValues.TooltipCurrentHealthDamage × vida actual del objetivo",
+              "formula": {
+                "op": "mul",
+                "operands": [
+                  {
+                    "op": "data_value",
+                    "name": "TooltipCurrentHealthDamage"
+                  },
+                  {
+                    "op": "stat",
+                    "stat": "health",
+                    "scope": "current",
+                    "subject": "target"
+                  }
+                ]
+              }
+            }
+          ]
+        }
+      ],
+      "not_modelled": [
+        "Enfriamiento por objetivo (TooltipCooldown), mínimo 20 y tope de 400"
+      ]
+    },
+    "Q": {
+      "name": "Golpe del dragón",
+      "tooltip": "spell_jarvanivdragonstrike_tooltip",
+      "cases": [
+        {
+          "id": "lance",
+          "name": "Estocada",
+          "parts": [
+            {
+              "calculation": "TotalDamage"
+            }
+          ]
+        }
+      ],
+      "not_modelled": [
+        "Reducción porcentual de armadura durante 3 s y combo de deslizamiento + levantamiento con E"
+      ]
+    },
+    "W": {
+      "name": "Protección áurea",
+      "tooltip": "spell_jarvanivgoldenaegis_tooltip",
+      "not_modelled": [
+        "Ralentización en área y escudo escalado por campeones golpeados (TotalShield, BonusShield)"
+      ]
+    },
+    "E": {
+      "name": "Estandarte demaciano",
+      "tooltip": "spell_jarvanivdemacianstandard_tooltip",
+      "passive_stats": [
+        {
+          "stat": "attack_speed_bonus",
+          "data_value": "PermanentAttackSpeed",
+          "condition": "Velocidad de ataque pasiva permanente al subir E"
+        }
+      ],
+      "not_modelled": [
+        "Daño mágico al caer el estandarte (TotalDamage usa EffectValue en el bin) y aura activa de velocidad de ataque"
+      ]
+    },
+    "R": {
+      "name": "Cataclismo",
+      "tooltip": "spell_jarvanivcataclysm_tooltip",
+      "cases": [
+        {
+          "id": "impact",
+          "name": "Impacto del cráter",
+          "parts": [
+            {
+              "calculation": "DamageCalc"
+            }
+          ]
+        }
+      ],
+      "not_modelled": [
+        "Arena infranqueable durante 3,5 s e imparabilidad en el salto"
+      ]
+    }
+  }
+}
