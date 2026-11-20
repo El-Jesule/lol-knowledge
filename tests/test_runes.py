@@ -168,7 +168,7 @@ def test_stats_with_a_page_applies_the_shards_and_lists_the_runes(capsys):
     sources = [part["source"] for part in power["contributions"]]
     assert sum(source.startswith("rune:5008 Adaptive") for source in sources) == 2
     assert report["stats"]["health"]["total"] == pytest.approx(1502.6 + 110)
-    assert "rune 8112 Electrocutar: effects not modelled (RUN-04)" in report["notes"]
+    assert "rune 8112 Electrocutar: combat effect (applied in rotation)" in report["notes"]
 
 
 def test_adaptive_follows_the_items_and_ahri_takes_ap_on_a_tie(capsys):
@@ -193,24 +193,56 @@ def test_an_illegal_page_is_refused_unless_allowed(capsys):
 
 
 def test_tree_runes_weaken_ability_and_rotation_damage(capsys):
-    target = ["--target-armor", "60", "--target-mr", "40", "--target-max-health", "2000"]
+    # Precision with unmodelled Fleet Footwork (8021) + Absorb Life (9101)
+    unmodelled_page = [8021, 9101, 9104, 8014, 8226, 8210]
+    target = [
+        "--target-armor",
+        "60",
+        "--target-mr",
+        "40",
+        "--target-max-health",
+        "2000",
+        "--target-kind",
+        "champion",
+    ]
     base = ["--champion", "Ahri", "--level", "11", "--learned", "Q=5", *target]
-    code, captured = run(capsys, "ability", *base, "--ability", "Q", "--rank", "5", "--case", "out",
-                         "--json")  # fmt: skip
+    code, captured = run(
+        capsys, "ability", *base, "--ability", "Q", "--rank", "5", "--case", "out", "--json"
+    )
     assert code == 0, captured.err
     assert json.loads(captured.out)["weakest_input_label"] == "Derivado"
-    code, captured = run(capsys, "ability", *base, "--ability", "Q", "--rank", "5", "--case", "out",
-                         *page_args(), "--json")  # fmt: skip
+    code, captured = run(
+        capsys,
+        "ability",
+        *base,
+        "--ability",
+        "Q",
+        "--rank",
+        "5",
+        "--case",
+        "out",
+        *page_args(runes=unmodelled_page),
+        "--json",
+    )
     assert code == 0, captured.err
     assert json.loads(captured.out)["weakest_input_label"] == "Pendiente de verificación"
     code, captured = run(
-        capsys, "rotation", *base, "--steps", "Q.out", "--attacker-range", "ranged",
-        "--target-current-health", "2000", *page_args(), "--json",
-    )  # fmt: skip
+        capsys,
+        "rotation",
+        *base,
+        "--steps",
+        "Q.out",
+        "--attacker-range",
+        "ranged",
+        "--target-current-health",
+        "2000",
+        *page_args(runes=unmodelled_page),
+        "--json",
+    )
     assert code == 0, captured.err
     report = json.loads(captured.out)
     assert report["weakest_input_label"] == "Pendiente de verificación"
-    assert "rune 8112 Electrocutar: effects not modelled (RUN-04)" in report["not_applied"]
+    assert "rune 8021 Pies veloces: effects not modelled (RUN-04)" in report["not_applied"]
 
 
 def test_transcendence_scales_at_levels_5_and_8():

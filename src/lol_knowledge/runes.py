@@ -83,6 +83,23 @@ COMBAT_MINOR_RUNE_KEYS = frozenset(
         "Demolish",
     }
 )
+# Keystones whose combat effects are evaluated by rotations (rune_keystones.py).
+COMBAT_KEYSTONE_KEYS = frozenset(
+    {
+        "Electrocute",
+        "DarkHarvest",
+        "PressTheAttack",
+        "Conqueror",
+        "LethalTempo",
+        "HailOfBlades",
+        "SummonAery",
+        "ArcaneComet",
+        "DeathfireTouch",
+        "FirstStrike",
+        "GraspOfTheUndying",
+    }
+)
+COMBAT_RUNE_KEYS = COMBAT_MINOR_RUNE_KEYS | COMBAT_KEYSTONE_KEYS
 
 
 @dataclass(frozen=True)
@@ -810,7 +827,7 @@ def minor_rune_effects(
             notes.append(f"rune {rune_id} {rune.name}: {NON_COMBAT_MINOR_RUNES[rune.key]}")
             continue
 
-        if rune.key in COMBAT_MINOR_RUNE_KEYS:
+        if rune.key in COMBAT_RUNE_KEYS:
             combat_runes.append(rune_id)
             continue
 

@@ -3,7 +3,7 @@
 - **Fecha:** 2026-11-18
 - **Estado de partida:** fase 33 (kit de Ahri), `dev` en `b363a1b`, parche 16.22.1.
 - **Avance del 2026-11-19:** fases 34 a 37 (documentación, parche 16.23 con procedimiento repetible, legalidad de builds, runas y fragmentos); `dev` en `85fc4be`, parche 16.23.1.
-- **Avance del 2026-11-20:** decisiones `DEC-01` a `DEC-05` cerradas, validación en Windows superada (`OP-02`), CI de GitHub Actions añadido (`OP-03`, `e965d47`), 52 ramas locales integradas eliminadas (`OP-04`), **fase 38** (runas menores de estadísticas en la hoja, `basic_ability_haste` y `ultimate_haste`, `--input` en `stats`) y **fase 39** (8 runas menores de combate en `rotation`, con procs retardados en `--timeline`). Siguiente paso (DEC-01): fase 40 (piedras angulares en `rotation`), después `CH-02` y `CH-03`.
+- **Avance del 2026-11-20:** decisiones `DEC-01` a `DEC-05` cerradas, validación en Windows superada (`OP-02`), CI de GitHub Actions añadido (`OP-03`, `e965d47`), 52 ramas locales integradas eliminadas (`OP-04`), **fase 38** (runas menores de estadísticas en la hoja, `basic_ability_haste` y `ultimate_haste`, `--input` en `stats`), **fase 39** (8 runas menores de combate en `rotation`) y **fase 40** (11 piedras angulares ofensivas en `rotation`, cerrando `RUN-04` dentro de las mecánicas actuales del motor). Siguiente paso: `CH-02` y `CH-03` (automatizar kits y pasivas de campeón).
 - **Método:** revisión de `README.md`, `lol-knowledge/` (fichas, reglas de `mechanics/`, `objects/README.md`), `odd/tasks/`, `research/`, los dos `kit.json` (campo `not_modelled`), el catálogo de objetos y los registros derivados. Cada punto cita el archivo donde consta. Si un punto procede de una tarea antigua y no se ha comprobado que siga vigente, se dice.
 - **Objetivo final** (descripción del proyecto): a partir de una petición en lenguaje natural («la build de Jax que maximice su burst con AP»), una IA prepara el escenario, el motor determinista calcula y la IA explica el resultado, para cualquier campeón, objeto y runa, con todas las cifras trazables.
 
@@ -142,7 +142,7 @@ El motor debe servir también para vida, resistencias, curación y supervivencia
 - [x] **RUN-01 (P1)** *Hecho en la fase 37: [`runes.json`](../lol-knowledge/derived/runes.json) y [`runes.md`](../lol-knowledge/mechanics/runes.md).* Modelo de runas: no hay ninguno. El snapshot trae los 5 árboles de Data Dragon (62 runas), pero solo con descripciones, sin cifras estructuradas.
 - [x] **RUN-02 (P1)** *Hecho en la fase 37: `binmodel.perks`, valores con nombre cuando un texto lo da (332 de 463).* Cifras de las runas desde el cliente, con el mismo método que `item-effects.json` (bin + textos), etiquetadas `Derivado`.
 - [x] **RUN-03 (P1)** *Hecho en la fase 37: los fragmentos salen del cliente y se aplican en la hoja; progresión de vida lineal y empates de la fuerza adaptable, `Pendiente de verificación`.* Fragmentos de estadísticas: no están en `runes.json` de Data Dragon; hacen falta fuente y modelo.
-- [ ] **RUN-04 (P1)** *Parcial (fases 37–39): legalidad de página, 15 runas menores de estadísticas, 7 no-combate y 8 runas menores de combate en `rotation` hechas (30 de 45); faltan las 17 piedras angulares en `rotation` (fase 40) y las 15 runas menores ligadas a `MEC-01/04/05/07/08/26/29` y `OBJ-12`.* Piedras angulares en la rotación (Electrocutar, Conquistador, Cometa, Primer golpe…) y runas menores en la hoja; legalidad de la página (árbol principal y secundario, una por fila).
+- [x] **RUN-04 (P1)** *Hecho en las fases 37–40 dentro de las mecánicas actuales del motor: legalidad de página, 15 runas menores de estadísticas, 7 no-combate, 8 runas menores de combate y 11 piedras angulares ofensivas (41 de 62 runas de árbol; [`runes.md`](../lol-knowledge/mechanics/runes.md)). Las 6 piedras angulares y 15 runas menores restantes dependen de mecánicas pendientes (`MEC-01`, `MEC-04`, `MEC-05`, `MEC-07`, `MEC-08`, `MEC-26`, `MEC-27`, `MEC-29`, `DAT-06`, `OBJ-04`, `OBJ-12`) y entrarán con ellas.* Piedras angulares en la rotación (Electrocutar, Conquistador, Cometa, Primer golpe…) y runas menores en la hoja; legalidad de la página (árbol principal y secundario, una por fila).
 
 ## 8. Optimizador de builds
 
@@ -177,8 +177,8 @@ El motor debe servir también para vida, resistencias, curación y supervivencia
 
 1. ~~OP-01, OP-02~~ (hechos), ~~OP-03, OP-04~~ (hechos).
 2. ~~DOC-01 a DOC-07~~ (hechos en fase 34).
-3. ~~RUN-01 a RUN-03 y OBJ-13~~ (hechos en fases 36–37); **siguiente:** resto de **RUN-04** (runas menores en `stats` y piedras angulares en `rotation`).
-4. CH-02 y CH-03 (automatizar kits y pasivas), y después CH-01 por lotes de campeones.
+3. ~~RUN-01 a RUN-04 y OBJ-13~~ (hechos en fases 36–40).
+4. **Siguiente:** **CH-02 y CH-03** (automatizar kits y pasivas), y después CH-01 por lotes de campeones.
 5. MEC-01, MEC-04 a MEC-07 y MEC-09 (recursos y supervivencia).
 6. OBJ-01 por mecánicas, OBJ-02 y alcance decidido de OBJ-12 (consumibles y mejoras de Ornn).
 7. IA-01, IA-04 (servidor MCP local) y OPT-01 a OPT-03 (contrato, servidor MCP y primer optimizador).

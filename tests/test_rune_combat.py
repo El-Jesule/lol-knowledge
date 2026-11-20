@@ -248,9 +248,9 @@ def test_target_kind_is_required_by_champion_and_structure_combat_runes():
 
 
 def test_cli_ability_keeps_combat_runes_pending_while_rotation_applies_them(capsys):
-    # Sorcery (8229 Comet, 8224 Axiom, 8210 Transcendence, 8237 Scorch) +
+    # Sorcery (8230 PhaseRush unmodelled, 8224 Axiom, 8210 Transcendence, 8237 Scorch) +
     # Precision (9104 Alacrity, 8014 CoupDeGrace)
-    page = [8229, 8224, 8210, 8237, 9104, 8014]
+    page = [8230, 8224, 8210, 8237, 9104, 8014]
     common = [
         "--champion",
         "Ahri",
@@ -337,8 +337,8 @@ def test_cli_ability_keeps_combat_runes_pending_while_rotation_applies_them(caps
     scorch_part = step["parts"][1]
     assert scorch_part["kind"] == "rune"
     assert scorch_part["dealt_modifiers"] == [{"effect": "rune:8014 CoupDeGrace", "percent": 8.0}]
-    # Only keystone 8229 remains unmodelled in not_applied!
-    assert any("8229" in note for note in rot_report["not_applied"])
+    # Only unmodelled keystone 8230 remains in not_applied!
+    assert any("8230" in note for note in rot_report["not_applied"])
     assert not any("8014" in note for note in rot_report["not_applied"])
     assert not any("8237" in note for note in rot_report["not_applied"])
 
