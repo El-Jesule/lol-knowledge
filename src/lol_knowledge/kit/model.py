@@ -27,6 +27,41 @@ KIT_FILENAME = "kit.json"
 SLOTS = ("P", "Q", "W", "E", "R")
 CASE_ID = re.compile(r"[a-z][a-z0-9_]*")
 COST_RESOURCES = frozenset({"mana", "energy", "health", "none"})
+PASSIVE_EFFECT_KINDS = frozenset({"stat_bonus", "stacking_stat", "heal", "damage_proc"})
+PASSIVE_STAT_MODES = frozenset({"flat", "percent"})
+PASSIVE_STACK_TRIGGERS = frozenset({"champion_hit", "attack", "ability_hit", "any_hit"})
+PASSIVE_HEAL_TRIGGERS = frozenset(
+    {"on_champion_takedown", "on_minion_monster_kill", "on_hit", "on_ability_hit"}
+)
+PASSIVE_PROC_TRIGGERS = frozenset({"on_attack", "on_hit", "every_n_attacks"})
+
+
+@dataclass(frozen=True)
+class PassiveEffectSpec:
+    """Declarative champion passive effect applied on the stat sheet and/or in rotations."""
+
+    id: str
+    name: str
+    kind: str  # "stat_bonus", "stacking_stat", "heal" or "damage_proc"
+    formula: Mapping[str, Any]
+    label: Label
+    source: str
+    # Stat target and mode for "stat_bonus" and "stacking_stat".
+    stat: str | None = None
+    mode: str = "flat"  # "flat" or "percent" (amplifier of total)
+    # Trigger and stacking controls for combat passives.
+    trigger: str | None = None
+    max_stacks: int | None = None
+    max_stacks_multiplier: Fraction = Fraction(1)
+    duration_seconds: Fraction | None = None
+    cooldown_seconds: Fraction | None = None
+    every: int | None = None
+    stacks_required: int | None = None
+    # Damage type for "damage_proc".
+    damage_type: DamageType | None = None
+    # Optional scenario --input name (e.g. determination_stacks, essence_fragments).
+    input_name: str | None = None
+    condition: str = ""
 
 
 @dataclass(frozen=True)
@@ -81,6 +116,7 @@ class AbilitySpec:
     max_recasts: int = 1
     recast_interval: Fraction | None = None
     cost: CostSpec | None = None
+    passive_effects: tuple[PassiveEffectSpec, ...] = ()
 
     def case(self, case_id: str) -> CaseSpec:
         for case in self.cases:
@@ -165,6 +201,142 @@ def _cost(record: Mapping[str, Any], max_rank: int, context: str) -> CostSpec | 
         _label(raw, cost_context),
         _text(raw, "source", cost_context),
     )
+
+
+def _optional_positive_fraction(
+    record: Mapping[str, Any], key: str, context: str
+) -> Fraction | None:
+    value = record.get(key)
+    if value is None:
+        return None
+    if isinstance(value, bool) or not isinstance(value, (int, float)) or value <= 0:
+        raise KitError(f"{context}: {key} must be a positive number")
+    return Fraction(str(value))
+
+
+def _optional_positive_int(
+    record: Mapping[str, Any], key: str, context: str, *, minimum: int = 1
+) -> int | None:
+    value = record.get(key)
+    if value is None:
+        return None
+    if isinstance(value, bool) or not isinstance(value, int) or value < minimum:
+        raise KitError(f"{context}: {key} must be an integer >= {minimum}")
+    return value
+
+
+def _passive_effects(
+    record: Mapping[str, Any], max_rank: int, context: str
+) -> tuple[PassiveEffectSpec, ...]:
+    effects: list[PassiveEffectSpec] = []
+    seen_ids: set[str] = set()
+    for index, entry in enumerate(_list(record, "passive_effects", context)):
+        entry_ctx = f"{context}.passive_effects[{index}]"
+        if not isinstance(entry, Mapping):
+            raise KitError(f"{entry_ctx}: must be an object")
+        effect_id = _text(entry, "id", entry_ctx)
+        if CASE_ID.fullmatch(effect_id) is None:
+            raise KitError(f"{entry_ctx}: id must be lowercase snake_case")
+        if effect_id in seen_ids:
+            raise KitError(f"{entry_ctx}: duplicate passive effect id {effect_id!r}")
+        seen_ids.add(effect_id)
+        name = _text(entry, "name", entry_ctx)
+        kind = _text(entry, "kind", entry_ctx)
+        if kind not in PASSIVE_EFFECT_KINDS:
+            raise KitError(f"{entry_ctx}: kind must be one of {sorted(PASSIVE_EFFECT_KINDS)}")
+        formula = _formula(entry, max_rank, entry_ctx)
+        label = _label(entry, entry_ctx)
+        source = _text(entry, "source", entry_ctx)
+        raw_input = entry.get("input_name")
+        if raw_input is not None and (not isinstance(raw_input, str) or not raw_input.strip()):
+            raise KitError(f"{entry_ctx}: input_name must be a non-empty string")
+        condition = entry.get("condition", "")
+        if not isinstance(condition, str):
+            raise KitError(f"{entry_ctx}: condition must be a string")
+
+        stat_id: str | None = None
+        mode = "flat"
+        trigger: str | None = None
+        max_stacks: int | None = None
+        max_mult = Fraction(1)
+        duration: Fraction | None = None
+        cooldown: Fraction | None = None
+        every: int | None = None
+        stacks_req: int | None = None
+        damage_type: DamageType | None = None
+
+        if kind in {"stat_bonus", "stacking_stat"}:
+            stat_id = _text(entry, "stat", entry_ctx)
+            definition = STATS.get(stat_id)
+            if definition is None or not definition.resolvable:
+                raise KitError(f"{entry_ctx}: {stat_id!r} is not a resolvable stat")
+            mode = str(entry.get("mode", "flat"))
+            if mode not in PASSIVE_STAT_MODES:
+                raise KitError(f"{entry_ctx}: mode must be one of {sorted(PASSIVE_STAT_MODES)}")
+            if kind == "stacking_stat":
+                trigger = _text(entry, "trigger", entry_ctx)
+                if trigger not in PASSIVE_STACK_TRIGGERS:
+                    raise KitError(
+                        f"{entry_ctx}: trigger must be one of {sorted(PASSIVE_STACK_TRIGGERS)}"
+                    )
+                max_stacks = _optional_positive_int(entry, "max_stacks", entry_ctx)
+                if max_stacks is None:
+                    raise KitError(f"{entry_ctx}: stacking_stat requires max_stacks")
+                mult_val = _optional_positive_fraction(entry, "max_stacks_multiplier", entry_ctx)
+                if mult_val is not None:
+                    if mult_val < 1:
+                        raise KitError(f"{entry_ctx}: max_stacks_multiplier must be >= 1")
+                    max_mult = mult_val
+                duration = _optional_positive_fraction(entry, "duration_seconds", entry_ctx)
+            else:
+                max_stacks = _optional_positive_int(entry, "max_stacks", entry_ctx)
+        elif kind == "heal":
+            trigger = _text(entry, "trigger", entry_ctx)
+            if trigger not in PASSIVE_HEAL_TRIGGERS:
+                raise KitError(
+                    f"{entry_ctx}: trigger must be one of {sorted(PASSIVE_HEAL_TRIGGERS)}"
+                )
+            cooldown = _optional_positive_fraction(entry, "cooldown_seconds", entry_ctx)
+            stacks_req = _optional_positive_int(entry, "stacks_required", entry_ctx)
+        elif kind == "damage_proc":
+            trigger = _text(entry, "trigger", entry_ctx)
+            if trigger not in PASSIVE_PROC_TRIGGERS:
+                raise KitError(
+                    f"{entry_ctx}: trigger must be one of {sorted(PASSIVE_PROC_TRIGGERS)}"
+                )
+            try:
+                damage_type = DamageType(entry.get("damage_type"))
+            except ValueError as exc:
+                raise KitError(f"{entry_ctx}: unknown damage_type") from exc
+            cooldown = _optional_positive_fraction(entry, "cooldown_seconds", entry_ctx)
+            if trigger == "every_n_attacks":
+                every = _optional_positive_int(entry, "every", entry_ctx, minimum=2)
+                if every is None:
+                    raise KitError(f"{entry_ctx}: every_n_attacks requires every >= 2")
+
+        effects.append(
+            PassiveEffectSpec(
+                id=effect_id,
+                name=name,
+                kind=kind,
+                formula=formula,
+                label=label,
+                source=source,
+                stat=stat_id,
+                mode=mode,
+                trigger=trigger,
+                max_stacks=max_stacks,
+                max_stacks_multiplier=max_mult,
+                duration_seconds=duration,
+                cooldown_seconds=cooldown,
+                every=every,
+                stacks_required=stacks_req,
+                damage_type=damage_type,
+                input_name=raw_input,
+                condition=condition,
+            )
+        )
+    return tuple(effects)
 
 
 def _ability(slot: str, record: Any) -> AbilitySpec:
@@ -262,6 +434,7 @@ def _ability(slot: str, record: Any) -> AbilitySpec:
         max_recasts,
         None if interval is None else Fraction(str(interval)),
         _cost(record, max_rank, context),
+        _passive_effects(record, max_rank, context),
     )
 
 

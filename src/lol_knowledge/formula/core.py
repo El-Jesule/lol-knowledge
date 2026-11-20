@@ -78,6 +78,7 @@ _ALLOWED_FORMULA_KEYS = {
     "by_holder_range": {"op", "melee", "ranged"},
     "by_rank": {"op", "values"},
     "by_level": {"op", "values"},
+    "linear_by_level": {"op", "min", "max"},
     "input": {"op", "name"},
     "unknown": {"op", "reason"},
     "unsupported": {"op", "reason", "needed"},
@@ -137,6 +138,13 @@ def _formula_issues(formula: Any, depth: int, ops: frozenset[str]) -> list[str]:
         return problems
     if operation in {"by_rank", "by_level"}:
         return _values_issues(operation, formula.get("values"))
+    if operation == "linear_by_level":
+        problems = []
+        if not _is_number(formula.get("min")):
+            problems.append("linear_by_level formula needs a finite numeric 'min'")
+        if not _is_number(formula.get("max")):
+            problems.append("linear_by_level formula needs a finite numeric 'max'")
+        return problems
     if operation == "input":
         name = formula.get("name")
         if not isinstance(name, str) or not name.strip():
@@ -298,6 +306,23 @@ def _evaluate(formula: Any, ctx: _Context, depth: int) -> tuple[Fraction, list[s
         return _pick(formula["values"], ctx.rank, "rank", formula), ["rank"]
     if operation == "by_level":
         return _pick(formula["values"], ctx.level, "level", formula), ["level"]
+    if operation == "linear_by_level":
+        if ctx.level is None:
+            raise FormulaError(
+                "formula needs an explicit level", code="missing_level", node=formula
+            )
+        if (
+            isinstance(ctx.level, bool)
+            or not isinstance(ctx.level, int)
+            or not 1 <= ctx.level <= 18
+        ):
+            raise FormulaError(
+                f"level {ctx.level!r} is outside 1..18",
+                code="level_out_of_range",
+                node=formula,
+            )
+        low, high = _exact(formula["min"]), _exact(formula["max"])
+        return low + (high - low) * Fraction(ctx.level - 1, 17), ["level"]
     if operation == "input":
         name = formula.get("name")
         value = ctx.inputs.get(name)
