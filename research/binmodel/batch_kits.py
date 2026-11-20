@@ -126,6 +126,7 @@ def extract_champion_from_client(
 
     prefixes = (
         f"spell_{lower}",
+        f"game_spell_{lower}",
         f"buff_{lower}",
         f"generatedtip_spell_{lower}",
         f"generatedtip_passive_{lower}",

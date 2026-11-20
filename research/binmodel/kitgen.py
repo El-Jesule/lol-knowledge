@@ -470,10 +470,10 @@ def compile_kit(
                     "condition": item["condition"],
                 }
             )
-        if ability is not None and ability.max_rank is not None:
-            max_rank = ability.max_rank
-        elif "max_rank" in entry:
+        if "max_rank" in entry:
             max_rank = int(entry["max_rank"])
+        elif ability is not None and ability.max_rank is not None:
+            max_rank = ability.max_rank
         else:
             raise KitGenError(f"{context}: unknown max_rank (declare max_rank in spec)")
         abilities[slot] = {
