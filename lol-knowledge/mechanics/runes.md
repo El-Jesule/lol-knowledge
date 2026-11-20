@@ -123,15 +123,23 @@ Se aplican contra campeones en `python -m lol_knowledge rotation` (en `stats` co
 | 8369 | `FirstStrike` | `first_strike` (`0` o `1`) y `--target-kind` si `1` | Ventana de 3 s (enfriamiento 25–15 s en `--timeline`): +7 % del daño posmitigación del paso como parte aparte de daño verdadero (sin volver a aplicar modificadores de daño). Oro adicional anotado fuera |
 | 8437 | `GraspOfTheUndying` | `grasp_ready` (`0` o `1`), `--target-kind`, `--attacker-range` | En el siguiente ataque listo (o cada 4 s en combate en `--timeline`): inflige 3,5 % de vida máxima (× 0,4 a distancia) como daño mágico y **cura** 1,3 % de vida máxima (× 0,4 a distancia, escalada con HSP y Heridas graves; [`survival.md`](survival.md)). La vida máxima permanente (+5 / +2 por proc) se anota fuera |
 
+## Runas defensivas en `survive` (`Derivado`, R1 y V7 de [`survival.md`](survival.md))
+
+Se evalúan en la simulación inversa `python -m lol_knowledge survive` (en `stats` y `rotation` ofensiva constan como nota informativa sin debilitar el daño ofensivo):
+
+| Id | Clave del cliente | `--input` / requisito | Efecto en `survive` |
+|---|---|---|---|
+| 8473 | `BonePlating` | Ninguno | Al recibir > 0 de daño real a la vida (no solo a escudos), activa 3 cargas durante 1,5 s (55 s CD en `--timeline`): los siguientes 3 golpes (incluido daño verdadero) infligen `30–60` menos de daño posmitigación (`MEC-08`) |
+| 8444 | `SecondWind` | Ninguno | Tras recibir daño de campeón, regenera un `4 %` de la vida perdida durante 10 s (continuo y reiniciable en `--timeline`), reducido por Heridas graves y sin escalar con HSP ni Revitalizar |
+| 8465 | `Guardian` | `guardian_ally` (`0` o `1`) | Con `1`, al recibir `50–165` de daño en 2,5 s o daño letal, otorga escudo `40–150 + 20 % PH + 6 % vida adicional` durante 1,5 s (`ShieldDuration` del cliente 16.23; 75–40 s CD), escalado con HSP y Revitalizar |
+
 ## Lo que no se modela todavía (dependencias de futuras mecánicas)
 
-Las **6 piedras angulares** y **9 runas menores** restantes dependen de mecánicas aún no construidas; siguen en `pending_effects` y dejan `ability` y `rotation` en `Pendiente de verificación`:
+Las **5 piedras angulares** y **7 runas menores** restantes dependen de mecánicas aún no construidas; siguen en `pending_effects` y dejan `ability` y `rotation` en `Pendiente de verificación`:
 
-- **Piedras angulares (6):** `8021` Pies veloces (`OBJ-04`), `8230` Tensión del saqueador de tormentas (`MEC-27`), `8351` Mejora glacial (`MEC-26`), `8360` Libro de hechizos (`DAT-06`), `8439` Reverberacción (`MEC-26`, `MEC-09`) y `8465` Protector (`MEC-09`).
-- **Runas menores (9):**
-  - Simulación inversa / daño recibido (`MEC-09`): `8444` Fuerzas renovadas.
+- **Piedras angulares (5):** `8021` Pies veloces (`OBJ-04`), `8230` Tensión del saqueador de tormentas (`MEC-27`), `8351` Mejora glacial (`MEC-26`), `8360` Libro de hechizos (`DAT-06`) y `8439` Reverberacción (`MEC-26`).
+- **Runas menores (7):**
   - Recursos / maná (`MEC-01`): `8009` Claridad mental.
-  - Reducción plana de daño (`MEC-08`, `MEC-09`): `8473` Revestimiento de huesos.
   - CC / velocidad condicional (`MEC-26`): `8410` Velocidad de acercamiento y `8242` Inquebrantable.
   - Hechizos de invocador / aceleración de objetos (`DAT-06`, `MEC-29`): `8275` Capa del nimbo y `8347` Perspicacia cósmica.
   - Consumibles / elixires (`OBJ-12`): `8313` Tónico triple y `8352` Tónico de distorsión temporal.

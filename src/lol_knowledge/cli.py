@@ -11,6 +11,9 @@ from pathlib import Path
 
 from . import __version__
 from .damage import DamageType, Modifiers, format_text, mitigate, to_dict, to_fraction
+from .defense import evaluate_defense, hits_from_rotation, parse_incoming
+from .defense_report import format_text as format_defense_text
+from .defense_report import to_dict as defense_to_dict
 from .errors import (
     DamageInputError,
     KitError,
@@ -98,6 +101,7 @@ def build_parser() -> argparse.ArgumentParser:
     _add_stats_parser(subparsers)
     _add_ability_parser(subparsers)
     _add_rotation_parser(subparsers)
+    _add_survive_parser(subparsers)
 
     return parser
 
@@ -438,6 +442,56 @@ def _add_rotation_parser(subparsers: argparse._SubParsersAction) -> None:
     rotation.add_argument("--json", action="store_true", help="Print a JSON report.")
 
 
+def _add_survive_parser(subparsers: argparse._SubParsersAction) -> None:
+    survive = subparsers.add_parser(
+        "survive",
+        help="Reverse defense simulation: incoming damage, shields, flat reduction & time to die.",
+        description=(
+            "Evaluate how an analyzed defender survives either a manual sequence of incoming "
+            "hits (--incoming) or an enemy champion's rotation (--enemy-champion + --steps), "
+            "applying Bone Plating, Second Wind, Guardian, Sterak's Gage Lifeline and Thornmail "
+            "(lol-knowledge/mechanics/survival.md)."
+        ),
+    )
+    survive.add_argument("--champion", required=True, help="Defender champion, e.g. Zaahen.")
+    survive.add_argument("--level", required=True, type=int, help="Defender level.")
+    survive.add_argument("--item", action="append", default=[], metavar="ID")
+    survive.add_argument("--defender-health", help="Defender starting health (defaults to max).")
+    survive.add_argument("--defender-shield", help="Defender initial shield amount.")
+    survive.add_argument(
+        "--defender-shield-type",
+        choices=("normal", "physical", "magic"),
+        default="normal",
+        help="Defender initial shield type: normal, physical or magic.",
+    )
+    survive.add_argument(
+        "--incoming",
+        help='Manual hits, e.g. "attack:400, attack:crit:600, magic:300, true:150, wait:1".',
+    )
+    survive.add_argument("--enemy-champion", help="Enemy attacker champion (requires kit).")
+    survive.add_argument("--enemy-level", type=int, help="Enemy attacker level.")
+    survive.add_argument("--enemy-item", action="append", default=[], metavar="ID")
+    survive.add_argument(
+        "--enemy-learned",
+        action="append",
+        default=[],
+        metavar="SLOT=RANK",
+        help="Enemy learned ability rank (repeat).",
+    )
+    survive.add_argument("--enemy-range", choices=("melee", "ranged"), help="Enemy range.")
+    survive.add_argument("--steps", help="Enemy rotation steps (with --enemy-champion).")
+    survive.add_argument(
+        "--timeline", action="store_true", help="Simulate timestamps and durations."
+    )
+    survive.add_argument("--assume", action="append", default=[], metavar="FIELD=VALUE")
+    survive.add_argument(
+        "--input", action="append", default=[], metavar="NAME=VALUE", help="Scenario input."
+    )
+    _add_build_option(survive)
+    survive.add_argument("--root", type=Path, default=Path("."))
+    survive.add_argument("--json", action="store_true", help="Print a JSON report.")
+
+
 def _pairs(values: list[str], option: str) -> dict[str, str]:
     parsed: dict[str, str] = {}
     for entry in values:
@@ -514,6 +568,7 @@ def main(argv: list[str] | None = None) -> int:
         "stats": _run_stats,
         "ability": _run_ability,
         "rotation": _run_rotation,
+        "survive": _run_survive,
     }
     handler = handlers[args.command]
     return handler(args)
@@ -737,6 +792,99 @@ def _run_stats(args: argparse.Namespace) -> int:
         print(json.dumps(stats_to_dict(sheet), indent=2, ensure_ascii=False))
     else:
         print(format_stats_text(sheet))
+    return 0
+
+
+def _run_survive(args: argparse.Namespace) -> int:
+    root: Path = args.root
+    try:
+        assumptions = _parse_assume(args.assume)
+        inputs = {
+            key: _number(value, f"--input {key}")
+            for key, value in _pairs(args.input, "--input").items()
+        }
+        champion = load_champion(root, args.champion)
+        items = load_items(root, args.item)
+        _check_build(root, args.item, champion, allow=args.allow_illegal_build, who="defender")
+        issues = load_issues(root)
+        derived = load_records(root)
+        defender_sheet = _build_sheet(
+            args, root, champion, items, issues, assumptions, derived, inputs=inputs
+        )
+        runes = _rune_ids(args.rune, "--rune")
+        rune_data = load_runes(root) if runes else None
+        start_hp = _number(args.defender_health, "--defender-health")
+        start_sh = _number(args.defender_shield, "--defender-shield") or Fraction(0)
+
+        if bool(args.incoming) == bool(args.enemy_champion):
+            raise StatsError("give either --incoming or --enemy-champion (with --steps), not both")
+        if args.incoming:
+            hits = parse_incoming(args.incoming)
+            enemy_desc = "manual incoming hits"
+        else:
+            if args.enemy_level is None or not args.steps:
+                raise StatsError("--enemy-champion requires --enemy-level and --steps")
+            enemy_champ = load_champion(root, args.enemy_champion)
+            enemy_kit = load_kit(root, enemy_champ.id)
+            enemy_items = load_items(root, args.enemy_item)
+            _check_build(
+                root, args.enemy_item, enemy_champ, allow=args.allow_illegal_build, who="enemy"
+            )
+            enemy_ranks = _parse_ranks(args.enemy_learned)
+            enemy_extras = passive_contributions(enemy_kit, enemy_ranks)
+            enemy_sheet = build_stat_sheet(
+                enemy_champ, args.enemy_level, enemy_items, issues, {}, derived, enemy_extras
+            )
+            crit_val = derived.value(enemy_champ.id, "critdamagemultiplier")
+            crit_base = (
+                None
+                if crit_val is None
+                else CritBase(
+                    crit_val,
+                    Label.DERIVED if derived.matches_patch(enemy_champ.patch) else Label.PENDING,
+                    f"derived:{enemy_champ.id}.critdamagemultiplier ({derived.content_version})",
+                )
+            )
+            rot = evaluate_rotation(
+                enemy_kit,
+                enemy_sheet,
+                enemy_ranks,
+                target_from_sheet(defender_sheet, current_health=start_hp),
+                parse_steps(args.steps),
+                crit_base,
+                holder_range=args.enemy_range,
+                inputs=inputs,
+                timeline=args.timeline,
+                ap_weight=derived.value(enemy_champ.id, "adaptiveforceapweight"),
+            )
+            hits = hits_from_rotation(rot)
+            enemy_desc = (
+                f"{enemy_champ.name} level {args.enemy_level} "
+                f"({', '.join(args.enemy_item) or 'no items'}): {args.steps}"
+            )
+        outcome = evaluate_defense(
+            defender_sheet,
+            hits,
+            enemy_description=enemy_desc,
+            start_health=start_hp,
+            start_shield=start_sh,
+            shield_type=args.defender_shield_type,
+            runes=runes,
+            rune_data=rune_data,
+            inputs=inputs,
+            timeline=args.timeline,
+        )
+    except (StatsError, KitError, RotationError) as exc:
+        print(f"error: {exc}", file=sys.stderr)
+        return 2
+    except OSError as exc:
+        print(f"error: {exc}", file=sys.stderr)
+        return 2
+
+    if args.json:
+        print(json.dumps(defense_to_dict(outcome, defender_sheet), indent=2, ensure_ascii=False))
+    else:
+        print(format_defense_text(outcome, defender_sheet))
     return 0
 
 

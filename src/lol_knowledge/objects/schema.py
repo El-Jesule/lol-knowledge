@@ -127,6 +127,7 @@ TRIGGER_EVENTS = frozenset(
         "spellblade",
         "energized",
         "taking_attack",
+        "taking_damage",
         "damaging_ability",
         "on_heal_or_shield",
         "cast",

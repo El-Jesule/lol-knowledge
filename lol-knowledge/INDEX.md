@@ -28,6 +28,7 @@
 | Calcular la velocidad de ataque (base, ratio, crecimiento y tope) | [Velocidad de ataque](mechanics/attack-speed.md) |
 | Calcular la curación por robo de vida y omnivampirismo | [Robo de vida y omnivampirismo](mechanics/life-steal-and-omnivamp.md) |
 | Calcular escudos, curación de efectos, Heridas graves y poder de curaciones y escudos | [Supervivencia](mechanics/survival.md) |
+| Simular cuánto aguanta un campeón (daño recibido, tiempo hasta morir, Sterak, Revestimiento de huesos) | `python -m lol_knowledge survive` y [Supervivencia](mechanics/survival.md) |
 | Calcular la tenacidad y cómo se combinan sus fuentes | [Tenacidad](mechanics/tenacity.md) |
 | Calcular la regeneración de vida y maná | [Regeneración](mechanics/regeneration.md) |
 | Calcular la velocidad de movimiento y sus límites suaves | [Velocidad de movimiento](mechanics/move-speed.md) |
@@ -53,7 +54,7 @@
 
 Dos campeones con kit calculable (Zaahen, con análisis completo, y Ahri), datos oficiales de los 173 campeones en `data/current/` y sus estadísticas base y por nivel del cliente en [champion-records.json](derived/champion-records.json). La cobertura de kits crece de uno en uno: cada campeón nuevo reutiliza esta estructura.
 
-El modelo de objetos tiene las estadísticas de los **218 objetos comprables de la Grieta**; los efectos están curados en **42 objetos** (64 efectos), elegidos por mecánica, y el resto queda `pending`. Las cifras que Data Dragon no publica se registran con fuente citada: la wiki (`secondary`) o los datos del cliente 16.23 (`derived`, `corroborated` si coinciden). Los límites están en [Modelo de objetos](objects/README.md).
+El modelo de objetos tiene las estadísticas de los **218 objetos comprables de la Grieta**; los efectos están curados en **43 objetos** (66 efectos), elegidos por mecánica, y el resto queda `pending`. Las cifras que Data Dragon no publica se registran con fuente citada: la wiki (`secondary`) o los datos del cliente 16.23 (`derived`, `corroborated` si coinciden). Los límites están en [Modelo de objetos](objects/README.md).
 
 ## Aviso de fuentes
 

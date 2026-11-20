@@ -1,9 +1,9 @@
 # Supervivencia: escudos, curación de efectos, Heridas graves y poder de curaciones y escudos
 
-- **Ámbito:** estadística de poder de curaciones y escudos (`heal_and_shield_power`), absorción de escudos del objetivo, escudos y curaciones directas generadas por el atacante (objetos y runas), seguimiento de la vida del atacante y reducción por Heridas graves (`grievous_wounds`). Lo usan `stats`, `ability` y `rotation`.
+- **Ámbito:** estadística de poder de curaciones y escudos (`heal_and_shield_power`), absorción de escudos del objetivo, escudos y curaciones directas generadas por el atacante (objetos y runas), seguimiento de la vida del atacante, reducción por Heridas graves (`grievous_wounds`), reducción plana de daño (`MEC-08`) y simulación inversa de supervivencia (`MEC-09`). Lo usan `stats`, `ability`, `rotation` y `survive`.
 - **Parche de referencia:** cliente 16.23 y Data Dragon 16.23.1.
 - **Fecha de consulta:** 2026-11-20
-- **Código:** [`src/lol_knowledge/survival.py`](../../src/lol_knowledge/survival.py), [`src/lol_knowledge/stats/registry.py`](../../src/lol_knowledge/stats/registry.py), [`src/lol_knowledge/rotation.py`](../../src/lol_knowledge/rotation.py), [`src/lol_knowledge/rune_combat.py`](../../src/lol_knowledge/rune_combat.py) y [`src/lol_knowledge/rune_keystones.py`](../../src/lol_knowledge/rune_keystones.py).
+- **Código:** [`src/lol_knowledge/survival.py`](../../src/lol_knowledge/survival.py), [`src/lol_knowledge/defense.py`](../../src/lol_knowledge/defense.py), [`src/lol_knowledge/defense_report.py`](../../src/lol_knowledge/defense_report.py), [`src/lol_knowledge/stats/registry.py`](../../src/lol_knowledge/stats/registry.py), [`src/lol_knowledge/rotation.py`](../../src/lol_knowledge/rotation.py), [`src/lol_knowledge/rune_combat.py`](../../src/lol_knowledge/rune_combat.py) y [`src/lol_knowledge/rune_keystones.py`](../../src/lol_knowledge/rune_keystones.py).
 
 ## Fuentes
 
@@ -14,7 +14,8 @@
 | V3 | Wiki oficial de League of Legends, `Thornmail` (rev `4025130`), consultada el 2026-11-20 | Las Heridas graves aplicadas por Malla de espinas (40 % durante 3 s) al recibir un ataque básico se aplican **antes** de la curación de ese mismo ataque (robo de vida, etc.) | Fuente comunitaria secundaria |
 | V4 | Wiki oficial de League of Legends, `Shield` (rev `4093144`), consultada el 2026-11-20 | Los escudos absorben daño posmitigación (tras armadura, RM y modificadores de daño) en lugar de la vida; tipos `normal` (físico, mágico y verdadero), `physical` (solo físico) y `magic` (solo mágico); no cuentan como vida para efectos basados en vida actual/máxima/perdida | Fuente comunitaria secundaria |
 | V5 | Data Dragon 16.23.1 (`data/current/items.json`) y [`../objects/catalog-stats.json`](../objects/catalog-stats.json) | Porcentaje de «poder de curaciones y escudos» en las descripciones de los objetos de la Grieta | Oficial de Riot |
-| V6 | Cliente 16.23 ([`../derived/runes.json`](../derived/runes.json) y [`../derived/item-effects.json`](../derived/item-effects.json)) | Valores de `Revitalize` (`8453`), `ShieldBash` (`8401`), `TasteOfBlood` (`8139`), `GraspOfTheUndying` (`8437`), `AbsorbLife` (`9101`), `Triumph` (`9111`), `FontOfLife` (`8463`), `2510` Amanecer y anochecer y `3075` Malla de espinas | `Derivado` |
+| V6 | Cliente 16.23 ([`../derived/runes.json`](../derived/runes.json) y [`../derived/item-effects.json`](../derived/item-effects.json)) | Valores de `Revitalize` (`8453`), `ShieldBash` (`8401`), `TasteOfBlood` (`8139`), `GraspOfTheUndying` (`8437`), `AbsorbLife` (`9101`), `Triumph` (`9111`), `FontOfLife` (`8463`), `BonePlating` (`8473`), `SecondWind` (`8444`), `Guardian` (`8465`), `2510` Amanecer y anochecer, `3053` Calibrador de Sterak y `3075` Malla de espinas | `Derivado` |
+| V7 | Wiki oficial de League of Legends (`wiki.leagueoflegends.com`, consultada el 2026-11-20): `Bone_Plating` (`4072632`) y `Template:Rune_data_Bone_Plating` (`3985159`), `Template:Rune_data_Second_Wind` (`3960974`), `Template:Rune_data_Guardian` (`4022993`), `Module:ItemData/data` (`4095269`, `Sterak's Gage`) | Revestimiento de huesos reduce daño posmitigación (incluido daño verdadero) tras activarse al recibir daño real a la vida (no a escudos); Fuerzas renovadas regenera 4 % de vida perdida en 10 s (solo afectada por Heridas graves); Salvavidas de Sterak salta antes de bajar del 30 % de vida con escudo del 60 % de vida adicional | Fuente comunitaria secundaria |
 
 ## Reglas (`Derivado`, V1–V4 y V6; estadísticas de objetos `Oficial`, V5)
 
@@ -48,6 +49,14 @@
 - Si se pasa `--input attacker_health_percent=<0..1>`, la rotación sigue la vida real del atacante desde `vida_máx × porcentaje` hasta un tope de `vida_máx`, informando tanto la curación generada (`healing`) como la curación efectiva acotada por vida perdida (`effective_healing`).
 - Si no se especifica `attacker_health_percent`, la rotación informa la curación generada sin acotar (compatible con el comportamiento previo de robo de vida y omnivampirismo).
 
+### 5. Reducción plana de daño (`MEC-08`) y simulación inversa (`MEC-09`, `survive`)
+- `python -m lol_knowledge survive` evalúa al campeón analizado como **defensor** frente a golpes manuales (`--incoming "attack:400, attack:crit:600, magic:300, true:150, wait:1"`) o frente a la rotación de un campeón enemigo (`--enemy-champion` + `--steps`).
+- **Reducción plana (`MEC-08`, V7):** se resta al daño posmitigación (incluido daño verdadero) con suelo `0`. Aplica `--input flat_damage_reduction=<n>` y `8473` Revestimiento de huesos (se activa tras recibir > 0 de daño real a la vida, no solo a escudos; reduce los 3 golpes siguientes en `30–60` durante `1,5 s`, `55 s` CD en `--timeline`).
+- **Escudos previos al daño:** `3053` Calibrador de Sterak (`Salvavidas`: antes de bajar del `30 %` de vida máxima, otorga un escudo del `60 %` de vida adicional durante `4,5 s`, `90 s` CD) y `8465` Protector (con `--input guardian_ally=1`, al recibir `50–165` de daño en `2,5 s` o daño letal, otorga `40–150 + 20 % PH + 6 % vida adicional` durante `1,5 s`, `75–40 s` CD). Ambos escalan con HSP y Revitalizar y absorben el golpe disparador inmediatamente (los escudos que caducan antes absorben primero, V4).
+- **Regeneración defensiva:** `8444` Fuerzas renovadas regenera un `4 %` de vida perdida en `10 s` tras recibir daño de campeón (reducida por Heridas graves y sin escalar con HSP ni Revitalizar, V1/V7).
+- **Reflejo reactivo:** `3075` Malla de espinas informa el daño mágico en bruto reflejado (`20 + 10 %` armadura adicional) por cada ataque básico recibido.
+- **Métricas de salida:** daño total recibido, reducción plana total, escudos otorgados/absorbidos, curación defensiva, vida restante, supervivencia (`survived`), paso letal, **tiempo hasta morir** (`time_to_die`) y **daño recibido por segundo** (`damage_taken_per_second`) con `--timeline`.
+
 ## Limitaciones
-- La **simulación inversa** (daño recibido por el campeón analizado, tiempo hasta morir, disparadores defensivos al recibir daño como Sterak, Protector, Fuerzas renovadas o Revestimiento de huesos) se aborda en `MEC-09` (siguiente fase).
+- La curva de decaimiento del escudo de `3053` Salvavidas (`4,5 s` tras `0,75 s`) se anota como pendiente dentro de `--timeline`; el escudo caduca completo al final de los `4,5 s`.
 - La interacción de `Serpent's Fang` (reducción de escudos) y `Spirit Visage` (+25 % a curaciones/escudos entrantes) entrará al curar esos objetos en `OBJ-01`.

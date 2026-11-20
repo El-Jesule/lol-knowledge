@@ -25,7 +25,7 @@ daño final = daño mitigado × (1 + Σ infligido_i / 100) × Π (1 + recibido_j
 - **Daño infligido** (del atacante, `direction: dealt`): los porcentajes se **suman** entre sí y luego multiplican (M1, desde la V26.09).
 - **Daño recibido** (del objetivo, `direction: taken`): cada porcentaje **multiplica** por separado (M1). Una reducción es un porcentaje negativo.
 - Ambos grupos multiplican entre sí y con el multiplicador de la resistencia (M2, M3). Por eso el orden respecto a la mitigación no cambia el resultado.
-- La **reducción plana** de daño (restar una cantidad fija) no está modelada; ningún efecto curado del catálogo la tiene.
+- La **reducción plana** de daño (`MEC-08`, restar una cantidad fija tras la mitigación y los modificadores porcentuales, con suelo 0, incluido daño verdadero) se evalúa en `python -m lol_knowledge survive` ([`survival.md`](survival.md), `8473` Revestimiento de huesos y `--input flat_damage_reduction`).
 
 ## Condiciones que aplica el motor
 
