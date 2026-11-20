@@ -89,6 +89,7 @@ COMBAT_MINOR_RUNE_KEYS = frozenset(
         "AbsorbLife",
         "Triumph",
         "FontOfLife",
+        "PresenceOfMind",
     }
 )
 # Keystones whose combat effects are evaluated by rotations (rune_keystones.py).
@@ -140,6 +141,7 @@ class Rune:
     values: Mapping[str, Fraction]
     ranged_multipliers: Mapping[str, Fraction] = field(default_factory=dict)
     level_bounds: Mapping[str, tuple[Fraction, Fraction]] = field(default_factory=dict)
+    level_tables: Mapping[str, tuple[Fraction, ...]] = field(default_factory=dict)
 
 
 @dataclass(frozen=True)
@@ -324,10 +326,42 @@ def _parse_level_bounds(calculations: Any) -> dict[str, tuple[Fraction, Fraction
     return result
 
 
+def _parse_level_tables(calculations: Any) -> dict[str, tuple[Fraction, ...]]:
+    """Parse per-level value tables (class ``{2421b258}``, values in ``{34474c3b}``)."""
+    if not isinstance(calculations, Mapping):
+        return {}
+    result: dict[str, tuple[Fraction, ...]] = {}
+    for name, calc in calculations.items():
+        if not isinstance(calc, Mapping):
+            continue
+        for part in calc.get("mFormulaParts") or ():
+            if not isinstance(part, Mapping):
+                continue
+            values = part.get("{34474c3b}")
+            if (
+                isinstance(values, list)
+                and len(values) > LEVELS
+                and all(isinstance(v, (int, float)) and not isinstance(v, bool) for v in values)
+            ):
+                result[str(name)] = tuple(Fraction(str(v)) for v in values)
+                break
+    return result
+
+
 def rune_level_bounds(rune: Rune, name: str) -> tuple[Fraction, Fraction]:
     if name not in rune.level_bounds:
         raise StatsError(f"rune {rune.id} {rune.key}: client data has no level bounds {name}")
     return rune.level_bounds[name]
+
+
+def rune_level_table(rune: Rune, name: str, level: int) -> Fraction:
+    """1-indexed level value from a client per-level breakpoint table (levels 1..18)."""
+    if name not in rune.level_tables:
+        raise StatsError(f"rune {rune.id} {rune.key}: client data has no level table {name}")
+    table = rune.level_tables[name]
+    if not 1 <= level < len(table):
+        raise StatsError(f"rune {rune.id} {rune.key}: level {level} out of table bounds")
+    return table[level]
 
 
 def rune_ranged_multiplier(rune: Rune, name: str) -> Fraction:
@@ -358,6 +392,7 @@ def parse_runes(document: Any, path: str = RUNES_PATH.as_posix()) -> RuneData:
             {name: Fraction(str(value)) for name, value in perk["effect_amounts"].items()},
             _parse_ranged_multipliers(perk.get("calculations")),
             _parse_level_bounds(perk.get("calculations")),
+            _parse_level_tables(perk.get("calculations")),
         )
         for perk_id, perk in document["perks"].items()
     }
@@ -960,7 +995,8 @@ def minor_rune_effects(
                     )
                 )
                 notes.append(
-                    f"rune {rune_id} {rune.name}: missing mana regeneration is not modelled"
+                    f"rune {rune_id} {rune.name}: missing mana regeneration applies in "
+                    "rotation --timeline"
                 )
             else:
                 notes.append(f"rune {rune_id} {rune.name}: champion does not use mana")

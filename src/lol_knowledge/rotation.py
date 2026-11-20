@@ -29,6 +29,13 @@ from .damage import DamageResult, DamageType, format_number, mitigate
 from .errors import KitError, RotationError, StatsError
 from .formula import FormulaError, evaluate_formula
 from .kit import Kit, ability_damage, sheet_stats
+from .resources import (
+    ResourceEvent,
+    ResourceSummary,
+    ResourceTracker,
+    StepResourceCost,
+    resolve_ability_cost,
+)
 from .rune_combat import RuneCombat
 from .runes import RuneData, fraction_input, int_input
 from .scenario import PENETRATION, Target, penetration_modifiers
@@ -62,6 +69,7 @@ RULES = (
     "lol-knowledge/mechanics/stat-growth.md",
     "lol-knowledge/mechanics/life-steal-and-omnivamp.md",
     "lol-knowledge/mechanics/survival.md",
+    "lol-knowledge/mechanics/resources.md",
 )
 HOLDER_RANGES = frozenset({"melee", "ranged"})
 ATTACK_MODIFIERS = frozenset({"crit", "nospellblade"})
@@ -226,6 +234,10 @@ class StepOutcome:
     shield_absorbed: Fraction = Fraction(0)
     heal_events: tuple[HealEvent, ...] = ()
     shield_events: tuple[ShieldEvent, ...] = ()
+    resource_cost: StepResourceCost | None = None
+    resource_before: Fraction | None = None
+    resource_after: Fraction | None = None
+    resource_events: tuple[ResourceEvent, ...] = ()
 
     @property
     def total(self) -> Fraction:
@@ -302,6 +314,7 @@ class RotationOutcome:
     attacker_remaining_health: Fraction | None = None
     effective_healing: Fraction | None = None
     grievous_wounds_applied: bool = False
+    resource: ResourceSummary | None = None
 
     @property
     def total(self) -> Fraction:
@@ -628,6 +641,8 @@ class _Rotation:
         rune_data: RuneData | None = None,
         has_ultimate_step: bool = False,
         ap_weight: Fraction | None = None,
+        start_resource: Fraction | None = None,
+        allow_insufficient_resource: bool = False,
     ) -> None:
         self.kit, self.sheet, self.ranks, self.target = kit, sheet, ranks, target
         self.base_sheet = sheet
@@ -664,6 +679,7 @@ class _Rotation:
             self.effective_healing_total = Fraction(0)
         self.item_heals: list[_Effect] = []
         self.item_shields: list[_Effect] = []
+        self.item_resource_restores: list[_Effect] = []
         self.defender_grievous: list[_Effect] = []
         attacker, notes, weakened = _effects(sheet.items, "attacker", target.kind)
         defender, target_notes, target_weakened = _effects(target.items, "target")
@@ -678,9 +694,27 @@ class _Rotation:
             timeline=timeline,
             ap_weight=ap_weight,
         )
-        self.notes = notes + target_notes + list(sheet.pending_effects) + self.rune_combat.notes
+        self.resources = ResourceTracker(
+            sheet,
+            inputs,
+            start_resource=start_resource,
+            timeline=timeline,
+            allow_insufficient=allow_insufficient_resource,
+            manaflow_regen=self.rune_combat.manaflow_band_config(sheet),
+        )
+        self.notes = (
+            notes
+            + target_notes
+            + list(sheet.pending_effects)
+            + self.rune_combat.notes
+            + list(self.resources.notes)
+        )
         self.weakened = (
-            weakened or target_weakened or bool(sheet.pending_effects) or self.rune_combat.weakened
+            weakened
+            or target_weakened
+            or bool(sheet.pending_effects)
+            or self.rune_combat.weakened
+            or self.resources.weakened
         )
         self.on_hit: list[_Effect] = []
         self.dealt: list[_Effect] = []
@@ -773,6 +807,12 @@ class _Rotation:
                 and effect.trigger in {"spellblade", "on_hit", "damaging_ability", "cast"}
             ):
                 self.item_shields.append(effect)
+            elif (
+                kind == "resource_restore"
+                and ((effect.component.get("target") or {}).get("kind") or effect.affects) == "self"
+                and effect.trigger in {"spellblade", "on_hit", "damaging_ability", "cast"}
+            ):
+                self.item_resource_restores.append(effect)
             elif (
                 effect.duration is not None
                 and kind in TIMED_KINDS
@@ -950,6 +990,40 @@ class _Rotation:
                 )
             )
         return heals, shields
+
+    def _item_resource_restores(
+        self, trigger: str, target_stats: Mapping[str, Fraction]
+    ) -> list[ResourceEvent]:
+        events: list[ResourceEvent] = []
+        part_kind = "on_hit" if trigger in {"spellblade", "on_hit"} else "trigger"
+        for effect in self.item_resource_restores:
+            if effect.trigger != trigger:
+                continue
+            if not _conditions_hold(effect, self.target, part_kind, False, target_stats):
+                continue
+            raw, stat_labels = self._value(effect, target_stats)
+            resource = str(effect.component.get("resource", "mana"))
+            ev = self.resources.restore(
+                f"{effect.title} ({effect.name})",
+                resource,
+                raw,
+                weakest([effect.label, *stat_labels]),
+            )
+            if ev is not None:
+                events.append(ev)
+        return events
+
+    def _ensure_attacker_hp(self) -> Fraction:
+        if self.attacker_hp is None:
+            try:
+                max_hp = self.sheet["health"].total()
+            except StatBlocked as exc:
+                raise RotationError(f"health cost needs attacker health: {exc}") from exc
+            self.attacker_max_hp = max_hp
+            self.attacker_start_hp = max_hp
+            self.attacker_hp = max_hp
+            self.effective_healing_total = Fraction(0)
+        return self.attacker_hp
 
     def _absorb_parts(
         self, parts: Sequence[Part], health: Fraction, shield: Fraction
@@ -1866,11 +1940,16 @@ class _Rotation:
         clock: Fraction,
         health: Fraction,
         shield: Fraction = Fraction(0),
+        *,
+        regen_until: Fraction | None = None,
     ) -> StepOutcome:
         """A step with no damage of its own: the burn damage up to ``clock``."""
+        res_before = self.resources.current if self.resources.uses_casting_pool else None
         parts, left, _, absorbed = self._accrue(clock, health, shield)
         if parts:
             parts += self._execute(parts, health, self._target_stats(left), absorbed)
+        regen_events = self.resources.accrue_regen(clock if regen_until is None else regen_until)
+        res_after = self.resources.current if self.resources.uses_casting_pool else None
         outcome = StepOutcome(
             index,
             step,
@@ -1881,6 +1960,9 @@ class _Rotation:
             clock,
             shield_before=shield,
             shield_absorbed=absorbed,
+            resource_before=res_before,
+            resource_after=res_after,
+            resource_events=tuple(regen_events),
         )
         self._record_attacker_healing(outcome.healing)
         return outcome
@@ -1914,7 +1996,15 @@ class _Rotation:
             if step.wait is not None:
                 if self.timeline is None:
                     raise RotationError(f"step {step.text}: waits need the timeline (--timeline)")
-                outcome = self._burn_outcome(index, step, "wait", clock, health, shield)
+                outcome = self._burn_outcome(
+                    index,
+                    step,
+                    "wait",
+                    clock,
+                    health,
+                    shield,
+                    regen_until=clock + step.wait,
+                )
                 outcomes.append(outcome)
                 health = outcome.health_after
                 shield = outcome.shield_after
@@ -1927,11 +2017,15 @@ class _Rotation:
             parts: list[Part] = []
             heal_events: list[HealEvent] = []
             shield_events: list[ShieldEvent] = []
+            resource_events: list[ResourceEvent] = []
+            step_cost: StepResourceCost | None = None
+            res_before = self.resources.current if self.resources.uses_casting_pool else None
             before = health
             shield_before = shield
             accrued_absorbed = Fraction(0)
             if self.timeline is not None:
                 parts, health, shield, accrued_absorbed = self._accrue(clock, health, shield)
+                resource_events.extend(self.resources.accrue_regen(clock))
             accrued_count = len(parts)
             self._set_moment(clock)
             target_stats = self._target_stats(health)
@@ -1955,12 +2049,14 @@ class _Rotation:
                 oh_heals, oh_shields = self._item_survival_events("on_hit", target_stats, clock)
                 heal_events += oh_heals
                 shield_events += oh_shields
+                resource_events.extend(self._item_resource_restores("on_hit", target_stats))
                 if empowered:
                     sb_heals, sb_shields = self._item_survival_events(
                         "spellblade", target_stats, clock
                     )
                     heal_events += sb_heals
                     shield_events += sb_shields
+                    resource_events.extend(self._item_resource_restores("spellblade", target_stats))
                 if empowered and self.timeline is not None:
                     spellblade_ready = clock + self._spellblade_cooldown()
                     if self._open("spellblade", clock, target_stats):
@@ -1981,16 +2077,46 @@ class _Rotation:
                         extra.append(Label.PENDING)
             else:
                 name, ability_parts = self._ability(step, target_stats)
+                step_cost = resolve_ability_cost(
+                    self.kit,
+                    self.sheet,
+                    step.slot,
+                    self.ranks[step.slot],
+                    step.case,
+                    self.stats,
+                    self.origin,
+                    self.inputs,
+                    attacker_hp=self.attacker_hp,
+                    attacker_max_hp=self.attacker_max_hp,
+                )
+                if step_cost.resource == "health":
+                    current_hp = self._ensure_attacker_hp()
+                    self.attacker_hp, hp_ev = self.resources.spend_health(current_hp, step_cost)
+                    resource_events.append(hp_ev)
+                else:
+                    cost_ev, was_insufficient = self.resources.spend_pool(
+                        index, step.text, step_cost
+                    )
+                    if cost_ev is not None:
+                        resource_events.append(cost_ev)
+                    if was_insufficient:
+                        extra.append(Label.PENDING)
+                if step_cost.label is Label.PENDING:
+                    extra.append(Label.PENDING)
                 parts += ability_parts
                 c_heals, c_shields = self._item_survival_events("cast", target_stats, clock)
                 heal_events += c_heals
                 shield_events += c_shields
+                resource_events.extend(self._item_resource_restores("cast", target_stats))
                 if ability_parts:
                     da_heals, da_shields = self._item_survival_events(
                         "damaging_ability", target_stats, clock
                     )
                     heal_events += da_heals
                     shield_events += da_shields
+                    resource_events.extend(
+                        self._item_resource_restores("damaging_ability", target_stats)
+                    )
                 # An ability cast while Spellblade is on cooldown does not charge it.
                 if self.timeline is None or clock >= spellblade_ready:
                     charged, charged_at = True, clock
@@ -2086,10 +2212,28 @@ class _Rotation:
                         notes=raw_heal.notes,
                     )
                 )
+            for raw_restore in self.rune_combat.on_step_resource_restores(
+                step_dealt,
+                killed_now,
+                clock,
+                self.sheet,
+                self.resources.pool.kind,
+                self.resources.maximum,
+            ):
+                applied = self.resources.restore(
+                    raw_restore.source,
+                    raw_restore.resource,
+                    raw_restore.raw,
+                    raw_restore.label,
+                    raw_restore.notes,
+                )
+                if applied is not None:
+                    resource_events.append(applied)
             new_notes, kw_weak = self.rune_combat.drain_runtime_updates()
             self.notes.extend(new_notes)
             self.weakened |= kw_weak
             self.speed_changed |= self.rune_combat.speed_changed
+            res_after = self.resources.current if self.resources.uses_casting_pool else None
             outcome = StepOutcome(
                 index,
                 step,
@@ -2108,6 +2252,10 @@ class _Rotation:
                 shield_absorbed=total_absorbed,
                 heal_events=tuple(heal_events),
                 shield_events=tuple(shield_events),
+                resource_cost=step_cost,
+                resource_before=res_before,
+                resource_after=res_after,
+                resource_events=tuple(resource_events),
             )
             outcomes.append(outcome)
             self._record_attacker_healing(outcome.healing)
@@ -2176,6 +2324,9 @@ class _Rotation:
                     "timeline: a timed effect starts after the damage of the step that triggers "
                     "it and lasts its duration; triggering it again restarts it (timeline.md)"
                 )
+        resource_summary = self.resources.summary()
+        self.notes.extend(self.resources.notes)
+        self.weakened |= self.resources.weakened
         notes = list(dict.fromkeys(self.notes))
         passive = self.kit.abilities.get("P")
         if passive is not None and passive.not_modelled:
@@ -2198,6 +2349,7 @@ class _Rotation:
             attacker_remaining_health=self.attacker_hp,
             effective_healing=self.effective_healing_total,
             grievous_wounds_applied=self.grievous_used,
+            resource=resource_summary,
         )
 
 
@@ -2215,6 +2367,8 @@ def evaluate_rotation(
     runes: Sequence[int] = (),
     rune_data: RuneData | None = None,
     ap_weight: Fraction | None = None,
+    start_resource: Fraction | None = None,
+    allow_insufficient_resource: bool = False,
 ) -> RotationOutcome:
     """Damage of every step against ``target``, carrying its current health forward.
 
@@ -2240,5 +2394,7 @@ def evaluate_rotation(
         rune_data=rune_data,
         has_ultimate_step=has_ultimate,
         ap_weight=ap_weight,
+        start_resource=start_resource,
+        allow_insufficient_resource=allow_insufficient_resource,
     )
     return rotation.run(steps)

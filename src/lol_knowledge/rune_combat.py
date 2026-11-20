@@ -13,6 +13,7 @@ from fractions import Fraction
 
 from .damage import DamageType, format_number
 from .errors import RotationError, StatsError
+from .resources import ResourceEvent
 from .rune_keystones import (
     DelayedRuneProc,
     KeystoneCombat,
@@ -32,10 +33,11 @@ from .runes import (
     int_input,
     linear_by_level,
     rune_level_bounds,
+    rune_level_table,
     rune_value,
 )
 from .scenario import Target
-from .stats import Label, StatBlocked, StatSheet, weakest
+from .stats import Label, StatBlocked, StatSheet, champion_resource, weakest
 from .survival import HealEvent, absorb_life_heal
 
 _require_target_kind = require_target_kind
@@ -95,6 +97,8 @@ class RuneCombat:
         self._absorb_life: Rune | None = None
         self._triumph: Rune | None = None
         self._font_of_life: Rune | None = None
+        self._presence_of_mind: Rune | None = None
+        self._manaflow_band: Rune | None = None
 
         self._fired: set[int] = set()
         self._ready: dict[int, Fraction] = {}
@@ -110,7 +114,12 @@ class RuneCombat:
                 continue
             seen.add(rune_id)
             rune = data.runes.get(rune_id)
-            if rune is None or rune.key not in COMBAT_MINOR_RUNE_KEYS:
+            if rune is None:
+                continue
+            if rune.key == "ManaflowBand":
+                self._manaflow_band = rune
+                continue
+            if rune.key not in COMBAT_MINOR_RUNE_KEYS:
                 continue
             try:
                 self._configure(rune, inputs, has_ultimate_step)
@@ -308,6 +317,23 @@ class RuneCombat:
                     f"rune {rune.id} {rune.name}: needs --attacker-range melee|ranged"
                 )
             self._font_of_life = rune
+            return
+
+        if rune.key == "PresenceOfMind":
+            pool = champion_resource(self.sheet)
+            if pool.kind not in {"mana", "energy"}:
+                self.notes.append(
+                    f"rune {rune.id} {rune.name}: champion uses {pool.name!r} (replaced by "
+                    "Triumph in-game; no resource restored)"
+                )
+                return
+            if _require_target_kind(rune, self.target) != "champion":
+                return
+            if pool.kind == "mana" and self.holder_range is None:
+                raise RotationError(
+                    f"rune {rune.id} {rune.name}: needs --attacker-range melee|ranged"
+                )
+            self._presence_of_mind = rune
 
     def dealt_modifiers(
         self, part_kind: str, slot: str | None, target_stats: Mapping[str, Fraction]
@@ -697,3 +723,78 @@ class RuneCombat:
             )
 
         return heals
+
+    def manaflow_band_config(
+        self, sheet: StatSheet
+    ) -> tuple[Fraction, Fraction, Label, str] | None:
+        """Missing-mana regen config ``(fraction, interval_s, label, source)`` for Manaflow Band."""
+        if self._manaflow_band is None or self.data is None:
+            return None
+        pool = champion_resource(sheet)
+        if pool.kind != "mana":
+            return None
+        rune = self._manaflow_band
+        return (
+            rune_value(rune, "PercentManaRestore"),
+            rune_value(rune, "PercentManaRestoreCooldown"),
+            self._base,
+            f"{_rune_source(rune, self.data)} ({rune.name})",
+        )
+
+    def on_step_resource_restores(
+        self,
+        dealt_damage: bool,
+        killed_target: bool,
+        clock: Fraction,
+        sheet: StatSheet,
+        resource_kind: str,
+        max_resource: Fraction,
+    ) -> list[ResourceEvent]:
+        """Resource restore events triggered by combat runes (Presence of Mind)."""
+        if self._presence_of_mind is None or self.data is None:
+            return []
+        if resource_kind not in {"mana", "energy"}:
+            return []
+        rune = self._presence_of_mind
+        source = f"{_rune_source(rune, self.data)} ({rune.name})"
+        events: list[ResourceEvent] = []
+
+        if dealt_damage and self._can_fire(rune, clock):
+            cd = rune_value(rune, "CooldownDuration")
+            self._mark_fired(rune, clock, cd)
+            notes: list[str] = []
+            if resource_kind == "mana":
+                melee = rune_level_table(rune, "{47582016}", sheet.level)
+                raw = melee * Fraction(4, 5) if self.holder_range == "ranged" else melee
+                notes.append(f"damaging champion ({self.holder_range})")
+            else:
+                raw = rune_value(rune, "EnergyRestore")
+                notes.append("damaging champion (energy)")
+            if not self.timeline:
+                notes.append(
+                    f"fires once without --timeline ({format_number(cd)} s cooldown applies "
+                    "with --timeline)"
+                )
+            events.append(
+                ResourceEvent(source, resource_kind, "restore", raw, raw, self._base, tuple(notes))
+            )
+
+        if killed_target and max_resource > 0:
+            pct = rune_value(rune, "PercentManaRestore")
+            raw = max_resource * pct
+            events.append(
+                ResourceEvent(
+                    f"{source} takedown",
+                    resource_kind,
+                    "restore",
+                    raw,
+                    raw,
+                    self._base,
+                    (
+                        f"on champion takedown ({format_number(pct * 100)}% max {resource_kind}; "
+                        "1 s in-game delay applied on lethal step)",
+                    ),
+                )
+            )
+
+        return events

@@ -6,6 +6,7 @@ from fractions import Fraction
 from typing import Any
 
 from .damage import format_number, format_percent
+from .resources import ResourceEvent
 from .rotation import RULES, CritBase, Healing, Part, RotationOutcome
 from .scenario import Target
 from .stats import StatSheet
@@ -96,6 +97,19 @@ def _shield_event_dict(event: ShieldEvent) -> dict[str, Any]:
     }
 
 
+def _resource_event_dict(event: ResourceEvent) -> dict[str, Any]:
+    return {
+        "source": event.source,
+        "resource": event.resource,
+        "kind": event.kind,
+        "raw": float(event.raw),
+        "effective": float(event.effective),
+        "exact_effective": str(event.effective),
+        "label": event.label.value,
+        "notes": list(event.notes),
+    }
+
+
 def format_text(
     outcome: RotationOutcome, sheet: StatSheet, target: Target, crit_base: CritBase | None
 ) -> str:
@@ -113,6 +127,12 @@ def format_text(
     if outcome.start_shield > 0:
         lines.append(
             f"target shield: {format_number(outcome.start_shield)} ({outcome.shield_type})"
+        )
+    res = outcome.resource
+    if res is not None and res.uses_casting_pool:
+        lines.append(
+            f"attacker resource: {res.name} {format_number(res.start)} / "
+            f"{format_number(res.maximum)} [{res.label.value}]"
         )
     if crit_base is not None and any(step.step.crit for step in outcome.steps):
         lines.append(
@@ -157,15 +177,33 @@ def format_text(
                 f"[{event.label.value}] ({event.source})"
             )
             lines += [f"      shield note: {note}" for note in event.notes]
+        for event in step.resource_events:
+            sign = "-" if event.kind == "cost" else "+"
+            cap_note = f" (raw {format_number(event.raw)})" if event.effective != event.raw else ""
+            lines.append(
+                f"    resource {event.kind}: {sign}{format_number(event.effective)} "
+                f"{event.resource}{cap_note} [{event.label.value}] ({event.source})"
+            )
+            lines += [f"      resource note: {note}" for note in event.notes]
         absorbed_str = (
             f" (shield absorbed {format_number(step.shield_absorbed)} -> "
             f"shield {format_number(step.shield_after)})"
             if outcome.start_shield > 0
             else ""
         )
+        res_str = (
+            f"; {res.name} {format_number(step.resource_before)} -> "
+            f"{format_number(step.resource_after)}"
+            if res is not None
+            and res.uses_casting_pool
+            and step.resource_before is not None
+            and step.resource_after is not None
+            and (step.resource_before != step.resource_after or step.resource_events)
+            else ""
+        )
         lines.append(
             f"  step total {format_number(step.total)}{absorbed_str} -> "
-            f"health {format_number(step.health_after)}"
+            f"health {format_number(step.health_after)}{res_str}"
         )
         if heals:
             lines.append(f"  step heal {format_number(step.healing)} [{step.healing_label.value}]")
@@ -189,6 +227,17 @@ def format_text(
         )
     if outcome.total_shield_granted > 0:
         lines.append(f"total attacker shield: {format_number(outcome.total_shield_granted)}")
+    if res is not None and res.uses_casting_pool:
+        parts_res = [
+            f"spent {format_number(res.spent)}",
+            f"restored {format_number(res.effective_restored)}",
+        ]
+        if res.regenerated:
+            parts_res.append(f"regenerated {format_number(res.regenerated)}")
+        parts_res.append(f"remaining {format_number(res.remaining)} / {format_number(res.maximum)}")
+        lines.append(f"resource ({res.name}): {', '.join(parts_res)} [{res.label.value}]")
+    if res is not None and res.health_cost_spent > 0:
+        lines.append(f"health cost spent: {format_number(res.health_cost_spent)}")
     lines.append(f"remaining health: {format_number(outcome.remaining_health)}")
     if outcome.timeline is not None:
         lines.append(
@@ -294,6 +343,22 @@ def to_dict(
                 "healing_notes": list(step.healing_notes),
                 "heal_events": [_heal_event_dict(ev) for ev in step.heal_events],
                 "shield_events": [_shield_event_dict(ev) for ev in step.shield_events],
+                "resource_cost": None
+                if step.resource_cost is None
+                else {
+                    "resource": step.resource_cost.resource,
+                    "amount": float(step.resource_cost.amount),
+                    "exact_amount": str(step.resource_cost.amount),
+                    "label": step.resource_cost.label.value,
+                    "source": step.resource_cost.source,
+                },
+                "resource_before": None
+                if step.resource_before is None
+                else float(step.resource_before),
+                "resource_after": None
+                if step.resource_after is None
+                else float(step.resource_after),
+                "resource_events": [_resource_event_dict(ev) for ev in step.resource_events],
                 "parts": [_part_dict(part) for part in step.parts],
             }
             for step in outcome.steps
@@ -314,6 +379,28 @@ def to_dict(
             "start": float(outcome.attacker_start_health or 0),
             "remaining": float(outcome.attacker_remaining_health or 0),
             "max": float(outcome.attacker_max_health),
+        },
+        "resource": None
+        if outcome.resource is None
+        else {
+            "kind": outcome.resource.kind,
+            "name": outcome.resource.name,
+            "maximum": float(outcome.resource.maximum),
+            "start": float(outcome.resource.start),
+            "spent": float(outcome.resource.spent),
+            "exact_spent": str(outcome.resource.spent),
+            "restored": float(outcome.resource.restored),
+            "effective_restored": float(outcome.resource.effective_restored),
+            "exact_effective_restored": str(outcome.resource.effective_restored),
+            "regenerated": float(outcome.resource.regenerated),
+            "exact_regenerated": str(outcome.resource.regenerated),
+            "remaining": float(outcome.resource.remaining),
+            "exact_remaining": str(outcome.resource.remaining),
+            "health_cost_spent": float(outcome.resource.health_cost_spent),
+            "insufficient_steps": list(outcome.resource.insufficient_steps),
+            "uses_casting_pool": outcome.resource.uses_casting_pool,
+            "label": outcome.resource.label.value,
+            "notes": list(outcome.resource.notes),
         },
         "timeline": None
         if outcome.timeline is None
