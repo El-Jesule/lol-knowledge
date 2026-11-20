@@ -1,0 +1,344 @@
+{
+  "schema": "lol-champion-kit/1",
+  "champion": "Katarina",
+  "label": "Derivado",
+  "game_version": "16.23",
+  "content_version": "16.23.8406595+branch.releases-16-23.content.release",
+  "verified_against": {
+    "content_version": "16.23.8406595+branch.releases-16-23.content.release",
+    "bin_sha256": "322ea45b4146ccafe3875b283ed57c51ef1b2111d91ff817dd6ae5a5ea3af5fd",
+    "evidence": "odd/tasks/champion-kits-wave-4.md",
+    "result": "Bin del cliente 16.23 convertido con python -m binmodel.batch_kits y compilado con esta especificación curada (CH-01 oleada 4 — cierre 173/173)"
+  },
+  "source": "Árboles de cálculo del bin del cliente (python -m binmodel) y marcado de los tooltips del cliente; estructura de casos curada en research/kits/",
+  "abilities": {
+    "P": {
+      "name": "Ansia",
+      "max_rank": 1,
+      "cases": [
+        {
+          "id": "dagger",
+          "name": "Giro al recoger daga",
+          "parts": [
+            {
+              "damage_type": "magic",
+              "formula": {
+                "op": "add",
+                "operands": [
+                  {
+                    "op": "by_level",
+                    "values": [
+                      68.1846,
+                      72.1385,
+                      76.8615,
+                      82.3538,
+                      88.6154,
+                      95.6462,
+                      103.4462,
+                      112.0154,
+                      121.3538,
+                      131.4615,
+                      142.3385,
+                      153.9846,
+                      166.4,
+                      179.5846,
+                      193.5385,
+                      208.2615,
+                      223.754,
+                      240.0154
+                    ]
+                  },
+                  {
+                    "op": "mul",
+                    "operands": [
+                      {
+                        "op": "constant",
+                        "value": 0.6
+                      },
+                      {
+                        "op": "stat",
+                        "stat": "attack_damage",
+                        "scope": "bonus"
+                      }
+                    ]
+                  },
+                  {
+                    "op": "mul",
+                    "operands": [
+                      {
+                        "op": "by_level",
+                        "values": [
+                          0.7,
+                          0.7,
+                          0.7,
+                          0.7,
+                          0.7,
+                          0.8,
+                          0.8,
+                          0.8,
+                          0.8,
+                          0.8,
+                          0.9,
+                          0.9,
+                          0.9,
+                          0.9,
+                          0.9,
+                          1,
+                          1,
+                          1
+                        ]
+                      },
+                      {
+                        "op": "stat",
+                        "stat": "ability_power",
+                        "scope": "total"
+                      }
+                    ]
+                  }
+                ]
+              },
+              "label": "Derivado",
+              "source": "Characters/Katarina/Spells/KatarinaPassiveAbility/KatarinaPassive.mSpellCalculations.TotalDamage (16.23.8406595+branch.releases-16-23.content.release)",
+              "damage_type_source": "spell_katarinapassive_tooltip <magicDamage>"
+            }
+          ]
+        }
+      ],
+      "passive_stats": [],
+      "not_modelled": [
+        "Reducción de 15 s de enfriamientos al derribar campeones y aplicación de efectos al impactar"
+      ]
+    },
+    "Q": {
+      "name": "Hoja rebotante",
+      "max_rank": 5,
+      "cases": [
+        {
+          "id": "blade",
+          "name": "Impacto de hoja (hasta 3 objetivos)",
+          "parts": [
+            {
+              "damage_type": "magic",
+              "formula": {
+                "op": "add",
+                "operands": [
+                  {
+                    "op": "by_rank",
+                    "values": [
+                      80,
+                      115,
+                      150,
+                      185,
+                      220
+                    ]
+                  },
+                  {
+                    "op": "mul",
+                    "operands": [
+                      {
+                        "op": "constant",
+                        "value": 0.4
+                      },
+                      {
+                        "op": "stat",
+                        "stat": "ability_power",
+                        "scope": "total"
+                      }
+                    ]
+                  }
+                ]
+              },
+              "label": "Derivado",
+              "source": "Characters/Katarina/Spells/KatarinaQAbility/KatarinaQ.mSpellCalculations.TotalDamage (16.23.8406595+branch.releases-16-23.content.release)",
+              "damage_type_source": "spell_katarinaq_tooltip <magicDamage>"
+            }
+          ]
+        }
+      ],
+      "passive_stats": [],
+      "not_modelled": [
+        "Caída de daga detrás del primer objetivo"
+      ]
+    },
+    "W": {
+      "name": "Preparación",
+      "max_rank": 5,
+      "cases": [],
+      "passive_stats": [],
+      "not_modelled": [
+        "Velocidad de movimiento decreciente y lanzamiento de daga al aire"
+      ]
+    },
+    "E": {
+      "name": "Velocidad del rayo",
+      "max_rank": 5,
+      "cases": [
+        {
+          "id": "shunpo",
+          "name": "Impacto de destello",
+          "parts": [
+            {
+              "damage_type": "magic",
+              "formula": {
+                "op": "add",
+                "operands": [
+                  {
+                    "op": "by_rank",
+                    "values": [
+                      20,
+                      30,
+                      40,
+                      50,
+                      60
+                    ]
+                  },
+                  {
+                    "op": "mul",
+                    "operands": [
+                      {
+                        "op": "constant",
+                        "value": 0.25
+                      },
+                      {
+                        "op": "stat",
+                        "stat": "ability_power",
+                        "scope": "total"
+                      }
+                    ]
+                  },
+                  {
+                    "op": "mul",
+                    "operands": [
+                      {
+                        "op": "constant",
+                        "value": 0.4
+                      },
+                      {
+                        "op": "stat",
+                        "stat": "attack_damage",
+                        "scope": "total"
+                      }
+                    ]
+                  }
+                ]
+              },
+              "label": "Derivado",
+              "source": "Characters/Katarina/Spells/KatarinaEWrapperAbility/KatarinaEWrapper.mSpellCalculations.TotalDamage (16.23.8406595+branch.releases-16-23.content.release)",
+              "damage_type_source": "spell_katarinaewrapper_tooltip <magicDamage>"
+            }
+          ]
+        }
+      ],
+      "passive_stats": [],
+      "not_modelled": [
+        "Aplicación de efectos al impactar y devolución porcentual del enfriamiento al recoger dagas (TooltipDaggerReduction)"
+      ]
+    },
+    "R": {
+      "name": "Loto mortal",
+      "max_rank": 3,
+      "cases": [
+        {
+          "id": "per_dagger_magic",
+          "name": "Una daga (parte mágica)",
+          "parts": [
+            {
+              "damage_type": "magic",
+              "formula": {
+                "op": "add",
+                "operands": [
+                  {
+                    "op": "by_rank",
+                    "values": [
+                      25,
+                      37.5,
+                      50
+                    ]
+                  },
+                  {
+                    "op": "mul",
+                    "operands": [
+                      {
+                        "op": "constant",
+                        "value": 0.19
+                      },
+                      {
+                        "op": "stat",
+                        "stat": "ability_power",
+                        "scope": "total"
+                      }
+                    ]
+                  }
+                ]
+              },
+              "label": "Derivado",
+              "source": "Characters/Katarina/Spells/KatarinaRAbility/KatarinaR.mSpellCalculations.DamageCalc (16.23.8406595+branch.releases-16-23.content.release)",
+              "damage_type_source": "spell_katarinar_tooltip <magicDamage>"
+            }
+          ]
+        },
+        {
+          "id": "total_magic",
+          "name": "Canalización completa de 15 dagas (parte mágica)",
+          "parts": [
+            {
+              "damage_type": "magic",
+              "formula": {
+                "op": "mul",
+                "operands": [
+                  {
+                    "op": "add",
+                    "operands": [
+                      {
+                        "op": "by_rank",
+                        "values": [
+                          25,
+                          37.5,
+                          50
+                        ]
+                      },
+                      {
+                        "op": "mul",
+                        "operands": [
+                          {
+                            "op": "constant",
+                            "value": 0.19
+                          },
+                          {
+                            "op": "stat",
+                            "stat": "ability_power",
+                            "scope": "total"
+                          }
+                        ]
+                      }
+                    ]
+                  },
+                  {
+                    "op": "mul",
+                    "operands": [
+                      {
+                        "op": "constant",
+                        "value": 6
+                      },
+                      {
+                        "op": "constant",
+                        "value": 2.5
+                      }
+                    ]
+                  }
+                ]
+              },
+              "label": "Derivado",
+              "source": "Characters/Katarina/Spells/KatarinaRAbility/KatarinaR.mSpellCalculations.TotalDamageCalc (16.23.8406595+branch.releases-16-23.content.release)",
+              "damage_type_source": "spell_katarinar_tooltip <magicDamage>"
+            }
+          ]
+        }
+      ],
+      "passive_stats": [],
+      "not_modelled": [
+        "Parte física escalada con DA adicional y velocidad de ataque, efectos al impactar reducidos y Heridas graves"
+      ]
+    }
+  }
+}

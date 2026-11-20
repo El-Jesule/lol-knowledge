@@ -1,0 +1,90 @@
+{
+  "champion": "Nilah",
+  "game_version": "16.23",
+  "verified_against": {
+    "content_version": "16.23.8406595+branch.releases-16-23.content.release",
+    "bin_sha256": "0821ef69bcd4f83dc000cf2b9f641c12864a99e91d62c9f3d9e4d20453ad0a61",
+    "evidence": "odd/tasks/champion-kits-wave-4.md",
+    "result": "Bin del cliente 16.23 convertido con python -m binmodel.batch_kits y compilado con esta especificación curada (CH-01 oleada 4 — cierre 173/173)"
+  },
+  "abilities": {
+    "P": {
+      "name": "Júbilo sin fin",
+      "tooltip": "spell_nilahpassive_tooltip",
+      "max_rank": 1,
+      "not_modelled": [
+        "Experiencia adicional compartida en súbditos y amplificación/compartición de curaciones y escudos aliados"
+      ]
+    },
+    "Q": {
+      "name": "Hoja sin forma",
+      "tooltip": "spell_nilahq_tooltip",
+      "cases": [
+        {
+          "id": "lash",
+          "name": "Latigazo (base, sin escalado crítico)",
+          "parts": [
+            {
+              "calculation": "DamageCalc"
+            }
+          ]
+        }
+      ],
+      "not_modelled": [
+        "Escalado pasivo con probabilidad de crítico para penetración de armadura (CritArmorPen) y curación (CritLifesteal), escalado crítico activo, VA/alcance y daño en cono"
+      ]
+    },
+    "W": {
+      "name": "Velo exultante",
+      "tooltip": "spell_nilahw_tooltip",
+      "not_modelled": [
+        "Esquiva de ataques básicos, reducción de daño mágico, velocidad de movimiento y contagio a aliados"
+      ]
+    },
+    "E": {
+      "name": "Estela",
+      "tooltip": "spell_nilahe_tooltip",
+      "cases": [
+        {
+          "id": "dash",
+          "name": "Deslizamiento (2 cargas)",
+          "parts": [
+            {
+              "calculation": "DashDamage"
+            }
+          ]
+        }
+      ],
+      "not_modelled": [
+        "Combo E+Q en ola"
+      ]
+    },
+    "R": {
+      "name": "Apoteosis",
+      "tooltip": "spell_nilahr_tooltip",
+      "cases": [
+        {
+          "id": "spin_total",
+          "name": "Giro continuo (4 tics)",
+          "parts": [
+            {
+              "calculation": "DamagePerTickCalcTooltip"
+            }
+          ]
+        },
+        {
+          "id": "burst",
+          "name": "Estallido final con atracción",
+          "parts": [
+            {
+              "calculation": "DamageCalc"
+            }
+          ]
+        }
+      ],
+      "not_modelled": [
+        "Curación propia y aliada por daño infligido (ChampHealingPercent) y escudo por exceso de curación"
+      ]
+    }
+  }
+}

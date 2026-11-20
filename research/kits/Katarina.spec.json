@@ -1,0 +1,101 @@
+{
+  "champion": "Katarina",
+  "game_version": "16.23",
+  "verified_against": {
+    "content_version": "16.23.8406595+branch.releases-16-23.content.release",
+    "bin_sha256": "322ea45b4146ccafe3875b283ed57c51ef1b2111d91ff817dd6ae5a5ea3af5fd",
+    "evidence": "odd/tasks/champion-kits-wave-4.md",
+    "result": "Bin del cliente 16.23 convertido con python -m binmodel.batch_kits y compilado con esta especificación curada (CH-01 oleada 4 — cierre 173/173)"
+  },
+  "abilities": {
+    "P": {
+      "name": "Ansia",
+      "tooltip": "spell_katarinapassive_tooltip",
+      "max_rank": 1,
+      "cases": [
+        {
+          "id": "dagger",
+          "name": "Giro al recoger daga",
+          "parts": [
+            {
+              "calculation": "TotalDamage"
+            }
+          ]
+        }
+      ],
+      "not_modelled": [
+        "Reducción de 15 s de enfriamientos al derribar campeones y aplicación de efectos al impactar"
+      ]
+    },
+    "Q": {
+      "name": "Hoja rebotante",
+      "tooltip": "spell_katarinaq_tooltip",
+      "cases": [
+        {
+          "id": "blade",
+          "name": "Impacto de hoja (hasta 3 objetivos)",
+          "parts": [
+            {
+              "calculation": "TotalDamage"
+            }
+          ]
+        }
+      ],
+      "not_modelled": [
+        "Caída de daga detrás del primer objetivo"
+      ]
+    },
+    "W": {
+      "name": "Preparación",
+      "tooltip": "spell_katarinaw_tooltip",
+      "not_modelled": [
+        "Velocidad de movimiento decreciente y lanzamiento de daga al aire"
+      ]
+    },
+    "E": {
+      "name": "Velocidad del rayo",
+      "tooltip": "spell_katarinaewrapper_tooltip",
+      "cases": [
+        {
+          "id": "shunpo",
+          "name": "Impacto de destello",
+          "parts": [
+            {
+              "calculation": "TotalDamage"
+            }
+          ]
+        }
+      ],
+      "not_modelled": [
+        "Aplicación de efectos al impactar y devolución porcentual del enfriamiento al recoger dagas (TooltipDaggerReduction)"
+      ]
+    },
+    "R": {
+      "name": "Loto mortal",
+      "tooltip": "spell_katarinar_tooltip",
+      "cases": [
+        {
+          "id": "per_dagger_magic",
+          "name": "Una daga (parte mágica)",
+          "parts": [
+            {
+              "calculation": "DamageCalc"
+            }
+          ]
+        },
+        {
+          "id": "total_magic",
+          "name": "Canalización completa de 15 dagas (parte mágica)",
+          "parts": [
+            {
+              "calculation": "TotalDamageCalc"
+            }
+          ]
+        }
+      ],
+      "not_modelled": [
+        "Parte física escalada con DA adicional y velocidad de ataque, efectos al impactar reducidos y Heridas graves"
+      ]
+    }
+  }
+}

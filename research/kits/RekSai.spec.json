@@ -1,0 +1,125 @@
+{
+  "champion": "RekSai",
+  "game_version": "16.23",
+  "verified_against": {
+    "content_version": "16.23.8406595+branch.releases-16-23.content.release",
+    "bin_sha256": "8074d42e73acd5fd73a47a38ee9dfac8b1a4f24387891e48dd6134c9603de150",
+    "evidence": "odd/tasks/champion-kits-wave-4.md",
+    "result": "Bin del cliente 16.23 convertido con python -m binmodel.batch_kits y compilado con esta especificación curada (CH-01 oleada 4 — cierre 173/173)"
+  },
+  "abilities": {
+    "P": {
+      "name": "Furia del Xer'Sai",
+      "tooltip": "spell_reksaipassive_tooltip",
+      "max_rank": 1,
+      "not_modelled": [
+        "Generación de Furia y curación al excavar consumiendo Furia (HealAmount)"
+      ]
+    },
+    "Q": {
+      "name": "Ira de la reina / Rastreadora",
+      "tooltip": "spell_reksaiq_tooltip",
+      "cases": [
+        {
+          "id": "unburrowed",
+          "name": "Superficie: Ira de la reina (por ataque)",
+          "parts": [
+            {
+              "calculation": "TotalDamageTooltip"
+            }
+          ]
+        }
+      ],
+      "not_modelled": [
+        "Velocidad de ataque del 35 % en 3 ataques y bajo tierra: Rastreadora (BurrowDamageTooltip en tooltip separado)"
+      ]
+    },
+    "W": {
+      "name": "Excavar / Salir a la superficie",
+      "tooltip": "spell_reksaiwburrowed_tooltip",
+      "cases": [
+        {
+          "id": "unburrow",
+          "name": "Salir a la superficie",
+          "parts": [
+            {
+              "calculation": "UnburrowDamage"
+            }
+          ]
+        }
+      ],
+      "not_modelled": [
+        "Lanzamiento por los aires de 1 s, sentido sísmico y velocidad de movimiento bajo tierra"
+      ]
+    },
+    "E": {
+      "name": "Mordisco furioso / Túnel",
+      "tooltip": "spell_reksaie_tooltip",
+      "cases": [
+        {
+          "id": "bite_normal",
+          "name": "Superficie: Mordisco normal",
+          "parts": [
+            {
+              "calculation": "BaseDamageCalculation"
+            }
+          ]
+        },
+        {
+          "id": "bite_max_fury",
+          "name": "Superficie: Mordisco a furia máxima (verdadero)",
+          "parts": [
+            {
+              "calculation": "EmpoweredDamageCalculation"
+            }
+          ]
+        }
+      ],
+      "not_modelled": [
+        "Bajo tierra: excavación de túneles (hasta 8)"
+      ]
+    },
+    "R": {
+      "name": "Carrera del vacío",
+      "tooltip": "spell_reksair_tooltip",
+      "cases": [
+        {
+          "id": "rush",
+          "name": "Salto (base + % vida máxima)",
+          "parts": [
+            {
+              "calculation": "RBaseDamageCalc"
+            },
+            {
+              "tooltip_reference": "PercentHealthDamage",
+              "damage_type": "physical",
+              "source_note": "DataValues.PercentHealthDamage % × vida máxima del objetivo",
+              "formula": {
+                "op": "mul",
+                "operands": [
+                  {
+                    "op": "data_value",
+                    "name": "PercentHealthDamage"
+                  },
+                  {
+                    "op": "constant",
+                    "value": 0.01
+                  },
+                  {
+                    "op": "stat",
+                    "stat": "health",
+                    "scope": "max",
+                    "subject": "target"
+                  }
+                ]
+              }
+            }
+          ]
+        }
+      ],
+      "not_modelled": [
+        "Inalcanzabilidad, imparabilidad y reinicio del enfriamiento de W"
+      ]
+    }
+  }
+}

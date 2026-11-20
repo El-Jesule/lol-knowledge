@@ -1,0 +1,110 @@
+{
+  "champion": "Mordekaiser",
+  "game_version": "16.23",
+  "verified_against": {
+    "content_version": "16.23.8406595+branch.releases-16-23.content.release",
+    "bin_sha256": "59df2c462e15d2c6c8e188241bf5d79979e89f09010628fc064fd1826f4a63d9",
+    "evidence": "odd/tasks/champion-kits-wave-4.md",
+    "result": "Bin del cliente 16.23 convertido con python -m binmodel.batch_kits y compilado con esta especificación curada (CH-01 oleada 4 — cierre 173/173)"
+  },
+  "abilities": {
+    "P": {
+      "name": "El auge de la oscuridad",
+      "tooltip": "spell_mordekaiserpassive_tooltip",
+      "max_rank": 1,
+      "cases": [
+        {
+          "id": "on_hit",
+          "name": "Daño mágico al impactar (40 % PH)",
+          "parts": [
+            {
+              "calculation": "BonusAPAuto"
+            }
+          ]
+        },
+        {
+          "id": "aura_dps",
+          "name": "Aura por segundo (plano + 1..5 % vida máxima)",
+          "parts": [
+            {
+              "calculation": "AuraDamagePerStack"
+            },
+            {
+              "tooltip_reference": "PercentHealthForAura",
+              "damage_type": "magic",
+              "source_note": "mSpellCalculations.PercentHealthForAura % × vida máxima del objetivo",
+              "formula": {
+                "op": "mul",
+                "operands": [
+                  {
+                    "op": "calculation",
+                    "name": "PercentHealthForAura"
+                  },
+                  {
+                    "op": "constant",
+                    "value": 0.01
+                  },
+                  {
+                    "op": "stat",
+                    "stat": "health",
+                    "scope": "max",
+                    "subject": "target"
+                  }
+                ]
+              }
+            }
+          ]
+        }
+      ],
+      "not_modelled": [
+        "Velocidad de movimiento del aura (PassiveMovementSpeed) y tope contra monstruos (MaxAuraMonsterDamage)"
+      ]
+    },
+    "Q": {
+      "name": "Aniquilación",
+      "tooltip": "spell_mordekaiserq_tooltip",
+      "not_modelled": [
+        "Mazo en área y bonificación aislado (QDamage usa un nodo breakpoints sin level1_value en el bin, no traducido por kitgen)"
+      ]
+    },
+    "W": {
+      "name": "Indestructible",
+      "tooltip": "spell_mordekaiserw_tooltip",
+      "not_modelled": [
+        "Acumulación de escudo por daño infligido/recibido y reactivación curativa"
+      ]
+    },
+    "E": {
+      "name": "Abrazo de la muerte",
+      "tooltip": "spell_mordekaisere_circular_tooltip",
+      "passive_stats": [
+        {
+          "stat": "magic_penetration_percent",
+          "data_value": "MagicPen",
+          "condition": "Penetración mágica pasiva permanente al subir E (5..15 %)"
+        }
+      ],
+      "cases": [
+        {
+          "id": "pull",
+          "name": "Garra de atracción",
+          "parts": [
+            {
+              "calculation": "TotalDamage"
+            }
+          ]
+        }
+      ],
+      "not_modelled": [
+        "Atracción de enemigos"
+      ]
+    },
+    "R": {
+      "name": "Reino de la muerte",
+      "tooltip": "spell_mordekaiserr_tooltip",
+      "not_modelled": [
+        "Duelo de 7 s en el Reino de la Muerte y robo del 10 % de estadísticas básicas del objetivo"
+      ]
+    }
+  }
+}

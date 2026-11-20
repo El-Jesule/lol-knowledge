@@ -1,0 +1,123 @@
+{
+  "champion": "Urgot",
+  "game_version": "16.23",
+  "verified_against": {
+    "content_version": "16.23.8406595+branch.releases-16-23.content.release",
+    "bin_sha256": "e79e3bceeb0f1150b74d3528497f55653dae675d6d48a66130c41d0071f4018a",
+    "evidence": "odd/tasks/champion-kits-wave-4.md",
+    "result": "Bin del cliente 16.23 convertido con python -m binmodel.batch_kits y compilado con esta especificación curada (CH-01 oleada 4 — cierre 173/173)"
+  },
+  "abilities": {
+    "P": {
+      "name": "Articulaciones llameantes",
+      "tooltip": "spell_urgotpassive_tooltip",
+      "max_rank": 1,
+      "cases": [
+        {
+          "id": "shotgun_leg",
+          "name": "Disparo de pierna (DA + % vida máxima)",
+          "parts": [
+            {
+              "calculation": "ADDamage"
+            },
+            {
+              "tooltip_reference": "PercentHPRatio",
+              "damage_type": "physical",
+              "source_note": "mSpellCalculations.PercentHPRatio × vida máxima del objetivo",
+              "formula": {
+                "op": "mul",
+                "operands": [
+                  {
+                    "op": "calculation",
+                    "name": "PercentHPRatio"
+                  },
+                  {
+                    "op": "stat",
+                    "stat": "health",
+                    "scope": "max",
+                    "subject": "target"
+                  }
+                ]
+              }
+            }
+          ]
+        }
+      ],
+      "not_modelled": [
+        "Enfriamiento independiente por pierna (PerLegCD) y tope contra monstruos (MonsterCap)"
+      ]
+    },
+    "Q": {
+      "name": "Carga corrosiva",
+      "tooltip": "spell_urgotq_tooltip",
+      "cases": [
+        {
+          "id": "blast",
+          "name": "Explosión corrosiva",
+          "parts": [
+            {
+              "calculation": "TotalDamage"
+            }
+          ]
+        }
+      ],
+      "not_modelled": [
+        "Ralentización de 1,25 s"
+      ]
+    },
+    "W": {
+      "name": "Purgar",
+      "tooltip": "spell_urgotw_tooltip",
+      "cases": [
+        {
+          "id": "per_shot",
+          "name": "Un disparo (3 disparos/s)",
+          "parts": [
+            {
+              "calculation": "DamagePerShot"
+            }
+          ]
+        }
+      ],
+      "not_modelled": [
+        "Cadencia fija de 3 disparos/s, efectos al impactar al 50 %, alternable permanente a rango 5 y autoralentización"
+      ]
+    },
+    "E": {
+      "name": "Desdén",
+      "tooltip": "spell_urgote_tooltip",
+      "cases": [
+        {
+          "id": "fling",
+          "name": "Embestida con lanzamiento",
+          "parts": [
+            {
+              "calculation": "EDamage"
+            }
+          ]
+        }
+      ],
+      "not_modelled": [
+        "Escudo (ETotalShieldHealth) y aturdimiento de 1,5 s"
+      ]
+    },
+    "R": {
+      "name": "Miedo más allá de la muerte",
+      "tooltip": "spell_urgotr_tooltip",
+      "cases": [
+        {
+          "id": "drill",
+          "name": "Impacto inicial del taladro",
+          "parts": [
+            {
+              "calculation": "RCalculatedDamage"
+            }
+          ]
+        }
+      ],
+      "not_modelled": [
+        "Ralentización por vida faltante, reactivación de ejecución bajo 25 % de vida y miedo en área"
+      ]
+    }
+  }
+}

@@ -1,0 +1,48 @@
+{
+  "champion": "Ryze",
+  "game_version": "16.23",
+  "verified_against": {
+    "content_version": "16.23.8406595+branch.releases-16-23.content.release",
+    "bin_sha256": "edb3ee342f3161ec0e4f1651c5490828393d1042de16a677f2efd7a6cf049623",
+    "evidence": "odd/tasks/champion-kits-wave-4.md",
+    "result": "Bin del cliente 16.23 convertido con python -m binmodel.batch_kits y compilado con esta especificación curada (CH-01 oleada 4 — cierre 173/173)"
+  },
+  "abilities": {
+    "P": {
+      "name": "Maestría arcana",
+      "tooltip": "spell_ryzepassive_tooltip",
+      "max_rank": 1,
+      "not_modelled": [
+        "Aumento porcentual de maná máximo según PH (PassiveManaCalcTooltip: 10 % por 100 PH) y escalado de habilidades por maná adicional"
+      ]
+    },
+    "Q": {
+      "name": "Descarga eléctrica",
+      "tooltip": "spell_ryzeqwrapper_tooltip",
+      "not_modelled": [
+        "QDamageCalc incluye término de maná adicional no resuelto en el bin (unresolved); reinicio de CD por W/E, 2 runas de velocidad de movimiento y amplificación contra Flujo"
+      ]
+    },
+    "W": {
+      "name": "Prisión rúnica",
+      "tooltip": "spell_ryzew_tooltip",
+      "not_modelled": [
+        "WDamageCalc incluye término de maná adicional no resuelto en el bin; ralentización o raíz sobre Flujo"
+      ]
+    },
+    "E": {
+      "name": "Tormenta eléctrica",
+      "tooltip": "spell_ryzee_tooltip",
+      "not_modelled": [
+        "EDamageCalc incluye término de maná adicional no resuelto en el bin; aplicación y propagación de Flujo"
+      ]
+    },
+    "R": {
+      "name": "Distorsión de reinos",
+      "tooltip": "spell_ryzer_tooltip",
+      "not_modelled": [
+        "Amplificación pasiva de Q sobre Flujo (40/70/100 %) y teletransporte grupal"
+      ]
+    }
+  }
+}

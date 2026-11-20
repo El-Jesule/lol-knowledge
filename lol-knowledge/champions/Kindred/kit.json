@@ -1,0 +1,249 @@
+{
+  "schema": "lol-champion-kit/1",
+  "champion": "Kindred",
+  "label": "Derivado",
+  "game_version": "16.23",
+  "content_version": "16.23.8406595+branch.releases-16-23.content.release",
+  "verified_against": {
+    "content_version": "16.23.8406595+branch.releases-16-23.content.release",
+    "bin_sha256": "c3813711923cfde1260d748ee7d8a4088bbde213a6851c83e928adbb62603b3f",
+    "evidence": "odd/tasks/champion-kits-wave-4.md",
+    "result": "Bin del cliente 16.23 convertido con python -m binmodel.batch_kits y compilado con esta especificación curada (CH-01 oleada 4 — cierre 173/173)"
+  },
+  "source": "Árboles de cálculo del bin del cliente (python -m binmodel) y marcado de los tooltips del cliente; estructura de casos curada en research/kits/",
+  "abilities": {
+    "P": {
+      "name": "Marca de Kindred",
+      "max_rank": 1,
+      "cases": [],
+      "passive_stats": [],
+      "not_modelled": [
+        "Acumulaciones de Marca de Kindred (alcance en 4/+3 marcas, VA en Q y % vida en W/E)"
+      ]
+    },
+    "Q": {
+      "name": "Danza de flechas",
+      "max_rank": 5,
+      "cases": [
+        {
+          "id": "arrow",
+          "name": "Flecha (hasta 3 enemigos)",
+          "parts": [
+            {
+              "damage_type": "physical",
+              "formula": {
+                "op": "add",
+                "operands": [
+                  {
+                    "op": "by_rank",
+                    "values": [
+                      40,
+                      65,
+                      90,
+                      115,
+                      140
+                    ]
+                  },
+                  {
+                    "op": "mul",
+                    "operands": [
+                      {
+                        "op": "constant",
+                        "value": 0.75
+                      },
+                      {
+                        "op": "stat",
+                        "stat": "attack_damage",
+                        "scope": "bonus"
+                      }
+                    ]
+                  }
+                ]
+              },
+              "label": "Derivado",
+              "source": "Characters/Kindred/Spells/KindredQAbility/KindredQ.mSpellCalculations.TotalDamage (16.23.8406595+branch.releases-16-23.content.release)",
+              "damage_type_source": "spell_kindredq_tooltip <physicalDamage>"
+            }
+          ]
+        }
+      ],
+      "passive_stats": [],
+      "not_modelled": [
+        "Velocidad de ataque temporal (TotalQAttackSpeed) y reducción de CD dentro de W"
+      ]
+    },
+    "W": {
+      "name": "Frenesí de lobo",
+      "max_rank": 5,
+      "cases": [
+        {
+          "id": "wolf_bite_0_marks",
+          "name": "Mordisco de Lobo (0 marcas: base + 1,5 % vida actual)",
+          "parts": [
+            {
+              "damage_type": "magic",
+              "formula": {
+                "op": "add",
+                "operands": [
+                  {
+                    "op": "by_rank",
+                    "values": [
+                      25,
+                      30,
+                      35,
+                      40,
+                      45
+                    ]
+                  },
+                  {
+                    "op": "mul",
+                    "operands": [
+                      {
+                        "op": "constant",
+                        "value": 0.2
+                      },
+                      {
+                        "op": "stat",
+                        "stat": "attack_damage",
+                        "scope": "bonus"
+                      }
+                    ]
+                  },
+                  {
+                    "op": "mul",
+                    "operands": [
+                      {
+                        "op": "constant",
+                        "value": 0.2
+                      },
+                      {
+                        "op": "stat",
+                        "stat": "ability_power",
+                        "scope": "total"
+                      }
+                    ]
+                  }
+                ]
+              },
+              "label": "Derivado",
+              "source": "Characters/Kindred/Spells/KindredWAbility/KindredW.mSpellCalculations.BaseWolfDamage (16.23.8406595+branch.releases-16-23.content.release)",
+              "damage_type_source": "spell_kindredw_tooltip <magicDamage>"
+            },
+            {
+              "damage_type": "magic",
+              "formula": {
+                "op": "mul",
+                "operands": [
+                  {
+                    "op": "constant",
+                    "value": 0.015
+                  },
+                  {
+                    "op": "stat",
+                    "stat": "health",
+                    "scope": "current",
+                    "subject": "target"
+                  }
+                ]
+              },
+              "label": "Derivado",
+              "source": "Characters/Kindred/Spells/KindredWAbility/KindredW · DataValues.CloneBasePercentDamage × vida actual del objetivo (0 marcas) (16.23.8406595+branch.releases-16-23.content.release)",
+              "damage_type_source": "spell_kindredw_tooltip <magicDamage>"
+            }
+          ]
+        }
+      ],
+      "passive_stats": [],
+      "not_modelled": [
+        "Escalado de +1 % vida actual por Marca de Kindred, curación pasiva al moverse (AttackHeal) y cadencia de Lobo"
+      ]
+    },
+    "E": {
+      "name": "Temor creciente",
+      "max_rank": 5,
+      "cases": [
+        {
+          "id": "bite_0_marks",
+          "name": "Detonación de 3 ataques (0 marcas: base + 5 % vida faltante)",
+          "parts": [
+            {
+              "damage_type": "physical",
+              "formula": {
+                "op": "add",
+                "operands": [
+                  {
+                    "op": "by_rank",
+                    "values": [
+                      80,
+                      110,
+                      140,
+                      170,
+                      200
+                    ]
+                  },
+                  {
+                    "op": "mul",
+                    "operands": [
+                      {
+                        "op": "constant",
+                        "value": 1
+                      },
+                      {
+                        "op": "stat",
+                        "stat": "attack_damage",
+                        "scope": "bonus"
+                      }
+                    ]
+                  }
+                ]
+              },
+              "label": "Derivado",
+              "source": "Characters/Kindred/Spells/KindredEWrapperAbility/KindredEWrapper.mSpellCalculations.BaseBiteDamage (16.23.8406595+branch.releases-16-23.content.release)",
+              "damage_type_source": "spell_kindredewrapper_tooltip <physicalDamage>"
+            },
+            {
+              "damage_type": "physical",
+              "formula": {
+                "op": "mul",
+                "operands": [
+                  {
+                    "op": "constant",
+                    "value": 0.05
+                  },
+                  {
+                    "op": "stat",
+                    "stat": "health",
+                    "scope": "max",
+                    "subject": "target"
+                  },
+                  {
+                    "op": "stat",
+                    "stat": "health",
+                    "scope": "missing_fraction",
+                    "subject": "target"
+                  }
+                ]
+              },
+              "label": "Derivado",
+              "source": "Characters/Kindred/Spells/KindredEWrapperAbility/KindredEWrapper · DataValues.BasePercentDamage × vida faltante del objetivo (0 marcas) (16.23.8406595+branch.releases-16-23.content.release)",
+              "damage_type_source": "spell_kindredewrapper_tooltip <physicalDamage>"
+            }
+          ]
+        }
+      ],
+      "passive_stats": [],
+      "not_modelled": [
+        "Escalado de +0,5 % por Marca de Kindred, golpe crítico en umbral de vida baja, ralentización y tope a monstruos"
+      ]
+    },
+    "R": {
+      "name": "Respiro de cordera",
+      "max_rank": 3,
+      "cases": [],
+      "passive_stats": [],
+      "not_modelled": [
+        "Zona de invulnerabilidad al 10 % de vida durante 4 s y curación final"
+      ]
+    }
+  }
+}

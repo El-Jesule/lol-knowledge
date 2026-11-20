@@ -39,6 +39,7 @@ def _sheet(
     *,
     learned: dict[str, int] | None = None,
     inputs: dict[str, F] | None = None,
+    assumptions: dict[str, F] | None = None,
     include_stacking: bool = True,
 ):
     champ = load_champion(ROOT, champion_id)
@@ -53,6 +54,7 @@ def _sheet(
         loaded,
         issues=ISSUES,
         derived=RECORDS,
+        assumptions=assumptions,
         extras=extras,
         extra_amplifiers=passive_fx.amplifiers,
     )
@@ -76,52 +78,11 @@ def _target(
     )
 
 
-def test_published_kits_count_reaches_wave_3_target():
+def test_published_kits_cover_full_173_champion_roster():
     ids = _published_kit_ids()
-    assert len(ids) >= 129
-    for expected in (
-        "Ahri",
-        "Zaahen",
-        "Jax",
-        "Darius",
-        "Malphite",
-        "Pantheon",
-        "Annie",
-        "Lux",
-        "Veigar",
-        "Syndra",
-        "Ezreal",
-        "Garen",
-        "Brand",
-        "Vayne",
-        "Leona",
-        "Nautilus",
-        "Vladimir",
-        "KogMaw",
-        "Lillia",
-        "Vex",
-        "Gwen",
-        "LeeSin",
-        "Akali",
-        "Caitlyn",
-        "TahmKench",
-        "Aatrox",
-        "Fiora",
-        "DrMundo",
-        "KSante",
-        "Nasus",
-        "Briar",
-        "Shyvana",
-        "Viego",
-        "JarvanIV",
-        "Mel",
-        "Hwei",
-        "Naafiri",
-        "Twitch",
-        "Thresh",
-        "Renata",
-    ):
-        assert expected in ids
+    snapshot_ids = sorted(p.stem for p in (ROOT / "data" / "current" / "champions").glob("*.json"))
+    assert ids == snapshot_ids
+    assert len(ids) == 173
 
 
 @pytest.mark.parametrize("champion_id", _published_kit_ids())
@@ -141,8 +102,11 @@ def test_every_published_kit_evaluates_all_cases_and_timeline_rotation(champion_
         "missing_fraction_health": F(1, 2),
     }
 
+    # Senna has no AD growth in the client bin (DAT-04); supply the explicit 0 assumption.
+    assumptions = {"attackdamageperlevel": F(0)} if champion_id == "Senna" else None
+
     for level in (11, 18):
-        sheet = _sheet(champion_id, level, items, learned=learned)
+        sheet = _sheet(champion_id, level, items, learned=learned, assumptions=assumptions)
         for slot, ability in kit.abilities.items():
             if not ability.cases:
                 continue
@@ -160,7 +124,9 @@ def test_every_published_kit_evaluates_all_cases_and_timeline_rotation(champion_
                 )
 
     # Also verify a real --timeline rotation using the first non-recast case of each active slot.
-    sheet18 = _sheet(champion_id, 18, items, learned=learned, include_stacking=False)
+    sheet18 = _sheet(
+        champion_id, 18, items, learned=learned, assumptions=assumptions, include_stacking=False
+    )
     step_tokens: list[str] = ["attack"]
     for slot in ("Q", "W", "E", "R"):
         ability = kit.abilities.get(slot)
@@ -169,8 +135,8 @@ def test_every_published_kit_evaluates_all_cases_and_timeline_rotation(champion_
         non_recast = [case for case in ability.cases if not case.recast]
         if non_recast:
             step_tokens.append(f"{slot}.{non_recast[0].id}")
-    # Kits with one active damage spell (e.g. Twitch: E + passive P) yield 2 steps.
-    assert len(step_tokens) >= 2
+    # Champions whose active slots all depend on unmodelled bin nodes (Khazix, Ryze) yield 1 step.
+    assert len(step_tokens) >= 1
     out = evaluate_rotation(
         kit,
         sheet18,
@@ -476,3 +442,132 @@ def test_wave_3_spot_checks_fiora_drmundo_nasus_jarvaniv_thresh_shyvana_viego_tw
     )[0]
     assert renata_p.damage_type == "magic"
     assert renata_p.raw > F(40)
+
+
+def test_wave_4_spot_checks_ambessa_mordekaiser_tf_olaf_senna_yone_kayn_udyr_varus_belveth():
+    # Ambessa R grants +30% passive armor penetration at rank 3; Q has Q1 + Q2 recast % max HP
+    ambessa_r3 = _sheet("Ambessa", 16, learned={"R": 3})
+    assert ambessa_r3["armor_penetration_percent"].total() == F(3, 10)
+    ambessa_kit = load_kit(ROOT, "Ambessa")
+    assert ambessa_kit is not None
+    assert ambessa_kit.ability("Q").case("slam_first").recast is True
+    amb_q1 = ability_damage(
+        ambessa_kit,
+        "Q",
+        5,
+        _sheet("Ambessa", 18),
+        case="sweep_edge",
+        target={"max_health": F(2000)},
+    )
+    assert amb_q1[1].raw == F(120)  # 6% of 2000 at 0 bonus AD
+
+    # Mordekaiser E grants +15% passive magic penetration at rank 5; P aura deals 5% max HP/s at 18
+    morde_e5 = _sheet("Mordekaiser", 18, learned={"E": 5})
+    assert morde_e5["magic_penetration_percent"].total() == F(3, 20)
+    morde_kit = load_kit(ROOT, "Mordekaiser")
+    assert morde_kit is not None
+    morde_aura = ability_damage(
+        morde_kit, "P", 1, morde_e5, case="aura_dps", target={"max_health": F(2000)}
+    )
+    assert morde_aura[1].damage_type == "magic"
+    assert morde_aura[1].raw == F(100)  # 5% of 2000 at level 18
+
+    # TwistedFate E grants +55% passive attack speed at rank 5
+    tf_base = _sheet("TwistedFate", 18)
+    tf_e5 = _sheet("TwistedFate", 18, learned={"E": 5})
+    assert tf_e5["attack_speed_bonus"].total() - tf_base["attack_speed_bonus"].total() == F(11, 20)
+
+    # Olaf E deals true damage and pays 40% of its raw damage as dynamic health cost
+    olaf_kit = load_kit(ROOT, "Olaf")
+    assert olaf_kit is not None
+    olaf_sheet = _sheet("Olaf", 18)
+    olaf_rot = evaluate_rotation(
+        olaf_kit,
+        olaf_sheet,
+        {"E": 5},
+        _target(armor=F(100), mr=F(100), max_health=F(2000), current_health=F(2000)),
+        parse_steps("E.strike"),
+        CATALOG,
+    )
+    e_raw = olaf_rot.steps[0].parts[0].raw
+    assert olaf_rot.steps[0].parts[0].damage_type == "true"
+    assert olaf_rot.steps[0].resource_cost is not None
+    assert olaf_rot.steps[0].resource_cost.resource == "health"
+    assert olaf_rot.steps[0].resource_cost.amount == e_raw * F(2, 5)
+
+    # Senna P at level 1 (no DAT-04 assumption needed) grants +0.75 AD per Mist stack
+    senna0 = _sheet("Senna", 1, inputs={"mist_stacks": F(0)})
+    senna40 = _sheet("Senna", 1, inputs={"mist_stacks": F(40)})
+    assert senna40["attack_damage"].total() - senna0["attack_damage"].total() == F(30)
+
+    # Yone W & R deal exact 50% physical + 50% magic dual damage
+    yone_kit = load_kit(ROOT, "Yone")
+    assert yone_kit is not None
+    yone_sheet = _sheet("Yone", 18, ("1038",))
+    yone_w = ability_damage(
+        yone_kit, "W", 5, yone_sheet, case="cleave", target={"max_health": F(2000)}
+    )
+    assert [p.damage_type for p in yone_w] == ["physical", "magic"]
+    assert yone_w[0].raw == yone_w[1].raw == F(145)  # 0.5 * (50 + 0.12 * 2000) = 145 each
+    yone_r = ability_damage(yone_kit, "R", 3, yone_sheet, case="slash")
+    assert [p.damage_type for p in yone_r] == ["physical", "magic"]
+    assert yone_r[0].raw == yone_r[1].raw
+
+    # Kayn Q Darkin & R Darkin deal % max HP physical damage (resolved via game_spell_kayn_*)
+    kayn_kit = load_kit(ROOT, "Kayn")
+    assert kayn_kit is not None
+    kayn_sheet = _sheet("Kayn", 18)
+    kayn_q = ability_damage(
+        kayn_kit, "Q", 5, kayn_sheet, case="darkin_hit", target={"max_health": F(2000)}
+    )
+    assert kayn_q[1].raw == F(120)  # 6% of 2000 at 0 bonus AD
+    kayn_r = ability_damage(
+        kayn_kit, "R", 3, kayn_sheet, case="darkin", target={"max_health": F(2000)}
+    )[0]
+    assert kayn_r.raw == F(300)  # 15% of 2000 at 0 bonus AD
+
+    # Varus W blight_3 = 3x blight_1 and active_q_max = 1.7x active_q_min
+    varus_kit = load_kit(ROOT, "Varus")
+    assert varus_kit is not None
+    varus_sheet = _sheet("Varus", 18)
+    b1 = ability_damage(
+        varus_kit, "W", 5, varus_sheet, case="blight_1", target={"max_health": F(2000)}
+    )[0]
+    b3 = ability_damage(
+        varus_kit, "W", 5, varus_sheet, case="blight_3", target={"max_health": F(2000)}
+    )[0]
+    assert b1.raw == F(90)  # 4.5% of 2000
+    assert b3.raw == b1.raw * 3
+    qmin = ability_damage(
+        varus_kit,
+        "W",
+        5,
+        varus_sheet,
+        case="active_q_min",
+        target={"max_health": F(2000), "missing_fraction_health": F(1, 2)},
+    )[0]
+    qmax = ability_damage(
+        varus_kit,
+        "W",
+        5,
+        varus_sheet,
+        case="active_q_max",
+        target={"max_health": F(2000), "missing_fraction_health": F(1, 2)},
+    )[0]
+    assert qmin.raw == F(100)  # 10% of 1000 missing HP
+    assert qmax.raw == F(170)  # 1.7x
+
+    # Belveth R explosion includes 20% missing HP true damage
+    bel_kit = load_kit(ROOT, "Belveth")
+    assert bel_kit is not None
+    bel_r = ability_damage(
+        bel_kit,
+        "R",
+        3,
+        _sheet("Belveth", 18),
+        case="explosion",
+        target={"max_health": F(2000), "missing_fraction_health": F(1, 2)},
+    )
+    assert [p.damage_type for p in bel_r] == ["true", "true"]
+    assert bel_r[0].raw == F(250)
+    assert bel_r[1].raw == F(200)  # 20% of 1000 missing HP

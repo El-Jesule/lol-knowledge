@@ -1,0 +1,121 @@
+{
+  "champion": "Gnar",
+  "game_version": "16.23",
+  "verified_against": {
+    "content_version": "16.23.8406595+branch.releases-16-23.content.release",
+    "bin_sha256": "621a4caa7374cd3a2dba4cb80c1927156c85ec219c7df8e7c442892f55550aaa",
+    "evidence": "odd/tasks/champion-kits-wave-4.md",
+    "result": "Bin del cliente 16.23 convertido con python -m binmodel.batch_kits y compilado con esta especificación curada (CH-01 oleada 4 — cierre 173/173)"
+  },
+  "abilities": {
+    "P": {
+      "name": "Gen de furia",
+      "tooltip": "spell_gnarpassive_tooltip",
+      "max_rank": 1,
+      "not_modelled": [
+        "Estadísticas de Mini-Gnar (alcance, VM, VA: TotalAS) y transformación en Mega-Gnar (vida, armadura, RM, DA base adicionales)"
+      ]
+    },
+    "Q": {
+      "name": "Bumerán / Peñascazo",
+      "tooltip": "spell_gnarq_tooltip",
+      "cases": [
+        {
+          "id": "mini",
+          "name": "Mini-Gnar: Bumerán (primer objetivo)",
+          "parts": [
+            {
+              "calculation": "MiniTotalDamage"
+            }
+          ]
+        }
+      ],
+      "not_modelled": [
+        "Mini-Gnar: 50 % a objetivos posteriores y devolución de CD al recogerlo; Mega-Gnar: Peñascazo (MegaTotalDamage)"
+      ]
+    },
+    "W": {
+      "name": "Híper / Golpazo",
+      "tooltip": "spell_gnarw_tooltip",
+      "cases": [
+        {
+          "id": "mini_proc",
+          "name": "Mini-Gnar: 3.ª carga de Híper (plano + % vida máxima)",
+          "parts": [
+            {
+              "calculation": "MiniTotalDamage"
+            },
+            {
+              "tooltip_reference": "MiniPercentHPDamage",
+              "damage_type": "magic",
+              "source_note": "DataValues.MiniPercentHPDamage × vida máxima del objetivo",
+              "formula": {
+                "op": "mul",
+                "operands": [
+                  {
+                    "op": "data_value",
+                    "name": "MiniPercentHPDamage"
+                  },
+                  {
+                    "op": "stat",
+                    "stat": "health",
+                    "scope": "max",
+                    "subject": "target"
+                  }
+                ]
+              }
+            }
+          ]
+        }
+      ],
+      "not_modelled": [
+        "Velocidad de movimiento de Híper, tope contra monstruos (300) y Mega-Gnar: Golpazo (MegaTotalDamage + aturdimiento)"
+      ]
+    },
+    "E": {
+      "name": "Brinco / Sacudida",
+      "tooltip": "spell_gnare_tooltip",
+      "cases": [
+        {
+          "id": "mini",
+          "name": "Mini-Gnar: Brinco",
+          "parts": [
+            {
+              "calculation": "MiniTotalDamage"
+            }
+          ]
+        }
+      ],
+      "not_modelled": [
+        "Velocidad de ataque de Brinco (MinibAS), rebote y Mega-Gnar: Sacudida (MegaTotalDamage)"
+      ]
+    },
+    "R": {
+      "name": "¡GNAR!",
+      "tooltip": "spell_gnarr_tooltip",
+      "cases": [
+        {
+          "id": "throw",
+          "name": "Mega-Gnar: Lanzamiento",
+          "parts": [
+            {
+              "calculation": "Damage"
+            }
+          ]
+        },
+        {
+          "id": "wall_slam",
+          "name": "Mega-Gnar: Choque contra muro (+50 %)",
+          "parts": [
+            {
+              "calculation": "WallDamage"
+            }
+          ]
+        }
+      ],
+      "not_modelled": [
+        "Desplazamiento, ralentización y aturdimiento contra muro"
+      ]
+    }
+  }
+}

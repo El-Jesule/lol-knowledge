@@ -1,0 +1,343 @@
+{
+  "schema": "lol-champion-kit/1",
+  "champion": "Belveth",
+  "label": "Derivado",
+  "game_version": "16.23",
+  "content_version": "16.23.8406595+branch.releases-16-23.content.release",
+  "verified_against": {
+    "content_version": "16.23.8406595+branch.releases-16-23.content.release",
+    "bin_sha256": "98b93c599e8f8a9e12687f7e64a7ad8e02dae4700e69fcbfcdf8a2ed3aafd363",
+    "evidence": "odd/tasks/champion-kits-wave-4.md",
+    "result": "Bin del cliente 16.23 convertido con python -m binmodel.batch_kits y compilado con esta especificación curada (CH-01 oleada 4 — cierre 173/173)"
+  },
+  "source": "Árboles de cálculo del bin del cliente (python -m binmodel) y marcado de los tooltips del cliente; estructura de casos curada en research/kits/",
+  "abilities": {
+    "P": {
+      "name": "Muerte en lavanda",
+      "max_rank": 1,
+      "cases": [],
+      "passive_stats": [],
+      "not_modelled": [
+        "Velocidad de ataque temporal tras habilidad (SheenSpeedPerStack), acumulaciones infinitas de Lavanda (AttackSpeedPerStack) sin tope de VA y ataques básicos al 75 % de daño"
+      ]
+    },
+    "Q": {
+      "name": "Oleada del Vacío",
+      "max_rank": 5,
+      "cases": [
+        {
+          "id": "dash",
+          "name": "Deslizamiento direccional",
+          "parts": [
+            {
+              "damage_type": "physical",
+              "formula": {
+                "op": "add",
+                "operands": [
+                  {
+                    "op": "by_rank",
+                    "values": [
+                      12,
+                      14,
+                      16,
+                      18,
+                      20
+                    ]
+                  },
+                  {
+                    "op": "mul",
+                    "operands": [
+                      {
+                        "op": "constant",
+                        "value": 1.05
+                      },
+                      {
+                        "op": "stat",
+                        "stat": "attack_damage",
+                        "scope": "total"
+                      }
+                    ]
+                  }
+                ]
+              },
+              "label": "Derivado",
+              "source": "Characters/Belveth/Spells/BelvethQAbility/BelvethQ.mSpellCalculations.BaseDamage (16.23.8406595+branch.releases-16-23.content.release)",
+              "damage_type_source": "spell_belvethq_tooltip <physicalDamage>"
+            }
+          ]
+        }
+      ],
+      "passive_stats": [],
+      "not_modelled": [
+        "4 enfriamientos direccionales independientes escalados con VA y aplicación de efectos al impactar al 75 %"
+      ]
+    },
+    "W": {
+      "name": "Arriba y abajo",
+      "max_rank": 5,
+      "cases": [
+        {
+          "id": "slam",
+          "name": "Golpe de cola",
+          "parts": [
+            {
+              "damage_type": "magic",
+              "formula": {
+                "op": "add",
+                "operands": [
+                  {
+                    "op": "by_rank",
+                    "values": [
+                      80,
+                      140,
+                      200,
+                      260,
+                      320
+                    ]
+                  },
+                  {
+                    "op": "mul",
+                    "operands": [
+                      {
+                        "op": "constant",
+                        "value": 1.5
+                      },
+                      {
+                        "op": "stat",
+                        "stat": "ability_power",
+                        "scope": "total"
+                      }
+                    ]
+                  }
+                ]
+              },
+              "label": "Derivado",
+              "source": "Characters/Belveth/Spells/BelvethWAbility/BelvethW.mSpellCalculations.Damage (16.23.8406595+branch.releases-16-23.content.release)",
+              "damage_type_source": "spell_belvethw_tooltip <magicDamage>"
+            }
+          ]
+        }
+      ],
+      "passive_stats": [],
+      "not_modelled": [
+        "Lanzamiento por los aires, ralentización y reinicio del enfriamiento direccional de Q"
+      ]
+    },
+    "E": {
+      "name": "Vorágine real",
+      "max_rank": 5,
+      "cases": [
+        {
+          "id": "per_slash_min",
+          "name": "Un corte (objetivo a vida completa)",
+          "parts": [
+            {
+              "damage_type": "physical",
+              "formula": {
+                "op": "add",
+                "operands": [
+                  {
+                    "op": "by_rank",
+                    "values": [
+                      10,
+                      12,
+                      14,
+                      16,
+                      18
+                    ]
+                  },
+                  {
+                    "op": "mul",
+                    "operands": [
+                      {
+                        "op": "constant",
+                        "value": 0.12
+                      },
+                      {
+                        "op": "stat",
+                        "stat": "attack_damage",
+                        "scope": "total"
+                      }
+                    ]
+                  }
+                ]
+              },
+              "label": "Derivado",
+              "source": "Characters/Belveth/Spells/BelvethEAbility/BelvethE.mSpellCalculations.DamagePerStrike (16.23.8406595+branch.releases-16-23.content.release)",
+              "damage_type_source": "spell_belvethe_tooltip <physicalDamage>"
+            }
+          ]
+        },
+        {
+          "id": "per_slash_max",
+          "name": "Un corte (daño máximo por vida faltante)",
+          "parts": [
+            {
+              "damage_type": "physical",
+              "formula": {
+                "op": "mul",
+                "operands": [
+                  {
+                    "op": "add",
+                    "operands": [
+                      {
+                        "op": "by_rank",
+                        "values": [
+                          10,
+                          12,
+                          14,
+                          16,
+                          18
+                        ]
+                      },
+                      {
+                        "op": "mul",
+                        "operands": [
+                          {
+                            "op": "constant",
+                            "value": 0.12
+                          },
+                          {
+                            "op": "stat",
+                            "stat": "attack_damage",
+                            "scope": "total"
+                          }
+                        ]
+                      }
+                    ]
+                  },
+                  {
+                    "op": "constant",
+                    "value": 2
+                  }
+                ]
+              },
+              "label": "Derivado",
+              "source": "Characters/Belveth/Spells/BelvethEAbility/BelvethE.mSpellCalculations.MaxDamagePerStrikeTooltip (16.23.8406595+branch.releases-16-23.content.release)",
+              "damage_type_source": "spell_belvethe_tooltip <physicalDamage>"
+            }
+          ]
+        }
+      ],
+      "passive_stats": [],
+      "not_modelled": [
+        "Número de cortes escalado con VA, reducción de daño durante canalización y robo de vida adicional (TotalLifesteal)"
+      ]
+    },
+    "R": {
+      "name": "Banquete infinito",
+      "max_rank": 3,
+      "cases": [
+        {
+          "id": "passive_on_hit",
+          "name": "Pasiva al impactar (1 acumulación, verdadero)",
+          "parts": [
+            {
+              "damage_type": "true",
+              "formula": {
+                "op": "add",
+                "operands": [
+                  {
+                    "op": "by_rank",
+                    "values": [
+                      2,
+                      4,
+                      6
+                    ]
+                  },
+                  {
+                    "op": "mul",
+                    "operands": [
+                      {
+                        "op": "constant",
+                        "value": 0.03
+                      },
+                      {
+                        "op": "stat",
+                        "stat": "attack_damage",
+                        "scope": "bonus"
+                      }
+                    ]
+                  }
+                ]
+              },
+              "label": "Derivado",
+              "source": "Characters/Belveth/Spells/BelvethRAbility/BelvethR.mSpellCalculations.FinalOnHitDamage (16.23.8406595+branch.releases-16-23.content.release)",
+              "damage_type_source": "spell_belvethr_tooltip <trueDamage>"
+            }
+          ]
+        },
+        {
+          "id": "explosion",
+          "name": "Explosión al consumir coral (base + 20 % vida faltante, verdadero)",
+          "parts": [
+            {
+              "damage_type": "true",
+              "formula": {
+                "op": "add",
+                "operands": [
+                  {
+                    "op": "by_rank",
+                    "values": [
+                      150,
+                      200,
+                      250
+                    ]
+                  },
+                  {
+                    "op": "mul",
+                    "operands": [
+                      {
+                        "op": "constant",
+                        "value": 1.5
+                      },
+                      {
+                        "op": "stat",
+                        "stat": "ability_power",
+                        "scope": "total"
+                      }
+                    ]
+                  }
+                ]
+              },
+              "label": "Derivado",
+              "source": "Characters/Belveth/Spells/BelvethRAbility/BelvethR.mSpellCalculations.TotalExplosionDamage (16.23.8406595+branch.releases-16-23.content.release)",
+              "damage_type_source": "spell_belvethr_tooltip <trueDamage>"
+            },
+            {
+              "damage_type": "true",
+              "formula": {
+                "op": "mul",
+                "operands": [
+                  {
+                    "op": "constant",
+                    "value": 0.2
+                  },
+                  {
+                    "op": "stat",
+                    "stat": "health",
+                    "scope": "max",
+                    "subject": "target"
+                  },
+                  {
+                    "op": "stat",
+                    "stat": "health",
+                    "scope": "missing_fraction",
+                    "subject": "target"
+                  }
+                ]
+              },
+              "label": "Derivado",
+              "source": "Characters/Belveth/Spells/BelvethRAbility/BelvethR · DataValues.MissingHealthDamage × vida faltante del objetivo (16.23.8406595+branch.releases-16-23.content.release)",
+              "damage_type_source": "spell_belvethr_tooltip <trueDamage>"
+            }
+          ]
+        }
+      ],
+      "passive_stats": [],
+      "not_modelled": [
+        "Acumulación infinita de la pasiva de R contra el mismo objetivo, vida máxima/alcance/VA en forma verdadera (MaxHealthOnDevour) e invocación de rémoras"
+      ]
+    }
+  }
+}

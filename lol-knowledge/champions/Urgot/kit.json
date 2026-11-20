@@ -1,0 +1,313 @@
+{
+  "schema": "lol-champion-kit/1",
+  "champion": "Urgot",
+  "label": "Derivado",
+  "game_version": "16.23",
+  "content_version": "16.23.8406595+branch.releases-16-23.content.release",
+  "verified_against": {
+    "content_version": "16.23.8406595+branch.releases-16-23.content.release",
+    "bin_sha256": "e79e3bceeb0f1150b74d3528497f55653dae675d6d48a66130c41d0071f4018a",
+    "evidence": "odd/tasks/champion-kits-wave-4.md",
+    "result": "Bin del cliente 16.23 convertido con python -m binmodel.batch_kits y compilado con esta especificación curada (CH-01 oleada 4 — cierre 173/173)"
+  },
+  "source": "Árboles de cálculo del bin del cliente (python -m binmodel) y marcado de los tooltips del cliente; estructura de casos curada en research/kits/",
+  "abilities": {
+    "P": {
+      "name": "Articulaciones llameantes",
+      "max_rank": 1,
+      "cases": [
+        {
+          "id": "shotgun_leg",
+          "name": "Disparo de pierna (DA + % vida máxima)",
+          "parts": [
+            {
+              "damage_type": "physical",
+              "formula": {
+                "op": "mul",
+                "operands": [
+                  {
+                    "op": "by_level",
+                    "values": [
+                      0.4,
+                      0.4,
+                      0.4,
+                      0.4,
+                      0.4,
+                      0.52,
+                      0.52,
+                      0.52,
+                      0.64,
+                      0.64,
+                      0.76,
+                      0.76,
+                      0.88,
+                      0.88,
+                      1,
+                      1,
+                      1,
+                      1
+                    ]
+                  },
+                  {
+                    "op": "stat",
+                    "stat": "attack_damage",
+                    "scope": "total"
+                  }
+                ]
+              },
+              "label": "Derivado",
+              "source": "Characters/Urgot/Spells/UrgotPassiveAbility/UrgotPassive.mSpellCalculations.ADDamage (16.23.8406595+branch.releases-16-23.content.release)",
+              "damage_type_source": "spell_urgotpassive_tooltip <physicalDamage>"
+            },
+            {
+              "damage_type": "physical",
+              "formula": {
+                "op": "mul",
+                "operands": [
+                  {
+                    "op": "by_level",
+                    "values": [
+                      0.02,
+                      0.02,
+                      0.02,
+                      0.02,
+                      0.02,
+                      0.03,
+                      0.03,
+                      0.03,
+                      0.04,
+                      0.04,
+                      0.05,
+                      0.05,
+                      0.06,
+                      0.06,
+                      0.06,
+                      0.06,
+                      0.06,
+                      0.06
+                    ]
+                  },
+                  {
+                    "op": "stat",
+                    "stat": "health",
+                    "scope": "max",
+                    "subject": "target"
+                  }
+                ]
+              },
+              "label": "Derivado",
+              "source": "Characters/Urgot/Spells/UrgotPassiveAbility/UrgotPassive · mSpellCalculations.PercentHPRatio × vida máxima del objetivo (16.23.8406595+branch.releases-16-23.content.release)",
+              "damage_type_source": "spell_urgotpassive_tooltip <physicalDamage>"
+            }
+          ]
+        }
+      ],
+      "passive_stats": [],
+      "not_modelled": [
+        "Enfriamiento independiente por pierna (PerLegCD) y tope contra monstruos (MonsterCap)"
+      ]
+    },
+    "Q": {
+      "name": "Carga corrosiva",
+      "max_rank": 5,
+      "cases": [
+        {
+          "id": "blast",
+          "name": "Explosión corrosiva",
+          "parts": [
+            {
+              "damage_type": "physical",
+              "formula": {
+                "op": "add",
+                "operands": [
+                  {
+                    "op": "by_rank",
+                    "values": [
+                      25,
+                      70,
+                      115,
+                      160,
+                      205
+                    ]
+                  },
+                  {
+                    "op": "mul",
+                    "operands": [
+                      {
+                        "op": "constant",
+                        "value": 0.7
+                      },
+                      {
+                        "op": "stat",
+                        "stat": "attack_damage",
+                        "scope": "total"
+                      }
+                    ]
+                  }
+                ]
+              },
+              "label": "Derivado",
+              "source": "Characters/Urgot/Spells/UrgotQAbility/UrgotQ.mSpellCalculations.TotalDamage (16.23.8406595+branch.releases-16-23.content.release)",
+              "damage_type_source": "spell_urgotq_tooltip <physicalDamage>"
+            }
+          ]
+        }
+      ],
+      "passive_stats": [],
+      "not_modelled": [
+        "Ralentización de 1,25 s"
+      ]
+    },
+    "W": {
+      "name": "Purgar",
+      "max_rank": 5,
+      "cases": [
+        {
+          "id": "per_shot",
+          "name": "Un disparo (3 disparos/s)",
+          "parts": [
+            {
+              "damage_type": "physical",
+              "formula": {
+                "op": "add",
+                "operands": [
+                  {
+                    "op": "constant",
+                    "value": 12
+                  },
+                  {
+                    "op": "mul",
+                    "operands": [
+                      {
+                        "op": "by_rank",
+                        "values": [
+                          0.2,
+                          0.235,
+                          0.27,
+                          0.305,
+                          0.34
+                        ]
+                      },
+                      {
+                        "op": "stat",
+                        "stat": "attack_damage",
+                        "scope": "total"
+                      }
+                    ]
+                  }
+                ]
+              },
+              "label": "Derivado",
+              "source": "Characters/Urgot/Spells/UrgotWAbility/UrgotW.mSpellCalculations.DamagePerShot (16.23.8406595+branch.releases-16-23.content.release)",
+              "damage_type_source": "spell_urgotw_tooltip <physicalDamage>"
+            }
+          ]
+        }
+      ],
+      "passive_stats": [],
+      "not_modelled": [
+        "Cadencia fija de 3 disparos/s, efectos al impactar al 50 %, alternable permanente a rango 5 y autoralentización"
+      ]
+    },
+    "E": {
+      "name": "Desdén",
+      "max_rank": 5,
+      "cases": [
+        {
+          "id": "fling",
+          "name": "Embestida con lanzamiento",
+          "parts": [
+            {
+              "damage_type": "physical",
+              "formula": {
+                "op": "add",
+                "operands": [
+                  {
+                    "op": "by_rank",
+                    "values": [
+                      90,
+                      120,
+                      150,
+                      180,
+                      210
+                    ]
+                  },
+                  {
+                    "op": "mul",
+                    "operands": [
+                      {
+                        "op": "constant",
+                        "value": 1
+                      },
+                      {
+                        "op": "stat",
+                        "stat": "attack_damage",
+                        "scope": "bonus"
+                      }
+                    ]
+                  }
+                ]
+              },
+              "label": "Derivado",
+              "source": "Characters/Urgot/Spells/UrgotEAbility/UrgotE.mSpellCalculations.EDamage (16.23.8406595+branch.releases-16-23.content.release)",
+              "damage_type_source": "spell_urgote_tooltip <physicalDamage>"
+            }
+          ]
+        }
+      ],
+      "passive_stats": [],
+      "not_modelled": [
+        "Escudo (ETotalShieldHealth) y aturdimiento de 1,5 s"
+      ]
+    },
+    "R": {
+      "name": "Miedo más allá de la muerte",
+      "max_rank": 3,
+      "cases": [
+        {
+          "id": "drill",
+          "name": "Impacto inicial del taladro",
+          "parts": [
+            {
+              "damage_type": "physical",
+              "formula": {
+                "op": "add",
+                "operands": [
+                  {
+                    "op": "by_rank",
+                    "values": [
+                      100,
+                      225,
+                      350
+                    ]
+                  },
+                  {
+                    "op": "mul",
+                    "operands": [
+                      {
+                        "op": "constant",
+                        "value": 0.5
+                      },
+                      {
+                        "op": "stat",
+                        "stat": "attack_damage",
+                        "scope": "bonus"
+                      }
+                    ]
+                  }
+                ]
+              },
+              "label": "Derivado",
+              "source": "Characters/Urgot/Spells/UrgotRAbility/UrgotR.mSpellCalculations.RCalculatedDamage (16.23.8406595+branch.releases-16-23.content.release)",
+              "damage_type_source": "spell_urgotr_tooltip <physicalDamage>"
+            }
+          ]
+        }
+      ],
+      "passive_stats": [],
+      "not_modelled": [
+        "Ralentización por vida faltante, reactivación de ejecución bajo 25 % de vida y miedo en área"
+      ]
+    }
+  }
+}

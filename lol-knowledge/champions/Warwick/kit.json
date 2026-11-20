@@ -1,0 +1,229 @@
+{
+  "schema": "lol-champion-kit/1",
+  "champion": "Warwick",
+  "label": "Derivado",
+  "game_version": "16.23",
+  "content_version": "16.23.8406595+branch.releases-16-23.content.release",
+  "verified_against": {
+    "content_version": "16.23.8406595+branch.releases-16-23.content.release",
+    "bin_sha256": "bd7e2058d44c2f002b23d5842a5eebfe9e116a21cb32f066f33c2e62237dfefa",
+    "evidence": "odd/tasks/champion-kits-wave-4.md",
+    "result": "Bin del cliente 16.23 convertido con python -m binmodel.batch_kits y compilado con esta especificación curada (CH-01 oleada 4 — cierre 173/173)"
+  },
+  "source": "Árboles de cálculo del bin del cliente (python -m binmodel) y marcado de los tooltips del cliente; estructura de casos curada en research/kits/",
+  "abilities": {
+    "P": {
+      "name": "Sed insaciable",
+      "max_rank": 1,
+      "cases": [
+        {
+          "id": "on_hit",
+          "name": "Daño mágico al impactar",
+          "parts": [
+            {
+              "damage_type": "magic",
+              "formula": {
+                "op": "add",
+                "operands": [
+                  {
+                    "op": "linear_by_level",
+                    "min": 6,
+                    "max": 55
+                  },
+                  {
+                    "op": "mul",
+                    "operands": [
+                      {
+                        "op": "constant",
+                        "value": 0.15
+                      },
+                      {
+                        "op": "stat",
+                        "stat": "attack_damage",
+                        "scope": "bonus"
+                      }
+                    ]
+                  },
+                  {
+                    "op": "mul",
+                    "operands": [
+                      {
+                        "op": "constant",
+                        "value": 0.1
+                      },
+                      {
+                        "op": "stat",
+                        "stat": "ability_power",
+                        "scope": "total"
+                      }
+                    ]
+                  }
+                ]
+              },
+              "label": "Derivado",
+              "source": "Characters/Warwick/Spells/WarwickPAbility/WarwickP.mSpellCalculations.OnHitDamage (16.23.8406595+branch.releases-16-23.content.release)",
+              "damage_type_source": "spell_warwickp_tooltip <magicDamage>"
+            }
+          ]
+        }
+      ],
+      "passive_stats": [],
+      "not_modelled": [
+        "Curación del 100 % del daño bajo 50 % de vida (250 % bajo 25 % de vida)"
+      ]
+    },
+    "Q": {
+      "name": "Las fauces de la bestia",
+      "max_rank": 5,
+      "cases": [
+        {
+          "id": "bite",
+          "name": "Mordisco (DA/PH + % vida máxima)",
+          "parts": [
+            {
+              "damage_type": "magic",
+              "formula": {
+                "op": "add",
+                "operands": [
+                  {
+                    "op": "mul",
+                    "operands": [
+                      {
+                        "op": "constant",
+                        "value": 1.2
+                      },
+                      {
+                        "op": "stat",
+                        "stat": "attack_damage",
+                        "scope": "total"
+                      }
+                    ]
+                  },
+                  {
+                    "op": "mul",
+                    "operands": [
+                      {
+                        "op": "constant",
+                        "value": 1
+                      },
+                      {
+                        "op": "stat",
+                        "stat": "ability_power",
+                        "scope": "total"
+                      }
+                    ]
+                  }
+                ]
+              },
+              "label": "Derivado",
+              "source": "Characters/Warwick/Spells/WarwickQAbility/WarwickQ.mSpellCalculations.BaseBiteDamage (16.23.8406595+branch.releases-16-23.content.release)",
+              "damage_type_source": "spell_warwickq_tooltip <magicDamage>"
+            },
+            {
+              "damage_type": "magic",
+              "formula": {
+                "op": "mul",
+                "operands": [
+                  {
+                    "op": "by_rank",
+                    "values": [
+                      6,
+                      7,
+                      8,
+                      9,
+                      10
+                    ]
+                  },
+                  {
+                    "op": "constant",
+                    "value": 0.01
+                  },
+                  {
+                    "op": "stat",
+                    "stat": "health",
+                    "scope": "max",
+                    "subject": "target"
+                  }
+                ]
+              },
+              "label": "Derivado",
+              "source": "Characters/Warwick/Spells/WarwickQAbility/WarwickQ · DataValues.TargetPercentHPDamage % × vida máxima del objetivo (16.23.8406595+branch.releases-16-23.content.release)",
+              "damage_type_source": "spell_warwickq_tooltip <magicDamage>"
+            }
+          ]
+        }
+      ],
+      "passive_stats": [],
+      "not_modelled": [
+        "Curación porcentual del daño (25..75 %), aplicación de efectos al impactar, seguimiento al mantener pulsado y tope a monstruos"
+      ]
+    },
+    "W": {
+      "name": "Caza sanguinaria",
+      "max_rank": 5,
+      "cases": [],
+      "passive_stats": [],
+      "not_modelled": [
+        "Velocidad de ataque y movimiento contra enemigos con <50 % (triple con <20 %) de vida y rastro activo"
+      ]
+    },
+    "E": {
+      "name": "Aullido primigenio",
+      "max_rank": 5,
+      "cases": [],
+      "passive_stats": [],
+      "not_modelled": [
+        "Reducción de daño (35..55 %) durante 2,5 s y miedo en área de 1 s"
+      ]
+    },
+    "R": {
+      "name": "Presión infinita",
+      "max_rank": 3,
+      "cases": [
+        {
+          "id": "total",
+          "name": "Supresión completa (3 golpes)",
+          "parts": [
+            {
+              "damage_type": "magic",
+              "formula": {
+                "op": "add",
+                "operands": [
+                  {
+                    "op": "by_rank",
+                    "values": [
+                      175,
+                      350,
+                      525
+                    ]
+                  },
+                  {
+                    "op": "mul",
+                    "operands": [
+                      {
+                        "op": "constant",
+                        "value": 1.67
+                      },
+                      {
+                        "op": "stat",
+                        "stat": "attack_damage",
+                        "scope": "bonus"
+                      }
+                    ]
+                  }
+                ]
+              },
+              "label": "Derivado",
+              "source": "Characters/Warwick/Spells/WarwickRAbility/WarwickR.mSpellCalculations.DamageCumulative (16.23.8406595+branch.releases-16-23.content.release)",
+              "damage_type_source": "spell_warwickr_tooltip <magicDamage>"
+            }
+          ]
+        }
+      ],
+      "passive_stats": [],
+      "not_modelled": [
+        "Supresión de 1,5 s, aplicación de 3 efectos al impactar y curación del 100 % del daño infligido"
+      ]
+    }
+  }
+}

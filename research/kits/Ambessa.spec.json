@@ -1,0 +1,172 @@
+{
+  "champion": "Ambessa",
+  "game_version": "16.23",
+  "verified_against": {
+    "content_version": "16.23.8406595+branch.releases-16-23.content.release",
+    "bin_sha256": "9dc84113f61d51e7b0a24a1c3ae8daefbb8e5f7644b354bcae34ab8528ad8f61",
+    "evidence": "odd/tasks/champion-kits-wave-4.md",
+    "result": "Bin del cliente 16.23 convertido con python -m binmodel.batch_kits y compilado con esta especificación curada (CH-01 oleada 4 — cierre 173/173)"
+  },
+  "abilities": {
+    "P": {
+      "name": "Caza del perrodraco",
+      "tooltip": "spell_ambessap_tooltip",
+      "max_rank": 1,
+      "cases": [
+        {
+          "id": "empowered_aa",
+          "name": "Daño físico adicional del ataque potenciado",
+          "parts": [
+            {
+              "calculation": "Calc_OnHit_Damage_Flat"
+            }
+          ]
+        }
+      ],
+      "not_modelled": [
+        "Deslizamiento tras cada habilidad, velocidad de ataque (Calc_Attack_Speed), alcance adicional y devolución de energía (Calc_OnHit_Energy_Refund)"
+      ]
+    },
+    "Q": {
+      "name": "Barrido artero / Impacto desgarrador",
+      "tooltip": "spell_ambessaq_tooltip",
+      "recast_window_seconds": {
+        "data_value": "Swap_Duration"
+      },
+      "cases": [
+        {
+          "id": "sweep_edge",
+          "name": "Q1 Barrido artero (borde: plano + % vida máxima)",
+          "parts": [
+            {
+              "calculation": "Calc_Damage_1_Max"
+            },
+            {
+              "tooltip_reference": "Calc_Damage_1_Percent_Max",
+              "damage_type": "physical",
+              "source_note": "mSpellCalculations.Calc_Damage_1_Percent_Max × vida máxima del objetivo",
+              "formula": {
+                "op": "mul",
+                "operands": [
+                  {
+                    "op": "calculation",
+                    "name": "Calc_Damage_1_Percent_Max"
+                  },
+                  {
+                    "op": "stat",
+                    "stat": "health",
+                    "scope": "max",
+                    "subject": "target"
+                  }
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "id": "slam_first",
+          "name": "Q2 Impacto desgarrador (primer enemigo: plano + % vida máxima)",
+          "recast": true,
+          "parts": [
+            {
+              "calculation": "Calc_Damage_2_Max"
+            },
+            {
+              "tooltip_reference": "Calc_Damage_2_Percent_Max",
+              "damage_type": "physical",
+              "source_note": "mSpellCalculations.Calc_Damage_2_Percent_Max × vida máxima del objetivo",
+              "formula": {
+                "op": "mul",
+                "operands": [
+                  {
+                    "op": "calculation",
+                    "name": "Calc_Damage_2_Percent_Max"
+                  },
+                  {
+                    "op": "stat",
+                    "stat": "health",
+                    "scope": "max",
+                    "subject": "target"
+                  }
+                ]
+              }
+            }
+          ]
+        }
+      ],
+      "not_modelled": [
+        "Daño reducido al 50 % fuera del borde/primer objetivo y bonificación/tope contra monstruos"
+      ]
+    },
+    "W": {
+      "name": "Vituperio",
+      "tooltip": "spell_ambessaw_tooltip",
+      "cases": [
+        {
+          "id": "normal",
+          "name": "Sin bloquear daño de campeón/monstruo",
+          "parts": [
+            {
+              "calculation": "Calc_Damage_Low"
+            }
+          ]
+        },
+        {
+          "id": "blocked",
+          "name": "Tras bloquear daño (+50 %)",
+          "parts": [
+            {
+              "calculation": "Calc_Damage_High"
+            }
+          ]
+        }
+      ],
+      "not_modelled": [
+        "Escudo temporal (Calc_Shield)"
+      ]
+    },
+    "E": {
+      "name": "Laceración",
+      "tooltip": "spell_ambessae_tooltip",
+      "cases": [
+        {
+          "id": "hit",
+          "name": "Un golpe de cadena (hasta 2 golpes)",
+          "parts": [
+            {
+              "calculation": "Calc_Damage_Flat"
+            }
+          ]
+        }
+      ],
+      "not_modelled": [
+        "Ralentización del 99 % decreciente y segundo golpe automático tras deslizarse con P"
+      ]
+    },
+    "R": {
+      "name": "Ajusticiar",
+      "tooltip": "spell_ambessar_tooltip",
+      "passive_stats": [
+        {
+          "stat": "armor_penetration_percent",
+          "data_value": "Armor_Penetration",
+          "condition": "Penetración de armadura pasiva permanente al subir R (10/20/30 %)"
+        }
+      ],
+      "cases": [
+        {
+          "id": "slam",
+          "name": "Impacto al estrellar",
+          "parts": [
+            {
+              "calculation": "Calc_Damage"
+            }
+          ]
+        }
+      ],
+      "not_modelled": [
+        "Omnisucción pasiva de habilidades (Calc_Omnivamp usa stat no corroborado en bin), supresión e imparabilidad"
+      ]
+    }
+  }
+}

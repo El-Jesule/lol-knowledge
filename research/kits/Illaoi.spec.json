@@ -1,0 +1,102 @@
+{
+  "champion": "Illaoi",
+  "game_version": "16.23",
+  "verified_against": {
+    "content_version": "16.23.8406595+branch.releases-16-23.content.release",
+    "bin_sha256": "5c218fb632f31289eaafe4a57bbc9025416c3773564fd206c594b017e387b194",
+    "evidence": "odd/tasks/champion-kits-wave-4.md",
+    "result": "Bin del cliente 16.23 convertido con python -m binmodel.batch_kits y compilado con esta especificación curada (CH-01 oleada 4 — cierre 173/173)"
+  },
+  "abilities": {
+    "P": {
+      "name": "Profeta de un dios antiguo",
+      "tooltip": "spell_illaoipassive_tooltip",
+      "max_rank": 1,
+      "not_modelled": [
+        "Aparición periódica de tentáculos en muros (SpawnCD) y curación del 5 % de vida faltante por golpe de tentáculo"
+      ]
+    },
+    "Q": {
+      "name": "Aplastamiento con tentáculo",
+      "tooltip": "spell_illaoiq_tooltip",
+      "cases": [
+        {
+          "id": "slam",
+          "name": "Golpetazo de tentáculo",
+          "parts": [
+            {
+              "calculation": "TentacleDamageTotal"
+            }
+          ]
+        }
+      ],
+      "not_modelled": [
+        "Amplificación pasiva del daño de tentáculos (DamageIncreaseTooltip ya reflejada en TentacleDamageTotal)"
+      ]
+    },
+    "W": {
+      "name": "Dura lección",
+      "tooltip": "spell_illaoiw_tooltip",
+      "cases": [
+        {
+          "id": "leap",
+          "name": "Ataque potenciado (% vida máxima)",
+          "parts": [
+            {
+              "tooltip_reference": "HealthPercentTotal",
+              "damage_type": "physical",
+              "source_note": "mSpellCalculations.HealthPercentTotal % × vida máxima del objetivo",
+              "formula": {
+                "op": "mul",
+                "operands": [
+                  {
+                    "op": "calculation",
+                    "name": "HealthPercentTotal"
+                  },
+                  {
+                    "op": "constant",
+                    "value": 0.01
+                  },
+                  {
+                    "op": "stat",
+                    "stat": "health",
+                    "scope": "max",
+                    "subject": "target"
+                  }
+                ]
+              }
+            }
+          ]
+        }
+      ],
+      "not_modelled": [
+        "Daño mínimo (WMinDamage), tope de 300 a monstruos y orden de golpetazo de tentáculos cercanos"
+      ]
+    },
+    "E": {
+      "name": "Prueba de espíritu",
+      "tooltip": "spell_illaoie_tooltip",
+      "not_modelled": [
+        "Extracción de espíritu, transferencia porcentual de daño (EchoPercent) y maldición de Recipiente"
+      ]
+    },
+    "R": {
+      "name": "Salto de fe",
+      "tooltip": "spell_illaoir_tooltip",
+      "cases": [
+        {
+          "id": "impact",
+          "name": "Impacto del salto",
+          "parts": [
+            {
+              "calculation": "DamageCalc"
+            }
+          ]
+        }
+      ],
+      "not_modelled": [
+        "Invocación de tentáculos por campeón golpeado, reducción del 50 % del CD de W e imparabilidad"
+      ]
+    }
+  }
+}

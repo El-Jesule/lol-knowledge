@@ -1,0 +1,131 @@
+{
+  "champion": "Zac",
+  "game_version": "16.23",
+  "verified_against": {
+    "content_version": "16.23.8406595+branch.releases-16-23.content.release",
+    "bin_sha256": "47e3f47b1da6c9b6c3f4a9632e82419056514a3012908292e66a38f403e836bc",
+    "evidence": "odd/tasks/champion-kits-wave-4.md",
+    "result": "Bin del cliente 16.23 convertido con python -m binmodel.batch_kits y compilado con esta especificación curada (CH-01 oleada 4 — cierre 173/173)"
+  },
+  "abilities": {
+    "P": {
+      "name": "División celular",
+      "tooltip": "spell_zacpassivechunkdrop_tooltip",
+      "max_rank": 1,
+      "not_modelled": [
+        "Curación por trozos de materia (HealPercent) y resurrección en 4 partículas"
+      ]
+    },
+    "Q": {
+      "name": "Manos locas",
+      "tooltip": "spell_zacq_tooltip",
+      "cases": [
+        {
+          "id": "hit",
+          "name": "Un golpe (alcance inicial o choque)",
+          "parts": [
+            {
+              "calculation": "TotalDamage"
+            }
+          ]
+        }
+      ],
+      "not_modelled": [
+        "Coste del 8 % de vida actual (HPCost), choque entre dos enemigos (MaxDamageTooltip = 2×) y ralentización"
+      ]
+    },
+    "W": {
+      "name": "Materia inestable",
+      "tooltip": "spell_zacw_tooltip",
+      "cases": [
+        {
+          "id": "eruption",
+          "name": "Erupción (plano + % vida máxima)",
+          "parts": [
+            {
+              "tooltip_reference": "BaseDamage",
+              "damage_type": "magic",
+              "source_note": "DataValues.BaseDamage + mSpellCalculations.DisplayPercentDamage % × vida máxima del objetivo",
+              "formula": {
+                "op": "add",
+                "operands": [
+                  {
+                    "op": "data_value",
+                    "name": "BaseDamage"
+                  },
+                  {
+                    "op": "mul",
+                    "operands": [
+                      {
+                        "op": "calculation",
+                        "name": "DisplayPercentDamage"
+                      },
+                      {
+                        "op": "constant",
+                        "value": 0.01
+                      },
+                      {
+                        "op": "stat",
+                        "stat": "health",
+                        "scope": "max",
+                        "subject": "target"
+                      }
+                    ]
+                  }
+                ]
+              }
+            }
+          ]
+        }
+      ],
+      "not_modelled": [
+        "Coste del 4 % de vida actual (HPCost), tope de 200 a súbditos/monstruos y reducción de 1 s de CD al recoger materia"
+      ]
+    },
+    "E": {
+      "name": "Honda elástica",
+      "tooltip": "spell_zace_tooltip",
+      "cases": [
+        {
+          "id": "slam",
+          "name": "Impacto de aterrizaje",
+          "parts": [
+            {
+              "calculation": "Damage"
+            }
+          ]
+        }
+      ],
+      "not_modelled": [
+        "Coste del 4 % de vida actual (HPCost) y lanzamiento por los aires de 0,5 a 1 s (MaxStun)"
+      ]
+    },
+    "R": {
+      "name": "¡Rebotemos!",
+      "tooltip": "spell_zacr_tooltip",
+      "cases": [
+        {
+          "id": "first_bounce",
+          "name": "Primer rebote sobre un enemigo",
+          "parts": [
+            {
+              "calculation": "DamagePerBounce"
+            }
+          ]
+        },
+        {
+          "id": "subsequent_bounce",
+          "name": "Cada rebote posterior (50 %)",
+          "parts": [
+            {
+              "calculation": "DamagePerSubsequentBounce"
+            }
+          ]
+        }
+      ],
+      "not_modelled": [
+        "4 rebotes totales (MaxDamageTooltip), empuje/ralentización y velocidad de movimiento creciente"
+      ]
+    }
+  }
+}

@@ -1,0 +1,371 @@
+{
+  "schema": "lol-champion-kit/1",
+  "champion": "Jhin",
+  "label": "Derivado",
+  "game_version": "16.23",
+  "content_version": "16.23.8406595+branch.releases-16-23.content.release",
+  "verified_against": {
+    "content_version": "16.23.8406595+branch.releases-16-23.content.release",
+    "bin_sha256": "f6eaa5243460f5a21217aaa9ebeea5c5913552ba0bc0720cca0ae7014d954595",
+    "evidence": "odd/tasks/champion-kits-wave-4.md",
+    "result": "Bin del cliente 16.23 convertido con python -m binmodel.batch_kits y compilado con esta especificación curada (CH-01 oleada 4 — cierre 173/173)"
+  },
+  "source": "Árboles de cálculo del bin del cliente (python -m binmodel) y marcado de los tooltips del cliente; estructura de casos curada en research/kits/",
+  "abilities": {
+    "P": {
+      "name": "Susurro",
+      "max_rank": 1,
+      "cases": [
+        {
+          "id": "fourth_shot_execute",
+          "name": "Cuarto disparo (daño adicional % vida faltante)",
+          "parts": [
+            {
+              "damage_type": "physical",
+              "formula": {
+                "op": "mul",
+                "operands": [
+                  {
+                    "op": "by_level",
+                    "values": [
+                      0.15,
+                      0.15,
+                      0.15,
+                      0.15,
+                      0.15,
+                      0.2,
+                      0.2,
+                      0.2,
+                      0.2,
+                      0.2,
+                      0.25,
+                      0.25,
+                      0.25,
+                      0.25,
+                      0.25,
+                      0.25,
+                      0.25,
+                      0.25
+                    ]
+                  },
+                  {
+                    "op": "stat",
+                    "stat": "health",
+                    "scope": "max",
+                    "subject": "target"
+                  },
+                  {
+                    "op": "stat",
+                    "stat": "health",
+                    "scope": "missing_fraction",
+                    "subject": "target"
+                  }
+                ]
+              },
+              "label": "Derivado",
+              "source": "Characters/Jhin/Spells/JhinPassiveAbility/JhinPassive · mSpellCalculations.FourthShotExecutePercent × vida faltante del objetivo (16.23.8406595+branch.releases-16-23.content.release)",
+              "damage_type_source": "spell_jhinpassive_tooltip <physicalDamage>"
+            }
+          ]
+        }
+      ],
+      "passive_stats": [],
+      "not_modelled": [
+        "Velocidad de ataque fija y recarga de 4 balas, conversión de crítico y VA en % DA total (TotalADPercent), penalización del 25 % de daño crítico y VM al criticar (CritMoveSpeedPercent)"
+      ]
+    },
+    "Q": {
+      "name": "Granada danzante",
+      "max_rank": 5,
+      "cases": [
+        {
+          "id": "base",
+          "name": "Primer rebote (sin bajas previas)",
+          "parts": [
+            {
+              "damage_type": "physical",
+              "formula": {
+                "op": "add",
+                "operands": [
+                  {
+                    "op": "by_rank",
+                    "values": [
+                      44,
+                      69,
+                      94,
+                      119,
+                      144
+                    ]
+                  },
+                  {
+                    "op": "mul",
+                    "operands": [
+                      {
+                        "op": "by_rank",
+                        "values": [
+                          0.44,
+                          0.515,
+                          0.59,
+                          0.665,
+                          0.74
+                        ]
+                      },
+                      {
+                        "op": "stat",
+                        "stat": "attack_damage",
+                        "scope": "total"
+                      }
+                    ]
+                  },
+                  {
+                    "op": "mul",
+                    "operands": [
+                      {
+                        "op": "constant",
+                        "value": 0.6
+                      },
+                      {
+                        "op": "stat",
+                        "stat": "ability_power",
+                        "scope": "total"
+                      }
+                    ]
+                  }
+                ]
+              },
+              "label": "Derivado",
+              "source": "Characters/Jhin/Spells/JhinQAbility/JhinQ.mSpellCalculations.TotalDamage (16.23.8406595+branch.releases-16-23.content.release)",
+              "damage_type_source": "spell_jhinq_tooltip <physicalDamage>"
+            }
+          ]
+        }
+      ],
+      "passive_stats": [],
+      "not_modelled": [
+        "Aumento del 35 % de daño por cada unidad rematada en rebotes anteriores"
+      ]
+    },
+    "W": {
+      "name": "Florecer mortal",
+      "max_rank": 5,
+      "cases": [
+        {
+          "id": "shot",
+          "name": "Disparo a campeones",
+          "parts": [
+            {
+              "damage_type": "physical",
+              "formula": {
+                "op": "add",
+                "operands": [
+                  {
+                    "op": "by_rank",
+                    "values": [
+                      70,
+                      105,
+                      140,
+                      175,
+                      210
+                    ]
+                  },
+                  {
+                    "op": "mul",
+                    "operands": [
+                      {
+                        "op": "constant",
+                        "value": 0.5
+                      },
+                      {
+                        "op": "stat",
+                        "stat": "attack_damage",
+                        "scope": "total"
+                      }
+                    ]
+                  }
+                ]
+              },
+              "label": "Derivado",
+              "source": "Characters/Jhin/Spells/JhinWAbility/JhinW.mSpellCalculations.TotalDamage (16.23.8406595+branch.releases-16-23.content.release)",
+              "damage_type_source": "spell_jhinw_tooltip <physicalDamage>"
+            }
+          ]
+        }
+      ],
+      "passive_stats": [],
+      "not_modelled": [
+        "Inmovilización sobre objetivos marcados, 75 % de daño a no campeones y velocidad de movimiento de Susurro"
+      ]
+    },
+    "E": {
+      "name": "Público entregado",
+      "max_rank": 5,
+      "cases": [
+        {
+          "id": "trap",
+          "name": "Detonación de trampa de loto",
+          "parts": [
+            {
+              "damage_type": "magic",
+              "formula": {
+                "op": "add",
+                "operands": [
+                  {
+                    "op": "by_rank",
+                    "values": [
+                      20,
+                      80,
+                      140,
+                      200,
+                      260
+                    ]
+                  },
+                  {
+                    "op": "mul",
+                    "operands": [
+                      {
+                        "op": "constant",
+                        "value": 1.2
+                      },
+                      {
+                        "op": "stat",
+                        "stat": "attack_damage",
+                        "scope": "total"
+                      }
+                    ]
+                  },
+                  {
+                    "op": "mul",
+                    "operands": [
+                      {
+                        "op": "constant",
+                        "value": 1
+                      },
+                      {
+                        "op": "stat",
+                        "stat": "ability_power",
+                        "scope": "total"
+                      }
+                    ]
+                  }
+                ]
+              },
+              "label": "Derivado",
+              "source": "Characters/Jhin/Spells/JhinEAbility/JhinE.mSpellCalculations.TotalDamage (16.23.8406595+branch.releases-16-23.content.release)",
+              "damage_type_source": "spell_jhine_tooltip <magicDamage>"
+            }
+          ]
+        }
+      ],
+      "passive_stats": [],
+      "not_modelled": [
+        "Ralentización del 35 %, trampa automática al derribar campeones y 65 % de daño en impactos posteriores"
+      ]
+    },
+    "R": {
+      "name": "Abajo el telón",
+      "max_rank": 3,
+      "cases": [
+        {
+          "id": "shot_min",
+          "name": "Un disparo (objetivo a vida completa)",
+          "parts": [
+            {
+              "damage_type": "physical",
+              "formula": {
+                "op": "add",
+                "operands": [
+                  {
+                    "op": "by_rank",
+                    "values": [
+                      64,
+                      128,
+                      192
+                    ]
+                  },
+                  {
+                    "op": "mul",
+                    "operands": [
+                      {
+                        "op": "constant",
+                        "value": 0.25
+                      },
+                      {
+                        "op": "stat",
+                        "stat": "attack_damage",
+                        "scope": "total"
+                      }
+                    ]
+                  }
+                ]
+              },
+              "label": "Derivado",
+              "source": "Characters/Jhin/Spells/JhinRAbility/JhinR.mSpellCalculations.DamageCalc (16.23.8406595+branch.releases-16-23.content.release)",
+              "damage_type_source": "spell_jhinr_tooltip <physicalDamage>"
+            }
+          ]
+        },
+        {
+          "id": "shot_max",
+          "name": "Un disparo (daño máximo por vida faltante)",
+          "parts": [
+            {
+              "damage_type": "physical",
+              "formula": {
+                "op": "mul",
+                "operands": [
+                  {
+                    "op": "add",
+                    "operands": [
+                      {
+                        "op": "by_rank",
+                        "values": [
+                          64,
+                          128,
+                          192
+                        ]
+                      },
+                      {
+                        "op": "mul",
+                        "operands": [
+                          {
+                            "op": "constant",
+                            "value": 0.25
+                          },
+                          {
+                            "op": "stat",
+                            "stat": "attack_damage",
+                            "scope": "total"
+                          }
+                        ]
+                      }
+                    ]
+                  },
+                  {
+                    "op": "add",
+                    "operands": [
+                      {
+                        "op": "constant",
+                        "value": 1
+                      },
+                      {
+                        "op": "constant",
+                        "value": 3
+                      }
+                    ]
+                  }
+                ]
+              },
+              "label": "Derivado",
+              "source": "Characters/Jhin/Spells/JhinRAbility/JhinR.mSpellCalculations.MaxIncreaseCalc (16.23.8406595+branch.releases-16-23.content.release)",
+              "damage_type_source": "spell_jhinr_tooltip <physicalDamage>"
+            }
+          ]
+        }
+      ],
+      "passive_stats": [],
+      "not_modelled": [
+        "4 disparos, ralentización del 80 % y crítico garantizado del 4.º disparo"
+      ]
+    }
+  }
+}

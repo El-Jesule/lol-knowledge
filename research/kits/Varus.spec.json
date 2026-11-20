@@ -1,0 +1,217 @@
+{
+  "champion": "Varus",
+  "game_version": "16.23",
+  "verified_against": {
+    "content_version": "16.23.8406595+branch.releases-16-23.content.release",
+    "bin_sha256": "b74a1755a589774cab2648f6409c81d3d021229d1143da98447da29d9d0a0384",
+    "evidence": "odd/tasks/champion-kits-wave-4.md",
+    "result": "Bin del cliente 16.23 convertido con python -m binmodel.batch_kits y compilado con esta especificación curada (CH-01 oleada 4 — cierre 173/173)"
+  },
+  "abilities": {
+    "P": {
+      "name": "Venganza viviente",
+      "tooltip": "spell_varuspassivebuff_tooltip",
+      "max_rank": 1,
+      "not_modelled": [
+        "Velocidad de ataque y DA/PH temporales al matar súbditos o derribar campeones (MinionAS, ChampionAS)"
+      ]
+    },
+    "Q": {
+      "name": "Flecha penetrante",
+      "tooltip": "spell_varusq_tooltip",
+      "cases": [
+        {
+          "id": "min",
+          "name": "Sin cargar",
+          "parts": [
+            {
+              "calculation": "TotalDamageMin"
+            }
+          ]
+        },
+        {
+          "id": "max",
+          "name": "Carga completa",
+          "parts": [
+            {
+              "calculation": "TotalDamageMax"
+            }
+          ]
+        }
+      ],
+      "not_modelled": [
+        "Reducción de daño por objetivo atravesado (hasta mínimo 33 %)"
+      ]
+    },
+    "W": {
+      "name": "Carcaj infectado",
+      "tooltip": "spell_varusw_tooltip",
+      "cases": [
+        {
+          "id": "on_hit",
+          "name": "Pasiva al impactar",
+          "parts": [
+            {
+              "calculation": "OnHitDamage"
+            }
+          ]
+        },
+        {
+          "id": "blight_1",
+          "name": "Detonación de 1 carga de Infección (% vida máxima)",
+          "parts": [
+            {
+              "tooltip_reference": "PercentHPPerStack",
+              "damage_type": "magic",
+              "source_note": "mSpellCalculations.PercentHPPerStack × vida máxima del objetivo",
+              "formula": {
+                "op": "mul",
+                "operands": [
+                  {
+                    "op": "calculation",
+                    "name": "PercentHPPerStack"
+                  },
+                  {
+                    "op": "stat",
+                    "stat": "health",
+                    "scope": "max",
+                    "subject": "target"
+                  }
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "id": "blight_3",
+          "name": "Detonación de 3 cargas de Infección (% vida máxima)",
+          "parts": [
+            {
+              "tooltip_reference": "MaxPercentHPPerStack",
+              "damage_type": "magic",
+              "source_note": "mSpellCalculations.MaxPercentHPPerStack × vida máxima del objetivo",
+              "formula": {
+                "op": "mul",
+                "operands": [
+                  {
+                    "op": "calculation",
+                    "name": "MaxPercentHPPerStack"
+                  },
+                  {
+                    "op": "stat",
+                    "stat": "health",
+                    "scope": "max",
+                    "subject": "target"
+                  }
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "id": "active_q_min",
+          "name": "Activa W+Q sin cargar (% vida faltante)",
+          "parts": [
+            {
+              "tooltip_reference": "QEmpowerPercentHP",
+              "damage_type": "magic",
+              "source_note": "mSpellCalculations.QEmpowerPercentHP × vida faltante del objetivo",
+              "formula": {
+                "op": "mul",
+                "operands": [
+                  {
+                    "op": "calculation",
+                    "name": "QEmpowerPercentHP"
+                  },
+                  {
+                    "op": "stat",
+                    "stat": "health",
+                    "scope": "max",
+                    "subject": "target"
+                  },
+                  {
+                    "op": "stat",
+                    "stat": "health",
+                    "scope": "missing_fraction",
+                    "subject": "target"
+                  }
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "id": "active_q_max",
+          "name": "Activa W+Q carga completa (% vida faltante)",
+          "parts": [
+            {
+              "tooltip_reference": "MaxQEmpowerPercentHP",
+              "damage_type": "magic",
+              "source_note": "mSpellCalculations.MaxQEmpowerPercentHP × vida faltante del objetivo",
+              "formula": {
+                "op": "mul",
+                "operands": [
+                  {
+                    "op": "calculation",
+                    "name": "MaxQEmpowerPercentHP"
+                  },
+                  {
+                    "op": "stat",
+                    "stat": "health",
+                    "scope": "max",
+                    "subject": "target"
+                  },
+                  {
+                    "op": "stat",
+                    "stat": "health",
+                    "scope": "missing_fraction",
+                    "subject": "target"
+                  }
+                ]
+              }
+            }
+          ]
+        }
+      ],
+      "not_modelled": [
+        "Devolución de 11 % de enfriamientos básicos por carga detonada y topes contra monstruos"
+      ]
+    },
+    "E": {
+      "name": "Lluvia de flechas",
+      "tooltip": "spell_varuse_tooltip",
+      "cases": [
+        {
+          "id": "rain",
+          "name": "Impacto de flechas",
+          "parts": [
+            {
+              "calculation": "TotalDamage"
+            }
+          ]
+        }
+      ],
+      "not_modelled": [
+        "Zona de ralentización y Heridas graves durante 4 s"
+      ]
+    },
+    "R": {
+      "name": "Cadena de corrupción",
+      "tooltip": "spell_varusr_tooltip",
+      "cases": [
+        {
+          "id": "snare",
+          "name": "Impacto de zarcillo",
+          "parts": [
+            {
+              "calculation": "TotalDamage"
+            }
+          ]
+        }
+      ],
+      "not_modelled": [
+        "Inmovilización de 2 s, propagación a enemigos cercanos y aplicación de 3 cargas de Infección"
+      ]
+    }
+  }
+}

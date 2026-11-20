@@ -1,0 +1,202 @@
+{
+  "schema": "lol-champion-kit/1",
+  "champion": "Jayce",
+  "label": "Derivado",
+  "game_version": "16.23",
+  "content_version": "16.23.8406595+branch.releases-16-23.content.release",
+  "verified_against": {
+    "content_version": "16.23.8406595+branch.releases-16-23.content.release",
+    "bin_sha256": "c5a4bd89a5bcd8d0b779c561a6574399d593fac3b6769a7c0464647e4e2d2375",
+    "evidence": "odd/tasks/champion-kits-wave-4.md",
+    "result": "Bin del cliente 16.23 convertido con python -m binmodel.batch_kits y compilado con esta especificación curada (CH-01 oleada 4 — cierre 173/173)"
+  },
+  "source": "Árboles de cálculo del bin del cliente (python -m binmodel) y marcado de los tooltips del cliente; estructura de casos curada en research/kits/",
+  "abilities": {
+    "P": {
+      "name": "Condensador hextech",
+      "max_rank": 1,
+      "cases": [],
+      "passive_stats": [],
+      "not_modelled": [
+        "Velocidad de movimiento plana (+40) y efecto fantasmal al cambiar de postura"
+      ]
+    },
+    "Q": {
+      "name": "¡Hacia los cielos! / Explosión eléctrica",
+      "max_rank": 6,
+      "cases": [
+        {
+          "id": "hammer",
+          "name": "Martillo: ¡Hacia los cielos!",
+          "parts": [
+            {
+              "damage_type": "physical",
+              "formula": {
+                "op": "add",
+                "operands": [
+                  {
+                    "op": "by_rank",
+                    "values": [
+                      60,
+                      110,
+                      160,
+                      210,
+                      260,
+                      310
+                    ]
+                  },
+                  {
+                    "op": "mul",
+                    "operands": [
+                      {
+                        "op": "constant",
+                        "value": 1.35
+                      },
+                      {
+                        "op": "stat",
+                        "stat": "attack_damage",
+                        "scope": "bonus"
+                      }
+                    ]
+                  }
+                ]
+              },
+              "label": "Derivado",
+              "source": "Characters/Jayce/Spells/JayceToTheSkiesAbility/JayceToTheSkies.mSpellCalculations.Damage (16.23.8406595+branch.releases-16-23.content.release)",
+              "damage_type_source": "spell_jaycetotheskies_tooltip <physicalDamage>"
+            }
+          ]
+        }
+      ],
+      "passive_stats": [],
+      "not_modelled": [
+        "Ralentización y postura de cañón: Explosión eléctrica (normal y acelerada con Portal E, en hechizo separado)"
+      ]
+    },
+    "W": {
+      "name": "Campo de rayos / Hipercarga",
+      "max_rank": 6,
+      "cases": [
+        {
+          "id": "hammer",
+          "name": "Martillo: Campo de rayos (4 s totales)",
+          "parts": [
+            {
+              "damage_type": "magic",
+              "formula": {
+                "op": "add",
+                "operands": [
+                  {
+                    "op": "by_rank",
+                    "values": [
+                      140,
+                      200,
+                      260,
+                      320,
+                      380,
+                      440
+                    ]
+                  },
+                  {
+                    "op": "mul",
+                    "operands": [
+                      {
+                        "op": "constant",
+                        "value": 1
+                      },
+                      {
+                        "op": "stat",
+                        "stat": "ability_power",
+                        "scope": "total"
+                      }
+                    ]
+                  }
+                ]
+              },
+              "label": "Derivado",
+              "source": "Characters/Jayce/Spells/JayceStaticFieldAbility/JayceStaticField.mSpellCalculations.Damage (16.23.8406595+branch.releases-16-23.content.release)",
+              "damage_type_source": "spell_jaycestaticfield_tooltip <magicDamage>"
+            }
+          ]
+        }
+      ],
+      "passive_stats": [],
+      "not_modelled": [
+        "Restauración pasiva de maná en martillo (ManaGain) y postura de cañón: Hipercarga (3 ataques a VA máxima)"
+      ]
+    },
+    "E": {
+      "name": "Golpe tormentoso / Portal de aceleración",
+      "max_rank": 6,
+      "cases": [
+        {
+          "id": "hammer",
+          "name": "Martillo: Golpe tormentoso (DA adicional + % vida máxima)",
+          "parts": [
+            {
+              "damage_type": "magic",
+              "formula": {
+                "op": "mul",
+                "operands": [
+                  {
+                    "op": "constant",
+                    "value": 1
+                  },
+                  {
+                    "op": "stat",
+                    "stat": "attack_damage",
+                    "scope": "bonus"
+                  }
+                ]
+              },
+              "label": "Derivado",
+              "source": "Characters/Jayce/Spells/JayceThunderingBlowAbility/JayceThunderingBlow.mSpellCalculations.FlatDamage (16.23.8406595+branch.releases-16-23.content.release)",
+              "damage_type_source": "spell_jaycethunderingblow_tooltip <magicDamage>"
+            },
+            {
+              "damage_type": "magic",
+              "formula": {
+                "op": "mul",
+                "operands": [
+                  {
+                    "op": "by_rank",
+                    "values": [
+                      0.08,
+                      0.108,
+                      0.136,
+                      0.164,
+                      0.192,
+                      0.22
+                    ]
+                  },
+                  {
+                    "op": "stat",
+                    "stat": "health",
+                    "scope": "max",
+                    "subject": "target"
+                  }
+                ]
+              },
+              "label": "Derivado",
+              "source": "Characters/Jayce/Spells/JayceThunderingBlowAbility/JayceThunderingBlow · DataValues.PercHPDamage × vida máxima del objetivo (16.23.8406595+branch.releases-16-23.content.release)",
+              "damage_type_source": "spell_jaycethunderingblow_tooltip <magicDamage>"
+            }
+          ]
+        }
+      ],
+      "passive_stats": [],
+      "not_modelled": [
+        "Empuje, tope contra monstruos (MonsterCap) y postura de cañón: Portal de aceleración"
+      ]
+    },
+    "R": {
+      "name": "Cañón de mercurio / Martillo de mercurio",
+      "max_rank": 1,
+      "cases": [],
+      "passive_stats": [],
+      "not_modelled": [
+        "Cambio de forma desde nivel 1, reducción de armadura/RM en cañón (RangedFormShred), daño mágico adicional al cambiar a martillo (Damage, ADRatio sin valores en bin) y resistencias de martillo (Resists)"
+      ]
+    }
+  }
+}

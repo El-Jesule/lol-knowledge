@@ -1,0 +1,195 @@
+{
+  "schema": "lol-champion-kit/1",
+  "champion": "Nidalee",
+  "label": "Derivado",
+  "game_version": "16.23",
+  "content_version": "16.23.8406595+branch.releases-16-23.content.release",
+  "verified_against": {
+    "content_version": "16.23.8406595+branch.releases-16-23.content.release",
+    "bin_sha256": "e6cba8765110c0dabccac4b3edf978ac5568cf1b0af54150b2c8a3cce389e1fe",
+    "evidence": "odd/tasks/champion-kits-wave-4.md",
+    "result": "Bin del cliente 16.23 convertido con python -m binmodel.batch_kits y compilado con esta especificación curada (CH-01 oleada 4 — cierre 173/173)"
+  },
+  "source": "Árboles de cálculo del bin del cliente (python -m binmodel) y marcado de los tooltips del cliente; estructura de casos curada en research/kits/",
+  "abilities": {
+    "P": {
+      "name": "Acecho",
+      "max_rank": 1,
+      "cases": [],
+      "passive_stats": [],
+      "not_modelled": [
+        "Velocidad de movimiento en maleza y hacia objetivos Cazados"
+      ]
+    },
+    "Q": {
+      "name": "Jabalina / Tumbar",
+      "max_rank": 5,
+      "cases": [
+        {
+          "id": "human_min",
+          "name": "Forma humana: Jabalina (distancia mínima)",
+          "parts": [
+            {
+              "damage_type": "magic",
+              "formula": {
+                "op": "add",
+                "operands": [
+                  {
+                    "op": "by_rank",
+                    "values": [
+                      70,
+                      90,
+                      110,
+                      130,
+                      150
+                    ]
+                  },
+                  {
+                    "op": "mul",
+                    "operands": [
+                      {
+                        "op": "constant",
+                        "value": 0.5
+                      },
+                      {
+                        "op": "stat",
+                        "stat": "ability_power",
+                        "scope": "total"
+                      }
+                    ]
+                  }
+                ]
+              },
+              "label": "Derivado",
+              "source": "Characters/Nidalee/Spells/JavelinTossAbility/JavelinToss.mSpellCalculations.HumanMinimumDamage (16.23.8406595+branch.releases-16-23.content.release)",
+              "damage_type_source": "spell_javelintoss_tooltip <magicDamage>"
+            }
+          ]
+        },
+        {
+          "id": "human_max",
+          "name": "Forma humana: Jabalina (distancia máxima, ×3,25)",
+          "parts": [
+            {
+              "damage_type": "magic",
+              "formula": {
+                "op": "mul",
+                "operands": [
+                  {
+                    "op": "add",
+                    "operands": [
+                      {
+                        "op": "by_rank",
+                        "values": [
+                          70,
+                          90,
+                          110,
+                          130,
+                          150
+                        ]
+                      },
+                      {
+                        "op": "mul",
+                        "operands": [
+                          {
+                            "op": "constant",
+                            "value": 0.5
+                          },
+                          {
+                            "op": "stat",
+                            "stat": "ability_power",
+                            "scope": "total"
+                          }
+                        ]
+                      }
+                    ]
+                  },
+                  {
+                    "op": "constant",
+                    "value": 3.25
+                  }
+                ]
+              },
+              "label": "Derivado",
+              "source": "Characters/Nidalee/Spells/JavelinTossAbility/JavelinToss.mSpellCalculations.HumanMaximumDamage (16.23.8406595+branch.releases-16-23.content.release)",
+              "damage_type_source": "spell_javelintoss_tooltip <magicDamage>"
+            }
+          ]
+        }
+      ],
+      "passive_stats": [],
+      "not_modelled": [
+        "Forma felina: Tumbar (en hechizo separado, TotalTakedownDamage escalado por vida faltante y marca Cazado)"
+      ]
+    },
+    "W": {
+      "name": "Emboscada / Asalto",
+      "max_rank": 5,
+      "cases": [
+        {
+          "id": "human_trap_dps",
+          "name": "Forma humana: Trampa (daño por segundo, 4 s)",
+          "parts": [
+            {
+              "damage_type": "magic",
+              "formula": {
+                "op": "add",
+                "operands": [
+                  {
+                    "op": "by_rank",
+                    "values": [
+                      10,
+                      20,
+                      30,
+                      40,
+                      50
+                    ]
+                  },
+                  {
+                    "op": "mul",
+                    "operands": [
+                      {
+                        "op": "constant",
+                        "value": 0.05
+                      },
+                      {
+                        "op": "stat",
+                        "stat": "ability_power",
+                        "scope": "total"
+                      }
+                    ]
+                  }
+                ]
+              },
+              "label": "Derivado",
+              "source": "Characters/Nidalee/Spells/BushwhackAbility/Bushwhack.mSpellCalculations.DamagePerSecond (16.23.8406595+branch.releases-16-23.content.release)",
+              "damage_type_source": "spell_bushwhack_tooltip <magicDamage>"
+            }
+          ]
+        }
+      ],
+      "passive_stats": [],
+      "not_modelled": [
+        "Visión verdadera/marca Cazado de trampa y forma felina: Asalto (TotalPounceDamage)"
+      ]
+    },
+    "E": {
+      "name": "Tensión primaria / Zarpazo",
+      "max_rank": 5,
+      "cases": [],
+      "passive_stats": [],
+      "not_modelled": [
+        "Forma humana: curación (TotalHealing/MaxHealing) y VA; forma felina: Zarpazo (TotalSwipeDamage)"
+      ]
+    },
+    "R": {
+      "name": "Aspecto felino",
+      "max_rank": 4,
+      "cases": [],
+      "passive_stats": [],
+      "not_modelled": [
+        "Cambio entre forma humana y felina desde nivel 1; los daños felinos (TotalTakedownDamage, TotalPounceDamage, TotalSwipeDamage) pertenecen a los hechizos de forma felina"
+      ]
+    }
+  }
+}

@@ -1,0 +1,74 @@
+{
+  "champion": "Olaf",
+  "game_version": "16.23",
+  "verified_against": {
+    "content_version": "16.23.8406595+branch.releases-16-23.content.release",
+    "bin_sha256": "4bebc1281a14579300b5e57fab4a2fca78c8ead6ec3421f5980cf5fa3818ba7b",
+    "evidence": "odd/tasks/champion-kits-wave-4.md",
+    "result": "Bin del cliente 16.23 convertido con python -m binmodel.batch_kits y compilado con esta especificación curada (CH-01 oleada 4 — cierre 173/173)"
+  },
+  "abilities": {
+    "P": {
+      "name": "Furia berserker",
+      "tooltip": "game_character_passivedescription_olaf",
+      "max_rank": 1,
+      "not_modelled": [
+        "Velocidad de ataque (hasta MaxAttackSpeed) y robo de vida (hasta MaxLifeSteal) crecientes según vida faltante"
+      ]
+    },
+    "Q": {
+      "name": "Lanzamiento",
+      "tooltip": "spell_olafaxethrowcast_tooltip",
+      "cases": [
+        {
+          "id": "axe",
+          "name": "Impacto de hacha",
+          "parts": [
+            {
+              "calculation": "TotalDamage"
+            }
+          ]
+        }
+      ],
+      "not_modelled": [
+        "Ralentización, reducción del 20 % de armadura durante 4 s y devolución de CD al recoger el hacha"
+      ]
+    },
+    "W": {
+      "name": "Aguante",
+      "tooltip": "spell_olaffrenziedstrikes_tooltip",
+      "not_modelled": [
+        "Velocidad de ataque durante 5 s y escudo escalado por vida faltante (MaxShieldCalc)"
+      ]
+    },
+    "E": {
+      "name": "Embestida temeraria",
+      "tooltip": "spell_olafrecklessstrike_tooltip",
+      "cost": {
+        "resource": "health",
+        "calculation": "HealthCostCalc"
+      },
+      "cases": [
+        {
+          "id": "strike",
+          "name": "Rayo verdadero",
+          "parts": [
+            {
+              "calculation": "TotalDamage"
+            }
+          ]
+        }
+      ],
+      "not_modelled": [
+        "Reembolso del coste de vida si mata al objetivo y reducción de 1 s de enfriamiento por ataque básico"
+      ]
+    },
+    "R": {
+      "name": "Ragnarok",
+      "tooltip": "spell_olafragnarok_tooltip",
+      "not_modelled": [
+        "Resistencias pasivas (armadura/RM), inmunidad a CC, DA adicional activo (AD), velocidad de movimiento y extensión al golpear"
+      ]
+    }
+  }
+}

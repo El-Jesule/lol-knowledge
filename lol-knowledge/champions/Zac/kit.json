@@ -1,0 +1,319 @@
+{
+  "schema": "lol-champion-kit/1",
+  "champion": "Zac",
+  "label": "Derivado",
+  "game_version": "16.23",
+  "content_version": "16.23.8406595+branch.releases-16-23.content.release",
+  "verified_against": {
+    "content_version": "16.23.8406595+branch.releases-16-23.content.release",
+    "bin_sha256": "47e3f47b1da6c9b6c3f4a9632e82419056514a3012908292e66a38f403e836bc",
+    "evidence": "odd/tasks/champion-kits-wave-4.md",
+    "result": "Bin del cliente 16.23 convertido con python -m binmodel.batch_kits y compilado con esta especificación curada (CH-01 oleada 4 — cierre 173/173)"
+  },
+  "source": "Árboles de cálculo del bin del cliente (python -m binmodel) y marcado de los tooltips del cliente; estructura de casos curada en research/kits/",
+  "abilities": {
+    "P": {
+      "name": "División celular",
+      "max_rank": 1,
+      "cases": [],
+      "passive_stats": [],
+      "not_modelled": [
+        "Curación por trozos de materia (HealPercent) y resurrección en 4 partículas"
+      ]
+    },
+    "Q": {
+      "name": "Manos locas",
+      "max_rank": 5,
+      "cases": [
+        {
+          "id": "hit",
+          "name": "Un golpe (alcance inicial o choque)",
+          "parts": [
+            {
+              "damage_type": "magic",
+              "formula": {
+                "op": "add",
+                "operands": [
+                  {
+                    "op": "by_rank",
+                    "values": [
+                      60,
+                      90,
+                      120,
+                      150,
+                      180
+                    ]
+                  },
+                  {
+                    "op": "mul",
+                    "operands": [
+                      {
+                        "op": "constant",
+                        "value": 0.3
+                      },
+                      {
+                        "op": "stat",
+                        "stat": "ability_power",
+                        "scope": "total"
+                      }
+                    ]
+                  },
+                  {
+                    "op": "mul",
+                    "operands": [
+                      {
+                        "op": "constant",
+                        "value": 0.03
+                      },
+                      {
+                        "op": "stat",
+                        "stat": "health",
+                        "scope": "bonus"
+                      }
+                    ]
+                  }
+                ]
+              },
+              "label": "Derivado",
+              "source": "Characters/Zac/Spells/ZacQAbility/ZacQ.mSpellCalculations.TotalDamage (16.23.8406595+branch.releases-16-23.content.release)",
+              "damage_type_source": "spell_zacq_tooltip <magicDamage>"
+            }
+          ]
+        }
+      ],
+      "passive_stats": [],
+      "not_modelled": [
+        "Coste del 8 % de vida actual (HPCost), choque entre dos enemigos (MaxDamageTooltip = 2×) y ralentización"
+      ]
+    },
+    "W": {
+      "name": "Materia inestable",
+      "max_rank": 5,
+      "cases": [
+        {
+          "id": "eruption",
+          "name": "Erupción (plano + % vida máxima)",
+          "parts": [
+            {
+              "damage_type": "magic",
+              "formula": {
+                "op": "add",
+                "operands": [
+                  {
+                    "op": "by_rank",
+                    "values": [
+                      40,
+                      50,
+                      60,
+                      70,
+                      80
+                    ]
+                  },
+                  {
+                    "op": "mul",
+                    "operands": [
+                      {
+                        "op": "add",
+                        "operands": [
+                          {
+                            "op": "by_rank",
+                            "values": [
+                              4,
+                              5,
+                              6,
+                              7,
+                              8
+                            ]
+                          },
+                          {
+                            "op": "mul",
+                            "operands": [
+                              {
+                                "op": "constant",
+                                "value": 0.03
+                              },
+                              {
+                                "op": "stat",
+                                "stat": "ability_power",
+                                "scope": "total"
+                              }
+                            ]
+                          }
+                        ]
+                      },
+                      {
+                        "op": "constant",
+                        "value": 0.01
+                      },
+                      {
+                        "op": "stat",
+                        "stat": "health",
+                        "scope": "max",
+                        "subject": "target"
+                      }
+                    ]
+                  }
+                ]
+              },
+              "label": "Derivado",
+              "source": "Characters/Zac/Spells/ZacWAbility/ZacW · DataValues.BaseDamage + mSpellCalculations.DisplayPercentDamage % × vida máxima del objetivo (16.23.8406595+branch.releases-16-23.content.release)",
+              "damage_type_source": "spell_zacw_tooltip <magicDamage>"
+            }
+          ]
+        }
+      ],
+      "passive_stats": [],
+      "not_modelled": [
+        "Coste del 4 % de vida actual (HPCost), tope de 200 a súbditos/monstruos y reducción de 1 s de CD al recoger materia"
+      ]
+    },
+    "E": {
+      "name": "Honda elástica",
+      "max_rank": 5,
+      "cases": [
+        {
+          "id": "slam",
+          "name": "Impacto de aterrizaje",
+          "parts": [
+            {
+              "damage_type": "magic",
+              "formula": {
+                "op": "add",
+                "operands": [
+                  {
+                    "op": "by_rank",
+                    "values": [
+                      60,
+                      105,
+                      150,
+                      195,
+                      240
+                    ]
+                  },
+                  {
+                    "op": "mul",
+                    "operands": [
+                      {
+                        "op": "constant",
+                        "value": 0.8
+                      },
+                      {
+                        "op": "stat",
+                        "stat": "ability_power",
+                        "scope": "total"
+                      }
+                    ]
+                  }
+                ]
+              },
+              "label": "Derivado",
+              "source": "Characters/Zac/Spells/ZacEAbility/ZacE.mSpellCalculations.Damage (16.23.8406595+branch.releases-16-23.content.release)",
+              "damage_type_source": "spell_zace_tooltip <magicDamage>"
+            }
+          ]
+        }
+      ],
+      "passive_stats": [],
+      "not_modelled": [
+        "Coste del 4 % de vida actual (HPCost) y lanzamiento por los aires de 0,5 a 1 s (MaxStun)"
+      ]
+    },
+    "R": {
+      "name": "¡Rebotemos!",
+      "max_rank": 3,
+      "cases": [
+        {
+          "id": "first_bounce",
+          "name": "Primer rebote sobre un enemigo",
+          "parts": [
+            {
+              "damage_type": "magic",
+              "formula": {
+                "op": "add",
+                "operands": [
+                  {
+                    "op": "by_rank",
+                    "values": [
+                      120,
+                      190,
+                      260
+                    ]
+                  },
+                  {
+                    "op": "mul",
+                    "operands": [
+                      {
+                        "op": "constant",
+                        "value": 0.4
+                      },
+                      {
+                        "op": "stat",
+                        "stat": "ability_power",
+                        "scope": "total"
+                      }
+                    ]
+                  }
+                ]
+              },
+              "label": "Derivado",
+              "source": "Characters/Zac/Spells/ZacRAbility/ZacR.mSpellCalculations.DamagePerBounce (16.23.8406595+branch.releases-16-23.content.release)",
+              "damage_type_source": "spell_zacr_tooltip <magicDamage>"
+            }
+          ]
+        },
+        {
+          "id": "subsequent_bounce",
+          "name": "Cada rebote posterior (50 %)",
+          "parts": [
+            {
+              "damage_type": "magic",
+              "formula": {
+                "op": "mul",
+                "operands": [
+                  {
+                    "op": "add",
+                    "operands": [
+                      {
+                        "op": "by_rank",
+                        "values": [
+                          120,
+                          190,
+                          260
+                        ]
+                      },
+                      {
+                        "op": "mul",
+                        "operands": [
+                          {
+                            "op": "constant",
+                            "value": 0.4
+                          },
+                          {
+                            "op": "stat",
+                            "stat": "ability_power",
+                            "scope": "total"
+                          }
+                        ]
+                      }
+                    ]
+                  },
+                  {
+                    "op": "constant",
+                    "value": 0.5
+                  }
+                ]
+              },
+              "label": "Derivado",
+              "source": "Characters/Zac/Spells/ZacRAbility/ZacR.mSpellCalculations.DamagePerSubsequentBounce (16.23.8406595+branch.releases-16-23.content.release)",
+              "damage_type_source": "spell_zacr_tooltip <magicDamage>"
+            }
+          ]
+        }
+      ],
+      "passive_stats": [],
+      "not_modelled": [
+        "4 rebotes totales (MaxDamageTooltip), empuje/ralentización y velocidad de movimiento creciente"
+      ]
+    }
+  }
+}

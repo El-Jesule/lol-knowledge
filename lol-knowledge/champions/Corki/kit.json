@@ -1,0 +1,330 @@
+{
+  "schema": "lol-champion-kit/1",
+  "champion": "Corki",
+  "label": "Derivado",
+  "game_version": "16.23",
+  "content_version": "16.23.8406595+branch.releases-16-23.content.release",
+  "verified_against": {
+    "content_version": "16.23.8406595+branch.releases-16-23.content.release",
+    "bin_sha256": "bdb31150dd208900310895607d6c30f12b9f2557c45f55b3dc0466ee2a9e850b",
+    "evidence": "odd/tasks/champion-kits-wave-4.md",
+    "result": "Bin del cliente 16.23 convertido con python -m binmodel.batch_kits y compilado con esta especificación curada (CH-01 oleada 4 — cierre 173/173)"
+  },
+  "source": "Árboles de cálculo del bin del cliente (python -m binmodel) y marcado de los tooltips del cliente; estructura de casos curada en research/kits/",
+  "abilities": {
+    "P": {
+      "name": "Municiones hextech",
+      "max_rank": 1,
+      "cases": [
+        {
+          "id": "true_bonus",
+          "name": "Daño verdadero adicional por ataque (20 % DA)",
+          "parts": [
+            {
+              "damage_type": "true",
+              "formula": {
+                "op": "mul",
+                "operands": [
+                  {
+                    "op": "constant",
+                    "value": 0.2
+                  },
+                  {
+                    "op": "stat",
+                    "stat": "attack_damage",
+                    "scope": "total"
+                  }
+                ]
+              },
+              "label": "Derivado",
+              "source": "Characters/Corki/Spells/RapidReloadAbility/RapidReload.mSpellCalculations.BasicAttackTOOLTIP (16.23.8406595+branch.releases-16-23.content.release)",
+              "damage_type_source": "spell_rapidreload_tooltip <trueDamage>"
+            }
+          ]
+        }
+      ],
+      "passive_stats": [],
+      "not_modelled": [
+        "Escalado en golpes críticos del ataque básico"
+      ]
+    },
+    "Q": {
+      "name": "Bomba de fósforo",
+      "max_rank": 5,
+      "cases": [
+        {
+          "id": "bomb",
+          "name": "Explosión de bomba",
+          "parts": [
+            {
+              "damage_type": "magic",
+              "formula": {
+                "op": "add",
+                "operands": [
+                  {
+                    "op": "by_rank",
+                    "values": [
+                      60,
+                      105,
+                      150,
+                      195,
+                      240
+                    ]
+                  },
+                  {
+                    "op": "mul",
+                    "operands": [
+                      {
+                        "op": "constant",
+                        "value": 1.25
+                      },
+                      {
+                        "op": "stat",
+                        "stat": "attack_damage",
+                        "scope": "bonus"
+                      }
+                    ]
+                  },
+                  {
+                    "op": "mul",
+                    "operands": [
+                      {
+                        "op": "constant",
+                        "value": 1
+                      },
+                      {
+                        "op": "stat",
+                        "stat": "ability_power",
+                        "scope": "total"
+                      }
+                    ]
+                  }
+                ]
+              },
+              "label": "Derivado",
+              "source": "Characters/Corki/Spells/PhosphorusBombAbility/PhosphorusBomb.mSpellCalculations.TotalDamage (16.23.8406595+branch.releases-16-23.content.release)",
+              "damage_type_source": "spell_phosphorusbomb_tooltip <magicDamage>"
+            }
+          ]
+        }
+      ],
+      "passive_stats": [],
+      "not_modelled": [
+        "Visión revelada durante 6 s"
+      ]
+    },
+    "W": {
+      "name": "Valquiria",
+      "max_rank": 5,
+      "cases": [
+        {
+          "id": "zone_max",
+          "name": "Zona incendiaria completa",
+          "parts": [
+            {
+              "damage_type": "magic",
+              "formula": {
+                "op": "add",
+                "operands": [
+                  {
+                    "op": "by_rank",
+                    "values": [
+                      150,
+                      225,
+                      300,
+                      375,
+                      450
+                    ]
+                  },
+                  {
+                    "op": "mul",
+                    "operands": [
+                      {
+                        "op": "constant",
+                        "value": 1.5
+                      },
+                      {
+                        "op": "stat",
+                        "stat": "ability_power",
+                        "scope": "total"
+                      }
+                    ]
+                  },
+                  {
+                    "op": "mul",
+                    "operands": [
+                      {
+                        "op": "constant",
+                        "value": 2
+                      },
+                      {
+                        "op": "stat",
+                        "stat": "attack_damage",
+                        "scope": "bonus"
+                      }
+                    ]
+                  }
+                ]
+              },
+              "label": "Derivado",
+              "source": "Characters/Corki/Spells/CarpetBombAbility/CarpetBomb.mSpellCalculations.MaximumDamage (16.23.8406595+branch.releases-16-23.content.release)",
+              "damage_type_source": "spell_carpetbomb_tooltip <magicDamage>"
+            }
+          ]
+        }
+      ],
+      "passive_stats": [],
+      "not_modelled": [
+        "Desplazamiento sobre terreno"
+      ]
+    },
+    "E": {
+      "name": "Cañón de repetición",
+      "max_rank": 5,
+      "cases": [
+        {
+          "id": "total",
+          "name": "Descarga completa (4 s)",
+          "parts": [
+            {
+              "damage_type": "physical",
+              "formula": {
+                "op": "add",
+                "operands": [
+                  {
+                    "op": "by_rank",
+                    "values": [
+                      80,
+                      130,
+                      180,
+                      230,
+                      280
+                    ]
+                  },
+                  {
+                    "op": "mul",
+                    "operands": [
+                      {
+                        "op": "constant",
+                        "value": 2.4
+                      },
+                      {
+                        "op": "stat",
+                        "stat": "attack_damage",
+                        "scope": "bonus"
+                      }
+                    ]
+                  }
+                ]
+              },
+              "label": "Derivado",
+              "source": "Characters/Corki/Spells/GGunAbility/GGun.mSpellCalculations.TotalDamage (16.23.8406595+branch.releases-16-23.content.release)",
+              "damage_type_source": "spell_ggun_tooltip <physicalDamage>"
+            }
+          ]
+        }
+      ],
+      "passive_stats": [],
+      "not_modelled": [
+        "Reducción acumulable de armadura y resistencia mágica en cono"
+      ]
+    },
+    "R": {
+      "name": "Andanada de Proyectiles",
+      "max_rank": 3,
+      "cases": [
+        {
+          "id": "small",
+          "name": "Misil normal",
+          "parts": [
+            {
+              "damage_type": "physical",
+              "formula": {
+                "op": "add",
+                "operands": [
+                  {
+                    "op": "by_rank",
+                    "values": [
+                      100,
+                      190,
+                      280
+                    ]
+                  },
+                  {
+                    "op": "mul",
+                    "operands": [
+                      {
+                        "op": "constant",
+                        "value": 0.9
+                      },
+                      {
+                        "op": "stat",
+                        "stat": "attack_damage",
+                        "scope": "bonus"
+                      }
+                    ]
+                  }
+                ]
+              },
+              "label": "Derivado",
+              "source": "Characters/Corki/Spells/MissileBarrageAbility/MissileBarrage.mSpellCalculations.RSmallMissileDamage (16.23.8406595+branch.releases-16-23.content.release)",
+              "damage_type_source": "spell_missilebarrage_tooltip <physicalDamage>"
+            }
+          ]
+        },
+        {
+          "id": "big",
+          "name": "Gran misil (cada 3.er disparo)",
+          "parts": [
+            {
+              "damage_type": "physical",
+              "formula": {
+                "op": "mul",
+                "operands": [
+                  {
+                    "op": "add",
+                    "operands": [
+                      {
+                        "op": "by_rank",
+                        "values": [
+                          100,
+                          190,
+                          280
+                        ]
+                      },
+                      {
+                        "op": "mul",
+                        "operands": [
+                          {
+                            "op": "constant",
+                            "value": 0.9
+                          },
+                          {
+                            "op": "stat",
+                            "stat": "attack_damage",
+                            "scope": "bonus"
+                          }
+                        ]
+                      }
+                    ]
+                  },
+                  {
+                    "op": "constant",
+                    "value": 2
+                  }
+                ]
+              },
+              "label": "Derivado",
+              "source": "Characters/Corki/Spells/MissileBarrageAbility/MissileBarrage.mSpellCalculations.RBigMissileDamage (16.23.8406595+branch.releases-16-23.content.release)",
+              "damage_type_source": "spell_missilebarrage_tooltip <physicalDamage>"
+            }
+          ]
+        }
+      ],
+      "passive_stats": [],
+      "not_modelled": [
+        "Sistema de hasta 4 cargas y reducción de recarga con ataques básicos (AttackRefund)"
+      ]
+    }
+  }
+}

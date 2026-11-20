@@ -1,0 +1,59 @@
+{
+  "champion": "Zilean",
+  "game_version": "16.23",
+  "verified_against": {
+    "content_version": "16.23.8406595+branch.releases-16-23.content.release",
+    "bin_sha256": "c5ad16fd929d7751e1a2dda126cd1fef9b8237ac62a99fd693405efe01dfa9cd",
+    "evidence": "odd/tasks/champion-kits-wave-4.md",
+    "result": "Bin del cliente 16.23 convertido con python -m binmodel.batch_kits y compilado con esta especificación curada (CH-01 oleada 4 — cierre 173/173)"
+  },
+  "abilities": {
+    "P": {
+      "name": "Tiempo embotellado",
+      "tooltip": "spell_heightenedlearning_tooltip",
+      "max_rank": 1,
+      "not_modelled": [
+        "Acumulación y entrega de experiencia a campeones aliados"
+      ]
+    },
+    "Q": {
+      "name": "Bomba de relojería",
+      "tooltip": "spell_zileanq_tooltip",
+      "cases": [
+        {
+          "id": "bomb",
+          "name": "Explosión de bomba",
+          "parts": [
+            {
+              "calculation": "TotalDamage"
+            }
+          ]
+        }
+      ],
+      "not_modelled": [
+        "Aturdimiento en área al encadenar dos bombas sobre la misma unidad"
+      ]
+    },
+    "W": {
+      "name": "Retroceder",
+      "tooltip": "spell_zileanw_tooltip",
+      "not_modelled": [
+        "Reducción de 10 s de enfriamiento en Q y E"
+      ]
+    },
+    "E": {
+      "name": "Distorsión temporal",
+      "tooltip": "spell_timewarp_tooltip",
+      "not_modelled": [
+        "Aumento de velocidad de movimiento a aliado o ralentización a enemigo (40..99 %)"
+      ]
+    },
+    "R": {
+      "name": "Alteración del tiempo",
+      "tooltip": "spell_chronoshift_tooltip",
+      "not_modelled": [
+        "Resurrección de aliado durante 5 s con curación (RTotalHeal)"
+      ]
+    }
+  }
+}

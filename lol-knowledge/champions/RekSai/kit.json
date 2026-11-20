@@ -1,0 +1,297 @@
+{
+  "schema": "lol-champion-kit/1",
+  "champion": "RekSai",
+  "label": "Derivado",
+  "game_version": "16.23",
+  "content_version": "16.23.8406595+branch.releases-16-23.content.release",
+  "verified_against": {
+    "content_version": "16.23.8406595+branch.releases-16-23.content.release",
+    "bin_sha256": "8074d42e73acd5fd73a47a38ee9dfac8b1a4f24387891e48dd6134c9603de150",
+    "evidence": "odd/tasks/champion-kits-wave-4.md",
+    "result": "Bin del cliente 16.23 convertido con python -m binmodel.batch_kits y compilado con esta especificación curada (CH-01 oleada 4 — cierre 173/173)"
+  },
+  "source": "Árboles de cálculo del bin del cliente (python -m binmodel) y marcado de los tooltips del cliente; estructura de casos curada en research/kits/",
+  "abilities": {
+    "P": {
+      "name": "Furia del Xer'Sai",
+      "max_rank": 1,
+      "cases": [],
+      "passive_stats": [],
+      "not_modelled": [
+        "Generación de Furia y curación al excavar consumiendo Furia (HealAmount)"
+      ]
+    },
+    "Q": {
+      "name": "Ira de la reina / Rastreadora",
+      "max_rank": 5,
+      "cases": [
+        {
+          "id": "unburrowed",
+          "name": "Superficie: Ira de la reina (por ataque)",
+          "parts": [
+            {
+              "damage_type": "physical",
+              "formula": {
+                "op": "mul",
+                "operands": [
+                  {
+                    "op": "by_rank",
+                    "values": [
+                      0.3,
+                      0.35,
+                      0.4,
+                      0.45,
+                      0.5
+                    ]
+                  },
+                  {
+                    "op": "stat",
+                    "stat": "attack_damage",
+                    "scope": "total"
+                  }
+                ]
+              },
+              "label": "Derivado",
+              "source": "Characters/RekSai/Spells/RekSaiQAbility/RekSaiQ.mSpellCalculations.TotalDamageTooltip (16.23.8406595+branch.releases-16-23.content.release)",
+              "damage_type_source": "spell_reksaiq_tooltip <physicalDamage>"
+            }
+          ]
+        }
+      ],
+      "passive_stats": [],
+      "not_modelled": [
+        "Velocidad de ataque del 35 % en 3 ataques y bajo tierra: Rastreadora (BurrowDamageTooltip en tooltip separado)"
+      ]
+    },
+    "W": {
+      "name": "Excavar / Salir a la superficie",
+      "max_rank": 5,
+      "cases": [
+        {
+          "id": "unburrow",
+          "name": "Salir a la superficie",
+          "parts": [
+            {
+              "damage_type": "magic",
+              "formula": {
+                "op": "add",
+                "operands": [
+                  {
+                    "op": "by_rank",
+                    "values": [
+                      30,
+                      55,
+                      80,
+                      105,
+                      130
+                    ]
+                  },
+                  {
+                    "op": "mul",
+                    "operands": [
+                      {
+                        "op": "constant",
+                        "value": 0.8
+                      },
+                      {
+                        "op": "stat",
+                        "stat": "ability_power",
+                        "scope": "total"
+                      }
+                    ]
+                  }
+                ]
+              },
+              "label": "Derivado",
+              "source": "Characters/RekSai/Spells/RekSaiWAbility/RekSaiW.mSpellCalculations.UnburrowDamage (16.23.8406595+branch.releases-16-23.content.release)",
+              "damage_type_source": "spell_reksaiwburrowed_tooltip <magicDamage>"
+            }
+          ]
+        }
+      ],
+      "passive_stats": [],
+      "not_modelled": [
+        "Lanzamiento por los aires de 1 s, sentido sísmico y velocidad de movimiento bajo tierra"
+      ]
+    },
+    "E": {
+      "name": "Mordisco furioso / Túnel",
+      "max_rank": 5,
+      "cases": [
+        {
+          "id": "bite_normal",
+          "name": "Superficie: Mordisco normal",
+          "parts": [
+            {
+              "damage_type": "physical",
+              "formula": {
+                "op": "add",
+                "operands": [
+                  {
+                    "op": "by_rank",
+                    "values": [
+                      70,
+                      95,
+                      120,
+                      145,
+                      170
+                    ]
+                  },
+                  {
+                    "op": "mul",
+                    "operands": [
+                      {
+                        "op": "constant",
+                        "value": 0.6
+                      },
+                      {
+                        "op": "stat",
+                        "stat": "attack_damage",
+                        "scope": "bonus"
+                      }
+                    ]
+                  }
+                ]
+              },
+              "label": "Derivado",
+              "source": "Characters/RekSai/Spells/RekSaiEAbility/RekSaiE.mSpellCalculations.BaseDamageCalculation (16.23.8406595+branch.releases-16-23.content.release)",
+              "damage_type_source": "spell_reksaie_tooltip <physicalDamage>"
+            }
+          ]
+        },
+        {
+          "id": "bite_max_fury",
+          "name": "Superficie: Mordisco a furia máxima (verdadero)",
+          "parts": [
+            {
+              "damage_type": "true",
+              "formula": {
+                "op": "mul",
+                "operands": [
+                  {
+                    "op": "add",
+                    "operands": [
+                      {
+                        "op": "by_rank",
+                        "values": [
+                          70,
+                          95,
+                          120,
+                          145,
+                          170
+                        ]
+                      },
+                      {
+                        "op": "mul",
+                        "operands": [
+                          {
+                            "op": "constant",
+                            "value": 0.6
+                          },
+                          {
+                            "op": "stat",
+                            "stat": "attack_damage",
+                            "scope": "bonus"
+                          }
+                        ]
+                      }
+                    ]
+                  },
+                  {
+                    "op": "constant",
+                    "value": 1.2
+                  }
+                ]
+              },
+              "label": "Derivado",
+              "source": "Characters/RekSai/Spells/RekSaiEAbility/RekSaiE.mSpellCalculations.EmpoweredDamageCalculation (16.23.8406595+branch.releases-16-23.content.release)",
+              "damage_type_source": "spell_reksaie_tooltip <trueDamage>"
+            }
+          ]
+        }
+      ],
+      "passive_stats": [],
+      "not_modelled": [
+        "Bajo tierra: excavación de túneles (hasta 8)"
+      ]
+    },
+    "R": {
+      "name": "Carrera del vacío",
+      "max_rank": 3,
+      "cases": [
+        {
+          "id": "rush",
+          "name": "Salto (base + % vida máxima)",
+          "parts": [
+            {
+              "damage_type": "physical",
+              "formula": {
+                "op": "add",
+                "operands": [
+                  {
+                    "op": "by_rank",
+                    "values": [
+                      150,
+                      250,
+                      350
+                    ]
+                  },
+                  {
+                    "op": "mul",
+                    "operands": [
+                      {
+                        "op": "constant",
+                        "value": 1
+                      },
+                      {
+                        "op": "stat",
+                        "stat": "attack_damage",
+                        "scope": "bonus"
+                      }
+                    ]
+                  }
+                ]
+              },
+              "label": "Derivado",
+              "source": "Characters/RekSai/Spells/RekSaiRAbility/RekSaiR.mSpellCalculations.RBaseDamageCalc (16.23.8406595+branch.releases-16-23.content.release)",
+              "damage_type_source": "spell_reksair_tooltip <physicalDamage>"
+            },
+            {
+              "damage_type": "physical",
+              "formula": {
+                "op": "mul",
+                "operands": [
+                  {
+                    "op": "by_rank",
+                    "values": [
+                      15,
+                      20,
+                      25
+                    ]
+                  },
+                  {
+                    "op": "constant",
+                    "value": 0.01
+                  },
+                  {
+                    "op": "stat",
+                    "stat": "health",
+                    "scope": "max",
+                    "subject": "target"
+                  }
+                ]
+              },
+              "label": "Derivado",
+              "source": "Characters/RekSai/Spells/RekSaiRAbility/RekSaiR · DataValues.PercentHealthDamage % × vida máxima del objetivo (16.23.8406595+branch.releases-16-23.content.release)",
+              "damage_type_source": "spell_reksair_tooltip <physicalDamage>"
+            }
+          ]
+        }
+      ],
+      "passive_stats": [],
+      "not_modelled": [
+        "Inalcanzabilidad, imparabilidad y reinicio del enfriamiento de W"
+      ]
+    }
+  }
+}

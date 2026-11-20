@@ -1,0 +1,135 @@
+{
+  "champion": "Jhin",
+  "game_version": "16.23",
+  "verified_against": {
+    "content_version": "16.23.8406595+branch.releases-16-23.content.release",
+    "bin_sha256": "f6eaa5243460f5a21217aaa9ebeea5c5913552ba0bc0720cca0ae7014d954595",
+    "evidence": "odd/tasks/champion-kits-wave-4.md",
+    "result": "Bin del cliente 16.23 convertido con python -m binmodel.batch_kits y compilado con esta especificación curada (CH-01 oleada 4 — cierre 173/173)"
+  },
+  "abilities": {
+    "P": {
+      "name": "Susurro",
+      "tooltip": "spell_jhinpassive_tooltip",
+      "max_rank": 1,
+      "cases": [
+        {
+          "id": "fourth_shot_execute",
+          "name": "Cuarto disparo (daño adicional % vida faltante)",
+          "parts": [
+            {
+              "tooltip_reference": "FourthShotExecutePercent",
+              "damage_type": "physical",
+              "source_note": "mSpellCalculations.FourthShotExecutePercent × vida faltante del objetivo",
+              "formula": {
+                "op": "mul",
+                "operands": [
+                  {
+                    "op": "calculation",
+                    "name": "FourthShotExecutePercent"
+                  },
+                  {
+                    "op": "stat",
+                    "stat": "health",
+                    "scope": "max",
+                    "subject": "target"
+                  },
+                  {
+                    "op": "stat",
+                    "stat": "health",
+                    "scope": "missing_fraction",
+                    "subject": "target"
+                  }
+                ]
+              }
+            }
+          ]
+        }
+      ],
+      "not_modelled": [
+        "Velocidad de ataque fija y recarga de 4 balas, conversión de crítico y VA en % DA total (TotalADPercent), penalización del 25 % de daño crítico y VM al criticar (CritMoveSpeedPercent)"
+      ]
+    },
+    "Q": {
+      "name": "Granada danzante",
+      "tooltip": "spell_jhinq_tooltip",
+      "cases": [
+        {
+          "id": "base",
+          "name": "Primer rebote (sin bajas previas)",
+          "parts": [
+            {
+              "calculation": "TotalDamage"
+            }
+          ]
+        }
+      ],
+      "not_modelled": [
+        "Aumento del 35 % de daño por cada unidad rematada en rebotes anteriores"
+      ]
+    },
+    "W": {
+      "name": "Florecer mortal",
+      "tooltip": "spell_jhinw_tooltip",
+      "cases": [
+        {
+          "id": "shot",
+          "name": "Disparo a campeones",
+          "parts": [
+            {
+              "calculation": "TotalDamage"
+            }
+          ]
+        }
+      ],
+      "not_modelled": [
+        "Inmovilización sobre objetivos marcados, 75 % de daño a no campeones y velocidad de movimiento de Susurro"
+      ]
+    },
+    "E": {
+      "name": "Público entregado",
+      "tooltip": "spell_jhine_tooltip",
+      "cases": [
+        {
+          "id": "trap",
+          "name": "Detonación de trampa de loto",
+          "parts": [
+            {
+              "calculation": "TotalDamage"
+            }
+          ]
+        }
+      ],
+      "not_modelled": [
+        "Ralentización del 35 %, trampa automática al derribar campeones y 65 % de daño en impactos posteriores"
+      ]
+    },
+    "R": {
+      "name": "Abajo el telón",
+      "tooltip": "spell_jhinr_tooltip",
+      "cases": [
+        {
+          "id": "shot_min",
+          "name": "Un disparo (objetivo a vida completa)",
+          "parts": [
+            {
+              "calculation": "DamageCalc"
+            }
+          ]
+        },
+        {
+          "id": "shot_max",
+          "name": "Un disparo (daño máximo por vida faltante)",
+          "parts": [
+            {
+              "calculation": "MaxIncreaseCalc"
+            }
+          ]
+        }
+      ],
+      "not_modelled": [
+        "4 disparos, ralentización del 80 % y crítico garantizado del 4.º disparo"
+      ]
+    }
+  }
+}

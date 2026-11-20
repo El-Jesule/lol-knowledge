@@ -1,0 +1,139 @@
+{
+  "schema": "lol-champion-kit/1",
+  "champion": "Bard",
+  "label": "Derivado",
+  "game_version": "16.23",
+  "content_version": "16.23.8406595+branch.releases-16-23.content.release",
+  "verified_against": {
+    "content_version": "16.23.8406595+branch.releases-16-23.content.release",
+    "bin_sha256": "3645f05d9c3aa8a0984cf65a6d37132caca2d356c430bdc54f757c37ea82a0e9",
+    "evidence": "odd/tasks/champion-kits-wave-4.md",
+    "result": "Bin del cliente 16.23 convertido con python -m binmodel.batch_kits y compilado con esta especificación curada (CH-01 oleada 4 — cierre 173/173)"
+  },
+  "source": "Árboles de cálculo del bin del cliente (python -m binmodel) y marcado de los tooltips del cliente; estructura de casos curada en research/kits/",
+  "abilities": {
+    "P": {
+      "name": "Llamada del viajero",
+      "max_rank": 1,
+      "cases": [
+        {
+          "id": "meep_base",
+          "name": "Ataque con Meep (0 campanillas)",
+          "parts": [
+            {
+              "damage_type": "magic",
+              "formula": {
+                "op": "add",
+                "operands": [
+                  {
+                    "op": "constant",
+                    "value": 30
+                  },
+                  {
+                    "op": "mul",
+                    "operands": [
+                      {
+                        "op": "constant",
+                        "value": 0.4
+                      },
+                      {
+                        "op": "stat",
+                        "stat": "ability_power",
+                        "scope": "total"
+                      }
+                    ]
+                  }
+                ]
+              },
+              "label": "Derivado",
+              "source": "Characters/Bard/Spells/BardPTooltip_D_nSAbility/BardPTooltip_D_nS.mSpellCalculations.MeepDamageNoChime (16.23.8406595+branch.releases-16-23.content.release)",
+              "damage_type_source": "spell_bardptooltip_d_ns_tooltip <magicDamage>"
+            }
+          ]
+        }
+      ],
+      "passive_stats": [],
+      "not_modelled": [
+        "Daño adicional y mejoras de área/ralentización de Meeps por campanillas recogidas y velocidad de movimiento/maná de campanillas"
+      ]
+    },
+    "Q": {
+      "name": "Cadenas cósmicas",
+      "max_rank": 5,
+      "cases": [
+        {
+          "id": "bolt",
+          "name": "Impacto de energía",
+          "parts": [
+            {
+              "damage_type": "magic",
+              "formula": {
+                "op": "add",
+                "operands": [
+                  {
+                    "op": "by_rank",
+                    "values": [
+                      80,
+                      125,
+                      170,
+                      215,
+                      260
+                    ]
+                  },
+                  {
+                    "op": "mul",
+                    "operands": [
+                      {
+                        "op": "constant",
+                        "value": 1
+                      },
+                      {
+                        "op": "stat",
+                        "stat": "ability_power",
+                        "scope": "total"
+                      }
+                    ]
+                  }
+                ]
+              },
+              "label": "Derivado",
+              "source": "Characters/Bard/Spells/BardQAbility/BardQ.mSpellCalculations.TotalDamage (16.23.8406595+branch.releases-16-23.content.release)",
+              "damage_type_source": "spell_bardq_tooltip <magicDamage>"
+            }
+          ]
+        }
+      ],
+      "passive_stats": [],
+      "not_modelled": [
+        "Ralentización del 60 % y aturdimiento al encadenar dos enemigos o un muro"
+      ]
+    },
+    "W": {
+      "name": "Santuario del protector",
+      "max_rank": 5,
+      "cases": [],
+      "passive_stats": [],
+      "not_modelled": [
+        "Curación inmediata o cargada (InitialHeal, MaxHeal) y velocidad de movimiento (Calc_MoveSpeed)"
+      ]
+    },
+    "E": {
+      "name": "Periplo mágico",
+      "max_rank": 5,
+      "cases": [],
+      "passive_stats": [],
+      "not_modelled": [
+        "Portal unidireccional a través de terreno"
+      ]
+    },
+    "R": {
+      "name": "Destino maleable",
+      "max_rank": 3,
+      "cases": [],
+      "passive_stats": [],
+      "not_modelled": [
+        "Estasis en área durante 2,5 s sobre unidades y estructuras"
+      ]
+    }
+  }
+}

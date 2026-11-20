@@ -1,0 +1,119 @@
+{
+  "champion": "Locke",
+  "game_version": "16.23",
+  "verified_against": {
+    "content_version": "16.23.8406595+branch.releases-16-23.content.release",
+    "bin_sha256": "613253694a3001c4ea943d03cb59281703ac05f4866d07c50d0303ed2fb8d8b0",
+    "evidence": "odd/tasks/champion-kits-wave-4.md",
+    "result": "Bin del cliente 16.23 convertido con python -m binmodel.batch_kits y compilado con esta especificación curada (CH-01 oleada 4 — cierre 173/173)"
+  },
+  "abilities": {
+    "P": {
+      "name": "Estaca de plata",
+      "tooltip": "spell_lockepassive_tooltip",
+      "max_rank": 1,
+      "cases": [
+        {
+          "id": "on_hit_min",
+          "name": "Daño al impactar mínimo",
+          "parts": [
+            {
+              "calculation": "MinOnHitDamage"
+            }
+          ]
+        },
+        {
+          "id": "on_hit_max",
+          "name": "Daño al impactar máximo",
+          "parts": [
+            {
+              "calculation": "MaxOnHitDamage"
+            }
+          ]
+        }
+      ],
+      "not_modelled": [
+        "Escalado intermedio por estado de la pasiva"
+      ]
+    },
+    "Q": {
+      "name": "Clavos rituales",
+      "tooltip": "spell_lockeq_tooltip",
+      "cases": [
+        {
+          "id": "missile",
+          "name": "Impacto de proyectil",
+          "parts": [
+            {
+              "calculation": "MissileDamage"
+            }
+          ]
+        },
+        {
+          "id": "nail",
+          "name": "Daño de clavo",
+          "parts": [
+            {
+              "calculation": "NailDamage"
+            }
+          ]
+        }
+      ],
+      "not_modelled": [
+        "Sistema de cargas y reembolso de recarga (AmmoCooldownReset)"
+      ]
+    },
+    "W": {
+      "name": "Ignición de alma",
+      "tooltip": "spell_lockew_tooltip",
+      "not_modelled": [
+        "Velocidad de movimiento (MoveSpeed), velocidad de ataque (AttackSpeed) y restauración de daño recibido (DamageRestoreAmount)"
+      ]
+    },
+    "E": {
+      "name": "Afán ceniciento",
+      "tooltip": "spell_lockee_tooltip",
+      "cases": [
+        {
+          "id": "dash",
+          "name": "Daño del deslizamiento",
+          "parts": [
+            {
+              "calculation": "DashDamage"
+            }
+          ]
+        },
+        {
+          "id": "on_hit",
+          "name": "Daño adicional al impactar",
+          "parts": [
+            {
+              "calculation": "OnHitDamage"
+            }
+          ]
+        }
+      ],
+      "not_modelled": [
+        "Desplazamiento y sinergia con cargas de Q"
+      ]
+    },
+    "R": {
+      "name": "Purgatorio",
+      "tooltip": "spell_locker_tooltip",
+      "cases": [
+        {
+          "id": "hit",
+          "name": "Daño base de Purgatorio",
+          "parts": [
+            {
+              "calculation": "Damage"
+            }
+          ]
+        }
+      ],
+      "not_modelled": [
+        "Umbral de ejecución (ExecuteTooltipCalc)"
+      ]
+    }
+  }
+}

@@ -1,0 +1,140 @@
+{
+  "champion": "Kayn",
+  "game_version": "16.23",
+  "verified_against": {
+    "content_version": "16.23.8406595+branch.releases-16-23.content.release",
+    "bin_sha256": "6350dcbdf8f19e6854eb931cb44648bdab6ba37806a045071932ab72029d7024",
+    "evidence": "odd/tasks/champion-kits-wave-4.md",
+    "result": "Bin del cliente 16.23 convertido con python -m binmodel.batch_kits y compilado con esta especificación curada (CH-01 oleada 4 — cierre 173/173)"
+  },
+  "abilities": {
+    "P": {
+      "name": "La guadaña de los oscuros",
+      "tooltip": "spell_kaynpassive_tooltip",
+      "max_rank": 1,
+      "not_modelled": [
+        "Transformación en Asesino de las sombras (daño mágico adicional porcentual en los primeros 3 s) o Verdugo de los oscuros / Rhaast (curación por daño físico)"
+      ]
+    },
+    "Q": {
+      "name": "Corte de guadaña",
+      "tooltip": "game_spell_kayn_q_main_0",
+      "cases": [
+        {
+          "id": "base_hit",
+          "name": "Base / Asesino: un golpe (deslizamiento o giro)",
+          "parts": [
+            {
+              "calculation": "TotalDamage"
+            }
+          ]
+        },
+        {
+          "id": "darkin_hit",
+          "name": "Verdugo (Rhaast): un golpe (65 % DA + % vida máxima)",
+          "parts": [
+            {
+              "calculation": "DarkinFlatDamage"
+            },
+            {
+              "tooltip_reference": "DarkinPercentDamage",
+              "damage_type": "physical",
+              "source_note": "mSpellCalculations.DarkinPercentDamage % × vida máxima del objetivo",
+              "formula": {
+                "op": "mul",
+                "operands": [
+                  {
+                    "op": "calculation",
+                    "name": "DarkinPercentDamage"
+                  },
+                  {
+                    "op": "constant",
+                    "value": 0.01
+                  },
+                  {
+                    "op": "stat",
+                    "stat": "health",
+                    "scope": "max",
+                    "subject": "target"
+                  }
+                ]
+              }
+            }
+          ]
+        }
+      ],
+      "not_modelled": [
+        "Tope de daño contra monstruos (MaxDmgToMonsters)"
+      ]
+    },
+    "W": {
+      "name": "Golpe de hoja",
+      "tooltip": "game_spell_kayn_w_maintext_0",
+      "cases": [
+        {
+          "id": "slash",
+          "name": "Tajo lineal",
+          "parts": [
+            {
+              "calculation": "TotalDamage"
+            }
+          ]
+        }
+      ],
+      "not_modelled": [
+        "Ralentización del 90 %, sombra móvil en Asesino y lanzamiento por los aires en Verdugo"
+      ]
+    },
+    "E": {
+      "name": "Pasos de sombra",
+      "tooltip": "spell_kayne_tooltip",
+      "not_modelled": [
+        "Travesía de muros, velocidad de movimiento, curación e inmunidad a ralentizaciones en Asesino"
+      ]
+    },
+    "R": {
+      "name": "Invasión sombría",
+      "tooltip": "spell_kayn_r_main_0",
+      "cases": [
+        {
+          "id": "base",
+          "name": "Base / Asesino: salida",
+          "parts": [
+            {
+              "calculation": "Damage"
+            }
+          ]
+        },
+        {
+          "id": "darkin",
+          "name": "Verdugo (Rhaast): salida (% vida máxima)",
+          "parts": [
+            {
+              "tooltip_reference": "SlayerDamage",
+              "damage_type": "physical",
+              "source_note": "mSpellCalculations.SlayerDamage × vida máxima del objetivo",
+              "formula": {
+                "op": "mul",
+                "operands": [
+                  {
+                    "op": "calculation",
+                    "name": "SlayerDamage"
+                  },
+                  {
+                    "op": "stat",
+                    "stat": "health",
+                    "scope": "max",
+                    "subject": "target"
+                  }
+                ]
+              }
+            }
+          ]
+        }
+      ],
+      "not_modelled": [
+        "Inalcanzabilidad durante infestación y curación de Verdugo (HealValue)"
+      ]
+    }
+  }
+}

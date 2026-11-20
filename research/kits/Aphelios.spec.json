@@ -1,0 +1,62 @@
+{
+  "champion": "Aphelios",
+  "game_version": "16.23",
+  "verified_against": {
+    "content_version": "16.23.8406595+branch.releases-16-23.content.release",
+    "bin_sha256": "dfc48a744f30d75e8631d18acd284d0dc97106ae3ca8f2ab694e9a03e7e2e0a9",
+    "evidence": "odd/tasks/champion-kits-wave-4.md",
+    "result": "Bin del cliente 16.23 convertido con python -m binmodel.batch_kits y compilado con esta especificación curada (CH-01 oleada 4 — cierre 173/173)"
+  },
+  "abilities": {
+    "P": {
+      "name": "El Asesino y la Vidente",
+      "tooltip": "spell_apheliosp_tooltip",
+      "max_rank": 1,
+      "not_modelled": [
+        "Sistema de 5 armas con munición (Calibrum, Severum, Gravitum, Infernum, Crescendum) y distribución manual de hasta 6 rangos de DA, VA y letalidad"
+      ]
+    },
+    "Q": {
+      "name": "Habilidades de las armas",
+      "tooltip": "spell_aphelioscalibrumq_summary",
+      "max_rank": 6,
+      "not_modelled": [
+        "5 habilidades Q distintas en hechizos separados según el arma principal equipada (no enlazadas como ranura única en Data Dragon/bin raíz)"
+      ]
+    },
+    "W": {
+      "name": "Fase",
+      "tooltip": "spell_apheliosw_tooltip",
+      "max_rank": 6,
+      "not_modelled": [
+        "Intercambio de arma principal y secundaria"
+      ]
+    },
+    "E": {
+      "name": "Sistema de cola de armas",
+      "tooltip": "spell_apheliose_summary",
+      "max_rank": 6,
+      "not_modelled": [
+        "Cola de armas sin habilidad activa"
+      ]
+    },
+    "R": {
+      "name": "Vigilia lunar",
+      "tooltip": "spell_apheliosr_tooltip",
+      "cases": [
+        {
+          "id": "explosion",
+          "name": "Explosión inicial de Vigilia lunar",
+          "parts": [
+            {
+              "calculation": "MaxDamage"
+            }
+          ]
+        }
+      ],
+      "not_modelled": [
+        "Ataque de seguimiento con el arma principal, daño adicional de Infernum (InfernumRBonusDamage), curación de Severum, marca de Calibrum, chakrams de Crescendum y ralentización de Gravitum"
+      ]
+    }
+  }
+}

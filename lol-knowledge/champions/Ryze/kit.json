@@ -1,0 +1,61 @@
+{
+  "schema": "lol-champion-kit/1",
+  "champion": "Ryze",
+  "label": "Derivado",
+  "game_version": "16.23",
+  "content_version": "16.23.8406595+branch.releases-16-23.content.release",
+  "verified_against": {
+    "content_version": "16.23.8406595+branch.releases-16-23.content.release",
+    "bin_sha256": "edb3ee342f3161ec0e4f1651c5490828393d1042de16a677f2efd7a6cf049623",
+    "evidence": "odd/tasks/champion-kits-wave-4.md",
+    "result": "Bin del cliente 16.23 convertido con python -m binmodel.batch_kits y compilado con esta especificación curada (CH-01 oleada 4 — cierre 173/173)"
+  },
+  "source": "Árboles de cálculo del bin del cliente (python -m binmodel) y marcado de los tooltips del cliente; estructura de casos curada en research/kits/",
+  "abilities": {
+    "P": {
+      "name": "Maestría arcana",
+      "max_rank": 1,
+      "cases": [],
+      "passive_stats": [],
+      "not_modelled": [
+        "Aumento porcentual de maná máximo según PH (PassiveManaCalcTooltip: 10 % por 100 PH) y escalado de habilidades por maná adicional"
+      ]
+    },
+    "Q": {
+      "name": "Descarga eléctrica",
+      "max_rank": 5,
+      "cases": [],
+      "passive_stats": [],
+      "not_modelled": [
+        "QDamageCalc incluye término de maná adicional no resuelto en el bin (unresolved); reinicio de CD por W/E, 2 runas de velocidad de movimiento y amplificación contra Flujo"
+      ]
+    },
+    "W": {
+      "name": "Prisión rúnica",
+      "max_rank": 5,
+      "cases": [],
+      "passive_stats": [],
+      "not_modelled": [
+        "WDamageCalc incluye término de maná adicional no resuelto en el bin; ralentización o raíz sobre Flujo"
+      ]
+    },
+    "E": {
+      "name": "Tormenta eléctrica",
+      "max_rank": 5,
+      "cases": [],
+      "passive_stats": [],
+      "not_modelled": [
+        "EDamageCalc incluye término de maná adicional no resuelto en el bin; aplicación y propagación de Flujo"
+      ]
+    },
+    "R": {
+      "name": "Distorsión de reinos",
+      "max_rank": 3,
+      "cases": [],
+      "passive_stats": [],
+      "not_modelled": [
+        "Amplificación pasiva de Q sobre Flujo (40/70/100 %) y teletransporte grupal"
+      ]
+    }
+  }
+}

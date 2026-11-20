@@ -1,0 +1,99 @@
+{
+  "champion": "Lucian",
+  "game_version": "16.23",
+  "verified_against": {
+    "content_version": "16.23.8406595+branch.releases-16-23.content.release",
+    "bin_sha256": "79515b685fb9d876cb7f121fc8297755458b0240e9bd5de8cb7d2f8d9e5d832f",
+    "evidence": "odd/tasks/champion-kits-wave-4.md",
+    "result": "Bin del cliente 16.23 convertido con python -m binmodel.batch_kits y compilado con esta especificación curada (CH-01 oleada 4 — cierre 173/173)"
+  },
+  "abilities": {
+    "P": {
+      "name": "Balas de luz",
+      "tooltip": "spell_lucianpassive_tooltip",
+      "max_rank": 1,
+      "cases": [
+        {
+          "id": "second_shot",
+          "name": "Segundo disparo (campeones)",
+          "parts": [
+            {
+              "calculation": "TotalDamage"
+            }
+          ]
+        },
+        {
+          "id": "vigilance_on_hit",
+          "name": "Vigilancia (daño mágico adicional por disparo)",
+          "parts": [
+            {
+              "calculation": "PassiveTotalDamage"
+            }
+          ]
+        }
+      ],
+      "not_modelled": [
+        "Daño al 100 % a súbditos (MinionDamage), golpes críticos del segundo disparo y activación de Vigilancia con aliados"
+      ]
+    },
+    "Q": {
+      "name": "Luz lacerante",
+      "tooltip": "spell_lucianq_tooltip",
+      "cases": [
+        {
+          "id": "beam",
+          "name": "Rayo de luz",
+          "parts": [
+            {
+              "calculation": "TotalDamage"
+            }
+          ]
+        }
+      ],
+      "not_modelled": []
+    },
+    "W": {
+      "name": "Resplandor ardiente",
+      "tooltip": "spell_lucianw_tooltip",
+      "cases": [
+        {
+          "id": "star",
+          "name": "Explosión en estrella",
+          "parts": [
+            {
+              "calculation": "TotalDamage"
+            }
+          ]
+        }
+      ],
+      "not_modelled": [
+        "Velocidad de movimiento al dañar enemigos marcados y activación de Vigilancia"
+      ]
+    },
+    "E": {
+      "name": "Persecución implacable",
+      "tooltip": "spell_luciane_tooltip",
+      "not_modelled": [
+        "Deslizamiento y reducción de 1 s (2 s contra campeones) por cada impacto de Balas de luz"
+      ]
+    },
+    "R": {
+      "name": "El sacrificio",
+      "tooltip": "spell_lucianr_tooltip",
+      "cases": [
+        {
+          "id": "per_bullet",
+          "name": "Una bala (de 22 + escalado por crítico)",
+          "parts": [
+            {
+              "calculation": "DamagePerBullet"
+            }
+          ]
+        }
+      ],
+      "not_modelled": [
+        "Número total de disparos según probabilidad de crítico (TotalNumShots) y 400 % de daño a súbditos"
+      ]
+    }
+  }
+}

@@ -1,0 +1,70 @@
+{
+  "champion": "Taric",
+  "game_version": "16.23",
+  "verified_against": {
+    "content_version": "16.23.8406595+branch.releases-16-23.content.release",
+    "bin_sha256": "c117e80114d7a98815e29c4134ed43b29b870a65399a2bfb26a57c6c851f1206",
+    "evidence": "odd/tasks/champion-kits-wave-4.md",
+    "result": "Bin del cliente 16.23 convertido con python -m binmodel.batch_kits y compilado con esta especificación curada (CH-01 oleada 4 — cierre 173/173)"
+  },
+  "abilities": {
+    "P": {
+      "name": "Bravuconería",
+      "tooltip": "spell_taricpassive_tooltip",
+      "max_rank": 1,
+      "cases": [
+        {
+          "id": "empowered_aa",
+          "name": "Daño mágico adicional por ataque potenciado",
+          "parts": [
+            {
+              "calculation": "TotalDamage"
+            }
+          ]
+        }
+      ],
+      "not_modelled": [
+        "+100 % velocidad de ataque en los 2 golpes y reducción de 1 s de enfriamientos (CDR) + 1 carga de Q"
+      ]
+    },
+    "Q": {
+      "name": "Toque de luz estelar",
+      "tooltip": "spell_taricq_tooltip",
+      "not_modelled": [
+        "Curación en área por cargas (HealingPerStack, MaxStackHealing)"
+      ]
+    },
+    "W": {
+      "name": "Bastión",
+      "tooltip": "spell_taricw_tooltip",
+      "not_modelled": [
+        "Armadura pasiva por porcentaje de armadura total (BonusArmor: 6..10 % de armadura de Taric), vínculo aliado y escudo"
+      ]
+    },
+    "E": {
+      "name": "Desorientación",
+      "tooltip": "spell_tarice_tooltip",
+      "cases": [
+        {
+          "id": "beam",
+          "name": "Rayo estelar",
+          "parts": [
+            {
+              "calculation": "TotalDamage"
+            }
+          ]
+        }
+      ],
+      "not_modelled": [
+        "Aturdimiento de 1,5 s y duplicación desde el aliado con Bastión"
+      ]
+    },
+    "R": {
+      "name": "Esplendor cósmico",
+      "tooltip": "spell_taricr_tooltip",
+      "not_modelled": [
+        "Invulnerabilidad en área de 2,5 s tras 2,5 s de retardo"
+      ]
+    }
+  }
+}

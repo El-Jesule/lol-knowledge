@@ -1,0 +1,163 @@
+{
+  "schema": "lol-champion-kit/1",
+  "champion": "Taric",
+  "label": "Derivado",
+  "game_version": "16.23",
+  "content_version": "16.23.8406595+branch.releases-16-23.content.release",
+  "verified_against": {
+    "content_version": "16.23.8406595+branch.releases-16-23.content.release",
+    "bin_sha256": "c117e80114d7a98815e29c4134ed43b29b870a65399a2bfb26a57c6c851f1206",
+    "evidence": "odd/tasks/champion-kits-wave-4.md",
+    "result": "Bin del cliente 16.23 convertido con python -m binmodel.batch_kits y compilado con esta especificación curada (CH-01 oleada 4 — cierre 173/173)"
+  },
+  "source": "Árboles de cálculo del bin del cliente (python -m binmodel) y marcado de los tooltips del cliente; estructura de casos curada en research/kits/",
+  "abilities": {
+    "P": {
+      "name": "Bravuconería",
+      "max_rank": 1,
+      "cases": [
+        {
+          "id": "empowered_aa",
+          "name": "Daño mágico adicional por ataque potenciado",
+          "parts": [
+            {
+              "damage_type": "magic",
+              "formula": {
+                "op": "add",
+                "operands": [
+                  {
+                    "op": "mul",
+                    "operands": [
+                      {
+                        "op": "linear_by_level",
+                        "min": 25,
+                        "max": 93
+                      },
+                      {
+                        "op": "constant",
+                        "value": 1
+                      }
+                    ]
+                  },
+                  {
+                    "op": "mul",
+                    "operands": [
+                      {
+                        "op": "constant",
+                        "value": 0.15
+                      },
+                      {
+                        "op": "stat",
+                        "stat": "armor",
+                        "scope": "bonus"
+                      }
+                    ]
+                  }
+                ]
+              },
+              "label": "Derivado",
+              "source": "Characters/Taric/Spells/TaricPassiveAbility/TaricPassive.mSpellCalculations.TotalDamage (16.23.8406595+branch.releases-16-23.content.release)",
+              "damage_type_source": "spell_taricpassive_tooltip <magicDamage>"
+            }
+          ]
+        }
+      ],
+      "passive_stats": [],
+      "not_modelled": [
+        "+100 % velocidad de ataque en los 2 golpes y reducción de 1 s de enfriamientos (CDR) + 1 carga de Q"
+      ]
+    },
+    "Q": {
+      "name": "Toque de luz estelar",
+      "max_rank": 5,
+      "cases": [],
+      "passive_stats": [],
+      "not_modelled": [
+        "Curación en área por cargas (HealingPerStack, MaxStackHealing)"
+      ]
+    },
+    "W": {
+      "name": "Bastión",
+      "max_rank": 5,
+      "cases": [],
+      "passive_stats": [],
+      "not_modelled": [
+        "Armadura pasiva por porcentaje de armadura total (BonusArmor: 6..10 % de armadura de Taric), vínculo aliado y escudo"
+      ]
+    },
+    "E": {
+      "name": "Desorientación",
+      "max_rank": 5,
+      "cases": [
+        {
+          "id": "beam",
+          "name": "Rayo estelar",
+          "parts": [
+            {
+              "damage_type": "magic",
+              "formula": {
+                "op": "add",
+                "operands": [
+                  {
+                    "op": "by_rank",
+                    "values": [
+                      90,
+                      130,
+                      170,
+                      210,
+                      250
+                    ]
+                  },
+                  {
+                    "op": "mul",
+                    "operands": [
+                      {
+                        "op": "constant",
+                        "value": 0.5
+                      },
+                      {
+                        "op": "stat",
+                        "stat": "ability_power",
+                        "scope": "total"
+                      }
+                    ]
+                  },
+                  {
+                    "op": "mul",
+                    "operands": [
+                      {
+                        "op": "constant",
+                        "value": 0.5
+                      },
+                      {
+                        "op": "stat",
+                        "stat": "armor",
+                        "scope": "bonus"
+                      }
+                    ]
+                  }
+                ]
+              },
+              "label": "Derivado",
+              "source": "Characters/Taric/Spells/TaricEAbility/TaricE.mSpellCalculations.TotalDamage (16.23.8406595+branch.releases-16-23.content.release)",
+              "damage_type_source": "spell_tarice_tooltip <magicDamage>"
+            }
+          ]
+        }
+      ],
+      "passive_stats": [],
+      "not_modelled": [
+        "Aturdimiento de 1,5 s y duplicación desde el aliado con Bastión"
+      ]
+    },
+    "R": {
+      "name": "Esplendor cósmico",
+      "max_rank": 3,
+      "cases": [],
+      "passive_stats": [],
+      "not_modelled": [
+        "Invulnerabilidad en área de 2,5 s tras 2,5 s de retardo"
+      ]
+    }
+  }
+}

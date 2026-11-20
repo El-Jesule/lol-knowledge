@@ -1,0 +1,110 @@
+{
+  "champion": "Akshan",
+  "game_version": "16.23",
+  "verified_against": {
+    "content_version": "16.23.8406595+branch.releases-16-23.content.release",
+    "bin_sha256": "bc895bb584587c31b5d3b330ffe90ff5e63d663d539e673d038c5a2c4bfe1b93",
+    "evidence": "odd/tasks/champion-kits-wave-4.md",
+    "result": "Bin del cliente 16.23 convertido con python -m binmodel.batch_kits y compilado con esta especificación curada (CH-01 oleada 4 — cierre 173/173)"
+  },
+  "abilities": {
+    "P": {
+      "name": "Artimañas",
+      "tooltip": "spell_akshanpassive_tooltip",
+      "max_rank": 1,
+      "cases": [
+        {
+          "id": "second_shot",
+          "name": "Segundo disparo (50 % DA)",
+          "parts": [
+            {
+              "calculation": "SecondAutoDamage"
+            }
+          ]
+        },
+        {
+          "id": "three_hit",
+          "name": "Detonación de 3 impactos",
+          "parts": [
+            {
+              "calculation": "PassiveProcDamage"
+            }
+          ]
+        }
+      ],
+      "not_modelled": [
+        "Escudo al detonar contra campeones (TotalShieldAmount) y velocidad de movimiento al cancelar segundo disparo (ASModdedMS)"
+      ]
+    },
+    "Q": {
+      "name": "Bumerán vengador",
+      "tooltip": "spell_akshanq_tooltip",
+      "cases": [
+        {
+          "id": "hit",
+          "name": "Un pase (ida o vuelta)",
+          "parts": [
+            {
+              "calculation": "FinalDamage"
+            }
+          ]
+        }
+      ],
+      "not_modelled": [
+        "Extensión de alcance al golpear enemigos, velocidad de movimiento (TotalHaste) y daño reducido a súbditos"
+      ]
+    },
+    "W": {
+      "name": "Rebelde",
+      "tooltip": "spell_akshanw_tooltip",
+      "not_modelled": [
+        "Camuflaje junto a muros, marca de Canalla, oro adicional y resurrección de aliados"
+      ]
+    },
+    "E": {
+      "name": "Balanceo heroico",
+      "tooltip": "spell_akshane_tooltip",
+      "cases": [
+        {
+          "id": "per_shot",
+          "name": "Un disparo del balanceo (sin crítico)",
+          "parts": [
+            {
+              "calculation": "DamageToDeal"
+            }
+          ]
+        }
+      ],
+      "not_modelled": [
+        "Frecuencia de disparos con velocidad de ataque, crítico por disparo (CriticalCalc), efectos al impactar al 25 % y reinicio por derribo"
+      ]
+    },
+    "R": {
+      "name": "Merecido",
+      "tooltip": "spell_akshanr_tooltip",
+      "cases": [
+        {
+          "id": "per_bullet_min",
+          "name": "Una bala (objetivo con vida completa)",
+          "parts": [
+            {
+              "calculation": "DamagePerBulletWithCrit"
+            }
+          ]
+        },
+        {
+          "id": "per_bullet_max",
+          "name": "Una bala (daño máximo por vida faltante)",
+          "parts": [
+            {
+              "calculation": "MaxDamagePerBullet"
+            }
+          ]
+        }
+      ],
+      "not_modelled": [
+        "Número de balas cargadas (5/6/7) y escalado de balas con probabilidad/daño crítico"
+      ]
+    }
+  }
+}

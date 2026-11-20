@@ -1,0 +1,74 @@
+{
+  "champion": "TwistedFate",
+  "game_version": "16.23",
+  "verified_against": {
+    "content_version": "16.23.8406595+branch.releases-16-23.content.release",
+    "bin_sha256": "a9377f5bd3808f1a0af321a9b3efdb5a55678c300b3cf29b07a504d3180cad61",
+    "evidence": "odd/tasks/champion-kits-wave-4.md",
+    "result": "Bin del cliente 16.23 convertido con python -m binmodel.batch_kits y compilado con esta especificación curada (CH-01 oleada 4 — cierre 173/173)"
+  },
+  "abilities": {
+    "P": {
+      "name": "Dado trucado",
+      "tooltip": "spell_secondsight_tooltip",
+      "max_rank": 1,
+      "not_modelled": [
+        "Oro adicional aleatorio (1 a 6) al matar unidades"
+      ]
+    },
+    "Q": {
+      "name": "Comodín",
+      "tooltip": "spell_wildcards_tooltip",
+      "cases": [
+        {
+          "id": "card",
+          "name": "Impacto de carta",
+          "parts": [
+            {
+              "calculation": "TotalDamage"
+            }
+          ]
+        }
+      ],
+      "not_modelled": []
+    },
+    "W": {
+      "name": "Escoge una carta",
+      "tooltip": "spell_pickacard_tooltip",
+      "not_modelled": [
+        "Cartas azul, roja y dorada (BlueDamage, RedDamage y GoldDamage escalan con critical_strike_chance/total, no traducido aún en kitgen); restauración de maná, ralentización y aturdimiento"
+      ]
+    },
+    "E": {
+      "name": "Baraja de cartas",
+      "tooltip": "spell_cardmasterstack_tooltip",
+      "passive_stats": [
+        {
+          "stat": "attack_speed_bonus",
+          "data_value": "AttackSpeedBonus",
+          "scale": 0.01,
+          "condition": "Velocidad de ataque pasiva permanente al subir E (15..55 %)"
+        }
+      ],
+      "cases": [
+        {
+          "id": "fourth_hit",
+          "name": "Cada 4.º ataque",
+          "parts": [
+            {
+              "calculation": "BonusDamage"
+            }
+          ]
+        }
+      ],
+      "not_modelled": []
+    },
+    "R": {
+      "name": "Destino",
+      "tooltip": "spell_destiny_tooltip",
+      "not_modelled": [
+        "Visión verdadera global y teletransporte"
+      ]
+    }
+  }
+}
