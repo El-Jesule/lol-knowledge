@@ -241,14 +241,14 @@ Condiciones de uso y cuestiones pendientes: [`research/evidence/usage-conditions
 ## Limitaciones conocidas
 
 - No hay integración con la Riot API ni claves de API.
-- No hay estadísticas comunitarias (tasa de victorias, builds populares). Los valores derivados del cliente se marcan `Derivado` y llevan atribución.
+- No hay estadísticas comunitarias (tasa de victorias, builds populares); están excluidas bajo cualquier condición (DEC-05). Los valores derivados del cliente se marcan `Derivado` y llevan atribución.
 - Data Dragon (16.20.1, 16.22.1 y 16.23.1) publica `attackdamageperlevel = 0` para todos los campeones. Se sustituye por el crecimiento del cliente 16.23, `Derivado` porque cliente y snapshot coinciden. Senna no tiene el campo en el bin y su DA queda bloqueado por encima del nivel 1.
 - La hoja de estadísticas aplica los fragmentos de runas, pero no los efectos de las runas de los árboles ni las pasivas de campeón; de los efectos de objeto solo aplica los de estadística permanentes (`always`) y las acumulaciones permanentes al máximo. Antes de calcular comprueba que los objetos puedan llevarse a la vez (ver «Legalidad de la build»).
 - `ability` calcula un lanzamiento sin efectos de objeto ni tiempo; para críticos, efectos de objeto y tiempo está `rotation`, cuya línea de tiempo (`--timeline`) separa los ataques por la velocidad de ataque, respeta los enfriamientos y aplica los efectos con duración. No hay tiempos de lanzamiento, animaciones ni viaje de proyectiles. Ninguno de los dos admite reducciones de resistencia de habilidades ni escudos; `rotation` informa la curación por robo de vida y omnivampirismo, pero no la vida del atacante ni los costes de maná. Solo Zaahen y Ahri tienen kit.
 - El núcleo de mitigación trata una instancia; `rotation` añade críticos y modificadores porcentuales de daño. No se modelan escudos, reducciones planas de daño, la penetración de armadura adicional ni el redondeo del juego.
 - Data Dragon no publica valores numéricos de las habilidades de Zaahen; los valores derivados están documentados y las discrepancias abiertas siguen como pendientes.
 - La cobertura de campeones empieza por un caso representativo y crece de forma incremental.
-- El modelo de objetos tiene las estadísticas de los 218 objetos comprables de la Grieta, generadas desde la descripción con `python -m lol_knowledge.objects --generate-stats`; los efectos solo están curados en 42 objetos, y una rotación con un objeto sin efectos revisados queda `Pendiente de verificación`. Las cifras que Data Dragon no publica solo se incorporan con una fuente citada: la wiki (`secondary`) y, cuando coinciden, los datos del cliente 16.22 (`corroborated`). Lo no verificado se marca como desconocido o parcial, no se inventa.
+- El modelo de objetos tiene las estadísticas de los 218 objetos comprables de la Grieta, generadas desde la descripción con `python -m lol_knowledge.objects --generate-stats`; los efectos solo están curados en 42 objetos, y una rotación con un objeto sin efectos revisados queda `Pendiente de verificación`. Las cifras que Data Dragon no publica solo se incorporan con una fuente citada: la wiki (`secondary`) y, cuando coinciden, los datos del cliente 16.23 (`corroborated`). Lo no verificado se marca como desconocido o parcial, no se inventa.
 
 ## Flujo de trabajo
 

@@ -27,14 +27,13 @@ Punto de partida razonado a partir del texto oficial del kit, **no demostrado** 
 - **Aceleración de habilidades:** Q, W y E son las herramientas de intercambio y control; más aceleración aumenta su disponibilidad, a costa de daño por golpe.
 - **Maná:** el recurso es Maná. No hay datos para decidir si hace falta maná adicional en la build.
 
-Estas son hipótesis de trabajo, no conclusiones. Cualquier build concreta exige datos de rendimiento por parche, rango y región.
+Estas son hipótesis de trabajo, no conclusiones. Cualquier build concreta exige evaluación determinista con entradas verificadas y un optimizador sobre builds legales.
 
 ## Datos que faltan (`Pendiente de verificación`)
 
 - Si el crecimiento de daño de ataque 0 de Data Dragon es un hueco o un valor real; el cliente indica 4,0.
 - El máximo exacto de AD por acumulación de la pasiva (2,8 % frente a 2,95 %).
 - Eficiencia de objetos en el parche 16.22.1.
-- Rendimiento por rango y región.
 - Medición en partida de los valores derivados.
 
 La calculadora existe, pero mientras no se resuelvan esos puntos (CH-Z-01 a CH-Z-03 en la [hoja de ruta](../../../odd/roadmap.md)) no se publica una build cuantificada: un cálculo con entradas no verificadas produciría cifras que parecen dato y no lo son. El estado de la investigación está en [`../../../research/zaahen-research-handoff.md`](../../../research/zaahen-research-handoff.md).
@@ -43,4 +42,4 @@ La calculadora existe, pero mientras no se resuelvan esos puntos (CH-Z-01 a CH-Z
 
 Los valores marcados `Derivado` proceden de datos del cliente publicados por CommunityDragon y se incluyen con atribución y aviso de no afiliación (ver [`sources.md`](sources.md)). No se presentan como datos oficiales de Riot.
 
-No se consultaron estadísticas comunitarias: la autorización vigente permite usarlas solo si el acceso es viable y respeta sus condiciones. Si se incorporan, deberán citar parche, rango, región, fecha y tamaño de muestra.
+No se admiten estadísticas comunitarias (tasa de victorias, builds populares) bajo ninguna condición (decisión DEC-05 en la [hoja de ruta](../../../odd/roadmap.md)).
