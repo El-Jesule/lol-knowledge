@@ -1,0 +1,160 @@
+{
+  "schema": "lol-champion-kit/1",
+  "champion": "Trundle",
+  "label": "Derivado",
+  "game_version": "16.23",
+  "content_version": "16.23.8406595+branch.releases-16-23.content.release",
+  "verified_against": {
+    "content_version": "16.23.8406595+branch.releases-16-23.content.release",
+    "bin_sha256": "a52f3f0627ff12fe8d4c77f5405eefdbc5200f9362d973f4d98846896633c4ea",
+    "evidence": "odd/tasks/champion-kits-wave-3.md",
+    "result": "Bin del cliente 16.23 convertido con python -m binmodel.batch_kits y compilado con esta especificación curada (CH-01 oleada 3)"
+  },
+  "source": "Árboles de cálculo del bin del cliente (python -m binmodel) y marcado de los tooltips del cliente; estructura de casos curada en research/kits/",
+  "abilities": {
+    "P": {
+      "name": "Tributo al rey",
+      "max_rank": 1,
+      "cases": [],
+      "passive_stats": [],
+      "not_modelled": [
+        "Curación porcentual por la vida máxima de enemigos cercanos que mueren (RegenPercent)"
+      ]
+    },
+    "Q": {
+      "name": "Mascar",
+      "max_rank": 5,
+      "cases": [
+        {
+          "id": "chomp",
+          "name": "Mordisco",
+          "parts": [
+            {
+              "damage_type": "physical",
+              "formula": {
+                "op": "add",
+                "operands": [
+                  {
+                    "op": "by_rank",
+                    "values": [
+                      10,
+                      30,
+                      50,
+                      70,
+                      90
+                    ]
+                  },
+                  {
+                    "op": "mul",
+                    "operands": [
+                      {
+                        "op": "by_rank",
+                        "values": [
+                          1.15,
+                          1.25,
+                          1.35,
+                          1.45,
+                          1.55
+                        ]
+                      },
+                      {
+                        "op": "stat",
+                        "stat": "attack_damage",
+                        "scope": "total"
+                      }
+                    ]
+                  }
+                ]
+              },
+              "label": "Derivado",
+              "source": "Characters/Trundle/Spells/TrundleTrollSmashAbility/TrundleTrollSmash.mSpellCalculations.TotalDamage (16.23.8406595+branch.releases-16-23.content.release)",
+              "damage_type_source": "spell_trundletrollsmash_tooltip <physicalDamage>"
+            }
+          ]
+        }
+      ],
+      "passive_stats": [],
+      "not_modelled": [
+        "Ralentización breve, DA ganado (BonusAD) y DA robado al objetivo (SappedAD)"
+      ]
+    },
+    "W": {
+      "name": "Reino helado",
+      "max_rank": 5,
+      "cases": [],
+      "passive_stats": [],
+      "not_modelled": [
+        "Zona de velocidad de movimiento, velocidad de ataque y amplificación de curaciones"
+      ]
+    },
+    "E": {
+      "name": "Pilar de hielo",
+      "max_rank": 5,
+      "cases": [],
+      "passive_stats": [],
+      "not_modelled": [
+        "Terreno temporal, desplazamiento y ralentización en área"
+      ]
+    },
+    "R": {
+      "name": "Subyugar",
+      "max_rank": 3,
+      "cases": [
+        {
+          "id": "drain_total",
+          "name": "Drenaje completo (% vida máxima)",
+          "parts": [
+            {
+              "damage_type": "magic",
+              "formula": {
+                "op": "mul",
+                "operands": [
+                  {
+                    "op": "add",
+                    "operands": [
+                      {
+                        "op": "by_rank",
+                        "values": [
+                          0.2,
+                          0.25,
+                          0.3
+                        ]
+                      },
+                      {
+                        "op": "mul",
+                        "operands": [
+                          {
+                            "op": "constant",
+                            "value": 0.0002
+                          },
+                          {
+                            "op": "stat",
+                            "stat": "ability_power",
+                            "scope": "total"
+                          }
+                        ]
+                      }
+                    ]
+                  },
+                  {
+                    "op": "stat",
+                    "stat": "health",
+                    "scope": "max",
+                    "subject": "target"
+                  }
+                ]
+              },
+              "label": "Derivado",
+              "source": "Characters/Trundle/Spells/TrundlePainAbility/TrundlePain · mSpellCalculations.TotalPercentHPDamage × vida máxima del objetivo (16.23.8406595+branch.releases-16-23.content.release)",
+              "damage_type_source": "spell_trundlepain_tooltip <magicDamage>"
+            }
+          ]
+        }
+      ],
+      "passive_stats": [],
+      "not_modelled": [
+        "Curación equivalente al daño infligido y robo del 40 % de armadura y RM durante 4 s"
+      ]
+    }
+  }
+}

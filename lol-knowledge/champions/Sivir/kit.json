@@ -1,0 +1,150 @@
+{
+  "schema": "lol-champion-kit/1",
+  "champion": "Sivir",
+  "label": "Derivado",
+  "game_version": "16.23",
+  "content_version": "16.23.8406595+branch.releases-16-23.content.release",
+  "verified_against": {
+    "content_version": "16.23.8406595+branch.releases-16-23.content.release",
+    "bin_sha256": "4faf3cda3b891bf1ddf91bcbb34c5172685162ec4086a2cf13e869bafce0d479",
+    "evidence": "odd/tasks/champion-kits-wave-3.md",
+    "result": "Bin del cliente 16.23 convertido con python -m binmodel.batch_kits y compilado con esta especificación curada (CH-01 oleada 3)"
+  },
+  "source": "Árboles de cálculo del bin del cliente (python -m binmodel) y marcado de los tooltips del cliente; estructura de casos curada en research/kits/",
+  "abilities": {
+    "P": {
+      "name": "Mil pies",
+      "max_rank": 1,
+      "cases": [],
+      "passive_stats": [],
+      "not_modelled": [
+        "Velocidad de movimiento plana al dañar campeones (FlatMS)"
+      ]
+    },
+    "Q": {
+      "name": "Cuchilla bumerán",
+      "max_rank": 5,
+      "cases": [
+        {
+          "id": "pass",
+          "name": "Un pase (ida o vuelta)",
+          "parts": [
+            {
+              "damage_type": "physical",
+              "formula": {
+                "op": "add",
+                "operands": [
+                  {
+                    "op": "by_rank",
+                    "values": [
+                      60,
+                      85,
+                      110,
+                      135,
+                      160
+                    ]
+                  },
+                  {
+                    "op": "mul",
+                    "operands": [
+                      {
+                        "op": "constant",
+                        "value": 0.7
+                      },
+                      {
+                        "op": "stat",
+                        "stat": "attack_damage",
+                        "scope": "bonus"
+                      }
+                    ]
+                  },
+                  {
+                    "op": "mul",
+                    "operands": [
+                      {
+                        "op": "constant",
+                        "value": 0.6
+                      },
+                      {
+                        "op": "stat",
+                        "stat": "ability_power",
+                        "scope": "total"
+                      }
+                    ]
+                  }
+                ]
+              },
+              "label": "Derivado",
+              "source": "Characters/Sivir/Spells/SivirQAbility/SivirQ.mSpellCalculations.TotalDamage (16.23.8406595+branch.releases-16-23.content.release)",
+              "damage_type_source": "spell_sivirq_tooltip <physicalDamage>"
+            }
+          ]
+        }
+      ],
+      "passive_stats": [],
+      "not_modelled": [
+        "Escalado con probabilidad de crítico y reducción de daño por objetivo atravesado"
+      ]
+    },
+    "W": {
+      "name": "Ricochet",
+      "max_rank": 5,
+      "cases": [
+        {
+          "id": "bounce",
+          "name": "Daño por rebote",
+          "parts": [
+            {
+              "damage_type": "physical",
+              "formula": {
+                "op": "mul",
+                "operands": [
+                  {
+                    "op": "by_rank",
+                    "values": [
+                      0.4,
+                      0.425,
+                      0.45,
+                      0.475,
+                      0.5
+                    ]
+                  },
+                  {
+                    "op": "stat",
+                    "stat": "attack_damage",
+                    "scope": "total"
+                  }
+                ]
+              },
+              "label": "Derivado",
+              "source": "Characters/Sivir/Spells/SivirWAbility/SivirW.mSpellCalculations.BounceDamage (16.23.8406595+branch.releases-16-23.content.release)",
+              "damage_type_source": "spell_sivirw_tooltip <physicalDamage>"
+            }
+          ]
+        }
+      ],
+      "passive_stats": [],
+      "not_modelled": [
+        "Velocidad de ataque activa durante 4 s y golpes críticos en rebotes"
+      ]
+    },
+    "E": {
+      "name": "Escudo de hechizos",
+      "max_rank": 5,
+      "cases": [],
+      "passive_stats": [],
+      "not_modelled": [
+        "Bloqueo de 1 habilidad enemiga, curación (TotalHeal) y activación de Mil pies"
+      ]
+    },
+    "R": {
+      "name": "A la caza",
+      "max_rank": 3,
+      "cases": [],
+      "passive_stats": [],
+      "not_modelled": [
+        "Velocidad de movimiento en área, reducción de enfriamiento al atacar y extensión por bajas"
+      ]
+    }
+  }
+}

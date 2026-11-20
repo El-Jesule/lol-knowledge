@@ -1,0 +1,542 @@
+{
+  "schema": "lol-champion-kit/1",
+  "champion": "Shaco",
+  "label": "Derivado",
+  "game_version": "16.23",
+  "content_version": "16.23.8406595+branch.releases-16-23.content.release",
+  "verified_against": {
+    "content_version": "16.23.8406595+branch.releases-16-23.content.release",
+    "bin_sha256": "3ed5a5ffe1637c90ee1340e24976b768495fec7a6ac205f568a8a127d8d4a7d3",
+    "evidence": "odd/tasks/champion-kits-wave-3.md",
+    "result": "Bin del cliente 16.23 convertido con python -m binmodel.batch_kits y compilado con esta especificación curada (CH-01 oleada 3)"
+  },
+  "source": "Árboles de cálculo del bin del cliente (python -m binmodel) y marcado de los tooltips del cliente; estructura de casos curada en research/kits/",
+  "abilities": {
+    "P": {
+      "name": "Puñalada por la espalda",
+      "max_rank": 1,
+      "cases": [
+        {
+          "id": "backstab_aa",
+          "name": "Ataque por la espalda (adicional)",
+          "parts": [
+            {
+              "damage_type": "physical",
+              "formula": {
+                "op": "add",
+                "operands": [
+                  {
+                    "op": "linear_by_level",
+                    "min": 20,
+                    "max": 35
+                  },
+                  {
+                    "op": "mul",
+                    "operands": [
+                      {
+                        "op": "constant",
+                        "value": 0.2
+                      },
+                      {
+                        "op": "stat",
+                        "stat": "attack_damage",
+                        "scope": "bonus"
+                      }
+                    ]
+                  }
+                ]
+              },
+              "label": "Derivado",
+              "source": "Characters/Shaco/Spells/ShacoPassiveAbility/ShacoPassive.mSpellCalculations.BasicAttackDamage (16.23.8406595+branch.releases-16-23.content.release)",
+              "damage_type_source": "spell_shacopassive_tooltip <physicalDamage>"
+            }
+          ]
+        },
+        {
+          "id": "backstab_e",
+          "name": "E por la espalda (adicional)",
+          "parts": [
+            {
+              "damage_type": "magic",
+              "formula": {
+                "op": "add",
+                "operands": [
+                  {
+                    "op": "linear_by_level",
+                    "min": 15,
+                    "max": 50
+                  },
+                  {
+                    "op": "mul",
+                    "operands": [
+                      {
+                        "op": "constant",
+                        "value": 0.1
+                      },
+                      {
+                        "op": "stat",
+                        "stat": "ability_power",
+                        "scope": "total"
+                      }
+                    ]
+                  }
+                ]
+              },
+              "label": "Derivado",
+              "source": "Characters/Shaco/Spells/ShacoPassiveAbility/ShacoPassive.mSpellCalculations.ShivDamage (16.23.8406595+branch.releases-16-23.content.release)",
+              "damage_type_source": "spell_shacopassive_tooltip <magicDamage>"
+            }
+          ]
+        },
+        {
+          "id": "backstab_e_execute",
+          "name": "E por la espalda (<30 % vida, adicional)",
+          "parts": [
+            {
+              "damage_type": "magic",
+              "formula": {
+                "op": "mul",
+                "operands": [
+                  {
+                    "op": "add",
+                    "operands": [
+                      {
+                        "op": "linear_by_level",
+                        "min": 15,
+                        "max": 50
+                      },
+                      {
+                        "op": "mul",
+                        "operands": [
+                          {
+                            "op": "constant",
+                            "value": 0.1
+                          },
+                          {
+                            "op": "stat",
+                            "stat": "ability_power",
+                            "scope": "total"
+                          }
+                        ]
+                      }
+                    ]
+                  },
+                  {
+                    "op": "constant",
+                    "value": 1.5
+                  }
+                ]
+              },
+              "label": "Derivado",
+              "source": "Characters/Shaco/Spells/ShacoPassiveAbility/ShacoPassive.mSpellCalculations.ShivDamageExecute (16.23.8406595+branch.releases-16-23.content.release)",
+              "damage_type_source": "spell_shacopassive_tooltip <magicDamage>"
+            }
+          ]
+        }
+      ],
+      "passive_stats": [],
+      "not_modelled": [
+        "Multiplicador de daño crítico modificado en Q por la espalda"
+      ]
+    },
+    "Q": {
+      "name": "Engañar",
+      "max_rank": 5,
+      "cases": [
+        {
+          "id": "hit",
+          "name": "Daño físico adicional del ataque",
+          "parts": [
+            {
+              "damage_type": "physical",
+              "formula": {
+                "op": "add",
+                "operands": [
+                  {
+                    "op": "by_rank",
+                    "values": [
+                      25,
+                      35,
+                      45,
+                      55,
+                      65
+                    ]
+                  },
+                  {
+                    "op": "mul",
+                    "operands": [
+                      {
+                        "op": "constant",
+                        "value": 0.6
+                      },
+                      {
+                        "op": "stat",
+                        "stat": "attack_damage",
+                        "scope": "bonus"
+                      }
+                    ]
+                  }
+                ]
+              },
+              "label": "Derivado",
+              "source": "Characters/Shaco/Spells/DeceiveAbility/Deceive.mSpellCalculations.TotalDamage (16.23.8406595+branch.releases-16-23.content.release)",
+              "damage_type_source": "spell_shacoq_tooltip <physicalDamage>"
+            }
+          ]
+        }
+      ],
+      "passive_stats": [],
+      "not_modelled": [
+        "Invisibilidad, destello y crítico garantizado por la espalda (QCritDamageMod)"
+      ]
+    },
+    "W": {
+      "name": "Caja sorpresa",
+      "max_rank": 5,
+      "cases": [
+        {
+          "id": "single",
+          "name": "Disparo a objetivo único",
+          "parts": [
+            {
+              "damage_type": "magic",
+              "formula": {
+                "op": "add",
+                "operands": [
+                  {
+                    "op": "by_rank",
+                    "values": [
+                      25,
+                      40,
+                      55,
+                      70,
+                      85
+                    ]
+                  },
+                  {
+                    "op": "mul",
+                    "operands": [
+                      {
+                        "op": "constant",
+                        "value": 0.18
+                      },
+                      {
+                        "op": "stat",
+                        "stat": "ability_power",
+                        "scope": "total"
+                      }
+                    ]
+                  }
+                ]
+              },
+              "label": "Derivado",
+              "source": "Characters/Shaco/Spells/JackInTheBoxAbility/JackInTheBox.mSpellCalculations.STDamage (16.23.8406595+branch.releases-16-23.content.release)",
+              "damage_type_source": "spell_jackinthebox_tooltip <magicDamage>"
+            }
+          ]
+        },
+        {
+          "id": "aoe",
+          "name": "Disparo en área (múltiples objetivos)",
+          "parts": [
+            {
+              "damage_type": "magic",
+              "formula": {
+                "op": "add",
+                "operands": [
+                  {
+                    "op": "by_rank",
+                    "values": [
+                      10,
+                      15,
+                      20,
+                      25,
+                      30
+                    ]
+                  },
+                  {
+                    "op": "mul",
+                    "operands": [
+                      {
+                        "op": "constant",
+                        "value": 0.12
+                      },
+                      {
+                        "op": "stat",
+                        "stat": "ability_power",
+                        "scope": "total"
+                      }
+                    ]
+                  }
+                ]
+              },
+              "label": "Derivado",
+              "source": "Characters/Shaco/Spells/JackInTheBoxAbility/JackInTheBox.mSpellCalculations.AoEDamage (16.23.8406595+branch.releases-16-23.content.release)",
+              "damage_type_source": "spell_jackinthebox_tooltip <magicDamage>"
+            }
+          ]
+        }
+      ],
+      "passive_stats": [],
+      "not_modelled": [
+        "Miedo en área, daño adicional a monstruos (MonsterBonusDamage) y duración de trampa (TrapDuration)"
+      ]
+    },
+    "E": {
+      "name": "Veneno de doble filo",
+      "max_rank": 5,
+      "cases": [
+        {
+          "id": "normal",
+          "name": "Lanzamiento normal",
+          "parts": [
+            {
+              "damage_type": "magic",
+              "formula": {
+                "op": "add",
+                "operands": [
+                  {
+                    "op": "by_rank",
+                    "values": [
+                      70,
+                      95,
+                      120,
+                      145,
+                      170
+                    ]
+                  },
+                  {
+                    "op": "mul",
+                    "operands": [
+                      {
+                        "op": "constant",
+                        "value": 0.8
+                      },
+                      {
+                        "op": "stat",
+                        "stat": "attack_damage",
+                        "scope": "bonus"
+                      }
+                    ]
+                  },
+                  {
+                    "op": "mul",
+                    "operands": [
+                      {
+                        "op": "constant",
+                        "value": 0.6
+                      },
+                      {
+                        "op": "stat",
+                        "stat": "ability_power",
+                        "scope": "total"
+                      }
+                    ]
+                  }
+                ]
+              },
+              "label": "Derivado",
+              "source": "Characters/Shaco/Spells/TwoShivPoisonAbility/TwoShivPoison.mSpellCalculations.TotalDamage (16.23.8406595+branch.releases-16-23.content.release)",
+              "damage_type_source": "spell_twoshivpoison_tooltip <magicDamage>"
+            }
+          ]
+        },
+        {
+          "id": "execute",
+          "name": "Objetivo <30 % vida (+50 %)",
+          "parts": [
+            {
+              "damage_type": "magic",
+              "formula": {
+                "op": "mul",
+                "operands": [
+                  {
+                    "op": "add",
+                    "operands": [
+                      {
+                        "op": "by_rank",
+                        "values": [
+                          70,
+                          95,
+                          120,
+                          145,
+                          170
+                        ]
+                      },
+                      {
+                        "op": "mul",
+                        "operands": [
+                          {
+                            "op": "constant",
+                            "value": 0.8
+                          },
+                          {
+                            "op": "stat",
+                            "stat": "attack_damage",
+                            "scope": "bonus"
+                          }
+                        ]
+                      },
+                      {
+                        "op": "mul",
+                        "operands": [
+                          {
+                            "op": "constant",
+                            "value": 0.6
+                          },
+                          {
+                            "op": "stat",
+                            "stat": "ability_power",
+                            "scope": "total"
+                          }
+                        ]
+                      }
+                    ]
+                  },
+                  {
+                    "op": "constant",
+                    "value": 1.5
+                  }
+                ]
+              },
+              "label": "Derivado",
+              "source": "Characters/Shaco/Spells/TwoShivPoisonAbility/TwoShivPoison.mSpellCalculations.TotalExecuteDamage (16.23.8406595+branch.releases-16-23.content.release)",
+              "damage_type_source": "spell_twoshivpoison_tooltip <magicDamage>"
+            }
+          ]
+        }
+      ],
+      "passive_stats": [],
+      "not_modelled": [
+        "Ralentización pasiva al atacar y ralentización activa"
+      ]
+    },
+    "R": {
+      "name": "Alucinación",
+      "max_rank": 3,
+      "cases": [
+        {
+          "id": "explosion",
+          "name": "Explosión del clon",
+          "parts": [
+            {
+              "damage_type": "magic",
+              "formula": {
+                "op": "add",
+                "operands": [
+                  {
+                    "op": "by_rank",
+                    "values": [
+                      150,
+                      225,
+                      300
+                    ]
+                  },
+                  {
+                    "op": "mul",
+                    "operands": [
+                      {
+                        "op": "constant",
+                        "value": 0.7
+                      },
+                      {
+                        "op": "stat",
+                        "stat": "ability_power",
+                        "scope": "total"
+                      }
+                    ]
+                  }
+                ]
+              },
+              "label": "Derivado",
+              "source": "Characters/Shaco/Spells/HallucinateFullAbility/HallucinateFull.mSpellCalculations.ExplosionTotalDamage (16.23.8406595+branch.releases-16-23.content.release)",
+              "damage_type_source": "spell_hallucinatefull_tooltip <magicDamage>"
+            }
+          ]
+        },
+        {
+          "id": "box_single",
+          "name": "Mini-caja (objetivo único)",
+          "parts": [
+            {
+              "damage_type": "magic",
+              "formula": {
+                "op": "add",
+                "operands": [
+                  {
+                    "op": "by_rank",
+                    "values": [
+                      25,
+                      50,
+                      75
+                    ]
+                  },
+                  {
+                    "op": "mul",
+                    "operands": [
+                      {
+                        "op": "constant",
+                        "value": 0.15
+                      },
+                      {
+                        "op": "stat",
+                        "stat": "ability_power",
+                        "scope": "total"
+                      }
+                    ]
+                  }
+                ]
+              },
+              "label": "Derivado",
+              "source": "Characters/Shaco/Spells/HallucinateFullAbility/HallucinateFull.mSpellCalculations.STDamage (16.23.8406595+branch.releases-16-23.content.release)",
+              "damage_type_source": "spell_hallucinatefull_tooltip <magicDamage>"
+            }
+          ]
+        },
+        {
+          "id": "box_aoe",
+          "name": "Mini-caja (área)",
+          "parts": [
+            {
+              "damage_type": "magic",
+              "formula": {
+                "op": "add",
+                "operands": [
+                  {
+                    "op": "by_rank",
+                    "values": [
+                      10,
+                      20,
+                      30
+                    ]
+                  },
+                  {
+                    "op": "mul",
+                    "operands": [
+                      {
+                        "op": "constant",
+                        "value": 0.1
+                      },
+                      {
+                        "op": "stat",
+                        "stat": "ability_power",
+                        "scope": "total"
+                      }
+                    ]
+                  }
+                ]
+              },
+              "label": "Derivado",
+              "source": "Characters/Shaco/Spells/HallucinateFullAbility/HallucinateFull.mSpellCalculations.AoEDamage (16.23.8406595+branch.releases-16-23.content.release)",
+              "damage_type_source": "spell_hallucinatefull_tooltip <magicDamage>"
+            }
+          ]
+        }
+      ],
+      "passive_stats": [],
+      "not_modelled": [
+        "Ataques del clon (60 % del daño) y miedo de las 3 mini-cajas"
+      ]
+    }
+  }
+}

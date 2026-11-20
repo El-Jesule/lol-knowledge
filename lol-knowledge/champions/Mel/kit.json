@@ -1,0 +1,605 @@
+{
+  "schema": "lol-champion-kit/1",
+  "champion": "Mel",
+  "label": "Derivado",
+  "game_version": "16.23",
+  "content_version": "16.23.8406595+branch.releases-16-23.content.release",
+  "verified_against": {
+    "content_version": "16.23.8406595+branch.releases-16-23.content.release",
+    "bin_sha256": "1074d59d2ece8a0aeea4ea7cb0a01c1c5e00bf42e5e39bed57e8ad0569024d20",
+    "evidence": "odd/tasks/champion-kits-wave-3.md",
+    "result": "Bin del cliente 16.23 convertido con python -m binmodel.batch_kits y compilado con esta especificación curada (CH-01 oleada 3)"
+  },
+  "source": "Árboles de cálculo del bin del cliente (python -m binmodel) y marcado de los tooltips del cliente; estructura de casos curada en research/kits/",
+  "abilities": {
+    "P": {
+      "name": "Resplandor abrasador",
+      "max_rank": 1,
+      "cases": [
+        {
+          "id": "bonus_missile",
+          "name": "Un proyectil adicional por ataque",
+          "parts": [
+            {
+              "damage_type": "magic",
+              "formula": {
+                "op": "add",
+                "operands": [
+                  {
+                    "op": "linear_by_level",
+                    "min": 4,
+                    "max": 30
+                  },
+                  {
+                    "op": "mul",
+                    "operands": [
+                      {
+                        "op": "constant",
+                        "value": 0.04
+                      },
+                      {
+                        "op": "stat",
+                        "stat": "ability_power",
+                        "scope": "total"
+                      }
+                    ]
+                  }
+                ]
+              },
+              "label": "Derivado",
+              "source": "Characters/Mel/Spells/MelPassiveAbility/MelPassive.mSpellCalculations.PassiveBonusMissileDamage (16.23.8406595+branch.releases-16-23.content.release)",
+              "damage_type_source": "spell_melpassive_tooltip <magicDamage>"
+            }
+          ]
+        }
+      ],
+      "passive_stats": [],
+      "not_modelled": [
+        "Acumulación de hasta 9 proyectiles adicionales (3 por habilidad) y ejecución de Abrumar (detonación documentada en R)"
+      ]
+    },
+    "Q": {
+      "name": "Lluvia centelleante",
+      "max_rank": 5,
+      "cases": [
+        {
+          "id": "initial",
+          "name": "Primer proyectil",
+          "parts": [
+            {
+              "damage_type": "magic",
+              "formula": {
+                "op": "add",
+                "operands": [
+                  {
+                    "op": "constant",
+                    "value": 60
+                  },
+                  {
+                    "op": "mul",
+                    "operands": [
+                      {
+                        "op": "constant",
+                        "value": 0.25
+                      },
+                      {
+                        "op": "stat",
+                        "stat": "ability_power",
+                        "scope": "total"
+                      }
+                    ]
+                  }
+                ]
+              },
+              "label": "Derivado",
+              "source": "Characters/Mel/Spells/MelQAbility/MelQ.mSpellCalculations.InitialDamage (16.23.8406595+branch.releases-16-23.content.release)",
+              "damage_type_source": "spell_melq_tooltip <magicDamage>"
+            }
+          ]
+        },
+        {
+          "id": "subsequent",
+          "name": "Cada proyectil adicional",
+          "parts": [
+            {
+              "damage_type": "magic",
+              "formula": {
+                "op": "add",
+                "operands": [
+                  {
+                    "op": "by_rank",
+                    "values": [
+                      6,
+                      11,
+                      16,
+                      21,
+                      26
+                    ]
+                  },
+                  {
+                    "op": "mul",
+                    "operands": [
+                      {
+                        "op": "constant",
+                        "value": 0.09
+                      },
+                      {
+                        "op": "stat",
+                        "stat": "ability_power",
+                        "scope": "total"
+                      }
+                    ]
+                  }
+                ]
+              },
+              "label": "Derivado",
+              "source": "Characters/Mel/Spells/MelQAbility/MelQ.mSpellCalculations.SubsequentDamage (16.23.8406595+branch.releases-16-23.content.release)",
+              "damage_type_source": "spell_melq_tooltip <magicDamage>"
+            }
+          ]
+        },
+        {
+          "id": "total",
+          "name": "Descarga completa",
+          "parts": [
+            {
+              "damage_type": "magic",
+              "formula": {
+                "op": "add",
+                "operands": [
+                  {
+                    "op": "add",
+                    "operands": [
+                      {
+                        "op": "constant",
+                        "value": 60
+                      },
+                      {
+                        "op": "mul",
+                        "operands": [
+                          {
+                            "op": "add",
+                            "operands": [
+                              {
+                                "op": "by_rank",
+                                "values": [
+                                  6,
+                                  7,
+                                  8,
+                                  9,
+                                  10
+                                ]
+                              },
+                              {
+                                "op": "constant",
+                                "value": -1
+                              }
+                            ]
+                          },
+                          {
+                            "op": "by_rank",
+                            "values": [
+                              6,
+                              11,
+                              16,
+                              21,
+                              26
+                            ]
+                          }
+                        ]
+                      }
+                    ]
+                  },
+                  {
+                    "op": "mul",
+                    "operands": [
+                      {
+                        "op": "add",
+                        "operands": [
+                          {
+                            "op": "constant",
+                            "value": 0.25
+                          },
+                          {
+                            "op": "mul",
+                            "operands": [
+                              {
+                                "op": "add",
+                                "operands": [
+                                  {
+                                    "op": "by_rank",
+                                    "values": [
+                                      6,
+                                      7,
+                                      8,
+                                      9,
+                                      10
+                                    ]
+                                  },
+                                  {
+                                    "op": "constant",
+                                    "value": -1
+                                  }
+                                ]
+                              },
+                              {
+                                "op": "constant",
+                                "value": 0.09
+                              }
+                            ]
+                          }
+                        ]
+                      },
+                      {
+                        "op": "stat",
+                        "stat": "ability_power",
+                        "scope": "total"
+                      }
+                    ]
+                  }
+                ]
+              },
+              "label": "Derivado",
+              "source": "Characters/Mel/Spells/MelQAbility/MelQ.mSpellCalculations.TotalDamageTT (16.23.8406595+branch.releases-16-23.content.release)",
+              "damage_type_source": "spell_melq_tooltip <magicDamage>"
+            }
+          ]
+        }
+      ],
+      "passive_stats": [],
+      "not_modelled": [
+        "Reembolso de enfriamiento al golpear campeones (CDRefundChampHit)"
+      ]
+    },
+    "W": {
+      "name": "Impugnar",
+      "max_rank": 5,
+      "cases": [
+        {
+          "id": "initial",
+          "name": "Impacto inicial reflejado",
+          "parts": [
+            {
+              "damage_type": "magic",
+              "formula": {
+                "op": "add",
+                "operands": [
+                  {
+                    "op": "by_rank",
+                    "values": [
+                      35,
+                      45,
+                      55,
+                      65,
+                      75
+                    ]
+                  },
+                  {
+                    "op": "mul",
+                    "operands": [
+                      {
+                        "op": "constant",
+                        "value": 0.1
+                      },
+                      {
+                        "op": "stat",
+                        "stat": "ability_power",
+                        "scope": "total"
+                      }
+                    ]
+                  }
+                ]
+              },
+              "label": "Derivado",
+              "source": "Characters/Mel/Spells/MelWAbility/MelW.mSpellCalculations.InitialDamage (16.23.8406595+branch.releases-16-23.content.release)",
+              "damage_type_source": "spell_melw_tooltip <magicDamage>"
+            }
+          ]
+        },
+        {
+          "id": "subsequent",
+          "name": "Impactos adicionales",
+          "parts": [
+            {
+              "damage_type": "magic",
+              "formula": {
+                "op": "add",
+                "operands": [
+                  {
+                    "op": "by_rank",
+                    "values": [
+                      5,
+                      10,
+                      15,
+                      20,
+                      25
+                    ]
+                  },
+                  {
+                    "op": "mul",
+                    "operands": [
+                      {
+                        "op": "constant",
+                        "value": 0.05
+                      },
+                      {
+                        "op": "stat",
+                        "stat": "ability_power",
+                        "scope": "total"
+                      }
+                    ]
+                  }
+                ]
+              },
+              "label": "Derivado",
+              "source": "Characters/Mel/Spells/MelWAbility/MelW.mSpellCalculations.SubsequentDamage (16.23.8406595+branch.releases-16-23.content.release)",
+              "damage_type_source": "spell_melw_tooltip <magicDamage>"
+            }
+          ]
+        }
+      ],
+      "passive_stats": [],
+      "not_modelled": [
+        "Escudo (TotalShield), velocidad de movimiento (TotalMS) y reflejo de proyectiles enemigos"
+      ]
+    },
+    "E": {
+      "name": "Trampa solar",
+      "max_rank": 5,
+      "cases": [
+        {
+          "id": "center",
+          "name": "Orbe central (inmovilización)",
+          "parts": [
+            {
+              "damage_type": "magic",
+              "formula": {
+                "op": "add",
+                "operands": [
+                  {
+                    "op": "by_rank",
+                    "values": [
+                      60,
+                      105,
+                      150,
+                      195,
+                      240
+                    ]
+                  },
+                  {
+                    "op": "mul",
+                    "operands": [
+                      {
+                        "op": "constant",
+                        "value": 0.7
+                      },
+                      {
+                        "op": "stat",
+                        "stat": "ability_power",
+                        "scope": "total"
+                      }
+                    ]
+                  }
+                ]
+              },
+              "label": "Derivado",
+              "source": "Characters/Mel/Spells/MelEAbility/MelE.mSpellCalculations.Damage (16.23.8406595+branch.releases-16-23.content.release)",
+              "damage_type_source": "spell_mele_tooltip <magicDamage>"
+            }
+          ]
+        },
+        {
+          "id": "area_dps",
+          "name": "Zona exterior (daño por segundo)",
+          "parts": [
+            {
+              "damage_type": "magic",
+              "formula": {
+                "op": "add",
+                "operands": [
+                  {
+                    "op": "by_rank",
+                    "values": [
+                      16,
+                      28,
+                      40,
+                      52,
+                      64
+                    ]
+                  },
+                  {
+                    "op": "mul",
+                    "operands": [
+                      {
+                        "op": "constant",
+                        "value": 0.08
+                      },
+                      {
+                        "op": "stat",
+                        "stat": "ability_power",
+                        "scope": "total"
+                      }
+                    ]
+                  }
+                ]
+              },
+              "label": "Derivado",
+              "source": "Characters/Mel/Spells/MelEAbility/MelE.mSpellCalculations.AreaDamagePerSecond (16.23.8406595+branch.releases-16-23.content.release)",
+              "damage_type_source": "spell_mele_tooltip <magicDamage>"
+            }
+          ]
+        }
+      ],
+      "passive_stats": [],
+      "not_modelled": [
+        "Inmovilización central, ralentización exterior y reducción contra súbditos (MinionModTooltip)"
+      ]
+    },
+    "R": {
+      "name": "Eclipse áureo",
+      "max_rank": 3,
+      "cases": [
+        {
+          "id": "ult_base",
+          "name": "Daño base de Eclipse áureo",
+          "parts": [
+            {
+              "damage_type": "magic",
+              "formula": {
+                "op": "add",
+                "operands": [
+                  {
+                    "op": "by_rank",
+                    "values": [
+                      125,
+                      200,
+                      275
+                    ]
+                  },
+                  {
+                    "op": "mul",
+                    "operands": [
+                      {
+                        "op": "constant",
+                        "value": 0.3
+                      },
+                      {
+                        "op": "stat",
+                        "stat": "ability_power",
+                        "scope": "total"
+                      }
+                    ]
+                  }
+                ]
+              },
+              "label": "Derivado",
+              "source": "Characters/Mel/Spells/MelRAbility/MelR.mSpellCalculations.UltFlatDamage (16.23.8406595+branch.releases-16-23.content.release)",
+              "damage_type_source": "spell_melr_tooltip <magicDamage>"
+            }
+          ]
+        },
+        {
+          "id": "ult_per_stack",
+          "name": "Daño adicional por carga de Abrumar",
+          "parts": [
+            {
+              "damage_type": "magic",
+              "formula": {
+                "op": "add",
+                "operands": [
+                  {
+                    "op": "by_rank",
+                    "values": [
+                      4,
+                      7,
+                      10
+                    ]
+                  },
+                  {
+                    "op": "mul",
+                    "operands": [
+                      {
+                        "op": "constant",
+                        "value": 0.04
+                      },
+                      {
+                        "op": "stat",
+                        "stat": "ability_power",
+                        "scope": "total"
+                      }
+                    ]
+                  }
+                ]
+              },
+              "label": "Derivado",
+              "source": "Characters/Mel/Spells/MelRAbility/MelR.mSpellCalculations.UltStackDamage (16.23.8406595+branch.releases-16-23.content.release)",
+              "damage_type_source": "spell_melr_tooltip <magicDamage>"
+            }
+          ]
+        },
+        {
+          "id": "overwhelm_base",
+          "name": "Pasiva Abrumar (base)",
+          "parts": [
+            {
+              "damage_type": "magic",
+              "formula": {
+                "op": "add",
+                "operands": [
+                  {
+                    "op": "by_rank",
+                    "values": [
+                      60,
+                      70,
+                      80
+                    ]
+                  },
+                  {
+                    "op": "mul",
+                    "operands": [
+                      {
+                        "op": "constant",
+                        "value": 0.1
+                      },
+                      {
+                        "op": "stat",
+                        "stat": "ability_power",
+                        "scope": "total"
+                      }
+                    ]
+                  }
+                ]
+              },
+              "label": "Derivado",
+              "source": "Characters/Mel/Spells/MelRAbility/MelR.mSpellCalculations.PassiveFlatDamage (16.23.8406595+branch.releases-16-23.content.release)",
+              "damage_type_source": "spell_melr_tooltip <magicDamage>"
+            }
+          ]
+        },
+        {
+          "id": "overwhelm_per_stack",
+          "name": "Pasiva Abrumar (por carga)",
+          "parts": [
+            {
+              "damage_type": "magic",
+              "formula": {
+                "op": "add",
+                "operands": [
+                  {
+                    "op": "by_rank",
+                    "values": [
+                      3,
+                      4,
+                      5
+                    ]
+                  },
+                  {
+                    "op": "mul",
+                    "operands": [
+                      {
+                        "op": "constant",
+                        "value": 0.0075
+                      },
+                      {
+                        "op": "stat",
+                        "stat": "ability_power",
+                        "scope": "total"
+                      }
+                    ]
+                  }
+                ]
+              },
+              "label": "Derivado",
+              "source": "Characters/Mel/Spells/MelRAbility/MelR.mSpellCalculations.PassiveStackDamage (16.23.8406595+branch.releases-16-23.content.release)",
+              "damage_type_source": "spell_melr_tooltip <magicDamage>"
+            }
+          ]
+        }
+      ],
+      "passive_stats": [],
+      "not_modelled": [
+        "Umbral automático de ejecución de Abrumar y reducción contra súbditos (FlatMinionMod)"
+      ]
+    }
+  }
+}

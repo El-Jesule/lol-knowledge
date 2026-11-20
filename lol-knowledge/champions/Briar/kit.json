@@ -1,0 +1,492 @@
+{
+  "schema": "lol-champion-kit/1",
+  "champion": "Briar",
+  "label": "Derivado",
+  "game_version": "16.23",
+  "content_version": "16.23.8406595+branch.releases-16-23.content.release",
+  "verified_against": {
+    "content_version": "16.23.8406595+branch.releases-16-23.content.release",
+    "bin_sha256": "73827ff9936f2a252bf08bf0622ebb68cad245479f287cb905d19760d501f031",
+    "evidence": "odd/tasks/champion-kits-wave-3.md",
+    "result": "Bin del cliente 16.23 convertido con python -m binmodel.batch_kits y compilado con esta especificación curada (CH-01 oleada 3)"
+  },
+  "source": "Árboles de cálculo del bin del cliente (python -m binmodel) y marcado de los tooltips del cliente; estructura de casos curada en research/kits/",
+  "abilities": {
+    "P": {
+      "name": "Maldición carmesí",
+      "max_rank": 1,
+      "cases": [
+        {
+          "id": "bleed_1",
+          "name": "Sangrado completo (1 carga)",
+          "parts": [
+            {
+              "damage_type": "physical",
+              "formula": {
+                "op": "mul",
+                "operands": [
+                  {
+                    "op": "add",
+                    "operands": [
+                      {
+                        "op": "linear_by_level",
+                        "min": 2,
+                        "max": 10
+                      },
+                      {
+                        "op": "mul",
+                        "operands": [
+                          {
+                            "op": "constant",
+                            "value": 0.1
+                          },
+                          {
+                            "op": "stat",
+                            "stat": "attack_damage",
+                            "scope": "bonus"
+                          }
+                        ]
+                      }
+                    ]
+                  },
+                  {
+                    "op": "constant",
+                    "value": 5
+                  }
+                ]
+              },
+              "label": "Derivado",
+              "source": "Characters/Briar/Spells/BriarPAbility/BriarP.mSpellCalculations.BleedDamageOverDurationTooltip (16.23.8406595+branch.releases-16-23.content.release)",
+              "damage_type_source": "spell_briarp_tooltip <physicalDamage>"
+            }
+          ]
+        },
+        {
+          "id": "bleed_max",
+          "name": "Sangrado completo (máximo de cargas)",
+          "parts": [
+            {
+              "damage_type": "physical",
+              "formula": {
+                "op": "mul",
+                "operands": [
+                  {
+                    "op": "add",
+                    "operands": [
+                      {
+                        "op": "linear_by_level",
+                        "min": 2,
+                        "max": 10
+                      },
+                      {
+                        "op": "mul",
+                        "operands": [
+                          {
+                            "op": "constant",
+                            "value": 0.1
+                          },
+                          {
+                            "op": "stat",
+                            "stat": "attack_damage",
+                            "scope": "bonus"
+                          }
+                        ]
+                      }
+                    ]
+                  },
+                  {
+                    "op": "mul",
+                    "operands": [
+                      {
+                        "op": "constant",
+                        "value": 5
+                      },
+                      {
+                        "op": "constant",
+                        "value": 2
+                      }
+                    ]
+                  }
+                ]
+              },
+              "label": "Derivado",
+              "source": "Characters/Briar/Spells/BriarPAbility/BriarP.mSpellCalculations.BleedMaxDamageOverDurationTooltip (16.23.8406595+branch.releases-16-23.content.release)",
+              "damage_type_source": "spell_briarp_tooltip <physicalDamage>"
+            }
+          ]
+        }
+      ],
+      "passive_stats": [],
+      "not_modelled": [
+        "Ausencia de regeneración base de vida, curación por sangrado y aumento de curación según vida faltante"
+      ]
+    },
+    "Q": {
+      "name": "A la yugular",
+      "max_rank": 5,
+      "cases": [
+        {
+          "id": "leap",
+          "name": "Salto con aturdimiento",
+          "parts": [
+            {
+              "damage_type": "physical",
+              "formula": {
+                "op": "add",
+                "operands": [
+                  {
+                    "op": "by_rank",
+                    "values": [
+                      60,
+                      85,
+                      110,
+                      135,
+                      160
+                    ]
+                  },
+                  {
+                    "op": "mul",
+                    "operands": [
+                      {
+                        "op": "constant",
+                        "value": 0.6
+                      },
+                      {
+                        "op": "stat",
+                        "stat": "ability_power",
+                        "scope": "total"
+                      }
+                    ]
+                  },
+                  {
+                    "op": "mul",
+                    "operands": [
+                      {
+                        "op": "constant",
+                        "value": 0.8
+                      },
+                      {
+                        "op": "stat",
+                        "stat": "attack_damage",
+                        "scope": "bonus"
+                      }
+                    ]
+                  }
+                ]
+              },
+              "label": "Derivado",
+              "source": "Characters/Briar/Spells/BriarQAbility/BriarQ.mSpellCalculations.TotalDamage (16.23.8406595+branch.releases-16-23.content.release)",
+              "damage_type_source": "spell_briarq_tooltip <physicalDamage>"
+            }
+          ]
+        }
+      ],
+      "passive_stats": [],
+      "not_modelled": [
+        "Coste porcentual de vida actual, aturdimiento de 0,85 s y reducción de armadura/RM (ShredPercent)"
+      ]
+    },
+    "W": {
+      "name": "Frenesí sanguinario / Otro mordisquito",
+      "max_rank": 5,
+      "cases": [
+        {
+          "id": "frenzy_cleave",
+          "name": "Daño en área por ataque en Frenesí",
+          "parts": [
+            {
+              "damage_type": "physical",
+              "formula": {
+                "op": "mul",
+                "operands": [
+                  {
+                    "op": "by_rank",
+                    "values": [
+                      0.6,
+                      0.7,
+                      0.8,
+                      0.9,
+                      1
+                    ]
+                  },
+                  {
+                    "op": "stat",
+                    "stat": "attack_damage",
+                    "scope": "total"
+                  }
+                ]
+              },
+              "label": "Derivado",
+              "source": "Characters/Briar/Spells/BriarWAbility/BriarW.mSpellCalculations.TotalAoEDamage (16.23.8406595+branch.releases-16-23.content.release)",
+              "damage_type_source": "spell_briarw_tooltip <physicalDamage>"
+            }
+          ]
+        },
+        {
+          "id": "snack_attack",
+          "name": "Otro mordisquito (base + % vida faltante)",
+          "parts": [
+            {
+              "damage_type": "physical",
+              "formula": {
+                "op": "add",
+                "operands": [
+                  {
+                    "op": "by_rank",
+                    "values": [
+                      5,
+                      20,
+                      35,
+                      50,
+                      65
+                    ]
+                  },
+                  {
+                    "op": "mul",
+                    "operands": [
+                      {
+                        "op": "constant",
+                        "value": 1.05
+                      },
+                      {
+                        "op": "stat",
+                        "stat": "attack_damage",
+                        "scope": "total"
+                      }
+                    ]
+                  }
+                ]
+              },
+              "label": "Derivado",
+              "source": "Characters/Briar/Spells/BriarWAbility/BriarW.mSpellCalculations.TotalAttackBonusDamage (16.23.8406595+branch.releases-16-23.content.release)",
+              "damage_type_source": "spell_briarw_tooltip <physicalDamage>"
+            },
+            {
+              "damage_type": "physical",
+              "formula": {
+                "op": "mul",
+                "operands": [
+                  {
+                    "op": "add",
+                    "operands": [
+                      {
+                        "op": "constant",
+                        "value": 9
+                      },
+                      {
+                        "op": "mul",
+                        "operands": [
+                          {
+                            "op": "constant",
+                            "value": 0.025
+                          },
+                          {
+                            "op": "stat",
+                            "stat": "attack_damage",
+                            "scope": "bonus"
+                          }
+                        ]
+                      }
+                    ]
+                  },
+                  {
+                    "op": "constant",
+                    "value": 0.01
+                  },
+                  {
+                    "op": "stat",
+                    "stat": "health",
+                    "scope": "max",
+                    "subject": "target"
+                  },
+                  {
+                    "op": "stat",
+                    "stat": "health",
+                    "scope": "missing_fraction",
+                    "subject": "target"
+                  }
+                ]
+              },
+              "label": "Derivado",
+              "source": "Characters/Briar/Spells/BriarWAbility/BriarW · mSpellCalculations.TotalAttackPercentMissingHealth % × vida faltante del objetivo (16.23.8406595+branch.releases-16-23.content.release)",
+              "damage_type_source": "spell_briarw_tooltip <physicalDamage>"
+            }
+          ]
+        }
+      ],
+      "passive_stats": [],
+      "not_modelled": [
+        "Coste porcentual de vida actual, Frenesí sanguinario (velocidad de ataque/movimiento), curación de Otro mordisquito (AttackMaxHPHeal) y tope contra monstruos"
+      ]
+    },
+    "E": {
+      "name": "Alarido escalofriante",
+      "max_rank": 5,
+      "cases": [
+        {
+          "id": "scream",
+          "name": "Alarido cargado",
+          "parts": [
+            {
+              "damage_type": "magic",
+              "formula": {
+                "op": "add",
+                "operands": [
+                  {
+                    "op": "by_rank",
+                    "values": [
+                      80,
+                      115,
+                      150,
+                      185,
+                      220
+                    ]
+                  },
+                  {
+                    "op": "mul",
+                    "operands": [
+                      {
+                        "op": "constant",
+                        "value": 1
+                      },
+                      {
+                        "op": "stat",
+                        "stat": "attack_damage",
+                        "scope": "bonus"
+                      }
+                    ]
+                  },
+                  {
+                    "op": "mul",
+                    "operands": [
+                      {
+                        "op": "constant",
+                        "value": 1
+                      },
+                      {
+                        "op": "stat",
+                        "stat": "ability_power",
+                        "scope": "total"
+                      }
+                    ]
+                  }
+                ]
+              },
+              "label": "Derivado",
+              "source": "Characters/Briar/Spells/BriarEAbility/BriarE.mSpellCalculations.Damage (16.23.8406595+branch.releases-16-23.content.release)",
+              "damage_type_source": "spell_briare_tooltip <magicDamage>"
+            }
+          ]
+        },
+        {
+          "id": "wall_hit",
+          "name": "Choque contra muro (adicional)",
+          "parts": [
+            {
+              "damage_type": "magic",
+              "formula": {
+                "op": "add",
+                "operands": [
+                  {
+                    "op": "by_rank",
+                    "values": [
+                      140,
+                      215,
+                      290,
+                      365,
+                      440
+                    ]
+                  },
+                  {
+                    "op": "mul",
+                    "operands": [
+                      {
+                        "op": "constant",
+                        "value": 2.4
+                      },
+                      {
+                        "op": "stat",
+                        "stat": "attack_damage",
+                        "scope": "bonus"
+                      }
+                    ]
+                  },
+                  {
+                    "op": "mul",
+                    "operands": [
+                      {
+                        "op": "constant",
+                        "value": 2.4
+                      },
+                      {
+                        "op": "stat",
+                        "stat": "ability_power",
+                        "scope": "total"
+                      }
+                    ]
+                  }
+                ]
+              },
+              "label": "Derivado",
+              "source": "Characters/Briar/Spells/BriarEAbility/BriarE.mSpellCalculations.WallHitDamage (16.23.8406595+branch.releases-16-23.content.release)",
+              "damage_type_source": "spell_briare_tooltip <magicDamage>"
+            }
+          ]
+        }
+      ],
+      "passive_stats": [],
+      "not_modelled": [
+        "Reducción de daño del 35 % durante la canalización, curación (PercentMaxHPHeal), ralentización y aturdimiento contra muro"
+      ]
+    },
+    "R": {
+      "name": "Final sangriento",
+      "max_rank": 3,
+      "cases": [
+        {
+          "id": "impact",
+          "name": "Impacto al aterrizar",
+          "parts": [
+            {
+              "damage_type": "magic",
+              "formula": {
+                "op": "add",
+                "operands": [
+                  {
+                    "op": "by_rank",
+                    "values": [
+                      150,
+                      250,
+                      350
+                    ]
+                  },
+                  {
+                    "op": "mul",
+                    "operands": [
+                      {
+                        "op": "constant",
+                        "value": 1.3
+                      },
+                      {
+                        "op": "stat",
+                        "stat": "ability_power",
+                        "scope": "total"
+                      }
+                    ]
+                  }
+                ]
+              },
+              "label": "Derivado",
+              "source": "Characters/Briar/Spells/BriarRAbility/BriarR.mSpellCalculations.Damage (16.23.8406595+branch.releases-16-23.content.release)",
+              "damage_type_source": "spell_briarr_tooltip <magicDamage>"
+            }
+          ]
+        }
+      ],
+      "passive_stats": [],
+      "not_modelled": [
+        "Coste porcentual de vida actual, miedo en área, Frenesí potenciado con resistencias (TotalResists), robo de vida y velocidad de movimiento"
+      ]
+    }
+  }
+}

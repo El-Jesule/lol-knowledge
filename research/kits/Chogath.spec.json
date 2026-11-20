@@ -1,0 +1,114 @@
+{
+  "champion": "Chogath",
+  "game_version": "16.23",
+  "verified_against": {
+    "content_version": "16.23.8406595+branch.releases-16-23.content.release",
+    "bin_sha256": "4f238a4cd522e77e18654f9d107e4fcfa1adc1c84472659fc218c6b7632b9de3",
+    "evidence": "odd/tasks/champion-kits-wave-3.md",
+    "result": "Bin del cliente 16.23 convertido con python -m binmodel.batch_kits y compilado con esta especificación curada (CH-01 oleada 3)"
+  },
+  "abilities": {
+    "P": {
+      "name": "Carnívoro",
+      "tooltip": "game_character_passivetooltip_chogath",
+      "max_rank": 1,
+      "not_modelled": [
+        "Curación y restauración de maná al matar unidades (ChogathCarnivoreHeal, ChogathCarnivoreMana)"
+      ]
+    },
+    "Q": {
+      "name": "Ruptura",
+      "tooltip": "spell_rupture_tooltip",
+      "cases": [
+        {
+          "id": "hit",
+          "name": "Impacto de púas",
+          "parts": [
+            {
+              "calculation": "TotalDamageTooltip"
+            }
+          ]
+        }
+      ],
+      "not_modelled": [
+        "Lanzamiento por los aires de 1 s y ralentización posterior"
+      ]
+    },
+    "W": {
+      "name": "Grito salvaje",
+      "tooltip": "spell_feralscream_tooltip",
+      "not_modelled": [
+        "El cálculo de daño de W en el bin usa un nodo EffectValue no traducido por kitgen; silencio en cono"
+      ]
+    },
+    "E": {
+      "name": "Pinchos mortíferos",
+      "tooltip": "spell_vorpalspikes_tooltip",
+      "cases": [
+        {
+          "id": "spike",
+          "name": "Un pincho (0 cargas de Festín: plano + % vida máxima)",
+          "parts": [
+            {
+              "calculation": "FlatDamageCalc"
+            },
+            {
+              "tooltip_reference": "MaxHealthPercentCalc",
+              "damage_type": "magic",
+              "source_note": "DataValues.PercentHealthDamage % × vida máxima del objetivo (sin cargas de Festín)",
+              "formula": {
+                "op": "mul",
+                "operands": [
+                  {
+                    "op": "data_value",
+                    "name": "PercentHealthDamage"
+                  },
+                  {
+                    "op": "constant",
+                    "value": 0.01
+                  },
+                  {
+                    "op": "stat",
+                    "stat": "health",
+                    "scope": "max",
+                    "subject": "target"
+                  }
+                ]
+              }
+            }
+          ]
+        }
+      ],
+      "not_modelled": [
+        "Escalado adicional de +0,5 % vida máxima por cada carga de Festín (FeastStackMultiplier), ralentización y tope contra monstruos"
+      ]
+    },
+    "R": {
+      "name": "Festín",
+      "tooltip": "spell_feast_tooltip",
+      "cases": [
+        {
+          "id": "champion",
+          "name": "Contra campeones (daño verdadero)",
+          "parts": [
+            {
+              "calculation": "RDamage"
+            }
+          ]
+        },
+        {
+          "id": "monster",
+          "name": "Contra súbditos y monstruos (daño verdadero)",
+          "parts": [
+            {
+              "calculation": "RMonsterDamage"
+            }
+          ]
+        }
+      ],
+      "not_modelled": [
+        "Vida máxima permanente por carga de Festín (RHealthPerStack: 80/120/160), aumento de tamaño y alcance de ataque/lanzamiento"
+      ]
+    }
+  }
+}

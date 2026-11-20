@@ -1,0 +1,523 @@
+{
+  "schema": "lol-champion-kit/1",
+  "champion": "Naafiri",
+  "label": "Derivado",
+  "game_version": "16.23",
+  "content_version": "16.23.8406595+branch.releases-16-23.content.release",
+  "verified_against": {
+    "content_version": "16.23.8406595+branch.releases-16-23.content.release",
+    "bin_sha256": "b7cf9911e0d4c7cf133d9d937898d37b3c7aa78d12ff7f2fc526805da4d2d6c6",
+    "evidence": "odd/tasks/champion-kits-wave-3.md",
+    "result": "Bin del cliente 16.23 convertido con python -m binmodel.batch_kits y compilado con esta especificación curada (CH-01 oleada 3)"
+  },
+  "source": "Árboles de cálculo del bin del cliente (python -m binmodel) y marcado de los tooltips del cliente; estructura de casos curada en research/kits/",
+  "abilities": {
+    "P": {
+      "name": "Carne fresca",
+      "max_rank": 1,
+      "cases": [
+        {
+          "id": "packmate_hit",
+          "name": "Ataque de un miembro de la manada",
+          "parts": [
+            {
+              "damage_type": "physical",
+              "formula": {
+                "op": "add",
+                "operands": [
+                  {
+                    "op": "linear_by_level",
+                    "min": 10,
+                    "max": 20
+                  },
+                  {
+                    "op": "mul",
+                    "operands": [
+                      {
+                        "op": "constant",
+                        "value": 0.04
+                      },
+                      {
+                        "op": "stat",
+                        "stat": "attack_damage",
+                        "scope": "bonus"
+                      }
+                    ]
+                  }
+                ]
+              },
+              "label": "Derivado",
+              "source": "Characters/Naafiri/Spells/NaafiriPAbility/NaafiriP.mSpellCalculations.PackmateTotalDamage (16.23.8406595+branch.releases-16-23.content.release)",
+              "damage_type_source": "spell_naafirip_tooltip <physicalDamage>"
+            }
+          ]
+        },
+        {
+          "id": "packmate_frenzy",
+          "name": "Ataque de manada potenciado",
+          "parts": [
+            {
+              "damage_type": "physical",
+              "formula": {
+                "op": "mul",
+                "operands": [
+                  {
+                    "op": "add",
+                    "operands": [
+                      {
+                        "op": "linear_by_level",
+                        "min": 10,
+                        "max": 20
+                      },
+                      {
+                        "op": "mul",
+                        "operands": [
+                          {
+                            "op": "constant",
+                            "value": 0.04
+                          },
+                          {
+                            "op": "stat",
+                            "stat": "attack_damage",
+                            "scope": "bonus"
+                          }
+                        ]
+                      }
+                    ]
+                  },
+                  {
+                    "op": "constant",
+                    "value": 1.3
+                  }
+                ]
+              },
+              "label": "Derivado",
+              "source": "Characters/Naafiri/Spells/NaafiriPAbility/NaafiriP.mSpellCalculations.FrenzyDamageTooltipOnly (16.23.8406595+branch.releases-16-23.content.release)",
+              "damage_type_source": "spell_naafirip_tooltip <physicalDamage>"
+            }
+          ]
+        }
+      ],
+      "passive_stats": [],
+      "not_modelled": [
+        "Límite de manada (PackmateCap), enfriamiento de aparición y reducción de daño en área"
+      ]
+    },
+    "Q": {
+      "name": "Dagas de los Oscuros",
+      "max_rank": 5,
+      "cases": [
+        {
+          "id": "first_cast",
+          "name": "Primera daga",
+          "parts": [
+            {
+              "damage_type": "physical",
+              "formula": {
+                "op": "add",
+                "operands": [
+                  {
+                    "op": "by_rank",
+                    "values": [
+                      35,
+                      40,
+                      45,
+                      50,
+                      55
+                    ]
+                  },
+                  {
+                    "op": "mul",
+                    "operands": [
+                      {
+                        "op": "constant",
+                        "value": 0.2
+                      },
+                      {
+                        "op": "stat",
+                        "stat": "attack_damage",
+                        "scope": "bonus"
+                      }
+                    ]
+                  }
+                ]
+              },
+              "label": "Derivado",
+              "source": "Characters/Naafiri/Spells/NaafiriQAbility/NaafiriQ.mSpellCalculations.TotalDamageFirstCast (16.23.8406595+branch.releases-16-23.content.release)",
+              "damage_type_source": "spell_naafiriq_tooltip <physicalDamage>"
+            }
+          ]
+        },
+        {
+          "id": "bleed",
+          "name": "Sangrado completo (4 s)",
+          "parts": [
+            {
+              "damage_type": "physical",
+              "formula": {
+                "op": "add",
+                "operands": [
+                  {
+                    "op": "by_rank",
+                    "values": [
+                      35,
+                      60,
+                      85,
+                      110,
+                      135
+                    ]
+                  },
+                  {
+                    "op": "mul",
+                    "operands": [
+                      {
+                        "op": "constant",
+                        "value": 0.8
+                      },
+                      {
+                        "op": "stat",
+                        "stat": "attack_damage",
+                        "scope": "bonus"
+                      }
+                    ]
+                  }
+                ]
+              },
+              "label": "Derivado",
+              "source": "Characters/Naafiri/Spells/NaafiriQAbility/NaafiriQ.mSpellCalculations.TotalBleedDamage (16.23.8406595+branch.releases-16-23.content.release)",
+              "damage_type_source": "spell_naafiriq_tooltip <physicalDamage>"
+            }
+          ]
+        },
+        {
+          "id": "recast_min",
+          "name": "Segunda daga (mínimo contra objetivo sangrando)",
+          "parts": [
+            {
+              "damage_type": "physical",
+              "formula": {
+                "op": "add",
+                "operands": [
+                  {
+                    "op": "by_rank",
+                    "values": [
+                      30,
+                      42.5,
+                      55,
+                      67.5,
+                      80
+                    ]
+                  },
+                  {
+                    "op": "mul",
+                    "operands": [
+                      {
+                        "op": "constant",
+                        "value": 0.4
+                      },
+                      {
+                        "op": "stat",
+                        "stat": "attack_damage",
+                        "scope": "bonus"
+                      }
+                    ]
+                  }
+                ]
+              },
+              "label": "Derivado",
+              "source": "Characters/Naafiri/Spells/NaafiriQAbility/NaafiriQ.mSpellCalculations.TotalMinDamageSecondCast (16.23.8406595+branch.releases-16-23.content.release)",
+              "damage_type_source": "spell_naafiriq_tooltip <physicalDamage>"
+            }
+          ],
+          "recast": true
+        },
+        {
+          "id": "recast_max",
+          "name": "Segunda daga (máximo por vida faltante)",
+          "parts": [
+            {
+              "damage_type": "physical",
+              "formula": {
+                "op": "add",
+                "operands": [
+                  {
+                    "op": "by_rank",
+                    "values": [
+                      30,
+                      42.5,
+                      55,
+                      67.5,
+                      80
+                    ]
+                  },
+                  {
+                    "op": "mul",
+                    "operands": [
+                      {
+                        "op": "constant",
+                        "value": 0.7
+                      },
+                      {
+                        "op": "stat",
+                        "stat": "attack_damage",
+                        "scope": "bonus"
+                      }
+                    ]
+                  }
+                ]
+              },
+              "label": "Derivado",
+              "source": "Characters/Naafiri/Spells/NaafiriQAbility/NaafiriQ.mSpellCalculations.TotalMaxDamageSecondCast (16.23.8406595+branch.releases-16-23.content.release)",
+              "damage_type_source": "spell_naafiriq_tooltip <physicalDamage>"
+            }
+          ],
+          "recast": true
+        }
+      ],
+      "passive_stats": [],
+      "not_modelled": [
+        "Curación al reactivar sobre objetivo sangrando (TotalHealSecondCast) y ejecución de súbditos"
+      ],
+      "recast_window_seconds": 4
+    },
+    "W": {
+      "name": "Llamada de la manada",
+      "max_rank": 5,
+      "cases": [],
+      "passive_stats": [],
+      "not_modelled": [
+        "Inalcanzabilidad breve, velocidad de movimiento, invocación temporal de manada y bonificación activa de DA (BonusAD)"
+      ]
+    },
+    "E": {
+      "name": "Destripar",
+      "max_rank": 5,
+      "cases": [
+        {
+          "id": "dash",
+          "name": "Tajo del deslizamiento",
+          "parts": [
+            {
+              "damage_type": "physical",
+              "formula": {
+                "op": "add",
+                "operands": [
+                  {
+                    "op": "by_rank",
+                    "values": [
+                      15,
+                      25,
+                      35,
+                      45,
+                      55
+                    ]
+                  },
+                  {
+                    "op": "mul",
+                    "operands": [
+                      {
+                        "op": "constant",
+                        "value": 0.4
+                      },
+                      {
+                        "op": "stat",
+                        "stat": "attack_damage",
+                        "scope": "bonus"
+                      }
+                    ]
+                  }
+                ]
+              },
+              "label": "Derivado",
+              "source": "Characters/Naafiri/Spells/NaafiriEAbility/NaafiriE.mSpellCalculations.TotalDamageFirstSlash (16.23.8406595+branch.releases-16-23.content.release)",
+              "damage_type_source": "spell_naafirie_tooltip <physicalDamage>"
+            }
+          ]
+        },
+        {
+          "id": "flurry",
+          "name": "Ráfaga de cuchillas al terminar",
+          "parts": [
+            {
+              "damage_type": "physical",
+              "formula": {
+                "op": "add",
+                "operands": [
+                  {
+                    "op": "by_rank",
+                    "values": [
+                      60,
+                      85,
+                      110,
+                      135,
+                      160
+                    ]
+                  },
+                  {
+                    "op": "mul",
+                    "operands": [
+                      {
+                        "op": "constant",
+                        "value": 0.8
+                      },
+                      {
+                        "op": "stat",
+                        "stat": "attack_damage",
+                        "scope": "bonus"
+                      }
+                    ]
+                  }
+                ]
+              },
+              "label": "Derivado",
+              "source": "Characters/Naafiri/Spells/NaafiriEAbility/NaafiriE.mSpellCalculations.TotalDamageSecondSlash (16.23.8406595+branch.releases-16-23.content.release)",
+              "damage_type_source": "spell_naafirie_tooltip <physicalDamage>"
+            }
+          ]
+        }
+      ],
+      "passive_stats": [],
+      "not_modelled": [
+        "Curación completa y reagrupamiento de la manada"
+      ]
+    },
+    "R": {
+      "name": "Persecución sabuesa",
+      "max_rank": 3,
+      "cases": [
+        {
+          "id": "pounce",
+          "name": "Impacto de embestida",
+          "parts": [
+            {
+              "damage_type": "physical",
+              "formula": {
+                "op": "add",
+                "operands": [
+                  {
+                    "op": "by_rank",
+                    "values": [
+                      125,
+                      200,
+                      275
+                    ]
+                  },
+                  {
+                    "op": "mul",
+                    "operands": [
+                      {
+                        "op": "constant",
+                        "value": 1
+                      },
+                      {
+                        "op": "stat",
+                        "stat": "attack_damage",
+                        "scope": "bonus"
+                      }
+                    ]
+                  }
+                ]
+              },
+              "label": "Derivado",
+              "source": "Characters/Naafiri/Spells/NaafiriWAbility/NaafiriW.mSpellCalculations.TotalDamage (16.23.8406595+branch.releases-16-23.content.release)",
+              "damage_type_source": "spell_naafiriw_tooltip <physicalDamage>"
+            }
+          ]
+        },
+        {
+          "id": "packmate_bonus",
+          "name": "Daño adicional por miembro de la manada",
+          "parts": [
+            {
+              "damage_type": "physical",
+              "formula": {
+                "op": "mul",
+                "operands": [
+                  {
+                    "op": "add",
+                    "operands": [
+                      {
+                        "op": "by_rank",
+                        "values": [
+                          125,
+                          200,
+                          275
+                        ]
+                      },
+                      {
+                        "op": "mul",
+                        "operands": [
+                          {
+                            "op": "constant",
+                            "value": 1
+                          },
+                          {
+                            "op": "stat",
+                            "stat": "attack_damage",
+                            "scope": "bonus"
+                          }
+                        ]
+                      }
+                    ]
+                  },
+                  {
+                    "op": "constant",
+                    "value": 0.1
+                  }
+                ]
+              },
+              "label": "Derivado",
+              "source": "Characters/Naafiri/Spells/NaafiriWAbility/NaafiriW.mSpellCalculations.PackmateDamage (16.23.8406595+branch.releases-16-23.content.release)",
+              "damage_type_source": "spell_naafiriw_tooltip <physicalDamage>"
+            }
+          ]
+        },
+        {
+          "id": "recast",
+          "name": "Segunda embestida tras derribo (recast)",
+          "parts": [
+            {
+              "damage_type": "physical",
+              "formula": {
+                "op": "add",
+                "operands": [
+                  {
+                    "op": "by_rank",
+                    "values": [
+                      125,
+                      200,
+                      275
+                    ]
+                  },
+                  {
+                    "op": "mul",
+                    "operands": [
+                      {
+                        "op": "constant",
+                        "value": 1
+                      },
+                      {
+                        "op": "stat",
+                        "stat": "attack_damage",
+                        "scope": "bonus"
+                      }
+                    ]
+                  }
+                ]
+              },
+              "label": "Derivado",
+              "source": "Characters/Naafiri/Spells/NaafiriWAbility/NaafiriW.mSpellCalculations.TotalDamage (16.23.8406595+branch.releases-16-23.content.release)",
+              "damage_type_source": "spell_naafiriw_tooltip <physicalDamage>"
+            }
+          ],
+          "recast": true
+        }
+      ],
+      "passive_stats": [],
+      "not_modelled": [
+        "Escudo tras baja (ShieldTotal), visión revelada y ralentización breve"
+      ],
+      "recast_window_seconds": 12
+    }
+  }
+}

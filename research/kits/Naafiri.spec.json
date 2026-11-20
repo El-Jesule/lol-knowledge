@@ -1,0 +1,164 @@
+{
+  "champion": "Naafiri",
+  "game_version": "16.23",
+  "verified_against": {
+    "content_version": "16.23.8406595+branch.releases-16-23.content.release",
+    "bin_sha256": "b7cf9911e0d4c7cf133d9d937898d37b3c7aa78d12ff7f2fc526805da4d2d6c6",
+    "evidence": "odd/tasks/champion-kits-wave-3.md",
+    "result": "Bin del cliente 16.23 convertido con python -m binmodel.batch_kits y compilado con esta especificación curada (CH-01 oleada 3)"
+  },
+  "abilities": {
+    "P": {
+      "name": "Carne fresca",
+      "tooltip": "spell_naafirip_tooltip",
+      "max_rank": 1,
+      "cases": [
+        {
+          "id": "packmate_hit",
+          "name": "Ataque de un miembro de la manada",
+          "parts": [
+            {
+              "calculation": "PackmateTotalDamage"
+            }
+          ]
+        },
+        {
+          "id": "packmate_frenzy",
+          "name": "Ataque de manada potenciado",
+          "parts": [
+            {
+              "calculation": "FrenzyDamageTooltipOnly"
+            }
+          ]
+        }
+      ],
+      "not_modelled": [
+        "Límite de manada (PackmateCap), enfriamiento de aparición y reducción de daño en área"
+      ]
+    },
+    "Q": {
+      "name": "Dagas de los Oscuros",
+      "tooltip": "spell_naafiriq_tooltip",
+      "recast_window_seconds": {
+        "data_value": "RecastWindow"
+      },
+      "cases": [
+        {
+          "id": "first_cast",
+          "name": "Primera daga",
+          "parts": [
+            {
+              "calculation": "TotalDamageFirstCast"
+            }
+          ]
+        },
+        {
+          "id": "bleed",
+          "name": "Sangrado completo (4 s)",
+          "parts": [
+            {
+              "calculation": "TotalBleedDamage"
+            }
+          ]
+        },
+        {
+          "id": "recast_min",
+          "name": "Segunda daga (mínimo contra objetivo sangrando)",
+          "recast": true,
+          "parts": [
+            {
+              "calculation": "TotalMinDamageSecondCast"
+            }
+          ]
+        },
+        {
+          "id": "recast_max",
+          "name": "Segunda daga (máximo por vida faltante)",
+          "recast": true,
+          "parts": [
+            {
+              "calculation": "TotalMaxDamageSecondCast"
+            }
+          ]
+        }
+      ],
+      "not_modelled": [
+        "Curación al reactivar sobre objetivo sangrando (TotalHealSecondCast) y ejecución de súbditos"
+      ]
+    },
+    "W": {
+      "name": "Llamada de la manada",
+      "tooltip": "spell_naafirir_tooltip",
+      "not_modelled": [
+        "Inalcanzabilidad breve, velocidad de movimiento, invocación temporal de manada y bonificación activa de DA (BonusAD)"
+      ]
+    },
+    "E": {
+      "name": "Destripar",
+      "tooltip": "spell_naafirie_tooltip",
+      "cases": [
+        {
+          "id": "dash",
+          "name": "Tajo del deslizamiento",
+          "parts": [
+            {
+              "calculation": "TotalDamageFirstSlash"
+            }
+          ]
+        },
+        {
+          "id": "flurry",
+          "name": "Ráfaga de cuchillas al terminar",
+          "parts": [
+            {
+              "calculation": "TotalDamageSecondSlash"
+            }
+          ]
+        }
+      ],
+      "not_modelled": [
+        "Curación completa y reagrupamiento de la manada"
+      ]
+    },
+    "R": {
+      "name": "Persecución sabuesa",
+      "tooltip": "spell_naafiriw_tooltip",
+      "recast_window_seconds": {
+        "data_value": "RecastWindow"
+      },
+      "cases": [
+        {
+          "id": "pounce",
+          "name": "Impacto de embestida",
+          "parts": [
+            {
+              "calculation": "TotalDamage"
+            }
+          ]
+        },
+        {
+          "id": "packmate_bonus",
+          "name": "Daño adicional por miembro de la manada",
+          "parts": [
+            {
+              "calculation": "PackmateDamage"
+            }
+          ]
+        },
+        {
+          "id": "recast",
+          "name": "Segunda embestida tras derribo (recast)",
+          "recast": true,
+          "parts": [
+            {
+              "calculation": "TotalDamage"
+            }
+          ]
+        }
+      ],
+      "not_modelled": [
+        "Escudo tras baja (ShieldTotal), visión revelada y ralentización breve"
+      ]
+    }
+  }
+}

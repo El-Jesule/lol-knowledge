@@ -1,0 +1,166 @@
+{
+  "champion": "Mel",
+  "game_version": "16.23",
+  "verified_against": {
+    "content_version": "16.23.8406595+branch.releases-16-23.content.release",
+    "bin_sha256": "1074d59d2ece8a0aeea4ea7cb0a01c1c5e00bf42e5e39bed57e8ad0569024d20",
+    "evidence": "odd/tasks/champion-kits-wave-3.md",
+    "result": "Bin del cliente 16.23 convertido con python -m binmodel.batch_kits y compilado con esta especificación curada (CH-01 oleada 3)"
+  },
+  "abilities": {
+    "P": {
+      "name": "Resplandor abrasador",
+      "tooltip": "spell_melpassive_tooltip",
+      "max_rank": 1,
+      "cases": [
+        {
+          "id": "bonus_missile",
+          "name": "Un proyectil adicional por ataque",
+          "parts": [
+            {
+              "calculation": "PassiveBonusMissileDamage"
+            }
+          ]
+        }
+      ],
+      "not_modelled": [
+        "Acumulación de hasta 9 proyectiles adicionales (3 por habilidad) y ejecución de Abrumar (detonación documentada en R)"
+      ]
+    },
+    "Q": {
+      "name": "Lluvia centelleante",
+      "tooltip": "spell_melq_tooltip",
+      "cases": [
+        {
+          "id": "initial",
+          "name": "Primer proyectil",
+          "parts": [
+            {
+              "calculation": "InitialDamage"
+            }
+          ]
+        },
+        {
+          "id": "subsequent",
+          "name": "Cada proyectil adicional",
+          "parts": [
+            {
+              "calculation": "SubsequentDamage"
+            }
+          ]
+        },
+        {
+          "id": "total",
+          "name": "Descarga completa",
+          "parts": [
+            {
+              "calculation": "TotalDamageTT"
+            }
+          ]
+        }
+      ],
+      "not_modelled": [
+        "Reembolso de enfriamiento al golpear campeones (CDRefundChampHit)"
+      ]
+    },
+    "W": {
+      "name": "Impugnar",
+      "tooltip": "spell_melw_tooltip",
+      "cases": [
+        {
+          "id": "initial",
+          "name": "Impacto inicial reflejado",
+          "parts": [
+            {
+              "calculation": "InitialDamage"
+            }
+          ]
+        },
+        {
+          "id": "subsequent",
+          "name": "Impactos adicionales",
+          "parts": [
+            {
+              "calculation": "SubsequentDamage"
+            }
+          ]
+        }
+      ],
+      "not_modelled": [
+        "Escudo (TotalShield), velocidad de movimiento (TotalMS) y reflejo de proyectiles enemigos"
+      ]
+    },
+    "E": {
+      "name": "Trampa solar",
+      "tooltip": "spell_mele_tooltip",
+      "cases": [
+        {
+          "id": "center",
+          "name": "Orbe central (inmovilización)",
+          "parts": [
+            {
+              "calculation": "Damage"
+            }
+          ]
+        },
+        {
+          "id": "area_dps",
+          "name": "Zona exterior (daño por segundo)",
+          "parts": [
+            {
+              "calculation": "AreaDamagePerSecond"
+            }
+          ]
+        }
+      ],
+      "not_modelled": [
+        "Inmovilización central, ralentización exterior y reducción contra súbditos (MinionModTooltip)"
+      ]
+    },
+    "R": {
+      "name": "Eclipse áureo",
+      "tooltip": "spell_melr_tooltip",
+      "cases": [
+        {
+          "id": "ult_base",
+          "name": "Daño base de Eclipse áureo",
+          "parts": [
+            {
+              "calculation": "UltFlatDamage"
+            }
+          ]
+        },
+        {
+          "id": "ult_per_stack",
+          "name": "Daño adicional por carga de Abrumar",
+          "parts": [
+            {
+              "calculation": "UltStackDamage"
+            }
+          ]
+        },
+        {
+          "id": "overwhelm_base",
+          "name": "Pasiva Abrumar (base)",
+          "parts": [
+            {
+              "calculation": "PassiveFlatDamage"
+            }
+          ]
+        },
+        {
+          "id": "overwhelm_per_stack",
+          "name": "Pasiva Abrumar (por carga)",
+          "parts": [
+            {
+              "calculation": "PassiveStackDamage"
+            }
+          ]
+        }
+      ],
+      "not_modelled": [
+        "Umbral automático de ejecución de Abrumar y reducción contra súbditos (FlatMinionMod)"
+      ]
+    }
+  }
+}

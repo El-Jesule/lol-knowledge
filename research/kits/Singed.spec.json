@@ -1,0 +1,94 @@
+{
+  "champion": "Singed",
+  "game_version": "16.23",
+  "verified_against": {
+    "content_version": "16.23.8406595+branch.releases-16-23.content.release",
+    "bin_sha256": "f655e0879316998bacfeec57de806325b9f4ee95ae0416c5280d8920f99ee22b",
+    "evidence": "odd/tasks/champion-kits-wave-3.md",
+    "result": "Bin del cliente 16.23 convertido con python -m binmodel.batch_kits y compilado con esta especificación curada (CH-01 oleada 3)"
+  },
+  "abilities": {
+    "P": {
+      "name": "Estela nociva",
+      "tooltip": "spell_singedp_tooltip",
+      "max_rank": 1,
+      "not_modelled": [
+        "Velocidad de movimiento al pasar cerca de campeones"
+      ]
+    },
+    "Q": {
+      "name": "Rastro de veneno",
+      "tooltip": "spell_poisontrail_tooltip",
+      "cases": [
+        {
+          "id": "dps",
+          "name": "Daño por segundo del veneno",
+          "parts": [
+            {
+              "calculation": "DamagePerSecond"
+            }
+          ]
+        }
+      ],
+      "not_modelled": [
+        "Consumo continuo de maná por segundo y duración de 2 s de la estela (ApproximateTotalDamageTooltip)"
+      ]
+    },
+    "W": {
+      "name": "Megaadhesivo",
+      "tooltip": "spell_megaadhesive_tooltip",
+      "not_modelled": [
+        "Zona de ralentización y anclaje (grounded)"
+      ]
+    },
+    "E": {
+      "name": "Lanzar",
+      "tooltip": "spell_fling_tooltip",
+      "cases": [
+        {
+          "id": "fling",
+          "name": "Lanzamiento (plano + % vida máxima)",
+          "parts": [
+            {
+              "calculation": "BaseDamage"
+            },
+            {
+              "tooltip_reference": "MaxHPDamage",
+              "damage_type": "magic",
+              "source_note": "DataValues.MaxHPDamage % × vida máxima del objetivo",
+              "formula": {
+                "op": "mul",
+                "operands": [
+                  {
+                    "op": "data_value",
+                    "name": "MaxHPDamage"
+                  },
+                  {
+                    "op": "constant",
+                    "value": 0.01
+                  },
+                  {
+                    "op": "stat",
+                    "stat": "health",
+                    "scope": "max",
+                    "subject": "target"
+                  }
+                ]
+              }
+            }
+          ]
+        }
+      ],
+      "not_modelled": [
+        "Inmovilización si aterriza sobre Megaadhesivo y tope de 300 contra no campeones"
+      ]
+    },
+    "R": {
+      "name": "Poción de demencia",
+      "tooltip": "spell_insanitypotion_tooltip",
+      "not_modelled": [
+        "Bonificación temporal de PH, armadura, RM, velocidad de movimiento, regeneración y Heridas graves en Q"
+      ]
+    }
+  }
+}

@@ -1,0 +1,195 @@
+{
+  "schema": "lol-champion-kit/1",
+  "champion": "Draven",
+  "label": "Derivado",
+  "game_version": "16.23",
+  "content_version": "16.23.8406595+branch.releases-16-23.content.release",
+  "verified_against": {
+    "content_version": "16.23.8406595+branch.releases-16-23.content.release",
+    "bin_sha256": "2aed9484380d92535186a52b73a19f6ad96c9768b93c4c6a7d98d02f83646db8",
+    "evidence": "odd/tasks/champion-kits-wave-3.md",
+    "result": "Bin del cliente 16.23 convertido con python -m binmodel.batch_kits y compilado con esta especificación curada (CH-01 oleada 3)"
+  },
+  "source": "Árboles de cálculo del bin del cliente (python -m binmodel) y marcado de los tooltips del cliente; estructura de casos curada en research/kits/",
+  "abilities": {
+    "P": {
+      "name": "League of Draven",
+      "max_rank": 1,
+      "cases": [],
+      "passive_stats": [],
+      "not_modelled": [
+        "Acumulación de Adoración y oro adicional al matar campeones"
+      ]
+    },
+    "Q": {
+      "name": "Hacha giratoria",
+      "max_rank": 5,
+      "cases": [
+        {
+          "id": "bonus",
+          "name": "Daño físico adicional por hacha",
+          "parts": [
+            {
+              "damage_type": "physical",
+              "formula": {
+                "op": "add",
+                "operands": [
+                  {
+                    "op": "by_rank",
+                    "values": [
+                      40,
+                      45,
+                      50,
+                      55,
+                      60
+                    ]
+                  },
+                  {
+                    "op": "mul",
+                    "operands": [
+                      {
+                        "op": "by_rank",
+                        "values": [
+                          0.75,
+                          0.85,
+                          0.95,
+                          1.05,
+                          1.15
+                        ]
+                      },
+                      {
+                        "op": "stat",
+                        "stat": "attack_damage",
+                        "scope": "bonus"
+                      }
+                    ]
+                  }
+                ]
+              },
+              "label": "Derivado",
+              "source": "Characters/Draven/Spells/DravenSpinningAbility/DravenSpinning.mSpellCalculations.TotalDamage (16.23.8406595+branch.releases-16-23.content.release)",
+              "damage_type_source": "spell_dravenspinning_tooltip <physicalDamage>"
+            }
+          ]
+        }
+      ],
+      "passive_stats": [],
+      "not_modelled": [
+        "Rebote y captura de hachas (hasta 2 activas) y reinicio de W"
+      ]
+    },
+    "W": {
+      "name": "Subidón de adrenalina",
+      "max_rank": 5,
+      "cases": [],
+      "passive_stats": [],
+      "not_modelled": [
+        "Velocidad de movimiento decreciente, velocidad de ataque y efecto fantasmal"
+      ]
+    },
+    "E": {
+      "name": "A un lado",
+      "max_rank": 5,
+      "cases": [
+        {
+          "id": "hit",
+          "name": "Impacto de hachas",
+          "parts": [
+            {
+              "damage_type": "physical",
+              "formula": {
+                "op": "add",
+                "operands": [
+                  {
+                    "op": "by_rank",
+                    "values": [
+                      75,
+                      110,
+                      145,
+                      180,
+                      215
+                    ]
+                  },
+                  {
+                    "op": "mul",
+                    "operands": [
+                      {
+                        "op": "constant",
+                        "value": 0.5
+                      },
+                      {
+                        "op": "stat",
+                        "stat": "attack_damage",
+                        "scope": "bonus"
+                      }
+                    ]
+                  }
+                ]
+              },
+              "label": "Derivado",
+              "source": "Characters/Draven/Spells/DravenDoubleShotAbility/DravenDoubleShot.mSpellCalculations.TotalDamage (16.23.8406595+branch.releases-16-23.content.release)",
+              "damage_type_source": "spell_dravendoubleshot_tooltip <physicalDamage>"
+            }
+          ]
+        }
+      ],
+      "passive_stats": [],
+      "not_modelled": [
+        "Desplazamiento lateral y ralentización"
+      ]
+    },
+    "R": {
+      "name": "Espiral de muerte",
+      "max_rank": 3,
+      "cases": [
+        {
+          "id": "hit",
+          "name": "Un pase (ida o vuelta)",
+          "parts": [
+            {
+              "damage_type": "physical",
+              "formula": {
+                "op": "add",
+                "operands": [
+                  {
+                    "op": "by_rank",
+                    "values": [
+                      200,
+                      300,
+                      400
+                    ]
+                  },
+                  {
+                    "op": "mul",
+                    "operands": [
+                      {
+                        "op": "by_rank",
+                        "values": [
+                          1.1,
+                          1.3,
+                          1.5
+                        ]
+                      },
+                      {
+                        "op": "stat",
+                        "stat": "attack_damage",
+                        "scope": "bonus"
+                      }
+                    ]
+                  }
+                ]
+              },
+              "label": "Derivado",
+              "source": "Characters/Draven/Spells/DravenRCastAbility/DravenRCast.mSpellCalculations.RCalculatedDamage (16.23.8406595+branch.releases-16-23.content.release)",
+              "damage_type_source": "spell_dravenrcast_tooltip <physicalDamage>"
+            }
+          ]
+        }
+      ],
+      "passive_stats": [],
+      "not_modelled": [
+        "Reducción de daño por unidad atravesada y ejecución con acumulaciones de Adoración (RPassiveTrueDamage)"
+      ]
+    }
+  }
+}

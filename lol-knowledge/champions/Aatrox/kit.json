@@ -1,0 +1,245 @@
+{
+  "schema": "lol-champion-kit/1",
+  "champion": "Aatrox",
+  "label": "Derivado",
+  "game_version": "16.23",
+  "content_version": "16.23.8406595+branch.releases-16-23.content.release",
+  "verified_against": {
+    "content_version": "16.23.8406595+branch.releases-16-23.content.release",
+    "bin_sha256": "b2deb766a83f8f862e2deaba715b915892be3cd2f4c22a65a7865eacf33420b0",
+    "evidence": "odd/tasks/champion-kits-wave-3.md",
+    "result": "Bin del cliente 16.23 convertido con python -m binmodel.batch_kits y compilado con esta especificación curada (CH-01 oleada 3)"
+  },
+  "source": "Árboles de cálculo del bin del cliente (python -m binmodel) y marcado de los tooltips del cliente; estructura de casos curada en research/kits/",
+  "abilities": {
+    "P": {
+      "name": "Aspecto de la muerte",
+      "max_rank": 1,
+      "cases": [
+        {
+          "id": "strike",
+          "name": "Golpe potenciado (% vida máxima)",
+          "parts": [
+            {
+              "damage_type": "magic",
+              "formula": {
+                "op": "mul",
+                "operands": [
+                  {
+                    "op": "linear_by_level",
+                    "min": 0.04,
+                    "max": 0.1
+                  },
+                  {
+                    "op": "stat",
+                    "stat": "health",
+                    "scope": "max",
+                    "subject": "target"
+                  }
+                ]
+              },
+              "label": "Derivado",
+              "source": "Characters/Aatrox/Spells/AatroxPassiveAbility/AatroxPassive · mSpellCalculations.PDamage × vida máxima del objetivo (16.23.8406595+branch.releases-16-23.content.release)",
+              "damage_type_source": "passive_aatroxpassive_tooltip <magicDamage>"
+            }
+          ]
+        }
+      ],
+      "passive_stats": [],
+      "not_modelled": [
+        "Curación sobre el daño adicional, alcance extra (+50), tope contra monstruos (MonsterDamageCap) y reducción de enfriamiento"
+      ]
+    },
+    "Q": {
+      "name": "La Espada de los Oscuros",
+      "max_rank": 5,
+      "cases": [
+        {
+          "id": "hit",
+          "name": "Primer golpe (base)",
+          "parts": [
+            {
+              "damage_type": "physical",
+              "formula": {
+                "op": "add",
+                "operands": [
+                  {
+                    "op": "by_rank",
+                    "values": [
+                      10,
+                      25,
+                      40,
+                      55,
+                      70
+                    ]
+                  },
+                  {
+                    "op": "mul",
+                    "operands": [
+                      {
+                        "op": "by_rank",
+                        "values": [
+                          0.6,
+                          0.675,
+                          0.75,
+                          0.825,
+                          0.9
+                        ]
+                      },
+                      {
+                        "op": "stat",
+                        "stat": "attack_damage",
+                        "scope": "total"
+                      }
+                    ]
+                  }
+                ]
+              },
+              "label": "Derivado",
+              "source": "Characters/Aatrox/Spells/AatroxQAbility/AatroxQ.mSpellCalculations.QDamage (16.23.8406595+branch.releases-16-23.content.release)",
+              "damage_type_source": "spell_aatroxq_tooltip <physicalDamage>"
+            }
+          ]
+        },
+        {
+          "id": "sweetspot",
+          "name": "Primer golpe (filo, +60 %)",
+          "parts": [
+            {
+              "damage_type": "physical",
+              "formula": {
+                "op": "mul",
+                "operands": [
+                  {
+                    "op": "add",
+                    "operands": [
+                      {
+                        "op": "by_rank",
+                        "values": [
+                          10,
+                          25,
+                          40,
+                          55,
+                          70
+                        ]
+                      },
+                      {
+                        "op": "mul",
+                        "operands": [
+                          {
+                            "op": "by_rank",
+                            "values": [
+                              0.6,
+                              0.675,
+                              0.75,
+                              0.825,
+                              0.9
+                            ]
+                          },
+                          {
+                            "op": "stat",
+                            "stat": "attack_damage",
+                            "scope": "total"
+                          }
+                        ]
+                      }
+                    ]
+                  },
+                  {
+                    "op": "add",
+                    "operands": [
+                      {
+                        "op": "constant",
+                        "value": 1
+                      },
+                      {
+                        "op": "constant",
+                        "value": 0.75
+                      }
+                    ]
+                  }
+                ]
+              },
+              "label": "Derivado",
+              "source": "Characters/Aatrox/Spells/AatroxQAbility/AatroxQ.mSpellCalculations.QEdgeDamage (16.23.8406595+branch.releases-16-23.content.release)",
+              "damage_type_source": "spell_aatroxq_tooltip <physicalDamage>"
+            }
+          ]
+        }
+      ],
+      "passive_stats": [],
+      "not_modelled": [
+        "Escalado de Q2 (+25 %) y Q3 (+50 %), levantamiento en el filo y modificador contra súbditos (QMinionDamage)"
+      ]
+    },
+    "W": {
+      "name": "Cadenas infernales",
+      "max_rank": 5,
+      "cases": [
+        {
+          "id": "hit",
+          "name": "Impacto inicial (o tirón al cerrarse)",
+          "parts": [
+            {
+              "damage_type": "physical",
+              "formula": {
+                "op": "add",
+                "operands": [
+                  {
+                    "op": "by_rank",
+                    "values": [
+                      30,
+                      40,
+                      50,
+                      60,
+                      70
+                    ]
+                  },
+                  {
+                    "op": "mul",
+                    "operands": [
+                      {
+                        "op": "constant",
+                        "value": 0.4
+                      },
+                      {
+                        "op": "stat",
+                        "stat": "attack_damage",
+                        "scope": "total"
+                      }
+                    ]
+                  }
+                ]
+              },
+              "label": "Derivado",
+              "source": "Characters/Aatrox/Spells/AatroxWAbility/AatroxW.mSpellCalculations.WDamage (16.23.8406595+branch.releases-16-23.content.release)",
+              "damage_type_source": "spell_aatroxw_tooltip <physicalDamage>"
+            }
+          ]
+        }
+      ],
+      "passive_stats": [],
+      "not_modelled": [
+        "Ralentización, tirón al centro si no sale de la zona y doble daño contra súbditos"
+      ]
+    },
+    "E": {
+      "name": "Deslizamiento sombrío",
+      "max_rank": 5,
+      "cases": [],
+      "passive_stats": [],
+      "not_modelled": [
+        "Deslizamiento y curación pasiva por daño a campeones (TotalEVamp)"
+      ]
+    },
+    "R": {
+      "name": "El Aniquilador de mundos",
+      "max_rank": 3,
+      "cases": [],
+      "passive_stats": [],
+      "not_modelled": [
+        "Bonificación porcentual de DA total, amplificación de curación, velocidad de movimiento y extensión por bajas"
+      ]
+    }
+  }
+}

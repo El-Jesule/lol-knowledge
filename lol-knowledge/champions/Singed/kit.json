@@ -1,0 +1,176 @@
+{
+  "schema": "lol-champion-kit/1",
+  "champion": "Singed",
+  "label": "Derivado",
+  "game_version": "16.23",
+  "content_version": "16.23.8406595+branch.releases-16-23.content.release",
+  "verified_against": {
+    "content_version": "16.23.8406595+branch.releases-16-23.content.release",
+    "bin_sha256": "f655e0879316998bacfeec57de806325b9f4ee95ae0416c5280d8920f99ee22b",
+    "evidence": "odd/tasks/champion-kits-wave-3.md",
+    "result": "Bin del cliente 16.23 convertido con python -m binmodel.batch_kits y compilado con esta especificación curada (CH-01 oleada 3)"
+  },
+  "source": "Árboles de cálculo del bin del cliente (python -m binmodel) y marcado de los tooltips del cliente; estructura de casos curada en research/kits/",
+  "abilities": {
+    "P": {
+      "name": "Estela nociva",
+      "max_rank": 1,
+      "cases": [],
+      "passive_stats": [],
+      "not_modelled": [
+        "Velocidad de movimiento al pasar cerca de campeones"
+      ]
+    },
+    "Q": {
+      "name": "Rastro de veneno",
+      "max_rank": 5,
+      "cases": [
+        {
+          "id": "dps",
+          "name": "Daño por segundo del veneno",
+          "parts": [
+            {
+              "damage_type": "magic",
+              "formula": {
+                "op": "add",
+                "operands": [
+                  {
+                    "op": "by_rank",
+                    "values": [
+                      20,
+                      30,
+                      40,
+                      50,
+                      60
+                    ]
+                  },
+                  {
+                    "op": "mul",
+                    "operands": [
+                      {
+                        "op": "constant",
+                        "value": 0.425
+                      },
+                      {
+                        "op": "stat",
+                        "stat": "ability_power",
+                        "scope": "total"
+                      }
+                    ]
+                  }
+                ]
+              },
+              "label": "Derivado",
+              "source": "Characters/Singed/Spells/PoisonTrailAbility/PoisonTrail.mSpellCalculations.DamagePerSecond (16.23.8406595+branch.releases-16-23.content.release)",
+              "damage_type_source": "spell_poisontrail_tooltip <magicDamage>"
+            }
+          ]
+        }
+      ],
+      "passive_stats": [],
+      "not_modelled": [
+        "Consumo continuo de maná por segundo y duración de 2 s de la estela (ApproximateTotalDamageTooltip)"
+      ]
+    },
+    "W": {
+      "name": "Megaadhesivo",
+      "max_rank": 5,
+      "cases": [],
+      "passive_stats": [],
+      "not_modelled": [
+        "Zona de ralentización y anclaje (grounded)"
+      ]
+    },
+    "E": {
+      "name": "Lanzar",
+      "max_rank": 5,
+      "cases": [
+        {
+          "id": "fling",
+          "name": "Lanzamiento (plano + % vida máxima)",
+          "parts": [
+            {
+              "damage_type": "magic",
+              "formula": {
+                "op": "add",
+                "operands": [
+                  {
+                    "op": "by_rank",
+                    "values": [
+                      50,
+                      60,
+                      70,
+                      80,
+                      90
+                    ]
+                  },
+                  {
+                    "op": "mul",
+                    "operands": [
+                      {
+                        "op": "constant",
+                        "value": 0.55
+                      },
+                      {
+                        "op": "stat",
+                        "stat": "ability_power",
+                        "scope": "total"
+                      }
+                    ]
+                  }
+                ]
+              },
+              "label": "Derivado",
+              "source": "Characters/Singed/Spells/FlingAbility/Fling.mSpellCalculations.BaseDamage (16.23.8406595+branch.releases-16-23.content.release)",
+              "damage_type_source": "spell_fling_tooltip <magicDamage>"
+            },
+            {
+              "damage_type": "magic",
+              "formula": {
+                "op": "mul",
+                "operands": [
+                  {
+                    "op": "by_rank",
+                    "values": [
+                      6,
+                      6.5,
+                      7,
+                      7.5,
+                      8
+                    ]
+                  },
+                  {
+                    "op": "constant",
+                    "value": 0.01
+                  },
+                  {
+                    "op": "stat",
+                    "stat": "health",
+                    "scope": "max",
+                    "subject": "target"
+                  }
+                ]
+              },
+              "label": "Derivado",
+              "source": "Characters/Singed/Spells/FlingAbility/Fling · DataValues.MaxHPDamage % × vida máxima del objetivo (16.23.8406595+branch.releases-16-23.content.release)",
+              "damage_type_source": "spell_fling_tooltip <magicDamage>"
+            }
+          ]
+        }
+      ],
+      "passive_stats": [],
+      "not_modelled": [
+        "Inmovilización si aterriza sobre Megaadhesivo y tope de 300 contra no campeones"
+      ]
+    },
+    "R": {
+      "name": "Poción de demencia",
+      "max_rank": 3,
+      "cases": [],
+      "passive_stats": [],
+      "not_modelled": [
+        "Bonificación temporal de PH, armadura, RM, velocidad de movimiento, regeneración y Heridas graves en Q"
+      ]
+    }
+  }
+}

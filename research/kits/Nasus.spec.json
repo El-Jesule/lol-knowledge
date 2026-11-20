@@ -1,0 +1,105 @@
+{
+  "champion": "Nasus",
+  "game_version": "16.23",
+  "verified_against": {
+    "content_version": "16.23.8406595+branch.releases-16-23.content.release",
+    "bin_sha256": "2b4d3184d0c81ee65d6c45a7e28b7d2db72f83806e01b9b8eca1d840784f6224",
+    "evidence": "odd/tasks/champion-kits-wave-3.md",
+    "result": "Bin del cliente 16.23 convertido con python -m binmodel.batch_kits y compilado con esta especificación curada (CH-01 oleada 3)"
+  },
+  "abilities": {
+    "P": {
+      "name": "Devorador de almas",
+      "tooltip": "spell_nasuspassive_tooltip",
+      "max_rank": 1,
+      "passive_effects": [
+        {
+          "id": "soul_eater_lifesteal",
+          "name": "Robo de vida pasivo",
+          "kind": "stat_bonus",
+          "stat": "life_steal",
+          "mode": "flat",
+          "calculation": "LifestealTooltip",
+          "condition": "Robo de vida permanente escalado a niveles 1, 7 y 13 (10/15/20 %)"
+        }
+      ],
+      "not_modelled": []
+    },
+    "Q": {
+      "name": "Golpe absorbente",
+      "tooltip": "spell_nasusq_tooltip",
+      "not_modelled": [
+        "Daño base + acumulaciones infinitas de Golpe absorbente (el cálculo en el bin referencia el contador dinámico de cargas)"
+      ]
+    },
+    "W": {
+      "name": "Marchitar",
+      "tooltip": "spell_nasusw_tooltip",
+      "not_modelled": [
+        "Ralentización creciente de velocidad de movimiento y velocidad de ataque durante 5 s"
+      ]
+    },
+    "E": {
+      "name": "Fuego espiritual",
+      "tooltip": "spell_nasuse_tooltip",
+      "cases": [
+        {
+          "id": "initial",
+          "name": "Impacto inicial",
+          "parts": [
+            {
+              "calculation": "InitialDamage"
+            }
+          ]
+        },
+        {
+          "id": "dot_total",
+          "name": "Zona completa (5 s)",
+          "parts": [
+            {
+              "calculation": "TotalDotDamage"
+            }
+          ]
+        }
+      ],
+      "not_modelled": [
+        "Reducción porcentual de armadura dentro del área"
+      ]
+    },
+    "R": {
+      "name": "Furia de las arenas",
+      "tooltip": "spell_nasusr_tooltip",
+      "cases": [
+        {
+          "id": "aura_dps",
+          "name": "Aura por segundo (% vida máxima)",
+          "parts": [
+            {
+              "tooltip_reference": "DamageCalc",
+              "damage_type": "magic",
+              "source_note": "mSpellCalculations.DamageCalc × vida máxima del objetivo",
+              "formula": {
+                "op": "mul",
+                "operands": [
+                  {
+                    "op": "calculation",
+                    "name": "DamageCalc"
+                  },
+                  {
+                    "op": "stat",
+                    "stat": "health",
+                    "scope": "max",
+                    "subject": "target"
+                  }
+                ]
+              }
+            }
+          ]
+        }
+      ],
+      "not_modelled": [
+        "Vida máxima temporal (BonusHealth), armadura/RM adicionales, tope de 240 DPS (MaxDamageCap) y 50 % menos enfriamiento en Q"
+      ]
+    }
+  }
+}

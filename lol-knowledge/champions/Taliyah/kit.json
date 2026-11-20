@@ -1,0 +1,236 @@
+{
+  "schema": "lol-champion-kit/1",
+  "champion": "Taliyah",
+  "label": "Derivado",
+  "game_version": "16.23",
+  "content_version": "16.23.8406595+branch.releases-16-23.content.release",
+  "verified_against": {
+    "content_version": "16.23.8406595+branch.releases-16-23.content.release",
+    "bin_sha256": "8f126f20980448fa67ee668c6b546a1d98e8edb20f494d1d7439cad821d36e1a",
+    "evidence": "odd/tasks/champion-kits-wave-3.md",
+    "result": "Bin del cliente 16.23 convertido con python -m binmodel.batch_kits y compilado con esta especificación curada (CH-01 oleada 3)"
+  },
+  "source": "Árboles de cálculo del bin del cliente (python -m binmodel) y marcado de los tooltips del cliente; estructura de casos curada en research/kits/",
+  "abilities": {
+    "P": {
+      "name": "Surfista de rocas",
+      "max_rank": 1,
+      "cases": [],
+      "passive_stats": [],
+      "not_modelled": [
+        "Velocidad de movimiento junto a muros (TotalMS)"
+      ]
+    },
+    "Q": {
+      "name": "Lanzarrocas",
+      "max_rank": 5,
+      "cases": [
+        {
+          "id": "single_rock",
+          "name": "Una roca (terreno normal)",
+          "parts": [
+            {
+              "damage_type": "magic",
+              "formula": {
+                "op": "add",
+                "operands": [
+                  {
+                    "op": "by_rank",
+                    "values": [
+                      55,
+                      72.5,
+                      90,
+                      107.5,
+                      125
+                    ]
+                  },
+                  {
+                    "op": "mul",
+                    "operands": [
+                      {
+                        "op": "constant",
+                        "value": 0.5
+                      },
+                      {
+                        "op": "stat",
+                        "stat": "ability_power",
+                        "scope": "total"
+                      }
+                    ]
+                  }
+                ]
+              },
+              "label": "Derivado",
+              "source": "Characters/Taliyah/Spells/TaliyahQAbility/TaliyahQ.mSpellCalculations.RockDamage (16.23.8406595+branch.releases-16-23.content.release)",
+              "damage_type_source": "spell_taliyahq_tooltip <magicDamage>"
+            }
+          ]
+        },
+        {
+          "id": "boulder",
+          "name": "Roca gigante (Tierra árida)",
+          "parts": [
+            {
+              "damage_type": "magic",
+              "formula": {
+                "op": "mul",
+                "operands": [
+                  {
+                    "op": "add",
+                    "operands": [
+                      {
+                        "op": "by_rank",
+                        "values": [
+                          55,
+                          72.5,
+                          90,
+                          107.5,
+                          125
+                        ]
+                      },
+                      {
+                        "op": "mul",
+                        "operands": [
+                          {
+                            "op": "constant",
+                            "value": 0.5
+                          },
+                          {
+                            "op": "stat",
+                            "stat": "ability_power",
+                            "scope": "total"
+                          }
+                        ]
+                      }
+                    ]
+                  },
+                  {
+                    "op": "constant",
+                    "value": 1.8
+                  }
+                ]
+              },
+              "label": "Derivado",
+              "source": "Characters/Taliyah/Spells/TaliyahQAbility/TaliyahQ.mSpellCalculations.BigRockDamage (16.23.8406595+branch.releases-16-23.content.release)",
+              "damage_type_source": "spell_taliyahq_tooltip <magicDamage>"
+            }
+          ]
+        }
+      ],
+      "passive_stats": [],
+      "not_modelled": [
+        "Descarga completa de 5 rocas con reducción en impactos posteriores (MaxDamageTooltip), ralentización de roca gigante y daño extra a monstruos"
+      ]
+    },
+    "W": {
+      "name": "Empujón sísmico",
+      "max_rank": 5,
+      "cases": [],
+      "passive_stats": [],
+      "not_modelled": [
+        "Desplazamiento direccional sin daño directo"
+      ]
+    },
+    "E": {
+      "name": "Tierra comprometida",
+      "max_rank": 5,
+      "cases": [
+        {
+          "id": "scatter",
+          "name": "Colocación de rocas",
+          "parts": [
+            {
+              "damage_type": "magic",
+              "formula": {
+                "op": "add",
+                "operands": [
+                  {
+                    "op": "by_rank",
+                    "values": [
+                      70,
+                      115,
+                      160,
+                      205,
+                      250
+                    ]
+                  },
+                  {
+                    "op": "mul",
+                    "operands": [
+                      {
+                        "op": "constant",
+                        "value": 0.7
+                      },
+                      {
+                        "op": "stat",
+                        "stat": "ability_power",
+                        "scope": "total"
+                      }
+                    ]
+                  }
+                ]
+              },
+              "label": "Derivado",
+              "source": "Characters/Taliyah/Spells/TaliyahEAbility/TaliyahE.mSpellCalculations.ScatterDamage (16.23.8406595+branch.releases-16-23.content.release)",
+              "damage_type_source": "spell_taliyahe_tooltip <magicDamage>"
+            }
+          ]
+        },
+        {
+          "id": "detonate_one",
+          "name": "Detonación de 1 roca al desplazarse",
+          "parts": [
+            {
+              "damage_type": "magic",
+              "formula": {
+                "op": "add",
+                "operands": [
+                  {
+                    "op": "by_rank",
+                    "values": [
+                      30,
+                      45,
+                      60,
+                      75,
+                      90
+                    ]
+                  },
+                  {
+                    "op": "mul",
+                    "operands": [
+                      {
+                        "op": "constant",
+                        "value": 0.3
+                      },
+                      {
+                        "op": "stat",
+                        "stat": "ability_power",
+                        "scope": "total"
+                      }
+                    ]
+                  }
+                ]
+              },
+              "label": "Derivado",
+              "source": "Characters/Taliyah/Spells/TaliyahEAbility/TaliyahE.mSpellCalculations.DetonationDamage (16.23.8406595+branch.releases-16-23.content.release)",
+              "damage_type_source": "spell_taliyahe_tooltip <magicDamage>"
+            }
+          ]
+        }
+      ],
+      "passive_stats": [],
+      "not_modelled": [
+        "Aturdimiento al desplazarse, ralentización y daño máximo de 4 detonaciones (MaxDetonationDamageTooltip)"
+      ]
+    },
+    "R": {
+      "name": "Muro de la Tejedora",
+      "max_rank": 3,
+      "cases": [],
+      "passive_stats": [],
+      "not_modelled": [
+        "Muro de terreno largo y desplazamiento sobre el muro"
+      ]
+    }
+  }
+}

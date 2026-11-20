@@ -1,0 +1,382 @@
+{
+  "schema": "lol-champion-kit/1",
+  "champion": "Heimerdinger",
+  "label": "Derivado",
+  "game_version": "16.23",
+  "content_version": "16.23.8406595+branch.releases-16-23.content.release",
+  "verified_against": {
+    "content_version": "16.23.8406595+branch.releases-16-23.content.release",
+    "bin_sha256": "eec638a80642c4defc34a12205db270088f177c5867b42ec8c2514ba43e95d94",
+    "evidence": "odd/tasks/champion-kits-wave-3.md",
+    "result": "Bin del cliente 16.23 convertido con python -m binmodel.batch_kits y compilado con esta especificación curada (CH-01 oleada 3)"
+  },
+  "source": "Árboles de cálculo del bin del cliente (python -m binmodel) y marcado de los tooltips del cliente; estructura de casos curada en research/kits/",
+  "abilities": {
+    "P": {
+      "name": "Afinidad hextech",
+      "max_rank": 1,
+      "cases": [],
+      "passive_stats": [],
+      "not_modelled": [
+        "Velocidad de movimiento del 20 % cerca de torretas"
+      ]
+    },
+    "Q": {
+      "name": "Torreta evolucionada H-28 G",
+      "max_rank": 5,
+      "cases": [],
+      "passive_stats": [],
+      "not_modelled": [
+        "Los disparos (Damage) y el rayo (DamageBeam) de la torreta usan referencias internas no expuestas como casos planos en el tooltip principal; vida de torreta (TurretHealth)"
+      ]
+    },
+    "W": {
+      "name": "Microcohetes hextech",
+      "max_rank": 5,
+      "cases": [
+        {
+          "id": "first_rocket",
+          "name": "Primer cohete",
+          "parts": [
+            {
+              "damage_type": "magic",
+              "formula": {
+                "op": "add",
+                "operands": [
+                  {
+                    "op": "by_rank",
+                    "values": [
+                      50,
+                      75,
+                      100,
+                      125,
+                      150
+                    ]
+                  },
+                  {
+                    "op": "mul",
+                    "operands": [
+                      {
+                        "op": "constant",
+                        "value": 0.55
+                      },
+                      {
+                        "op": "stat",
+                        "stat": "ability_power",
+                        "scope": "total"
+                      }
+                    ]
+                  }
+                ]
+              },
+              "label": "Derivado",
+              "source": "Characters/Heimerdinger/Spells/HeimerdingerWAbility/HeimerdingerW.mSpellCalculations.Damage (16.23.8406595+branch.releases-16-23.content.release)",
+              "damage_type_source": "spell_heimerdingerw_tooltip <magicDamage>"
+            }
+          ]
+        },
+        {
+          "id": "all_rockets",
+          "name": "Los 5 cohetes sobre un campeón",
+          "parts": [
+            {
+              "damage_type": "magic",
+              "formula": {
+                "op": "add",
+                "operands": [
+                  {
+                    "op": "by_rank",
+                    "values": [
+                      90,
+                      135,
+                      180,
+                      225,
+                      270
+                    ]
+                  },
+                  {
+                    "op": "mul",
+                    "operands": [
+                      {
+                        "op": "constant",
+                        "value": 1.03
+                      },
+                      {
+                        "op": "stat",
+                        "stat": "ability_power",
+                        "scope": "total"
+                      }
+                    ]
+                  }
+                ]
+              },
+              "label": "Derivado",
+              "source": "Characters/Heimerdinger/Spells/HeimerdingerWAbility/HeimerdingerW.mSpellCalculations.TotalDamage (16.23.8406595+branch.releases-16-23.content.release)",
+              "damage_type_source": "spell_heimerdingerw_tooltip <magicDamage>"
+            }
+          ]
+        }
+      ],
+      "passive_stats": [],
+      "not_modelled": [
+        "Daño por cohete adicional aislado (ExtraHitDamage) y carga del rayo de torretas"
+      ]
+    },
+    "E": {
+      "name": "Granada de tormenta de electrones CH-2",
+      "max_rank": 5,
+      "cases": [
+        {
+          "id": "hit",
+          "name": "Impacto de granada",
+          "parts": [
+            {
+              "damage_type": "magic",
+              "formula": {
+                "op": "add",
+                "operands": [
+                  {
+                    "op": "by_rank",
+                    "values": [
+                      60,
+                      100,
+                      140,
+                      180,
+                      220
+                    ]
+                  },
+                  {
+                    "op": "mul",
+                    "operands": [
+                      {
+                        "op": "constant",
+                        "value": 0.6
+                      },
+                      {
+                        "op": "stat",
+                        "stat": "ability_power",
+                        "scope": "total"
+                      }
+                    ]
+                  }
+                ]
+              },
+              "label": "Derivado",
+              "source": "Characters/Heimerdinger/Spells/HeimerdingerEAbility/HeimerdingerE.mSpellCalculations.Damage (16.23.8406595+branch.releases-16-23.content.release)",
+              "damage_type_source": "spell_heimerdingere_tooltip <magicDamage>"
+            }
+          ]
+        }
+      ],
+      "passive_stats": [],
+      "not_modelled": [
+        "Ralentización en borde y aturdimiento en el centro"
+      ]
+    },
+    "R": {
+      "name": "¡MEJORA!",
+      "max_rank": 3,
+      "cases": [
+        {
+          "id": "rq_shot",
+          "name": "R+Q Torreta ápice (cañón)",
+          "parts": [
+            {
+              "damage_type": "magic",
+              "formula": {
+                "op": "add",
+                "operands": [
+                  {
+                    "op": "by_rank",
+                    "values": [
+                      80,
+                      100,
+                      120
+                    ]
+                  },
+                  {
+                    "op": "mul",
+                    "operands": [
+                      {
+                        "op": "constant",
+                        "value": 0.35
+                      },
+                      {
+                        "op": "stat",
+                        "stat": "ability_power",
+                        "scope": "total"
+                      }
+                    ]
+                  }
+                ]
+              },
+              "label": "Derivado",
+              "source": "Characters/Heimerdinger/Spells/HeimerdingerRAbility/HeimerdingerR.mSpellCalculations.QUltDamage (16.23.8406595+branch.releases-16-23.content.release)",
+              "damage_type_source": "spell_heimerdingerr_tooltip <magicDamage>"
+            }
+          ]
+        },
+        {
+          "id": "rq_beam",
+          "name": "R+Q Torreta ápice (rayo)",
+          "parts": [
+            {
+              "damage_type": "magic",
+              "formula": {
+                "op": "add",
+                "operands": [
+                  {
+                    "op": "by_rank",
+                    "values": [
+                      100,
+                      140,
+                      180
+                    ]
+                  },
+                  {
+                    "op": "mul",
+                    "operands": [
+                      {
+                        "op": "constant",
+                        "value": 0.7
+                      },
+                      {
+                        "op": "stat",
+                        "stat": "ability_power",
+                        "scope": "total"
+                      }
+                    ]
+                  }
+                ]
+              },
+              "label": "Derivado",
+              "source": "Characters/Heimerdinger/Spells/HeimerdingerRAbility/HeimerdingerR.mSpellCalculations.QUltDamageBeam (16.23.8406595+branch.releases-16-23.content.release)",
+              "damage_type_source": "spell_heimerdingerr_tooltip <magicDamage>"
+            }
+          ]
+        },
+        {
+          "id": "rw_rocket",
+          "name": "R+W Enjambre de cohetes (primer cohete)",
+          "parts": [
+            {
+              "damage_type": "magic",
+              "formula": {
+                "op": "add",
+                "operands": [
+                  {
+                    "op": "by_rank",
+                    "values": [
+                      135,
+                      180,
+                      225
+                    ]
+                  },
+                  {
+                    "op": "mul",
+                    "operands": [
+                      {
+                        "op": "constant",
+                        "value": 0.45
+                      },
+                      {
+                        "op": "stat",
+                        "stat": "ability_power",
+                        "scope": "total"
+                      }
+                    ]
+                  }
+                ]
+              },
+              "label": "Derivado",
+              "source": "Characters/Heimerdinger/Spells/HeimerdingerRAbility/HeimerdingerR.mSpellCalculations.WUltDamage (16.23.8406595+branch.releases-16-23.content.release)",
+              "damage_type_source": "spell_heimerdingerr_tooltip <magicDamage>"
+            }
+          ]
+        },
+        {
+          "id": "rw_total",
+          "name": "R+W Enjambre de cohetes (total)",
+          "parts": [
+            {
+              "damage_type": "magic",
+              "formula": {
+                "op": "add",
+                "operands": [
+                  {
+                    "op": "by_rank",
+                    "values": [
+                      503,
+                      697.5,
+                      892
+                    ]
+                  },
+                  {
+                    "op": "mul",
+                    "operands": [
+                      {
+                        "op": "constant",
+                        "value": 1.83
+                      },
+                      {
+                        "op": "stat",
+                        "stat": "ability_power",
+                        "scope": "total"
+                      }
+                    ]
+                  }
+                ]
+              },
+              "label": "Derivado",
+              "source": "Characters/Heimerdinger/Spells/HeimerdingerRAbility/HeimerdingerR.mSpellCalculations.WUltTotalDamage (16.23.8406595+branch.releases-16-23.content.release)",
+              "damage_type_source": "spell_heimerdingerr_tooltip <magicDamage>"
+            }
+          ]
+        },
+        {
+          "id": "re_bounce",
+          "name": "R+E Granada relámpago (por bote)",
+          "parts": [
+            {
+              "damage_type": "magic",
+              "formula": {
+                "op": "add",
+                "operands": [
+                  {
+                    "op": "by_rank",
+                    "values": [
+                      100,
+                      200,
+                      300
+                    ]
+                  },
+                  {
+                    "op": "mul",
+                    "operands": [
+                      {
+                        "op": "constant",
+                        "value": 0.6
+                      },
+                      {
+                        "op": "stat",
+                        "stat": "ability_power",
+                        "scope": "total"
+                      }
+                    ]
+                  }
+                ]
+              },
+              "label": "Derivado",
+              "source": "Characters/Heimerdinger/Spells/HeimerdingerRAbility/HeimerdingerR.mSpellCalculations.EUltDamage (16.23.8406595+branch.releases-16-23.content.release)",
+              "damage_type_source": "spell_heimerdingerr_tooltip <magicDamage>"
+            }
+          ]
+        }
+      ],
+      "passive_stats": [],
+      "not_modelled": [
+        "Vida y resistencias de la Torreta ápice (QUltTurretHealth)"
+      ]
+    }
+  }
+}

@@ -1,0 +1,215 @@
+{
+  "schema": "lol-champion-kit/1",
+  "champion": "Thresh",
+  "label": "Derivado",
+  "game_version": "16.23",
+  "content_version": "16.23.8406595+branch.releases-16-23.content.release",
+  "verified_against": {
+    "content_version": "16.23.8406595+branch.releases-16-23.content.release",
+    "bin_sha256": "1a40c12025e241bfa91409fefcb4c79af5f4b89018bde0c98cee33871847e583",
+    "evidence": "odd/tasks/champion-kits-wave-3.md",
+    "result": "Bin del cliente 16.23 convertido con python -m binmodel.batch_kits y compilado con esta especificación curada (CH-01 oleada 3)"
+  },
+  "source": "Árboles de cálculo del bin del cliente (python -m binmodel) y marcado de los tooltips del cliente; estructura de casos curada en research/kits/",
+  "abilities": {
+    "P": {
+      "name": "Condenación",
+      "max_rank": 1,
+      "cases": [],
+      "passive_stats": [],
+      "not_modelled": [],
+      "passive_effects": [
+        {
+          "id": "damnation_armor",
+          "name": "Condenación (Armadura por alma)",
+          "kind": "stat_bonus",
+          "formula": {
+            "op": "constant",
+            "value": 1
+          },
+          "label": "Derivado",
+          "source": "Characters/Thresh/Spells/ThreshPassiveSoulsAbility/ThreshPassiveSouls.DataValues.StatValuePerSoul (16.23.8406595+branch.releases-16-23.content.release)",
+          "stat": "armor",
+          "mode": "flat",
+          "input_name": "souls",
+          "condition": "Armadura permanente por alma recogida (--input souls)"
+        },
+        {
+          "id": "damnation_ap",
+          "name": "Condenación (PH por alma)",
+          "kind": "stat_bonus",
+          "formula": {
+            "op": "constant",
+            "value": 1
+          },
+          "label": "Derivado",
+          "source": "Characters/Thresh/Spells/ThreshPassiveSoulsAbility/ThreshPassiveSouls.DataValues.StatValuePerSoul (16.23.8406595+branch.releases-16-23.content.release)",
+          "stat": "ability_power",
+          "mode": "flat",
+          "input_name": "souls",
+          "condition": "Poder de habilidad permanente por alma recogida (--input souls)"
+        }
+      ]
+    },
+    "Q": {
+      "name": "Sentencia de muerte",
+      "max_rank": 5,
+      "cases": [
+        {
+          "id": "hook",
+          "name": "Impacto de gancho",
+          "parts": [
+            {
+              "damage_type": "magic",
+              "formula": {
+                "op": "add",
+                "operands": [
+                  {
+                    "op": "by_rank",
+                    "values": [
+                      100,
+                      150,
+                      200,
+                      250,
+                      300
+                    ]
+                  },
+                  {
+                    "op": "mul",
+                    "operands": [
+                      {
+                        "op": "constant",
+                        "value": 0.9
+                      },
+                      {
+                        "op": "stat",
+                        "stat": "ability_power",
+                        "scope": "total"
+                      }
+                    ]
+                  }
+                ]
+              },
+              "label": "Derivado",
+              "source": "Characters/Thresh/Spells/ThreshQAbility/ThreshQ.mSpellCalculations.TotalDamage (16.23.8406595+branch.releases-16-23.content.release)",
+              "damage_type_source": "spell_threshq_tooltip <magicDamage>"
+            }
+          ]
+        }
+      ],
+      "passive_stats": [],
+      "not_modelled": [
+        "Aturdimiento de 1,5 s, dos tirones, reactivación para desplazarse y reducción de enfriamiento al acertar"
+      ]
+    },
+    "W": {
+      "name": "Camino oscuro",
+      "max_rank": 5,
+      "cases": [],
+      "passive_stats": [],
+      "not_modelled": [
+        "Farol de desplazamiento aliado y escudo (TotalShield)"
+      ]
+    },
+    "E": {
+      "name": "Despellejar",
+      "max_rank": 5,
+      "cases": [
+        {
+          "id": "flay",
+          "name": "Barrido activo",
+          "parts": [
+            {
+              "damage_type": "magic",
+              "formula": {
+                "op": "add",
+                "operands": [
+                  {
+                    "op": "by_rank",
+                    "values": [
+                      65,
+                      110,
+                      155,
+                      200,
+                      245
+                    ]
+                  },
+                  {
+                    "op": "mul",
+                    "operands": [
+                      {
+                        "op": "constant",
+                        "value": 0.6
+                      },
+                      {
+                        "op": "stat",
+                        "stat": "ability_power",
+                        "scope": "total"
+                      }
+                    ]
+                  }
+                ]
+              },
+              "label": "Derivado",
+              "source": "Characters/Thresh/Spells/ThreshEAbility/ThreshE.mSpellCalculations.TotalDamage (16.23.8406595+branch.releases-16-23.content.release)",
+              "damage_type_source": "spell_threshe_tooltip <magicDamage>"
+            }
+          ]
+        }
+      ],
+      "passive_stats": [],
+      "not_modelled": [
+        "Desplazamiento, ralentización y daño mágico pasivo cargado en ataques básicos por almas + DA"
+      ]
+    },
+    "R": {
+      "name": "La caja",
+      "max_rank": 3,
+      "cases": [
+        {
+          "id": "wall",
+          "name": "Rotura del primer muro",
+          "parts": [
+            {
+              "damage_type": "magic",
+              "formula": {
+                "op": "add",
+                "operands": [
+                  {
+                    "op": "by_rank",
+                    "values": [
+                      200,
+                      350,
+                      500
+                    ]
+                  },
+                  {
+                    "op": "mul",
+                    "operands": [
+                      {
+                        "op": "constant",
+                        "value": 1
+                      },
+                      {
+                        "op": "stat",
+                        "stat": "ability_power",
+                        "scope": "total"
+                      }
+                    ]
+                  }
+                ]
+              },
+              "label": "Derivado",
+              "source": "Characters/Thresh/Spells/ThreshRPentaAbility/ThreshRPenta.mSpellCalculations.TotalDamage (16.23.8406595+branch.releases-16-23.content.release)",
+              "damage_type_source": "spell_threshrpenta_tooltip <magicDamage>"
+            }
+          ]
+        }
+      ],
+      "passive_stats": [],
+      "not_modelled": [
+        "Ralentización del 99 % durante 2 s y muros adicionales sin daño"
+      ]
+    }
+  }
+}

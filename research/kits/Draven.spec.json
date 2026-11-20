@@ -1,0 +1,81 @@
+{
+  "champion": "Draven",
+  "game_version": "16.23",
+  "verified_against": {
+    "content_version": "16.23.8406595+branch.releases-16-23.content.release",
+    "bin_sha256": "2aed9484380d92535186a52b73a19f6ad96c9768b93c4c6a7d98d02f83646db8",
+    "evidence": "odd/tasks/champion-kits-wave-3.md",
+    "result": "Bin del cliente 16.23 convertido con python -m binmodel.batch_kits y compilado con esta especificación curada (CH-01 oleada 3)"
+  },
+  "abilities": {
+    "P": {
+      "name": "League of Draven",
+      "tooltip": "spell_dravenpassive_tooltip",
+      "max_rank": 1,
+      "not_modelled": [
+        "Acumulación de Adoración y oro adicional al matar campeones"
+      ]
+    },
+    "Q": {
+      "name": "Hacha giratoria",
+      "tooltip": "spell_dravenspinning_tooltip",
+      "cases": [
+        {
+          "id": "bonus",
+          "name": "Daño físico adicional por hacha",
+          "parts": [
+            {
+              "calculation": "TotalDamage"
+            }
+          ]
+        }
+      ],
+      "not_modelled": [
+        "Rebote y captura de hachas (hasta 2 activas) y reinicio de W"
+      ]
+    },
+    "W": {
+      "name": "Subidón de adrenalina",
+      "tooltip": "spell_dravenfury_tooltip",
+      "not_modelled": [
+        "Velocidad de movimiento decreciente, velocidad de ataque y efecto fantasmal"
+      ]
+    },
+    "E": {
+      "name": "A un lado",
+      "tooltip": "spell_dravendoubleshot_tooltip",
+      "cases": [
+        {
+          "id": "hit",
+          "name": "Impacto de hachas",
+          "parts": [
+            {
+              "calculation": "TotalDamage"
+            }
+          ]
+        }
+      ],
+      "not_modelled": [
+        "Desplazamiento lateral y ralentización"
+      ]
+    },
+    "R": {
+      "name": "Espiral de muerte",
+      "tooltip": "spell_dravenrcast_tooltip",
+      "cases": [
+        {
+          "id": "hit",
+          "name": "Un pase (ida o vuelta)",
+          "parts": [
+            {
+              "calculation": "RCalculatedDamage"
+            }
+          ]
+        }
+      ],
+      "not_modelled": [
+        "Reducción de daño por unidad atravesada y ejecución con acumulaciones de Adoración (RPassiveTrueDamage)"
+      ]
+    }
+  }
+}

@@ -1,0 +1,81 @@
+{
+  "champion": "Ashe",
+  "game_version": "16.23",
+  "verified_against": {
+    "content_version": "16.23.8406595+branch.releases-16-23.content.release",
+    "bin_sha256": "a8149a3a2027cbb61354c2ff4bd3d0280503724ac422d55a52670c2134b56e37",
+    "evidence": "odd/tasks/champion-kits-wave-3.md",
+    "result": "Bin del cliente 16.23 convertido con python -m binmodel.batch_kits y compilado con esta especificación curada (CH-01 oleada 3)"
+  },
+  "abilities": {
+    "P": {
+      "name": "Tiro congelador",
+      "tooltip": "spell_ashepassive_tooltip",
+      "max_rank": 1,
+      "not_modelled": [
+        "Ralentización al atacar (SlowAmount, EmpoweredSlowAmount) y multiplicador de daño por crítico sobre objetivos congelados (DamageBonus usa critical_strike_damage/bonus)"
+      ]
+    },
+    "Q": {
+      "name": "Concentración máxima",
+      "tooltip": "spell_asheq_tooltip",
+      "cases": [
+        {
+          "id": "flurry",
+          "name": "Ráfaga de 5 flechas (un ataque potenciado)",
+          "parts": [
+            {
+              "calculation": "EmpoweredDamage"
+            }
+          ]
+        }
+      ],
+      "not_modelled": [
+        "Requisito de 4 acumulaciones de Concentración y velocidad de ataque activa durante 6 s"
+      ]
+    },
+    "W": {
+      "name": "Descarga",
+      "tooltip": "spell_volley_tooltip",
+      "cases": [
+        {
+          "id": "arrow",
+          "name": "Impacto de flecha",
+          "parts": [
+            {
+              "calculation": "TotalDamage"
+            }
+          ]
+        }
+      ],
+      "not_modelled": [
+        "Aplicación de ralentización crítica de Tiro congelador"
+      ]
+    },
+    "E": {
+      "name": "Disparo de halcón",
+      "tooltip": "spell_ashespiritofthehawk_tooltip",
+      "not_modelled": [
+        "Visión global en trayectoria y destino (2 cargas, ChargeCooldown)"
+      ]
+    },
+    "R": {
+      "name": "Flecha de cristal encantada",
+      "tooltip": "spell_enchantedcrystalarrow_tooltip",
+      "cases": [
+        {
+          "id": "impact",
+          "name": "Impacto directo",
+          "parts": [
+            {
+              "calculation": "RMainDamage"
+            }
+          ]
+        }
+      ],
+      "not_modelled": [
+        "Aturdimiento escalado por distancia (hasta 3,5 s) y 50 % de daño en área secundaria"
+      ]
+    }
+  }
+}

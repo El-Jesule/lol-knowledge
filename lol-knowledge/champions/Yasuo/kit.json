@@ -1,0 +1,263 @@
+{
+  "schema": "lol-champion-kit/1",
+  "champion": "Yasuo",
+  "label": "Derivado",
+  "game_version": "16.23",
+  "content_version": "16.23.8406595+branch.releases-16-23.content.release",
+  "verified_against": {
+    "content_version": "16.23.8406595+branch.releases-16-23.content.release",
+    "bin_sha256": "c7f04ae7aacfbb20052209e520356424ab3ec98bcf80cf15c63beff6b500f66b",
+    "evidence": "odd/tasks/champion-kits-wave-3.md",
+    "result": "Bin del cliente 16.23 convertido con python -m binmodel.batch_kits y compilado con esta especificación curada (CH-01 oleada 3)"
+  },
+  "source": "Árboles de cálculo del bin del cliente (python -m binmodel) y marcado de los tooltips del cliente; estructura de casos curada en research/kits/",
+  "abilities": {
+    "P": {
+      "name": "Camino del alma errante",
+      "max_rank": 1,
+      "cases": [],
+      "passive_stats": [],
+      "not_modelled": [
+        "Escudo de Flujo (ShieldValue usa interpolación por progresión), duplicación de probabilidad de crítico, conversión del exceso en DA y modificador de daño crítico"
+      ]
+    },
+    "Q": {
+      "name": "Tempestad de acero",
+      "max_rank": 5,
+      "cases": [
+        {
+          "id": "thrust",
+          "name": "Estocada / torbellino (sin crítico)",
+          "parts": [
+            {
+              "damage_type": "physical",
+              "formula": {
+                "op": "add",
+                "operands": [
+                  {
+                    "op": "by_rank",
+                    "values": [
+                      20,
+                      45,
+                      70,
+                      95,
+                      120
+                    ]
+                  },
+                  {
+                    "op": "mul",
+                    "operands": [
+                      {
+                        "op": "constant",
+                        "value": 1
+                      },
+                      {
+                        "op": "stat",
+                        "stat": "attack_damage",
+                        "scope": "total"
+                      }
+                    ]
+                  }
+                ]
+              },
+              "label": "Derivado",
+              "source": "Characters/Yasuo/Spells/YasuoQ1WrapperAbility/YasuoQ1Wrapper.mSpellCalculations.TotalDamage (16.23.8406595+branch.releases-16-23.content.release)",
+              "damage_type_source": "spell_yasuoq1wrapper_tooltip <physicalDamage>"
+            }
+          ]
+        }
+      ],
+      "passive_stats": [],
+      "not_modelled": [
+        "Golpe crítico de Q (TotalDamageCrit), reducción de enfriamiento/lanzamiento por velocidad de ataque y levantamiento en Q3"
+      ]
+    },
+    "W": {
+      "name": "Muro de viento",
+      "max_rank": 5,
+      "cases": [],
+      "passive_stats": [],
+      "not_modelled": [
+        "Bloqueo de proyectiles enemigos durante 4 s"
+      ]
+    },
+    "E": {
+      "name": "Hoja cortante",
+      "max_rank": 5,
+      "cases": [
+        {
+          "id": "base",
+          "name": "Deslizamiento (0 cargas)",
+          "parts": [
+            {
+              "damage_type": "magic",
+              "formula": {
+                "op": "add",
+                "operands": [
+                  {
+                    "op": "by_rank",
+                    "values": [
+                      70,
+                      85,
+                      100,
+                      115,
+                      130
+                    ]
+                  },
+                  {
+                    "op": "mul",
+                    "operands": [
+                      {
+                        "op": "constant",
+                        "value": 0.2
+                      },
+                      {
+                        "op": "stat",
+                        "stat": "attack_damage",
+                        "scope": "bonus"
+                      }
+                    ]
+                  },
+                  {
+                    "op": "mul",
+                    "operands": [
+                      {
+                        "op": "constant",
+                        "value": 0.6
+                      },
+                      {
+                        "op": "stat",
+                        "stat": "ability_power",
+                        "scope": "total"
+                      }
+                    ]
+                  }
+                ]
+              },
+              "label": "Derivado",
+              "source": "Characters/Yasuo/Spells/YasuoEAbility/YasuoE.mSpellCalculations.TotalDamage (16.23.8406595+branch.releases-16-23.content.release)",
+              "damage_type_source": "spell_yasuoe_tooltip <magicDamage>"
+            }
+          ]
+        },
+        {
+          "id": "per_stack",
+          "name": "Daño adicional por carga (hasta 4)",
+          "parts": [
+            {
+              "damage_type": "magic",
+              "formula": {
+                "op": "mul",
+                "operands": [
+                  {
+                    "op": "add",
+                    "operands": [
+                      {
+                        "op": "by_rank",
+                        "values": [
+                          70,
+                          85,
+                          100,
+                          115,
+                          130
+                        ]
+                      },
+                      {
+                        "op": "mul",
+                        "operands": [
+                          {
+                            "op": "constant",
+                            "value": 0.2
+                          },
+                          {
+                            "op": "stat",
+                            "stat": "attack_damage",
+                            "scope": "bonus"
+                          }
+                        ]
+                      },
+                      {
+                        "op": "mul",
+                        "operands": [
+                          {
+                            "op": "constant",
+                            "value": 0.6
+                          },
+                          {
+                            "op": "stat",
+                            "stat": "ability_power",
+                            "scope": "total"
+                          }
+                        ]
+                      }
+                    ]
+                  },
+                  {
+                    "op": "constant",
+                    "value": 0.25
+                  }
+                ]
+              },
+              "label": "Derivado",
+              "source": "Characters/Yasuo/Spells/YasuoEAbility/YasuoE.mSpellCalculations.BonusDamagePerStack (16.23.8406595+branch.releases-16-23.content.release)",
+              "damage_type_source": "spell_yasuoe_tooltip <magicDamage>"
+            }
+          ]
+        }
+      ],
+      "passive_stats": [],
+      "not_modelled": [
+        "Enfriamiento por objetivo y combo circular E+Q"
+      ]
+    },
+    "R": {
+      "name": "Último aliento",
+      "max_rank": 3,
+      "cases": [
+        {
+          "id": "slash",
+          "name": "Corte aéreo",
+          "parts": [
+            {
+              "damage_type": "physical",
+              "formula": {
+                "op": "add",
+                "operands": [
+                  {
+                    "op": "by_rank",
+                    "values": [
+                      200,
+                      350,
+                      500
+                    ]
+                  },
+                  {
+                    "op": "mul",
+                    "operands": [
+                      {
+                        "op": "constant",
+                        "value": 1.5
+                      },
+                      {
+                        "op": "stat",
+                        "stat": "attack_damage",
+                        "scope": "bonus"
+                      }
+                    ]
+                  }
+                ]
+              },
+              "label": "Derivado",
+              "source": "Characters/Yasuo/Spells/YasuoRAbility/YasuoR.mSpellCalculations.Damage (16.23.8406595+branch.releases-16-23.content.release)",
+              "damage_type_source": "spell_yasuor_tooltip <physicalDamage>"
+            }
+          ]
+        }
+      ],
+      "passive_stats": [],
+      "not_modelled": [
+        "Extensión de suspensión aérea, recarga completa de Flujo y 60 % de penetración de armadura adicional en críticos durante 15 s (RPercentArmorPen)"
+      ]
+    }
+  }
+}

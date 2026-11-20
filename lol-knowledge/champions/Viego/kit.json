@@ -1,0 +1,308 @@
+{
+  "schema": "lol-champion-kit/1",
+  "champion": "Viego",
+  "label": "Derivado",
+  "game_version": "16.23",
+  "content_version": "16.23.8406595+branch.releases-16-23.content.release",
+  "verified_against": {
+    "content_version": "16.23.8406595+branch.releases-16-23.content.release",
+    "bin_sha256": "4a454661a326aa864eb02e734a52e4c8fa12a2eab591e6e63bf99e196bdf3a5b",
+    "evidence": "odd/tasks/champion-kits-wave-3.md",
+    "result": "Bin del cliente 16.23 convertido con python -m binmodel.batch_kits y compilado con esta especificación curada (CH-01 oleada 3)"
+  },
+  "source": "Árboles de cálculo del bin del cliente (python -m binmodel) y marcado de los tooltips del cliente; estructura de casos curada en research/kits/",
+  "abilities": {
+    "P": {
+      "name": "Dominación soberana",
+      "max_rank": 1,
+      "cases": [],
+      "passive_stats": [],
+      "not_modelled": [
+        "Posesión de campeones enemigos caídos y curación al poseer (PercentHealthHeal)"
+      ]
+    },
+    "Q": {
+      "name": "Hoja del rey arruinado",
+      "max_rank": 5,
+      "cases": [
+        {
+          "id": "thrust",
+          "name": "Estocada activa",
+          "parts": [
+            {
+              "damage_type": "physical",
+              "formula": {
+                "op": "add",
+                "operands": [
+                  {
+                    "op": "by_rank",
+                    "values": [
+                      25,
+                      40,
+                      55,
+                      70,
+                      85
+                    ]
+                  },
+                  {
+                    "op": "mul",
+                    "operands": [
+                      {
+                        "op": "constant",
+                        "value": 0.7
+                      },
+                      {
+                        "op": "stat",
+                        "stat": "attack_damage",
+                        "scope": "total"
+                      }
+                    ]
+                  }
+                ]
+              },
+              "label": "Derivado",
+              "source": "Characters/Viego/Spells/ViegoQAbility/ViegoQ.mSpellCalculations.TotalDamage (16.23.8406595+branch.releases-16-23.content.release)",
+              "damage_type_source": "spell_viegoq_tooltip <physicalDamage>"
+            }
+          ]
+        },
+        {
+          "id": "double_strike",
+          "name": "Segundo golpe de marca",
+          "parts": [
+            {
+              "damage_type": "physical",
+              "formula": {
+                "op": "add",
+                "operands": [
+                  {
+                    "op": "mul",
+                    "operands": [
+                      {
+                        "op": "constant",
+                        "value": 0.2
+                      },
+                      {
+                        "op": "stat",
+                        "stat": "attack_damage",
+                        "scope": "total"
+                      }
+                    ]
+                  },
+                  {
+                    "op": "mul",
+                    "operands": [
+                      {
+                        "op": "constant",
+                        "value": 0.15
+                      },
+                      {
+                        "op": "stat",
+                        "stat": "ability_power",
+                        "scope": "total"
+                      }
+                    ]
+                  }
+                ]
+              },
+              "label": "Derivado",
+              "source": "Characters/Viego/Spells/ViegoQAbility/ViegoQ.mSpellCalculations.SecondAttackDamage (16.23.8406595+branch.releases-16-23.content.release)",
+              "damage_type_source": "spell_viegoq_tooltip <physicalDamage>"
+            }
+          ]
+        },
+        {
+          "id": "on_hit",
+          "name": "Pasiva al impactar (% vida actual)",
+          "parts": [
+            {
+              "damage_type": "physical",
+              "formula": {
+                "op": "mul",
+                "operands": [
+                  {
+                    "op": "by_rank",
+                    "values": [
+                      2,
+                      3,
+                      4,
+                      5,
+                      6
+                    ]
+                  },
+                  {
+                    "op": "constant",
+                    "value": 0.01
+                  },
+                  {
+                    "op": "stat",
+                    "stat": "health",
+                    "scope": "current",
+                    "subject": "target"
+                  }
+                ]
+              },
+              "label": "Derivado",
+              "source": "Characters/Viego/Spells/ViegoQAbility/ViegoQ · mSpellCalculations.TotalPercentHealthOnHit % × vida actual del objetivo (16.23.8406595+branch.releases-16-23.content.release)",
+              "damage_type_source": "spell_viegoq_tooltip <physicalDamage>"
+            }
+          ]
+        }
+      ],
+      "passive_stats": [],
+      "not_modelled": [
+        "Escalado con probabilidad de crítico (HealthCritDamage) y curación del segundo golpe"
+      ]
+    },
+    "W": {
+      "name": "Fauces espectrales",
+      "max_rank": 5,
+      "cases": [
+        {
+          "id": "blast",
+          "name": "Descarga de niebla",
+          "parts": [
+            {
+              "damage_type": "magic",
+              "formula": {
+                "op": "add",
+                "operands": [
+                  {
+                    "op": "by_rank",
+                    "values": [
+                      80,
+                      135,
+                      190,
+                      245,
+                      300
+                    ]
+                  },
+                  {
+                    "op": "mul",
+                    "operands": [
+                      {
+                        "op": "constant",
+                        "value": 1
+                      },
+                      {
+                        "op": "stat",
+                        "stat": "ability_power",
+                        "scope": "total"
+                      }
+                    ]
+                  }
+                ]
+              },
+              "label": "Derivado",
+              "source": "Characters/Viego/Spells/ViegoWAbility/ViegoW.mSpellCalculations.TotalDamage (16.23.8406595+branch.releases-16-23.content.release)",
+              "damage_type_source": "spell_viegow_tooltip <magicDamage>"
+            }
+          ]
+        }
+      ],
+      "passive_stats": [],
+      "not_modelled": [
+        "Aturdimiento escalado con carga y deslizamiento"
+      ]
+    },
+    "E": {
+      "name": "Camino del tormento",
+      "max_rank": 5,
+      "cases": [],
+      "passive_stats": [],
+      "not_modelled": [
+        "Camuflaje en la Niebla, velocidad de movimiento (TotalMoveSpeed) y velocidad de ataque"
+      ]
+    },
+    "R": {
+      "name": "Rompecorazones",
+      "max_rank": 3,
+      "cases": [
+        {
+          "id": "strike",
+          "name": "Impacto principal (DA + % vida faltante)",
+          "parts": [
+            {
+              "damage_type": "physical",
+              "formula": {
+                "op": "mul",
+                "operands": [
+                  {
+                    "op": "constant",
+                    "value": 1.2
+                  },
+                  {
+                    "op": "stat",
+                    "stat": "attack_damage",
+                    "scope": "total"
+                  }
+                ]
+              },
+              "label": "Derivado",
+              "source": "Characters/Viego/Spells/ViegoRAbility/ViegoR.mSpellCalculations.TotalDamage (16.23.8406595+branch.releases-16-23.content.release)",
+              "damage_type_source": "spell_viegor_tooltip <physicalDamage>"
+            },
+            {
+              "damage_type": "physical",
+              "formula": {
+                "op": "mul",
+                "operands": [
+                  {
+                    "op": "add",
+                    "operands": [
+                      {
+                        "op": "by_rank",
+                        "values": [
+                          12,
+                          16,
+                          20
+                        ]
+                      },
+                      {
+                        "op": "mul",
+                        "operands": [
+                          {
+                            "op": "constant",
+                            "value": 0.05
+                          },
+                          {
+                            "op": "stat",
+                            "stat": "attack_damage",
+                            "scope": "bonus"
+                          }
+                        ]
+                      }
+                    ]
+                  },
+                  {
+                    "op": "constant",
+                    "value": 0.01
+                  },
+                  {
+                    "op": "stat",
+                    "stat": "health",
+                    "scope": "max",
+                    "subject": "target"
+                  },
+                  {
+                    "op": "stat",
+                    "stat": "health",
+                    "scope": "missing_fraction",
+                    "subject": "target"
+                  }
+                ]
+              },
+              "label": "Derivado",
+              "source": "Characters/Viego/Spells/ViegoRAbility/ViegoR · mSpellCalculations.TotalPercentHealth % × vida faltante del objetivo (16.23.8406595+branch.releases-16-23.content.release)",
+              "damage_type_source": "spell_viegor_tooltip <physicalDamage>"
+            }
+          ]
+        }
+      ],
+      "passive_stats": [],
+      "not_modelled": [
+        "Ralentización del 99 % durante 0,25 s, empuje a objetivos secundarios y escalado crítico"
+      ]
+    }
+  }
+}

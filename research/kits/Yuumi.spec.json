@@ -1,0 +1,88 @@
+{
+  "champion": "Yuumi",
+  "game_version": "16.23",
+  "verified_against": {
+    "content_version": "16.23.8406595+branch.releases-16-23.content.release",
+    "bin_sha256": "c373a7cb11a699a057649ff7a521178a821657e4d42dce6aadc2b2310bf67cf4",
+    "evidence": "odd/tasks/champion-kits-wave-3.md",
+    "result": "Bin del cliente 16.23 convertido con python -m binmodel.batch_kits y compilado con esta especificación curada (CH-01 oleada 3)"
+  },
+  "abilities": {
+    "P": {
+      "name": "Amistad felina",
+      "tooltip": "spell_yuumipassive_tooltip",
+      "max_rank": 1,
+      "not_modelled": [
+        "Curación periódica al golpear campeones (HealAmount, PassiveCooldown)"
+      ]
+    },
+    "Q": {
+      "name": "Misil acechador",
+      "tooltip": "spell_yuumimagicmissile_tooltip",
+      "cases": [
+        {
+          "id": "normal",
+          "name": "Misil sin potenciar",
+          "parts": [
+            {
+              "calculation": "TotalMissileDamage"
+            }
+          ]
+        },
+        {
+          "id": "empowered",
+          "name": "Misil potenciado (vinculada)",
+          "parts": [
+            {
+              "calculation": "TotalMissileDamageEmpowered"
+            }
+          ]
+        },
+        {
+          "id": "ally_on_hit",
+          "name": "Daño mágico al impactar otorgado al aliado",
+          "parts": [
+            {
+              "calculation": "OnHitDamageCalc"
+            }
+          ]
+        }
+      ],
+      "not_modelled": [
+        "Ralentización y aumento con probabilidad de crítico del aliado vinculado"
+      ]
+    },
+    "W": {
+      "name": "¡Yupi!",
+      "tooltip": "spell_yuumihugcast_tooltip",
+      "not_modelled": [
+        "Vinculación a aliado, poder de curación/escudo adicional con Mejor Amigo y curación al impactar (HealthOnHit)"
+      ]
+    },
+    "E": {
+      "name": "Presteza gatuna",
+      "tooltip": "spell_yuumispellshield_tooltip",
+      "not_modelled": [
+        "Escudo (TotalShielding), velocidad de ataque (TotalAttackSpeed), velocidad de movimiento y restauración de maná (ManaRestore)"
+      ]
+    },
+    "R": {
+      "name": "Capítulo final",
+      "tooltip": "spell_yuumir_tooltip",
+      "cases": [
+        {
+          "id": "wave",
+          "name": "Una oleada",
+          "parts": [
+            {
+              "calculation": "TotalMissileDamage"
+            }
+          ]
+        }
+      ],
+      "not_modelled": [
+        "5 oleadas con reducción en impactos múltiples (TotalSingleTargetDamage, MultiMissileTotal), ralentización y curación a aliados"
+      ]
+    }
+  }
+}

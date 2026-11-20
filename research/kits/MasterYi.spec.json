@@ -1,0 +1,99 @@
+{
+  "champion": "MasterYi",
+  "game_version": "16.23",
+  "verified_against": {
+    "content_version": "16.23.8406595+branch.releases-16-23.content.release",
+    "bin_sha256": "648253b4c2c55983c397834584c924498a4530269777b092c3bdb10f72e264d6",
+    "evidence": "odd/tasks/champion-kits-wave-3.md",
+    "result": "Bin del cliente 16.23 convertido con python -m binmodel.batch_kits y compilado con esta especificación curada (CH-01 oleada 3)"
+  },
+  "abilities": {
+    "P": {
+      "name": "Golpe doble",
+      "tooltip": "passive_masteryipassive_tooltip",
+      "max_rank": 1,
+      "cases": [
+        {
+          "id": "second_strike",
+          "name": "Segundo golpe adicional (50 % DA)",
+          "parts": [
+            {
+              "calculation": "TotalDamage"
+            }
+          ]
+        }
+      ],
+      "not_modelled": [
+        "Disparo cada 4 ataques y aplicación de efectos de impacto en el segundo golpe"
+      ]
+    },
+    "Q": {
+      "name": "Golpe fulgurante",
+      "tooltip": "spell_alphastrike_tooltip",
+      "cases": [
+        {
+          "id": "first_hit",
+          "name": "Primer impacto",
+          "parts": [
+            {
+              "calculation": "TotalDamage"
+            }
+          ]
+        },
+        {
+          "id": "subsequent",
+          "name": "Cada impacto adicional al mismo objetivo",
+          "parts": [
+            {
+              "calculation": "SubesquentDamage"
+            }
+          ]
+        },
+        {
+          "id": "single_target",
+          "name": "Objetivo aislado (4 impactos sin crítico)",
+          "parts": [
+            {
+              "calculation": "SingleTotalDamage"
+            }
+          ]
+        }
+      ],
+      "not_modelled": [
+        "Inalcanzabilidad, daño crítico adicional (CritBonus, SingleCritTotalDamage) y efectos de impacto"
+      ]
+    },
+    "W": {
+      "name": "Meditar",
+      "tooltip": "spell_meditate_tooltip",
+      "not_modelled": [
+        "Canalización de curación (TotalHeal) y reducción de daño (InitialDR)"
+      ]
+    },
+    "E": {
+      "name": "Estilo Wuju",
+      "tooltip": "spell_wujustyle_tooltip",
+      "cases": [
+        {
+          "id": "on_hit",
+          "name": "Daño verdadero al impactar",
+          "parts": [
+            {
+              "calculation": "TotalDamage"
+            }
+          ]
+        }
+      ],
+      "not_modelled": [
+        "Duración activa de 5 s"
+      ]
+    },
+    "R": {
+      "name": "Imparable",
+      "tooltip": "spell_highlander_tooltip",
+      "not_modelled": [
+        "Inmunidad a ralentizaciones, velocidad de movimiento/ataque, reducción de enfriamientos por bajas y extensión de duración"
+      ]
+    }
+  }
+}

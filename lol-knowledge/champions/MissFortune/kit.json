@@ -1,0 +1,375 @@
+{
+  "schema": "lol-champion-kit/1",
+  "champion": "MissFortune",
+  "label": "Derivado",
+  "game_version": "16.23",
+  "content_version": "16.23.8406595+branch.releases-16-23.content.release",
+  "verified_against": {
+    "content_version": "16.23.8406595+branch.releases-16-23.content.release",
+    "bin_sha256": "a9f7c7fb2d16ab34e431d2e99df7a588ee75dbfc74e4d462cacd1a271935ab8d",
+    "evidence": "odd/tasks/champion-kits-wave-3.md",
+    "result": "Bin del cliente 16.23 convertido con python -m binmodel.batch_kits y compilado con esta especificación curada (CH-01 oleada 3)"
+  },
+  "source": "Árboles de cálculo del bin del cliente (python -m binmodel) y marcado de los tooltips del cliente; estructura de casos curada en research/kits/",
+  "abilities": {
+    "P": {
+      "name": "Cachete",
+      "max_rank": 1,
+      "cases": [
+        {
+          "id": "proc",
+          "name": "Daño físico adicional al cambiar de objetivo",
+          "parts": [
+            {
+              "damage_type": "physical",
+              "formula": {
+                "op": "mul",
+                "operands": [
+                  {
+                    "op": "by_level",
+                    "values": [
+                      0.5,
+                      0.5,
+                      0.5,
+                      0.6,
+                      0.6,
+                      0.6,
+                      0.7,
+                      0.7,
+                      0.8,
+                      0.8,
+                      0.9,
+                      0.9,
+                      1,
+                      1,
+                      1,
+                      1,
+                      1,
+                      1
+                    ]
+                  },
+                  {
+                    "op": "stat",
+                    "stat": "attack_damage",
+                    "scope": "total"
+                  }
+                ]
+              },
+              "label": "Derivado",
+              "source": "Characters/MissFortune/Spells/MissFortunePassiveAbility/MissFortunePassive.mSpellCalculations.TotalDamage (16.23.8406595+branch.releases-16-23.content.release)",
+              "damage_type_source": "spell_missfortunepassive_tooltip <physicalDamage>"
+            }
+          ]
+        }
+      ],
+      "passive_stats": [],
+      "not_modelled": [
+        "Daño reducido al 50 % contra súbditos (MinionDamage)"
+      ]
+    },
+    "Q": {
+      "name": "Redoble",
+      "max_rank": 5,
+      "cases": [
+        {
+          "id": "shot",
+          "name": "Disparo (primer o segundo objetivo sin crítico)",
+          "parts": [
+            {
+              "damage_type": "physical",
+              "formula": {
+                "op": "add",
+                "operands": [
+                  {
+                    "op": "by_rank",
+                    "values": [
+                      20,
+                      45,
+                      70,
+                      95,
+                      120
+                    ]
+                  },
+                  {
+                    "op": "mul",
+                    "operands": [
+                      {
+                        "op": "constant",
+                        "value": 1
+                      },
+                      {
+                        "op": "stat",
+                        "stat": "attack_damage",
+                        "scope": "total"
+                      }
+                    ]
+                  },
+                  {
+                    "op": "mul",
+                    "operands": [
+                      {
+                        "op": "constant",
+                        "value": 0.35
+                      },
+                      {
+                        "op": "stat",
+                        "stat": "ability_power",
+                        "scope": "total"
+                      }
+                    ]
+                  }
+                ]
+              },
+              "label": "Derivado",
+              "source": "Characters/MissFortune/Spells/MissFortuneRicochetShotAbility/MissFortuneRicochetShot.mSpellCalculations.TotalDamageTooltip (16.23.8406595+branch.releases-16-23.content.release)",
+              "damage_type_source": "spell_missfortuneq_tooltip <physicalDamage>"
+            }
+          ]
+        }
+      ],
+      "passive_stats": [],
+      "not_modelled": [
+        "Crítico garantizado del segundo rebote si el primer objetivo muere"
+      ]
+    },
+    "W": {
+      "name": "Alarde",
+      "max_rank": 5,
+      "cases": [],
+      "passive_stats": [],
+      "not_modelled": [
+        "Velocidad de movimiento pasiva fuera de combate, velocidad de ataque activa y reducción de enfriamiento con Cachete (LoveTapRefund)"
+      ]
+    },
+    "E": {
+      "name": "Que llueva",
+      "max_rank": 5,
+      "cases": [
+        {
+          "id": "dps",
+          "name": "Daño por segundo",
+          "parts": [
+            {
+              "damage_type": "magic",
+              "formula": {
+                "op": "add",
+                "operands": [
+                  {
+                    "op": "by_rank",
+                    "values": [
+                      45,
+                      60,
+                      75,
+                      90,
+                      105
+                    ]
+                  },
+                  {
+                    "op": "mul",
+                    "operands": [
+                      {
+                        "op": "constant",
+                        "value": 0.6
+                      },
+                      {
+                        "op": "stat",
+                        "stat": "ability_power",
+                        "scope": "total"
+                      }
+                    ]
+                  }
+                ]
+              },
+              "label": "Derivado",
+              "source": "Characters/MissFortune/Spells/MissFortuneScattershotAbility/MissFortuneScattershot.mSpellCalculations.TotalDamagePerSecond (16.23.8406595+branch.releases-16-23.content.release)",
+              "damage_type_source": "spell_missfortunee_tooltip <magicDamage>"
+            }
+          ]
+        },
+        {
+          "id": "total",
+          "name": "Duración completa (2 s)",
+          "parts": [
+            {
+              "damage_type": "magic",
+              "formula": {
+                "op": "mul",
+                "operands": [
+                  {
+                    "op": "add",
+                    "operands": [
+                      {
+                        "op": "by_rank",
+                        "values": [
+                          45,
+                          60,
+                          75,
+                          90,
+                          105
+                        ]
+                      },
+                      {
+                        "op": "mul",
+                        "operands": [
+                          {
+                            "op": "constant",
+                            "value": 0.6
+                          },
+                          {
+                            "op": "stat",
+                            "stat": "ability_power",
+                            "scope": "total"
+                          }
+                        ]
+                      }
+                    ]
+                  },
+                  {
+                    "op": "constant",
+                    "value": 2
+                  }
+                ]
+              },
+              "label": "Derivado",
+              "source": "Characters/MissFortune/Spells/MissFortuneScattershotAbility/MissFortuneScattershot.mSpellCalculations.TotalDamage (16.23.8406595+branch.releases-16-23.content.release)",
+              "damage_type_source": "spell_missfortunee_tooltip <magicDamage>"
+            }
+          ]
+        }
+      ],
+      "passive_stats": [],
+      "not_modelled": [
+        "Ralentización en área (TotalSlowAmount)"
+      ]
+    },
+    "R": {
+      "name": "Lluvia de balas",
+      "max_rank": 3,
+      "cases": [
+        {
+          "id": "per_wave",
+          "name": "Una oleada (sin crítico)",
+          "parts": [
+            {
+              "damage_type": "physical",
+              "formula": {
+                "op": "add",
+                "operands": [
+                  {
+                    "op": "by_rank",
+                    "values": [
+                      20,
+                      30,
+                      40
+                    ]
+                  },
+                  {
+                    "op": "mul",
+                    "operands": [
+                      {
+                        "op": "constant",
+                        "value": 0.6
+                      },
+                      {
+                        "op": "stat",
+                        "stat": "attack_damage",
+                        "scope": "total"
+                      }
+                    ]
+                  },
+                  {
+                    "op": "mul",
+                    "operands": [
+                      {
+                        "op": "constant",
+                        "value": 0.25
+                      },
+                      {
+                        "op": "stat",
+                        "stat": "ability_power",
+                        "scope": "total"
+                      }
+                    ]
+                  }
+                ]
+              },
+              "label": "Derivado",
+              "source": "Characters/MissFortune/Spells/MissFortuneBulletTimeAbility/MissFortuneBulletTime.mSpellCalculations.PhysicalDamagePerWave (16.23.8406595+branch.releases-16-23.content.release)",
+              "damage_type_source": "spell_missfortuner_tooltip <physicalDamage>"
+            }
+          ]
+        },
+        {
+          "id": "total",
+          "name": "Canalización completa (14/16/18 oleadas, sin crítico)",
+          "parts": [
+            {
+              "damage_type": "physical",
+              "formula": {
+                "op": "mul",
+                "operands": [
+                  {
+                    "op": "add",
+                    "operands": [
+                      {
+                        "op": "by_rank",
+                        "values": [
+                          20,
+                          30,
+                          40
+                        ]
+                      },
+                      {
+                        "op": "mul",
+                        "operands": [
+                          {
+                            "op": "constant",
+                            "value": 0.6
+                          },
+                          {
+                            "op": "stat",
+                            "stat": "attack_damage",
+                            "scope": "total"
+                          }
+                        ]
+                      },
+                      {
+                        "op": "mul",
+                        "operands": [
+                          {
+                            "op": "constant",
+                            "value": 0.25
+                          },
+                          {
+                            "op": "stat",
+                            "stat": "ability_power",
+                            "scope": "total"
+                          }
+                        ]
+                      }
+                    ]
+                  },
+                  {
+                    "op": "by_rank",
+                    "values": [
+                      14,
+                      16,
+                      18
+                    ]
+                  }
+                ]
+              },
+              "label": "Derivado",
+              "source": "Characters/MissFortune/Spells/MissFortuneBulletTimeAbility/MissFortuneBulletTime.mSpellCalculations.TotalPhysicalDamage (16.23.8406595+branch.releases-16-23.content.release)",
+              "damage_type_source": "spell_missfortuner_tooltip <physicalDamage>"
+            }
+          ]
+        }
+      ],
+      "passive_stats": [],
+      "not_modelled": [
+        "Posibilidad de golpe crítico por oleada (CritDamagePerWave)"
+      ]
+    }
+  }
+}

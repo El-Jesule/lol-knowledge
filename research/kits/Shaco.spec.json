@@ -1,0 +1,157 @@
+{
+  "champion": "Shaco",
+  "game_version": "16.23",
+  "verified_against": {
+    "content_version": "16.23.8406595+branch.releases-16-23.content.release",
+    "bin_sha256": "3ed5a5ffe1637c90ee1340e24976b768495fec7a6ac205f568a8a127d8d4a7d3",
+    "evidence": "odd/tasks/champion-kits-wave-3.md",
+    "result": "Bin del cliente 16.23 convertido con python -m binmodel.batch_kits y compilado con esta especificación curada (CH-01 oleada 3)"
+  },
+  "abilities": {
+    "P": {
+      "name": "Puñalada por la espalda",
+      "tooltip": "spell_shacopassive_tooltip",
+      "max_rank": 1,
+      "cases": [
+        {
+          "id": "backstab_aa",
+          "name": "Ataque por la espalda (adicional)",
+          "parts": [
+            {
+              "calculation": "BasicAttackDamage"
+            }
+          ]
+        },
+        {
+          "id": "backstab_e",
+          "name": "E por la espalda (adicional)",
+          "parts": [
+            {
+              "calculation": "ShivDamage"
+            }
+          ]
+        },
+        {
+          "id": "backstab_e_execute",
+          "name": "E por la espalda (<30 % vida, adicional)",
+          "parts": [
+            {
+              "calculation": "ShivDamageExecute"
+            }
+          ]
+        }
+      ],
+      "not_modelled": [
+        "Multiplicador de daño crítico modificado en Q por la espalda"
+      ]
+    },
+    "Q": {
+      "name": "Engañar",
+      "tooltip": "spell_shacoq_tooltip",
+      "cases": [
+        {
+          "id": "hit",
+          "name": "Daño físico adicional del ataque",
+          "parts": [
+            {
+              "calculation": "TotalDamage"
+            }
+          ]
+        }
+      ],
+      "not_modelled": [
+        "Invisibilidad, destello y crítico garantizado por la espalda (QCritDamageMod)"
+      ]
+    },
+    "W": {
+      "name": "Caja sorpresa",
+      "tooltip": "spell_jackinthebox_tooltip",
+      "cases": [
+        {
+          "id": "single",
+          "name": "Disparo a objetivo único",
+          "parts": [
+            {
+              "calculation": "STDamage"
+            }
+          ]
+        },
+        {
+          "id": "aoe",
+          "name": "Disparo en área (múltiples objetivos)",
+          "parts": [
+            {
+              "calculation": "AoEDamage"
+            }
+          ]
+        }
+      ],
+      "not_modelled": [
+        "Miedo en área, daño adicional a monstruos (MonsterBonusDamage) y duración de trampa (TrapDuration)"
+      ]
+    },
+    "E": {
+      "name": "Veneno de doble filo",
+      "tooltip": "spell_twoshivpoison_tooltip",
+      "cases": [
+        {
+          "id": "normal",
+          "name": "Lanzamiento normal",
+          "parts": [
+            {
+              "calculation": "TotalDamage"
+            }
+          ]
+        },
+        {
+          "id": "execute",
+          "name": "Objetivo <30 % vida (+50 %)",
+          "parts": [
+            {
+              "calculation": "TotalExecuteDamage"
+            }
+          ]
+        }
+      ],
+      "not_modelled": [
+        "Ralentización pasiva al atacar y ralentización activa"
+      ]
+    },
+    "R": {
+      "name": "Alucinación",
+      "tooltip": "spell_hallucinatefull_tooltip",
+      "cases": [
+        {
+          "id": "explosion",
+          "name": "Explosión del clon",
+          "parts": [
+            {
+              "calculation": "ExplosionTotalDamage"
+            }
+          ]
+        },
+        {
+          "id": "box_single",
+          "name": "Mini-caja (objetivo único)",
+          "parts": [
+            {
+              "calculation": "STDamage"
+            }
+          ]
+        },
+        {
+          "id": "box_aoe",
+          "name": "Mini-caja (área)",
+          "parts": [
+            {
+              "calculation": "AoEDamage"
+            }
+          ]
+        }
+      ],
+      "not_modelled": [
+        "Ataques del clon (60 % del daño) y miedo de las 3 mini-cajas"
+      ]
+    }
+  }
+}

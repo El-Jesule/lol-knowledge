@@ -1,0 +1,348 @@
+{
+  "schema": "lol-champion-kit/1",
+  "champion": "KSante",
+  "label": "Derivado",
+  "game_version": "16.23",
+  "content_version": "16.23.8406595+branch.releases-16-23.content.release",
+  "verified_against": {
+    "content_version": "16.23.8406595+branch.releases-16-23.content.release",
+    "bin_sha256": "828c71f9666ec6b6c9e46bb318463d5efe62416f8f42f79565b5bef8a1c44935",
+    "evidence": "odd/tasks/champion-kits-wave-3.md",
+    "result": "Bin del cliente 16.23 convertido con python -m binmodel.batch_kits y compilado con esta especificación curada (CH-01 oleada 3)"
+  },
+  "source": "Árboles de cálculo del bin del cliente (python -m binmodel) y marcado de los tooltips del cliente; estructura de casos curada en research/kits/",
+  "abilities": {
+    "P": {
+      "name": "Instinto intrépido",
+      "max_rank": 1,
+      "cases": [
+        {
+          "id": "mark",
+          "name": "Detonación de marca (base + % vida máxima)",
+          "parts": [
+            {
+              "damage_type": "physical",
+              "formula": {
+                "op": "add",
+                "operands": [
+                  {
+                    "op": "constant",
+                    "value": 12
+                  },
+                  {
+                    "op": "mul",
+                    "operands": [
+                      {
+                        "op": "linear_by_level",
+                        "min": 0.01,
+                        "max": 0.02
+                      },
+                      {
+                        "op": "stat",
+                        "stat": "health",
+                        "scope": "max",
+                        "subject": "target"
+                      }
+                    ]
+                  }
+                ]
+              },
+              "label": "Derivado",
+              "source": "Characters/KSante/Spells/KSantePAbility/KSanteP · DataValues.FlatDamage + mSpellCalculations.PercentHealthDamage × vida máxima del objetivo (16.23.8406595+branch.releases-16-23.content.release)",
+              "damage_type_source": "spell_ksantep_tooltip <physicalDamage>"
+            }
+          ]
+        }
+      ],
+      "passive_stats": [],
+      "not_modelled": [
+        "Conversión a daño verdadero y daño adicional en forma Órdago (MaxHealthDamagePercent)"
+      ]
+    },
+    "Q": {
+      "name": "Golpes de ntofo",
+      "max_rank": 5,
+      "cases": [
+        {
+          "id": "hit",
+          "name": "Impacto de ntofo",
+          "parts": [
+            {
+              "damage_type": "physical",
+              "formula": {
+                "op": "add",
+                "operands": [
+                  {
+                    "op": "by_rank",
+                    "values": [
+                      70,
+                      100,
+                      130,
+                      160,
+                      190
+                    ]
+                  },
+                  {
+                    "op": "mul",
+                    "operands": [
+                      {
+                        "op": "constant",
+                        "value": 0.4
+                      },
+                      {
+                        "op": "stat",
+                        "stat": "armor",
+                        "scope": "bonus"
+                      }
+                    ]
+                  },
+                  {
+                    "op": "mul",
+                    "operands": [
+                      {
+                        "op": "constant",
+                        "value": 0.4
+                      },
+                      {
+                        "op": "stat",
+                        "stat": "magic_resist",
+                        "scope": "bonus"
+                      }
+                    ]
+                  }
+                ]
+              },
+              "label": "Derivado",
+              "source": "Characters/KSante/Spells/KSanteQAbility/KSanteQ.mSpellCalculations.BaseDamage (16.23.8406595+branch.releases-16-23.content.release)",
+              "damage_type_source": "spell_ksanteq_tooltip <physicalDamage>"
+            }
+          ]
+        },
+        {
+          "id": "recast",
+          "name": "Tercer golpe / onda de choque (recast)",
+          "parts": [
+            {
+              "damage_type": "physical",
+              "formula": {
+                "op": "add",
+                "operands": [
+                  {
+                    "op": "by_rank",
+                    "values": [
+                      70,
+                      100,
+                      130,
+                      160,
+                      190
+                    ]
+                  },
+                  {
+                    "op": "mul",
+                    "operands": [
+                      {
+                        "op": "constant",
+                        "value": 0.4
+                      },
+                      {
+                        "op": "stat",
+                        "stat": "armor",
+                        "scope": "bonus"
+                      }
+                    ]
+                  },
+                  {
+                    "op": "mul",
+                    "operands": [
+                      {
+                        "op": "constant",
+                        "value": 0.4
+                      },
+                      {
+                        "op": "stat",
+                        "stat": "magic_resist",
+                        "scope": "bonus"
+                      }
+                    ]
+                  }
+                ]
+              },
+              "label": "Derivado",
+              "source": "Characters/KSante/Spells/KSanteQAbility/KSanteQ.mSpellCalculations.BaseDamage (16.23.8406595+branch.releases-16-23.content.release)",
+              "damage_type_source": "spell_ksanteq_tooltip <physicalDamage>"
+            }
+          ],
+          "recast": true
+        }
+      ],
+      "passive_stats": [],
+      "not_modelled": [
+        "Ralentización, atracción en Q3 y reducción de enfriamiento/tiempo de lanzamiento por resistencias"
+      ],
+      "recast_window_seconds": 6
+    },
+    "W": {
+      "name": "Pionero",
+      "max_rank": 5,
+      "cases": [
+        {
+          "id": "charge",
+          "name": "Embestida (base + % vida máxima)",
+          "parts": [
+            {
+              "damage_type": "physical",
+              "formula": {
+                "op": "add",
+                "operands": [
+                  {
+                    "op": "by_rank",
+                    "values": [
+                      45,
+                      85,
+                      125,
+                      165,
+                      205
+                    ]
+                  },
+                  {
+                    "op": "mul",
+                    "operands": [
+                      {
+                        "op": "add",
+                        "operands": [
+                          {
+                            "op": "constant",
+                            "value": 0.08
+                          },
+                          {
+                            "op": "mul",
+                            "operands": [
+                              {
+                                "op": "constant",
+                                "value": 0.0002
+                              },
+                              {
+                                "op": "stat",
+                                "stat": "armor",
+                                "scope": "bonus"
+                              }
+                            ]
+                          },
+                          {
+                            "op": "mul",
+                            "operands": [
+                              {
+                                "op": "constant",
+                                "value": 0.0002
+                              },
+                              {
+                                "op": "stat",
+                                "stat": "magic_resist",
+                                "scope": "bonus"
+                              }
+                            ]
+                          }
+                        ]
+                      },
+                      {
+                        "op": "stat",
+                        "stat": "health",
+                        "scope": "max",
+                        "subject": "target"
+                      }
+                    ]
+                  }
+                ]
+              },
+              "label": "Derivado",
+              "source": "Characters/KSante/Spells/KSanteWAbility/KSanteW · DataValues.BaseDamage + mSpellCalculations.TotalMaxHealthDamage × vida máxima del objetivo (16.23.8406595+branch.releases-16-23.content.release)",
+              "damage_type_source": "spell_ksantew_tooltip <physicalDamage>"
+            }
+          ]
+        }
+      ],
+      "passive_stats": [],
+      "not_modelled": [
+        "Reducción de daño durante la carga (DamageReduction), aturdimiento, daño verdadero extra en Órdago y topes contra súbditos/monstruos"
+      ]
+    },
+    "E": {
+      "name": "Juego de pies",
+      "max_rank": 5,
+      "cases": [],
+      "passive_stats": [],
+      "not_modelled": [
+        "Deslizamiento y escudo propio o a aliado (TotalShield)"
+      ]
+    },
+    "R": {
+      "name": "Órdago",
+      "max_rank": 3,
+      "cases": [
+        {
+          "id": "initial",
+          "name": "Empujón inicial",
+          "parts": [
+            {
+              "damage_type": "physical",
+              "formula": {
+                "op": "by_rank",
+                "values": [
+                  80,
+                  115,
+                  150
+                ]
+              },
+              "label": "Derivado",
+              "source": "Characters/KSante/Spells/KSanteRAbility/KSanteR · DataValues.BaseDamage (16.23.8406595+branch.releases-16-23.content.release)",
+              "damage_type_source": "spell_ksanter_tooltip <physicalDamage>"
+            }
+          ]
+        },
+        {
+          "id": "wall_slam",
+          "name": "Impacto a través de muro",
+          "parts": [
+            {
+              "damage_type": "physical",
+              "formula": {
+                "op": "add",
+                "operands": [
+                  {
+                    "op": "by_rank",
+                    "values": [
+                      80,
+                      115,
+                      150
+                    ]
+                  },
+                  {
+                    "op": "mul",
+                    "operands": [
+                      {
+                        "op": "constant",
+                        "value": 0.05
+                      },
+                      {
+                        "op": "stat",
+                        "stat": "health",
+                        "scope": "bonus"
+                      }
+                    ]
+                  }
+                ]
+              },
+              "label": "Derivado",
+              "source": "Characters/KSante/Spells/KSanteRAbility/KSanteR.mSpellCalculations.TotalDamageSlamDown (16.23.8406595+branch.releases-16-23.content.release)",
+              "damage_type_source": "spell_ksanter_tooltip <physicalDamage>"
+            }
+          ]
+        }
+      ],
+      "passive_stats": [],
+      "not_modelled": [
+        "Transformación Órdago (pérdida de vida/resistencias a cambio de velocidad de ataque, penetración de armadura y omnisucción)"
+      ]
+    }
+  }
+}

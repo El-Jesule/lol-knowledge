@@ -1,0 +1,279 @@
+{
+  "schema": "lol-champion-kit/1",
+  "champion": "Chogath",
+  "label": "Derivado",
+  "game_version": "16.23",
+  "content_version": "16.23.8406595+branch.releases-16-23.content.release",
+  "verified_against": {
+    "content_version": "16.23.8406595+branch.releases-16-23.content.release",
+    "bin_sha256": "4f238a4cd522e77e18654f9d107e4fcfa1adc1c84472659fc218c6b7632b9de3",
+    "evidence": "odd/tasks/champion-kits-wave-3.md",
+    "result": "Bin del cliente 16.23 convertido con python -m binmodel.batch_kits y compilado con esta especificación curada (CH-01 oleada 3)"
+  },
+  "source": "Árboles de cálculo del bin del cliente (python -m binmodel) y marcado de los tooltips del cliente; estructura de casos curada en research/kits/",
+  "abilities": {
+    "P": {
+      "name": "Carnívoro",
+      "max_rank": 1,
+      "cases": [],
+      "passive_stats": [],
+      "not_modelled": [
+        "Curación y restauración de maná al matar unidades (ChogathCarnivoreHeal, ChogathCarnivoreMana)"
+      ]
+    },
+    "Q": {
+      "name": "Ruptura",
+      "max_rank": 5,
+      "cases": [
+        {
+          "id": "hit",
+          "name": "Impacto de púas",
+          "parts": [
+            {
+              "damage_type": "magic",
+              "formula": {
+                "op": "add",
+                "operands": [
+                  {
+                    "op": "by_rank",
+                    "values": [
+                      80,
+                      135,
+                      190,
+                      245,
+                      300
+                    ]
+                  },
+                  {
+                    "op": "mul",
+                    "operands": [
+                      {
+                        "op": "constant",
+                        "value": 1
+                      },
+                      {
+                        "op": "stat",
+                        "stat": "ability_power",
+                        "scope": "total"
+                      }
+                    ]
+                  }
+                ]
+              },
+              "label": "Derivado",
+              "source": "Characters/Chogath/Spells/RuptureAbility/Rupture.mSpellCalculations.TotalDamageTooltip (16.23.8406595+branch.releases-16-23.content.release)",
+              "damage_type_source": "spell_rupture_tooltip <magicDamage>"
+            }
+          ]
+        }
+      ],
+      "passive_stats": [],
+      "not_modelled": [
+        "Lanzamiento por los aires de 1 s y ralentización posterior"
+      ]
+    },
+    "W": {
+      "name": "Grito salvaje",
+      "max_rank": 5,
+      "cases": [],
+      "passive_stats": [],
+      "not_modelled": [
+        "El cálculo de daño de W en el bin usa un nodo EffectValue no traducido por kitgen; silencio en cono"
+      ]
+    },
+    "E": {
+      "name": "Pinchos mortíferos",
+      "max_rank": 5,
+      "cases": [
+        {
+          "id": "spike",
+          "name": "Un pincho (0 cargas de Festín: plano + % vida máxima)",
+          "parts": [
+            {
+              "damage_type": "magic",
+              "formula": {
+                "op": "add",
+                "operands": [
+                  {
+                    "op": "by_rank",
+                    "values": [
+                      30,
+                      50,
+                      70,
+                      90,
+                      110
+                    ]
+                  },
+                  {
+                    "op": "mul",
+                    "operands": [
+                      {
+                        "op": "constant",
+                        "value": 0.3
+                      },
+                      {
+                        "op": "stat",
+                        "stat": "ability_power",
+                        "scope": "total"
+                      }
+                    ]
+                  }
+                ]
+              },
+              "label": "Derivado",
+              "source": "Characters/Chogath/Spells/VorpalSpikesAbility/VorpalSpikes.mSpellCalculations.FlatDamageCalc (16.23.8406595+branch.releases-16-23.content.release)",
+              "damage_type_source": "spell_vorpalspikes_tooltip <magicDamage>"
+            },
+            {
+              "damage_type": "magic",
+              "formula": {
+                "op": "mul",
+                "operands": [
+                  {
+                    "op": "by_rank",
+                    "values": [
+                      2.5,
+                      2.85,
+                      3.2,
+                      3.55,
+                      3.9
+                    ]
+                  },
+                  {
+                    "op": "constant",
+                    "value": 0.01
+                  },
+                  {
+                    "op": "stat",
+                    "stat": "health",
+                    "scope": "max",
+                    "subject": "target"
+                  }
+                ]
+              },
+              "label": "Derivado",
+              "source": "Characters/Chogath/Spells/VorpalSpikesAbility/VorpalSpikes · DataValues.PercentHealthDamage % × vida máxima del objetivo (sin cargas de Festín) (16.23.8406595+branch.releases-16-23.content.release)",
+              "damage_type_source": "spell_vorpalspikes_tooltip <magicDamage>"
+            }
+          ]
+        }
+      ],
+      "passive_stats": [],
+      "not_modelled": [
+        "Escalado adicional de +0,5 % vida máxima por cada carga de Festín (FeastStackMultiplier), ralentización y tope contra monstruos"
+      ]
+    },
+    "R": {
+      "name": "Festín",
+      "max_rank": 3,
+      "cases": [
+        {
+          "id": "champion",
+          "name": "Contra campeones (daño verdadero)",
+          "parts": [
+            {
+              "damage_type": "true",
+              "formula": {
+                "op": "add",
+                "operands": [
+                  {
+                    "op": "by_rank",
+                    "values": [
+                      300,
+                      475,
+                      650
+                    ]
+                  },
+                  {
+                    "op": "mul",
+                    "operands": [
+                      {
+                        "op": "constant",
+                        "value": 0.5
+                      },
+                      {
+                        "op": "stat",
+                        "stat": "ability_power",
+                        "scope": "total"
+                      }
+                    ]
+                  },
+                  {
+                    "op": "mul",
+                    "operands": [
+                      {
+                        "op": "constant",
+                        "value": 0.1
+                      },
+                      {
+                        "op": "stat",
+                        "stat": "health",
+                        "scope": "bonus"
+                      }
+                    ]
+                  }
+                ]
+              },
+              "label": "Derivado",
+              "source": "Characters/Chogath/Spells/FeastAbility/Feast.mSpellCalculations.RDamage (16.23.8406595+branch.releases-16-23.content.release)",
+              "damage_type_source": "spell_feast_tooltip <trueDamage>"
+            }
+          ]
+        },
+        {
+          "id": "monster",
+          "name": "Contra súbditos y monstruos (daño verdadero)",
+          "parts": [
+            {
+              "damage_type": "true",
+              "formula": {
+                "op": "add",
+                "operands": [
+                  {
+                    "op": "constant",
+                    "value": 1200
+                  },
+                  {
+                    "op": "mul",
+                    "operands": [
+                      {
+                        "op": "constant",
+                        "value": 0.5
+                      },
+                      {
+                        "op": "stat",
+                        "stat": "ability_power",
+                        "scope": "total"
+                      }
+                    ]
+                  },
+                  {
+                    "op": "mul",
+                    "operands": [
+                      {
+                        "op": "constant",
+                        "value": 0.1
+                      },
+                      {
+                        "op": "stat",
+                        "stat": "health",
+                        "scope": "bonus"
+                      }
+                    ]
+                  }
+                ]
+              },
+              "label": "Derivado",
+              "source": "Characters/Chogath/Spells/FeastAbility/Feast.mSpellCalculations.RMonsterDamage (16.23.8406595+branch.releases-16-23.content.release)",
+              "damage_type_source": "spell_feast_tooltip <trueDamage>"
+            }
+          ]
+        }
+      ],
+      "passive_stats": [],
+      "not_modelled": [
+        "Vida máxima permanente por carga de Festín (RHealthPerStack: 80/120/160), aumento de tamaño y alcance de ataque/lanzamiento"
+      ]
+    }
+  }
+}

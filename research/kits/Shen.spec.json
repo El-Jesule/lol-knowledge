@@ -1,0 +1,127 @@
+{
+  "champion": "Shen",
+  "game_version": "16.23",
+  "verified_against": {
+    "content_version": "16.23.8406595+branch.releases-16-23.content.release",
+    "bin_sha256": "0ae5a0171a91722b48e12b0d295319721ccb812680f651be42a4877a7faea3af",
+    "evidence": "odd/tasks/champion-kits-wave-3.md",
+    "result": "Bin del cliente 16.23 convertido con python -m binmodel.batch_kits y compilado con esta especificación curada (CH-01 oleada 3)"
+  },
+  "abilities": {
+    "P": {
+      "name": "Barrera ki",
+      "tooltip": "spell_shenpassive_tooltip",
+      "max_rank": 1,
+      "not_modelled": [
+        "Escudo al lanzar habilidades (ShieldValue) y reducción de enfriamiento al afectar campeones"
+      ]
+    },
+    "Q": {
+      "name": "Asalto del crepúsculo",
+      "tooltip": "spell_shenq_tooltip",
+      "cases": [
+        {
+          "id": "base_hit",
+          "name": "Ataque base (plano + % vida máxima)",
+          "parts": [
+            {
+              "calculation": "BaseFlatDamage"
+            },
+            {
+              "tooltip_reference": "BasePercentHealth",
+              "damage_type": "magic",
+              "source_note": "mSpellCalculations.BasePercentHealth % × vida máxima del objetivo",
+              "formula": {
+                "op": "mul",
+                "operands": [
+                  {
+                    "op": "calculation",
+                    "name": "BasePercentHealth"
+                  },
+                  {
+                    "op": "constant",
+                    "value": 0.01
+                  },
+                  {
+                    "op": "stat",
+                    "stat": "health",
+                    "scope": "max",
+                    "subject": "target"
+                  }
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "id": "empowered_hit",
+          "name": "Ataque potenciado tras atravesar campeón (plano + % vida máxima)",
+          "parts": [
+            {
+              "calculation": "BaseFlatDamage"
+            },
+            {
+              "tooltip_reference": "EmpPercentHealth",
+              "damage_type": "magic",
+              "source_note": "mSpellCalculations.EmpPercentHealth % × vida máxima del objetivo",
+              "formula": {
+                "op": "mul",
+                "operands": [
+                  {
+                    "op": "calculation",
+                    "name": "EmpPercentHealth"
+                  },
+                  {
+                    "op": "constant",
+                    "value": 0.01
+                  },
+                  {
+                    "op": "stat",
+                    "stat": "health",
+                    "scope": "max",
+                    "subject": "target"
+                  }
+                ]
+              }
+            }
+          ]
+        }
+      ],
+      "not_modelled": [
+        "Velocidad de ataque del 50 % potenciada, ralentización y daño a torretas/monstruos"
+      ]
+    },
+    "W": {
+      "name": "Refugio espiritual",
+      "tooltip": "spell_shenw_tooltip",
+      "not_modelled": [
+        "Zona de esquiva de ataques básicos durante 1,75 s"
+      ]
+    },
+    "E": {
+      "name": "Movimiento de sombra",
+      "tooltip": "spell_shene_tooltip",
+      "cases": [
+        {
+          "id": "taunt",
+          "name": "Impacto de provocación",
+          "parts": [
+            {
+              "calculation": "TauntDamage"
+            }
+          ]
+        }
+      ],
+      "not_modelled": [
+        "Provocación de 1,5 s y recuperación pasiva de energía (EnergyRefund)"
+      ]
+    },
+    "R": {
+      "name": "Mantenerse unidos",
+      "tooltip": "spell_shenr_tooltip",
+      "not_modelled": [
+        "Escudo global sobre aliado (Shield / MaxShield) y teletransporte"
+      ]
+    }
+  }
+}

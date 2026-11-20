@@ -1,0 +1,195 @@
+{
+  "champion": "Kled",
+  "game_version": "16.23",
+  "verified_against": {
+    "content_version": "16.23.8406595+branch.releases-16-23.content.release",
+    "bin_sha256": "194655c3b4733372baef0b72cc9a4b70ee64cf12a98492b9e3f376ae9baa449c",
+    "evidence": "odd/tasks/champion-kits-wave-3.md",
+    "result": "Bin del cliente 16.23 convertido con python -m binmodel.batch_kits y compilado con esta especificación curada (CH-01 oleada 3)"
+  },
+  "abilities": {
+    "P": {
+      "name": "Skaarl, el Lagarto Cobarde",
+      "tooltip": "spell_kledpassive_tooltip",
+      "max_rank": 1,
+      "not_modelled": [
+        "Vida de Skaarl (SkaarlHealth), estado desmontado, Coraje, remontar (SkaarlRemountHealth) y penalización de daño de ataques desmontado"
+      ]
+    },
+    "Q": {
+      "name": "Trampa para osos",
+      "tooltip": "spell_kledq_tooltip",
+      "cases": [
+        {
+          "id": "throw",
+          "name": "Impacto inicial (montado)",
+          "parts": [
+            {
+              "calculation": "TotalDamage"
+            }
+          ]
+        },
+        {
+          "id": "yank",
+          "name": "Tirón tras 1,75 s",
+          "parts": [
+            {
+              "calculation": "TotalYankDamage"
+            }
+          ]
+        }
+      ],
+      "not_modelled": [
+        "Q desmontado (DismountedQDamage), ralentización y Heridas graves en el tirón"
+      ]
+    },
+    "W": {
+      "name": "Tendencias violentas",
+      "tooltip": "spell_kledw_tooltip",
+      "cases": [
+        {
+          "id": "fourth_hit",
+          "name": "Cuarto golpe (plano + % vida máxima)",
+          "parts": [
+            {
+              "tooltip_reference": "BaseFlatDamage",
+              "damage_type": "physical",
+              "source_note": "DataValues.BaseFlatDamage + mSpellCalculations.PercentDamage % × vida máxima del objetivo",
+              "formula": {
+                "op": "add",
+                "operands": [
+                  {
+                    "op": "data_value",
+                    "name": "BaseFlatDamage"
+                  },
+                  {
+                    "op": "mul",
+                    "operands": [
+                      {
+                        "op": "calculation",
+                        "name": "PercentDamage"
+                      },
+                      {
+                        "op": "constant",
+                        "value": 0.01
+                      },
+                      {
+                        "op": "stat",
+                        "stat": "health",
+                        "scope": "max",
+                        "subject": "target"
+                      }
+                    ]
+                  }
+                ]
+              }
+            }
+          ]
+        }
+      ],
+      "not_modelled": [
+        "Velocidad de ataque del 150 % durante 4 golpes y reducción de enfriamiento al golpear"
+      ]
+    },
+    "E": {
+      "name": "Justa",
+      "tooltip": "spell_klede_tooltip",
+      "recast_window_seconds": {
+        "data_value": "RecastWindow"
+      },
+      "cases": [
+        {
+          "id": "dash",
+          "name": "Primer deslizamiento",
+          "parts": [
+            {
+              "calculation": "TotalDamage"
+            }
+          ]
+        },
+        {
+          "id": "recast",
+          "name": "Segundo deslizamiento (recast)",
+          "recast": true,
+          "parts": [
+            {
+              "calculation": "TotalDamage"
+            }
+          ]
+        }
+      ],
+      "not_modelled": [
+        "Velocidad de movimiento al acertar campeón o monstruo grande"
+      ]
+    },
+    "R": {
+      "name": "¡A LA CARGAAA!",
+      "tooltip": "spell_kledr_tooltip",
+      "cases": [
+        {
+          "id": "min",
+          "name": "Carga mínima (% vida máxima)",
+          "parts": [
+            {
+              "tooltip_reference": "MinimumDamageTooltip",
+              "damage_type": "magic",
+              "source_note": "mSpellCalculations.MinimumDamageTooltip % × vida máxima del objetivo",
+              "formula": {
+                "op": "mul",
+                "operands": [
+                  {
+                    "op": "calculation",
+                    "name": "MinimumDamageTooltip"
+                  },
+                  {
+                    "op": "constant",
+                    "value": 0.01
+                  },
+                  {
+                    "op": "stat",
+                    "stat": "health",
+                    "scope": "max",
+                    "subject": "target"
+                  }
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "id": "max",
+          "name": "Carga máxima (% vida máxima)",
+          "parts": [
+            {
+              "tooltip_reference": "MaximumChargeDamage",
+              "damage_type": "magic",
+              "source_note": "mSpellCalculations.MaximumChargeDamage % × vida máxima del objetivo",
+              "formula": {
+                "op": "mul",
+                "operands": [
+                  {
+                    "op": "calculation",
+                    "name": "MaximumChargeDamage"
+                  },
+                  {
+                    "op": "constant",
+                    "value": 0.01
+                  },
+                  {
+                    "op": "stat",
+                    "stat": "health",
+                    "scope": "max",
+                    "subject": "target"
+                  }
+                ]
+              }
+            }
+          ]
+        }
+      ],
+      "not_modelled": [
+        "Escudo progresivo (MaximumShield), rastro de velocidad para aliados e imparabilidad"
+      ]
+    }
+  }
+}

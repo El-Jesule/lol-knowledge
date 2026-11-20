@@ -1,0 +1,108 @@
+{
+  "champion": "Zoe",
+  "game_version": "16.23",
+  "verified_against": {
+    "content_version": "16.23.8406595+branch.releases-16-23.content.release",
+    "bin_sha256": "013b46ddb2d658d54394fe477ca044a5d162b65738a6680b268b459a08b313f6",
+    "evidence": "odd/tasks/champion-kits-wave-3.md",
+    "result": "Bin del cliente 16.23 convertido con python -m binmodel.batch_kits y compilado con esta especificación curada (CH-01 oleada 3)"
+  },
+  "abilities": {
+    "P": {
+      "name": "¡Más chispas!",
+      "tooltip": "spell_zoepassive_tooltip",
+      "max_rank": 1,
+      "cases": [
+        {
+          "id": "spark",
+          "name": "Ataque potenciado tras habilidad",
+          "parts": [
+            {
+              "calculation": "PassiveDamage"
+            }
+          ]
+        }
+      ],
+      "not_modelled": []
+    },
+    "Q": {
+      "name": "Pádel estelar",
+      "tooltip": "spell_zoeq_tooltip",
+      "cases": [
+        {
+          "id": "min",
+          "name": "Distancia mínima",
+          "parts": [
+            {
+              "calculation": "TotalDamageTooltip"
+            }
+          ]
+        },
+        {
+          "id": "max",
+          "name": "Distancia máxima (+150 %)",
+          "parts": [
+            {
+              "calculation": "MaxDamageTooltip"
+            }
+          ]
+        }
+      ],
+      "not_modelled": [
+        "Redirección de segundo lanzamiento y 20 % menos de daño a objetivos secundarios"
+      ]
+    },
+    "W": {
+      "name": "Ladrona de hechizos",
+      "tooltip": "spell_zoew_tooltip",
+      "cases": [
+        {
+          "id": "missiles_total",
+          "name": "Tres misiles (total)",
+          "parts": [
+            {
+              "calculation": "MissileDamageTooltip"
+            }
+          ]
+        }
+      ],
+      "not_modelled": [
+        "Recogida de hechizos de invocador/objetos activos y velocidad de movimiento"
+      ]
+    },
+    "E": {
+      "name": "Burbuja somnífera",
+      "tooltip": "spell_zoee_tooltip",
+      "cases": [
+        {
+          "id": "impact",
+          "name": "Impacto de burbuja",
+          "parts": [
+            {
+              "calculation": "TotalDamageTooltip"
+            }
+          ]
+        },
+        {
+          "id": "wake_cap",
+          "name": "Daño verdadero adicional máximo al despertar",
+          "parts": [
+            {
+              "calculation": "BreakDamageTooltip"
+            }
+          ]
+        }
+      ],
+      "not_modelled": [
+        "Somnolencia, sueño de 2,25 s y reducción porcentual de resistencia mágica"
+      ]
+    },
+    "R": {
+      "name": "Salto dimensional",
+      "tooltip": "spell_zoer_tooltip",
+      "not_modelled": [
+        "Teletransporte ida y vuelta durante 1 s"
+      ]
+    }
+  }
+}

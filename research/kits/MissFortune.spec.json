@@ -1,0 +1,110 @@
+{
+  "champion": "MissFortune",
+  "game_version": "16.23",
+  "verified_against": {
+    "content_version": "16.23.8406595+branch.releases-16-23.content.release",
+    "bin_sha256": "a9f7c7fb2d16ab34e431d2e99df7a588ee75dbfc74e4d462cacd1a271935ab8d",
+    "evidence": "odd/tasks/champion-kits-wave-3.md",
+    "result": "Bin del cliente 16.23 convertido con python -m binmodel.batch_kits y compilado con esta especificación curada (CH-01 oleada 3)"
+  },
+  "abilities": {
+    "P": {
+      "name": "Cachete",
+      "tooltip": "spell_missfortunepassive_tooltip",
+      "max_rank": 1,
+      "cases": [
+        {
+          "id": "proc",
+          "name": "Daño físico adicional al cambiar de objetivo",
+          "parts": [
+            {
+              "calculation": "TotalDamage"
+            }
+          ]
+        }
+      ],
+      "not_modelled": [
+        "Daño reducido al 50 % contra súbditos (MinionDamage)"
+      ]
+    },
+    "Q": {
+      "name": "Redoble",
+      "tooltip": "spell_missfortuneq_tooltip",
+      "cases": [
+        {
+          "id": "shot",
+          "name": "Disparo (primer o segundo objetivo sin crítico)",
+          "parts": [
+            {
+              "calculation": "TotalDamageTooltip"
+            }
+          ]
+        }
+      ],
+      "not_modelled": [
+        "Crítico garantizado del segundo rebote si el primer objetivo muere"
+      ]
+    },
+    "W": {
+      "name": "Alarde",
+      "tooltip": "spell_missfortunew_tooltip",
+      "not_modelled": [
+        "Velocidad de movimiento pasiva fuera de combate, velocidad de ataque activa y reducción de enfriamiento con Cachete (LoveTapRefund)"
+      ]
+    },
+    "E": {
+      "name": "Que llueva",
+      "tooltip": "spell_missfortunee_tooltip",
+      "cases": [
+        {
+          "id": "dps",
+          "name": "Daño por segundo",
+          "parts": [
+            {
+              "calculation": "TotalDamagePerSecond"
+            }
+          ]
+        },
+        {
+          "id": "total",
+          "name": "Duración completa (2 s)",
+          "parts": [
+            {
+              "calculation": "TotalDamage"
+            }
+          ]
+        }
+      ],
+      "not_modelled": [
+        "Ralentización en área (TotalSlowAmount)"
+      ]
+    },
+    "R": {
+      "name": "Lluvia de balas",
+      "tooltip": "spell_missfortuner_tooltip",
+      "cases": [
+        {
+          "id": "per_wave",
+          "name": "Una oleada (sin crítico)",
+          "parts": [
+            {
+              "calculation": "PhysicalDamagePerWave"
+            }
+          ]
+        },
+        {
+          "id": "total",
+          "name": "Canalización completa (14/16/18 oleadas, sin crítico)",
+          "parts": [
+            {
+              "calculation": "TotalPhysicalDamage"
+            }
+          ]
+        }
+      ],
+      "not_modelled": [
+        "Posibilidad de golpe crítico por oleada (CritDamagePerWave)"
+      ]
+    }
+  }
+}

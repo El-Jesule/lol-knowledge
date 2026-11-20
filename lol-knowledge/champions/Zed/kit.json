@@ -1,0 +1,222 @@
+{
+  "schema": "lol-champion-kit/1",
+  "champion": "Zed",
+  "label": "Derivado",
+  "game_version": "16.23",
+  "content_version": "16.23.8406595+branch.releases-16-23.content.release",
+  "verified_against": {
+    "content_version": "16.23.8406595+branch.releases-16-23.content.release",
+    "bin_sha256": "b08d83ca54d9cf80a161c3467bb5ddbd2bb3a42ba4e31672fb5cb0ea9df91533",
+    "evidence": "odd/tasks/champion-kits-wave-3.md",
+    "result": "Bin del cliente 16.23 convertido con python -m binmodel.batch_kits y compilado con esta especificación curada (CH-01 oleada 3)"
+  },
+  "source": "Árboles de cálculo del bin del cliente (python -m binmodel) y marcado de los tooltips del cliente; estructura de casos curada en research/kits/",
+  "abilities": {
+    "P": {
+      "name": "Desprecio por los débiles",
+      "max_rank": 1,
+      "cases": [],
+      "passive_stats": [],
+      "not_modelled": [
+        "Daño mágico del 5/7,5/10 % de vida máxima contra objetivos bajo el 50 % de vida (MaxHPDamage usa condicional de misión HasBuffCastRequirement en el bin)"
+      ]
+    },
+    "Q": {
+      "name": "Shuriken navaja",
+      "max_rank": 5,
+      "cases": [
+        {
+          "id": "first",
+          "name": "Primer objetivo",
+          "parts": [
+            {
+              "damage_type": "physical",
+              "formula": {
+                "op": "add",
+                "operands": [
+                  {
+                    "op": "by_rank",
+                    "values": [
+                      80,
+                      120,
+                      160,
+                      200,
+                      240
+                    ]
+                  },
+                  {
+                    "op": "mul",
+                    "operands": [
+                      {
+                        "op": "constant",
+                        "value": 1
+                      },
+                      {
+                        "op": "stat",
+                        "stat": "attack_damage",
+                        "scope": "bonus"
+                      }
+                    ]
+                  }
+                ]
+              },
+              "label": "Derivado",
+              "source": "Characters/Zed/Spells/ZedQAbility/ZedQ.mSpellCalculations.TotalDamage (16.23.8406595+branch.releases-16-23.content.release)",
+              "damage_type_source": "spell_zedq_tooltip <physicalDamage>"
+            }
+          ]
+        },
+        {
+          "id": "passthrough",
+          "name": "Objetivos atravesados (60 %)",
+          "parts": [
+            {
+              "damage_type": "physical",
+              "formula": {
+                "op": "mul",
+                "operands": [
+                  {
+                    "op": "add",
+                    "operands": [
+                      {
+                        "op": "by_rank",
+                        "values": [
+                          80,
+                          120,
+                          160,
+                          200,
+                          240
+                        ]
+                      },
+                      {
+                        "op": "mul",
+                        "operands": [
+                          {
+                            "op": "constant",
+                            "value": 1
+                          },
+                          {
+                            "op": "stat",
+                            "stat": "attack_damage",
+                            "scope": "bonus"
+                          }
+                        ]
+                      }
+                    ]
+                  },
+                  {
+                    "op": "constant",
+                    "value": 0.6
+                  }
+                ]
+              },
+              "label": "Derivado",
+              "source": "Characters/Zed/Spells/ZedQAbility/ZedQ.mSpellCalculations.PassThroughDamage (16.23.8406595+branch.releases-16-23.content.release)",
+              "damage_type_source": "spell_zedq_tooltip <physicalDamage>"
+            }
+          ]
+        }
+      ],
+      "passive_stats": [],
+      "not_modelled": [
+        "Impactos simultáneos desde Sombras y reembolso de energía"
+      ]
+    },
+    "W": {
+      "name": "Sombra viviente",
+      "max_rank": 5,
+      "cases": [],
+      "passive_stats": [],
+      "not_modelled": [
+        "Invocación de Sombra, intercambio de posición y reembolso pasivo de energía"
+      ]
+    },
+    "E": {
+      "name": "Cuchillada de sombra",
+      "max_rank": 5,
+      "cases": [
+        {
+          "id": "slash",
+          "name": "Cuchillada",
+          "parts": [
+            {
+              "damage_type": "physical",
+              "formula": {
+                "op": "add",
+                "operands": [
+                  {
+                    "op": "by_rank",
+                    "values": [
+                      70,
+                      92.5,
+                      115,
+                      137.5,
+                      160
+                    ]
+                  },
+                  {
+                    "op": "mul",
+                    "operands": [
+                      {
+                        "op": "constant",
+                        "value": 0.7
+                      },
+                      {
+                        "op": "stat",
+                        "stat": "attack_damage",
+                        "scope": "bonus"
+                      }
+                    ]
+                  }
+                ]
+              },
+              "label": "Derivado",
+              "source": "Characters/Zed/Spells/ZedEAbility/ZedE.mSpellCalculations.TotalDamage (16.23.8406595+branch.releases-16-23.content.release)",
+              "damage_type_source": "spell_zede_tooltip <physicalDamage>"
+            }
+          ]
+        }
+      ],
+      "passive_stats": [],
+      "not_modelled": [
+        "Reducción de enfriamiento de W por campeón golpeado y ralentización desde Sombra"
+      ]
+    },
+    "R": {
+      "name": "Marca de la muerte",
+      "max_rank": 3,
+      "cases": [
+        {
+          "id": "base_pop",
+          "name": "Detonación base (100 % DA total, sin daño acumulado)",
+          "parts": [
+            {
+              "damage_type": "physical",
+              "formula": {
+                "op": "mul",
+                "operands": [
+                  {
+                    "op": "constant",
+                    "value": 1
+                  },
+                  {
+                    "op": "stat",
+                    "stat": "attack_damage",
+                    "scope": "total"
+                  }
+                ]
+              },
+              "label": "Derivado",
+              "source": "Characters/Zed/Spells/ZedRAbility/ZedR.mSpellCalculations.RCalculatedDamage (16.23.8406595+branch.releases-16-23.content.release)",
+              "damage_type_source": "spell_zedr_tooltip <physicalDamage>"
+            }
+          ]
+        }
+      ],
+      "passive_stats": [],
+      "not_modelled": [
+        "Porcentaje de daño acumulado por Zed durante los 3 s de la marca e intercambio con Sombra de R"
+      ]
+    }
+  }
+}

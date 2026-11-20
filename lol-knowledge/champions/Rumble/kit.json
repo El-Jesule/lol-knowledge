@@ -1,0 +1,397 @@
+{
+  "schema": "lol-champion-kit/1",
+  "champion": "Rumble",
+  "label": "Derivado",
+  "game_version": "16.23",
+  "content_version": "16.23.8406595+branch.releases-16-23.content.release",
+  "verified_against": {
+    "content_version": "16.23.8406595+branch.releases-16-23.content.release",
+    "bin_sha256": "69c883db5813262e56e5fc9a9138c6d9b52eb1f4382400e5ee3ffa6704149f4b",
+    "evidence": "odd/tasks/champion-kits-wave-3.md",
+    "result": "Bin del cliente 16.23 convertido con python -m binmodel.batch_kits y compilado con esta especificación curada (CH-01 oleada 3)"
+  },
+  "source": "Árboles de cálculo del bin del cliente (python -m binmodel) y marcado de los tooltips del cliente; estructura de casos curada en research/kits/",
+  "abilities": {
+    "P": {
+      "name": "Titán del desguace",
+      "max_rank": 1,
+      "cases": [
+        {
+          "id": "overheat_hit",
+          "name": "Ataque sobrecalentado (plano + 4 % vida máxima)",
+          "parts": [
+            {
+              "damage_type": "magic",
+              "formula": {
+                "op": "add",
+                "operands": [
+                  {
+                    "op": "linear_by_level",
+                    "min": 5,
+                    "max": 40
+                  },
+                  {
+                    "op": "mul",
+                    "operands": [
+                      {
+                        "op": "constant",
+                        "value": 0.25
+                      },
+                      {
+                        "op": "stat",
+                        "stat": "ability_power",
+                        "scope": "total"
+                      }
+                    ]
+                  }
+                ]
+              },
+              "label": "Derivado",
+              "source": "Characters/Rumble/Spells/RumbleHeatSystemAbility/RumbleHeatSystem.mSpellCalculations.TotalBaseDamage (16.23.8406595+branch.releases-16-23.content.release)",
+              "damage_type_source": "spell_rumbleheatsystem_tooltip <magicDamage>"
+            },
+            {
+              "damage_type": "magic",
+              "formula": {
+                "op": "mul",
+                "operands": [
+                  {
+                    "op": "constant",
+                    "value": 0.04
+                  },
+                  {
+                    "op": "stat",
+                    "stat": "health",
+                    "scope": "max",
+                    "subject": "target"
+                  }
+                ]
+              },
+              "label": "Derivado",
+              "source": "Characters/Rumble/Spells/RumbleHeatSystemAbility/RumbleHeatSystem · DataValues.OverheatPercBonusDamage × vida máxima del objetivo (16.23.8406595+branch.releases-16-23.content.release)",
+              "damage_type_source": "spell_rumbleheatsystem_tooltip <magicDamage>"
+            }
+          ]
+        }
+      ],
+      "passive_stats": [],
+      "not_modelled": [
+        "Gestión de Calor (Zona de peligro / Sobrecalentamiento), velocidad de ataque sobrecalentado (OverheatAS) y tope contra monstruos"
+      ]
+    },
+    "Q": {
+      "name": "Escupellamas",
+      "max_rank": 5,
+      "cases": [
+        {
+          "id": "normal",
+          "name": "Normal (3 s completos + % vida máxima)",
+          "parts": [
+            {
+              "damage_type": "magic",
+              "formula": {
+                "op": "add",
+                "operands": [
+                  {
+                    "op": "by_rank",
+                    "values": [
+                      50,
+                      75,
+                      100,
+                      125,
+                      150
+                    ]
+                  },
+                  {
+                    "op": "mul",
+                    "operands": [
+                      {
+                        "op": "constant",
+                        "value": 1.05
+                      },
+                      {
+                        "op": "stat",
+                        "stat": "ability_power",
+                        "scope": "total"
+                      }
+                    ]
+                  }
+                ]
+              },
+              "label": "Derivado",
+              "source": "Characters/Rumble/Spells/RumbleFlameThrowerAbility/RumbleFlameThrower.mSpellCalculations.FlatDamage (16.23.8406595+branch.releases-16-23.content.release)",
+              "damage_type_source": "spell_rumbleflamethrower_tooltip <magicDamage>"
+            },
+            {
+              "damage_type": "magic",
+              "formula": {
+                "op": "mul",
+                "operands": [
+                  {
+                    "op": "by_rank",
+                    "values": [
+                      0.06,
+                      0.065,
+                      0.07,
+                      0.075,
+                      0.08
+                    ]
+                  },
+                  {
+                    "op": "stat",
+                    "stat": "health",
+                    "scope": "max",
+                    "subject": "target"
+                  }
+                ]
+              },
+              "label": "Derivado",
+              "source": "Characters/Rumble/Spells/RumbleFlameThrowerAbility/RumbleFlameThrower · DataValues.HealthDamage × vida máxima del objetivo (16.23.8406595+branch.releases-16-23.content.release)",
+              "damage_type_source": "spell_rumbleflamethrower_tooltip <magicDamage>"
+            }
+          ]
+        },
+        {
+          "id": "danger_zone",
+          "name": "Zona de peligro (+50 % daño plano + % vida máxima)",
+          "parts": [
+            {
+              "damage_type": "magic",
+              "formula": {
+                "op": "mul",
+                "operands": [
+                  {
+                    "op": "add",
+                    "operands": [
+                      {
+                        "op": "by_rank",
+                        "values": [
+                          50,
+                          75,
+                          100,
+                          125,
+                          150
+                        ]
+                      },
+                      {
+                        "op": "mul",
+                        "operands": [
+                          {
+                            "op": "constant",
+                            "value": 1.05
+                          },
+                          {
+                            "op": "stat",
+                            "stat": "ability_power",
+                            "scope": "total"
+                          }
+                        ]
+                      }
+                    ]
+                  },
+                  {
+                    "op": "constant",
+                    "value": 1.5
+                  }
+                ]
+              },
+              "label": "Derivado",
+              "source": "Characters/Rumble/Spells/RumbleFlameThrowerAbility/RumbleFlameThrower.mSpellCalculations.EmpoweredDamage (16.23.8406595+branch.releases-16-23.content.release)",
+              "damage_type_source": "spell_rumbleflamethrower_tooltip <magicDamage>"
+            },
+            {
+              "damage_type": "magic",
+              "formula": {
+                "op": "mul",
+                "operands": [
+                  {
+                    "op": "by_rank",
+                    "values": [
+                      0.06,
+                      0.065,
+                      0.07,
+                      0.075,
+                      0.08
+                    ]
+                  },
+                  {
+                    "op": "stat",
+                    "stat": "health",
+                    "scope": "max",
+                    "subject": "target"
+                  }
+                ]
+              },
+              "label": "Derivado",
+              "source": "Characters/Rumble/Spells/RumbleFlameThrowerAbility/RumbleFlameThrower · mSpellCalculations.EmpoweredHealth × vida máxima del objetivo (16.23.8406595+branch.releases-16-23.content.release)",
+              "damage_type_source": "spell_rumbleflamethrower_tooltip <magicDamage>"
+            }
+          ]
+        }
+      ],
+      "passive_stats": [],
+      "not_modelled": [
+        "Reducción de daño contra súbditos (MinionMod) y tope contra monstruos (MonsterCap)"
+      ]
+    },
+    "W": {
+      "name": "Escudo de restos",
+      "max_rank": 5,
+      "cases": [],
+      "passive_stats": [],
+      "not_modelled": [
+        "Escudo (TotalShield / EmpoweredShield) y velocidad de movimiento (EmpoweredMS)"
+      ]
+    },
+    "E": {
+      "name": "Arpón eléctrico",
+      "max_rank": 5,
+      "cases": [
+        {
+          "id": "normal",
+          "name": "Un arpón (normal)",
+          "parts": [
+            {
+              "damage_type": "magic",
+              "formula": {
+                "op": "add",
+                "operands": [
+                  {
+                    "op": "by_rank",
+                    "values": [
+                      55,
+                      80,
+                      105,
+                      130,
+                      155
+                    ]
+                  },
+                  {
+                    "op": "mul",
+                    "operands": [
+                      {
+                        "op": "constant",
+                        "value": 0.5
+                      },
+                      {
+                        "op": "stat",
+                        "stat": "ability_power",
+                        "scope": "total"
+                      }
+                    ]
+                  }
+                ]
+              },
+              "label": "Derivado",
+              "source": "Characters/Rumble/Spells/RumbleGrenadeAbility/RumbleGrenade.mSpellCalculations.TotalDamage (16.23.8406595+branch.releases-16-23.content.release)",
+              "damage_type_source": "spell_rumblegrenade_tooltip <magicDamage>"
+            }
+          ]
+        },
+        {
+          "id": "danger_zone",
+          "name": "Un arpón (Zona de peligro)",
+          "parts": [
+            {
+              "damage_type": "magic",
+              "formula": {
+                "op": "mul",
+                "operands": [
+                  {
+                    "op": "add",
+                    "operands": [
+                      {
+                        "op": "by_rank",
+                        "values": [
+                          55,
+                          80,
+                          105,
+                          130,
+                          155
+                        ]
+                      },
+                      {
+                        "op": "mul",
+                        "operands": [
+                          {
+                            "op": "constant",
+                            "value": 0.5
+                          },
+                          {
+                            "op": "stat",
+                            "stat": "ability_power",
+                            "scope": "total"
+                          }
+                        ]
+                      }
+                    ]
+                  },
+                  {
+                    "op": "constant",
+                    "value": 1.5
+                  }
+                ]
+              },
+              "label": "Derivado",
+              "source": "Characters/Rumble/Spells/RumbleGrenadeAbility/RumbleGrenade.mSpellCalculations.EmpDamage (16.23.8406595+branch.releases-16-23.content.release)",
+              "damage_type_source": "spell_rumblegrenade_tooltip <magicDamage>"
+            }
+          ]
+        }
+      ],
+      "passive_stats": [],
+      "not_modelled": [
+        "Sistema de 2 cargas, ralentización y reducción de resistencia mágica acumulable"
+      ]
+    },
+    "R": {
+      "name": "Equilibrador",
+      "max_rank": 3,
+      "cases": [
+        {
+          "id": "dps",
+          "name": "Daño por segundo en la zona",
+          "parts": [
+            {
+              "damage_type": "magic",
+              "formula": {
+                "op": "add",
+                "operands": [
+                  {
+                    "op": "by_rank",
+                    "values": [
+                      120,
+                      200,
+                      280
+                    ]
+                  },
+                  {
+                    "op": "mul",
+                    "operands": [
+                      {
+                        "op": "constant",
+                        "value": 0.4
+                      },
+                      {
+                        "op": "stat",
+                        "stat": "ability_power",
+                        "scope": "total"
+                      }
+                    ]
+                  }
+                ]
+              },
+              "label": "Derivado",
+              "source": "Characters/Rumble/Spells/RumbleCarpetBombAbility/RumbleCarpetBomb.mSpellCalculations.DamagePerSecond (16.23.8406595+branch.releases-16-23.content.release)",
+              "damage_type_source": "spell_rumblecarpetbomb_tooltip <magicDamage>"
+            }
+          ]
+        }
+      ],
+      "passive_stats": [],
+      "not_modelled": [
+        "Daño total de 5 s (TotalDamage no traducible si depende de multiplicador) y ralentización"
+      ]
+    }
+  }
+}

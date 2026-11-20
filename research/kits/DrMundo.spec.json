@@ -1,0 +1,130 @@
+{
+  "champion": "DrMundo",
+  "game_version": "16.23",
+  "verified_against": {
+    "content_version": "16.23.8406595+branch.releases-16-23.content.release",
+    "bin_sha256": "7ea3a49f5b499bb31871feffd61d82f6b48abeb9d390a0f9163c688ac469066e",
+    "evidence": "odd/tasks/champion-kits-wave-3.md",
+    "result": "Bin del cliente 16.23 convertido con python -m binmodel.batch_kits y compilado con esta especificación curada (CH-01 oleada 3)"
+  },
+  "abilities": {
+    "P": {
+      "name": "Va donde quiere",
+      "tooltip": "spell_drmundopassive_tooltip",
+      "max_rank": 1,
+      "not_modelled": [
+        "Bloqueo del primer inmovilizador, bidón con curación y regeneración pasiva (MaxHealthRegen)"
+      ]
+    },
+    "Q": {
+      "name": "Serrucho infectado",
+      "tooltip": "spell_drmundoq_tooltip",
+      "cost": {
+        "resource": "health",
+        "data_value": "HealthCost"
+      },
+      "cases": [
+        {
+          "id": "cleaver",
+          "name": "Impacto (% vida actual)",
+          "parts": [
+            {
+              "tooltip_reference": "CurrentHealthDamage",
+              "damage_type": "magic",
+              "source_note": "DataValues.CurrentHealthDamage × vida actual del objetivo",
+              "formula": {
+                "op": "mul",
+                "operands": [
+                  {
+                    "op": "data_value",
+                    "name": "CurrentHealthDamage"
+                  },
+                  {
+                    "op": "stat",
+                    "stat": "health",
+                    "scope": "current",
+                    "subject": "target"
+                  }
+                ]
+              }
+            }
+          ]
+        }
+      ],
+      "not_modelled": [
+        "Daño mínimo (MinimumDamage), tope contra monstruos (MaximumMonsterDamage), ralentización y reembolso de vida al acertar"
+      ]
+    },
+    "W": {
+      "name": "Desisfibrulación",
+      "tooltip": "spell_drmundow_tooltip",
+      "cases": [
+        {
+          "id": "dps",
+          "name": "Daño por segundo (4 pulsos/s)",
+          "parts": [
+            {
+              "tooltip_reference": "DamagePerTick",
+              "damage_type": "magic",
+              "source_note": "DataValues.DamagePerTick × 4 pulsos/s",
+              "formula": {
+                "op": "mul",
+                "operands": [
+                  {
+                    "op": "data_value",
+                    "name": "DamagePerTick"
+                  },
+                  {
+                    "op": "constant",
+                    "value": 4
+                  }
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "id": "detonate",
+          "name": "Detonación final",
+          "parts": [
+            {
+              "calculation": "TotalDamage"
+            }
+          ]
+        }
+      ],
+      "not_modelled": [
+        "Coste del 8 % de vida actual (CurrentHealthCost), acumulación de vida gris (GrayHealthStorageInitial) y curación al reactivar"
+      ]
+    },
+    "E": {
+      "name": "Traumatismo",
+      "tooltip": "spell_drmundoe_tooltip",
+      "cost": {
+        "resource": "health",
+        "data_value": "FlatHealthCost"
+      },
+      "cases": [
+        {
+          "id": "hit",
+          "name": "Ataque potenciado (daño base adicional)",
+          "parts": [
+            {
+              "calculation": "AdditionalDamage"
+            }
+          ]
+        }
+      ],
+      "not_modelled": [
+        "DA pasivo por vida máxima (PassiveBonusAD), amplificación de hasta +40 % por vida faltante de Mundo (MaxDamageAmp) y lanzamiento de súbditos"
+      ]
+    },
+    "R": {
+      "name": "Dosis máxima",
+      "tooltip": "spell_drmundor_tooltip",
+      "not_modelled": [
+        "Vida máxima temporal por vida faltante, velocidad de movimiento y regeneración porcentual durante 10 s"
+      ]
+    }
+  }
+}

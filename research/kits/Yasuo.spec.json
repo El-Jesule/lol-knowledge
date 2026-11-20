@@ -1,0 +1,90 @@
+{
+  "champion": "Yasuo",
+  "game_version": "16.23",
+  "verified_against": {
+    "content_version": "16.23.8406595+branch.releases-16-23.content.release",
+    "bin_sha256": "c7f04ae7aacfbb20052209e520356424ab3ec98bcf80cf15c63beff6b500f66b",
+    "evidence": "odd/tasks/champion-kits-wave-3.md",
+    "result": "Bin del cliente 16.23 convertido con python -m binmodel.batch_kits y compilado con esta especificación curada (CH-01 oleada 3)"
+  },
+  "abilities": {
+    "P": {
+      "name": "Camino del alma errante",
+      "tooltip": "spell_yasuopassive_tooltip",
+      "max_rank": 1,
+      "not_modelled": [
+        "Escudo de Flujo (ShieldValue usa interpolación por progresión), duplicación de probabilidad de crítico, conversión del exceso en DA y modificador de daño crítico"
+      ]
+    },
+    "Q": {
+      "name": "Tempestad de acero",
+      "tooltip": "spell_yasuoq1wrapper_tooltip",
+      "cases": [
+        {
+          "id": "thrust",
+          "name": "Estocada / torbellino (sin crítico)",
+          "parts": [
+            {
+              "calculation": "TotalDamage"
+            }
+          ]
+        }
+      ],
+      "not_modelled": [
+        "Golpe crítico de Q (TotalDamageCrit), reducción de enfriamiento/lanzamiento por velocidad de ataque y levantamiento en Q3"
+      ]
+    },
+    "W": {
+      "name": "Muro de viento",
+      "tooltip": "spell_yasuow_tooltip",
+      "not_modelled": [
+        "Bloqueo de proyectiles enemigos durante 4 s"
+      ]
+    },
+    "E": {
+      "name": "Hoja cortante",
+      "tooltip": "spell_yasuoe_tooltip",
+      "cases": [
+        {
+          "id": "base",
+          "name": "Deslizamiento (0 cargas)",
+          "parts": [
+            {
+              "calculation": "TotalDamage"
+            }
+          ]
+        },
+        {
+          "id": "per_stack",
+          "name": "Daño adicional por carga (hasta 4)",
+          "parts": [
+            {
+              "calculation": "BonusDamagePerStack"
+            }
+          ]
+        }
+      ],
+      "not_modelled": [
+        "Enfriamiento por objetivo y combo circular E+Q"
+      ]
+    },
+    "R": {
+      "name": "Último aliento",
+      "tooltip": "spell_yasuor_tooltip",
+      "cases": [
+        {
+          "id": "slash",
+          "name": "Corte aéreo",
+          "parts": [
+            {
+              "calculation": "Damage"
+            }
+          ]
+        }
+      ],
+      "not_modelled": [
+        "Extensión de suspensión aérea, recarga completa de Flujo y 60 % de penetración de armadura adicional en críticos durante 15 s (RPercentArmorPen)"
+      ]
+    }
+  }
+}

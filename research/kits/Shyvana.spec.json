@@ -1,0 +1,232 @@
+{
+  "champion": "Shyvana",
+  "game_version": "16.23",
+  "verified_against": {
+    "content_version": "16.23.8406595+branch.releases-16-23.content.release",
+    "bin_sha256": "2788bd5fa38ffc69c36567a3c53d42be7db9954429f67679c65157382ccf48db",
+    "evidence": "odd/tasks/champion-kits-wave-3.md",
+    "result": "Bin del cliente 16.23 convertido con python -m binmodel.batch_kits y compilado con esta especificación curada (CH-01 oleada 3)"
+  },
+  "abilities": {
+    "P": {
+      "name": "Cota de escamas",
+      "tooltip": "spell_shyvana_passive_tooltip",
+      "max_rank": 1,
+      "passive_effects": [
+        {
+          "id": "scale_armor",
+          "name": "Cota de escamas (Armadura)",
+          "kind": "stat_bonus",
+          "stat": "armor",
+          "mode": "flat",
+          "data_value": "BonusArmor",
+          "input_name": "passive_stacks",
+          "condition": "Armadura permanente por acumulación (--input passive_stacks)"
+        },
+        {
+          "id": "scale_mr",
+          "name": "Cota de escamas (RM)",
+          "kind": "stat_bonus",
+          "stat": "magic_resist",
+          "mode": "flat",
+          "data_value": "BonusMagicResist",
+          "input_name": "passive_stacks",
+          "condition": "Resistencia mágica permanente por acumulación (--input passive_stacks)"
+        }
+      ],
+      "not_modelled": []
+    },
+    "Q": {
+      "name": "Golpe de ascuas",
+      "tooltip": "spell_shyvanaq_tooltip",
+      "recast_window_seconds": {
+        "data_value": "RecastDuration"
+      },
+      "cases": [
+        {
+          "id": "human",
+          "name": "Forma humana (físico + % vida máxima mágico)",
+          "parts": [
+            {
+              "calculation": "Calc_Damage"
+            },
+            {
+              "tooltip_reference": "Calc_Max_Health_Damage",
+              "damage_type": "magic",
+              "source_note": "mSpellCalculations.Calc_Max_Health_Damage × vida máxima del objetivo",
+              "formula": {
+                "op": "mul",
+                "operands": [
+                  {
+                    "op": "calculation",
+                    "name": "Calc_Max_Health_Damage"
+                  },
+                  {
+                    "op": "stat",
+                    "stat": "health",
+                    "scope": "max",
+                    "subject": "target"
+                  }
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "id": "recast",
+          "name": "Segundo golpe (recast)",
+          "recast": true,
+          "parts": [
+            {
+              "calculation": "Calc_Damage"
+            }
+          ]
+        },
+        {
+          "id": "dragon",
+          "name": "Forma dragón (+50 % físico + % vida máxima mágico)",
+          "parts": [
+            {
+              "calculation": "Calc_Dragon_Form_Damage"
+            },
+            {
+              "tooltip_reference": "Calc_Max_Health_Damage",
+              "damage_type": "magic",
+              "source_note": "mSpellCalculations.Calc_Max_Health_Damage × vida máxima del objetivo",
+              "formula": {
+                "op": "mul",
+                "operands": [
+                  {
+                    "op": "calculation",
+                    "name": "Calc_Max_Health_Damage"
+                  },
+                  {
+                    "op": "stat",
+                    "stat": "health",
+                    "scope": "max",
+                    "subject": "target"
+                  }
+                ]
+              }
+            }
+          ]
+        }
+      ],
+      "not_modelled": [
+        "Daño adicional y topes contra monstruos (Calc_Monster_Bonus)"
+      ]
+    },
+    "W": {
+      "name": "Égida infernal",
+      "tooltip": "spell_shyvanaw_tooltip",
+      "cases": [
+        {
+          "id": "burst",
+          "name": "Explosión ígnea",
+          "parts": [
+            {
+              "calculation": "Damage"
+            }
+          ]
+        }
+      ],
+      "not_modelled": [
+        "Velocidad de movimiento (MoveSpeed), escudo (Calc_Shield) y curación (Calc_Missing_Health_Heal)"
+      ]
+    },
+    "E": {
+      "name": "Explosión magmática",
+      "tooltip": "spell_shyvanae_tooltip",
+      "cases": [
+        {
+          "id": "human",
+          "name": "Forma humana (base + 5 % vida máxima)",
+          "parts": [
+            {
+              "calculation": "Damage"
+            },
+            {
+              "tooltip_reference": "Calc_Max_Health_Damage",
+              "damage_type": "magic",
+              "source_note": "mSpellCalculations.Calc_Max_Health_Damage × vida máxima del objetivo",
+              "formula": {
+                "op": "mul",
+                "operands": [
+                  {
+                    "op": "calculation",
+                    "name": "Calc_Max_Health_Damage"
+                  },
+                  {
+                    "op": "stat",
+                    "stat": "health",
+                    "scope": "max",
+                    "subject": "target"
+                  }
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "id": "dragon",
+          "name": "Forma dragón (base + % vida máxima)",
+          "parts": [
+            {
+              "calculation": "Calc_Dragon_Damage"
+            },
+            {
+              "tooltip_reference": "Calc_Max_Health_Dragon_Damage",
+              "damage_type": "magic",
+              "source_note": "mSpellCalculations.Calc_Max_Health_Dragon_Damage × vida máxima del objetivo",
+              "formula": {
+                "op": "mul",
+                "operands": [
+                  {
+                    "op": "calculation",
+                    "name": "Calc_Max_Health_Dragon_Damage"
+                  },
+                  {
+                    "op": "stat",
+                    "stat": "health",
+                    "scope": "max",
+                    "subject": "target"
+                  }
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "id": "zone_dps",
+          "name": "Zona abrasada (daño por segundo)",
+          "parts": [
+            {
+              "calculation": "DamagePerSecond"
+            }
+          ]
+        }
+      ],
+      "not_modelled": [
+        "Ralentización (Calc_Slow), eficacia de impactos múltiples y topes contra monstruos"
+      ]
+    },
+    "R": {
+      "name": "Ascendencia de dragón",
+      "tooltip": "spell_shyvana_r_tooltip",
+      "cases": [
+        {
+          "id": "dive",
+          "name": "Vuelo de dragón",
+          "parts": [
+            {
+              "calculation": "Damage"
+            }
+          ]
+        }
+      ],
+      "not_modelled": [
+        "Vida máxima adicional (Calc_Bonus_Health), generación de Furia e imparabilidad"
+      ]
+    }
+  }
+}
