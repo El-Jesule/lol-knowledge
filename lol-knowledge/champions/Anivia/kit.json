@@ -1,0 +1,398 @@
+{
+  "schema": "lol-champion-kit/1",
+  "champion": "Anivia",
+  "label": "Derivado",
+  "game_version": "16.23",
+  "content_version": "16.23.8406595+branch.releases-16-23.content.release",
+  "verified_against": {
+    "content_version": "16.23.8406595+branch.releases-16-23.content.release",
+    "bin_sha256": "9609c2278929602fe0da1173147380c5e9419d4b03ee5d9f5a4364e413a93457",
+    "evidence": "odd/tasks/champion-kits-wave-1.md",
+    "result": "Bin del cliente 16.23 convertido con python -m binmodel.batch_kits y compilado con esta especificación curada (CH-01 oleada 1)"
+  },
+  "source": "Árboles de cálculo del bin del cliente (python -m binmodel) y marcado de los tooltips del cliente; estructura de casos curada en research/kits/",
+  "abilities": {
+    "P": {
+      "name": "Renacimiento",
+      "max_rank": 1,
+      "cases": [],
+      "passive_stats": [],
+      "not_modelled": [
+        "Transformación en huevo al sufrir daño letal y resistencias (BonusResists)"
+      ]
+    },
+    "Q": {
+      "name": "Destello helado",
+      "max_rank": 5,
+      "cases": [
+        {
+          "id": "pass",
+          "name": "Paso del proyectil",
+          "parts": [
+            {
+              "damage_type": "magic",
+              "formula": {
+                "op": "add",
+                "operands": [
+                  {
+                    "op": "by_rank",
+                    "values": [
+                      50,
+                      70,
+                      90,
+                      110,
+                      130
+                    ]
+                  },
+                  {
+                    "op": "mul",
+                    "operands": [
+                      {
+                        "op": "constant",
+                        "value": 0.25
+                      },
+                      {
+                        "op": "stat",
+                        "stat": "ability_power",
+                        "scope": "total"
+                      }
+                    ]
+                  }
+                ]
+              },
+              "label": "Derivado",
+              "source": "Characters/Anivia/Spells/FlashFrostAbility/FlashFrost.mSpellCalculations.TotalPassthroughDamage (16.23.8406595+branch.releases-16-23.content.release)",
+              "damage_type_source": "spell_flashfrost_tooltip <magicDamage>"
+            }
+          ]
+        },
+        {
+          "id": "explode",
+          "name": "Detonación",
+          "parts": [
+            {
+              "damage_type": "magic",
+              "formula": {
+                "op": "add",
+                "operands": [
+                  {
+                    "op": "by_rank",
+                    "values": [
+                      60,
+                      95,
+                      130,
+                      165,
+                      200
+                    ]
+                  },
+                  {
+                    "op": "mul",
+                    "operands": [
+                      {
+                        "op": "constant",
+                        "value": 0.45
+                      },
+                      {
+                        "op": "stat",
+                        "stat": "ability_power",
+                        "scope": "total"
+                      }
+                    ]
+                  }
+                ]
+              },
+              "label": "Derivado",
+              "source": "Characters/Anivia/Spells/FlashFrostAbility/FlashFrost.mSpellCalculations.TotalExplosionDamage (16.23.8406595+branch.releases-16-23.content.release)",
+              "damage_type_source": "spell_flashfrost_tooltip <magicDamage>"
+            }
+          ]
+        },
+        {
+          "id": "both",
+          "name": "Paso + detonación",
+          "parts": [
+            {
+              "damage_type": "magic",
+              "formula": {
+                "op": "add",
+                "operands": [
+                  {
+                    "op": "by_rank",
+                    "values": [
+                      50,
+                      70,
+                      90,
+                      110,
+                      130
+                    ]
+                  },
+                  {
+                    "op": "mul",
+                    "operands": [
+                      {
+                        "op": "constant",
+                        "value": 0.25
+                      },
+                      {
+                        "op": "stat",
+                        "stat": "ability_power",
+                        "scope": "total"
+                      }
+                    ]
+                  }
+                ]
+              },
+              "label": "Derivado",
+              "source": "Characters/Anivia/Spells/FlashFrostAbility/FlashFrost.mSpellCalculations.TotalPassthroughDamage (16.23.8406595+branch.releases-16-23.content.release)",
+              "damage_type_source": "spell_flashfrost_tooltip <magicDamage>"
+            },
+            {
+              "damage_type": "magic",
+              "formula": {
+                "op": "add",
+                "operands": [
+                  {
+                    "op": "by_rank",
+                    "values": [
+                      60,
+                      95,
+                      130,
+                      165,
+                      200
+                    ]
+                  },
+                  {
+                    "op": "mul",
+                    "operands": [
+                      {
+                        "op": "constant",
+                        "value": 0.45
+                      },
+                      {
+                        "op": "stat",
+                        "stat": "ability_power",
+                        "scope": "total"
+                      }
+                    ]
+                  }
+                ]
+              },
+              "label": "Derivado",
+              "source": "Characters/Anivia/Spells/FlashFrostAbility/FlashFrost.mSpellCalculations.TotalExplosionDamage (16.23.8406595+branch.releases-16-23.content.release)",
+              "damage_type_source": "spell_flashfrost_tooltip <magicDamage>"
+            }
+          ]
+        }
+      ],
+      "passive_stats": [],
+      "not_modelled": [
+        "Ralentización, estado Enfriado y aturdimiento"
+      ]
+    },
+    "W": {
+      "name": "Cristalización",
+      "max_rank": 5,
+      "cases": [],
+      "passive_stats": [],
+      "not_modelled": [
+        "Muro de hielo"
+      ]
+    },
+    "E": {
+      "name": "Congelación",
+      "max_rank": 5,
+      "cases": [
+        {
+          "id": "base",
+          "name": "Objetivo sin enfriar",
+          "parts": [
+            {
+              "damage_type": "magic",
+              "formula": {
+                "op": "add",
+                "operands": [
+                  {
+                    "op": "by_rank",
+                    "values": [
+                      55,
+                      80,
+                      105,
+                      130,
+                      155
+                    ]
+                  },
+                  {
+                    "op": "mul",
+                    "operands": [
+                      {
+                        "op": "constant",
+                        "value": 0.55
+                      },
+                      {
+                        "op": "stat",
+                        "stat": "ability_power",
+                        "scope": "total"
+                      }
+                    ]
+                  }
+                ]
+              },
+              "label": "Derivado",
+              "source": "Characters/Anivia/Spells/FrostbiteAbility/Frostbite.mSpellCalculations.TotalDamage (16.23.8406595+branch.releases-16-23.content.release)",
+              "damage_type_source": "spell_frostbite_tooltip <magicDamage>"
+            }
+          ]
+        },
+        {
+          "id": "chilled",
+          "name": "Objetivo enfriado (daño doble)",
+          "parts": [
+            {
+              "damage_type": "magic",
+              "formula": {
+                "op": "mul",
+                "operands": [
+                  {
+                    "op": "add",
+                    "operands": [
+                      {
+                        "op": "by_rank",
+                        "values": [
+                          55,
+                          80,
+                          105,
+                          130,
+                          155
+                        ]
+                      },
+                      {
+                        "op": "mul",
+                        "operands": [
+                          {
+                            "op": "constant",
+                            "value": 0.55
+                          },
+                          {
+                            "op": "stat",
+                            "stat": "ability_power",
+                            "scope": "total"
+                          }
+                        ]
+                      }
+                    ]
+                  },
+                  {
+                    "op": "constant",
+                    "value": 2
+                  }
+                ]
+              },
+              "label": "Derivado",
+              "source": "Characters/Anivia/Spells/FrostbiteAbility/Frostbite.mSpellCalculations.EmpoweredDamage (16.23.8406595+branch.releases-16-23.content.release)",
+              "damage_type_source": "spell_frostbite_tooltip <magicDamage>"
+            }
+          ]
+        }
+      ],
+      "passive_stats": [],
+      "not_modelled": []
+    },
+    "R": {
+      "name": "Tormenta glacial",
+      "max_rank": 3,
+      "cases": [
+        {
+          "id": "per_second_base",
+          "name": "Por segundo (en crecimiento)",
+          "parts": [
+            {
+              "damage_type": "magic",
+              "formula": {
+                "op": "add",
+                "operands": [
+                  {
+                    "op": "by_rank",
+                    "values": [
+                      30,
+                      45,
+                      60
+                    ]
+                  },
+                  {
+                    "op": "mul",
+                    "operands": [
+                      {
+                        "op": "constant",
+                        "value": 0.125
+                      },
+                      {
+                        "op": "stat",
+                        "stat": "ability_power",
+                        "scope": "total"
+                      }
+                    ]
+                  }
+                ]
+              },
+              "label": "Derivado",
+              "source": "Characters/Anivia/Spells/GlacialStormAbility/GlacialStorm.mSpellCalculations.TotalDamagePerSecond (16.23.8406595+branch.releases-16-23.content.release)",
+              "damage_type_source": "spell_glacialstorm_tooltip <magicDamage>"
+            }
+          ]
+        },
+        {
+          "id": "per_second_full",
+          "name": "Por segundo (tormenta completa)",
+          "parts": [
+            {
+              "damage_type": "magic",
+              "formula": {
+                "op": "mul",
+                "operands": [
+                  {
+                    "op": "add",
+                    "operands": [
+                      {
+                        "op": "by_rank",
+                        "values": [
+                          30,
+                          45,
+                          60
+                        ]
+                      },
+                      {
+                        "op": "mul",
+                        "operands": [
+                          {
+                            "op": "constant",
+                            "value": 0.125
+                          },
+                          {
+                            "op": "stat",
+                            "stat": "ability_power",
+                            "scope": "total"
+                          }
+                        ]
+                      }
+                    ]
+                  },
+                  {
+                    "op": "constant",
+                    "value": 3
+                  }
+                ]
+              },
+              "label": "Derivado",
+              "source": "Characters/Anivia/Spells/GlacialStormAbility/GlacialStorm.mSpellCalculations.EmpoweredDamagePerSecondTooltipOnly (16.23.8406595+branch.releases-16-23.content.release)",
+              "damage_type_source": "spell_glacialstorm_tooltip <magicDamage>"
+            }
+          ]
+        }
+      ],
+      "passive_stats": [],
+      "not_modelled": [
+        "Ralentización y consumo continuo de maná por segundo"
+      ]
+    }
+  }
+}

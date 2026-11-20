@@ -1,0 +1,101 @@
+{
+  "champion": "Veigar",
+  "game_version": "16.23",
+  "verified_against": {
+    "content_version": "16.23.8406595+branch.releases-16-23.content.release",
+    "bin_sha256": "b05997d66a2cb2f446244026f4a2aa829c4c6f4f7c10de440ea1bc6461cc904d",
+    "evidence": "odd/tasks/champion-kits-wave-1.md",
+    "result": "Bin del cliente 16.23 convertido con python -m binmodel.batch_kits y compilado con esta especificación curada (CH-01 oleada 1)"
+  },
+  "abilities": {
+    "P": {
+      "name": "Poder de Maldad increíble",
+      "max_rank": 1,
+      "passive_effects": [
+        {
+          "id": "phenomenal_evil",
+          "name": "Maldad increíble",
+          "kind": "stat_bonus",
+          "stat": "ability_power",
+          "mode": "flat",
+          "calculation": "APPerStack",
+          "input_name": "phenomenal_evil_stacks",
+          "condition": "PH acumulado por acumulaciones de Maldad increíble (--input phenomenal_evil_stacks)"
+        }
+      ],
+      "not_modelled": [
+        "Cargas adicionales por asesinatos/asistencias (dTakedownStacks) y reducción de enfriamiento de W cada 50 cargas"
+      ]
+    },
+    "Q": {
+      "name": "Ataque maligno",
+      "tooltip": "spell_veigarbalefulstrike_tooltip",
+      "cases": [
+        {
+          "id": "hit",
+          "name": "Rayo oscuro",
+          "parts": [
+            {
+              "calculation": "TotalDamage"
+            }
+          ]
+        }
+      ],
+      "not_modelled": [
+        "Cargas de Maldad increíble al matar unidades"
+      ]
+    },
+    "W": {
+      "name": "Materia oscura",
+      "tooltip": "spell_veigardarkmatter_tooltip",
+      "cases": [
+        {
+          "id": "hit",
+          "name": "Impacto",
+          "parts": [
+            {
+              "calculation": "TotalDamage"
+            }
+          ]
+        }
+      ],
+      "not_modelled": [
+        "Reducción de enfriamiento por acumulaciones de Maldad increíble"
+      ]
+    },
+    "E": {
+      "name": "Horizonte de sucesos",
+      "tooltip": "spell_veigareventhorizon_tooltip",
+      "not_modelled": [
+        "Cárcel con aturdimiento (StunDuration)"
+      ]
+    },
+    "R": {
+      "name": "Estallido primordial",
+      "tooltip": "spell_veigarr_tooltip",
+      "cases": [
+        {
+          "id": "min",
+          "name": "Objetivo con 100 % vida",
+          "parts": [
+            {
+              "calculation": "MinDamage"
+            }
+          ]
+        },
+        {
+          "id": "max",
+          "name": "Objetivo <= 33 % vida (máximo)",
+          "parts": [
+            {
+              "calculation": "MaxDamage"
+            }
+          ]
+        }
+      ],
+      "not_modelled": [
+        "Interpolación continua entre 100 % y 33 % de vida del objetivo"
+      ]
+    }
+  }
+}

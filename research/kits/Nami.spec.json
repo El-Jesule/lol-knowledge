@@ -1,0 +1,106 @@
+{
+  "champion": "Nami",
+  "game_version": "16.23",
+  "verified_against": {
+    "content_version": "16.23.8406595+branch.releases-16-23.content.release",
+    "bin_sha256": "546626366470b247f52ae76b37c19ea20692091c71e5e7b899206ddd32859ba6",
+    "evidence": "odd/tasks/champion-kits-wave-1.md",
+    "result": "Bin del cliente 16.23 convertido con python -m binmodel.batch_kits y compilado con esta especificación curada (CH-01 oleada 1)"
+  },
+  "abilities": {
+    "P": {
+      "name": "Oleaje",
+      "max_rank": 1,
+      "not_modelled": [
+        "Velocidad de movimiento a aliados (TotalMSBonus)"
+      ]
+    },
+    "Q": {
+      "name": "Prisión de agua",
+      "tooltip": "spell_namiq_tooltip",
+      "cases": [
+        {
+          "id": "bubble",
+          "name": "Burbuja",
+          "parts": [
+            {
+              "calculation": "TotalDamageTT"
+            }
+          ]
+        }
+      ],
+      "not_modelled": [
+        "Aturdimiento (StunDuration)"
+      ]
+    },
+    "W": {
+      "name": "Resaca y oleada",
+      "tooltip": "spell_namiw_tooltip",
+      "cases": [
+        {
+          "id": "hit",
+          "name": "Impacto inicial",
+          "parts": [
+            {
+              "calculation": "TotalDamage"
+            }
+          ]
+        }
+      ],
+      "not_modelled": [
+        "Curación a aliados (TotalHeal) y variación porcentual por rebote (BounceScaling)"
+      ]
+    },
+    "E": {
+      "name": "Bendición de la marea",
+      "tooltip": "spell_namie_tooltip",
+      "cases": [
+        {
+          "id": "per_hit",
+          "name": "Por impacto (1 de 3)",
+          "parts": [
+            {
+              "calculation": "TotalDamage"
+            }
+          ]
+        },
+        {
+          "id": "all_hits",
+          "name": "Los tres impactos",
+          "parts": [
+            {
+              "calculation": "TotalDamage"
+            },
+            {
+              "calculation": "TotalDamage"
+            },
+            {
+              "calculation": "TotalDamage"
+            }
+          ]
+        }
+      ],
+      "not_modelled": [
+        "Ralentización (TotalSlow)"
+      ]
+    },
+    "R": {
+      "name": "Maremoto",
+      "tooltip": "spell_namir_tooltip",
+      "cases": [
+        {
+          "id": "wave",
+          "name": "Ola",
+          "parts": [
+            {
+              "calculation": "TotalDamage"
+            }
+          ]
+        }
+      ],
+      "not_modelled": [
+        "Lanzamiento por los aires, ralentización y velocidad a aliados"
+      ]
+    }
+  }
+}

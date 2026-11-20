@@ -1,0 +1,605 @@
+{
+  "schema": "lol-champion-kit/1",
+  "champion": "Darius",
+  "label": "Derivado",
+  "game_version": "16.23",
+  "content_version": "16.23.8406595+branch.releases-16-23.content.release",
+  "verified_against": {
+    "content_version": "16.23.8406595+branch.releases-16-23.content.release",
+    "bin_sha256": "c5a4b0c35367e10ff5fe8d22a4ac376ed4f4bfdb085b0021ff6cbdd89fee66ea",
+    "evidence": "odd/tasks/champion-kits-wave-1.md",
+    "result": "Bin del cliente 16.23 convertido con python -m binmodel.batch_kits y compilado con esta especificación curada (CH-01 oleada 1)"
+  },
+  "source": "Árboles de cálculo del bin del cliente (python -m binmodel) y marcado de los tooltips del cliente; estructura de casos curada en research/kits/",
+  "abilities": {
+    "P": {
+      "name": "Hemorragia",
+      "max_rank": 1,
+      "cases": [
+        {
+          "id": "bleed_stack",
+          "name": "Sangrado de 1 acumulación (5 s)",
+          "parts": [
+            {
+              "damage_type": "physical",
+              "formula": {
+                "op": "add",
+                "operands": [
+                  {
+                    "op": "linear_by_level",
+                    "min": 13,
+                    "max": 30
+                  },
+                  {
+                    "op": "mul",
+                    "operands": [
+                      {
+                        "op": "constant",
+                        "value": 0.3
+                      },
+                      {
+                        "op": "stat",
+                        "stat": "attack_damage",
+                        "scope": "bonus"
+                      }
+                    ]
+                  }
+                ]
+              },
+              "label": "Derivado",
+              "source": "Characters/Darius/Spells/DariusHemoMarkerAbility/DariusHemoMarker.mSpellCalculations.BleedDamagePerStack (16.23.8406595+branch.releases-16-23.content.release)",
+              "damage_type_source": "spell_dariushemomarker_tooltip <physicalDamage>"
+            }
+          ]
+        },
+        {
+          "id": "bleed_max",
+          "name": "Sangrado con 5 acumulaciones (5 s)",
+          "parts": [
+            {
+              "damage_type": "physical",
+              "formula": {
+                "op": "add",
+                "operands": [
+                  {
+                    "op": "linear_by_level",
+                    "min": 13,
+                    "max": 30
+                  },
+                  {
+                    "op": "mul",
+                    "operands": [
+                      {
+                        "op": "constant",
+                        "value": 0.3
+                      },
+                      {
+                        "op": "stat",
+                        "stat": "attack_damage",
+                        "scope": "bonus"
+                      }
+                    ]
+                  }
+                ]
+              },
+              "label": "Derivado",
+              "source": "Characters/Darius/Spells/DariusHemoMarkerAbility/DariusHemoMarker.mSpellCalculations.BleedDamagePerStack (16.23.8406595+branch.releases-16-23.content.release)",
+              "damage_type_source": "spell_dariushemomarker_tooltip <physicalDamage>"
+            },
+            {
+              "damage_type": "physical",
+              "formula": {
+                "op": "add",
+                "operands": [
+                  {
+                    "op": "linear_by_level",
+                    "min": 13,
+                    "max": 30
+                  },
+                  {
+                    "op": "mul",
+                    "operands": [
+                      {
+                        "op": "constant",
+                        "value": 0.3
+                      },
+                      {
+                        "op": "stat",
+                        "stat": "attack_damage",
+                        "scope": "bonus"
+                      }
+                    ]
+                  }
+                ]
+              },
+              "label": "Derivado",
+              "source": "Characters/Darius/Spells/DariusHemoMarkerAbility/DariusHemoMarker.mSpellCalculations.BleedDamagePerStack (16.23.8406595+branch.releases-16-23.content.release)",
+              "damage_type_source": "spell_dariushemomarker_tooltip <physicalDamage>"
+            },
+            {
+              "damage_type": "physical",
+              "formula": {
+                "op": "add",
+                "operands": [
+                  {
+                    "op": "linear_by_level",
+                    "min": 13,
+                    "max": 30
+                  },
+                  {
+                    "op": "mul",
+                    "operands": [
+                      {
+                        "op": "constant",
+                        "value": 0.3
+                      },
+                      {
+                        "op": "stat",
+                        "stat": "attack_damage",
+                        "scope": "bonus"
+                      }
+                    ]
+                  }
+                ]
+              },
+              "label": "Derivado",
+              "source": "Characters/Darius/Spells/DariusHemoMarkerAbility/DariusHemoMarker.mSpellCalculations.BleedDamagePerStack (16.23.8406595+branch.releases-16-23.content.release)",
+              "damage_type_source": "spell_dariushemomarker_tooltip <physicalDamage>"
+            },
+            {
+              "damage_type": "physical",
+              "formula": {
+                "op": "add",
+                "operands": [
+                  {
+                    "op": "linear_by_level",
+                    "min": 13,
+                    "max": 30
+                  },
+                  {
+                    "op": "mul",
+                    "operands": [
+                      {
+                        "op": "constant",
+                        "value": 0.3
+                      },
+                      {
+                        "op": "stat",
+                        "stat": "attack_damage",
+                        "scope": "bonus"
+                      }
+                    ]
+                  }
+                ]
+              },
+              "label": "Derivado",
+              "source": "Characters/Darius/Spells/DariusHemoMarkerAbility/DariusHemoMarker.mSpellCalculations.BleedDamagePerStack (16.23.8406595+branch.releases-16-23.content.release)",
+              "damage_type_source": "spell_dariushemomarker_tooltip <physicalDamage>"
+            },
+            {
+              "damage_type": "physical",
+              "formula": {
+                "op": "add",
+                "operands": [
+                  {
+                    "op": "linear_by_level",
+                    "min": 13,
+                    "max": 30
+                  },
+                  {
+                    "op": "mul",
+                    "operands": [
+                      {
+                        "op": "constant",
+                        "value": 0.3
+                      },
+                      {
+                        "op": "stat",
+                        "stat": "attack_damage",
+                        "scope": "bonus"
+                      }
+                    ]
+                  }
+                ]
+              },
+              "label": "Derivado",
+              "source": "Characters/Darius/Spells/DariusHemoMarkerAbility/DariusHemoMarker.mSpellCalculations.BleedDamagePerStack (16.23.8406595+branch.releases-16-23.content.release)",
+              "damage_type_source": "spell_dariushemomarker_tooltip <physicalDamage>"
+            }
+          ]
+        }
+      ],
+      "passive_stats": [],
+      "not_modelled": [
+        "Poderío noxiano: DA adicional al alcanzar 5 acumulaciones o asesinar con R (NoxianMightBonusAD)",
+        "Multiplicador de daño contra monstruos (MonsterMod)"
+      ]
+    },
+    "Q": {
+      "name": "Diezmar",
+      "max_rank": 5,
+      "cases": [
+        {
+          "id": "blade",
+          "name": "Filo exterior",
+          "parts": [
+            {
+              "damage_type": "physical",
+              "formula": {
+                "op": "add",
+                "operands": [
+                  {
+                    "op": "by_rank",
+                    "values": [
+                      50,
+                      80,
+                      110,
+                      140,
+                      170
+                    ]
+                  },
+                  {
+                    "op": "mul",
+                    "operands": [
+                      {
+                        "op": "mul",
+                        "operands": [
+                          {
+                            "op": "by_rank",
+                            "values": [
+                              100,
+                              110,
+                              120,
+                              130,
+                              140
+                            ]
+                          },
+                          {
+                            "op": "constant",
+                            "value": 0.01
+                          }
+                        ]
+                      },
+                      {
+                        "op": "stat",
+                        "stat": "attack_damage",
+                        "scope": "total"
+                      }
+                    ]
+                  }
+                ]
+              },
+              "label": "Derivado",
+              "source": "Characters/Darius/Spells/DariusCleaveAbility/DariusCleave.mSpellCalculations.BladeDamage (16.23.8406595+branch.releases-16-23.content.release)",
+              "damage_type_source": "spell_dariusq_tooltip <physicalDamage>"
+            }
+          ]
+        },
+        {
+          "id": "handle",
+          "name": "Mango interior",
+          "parts": [
+            {
+              "damage_type": "physical",
+              "formula": {
+                "op": "mul",
+                "operands": [
+                  {
+                    "op": "add",
+                    "operands": [
+                      {
+                        "op": "by_rank",
+                        "values": [
+                          50,
+                          80,
+                          110,
+                          140,
+                          170
+                        ]
+                      },
+                      {
+                        "op": "mul",
+                        "operands": [
+                          {
+                            "op": "mul",
+                            "operands": [
+                              {
+                                "op": "by_rank",
+                                "values": [
+                                  100,
+                                  110,
+                                  120,
+                                  130,
+                                  140
+                                ]
+                              },
+                              {
+                                "op": "constant",
+                                "value": 0.01
+                              }
+                            ]
+                          },
+                          {
+                            "op": "stat",
+                            "stat": "attack_damage",
+                            "scope": "total"
+                          }
+                        ]
+                      }
+                    ]
+                  },
+                  {
+                    "op": "constant",
+                    "value": 0.35
+                  }
+                ]
+              },
+              "label": "Derivado",
+              "source": "Characters/Darius/Spells/DariusCleaveAbility/DariusCleave.mSpellCalculations.HandleDamage (16.23.8406595+branch.releases-16-23.content.release)",
+              "damage_type_source": "spell_dariusq_tooltip <physicalDamage>"
+            }
+          ]
+        }
+      ],
+      "passive_stats": [],
+      "not_modelled": [
+        "Curación según vida que falta por campeón alcanzado con el filo (MissingHealPercent)"
+      ]
+    },
+    "W": {
+      "name": "Golpe atroz",
+      "max_rank": 5,
+      "cases": [
+        {
+          "id": "strike",
+          "name": "Ataque potenciado",
+          "parts": [
+            {
+              "damage_type": "physical",
+              "formula": {
+                "op": "mul",
+                "operands": [
+                  {
+                    "op": "by_rank",
+                    "values": [
+                      1.4,
+                      1.45,
+                      1.5,
+                      1.55,
+                      1.6
+                    ]
+                  },
+                  {
+                    "op": "stat",
+                    "stat": "attack_damage",
+                    "scope": "total"
+                  }
+                ]
+              },
+              "label": "Derivado",
+              "source": "Characters/Darius/Spells/DariusNoxianTacticsONHAbility/DariusNoxianTacticsONH.mSpellCalculations.EmpoweredAttackDamage (16.23.8406595+branch.releases-16-23.content.release)",
+              "damage_type_source": "spell_dariusw_tooltip <physicalDamage>"
+            }
+          ]
+        }
+      ],
+      "passive_stats": [],
+      "not_modelled": [
+        "Ralentización (SlowPercent) y devolución de maná/enfriamiento al matar"
+      ]
+    },
+    "E": {
+      "name": "Atrapar",
+      "max_rank": 5,
+      "cases": [],
+      "passive_stats": [
+        {
+          "stat": "armor_penetration_percent",
+          "formula": {
+            "op": "by_rank",
+            "values": [
+              0.2,
+              0.25,
+              0.3,
+              0.35,
+              0.4
+            ]
+          },
+          "label": "Derivado",
+          "source": "Characters/Darius/Spells/DariusAxeGrabConeAbility/DariusAxeGrabCone.DataValues.PassivePercentArmorPen (16.23.8406595+branch.releases-16-23.content.release)",
+          "condition": "pasiva de la E: activa con la E aprendida, también en enfriamiento"
+        }
+      ],
+      "not_modelled": [
+        "Atracción, levantamiento por los aires y ralentización (SlowPercent)"
+      ]
+    },
+    "R": {
+      "name": "Guillotina noxiana",
+      "max_rank": 3,
+      "cases": [
+        {
+          "id": "base",
+          "name": "0 acumulaciones de Hemorragia",
+          "parts": [
+            {
+              "damage_type": "true",
+              "formula": {
+                "op": "add",
+                "operands": [
+                  {
+                    "op": "by_rank",
+                    "values": [
+                      125,
+                      250,
+                      375
+                    ]
+                  },
+                  {
+                    "op": "mul",
+                    "operands": [
+                      {
+                        "op": "constant",
+                        "value": 0.75
+                      },
+                      {
+                        "op": "stat",
+                        "stat": "attack_damage",
+                        "scope": "bonus"
+                      }
+                    ]
+                  }
+                ]
+              },
+              "label": "Derivado",
+              "source": "Characters/Darius/Spells/DariusExecuteAbility/DariusExecute.mSpellCalculations.Damage (16.23.8406595+branch.releases-16-23.content.release)",
+              "damage_type_source": "spell_dariusr_tooltip <trueDamage>"
+            }
+          ]
+        },
+        {
+          "id": "max_stacks",
+          "name": "5 acumulaciones de Hemorragia",
+          "parts": [
+            {
+              "damage_type": "true",
+              "formula": {
+                "op": "mul",
+                "operands": [
+                  {
+                    "op": "add",
+                    "operands": [
+                      {
+                        "op": "by_rank",
+                        "values": [
+                          125,
+                          250,
+                          375
+                        ]
+                      },
+                      {
+                        "op": "mul",
+                        "operands": [
+                          {
+                            "op": "constant",
+                            "value": 0.75
+                          },
+                          {
+                            "op": "stat",
+                            "stat": "attack_damage",
+                            "scope": "bonus"
+                          }
+                        ]
+                      }
+                    ]
+                  },
+                  {
+                    "op": "constant",
+                    "value": 2
+                  }
+                ]
+              },
+              "label": "Derivado",
+              "source": "Characters/Darius/Spells/DariusExecuteAbility/DariusExecute.mSpellCalculations.MaximumDamage (16.23.8406595+branch.releases-16-23.content.release)",
+              "damage_type_source": "spell_dariusr_tooltip <trueDamage>"
+            }
+          ]
+        },
+        {
+          "id": "recast",
+          "name": "Reactivación tras asesinato (0 cargas)",
+          "parts": [
+            {
+              "damage_type": "true",
+              "formula": {
+                "op": "add",
+                "operands": [
+                  {
+                    "op": "by_rank",
+                    "values": [
+                      125,
+                      250,
+                      375
+                    ]
+                  },
+                  {
+                    "op": "mul",
+                    "operands": [
+                      {
+                        "op": "constant",
+                        "value": 0.75
+                      },
+                      {
+                        "op": "stat",
+                        "stat": "attack_damage",
+                        "scope": "bonus"
+                      }
+                    ]
+                  }
+                ]
+              },
+              "label": "Derivado",
+              "source": "Characters/Darius/Spells/DariusExecuteAbility/DariusExecute.mSpellCalculations.Damage (16.23.8406595+branch.releases-16-23.content.release)",
+              "damage_type_source": "spell_dariusr_tooltip <trueDamage>"
+            }
+          ],
+          "recast": true
+        },
+        {
+          "id": "recast_max",
+          "name": "Reactivación tras asesinato (5 cargas)",
+          "parts": [
+            {
+              "damage_type": "true",
+              "formula": {
+                "op": "mul",
+                "operands": [
+                  {
+                    "op": "add",
+                    "operands": [
+                      {
+                        "op": "by_rank",
+                        "values": [
+                          125,
+                          250,
+                          375
+                        ]
+                      },
+                      {
+                        "op": "mul",
+                        "operands": [
+                          {
+                            "op": "constant",
+                            "value": 0.75
+                          },
+                          {
+                            "op": "stat",
+                            "stat": "attack_damage",
+                            "scope": "bonus"
+                          }
+                        ]
+                      }
+                    ]
+                  },
+                  {
+                    "op": "constant",
+                    "value": 2
+                  }
+                ]
+              },
+              "label": "Derivado",
+              "source": "Characters/Darius/Spells/DariusExecuteAbility/DariusExecute.mSpellCalculations.MaximumDamage (16.23.8406595+branch.releases-16-23.content.release)",
+              "damage_type_source": "spell_dariusr_tooltip <trueDamage>"
+            }
+          ],
+          "recast": true
+        }
+      ],
+      "passive_stats": [],
+      "not_modelled": [
+        "Reinicio completo de enfriamiento y coste 0 en rango 3 tras asesinato"
+      ],
+      "recast_window_seconds": 20
+    }
+  }
+}

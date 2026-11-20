@@ -1,0 +1,363 @@
+{
+  "schema": "lol-champion-kit/1",
+  "champion": "Sett",
+  "label": "Derivado",
+  "game_version": "16.23",
+  "content_version": "16.23.8406595+branch.releases-16-23.content.release",
+  "verified_against": {
+    "content_version": "16.23.8406595+branch.releases-16-23.content.release",
+    "bin_sha256": "908c58118107634a029cc1b386f004867e4421e40c78a381b867b1455b274850",
+    "evidence": "odd/tasks/champion-kits-wave-1.md",
+    "result": "Bin del cliente 16.23 convertido con python -m binmodel.batch_kits y compilado con esta especificación curada (CH-01 oleada 1)"
+  },
+  "source": "Árboles de cálculo del bin del cliente (python -m binmodel) y marcado de los tooltips del cliente; estructura de casos curada en research/kits/",
+  "abilities": {
+    "P": {
+      "name": "Coraje del foso",
+      "max_rank": 1,
+      "cases": [
+        {
+          "id": "right_punch",
+          "name": "Daño adicional del puñetazo derecho",
+          "parts": [
+            {
+              "damage_type": "physical",
+              "formula": {
+                "op": "add",
+                "operands": [
+                  {
+                    "op": "by_level",
+                    "values": [
+                      5,
+                      10,
+                      15,
+                      20,
+                      25,
+                      30,
+                      35,
+                      40,
+                      45,
+                      50,
+                      55,
+                      60,
+                      65,
+                      70,
+                      75,
+                      80,
+                      85,
+                      90
+                    ]
+                  },
+                  {
+                    "op": "mul",
+                    "operands": [
+                      {
+                        "op": "constant",
+                        "value": 0.55
+                      },
+                      {
+                        "op": "stat",
+                        "stat": "attack_damage",
+                        "scope": "bonus"
+                      }
+                    ]
+                  }
+                ]
+              },
+              "label": "Derivado",
+              "source": "Characters/Sett/Spells/SettPassiveAbility/SettPassive.mSpellCalculations.RightPunchBonus (16.23.8406595+branch.releases-16-23.content.release)",
+              "damage_type_source": "spell_settpassive_tooltip <physicalDamage>"
+            }
+          ]
+        }
+      ],
+      "passive_stats": [],
+      "not_modelled": [
+        "Alternancia izquierda/derecha y mayor velocidad de ataque del golpe derecho",
+        "Regeneración adicional por vida perdida (TooltipRegenPerMissingHealthCalc)"
+      ]
+    },
+    "Q": {
+      "name": "Nudillos a punto",
+      "max_rank": 5,
+      "cases": [
+        {
+          "id": "hit",
+          "name": "Daño adicional por golpe",
+          "parts": [
+            {
+              "damage_type": "physical",
+              "formula": {
+                "op": "add",
+                "operands": [
+                  {
+                    "op": "by_rank",
+                    "values": [
+                      10,
+                      20,
+                      30,
+                      40,
+                      50
+                    ]
+                  },
+                  {
+                    "op": "mul",
+                    "operands": [
+                      {
+                        "op": "add",
+                        "operands": [
+                          {
+                            "op": "constant",
+                            "value": 0.01
+                          },
+                          {
+                            "op": "mul",
+                            "operands": [
+                              {
+                                "op": "by_rank",
+                                "values": [
+                                  0.0001,
+                                  0.00015,
+                                  0.0002,
+                                  0.00025,
+                                  0.0003
+                                ]
+                              },
+                              {
+                                "op": "stat",
+                                "stat": "attack_damage",
+                                "scope": "total"
+                              }
+                            ]
+                          }
+                        ]
+                      },
+                      {
+                        "op": "stat",
+                        "stat": "health",
+                        "scope": "max",
+                        "subject": "target"
+                      }
+                    ]
+                  }
+                ]
+              },
+              "label": "Derivado",
+              "source": "Characters/Sett/Spells/SettQAbility/SettQ · DataValues.BaseDamage + MaxHealthDamageCalc × vida máxima del objetivo (16.23.8406595+branch.releases-16-23.content.release)",
+              "damage_type_source": "spell_settw_tooltip <physicalDamage>"
+            }
+          ]
+        }
+      ],
+      "passive_stats": [],
+      "not_modelled": [
+        "Velocidad de movimiento hacia campeones y tope de 400 contra monstruos",
+        "El daño de los dos ataques básicos potenciados: se suma aparte"
+      ]
+    },
+    "W": {
+      "name": "Trastazo",
+      "max_rank": 5,
+      "cases": [
+        {
+          "id": "center_base",
+          "name": "Centro sin coraje (daño verdadero)",
+          "parts": [
+            {
+              "damage_type": "true",
+              "formula": {
+                "op": "by_rank",
+                "values": [
+                  80,
+                  100,
+                  120,
+                  140,
+                  160
+                ]
+              },
+              "label": "Derivado",
+              "source": "Characters/Sett/Spells/SettWAbility/SettW.mSpellCalculations.DamageCalc (16.23.8406595+branch.releases-16-23.content.release)",
+              "damage_type_source": "spell_sette_tooltip <trueDamage>"
+            }
+          ]
+        },
+        {
+          "id": "center_max_grit",
+          "name": "Centro con coraje máximo (daño verdadero)",
+          "parts": [
+            {
+              "damage_type": "true",
+              "formula": {
+                "op": "by_rank",
+                "values": [
+                  80,
+                  100,
+                  120,
+                  140,
+                  160
+                ]
+              },
+              "label": "Derivado",
+              "source": "Characters/Sett/Spells/SettWAbility/SettW.mSpellCalculations.DamageCalc (16.23.8406595+branch.releases-16-23.content.release)",
+              "damage_type_source": "spell_sette_tooltip <trueDamage>"
+            },
+            {
+              "damage_type": "true",
+              "formula": {
+                "op": "mul",
+                "operands": [
+                  {
+                    "op": "mul",
+                    "operands": [
+                      {
+                        "op": "constant",
+                        "value": 0.5
+                      },
+                      {
+                        "op": "stat",
+                        "stat": "health",
+                        "scope": "total"
+                      }
+                    ]
+                  },
+                  {
+                    "op": "add",
+                    "operands": [
+                      {
+                        "op": "constant",
+                        "value": 0.25
+                      },
+                      {
+                        "op": "mul",
+                        "operands": [
+                          {
+                            "op": "constant",
+                            "value": 0.0025
+                          },
+                          {
+                            "op": "stat",
+                            "stat": "attack_damage",
+                            "scope": "bonus"
+                          }
+                        ]
+                      }
+                    ]
+                  }
+                ]
+              },
+              "label": "Derivado",
+              "source": "Characters/Sett/Spells/SettWAbility/SettW · MaxGrit × DamageConversion (coraje máximo = 50 % vida máxima) (16.23.8406595+branch.releases-16-23.content.release)",
+              "damage_type_source": "spell_sette_tooltip <trueDamage>"
+            }
+          ]
+        }
+      ],
+      "passive_stats": [],
+      "not_modelled": [
+        "Daño físico en los bordes exteriores",
+        "Acumulación dinámica de coraje por daño recibido y escudo (ShieldConversion)"
+      ]
+    },
+    "E": {
+      "name": "Rompecaras",
+      "max_rank": 5,
+      "cases": [
+        {
+          "id": "slam",
+          "name": "Choque",
+          "parts": [
+            {
+              "damage_type": "physical",
+              "formula": {
+                "op": "add",
+                "operands": [
+                  {
+                    "op": "by_rank",
+                    "values": [
+                      50,
+                      70,
+                      90,
+                      110,
+                      130
+                    ]
+                  },
+                  {
+                    "op": "mul",
+                    "operands": [
+                      {
+                        "op": "constant",
+                        "value": 0.6
+                      },
+                      {
+                        "op": "stat",
+                        "stat": "attack_damage",
+                        "scope": "total"
+                      }
+                    ]
+                  }
+                ]
+              },
+              "label": "Derivado",
+              "source": "Characters/Sett/Spells/SettEAbility/SettE.mSpellCalculations.DamageCalc (16.23.8406595+branch.releases-16-23.content.release)",
+              "damage_type_source": "spell_settq_tooltip <physicalDamage>"
+            }
+          ]
+        }
+      ],
+      "passive_stats": [],
+      "not_modelled": [
+        "Ralentización, aturdimiento bilateral y bonificación contra monstruos"
+      ]
+    },
+    "R": {
+      "name": "El gran espectáculo",
+      "max_rank": 3,
+      "cases": [
+        {
+          "id": "base",
+          "name": "Daño base (sin vida adicional del objetivo)",
+          "parts": [
+            {
+              "damage_type": "physical",
+              "formula": {
+                "op": "add",
+                "operands": [
+                  {
+                    "op": "by_rank",
+                    "values": [
+                      200,
+                      300,
+                      400
+                    ]
+                  },
+                  {
+                    "op": "mul",
+                    "operands": [
+                      {
+                        "op": "constant",
+                        "value": 1.2
+                      },
+                      {
+                        "op": "stat",
+                        "stat": "attack_damage",
+                        "scope": "bonus"
+                      }
+                    ]
+                  }
+                ]
+              },
+              "label": "Derivado",
+              "source": "Characters/Sett/Spells/SettRAbility/SettR.mSpellCalculations.DamageCalc (16.23.8406595+branch.releases-16-23.content.release)",
+              "damage_type_source": "spell_settr_tooltip <physicalDamage>"
+            }
+          ]
+        }
+      ],
+      "passive_stats": [],
+      "not_modelled": [
+        "Daño adicional según la vida adicional del campeón agarrado (MaxHealthDamage × vida adicional del objetivo)",
+        "Supresión y ralentización"
+      ]
+    }
+  }
+}

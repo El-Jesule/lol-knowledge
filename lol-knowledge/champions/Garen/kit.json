@@ -1,0 +1,269 @@
+{
+  "schema": "lol-champion-kit/1",
+  "champion": "Garen",
+  "label": "Derivado",
+  "game_version": "16.23",
+  "content_version": "16.23.8406595+branch.releases-16-23.content.release",
+  "verified_against": {
+    "content_version": "16.23.8406595+branch.releases-16-23.content.release",
+    "bin_sha256": "6b90c0d9f5c40564363adc6047b4e5ca35eaecc1932d393e4fd2d16ce049c0c2",
+    "evidence": "odd/tasks/champion-kits-wave-1.md",
+    "result": "Bin del cliente 16.23 convertido con python -m binmodel.batch_kits y compilado con esta especificación curada (CH-01 oleada 1)"
+  },
+  "source": "Árboles de cálculo del bin del cliente (python -m binmodel) y marcado de los tooltips del cliente; estructura de casos curada en research/kits/",
+  "abilities": {
+    "P": {
+      "name": "Perseverancia",
+      "max_rank": 1,
+      "cases": [],
+      "passive_stats": [],
+      "not_modelled": [
+        "Regeneración de vida máxima fuera de combate (RegenCalc)"
+      ]
+    },
+    "Q": {
+      "name": "Golpe decisivo",
+      "max_rank": 5,
+      "cases": [
+        {
+          "id": "strike",
+          "name": "Daño físico adicional",
+          "parts": [
+            {
+              "damage_type": "physical",
+              "formula": {
+                "op": "add",
+                "operands": [
+                  {
+                    "op": "by_rank",
+                    "values": [
+                      30,
+                      60,
+                      90,
+                      120,
+                      150
+                    ]
+                  },
+                  {
+                    "op": "mul",
+                    "operands": [
+                      {
+                        "op": "constant",
+                        "value": 1.5
+                      },
+                      {
+                        "op": "stat",
+                        "stat": "attack_damage",
+                        "scope": "total"
+                      }
+                    ]
+                  }
+                ]
+              },
+              "label": "Derivado",
+              "source": "Characters/Garen/Spells/GarenQAbility/GarenQ.mSpellCalculations.TotalDamage (16.23.8406595+branch.releases-16-23.content.release)",
+              "damage_type_source": "spell_garenq_tooltip <physicalDamage>"
+            }
+          ]
+        }
+      ],
+      "passive_stats": [],
+      "not_modelled": [
+        "Limpieza de ralentizaciones, velocidad de movimiento, silencio y ataque básico aparte"
+      ]
+    },
+    "W": {
+      "name": "Coraje",
+      "max_rank": 5,
+      "cases": [],
+      "passive_stats": [],
+      "not_modelled": [
+        "Armadura y RM acumulables por asesinatos (ResistsForTooltip)",
+        "Reducción de daño, tenacidad y escudo (TotalShield)"
+      ]
+    },
+    "E": {
+      "name": "Juicio",
+      "max_rank": 5,
+      "cases": [
+        {
+          "id": "tick",
+          "name": "Un giro (objetivo secundario)",
+          "parts": [
+            {
+              "damage_type": "physical",
+              "formula": {
+                "op": "add",
+                "operands": [
+                  {
+                    "op": "by_rank",
+                    "values": [
+                      4,
+                      7,
+                      10,
+                      13,
+                      16
+                    ]
+                  },
+                  {
+                    "op": "mul",
+                    "operands": [
+                      {
+                        "op": "by_rank",
+                        "values": [
+                          0.4,
+                          0.43,
+                          0.46,
+                          0.49,
+                          0.52
+                        ]
+                      },
+                      {
+                        "op": "stat",
+                        "stat": "attack_damage",
+                        "scope": "total"
+                      }
+                    ]
+                  }
+                ]
+              },
+              "label": "Derivado",
+              "source": "Characters/Garen/Spells/GarenEAbility/GarenE.mSpellCalculations.TotalDamage (16.23.8406595+branch.releases-16-23.content.release)",
+              "damage_type_source": "spell_garene_tooltip <physicalDamage>"
+            }
+          ]
+        },
+        {
+          "id": "tick_nearest",
+          "name": "Un giro (enemigo más cercano, +25 %)",
+          "parts": [
+            {
+              "damage_type": "physical",
+              "formula": {
+                "op": "mul",
+                "operands": [
+                  {
+                    "op": "add",
+                    "operands": [
+                      {
+                        "op": "by_rank",
+                        "values": [
+                          4,
+                          7,
+                          10,
+                          13,
+                          16
+                        ]
+                      },
+                      {
+                        "op": "mul",
+                        "operands": [
+                          {
+                            "op": "by_rank",
+                            "values": [
+                              0.4,
+                              0.43,
+                              0.46,
+                              0.49,
+                              0.52
+                            ]
+                          },
+                          {
+                            "op": "stat",
+                            "stat": "attack_damage",
+                            "scope": "total"
+                          }
+                        ]
+                      }
+                    ]
+                  },
+                  {
+                    "op": "add",
+                    "operands": [
+                      {
+                        "op": "constant",
+                        "value": 1
+                      },
+                      {
+                        "op": "constant",
+                        "value": 0.25
+                      }
+                    ]
+                  }
+                ]
+              },
+              "label": "Derivado",
+              "source": "Characters/Garen/Spells/GarenEAbility/GarenE · TotalDamage × (1 + DataValues.NearestEnemyBonus) (16.23.8406595+branch.releases-16-23.content.release)",
+              "damage_type_source": "spell_garene_tooltip <physicalDamage>"
+            }
+          ]
+        }
+      ],
+      "passive_stats": [],
+      "not_modelled": [
+        "Número total de giros escalado con velocidad de ataque adicional (base 7)",
+        "Golpes críticos de Juicio y reducción del 25 % de armadura tras 6 giros"
+      ]
+    },
+    "R": {
+      "name": "Justicia demaciana",
+      "max_rank": 3,
+      "cases": [
+        {
+          "id": "execute",
+          "name": "Ejecución (daño verdadero)",
+          "parts": [
+            {
+              "damage_type": "true",
+              "formula": {
+                "op": "add",
+                "operands": [
+                  {
+                    "op": "by_rank",
+                    "values": [
+                      125,
+                      200,
+                      275
+                    ]
+                  },
+                  {
+                    "op": "mul",
+                    "operands": [
+                      {
+                        "op": "by_rank",
+                        "values": [
+                          0.25,
+                          0.3,
+                          0.35
+                        ]
+                      },
+                      {
+                        "op": "stat",
+                        "stat": "health",
+                        "scope": "max",
+                        "subject": "target"
+                      },
+                      {
+                        "op": "stat",
+                        "stat": "health",
+                        "scope": "missing_fraction",
+                        "subject": "target"
+                      }
+                    ]
+                  }
+                ]
+              },
+              "label": "Derivado",
+              "source": "Characters/Garen/Spells/GarenRAbility/GarenR · BaseDamage + ExecuteDamage × vida que falta del objetivo (16.23.8406595+branch.releases-16-23.content.release)",
+              "damage_type_source": "spell_garenr_tooltip <trueDamage>"
+            }
+          ]
+        }
+      ],
+      "passive_stats": [],
+      "not_modelled": [
+        "Revelación breve del objetivo"
+      ]
+    }
+  }
+}

@@ -1,0 +1,89 @@
+{
+  "champion": "Lux",
+  "game_version": "16.23",
+  "verified_against": {
+    "content_version": "16.23.8406595+branch.releases-16-23.content.release",
+    "bin_sha256": "dee4e794af8329d2bf8187ec035de05d6cf207f7aa7f10fcbe49fe6e09d6e9c8",
+    "evidence": "odd/tasks/champion-kits-wave-1.md",
+    "result": "Bin del cliente 16.23 convertido con python -m binmodel.batch_kits y compilado con esta especificación curada (CH-01 oleada 1)"
+  },
+  "abilities": {
+    "P": {
+      "name": "Iluminación",
+      "tooltip": "buff_luxp_tooltip",
+      "max_rank": 1,
+      "cases": [
+        {
+          "id": "proc",
+          "name": "Detonación de marca",
+          "parts": [
+            {
+              "calculation": "TotalDamage"
+            }
+          ]
+        }
+      ]
+    },
+    "Q": {
+      "name": "Enlace de luz",
+      "tooltip": "spell_luxq_tooltip",
+      "cases": [
+        {
+          "id": "hit",
+          "name": "Esfera de luz",
+          "parts": [
+            {
+              "calculation": "TotalDamageTT"
+            }
+          ]
+        }
+      ],
+      "not_modelled": [
+        "Inmovilización a los dos primeros objetivos (RootDuration)"
+      ]
+    },
+    "W": {
+      "name": "Barrera prismática",
+      "tooltip": "spell_luxw_tooltip",
+      "not_modelled": [
+        "Escudo de ida y vuelta (TotalShieldTT)"
+      ]
+    },
+    "E": {
+      "name": "Singularidad brillante",
+      "tooltip": "spell_luxe_tooltip",
+      "cases": [
+        {
+          "id": "detonate",
+          "name": "Explosión",
+          "parts": [
+            {
+              "calculation": "TotalDamageTT"
+            }
+          ]
+        }
+      ],
+      "not_modelled": [
+        "Ralentización (SlowPercent) y revelación de zona"
+      ]
+    },
+    "R": {
+      "name": "Chispa final",
+      "tooltip": "spell_luxr_tooltip",
+      "cases": [
+        {
+          "id": "beam",
+          "name": "Rayo láser",
+          "parts": [
+            {
+              "calculation": "TotalDamage"
+            }
+          ]
+        }
+      ],
+      "not_modelled": [
+        "Consumo y reaplicación automática de Iluminación"
+      ]
+    }
+  }
+}

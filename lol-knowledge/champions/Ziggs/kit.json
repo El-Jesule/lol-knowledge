@@ -1,0 +1,401 @@
+{
+  "schema": "lol-champion-kit/1",
+  "champion": "Ziggs",
+  "label": "Derivado",
+  "game_version": "16.23",
+  "content_version": "16.23.8406595+branch.releases-16-23.content.release",
+  "verified_against": {
+    "content_version": "16.23.8406595+branch.releases-16-23.content.release",
+    "bin_sha256": "fb5ede0d6f322d4bffaad14eba7931c8b6b639c77a769e247e35a97372a9eb5c",
+    "evidence": "odd/tasks/champion-kits-wave-1.md",
+    "result": "Bin del cliente 16.23 convertido con python -m binmodel.batch_kits y compilado con esta especificación curada (CH-01 oleada 1)"
+  },
+  "source": "Árboles de cálculo del bin del cliente (python -m binmodel) y marcado de los tooltips del cliente; estructura de casos curada en research/kits/",
+  "abilities": {
+    "P": {
+      "name": "Mecha corta",
+      "max_rank": 1,
+      "cases": [
+        {
+          "id": "proc",
+          "name": "Contra unidades",
+          "parts": [
+            {
+              "damage_type": "magic",
+              "formula": {
+                "op": "add",
+                "operands": [
+                  {
+                    "op": "by_level",
+                    "values": [
+                      20,
+                      24,
+                      28,
+                      32,
+                      36,
+                      40,
+                      44,
+                      52,
+                      60,
+                      68,
+                      76,
+                      84,
+                      92,
+                      104,
+                      116,
+                      128,
+                      140,
+                      152
+                    ]
+                  },
+                  {
+                    "op": "mul",
+                    "operands": [
+                      {
+                        "op": "constant",
+                        "value": 0.5
+                      },
+                      {
+                        "op": "stat",
+                        "stat": "ability_power",
+                        "scope": "total"
+                      }
+                    ]
+                  }
+                ]
+              },
+              "label": "Derivado",
+              "source": "Characters/Ziggs/Spells/ZiggsPassiveBuffAbility/ZiggsPassiveBuff.mSpellCalculations.TotalDamage (16.23.8406595+branch.releases-16-23.content.release)",
+              "damage_type_source": "spell_ziggspassivebuff_tooltip <magicDamage>"
+            }
+          ]
+        },
+        {
+          "id": "structure",
+          "name": "Contra estructuras",
+          "parts": [
+            {
+              "damage_type": "magic",
+              "formula": {
+                "op": "mul",
+                "operands": [
+                  {
+                    "op": "add",
+                    "operands": [
+                      {
+                        "op": "by_level",
+                        "values": [
+                          20,
+                          24,
+                          28,
+                          32,
+                          36,
+                          40,
+                          44,
+                          52,
+                          60,
+                          68,
+                          76,
+                          84,
+                          92,
+                          104,
+                          116,
+                          128,
+                          140,
+                          152
+                        ]
+                      },
+                      {
+                        "op": "mul",
+                        "operands": [
+                          {
+                            "op": "constant",
+                            "value": 0.5
+                          },
+                          {
+                            "op": "stat",
+                            "stat": "ability_power",
+                            "scope": "total"
+                          }
+                        ]
+                      }
+                    ]
+                  },
+                  {
+                    "op": "constant",
+                    "value": 1.75
+                  }
+                ]
+              },
+              "label": "Derivado",
+              "source": "Characters/Ziggs/Spells/ZiggsPassiveBuffAbility/ZiggsPassiveBuff.mSpellCalculations.StructureDamage (16.23.8406595+branch.releases-16-23.content.release)",
+              "damage_type_source": "spell_ziggspassivebuff_tooltip <magicDamage>"
+            }
+          ]
+        }
+      ],
+      "passive_stats": [],
+      "not_modelled": [
+        "Enfriamiento y reducción por habilidad lanzada (SpellCDR)"
+      ]
+    },
+    "Q": {
+      "name": "Bomba rebotante",
+      "max_rank": 5,
+      "cases": [
+        {
+          "id": "bomb",
+          "name": "Explosión",
+          "parts": [
+            {
+              "damage_type": "magic",
+              "formula": {
+                "op": "add",
+                "operands": [
+                  {
+                    "op": "by_rank",
+                    "values": [
+                      80,
+                      130,
+                      180,
+                      230,
+                      280
+                    ]
+                  },
+                  {
+                    "op": "mul",
+                    "operands": [
+                      {
+                        "op": "by_rank",
+                        "values": [
+                          0.6,
+                          0.65,
+                          0.7,
+                          0.75,
+                          0.8
+                        ]
+                      },
+                      {
+                        "op": "stat",
+                        "stat": "ability_power",
+                        "scope": "total"
+                      }
+                    ]
+                  }
+                ]
+              },
+              "label": "Derivado",
+              "source": "Characters/Ziggs/Spells/ZiggsQAbility/ZiggsQ.mSpellCalculations.TotalDamage (16.23.8406595+branch.releases-16-23.content.release)",
+              "damage_type_source": "spell_ziggsq_tooltip <magicDamage>"
+            }
+          ]
+        }
+      ],
+      "passive_stats": [],
+      "not_modelled": []
+    },
+    "W": {
+      "name": "Carga concentrada",
+      "max_rank": 5,
+      "cases": [
+        {
+          "id": "detonate",
+          "name": "Detonación",
+          "parts": [
+            {
+              "damage_type": "magic",
+              "formula": {
+                "op": "add",
+                "operands": [
+                  {
+                    "op": "by_rank",
+                    "values": [
+                      70,
+                      105,
+                      140,
+                      175,
+                      210
+                    ]
+                  },
+                  {
+                    "op": "mul",
+                    "operands": [
+                      {
+                        "op": "constant",
+                        "value": 0.5
+                      },
+                      {
+                        "op": "stat",
+                        "stat": "ability_power",
+                        "scope": "total"
+                      }
+                    ]
+                  }
+                ]
+              },
+              "label": "Derivado",
+              "source": "Characters/Ziggs/Spells/ZiggsWAbility/ZiggsW.mSpellCalculations.TotalDamage (16.23.8406595+branch.releases-16-23.content.release)",
+              "damage_type_source": "spell_ziggsw_tooltip <magicDamage>"
+            }
+          ]
+        }
+      ],
+      "passive_stats": [],
+      "not_modelled": [
+        "Empuje y demolición de torretas por debajo del umbral de vida"
+      ]
+    },
+    "E": {
+      "name": "Campo de hexplosivos",
+      "max_rank": 5,
+      "cases": [
+        {
+          "id": "mine",
+          "name": "Primera mina",
+          "parts": [
+            {
+              "damage_type": "magic",
+              "formula": {
+                "op": "add",
+                "operands": [
+                  {
+                    "op": "by_rank",
+                    "values": [
+                      30,
+                      70,
+                      110,
+                      150,
+                      190
+                    ]
+                  },
+                  {
+                    "op": "mul",
+                    "operands": [
+                      {
+                        "op": "by_rank",
+                        "values": [
+                          0.25,
+                          0.3,
+                          0.35,
+                          0.4,
+                          0.45
+                        ]
+                      },
+                      {
+                        "op": "stat",
+                        "stat": "ability_power",
+                        "scope": "total"
+                      }
+                    ]
+                  }
+                ]
+              },
+              "label": "Derivado",
+              "source": "Characters/Ziggs/Spells/ZiggsEAbility/ZiggsE.mSpellCalculations.TotalDamage (16.23.8406595+branch.releases-16-23.content.release)",
+              "damage_type_source": "spell_ziggse_tooltip <magicDamage>"
+            }
+          ]
+        }
+      ],
+      "passive_stats": [],
+      "not_modelled": [
+        "Minas sucesivas con daño reducido (ReducedDamage) y ralentización"
+      ]
+    },
+    "R": {
+      "name": "Megabomba incendiaria",
+      "max_rank": 3,
+      "cases": [
+        {
+          "id": "center",
+          "name": "Centro de la explosión",
+          "parts": [
+            {
+              "damage_type": "magic",
+              "formula": {
+                "op": "add",
+                "operands": [
+                  {
+                    "op": "by_rank",
+                    "values": [
+                      300,
+                      500,
+                      700
+                    ]
+                  },
+                  {
+                    "op": "mul",
+                    "operands": [
+                      {
+                        "op": "constant",
+                        "value": 1
+                      },
+                      {
+                        "op": "stat",
+                        "stat": "ability_power",
+                        "scope": "total"
+                      }
+                    ]
+                  }
+                ]
+              },
+              "label": "Derivado",
+              "source": "Characters/Ziggs/Spells/ZiggsRAbility/ZiggsR.mSpellCalculations.EmpoweredDamage (16.23.8406595+branch.releases-16-23.content.release)",
+              "damage_type_source": "spell_ziggsr_tooltip <magicDamage>"
+            }
+          ]
+        },
+        {
+          "id": "outer",
+          "name": "Borde exterior",
+          "parts": [
+            {
+              "damage_type": "magic",
+              "formula": {
+                "op": "mul",
+                "operands": [
+                  {
+                    "op": "add",
+                    "operands": [
+                      {
+                        "op": "by_rank",
+                        "values": [
+                          300,
+                          500,
+                          700
+                        ]
+                      },
+                      {
+                        "op": "mul",
+                        "operands": [
+                          {
+                            "op": "constant",
+                            "value": 1
+                          },
+                          {
+                            "op": "stat",
+                            "stat": "ability_power",
+                            "scope": "total"
+                          }
+                        ]
+                      }
+                    ]
+                  },
+                  {
+                    "op": "constant",
+                    "value": 0.65
+                  }
+                ]
+              },
+              "label": "Derivado",
+              "source": "Characters/Ziggs/Spells/ZiggsRAbility/ZiggsR.mSpellCalculations.BlastDamage (16.23.8406595+branch.releases-16-23.content.release)",
+              "damage_type_source": "spell_ziggsr_tooltip <magicDamage>"
+            }
+          ]
+        }
+      ],
+      "passive_stats": [],
+      "not_modelled": []
+    }
+  }
+}

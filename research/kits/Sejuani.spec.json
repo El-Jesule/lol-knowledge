@@ -1,0 +1,151 @@
+{
+  "champion": "Sejuani",
+  "game_version": "16.23",
+  "verified_against": {
+    "content_version": "16.23.8406595+branch.releases-16-23.content.release",
+    "bin_sha256": "ffb79c365dca7187d4d00c9e550fa28cfc0f2ae3dda46a2331af3fe9bdd26675",
+    "evidence": "odd/tasks/champion-kits-wave-1.md",
+    "result": "Bin del cliente 16.23 convertido con python -m binmodel.batch_kits y compilado con esta especificación curada (CH-01 oleada 1)"
+  },
+  "abilities": {
+    "P": {
+      "name": "Furia del norte",
+      "tooltip": "spell_sejuanipassive_tooltip",
+      "max_rank": 1,
+      "cases": [
+        {
+          "id": "icebreaker",
+          "name": "Rompehielos (10 % vida máxima)",
+          "parts": [
+            {
+              "tooltip_reference": "PercentHPDamage",
+              "damage_type": "magic",
+              "source_note": "PercentHPDamage × vida máxima del objetivo",
+              "formula": {
+                "op": "mul",
+                "operands": [
+                  {
+                    "op": "calculation",
+                    "name": "PercentHPDamage"
+                  },
+                  {
+                    "op": "stat",
+                    "stat": "health",
+                    "scope": "max",
+                    "subject": "target"
+                  }
+                ]
+              }
+            }
+          ]
+        }
+      ],
+      "not_modelled": [
+        "Armadura de escarcha (TotalArmorTooltip, TotalMRTooltip, FrostArmorOOC)",
+        "Tope de 250 contra monstruos épicos"
+      ]
+    },
+    "Q": {
+      "name": "Asalto ártico",
+      "tooltip": "spell_sejuaniq_tooltip",
+      "cases": [
+        {
+          "id": "hit",
+          "name": "Carga",
+          "parts": [
+            {
+              "calculation": "TotalDamageTooltip"
+            }
+          ]
+        }
+      ],
+      "not_modelled": [
+        "Lanzamiento por los aires"
+      ]
+    },
+    "W": {
+      "name": "Cólera del invierno",
+      "tooltip": "spell_sejuaniw_tooltip",
+      "cases": [
+        {
+          "id": "first_hit",
+          "name": "Primer golpe (arco)",
+          "parts": [
+            {
+              "calculation": "FirstHitDamageTooltip"
+            }
+          ]
+        },
+        {
+          "id": "second_hit",
+          "name": "Segundo golpe (latigazo)",
+          "parts": [
+            {
+              "calculation": "SecondHitDamageTooltip"
+            }
+          ]
+        },
+        {
+          "id": "both",
+          "name": "Ambos golpes",
+          "parts": [
+            {
+              "calculation": "FirstHitDamageTooltip"
+            },
+            {
+              "calculation": "SecondHitDamageTooltip"
+            }
+          ]
+        }
+      ],
+      "not_modelled": [
+        "Ralentización y empuje a súbditos/monstruos"
+      ]
+    },
+    "E": {
+      "name": "Congelación permanente",
+      "tooltip": "spell_sejuanie_tooltip",
+      "cases": [
+        {
+          "id": "shatter",
+          "name": "Activación con 4 cargas",
+          "parts": [
+            {
+              "calculation": "TotalDamage"
+            }
+          ]
+        }
+      ],
+      "not_modelled": [
+        "Acumulación de 4 cargas con ataques cuerpo a cuerpo aliados y aturdimiento"
+      ]
+    },
+    "R": {
+      "name": "Prisión glacial",
+      "tooltip": "spell_sejuanir_tooltip",
+      "cases": [
+        {
+          "id": "close",
+          "name": "Corta distancia",
+          "parts": [
+            {
+              "calculation": "MinorDamageTooltip"
+            }
+          ]
+        },
+        {
+          "id": "far",
+          "name": "Larga distancia (>= 25 % alcance)",
+          "parts": [
+            {
+              "calculation": "TotalDamageTooltip"
+            }
+          ]
+        }
+      ],
+      "not_modelled": [
+        "Aturdimiento, revelación y tormenta de hielo posterior"
+      ]
+    }
+  }
+}

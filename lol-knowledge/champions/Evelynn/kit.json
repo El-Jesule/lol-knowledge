@@ -1,0 +1,448 @@
+{
+  "schema": "lol-champion-kit/1",
+  "champion": "Evelynn",
+  "label": "Derivado",
+  "game_version": "16.23",
+  "content_version": "16.23.8406595+branch.releases-16-23.content.release",
+  "verified_against": {
+    "content_version": "16.23.8406595+branch.releases-16-23.content.release",
+    "bin_sha256": "c74965360dea108be4e9ae0f97b52f11ccd9dfa2b795e0207ade6805b540a850",
+    "evidence": "odd/tasks/champion-kits-wave-1.md",
+    "result": "Bin del cliente 16.23 convertido con python -m binmodel.batch_kits y compilado con esta especificación curada (CH-01 oleada 1)"
+  },
+  "source": "Árboles de cálculo del bin del cliente (python -m binmodel) y marcado de los tooltips del cliente; estructura de casos curada en research/kits/",
+  "abilities": {
+    "P": {
+      "name": "Sombra demoníaca",
+      "max_rank": 1,
+      "cases": [],
+      "passive_stats": [],
+      "not_modelled": [
+        "Camuflaje a partir del nivel 6 y regeneración de vida (HealPerSecondTOOLTIP)"
+      ]
+    },
+    "Q": {
+      "name": "Púa de odio",
+      "max_rank": 5,
+      "cases": [
+        {
+          "id": "lash",
+          "name": "Látigo inicial",
+          "parts": [
+            {
+              "damage_type": "magic",
+              "formula": {
+                "op": "add",
+                "operands": [
+                  {
+                    "op": "by_rank",
+                    "values": [
+                      25,
+                      30,
+                      35,
+                      40,
+                      45
+                    ]
+                  },
+                  {
+                    "op": "mul",
+                    "operands": [
+                      {
+                        "op": "constant",
+                        "value": 0.25
+                      },
+                      {
+                        "op": "stat",
+                        "stat": "ability_power",
+                        "scope": "total"
+                      }
+                    ]
+                  }
+                ]
+              },
+              "label": "Derivado",
+              "source": "Characters/Evelynn/Spells/EvelynnQAbility/EvelynnQ.mSpellCalculations.MissileDamage (16.23.8406595+branch.releases-16-23.content.release)",
+              "damage_type_source": "spell_evelynnq_tooltip <magicDamage>"
+            }
+          ]
+        },
+        {
+          "id": "bonus_proc",
+          "name": "Daño adicional de marca (1 de 3)",
+          "parts": [
+            {
+              "damage_type": "magic",
+              "formula": {
+                "op": "add",
+                "operands": [
+                  {
+                    "op": "by_rank",
+                    "values": [
+                      15,
+                      25,
+                      35,
+                      45,
+                      55
+                    ]
+                  },
+                  {
+                    "op": "mul",
+                    "operands": [
+                      {
+                        "op": "constant",
+                        "value": 0.25
+                      },
+                      {
+                        "op": "stat",
+                        "stat": "ability_power",
+                        "scope": "total"
+                      }
+                    ]
+                  }
+                ]
+              },
+              "label": "Derivado",
+              "source": "Characters/Evelynn/Spells/EvelynnQAbility/EvelynnQ.mSpellCalculations.TotalBonusDamage (16.23.8406595+branch.releases-16-23.content.release)",
+              "damage_type_source": "spell_evelynnq_tooltip <magicDamage>"
+            }
+          ]
+        },
+        {
+          "id": "spike",
+          "name": "Reactivación: púa",
+          "parts": [
+            {
+              "damage_type": "magic",
+              "formula": {
+                "op": "add",
+                "operands": [
+                  {
+                    "op": "by_rank",
+                    "values": [
+                      25,
+                      30,
+                      35,
+                      40,
+                      45
+                    ]
+                  },
+                  {
+                    "op": "mul",
+                    "operands": [
+                      {
+                        "op": "constant",
+                        "value": 0.25
+                      },
+                      {
+                        "op": "stat",
+                        "stat": "ability_power",
+                        "scope": "total"
+                      }
+                    ]
+                  }
+                ]
+              },
+              "label": "Derivado",
+              "source": "Characters/Evelynn/Spells/EvelynnQAbility/EvelynnQ.mSpellCalculations.MissileDamage (16.23.8406595+branch.releases-16-23.content.release)",
+              "damage_type_source": "spell_evelynnq_tooltip <magicDamage>"
+            }
+          ],
+          "recast": true
+        }
+      ],
+      "passive_stats": [],
+      "not_modelled": [
+        "Reducción de enfriamiento contra monstruos"
+      ],
+      "max_recasts": 3
+    },
+    "W": {
+      "name": "Sed de lujuria",
+      "max_rank": 5,
+      "cases": [
+        {
+          "id": "monster_proc",
+          "name": "Daño adicional a monstruos (marca completa)",
+          "parts": [
+            {
+              "damage_type": "magic",
+              "formula": {
+                "op": "add",
+                "operands": [
+                  {
+                    "op": "by_rank",
+                    "values": [
+                      250,
+                      300,
+                      350,
+                      400,
+                      450
+                    ]
+                  },
+                  {
+                    "op": "mul",
+                    "operands": [
+                      {
+                        "op": "constant",
+                        "value": 0.6
+                      },
+                      {
+                        "op": "stat",
+                        "stat": "ability_power",
+                        "scope": "total"
+                      }
+                    ]
+                  }
+                ]
+              },
+              "label": "Derivado",
+              "source": "Characters/Evelynn/Spells/EvelynnWAbility/EvelynnW.mSpellCalculations.MonsterDamageTotalTOOLTIP (16.23.8406595+branch.releases-16-23.content.release)",
+              "damage_type_source": "spell_evelynnw_tooltip <magicDamage>"
+            }
+          ]
+        }
+      ],
+      "passive_stats": [],
+      "not_modelled": [
+        "Hechizo, ralentización y reducción porcentual de RM contra campeones (MRShred)"
+      ]
+    },
+    "E": {
+      "name": "Latigazo",
+      "max_rank": 5,
+      "cases": [
+        {
+          "id": "base",
+          "name": "Sin potenciar",
+          "parts": [
+            {
+              "damage_type": "magic",
+              "formula": {
+                "op": "add",
+                "operands": [
+                  {
+                    "op": "by_rank",
+                    "values": [
+                      60,
+                      90,
+                      120,
+                      150,
+                      180
+                    ]
+                  },
+                  {
+                    "op": "mul",
+                    "operands": [
+                      {
+                        "op": "add",
+                        "operands": [
+                          {
+                            "op": "constant",
+                            "value": 3
+                          },
+                          {
+                            "op": "mul",
+                            "operands": [
+                              {
+                                "op": "constant",
+                                "value": 0.015
+                              },
+                              {
+                                "op": "stat",
+                                "stat": "ability_power",
+                                "scope": "total"
+                              }
+                            ]
+                          }
+                        ]
+                      },
+                      {
+                        "op": "constant",
+                        "value": 0.01
+                      },
+                      {
+                        "op": "stat",
+                        "stat": "health",
+                        "scope": "max",
+                        "subject": "target"
+                      }
+                    ]
+                  }
+                ]
+              },
+              "label": "Derivado",
+              "source": "Characters/Evelynn/Spells/EvelynnEAbility/EvelynnE · BaseDamage + (PercentHealthBaseTOOLTIP %) × vida máxima del objetivo (16.23.8406595+branch.releases-16-23.content.release)",
+              "damage_type_source": "spell_evelynne_tooltip <magicDamage>"
+            }
+          ]
+        },
+        {
+          "id": "empowered",
+          "name": "Potenciado (desde Sombra demoníaca)",
+          "parts": [
+            {
+              "damage_type": "magic",
+              "formula": {
+                "op": "add",
+                "operands": [
+                  {
+                    "op": "by_rank",
+                    "values": [
+                      80,
+                      120,
+                      160,
+                      200,
+                      240
+                    ]
+                  },
+                  {
+                    "op": "mul",
+                    "operands": [
+                      {
+                        "op": "add",
+                        "operands": [
+                          {
+                            "op": "constant",
+                            "value": 4
+                          },
+                          {
+                            "op": "mul",
+                            "operands": [
+                              {
+                                "op": "constant",
+                                "value": 0.025
+                              },
+                              {
+                                "op": "stat",
+                                "stat": "ability_power",
+                                "scope": "total"
+                              }
+                            ]
+                          }
+                        ]
+                      },
+                      {
+                        "op": "constant",
+                        "value": 0.01
+                      },
+                      {
+                        "op": "stat",
+                        "stat": "health",
+                        "scope": "max",
+                        "subject": "target"
+                      }
+                    ]
+                  }
+                ]
+              },
+              "label": "Derivado",
+              "source": "Characters/Evelynn/Spells/EvelynnEAbility/EvelynnE · EmpoweredDamage + (PercentHealthEmpoweredTOOLTIP %) × vida máxima del objetivo (16.23.8406595+branch.releases-16-23.content.release)",
+              "damage_type_source": "spell_evelynne_tooltip <magicDamage>"
+            }
+          ]
+        }
+      ],
+      "passive_stats": [],
+      "not_modelled": [
+        "Velocidad de movimiento y tope de 450 contra monstruos"
+      ]
+    },
+    "R": {
+      "name": "Hacedora de viudas",
+      "max_rank": 3,
+      "cases": [
+        {
+          "id": "normal",
+          "name": "Objetivo >= 30 % vida",
+          "parts": [
+            {
+              "damage_type": "magic",
+              "formula": {
+                "op": "add",
+                "operands": [
+                  {
+                    "op": "by_rank",
+                    "values": [
+                      125,
+                      250,
+                      375
+                    ]
+                  },
+                  {
+                    "op": "mul",
+                    "operands": [
+                      {
+                        "op": "constant",
+                        "value": 0.75
+                      },
+                      {
+                        "op": "stat",
+                        "stat": "ability_power",
+                        "scope": "total"
+                      }
+                    ]
+                  }
+                ]
+              },
+              "label": "Derivado",
+              "source": "Characters/Evelynn/Spells/EvelynnRAbility/EvelynnR.mSpellCalculations.Damage (16.23.8406595+branch.releases-16-23.content.release)",
+              "damage_type_source": "spell_evelynnr_tooltip <magicDamage>"
+            }
+          ]
+        },
+        {
+          "id": "execute",
+          "name": "Objetivo < 30 % vida",
+          "parts": [
+            {
+              "damage_type": "magic",
+              "formula": {
+                "op": "mul",
+                "operands": [
+                  {
+                    "op": "add",
+                    "operands": [
+                      {
+                        "op": "by_rank",
+                        "values": [
+                          125,
+                          250,
+                          375
+                        ]
+                      },
+                      {
+                        "op": "mul",
+                        "operands": [
+                          {
+                            "op": "constant",
+                            "value": 0.75
+                          },
+                          {
+                            "op": "stat",
+                            "stat": "ability_power",
+                            "scope": "total"
+                          }
+                        ]
+                      }
+                    ]
+                  },
+                  {
+                    "op": "constant",
+                    "value": 2.4
+                  }
+                ]
+              },
+              "label": "Derivado",
+              "source": "Characters/Evelynn/Spells/EvelynnRAbility/EvelynnR.mSpellCalculations.CritDamage (16.23.8406595+branch.releases-16-23.content.release)",
+              "damage_type_source": "spell_evelynnr_tooltip <magicDamage>"
+            }
+          ]
+        }
+      ],
+      "passive_stats": [],
+      "not_modelled": [
+        "Inalcanzabilidad y teletransporte hacia atrás"
+      ]
+    }
+  }
+}

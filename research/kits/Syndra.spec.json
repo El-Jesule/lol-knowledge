@@ -1,0 +1,128 @@
+{
+  "champion": "Syndra",
+  "game_version": "16.23",
+  "verified_against": {
+    "content_version": "16.23.8406595+branch.releases-16-23.content.release",
+    "bin_sha256": "f1acb5ae49c91cf5589957696d6d9948d8345864758e572c2aacd09cfd2061ff",
+    "evidence": "odd/tasks/champion-kits-wave-1.md",
+    "result": "Bin del cliente 16.23 convertido con python -m binmodel.batch_kits y compilado con esta especificación curada (CH-01 oleada 1)"
+  },
+  "abilities": {
+    "P": {
+      "name": "Trascendencia",
+      "max_rank": 1,
+      "not_modelled": [
+        "Astillas de ira, restauración de maná (ManaPerProc) y mejoras de habilidades"
+      ]
+    },
+    "Q": {
+      "name": "Esfera oscura",
+      "tooltip": "spell_syndraq_damage_0",
+      "cases": [
+        {
+          "id": "hit",
+          "name": "Esfera oscura",
+          "parts": [
+            {
+              "calculation": "TotalDamage"
+            }
+          ]
+        }
+      ],
+      "not_modelled": [
+        "Sistema de 2 cargas tras alcanzar 40 astillas de ira"
+      ]
+    },
+    "W": {
+      "name": "Fuerza de voluntad",
+      "tooltip": "spell_syndraw_damage1",
+      "cases": [
+        {
+          "id": "throw",
+          "name": "Lanzamiento base",
+          "parts": [
+            {
+              "calculation": "ThrowDamage"
+            }
+          ]
+        },
+        {
+          "id": "evolved",
+          "name": "Lanzamiento evolucionado (+ daño verdadero)",
+          "parts": [
+            {
+              "calculation": "ThrowDamage"
+            },
+            {
+              "calculation": "PassiveBonusDamage"
+            }
+          ]
+        }
+      ],
+      "not_modelled": [
+        "Ralentización (TotalSlowAmount)"
+      ]
+    },
+    "E": {
+      "name": "Dispersar a los débiles",
+      "tooltip": "spell_syndrae_tooltip",
+      "cases": [
+        {
+          "id": "wave",
+          "name": "Onda de fuerza",
+          "parts": [
+            {
+              "calculation": "TotalDamage"
+            }
+          ]
+        }
+      ],
+      "not_modelled": [
+        "Empuje y aturdimiento al proyectar esferas oscuras"
+      ]
+    },
+    "R": {
+      "name": "Poder desatado",
+      "tooltip": "spell_syndrar_tooltip",
+      "cases": [
+        {
+          "id": "per_sphere",
+          "name": "Por esfera",
+          "parts": [
+            {
+              "calculation": "DamageCalc"
+            }
+          ]
+        },
+        {
+          "id": "min_3_spheres",
+          "name": "Mínimo (3 esferas)",
+          "parts": [
+            {
+              "calculation": "DamageCalc"
+            },
+            {
+              "calculation": "DamageCalc"
+            },
+            {
+              "calculation": "DamageCalc"
+            }
+          ]
+        },
+        {
+          "id": "max_7_spheres",
+          "name": "Máximo (7 esferas)",
+          "parts": [
+            {
+              "calculation": "MaxDamageCalc"
+            }
+          ]
+        }
+      ],
+      "not_modelled": [
+        "Aceleración pasiva exclusiva de la Q (QHastePerRank)",
+        "Ejecución por debajo del 15 % de vida tras evolución (UpgradeExecuteThreshold)"
+      ]
+    }
+  }
+}

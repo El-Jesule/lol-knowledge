@@ -1,0 +1,101 @@
+{
+  "champion": "Teemo",
+  "game_version": "16.23",
+  "verified_against": {
+    "content_version": "16.23.8406595+branch.releases-16-23.content.release",
+    "bin_sha256": "cb045f4640fabe83b1373e900f8d6bef0f733c64cc318493403650a4410dacbc",
+    "evidence": "odd/tasks/champion-kits-wave-1.md",
+    "result": "Bin del cliente 16.23 convertido con python -m binmodel.batch_kits y compilado con esta especificación curada (CH-01 oleada 1)"
+  },
+  "abilities": {
+    "P": {
+      "name": "Guerra de guerrillas",
+      "max_rank": 1,
+      "not_modelled": [
+        "Invisibilidad y velocidad de ataque al salir de sigilo (BonusAttackSpeed)"
+      ]
+    },
+    "Q": {
+      "name": "Dardo cegador",
+      "tooltip": "spell_teemoq_tooltip",
+      "cases": [
+        {
+          "id": "dart",
+          "name": "Dardo",
+          "parts": [
+            {
+              "calculation": "CalculatedDamage"
+            }
+          ]
+        }
+      ],
+      "not_modelled": [
+        "Ceguera (BlindDuration)"
+      ]
+    },
+    "W": {
+      "name": "Movimiento rápido",
+      "tooltip": "spell_teemow_tooltip",
+      "not_modelled": [
+        "Velocidad de movimiento pasiva y activa"
+      ]
+    },
+    "E": {
+      "name": "Tiro tóxico",
+      "tooltip": "spell_teemoe_tooltip",
+      "cases": [
+        {
+          "id": "on_hit",
+          "name": "Impacto inicial",
+          "parts": [
+            {
+              "calculation": "ImpactCalculatedDamage"
+            }
+          ]
+        },
+        {
+          "id": "poison_total",
+          "name": "Veneno completo (4 s)",
+          "parts": [
+            {
+              "calculation": "TotalDotDamage"
+            }
+          ]
+        },
+        {
+          "id": "hit_and_poison",
+          "name": "Impacto + veneno completo",
+          "parts": [
+            {
+              "calculation": "ImpactCalculatedDamage"
+            },
+            {
+              "calculation": "TotalDotDamage"
+            }
+          ]
+        }
+      ],
+      "not_modelled": [
+        "Ticks individuales de veneno y daño aumentado contra monstruos"
+      ]
+    },
+    "R": {
+      "name": "Trampa ponzoñosa",
+      "tooltip": "spell_teemor_tooltip",
+      "cases": [
+        {
+          "id": "shroom",
+          "name": "Explosión completa (4 s)",
+          "parts": [
+            {
+              "calculation": "TotalDamage"
+            }
+          ]
+        }
+      ],
+      "not_modelled": [
+        "Ralentización, visión y munición de trampas"
+      ]
+    }
+  }
+}

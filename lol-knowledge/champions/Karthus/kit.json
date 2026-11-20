@@ -1,0 +1,233 @@
+{
+  "schema": "lol-champion-kit/1",
+  "champion": "Karthus",
+  "label": "Derivado",
+  "game_version": "16.23",
+  "content_version": "16.23.8406595+branch.releases-16-23.content.release",
+  "verified_against": {
+    "content_version": "16.23.8406595+branch.releases-16-23.content.release",
+    "bin_sha256": "9daa799618c11927514f8e2a941d9a4d99cb4348108f1562d2c9ac8fe22a374a",
+    "evidence": "odd/tasks/champion-kits-wave-1.md",
+    "result": "Bin del cliente 16.23 convertido con python -m binmodel.batch_kits y compilado con esta especificación curada (CH-01 oleada 1)"
+  },
+  "source": "Árboles de cálculo del bin del cliente (python -m binmodel) y marcado de los tooltips del cliente; estructura de casos curada en research/kits/",
+  "abilities": {
+    "P": {
+      "name": "Desafío a la muerte",
+      "max_rank": 1,
+      "cases": [],
+      "passive_stats": [],
+      "not_modelled": [
+        "7 s de lanzamiento gratuito tras morir"
+      ]
+    },
+    "Q": {
+      "name": "Sembrar la destrucción",
+      "max_rank": 5,
+      "cases": [
+        {
+          "id": "multi",
+          "name": "Varios objetivos",
+          "parts": [
+            {
+              "damage_type": "magic",
+              "formula": {
+                "op": "add",
+                "operands": [
+                  {
+                    "op": "by_rank",
+                    "values": [
+                      40,
+                      59,
+                      78,
+                      97,
+                      116
+                    ]
+                  },
+                  {
+                    "op": "mul",
+                    "operands": [
+                      {
+                        "op": "constant",
+                        "value": 0.35
+                      },
+                      {
+                        "op": "stat",
+                        "stat": "ability_power",
+                        "scope": "total"
+                      }
+                    ]
+                  }
+                ]
+              },
+              "label": "Derivado",
+              "source": "Characters/Karthus/Spells/KarthusLayWasteA1Ability/KarthusLayWasteA1.mSpellCalculations.QDamage (16.23.8406595+branch.releases-16-23.content.release)",
+              "damage_type_source": "spell_karthuslaywastea1_tooltip <magicDamage>"
+            }
+          ]
+        },
+        {
+          "id": "isolated",
+          "name": "Objetivo aislado (daño doble)",
+          "parts": [
+            {
+              "damage_type": "magic",
+              "formula": {
+                "op": "mul",
+                "operands": [
+                  {
+                    "op": "add",
+                    "operands": [
+                      {
+                        "op": "by_rank",
+                        "values": [
+                          40,
+                          59,
+                          78,
+                          97,
+                          116
+                        ]
+                      },
+                      {
+                        "op": "mul",
+                        "operands": [
+                          {
+                            "op": "constant",
+                            "value": 0.35
+                          },
+                          {
+                            "op": "stat",
+                            "stat": "ability_power",
+                            "scope": "total"
+                          }
+                        ]
+                      }
+                    ]
+                  },
+                  {
+                    "op": "constant",
+                    "value": 2
+                  }
+                ]
+              },
+              "label": "Derivado",
+              "source": "Characters/Karthus/Spells/KarthusLayWasteA1Ability/KarthusLayWasteA1.mSpellCalculations.QSingleTargetDamage (16.23.8406595+branch.releases-16-23.content.release)",
+              "damage_type_source": "spell_karthuslaywastea1_tooltip <magicDamage>"
+            }
+          ]
+        }
+      ],
+      "passive_stats": [],
+      "not_modelled": []
+    },
+    "W": {
+      "name": "Muro de dolor",
+      "max_rank": 5,
+      "cases": [],
+      "passive_stats": [],
+      "not_modelled": [
+        "Reducción de resistencia mágica (MagicResistShred) y ralentización"
+      ]
+    },
+    "E": {
+      "name": "Profanación",
+      "max_rank": 5,
+      "cases": [
+        {
+          "id": "per_second",
+          "name": "Aura por segundo",
+          "parts": [
+            {
+              "damage_type": "magic",
+              "formula": {
+                "op": "add",
+                "operands": [
+                  {
+                    "op": "by_rank",
+                    "values": [
+                      30,
+                      50,
+                      70,
+                      90,
+                      110
+                    ]
+                  },
+                  {
+                    "op": "mul",
+                    "operands": [
+                      {
+                        "op": "constant",
+                        "value": 0.2
+                      },
+                      {
+                        "op": "stat",
+                        "stat": "ability_power",
+                        "scope": "total"
+                      }
+                    ]
+                  }
+                ]
+              },
+              "label": "Derivado",
+              "source": "Characters/Karthus/Spells/KarthusDefileAbility/KarthusDefile.mSpellCalculations.TotalDPS (16.23.8406595+branch.releases-16-23.content.release)",
+              "damage_type_source": "spell_karthusdefile_tooltip <magicDamage>"
+            }
+          ]
+        }
+      ],
+      "passive_stats": [],
+      "not_modelled": [
+        "Restauración pasiva de maná al matar unidades y consumo continuo de maná"
+      ]
+    },
+    "R": {
+      "name": "Réquiem",
+      "max_rank": 3,
+      "cases": [
+        {
+          "id": "requiem",
+          "name": "Impacto global",
+          "parts": [
+            {
+              "damage_type": "magic",
+              "formula": {
+                "op": "add",
+                "operands": [
+                  {
+                    "op": "by_rank",
+                    "values": [
+                      200,
+                      350,
+                      500
+                    ]
+                  },
+                  {
+                    "op": "mul",
+                    "operands": [
+                      {
+                        "op": "constant",
+                        "value": 0.7
+                      },
+                      {
+                        "op": "stat",
+                        "stat": "ability_power",
+                        "scope": "total"
+                      }
+                    ]
+                  }
+                ]
+              },
+              "label": "Derivado",
+              "source": "Characters/Karthus/Spells/KarthusFallenOneAbility/KarthusFallenOne.mSpellCalculations.TotalDamage (16.23.8406595+branch.releases-16-23.content.release)",
+              "damage_type_source": "spell_karthusfallenone_tooltip <magicDamage>"
+            }
+          ]
+        }
+      ],
+      "passive_stats": [],
+      "not_modelled": [
+        "Canalización de 3 s y efecto sobre los 5 campeones enemigos"
+      ]
+    }
+  }
+}

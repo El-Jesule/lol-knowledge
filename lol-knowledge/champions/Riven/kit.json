@@ -1,0 +1,308 @@
+{
+  "schema": "lol-champion-kit/1",
+  "champion": "Riven",
+  "label": "Derivado",
+  "game_version": "16.23",
+  "content_version": "16.23.8406595+branch.releases-16-23.content.release",
+  "verified_against": {
+    "content_version": "16.23.8406595+branch.releases-16-23.content.release",
+    "bin_sha256": "7e248f8669c6081f0b76da9d9cb7c72411b7ed316953a31f64ce658b7ac98868",
+    "evidence": "odd/tasks/champion-kits-wave-1.md",
+    "result": "Bin del cliente 16.23 convertido con python -m binmodel.batch_kits y compilado con esta especificación curada (CH-01 oleada 1)"
+  },
+  "source": "Árboles de cálculo del bin del cliente (python -m binmodel) y marcado de los tooltips del cliente; estructura de casos curada en research/kits/",
+  "abilities": {
+    "P": {
+      "name": "Hoja rúnica",
+      "max_rank": 1,
+      "cases": [
+        {
+          "id": "proc",
+          "name": "Daño adicional por carga",
+          "parts": [
+            {
+              "damage_type": "physical",
+              "formula": {
+                "op": "mul",
+                "operands": [
+                  {
+                    "op": "linear_by_level",
+                    "min": 0.3,
+                    "max": 0.45
+                  },
+                  {
+                    "op": "stat",
+                    "stat": "attack_damage",
+                    "scope": "total"
+                  }
+                ]
+              },
+              "label": "Derivado",
+              "source": "Characters/Riven/Spells/RivenPassiveAbility/RivenPassive.mSpellCalculations.TotalDamage (16.23.8406595+branch.releases-16-23.content.release)",
+              "damage_type_source": "spell_rivenpassive_tooltip <physicalDamage>"
+            }
+          ]
+        }
+      ],
+      "passive_stats": [],
+      "not_modelled": [
+        "Gestión de hasta 3 cargas, reducción del 50 % a torretas y bonificación a monstruos"
+      ]
+    },
+    "Q": {
+      "name": "Alas rotas",
+      "max_rank": 5,
+      "cases": [
+        {
+          "id": "slash",
+          "name": "Primer golpe (Q1)",
+          "parts": [
+            {
+              "damage_type": "physical",
+              "formula": {
+                "op": "add",
+                "operands": [
+                  {
+                    "op": "by_rank",
+                    "values": [
+                      45,
+                      75,
+                      105,
+                      135,
+                      165
+                    ]
+                  },
+                  {
+                    "op": "mul",
+                    "operands": [
+                      {
+                        "op": "by_rank",
+                        "values": [
+                          0.6,
+                          0.65,
+                          0.7,
+                          0.75,
+                          0.8
+                        ]
+                      },
+                      {
+                        "op": "stat",
+                        "stat": "attack_damage",
+                        "scope": "bonus"
+                      }
+                    ]
+                  }
+                ]
+              },
+              "label": "Derivado",
+              "source": "Characters/Riven/Spells/RivenTriCleaveAbility/RivenTriCleave.mSpellCalculations.FirstSlashDamage (16.23.8406595+branch.releases-16-23.content.release)",
+              "damage_type_source": "spell_riventricleave_tooltip <physicalDamage>"
+            }
+          ]
+        },
+        {
+          "id": "recast",
+          "name": "Reactivación (Q2 / Q3)",
+          "parts": [
+            {
+              "damage_type": "physical",
+              "formula": {
+                "op": "add",
+                "operands": [
+                  {
+                    "op": "by_rank",
+                    "values": [
+                      45,
+                      75,
+                      105,
+                      135,
+                      165
+                    ]
+                  },
+                  {
+                    "op": "mul",
+                    "operands": [
+                      {
+                        "op": "by_rank",
+                        "values": [
+                          0.6,
+                          0.65,
+                          0.7,
+                          0.75,
+                          0.8
+                        ]
+                      },
+                      {
+                        "op": "stat",
+                        "stat": "attack_damage",
+                        "scope": "bonus"
+                      }
+                    ]
+                  }
+                ]
+              },
+              "label": "Derivado",
+              "source": "Characters/Riven/Spells/RivenTriCleaveAbility/RivenTriCleave.mSpellCalculations.FirstSlashDamage (16.23.8406595+branch.releases-16-23.content.release)",
+              "damage_type_source": "spell_riventricleave_tooltip <physicalDamage>"
+            }
+          ],
+          "recast": true
+        }
+      ],
+      "passive_stats": [],
+      "not_modelled": [
+        "Ventana de reactivación de 4 s y lanzamiento por los aires en Q3"
+      ],
+      "max_recasts": 2
+    },
+    "W": {
+      "name": "Estallido de ki",
+      "max_rank": 5,
+      "cases": [
+        {
+          "id": "burst",
+          "name": "Estallido",
+          "parts": [
+            {
+              "damage_type": "physical",
+              "formula": {
+                "op": "add",
+                "operands": [
+                  {
+                    "op": "by_rank",
+                    "values": [
+                      65,
+                      95,
+                      125,
+                      155,
+                      185
+                    ]
+                  },
+                  {
+                    "op": "mul",
+                    "operands": [
+                      {
+                        "op": "constant",
+                        "value": 1
+                      },
+                      {
+                        "op": "stat",
+                        "stat": "attack_damage",
+                        "scope": "bonus"
+                      }
+                    ]
+                  }
+                ]
+              },
+              "label": "Derivado",
+              "source": "Characters/Riven/Spells/RivenMartyrAbility/RivenMartyr.mSpellCalculations.TotalDamage (16.23.8406595+branch.releases-16-23.content.release)",
+              "damage_type_source": "spell_rivenmartyr_tooltip <physicalDamage>"
+            }
+          ]
+        }
+      ],
+      "passive_stats": [],
+      "not_modelled": [
+        "Aturdimiento (StunDuration)"
+      ]
+    },
+    "E": {
+      "name": "Valor",
+      "max_rank": 5,
+      "cases": [],
+      "passive_stats": [],
+      "not_modelled": [
+        "Escudo (TotalShield) y desplazamiento"
+      ]
+    },
+    "R": {
+      "name": "Hoja del exilio",
+      "max_rank": 3,
+      "cases": [
+        {
+          "id": "wind_slash_min",
+          "name": "Cuchillada de viento (mínimo)",
+          "parts": [
+            {
+              "damage_type": "physical",
+              "formula": {
+                "op": "add",
+                "operands": [
+                  {
+                    "op": "by_rank",
+                    "values": [
+                      100,
+                      150,
+                      200
+                    ]
+                  },
+                  {
+                    "op": "mul",
+                    "operands": [
+                      {
+                        "op": "constant",
+                        "value": 0.55
+                      },
+                      {
+                        "op": "stat",
+                        "stat": "attack_damage",
+                        "scope": "bonus"
+                      }
+                    ]
+                  }
+                ]
+              },
+              "label": "Derivado",
+              "source": "Characters/Riven/Spells/RivenFengShuiEngineAbility/RivenFengShuiEngine.mSpellCalculations.MinDamage (16.23.8406595+branch.releases-16-23.content.release)",
+              "damage_type_source": "spell_rivenfengshuiengine_tooltip <physicalDamage>"
+            }
+          ]
+        },
+        {
+          "id": "wind_slash_max",
+          "name": "Cuchillada de viento (máximo, <= 25 % vida)",
+          "parts": [
+            {
+              "damage_type": "physical",
+              "formula": {
+                "op": "add",
+                "operands": [
+                  {
+                    "op": "by_rank",
+                    "values": [
+                      300,
+                      450,
+                      600
+                    ]
+                  },
+                  {
+                    "op": "mul",
+                    "operands": [
+                      {
+                        "op": "constant",
+                        "value": 1.65
+                      },
+                      {
+                        "op": "stat",
+                        "stat": "attack_damage",
+                        "scope": "bonus"
+                      }
+                    ]
+                  }
+                ]
+              },
+              "label": "Derivado",
+              "source": "Characters/Riven/Spells/RivenFengShuiEngineAbility/RivenFengShuiEngine.mSpellCalculations.MaxDamage (16.23.8406595+branch.releases-16-23.content.release)",
+              "damage_type_source": "spell_rivenfengshuiengine_tooltip <physicalDamage>"
+            }
+          ]
+        }
+      ],
+      "passive_stats": [],
+      "not_modelled": [
+        "Mejora activa de +20 % DA (BonusAD) y alcance adicional durante 15 s",
+        "Interpolación continua de Cuchillada de viento según vida perdida"
+      ]
+    }
+  }
+}

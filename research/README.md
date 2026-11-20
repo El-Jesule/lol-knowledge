@@ -81,7 +81,7 @@ $env:PYTHONPATH="research"
 
 | Ruta | Contenido |
 |---|---|
-| `binmodel/` | Extractor, registro de clases, evaluador, estadísticas, validación, generador de borradores (`specdraft`), compilador de kits (`kitgen`) y CLI |
+| `binmodel/` | Extractor, registro de clases, evaluador, estadísticas, validación, generador de borradores (`specdraft`), compilador de kits (`kitgen`), compilador por lotes (`batch_kits`) y CLI |
 | `binmodel/schema/lol_classes.json` | Registro compacto de clases y hashes usados por los cálculos |
 | `fixtures/zaahen_extract_min.json` | Fixture recortado de Zaahen (43 KB) |
 | `fixtures/darius_extract_min.json` | Fixture recortado de Darius (34 KB) |

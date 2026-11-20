@@ -1,0 +1,104 @@
+{
+  "champion": "Annie",
+  "game_version": "16.23",
+  "verified_against": {
+    "content_version": "16.23.8406595+branch.releases-16-23.content.release",
+    "bin_sha256": "e36fdb0ecaf87d1b85f0957462e6591bab70bdb88f04eaa9cb4ee61b60beb912",
+    "evidence": "odd/tasks/champion-kits-wave-1.md",
+    "result": "Bin del cliente 16.23 convertido con python -m binmodel.batch_kits y compilado con esta especificación curada (CH-01 oleada 1)"
+  },
+  "abilities": {
+    "P": {
+      "name": "Piromanía",
+      "max_rank": 1,
+      "not_modelled": [
+        "Aturdimiento cada 4 habilidades (StunDuration)"
+      ]
+    },
+    "Q": {
+      "name": "Desintegración",
+      "tooltip": "spell_annieq_tooltip",
+      "cases": [
+        {
+          "id": "hit",
+          "name": "Bola de fuego",
+          "parts": [
+            {
+              "calculation": "TotalDamage"
+            }
+          ]
+        }
+      ],
+      "not_modelled": [
+        "Devolución de maná y 50 % de enfriamiento al matar al objetivo"
+      ]
+    },
+    "W": {
+      "name": "Incineración",
+      "tooltip": "spell_anniew_tooltip",
+      "cases": [
+        {
+          "id": "cone",
+          "name": "Ola de fuego",
+          "parts": [
+            {
+              "calculation": "TotalDamage"
+            }
+          ]
+        }
+      ]
+    },
+    "E": {
+      "name": "Escudo fundido",
+      "tooltip": "spell_anniee_tooltip",
+      "cases": [
+        {
+          "id": "reflect",
+          "name": "Daño reflejado al atacante",
+          "parts": [
+            {
+              "calculation": "DamageReturn"
+            }
+          ]
+        }
+      ],
+      "not_modelled": [
+        "Escudo (ShieldBlockTotal) y velocidad de movimiento (MoveSpeedCalc)"
+      ]
+    },
+    "R": {
+      "name": "Invocar: Tibbers",
+      "tooltip": "spell_annier_tooltip",
+      "cases": [
+        {
+          "id": "burst",
+          "name": "Invocación inicial",
+          "parts": [
+            {
+              "calculation": "InitialBurstDamage"
+            }
+          ]
+        },
+        {
+          "id": "aura_tick",
+          "name": "Aura de Tibbers (por segundo)",
+          "parts": [
+            {
+              "calculation": "TibbersAuraDamage"
+            }
+          ]
+        }
+      ],
+      "passive_stats": [
+        {
+          "stat": "magic_penetration_percent",
+          "data_value": "RPercentPenBuff",
+          "condition": "pasiva de la R: activa con la R aprendida, también en enfriamiento"
+        }
+      ],
+      "not_modelled": [
+        "Ataques y estadísticas de la mascota Tibbers (TibbersAADamage, TibbersTotalHP, TibbersTotalResists)"
+      ]
+    }
+  }
+}

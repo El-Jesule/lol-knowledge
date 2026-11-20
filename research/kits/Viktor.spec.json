@@ -1,0 +1,128 @@
+{
+  "champion": "Viktor",
+  "game_version": "16.23",
+  "verified_against": {
+    "content_version": "16.23.8406595+branch.releases-16-23.content.release",
+    "bin_sha256": "aa99bdd28c77f4c254faf21f083efa987a3a3a94faaff957317eb41ddd756edf",
+    "evidence": "odd/tasks/champion-kits-wave-1.md",
+    "result": "Bin del cliente 16.23 convertido con python -m binmodel.batch_kits y compilado con esta especificación curada (CH-01 oleada 1)"
+  },
+  "abilities": {
+    "P": {
+      "name": "Gloriosa evolución",
+      "max_rank": 1,
+      "not_modelled": [
+        "Fragmentos hextech y mejoras de habilidades"
+      ]
+    },
+    "Q": {
+      "name": "Transferencia de potencia",
+      "tooltip": "game_spell_tooltip_viktorpowertransfer",
+      "cases": [
+        {
+          "id": "missile",
+          "name": "Proyectil inicial",
+          "parts": [
+            {
+              "calculation": "TotalMissileDamage"
+            }
+          ]
+        },
+        {
+          "id": "attack",
+          "name": "Ataque potenciado",
+          "parts": [
+            {
+              "calculation": "AttackTotalDMG"
+            }
+          ]
+        },
+        {
+          "id": "full",
+          "name": "Proyectil + ataque potenciado",
+          "parts": [
+            {
+              "calculation": "TotalMissileDamage"
+            },
+            {
+              "calculation": "AttackTotalDMG"
+            }
+          ]
+        }
+      ],
+      "not_modelled": [
+        "Escudo (ShieldLevelScaling, TotalAugmentedShieldValue) y velocidad de movimiento evolucionada"
+      ]
+    },
+    "W": {
+      "name": "Campo gravitatorio",
+      "tooltip": "game_spell_tooltip_viktorgravitonfield",
+      "not_modelled": [
+        "Ralentización y aturdimiento en área"
+      ]
+    },
+    "E": {
+      "name": "Rayo hextech",
+      "tooltip": "spell_viktordeathray_tooltip",
+      "cases": [
+        {
+          "id": "laser",
+          "name": "Rayo inicial",
+          "parts": [
+            {
+              "calculation": "LaserDamage"
+            }
+          ]
+        },
+        {
+          "id": "aftershock",
+          "name": "Reverberación (evolucionada)",
+          "parts": [
+            {
+              "calculation": "AftershockDamage"
+            }
+          ]
+        },
+        {
+          "id": "evolved_both",
+          "name": "Rayo + reverberación",
+          "parts": [
+            {
+              "calculation": "LaserDamage"
+            },
+            {
+              "calculation": "AftershockDamage"
+            }
+          ]
+        }
+      ]
+    },
+    "R": {
+      "name": "Tormenta arcana",
+      "tooltip": "game_spell_tooltip_viktorchaosstorm",
+      "cases": [
+        {
+          "id": "burst",
+          "name": "Impacto inicial",
+          "parts": [
+            {
+              "calculation": "InitialBurstDamage"
+            }
+          ]
+        },
+        {
+          "id": "per_second",
+          "name": "Daño por segundo",
+          "parts": [
+            {
+              "calculation": "SubsequentBurstDamage"
+            }
+          ]
+        }
+      ],
+      "not_modelled": [
+        "Interrupción de canalizaciones y ampliación de duración al derribar campeones"
+      ]
+    }
+  }
+}

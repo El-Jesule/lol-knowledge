@@ -1,0 +1,419 @@
+{
+  "schema": "lol-champion-kit/1",
+  "champion": "Diana",
+  "label": "Derivado",
+  "game_version": "16.23",
+  "content_version": "16.23.8406595+branch.releases-16-23.content.release",
+  "verified_against": {
+    "content_version": "16.23.8406595+branch.releases-16-23.content.release",
+    "bin_sha256": "7da0740c3be54b1fa805f0d4ed554981eb2cc3c6ae3fb0f8e86aaaeb31513044",
+    "evidence": "odd/tasks/champion-kits-wave-1.md",
+    "result": "Bin del cliente 16.23 convertido con python -m binmodel.batch_kits y compilado con esta especificación curada (CH-01 oleada 1)"
+  },
+  "source": "Árboles de cálculo del bin del cliente (python -m binmodel) y marcado de los tooltips del cliente; estructura de casos curada en research/kits/",
+  "abilities": {
+    "P": {
+      "name": "Hoja lunaplata",
+      "max_rank": 1,
+      "cases": [
+        {
+          "id": "cleave",
+          "name": "Tercer ataque en área",
+          "parts": [
+            {
+              "damage_type": "magic",
+              "formula": {
+                "op": "add",
+                "operands": [
+                  {
+                    "op": "by_level",
+                    "values": [
+                      20,
+                      25,
+                      30,
+                      35,
+                      40,
+                      45,
+                      50,
+                      60,
+                      70,
+                      80,
+                      90,
+                      100,
+                      115,
+                      130,
+                      145,
+                      160,
+                      175,
+                      200
+                    ]
+                  },
+                  {
+                    "op": "mul",
+                    "operands": [
+                      {
+                        "op": "constant",
+                        "value": 0.5
+                      },
+                      {
+                        "op": "stat",
+                        "stat": "ability_power",
+                        "scope": "total"
+                      }
+                    ]
+                  }
+                ]
+              },
+              "label": "Derivado",
+              "source": "Characters/Diana/Spells/DianaPassiveAbility/DianaPassive.mSpellCalculations.CleaveDamage (16.23.8406595+branch.releases-16-23.content.release)",
+              "damage_type_source": "spell_dianapassive_tooltip <magicDamage>"
+            }
+          ]
+        }
+      ],
+      "passive_stats": [],
+      "not_modelled": [
+        "Velocidad de ataque pasiva y potenciada tras lanzar habilidades (BonusAS, EmpoweredAS)"
+      ]
+    },
+    "Q": {
+      "name": "Impacto creciente",
+      "max_rank": 5,
+      "cases": [
+        {
+          "id": "hit",
+          "name": "Arco lunar",
+          "parts": [
+            {
+              "damage_type": "magic",
+              "formula": {
+                "op": "add",
+                "operands": [
+                  {
+                    "op": "by_rank",
+                    "values": [
+                      70,
+                      105,
+                      140,
+                      175,
+                      210
+                    ]
+                  },
+                  {
+                    "op": "mul",
+                    "operands": [
+                      {
+                        "op": "constant",
+                        "value": 0.7
+                      },
+                      {
+                        "op": "stat",
+                        "stat": "ability_power",
+                        "scope": "total"
+                      }
+                    ]
+                  }
+                ]
+              },
+              "label": "Derivado",
+              "source": "Characters/Diana/Spells/DianaQAbility/DianaQ.mSpellCalculations.TotalDamage (16.23.8406595+branch.releases-16-23.content.release)",
+              "damage_type_source": "spell_dianaq_tooltip <magicDamage>"
+            }
+          ]
+        }
+      ],
+      "passive_stats": [],
+      "not_modelled": [
+        "Marca de Luz lunar y revelación"
+      ]
+    },
+    "W": {
+      "name": "Cascada pálida",
+      "max_rank": 5,
+      "cases": [
+        {
+          "id": "one_orb",
+          "name": "Una esfera",
+          "parts": [
+            {
+              "damage_type": "magic",
+              "formula": {
+                "op": "add",
+                "operands": [
+                  {
+                    "op": "by_rank",
+                    "values": [
+                      20,
+                      32,
+                      44,
+                      56,
+                      68
+                    ]
+                  },
+                  {
+                    "op": "mul",
+                    "operands": [
+                      {
+                        "op": "constant",
+                        "value": 0.18
+                      },
+                      {
+                        "op": "stat",
+                        "stat": "ability_power",
+                        "scope": "total"
+                      }
+                    ]
+                  }
+                ]
+              },
+              "label": "Derivado",
+              "source": "Characters/Diana/Spells/DianaOrbsAbility/DianaOrbs.mSpellCalculations.TotalDamage (16.23.8406595+branch.releases-16-23.content.release)",
+              "damage_type_source": "spell_dianaorbs_tooltip <magicDamage>"
+            }
+          ]
+        },
+        {
+          "id": "all_orbs",
+          "name": "Las tres esferas",
+          "parts": [
+            {
+              "damage_type": "magic",
+              "formula": {
+                "op": "mul",
+                "operands": [
+                  {
+                    "op": "add",
+                    "operands": [
+                      {
+                        "op": "by_rank",
+                        "values": [
+                          20,
+                          32,
+                          44,
+                          56,
+                          68
+                        ]
+                      },
+                      {
+                        "op": "mul",
+                        "operands": [
+                          {
+                            "op": "constant",
+                            "value": 0.18
+                          },
+                          {
+                            "op": "stat",
+                            "stat": "ability_power",
+                            "scope": "total"
+                          }
+                        ]
+                      }
+                    ]
+                  },
+                  {
+                    "op": "constant",
+                    "value": 3
+                  }
+                ]
+              },
+              "label": "Derivado",
+              "source": "Characters/Diana/Spells/DianaOrbsAbility/DianaOrbs.mSpellCalculations.TotalMaxDamage (16.23.8406595+branch.releases-16-23.content.release)",
+              "damage_type_source": "spell_dianaorbs_tooltip <magicDamage>"
+            }
+          ]
+        }
+      ],
+      "passive_stats": [],
+      "not_modelled": [
+        "Escudo inicial y renovación al detonar las tres esferas (ShieldValue)"
+      ]
+    },
+    "E": {
+      "name": "Torrente lunar",
+      "max_rank": 5,
+      "cases": [
+        {
+          "id": "dash",
+          "name": "Deslizamiento",
+          "parts": [
+            {
+              "damage_type": "magic",
+              "formula": {
+                "op": "add",
+                "operands": [
+                  {
+                    "op": "by_rank",
+                    "values": [
+                      50,
+                      70,
+                      90,
+                      110,
+                      130
+                    ]
+                  },
+                  {
+                    "op": "mul",
+                    "operands": [
+                      {
+                        "op": "constant",
+                        "value": 0.6
+                      },
+                      {
+                        "op": "stat",
+                        "stat": "ability_power",
+                        "scope": "total"
+                      }
+                    ]
+                  }
+                ]
+              },
+              "label": "Derivado",
+              "source": "Characters/Diana/Spells/DianaTeleportAbility/DianaTeleport.mSpellCalculations.TotalDamage (16.23.8406595+branch.releases-16-23.content.release)",
+              "damage_type_source": "spell_dianateleport_tooltip <magicDamage>"
+            }
+          ]
+        }
+      ],
+      "passive_stats": [],
+      "not_modelled": [
+        "Reinicio de enfriamiento al consumir Luz lunar"
+      ]
+    },
+    "R": {
+      "name": "Lluvia de luna",
+      "max_rank": 3,
+      "cases": [
+        {
+          "id": "one_champ",
+          "name": "1 campeón alcanzado",
+          "parts": [
+            {
+              "damage_type": "magic",
+              "formula": {
+                "op": "add",
+                "operands": [
+                  {
+                    "op": "by_rank",
+                    "values": [
+                      200,
+                      300,
+                      400
+                    ]
+                  },
+                  {
+                    "op": "mul",
+                    "operands": [
+                      {
+                        "op": "constant",
+                        "value": 0.6
+                      },
+                      {
+                        "op": "stat",
+                        "stat": "ability_power",
+                        "scope": "total"
+                      }
+                    ]
+                  }
+                ]
+              },
+              "label": "Derivado",
+              "source": "Characters/Diana/Spells/DianaRAbility/DianaR.mSpellCalculations.RExplosionDamage (16.23.8406595+branch.releases-16-23.content.release)",
+              "damage_type_source": "spell_dianar_tooltip <magicDamage>"
+            }
+          ]
+        },
+        {
+          "id": "extra_champ",
+          "name": "Bonificación por campeón adicional",
+          "parts": [
+            {
+              "damage_type": "magic",
+              "formula": {
+                "op": "add",
+                "operands": [
+                  {
+                    "op": "by_rank",
+                    "values": [
+                      35,
+                      60,
+                      85
+                    ]
+                  },
+                  {
+                    "op": "mul",
+                    "operands": [
+                      {
+                        "op": "constant",
+                        "value": 0.15
+                      },
+                      {
+                        "op": "stat",
+                        "stat": "ability_power",
+                        "scope": "total"
+                      }
+                    ]
+                  }
+                ]
+              },
+              "label": "Derivado",
+              "source": "Characters/Diana/Spells/DianaRAbility/DianaR.mSpellCalculations.RMultihitAmplification (16.23.8406595+branch.releases-16-23.content.release)",
+              "damage_type_source": "spell_dianar_tooltip <magicDamage>"
+            }
+          ]
+        },
+        {
+          "id": "max_champs",
+          "name": "5 campeones alcanzados (máximo)",
+          "parts": [
+            {
+              "damage_type": "magic",
+              "formula": {
+                "op": "mul",
+                "operands": [
+                  {
+                    "op": "add",
+                    "operands": [
+                      {
+                        "op": "by_rank",
+                        "values": [
+                          35,
+                          60,
+                          85
+                        ]
+                      },
+                      {
+                        "op": "mul",
+                        "operands": [
+                          {
+                            "op": "constant",
+                            "value": 0.15
+                          },
+                          {
+                            "op": "stat",
+                            "stat": "ability_power",
+                            "scope": "total"
+                          }
+                        ]
+                      }
+                    ]
+                  },
+                  {
+                    "op": "constant",
+                    "value": 5
+                  }
+                ]
+              },
+              "label": "Derivado",
+              "source": "Characters/Diana/Spells/DianaRAbility/DianaR.mSpellCalculations.MaxDamage (16.23.8406595+branch.releases-16-23.content.release)",
+              "damage_type_source": "spell_dianar_tooltip <magicDamage>"
+            }
+          ]
+        }
+      ],
+      "passive_stats": [],
+      "not_modelled": [
+        "Atracción y ralentización (SlowTooltip)"
+      ]
+    }
+  }
+}

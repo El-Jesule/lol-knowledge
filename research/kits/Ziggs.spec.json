@@ -1,0 +1,115 @@
+{
+  "champion": "Ziggs",
+  "game_version": "16.23",
+  "verified_against": {
+    "content_version": "16.23.8406595+branch.releases-16-23.content.release",
+    "bin_sha256": "fb5ede0d6f322d4bffaad14eba7931c8b6b639c77a769e247e35a97372a9eb5c",
+    "evidence": "odd/tasks/champion-kits-wave-1.md",
+    "result": "Bin del cliente 16.23 convertido con python -m binmodel.batch_kits y compilado con esta especificación curada (CH-01 oleada 1)"
+  },
+  "abilities": {
+    "P": {
+      "name": "Mecha corta",
+      "tooltip": "spell_ziggspassivebuff_tooltip",
+      "max_rank": 1,
+      "cases": [
+        {
+          "id": "proc",
+          "name": "Contra unidades",
+          "parts": [
+            {
+              "calculation": "TotalDamage"
+            }
+          ]
+        },
+        {
+          "id": "structure",
+          "name": "Contra estructuras",
+          "parts": [
+            {
+              "calculation": "StructureDamage"
+            }
+          ]
+        }
+      ],
+      "not_modelled": [
+        "Enfriamiento y reducción por habilidad lanzada (SpellCDR)"
+      ]
+    },
+    "Q": {
+      "name": "Bomba rebotante",
+      "tooltip": "spell_ziggsq_tooltip",
+      "cases": [
+        {
+          "id": "bomb",
+          "name": "Explosión",
+          "parts": [
+            {
+              "calculation": "TotalDamage"
+            }
+          ]
+        }
+      ]
+    },
+    "W": {
+      "name": "Carga concentrada",
+      "tooltip": "spell_ziggsw_tooltip",
+      "cases": [
+        {
+          "id": "detonate",
+          "name": "Detonación",
+          "parts": [
+            {
+              "calculation": "TotalDamage"
+            }
+          ]
+        }
+      ],
+      "not_modelled": [
+        "Empuje y demolición de torretas por debajo del umbral de vida"
+      ]
+    },
+    "E": {
+      "name": "Campo de hexplosivos",
+      "tooltip": "spell_ziggse_tooltip",
+      "cases": [
+        {
+          "id": "mine",
+          "name": "Primera mina",
+          "parts": [
+            {
+              "calculation": "TotalDamage"
+            }
+          ]
+        }
+      ],
+      "not_modelled": [
+        "Minas sucesivas con daño reducido (ReducedDamage) y ralentización"
+      ]
+    },
+    "R": {
+      "name": "Megabomba incendiaria",
+      "tooltip": "spell_ziggsr_tooltip",
+      "cases": [
+        {
+          "id": "center",
+          "name": "Centro de la explosión",
+          "parts": [
+            {
+              "calculation": "EmpoweredDamage"
+            }
+          ]
+        },
+        {
+          "id": "outer",
+          "name": "Borde exterior",
+          "parts": [
+            {
+              "calculation": "BlastDamage"
+            }
+          ]
+        }
+      ]
+    }
+  }
+}

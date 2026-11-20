@@ -1,0 +1,409 @@
+{
+  "schema": "lol-champion-kit/1",
+  "champion": "Orianna",
+  "label": "Derivado",
+  "game_version": "16.23",
+  "content_version": "16.23.8406595+branch.releases-16-23.content.release",
+  "verified_against": {
+    "content_version": "16.23.8406595+branch.releases-16-23.content.release",
+    "bin_sha256": "a6988e7b216cc2ed2d4283ff28733369afd31ebdccd49a417886843334d269ed",
+    "evidence": "odd/tasks/champion-kits-wave-1.md",
+    "result": "Bin del cliente 16.23 convertido con python -m binmodel.batch_kits y compilado con esta especificación curada (CH-01 oleada 1)"
+  },
+  "source": "Árboles de cálculo del bin del cliente (python -m binmodel) y marcado de los tooltips del cliente; estructura de casos curada en research/kits/",
+  "abilities": {
+    "P": {
+      "name": "Dando cuerda",
+      "max_rank": 1,
+      "cases": [
+        {
+          "id": "hit",
+          "name": "Daño mágico adicional base",
+          "parts": [
+            {
+              "damage_type": "magic",
+              "formula": {
+                "op": "add",
+                "operands": [
+                  {
+                    "op": "linear_by_level",
+                    "min": 10,
+                    "max": 50
+                  },
+                  {
+                    "op": "mul",
+                    "operands": [
+                      {
+                        "op": "constant",
+                        "value": 0.15
+                      },
+                      {
+                        "op": "stat",
+                        "stat": "ability_power",
+                        "scope": "total"
+                      }
+                    ]
+                  }
+                ]
+              },
+              "label": "Derivado",
+              "source": "Characters/Orianna/Spells/OriannaPAbility/OriannaP.mSpellCalculations.TotalDamage (16.23.8406595+branch.releases-16-23.content.release)",
+              "damage_type_source": "spell_oriannap_tooltip <magicDamage>"
+            }
+          ]
+        },
+        {
+          "id": "stack_bonus",
+          "name": "Aumento por golpe consecutivo",
+          "parts": [
+            {
+              "damage_type": "magic",
+              "formula": {
+                "op": "mul",
+                "operands": [
+                  {
+                    "op": "add",
+                    "operands": [
+                      {
+                        "op": "linear_by_level",
+                        "min": 10,
+                        "max": 50
+                      },
+                      {
+                        "op": "mul",
+                        "operands": [
+                          {
+                            "op": "constant",
+                            "value": 0.15
+                          },
+                          {
+                            "op": "stat",
+                            "stat": "ability_power",
+                            "scope": "total"
+                          }
+                        ]
+                      }
+                    ]
+                  },
+                  {
+                    "op": "constant",
+                    "value": 0.15
+                  }
+                ]
+              },
+              "label": "Derivado",
+              "source": "Characters/Orianna/Spells/OriannaPAbility/OriannaP.mSpellCalculations.StackDamage (16.23.8406595+branch.releases-16-23.content.release)",
+              "damage_type_source": "spell_oriannap_tooltip <magicDamage>"
+            }
+          ]
+        },
+        {
+          "id": "max_stacks",
+          "name": "Daño adicional máximo (2 cargas)",
+          "parts": [
+            {
+              "damage_type": "magic",
+              "formula": {
+                "op": "mul",
+                "operands": [
+                  {
+                    "op": "add",
+                    "operands": [
+                      {
+                        "op": "linear_by_level",
+                        "min": 10,
+                        "max": 50
+                      },
+                      {
+                        "op": "mul",
+                        "operands": [
+                          {
+                            "op": "constant",
+                            "value": 0.15
+                          },
+                          {
+                            "op": "stat",
+                            "stat": "ability_power",
+                            "scope": "total"
+                          }
+                        ]
+                      }
+                    ]
+                  },
+                  {
+                    "op": "mul",
+                    "operands": [
+                      {
+                        "op": "constant",
+                        "value": 0.15
+                      },
+                      {
+                        "op": "constant",
+                        "value": 2
+                      }
+                    ]
+                  }
+                ]
+              },
+              "label": "Derivado",
+              "source": "Characters/Orianna/Spells/OriannaPAbility/OriannaP.mSpellCalculations.StackDamageMax (16.23.8406595+branch.releases-16-23.content.release)",
+              "damage_type_source": "spell_oriannap_tooltip <magicDamage>"
+            }
+          ]
+        }
+      ],
+      "passive_stats": [],
+      "not_modelled": []
+    },
+    "Q": {
+      "name": "Orden: atacar",
+      "max_rank": 5,
+      "cases": [
+        {
+          "id": "first",
+          "name": "Primer objetivo",
+          "parts": [
+            {
+              "damage_type": "magic",
+              "formula": {
+                "op": "add",
+                "operands": [
+                  {
+                    "op": "by_rank",
+                    "values": [
+                      60,
+                      90,
+                      120,
+                      150,
+                      180
+                    ]
+                  },
+                  {
+                    "op": "mul",
+                    "operands": [
+                      {
+                        "op": "constant",
+                        "value": 0.6
+                      },
+                      {
+                        "op": "stat",
+                        "stat": "ability_power",
+                        "scope": "total"
+                      }
+                    ]
+                  }
+                ]
+              },
+              "label": "Derivado",
+              "source": "Characters/Orianna/Spells/OrianaIzunaCommandAbility/OrianaIzunaCommand.mSpellCalculations.TotalDamage (16.23.8406595+branch.releases-16-23.content.release)",
+              "damage_type_source": "spell_orianaizunacommand_tooltip <magicDamage>"
+            }
+          ]
+        },
+        {
+          "id": "reduced",
+          "name": "Objetivos sucesivos (reducido)",
+          "parts": [
+            {
+              "damage_type": "magic",
+              "formula": {
+                "op": "mul",
+                "operands": [
+                  {
+                    "op": "add",
+                    "operands": [
+                      {
+                        "op": "by_rank",
+                        "values": [
+                          60,
+                          90,
+                          120,
+                          150,
+                          180
+                        ]
+                      },
+                      {
+                        "op": "mul",
+                        "operands": [
+                          {
+                            "op": "constant",
+                            "value": 0.6
+                          },
+                          {
+                            "op": "stat",
+                            "stat": "ability_power",
+                            "scope": "total"
+                          }
+                        ]
+                      }
+                    ]
+                  },
+                  {
+                    "op": "constant",
+                    "value": 0.7
+                  }
+                ]
+              },
+              "label": "Derivado",
+              "source": "Characters/Orianna/Spells/OrianaIzunaCommandAbility/OrianaIzunaCommand.mSpellCalculations.ReducedDamage (16.23.8406595+branch.releases-16-23.content.release)",
+              "damage_type_source": "spell_orianaizunacommand_tooltip <magicDamage>"
+            }
+          ]
+        }
+      ],
+      "passive_stats": [],
+      "not_modelled": []
+    },
+    "W": {
+      "name": "Orden: disonancia",
+      "max_rank": 5,
+      "cases": [
+        {
+          "id": "pulse",
+          "name": "Pulso eléctrico",
+          "parts": [
+            {
+              "damage_type": "magic",
+              "formula": {
+                "op": "add",
+                "operands": [
+                  {
+                    "op": "by_rank",
+                    "values": [
+                      70,
+                      110,
+                      150,
+                      190,
+                      230
+                    ]
+                  },
+                  {
+                    "op": "mul",
+                    "operands": [
+                      {
+                        "op": "constant",
+                        "value": 0.85
+                      },
+                      {
+                        "op": "stat",
+                        "stat": "ability_power",
+                        "scope": "total"
+                      }
+                    ]
+                  }
+                ]
+              },
+              "label": "Derivado",
+              "source": "Characters/Orianna/Spells/OrianaDissonanceCommandAbility/OrianaDissonanceCommand.mSpellCalculations.TotalDamage (16.23.8406595+branch.releases-16-23.content.release)",
+              "damage_type_source": "spell_orianadissonancecommand_tooltip <magicDamage>"
+            }
+          ]
+        }
+      ],
+      "passive_stats": [],
+      "not_modelled": [
+        "Ralentización a enemigos y aceleración a aliados"
+      ]
+    },
+    "E": {
+      "name": "Orden: proteger",
+      "max_rank": 5,
+      "cases": [
+        {
+          "id": "passthrough",
+          "name": "Daño al atravesar enemigos",
+          "parts": [
+            {
+              "damage_type": "magic",
+              "formula": {
+                "op": "add",
+                "operands": [
+                  {
+                    "op": "by_rank",
+                    "values": [
+                      60,
+                      90,
+                      120,
+                      150,
+                      180
+                    ]
+                  },
+                  {
+                    "op": "mul",
+                    "operands": [
+                      {
+                        "op": "constant",
+                        "value": 0.3
+                      },
+                      {
+                        "op": "stat",
+                        "stat": "ability_power",
+                        "scope": "total"
+                      }
+                    ]
+                  }
+                ]
+              },
+              "label": "Derivado",
+              "source": "Characters/Orianna/Spells/OrianaRedactCommandAbility/OrianaRedactCommand.mSpellCalculations.TotalDamageTooltip (16.23.8406595+branch.releases-16-23.content.release)",
+              "damage_type_source": "spell_orianaredactcommand_tooltip <magicDamage>"
+            }
+          ]
+        }
+      ],
+      "passive_stats": [],
+      "not_modelled": [
+        "Escudo (TotalShieldTooltip) y armadura/RM pasivas al portador de la bola (DefenseBonus)"
+      ]
+    },
+    "R": {
+      "name": "Orden: onda de choque",
+      "max_rank": 3,
+      "cases": [
+        {
+          "id": "shockwave",
+          "name": "Onda de choque",
+          "parts": [
+            {
+              "damage_type": "magic",
+              "formula": {
+                "op": "add",
+                "operands": [
+                  {
+                    "op": "by_rank",
+                    "values": [
+                      225,
+                      350,
+                      475
+                    ]
+                  },
+                  {
+                    "op": "mul",
+                    "operands": [
+                      {
+                        "op": "constant",
+                        "value": 1.1
+                      },
+                      {
+                        "op": "stat",
+                        "stat": "ability_power",
+                        "scope": "total"
+                      }
+                    ]
+                  }
+                ]
+              },
+              "label": "Derivado",
+              "source": "Characters/Orianna/Spells/OrianaDetonateCommandAbility/OrianaDetonateCommand.mSpellCalculations.TotalDamage (16.23.8406595+branch.releases-16-23.content.release)",
+              "damage_type_source": "spell_orianadetonatecommand_tooltip <magicDamage>"
+            }
+          ]
+        }
+      ],
+      "passive_stats": [],
+      "not_modelled": [
+        "Atracción y derribo"
+      ]
+    }
+  }
+}

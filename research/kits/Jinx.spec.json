@@ -1,0 +1,161 @@
+{
+  "champion": "Jinx",
+  "game_version": "16.23",
+  "verified_against": {
+    "content_version": "16.23.8406595+branch.releases-16-23.content.release",
+    "bin_sha256": "e9d25c46a2534e00482ebad6e07c9bd377811af766ea60af9ecde08bd8834c52",
+    "evidence": "odd/tasks/champion-kits-wave-1.md",
+    "result": "Bin del cliente 16.23 convertido con python -m binmodel.batch_kits y compilado con esta especificación curada (CH-01 oleada 1)"
+  },
+  "abilities": {
+    "P": {
+      "name": "¡A tope!",
+      "max_rank": 1,
+      "not_modelled": [
+        "Velocidad de ataque y movimiento tras derribar campeones, monstruos épicos o estructuras"
+      ]
+    },
+    "Q": {
+      "name": "¡Cambiazo!",
+      "tooltip": "spell_jinxq_tooltip",
+      "cases": [
+        {
+          "id": "rocket",
+          "name": "Ataque con lanzacohetes (110 % DA)",
+          "parts": [
+            {
+              "calculation": "RocketDamage"
+            }
+          ]
+        }
+      ],
+      "not_modelled": [
+        "Velocidad de ataque acumulable de la ametralladora (MinigunAttackSpeedMax)",
+        "Alcance adicional, penalización de VA y coste de maná por cohete"
+      ]
+    },
+    "W": {
+      "name": "¡Zap!",
+      "tooltip": "spell_jinxw_tooltip",
+      "cases": [
+        {
+          "id": "zap",
+          "name": "Rayo",
+          "parts": [
+            {
+              "calculation": "TotalDamage"
+            }
+          ]
+        }
+      ],
+      "not_modelled": [
+        "Ralentización y revelación"
+      ]
+    },
+    "E": {
+      "name": "¡Mascafuegos!",
+      "tooltip": "spell_jinxe_tooltip",
+      "cases": [
+        {
+          "id": "chompers",
+          "name": "Explosión de trampa",
+          "parts": [
+            {
+              "calculation": "TotalDamage"
+            }
+          ]
+        }
+      ],
+      "not_modelled": [
+        "Inmovilización (RootDuration)"
+      ]
+    },
+    "R": {
+      "name": "¡Supermegacohete mortal!",
+      "tooltip": "spell_jinxr_tooltip",
+      "cases": [
+        {
+          "id": "min",
+          "name": "Corta distancia (+ % vida que falta)",
+          "parts": [
+            {
+              "calculation": "DamageFloor"
+            },
+            {
+              "tooltip_reference": "PercentDamage",
+              "damage_type": "physical",
+              "source_note": "DataValues.PercentDamage % × vida que falta del objetivo",
+              "formula": {
+                "op": "mul",
+                "operands": [
+                  {
+                    "op": "data_value",
+                    "name": "PercentDamage"
+                  },
+                  {
+                    "op": "constant",
+                    "value": 0.01
+                  },
+                  {
+                    "op": "stat",
+                    "stat": "health",
+                    "scope": "max",
+                    "subject": "target"
+                  },
+                  {
+                    "op": "stat",
+                    "stat": "health",
+                    "scope": "missing_fraction",
+                    "subject": "target"
+                  }
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "id": "max",
+          "name": "Larga distancia (+ % vida que falta)",
+          "parts": [
+            {
+              "calculation": "DamageMax"
+            },
+            {
+              "tooltip_reference": "PercentDamage",
+              "damage_type": "physical",
+              "source_note": "DataValues.PercentDamage % × vida que falta del objetivo",
+              "formula": {
+                "op": "mul",
+                "operands": [
+                  {
+                    "op": "data_value",
+                    "name": "PercentDamage"
+                  },
+                  {
+                    "op": "constant",
+                    "value": 0.01
+                  },
+                  {
+                    "op": "stat",
+                    "stat": "health",
+                    "scope": "max",
+                    "subject": "target"
+                  },
+                  {
+                    "op": "stat",
+                    "stat": "health",
+                    "scope": "missing_fraction",
+                    "subject": "target"
+                  }
+                ]
+              }
+            }
+          ]
+        }
+      ],
+      "not_modelled": [
+        "Daño AoE del 80 % a enemigos secundarios y tope contra monstruos (MonsterExecuteMax)"
+      ]
+    }
+  }
+}

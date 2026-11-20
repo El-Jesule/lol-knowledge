@@ -257,3 +257,221 @@ def test_specdraft_cli_writes_spec_and_review_and_rejects_missing_file(
 
     assert main(["--extract", str(tmp_path / "nope.json"), "--tooltips", str(ext_path)]) == 2
     assert capsys.readouterr().err.startswith("error:")
+
+
+def test_find_champion_root_disambiguates_multiple_records():
+    from binmodel.traverse import TraversalError, find_champion_root
+
+    doc = {
+        "Characters/Milio/CharacterRecords/Root": {
+            "__type": "CharacterRecord",
+            "mCharacterName": "Milio",
+        },
+        "Characters/Milio/CharacterRecords/Helper": {
+            "__type": "CharacterRecord",
+            "mCharacterName": "MilioHelper",
+        },
+    }
+    path, root = find_champion_root(doc)
+    assert path == "Characters/Milio/CharacterRecords/Root"
+    assert root["mCharacterName"] == "Milio"
+
+    ambiguous = {
+        "Characters/A/Record1": {"__type": "CharacterRecord"},
+        "Characters/A/Record2": {"__type": "CharacterRecord"},
+    }
+    with pytest.raises(TraversalError, match="found 2"):
+        find_champion_root(ambiguous)
+
+
+def test_kitgen_normalizes_bonus_ap_and_translates_named_breakpoints():
+    ability = _Ability(
+        {
+            "slot": "E",
+            "level_count": 5,
+            "path": "Characters/Jax/Spells/JaxCounterStrike",
+            "data_values": [
+                {"name": "L1", "mode": "base", "ranks": [10, 10, 10, 10, 10]},
+                {"name": "PerLvl", "mode": "base", "ranks": [2, 2, 2, 2, 2]},
+                {"name": "Step6", "mode": "base", "ranks": [5, 5, 5, 5, 5]},
+                {"name": "Rate11", "mode": "base", "ranks": [4, 4, 4, 4, 4]},
+            ],
+            "calculations": [
+                {
+                    "name": "BonusAPCalc",
+                    "tree": {
+                        "kind": "game_calculation",
+                        "parts": [
+                            {
+                                "kind": "stat_scaled",
+                                "stat": {
+                                    "stat": "ability_power",
+                                    "formula": "bonus",
+                                    "resolved": True,
+                                    "stat_confidence": "corroborated",
+                                    "formula_confidence": "corroborated",
+                                },
+                                "factor": {"kind": "number", "value": 0.7},
+                            }
+                        ],
+                    },
+                },
+                {
+                    "name": "NamedBP",
+                    "tree": {
+                        "kind": "by_char_level_named_breakpoints",
+                        "level1_data_value": "L1",
+                        "bonus_per_level_data_value": "PerLvl",
+                        "breakpoints": [
+                            {"level": 6, "additional_bonus_data_value": "Step6"},
+                            {"level": 11, "bonus_per_level_at_and_after_data_value": "Rate11"},
+                        ],
+                    },
+                },
+                {
+                    "name": "MissingNumber",
+                    "tree": {"kind": "number", "value": None},
+                },
+            ],
+        }
+    )
+    assert ability.calculation("BonusAPCalc") == {
+        "op": "mul",
+        "operands": [
+            {"op": "constant", "value": 0.7},
+            {"op": "stat", "stat": "ability_power", "scope": "total"},
+        ],
+    }
+    bp = ability.calculation("NamedBP")
+    assert bp["op"] == "by_level" and len(bp["values"]) == 18
+    assert bp["values"][0] == 10
+    assert bp["values"][4] == 18  # level 5: 10 + 4*2
+    assert bp["values"][5] == 25  # level 6: 18 + 2 + 5
+    assert bp["values"][10] == 35  # level 11: 25 + 5*2, then rate becomes 4
+    assert bp["values"][11] == 39  # level 12: 35 + 4
+    with pytest.raises(KitGenError, match="missing numeric value"):
+        ability.calculation("MissingNumber")
+
+
+def test_specdraft_handles_missing_level_count_and_recast_coherence(ahri_extract):
+    from lol_knowledge.kit.model import parse_kit
+
+    tooltips = _tooltips("ahri")
+    dd = json.loads((ROOT / "data/current/champions/Ahri.json").read_text(encoding="utf-8"))
+    # Ahri R has recast settings and 1 calculation -> specdraft emits a draft recast case
+    # so the compiled kit passes parse_kit without error!
+    drafted = draft_spec(ahri_extract, {"strings": tooltips}, ddragon=dd)
+    compiled = compile_kit(ahri_extract, {"strings": tooltips}, drafted["spec"])
+    kit = parse_kit(compiled)
+    assert any(case.recast for case in kit.abilities["R"].cases)
+
+    # Missing level_count falls back to Data Dragon maxrank instead of crashing
+    broken = copy.deepcopy(ahri_extract)
+    for ability in broken["abilities"]:
+        if ability["slot"] == "E":
+            ability["level_count"] = None
+    drafted2 = draft_spec(broken, tooltips, ddragon=dd)
+    assert drafted2["spec"]["abilities"]["E"]["max_rank"] == 5
+    assert any(
+        f["kind"] == "missing_level_count" and f["slot"] == "E"
+        for f in drafted2["review"]["findings"]
+    )
+
+
+def test_batch_kits_cli_rejects_bad_environment(tmp_path, capsys):
+    from binmodel.batch_kits import main as batch_main
+
+    code = batch_main(["--game", str(tmp_path), "--hashes", str(tmp_path), "--survey"])
+    assert code == 2
+    assert "content-metadata.json not found" in capsys.readouterr().err
+
+
+def test_kitgen_custom_calculation_scaled_passive_stat_and_percent_guard(zaahen_extract):
+    tooltips = _tooltips("zaahen")
+    # Synthetic ability with display_as_percent=True damage calc and percentage-point passive stat
+    extract_doc = {
+        "champion": {"id": "TestChamp", "name": "TestChamp"},
+        "game_version": "16.23",
+        "content_version": "16.23.test",
+        "abilities": [
+            {
+                "slot": "W",
+                "name": "W",
+                "path": "Characters/TestChamp/Spells/W",
+                "level_count": 5,
+                "tooltip": {"loc_keys": {"keyTooltip": "spell_test_w"}},
+                "data_values": [
+                    {"name": "PctPen", "mode": "base", "ranks": [20, 25, 30, 35, 40]},
+                    {"name": "MaxHpPct", "mode": "base", "ranks": [0.04, 0.05, 0.06, 0.07, 0.08]},
+                ],
+                "calculations": [
+                    {
+                        "name": "PctDmg",
+                        "tree": {
+                            "kind": "game_calculation",
+                            "display_as_percent": True,
+                            "parts": [{"kind": "data_value", "name": "MaxHpPct"}],
+                        },
+                    }
+                ],
+            }
+        ],
+    }
+    tt = {"spell_test_w": "Inflige <trueDamage>@PctDmg@ de vida máxima</trueDamage>."}
+    drafted = draft_spec(extract_doc, tt)
+    assert any(f["kind"] == "percent_damage_calc" for f in drafted["review"]["findings"])
+    assert "cases" not in drafted["spec"]["abilities"]["W"]
+
+    spec = {
+        "champion": "TestChamp",
+        "game_version": "16.23",
+        "abilities": {
+            "W": {
+                "name": "W",
+                "tooltip": "spell_test_w",
+                "cases": [
+                    {
+                        "id": "proc",
+                        "name": "Impacto",
+                        "parts": [
+                            {
+                                "tooltip_reference": "PctDmg",
+                                "source_note": "PctDmg × vida máxima del objetivo",
+                                "formula": {
+                                    "op": "mul",
+                                    "operands": [
+                                        {"op": "calculation", "name": "PctDmg"},
+                                        {
+                                            "op": "stat",
+                                            "stat": "health",
+                                            "scope": "max",
+                                            "subject": "target",
+                                        },
+                                    ],
+                                },
+                            }
+                        ],
+                    }
+                ],
+                "passive_stats": [
+                    {
+                        "stat": "armor_penetration_percent",
+                        "data_value": "PctPen",
+                        "scale": 0.01,
+                        "condition": "pasiva de W",
+                    }
+                ],
+            }
+        },
+    }
+    compiled = compile_kit(extract_doc, tt, spec)
+    assert compiled["abilities"]["W"]["passive_stats"][0]["formula"] == {
+        "op": "by_rank",
+        "values": [0.2, 0.25, 0.3, 0.35, 0.4],
+    }
+    assert compiled["abilities"]["W"]["cases"][0]["parts"][0]["formula"]["operands"][0] == {
+        "op": "by_rank",
+        "values": [0.04, 0.05, 0.06, 0.07, 0.08],
+    }
+    assert zaahen_extract["champion"]["name"] == "Zaahen"
+    assert isinstance(tooltips, dict)

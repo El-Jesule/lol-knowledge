@@ -1,0 +1,222 @@
+{
+  "schema": "lol-champion-kit/1",
+  "champion": "Alistar",
+  "label": "Derivado",
+  "game_version": "16.23",
+  "content_version": "16.23.8406595+branch.releases-16-23.content.release",
+  "verified_against": {
+    "content_version": "16.23.8406595+branch.releases-16-23.content.release",
+    "bin_sha256": "302541cae7e6d358afbce91cd94d2b2c0b6fe5ff9a947ea0909073e0ea1d7809",
+    "evidence": "odd/tasks/champion-kits-wave-1.md",
+    "result": "Bin del cliente 16.23 convertido con python -m binmodel.batch_kits y compilado con esta especificación curada (CH-01 oleada 1)"
+  },
+  "source": "Árboles de cálculo del bin del cliente (python -m binmodel) y marcado de los tooltips del cliente; estructura de casos curada en research/kits/",
+  "abilities": {
+    "P": {
+      "name": "Rugido triunfal",
+      "max_rank": 1,
+      "cases": [],
+      "passive_stats": [],
+      "not_modelled": [
+        "Curación propia y aliada cada 7 cargas (BaseHeal, AllyHeal)"
+      ]
+    },
+    "Q": {
+      "name": "Pulverización",
+      "max_rank": 5,
+      "cases": [
+        {
+          "id": "slam",
+          "name": "Impacto",
+          "parts": [
+            {
+              "damage_type": "magic",
+              "formula": {
+                "op": "add",
+                "operands": [
+                  {
+                    "op": "by_rank",
+                    "values": [
+                      60,
+                      100,
+                      140,
+                      180,
+                      220
+                    ]
+                  },
+                  {
+                    "op": "mul",
+                    "operands": [
+                      {
+                        "op": "constant",
+                        "value": 0.8
+                      },
+                      {
+                        "op": "stat",
+                        "stat": "ability_power",
+                        "scope": "total"
+                      }
+                    ]
+                  }
+                ]
+              },
+              "label": "Derivado",
+              "source": "Characters/Alistar/Spells/PulverizeAbility/Pulverize.mSpellCalculations.TotalDamage (16.23.8406595+branch.releases-16-23.content.release)",
+              "damage_type_source": "spell_pulverize_tooltip <magicDamage>"
+            }
+          ]
+        }
+      ],
+      "passive_stats": [],
+      "not_modelled": [
+        "Lanzamiento por los aires (KnockupDuration)"
+      ]
+    },
+    "W": {
+      "name": "Testarazo",
+      "max_rank": 5,
+      "cases": [
+        {
+          "id": "headbutt",
+          "name": "Embiste",
+          "parts": [
+            {
+              "damage_type": "magic",
+              "formula": {
+                "op": "add",
+                "operands": [
+                  {
+                    "op": "by_rank",
+                    "values": [
+                      55,
+                      110,
+                      165,
+                      220,
+                      275
+                    ]
+                  },
+                  {
+                    "op": "mul",
+                    "operands": [
+                      {
+                        "op": "constant",
+                        "value": 1
+                      },
+                      {
+                        "op": "stat",
+                        "stat": "ability_power",
+                        "scope": "total"
+                      }
+                    ]
+                  }
+                ]
+              },
+              "label": "Derivado",
+              "source": "Characters/Alistar/Spells/HeadbuttAbility/Headbutt.mSpellCalculations.TotalDamage (16.23.8406595+branch.releases-16-23.content.release)",
+              "damage_type_source": "spell_headbutt_tooltip <magicDamage>"
+            }
+          ]
+        }
+      ],
+      "passive_stats": [],
+      "not_modelled": [
+        "Empuje"
+      ]
+    },
+    "E": {
+      "name": "Pisotear",
+      "max_rank": 5,
+      "cases": [
+        {
+          "id": "trample_total",
+          "name": "Daño total de pulsos (5 s)",
+          "parts": [
+            {
+              "damage_type": "magic",
+              "formula": {
+                "op": "add",
+                "operands": [
+                  {
+                    "op": "by_rank",
+                    "values": [
+                      80,
+                      110,
+                      140,
+                      170,
+                      200
+                    ]
+                  },
+                  {
+                    "op": "mul",
+                    "operands": [
+                      {
+                        "op": "constant",
+                        "value": 0.7
+                      },
+                      {
+                        "op": "stat",
+                        "stat": "ability_power",
+                        "scope": "total"
+                      }
+                    ]
+                  }
+                ]
+              },
+              "label": "Derivado",
+              "source": "Characters/Alistar/Spells/AlistarEAbility/AlistarE.mSpellCalculations.TotalDamage (16.23.8406595+branch.releases-16-23.content.release)",
+              "damage_type_source": "spell_alistare_tooltip <magicDamage>"
+            }
+          ]
+        },
+        {
+          "id": "empowered_attack",
+          "name": "Ataque potenciado (5 cargas)",
+          "parts": [
+            {
+              "damage_type": "magic",
+              "formula": {
+                "op": "by_level",
+                "values": [
+                  20,
+                  35,
+                  50,
+                  65,
+                  80,
+                  95,
+                  110,
+                  125,
+                  140,
+                  155,
+                  170,
+                  185,
+                  200,
+                  215,
+                  230,
+                  245,
+                  260,
+                  275
+                ]
+              },
+              "label": "Derivado",
+              "source": "Characters/Alistar/Spells/AlistarEAbility/AlistarE.mSpellCalculations.AttackBonusDamage (16.23.8406595+branch.releases-16-23.content.release)",
+              "damage_type_source": "spell_alistare_tooltip <magicDamage>"
+            }
+          ]
+        }
+      ],
+      "passive_stats": [],
+      "not_modelled": [
+        "Aturdimiento del ataque potenciado"
+      ]
+    },
+    "R": {
+      "name": "Voluntad inquebrantable",
+      "max_rank": 3,
+      "cases": [],
+      "passive_stats": [],
+      "not_modelled": [
+        "Limpieza de control de adversario y reducción porcentual de daño recibido (RDamageReduction)"
+      ]
+    }
+  }
+}

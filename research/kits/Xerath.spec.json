@@ -1,0 +1,109 @@
+{
+  "champion": "Xerath",
+  "game_version": "16.23",
+  "verified_against": {
+    "content_version": "16.23.8406595+branch.releases-16-23.content.release",
+    "bin_sha256": "daa7334fd44351996e886c0d84f256f95a0bf6085d652d972a7a6c9e33081c0a",
+    "evidence": "odd/tasks/champion-kits-wave-1.md",
+    "result": "Bin del cliente 16.23 convertido con python -m binmodel.batch_kits y compilado con esta especificación curada (CH-01 oleada 1)"
+  },
+  "abilities": {
+    "P": {
+      "name": "Sobrecarga de maná",
+      "max_rank": 1,
+      "not_modelled": [
+        "Restauración de maná en ataque cada 16 s (ChampionManaRestoreTT, MinionManaRestoreTT)"
+      ]
+    },
+    "Q": {
+      "name": "Pulso arcano",
+      "tooltip": "spell_xeratharcanopulsechargeup_tooltip",
+      "cases": [
+        {
+          "id": "beam",
+          "name": "Rayo arcano",
+          "parts": [
+            {
+              "calculation": "TooltipTotalDamage"
+            }
+          ]
+        }
+      ],
+      "not_modelled": [
+        "Tiempo de carga y autorralentización"
+      ]
+    },
+    "W": {
+      "name": "Ojo de destrucción",
+      "tooltip": "spell_xeratharcanebarrage2_tooltip",
+      "cases": [
+        {
+          "id": "outer",
+          "name": "Borde exterior",
+          "parts": [
+            {
+              "calculation": "TotalDamage"
+            }
+          ]
+        },
+        {
+          "id": "center",
+          "name": "Centro potenciado",
+          "parts": [
+            {
+              "calculation": "SweetSpotTotalDamage"
+            }
+          ]
+        }
+      ],
+      "not_modelled": [
+        "Ralentización (SlowAmount)"
+      ]
+    },
+    "E": {
+      "name": "Orbe impactante",
+      "tooltip": "spell_xerathmagespear_tooltip",
+      "cases": [
+        {
+          "id": "orb",
+          "name": "Orbe",
+          "parts": [
+            {
+              "calculation": "TooltipTotalDamage"
+            }
+          ]
+        }
+      ],
+      "not_modelled": [
+        "Aturdimiento escalado por distancia (MaxStunDuration)"
+      ]
+    },
+    "R": {
+      "name": "Rito del arcano",
+      "tooltip": "spell_xerathlocusofpower2_tooltip",
+      "cases": [
+        {
+          "id": "shot",
+          "name": "Disparo base",
+          "parts": [
+            {
+              "calculation": "TooltipTotalDamage"
+            }
+          ]
+        },
+        {
+          "id": "ramp_bonus",
+          "name": "Bonificación por impacto consecutivo",
+          "parts": [
+            {
+              "calculation": "RampDamageCalc"
+            }
+          ]
+        }
+      ],
+      "not_modelled": [
+        "Número variable de disparos según rango (NumberOfShots) y acumulación automática por acierto"
+      ]
+    }
+  }
+}

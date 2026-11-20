@@ -1,0 +1,316 @@
+{
+  "schema": "lol-champion-kit/1",
+  "champion": "Xerath",
+  "label": "Derivado",
+  "game_version": "16.23",
+  "content_version": "16.23.8406595+branch.releases-16-23.content.release",
+  "verified_against": {
+    "content_version": "16.23.8406595+branch.releases-16-23.content.release",
+    "bin_sha256": "daa7334fd44351996e886c0d84f256f95a0bf6085d652d972a7a6c9e33081c0a",
+    "evidence": "odd/tasks/champion-kits-wave-1.md",
+    "result": "Bin del cliente 16.23 convertido con python -m binmodel.batch_kits y compilado con esta especificación curada (CH-01 oleada 1)"
+  },
+  "source": "Árboles de cálculo del bin del cliente (python -m binmodel) y marcado de los tooltips del cliente; estructura de casos curada en research/kits/",
+  "abilities": {
+    "P": {
+      "name": "Sobrecarga de maná",
+      "max_rank": 1,
+      "cases": [],
+      "passive_stats": [],
+      "not_modelled": [
+        "Restauración de maná en ataque cada 16 s (ChampionManaRestoreTT, MinionManaRestoreTT)"
+      ]
+    },
+    "Q": {
+      "name": "Pulso arcano",
+      "max_rank": 5,
+      "cases": [
+        {
+          "id": "beam",
+          "name": "Rayo arcano",
+          "parts": [
+            {
+              "damage_type": "magic",
+              "formula": {
+                "op": "add",
+                "operands": [
+                  {
+                    "op": "by_rank",
+                    "values": [
+                      70,
+                      110,
+                      150,
+                      190,
+                      230
+                    ]
+                  },
+                  {
+                    "op": "mul",
+                    "operands": [
+                      {
+                        "op": "constant",
+                        "value": 0.9
+                      },
+                      {
+                        "op": "stat",
+                        "stat": "ability_power",
+                        "scope": "total"
+                      }
+                    ]
+                  }
+                ]
+              },
+              "label": "Derivado",
+              "source": "Characters/Xerath/Spells/XerathArcanopulseChargeUpAbility/XerathArcanopulseChargeUp.mSpellCalculations.TooltipTotalDamage (16.23.8406595+branch.releases-16-23.content.release)",
+              "damage_type_source": "spell_xeratharcanopulsechargeup_tooltip <magicDamage>"
+            }
+          ]
+        }
+      ],
+      "passive_stats": [],
+      "not_modelled": [
+        "Tiempo de carga y autorralentización"
+      ]
+    },
+    "W": {
+      "name": "Ojo de destrucción",
+      "max_rank": 5,
+      "cases": [
+        {
+          "id": "outer",
+          "name": "Borde exterior",
+          "parts": [
+            {
+              "damage_type": "magic",
+              "formula": {
+                "op": "add",
+                "operands": [
+                  {
+                    "op": "by_rank",
+                    "values": [
+                      50,
+                      85,
+                      120,
+                      155,
+                      190
+                    ]
+                  },
+                  {
+                    "op": "mul",
+                    "operands": [
+                      {
+                        "op": "constant",
+                        "value": 0.65
+                      },
+                      {
+                        "op": "stat",
+                        "stat": "ability_power",
+                        "scope": "total"
+                      }
+                    ]
+                  }
+                ]
+              },
+              "label": "Derivado",
+              "source": "Characters/Xerath/Spells/XerathArcaneBarrage2Ability/XerathArcaneBarrage2.mSpellCalculations.TotalDamage (16.23.8406595+branch.releases-16-23.content.release)",
+              "damage_type_source": "spell_xeratharcanebarrage2_tooltip <magicDamage>"
+            }
+          ]
+        },
+        {
+          "id": "center",
+          "name": "Centro potenciado",
+          "parts": [
+            {
+              "damage_type": "magic",
+              "formula": {
+                "op": "mul",
+                "operands": [
+                  {
+                    "op": "add",
+                    "operands": [
+                      {
+                        "op": "by_rank",
+                        "values": [
+                          50,
+                          85,
+                          120,
+                          155,
+                          190
+                        ]
+                      },
+                      {
+                        "op": "mul",
+                        "operands": [
+                          {
+                            "op": "constant",
+                            "value": 0.65
+                          },
+                          {
+                            "op": "stat",
+                            "stat": "ability_power",
+                            "scope": "total"
+                          }
+                        ]
+                      }
+                    ]
+                  },
+                  {
+                    "op": "constant",
+                    "value": 1.667
+                  }
+                ]
+              },
+              "label": "Derivado",
+              "source": "Characters/Xerath/Spells/XerathArcaneBarrage2Ability/XerathArcaneBarrage2.mSpellCalculations.SweetSpotTotalDamage (16.23.8406595+branch.releases-16-23.content.release)",
+              "damage_type_source": "spell_xeratharcanebarrage2_tooltip <magicDamage>"
+            }
+          ]
+        }
+      ],
+      "passive_stats": [],
+      "not_modelled": [
+        "Ralentización (SlowAmount)"
+      ]
+    },
+    "E": {
+      "name": "Orbe impactante",
+      "max_rank": 5,
+      "cases": [
+        {
+          "id": "orb",
+          "name": "Orbe",
+          "parts": [
+            {
+              "damage_type": "magic",
+              "formula": {
+                "op": "add",
+                "operands": [
+                  {
+                    "op": "by_rank",
+                    "values": [
+                      70,
+                      100,
+                      130,
+                      160,
+                      190
+                    ]
+                  },
+                  {
+                    "op": "mul",
+                    "operands": [
+                      {
+                        "op": "constant",
+                        "value": 0.45
+                      },
+                      {
+                        "op": "stat",
+                        "stat": "ability_power",
+                        "scope": "total"
+                      }
+                    ]
+                  }
+                ]
+              },
+              "label": "Derivado",
+              "source": "Characters/Xerath/Spells/XerathMageSpearAbility/XerathMageSpear.mSpellCalculations.TooltipTotalDamage (16.23.8406595+branch.releases-16-23.content.release)",
+              "damage_type_source": "spell_xerathmagespear_tooltip <magicDamage>"
+            }
+          ]
+        }
+      ],
+      "passive_stats": [],
+      "not_modelled": [
+        "Aturdimiento escalado por distancia (MaxStunDuration)"
+      ]
+    },
+    "R": {
+      "name": "Rito del arcano",
+      "max_rank": 3,
+      "cases": [
+        {
+          "id": "shot",
+          "name": "Disparo base",
+          "parts": [
+            {
+              "damage_type": "magic",
+              "formula": {
+                "op": "add",
+                "operands": [
+                  {
+                    "op": "by_rank",
+                    "values": [
+                      170,
+                      220,
+                      270
+                    ]
+                  },
+                  {
+                    "op": "mul",
+                    "operands": [
+                      {
+                        "op": "constant",
+                        "value": 0.45
+                      },
+                      {
+                        "op": "stat",
+                        "stat": "ability_power",
+                        "scope": "total"
+                      }
+                    ]
+                  }
+                ]
+              },
+              "label": "Derivado",
+              "source": "Characters/Xerath/Spells/XerathLocusOfPower2Ability/XerathLocusOfPower2.mSpellCalculations.TooltipTotalDamage (16.23.8406595+branch.releases-16-23.content.release)",
+              "damage_type_source": "spell_xerathlocusofpower2_tooltip <magicDamage>"
+            }
+          ]
+        },
+        {
+          "id": "ramp_bonus",
+          "name": "Bonificación por impacto consecutivo",
+          "parts": [
+            {
+              "damage_type": "magic",
+              "formula": {
+                "op": "add",
+                "operands": [
+                  {
+                    "op": "by_rank",
+                    "values": [
+                      20,
+                      25,
+                      30
+                    ]
+                  },
+                  {
+                    "op": "mul",
+                    "operands": [
+                      {
+                        "op": "constant",
+                        "value": 0.05
+                      },
+                      {
+                        "op": "stat",
+                        "stat": "ability_power",
+                        "scope": "total"
+                      }
+                    ]
+                  }
+                ]
+              },
+              "label": "Derivado",
+              "source": "Characters/Xerath/Spells/XerathLocusOfPower2Ability/XerathLocusOfPower2.mSpellCalculations.RampDamageCalc (16.23.8406595+branch.releases-16-23.content.release)",
+              "damage_type_source": "spell_xerathlocusofpower2_tooltip <magicDamage>"
+            }
+          ]
+        }
+      ],
+      "passive_stats": [],
+      "not_modelled": [
+        "Número variable de disparos según rango (NumberOfShots) y acumulación automática por acierto"
+      ]
+    }
+  }
+}

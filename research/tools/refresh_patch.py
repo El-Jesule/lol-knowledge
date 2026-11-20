@@ -156,9 +156,7 @@ def _report(name: str, old_path: Path, new_path: Path, limit: int = 40) -> list[
 
 def refresh(root: Path, game: Path, hashes: Path, retrieved_at: str, *, write: bool) -> int:
     # Imported here so that --help works without PYTHONPATH.
-    from binmodel import bin2json, item_effects, item_groups, kitgen, perks, records
-    from binmodel import cli as extract_cli
-    from tools import extract_rst
+    from binmodel import batch_kits, item_effects, item_groups, perks, records
 
     from lol_knowledge.objects.__main__ import main as objects_main
 
@@ -227,46 +225,30 @@ def refresh(root: Path, game: Path, hashes: Path, retrieved_at: str, *, write: b
             lines += _report(relative.name, root / relative, output)
             if write:
                 shutil.copyfile(output, root / relative)
-        for kit_path in sorted((root / "lol-knowledge" / "champions").glob("*/kit.json")):
-            champion = kit_path.parent.name
-            lower = champion.lower()
-            spec = root / "research" / "kits" / f"{champion}.spec.json"
-            tooltips = work / f"{lower}-tooltips.json"
-            prefixes = [
-                arg for prefix in TOOLTIP_PREFIXES for arg in ("--prefix", f"{prefix}{lower}")
-            ]
-            steps_ok = True
-            for main, argv in (
-                (extract_rst.main, ["--wad", str(final / "Localized/Global.es_ES.wad.client"),
-                                    "--hash-table", str(hashes / "hashes.rst.xxh3.txt"),
-                                    "--output", str(tooltips), "--retrieved-at", retrieved_at,
-                                    *prefixes]),
-                (bin2json.main, ["--wad", str(final / "Champions" / f"{champion}.wad.client"),
-                                 "--entry", f"data/characters/{lower}/{lower}.bin",
-                                 "--hashes", str(hashes), "--names", str(tooltips),
-                                 "--output", str(work / f"{lower}.bin.json")]),
-                (extract_cli.main, ["--input", str(work / f"{lower}.bin.json"),
-                                    "--output", str(work / f"{lower}-extract.json"),
-                                    "--game-version", major_minor, "--content-version", version]),
-                (kitgen.main, ["--extract", str(work / f"{lower}-extract.json"),
-                               "--tooltips", str(tooltips), "--spec", str(spec),
-                               "--output", str(work / f"{lower}-kit.json")]),
-            ):  # fmt: skip
-                code, text = _run(main, argv)
-                if code != 0:
-                    lines.append(f"kit {champion}: step failed: {text}")
-                    failed, steps_ok = True, False
-                    break
-            if not steps_ok:
-                continue
-            changes = list(
-                differences(
-                    _without_sources(_read(kit_path)),
-                    _without_sources(_read(work / f"{lower}-kit.json")),
+        kit_paths = sorted((root / "lol-knowledge" / "champions").glob("*/kit.json"))
+        if kit_paths:
+            assets = batch_kits.load_client_assets(game, hashes)
+            for kit_path in kit_paths:
+                champion = kit_path.parent.name
+                spec = root / "research" / "kits" / f"{champion}.spec.json"
+                if not spec.is_file():
+                    lines.append(f"kit {champion}: missing spec {spec}")
+                    failed = True
+                    continue
+                try:
+                    compiled, _ = batch_kits.compile_champion_spec(champion, spec, assets)
+                except Exception as exc:
+                    lines.append(f"kit {champion}: step failed: {exc}")
+                    failed = True
+                    continue
+                changes = list(
+                    differences(
+                        _without_sources(_read(kit_path)),
+                        _without_sources(compiled),
+                    )
                 )
-            )
-            lines.append(f"kit {champion}: {len(changes)} change(s) besides provenance")
-            lines += [f"  {change}" for change in changes]
+                lines.append(f"kit {champion}: {len(changes)} change(s) besides provenance")
+                lines += [f"  {change}" for change in changes]
     print("\n".join(lines))
     print(
         "next: catalog game_version/catalog_version, data-issues patches, curated effects "

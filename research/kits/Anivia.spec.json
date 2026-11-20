@@ -1,0 +1,116 @@
+{
+  "champion": "Anivia",
+  "game_version": "16.23",
+  "verified_against": {
+    "content_version": "16.23.8406595+branch.releases-16-23.content.release",
+    "bin_sha256": "9609c2278929602fe0da1173147380c5e9419d4b03ee5d9f5a4364e413a93457",
+    "evidence": "odd/tasks/champion-kits-wave-1.md",
+    "result": "Bin del cliente 16.23 convertido con python -m binmodel.batch_kits y compilado con esta especificación curada (CH-01 oleada 1)"
+  },
+  "abilities": {
+    "P": {
+      "name": "Renacimiento",
+      "max_rank": 1,
+      "not_modelled": [
+        "Transformación en huevo al sufrir daño letal y resistencias (BonusResists)"
+      ]
+    },
+    "Q": {
+      "name": "Destello helado",
+      "tooltip": "spell_flashfrost_tooltip",
+      "cases": [
+        {
+          "id": "pass",
+          "name": "Paso del proyectil",
+          "parts": [
+            {
+              "calculation": "TotalPassthroughDamage"
+            }
+          ]
+        },
+        {
+          "id": "explode",
+          "name": "Detonación",
+          "parts": [
+            {
+              "calculation": "TotalExplosionDamage"
+            }
+          ]
+        },
+        {
+          "id": "both",
+          "name": "Paso + detonación",
+          "parts": [
+            {
+              "calculation": "TotalPassthroughDamage"
+            },
+            {
+              "calculation": "TotalExplosionDamage"
+            }
+          ]
+        }
+      ],
+      "not_modelled": [
+        "Ralentización, estado Enfriado y aturdimiento"
+      ]
+    },
+    "W": {
+      "name": "Cristalización",
+      "tooltip": "spell_crystallize_tooltip",
+      "not_modelled": [
+        "Muro de hielo"
+      ]
+    },
+    "E": {
+      "name": "Congelación",
+      "tooltip": "spell_frostbite_tooltip",
+      "cases": [
+        {
+          "id": "base",
+          "name": "Objetivo sin enfriar",
+          "parts": [
+            {
+              "calculation": "TotalDamage"
+            }
+          ]
+        },
+        {
+          "id": "chilled",
+          "name": "Objetivo enfriado (daño doble)",
+          "parts": [
+            {
+              "calculation": "EmpoweredDamage"
+            }
+          ]
+        }
+      ]
+    },
+    "R": {
+      "name": "Tormenta glacial",
+      "tooltip": "spell_glacialstorm_tooltip",
+      "cases": [
+        {
+          "id": "per_second_base",
+          "name": "Por segundo (en crecimiento)",
+          "parts": [
+            {
+              "calculation": "TotalDamagePerSecond"
+            }
+          ]
+        },
+        {
+          "id": "per_second_full",
+          "name": "Por segundo (tormenta completa)",
+          "parts": [
+            {
+              "calculation": "EmpoweredDamagePerSecondTooltipOnly"
+            }
+          ]
+        }
+      ],
+      "not_modelled": [
+        "Ralentización y consumo continuo de maná por segundo"
+      ]
+    }
+  }
+}

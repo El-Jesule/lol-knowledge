@@ -1,0 +1,118 @@
+{
+  "champion": "Renekton",
+  "game_version": "16.23",
+  "verified_against": {
+    "content_version": "16.23.8406595+branch.releases-16-23.content.release",
+    "bin_sha256": "00873a941018958ddbab406c6c2988284738240fa3fa7a34ae88e97cb8f81aab",
+    "evidence": "odd/tasks/champion-kits-wave-1.md",
+    "result": "Bin del cliente 16.23 convertido con python -m binmodel.batch_kits y compilado con esta especificación curada (CH-01 oleada 1)"
+  },
+  "abilities": {
+    "P": {
+      "name": "Reino de la ira",
+      "max_rank": 1,
+      "not_modelled": [
+        "Generación, consumo y decaimiento de Furia"
+      ]
+    },
+    "Q": {
+      "name": "Preferencia por el dócil",
+      "tooltip": "spell_renektoncleave_tooltip",
+      "cases": [
+        {
+          "id": "basic",
+          "name": "Sin furia",
+          "parts": [
+            {
+              "calculation": "BasicDamage"
+            }
+          ]
+        },
+        {
+          "id": "empowered",
+          "name": "Potenciada (50 furia)",
+          "parts": [
+            {
+              "calculation": "EmpDamage"
+            }
+          ]
+        }
+      ],
+      "not_modelled": [
+        "Curación por unidad golpeada (ChampHealing, NonChampHealing y versiones potenciadas)"
+      ]
+    },
+    "W": {
+      "name": "Depredador implacable",
+      "tooltip": "spell_renektonpreexecute_tooltip",
+      "cases": [
+        {
+          "id": "basic",
+          "name": "Sin furia (2 golpes)",
+          "parts": [
+            {
+              "calculation": "BasicTotalDamage"
+            }
+          ]
+        },
+        {
+          "id": "empowered",
+          "name": "Potenciada (3 golpes)",
+          "parts": [
+            {
+              "calculation": "EmpTotalDamage"
+            }
+          ]
+        }
+      ],
+      "not_modelled": [
+        "Aturdimiento y destrucción de escudos en la versión potenciada"
+      ]
+    },
+    "E": {
+      "name": "Cortar y trocear",
+      "tooltip": "spell_renektonsliceanddice_tooltip",
+      "cases": [
+        {
+          "id": "slice",
+          "name": "Cortar / Trocear sin furia",
+          "parts": [
+            {
+              "calculation": "BasicDamage"
+            }
+          ]
+        },
+        {
+          "id": "empowered_dice",
+          "name": "Trocear potenciado (50 furia)",
+          "parts": [
+            {
+              "calculation": "EmpDamage"
+            }
+          ]
+        }
+      ],
+      "not_modelled": [
+        "Reducción porcentual de armadura en Trocear potenciado"
+      ]
+    },
+    "R": {
+      "name": "Dominus",
+      "tooltip": "spell_renektonreignofthetyrant_tooltip",
+      "cases": [
+        {
+          "id": "per_second",
+          "name": "Daño mágico por segundo",
+          "parts": [
+            {
+              "calculation": "TotalDamagePerSecond"
+            }
+          ]
+        }
+      ],
+      "not_modelled": [
+        "Vida máxima temporal (HealthGain) y generación de furia"
+      ]
+    }
+  }
+}

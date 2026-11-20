@@ -1,0 +1,322 @@
+{
+  "schema": "lol-champion-kit/1",
+  "champion": "Jinx",
+  "label": "Derivado",
+  "game_version": "16.23",
+  "content_version": "16.23.8406595+branch.releases-16-23.content.release",
+  "verified_against": {
+    "content_version": "16.23.8406595+branch.releases-16-23.content.release",
+    "bin_sha256": "e9d25c46a2534e00482ebad6e07c9bd377811af766ea60af9ecde08bd8834c52",
+    "evidence": "odd/tasks/champion-kits-wave-1.md",
+    "result": "Bin del cliente 16.23 convertido con python -m binmodel.batch_kits y compilado con esta especificación curada (CH-01 oleada 1)"
+  },
+  "source": "Árboles de cálculo del bin del cliente (python -m binmodel) y marcado de los tooltips del cliente; estructura de casos curada en research/kits/",
+  "abilities": {
+    "P": {
+      "name": "¡A tope!",
+      "max_rank": 1,
+      "cases": [],
+      "passive_stats": [],
+      "not_modelled": [
+        "Velocidad de ataque y movimiento tras derribar campeones, monstruos épicos o estructuras"
+      ]
+    },
+    "Q": {
+      "name": "¡Cambiazo!",
+      "max_rank": 5,
+      "cases": [
+        {
+          "id": "rocket",
+          "name": "Ataque con lanzacohetes (110 % DA)",
+          "parts": [
+            {
+              "damage_type": "physical",
+              "formula": {
+                "op": "mul",
+                "operands": [
+                  {
+                    "op": "constant",
+                    "value": 1.1
+                  },
+                  {
+                    "op": "stat",
+                    "stat": "attack_damage",
+                    "scope": "total"
+                  }
+                ]
+              },
+              "label": "Derivado",
+              "source": "Characters/Jinx/Spells/JinxQAbility/JinxQ.mSpellCalculations.RocketDamage (16.23.8406595+branch.releases-16-23.content.release)",
+              "damage_type_source": "spell_jinxq_tooltip <physicalDamage>"
+            }
+          ]
+        }
+      ],
+      "passive_stats": [],
+      "not_modelled": [
+        "Velocidad de ataque acumulable de la ametralladora (MinigunAttackSpeedMax)",
+        "Alcance adicional, penalización de VA y coste de maná por cohete"
+      ]
+    },
+    "W": {
+      "name": "¡Zap!",
+      "max_rank": 5,
+      "cases": [
+        {
+          "id": "zap",
+          "name": "Rayo",
+          "parts": [
+            {
+              "damage_type": "physical",
+              "formula": {
+                "op": "add",
+                "operands": [
+                  {
+                    "op": "by_rank",
+                    "values": [
+                      10,
+                      60,
+                      110,
+                      160,
+                      210
+                    ]
+                  },
+                  {
+                    "op": "mul",
+                    "operands": [
+                      {
+                        "op": "constant",
+                        "value": 1.4
+                      },
+                      {
+                        "op": "stat",
+                        "stat": "attack_damage",
+                        "scope": "total"
+                      }
+                    ]
+                  }
+                ]
+              },
+              "label": "Derivado",
+              "source": "Characters/Jinx/Spells/JinxWAbility/JinxW.mSpellCalculations.TotalDamage (16.23.8406595+branch.releases-16-23.content.release)",
+              "damage_type_source": "spell_jinxw_tooltip <physicalDamage>"
+            }
+          ]
+        }
+      ],
+      "passive_stats": [],
+      "not_modelled": [
+        "Ralentización y revelación"
+      ]
+    },
+    "E": {
+      "name": "¡Mascafuegos!",
+      "max_rank": 5,
+      "cases": [
+        {
+          "id": "chompers",
+          "name": "Explosión de trampa",
+          "parts": [
+            {
+              "damage_type": "magic",
+              "formula": {
+                "op": "add",
+                "operands": [
+                  {
+                    "op": "by_rank",
+                    "values": [
+                      90,
+                      140,
+                      190,
+                      240,
+                      290
+                    ]
+                  },
+                  {
+                    "op": "mul",
+                    "operands": [
+                      {
+                        "op": "constant",
+                        "value": 1
+                      },
+                      {
+                        "op": "stat",
+                        "stat": "ability_power",
+                        "scope": "total"
+                      }
+                    ]
+                  }
+                ]
+              },
+              "label": "Derivado",
+              "source": "Characters/Jinx/Spells/JinxEAbility/JinxE.mSpellCalculations.TotalDamage (16.23.8406595+branch.releases-16-23.content.release)",
+              "damage_type_source": "spell_jinxe_tooltip <magicDamage>"
+            }
+          ]
+        }
+      ],
+      "passive_stats": [],
+      "not_modelled": [
+        "Inmovilización (RootDuration)"
+      ]
+    },
+    "R": {
+      "name": "¡Supermegacohete mortal!",
+      "max_rank": 3,
+      "cases": [
+        {
+          "id": "min",
+          "name": "Corta distancia (+ % vida que falta)",
+          "parts": [
+            {
+              "damage_type": "physical",
+              "formula": {
+                "op": "add",
+                "operands": [
+                  {
+                    "op": "by_rank",
+                    "values": [
+                      20,
+                      35,
+                      50
+                    ]
+                  },
+                  {
+                    "op": "mul",
+                    "operands": [
+                      {
+                        "op": "constant",
+                        "value": 0.12
+                      },
+                      {
+                        "op": "stat",
+                        "stat": "attack_damage",
+                        "scope": "bonus"
+                      }
+                    ]
+                  }
+                ]
+              },
+              "label": "Derivado",
+              "source": "Characters/Jinx/Spells/JinxRAbility/JinxR.mSpellCalculations.DamageFloor (16.23.8406595+branch.releases-16-23.content.release)",
+              "damage_type_source": "spell_jinxr_tooltip <physicalDamage>"
+            },
+            {
+              "damage_type": "physical",
+              "formula": {
+                "op": "mul",
+                "operands": [
+                  {
+                    "op": "by_rank",
+                    "values": [
+                      25,
+                      30,
+                      35
+                    ]
+                  },
+                  {
+                    "op": "constant",
+                    "value": 0.01
+                  },
+                  {
+                    "op": "stat",
+                    "stat": "health",
+                    "scope": "max",
+                    "subject": "target"
+                  },
+                  {
+                    "op": "stat",
+                    "stat": "health",
+                    "scope": "missing_fraction",
+                    "subject": "target"
+                  }
+                ]
+              },
+              "label": "Derivado",
+              "source": "Characters/Jinx/Spells/JinxRAbility/JinxR · DataValues.PercentDamage % × vida que falta del objetivo (16.23.8406595+branch.releases-16-23.content.release)",
+              "damage_type_source": "spell_jinxr_tooltip <physicalDamage>"
+            }
+          ]
+        },
+        {
+          "id": "max",
+          "name": "Larga distancia (+ % vida que falta)",
+          "parts": [
+            {
+              "damage_type": "physical",
+              "formula": {
+                "op": "add",
+                "operands": [
+                  {
+                    "op": "by_rank",
+                    "values": [
+                      200,
+                      350,
+                      500
+                    ]
+                  },
+                  {
+                    "op": "mul",
+                    "operands": [
+                      {
+                        "op": "constant",
+                        "value": 1.2
+                      },
+                      {
+                        "op": "stat",
+                        "stat": "attack_damage",
+                        "scope": "bonus"
+                      }
+                    ]
+                  }
+                ]
+              },
+              "label": "Derivado",
+              "source": "Characters/Jinx/Spells/JinxRAbility/JinxR.mSpellCalculations.DamageMax (16.23.8406595+branch.releases-16-23.content.release)",
+              "damage_type_source": "spell_jinxr_tooltip <physicalDamage>"
+            },
+            {
+              "damage_type": "physical",
+              "formula": {
+                "op": "mul",
+                "operands": [
+                  {
+                    "op": "by_rank",
+                    "values": [
+                      25,
+                      30,
+                      35
+                    ]
+                  },
+                  {
+                    "op": "constant",
+                    "value": 0.01
+                  },
+                  {
+                    "op": "stat",
+                    "stat": "health",
+                    "scope": "max",
+                    "subject": "target"
+                  },
+                  {
+                    "op": "stat",
+                    "stat": "health",
+                    "scope": "missing_fraction",
+                    "subject": "target"
+                  }
+                ]
+              },
+              "label": "Derivado",
+              "source": "Characters/Jinx/Spells/JinxRAbility/JinxR · DataValues.PercentDamage % × vida que falta del objetivo (16.23.8406595+branch.releases-16-23.content.release)",
+              "damage_type_source": "spell_jinxr_tooltip <physicalDamage>"
+            }
+          ]
+        }
+      ],
+      "passive_stats": [],
+      "not_modelled": [
+        "Daño AoE del 80 % a enemigos secundarios y tope contra monstruos (MonsterExecuteMax)"
+      ]
+    }
+  }
+}

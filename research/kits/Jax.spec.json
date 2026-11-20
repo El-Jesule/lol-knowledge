@@ -1,0 +1,155 @@
+{
+  "champion": "Jax",
+  "game_version": "16.23",
+  "verified_against": {
+    "content_version": "16.23.8406595+branch.releases-16-23.content.release",
+    "bin_sha256": "fe7e78e8a1b53ea69bc082591c0a162896e58cfca28ada82377d6c3ed8f6615f",
+    "evidence": "odd/tasks/champion-kits-wave-1.md",
+    "result": "Bin del cliente 16.23 convertido con python -m binmodel.batch_kits y compilado con esta especificación curada (CH-01 oleada 1)"
+  },
+  "abilities": {
+    "P": {
+      "name": "Asalto implacable",
+      "max_rank": 1,
+      "not_modelled": [
+        "Velocidad de ataque acumulable por ataque básico (AttackSpeedPerStack, MaxBonusAttackSpeed)"
+      ]
+    },
+    "Q": {
+      "name": "Golpe en salto",
+      "tooltip": "spell_jaxleapstrike_tooltip",
+      "cases": [
+        {
+          "id": "leap",
+          "name": "Salto sobre enemigo",
+          "parts": [
+            {
+              "calculation": "TotalDamage"
+            }
+          ]
+        }
+      ]
+    },
+    "W": {
+      "name": "Potenciación",
+      "tooltip": "spell_jaxempowertwo_tooltip",
+      "cases": [
+        {
+          "id": "empower",
+          "name": "Daño mágico adicional",
+          "parts": [
+            {
+              "calculation": "TotalDamage"
+            }
+          ]
+        }
+      ],
+      "not_modelled": [
+        "El daño del propio ataque básico o Golpe en salto: se suma aparte"
+      ]
+    },
+    "E": {
+      "name": "Contraataque",
+      "tooltip": "spell_jaxcounterstrike_tooltip",
+      "cases": [
+        {
+          "id": "min",
+          "name": "Sin ataques esquivados",
+          "parts": [
+            {
+              "calculation": "TotalDamage"
+            },
+            {
+              "tooltip_reference": "PercentHealthDamage",
+              "damage_type": "magic",
+              "source_note": "DataValues.PercentHealthDamage % × vida máxima del objetivo",
+              "formula": {
+                "op": "mul",
+                "operands": [
+                  {
+                    "op": "data_value",
+                    "name": "PercentHealthDamage"
+                  },
+                  {
+                    "op": "constant",
+                    "value": 0.01
+                  },
+                  {
+                    "op": "stat",
+                    "stat": "health",
+                    "scope": "max",
+                    "subject": "target"
+                  }
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "id": "max",
+          "name": "Máximo (5 ataques esquivados)",
+          "parts": [
+            {
+              "calculation": "MaxDamage"
+            },
+            {
+              "tooltip_reference": "MaxPercentHealthDamage",
+              "damage_type": "magic",
+              "source_note": "MaxPercentHealthDamage % × vida máxima del objetivo",
+              "formula": {
+                "op": "mul",
+                "operands": [
+                  {
+                    "op": "calculation",
+                    "name": "MaxPercentHealthDamage"
+                  },
+                  {
+                    "op": "constant",
+                    "value": 0.01
+                  },
+                  {
+                    "op": "stat",
+                    "stat": "health",
+                    "scope": "max",
+                    "subject": "target"
+                  }
+                ]
+              }
+            }
+          ]
+        }
+      ],
+      "not_modelled": [
+        "Esquiva de ataques básicos, reducción del 25 % al daño en área y aturdimiento (StunDuration)"
+      ]
+    },
+    "R": {
+      "name": "Gran Maestro de Armas",
+      "tooltip": "spell_jaxrapexform_tooltip",
+      "cases": [
+        {
+          "id": "third_hit",
+          "name": "Pasiva: cada tercer ataque",
+          "parts": [
+            {
+              "calculation": "OnHitDamage"
+            }
+          ]
+        },
+        {
+          "id": "active",
+          "name": "Activa: golpetazo en área",
+          "parts": [
+            {
+              "calculation": "SwingDamageTotal"
+            }
+          ]
+        }
+      ],
+      "not_modelled": [
+        "Armadura y resistencia mágica activas (BaseArmor, BonusArmor, BaseMR, BonusMR)",
+        "Reducción del 50 % a estructuras (StructureMod)"
+      ]
+    }
+  }
+}

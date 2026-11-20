@@ -1,0 +1,89 @@
+{
+  "champion": "Alistar",
+  "game_version": "16.23",
+  "verified_against": {
+    "content_version": "16.23.8406595+branch.releases-16-23.content.release",
+    "bin_sha256": "302541cae7e6d358afbce91cd94d2b2c0b6fe5ff9a947ea0909073e0ea1d7809",
+    "evidence": "odd/tasks/champion-kits-wave-1.md",
+    "result": "Bin del cliente 16.23 convertido con python -m binmodel.batch_kits y compilado con esta especificación curada (CH-01 oleada 1)"
+  },
+  "abilities": {
+    "P": {
+      "name": "Rugido triunfal",
+      "max_rank": 1,
+      "not_modelled": [
+        "Curación propia y aliada cada 7 cargas (BaseHeal, AllyHeal)"
+      ]
+    },
+    "Q": {
+      "name": "Pulverización",
+      "tooltip": "spell_pulverize_tooltip",
+      "cases": [
+        {
+          "id": "slam",
+          "name": "Impacto",
+          "parts": [
+            {
+              "calculation": "TotalDamage"
+            }
+          ]
+        }
+      ],
+      "not_modelled": [
+        "Lanzamiento por los aires (KnockupDuration)"
+      ]
+    },
+    "W": {
+      "name": "Testarazo",
+      "tooltip": "spell_headbutt_tooltip",
+      "cases": [
+        {
+          "id": "headbutt",
+          "name": "Embiste",
+          "parts": [
+            {
+              "calculation": "TotalDamage"
+            }
+          ]
+        }
+      ],
+      "not_modelled": [
+        "Empuje"
+      ]
+    },
+    "E": {
+      "name": "Pisotear",
+      "tooltip": "spell_alistare_tooltip",
+      "cases": [
+        {
+          "id": "trample_total",
+          "name": "Daño total de pulsos (5 s)",
+          "parts": [
+            {
+              "calculation": "TotalDamage"
+            }
+          ]
+        },
+        {
+          "id": "empowered_attack",
+          "name": "Ataque potenciado (5 cargas)",
+          "parts": [
+            {
+              "calculation": "AttackBonusDamage"
+            }
+          ]
+        }
+      ],
+      "not_modelled": [
+        "Aturdimiento del ataque potenciado"
+      ]
+    },
+    "R": {
+      "name": "Voluntad inquebrantable",
+      "tooltip": "spell_ferocioushowl_tooltip",
+      "not_modelled": [
+        "Limpieza de control de adversario y reducción porcentual de daño recibido (RDamageReduction)"
+      ]
+    }
+  }
+}

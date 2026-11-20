@@ -1,0 +1,100 @@
+{
+  "champion": "Nocturne",
+  "game_version": "16.23",
+  "verified_against": {
+    "content_version": "16.23.8406595+branch.releases-16-23.content.release",
+    "bin_sha256": "b5e7edec6db2edf17c3e4114d9bc9678f1eeee008c032b5aaa5af8790f46d075",
+    "evidence": "odd/tasks/champion-kits-wave-1.md",
+    "result": "Bin del cliente 16.23 convertido con python -m binmodel.batch_kits y compilado con esta especificación curada (CH-01 oleada 1)"
+  },
+  "abilities": {
+    "P": {
+      "name": "Espadas oscuras",
+      "tooltip": "spell_nocturnep_tooltip",
+      "max_rank": 1,
+      "cases": [
+        {
+          "id": "cleave",
+          "name": "Ataque en área (sin crítico)",
+          "parts": [
+            {
+              "calculation": "TotalDamageNoCrit"
+            }
+          ]
+        }
+      ],
+      "not_modelled": [
+        "Curación por enemigo golpeado (TotalHealing) y reducción de enfriamiento por ataque"
+      ]
+    },
+    "Q": {
+      "name": "Portador del anochecer",
+      "tooltip": "spell_nocturneq_tooltip",
+      "cases": [
+        {
+          "id": "hit",
+          "name": "Espada de sombras",
+          "parts": [
+            {
+              "calculation": "TotalDamage"
+            }
+          ]
+        }
+      ],
+      "not_modelled": [
+        "DA adicional (BonusTrailAD) y velocidad de movimiento sobre el rastro"
+      ]
+    },
+    "W": {
+      "name": "Velo de oscuridad",
+      "tooltip": "spell_nocturnew_tooltip",
+      "passive_stats": [
+        {
+          "stat": "attack_speed_bonus",
+          "data_value": "ActiveAS",
+          "scale": 0.01,
+          "condition": "pasiva de la W: activa con la W aprendida, también en enfriamiento"
+        }
+      ],
+      "not_modelled": [
+        "Escudo de hechizos y duplicación de velocidad de ataque al bloquear una habilidad"
+      ]
+    },
+    "E": {
+      "name": "Horror inenarrable",
+      "tooltip": "spell_nocturnee_tooltip",
+      "cases": [
+        {
+          "id": "tether",
+          "name": "Daño completo (2 s)",
+          "parts": [
+            {
+              "calculation": "TotalDamage"
+            }
+          ]
+        }
+      ],
+      "not_modelled": [
+        "Terror al completar la atadura y velocidad de movimiento pasiva hacia aterrorizados"
+      ]
+    },
+    "R": {
+      "name": "Paranoia",
+      "tooltip": "spell_nocturner_tooltip",
+      "cases": [
+        {
+          "id": "dash",
+          "name": "Reactivación: carga sobre campeón",
+          "parts": [
+            {
+              "calculation": "Damage"
+            }
+          ]
+        }
+      ],
+      "not_modelled": [
+        "Oscurecimiento global de la visión enemiga"
+      ]
+    }
+  }
+}

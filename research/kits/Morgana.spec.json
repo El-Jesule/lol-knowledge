@@ -1,0 +1,101 @@
+{
+  "champion": "Morgana",
+  "game_version": "16.23",
+  "verified_against": {
+    "content_version": "16.23.8406595+branch.releases-16-23.content.release",
+    "bin_sha256": "7b0aefc6e23ed9d5966184593aedd55bd2831c48840622ec96146ba69b3a7ecc",
+    "evidence": "odd/tasks/champion-kits-wave-1.md",
+    "result": "Bin del cliente 16.23 convertido con python -m binmodel.batch_kits y compilado con esta especificación curada (CH-01 oleada 1)"
+  },
+  "abilities": {
+    "P": {
+      "name": "Absorbealmas",
+      "max_rank": 1,
+      "not_modelled": [
+        "Curación porcentual del daño de habilidades (HealPercent)"
+      ]
+    },
+    "Q": {
+      "name": "Hechizo oscuro",
+      "tooltip": "spell_morganaq_tooltip",
+      "cases": [
+        {
+          "id": "hit",
+          "name": "Impacto",
+          "parts": [
+            {
+              "calculation": "TotalDamage"
+            }
+          ]
+        }
+      ],
+      "not_modelled": [
+        "Inmovilización (RootDuration)"
+      ]
+    },
+    "W": {
+      "name": "Sombra atormentada",
+      "tooltip": "spell_morganaw_tooltip",
+      "cases": [
+        {
+          "id": "per_second_min",
+          "name": "Por segundo (objetivo al 100 % vida)",
+          "parts": [
+            {
+              "calculation": "TotalMinDamage"
+            }
+          ]
+        },
+        {
+          "id": "per_second_max",
+          "name": "Por segundo (daño máximo por vida perdida)",
+          "parts": [
+            {
+              "calculation": "TotalMaxDamage"
+            }
+          ]
+        }
+      ],
+      "not_modelled": [
+        "Interpolación continua por vida perdida y reducción de enfriamiento al curarse"
+      ]
+    },
+    "E": {
+      "name": "Escudo negro",
+      "tooltip": "spell_morganae_tooltip",
+      "not_modelled": [
+        "Escudo mágico e inmunidad a control de adversario (TotalShieldStrength)"
+      ]
+    },
+    "R": {
+      "name": "Grilletes del alma",
+      "tooltip": "spell_morganar_tooltip",
+      "cases": [
+        {
+          "id": "cast",
+          "name": "Atadura inicial",
+          "parts": [
+            {
+              "calculation": "TotalDamage"
+            }
+          ]
+        },
+        {
+          "id": "both",
+          "name": "Atadura + detonación tras 3 s",
+          "parts": [
+            {
+              "calculation": "TotalDamage"
+            },
+            {
+              "calculation": "TotalDamage"
+            }
+          ]
+        }
+      ],
+      "not_modelled": [
+        "Ralentización y aturdimiento al completar la atadura"
+      ]
+    }
+  }
+}

@@ -1,0 +1,101 @@
+{
+  "champion": "Malphite",
+  "game_version": "16.23",
+  "verified_against": {
+    "content_version": "16.23.8406595+branch.releases-16-23.content.release",
+    "bin_sha256": "a450af2bfb8413ee9141b19e5f36a54689798110df1ade0bc669560b0a368ba0",
+    "evidence": "odd/tasks/champion-kits-wave-1.md",
+    "result": "Bin del cliente 16.23 convertido con python -m binmodel.batch_kits y compilado con esta especificación curada (CH-01 oleada 1)"
+  },
+  "abilities": {
+    "P": {
+      "name": "Escudo de granito",
+      "max_rank": 1,
+      "not_modelled": [
+        "Escudo del 10 % de vida máxima fuera de combate (TotalShield, PassiveCooldown)"
+      ]
+    },
+    "Q": {
+      "name": "Fragmento sísmico",
+      "tooltip": "spell_seismicshard_tooltip",
+      "cases": [
+        {
+          "id": "hit",
+          "name": "Impacto",
+          "parts": [
+            {
+              "calculation": "QDamageCalc"
+            }
+          ]
+        }
+      ],
+      "not_modelled": [
+        "Robo de velocidad de movimiento (SpeedSteal)"
+      ]
+    },
+    "W": {
+      "name": "Atronar",
+      "tooltip": "spell_obduracy_tooltip",
+      "cases": [
+        {
+          "id": "first_hit",
+          "name": "Primer ataque potenciado",
+          "parts": [
+            {
+              "calculation": "TotalBonusDamage"
+            }
+          ]
+        },
+        {
+          "id": "splash",
+          "name": "Golpe secundario en cono",
+          "parts": [
+            {
+              "calculation": "ThunderclapSplash"
+            }
+          ]
+        }
+      ],
+      "not_modelled": [
+        "Pasiva de armadura porcentual (BonusArmorPassive, triplicada mientras Escudo de granito está activo)",
+        "El daño del propio ataque básico: se suma aparte"
+      ]
+    },
+    "E": {
+      "name": "Golpe en el suelo",
+      "tooltip": "spell_landslide_tooltip",
+      "cases": [
+        {
+          "id": "slam",
+          "name": "Impacto en área",
+          "parts": [
+            {
+              "calculation": "EDamageCalc"
+            }
+          ]
+        }
+      ],
+      "not_modelled": [
+        "Reducción de velocidad de ataque enemiga (ASReduction)"
+      ]
+    },
+    "R": {
+      "name": "Fuerza imparable",
+      "tooltip": "spell_ufslash_tooltip",
+      "cases": [
+        {
+          "id": "impact",
+          "name": "Choque en área",
+          "parts": [
+            {
+              "calculation": "TotalDamage"
+            }
+          ]
+        }
+      ],
+      "not_modelled": [
+        "Lanzamiento por los aires (KnockupDuration)"
+      ]
+    }
+  }
+}
