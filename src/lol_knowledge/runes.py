@@ -81,6 +81,12 @@ COMBAT_MINOR_RUNE_KEYS = frozenset(
         "CheapShot",
         "SuddenImpact",
         "Demolish",
+        "Revitalize",
+        "ShieldBash",
+        "TasteOfBlood",
+        "AbsorbLife",
+        "Triumph",
+        "FontOfLife",
     }
 )
 # Keystones whose combat effects are evaluated by rotations (rune_keystones.py).
@@ -131,6 +137,7 @@ class Rune:
     name: str
     values: Mapping[str, Fraction]
     ranged_multipliers: Mapping[str, Fraction] = field(default_factory=dict)
+    level_bounds: Mapping[str, tuple[Fraction, Fraction]] = field(default_factory=dict)
 
 
 @dataclass(frozen=True)
@@ -291,6 +298,36 @@ def _parse_ranged_multipliers(calculations: Any) -> dict[str, Fraction]:
     return result
 
 
+def _parse_level_bounds(calculations: Any) -> dict[str, tuple[Fraction, Fraction]]:
+    if not isinstance(calculations, Mapping):
+        return {}
+    result: dict[str, tuple[Fraction, Fraction]] = {}
+    for name, calc in calculations.items():
+        if not isinstance(calc, Mapping):
+            continue
+        for part in calc.get("mFormulaParts") or ():
+            if (
+                isinstance(part, Mapping)
+                and part.get("class") == "ByCharLevelInterpolationCalculationPart"
+                and isinstance(part.get("mStartValue"), (int, float))
+                and isinstance(part.get("mEndValue"), (int, float))
+                and not isinstance(part.get("mStartValue"), bool)
+                and not isinstance(part.get("mEndValue"), bool)
+            ):
+                result[str(name)] = (
+                    Fraction(str(part["mStartValue"])),
+                    Fraction(str(part["mEndValue"])),
+                )
+                break
+    return result
+
+
+def rune_level_bounds(rune: Rune, name: str) -> tuple[Fraction, Fraction]:
+    if name not in rune.level_bounds:
+        raise StatsError(f"rune {rune.id} {rune.key}: client data has no level bounds {name}")
+    return rune.level_bounds[name]
+
+
 def rune_ranged_multiplier(rune: Rune, name: str) -> Fraction:
     if name not in rune.ranged_multipliers:
         raise StatsError(f"rune {rune.id} {rune.key}: client data has no ranged multiplier {name}")
@@ -318,6 +355,7 @@ def parse_runes(document: Any, path: str = RUNES_PATH.as_posix()) -> RuneData:
             perk["texts"].get("name", perk["key"]),
             {name: Fraction(str(value)) for name, value in perk["effect_amounts"].items()},
             _parse_ranged_multipliers(perk.get("calculations")),
+            _parse_level_bounds(perk.get("calculations")),
         )
         for perk_id, perk in document["perks"].items()
     }

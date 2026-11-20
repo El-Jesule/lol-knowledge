@@ -332,3 +332,173 @@ def test_cli_rotation_target_shield_json_output(capsys):
     assert report["shield_absorbed"] == 135.0
     assert report["remaining_shield"] == 65.0
     assert report["remaining_health"] == 865.0
+
+
+def test_revitalize_amplifies_vamp_effect_heals_and_shields_below_40_percent_hp():
+    # Revitalize (8453): +5% HSP always (on effect heal & shield, NOT life steal) AND
+    # +10% multiplicative below 40% attacker HP (on ALL healing including life steal + shields).
+    synthetic_shield = ItemData(
+        id="9992",
+        name="Test Shield",
+        game_version="16.23.1",
+        stats=(),
+        effects=(
+            {
+                "id": "test-shield",
+                "name": "Test Shield",
+                "trigger": {"event": "on_hit"},
+                "target": {"kind": "self"},
+                "model_status": "evaluable",
+                "evidence_confidence": "derived",
+                "components": [
+                    {
+                        "kind": "shield",
+                        "mode": "absolute",
+                        "target": {"kind": "self"},
+                        "formula": {"op": "constant", "value": 100},
+                    }
+                ],
+            },
+        ),
+        effect_review="complete",
+    )
+    high = simulate(
+        "Zaahen",
+        "attack",
+        items=("3072",),
+        extra_items=(synthetic_shield,),
+        runes=[8453],
+        holder_range="melee",
+        inputs={"attacker_health_percent": F(8, 10)},
+    )
+    low = simulate(
+        "Zaahen",
+        "attack",
+        items=("3072",),
+        extra_items=(synthetic_shield,),
+        runes=[8453],
+        holder_range="melee",
+        inputs={"attacker_health_percent": F(3, 10)},
+    )
+    # Above 40% HP: shield gets +5% HSP (105), life steal gets 1.0x.
+    assert high.total_shield_granted == 105
+    # Below 40% HP: shield gets 100 * 1.05 * 1.10 = 115.5; life steal gets 1.10x!
+    assert low.total_shield_granted == F(100) * F(105, 100) * F(11, 10)
+    assert low.healing == high.healing * F(11, 10)
+
+
+def test_grasp_of_the_undying_heals_and_scales_with_hsp_and_grievous_wounds():
+    champ = load_champion(ROOT, "Zaahen")
+    items = load_items(ROOT, ("3107",))  # +10% HSP
+    sheet = build_stat_sheet(champ, 18, items, ISSUES, {}, DERIVED)
+    max_hp = sheet["health"].total()
+
+    out = simulate(
+        "Zaahen",
+        "attack",
+        items=("3107",),
+        runes=[8437],
+        holder_range="melee",
+        inputs={"grasp_ready": F(1)},
+    )
+    assert len(out.steps[0].heal_events) == 1
+    assert out.steps[0].heal_events[0].raw == max_hp * F(13, 1000)
+    assert out.steps[0].heal_events[0].amount == max_hp * F(13, 1000) * F(11, 10)
+
+    # Ranged penalty (0.4x) + Grievous Wounds (0.6x)
+    ranged_gw = simulate(
+        "Ahri",
+        "attack",
+        runes=[8437],
+        holder_range="ranged",
+        inputs={"grasp_ready": F(1), "grievous_wounds": F(1)},
+    )
+    ahri_hp = build_stat_sheet(load_champion(ROOT, "Ahri"), 18, (), ISSUES, {}, DERIVED)[
+        "health"
+    ].total()
+    assert ranged_gw.steps[0].heal_events[0].amount == ahri_hp * F(13, 1000) * F(4, 10) * F(3, 5)
+
+
+def test_shield_bash_fires_from_attacker_shield_or_explicit_input():
+    # Explicit --input shield_amount=200 on Zaahen lvl 18 with Long Sword (1036 -> physical)
+    # and 0 bonus HP: 30 + 0 + 0.15 * 200 = 60 physical damage on attack 1 (consumed, not attack 2).
+    out = simulate(
+        "Zaahen",
+        "attack, attack",
+        items=("1036",),
+        runes=[8401],
+        holder_range="melee",
+        inputs={"shield_amount": F(200)},
+    )
+    sb1 = [p for p in out.steps[0].parts if p.kind == "rune"]
+    sb2 = [p for p in out.steps[1].parts if p.kind == "rune"]
+    assert len(sb1) == 1 and sb1[0].raw == 60 and sb1[0].label is Label.DERIVED
+    assert sb2 == []
+
+
+def test_taste_of_blood_heals_when_damaged_skips_at_full_hp_and_respects_20s_cooldown():
+    # At full health (attacker_health_percent=1): does not trigger!
+    full = simulate(
+        "Ahri",
+        "Q.out",
+        items=("3089",),
+        runes=[8139],
+        inputs={"attacker_health_percent": F(1)},
+    )
+    assert full.steps[0].heal_events == ()
+
+    # Damaged (0.5): heals 40 + 0.05 * 169 = 48.45, then 20s CD in timeline!
+    damaged = simulate(
+        "Ahri",
+        "Q.out, wait:10, W.one, wait:10, E",
+        items=("3089",),
+        runes=[8139],
+        inputs={"attacker_health_percent": F(1, 2)},
+        timeline=True,
+    )
+    assert len(damaged.steps[0].heal_events) == 1
+    assert damaged.steps[0].heal_events[0].raw == F(40) + F(5, 100) * F(169)
+    assert damaged.steps[2].heal_events == ()  # t=10s (< 20s CD)
+    assert len(damaged.steps[4].heal_events) == 1  # t=20s (CD ready)
+
+
+def test_absorb_life_and_triumph_trigger_on_lethal_step():
+    # Low-HP enemy champion killed by Ahri Q.both -> triggers both Absorb Life (23 at lvl 18)
+    # and Triumph (2.5% max HP + 5% missing HP).
+    champ = load_champion(ROOT, "Ahri")
+    max_hp = build_stat_sheet(champ, 18, (), ISSUES, {}, DERIVED)["health"].total()
+
+    out = simulate(
+        "Ahri",
+        "Q.both",
+        runes=[9101, 9111],
+        target_max_hp=1000,
+        target_current_hp=100,
+        inputs={"attacker_health_percent": F(1, 2)},
+    )
+    assert out.lethal_step == 1
+    by_source = {ev.source: ev.raw for ev in out.steps[0].heal_events}
+    assert any("AbsorbLife" in k and v == 23 for k, v in by_source.items())
+    expected_triumph = max_hp * F(25, 1000) + (max_hp / 2) * F(5, 100)
+    assert any("Triumph" in k and v == expected_triumph for k, v in by_source.items())
+
+    # Non-lethal step triggers neither!
+    alive = simulate("Ahri", "Q.out", runes=[9101, 9111], target_max_hp=3000)
+    assert alive.lethal_step is None and alive.steps[0].heal_events == ()
+
+
+def test_font_of_life_heals_when_target_impaired_with_ranged_penalty():
+    missing = simulate("Ahri", "Q.out", runes=[8463], holder_range="ranged")
+    assert missing.label is Label.PENDING and any("target_impaired" in n for n in missing.notes)
+
+    ranged = simulate(
+        "Ahri",
+        "Q.out",
+        runes=[8463],
+        holder_range="ranged",
+        inputs={"target_impaired": F(1)},
+    )
+    # Level 18 base heal = 50, ranged penalty x 0.7 = 35!
+    assert len(ranged.steps[0].heal_events) == 1
+    assert ranged.steps[0].heal_events[0].raw == 35
+    assert ranged.steps[0].heal_events[0].label is Label.DERIVED

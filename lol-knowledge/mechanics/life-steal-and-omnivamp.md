@@ -38,8 +38,9 @@ curación de una parte = daño final de la parte × (robo de vida aplicable + om
 
 ## Modificadores de la curación
 
-- **Poder de curación y escudos:** no se aplica a ninguno de los dos (L2, L4).
-- **Heridas graves** sí reduce la curación del robo de vida (L2).
+- **Poder de curación y escudos:** no se aplica a ninguno de los dos (L2, L4; ver [`survival.md`](survival.md)).
+- **Heridas graves:** reduce la curación en un `40 %` (`× 0,60`, no acumulable) tanto al declararse con `--input grievous_wounds=1` como automáticamente al atacar a un objetivo con Malla de espinas (`3075`, antes de la curación del propio ataque disparador; [`survival.md`](survival.md)).
+- **Revitalizar (`8453`):** su `+5 %` de poder de curaciones y escudos no afecta a robo de vida ni omnivampirismo, pero su `+10 %` adicional por debajo del `40 %` de vida del atacante sí los multiplica ([`survival.md`](survival.md)).
 
 ## Cómo lo aplica `rotation`
 
@@ -57,7 +58,7 @@ La curación de cada parte es su daño final (tras la resistencia y los modifica
 - **Súbdito o monstruo:** ataques y daño al impactar al 100 %. Las habilidades se curan al 100 % y quedan `Pendiente de verificación`, porque el kit no dice si son mascotas, daño periódico o área (L1: 33 % en esos casos). Sin `--target-kind`, una habilidad con omnivampirismo no se calcula.
 - **Estructura:** sin curación, `Pendiente de verificación`.
 - **Golpe letal con daño excesivo:** se usa el daño completo de cada parte y la curación de ese paso queda `Pendiente de verificación` con una nota. Un paso que deja la vida exactamente en 0 no es excesivo.
-- **Sin tope por vida perdida:** el motor no lleva la vida del atacante; la curación es la que genera el daño. Heridas graves sobre el atacante no se modela.
+- **Tope por vida perdida:** si se indica `--input attacker_health_percent=<0..1>`, la rotación sigue la vida del atacante e informa también la curación efectiva acotada por vida perdida (`effective_healing`); sin ese parámetro, informa la curación generada sin acotar ([`survival.md`](survival.md)).
 
 ## Implementación (`Calculado`)
 

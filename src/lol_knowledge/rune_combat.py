@@ -27,13 +27,16 @@ from .runes import (
     RULES,
     Rune,
     RuneData,
+    adaptive_stat,
     fraction_input,
     int_input,
     linear_by_level,
+    rune_level_bounds,
     rune_value,
 )
 from .scenario import Target
 from .stats import Label, StatBlocked, StatSheet, weakest
+from .survival import HealEvent, absorb_life_heal
 
 _require_target_kind = require_target_kind
 _rune_source = rune_source
@@ -60,6 +63,7 @@ class RuneCombat:
         self.target = target
         self.holder_range = holder_range
         self.timeline = timeline
+        self.ap_weight = ap_weight
         self.notes: list[str] = []
         self.weakened = False
         self._keystones = KeystoneCombat(
@@ -84,6 +88,13 @@ class RuneCombat:
         self._cheap_shot: Rune | None = None
         self._sudden_impact: Rune | None = None
         self._demolish: Rune | None = None
+        self._revitalize: Rune | None = None
+        self._shield_bash: Rune | None = None
+        self._shield_bash_amount = Fraction(0)
+        self._taste_of_blood: Rune | None = None
+        self._absorb_life: Rune | None = None
+        self._triumph: Rune | None = None
+        self._font_of_life: Rune | None = None
 
         self._fired: set[int] = set()
         self._ready: dict[int, Fraction] = {}
@@ -239,6 +250,64 @@ class RuneCombat:
                     f"rune {rune.id} {rune.name}: needs --attacker-range melee|ranged"
                 )
             self._demolish = rune
+            return
+
+        if rune.key == "Revitalize":
+            self._revitalize = rune
+            return
+
+        if rune.key == "ShieldBash":
+            if self.target.kind not in (None, "champion"):
+                return
+            _require_target_kind(rune, self.target)
+            if "shield_amount" in inputs:
+                amt = inputs["shield_amount"]
+                if amt < 0:
+                    raise RotationError(
+                        f"input shield_amount: must not be negative, got {format_number(amt)}"
+                    )
+                self._shield_bash_amount = amt
+            self._shield_bash = rune
+            return
+
+        if rune.key == "TasteOfBlood":
+            if _require_target_kind(rune, self.target) != "champion":
+                return
+            self._taste_of_blood = rune
+            return
+
+        if rune.key == "AbsorbLife":
+            if _require_target_kind(rune, self.target) == "structure":
+                return
+            self._absorb_life = rune
+            return
+
+        if rune.key == "Triumph":
+            if _require_target_kind(rune, self.target) != "champion":
+                return
+            self._triumph = rune
+            self.notes.append(f"rune {rune.id} {rune.name}: bonus gold is not modelled")
+            return
+
+        if rune.key == "FontOfLife":
+            if self.target.kind not in (None, "champion"):
+                return
+            impaired = int_input(inputs, "target_impaired", minimum=0, maximum=1)
+            if impaired is None:
+                self.notes.append(
+                    f"rune {rune.id} {rune.name}: needs --input target_impaired=0|1 ({RULES})"
+                )
+                self.weakened = True
+                return
+            if impaired == 0:
+                self.notes.append(f"rune {rune.id} {rune.name}: inactive (target_impaired=0)")
+                return
+            _require_target_kind(rune, self.target)
+            if self.holder_range is None:
+                raise RotationError(
+                    f"rune {rune.id} {rune.name}: needs --attacker-range melee|ranged"
+                )
+            self._font_of_life = rune
 
     def dealt_modifiers(
         self, part_kind: str, slot: str | None, target_stats: Mapping[str, Fraction]
@@ -412,6 +481,39 @@ class RuneCombat:
                         )
                     )
 
+        if self._shield_bash is not None and slot is None and self._shield_bash_amount > 0:
+            rune = self._shield_bash
+            assert self.data is not None
+            shield_amt = self._shield_bash_amount
+            self._shield_bash_amount = Fraction(0)
+            try:
+                bonus_hp = sheet["health"].scoped("bonus")
+                bonus_ad = sheet["attack_damage"].scoped("bonus")
+                ap = sheet["ability_power"].total()
+            except StatBlocked as exc:
+                raise RotationError(f"rune {rune.id} {rune.name}: {exc}") from exc
+            stat_name, ad_label, ad_note = adaptive_stat(bonus_ad, ap, self.ap_weight)
+            dtype = DamageType.MAGIC if stat_name == "ability_power" else DamageType.PHYSICAL
+            raw = (
+                linear_by_level(
+                    rune_value(rune, "ProcBaseMin"), rune_value(rune, "ProcBaseMax"), level
+                )
+                + bonus_hp * rune_value(rune, "BonusHealthRatio") / 100
+                + shield_amt * rune_value(rune, "ShieldRatio") / 100
+            )
+            sb_notes = [f"shield amount {format_number(shield_amt)}"]
+            if ad_note:
+                sb_notes.append(ad_note)
+            procs.append(
+                RuneProc(
+                    f"{_rune_source(rune, self.data)} ({rune.name})",
+                    dtype,
+                    raw,
+                    weakest((self._base, sheet["health"].label, ad_label)),
+                    tuple(sb_notes),
+                )
+            )
+
         procs.extend(self._keystones.on_step(slot, dealt_damage, clock, sheet))
         return procs
 
@@ -461,10 +563,17 @@ class RuneCombat:
 
     def revitalize_low_hp_amp(self, attacker_hp_fraction: Fraction) -> Fraction:
         """Extra +10% healing/shielding from Revitalize below 40% attacker HP."""
+        if self._revitalize is None:
+            return Fraction(0)
+        cutoff = rune_value(self._revitalize, "HealthCutoff") / 100
+        if attacker_hp_fraction < cutoff:
+            return rune_value(self._revitalize, "ExtraAmp") / 100
         return Fraction(0)
 
     def on_attacker_shield(self, amount: Fraction, clock: Fraction) -> None:
         """Notify runes (Shield Bash) that the attacker gained a shield."""
+        if self._shield_bash is not None and amount > 0:
+            self._shield_bash_amount = max(self._shield_bash_amount, amount)
 
     def on_step_heals(
         self,
@@ -475,6 +584,116 @@ class RuneCombat:
         sheet: StatSheet,
         attacker_hp: Fraction | None,
         attacker_max_hp: Fraction | None,
-    ) -> list:
+    ) -> list[HealEvent]:
         """Direct rune heal events triggered by a step."""
-        return []
+        heals: list[HealEvent] = self._keystones.pop_step_heals()
+        if self.data is None:
+            return heals
+        level = sheet.level
+
+        if (
+            self._taste_of_blood is not None
+            and dealt_damage
+            and self._can_fire(self._taste_of_blood, clock)
+        ):
+            rune = self._taste_of_blood
+            full_hp = (
+                attacker_hp is not None
+                and attacker_max_hp is not None
+                and attacker_hp >= attacker_max_hp
+            )
+            if not full_hp:
+                try:
+                    bonus_ad = sheet["attack_damage"].scoped("bonus")
+                    ap = sheet["ability_power"].total()
+                except StatBlocked as exc:
+                    raise RotationError(f"rune {rune.id} {rune.name}: {exc}") from exc
+                self._mark_fired(rune, clock, rune_value(rune, "Cooldown"))
+                raw = (
+                    linear_by_level(
+                        rune_value(rune, "HealAmount"), rune_value(rune, "HealAmountMax"), level
+                    )
+                    + bonus_ad * rune_value(rune, "ADRatio")
+                    + ap * rune_value(rune, "APRatio")
+                )
+                heals.append(
+                    HealEvent(
+                        f"{_rune_source(rune, self.data)} ({rune.name})",
+                        raw,
+                        raw,
+                        True,
+                        False,
+                        weakest(
+                            (self._base, sheet["attack_damage"].label, sheet["ability_power"].label)
+                        ),
+                    )
+                )
+
+        if (
+            self._font_of_life is not None
+            and dealt_damage
+            and self._can_fire(self._font_of_life, clock)
+        ):
+            rune = self._font_of_life
+            self._mark_fired(rune, clock, rune_value(rune, "Cooldown"))
+            low, high = rune_level_bounds(rune, "BaseHeal")
+            raw = linear_by_level(low, high, level)
+            if self.holder_range == "ranged":
+                raw *= rune_value(rune, "RangedMod")
+            heals.append(
+                HealEvent(
+                    f"{_rune_source(rune, self.data)} ({rune.name})",
+                    raw,
+                    raw,
+                    True,
+                    False,
+                    self._base,
+                    ("scenario: target_impaired=1", f"font of life ({self.holder_range})"),
+                )
+            )
+
+        if self._absorb_life is not None and killed_target:
+            rune = self._absorb_life
+            raw = absorb_life_heal(level)
+            heals.append(
+                HealEvent(
+                    f"{_rune_source(rune, self.data)} ({rune.name})",
+                    raw,
+                    raw,
+                    True,
+                    False,
+                    self._base,
+                    ("on kill",),
+                )
+            )
+
+        if self._triumph is not None and killed_target:
+            rune = self._triumph
+            try:
+                max_hp = sheet["health"].total()
+            except StatBlocked as exc:
+                raise RotationError(f"rune {rune.id} {rune.name}: {exc}") from exc
+            missing_hp = (
+                max(Fraction(0), attacker_max_hp - attacker_hp)
+                if (attacker_hp is not None and attacker_max_hp is not None)
+                else Fraction(0)
+            )
+            raw = max_hp * rune_value(rune, "TriumphMaxHealthRestored") + missing_hp * rune_value(
+                rune, "MissingHealthRestored"
+            )
+            t_notes = ["on champion takedown"]
+            if attacker_hp is None:
+                t_notes.append("missing health taken as 0 without attacker_health_percent")
+            heals.append(
+                HealEvent(
+                    f"{_rune_source(rune, self.data)} ({rune.name})",
+                    raw,
+                    raw,
+                    True,
+                    False,
+                    weakest((self._base, sheet["health"].label)),
+                    tuple(t_notes),
+                )
+            )
+
+        return heals

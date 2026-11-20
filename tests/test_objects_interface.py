@@ -159,6 +159,7 @@ def test_formula_requirements_separate_target_stats(object_model) -> None:
             "base_attack_damage",
             "bonus_armor",
             "bonus_attack_damage",
+            "bonus_health",
             "crit_chance",
             "health",
         ),
