@@ -11,8 +11,27 @@
     "P": {
       "name": "Robo de esencias",
       "max_rank": 1,
+      "passive_effects": [
+        {
+          "id": "essence_theft_champion",
+          "name": "Robo de esencias (derribo de campeón)",
+          "kind": "heal",
+          "trigger": "on_champion_takedown",
+          "calculation": "ChampionHeal",
+          "source_note": "wiki Template:Data_Ahri/Essence_Theft rev 4038191"
+        },
+        {
+          "id": "essence_theft_minion",
+          "name": "Robo de esencias (9 fragmentos)",
+          "kind": "heal",
+          "trigger": "on_minion_monster_kill",
+          "calculation": "MinionHeal",
+          "stacks_required": {"data_value": "MaxStacks"},
+          "input_name": "essence_fragments",
+          "source_note": "wiki Template:Data_Ahri/Essence_Theft rev 4038191"
+        }
+      ],
       "not_modelled": [
-        "Curación tras 9 súbditos o monstruos (MinionHeal) o tras derribar a un campeón (ChampionHeal): no es daño",
         "Ampliar la ventana de la R y sumar una reactivación al derribar a un campeón (PDurationExtension)"
       ]
     },

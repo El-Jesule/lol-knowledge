@@ -117,21 +117,21 @@ El motor debe servir también para vida, resistencias, curación y supervivencia
 
 ## 6. Campeones
 
-- [ ] **CH-01 (P1)** Kits de los 171 campeones restantes: solo Zaahen y Ahri tienen `kit.json` (de 173). El método actual (`bin2json` + `kitgen` + `research/kits/<Id>.spec.json` + ficha + pruebas) necesita curar los casos a mano por campeón.
-- [ ] **CH-02 (P1)** Automatizar todo lo posible de CH-01: generar el borrador de la especificación, detectar los valores con doble tipo de daño, los ajustes de reactivación y los escalados sin `mStat`, y dejar la curación a mano solo para los casos.
-- [ ] **CH-03 (P1)** Pasivas de campeón en la hoja y en la rotación: hoy no se aplican ([`README.md`](../README.md)).
+- [ ] **CH-01 (P1)** Kits de los 171 campeones restantes: solo Zaahen y Ahri tienen `kit.json` (de 173). Con `CH-02` y `CH-03` ya resueltos, el flujo es `bin2json` → `binmodel` → `binmodel.specdraft` → curación mínima de casos → `binmodel.kitgen` + pruebas.
+- [x] **CH-02 (P1)** *Hecho en la fase 45 (2026-11-20): [`research/binmodel/specdraft.py`](../research/binmodel/specdraft.py) (`python -m binmodel.specdraft`) genera borradores compilables de `spec.json` con detección automática de valores con doble tipo de daño (`dual_damage_type`), `DataValues` de daño en tooltip, ajustes de reactivación (`recast_detected`), escalados sin `mStat` (`omitted_mstat_default`), estadísticas no corroboradas, curaciones/escudos, costes de vida y candidatos pasivos; [`kitgen.py`](../research/binmodel/kitgen.py) traduce `ByCharLevelInterpolationCalculationPart`, `{ee18a47b}`, `ByCharLevelBreakpointsCalculationPart`, `ByCharLevelFormulaCalculationPart`, `sum`, `product`, `passive_effects` y `cost`.* Automatizar todo lo posible de CH-01.
+- [x] **CH-03 (P1)** *Hecho en la fase 45 (2026-11-20): motor declarativo de pasivas en [`src/lol_knowledge/passives.py`](../src/lol_knowledge/passives.py) (`PassiveEffectSpec`: `stat_bonus`, `stacking_stat`, `heal`, `damage_proc` y operador exacto `linear_by_level` en `ABILITY_OPS`), integrado en `stats`, `ability` y `rotation` (`--timeline` incluido); ver [`passives.md`](../lol-knowledge/mechanics/passives.md).* Pasivas de campeón en la hoja y en la rotación.
 - [ ] **CH-04 (P2)** Mecánicas de kit aún sin soporte en el modelo: transformaciones y evoluciones (Kha'Zix), cargas y munición, mascotas, formas (Nidalee, Elise), recursos propios, y kits que cambian el tope o el ratio de velocidad de ataque (Bel'Veth, Graves, Jhin, Sion, Zeri) ([`attack-speed.md`](../lol-knowledge/mechanics/attack-speed.md)), los críticos (Ashe, [`critical-strike.md`](../lol-knowledge/mechanics/critical-strike.md)) o la velocidad de movimiento (Cassiopeia, [`move-speed.md`](../lol-knowledge/mechanics/move-speed.md)).
 - [ ] **CH-05 (P2)** Varios objetivos y área: la rotación evalúa un único objetivo (la R de Ahri dispara 3 rayos a objetivos distintos y solo cuenta uno).
 
 ### 6.1 Zaahen (`not_modelled` del kit y fichas)
-- [ ] **CH-Z-01 (P1)** Pasiva: DA por acumulación (resuelta la curva en fase 41: `{ee18a47b}` es `ByCharLevelNamedDataValuesInterpolationCalculationPart` lineal 1–18 y `Template:Data_Zaahen/Cultivation_of_War` rev `4060321` confirma `1,5 %` a `2,8 %` AD, coincidiendo con el cliente 16.23; queda modelarla con `CH-03`).
+- [x] **CH-Z-01 (P1)** *Hecho en la fase 45 (2026-11-20): compilado en [`Zaahen/kit.json`](../lol-knowledge/champions/Zaahen/kit.json) desde `PercentBonusADCalc` (`{ee18a47b}`, `1,5 %`–`2,8 %` DA lineal 1–18 por acumulación, hasta `12`, duplicado `× 2` al máximo, `5 s` en `--timeline`, `--input determination_stacks` en `stats`/`ability`; [`passives.md`](../lol-knowledge/mechanics/passives.md)).* Pasiva: DA por acumulación.
 - [ ] **CH-Z-02 (P2)** Pasiva: revivir (faltan valores en el bin).
 - [ ] **CH-Z-03 (P2)** Crecimiento de DA: Data Dragon publica 0 y el cliente 4,0; el motor usa el cliente, la ficha mantiene el oficial.
 - [ ] **CH-Z-04 (P2)** Q contra monstruos y curación; E contra monstruos (+50 físico, tope de 400 del mágico); R: reducción de daño durante el lanzamiento y curación.
 - [ ] **CH-Z-05 (P3)** Semántica de `mStat`/`mStatFormula` (interpretación, no enum publicado) y las líneas abiertas de [`research/zaahen-uncertainties.md`](../research/zaahen-uncertainties.md) (P1, P2, P4/P5, Q1, B1/B4, B5/B6).
 
 ### 6.2 Ahri (`not_modelled` del kit)
-- [ ] **CH-A-01 (P2)** Pasiva: curación tras 9 súbditos o monstruos o tras derribar a un campeón.
+- [x] **CH-A-01 (P2)** *Hecho en la fase 45 (2026-11-20): compilado en [`Ahri/kit.json`](../lol-knowledge/champions/Ahri/kit.json) desde `ChampionHeal` (`75–165 + 30 % PH` al derribar campeón) y `MinionHeal` (`35–95 + 20 % PH` al consumir 9 fragmentos con `--input essence_fragments`; [`passives.md`](../lol-knowledge/mechanics/passives.md)).* Pasiva: curación tras 9 súbditos o monstruos o tras derribar a un campeón.
 - [ ] **CH-A-02 (P2)** R: reactivaciones extra y ampliación de la ventana al derribar campeones; 3 rayos a enemigos distintos.
 - [ ] **CH-A-03 (P3)** Q: el caso `both` supone que ida y vuelta alcanzan al mismo objetivo.
 - [ ] **CH-A-04 (P3)** W: velocidad de movimiento (40 % que decae en 2 s) y daño doble a súbditos por debajo del 20 %.

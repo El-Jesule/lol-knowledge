@@ -47,6 +47,7 @@ def simulate(
     inputs=None,
     timeline=False,
     ranks=None,
+    apply_passives=True,
 ):
     champ = load_champion(ROOT, champion_id)
     kit = load_kit(ROOT, champion_id)
@@ -73,6 +74,7 @@ def simulate(
         runes=runes,
         rune_data=DATA,
         ap_weight=ap_weight,
+        apply_passives=apply_passives,
     )
 
 
@@ -140,7 +142,23 @@ def test_conqueror_stacks_adaptive_force_and_heals_at_max_stacks():
     # Zaahen lvl 18 melee with Long Sword (1036 -> AD adaptive).
     # Each hit gives 2 stacks -> 6 hits reach 12 stacks (4.0 * 0.6 = 2.4 AD/stack -> +28.8 AD).
     # 7th attack deals +28.8 more AD AND heals 8% of its post-mitigation damage!
-    out = simulate(
+    isolated = simulate(
+        "Zaahen",
+        [8010],
+        "attack, attack, attack, attack, attack, attack, attack",
+        items=["1036"],
+        holder_range="melee",
+        timeline=True,
+        apply_passives=False,
+    )
+    # Step 1 (0 stacks) vs Step 7 (12 stacks): +28.8 raw AD without Zaahen's passive!
+    assert isolated.steps[6].parts[0].raw - isolated.steps[0].parts[0].raw == F(144, 5)
+    assert isolated.steps[5].healing == 0  # 10 stacks before step 6
+    assert isolated.steps[6].healing == isolated.steps[6].total * F(8, 100)
+
+    # With Zaahen's Determination passive active (default): 6 stacks (+16.8% AD) amplify
+    # total AD (141 + 28.8 = 169.8) -> 169.8 * 1.168 = 123954/625!
+    combined = simulate(
         "Zaahen",
         [8010],
         "attack, attack, attack, attack, attack, attack, attack",
@@ -148,10 +166,10 @@ def test_conqueror_stacks_adaptive_force_and_heals_at_max_stacks():
         holder_range="melee",
         timeline=True,
     )
-    # Step 1 (0 stacks) vs Step 7 (12 stacks): +28.8 raw AD!
-    assert out.steps[6].parts[0].raw - out.steps[0].parts[0].raw == F(144, 5)
-    assert out.steps[5].healing == 0  # 10 stacks before step 6
-    assert out.steps[6].healing == out.steps[6].total * F(8, 100)
+    assert combined.steps[6].parts[0].raw == (combined.steps[0].parts[0].raw + F(144, 5)) * (
+        1 + 6 * F(28, 1000)
+    )
+    assert combined.steps[6].healing == combined.steps[6].total * F(8, 100)
 
     # Intermediate level (10) follows corroborated linear curve 1.8..4.0 (Derivado).
     mid = simulate(

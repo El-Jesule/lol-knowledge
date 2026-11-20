@@ -11,8 +11,24 @@
     "P": {
       "name": "Florescencia de la guerra",
       "max_rank": 1,
+      "passive_effects": [
+        {
+          "id": "determination",
+          "name": "Determinación",
+          "kind": "stacking_stat",
+          "stat": "attack_damage",
+          "mode": "percent",
+          "trigger": "champion_hit",
+          "calculation": "PercentBonusADCalc",
+          "scale": 100,
+          "max_stacks": {"data_value": "MaxStacks"},
+          "max_stacks_multiplier": {"data_value": "MaxStacksMultiplier"},
+          "duration_seconds": {"data_value": "FallOffDuration"},
+          "input_name": "determination_stacks",
+          "source_note": "wiki Template:Data_Zaahen/Cultivation_of_War rev 4060321"
+        }
+      ],
       "not_modelled": [
-        "DA por acumulación (PercentBonusADCalc): depende de la interpolación por nivel {ee18a47b}, sin regla medida",
         "Revivir (RevivePercentCalc, ReviveCooldownCalc): faltan valores en el bin"
       ]
     },

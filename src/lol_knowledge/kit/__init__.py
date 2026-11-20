@@ -3,12 +3,14 @@
 from .evaluate import DamagePart, ability_damage, passive_contributions, sheet_stats
 from .model import (
     COST_RESOURCES,
+    PASSIVE_EFFECT_KINDS,
     SCHEMA,
     AbilitySpec,
     CaseSpec,
     CostSpec,
     DamagePartSpec,
     Kit,
+    PassiveEffectSpec,
     PassiveStatSpec,
     kit_path,
     load_kit,
@@ -17,6 +19,7 @@ from .model import (
 
 __all__ = [
     "COST_RESOURCES",
+    "PASSIVE_EFFECT_KINDS",
     "SCHEMA",
     "AbilitySpec",
     "CaseSpec",
@@ -24,6 +27,7 @@ __all__ = [
     "DamagePart",
     "DamagePartSpec",
     "Kit",
+    "PassiveEffectSpec",
     "PassiveStatSpec",
     "ability_damage",
     "kit_path",

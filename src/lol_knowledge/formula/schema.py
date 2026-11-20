@@ -47,6 +47,6 @@ OBJECT_OPS = frozenset(
         "unsupported",
     }
 )
-# Champion kits also need per-rank and per-level values and scenario inputs.
-ABILITY_OPS = OBJECT_OPS | {"by_rank", "input"}
+# Champion kits also need per-rank and per-level values, linear 1..18 curves and scenario inputs.
+ABILITY_OPS = OBJECT_OPS | {"by_rank", "linear_by_level", "input"}
 ALL_OPS = ABILITY_OPS

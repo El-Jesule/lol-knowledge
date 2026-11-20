@@ -29,6 +29,7 @@ from .damage import DamageResult, DamageType, format_number, mitigate
 from .errors import KitError, RotationError, StatsError
 from .formula import FormulaError, evaluate_formula
 from .kit import Kit, ability_damage, sheet_stats
+from .passives import PassiveCombat
 from .resources import (
     ResourceEvent,
     ResourceSummary,
@@ -70,6 +71,7 @@ RULES = (
     "lol-knowledge/mechanics/life-steal-and-omnivamp.md",
     "lol-knowledge/mechanics/survival.md",
     "lol-knowledge/mechanics/resources.md",
+    "lol-knowledge/mechanics/passives.md",
 )
 HOLDER_RANGES = frozenset({"melee", "ranged"})
 ATTACK_MODIFIERS = frozenset({"crit", "nospellblade"})
@@ -643,6 +645,7 @@ class _Rotation:
         ap_weight: Fraction | None = None,
         start_resource: Fraction | None = None,
         allow_insufficient_resource: bool = False,
+        apply_passives: bool = True,
     ) -> None:
         self.kit, self.sheet, self.ranks, self.target = kit, sheet, ranks, target
         self.base_sheet = sheet
@@ -701,6 +704,13 @@ class _Rotation:
             timeline=timeline,
             allow_insufficient=allow_insufficient_resource,
             manaflow_regen=self.rune_combat.manaflow_band_config(sheet),
+        )
+        self.passive_combat = PassiveCombat(
+            kit,
+            target,
+            inputs,
+            timeline=timeline,
+            enabled=apply_passives,
         )
         self.notes = (
             notes
@@ -1537,6 +1547,13 @@ class _Rotation:
             sheet = with_bonus(
                 sheet, bonus.stat_id, bonus.amount, bonus.source, bonus.label, bonus.note
             )
+        p_flats, p_amps = self.passive_combat.active_stat_modifiers(at, self.base_sheet.level)
+        for p_bonus in p_flats:
+            sheet = with_bonus(
+                sheet, p_bonus.stat_id, p_bonus.amount, p_bonus.source, p_bonus.label, p_bonus.note
+            )
+        for p_amp in p_amps:
+            sheet = with_amplifier(sheet, p_amp.stat_id, p_amp.percent, p_amp.source, p_amp.label)
         if sheet is not self.sheet:
             self.sheet = sheet
             self.stats, self.origin = sheet_stats(sheet)
@@ -1613,6 +1630,7 @@ class _Rotation:
                 *(Fraction(second) for second in range(math.ceil(until)) if self.combat),
                 *self.rune_combat.burn_split_times(start, until),
                 *self.rune_combat.due_times(until),
+                *self.passive_combat.stack_expiry_times(start, until),
             ]
             if start < end < until
         }
@@ -2155,6 +2173,20 @@ class _Rotation:
                         apply_modifiers=proc.apply_modifiers,
                     )
                 )
+            for p_proc in self.passive_combat.on_step(step.slot, step_dealt, clock, self.sheet):
+                parts.append(
+                    self._part(
+                        "ability",
+                        p_proc.source,
+                        p_proc.damage_type,
+                        p_proc.raw,
+                        [p_proc.label],
+                        False,
+                        target_stats,
+                        p_proc.notes,
+                        slot="P",
+                    )
+                )
             step_damage = sum((p.damage for p in parts[accrued_count:]), start=Fraction(0))
             step_after, shield_after, step_absorbed = self._absorb_parts(
                 parts[accrued_count:], health, shield
@@ -2210,6 +2242,19 @@ class _Rotation:
                         clock,
                         uses_hsp=raw_heal.uses_hsp,
                         notes=raw_heal.notes,
+                    )
+                )
+            for p_heal in self.passive_combat.on_step_heals(
+                step.slot, step_dealt, killed_now, clock, self.sheet
+            ):
+                heal_events.append(
+                    self._make_heal_event(
+                        p_heal.source,
+                        p_heal.raw,
+                        p_heal.label,
+                        clock,
+                        uses_hsp=p_heal.uses_hsp,
+                        notes=p_heal.notes,
                     )
                 )
             for raw_restore in self.rune_combat.on_step_resource_restores(
@@ -2326,6 +2371,7 @@ class _Rotation:
                 )
         resource_summary = self.resources.summary()
         self.notes.extend(self.resources.notes)
+        self.notes.extend(self.passive_combat.notes)
         self.weakened |= self.resources.weakened
         notes = list(dict.fromkeys(self.notes))
         passive = self.kit.abilities.get("P")
@@ -2369,6 +2415,7 @@ def evaluate_rotation(
     ap_weight: Fraction | None = None,
     start_resource: Fraction | None = None,
     allow_insufficient_resource: bool = False,
+    apply_passives: bool = True,
 ) -> RotationOutcome:
     """Damage of every step against ``target``, carrying its current health forward.
 
@@ -2396,5 +2443,6 @@ def evaluate_rotation(
         ap_weight=ap_weight,
         start_resource=start_resource,
         allow_insufficient_resource=allow_insufficient_resource,
+        apply_passives=apply_passives,
     )
     return rotation.run(steps)
