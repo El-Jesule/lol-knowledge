@@ -1,0 +1,459 @@
+{
+  "schema": "lol-champion-kit/1",
+  "champion": "Udyr",
+  "label": "Derivado",
+  "game_version": "16.23",
+  "content_version": "16.23.8406595+branch.releases-16-23.content.release",
+  "verified_against": {
+    "content_version": "16.23.8406595+branch.releases-16-23.content.release",
+    "bin_sha256": "70c4b319654d3f0ddeb5f555144c9d2dce00445f7b5d0a18c7974e11922310c2",
+    "evidence": "odd/tasks/champion-kits-wave-4.md",
+    "result": "Bin del cliente 16.23 convertido con python -m binmodel.batch_kits y compilado con esta especificación curada (CH-01 oleada 4 — cierre 173/173)"
+  },
+  "source": "Árboles de cálculo del bin del cliente (python -m binmodel) y marcado de los tooltips del cliente; estructura de casos curada en research/kits/",
+  "abilities": {
+    "P": {
+      "name": "Puente entre mundos",
+      "max_rank": 1,
+      "cases": [],
+      "passive_stats": [],
+      "not_modelled": [
+        "Velocidad de ataque tras cambiar de posición (AttackSpeed) y enfriamiento/recarga de Despertar (UltCD)"
+      ]
+    },
+    "Q": {
+      "name": "Garra bestial",
+      "max_rank": 6,
+      "cases": [
+        {
+          "id": "on_hit",
+          "name": "Daño físico al impactar (4 s)",
+          "parts": [
+            {
+              "damage_type": "physical",
+              "formula": {
+                "op": "add",
+                "operands": [
+                  {
+                    "op": "by_rank",
+                    "values": [
+                      6,
+                      12,
+                      18,
+                      24,
+                      30,
+                      36
+                    ]
+                  },
+                  {
+                    "op": "mul",
+                    "operands": [
+                      {
+                        "op": "constant",
+                        "value": 0.2
+                      },
+                      {
+                        "op": "stat",
+                        "stat": "attack_damage",
+                        "scope": "bonus"
+                      }
+                    ]
+                  },
+                  {
+                    "op": "mul",
+                    "operands": [
+                      {
+                        "op": "by_rank",
+                        "values": [
+                          0.01,
+                          0.012,
+                          0.014,
+                          0.016,
+                          0.018,
+                          0.02
+                        ]
+                      },
+                      {
+                        "op": "stat",
+                        "stat": "health",
+                        "scope": "bonus"
+                      }
+                    ]
+                  }
+                ]
+              },
+              "label": "Derivado",
+              "source": "Characters/Udyr/Spells/UdyrQAbility/UdyrQ.mSpellCalculations.OnHitDamage (16.23.8406595+branch.releases-16-23.content.release)",
+              "damage_type_source": "spell_udyrtigerstance_tooltip <physicalDamage>"
+            }
+          ]
+        },
+        {
+          "id": "two_hits_pct",
+          "name": "Golpe potenciado normal (% vida máxima físico)",
+          "parts": [
+            {
+              "damage_type": "physical",
+              "formula": {
+                "op": "mul",
+                "operands": [
+                  {
+                    "op": "add",
+                    "operands": [
+                      {
+                        "op": "by_rank",
+                        "values": [
+                          0.03,
+                          0.04,
+                          0.05,
+                          0.06,
+                          0.07,
+                          0.08
+                        ]
+                      },
+                      {
+                        "op": "mul",
+                        "operands": [
+                          {
+                            "op": "constant",
+                            "value": 0.00035
+                          },
+                          {
+                            "op": "stat",
+                            "stat": "attack_damage",
+                            "scope": "bonus"
+                          }
+                        ]
+                      }
+                    ]
+                  },
+                  {
+                    "op": "stat",
+                    "stat": "health",
+                    "scope": "max",
+                    "subject": "target"
+                  }
+                ]
+              },
+              "label": "Derivado",
+              "source": "Characters/Udyr/Spells/UdyrQAbility/UdyrQ · mSpellCalculations.MaxHPOnHit1 × vida máxima del objetivo (16.23.8406595+branch.releases-16-23.content.release)",
+              "damage_type_source": "spell_udyrtigerstance_tooltip <physicalDamage>"
+            }
+          ]
+        },
+        {
+          "id": "awakened_pct",
+          "name": "Despertar: golpe potenciado (% vida máxima físico)",
+          "parts": [
+            {
+              "damage_type": "physical",
+              "formula": {
+                "op": "mul",
+                "operands": [
+                  {
+                    "op": "add",
+                    "operands": [
+                      {
+                        "op": "by_rank",
+                        "values": [
+                          0.03,
+                          0.04,
+                          0.05,
+                          0.06,
+                          0.07,
+                          0.08
+                        ]
+                      },
+                      {
+                        "op": "linear_by_level",
+                        "min": 0.02,
+                        "max": 0.04
+                      },
+                      {
+                        "op": "mul",
+                        "operands": [
+                          {
+                            "op": "constant",
+                            "value": 0.0005
+                          },
+                          {
+                            "op": "stat",
+                            "stat": "attack_damage",
+                            "scope": "bonus"
+                          }
+                        ]
+                      },
+                      {
+                        "op": "mul",
+                        "operands": [
+                          {
+                            "op": "constant",
+                            "value": 1e-05
+                          },
+                          {
+                            "op": "stat",
+                            "stat": "health",
+                            "scope": "bonus"
+                          }
+                        ]
+                      }
+                    ]
+                  },
+                  {
+                    "op": "stat",
+                    "stat": "health",
+                    "scope": "max",
+                    "subject": "target"
+                  }
+                ]
+              },
+              "label": "Derivado",
+              "source": "Characters/Udyr/Spells/UdyrQAbility/UdyrQ · mSpellCalculations.Q2TotalOnHitHPDamage × vida máxima del objetivo (16.23.8406595+branch.releases-16-23.content.release)",
+              "damage_type_source": "spell_udyrtigerstance_tooltip <physicalDamage>"
+            }
+          ]
+        },
+        {
+          "id": "awakened_lightning_isolated",
+          "name": "Despertar: 6 rayos sobre objetivo aislado (% vida máxima mágico)",
+          "parts": [
+            {
+              "damage_type": "magic",
+              "formula": {
+                "op": "mul",
+                "operands": [
+                  {
+                    "op": "mul",
+                    "operands": [
+                      {
+                        "op": "add",
+                        "operands": [
+                          {
+                            "op": "mul",
+                            "operands": [
+                              {
+                                "op": "constant",
+                                "value": 6e-05
+                              },
+                              {
+                                "op": "stat",
+                                "stat": "ability_power",
+                                "scope": "total"
+                              }
+                            ]
+                          },
+                          {
+                            "op": "linear_by_level",
+                            "min": 0.015,
+                            "max": 0.03
+                          }
+                        ]
+                      },
+                      {
+                        "op": "add",
+                        "operands": [
+                          {
+                            "op": "constant",
+                            "value": 1
+                          },
+                          {
+                            "op": "mul",
+                            "operands": [
+                              {
+                                "op": "add",
+                                "operands": [
+                                  {
+                                    "op": "constant",
+                                    "value": 6
+                                  },
+                                  {
+                                    "op": "constant",
+                                    "value": -1
+                                  }
+                                ]
+                              },
+                              {
+                                "op": "constant",
+                                "value": 1
+                              }
+                            ]
+                          }
+                        ]
+                      }
+                    ]
+                  },
+                  {
+                    "op": "stat",
+                    "stat": "health",
+                    "scope": "max",
+                    "subject": "target"
+                  }
+                ]
+              },
+              "label": "Derivado",
+              "source": "Characters/Udyr/Spells/UdyrQAbility/UdyrQ · mSpellCalculations.EmpoweredLightningBonusMax × vida máxima del objetivo (16.23.8406595+branch.releases-16-23.content.release)",
+              "damage_type_source": "spell_udyrtigerstance_tooltip <magicDamage>"
+            }
+          ]
+        }
+      ],
+      "passive_stats": [],
+      "not_modelled": [
+        "Velocidad de ataque activa/Despertar (EmpoweredTotalAS), alcance extra (+50) y topes contra monstruos/súbditos"
+      ]
+    },
+    "W": {
+      "name": "Manto férreo",
+      "max_rank": 6,
+      "cases": [],
+      "passive_stats": [],
+      "not_modelled": [
+        "Escudo normal y Despertar (TotalShield), robo de vida y curación al golpear (LifeOnHit)"
+      ]
+    },
+    "E": {
+      "name": "Estampida llameante",
+      "max_rank": 6,
+      "cases": [],
+      "passive_stats": [],
+      "not_modelled": [
+        "Velocidad de movimiento (MoveSpeed / MoveSpeedBonus), aturdimiento por objetivo e inmunidad a CC en Despertar"
+      ]
+    },
+    "R": {
+      "name": "Tormenta alada",
+      "max_rank": 6,
+      "cases": [
+        {
+          "id": "storm_dps",
+          "name": "Ventisca (daño por segundo)",
+          "parts": [
+            {
+              "damage_type": "magic",
+              "formula": {
+                "op": "add",
+                "operands": [
+                  {
+                    "op": "by_rank",
+                    "values": [
+                      20,
+                      36,
+                      52,
+                      68,
+                      84,
+                      100
+                    ]
+                  },
+                  {
+                    "op": "mul",
+                    "operands": [
+                      {
+                        "op": "constant",
+                        "value": 0.35
+                      },
+                      {
+                        "op": "stat",
+                        "stat": "ability_power",
+                        "scope": "total"
+                      }
+                    ]
+                  }
+                ]
+              },
+              "label": "Derivado",
+              "source": "Characters/Udyr/Spells/UdyrRAbility/UdyrR.mSpellCalculations.StormDamage (16.23.8406595+branch.releases-16-23.content.release)",
+              "damage_type_source": "spell_udyrphoenixstance_tooltip <magicDamage>"
+            }
+          ]
+        },
+        {
+          "id": "pulse",
+          "name": "Golpe potenciado (pulso en área)",
+          "parts": [
+            {
+              "damage_type": "magic",
+              "formula": {
+                "op": "add",
+                "operands": [
+                  {
+                    "op": "linear_by_level",
+                    "min": 10,
+                    "max": 40
+                  },
+                  {
+                    "op": "mul",
+                    "operands": [
+                      {
+                        "op": "constant",
+                        "value": 0.35
+                      },
+                      {
+                        "op": "stat",
+                        "stat": "ability_power",
+                        "scope": "total"
+                      }
+                    ]
+                  }
+                ]
+              },
+              "label": "Derivado",
+              "source": "Characters/Udyr/Spells/UdyrRAbility/UdyrR.mSpellCalculations.PulseDamage (16.23.8406595+branch.releases-16-23.content.release)",
+              "damage_type_source": "spell_udyrphoenixstance_tooltip <magicDamage>"
+            }
+          ]
+        },
+        {
+          "id": "awakened_storm",
+          "name": "Despertar: tormenta perseguidora (% vida máxima)",
+          "parts": [
+            {
+              "damage_type": "magic",
+              "formula": {
+                "op": "mul",
+                "operands": [
+                  {
+                    "op": "add",
+                    "operands": [
+                      {
+                        "op": "linear_by_level",
+                        "min": 0.08,
+                        "max": 0.14
+                      },
+                      {
+                        "op": "mul",
+                        "operands": [
+                          {
+                            "op": "constant",
+                            "value": 0.00035
+                          },
+                          {
+                            "op": "stat",
+                            "stat": "ability_power",
+                            "scope": "total"
+                          }
+                        ]
+                      }
+                    ]
+                  },
+                  {
+                    "op": "stat",
+                    "stat": "health",
+                    "scope": "max",
+                    "subject": "target"
+                  }
+                ]
+              },
+              "label": "Derivado",
+              "source": "Characters/Udyr/Spells/UdyrRAbility/UdyrR · mSpellCalculations.PercentHPBlast × vida máxima del objetivo (16.23.8406595+branch.releases-16-23.content.release)",
+              "damage_type_source": "spell_udyrphoenixstance_tooltip <magicDamage>"
+            }
+          ]
+        }
+      ],
+      "passive_stats": [],
+      "not_modelled": [
+        "Ralentización, modificador contra súbditos y tope contra monstruos"
+      ]
+    }
+  }
+}

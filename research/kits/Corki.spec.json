@@ -1,0 +1,112 @@
+{
+  "champion": "Corki",
+  "game_version": "16.23",
+  "verified_against": {
+    "content_version": "16.23.8406595+branch.releases-16-23.content.release",
+    "bin_sha256": "bdb31150dd208900310895607d6c30f12b9f2557c45f55b3dc0466ee2a9e850b",
+    "evidence": "odd/tasks/champion-kits-wave-4.md",
+    "result": "Bin del cliente 16.23 convertido con python -m binmodel.batch_kits y compilado con esta especificación curada (CH-01 oleada 4 — cierre 173/173)"
+  },
+  "abilities": {
+    "P": {
+      "name": "Municiones hextech",
+      "tooltip": "spell_rapidreload_tooltip",
+      "max_rank": 1,
+      "cases": [
+        {
+          "id": "true_bonus",
+          "name": "Daño verdadero adicional por ataque (20 % DA)",
+          "parts": [
+            {
+              "calculation": "BasicAttackTOOLTIP"
+            }
+          ]
+        }
+      ],
+      "not_modelled": [
+        "Escalado en golpes críticos del ataque básico"
+      ]
+    },
+    "Q": {
+      "name": "Bomba de fósforo",
+      "tooltip": "spell_phosphorusbomb_tooltip",
+      "cases": [
+        {
+          "id": "bomb",
+          "name": "Explosión de bomba",
+          "parts": [
+            {
+              "calculation": "TotalDamage"
+            }
+          ]
+        }
+      ],
+      "not_modelled": [
+        "Visión revelada durante 6 s"
+      ]
+    },
+    "W": {
+      "name": "Valquiria",
+      "tooltip": "spell_carpetbomb_tooltip",
+      "cases": [
+        {
+          "id": "zone_max",
+          "name": "Zona incendiaria completa",
+          "parts": [
+            {
+              "calculation": "MaximumDamage"
+            }
+          ]
+        }
+      ],
+      "not_modelled": [
+        "Desplazamiento sobre terreno"
+      ]
+    },
+    "E": {
+      "name": "Cañón de repetición",
+      "tooltip": "spell_ggun_tooltip",
+      "cases": [
+        {
+          "id": "total",
+          "name": "Descarga completa (4 s)",
+          "parts": [
+            {
+              "calculation": "TotalDamage"
+            }
+          ]
+        }
+      ],
+      "not_modelled": [
+        "Reducción acumulable de armadura y resistencia mágica en cono"
+      ]
+    },
+    "R": {
+      "name": "Andanada de Proyectiles",
+      "tooltip": "spell_missilebarrage_tooltip",
+      "cases": [
+        {
+          "id": "small",
+          "name": "Misil normal",
+          "parts": [
+            {
+              "calculation": "RSmallMissileDamage"
+            }
+          ]
+        },
+        {
+          "id": "big",
+          "name": "Gran misil (cada 3.er disparo)",
+          "parts": [
+            {
+              "calculation": "RBigMissileDamage"
+            }
+          ]
+        }
+      ],
+      "not_modelled": [
+        "Sistema de hasta 4 cargas y reducción de recarga con ataques básicos (AttackRefund)"
+      ]
+    }
+  }
+}

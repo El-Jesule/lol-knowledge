@@ -1,0 +1,70 @@
+{
+  "champion": "Pyke",
+  "game_version": "16.23",
+  "verified_against": {
+    "content_version": "16.23.8406595+branch.releases-16-23.content.release",
+    "bin_sha256": "8a3781337a0fcb08172c376d85d7b3299f2a8bb4d0493dec4c190de952ba6aca",
+    "evidence": "odd/tasks/champion-kits-wave-4.md",
+    "result": "Bin del cliente 16.23 convertido con python -m binmodel.batch_kits y compilado con esta especificación curada (CH-01 oleada 4 — cierre 173/173)"
+  },
+  "abilities": {
+    "P": {
+      "name": "Bendición de los ahogados",
+      "tooltip": "spell_pykepassive_tooltip",
+      "max_rank": 1,
+      "not_modelled": [
+        "Conversión de vida adicional en DA (14 vida = 1 DA), almacenamiento de vida gris y regeneración fuera de visión"
+      ]
+    },
+    "Q": {
+      "name": "Espetón de huesos",
+      "tooltip": "spell_pykeq_tooltip",
+      "cases": [
+        {
+          "id": "skewer",
+          "name": "Puñalada o arpón cargado",
+          "parts": [
+            {
+              "calculation": "TotalDamage"
+            }
+          ]
+        }
+      ],
+      "not_modelled": [
+        "Ralentización del 90 %, atracción al cargar y devolución del 75 % de maná al golpear campeón"
+      ]
+    },
+    "W": {
+      "name": "Inmersión espectromarina",
+      "tooltip": "spell_pykew_tooltip",
+      "not_modelled": [
+        "Camuflaje y velocidad de movimiento escalada con letalidad (MoveSpeed)"
+      ]
+    },
+    "E": {
+      "name": "Corriente fantasma",
+      "tooltip": "spell_pykee_tooltip",
+      "cases": [
+        {
+          "id": "phantom",
+          "name": "Impacto del fantasma a campeones",
+          "parts": [
+            {
+              "calculation": "TotalDamage"
+            }
+          ]
+        }
+      ],
+      "not_modelled": [
+        "Aturdimiento escalado con letalidad (StunDuration)"
+      ]
+    },
+    "R": {
+      "name": "Muerte de las profundidades",
+      "tooltip": "spell_pyker_tooltip",
+      "not_modelled": [
+        "Umbral de ejecución verdadero y 50 % daño físico por encima del umbral (RDamage escala con letalidad, stat no corroborado en kitgen); reinicio y reparto de oro"
+      ]
+    }
+  }
+}

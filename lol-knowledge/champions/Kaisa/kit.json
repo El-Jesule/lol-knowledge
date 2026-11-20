@@ -1,0 +1,242 @@
+{
+  "schema": "lol-champion-kit/1",
+  "champion": "Kaisa",
+  "label": "Derivado",
+  "game_version": "16.23",
+  "content_version": "16.23.8406595+branch.releases-16-23.content.release",
+  "verified_against": {
+    "content_version": "16.23.8406595+branch.releases-16-23.content.release",
+    "bin_sha256": "1a56629726be50325cf7a37c419c13866cbb77dbb70a7469bb4515d62ca39b18",
+    "evidence": "odd/tasks/champion-kits-wave-4.md",
+    "result": "Bin del cliente 16.23 convertido con python -m binmodel.batch_kits y compilado con esta especificación curada (CH-01 oleada 4 — cierre 173/173)"
+  },
+  "source": "Árboles de cálculo del bin del cliente (python -m binmodel) y marcado de los tooltips del cliente; estructura de casos curada en research/kits/",
+  "abilities": {
+    "P": {
+      "name": "Segunda piel",
+      "max_rank": 1,
+      "cases": [
+        {
+          "id": "on_hit_base",
+          "name": "Daño mágico al impactar (0 cargas de Plasma)",
+          "parts": [
+            {
+              "damage_type": "magic",
+              "formula": {
+                "op": "add",
+                "operands": [
+                  {
+                    "op": "linear_by_level",
+                    "min": 4,
+                    "max": 30
+                  },
+                  {
+                    "op": "mul",
+                    "operands": [
+                      {
+                        "op": "constant",
+                        "value": 0.12
+                      },
+                      {
+                        "op": "stat",
+                        "stat": "ability_power",
+                        "scope": "total"
+                      }
+                    ]
+                  }
+                ]
+              },
+              "label": "Derivado",
+              "source": "Characters/Kaisa/Spells/KaisaPassiveAbility/KaisaPassive.mSpellCalculations.PBaseDamage (16.23.8406595+branch.releases-16-23.content.release)",
+              "damage_type_source": "spell_kaisapassive_tooltip <magicDamage>"
+            }
+          ]
+        },
+        {
+          "id": "on_hit_per_stack",
+          "name": "Daño adicional al impactar por carga de Plasma (hasta 4)",
+          "parts": [
+            {
+              "damage_type": "magic",
+              "formula": {
+                "op": "add",
+                "operands": [
+                  {
+                    "op": "linear_by_level",
+                    "min": 1,
+                    "max": 8
+                  },
+                  {
+                    "op": "mul",
+                    "operands": [
+                      {
+                        "op": "constant",
+                        "value": 0.03
+                      },
+                      {
+                        "op": "stat",
+                        "stat": "ability_power",
+                        "scope": "total"
+                      }
+                    ]
+                  }
+                ]
+              },
+              "label": "Derivado",
+              "source": "Characters/Kaisa/Spells/KaisaPassiveAbility/KaisaPassive.mSpellCalculations.PCurrentPerStackDamage (16.23.8406595+branch.releases-16-23.content.release)",
+              "damage_type_source": "spell_kaisapassive_tooltip <magicDamage>"
+            }
+          ]
+        },
+        {
+          "id": "plasma_pop",
+          "name": "Detonación de 5 cargas de Plasma (% vida faltante)",
+          "parts": [
+            {
+              "damage_type": "magic",
+              "formula": {
+                "op": "mul",
+                "operands": [
+                  {
+                    "op": "add",
+                    "operands": [
+                      {
+                        "op": "constant",
+                        "value": 0.15
+                      },
+                      {
+                        "op": "mul",
+                        "operands": [
+                          {
+                            "op": "constant",
+                            "value": 0.0006
+                          },
+                          {
+                            "op": "stat",
+                            "stat": "ability_power",
+                            "scope": "total"
+                          }
+                        ]
+                      }
+                    ]
+                  },
+                  {
+                    "op": "stat",
+                    "stat": "health",
+                    "scope": "max",
+                    "subject": "target"
+                  },
+                  {
+                    "op": "stat",
+                    "stat": "health",
+                    "scope": "missing_fraction",
+                    "subject": "target"
+                  }
+                ]
+              },
+              "label": "Derivado",
+              "source": "Characters/Kaisa/Spells/KaisaPassiveAbility/KaisaPassive · mSpellCalculations.PExecutePercentage × vida faltante del objetivo (16.23.8406595+branch.releases-16-23.content.release)",
+              "damage_type_source": "spell_kaisapassive_tooltip <magicDamage>"
+            }
+          ]
+        }
+      ],
+      "passive_stats": [],
+      "not_modelled": [
+        "Evoluciones de Q (100 DA adicional), W (100 PH) y E (100 % VA adicional) y tope de 400 contra monstruos"
+      ]
+    },
+    "Q": {
+      "name": "Lluvia de Icathia",
+      "max_rank": 5,
+      "cases": [
+        {
+          "id": "one_missile",
+          "name": "Primer misil",
+          "parts": [
+            {
+              "damage_type": "physical",
+              "formula": {
+                "op": "add",
+                "operands": [
+                  {
+                    "op": "by_rank",
+                    "values": [
+                      40,
+                      55,
+                      70,
+                      85,
+                      100
+                    ]
+                  },
+                  {
+                    "op": "mul",
+                    "operands": [
+                      {
+                        "op": "constant",
+                        "value": 0.55
+                      },
+                      {
+                        "op": "stat",
+                        "stat": "attack_damage",
+                        "scope": "bonus"
+                      }
+                    ]
+                  },
+                  {
+                    "op": "mul",
+                    "operands": [
+                      {
+                        "op": "constant",
+                        "value": 0.2
+                      },
+                      {
+                        "op": "stat",
+                        "stat": "ability_power",
+                        "scope": "total"
+                      }
+                    ]
+                  }
+                ]
+              },
+              "label": "Derivado",
+              "source": "Characters/Kaisa/Spells/KaisaQAbility/KaisaQ.mSpellCalculations.TotalIndividualMissileDamage (16.23.8406595+branch.releases-16-23.content.release)",
+              "damage_type_source": "spell_kaisaq_tooltip <physicalDamage>"
+            }
+          ]
+        }
+      ],
+      "passive_stats": [],
+      "not_modelled": [
+        "Total de 6 misiles (12 evolucionada) con reducción del 75 % en misiles posteriores (MaxDamageDisplay condicional) y ejecución de súbditos"
+      ]
+    },
+    "W": {
+      "name": "Buscador del Vacío",
+      "max_rank": 5,
+      "cases": [],
+      "passive_stats": [],
+      "not_modelled": [
+        "Proyectil de daño mágico (W.TotalDamage usa EffectValue en el bin), aplicación de 2/3 cargas de Plasma y devolución de 75 % de enfriamiento evolucionada"
+      ]
+    },
+    "E": {
+      "name": "Supercarga",
+      "max_rank": 5,
+      "cases": [],
+      "passive_stats": [],
+      "not_modelled": [
+        "Velocidad de movimiento (TotalMoveSpeed), invisibilidad evolucionada, velocidad de ataque activa y reducción de CD por ataque"
+      ]
+    },
+    "R": {
+      "name": "Instinto asesino",
+      "max_rank": 3,
+      "cases": [],
+      "passive_stats": [],
+      "not_modelled": [
+        "Desplazamiento hacia objetivo con Plasma y escudo (RCalculatedShieldValue)"
+      ]
+    }
+  }
+}

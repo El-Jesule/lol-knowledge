@@ -1,0 +1,169 @@
+{
+  "schema": "lol-champion-kit/1",
+  "champion": "Elise",
+  "label": "Derivado",
+  "game_version": "16.23",
+  "content_version": "16.23.8406595+branch.releases-16-23.content.release",
+  "verified_against": {
+    "content_version": "16.23.8406595+branch.releases-16-23.content.release",
+    "bin_sha256": "0b5d75f12f867a8ace14a88e73bfe097ca56cc22254939008709f4e1e015a390",
+    "evidence": "odd/tasks/champion-kits-wave-4.md",
+    "result": "Bin del cliente 16.23 convertido con python -m binmodel.batch_kits y compilado con esta especificación curada (CH-01 oleada 4 — cierre 173/173)"
+  },
+  "source": "Árboles de cálculo del bin del cliente (python -m binmodel) y marcado de los tooltips del cliente; estructura de casos curada en research/kits/",
+  "abilities": {
+    "P": {
+      "name": "Reina de las arañas",
+      "max_rank": 1,
+      "cases": [],
+      "passive_stats": [],
+      "not_modelled": [
+        "Generación de crías de araña al lanzar hechizos en forma humana y daño/curación al impactar en forma de araña"
+      ]
+    },
+    "Q": {
+      "name": "Neurotoxina / Mordisco venenoso",
+      "max_rank": 5,
+      "cases": [
+        {
+          "id": "human",
+          "name": "Forma humana: Neurotoxina (base + % vida actual)",
+          "parts": [
+            {
+              "damage_type": "magic",
+              "formula": {
+                "op": "add",
+                "operands": [
+                  {
+                    "op": "by_rank",
+                    "values": [
+                      40,
+                      70,
+                      100,
+                      130,
+                      160
+                    ]
+                  },
+                  {
+                    "op": "mul",
+                    "operands": [
+                      {
+                        "op": "add",
+                        "operands": [
+                          {
+                            "op": "constant",
+                            "value": 4
+                          },
+                          {
+                            "op": "mul",
+                            "operands": [
+                              {
+                                "op": "constant",
+                                "value": 0.03
+                              },
+                              {
+                                "op": "stat",
+                                "stat": "ability_power",
+                                "scope": "total"
+                              }
+                            ]
+                          }
+                        ]
+                      },
+                      {
+                        "op": "constant",
+                        "value": 0.01
+                      },
+                      {
+                        "op": "stat",
+                        "stat": "health",
+                        "scope": "current",
+                        "subject": "target"
+                      }
+                    ]
+                  }
+                ]
+              },
+              "label": "Derivado",
+              "source": "Characters/Elise/Spells/EliseHumanQAbility/EliseHumanQ · DataValues.BaseDamage + mSpellCalculations.HumanPercentHealth % × vida actual del objetivo (16.23.8406595+branch.releases-16-23.content.release)",
+              "damage_type_source": "spell_elisehumanq_tooltip <magicDamage>"
+            }
+          ]
+        }
+      ],
+      "passive_stats": [],
+      "not_modelled": [
+        "Forma de araña: Mordisco venenoso (% vida faltante, en hechizo separado) y tope contra monstruos (MonsterDamageCapCalc)"
+      ]
+    },
+    "W": {
+      "name": "Araña volátil / Frenesí arácnido",
+      "max_rank": 5,
+      "cases": [
+        {
+          "id": "human",
+          "name": "Forma humana: Araña volátil",
+          "parts": [
+            {
+              "damage_type": "magic",
+              "formula": {
+                "op": "add",
+                "operands": [
+                  {
+                    "op": "by_rank",
+                    "values": [
+                      60,
+                      100,
+                      140,
+                      180,
+                      220
+                    ]
+                  },
+                  {
+                    "op": "mul",
+                    "operands": [
+                      {
+                        "op": "constant",
+                        "value": 0.75
+                      },
+                      {
+                        "op": "stat",
+                        "stat": "ability_power",
+                        "scope": "total"
+                      }
+                    ]
+                  }
+                ]
+              },
+              "label": "Derivado",
+              "source": "Characters/Elise/Spells/EliseHumanWAbility/EliseHumanW.mSpellCalculations.TotalDamage (16.23.8406595+branch.releases-16-23.content.release)",
+              "damage_type_source": "spell_elisehumanw_tooltip <magicDamage>"
+            }
+          ]
+        }
+      ],
+      "passive_stats": [],
+      "not_modelled": [
+        "Forma de araña: Frenesí arácnido (velocidad de ataque durante 3 s)"
+      ]
+    },
+    "E": {
+      "name": "Maraña / Rápel",
+      "max_rank": 5,
+      "cases": [],
+      "passive_stats": [],
+      "not_modelled": [
+        "Forma humana: aturdimiento (TotalStunDuration); forma de araña: Rápel inalcanzable y amplificación de daño/curación"
+      ]
+    },
+    "R": {
+      "name": "Forma de araña",
+      "max_rank": 4,
+      "cases": [],
+      "passive_stats": [],
+      "not_modelled": [
+        "Transformación entre forma humana y forma de araña, daño/curación al impactar en araña (PassiveTotalDamage, PassiveTotalHealing) y ataques de crías (SpiderlingTotalDamage)"
+      ]
+    }
+  }
+}

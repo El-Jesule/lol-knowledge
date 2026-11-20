@@ -1,0 +1,79 @@
+{
+  "champion": "Kalista",
+  "game_version": "16.23",
+  "verified_against": {
+    "content_version": "16.23.8406595+branch.releases-16-23.content.release",
+    "bin_sha256": "d0d1f940c35eb80f7ca167ae74a766d0682db94c41b1db70b8c57666633d3dce",
+    "evidence": "odd/tasks/champion-kits-wave-4.md",
+    "result": "Bin del cliente 16.23 convertido con python -m binmodel.batch_kits y compilado con esta especificación curada (CH-01 oleada 4 — cierre 173/173)"
+  },
+  "abilities": {
+    "P": {
+      "name": "Aplomo marcial",
+      "tooltip": "spell_kalistapassivebuff_tooltip",
+      "max_rank": 1,
+      "not_modelled": [
+        "Salto tras cada ataque o Q, vínculo Juramentado y cancelación de ataques al perder visión"
+      ]
+    },
+    "Q": {
+      "name": "Atravesar",
+      "tooltip": "spell_kalistamysticshot_tooltip",
+      "cases": [
+        {
+          "id": "spear",
+          "name": "Lanza",
+          "parts": [
+            {
+              "calculation": "TotalDamage"
+            }
+          ]
+        }
+      ],
+      "not_modelled": [
+        "Transferencia de acumulaciones de Desgarrar al matar un objetivo"
+      ]
+    },
+    "W": {
+      "name": "Centinela",
+      "tooltip": "spell_kalistaw_tooltip",
+      "not_modelled": [
+        "Pasiva Marca del alma con el Juramentado (% vida máxima mágico) y centinela de visión"
+      ]
+    },
+    "E": {
+      "name": "Desgarrar",
+      "tooltip": "spell_kalistaexpungewrapper_tooltip",
+      "cases": [
+        {
+          "id": "first_spear",
+          "name": "Primera lanza",
+          "parts": [
+            {
+              "calculation": "NormalDamage"
+            }
+          ]
+        },
+        {
+          "id": "extra_spear",
+          "name": "Cada lanza adicional",
+          "parts": [
+            {
+              "calculation": "AdditionalDamage"
+            }
+          ]
+        }
+      ],
+      "not_modelled": [
+        "Ralentización (TotalSlowAmount), reinicio de enfriamiento y devolución de maná al matar una unidad"
+      ]
+    },
+    "R": {
+      "name": "Llamada del destino",
+      "tooltip": "spell_kalistarx_tooltip",
+      "not_modelled": [
+        "Rescate inalcanzable del Juramentado y lanzamiento con derribo aéreo"
+      ]
+    }
+  }
+}

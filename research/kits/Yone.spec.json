@@ -1,0 +1,159 @@
+{
+  "champion": "Yone",
+  "game_version": "16.23",
+  "verified_against": {
+    "content_version": "16.23.8406595+branch.releases-16-23.content.release",
+    "bin_sha256": "e29efc73d40268ea89612351d66b3bafccc18b14f0b45363f5147d1ec375ab50",
+    "evidence": "odd/tasks/champion-kits-wave-4.md",
+    "result": "Bin del cliente 16.23 convertido con python -m binmodel.batch_kits y compilado con esta especificación curada (CH-01 oleada 4 — cierre 173/173)"
+  },
+  "abilities": {
+    "P": {
+      "name": "Camino del cazador",
+      "tooltip": "spell_yonepassive_tooltip",
+      "max_rank": 1,
+      "not_modelled": [
+        "Conversión del 50 % del daño de cada segundo ataque a mágico (MagicDamageSplit), duplicación de probabilidad de crítico, exceso en DA y modificador de daño crítico"
+      ]
+    },
+    "Q": {
+      "name": "Acero mortal",
+      "tooltip": "spell_yoneq_tooltip",
+      "cases": [
+        {
+          "id": "thrust",
+          "name": "Estocada / ola de viento (sin crítico)",
+          "parts": [
+            {
+              "calculation": "QDamage"
+            }
+          ]
+        }
+      ],
+      "not_modelled": [
+        "Golpe crítico de Q (TotalDamageCrit), reducción de CD/lanzamiento por VA y levantamiento en Q3"
+      ]
+    },
+    "W": {
+      "name": "Cuchilla espiritual",
+      "tooltip": "spell_yonew_tooltip",
+      "cases": [
+        {
+          "id": "cleave",
+          "name": "Tajo dual (50 % físico + 50 % mágico sobre plano + % vida máxima)",
+          "parts": [
+            {
+              "tooltip_reference": "BaseDamage",
+              "damage_type": "physical",
+              "source_note": "0,5 × (DataValues.BaseDamage + DataValues.MaxHealthDamage × vida máxima del objetivo)",
+              "formula": {
+                "op": "mul",
+                "operands": [
+                  {
+                    "op": "constant",
+                    "value": 0.5
+                  },
+                  {
+                    "op": "add",
+                    "operands": [
+                      {
+                        "op": "data_value",
+                        "name": "BaseDamage"
+                      },
+                      {
+                        "op": "mul",
+                        "operands": [
+                          {
+                            "op": "data_value",
+                            "name": "MaxHealthDamage"
+                          },
+                          {
+                            "op": "stat",
+                            "stat": "health",
+                            "scope": "max",
+                            "subject": "target"
+                          }
+                        ]
+                      }
+                    ]
+                  }
+                ]
+              }
+            },
+            {
+              "tooltip_reference": "BaseDamage",
+              "damage_type": "magic",
+              "source_note": "0,5 × (DataValues.BaseDamage + DataValues.MaxHealthDamage × vida máxima del objetivo)",
+              "formula": {
+                "op": "mul",
+                "operands": [
+                  {
+                    "op": "constant",
+                    "value": 0.5
+                  },
+                  {
+                    "op": "add",
+                    "operands": [
+                      {
+                        "op": "data_value",
+                        "name": "BaseDamage"
+                      },
+                      {
+                        "op": "mul",
+                        "operands": [
+                          {
+                            "op": "data_value",
+                            "name": "MaxHealthDamage"
+                          },
+                          {
+                            "op": "stat",
+                            "stat": "health",
+                            "scope": "max",
+                            "subject": "target"
+                          }
+                        ]
+                      }
+                    ]
+                  }
+                ]
+              }
+            }
+          ]
+        }
+      ],
+      "not_modelled": [
+        "Escudo al golpear enemigos (WShield), reducción de CD/cast por VA y mínimo contra súbditos"
+      ]
+    },
+    "E": {
+      "name": "Alma desatada",
+      "tooltip": "spell_yonee_tooltip",
+      "not_modelled": [
+        "Forma espiritual durante 5 s, velocidad de movimiento creciente y repetición del 25..35 % del daño posmitigación como daño verdadero al regresar"
+      ]
+    },
+    "R": {
+      "name": "Destino sellado",
+      "tooltip": "spell_yoner_tooltip",
+      "cases": [
+        {
+          "id": "slash",
+          "name": "Impacto dual (50 % físico + 50 % mágico)",
+          "parts": [
+            {
+              "calculation": "TooltipDamage",
+              "damage_type": "physical"
+            },
+            {
+              "calculation": "TooltipDamage",
+              "damage_type": "magic"
+            }
+          ]
+        }
+      ],
+      "not_modelled": [
+        "Atracción y lanzamiento por los aires de 1 s"
+      ]
+    }
+  }
+}

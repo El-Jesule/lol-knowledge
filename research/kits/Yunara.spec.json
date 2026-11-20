@@ -1,0 +1,97 @@
+{
+  "champion": "Yunara",
+  "game_version": "16.23",
+  "verified_against": {
+    "content_version": "16.23.8406595+branch.releases-16-23.content.release",
+    "bin_sha256": "7c38b86bc38a56bb0d031acfa4c1aa98be423401807ce0197629eef5ffd7807a",
+    "evidence": "odd/tasks/champion-kits-wave-4.md",
+    "result": "Bin del cliente 16.23 convertido con python -m binmodel.batch_kits y compilado con esta especificación curada (CH-01 oleada 4 — cierre 173/173)"
+  },
+  "abilities": {
+    "P": {
+      "name": "Juramento a las Tierras Primigenias",
+      "tooltip": "spell_yunarap_tooltip",
+      "max_rank": 1,
+      "not_modelled": [
+        "Daño mágico adicional porcentual en golpes críticos (Calc_Damage_Amp: 10 % + 10 % por 100 PH del golpe crítico)"
+      ]
+    },
+    "Q": {
+      "name": "Florescencia del espíritu",
+      "tooltip": "spell_yunaraq_tooltip",
+      "cases": [
+        {
+          "id": "passive_on_hit",
+          "name": "Pasiva al impactar",
+          "parts": [
+            {
+              "calculation": "Calc_Passive_Damage"
+            }
+          ]
+        },
+        {
+          "id": "active_on_hit",
+          "name": "Activa al impactar (Desatar)",
+          "parts": [
+            {
+              "calculation": "Calc_Damage"
+            }
+          ]
+        },
+        {
+          "id": "spread",
+          "name": "Propagación a objetivos secundarios (30 % DA)",
+          "parts": [
+            {
+              "calculation": "Calc_Damage_Spread"
+            }
+          ]
+        }
+      ],
+      "not_modelled": [
+        "Velocidad de ataque activa (Calc_Attack_Speed), ejecución de súbditos y acumulación de 8 cargas de Desatar"
+      ]
+    },
+    "W": {
+      "name": "Arco del juicio | Arco de la ruina",
+      "tooltip": "spell_yunaraw_tooltip",
+      "cases": [
+        {
+          "id": "initial",
+          "name": "Impacto inicial",
+          "parts": [
+            {
+              "calculation": "Calc_Damage_Initial"
+            }
+          ]
+        },
+        {
+          "id": "dps",
+          "name": "Zona (daño por segundo)",
+          "parts": [
+            {
+              "calculation": "Calc_Damage_Per_Second"
+            }
+          ]
+        }
+      ],
+      "not_modelled": [
+        "Ralentización (Calc_Slow), versión trascendida Arco de la ruina (R: Calc_RW_Damage) y modificador contra súbditos"
+      ]
+    },
+    "E": {
+      "name": "Presteza kanmei | Sombras incorpóreas",
+      "tooltip": "spell_yunarae_tooltip",
+      "not_modelled": [
+        "Velocidad de movimiento (Calc_Move_Speed / Calc_Move_Speed_Enhanced) y deslizamiento en Trascendencia"
+      ]
+    },
+    "R": {
+      "name": "Trascender",
+      "tooltip": "spell_yunarar_tooltip",
+      "not_modelled": [
+        "Estado de Trascendencia (activa Q automáticamente y potencia W a Arco de la ruina: Calc_RW_Damage y E a Sombras incorpóreas)"
+      ]
+    }
+  }
+}

@@ -1,0 +1,287 @@
+{
+  "schema": "lol-champion-kit/1",
+  "champion": "Zeri",
+  "label": "Derivado",
+  "game_version": "16.23",
+  "content_version": "16.23.8406595+branch.releases-16-23.content.release",
+  "verified_against": {
+    "content_version": "16.23.8406595+branch.releases-16-23.content.release",
+    "bin_sha256": "12a5bed25996ce9d38b4cca217202d3df619168b0f012c8ad22e9a3bb2fd8ecb",
+    "evidence": "odd/tasks/champion-kits-wave-4.md",
+    "result": "Bin del cliente 16.23 convertido con python -m binmodel.batch_kits y compilado con esta especificación curada (CH-01 oleada 4 — cierre 173/173)"
+  },
+  "source": "Árboles de cálculo del bin del cliente (python -m binmodel) y marcado de los tooltips del cliente; estructura de casos curada en research/kits/",
+  "abilities": {
+    "P": {
+      "name": "Batería cargada",
+      "max_rank": 1,
+      "cases": [],
+      "passive_stats": [],
+      "not_modelled": [
+        "Descarga de ataque básico sin carga (ZeriQ.MinDamage) y cargada al máximo (ZeriQ.PassiveMaxDamage + ZeriQ.PassiveMaxChargePercentHealth % vida máxima), ejecución bajo umbral y robo de escudos"
+      ]
+    },
+    "Q": {
+      "name": "Fuego explosivo",
+      "max_rank": 5,
+      "cases": [
+        {
+          "id": "burst",
+          "name": "Ráfaga de 7 proyectiles (sin crítico)",
+          "parts": [
+            {
+              "damage_type": "physical",
+              "formula": {
+                "op": "add",
+                "operands": [
+                  {
+                    "op": "by_rank",
+                    "values": [
+                      22,
+                      26,
+                      30,
+                      34,
+                      38
+                    ]
+                  },
+                  {
+                    "op": "mul",
+                    "operands": [
+                      {
+                        "op": "by_rank",
+                        "values": [
+                          1.02,
+                          1.04,
+                          1.06,
+                          1.08,
+                          1.1
+                        ]
+                      },
+                      {
+                        "op": "stat",
+                        "stat": "attack_damage",
+                        "scope": "total"
+                      }
+                    ]
+                  }
+                ]
+              },
+              "label": "Derivado",
+              "source": "Characters/Zeri/Spells/ZeriQAbility/ZeriQ.mSpellCalculations.ActiveDamageThatCanCrit (16.23.8406595+branch.releases-16-23.content.release)",
+              "damage_type_source": "spell_zeriq_tooltip <physicalDamage>"
+            }
+          ]
+        }
+      ],
+      "passive_stats": [],
+      "not_modelled": [
+        "Cuenta como ataque básico (efectos al impactar y críticos), tope de 1,5 VA con conversión del 60 % del exceso en DA y cálculos de la descarga pasiva almacenados en ZeriQ"
+      ]
+    },
+    "W": {
+      "name": "Ultradescarga láser",
+      "max_rank": 5,
+      "cases": [
+        {
+          "id": "pulse",
+          "name": "Pulso normal (sin muro)",
+          "parts": [
+            {
+              "damage_type": "physical",
+              "formula": {
+                "op": "add",
+                "operands": [
+                  {
+                    "op": "by_rank",
+                    "values": [
+                      30,
+                      70,
+                      110,
+                      150,
+                      190
+                    ]
+                  },
+                  {
+                    "op": "mul",
+                    "operands": [
+                      {
+                        "op": "constant",
+                        "value": 1
+                      },
+                      {
+                        "op": "stat",
+                        "stat": "attack_damage",
+                        "scope": "total"
+                      }
+                    ]
+                  },
+                  {
+                    "op": "mul",
+                    "operands": [
+                      {
+                        "op": "constant",
+                        "value": 0.5
+                      },
+                      {
+                        "op": "stat",
+                        "stat": "ability_power",
+                        "scope": "total"
+                      }
+                    ]
+                  }
+                ]
+              },
+              "label": "Derivado",
+              "source": "Characters/Zeri/Spells/ZeriWAbility/ZeriW.mSpellCalculations.TotalDamage (16.23.8406595+branch.releases-16-23.content.release)",
+              "damage_type_source": "spell_zeriw_tooltip <physicalDamage>"
+            }
+          ]
+        }
+      ],
+      "passive_stats": [],
+      "not_modelled": [
+        "Láser crítico garantizado al atravesar muros (WallDamage usa critical_strike_damage/total) y ralentización"
+      ]
+    },
+    "E": {
+      "name": "Subida de tensión",
+      "max_rank": 5,
+      "cases": [
+        {
+          "id": "bonus_magic",
+          "name": "Daño mágico adicional al impactar con Q (5 s)",
+          "parts": [
+            {
+              "damage_type": "magic",
+              "formula": {
+                "op": "add",
+                "operands": [
+                  {
+                    "op": "by_rank",
+                    "values": [
+                      22,
+                      24,
+                      26,
+                      28,
+                      30
+                    ]
+                  },
+                  {
+                    "op": "mul",
+                    "operands": [
+                      {
+                        "op": "constant",
+                        "value": 0.2
+                      },
+                      {
+                        "op": "stat",
+                        "stat": "ability_power",
+                        "scope": "total"
+                      }
+                    ]
+                  }
+                ]
+              },
+              "label": "Derivado",
+              "source": "Characters/Zeri/Spells/ZeriEAbility/ZeriE.mSpellCalculations.BonusDamageTotal (16.23.8406595+branch.releases-16-23.content.release)",
+              "damage_type_source": "spell_zerie_tooltip <magicDamage>"
+            }
+          ]
+        }
+      ],
+      "passive_stats": [],
+      "not_modelled": [
+        "Deslizamiento sobre muros, perforación de Q (80..100 %), escalado crítico del daño adicional y reducción de CD al golpear campeones"
+      ]
+    },
+    "R": {
+      "name": "Choque de rayos",
+      "max_rank": 3,
+      "cases": [
+        {
+          "id": "nova",
+          "name": "Nova eléctrica inicial",
+          "parts": [
+            {
+              "damage_type": "magic",
+              "formula": {
+                "op": "add",
+                "operands": [
+                  {
+                    "op": "by_rank",
+                    "values": [
+                      150,
+                      250,
+                      350
+                    ]
+                  },
+                  {
+                    "op": "mul",
+                    "operands": [
+                      {
+                        "op": "constant",
+                        "value": 1.1
+                      },
+                      {
+                        "op": "stat",
+                        "stat": "ability_power",
+                        "scope": "total"
+                      }
+                    ]
+                  },
+                  {
+                    "op": "mul",
+                    "operands": [
+                      {
+                        "op": "constant",
+                        "value": 0.6
+                      },
+                      {
+                        "op": "stat",
+                        "stat": "attack_damage",
+                        "scope": "bonus"
+                      }
+                    ]
+                  }
+                ]
+              },
+              "label": "Derivado",
+              "source": "Characters/Zeri/Spells/ZeriRAbility/ZeriR.mSpellCalculations.TotalActiveDamage (16.23.8406595+branch.releases-16-23.content.release)",
+              "damage_type_source": "spell_zerir_tooltip <magicDamage>"
+            }
+          ]
+        },
+        {
+          "id": "chain",
+          "name": "Rayo en cadena por Q sobrecargado",
+          "parts": [
+            {
+              "damage_type": "physical",
+              "formula": {
+                "op": "mul",
+                "operands": [
+                  {
+                    "op": "constant",
+                    "value": 0.4
+                  },
+                  {
+                    "op": "stat",
+                    "stat": "attack_damage",
+                    "scope": "total"
+                  }
+                ]
+              },
+              "label": "Derivado",
+              "source": "Characters/Zeri/Spells/ZeriRAbility/ZeriR.mSpellCalculations.ChainPhysicalDamage (16.23.8406595+branch.releases-16-23.content.release)",
+              "damage_type_source": "spell_zerir_tooltip <physicalDamage>"
+            }
+          ]
+        }
+      ],
+      "passive_stats": [],
+      "not_modelled": [
+        "Sobrecarga acumulable de velocidad de movimiento, +30 % velocidad de ataque y daño mágico adicional por ataque"
+      ]
+    }
+  }
+}

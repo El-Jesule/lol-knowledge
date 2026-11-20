@@ -1,0 +1,183 @@
+{
+  "champion": "Udyr",
+  "game_version": "16.23",
+  "verified_against": {
+    "content_version": "16.23.8406595+branch.releases-16-23.content.release",
+    "bin_sha256": "70c4b319654d3f0ddeb5f555144c9d2dce00445f7b5d0a18c7974e11922310c2",
+    "evidence": "odd/tasks/champion-kits-wave-4.md",
+    "result": "Bin del cliente 16.23 convertido con python -m binmodel.batch_kits y compilado con esta especificación curada (CH-01 oleada 4 — cierre 173/173)"
+  },
+  "abilities": {
+    "P": {
+      "name": "Puente entre mundos",
+      "tooltip": "spell_udyrpassivemonkeyagility_tooltip",
+      "max_rank": 1,
+      "not_modelled": [
+        "Velocidad de ataque tras cambiar de posición (AttackSpeed) y enfriamiento/recarga de Despertar (UltCD)"
+      ]
+    },
+    "Q": {
+      "name": "Garra bestial",
+      "tooltip": "spell_udyrtigerstance_tooltip",
+      "cases": [
+        {
+          "id": "on_hit",
+          "name": "Daño físico al impactar (4 s)",
+          "parts": [
+            {
+              "calculation": "OnHitDamage"
+            }
+          ]
+        },
+        {
+          "id": "two_hits_pct",
+          "name": "Golpe potenciado normal (% vida máxima físico)",
+          "parts": [
+            {
+              "tooltip_reference": "MaxHPOnHit1",
+              "damage_type": "physical",
+              "source_note": "mSpellCalculations.MaxHPOnHit1 × vida máxima del objetivo",
+              "formula": {
+                "op": "mul",
+                "operands": [
+                  {
+                    "op": "calculation",
+                    "name": "MaxHPOnHit1"
+                  },
+                  {
+                    "op": "stat",
+                    "stat": "health",
+                    "scope": "max",
+                    "subject": "target"
+                  }
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "id": "awakened_pct",
+          "name": "Despertar: golpe potenciado (% vida máxima físico)",
+          "parts": [
+            {
+              "tooltip_reference": "Q2TotalOnHitHPDamage",
+              "damage_type": "physical",
+              "source_note": "mSpellCalculations.Q2TotalOnHitHPDamage × vida máxima del objetivo",
+              "formula": {
+                "op": "mul",
+                "operands": [
+                  {
+                    "op": "calculation",
+                    "name": "Q2TotalOnHitHPDamage"
+                  },
+                  {
+                    "op": "stat",
+                    "stat": "health",
+                    "scope": "max",
+                    "subject": "target"
+                  }
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "id": "awakened_lightning_isolated",
+          "name": "Despertar: 6 rayos sobre objetivo aislado (% vida máxima mágico)",
+          "parts": [
+            {
+              "tooltip_reference": "EmpoweredLightningBonusMax",
+              "damage_type": "magic",
+              "source_note": "mSpellCalculations.EmpoweredLightningBonusMax × vida máxima del objetivo",
+              "formula": {
+                "op": "mul",
+                "operands": [
+                  {
+                    "op": "calculation",
+                    "name": "EmpoweredLightningBonusMax"
+                  },
+                  {
+                    "op": "stat",
+                    "stat": "health",
+                    "scope": "max",
+                    "subject": "target"
+                  }
+                ]
+              }
+            }
+          ]
+        }
+      ],
+      "not_modelled": [
+        "Velocidad de ataque activa/Despertar (EmpoweredTotalAS), alcance extra (+50) y topes contra monstruos/súbditos"
+      ]
+    },
+    "W": {
+      "name": "Manto férreo",
+      "tooltip": "spell_udyrturtlestance_tooltip",
+      "not_modelled": [
+        "Escudo normal y Despertar (TotalShield), robo de vida y curación al golpear (LifeOnHit)"
+      ]
+    },
+    "E": {
+      "name": "Estampida llameante",
+      "tooltip": "spell_udyrbearstance_tooltip",
+      "not_modelled": [
+        "Velocidad de movimiento (MoveSpeed / MoveSpeedBonus), aturdimiento por objetivo e inmunidad a CC en Despertar"
+      ]
+    },
+    "R": {
+      "name": "Tormenta alada",
+      "tooltip": "spell_udyrphoenixstance_tooltip",
+      "cases": [
+        {
+          "id": "storm_dps",
+          "name": "Ventisca (daño por segundo)",
+          "parts": [
+            {
+              "calculation": "StormDamage"
+            }
+          ]
+        },
+        {
+          "id": "pulse",
+          "name": "Golpe potenciado (pulso en área)",
+          "parts": [
+            {
+              "calculation": "PulseDamage"
+            }
+          ]
+        },
+        {
+          "id": "awakened_storm",
+          "name": "Despertar: tormenta perseguidora (% vida máxima)",
+          "parts": [
+            {
+              "tooltip_reference": "PercentHPBlast",
+              "damage_type": "magic",
+              "source_note": "mSpellCalculations.PercentHPBlast × vida máxima del objetivo",
+              "formula": {
+                "op": "mul",
+                "operands": [
+                  {
+                    "op": "calculation",
+                    "name": "PercentHPBlast"
+                  },
+                  {
+                    "op": "stat",
+                    "stat": "health",
+                    "scope": "max",
+                    "subject": "target"
+                  }
+                ]
+              }
+            }
+          ]
+        }
+      ],
+      "not_modelled": [
+        "Ralentización, modificador contra súbditos y tope contra monstruos"
+      ]
+    }
+  }
+}

@@ -1,0 +1,208 @@
+{
+  "schema": "lol-champion-kit/1",
+  "champion": "Mordekaiser",
+  "label": "Derivado",
+  "game_version": "16.23",
+  "content_version": "16.23.8406595+branch.releases-16-23.content.release",
+  "verified_against": {
+    "content_version": "16.23.8406595+branch.releases-16-23.content.release",
+    "bin_sha256": "59df2c462e15d2c6c8e188241bf5d79979e89f09010628fc064fd1826f4a63d9",
+    "evidence": "odd/tasks/champion-kits-wave-4.md",
+    "result": "Bin del cliente 16.23 convertido con python -m binmodel.batch_kits y compilado con esta especificación curada (CH-01 oleada 4 — cierre 173/173)"
+  },
+  "source": "Árboles de cálculo del bin del cliente (python -m binmodel) y marcado de los tooltips del cliente; estructura de casos curada en research/kits/",
+  "abilities": {
+    "P": {
+      "name": "El auge de la oscuridad",
+      "max_rank": 1,
+      "cases": [
+        {
+          "id": "on_hit",
+          "name": "Daño mágico al impactar (40 % PH)",
+          "parts": [
+            {
+              "damage_type": "magic",
+              "formula": {
+                "op": "mul",
+                "operands": [
+                  {
+                    "op": "constant",
+                    "value": 0.4
+                  },
+                  {
+                    "op": "stat",
+                    "stat": "ability_power",
+                    "scope": "total"
+                  }
+                ]
+              },
+              "label": "Derivado",
+              "source": "Characters/Mordekaiser/Spells/MordekaiserPassiveAbility/MordekaiserPassive.mSpellCalculations.BonusAPAuto (16.23.8406595+branch.releases-16-23.content.release)",
+              "damage_type_source": "spell_mordekaiserpassive_tooltip <magicDamage>"
+            }
+          ]
+        },
+        {
+          "id": "aura_dps",
+          "name": "Aura por segundo (plano + 1..5 % vida máxima)",
+          "parts": [
+            {
+              "damage_type": "magic",
+              "formula": {
+                "op": "add",
+                "operands": [
+                  {
+                    "op": "constant",
+                    "value": 5
+                  },
+                  {
+                    "op": "mul",
+                    "operands": [
+                      {
+                        "op": "constant",
+                        "value": 0.3
+                      },
+                      {
+                        "op": "stat",
+                        "stat": "ability_power",
+                        "scope": "total"
+                      }
+                    ]
+                  }
+                ]
+              },
+              "label": "Derivado",
+              "source": "Characters/Mordekaiser/Spells/MordekaiserPassiveAbility/MordekaiserPassive.mSpellCalculations.AuraDamagePerStack (16.23.8406595+branch.releases-16-23.content.release)",
+              "damage_type_source": "spell_mordekaiserpassive_tooltip <magicDamage>"
+            },
+            {
+              "damage_type": "magic",
+              "formula": {
+                "op": "mul",
+                "operands": [
+                  {
+                    "op": "linear_by_level",
+                    "min": 1,
+                    "max": 5
+                  },
+                  {
+                    "op": "constant",
+                    "value": 0.01
+                  },
+                  {
+                    "op": "stat",
+                    "stat": "health",
+                    "scope": "max",
+                    "subject": "target"
+                  }
+                ]
+              },
+              "label": "Derivado",
+              "source": "Characters/Mordekaiser/Spells/MordekaiserPassiveAbility/MordekaiserPassive · mSpellCalculations.PercentHealthForAura % × vida máxima del objetivo (16.23.8406595+branch.releases-16-23.content.release)",
+              "damage_type_source": "spell_mordekaiserpassive_tooltip <magicDamage>"
+            }
+          ]
+        }
+      ],
+      "passive_stats": [],
+      "not_modelled": [
+        "Velocidad de movimiento del aura (PassiveMovementSpeed) y tope contra monstruos (MaxAuraMonsterDamage)"
+      ]
+    },
+    "Q": {
+      "name": "Aniquilación",
+      "max_rank": 5,
+      "cases": [],
+      "passive_stats": [],
+      "not_modelled": [
+        "Mazo en área y bonificación aislado (QDamage usa un nodo breakpoints sin level1_value en el bin, no traducido por kitgen)"
+      ]
+    },
+    "W": {
+      "name": "Indestructible",
+      "max_rank": 5,
+      "cases": [],
+      "passive_stats": [],
+      "not_modelled": [
+        "Acumulación de escudo por daño infligido/recibido y reactivación curativa"
+      ]
+    },
+    "E": {
+      "name": "Abrazo de la muerte",
+      "max_rank": 5,
+      "cases": [
+        {
+          "id": "pull",
+          "name": "Garra de atracción",
+          "parts": [
+            {
+              "damage_type": "magic",
+              "formula": {
+                "op": "add",
+                "operands": [
+                  {
+                    "op": "by_rank",
+                    "values": [
+                      60,
+                      80,
+                      100,
+                      120,
+                      140
+                    ]
+                  },
+                  {
+                    "op": "mul",
+                    "operands": [
+                      {
+                        "op": "constant",
+                        "value": 0.45
+                      },
+                      {
+                        "op": "stat",
+                        "stat": "ability_power",
+                        "scope": "total"
+                      }
+                    ]
+                  }
+                ]
+              },
+              "label": "Derivado",
+              "source": "Characters/Mordekaiser/Spells/MordekaiserEAbility/MordekaiserE.mSpellCalculations.TotalDamage (16.23.8406595+branch.releases-16-23.content.release)",
+              "damage_type_source": "spell_mordekaisere_circular_tooltip <magicDamage>"
+            }
+          ]
+        }
+      ],
+      "passive_stats": [
+        {
+          "stat": "magic_penetration_percent",
+          "formula": {
+            "op": "by_rank",
+            "values": [
+              0.05,
+              0.075,
+              0.1,
+              0.125,
+              0.15
+            ]
+          },
+          "label": "Derivado",
+          "source": "Characters/Mordekaiser/Spells/MordekaiserEAbility/MordekaiserE.DataValues.MagicPen (16.23.8406595+branch.releases-16-23.content.release)",
+          "condition": "Penetración mágica pasiva permanente al subir E (5..15 %)"
+        }
+      ],
+      "not_modelled": [
+        "Atracción de enemigos"
+      ]
+    },
+    "R": {
+      "name": "Reino de la muerte",
+      "max_rank": 3,
+      "cases": [],
+      "passive_stats": [],
+      "not_modelled": [
+        "Duelo de 7 s en el Reino de la Muerte y robo del 10 % de estadísticas básicas del objetivo"
+      ]
+    }
+  }
+}

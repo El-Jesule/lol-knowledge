@@ -1,0 +1,140 @@
+{
+  "schema": "lol-champion-kit/1",
+  "champion": "Milio",
+  "label": "Derivado",
+  "game_version": "16.23",
+  "content_version": "16.23.8406595+branch.releases-16-23.content.release",
+  "verified_against": {
+    "content_version": "16.23.8406595+branch.releases-16-23.content.release",
+    "bin_sha256": "e3d13a18da25388f2b6dc50a44a89a07cba212dee64c9e44cfcd30b02b9cf47b",
+    "evidence": "odd/tasks/champion-kits-wave-4.md",
+    "result": "Bin del cliente 16.23 convertido con python -m binmodel.batch_kits y compilado con esta especificación curada (CH-01 oleada 4 — cierre 173/173)"
+  },
+  "source": "Árboles de cálculo del bin del cliente (python -m binmodel) y marcado de los tooltips del cliente; estructura de casos curada en research/kits/",
+  "abilities": {
+    "P": {
+      "name": "¡Al calorcito!",
+      "max_rank": 1,
+      "cases": [
+        {
+          "id": "burn",
+          "name": "Quemadura mágica sobre el tiempo",
+          "parts": [
+            {
+              "damage_type": "magic",
+              "formula": {
+                "op": "add",
+                "operands": [
+                  {
+                    "op": "linear_by_level",
+                    "min": 10,
+                    "max": 50
+                  },
+                  {
+                    "op": "mul",
+                    "operands": [
+                      {
+                        "op": "constant",
+                        "value": 0.2
+                      },
+                      {
+                        "op": "stat",
+                        "stat": "ability_power",
+                        "scope": "total"
+                      }
+                    ]
+                  }
+                ]
+              },
+              "label": "Derivado",
+              "source": "Characters/Milio/Spells/MilioPassiveAbility/MilioPassive.mSpellCalculations.BurnDamage (16.23.8406595+branch.releases-16-23.content.release)",
+              "damage_type_source": "spell_miliopassive_tooltip <magicDamage>"
+            }
+          ]
+        }
+      ],
+      "passive_stats": [],
+      "not_modelled": [
+        "Explosión inicial porcentual del DA del aliado potenciado (ADBurstRatio)"
+      ]
+    },
+    "Q": {
+      "name": "Ultramegapatada ardiente",
+      "max_rank": 5,
+      "cases": [
+        {
+          "id": "kick",
+          "name": "Explosión del balón",
+          "parts": [
+            {
+              "damage_type": "magic",
+              "formula": {
+                "op": "add",
+                "operands": [
+                  {
+                    "op": "by_rank",
+                    "values": [
+                      80,
+                      140,
+                      200,
+                      260,
+                      320
+                    ]
+                  },
+                  {
+                    "op": "mul",
+                    "operands": [
+                      {
+                        "op": "constant",
+                        "value": 1.2
+                      },
+                      {
+                        "op": "stat",
+                        "stat": "ability_power",
+                        "scope": "total"
+                      }
+                    ]
+                  }
+                ]
+              },
+              "label": "Derivado",
+              "source": "Characters/Milio/Spells/MilioQAbility/MilioQ.mSpellCalculations.Damage (16.23.8406595+branch.releases-16-23.content.release)",
+              "damage_type_source": "spell_miliokickballq_tooltip <magicDamage>"
+            }
+          ]
+        }
+      ],
+      "passive_stats": [],
+      "not_modelled": [
+        "Empuje hacia atrás y ralentización en área (SlowAmountPercent)"
+      ]
+    },
+    "W": {
+      "name": "Hoguera reconfortante",
+      "max_rank": 5,
+      "cases": [],
+      "passive_stats": [],
+      "not_modelled": [
+        "Zona de curación continua (HealingOverTime), alcance de ataque adicional (RangePercent) y aplicación periódica de pasiva"
+      ]
+    },
+    "E": {
+      "name": "Abrazos cálidos",
+      "max_rank": 5,
+      "cases": [],
+      "passive_stats": [],
+      "not_modelled": [
+        "2 cargas de escudo (ShieldCalc) y velocidad de movimiento"
+      ]
+    },
+    "R": {
+      "name": "Aliento vital",
+      "max_rank": 3,
+      "cases": [],
+      "passive_stats": [],
+      "not_modelled": [
+        "Limpieza en área, tenacidad del 65 % durante 3 s y curación (HealCalc)"
+      ]
+    }
+  }
+}

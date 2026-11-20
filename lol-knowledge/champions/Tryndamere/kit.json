@@ -1,0 +1,117 @@
+{
+  "schema": "lol-champion-kit/1",
+  "champion": "Tryndamere",
+  "label": "Derivado",
+  "game_version": "16.23",
+  "content_version": "16.23.8406595+branch.releases-16-23.content.release",
+  "verified_against": {
+    "content_version": "16.23.8406595+branch.releases-16-23.content.release",
+    "bin_sha256": "84444dd20fc25f9de59441978b491f11bb7dd457c2bb5377423ced049e7a0892",
+    "evidence": "odd/tasks/champion-kits-wave-4.md",
+    "result": "Bin del cliente 16.23 convertido con python -m binmodel.batch_kits y compilado con esta especificación curada (CH-01 oleada 4 — cierre 173/173)"
+  },
+  "source": "Árboles de cálculo del bin del cliente (python -m binmodel) y marcado de los tooltips del cliente; estructura de casos curada en research/kits/",
+  "abilities": {
+    "P": {
+      "name": "Furia de batalla",
+      "max_rank": 1,
+      "cases": [],
+      "passive_stats": [],
+      "not_modelled": [
+        "Generación de Furia (hasta 100), probabilidad de crítico proporcional (hasta 50 %) y conversión de exceso en DA"
+      ]
+    },
+    "Q": {
+      "name": "Sed de sangre",
+      "max_rank": 5,
+      "cases": [],
+      "passive_stats": [],
+      "not_modelled": [
+        "DA pasivo adicional por vida faltante (hasta MaximumBonusAD) y curación activa consumiendo Furia (BaseHeal / MaximumHeal)"
+      ]
+    },
+    "W": {
+      "name": "Grito de mofa",
+      "max_rank": 5,
+      "cases": [],
+      "passive_stats": [],
+      "not_modelled": [
+        "Reducción de DA enemigo y ralentización si dan la espalda"
+      ]
+    },
+    "E": {
+      "name": "Cuchillada giratoria",
+      "max_rank": 5,
+      "cases": [
+        {
+          "id": "spin",
+          "name": "Giro",
+          "parts": [
+            {
+              "damage_type": "physical",
+              "formula": {
+                "op": "add",
+                "operands": [
+                  {
+                    "op": "by_rank",
+                    "values": [
+                      80,
+                      120,
+                      160,
+                      200,
+                      240
+                    ]
+                  },
+                  {
+                    "op": "mul",
+                    "operands": [
+                      {
+                        "op": "constant",
+                        "value": 1
+                      },
+                      {
+                        "op": "stat",
+                        "stat": "attack_damage",
+                        "scope": "bonus"
+                      }
+                    ]
+                  },
+                  {
+                    "op": "mul",
+                    "operands": [
+                      {
+                        "op": "constant",
+                        "value": 0.8
+                      },
+                      {
+                        "op": "stat",
+                        "stat": "ability_power",
+                        "scope": "total"
+                      }
+                    ]
+                  }
+                ]
+              },
+              "label": "Derivado",
+              "source": "Characters/Tryndamere/Spells/TryndamereEAbility/TryndamereE.mSpellCalculations.TotalDamage (16.23.8406595+branch.releases-16-23.content.release)",
+              "damage_type_source": "spell_tryndameree_tooltip <physicalDamage>"
+            }
+          ]
+        }
+      ],
+      "passive_stats": [],
+      "not_modelled": [
+        "Reducción de enfriamiento al asestar golpes críticos"
+      ]
+    },
+    "R": {
+      "name": "Furia inmortal",
+      "max_rank": 3,
+      "cases": [],
+      "passive_stats": [],
+      "not_modelled": [
+        "Inmortalidad durante 5 s y ganancia instantánea de Furia"
+      ]
+    }
+  }
+}

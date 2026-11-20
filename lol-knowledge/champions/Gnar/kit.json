@@ -1,0 +1,339 @@
+{
+  "schema": "lol-champion-kit/1",
+  "champion": "Gnar",
+  "label": "Derivado",
+  "game_version": "16.23",
+  "content_version": "16.23.8406595+branch.releases-16-23.content.release",
+  "verified_against": {
+    "content_version": "16.23.8406595+branch.releases-16-23.content.release",
+    "bin_sha256": "621a4caa7374cd3a2dba4cb80c1927156c85ec219c7df8e7c442892f55550aaa",
+    "evidence": "odd/tasks/champion-kits-wave-4.md",
+    "result": "Bin del cliente 16.23 convertido con python -m binmodel.batch_kits y compilado con esta especificación curada (CH-01 oleada 4 — cierre 173/173)"
+  },
+  "source": "Árboles de cálculo del bin del cliente (python -m binmodel) y marcado de los tooltips del cliente; estructura de casos curada en research/kits/",
+  "abilities": {
+    "P": {
+      "name": "Gen de furia",
+      "max_rank": 1,
+      "cases": [],
+      "passive_stats": [],
+      "not_modelled": [
+        "Estadísticas de Mini-Gnar (alcance, VM, VA: TotalAS) y transformación en Mega-Gnar (vida, armadura, RM, DA base adicionales)"
+      ]
+    },
+    "Q": {
+      "name": "Bumerán / Peñascazo",
+      "max_rank": 5,
+      "cases": [
+        {
+          "id": "mini",
+          "name": "Mini-Gnar: Bumerán (primer objetivo)",
+          "parts": [
+            {
+              "damage_type": "physical",
+              "formula": {
+                "op": "add",
+                "operands": [
+                  {
+                    "op": "by_rank",
+                    "values": [
+                      5,
+                      45,
+                      85,
+                      125,
+                      165
+                    ]
+                  },
+                  {
+                    "op": "mul",
+                    "operands": [
+                      {
+                        "op": "constant",
+                        "value": 1.35
+                      },
+                      {
+                        "op": "stat",
+                        "stat": "attack_damage",
+                        "scope": "total"
+                      }
+                    ]
+                  }
+                ]
+              },
+              "label": "Derivado",
+              "source": "Characters/Gnar/Spells/GnarQAbility/GnarQ.mSpellCalculations.MiniTotalDamage (16.23.8406595+branch.releases-16-23.content.release)",
+              "damage_type_source": "spell_gnarq_tooltip <physicalDamage>"
+            }
+          ]
+        }
+      ],
+      "passive_stats": [],
+      "not_modelled": [
+        "Mini-Gnar: 50 % a objetivos posteriores y devolución de CD al recogerlo; Mega-Gnar: Peñascazo (MegaTotalDamage)"
+      ]
+    },
+    "W": {
+      "name": "Híper / Golpazo",
+      "max_rank": 5,
+      "cases": [
+        {
+          "id": "mini_proc",
+          "name": "Mini-Gnar: 3.ª carga de Híper (plano + % vida máxima)",
+          "parts": [
+            {
+              "damage_type": "magic",
+              "formula": {
+                "op": "add",
+                "operands": [
+                  {
+                    "op": "by_rank",
+                    "values": [
+                      0,
+                      10,
+                      20,
+                      30,
+                      40
+                    ]
+                  },
+                  {
+                    "op": "mul",
+                    "operands": [
+                      {
+                        "op": "constant",
+                        "value": 1
+                      },
+                      {
+                        "op": "stat",
+                        "stat": "ability_power",
+                        "scope": "total"
+                      }
+                    ]
+                  }
+                ]
+              },
+              "label": "Derivado",
+              "source": "Characters/Gnar/Spells/GnarWAbility/GnarW.mSpellCalculations.MiniTotalDamage (16.23.8406595+branch.releases-16-23.content.release)",
+              "damage_type_source": "spell_gnarw_tooltip <magicDamage>"
+            },
+            {
+              "damage_type": "magic",
+              "formula": {
+                "op": "mul",
+                "operands": [
+                  {
+                    "op": "by_rank",
+                    "values": [
+                      0.06,
+                      0.08,
+                      0.1,
+                      0.12,
+                      0.14
+                    ]
+                  },
+                  {
+                    "op": "stat",
+                    "stat": "health",
+                    "scope": "max",
+                    "subject": "target"
+                  }
+                ]
+              },
+              "label": "Derivado",
+              "source": "Characters/Gnar/Spells/GnarWAbility/GnarW · DataValues.MiniPercentHPDamage × vida máxima del objetivo (16.23.8406595+branch.releases-16-23.content.release)",
+              "damage_type_source": "spell_gnarw_tooltip <magicDamage>"
+            }
+          ]
+        }
+      ],
+      "passive_stats": [],
+      "not_modelled": [
+        "Velocidad de movimiento de Híper, tope contra monstruos (300) y Mega-Gnar: Golpazo (MegaTotalDamage + aturdimiento)"
+      ]
+    },
+    "E": {
+      "name": "Brinco / Sacudida",
+      "max_rank": 5,
+      "cases": [
+        {
+          "id": "mini",
+          "name": "Mini-Gnar: Brinco",
+          "parts": [
+            {
+              "damage_type": "physical",
+              "formula": {
+                "op": "add",
+                "operands": [
+                  {
+                    "op": "by_rank",
+                    "values": [
+                      50,
+                      85,
+                      120,
+                      155,
+                      190
+                    ]
+                  },
+                  {
+                    "op": "mul",
+                    "operands": [
+                      {
+                        "op": "constant",
+                        "value": 0.06
+                      },
+                      {
+                        "op": "stat",
+                        "stat": "health",
+                        "scope": "total"
+                      }
+                    ]
+                  }
+                ]
+              },
+              "label": "Derivado",
+              "source": "Characters/Gnar/Spells/GnarEAbility/GnarE.mSpellCalculations.MiniTotalDamage (16.23.8406595+branch.releases-16-23.content.release)",
+              "damage_type_source": "spell_gnare_tooltip <physicalDamage>"
+            }
+          ]
+        }
+      ],
+      "passive_stats": [],
+      "not_modelled": [
+        "Velocidad de ataque de Brinco (MinibAS), rebote y Mega-Gnar: Sacudida (MegaTotalDamage)"
+      ]
+    },
+    "R": {
+      "name": "¡GNAR!",
+      "max_rank": 3,
+      "cases": [
+        {
+          "id": "throw",
+          "name": "Mega-Gnar: Lanzamiento",
+          "parts": [
+            {
+              "damage_type": "physical",
+              "formula": {
+                "op": "add",
+                "operands": [
+                  {
+                    "op": "by_rank",
+                    "values": [
+                      200,
+                      300,
+                      400
+                    ]
+                  },
+                  {
+                    "op": "mul",
+                    "operands": [
+                      {
+                        "op": "constant",
+                        "value": 1
+                      },
+                      {
+                        "op": "stat",
+                        "stat": "ability_power",
+                        "scope": "total"
+                      }
+                    ]
+                  },
+                  {
+                    "op": "mul",
+                    "operands": [
+                      {
+                        "op": "constant",
+                        "value": 0.5
+                      },
+                      {
+                        "op": "stat",
+                        "stat": "attack_damage",
+                        "scope": "bonus"
+                      }
+                    ]
+                  }
+                ]
+              },
+              "label": "Derivado",
+              "source": "Characters/Gnar/Spells/GnarRAbility/GnarR.mSpellCalculations.Damage (16.23.8406595+branch.releases-16-23.content.release)",
+              "damage_type_source": "spell_gnarr_tooltip <physicalDamage>"
+            }
+          ]
+        },
+        {
+          "id": "wall_slam",
+          "name": "Mega-Gnar: Choque contra muro (+50 %)",
+          "parts": [
+            {
+              "damage_type": "physical",
+              "formula": {
+                "op": "mul",
+                "operands": [
+                  {
+                    "op": "add",
+                    "operands": [
+                      {
+                        "op": "by_rank",
+                        "values": [
+                          200,
+                          300,
+                          400
+                        ]
+                      },
+                      {
+                        "op": "mul",
+                        "operands": [
+                          {
+                            "op": "constant",
+                            "value": 1
+                          },
+                          {
+                            "op": "stat",
+                            "stat": "ability_power",
+                            "scope": "total"
+                          }
+                        ]
+                      },
+                      {
+                        "op": "mul",
+                        "operands": [
+                          {
+                            "op": "constant",
+                            "value": 0.5
+                          },
+                          {
+                            "op": "stat",
+                            "stat": "attack_damage",
+                            "scope": "bonus"
+                          }
+                        ]
+                      }
+                    ]
+                  },
+                  {
+                    "op": "mul",
+                    "operands": [
+                      {
+                        "op": "constant",
+                        "value": 150
+                      },
+                      {
+                        "op": "constant",
+                        "value": 0.01
+                      }
+                    ]
+                  }
+                ]
+              },
+              "label": "Derivado",
+              "source": "Characters/Gnar/Spells/GnarRAbility/GnarR.mSpellCalculations.WallDamage (16.23.8406595+branch.releases-16-23.content.release)",
+              "damage_type_source": "spell_gnarr_tooltip <physicalDamage>"
+            }
+          ]
+        }
+      ],
+      "passive_stats": [],
+      "not_modelled": [
+        "Desplazamiento, ralentización y aturdimiento contra muro"
+      ]
+    }
+  }
+}

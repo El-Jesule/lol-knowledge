@@ -1,0 +1,108 @@
+{
+  "champion": "AurelionSol",
+  "game_version": "16.23",
+  "verified_against": {
+    "content_version": "16.23.8406595+branch.releases-16-23.content.release",
+    "bin_sha256": "67a656b0d262bfd4232fb869c701b6c3b9ce59539e736fb5675511d39479703a",
+    "evidence": "odd/tasks/champion-kits-wave-4.md",
+    "result": "Bin del cliente 16.23 convertido con python -m binmodel.batch_kits y compilado con esta especificación curada (CH-01 oleada 4 — cierre 173/173)"
+  },
+  "abilities": {
+    "P": {
+      "name": "Creador cósmico",
+      "tooltip": "spell_aurelionsolpassive_tooltip",
+      "max_rank": 1,
+      "not_modelled": [
+        "Acumulaciones infinitas de Polvo estelar (escalan el % de vida máxima de Q, radio y umbral de ejecución de E, y radio de R)"
+      ]
+    },
+    "Q": {
+      "name": "El aliento de los dioses",
+      "tooltip": "spell_aurelionsolq_tooltip",
+      "cases": [
+        {
+          "id": "dps",
+          "name": "Daño mágico por segundo",
+          "parts": [
+            {
+              "calculation": "DamagePerSecond"
+            }
+          ]
+        },
+        {
+          "id": "burst",
+          "name": "Estallido cada 1 s (sin cargas de Polvo estelar)",
+          "parts": [
+            {
+              "calculation": "BurstDamage"
+            }
+          ]
+        }
+      ],
+      "not_modelled": [
+        "Daño porcentual de vida máxima escalado con Polvo estelar en el estallido (BurstBonusTrueDamageToChamps), coste continuo de maná por segundo y tope contra monstruos"
+      ]
+    },
+    "W": {
+      "name": "Vuelo astral",
+      "tooltip": "spell_aurelionsolw_tooltip",
+      "not_modelled": [
+        "Vuelo sobre muros, aumento porcentual del daño de Q durante el vuelo y reinicio del 90 % por bajas"
+      ]
+    },
+    "E": {
+      "name": "Singularidad",
+      "tooltip": "spell_aurelionsole_tooltip",
+      "cases": [
+        {
+          "id": "dps",
+          "name": "Daño mágico por segundo",
+          "parts": [
+            {
+              "calculation": "DamagePerSecond"
+            }
+          ]
+        }
+      ],
+      "not_modelled": [
+        "Atracción hacia el centro, ejecución por umbral (BaseExecutionThreshold + Polvo estelar) y radio creciente"
+      ]
+    },
+    "R": {
+      "name": "Estrella fugaz / Ocaso celeste",
+      "tooltip": "spell_aurelionsolr_tooltip",
+      "cases": [
+        {
+          "id": "falling_star",
+          "name": "Estrella fugaz",
+          "parts": [
+            {
+              "calculation": "MaxDamageTooltip"
+            }
+          ]
+        },
+        {
+          "id": "skies_descend",
+          "name": "Ocaso celeste (75 cargas)",
+          "parts": [
+            {
+              "calculation": "R2Damage"
+            }
+          ]
+        },
+        {
+          "id": "shockwave",
+          "name": "Onda expansiva de Ocaso celeste",
+          "parts": [
+            {
+              "calculation": "ShockwaveDamage"
+            }
+          ]
+        }
+      ],
+      "not_modelled": [
+        "Aturdimiento, lanzamiento por los aires y ralentización"
+      ]
+    }
+  }
+}

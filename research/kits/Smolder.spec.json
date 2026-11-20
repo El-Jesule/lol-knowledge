@@ -1,0 +1,110 @@
+{
+  "champion": "Smolder",
+  "game_version": "16.23",
+  "verified_against": {
+    "content_version": "16.23.8406595+branch.releases-16-23.content.release",
+    "bin_sha256": "37a8886a56a4c8a2f7912151a30cfdd801186fc78a511c7e72fe6932cc82140a",
+    "evidence": "odd/tasks/champion-kits-wave-4.md",
+    "result": "Bin del cliente 16.23 convertido con python -m binmodel.batch_kits y compilado con esta especificación curada (CH-01 oleada 4 — cierre 173/173)"
+  },
+  "abilities": {
+    "P": {
+      "name": "Entrenamiento dracónico",
+      "tooltip": "spell_smolderp_tooltip",
+      "max_rank": 1,
+      "not_modelled": [
+        "Acumulaciones infinitas de Entrenamiento dracónico (daño en Q/W/E y umbrales 25/125/225 en Q)"
+      ]
+    },
+    "Q": {
+      "name": "Aliento supermegaabrasador",
+      "tooltip": "spell_smolderq_tooltip2",
+      "cases": [
+        {
+          "id": "base",
+          "name": "Aliento base (0 cargas, sin crítico)",
+          "parts": [
+            {
+              "calculation": "TotalDamage"
+            }
+          ]
+        }
+      ],
+      "not_modelled": [
+        "Escalado por acumulaciones de Entrenamiento dracónico, escalado con probabilidad de crítico, explosión en área (25), proyectiles traseros (125), quemadura verdadera (Tier3_Burn) y ejecución al 6,5 % (225)"
+      ]
+    },
+    "W": {
+      "name": "¡Achís!",
+      "tooltip": "spell_smolderw_tooltip",
+      "cases": [
+        {
+          "id": "glob",
+          "name": "Impacto inicial",
+          "parts": [
+            {
+              "calculation": "InitialDamage"
+            }
+          ]
+        },
+        {
+          "id": "explosion",
+          "name": "Explosión adicional al golpear campeón",
+          "parts": [
+            {
+              "calculation": "ExplosionDamage"
+            }
+          ]
+        }
+      ],
+      "not_modelled": [
+        "Ralentización del 35 %"
+      ]
+    },
+    "E": {
+      "name": "Clases de vuelo",
+      "tooltip": "spell_smoldere_tooltip",
+      "cases": [
+        {
+          "id": "per_bolt",
+          "name": "Un proyectil (de 5+ según crítico)",
+          "parts": [
+            {
+              "calculation": "DamagePerHit"
+            }
+          ]
+        }
+      ],
+      "not_modelled": [
+        "Número total de disparos (TotalNumberOfAttacks), vuelo sobre terreno y velocidad de movimiento"
+      ]
+    },
+    "R": {
+      "name": "¡MAMIIII!",
+      "tooltip": "spell_smolderr_tooltip",
+      "cases": [
+        {
+          "id": "edge",
+          "name": "Área exterior",
+          "parts": [
+            {
+              "calculation": "TotalDamage"
+            }
+          ]
+        },
+        {
+          "id": "center",
+          "name": "Zona central (+50 %)",
+          "parts": [
+            {
+              "calculation": "TooltipOnly_TotalSweetspotDamage"
+            }
+          ]
+        }
+      ],
+      "not_modelled": [
+        "Curación propia al pasar por la llama (MomHealCalc) y ralentización central"
+      ]
+    }
+  }
+}

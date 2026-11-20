@@ -1,0 +1,301 @@
+{
+  "schema": "lol-champion-kit/1",
+  "champion": "Kayn",
+  "label": "Derivado",
+  "game_version": "16.23",
+  "content_version": "16.23.8406595+branch.releases-16-23.content.release",
+  "verified_against": {
+    "content_version": "16.23.8406595+branch.releases-16-23.content.release",
+    "bin_sha256": "6350dcbdf8f19e6854eb931cb44648bdab6ba37806a045071932ab72029d7024",
+    "evidence": "odd/tasks/champion-kits-wave-4.md",
+    "result": "Bin del cliente 16.23 convertido con python -m binmodel.batch_kits y compilado con esta especificación curada (CH-01 oleada 4 — cierre 173/173)"
+  },
+  "source": "Árboles de cálculo del bin del cliente (python -m binmodel) y marcado de los tooltips del cliente; estructura de casos curada en research/kits/",
+  "abilities": {
+    "P": {
+      "name": "La guadaña de los oscuros",
+      "max_rank": 1,
+      "cases": [],
+      "passive_stats": [],
+      "not_modelled": [
+        "Transformación en Asesino de las sombras (daño mágico adicional porcentual en los primeros 3 s) o Verdugo de los oscuros / Rhaast (curación por daño físico)"
+      ]
+    },
+    "Q": {
+      "name": "Corte de guadaña",
+      "max_rank": 5,
+      "cases": [
+        {
+          "id": "base_hit",
+          "name": "Base / Asesino: un golpe (deslizamiento o giro)",
+          "parts": [
+            {
+              "damage_type": "physical",
+              "formula": {
+                "op": "add",
+                "operands": [
+                  {
+                    "op": "by_rank",
+                    "values": [
+                      75,
+                      105,
+                      135,
+                      165,
+                      195
+                    ]
+                  },
+                  {
+                    "op": "mul",
+                    "operands": [
+                      {
+                        "op": "constant",
+                        "value": 0.85
+                      },
+                      {
+                        "op": "stat",
+                        "stat": "attack_damage",
+                        "scope": "bonus"
+                      }
+                    ]
+                  }
+                ]
+              },
+              "label": "Derivado",
+              "source": "Characters/Kayn/Spells/KaynQAbility/KaynQ.mSpellCalculations.TotalDamage (16.23.8406595+branch.releases-16-23.content.release)",
+              "damage_type_source": "game_spell_kayn_q_main_0 <physicalDamage>"
+            }
+          ]
+        },
+        {
+          "id": "darkin_hit",
+          "name": "Verdugo (Rhaast): un golpe (65 % DA + % vida máxima)",
+          "parts": [
+            {
+              "damage_type": "physical",
+              "formula": {
+                "op": "mul",
+                "operands": [
+                  {
+                    "op": "constant",
+                    "value": 0.65
+                  },
+                  {
+                    "op": "stat",
+                    "stat": "attack_damage",
+                    "scope": "total"
+                  }
+                ]
+              },
+              "label": "Derivado",
+              "source": "Characters/Kayn/Spells/KaynQAbility/KaynQ.mSpellCalculations.DarkinFlatDamage (16.23.8406595+branch.releases-16-23.content.release)",
+              "damage_type_source": "game_spell_kayn_q_main_0 <physicalDamage>"
+            },
+            {
+              "damage_type": "physical",
+              "formula": {
+                "op": "mul",
+                "operands": [
+                  {
+                    "op": "add",
+                    "operands": [
+                      {
+                        "op": "constant",
+                        "value": 6
+                      },
+                      {
+                        "op": "mul",
+                        "operands": [
+                          {
+                            "op": "constant",
+                            "value": 0.035
+                          },
+                          {
+                            "op": "stat",
+                            "stat": "attack_damage",
+                            "scope": "bonus"
+                          }
+                        ]
+                      }
+                    ]
+                  },
+                  {
+                    "op": "constant",
+                    "value": 0.01
+                  },
+                  {
+                    "op": "stat",
+                    "stat": "health",
+                    "scope": "max",
+                    "subject": "target"
+                  }
+                ]
+              },
+              "label": "Derivado",
+              "source": "Characters/Kayn/Spells/KaynQAbility/KaynQ · mSpellCalculations.DarkinPercentDamage % × vida máxima del objetivo (16.23.8406595+branch.releases-16-23.content.release)",
+              "damage_type_source": "game_spell_kayn_q_main_0 <physicalDamage>"
+            }
+          ]
+        }
+      ],
+      "passive_stats": [],
+      "not_modelled": [
+        "Tope de daño contra monstruos (MaxDmgToMonsters)"
+      ]
+    },
+    "W": {
+      "name": "Golpe de hoja",
+      "max_rank": 5,
+      "cases": [
+        {
+          "id": "slash",
+          "name": "Tajo lineal",
+          "parts": [
+            {
+              "damage_type": "physical",
+              "formula": {
+                "op": "add",
+                "operands": [
+                  {
+                    "op": "by_rank",
+                    "values": [
+                      85,
+                      130,
+                      175,
+                      220,
+                      265
+                    ]
+                  },
+                  {
+                    "op": "mul",
+                    "operands": [
+                      {
+                        "op": "constant",
+                        "value": 1.1
+                      },
+                      {
+                        "op": "stat",
+                        "stat": "attack_damage",
+                        "scope": "bonus"
+                      }
+                    ]
+                  }
+                ]
+              },
+              "label": "Derivado",
+              "source": "Characters/Kayn/Spells/KaynWAbility/KaynW.mSpellCalculations.TotalDamage (16.23.8406595+branch.releases-16-23.content.release)",
+              "damage_type_source": "game_spell_kayn_w_maintext_0 <physicalDamage>"
+            }
+          ]
+        }
+      ],
+      "passive_stats": [],
+      "not_modelled": [
+        "Ralentización del 90 %, sombra móvil en Asesino y lanzamiento por los aires en Verdugo"
+      ]
+    },
+    "E": {
+      "name": "Pasos de sombra",
+      "max_rank": 5,
+      "cases": [],
+      "passive_stats": [],
+      "not_modelled": [
+        "Travesía de muros, velocidad de movimiento, curación e inmunidad a ralentizaciones en Asesino"
+      ]
+    },
+    "R": {
+      "name": "Invasión sombría",
+      "max_rank": 3,
+      "cases": [
+        {
+          "id": "base",
+          "name": "Base / Asesino: salida",
+          "parts": [
+            {
+              "damage_type": "physical",
+              "formula": {
+                "op": "add",
+                "operands": [
+                  {
+                    "op": "by_rank",
+                    "values": [
+                      150,
+                      250,
+                      350
+                    ]
+                  },
+                  {
+                    "op": "mul",
+                    "operands": [
+                      {
+                        "op": "constant",
+                        "value": 1.5
+                      },
+                      {
+                        "op": "stat",
+                        "stat": "attack_damage",
+                        "scope": "bonus"
+                      }
+                    ]
+                  }
+                ]
+              },
+              "label": "Derivado",
+              "source": "Characters/Kayn/Spells/KaynRAbility/KaynR.mSpellCalculations.Damage (16.23.8406595+branch.releases-16-23.content.release)",
+              "damage_type_source": "spell_kayn_r_main_0 <physicalDamage>"
+            }
+          ]
+        },
+        {
+          "id": "darkin",
+          "name": "Verdugo (Rhaast): salida (% vida máxima)",
+          "parts": [
+            {
+              "damage_type": "physical",
+              "formula": {
+                "op": "mul",
+                "operands": [
+                  {
+                    "op": "add",
+                    "operands": [
+                      {
+                        "op": "constant",
+                        "value": 0.15
+                      },
+                      {
+                        "op": "mul",
+                        "operands": [
+                          {
+                            "op": "constant",
+                            "value": 0.001
+                          },
+                          {
+                            "op": "stat",
+                            "stat": "attack_damage",
+                            "scope": "bonus"
+                          }
+                        ]
+                      }
+                    ]
+                  },
+                  {
+                    "op": "stat",
+                    "stat": "health",
+                    "scope": "max",
+                    "subject": "target"
+                  }
+                ]
+              },
+              "label": "Derivado",
+              "source": "Characters/Kayn/Spells/KaynRAbility/KaynR · mSpellCalculations.SlayerDamage × vida máxima del objetivo (16.23.8406595+branch.releases-16-23.content.release)",
+              "damage_type_source": "spell_kayn_r_main_0 <physicalDamage>"
+            }
+          ]
+        }
+      ],
+      "passive_stats": [],
+      "not_modelled": [
+        "Inalcanzabilidad durante infestación y curación de Verdugo (HealValue)"
+      ]
+    }
+  }
+}

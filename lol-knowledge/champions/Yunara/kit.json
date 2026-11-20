@@ -1,0 +1,290 @@
+{
+  "schema": "lol-champion-kit/1",
+  "champion": "Yunara",
+  "label": "Derivado",
+  "game_version": "16.23",
+  "content_version": "16.23.8406595+branch.releases-16-23.content.release",
+  "verified_against": {
+    "content_version": "16.23.8406595+branch.releases-16-23.content.release",
+    "bin_sha256": "7c38b86bc38a56bb0d031acfa4c1aa98be423401807ce0197629eef5ffd7807a",
+    "evidence": "odd/tasks/champion-kits-wave-4.md",
+    "result": "Bin del cliente 16.23 convertido con python -m binmodel.batch_kits y compilado con esta especificación curada (CH-01 oleada 4 — cierre 173/173)"
+  },
+  "source": "Árboles de cálculo del bin del cliente (python -m binmodel) y marcado de los tooltips del cliente; estructura de casos curada en research/kits/",
+  "abilities": {
+    "P": {
+      "name": "Juramento a las Tierras Primigenias",
+      "max_rank": 1,
+      "cases": [],
+      "passive_stats": [],
+      "not_modelled": [
+        "Daño mágico adicional porcentual en golpes críticos (Calc_Damage_Amp: 10 % + 10 % por 100 PH del golpe crítico)"
+      ]
+    },
+    "Q": {
+      "name": "Florescencia del espíritu",
+      "max_rank": 5,
+      "cases": [
+        {
+          "id": "passive_on_hit",
+          "name": "Pasiva al impactar",
+          "parts": [
+            {
+              "damage_type": "magic",
+              "formula": {
+                "op": "add",
+                "operands": [
+                  {
+                    "op": "by_rank",
+                    "values": [
+                      3,
+                      8,
+                      13,
+                      18,
+                      23
+                    ]
+                  },
+                  {
+                    "op": "mul",
+                    "operands": [
+                      {
+                        "op": "constant",
+                        "value": 0.2
+                      },
+                      {
+                        "op": "stat",
+                        "stat": "ability_power",
+                        "scope": "total"
+                      }
+                    ]
+                  }
+                ]
+              },
+              "label": "Derivado",
+              "source": "Characters/Yunara/Spells/YunaraQAbility/YunaraQ.mSpellCalculations.Calc_Passive_Damage (16.23.8406595+branch.releases-16-23.content.release)",
+              "damage_type_source": "spell_yunaraq_tooltip <magicDamage>"
+            }
+          ]
+        },
+        {
+          "id": "active_on_hit",
+          "name": "Activa al impactar (Desatar)",
+          "parts": [
+            {
+              "damage_type": "magic",
+              "formula": {
+                "op": "add",
+                "operands": [
+                  {
+                    "op": "by_rank",
+                    "values": [
+                      3,
+                      8,
+                      13,
+                      18,
+                      23
+                    ]
+                  },
+                  {
+                    "op": "mul",
+                    "operands": [
+                      {
+                        "op": "constant",
+                        "value": 0.2
+                      },
+                      {
+                        "op": "stat",
+                        "stat": "ability_power",
+                        "scope": "total"
+                      }
+                    ]
+                  }
+                ]
+              },
+              "label": "Derivado",
+              "source": "Characters/Yunara/Spells/YunaraQAbility/YunaraQ.mSpellCalculations.Calc_Damage (16.23.8406595+branch.releases-16-23.content.release)",
+              "damage_type_source": "spell_yunaraq_tooltip <magicDamage>"
+            }
+          ]
+        },
+        {
+          "id": "spread",
+          "name": "Propagación a objetivos secundarios (30 % DA)",
+          "parts": [
+            {
+              "damage_type": "physical",
+              "formula": {
+                "op": "mul",
+                "operands": [
+                  {
+                    "op": "constant",
+                    "value": 0.3
+                  },
+                  {
+                    "op": "stat",
+                    "stat": "attack_damage",
+                    "scope": "total"
+                  }
+                ]
+              },
+              "label": "Derivado",
+              "source": "Characters/Yunara/Spells/YunaraQAbility/YunaraQ.mSpellCalculations.Calc_Damage_Spread (16.23.8406595+branch.releases-16-23.content.release)",
+              "damage_type_source": "spell_yunaraq_tooltip <physicalDamage>"
+            }
+          ]
+        }
+      ],
+      "passive_stats": [],
+      "not_modelled": [
+        "Velocidad de ataque activa (Calc_Attack_Speed), ejecución de súbditos y acumulación de 8 cargas de Desatar"
+      ]
+    },
+    "W": {
+      "name": "Arco del juicio | Arco de la ruina",
+      "max_rank": 5,
+      "cases": [
+        {
+          "id": "initial",
+          "name": "Impacto inicial",
+          "parts": [
+            {
+              "damage_type": "magic",
+              "formula": {
+                "op": "add",
+                "operands": [
+                  {
+                    "op": "by_rank",
+                    "values": [
+                      55,
+                      95,
+                      135,
+                      175,
+                      215
+                    ]
+                  },
+                  {
+                    "op": "mul",
+                    "operands": [
+                      {
+                        "op": "constant",
+                        "value": 0.85
+                      },
+                      {
+                        "op": "stat",
+                        "stat": "attack_damage",
+                        "scope": "bonus"
+                      }
+                    ]
+                  },
+                  {
+                    "op": "mul",
+                    "operands": [
+                      {
+                        "op": "constant",
+                        "value": 0.5
+                      },
+                      {
+                        "op": "stat",
+                        "stat": "ability_power",
+                        "scope": "total"
+                      }
+                    ]
+                  }
+                ]
+              },
+              "label": "Derivado",
+              "source": "Characters/Yunara/Spells/YunaraWAbility/YunaraW.mSpellCalculations.Calc_Damage_Initial (16.23.8406595+branch.releases-16-23.content.release)",
+              "damage_type_source": "spell_yunaraw_tooltip <magicDamage>"
+            }
+          ]
+        },
+        {
+          "id": "dps",
+          "name": "Zona (daño por segundo)",
+          "parts": [
+            {
+              "damage_type": "magic",
+              "formula": {
+                "op": "mul",
+                "operands": [
+                  {
+                    "op": "add",
+                    "operands": [
+                      {
+                        "op": "by_rank",
+                        "values": [
+                          55,
+                          95,
+                          135,
+                          175,
+                          215
+                        ]
+                      },
+                      {
+                        "op": "mul",
+                        "operands": [
+                          {
+                            "op": "constant",
+                            "value": 0.85
+                          },
+                          {
+                            "op": "stat",
+                            "stat": "attack_damage",
+                            "scope": "bonus"
+                          }
+                        ]
+                      },
+                      {
+                        "op": "mul",
+                        "operands": [
+                          {
+                            "op": "constant",
+                            "value": 0.5
+                          },
+                          {
+                            "op": "stat",
+                            "stat": "ability_power",
+                            "scope": "total"
+                          }
+                        ]
+                      }
+                    ]
+                  },
+                  {
+                    "op": "constant",
+                    "value": 0.6
+                  }
+                ]
+              },
+              "label": "Derivado",
+              "source": "Characters/Yunara/Spells/YunaraWAbility/YunaraW.mSpellCalculations.Calc_Damage_Per_Second (16.23.8406595+branch.releases-16-23.content.release)",
+              "damage_type_source": "spell_yunaraw_tooltip <magicDamage>"
+            }
+          ]
+        }
+      ],
+      "passive_stats": [],
+      "not_modelled": [
+        "Ralentización (Calc_Slow), versión trascendida Arco de la ruina (R: Calc_RW_Damage) y modificador contra súbditos"
+      ]
+    },
+    "E": {
+      "name": "Presteza kanmei | Sombras incorpóreas",
+      "max_rank": 5,
+      "cases": [],
+      "passive_stats": [],
+      "not_modelled": [
+        "Velocidad de movimiento (Calc_Move_Speed / Calc_Move_Speed_Enhanced) y deslizamiento en Trascendencia"
+      ]
+    },
+    "R": {
+      "name": "Trascender",
+      "max_rank": 3,
+      "cases": [],
+      "passive_stats": [],
+      "not_modelled": [
+        "Estado de Trascendencia (activa Q automáticamente y potencia W a Arco de la ruina: Calc_RW_Damage y E a Sombras incorpóreas)"
+      ]
+    }
+  }
+}

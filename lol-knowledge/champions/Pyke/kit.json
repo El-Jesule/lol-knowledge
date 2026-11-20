@@ -1,0 +1,145 @@
+{
+  "schema": "lol-champion-kit/1",
+  "champion": "Pyke",
+  "label": "Derivado",
+  "game_version": "16.23",
+  "content_version": "16.23.8406595+branch.releases-16-23.content.release",
+  "verified_against": {
+    "content_version": "16.23.8406595+branch.releases-16-23.content.release",
+    "bin_sha256": "8a3781337a0fcb08172c376d85d7b3299f2a8bb4d0493dec4c190de952ba6aca",
+    "evidence": "odd/tasks/champion-kits-wave-4.md",
+    "result": "Bin del cliente 16.23 convertido con python -m binmodel.batch_kits y compilado con esta especificación curada (CH-01 oleada 4 — cierre 173/173)"
+  },
+  "source": "Árboles de cálculo del bin del cliente (python -m binmodel) y marcado de los tooltips del cliente; estructura de casos curada en research/kits/",
+  "abilities": {
+    "P": {
+      "name": "Bendición de los ahogados",
+      "max_rank": 1,
+      "cases": [],
+      "passive_stats": [],
+      "not_modelled": [
+        "Conversión de vida adicional en DA (14 vida = 1 DA), almacenamiento de vida gris y regeneración fuera de visión"
+      ]
+    },
+    "Q": {
+      "name": "Espetón de huesos",
+      "max_rank": 5,
+      "cases": [
+        {
+          "id": "skewer",
+          "name": "Puñalada o arpón cargado",
+          "parts": [
+            {
+              "damage_type": "physical",
+              "formula": {
+                "op": "add",
+                "operands": [
+                  {
+                    "op": "by_rank",
+                    "values": [
+                      100,
+                      150,
+                      200,
+                      250,
+                      300
+                    ]
+                  },
+                  {
+                    "op": "mul",
+                    "operands": [
+                      {
+                        "op": "constant",
+                        "value": 0.75
+                      },
+                      {
+                        "op": "stat",
+                        "stat": "attack_damage",
+                        "scope": "bonus"
+                      }
+                    ]
+                  }
+                ]
+              },
+              "label": "Derivado",
+              "source": "Characters/Pyke/Spells/PykeQAbility/PykeQ.mSpellCalculations.TotalDamage (16.23.8406595+branch.releases-16-23.content.release)",
+              "damage_type_source": "spell_pykeq_tooltip <physicalDamage>"
+            }
+          ]
+        }
+      ],
+      "passive_stats": [],
+      "not_modelled": [
+        "Ralentización del 90 %, atracción al cargar y devolución del 75 % de maná al golpear campeón"
+      ]
+    },
+    "W": {
+      "name": "Inmersión espectromarina",
+      "max_rank": 5,
+      "cases": [],
+      "passive_stats": [],
+      "not_modelled": [
+        "Camuflaje y velocidad de movimiento escalada con letalidad (MoveSpeed)"
+      ]
+    },
+    "E": {
+      "name": "Corriente fantasma",
+      "max_rank": 5,
+      "cases": [
+        {
+          "id": "phantom",
+          "name": "Impacto del fantasma a campeones",
+          "parts": [
+            {
+              "damage_type": "physical",
+              "formula": {
+                "op": "add",
+                "operands": [
+                  {
+                    "op": "by_rank",
+                    "values": [
+                      100,
+                      150,
+                      200,
+                      250,
+                      300
+                    ]
+                  },
+                  {
+                    "op": "mul",
+                    "operands": [
+                      {
+                        "op": "constant",
+                        "value": 1
+                      },
+                      {
+                        "op": "stat",
+                        "stat": "attack_damage",
+                        "scope": "bonus"
+                      }
+                    ]
+                  }
+                ]
+              },
+              "label": "Derivado",
+              "source": "Characters/Pyke/Spells/PykeEAbility/PykeE.mSpellCalculations.TotalDamage (16.23.8406595+branch.releases-16-23.content.release)",
+              "damage_type_source": "spell_pykee_tooltip <physicalDamage>"
+            }
+          ]
+        }
+      ],
+      "passive_stats": [],
+      "not_modelled": [
+        "Aturdimiento escalado con letalidad (StunDuration)"
+      ]
+    },
+    "R": {
+      "name": "Muerte de las profundidades",
+      "max_rank": 3,
+      "cases": [],
+      "passive_stats": [],
+      "not_modelled": [
+        "Umbral de ejecución verdadero y 50 % daño físico por encima del umbral (RDamage escala con letalidad, stat no corroborado en kitgen); reinicio y reparto de oro"
+      ]
+    }
+  }
+}

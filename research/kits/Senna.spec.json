@@ -1,0 +1,134 @@
+{
+  "champion": "Senna",
+  "game_version": "16.23",
+  "verified_against": {
+    "content_version": "16.23.8406595+branch.releases-16-23.content.release",
+    "bin_sha256": "511102d2a41d5d43ca7cff0d29262ff2018cac29fce6aba999e97c455c85c831",
+    "evidence": "odd/tasks/champion-kits-wave-4.md",
+    "result": "Bin del cliente 16.23 convertido con python -m binmodel.batch_kits y compilado con esta especificación curada (CH-01 oleada 4 — cierre 173/173)"
+  },
+  "abilities": {
+    "P": {
+      "name": "Absolución",
+      "tooltip": "spell_sennapassive_tooltip",
+      "max_rank": 1,
+      "passive_effects": [
+        {
+          "id": "mist_ad",
+          "name": "Niebla (DA por acumulación)",
+          "kind": "stat_bonus",
+          "stat": "attack_damage",
+          "mode": "flat",
+          "data_value": "ADPerStack",
+          "input_name": "mist_stacks",
+          "condition": "DA permanente por acumulación de Niebla (+0,75 DA/alma, --input mist_stacks)"
+        }
+      ],
+      "cases": [
+        {
+          "id": "on_hit",
+          "name": "Daño físico adicional por ataque (20 % DA)",
+          "parts": [
+            {
+              "calculation": "BonusOnHitDamage"
+            }
+          ]
+        },
+        {
+          "id": "mist_extract",
+          "name": "Extracción de Niebla (% vida actual)",
+          "parts": [
+            {
+              "tooltip_reference": "BonusCurentHealthDamage",
+              "damage_type": "physical",
+              "source_note": "mSpellCalculations.BonusCurentHealthDamage % × vida actual del objetivo",
+              "formula": {
+                "op": "mul",
+                "operands": [
+                  {
+                    "op": "calculation",
+                    "name": "BonusCurentHealthDamage"
+                  },
+                  {
+                    "op": "constant",
+                    "value": 0.01
+                  },
+                  {
+                    "op": "stat",
+                    "stat": "health",
+                    "scope": "current",
+                    "subject": "target"
+                  }
+                ]
+              }
+            }
+          ]
+        }
+      ],
+      "not_modelled": [
+        "Crítico y alcance cada 20 acumulaciones de Niebla, conversión de exceso de crítico en robo de vida (35 %), daño crítico reducido (80 %), robo de VM y crecimiento 0 de DA por nivel (DAT-04)"
+      ]
+    },
+    "Q": {
+      "name": "Oscuridad lacerante",
+      "tooltip": "spell_sennaq_tooltip",
+      "cases": [
+        {
+          "id": "beam",
+          "name": "Proyectil de sombra",
+          "parts": [
+            {
+              "calculation": "TotalDamage"
+            }
+          ]
+        }
+      ],
+      "not_modelled": [
+        "Curación a aliados (TotalHeal), ralentización (TotalSlow), efectos al impactar y reducción de 1 s de CD por ataque"
+      ]
+    },
+    "W": {
+      "name": "Último abrazo",
+      "tooltip": "spell_sennaw_tooltip",
+      "cases": [
+        {
+          "id": "hit",
+          "name": "Impacto de Niebla Negra",
+          "parts": [
+            {
+              "calculation": "Damage"
+            }
+          ]
+        }
+      ],
+      "not_modelled": [
+        "Inmovilización en área tras 1 s"
+      ]
+    },
+    "E": {
+      "name": "Maldición de la Niebla Negra",
+      "tooltip": "spell_sennae_tooltip",
+      "not_modelled": [
+        "Camuflaje/espectros en área y velocidad de movimiento (TotalMS)"
+      ]
+    },
+    "R": {
+      "name": "Sombra del amanecer",
+      "tooltip": "spell_sennar_tooltip",
+      "cases": [
+        {
+          "id": "beam",
+          "name": "Rayo central",
+          "parts": [
+            {
+              "calculation": "TotalDamage"
+            }
+          ]
+        }
+      ],
+      "not_modelled": [
+        "Escudo global a aliados (TotalShield) y aplicación de Niebla"
+      ]
+    }
+  }
+}

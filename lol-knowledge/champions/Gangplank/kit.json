@@ -1,0 +1,219 @@
+{
+  "schema": "lol-champion-kit/1",
+  "champion": "Gangplank",
+  "label": "Derivado",
+  "game_version": "16.23",
+  "content_version": "16.23.8406595+branch.releases-16-23.content.release",
+  "verified_against": {
+    "content_version": "16.23.8406595+branch.releases-16-23.content.release",
+    "bin_sha256": "7e5c02bf0c8ea7a803bd83f4e3c829c3092c63d90f32ca10fc31e233e0b93f7b",
+    "evidence": "odd/tasks/champion-kits-wave-4.md",
+    "result": "Bin del cliente 16.23 convertido con python -m binmodel.batch_kits y compilado con esta especificación curada (CH-01 oleada 4 — cierre 173/173)"
+  },
+  "source": "Árboles de cálculo del bin del cliente (python -m binmodel) y marcado de los tooltips del cliente; estructura de casos curada en research/kits/",
+  "abilities": {
+    "P": {
+      "name": "Prueba de fuego",
+      "max_rank": 1,
+      "cases": [
+        {
+          "id": "burn",
+          "name": "Quemadura verdadera (2,5 s)",
+          "parts": [
+            {
+              "damage_type": "true",
+              "formula": {
+                "op": "add",
+                "operands": [
+                  {
+                    "op": "linear_by_level",
+                    "min": 50,
+                    "max": 250
+                  },
+                  {
+                    "op": "mul",
+                    "operands": [
+                      {
+                        "op": "constant",
+                        "value": 1
+                      },
+                      {
+                        "op": "stat",
+                        "stat": "attack_damage",
+                        "scope": "bonus"
+                      }
+                    ]
+                  }
+                ]
+              },
+              "label": "Derivado",
+              "source": "Characters/Gangplank/Spells/GangplankPassiveAbility/GangplankPassive.mSpellCalculations.TotalDamage (16.23.8406595+branch.releases-16-23.content.release)",
+              "damage_type_source": "spell_gangplankpassive_tooltip <trueDamage>"
+            }
+          ]
+        }
+      ],
+      "passive_stats": [],
+      "not_modelled": [
+        "Velocidad de movimiento (MoveSpeed), daño a estructuras y reinicio al detonar barriles"
+      ]
+    },
+    "Q": {
+      "name": "Parrrlamento",
+      "max_rank": 5,
+      "cases": [
+        {
+          "id": "shot",
+          "name": "Disparo (sin crítico)",
+          "parts": [
+            {
+              "damage_type": "physical",
+              "formula": {
+                "op": "add",
+                "operands": [
+                  {
+                    "op": "by_rank",
+                    "values": [
+                      10,
+                      40,
+                      70,
+                      100,
+                      130
+                    ]
+                  },
+                  {
+                    "op": "mul",
+                    "operands": [
+                      {
+                        "op": "constant",
+                        "value": 1
+                      },
+                      {
+                        "op": "stat",
+                        "stat": "attack_damage",
+                        "scope": "total"
+                      }
+                    ]
+                  }
+                ]
+              },
+              "label": "Derivado",
+              "source": "Characters/Gangplank/Spells/GangplankQWrapperAbility/GangplankQWrapper.mSpellCalculations.ShotDamage (16.23.8406595+branch.releases-16-23.content.release)",
+              "damage_type_source": "spell_gangplankqwrapper_tooltip_1 <physicalDamage>"
+            }
+          ]
+        }
+      ],
+      "passive_stats": [],
+      "not_modelled": [
+        "Aplicación de efectos al impactar, golpe crítico (ShotCrit), oro adicional y Serpientes de plata al rematar"
+      ]
+    },
+    "W": {
+      "name": "Eliminar escorbuto",
+      "max_rank": 5,
+      "cases": [],
+      "passive_stats": [],
+      "not_modelled": [
+        "Limpieza de control de masas y curación (BaseHealth + % vida faltante)"
+      ]
+    },
+    "E": {
+      "name": "Barril de pólvora",
+      "max_rank": 5,
+      "cases": [],
+      "passive_stats": [],
+      "not_modelled": [
+        "Cadena de barriles con daño del ataque detonador + BonusDamageToChampions, 40 % penetración de armadura (BarrelArmorPenetration) y ralentización"
+      ]
+    },
+    "R": {
+      "name": "Andanada de cañón",
+      "max_rank": 3,
+      "cases": [
+        {
+          "id": "one_wave",
+          "name": "Una oleada (12/18 oleadas)",
+          "parts": [
+            {
+              "damage_type": "magic",
+              "formula": {
+                "op": "add",
+                "operands": [
+                  {
+                    "op": "by_rank",
+                    "values": [
+                      40,
+                      70,
+                      100
+                    ]
+                  },
+                  {
+                    "op": "mul",
+                    "operands": [
+                      {
+                        "op": "constant",
+                        "value": 0.1
+                      },
+                      {
+                        "op": "stat",
+                        "stat": "ability_power",
+                        "scope": "total"
+                      }
+                    ]
+                  }
+                ]
+              },
+              "label": "Derivado",
+              "source": "Characters/Gangplank/Spells/GangplankRAbility/GangplankR.mSpellCalculations.OneWaveDamage (16.23.8406595+branch.releases-16-23.content.release)",
+              "damage_type_source": "spell_gangplankr_tooltip <magicDamage>"
+            }
+          ]
+        },
+        {
+          "id": "deaths_daughter",
+          "name": "Hija de la muerte (daño verdadero central)",
+          "parts": [
+            {
+              "damage_type": "true",
+              "formula": {
+                "op": "add",
+                "operands": [
+                  {
+                    "op": "by_rank",
+                    "values": [
+                      120,
+                      210,
+                      300
+                    ]
+                  },
+                  {
+                    "op": "mul",
+                    "operands": [
+                      {
+                        "op": "constant",
+                        "value": 0.3
+                      },
+                      {
+                        "op": "stat",
+                        "stat": "ability_power",
+                        "scope": "total"
+                      }
+                    ]
+                  }
+                ]
+              },
+              "label": "Derivado",
+              "source": "Characters/Gangplank/Spells/GangplankRAbility/GangplankR.mSpellCalculations.DeathsDaughterDamage (16.23.8406595+branch.releases-16-23.content.release)",
+              "damage_type_source": "spell_gangplankr_tooltip <trueDamage>"
+            }
+          ]
+        }
+      ],
+      "passive_stats": [],
+      "not_modelled": [
+        "Mejoras con Serpientes de plata (Fuego a discreción, Subir la moral), ralentización y total combinado"
+      ]
+    }
+  }
+}

@@ -1,0 +1,101 @@
+{
+  "champion": "Zeri",
+  "game_version": "16.23",
+  "verified_against": {
+    "content_version": "16.23.8406595+branch.releases-16-23.content.release",
+    "bin_sha256": "12a5bed25996ce9d38b4cca217202d3df619168b0f012c8ad22e9a3bb2fd8ecb",
+    "evidence": "odd/tasks/champion-kits-wave-4.md",
+    "result": "Bin del cliente 16.23 convertido con python -m binmodel.batch_kits y compilado con esta especificación curada (CH-01 oleada 4 — cierre 173/173)"
+  },
+  "abilities": {
+    "P": {
+      "name": "Batería cargada",
+      "tooltip": "spell_zeripassive_tooltip",
+      "max_rank": 1,
+      "not_modelled": [
+        "Descarga de ataque básico sin carga (ZeriQ.MinDamage) y cargada al máximo (ZeriQ.PassiveMaxDamage + ZeriQ.PassiveMaxChargePercentHealth % vida máxima), ejecución bajo umbral y robo de escudos"
+      ]
+    },
+    "Q": {
+      "name": "Fuego explosivo",
+      "tooltip": "spell_zeriq_tooltip",
+      "cases": [
+        {
+          "id": "burst",
+          "name": "Ráfaga de 7 proyectiles (sin crítico)",
+          "parts": [
+            {
+              "calculation": "ActiveDamageThatCanCrit"
+            }
+          ]
+        }
+      ],
+      "not_modelled": [
+        "Cuenta como ataque básico (efectos al impactar y críticos), tope de 1,5 VA con conversión del 60 % del exceso en DA y cálculos de la descarga pasiva almacenados en ZeriQ"
+      ]
+    },
+    "W": {
+      "name": "Ultradescarga láser",
+      "tooltip": "spell_zeriw_tooltip",
+      "cases": [
+        {
+          "id": "pulse",
+          "name": "Pulso normal (sin muro)",
+          "parts": [
+            {
+              "calculation": "TotalDamage"
+            }
+          ]
+        }
+      ],
+      "not_modelled": [
+        "Láser crítico garantizado al atravesar muros (WallDamage usa critical_strike_damage/total) y ralentización"
+      ]
+    },
+    "E": {
+      "name": "Subida de tensión",
+      "tooltip": "spell_zerie_tooltip",
+      "cases": [
+        {
+          "id": "bonus_magic",
+          "name": "Daño mágico adicional al impactar con Q (5 s)",
+          "parts": [
+            {
+              "calculation": "BonusDamageTotal"
+            }
+          ]
+        }
+      ],
+      "not_modelled": [
+        "Deslizamiento sobre muros, perforación de Q (80..100 %), escalado crítico del daño adicional y reducción de CD al golpear campeones"
+      ]
+    },
+    "R": {
+      "name": "Choque de rayos",
+      "tooltip": "spell_zerir_tooltip",
+      "cases": [
+        {
+          "id": "nova",
+          "name": "Nova eléctrica inicial",
+          "parts": [
+            {
+              "calculation": "TotalActiveDamage"
+            }
+          ]
+        },
+        {
+          "id": "chain",
+          "name": "Rayo en cadena por Q sobrecargado",
+          "parts": [
+            {
+              "calculation": "ChainPhysicalDamage"
+            }
+          ]
+        }
+      ],
+      "not_modelled": [
+        "Sobrecarga acumulable de velocidad de movimiento, +30 % velocidad de ataque y daño mágico adicional por ataque"
+      ]
+    }
+  }
+}

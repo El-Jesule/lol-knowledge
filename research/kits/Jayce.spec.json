@@ -1,0 +1,102 @@
+{
+  "champion": "Jayce",
+  "game_version": "16.23",
+  "verified_against": {
+    "content_version": "16.23.8406595+branch.releases-16-23.content.release",
+    "bin_sha256": "c5a4bd89a5bcd8d0b779c561a6574399d593fac3b6769a7c0464647e4e2d2375",
+    "evidence": "odd/tasks/champion-kits-wave-4.md",
+    "result": "Bin del cliente 16.23 convertido con python -m binmodel.batch_kits y compilado con esta especificación curada (CH-01 oleada 4 — cierre 173/173)"
+  },
+  "abilities": {
+    "P": {
+      "name": "Condensador hextech",
+      "tooltip": "spell_jaycepassive_tooltip",
+      "max_rank": 1,
+      "not_modelled": [
+        "Velocidad de movimiento plana (+40) y efecto fantasmal al cambiar de postura"
+      ]
+    },
+    "Q": {
+      "name": "¡Hacia los cielos! / Explosión eléctrica",
+      "tooltip": "spell_jaycetotheskies_tooltip",
+      "cases": [
+        {
+          "id": "hammer",
+          "name": "Martillo: ¡Hacia los cielos!",
+          "parts": [
+            {
+              "calculation": "Damage"
+            }
+          ]
+        }
+      ],
+      "not_modelled": [
+        "Ralentización y postura de cañón: Explosión eléctrica (normal y acelerada con Portal E, en hechizo separado)"
+      ]
+    },
+    "W": {
+      "name": "Campo de rayos / Hipercarga",
+      "tooltip": "spell_jaycestaticfield_tooltip",
+      "cases": [
+        {
+          "id": "hammer",
+          "name": "Martillo: Campo de rayos (4 s totales)",
+          "parts": [
+            {
+              "calculation": "Damage"
+            }
+          ]
+        }
+      ],
+      "not_modelled": [
+        "Restauración pasiva de maná en martillo (ManaGain) y postura de cañón: Hipercarga (3 ataques a VA máxima)"
+      ]
+    },
+    "E": {
+      "name": "Golpe tormentoso / Portal de aceleración",
+      "tooltip": "spell_jaycethunderingblow_tooltip",
+      "cases": [
+        {
+          "id": "hammer",
+          "name": "Martillo: Golpe tormentoso (DA adicional + % vida máxima)",
+          "parts": [
+            {
+              "calculation": "FlatDamage"
+            },
+            {
+              "tooltip_reference": "PercHPDamage",
+              "damage_type": "magic",
+              "source_note": "DataValues.PercHPDamage × vida máxima del objetivo",
+              "formula": {
+                "op": "mul",
+                "operands": [
+                  {
+                    "op": "data_value",
+                    "name": "PercHPDamage"
+                  },
+                  {
+                    "op": "stat",
+                    "stat": "health",
+                    "scope": "max",
+                    "subject": "target"
+                  }
+                ]
+              }
+            }
+          ]
+        }
+      ],
+      "not_modelled": [
+        "Empuje, tope contra monstruos (MonsterCap) y postura de cañón: Portal de aceleración"
+      ]
+    },
+    "R": {
+      "name": "Cañón de mercurio / Martillo de mercurio",
+      "tooltip": "spell_jaycestancehtg_tooltip",
+      "max_rank": 1,
+      "not_modelled": [
+        "Cambio de forma desde nivel 1, reducción de armadura/RM en cañón (RangedFormShred), daño mágico adicional al cambiar a martillo (Damage, ADRatio sin valores en bin) y resistencias de martillo (Resists)"
+      ]
+    }
+  }
+}

@@ -1,0 +1,188 @@
+{
+  "schema": "lol-champion-kit/1",
+  "champion": "Olaf",
+  "label": "Derivado",
+  "game_version": "16.23",
+  "content_version": "16.23.8406595+branch.releases-16-23.content.release",
+  "verified_against": {
+    "content_version": "16.23.8406595+branch.releases-16-23.content.release",
+    "bin_sha256": "4bebc1281a14579300b5e57fab4a2fca78c8ead6ec3421f5980cf5fa3818ba7b",
+    "evidence": "odd/tasks/champion-kits-wave-4.md",
+    "result": "Bin del cliente 16.23 convertido con python -m binmodel.batch_kits y compilado con esta especificación curada (CH-01 oleada 4 — cierre 173/173)"
+  },
+  "source": "Árboles de cálculo del bin del cliente (python -m binmodel) y marcado de los tooltips del cliente; estructura de casos curada en research/kits/",
+  "abilities": {
+    "P": {
+      "name": "Furia berserker",
+      "max_rank": 1,
+      "cases": [],
+      "passive_stats": [],
+      "not_modelled": [
+        "Velocidad de ataque (hasta MaxAttackSpeed) y robo de vida (hasta MaxLifeSteal) crecientes según vida faltante"
+      ]
+    },
+    "Q": {
+      "name": "Lanzamiento",
+      "max_rank": 5,
+      "cases": [
+        {
+          "id": "axe",
+          "name": "Impacto de hacha",
+          "parts": [
+            {
+              "damage_type": "physical",
+              "formula": {
+                "op": "add",
+                "operands": [
+                  {
+                    "op": "by_rank",
+                    "values": [
+                      70,
+                      120,
+                      170,
+                      220,
+                      270
+                    ]
+                  },
+                  {
+                    "op": "mul",
+                    "operands": [
+                      {
+                        "op": "constant",
+                        "value": 1
+                      },
+                      {
+                        "op": "stat",
+                        "stat": "attack_damage",
+                        "scope": "bonus"
+                      }
+                    ]
+                  }
+                ]
+              },
+              "label": "Derivado",
+              "source": "Characters/Olaf/Spells/OlafAxeThrowCastAbility/OlafAxeThrowCast.mSpellCalculations.TotalDamage (16.23.8406595+branch.releases-16-23.content.release)",
+              "damage_type_source": "spell_olafaxethrowcast_tooltip <physicalDamage>"
+            }
+          ]
+        }
+      ],
+      "passive_stats": [],
+      "not_modelled": [
+        "Ralentización, reducción del 20 % de armadura durante 4 s y devolución de CD al recoger el hacha"
+      ]
+    },
+    "W": {
+      "name": "Aguante",
+      "max_rank": 5,
+      "cases": [],
+      "passive_stats": [],
+      "not_modelled": [
+        "Velocidad de ataque durante 5 s y escudo escalado por vida faltante (MaxShieldCalc)"
+      ]
+    },
+    "E": {
+      "name": "Embestida temeraria",
+      "max_rank": 5,
+      "cases": [
+        {
+          "id": "strike",
+          "name": "Rayo verdadero",
+          "parts": [
+            {
+              "damage_type": "true",
+              "formula": {
+                "op": "add",
+                "operands": [
+                  {
+                    "op": "by_rank",
+                    "values": [
+                      70,
+                      115,
+                      160,
+                      205,
+                      250
+                    ]
+                  },
+                  {
+                    "op": "mul",
+                    "operands": [
+                      {
+                        "op": "constant",
+                        "value": 0.5
+                      },
+                      {
+                        "op": "stat",
+                        "stat": "attack_damage",
+                        "scope": "total"
+                      }
+                    ]
+                  }
+                ]
+              },
+              "label": "Derivado",
+              "source": "Characters/Olaf/Spells/OlafRecklessStrikeAbility/OlafRecklessStrike.mSpellCalculations.TotalDamage (16.23.8406595+branch.releases-16-23.content.release)",
+              "damage_type_source": "spell_olafrecklessstrike_tooltip <trueDamage>"
+            }
+          ]
+        }
+      ],
+      "passive_stats": [],
+      "not_modelled": [
+        "Reembolso del coste de vida si mata al objetivo y reducción de 1 s de enfriamiento por ataque básico"
+      ],
+      "cost": {
+        "resource": "health",
+        "formula": {
+          "op": "mul",
+          "operands": [
+            {
+              "op": "add",
+              "operands": [
+                {
+                  "op": "by_rank",
+                  "values": [
+                    70,
+                    115,
+                    160,
+                    205,
+                    250
+                  ]
+                },
+                {
+                  "op": "mul",
+                  "operands": [
+                    {
+                      "op": "constant",
+                      "value": 0.5
+                    },
+                    {
+                      "op": "stat",
+                      "stat": "attack_damage",
+                      "scope": "total"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "op": "constant",
+              "value": 0.4
+            }
+          ]
+        },
+        "label": "Derivado",
+        "source": "Characters/Olaf/Spells/OlafRecklessStrikeAbility/OlafRecklessStrike.mSpellCalculations.HealthCostCalc (16.23.8406595+branch.releases-16-23.content.release)"
+      }
+    },
+    "R": {
+      "name": "Ragnarok",
+      "max_rank": 3,
+      "cases": [],
+      "passive_stats": [],
+      "not_modelled": [
+        "Resistencias pasivas (armadura/RM), inmunidad a CC, DA adicional activo (AD), velocidad de movimiento y extensión al golpear"
+      ]
+    }
+  }
+}

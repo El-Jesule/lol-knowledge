@@ -1,0 +1,303 @@
+{
+  "schema": "lol-champion-kit/1",
+  "champion": "Yone",
+  "label": "Derivado",
+  "game_version": "16.23",
+  "content_version": "16.23.8406595+branch.releases-16-23.content.release",
+  "verified_against": {
+    "content_version": "16.23.8406595+branch.releases-16-23.content.release",
+    "bin_sha256": "e29efc73d40268ea89612351d66b3bafccc18b14f0b45363f5147d1ec375ab50",
+    "evidence": "odd/tasks/champion-kits-wave-4.md",
+    "result": "Bin del cliente 16.23 convertido con python -m binmodel.batch_kits y compilado con esta especificación curada (CH-01 oleada 4 — cierre 173/173)"
+  },
+  "source": "Árboles de cálculo del bin del cliente (python -m binmodel) y marcado de los tooltips del cliente; estructura de casos curada en research/kits/",
+  "abilities": {
+    "P": {
+      "name": "Camino del cazador",
+      "max_rank": 1,
+      "cases": [],
+      "passive_stats": [],
+      "not_modelled": [
+        "Conversión del 50 % del daño de cada segundo ataque a mágico (MagicDamageSplit), duplicación de probabilidad de crítico, exceso en DA y modificador de daño crítico"
+      ]
+    },
+    "Q": {
+      "name": "Acero mortal",
+      "max_rank": 5,
+      "cases": [
+        {
+          "id": "thrust",
+          "name": "Estocada / ola de viento (sin crítico)",
+          "parts": [
+            {
+              "damage_type": "physical",
+              "formula": {
+                "op": "add",
+                "operands": [
+                  {
+                    "op": "by_rank",
+                    "values": [
+                      25,
+                      50,
+                      75,
+                      100,
+                      125
+                    ]
+                  },
+                  {
+                    "op": "mul",
+                    "operands": [
+                      {
+                        "op": "constant",
+                        "value": 1.05
+                      },
+                      {
+                        "op": "stat",
+                        "stat": "attack_damage",
+                        "scope": "total"
+                      }
+                    ]
+                  }
+                ]
+              },
+              "label": "Derivado",
+              "source": "Characters/Yone/Spells/YoneQAbility/YoneQ.mSpellCalculations.QDamage (16.23.8406595+branch.releases-16-23.content.release)",
+              "damage_type_source": "spell_yoneq_tooltip <physicalDamage>"
+            }
+          ]
+        }
+      ],
+      "passive_stats": [],
+      "not_modelled": [
+        "Golpe crítico de Q (TotalDamageCrit), reducción de CD/lanzamiento por VA y levantamiento en Q3"
+      ]
+    },
+    "W": {
+      "name": "Cuchilla espiritual",
+      "max_rank": 5,
+      "cases": [
+        {
+          "id": "cleave",
+          "name": "Tajo dual (50 % físico + 50 % mágico sobre plano + % vida máxima)",
+          "parts": [
+            {
+              "damage_type": "physical",
+              "formula": {
+                "op": "mul",
+                "operands": [
+                  {
+                    "op": "constant",
+                    "value": 0.5
+                  },
+                  {
+                    "op": "add",
+                    "operands": [
+                      {
+                        "op": "by_rank",
+                        "values": [
+                          10,
+                          20,
+                          30,
+                          40,
+                          50
+                        ]
+                      },
+                      {
+                        "op": "mul",
+                        "operands": [
+                          {
+                            "op": "by_rank",
+                            "values": [
+                              0.08,
+                              0.09,
+                              0.1,
+                              0.11,
+                              0.12
+                            ]
+                          },
+                          {
+                            "op": "stat",
+                            "stat": "health",
+                            "scope": "max",
+                            "subject": "target"
+                          }
+                        ]
+                      }
+                    ]
+                  }
+                ]
+              },
+              "label": "Derivado",
+              "source": "Characters/Yone/Spells/YoneWAbility/YoneW · 0,5 × (DataValues.BaseDamage + DataValues.MaxHealthDamage × vida máxima del objetivo) (16.23.8406595+branch.releases-16-23.content.release)",
+              "damage_type_source": "spell_yonew_tooltip <physicalDamage>"
+            },
+            {
+              "damage_type": "magic",
+              "formula": {
+                "op": "mul",
+                "operands": [
+                  {
+                    "op": "constant",
+                    "value": 0.5
+                  },
+                  {
+                    "op": "add",
+                    "operands": [
+                      {
+                        "op": "by_rank",
+                        "values": [
+                          10,
+                          20,
+                          30,
+                          40,
+                          50
+                        ]
+                      },
+                      {
+                        "op": "mul",
+                        "operands": [
+                          {
+                            "op": "by_rank",
+                            "values": [
+                              0.08,
+                              0.09,
+                              0.1,
+                              0.11,
+                              0.12
+                            ]
+                          },
+                          {
+                            "op": "stat",
+                            "stat": "health",
+                            "scope": "max",
+                            "subject": "target"
+                          }
+                        ]
+                      }
+                    ]
+                  }
+                ]
+              },
+              "label": "Derivado",
+              "source": "Characters/Yone/Spells/YoneWAbility/YoneW · 0,5 × (DataValues.BaseDamage + DataValues.MaxHealthDamage × vida máxima del objetivo) (16.23.8406595+branch.releases-16-23.content.release)",
+              "damage_type_source": "spell_yonew_tooltip <magicDamage>"
+            }
+          ]
+        }
+      ],
+      "passive_stats": [],
+      "not_modelled": [
+        "Escudo al golpear enemigos (WShield), reducción de CD/cast por VA y mínimo contra súbditos"
+      ]
+    },
+    "E": {
+      "name": "Alma desatada",
+      "max_rank": 5,
+      "cases": [],
+      "passive_stats": [],
+      "not_modelled": [
+        "Forma espiritual durante 5 s, velocidad de movimiento creciente y repetición del 25..35 % del daño posmitigación como daño verdadero al regresar"
+      ]
+    },
+    "R": {
+      "name": "Destino sellado",
+      "max_rank": 3,
+      "cases": [
+        {
+          "id": "slash",
+          "name": "Impacto dual (50 % físico + 50 % mágico)",
+          "parts": [
+            {
+              "damage_type": "physical",
+              "formula": {
+                "op": "mul",
+                "operands": [
+                  {
+                    "op": "add",
+                    "operands": [
+                      {
+                        "op": "by_rank",
+                        "values": [
+                          200,
+                          400,
+                          600
+                        ]
+                      },
+                      {
+                        "op": "mul",
+                        "operands": [
+                          {
+                            "op": "constant",
+                            "value": 0.8
+                          },
+                          {
+                            "op": "stat",
+                            "stat": "attack_damage",
+                            "scope": "bonus"
+                          }
+                        ]
+                      }
+                    ]
+                  },
+                  {
+                    "op": "constant",
+                    "value": 0.5
+                  }
+                ]
+              },
+              "label": "Derivado",
+              "source": "Characters/Yone/Spells/YoneRAbility/YoneR.mSpellCalculations.TooltipDamage (16.23.8406595+branch.releases-16-23.content.release)",
+              "damage_type_source": "spell_yoner_tooltip <physicalDamage>"
+            },
+            {
+              "damage_type": "magic",
+              "formula": {
+                "op": "mul",
+                "operands": [
+                  {
+                    "op": "add",
+                    "operands": [
+                      {
+                        "op": "by_rank",
+                        "values": [
+                          200,
+                          400,
+                          600
+                        ]
+                      },
+                      {
+                        "op": "mul",
+                        "operands": [
+                          {
+                            "op": "constant",
+                            "value": 0.8
+                          },
+                          {
+                            "op": "stat",
+                            "stat": "attack_damage",
+                            "scope": "bonus"
+                          }
+                        ]
+                      }
+                    ]
+                  },
+                  {
+                    "op": "constant",
+                    "value": 0.5
+                  }
+                ]
+              },
+              "label": "Derivado",
+              "source": "Characters/Yone/Spells/YoneRAbility/YoneR.mSpellCalculations.TooltipDamage (16.23.8406595+branch.releases-16-23.content.release)",
+              "damage_type_source": "spell_yoner_tooltip <magicDamage>"
+            }
+          ]
+        }
+      ],
+      "passive_stats": [],
+      "not_modelled": [
+        "Atracción y lanzamiento por los aires de 1 s"
+      ]
+    }
+  }
+}

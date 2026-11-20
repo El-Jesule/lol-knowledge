@@ -1,0 +1,278 @@
+{
+  "schema": "lol-champion-kit/1",
+  "champion": "Lucian",
+  "label": "Derivado",
+  "game_version": "16.23",
+  "content_version": "16.23.8406595+branch.releases-16-23.content.release",
+  "verified_against": {
+    "content_version": "16.23.8406595+branch.releases-16-23.content.release",
+    "bin_sha256": "79515b685fb9d876cb7f121fc8297755458b0240e9bd5de8cb7d2f8d9e5d832f",
+    "evidence": "odd/tasks/champion-kits-wave-4.md",
+    "result": "Bin del cliente 16.23 convertido con python -m binmodel.batch_kits y compilado con esta especificación curada (CH-01 oleada 4 — cierre 173/173)"
+  },
+  "source": "Árboles de cálculo del bin del cliente (python -m binmodel) y marcado de los tooltips del cliente; estructura de casos curada en research/kits/",
+  "abilities": {
+    "P": {
+      "name": "Balas de luz",
+      "max_rank": 1,
+      "cases": [
+        {
+          "id": "second_shot",
+          "name": "Segundo disparo (campeones)",
+          "parts": [
+            {
+              "damage_type": "physical",
+              "formula": {
+                "op": "mul",
+                "operands": [
+                  {
+                    "op": "by_level",
+                    "values": [
+                      0.5,
+                      0.5,
+                      0.5,
+                      0.5,
+                      0.5,
+                      0.5,
+                      0.55,
+                      0.55,
+                      0.55,
+                      0.55,
+                      0.55,
+                      0.55,
+                      0.6,
+                      0.6,
+                      0.6,
+                      0.6,
+                      0.6,
+                      0.6
+                    ]
+                  },
+                  {
+                    "op": "stat",
+                    "stat": "attack_damage",
+                    "scope": "total"
+                  }
+                ]
+              },
+              "label": "Derivado",
+              "source": "Characters/Lucian/Spells/LucianPassiveAbility/LucianPassive.mSpellCalculations.TotalDamage (16.23.8406595+branch.releases-16-23.content.release)",
+              "damage_type_source": "spell_lucianpassive_tooltip <physicalDamage>"
+            }
+          ]
+        },
+        {
+          "id": "vigilance_on_hit",
+          "name": "Vigilancia (daño mágico adicional por disparo)",
+          "parts": [
+            {
+              "damage_type": "magic",
+              "formula": {
+                "op": "add",
+                "operands": [
+                  {
+                    "op": "constant",
+                    "value": 5
+                  },
+                  {
+                    "op": "mul",
+                    "operands": [
+                      {
+                        "op": "constant",
+                        "value": 0.15
+                      },
+                      {
+                        "op": "stat",
+                        "stat": "attack_damage",
+                        "scope": "total"
+                      }
+                    ]
+                  }
+                ]
+              },
+              "label": "Derivado",
+              "source": "Characters/Lucian/Spells/LucianPassiveAbility/LucianPassive.mSpellCalculations.PassiveTotalDamage (16.23.8406595+branch.releases-16-23.content.release)",
+              "damage_type_source": "spell_lucianpassive_tooltip <magicDamage>"
+            }
+          ]
+        }
+      ],
+      "passive_stats": [],
+      "not_modelled": [
+        "Daño al 100 % a súbditos (MinionDamage), golpes críticos del segundo disparo y activación de Vigilancia con aliados"
+      ]
+    },
+    "Q": {
+      "name": "Luz lacerante",
+      "max_rank": 5,
+      "cases": [
+        {
+          "id": "beam",
+          "name": "Rayo de luz",
+          "parts": [
+            {
+              "damage_type": "physical",
+              "formula": {
+                "op": "add",
+                "operands": [
+                  {
+                    "op": "by_rank",
+                    "values": [
+                      90,
+                      130,
+                      170,
+                      210,
+                      250
+                    ]
+                  },
+                  {
+                    "op": "mul",
+                    "operands": [
+                      {
+                        "op": "constant",
+                        "value": 1
+                      },
+                      {
+                        "op": "stat",
+                        "stat": "attack_damage",
+                        "scope": "bonus"
+                      }
+                    ]
+                  }
+                ]
+              },
+              "label": "Derivado",
+              "source": "Characters/Lucian/Spells/LucianQAbility/LucianQ.mSpellCalculations.TotalDamage (16.23.8406595+branch.releases-16-23.content.release)",
+              "damage_type_source": "spell_lucianq_tooltip <physicalDamage>"
+            }
+          ]
+        }
+      ],
+      "passive_stats": [],
+      "not_modelled": []
+    },
+    "W": {
+      "name": "Resplandor ardiente",
+      "max_rank": 5,
+      "cases": [
+        {
+          "id": "star",
+          "name": "Explosión en estrella",
+          "parts": [
+            {
+              "damage_type": "magic",
+              "formula": {
+                "op": "add",
+                "operands": [
+                  {
+                    "op": "by_rank",
+                    "values": [
+                      75,
+                      110,
+                      145,
+                      180,
+                      215
+                    ]
+                  },
+                  {
+                    "op": "mul",
+                    "operands": [
+                      {
+                        "op": "constant",
+                        "value": 0.9
+                      },
+                      {
+                        "op": "stat",
+                        "stat": "ability_power",
+                        "scope": "total"
+                      }
+                    ]
+                  }
+                ]
+              },
+              "label": "Derivado",
+              "source": "Characters/Lucian/Spells/LucianWAbility/LucianW.mSpellCalculations.TotalDamage (16.23.8406595+branch.releases-16-23.content.release)",
+              "damage_type_source": "spell_lucianw_tooltip <magicDamage>"
+            }
+          ]
+        }
+      ],
+      "passive_stats": [],
+      "not_modelled": [
+        "Velocidad de movimiento al dañar enemigos marcados y activación de Vigilancia"
+      ]
+    },
+    "E": {
+      "name": "Persecución implacable",
+      "max_rank": 5,
+      "cases": [],
+      "passive_stats": [],
+      "not_modelled": [
+        "Deslizamiento y reducción de 1 s (2 s contra campeones) por cada impacto de Balas de luz"
+      ]
+    },
+    "R": {
+      "name": "El sacrificio",
+      "max_rank": 3,
+      "cases": [
+        {
+          "id": "per_bullet",
+          "name": "Una bala (de 22 + escalado por crítico)",
+          "parts": [
+            {
+              "damage_type": "physical",
+              "formula": {
+                "op": "add",
+                "operands": [
+                  {
+                    "op": "by_rank",
+                    "values": [
+                      15,
+                      30,
+                      45
+                    ]
+                  },
+                  {
+                    "op": "mul",
+                    "operands": [
+                      {
+                        "op": "constant",
+                        "value": 0.25
+                      },
+                      {
+                        "op": "stat",
+                        "stat": "attack_damage",
+                        "scope": "total"
+                      }
+                    ]
+                  },
+                  {
+                    "op": "mul",
+                    "operands": [
+                      {
+                        "op": "constant",
+                        "value": 0.15
+                      },
+                      {
+                        "op": "stat",
+                        "stat": "ability_power",
+                        "scope": "total"
+                      }
+                    ]
+                  }
+                ]
+              },
+              "label": "Derivado",
+              "source": "Characters/Lucian/Spells/LucianRAbility/LucianR.mSpellCalculations.DamagePerBullet (16.23.8406595+branch.releases-16-23.content.release)",
+              "damage_type_source": "spell_lucianr_tooltip <physicalDamage>"
+            }
+          ]
+        }
+      ],
+      "passive_stats": [],
+      "not_modelled": [
+        "Número total de disparos según probabilidad de crítico (TotalNumShots) y 400 % de daño a súbditos"
+      ]
+    }
+  }
+}

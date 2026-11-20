@@ -1,0 +1,116 @@
+{
+  "schema": "lol-champion-kit/1",
+  "champion": "Khazix",
+  "label": "Derivado",
+  "game_version": "16.23",
+  "content_version": "16.23.8406595+branch.releases-16-23.content.release",
+  "verified_against": {
+    "content_version": "16.23.8406595+branch.releases-16-23.content.release",
+    "bin_sha256": "1a8235e2c1dcc9d1560e88d8a465301a4e5bc8ee792ced0b07144a1586a0c00a",
+    "evidence": "odd/tasks/champion-kits-wave-4.md",
+    "result": "Bin del cliente 16.23 convertido con python -m binmodel.batch_kits y compilado con esta especificación curada (CH-01 oleada 4 — cierre 173/173)"
+  },
+  "source": "Árboles de cálculo del bin del cliente (python -m binmodel) y marcado de los tooltips del cliente; estructura de casos curada en research/kits/",
+  "abilities": {
+    "P": {
+      "name": "Amenaza invisible",
+      "max_rank": 1,
+      "cases": [
+        {
+          "id": "unseen",
+          "name": "Ataque tras ser invisible",
+          "parts": [
+            {
+              "damage_type": "magic",
+              "formula": {
+                "op": "add",
+                "operands": [
+                  {
+                    "op": "by_level",
+                    "values": [
+                      22,
+                      29,
+                      36,
+                      43,
+                      50,
+                      57,
+                      64,
+                      71,
+                      78,
+                      85,
+                      92,
+                      99,
+                      106,
+                      113,
+                      120,
+                      127,
+                      134,
+                      141
+                    ]
+                  },
+                  {
+                    "op": "mul",
+                    "operands": [
+                      {
+                        "op": "constant",
+                        "value": 0.5
+                      },
+                      {
+                        "op": "stat",
+                        "stat": "attack_damage",
+                        "scope": "bonus"
+                      }
+                    ]
+                  }
+                ]
+              },
+              "label": "Derivado",
+              "source": "Characters/Khazix/Spells/KhazixPassiveAbility/KhazixPassive.mSpellCalculations.TotalDamage (16.23.8406595+branch.releases-16-23.content.release)",
+              "damage_type_source": "spell_khazixpassive_tooltip <magicDamage>"
+            }
+          ]
+        }
+      ],
+      "passive_stats": [],
+      "not_modelled": [
+        "Ralentización del 25 % y estado Aislamiento"
+      ]
+    },
+    "Q": {
+      "name": "Saborea su miedo",
+      "max_rank": 5,
+      "cases": [],
+      "passive_stats": [],
+      "not_modelled": [
+        "Q.BaseDamage y Q.IsoDamage (+110 % aislado) usan EffectValue en el bin (no traducible por kitgen); evolución con alcance y 45 % devolución de CD"
+      ]
+    },
+    "W": {
+      "name": "Pincho del Vacío",
+      "max_rank": 5,
+      "cases": [],
+      "passive_stats": [],
+      "not_modelled": [
+        "W.BaseDamage usa EffectValue en el bin; curación cercana (HealAmount) y evolución de 3 pinchos con ralentización"
+      ]
+    },
+    "E": {
+      "name": "Salto",
+      "max_rank": 5,
+      "cases": [],
+      "passive_stats": [],
+      "not_modelled": [
+        "E.TotalDamage usa EffectValue en el bin; evolución de alcance (1000) y reinicio por derribo"
+      ]
+    },
+    "R": {
+      "name": "Asalto del Vacío",
+      "max_rank": 3,
+      "cases": [],
+      "passive_stats": [],
+      "not_modelled": [
+        "Invisibilidad (2/3 cargas), velocidad de movimiento y puntos de evolución en niveles 6/11/16"
+      ]
+    }
+  }
+}

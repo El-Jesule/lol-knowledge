@@ -1,0 +1,293 @@
+{
+  "schema": "lol-champion-kit/1",
+  "champion": "Senna",
+  "label": "Derivado",
+  "game_version": "16.23",
+  "content_version": "16.23.8406595+branch.releases-16-23.content.release",
+  "verified_against": {
+    "content_version": "16.23.8406595+branch.releases-16-23.content.release",
+    "bin_sha256": "511102d2a41d5d43ca7cff0d29262ff2018cac29fce6aba999e97c455c85c831",
+    "evidence": "odd/tasks/champion-kits-wave-4.md",
+    "result": "Bin del cliente 16.23 convertido con python -m binmodel.batch_kits y compilado con esta especificación curada (CH-01 oleada 4 — cierre 173/173)"
+  },
+  "source": "Árboles de cálculo del bin del cliente (python -m binmodel) y marcado de los tooltips del cliente; estructura de casos curada en research/kits/",
+  "abilities": {
+    "P": {
+      "name": "Absolución",
+      "max_rank": 1,
+      "cases": [
+        {
+          "id": "on_hit",
+          "name": "Daño físico adicional por ataque (20 % DA)",
+          "parts": [
+            {
+              "damage_type": "physical",
+              "formula": {
+                "op": "mul",
+                "operands": [
+                  {
+                    "op": "constant",
+                    "value": 0.2
+                  },
+                  {
+                    "op": "stat",
+                    "stat": "attack_damage",
+                    "scope": "total"
+                  }
+                ]
+              },
+              "label": "Derivado",
+              "source": "Characters/Senna/Spells/SennaPassiveAbility/SennaPassive.mSpellCalculations.BonusOnHitDamage (16.23.8406595+branch.releases-16-23.content.release)",
+              "damage_type_source": "spell_sennapassive_tooltip <physicalDamage>"
+            }
+          ]
+        },
+        {
+          "id": "mist_extract",
+          "name": "Extracción de Niebla (% vida actual)",
+          "parts": [
+            {
+              "damage_type": "physical",
+              "formula": {
+                "op": "mul",
+                "operands": [
+                  {
+                    "op": "by_level",
+                    "values": [
+                      1,
+                      2,
+                      3,
+                      4,
+                      5,
+                      6,
+                      7,
+                      8,
+                      9,
+                      10,
+                      11,
+                      12,
+                      13,
+                      14,
+                      15,
+                      16,
+                      17,
+                      18
+                    ]
+                  },
+                  {
+                    "op": "constant",
+                    "value": 0.01
+                  },
+                  {
+                    "op": "stat",
+                    "stat": "health",
+                    "scope": "current",
+                    "subject": "target"
+                  }
+                ]
+              },
+              "label": "Derivado",
+              "source": "Characters/Senna/Spells/SennaPassiveAbility/SennaPassive · mSpellCalculations.BonusCurentHealthDamage % × vida actual del objetivo (16.23.8406595+branch.releases-16-23.content.release)",
+              "damage_type_source": "spell_sennapassive_tooltip <physicalDamage>"
+            }
+          ]
+        }
+      ],
+      "passive_stats": [],
+      "not_modelled": [
+        "Crítico y alcance cada 20 acumulaciones de Niebla, conversión de exceso de crítico en robo de vida (35 %), daño crítico reducido (80 %), robo de VM y crecimiento 0 de DA por nivel (DAT-04)"
+      ],
+      "passive_effects": [
+        {
+          "id": "mist_ad",
+          "name": "Niebla (DA por acumulación)",
+          "kind": "stat_bonus",
+          "formula": {
+            "op": "constant",
+            "value": 0.75
+          },
+          "label": "Derivado",
+          "source": "Characters/Senna/Spells/SennaPassiveAbility/SennaPassive.DataValues.ADPerStack (16.23.8406595+branch.releases-16-23.content.release)",
+          "stat": "attack_damage",
+          "mode": "flat",
+          "input_name": "mist_stacks",
+          "condition": "DA permanente por acumulación de Niebla (+0,75 DA/alma, --input mist_stacks)"
+        }
+      ]
+    },
+    "Q": {
+      "name": "Oscuridad lacerante",
+      "max_rank": 5,
+      "cases": [
+        {
+          "id": "beam",
+          "name": "Proyectil de sombra",
+          "parts": [
+            {
+              "damage_type": "physical",
+              "formula": {
+                "op": "add",
+                "operands": [
+                  {
+                    "op": "by_rank",
+                    "values": [
+                      30,
+                      55,
+                      80,
+                      105,
+                      130
+                    ]
+                  },
+                  {
+                    "op": "mul",
+                    "operands": [
+                      {
+                        "op": "constant",
+                        "value": 0.6
+                      },
+                      {
+                        "op": "stat",
+                        "stat": "attack_damage",
+                        "scope": "bonus"
+                      }
+                    ]
+                  }
+                ]
+              },
+              "label": "Derivado",
+              "source": "Characters/Senna/Spells/SennaQAbility/SennaQ.mSpellCalculations.TotalDamage (16.23.8406595+branch.releases-16-23.content.release)",
+              "damage_type_source": "spell_sennaq_tooltip <physicalDamage>"
+            }
+          ]
+        }
+      ],
+      "passive_stats": [],
+      "not_modelled": [
+        "Curación a aliados (TotalHeal), ralentización (TotalSlow), efectos al impactar y reducción de 1 s de CD por ataque"
+      ]
+    },
+    "W": {
+      "name": "Último abrazo",
+      "max_rank": 5,
+      "cases": [
+        {
+          "id": "hit",
+          "name": "Impacto de Niebla Negra",
+          "parts": [
+            {
+              "damage_type": "physical",
+              "formula": {
+                "op": "add",
+                "operands": [
+                  {
+                    "op": "by_rank",
+                    "values": [
+                      70,
+                      110,
+                      150,
+                      190,
+                      230
+                    ]
+                  },
+                  {
+                    "op": "mul",
+                    "operands": [
+                      {
+                        "op": "constant",
+                        "value": 0.9
+                      },
+                      {
+                        "op": "stat",
+                        "stat": "attack_damage",
+                        "scope": "bonus"
+                      }
+                    ]
+                  }
+                ]
+              },
+              "label": "Derivado",
+              "source": "Characters/Senna/Spells/SennaWAbility/SennaW.mSpellCalculations.Damage (16.23.8406595+branch.releases-16-23.content.release)",
+              "damage_type_source": "spell_sennaw_tooltip <physicalDamage>"
+            }
+          ]
+        }
+      ],
+      "passive_stats": [],
+      "not_modelled": [
+        "Inmovilización en área tras 1 s"
+      ]
+    },
+    "E": {
+      "name": "Maldición de la Niebla Negra",
+      "max_rank": 5,
+      "cases": [],
+      "passive_stats": [],
+      "not_modelled": [
+        "Camuflaje/espectros en área y velocidad de movimiento (TotalMS)"
+      ]
+    },
+    "R": {
+      "name": "Sombra del amanecer",
+      "max_rank": 3,
+      "cases": [
+        {
+          "id": "beam",
+          "name": "Rayo central",
+          "parts": [
+            {
+              "damage_type": "physical",
+              "formula": {
+                "op": "add",
+                "operands": [
+                  {
+                    "op": "by_rank",
+                    "values": [
+                      250,
+                      400,
+                      550
+                    ]
+                  },
+                  {
+                    "op": "mul",
+                    "operands": [
+                      {
+                        "op": "constant",
+                        "value": 0.7
+                      },
+                      {
+                        "op": "stat",
+                        "stat": "ability_power",
+                        "scope": "total"
+                      }
+                    ]
+                  },
+                  {
+                    "op": "mul",
+                    "operands": [
+                      {
+                        "op": "constant",
+                        "value": 1.15
+                      },
+                      {
+                        "op": "stat",
+                        "stat": "attack_damage",
+                        "scope": "bonus"
+                      }
+                    ]
+                  }
+                ]
+              },
+              "label": "Derivado",
+              "source": "Characters/Senna/Spells/SennaRAbility/SennaR.mSpellCalculations.TotalDamage (16.23.8406595+branch.releases-16-23.content.release)",
+              "damage_type_source": "spell_sennar_tooltip <physicalDamage>"
+            }
+          ]
+        }
+      ],
+      "passive_stats": [],
+      "not_modelled": [
+        "Escudo global a aliados (TotalShield) y aplicación de Niebla"
+      ]
+    }
+  }
+}

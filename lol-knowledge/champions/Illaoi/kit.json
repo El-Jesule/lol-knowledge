@@ -1,0 +1,209 @@
+{
+  "schema": "lol-champion-kit/1",
+  "champion": "Illaoi",
+  "label": "Derivado",
+  "game_version": "16.23",
+  "content_version": "16.23.8406595+branch.releases-16-23.content.release",
+  "verified_against": {
+    "content_version": "16.23.8406595+branch.releases-16-23.content.release",
+    "bin_sha256": "5c218fb632f31289eaafe4a57bbc9025416c3773564fd206c594b017e387b194",
+    "evidence": "odd/tasks/champion-kits-wave-4.md",
+    "result": "Bin del cliente 16.23 convertido con python -m binmodel.batch_kits y compilado con esta especificación curada (CH-01 oleada 4 — cierre 173/173)"
+  },
+  "source": "Árboles de cálculo del bin del cliente (python -m binmodel) y marcado de los tooltips del cliente; estructura de casos curada en research/kits/",
+  "abilities": {
+    "P": {
+      "name": "Profeta de un dios antiguo",
+      "max_rank": 1,
+      "cases": [],
+      "passive_stats": [],
+      "not_modelled": [
+        "Aparición periódica de tentáculos en muros (SpawnCD) y curación del 5 % de vida faltante por golpe de tentáculo"
+      ]
+    },
+    "Q": {
+      "name": "Aplastamiento con tentáculo",
+      "max_rank": 5,
+      "cases": [
+        {
+          "id": "slam",
+          "name": "Golpetazo de tentáculo",
+          "parts": [
+            {
+              "damage_type": "physical",
+              "formula": {
+                "op": "add",
+                "operands": [
+                  {
+                    "op": "linear_by_level",
+                    "min": 9,
+                    "max": 180
+                  },
+                  {
+                    "op": "mul",
+                    "operands": [
+                      {
+                        "op": "constant",
+                        "value": 1.1
+                      },
+                      {
+                        "op": "stat",
+                        "stat": "attack_damage",
+                        "scope": "total"
+                      }
+                    ]
+                  },
+                  {
+                    "op": "mul",
+                    "operands": [
+                      {
+                        "op": "constant",
+                        "value": 0.4
+                      },
+                      {
+                        "op": "stat",
+                        "stat": "ability_power",
+                        "scope": "total"
+                      }
+                    ]
+                  }
+                ]
+              },
+              "label": "Derivado",
+              "source": "Characters/Illaoi/Spells/IllaoiQAbility/IllaoiQ.mSpellCalculations.TentacleDamageTotal (16.23.8406595+branch.releases-16-23.content.release)",
+              "damage_type_source": "spell_illaoiq_tooltip <physicalDamage>"
+            }
+          ]
+        }
+      ],
+      "passive_stats": [],
+      "not_modelled": [
+        "Amplificación pasiva del daño de tentáculos (DamageIncreaseTooltip ya reflejada en TentacleDamageTotal)"
+      ]
+    },
+    "W": {
+      "name": "Dura lección",
+      "max_rank": 5,
+      "cases": [
+        {
+          "id": "leap",
+          "name": "Ataque potenciado (% vida máxima)",
+          "parts": [
+            {
+              "damage_type": "physical",
+              "formula": {
+                "op": "mul",
+                "operands": [
+                  {
+                    "op": "add",
+                    "operands": [
+                      {
+                        "op": "by_rank",
+                        "values": [
+                          3,
+                          3.5,
+                          4,
+                          4.5,
+                          5
+                        ]
+                      },
+                      {
+                        "op": "mul",
+                        "operands": [
+                          {
+                            "op": "constant",
+                            "value": 0.035
+                          },
+                          {
+                            "op": "stat",
+                            "stat": "attack_damage",
+                            "scope": "total"
+                          }
+                        ]
+                      }
+                    ]
+                  },
+                  {
+                    "op": "constant",
+                    "value": 0.01
+                  },
+                  {
+                    "op": "stat",
+                    "stat": "health",
+                    "scope": "max",
+                    "subject": "target"
+                  }
+                ]
+              },
+              "label": "Derivado",
+              "source": "Characters/Illaoi/Spells/IllaoiWAbility/IllaoiW · mSpellCalculations.HealthPercentTotal % × vida máxima del objetivo (16.23.8406595+branch.releases-16-23.content.release)",
+              "damage_type_source": "spell_illaoiw_tooltip <physicalDamage>"
+            }
+          ]
+        }
+      ],
+      "passive_stats": [],
+      "not_modelled": [
+        "Daño mínimo (WMinDamage), tope de 300 a monstruos y orden de golpetazo de tentáculos cercanos"
+      ]
+    },
+    "E": {
+      "name": "Prueba de espíritu",
+      "max_rank": 5,
+      "cases": [],
+      "passive_stats": [],
+      "not_modelled": [
+        "Extracción de espíritu, transferencia porcentual de daño (EchoPercent) y maldición de Recipiente"
+      ]
+    },
+    "R": {
+      "name": "Salto de fe",
+      "max_rank": 3,
+      "cases": [
+        {
+          "id": "impact",
+          "name": "Impacto del salto",
+          "parts": [
+            {
+              "damage_type": "physical",
+              "formula": {
+                "op": "add",
+                "operands": [
+                  {
+                    "op": "by_rank",
+                    "values": [
+                      150,
+                      250,
+                      350
+                    ]
+                  },
+                  {
+                    "op": "mul",
+                    "operands": [
+                      {
+                        "op": "constant",
+                        "value": 0.5
+                      },
+                      {
+                        "op": "stat",
+                        "stat": "attack_damage",
+                        "scope": "bonus"
+                      }
+                    ]
+                  }
+                ]
+              },
+              "label": "Derivado",
+              "source": "Characters/Illaoi/Spells/IllaoiRAbility/IllaoiR.mSpellCalculations.DamageCalc (16.23.8406595+branch.releases-16-23.content.release)",
+              "damage_type_source": "spell_illaoir_tooltip <physicalDamage>"
+            }
+          ]
+        }
+      ],
+      "passive_stats": [],
+      "not_modelled": [
+        "Invocación de tentáculos por campeón golpeado, reducción del 50 % del CD de W e imparabilidad"
+      ]
+    }
+  }
+}

@@ -214,3 +214,11 @@ def test_recast_settings_read_from_the_bin_must_be_constant(ahri_extract):
     extract["abilities"] = [item for item in extract["abilities"] if item["slot"] != "P"]
     with pytest.raises(KitGenError, match="no bin data for this ability"):
         compile_kit(extract, ahri_tooltips(), spec)
+
+
+def test_explicit_max_rank_in_spec_overrides_bin_level_count(ahri_extract):
+    spec = json.loads(AHRI_SPEC.read_text(encoding="utf-8"))
+    spec["abilities"]["W"]["cases"] = []
+    spec["abilities"]["W"]["max_rank"] = 6
+    compiled = compile_kit(ahri_extract, ahri_tooltips(), spec)
+    assert compiled["abilities"]["W"]["max_rank"] == 6

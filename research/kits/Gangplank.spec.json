@@ -1,0 +1,90 @@
+{
+  "champion": "Gangplank",
+  "game_version": "16.23",
+  "verified_against": {
+    "content_version": "16.23.8406595+branch.releases-16-23.content.release",
+    "bin_sha256": "7e5c02bf0c8ea7a803bd83f4e3c829c3092c63d90f32ca10fc31e233e0b93f7b",
+    "evidence": "odd/tasks/champion-kits-wave-4.md",
+    "result": "Bin del cliente 16.23 convertido con python -m binmodel.batch_kits y compilado con esta especificación curada (CH-01 oleada 4 — cierre 173/173)"
+  },
+  "abilities": {
+    "P": {
+      "name": "Prueba de fuego",
+      "tooltip": "spell_gangplankpassive_tooltip",
+      "max_rank": 1,
+      "cases": [
+        {
+          "id": "burn",
+          "name": "Quemadura verdadera (2,5 s)",
+          "parts": [
+            {
+              "calculation": "TotalDamage"
+            }
+          ]
+        }
+      ],
+      "not_modelled": [
+        "Velocidad de movimiento (MoveSpeed), daño a estructuras y reinicio al detonar barriles"
+      ]
+    },
+    "Q": {
+      "name": "Parrrlamento",
+      "tooltip": "spell_gangplankqwrapper_tooltip_1",
+      "cases": [
+        {
+          "id": "shot",
+          "name": "Disparo (sin crítico)",
+          "parts": [
+            {
+              "calculation": "ShotDamage"
+            }
+          ]
+        }
+      ],
+      "not_modelled": [
+        "Aplicación de efectos al impactar, golpe crítico (ShotCrit), oro adicional y Serpientes de plata al rematar"
+      ]
+    },
+    "W": {
+      "name": "Eliminar escorbuto",
+      "tooltip": "spell_gangplankw_tooltip",
+      "not_modelled": [
+        "Limpieza de control de masas y curación (BaseHealth + % vida faltante)"
+      ]
+    },
+    "E": {
+      "name": "Barril de pólvora",
+      "tooltip": "spell_gangplanke_tooltip",
+      "not_modelled": [
+        "Cadena de barriles con daño del ataque detonador + BonusDamageToChampions, 40 % penetración de armadura (BarrelArmorPenetration) y ralentización"
+      ]
+    },
+    "R": {
+      "name": "Andanada de cañón",
+      "tooltip": "spell_gangplankr_tooltip",
+      "cases": [
+        {
+          "id": "one_wave",
+          "name": "Una oleada (12/18 oleadas)",
+          "parts": [
+            {
+              "calculation": "OneWaveDamage"
+            }
+          ]
+        },
+        {
+          "id": "deaths_daughter",
+          "name": "Hija de la muerte (daño verdadero central)",
+          "parts": [
+            {
+              "calculation": "DeathsDaughterDamage"
+            }
+          ]
+        }
+      ],
+      "not_modelled": [
+        "Mejoras con Serpientes de plata (Fuego a discreción, Subir la moral), ralentización y total combinado"
+      ]
+    }
+  }
+}

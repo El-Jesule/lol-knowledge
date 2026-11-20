@@ -1,0 +1,115 @@
+{
+  "schema": "lol-champion-kit/1",
+  "champion": "Aphelios",
+  "label": "Derivado",
+  "game_version": "16.23",
+  "content_version": "16.23.8406595+branch.releases-16-23.content.release",
+  "verified_against": {
+    "content_version": "16.23.8406595+branch.releases-16-23.content.release",
+    "bin_sha256": "dfc48a744f30d75e8631d18acd284d0dc97106ae3ca8f2ab694e9a03e7e2e0a9",
+    "evidence": "odd/tasks/champion-kits-wave-4.md",
+    "result": "Bin del cliente 16.23 convertido con python -m binmodel.batch_kits y compilado con esta especificación curada (CH-01 oleada 4 — cierre 173/173)"
+  },
+  "source": "Árboles de cálculo del bin del cliente (python -m binmodel) y marcado de los tooltips del cliente; estructura de casos curada en research/kits/",
+  "abilities": {
+    "P": {
+      "name": "El Asesino y la Vidente",
+      "max_rank": 1,
+      "cases": [],
+      "passive_stats": [],
+      "not_modelled": [
+        "Sistema de 5 armas con munición (Calibrum, Severum, Gravitum, Infernum, Crescendum) y distribución manual de hasta 6 rangos de DA, VA y letalidad"
+      ]
+    },
+    "Q": {
+      "name": "Habilidades de las armas",
+      "max_rank": 6,
+      "cases": [],
+      "passive_stats": [],
+      "not_modelled": [
+        "5 habilidades Q distintas en hechizos separados según el arma principal equipada (no enlazadas como ranura única en Data Dragon/bin raíz)"
+      ]
+    },
+    "W": {
+      "name": "Fase",
+      "max_rank": 6,
+      "cases": [],
+      "passive_stats": [],
+      "not_modelled": [
+        "Intercambio de arma principal y secundaria"
+      ]
+    },
+    "E": {
+      "name": "Sistema de cola de armas",
+      "max_rank": 6,
+      "cases": [],
+      "passive_stats": [],
+      "not_modelled": [
+        "Cola de armas sin habilidad activa"
+      ]
+    },
+    "R": {
+      "name": "Vigilia lunar",
+      "max_rank": 3,
+      "cases": [
+        {
+          "id": "explosion",
+          "name": "Explosión inicial de Vigilia lunar",
+          "parts": [
+            {
+              "damage_type": "physical",
+              "formula": {
+                "op": "add",
+                "operands": [
+                  {
+                    "op": "by_rank",
+                    "values": [
+                      125,
+                      175,
+                      225
+                    ]
+                  },
+                  {
+                    "op": "mul",
+                    "operands": [
+                      {
+                        "op": "constant",
+                        "value": 0.2
+                      },
+                      {
+                        "op": "stat",
+                        "stat": "attack_damage",
+                        "scope": "bonus"
+                      }
+                    ]
+                  },
+                  {
+                    "op": "mul",
+                    "operands": [
+                      {
+                        "op": "constant",
+                        "value": 1
+                      },
+                      {
+                        "op": "stat",
+                        "stat": "ability_power",
+                        "scope": "total"
+                      }
+                    ]
+                  }
+                ]
+              },
+              "label": "Derivado",
+              "source": "Characters/Aphelios/Spells/ApheliosRAbility/ApheliosR.mSpellCalculations.MaxDamage (16.23.8406595+branch.releases-16-23.content.release)",
+              "damage_type_source": "spell_apheliosr_tooltip <physicalDamage>"
+            }
+          ]
+        }
+      ],
+      "passive_stats": [],
+      "not_modelled": [
+        "Ataque de seguimiento con el arma principal, daño adicional de Infernum (InfernumRBonusDamage), curación de Severum, marca de Calibrum, chakrams de Crescendum y ralentización de Gravitum"
+      ]
+    }
+  }
+}

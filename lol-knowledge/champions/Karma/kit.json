@@ -1,0 +1,226 @@
+{
+  "schema": "lol-champion-kit/1",
+  "champion": "Karma",
+  "label": "Derivado",
+  "game_version": "16.23",
+  "content_version": "16.23.8406595+branch.releases-16-23.content.release",
+  "verified_against": {
+    "content_version": "16.23.8406595+branch.releases-16-23.content.release",
+    "bin_sha256": "6f9cedf5ce00a2373c35cbda097a0bcc21dcf8ad5b86ae9f6d978ddf55f59968",
+    "evidence": "odd/tasks/champion-kits-wave-4.md",
+    "result": "Bin del cliente 16.23 convertido con python -m binmodel.batch_kits y compilado con esta especificación curada (CH-01 oleada 4 — cierre 173/173)"
+  },
+  "source": "Árboles de cálculo del bin del cliente (python -m binmodel) y marcado de los tooltips del cliente; estructura de casos curada en research/kits/",
+  "abilities": {
+    "P": {
+      "name": "Fuego reunificador",
+      "max_rank": 1,
+      "cases": [],
+      "passive_stats": [],
+      "not_modelled": [
+        "Reducción del enfriamiento de Mantra (SpellMantraRefund) al dañar campeones con habilidades"
+      ]
+    },
+    "Q": {
+      "name": "Llama interior",
+      "max_rank": 5,
+      "cases": [
+        {
+          "id": "bolt",
+          "name": "Rayo base (sin Mantra)",
+          "parts": [
+            {
+              "damage_type": "magic",
+              "formula": {
+                "op": "add",
+                "operands": [
+                  {
+                    "op": "by_rank",
+                    "values": [
+                      60,
+                      110,
+                      160,
+                      210,
+                      260
+                    ]
+                  },
+                  {
+                    "op": "mul",
+                    "operands": [
+                      {
+                        "op": "constant",
+                        "value": 0.7
+                      },
+                      {
+                        "op": "stat",
+                        "stat": "ability_power",
+                        "scope": "total"
+                      }
+                    ]
+                  }
+                ]
+              },
+              "label": "Derivado",
+              "source": "Characters/Karma/Spells/KarmaQAbility/KarmaQ.mSpellCalculations.TotalDamage (16.23.8406595+branch.releases-16-23.content.release)",
+              "damage_type_source": "spell_karmaq_tooltip_0 <magicDamage>"
+            }
+          ]
+        }
+      ],
+      "passive_stats": [],
+      "not_modelled": [
+        "Ralentización del 40 % y bonificación de Mantra (documentada en R: rq_impact y rq_field)"
+      ]
+    },
+    "W": {
+      "name": "Resolución concentrada",
+      "max_rank": 5,
+      "cases": [
+        {
+          "id": "tick",
+          "name": "Un impacto (vínculo inicial o al inmovilizar)",
+          "parts": [
+            {
+              "damage_type": "magic",
+              "formula": {
+                "op": "add",
+                "operands": [
+                  {
+                    "op": "by_rank",
+                    "values": [
+                      40,
+                      65,
+                      90,
+                      115,
+                      140
+                    ]
+                  },
+                  {
+                    "op": "mul",
+                    "operands": [
+                      {
+                        "op": "constant",
+                        "value": 0.45
+                      },
+                      {
+                        "op": "stat",
+                        "stat": "ability_power",
+                        "scope": "total"
+                      }
+                    ]
+                  }
+                ]
+              },
+              "label": "Derivado",
+              "source": "Characters/Karma/Spells/KarmaSpiritBindAbility/KarmaSpiritBind.mSpellCalculations.InitialDamage (16.23.8406595+branch.releases-16-23.content.release)",
+              "damage_type_source": "spell_karmaw_tooltip_0 <magicDamage>"
+            }
+          ]
+        }
+      ],
+      "passive_stats": [],
+      "not_modelled": [
+        "Inmovilización tras 2 s, visión verdadera y curación de Mantra (R: RWHealAmount)"
+      ]
+    },
+    "E": {
+      "name": "Inspiración",
+      "max_rank": 5,
+      "cases": [],
+      "passive_stats": [],
+      "not_modelled": [
+        "Escudo (TotalShield), velocidad de movimiento y escudo en área con Mantra (R: REBonusShield)"
+      ]
+    },
+    "R": {
+      "name": "Mantra",
+      "max_rank": 4,
+      "cases": [
+        {
+          "id": "rq_bonus_impact",
+          "name": "R+Q: Daño mágico adicional al impactar",
+          "parts": [
+            {
+              "damage_type": "magic",
+              "formula": {
+                "op": "add",
+                "operands": [
+                  {
+                    "op": "by_rank",
+                    "values": [
+                      40,
+                      100,
+                      160,
+                      220
+                    ]
+                  },
+                  {
+                    "op": "mul",
+                    "operands": [
+                      {
+                        "op": "constant",
+                        "value": 0.3
+                      },
+                      {
+                        "op": "stat",
+                        "stat": "ability_power",
+                        "scope": "total"
+                      }
+                    ]
+                  }
+                ]
+              },
+              "label": "Derivado",
+              "source": "Characters/Karma/Spells/KarmaMantraAbility/KarmaMantra.mSpellCalculations.RQImpactDamage (16.23.8406595+branch.releases-16-23.content.release)",
+              "damage_type_source": "spell_karmamantra_tooltip <magicDamage>"
+            }
+          ]
+        },
+        {
+          "id": "rq_detonation",
+          "name": "R+Q: Explosión del campo de fuego",
+          "parts": [
+            {
+              "damage_type": "magic",
+              "formula": {
+                "op": "add",
+                "operands": [
+                  {
+                    "op": "by_rank",
+                    "values": [
+                      40,
+                      130,
+                      220,
+                      310
+                    ]
+                  },
+                  {
+                    "op": "mul",
+                    "operands": [
+                      {
+                        "op": "constant",
+                        "value": 0.5
+                      },
+                      {
+                        "op": "stat",
+                        "stat": "ability_power",
+                        "scope": "total"
+                      }
+                    ]
+                  }
+                ]
+              },
+              "label": "Derivado",
+              "source": "Characters/Karma/Spells/KarmaMantraAbility/KarmaMantra.mSpellCalculations.RQFieldDamage (16.23.8406595+branch.releases-16-23.content.release)",
+              "damage_type_source": "spell_karmamantra_tooltip <magicDamage>"
+            }
+          ]
+        }
+      ],
+      "passive_stats": [],
+      "not_modelled": [
+        "Curación de R+W (RWHealAmount) y escudo adicional en área de R+E (REBonusShield, REBonusShieldArea)"
+      ]
+    }
+  }
+}

@@ -1,0 +1,220 @@
+{
+  "schema": "lol-champion-kit/1",
+  "champion": "Kalista",
+  "label": "Derivado",
+  "game_version": "16.23",
+  "content_version": "16.23.8406595+branch.releases-16-23.content.release",
+  "verified_against": {
+    "content_version": "16.23.8406595+branch.releases-16-23.content.release",
+    "bin_sha256": "d0d1f940c35eb80f7ca167ae74a766d0682db94c41b1db70b8c57666633d3dce",
+    "evidence": "odd/tasks/champion-kits-wave-4.md",
+    "result": "Bin del cliente 16.23 convertido con python -m binmodel.batch_kits y compilado con esta especificación curada (CH-01 oleada 4 — cierre 173/173)"
+  },
+  "source": "Árboles de cálculo del bin del cliente (python -m binmodel) y marcado de los tooltips del cliente; estructura de casos curada en research/kits/",
+  "abilities": {
+    "P": {
+      "name": "Aplomo marcial",
+      "max_rank": 1,
+      "cases": [],
+      "passive_stats": [],
+      "not_modelled": [
+        "Salto tras cada ataque o Q, vínculo Juramentado y cancelación de ataques al perder visión"
+      ]
+    },
+    "Q": {
+      "name": "Atravesar",
+      "max_rank": 5,
+      "cases": [
+        {
+          "id": "spear",
+          "name": "Lanza",
+          "parts": [
+            {
+              "damage_type": "physical",
+              "formula": {
+                "op": "add",
+                "operands": [
+                  {
+                    "op": "by_rank",
+                    "values": [
+                      10,
+                      75,
+                      140,
+                      205,
+                      270
+                    ]
+                  },
+                  {
+                    "op": "mul",
+                    "operands": [
+                      {
+                        "op": "constant",
+                        "value": 1.05
+                      },
+                      {
+                        "op": "stat",
+                        "stat": "attack_damage",
+                        "scope": "total"
+                      }
+                    ]
+                  }
+                ]
+              },
+              "label": "Derivado",
+              "source": "Characters/Kalista/Spells/KalistaMysticShotAbility/KalistaMysticShot.mSpellCalculations.TotalDamage (16.23.8406595+branch.releases-16-23.content.release)",
+              "damage_type_source": "spell_kalistamysticshot_tooltip <physicalDamage>"
+            }
+          ]
+        }
+      ],
+      "passive_stats": [],
+      "not_modelled": [
+        "Transferencia de acumulaciones de Desgarrar al matar un objetivo"
+      ]
+    },
+    "W": {
+      "name": "Centinela",
+      "max_rank": 5,
+      "cases": [],
+      "passive_stats": [],
+      "not_modelled": [
+        "Pasiva Marca del alma con el Juramentado (% vida máxima mágico) y centinela de visión"
+      ]
+    },
+    "E": {
+      "name": "Desgarrar",
+      "max_rank": 5,
+      "cases": [
+        {
+          "id": "first_spear",
+          "name": "Primera lanza",
+          "parts": [
+            {
+              "damage_type": "physical",
+              "formula": {
+                "op": "add",
+                "operands": [
+                  {
+                    "op": "by_rank",
+                    "values": [
+                      5,
+                      15,
+                      25,
+                      35,
+                      45
+                    ]
+                  },
+                  {
+                    "op": "mul",
+                    "operands": [
+                      {
+                        "op": "constant",
+                        "value": 0.7
+                      },
+                      {
+                        "op": "stat",
+                        "stat": "attack_damage",
+                        "scope": "total"
+                      }
+                    ]
+                  },
+                  {
+                    "op": "mul",
+                    "operands": [
+                      {
+                        "op": "constant",
+                        "value": 0.65
+                      },
+                      {
+                        "op": "stat",
+                        "stat": "ability_power",
+                        "scope": "total"
+                      }
+                    ]
+                  }
+                ]
+              },
+              "label": "Derivado",
+              "source": "Characters/Kalista/Spells/KalistaExpungeWrapperAbility/KalistaExpungeWrapper.mSpellCalculations.NormalDamage (16.23.8406595+branch.releases-16-23.content.release)",
+              "damage_type_source": "spell_kalistaexpungewrapper_tooltip <physicalDamage>"
+            }
+          ]
+        },
+        {
+          "id": "extra_spear",
+          "name": "Cada lanza adicional",
+          "parts": [
+            {
+              "damage_type": "physical",
+              "formula": {
+                "op": "add",
+                "operands": [
+                  {
+                    "op": "by_rank",
+                    "values": [
+                      7,
+                      14,
+                      21,
+                      28,
+                      35
+                    ]
+                  },
+                  {
+                    "op": "mul",
+                    "operands": [
+                      {
+                        "op": "by_rank",
+                        "values": [
+                          0.2,
+                          0.275,
+                          0.35,
+                          0.425,
+                          0.5
+                        ]
+                      },
+                      {
+                        "op": "stat",
+                        "stat": "attack_damage",
+                        "scope": "total"
+                      }
+                    ]
+                  },
+                  {
+                    "op": "mul",
+                    "operands": [
+                      {
+                        "op": "constant",
+                        "value": 0.5
+                      },
+                      {
+                        "op": "stat",
+                        "stat": "ability_power",
+                        "scope": "total"
+                      }
+                    ]
+                  }
+                ]
+              },
+              "label": "Derivado",
+              "source": "Characters/Kalista/Spells/KalistaExpungeWrapperAbility/KalistaExpungeWrapper.mSpellCalculations.AdditionalDamage (16.23.8406595+branch.releases-16-23.content.release)",
+              "damage_type_source": "spell_kalistaexpungewrapper_tooltip <physicalDamage>"
+            }
+          ]
+        }
+      ],
+      "passive_stats": [],
+      "not_modelled": [
+        "Ralentización (TotalSlowAmount), reinicio de enfriamiento y devolución de maná al matar una unidad"
+      ]
+    },
+    "R": {
+      "name": "Llamada del destino",
+      "max_rank": 3,
+      "cases": [],
+      "passive_stats": [],
+      "not_modelled": [
+        "Rescate inalcanzable del Juramentado y lanzamiento con derribo aéreo"
+      ]
+    }
+  }
+}
