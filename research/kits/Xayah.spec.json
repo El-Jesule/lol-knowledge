@@ -1,0 +1,98 @@
+{
+  "champion": "Xayah",
+  "game_version": "16.23",
+  "verified_against": {
+    "content_version": "16.23.8406595+branch.releases-16-23.content.release",
+    "bin_sha256": "44d7eb54ed7993cc4f262c462842376c4f737d84d6e84a547ca11c0cac72dfcf",
+    "evidence": "odd/tasks/champion-kits-wave-1.md",
+    "result": "Bin del cliente 16.23 convertido con python -m binmodel.batch_kits y compilado con esta especificación curada (CH-01 oleada 1)"
+  },
+  "abilities": {
+    "P": {
+      "name": "Corte limpio",
+      "max_rank": 1,
+      "not_modelled": [
+        "Daño atravesado en línea y colocación de plumas"
+      ]
+    },
+    "Q": {
+      "name": "Daga doble",
+      "tooltip": "spell_xayahq_tooltip",
+      "cases": [
+        {
+          "id": "one_dagger",
+          "name": "Una daga (primer objetivo)",
+          "parts": [
+            {
+              "calculation": "TotalDamage"
+            }
+          ]
+        },
+        {
+          "id": "two_daggers",
+          "name": "Ambas dagas (primer objetivo)",
+          "parts": [
+            {
+              "calculation": "TotalDamage"
+            },
+            {
+              "calculation": "TotalDamage"
+            }
+          ]
+        },
+        {
+          "id": "passthrough",
+          "name": "Una daga (objetivos sucesivos)",
+          "parts": [
+            {
+              "calculation": "MultiHitDamage"
+            }
+          ]
+        }
+      ]
+    },
+    "W": {
+      "name": "Plumaje mortífero",
+      "tooltip": "spell_xayahw_tooltip",
+      "not_modelled": [
+        "Velocidad de ataque, cuchilla secundaria del 20 % y velocidad de movimiento"
+      ]
+    },
+    "E": {
+      "name": "Dagas a mí",
+      "tooltip": "spell_xayahe_tooltip",
+      "cases": [
+        {
+          "id": "one_feather",
+          "name": "Una pluma (sin escalado crítico)",
+          "parts": [
+            {
+              "calculation": "FeatherDamage"
+            }
+          ]
+        }
+      ],
+      "not_modelled": [
+        "Escalado por probabilidad de crítico, reducción progresiva en plumas múltiples e inmovilización con 3+ plumas"
+      ]
+    },
+    "R": {
+      "name": "Tormenta de plumas",
+      "tooltip": "spell_xayahr_tooltip",
+      "cases": [
+        {
+          "id": "feathers",
+          "name": "Lluvia de dagas",
+          "parts": [
+            {
+              "calculation": "Damage"
+            }
+          ]
+        }
+      ],
+      "not_modelled": [
+        "Inalcanzabilidad y línea de 5 plumas"
+      ]
+    }
+  }
+}

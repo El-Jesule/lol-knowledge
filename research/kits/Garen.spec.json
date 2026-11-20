@@ -1,0 +1,147 @@
+{
+  "champion": "Garen",
+  "game_version": "16.23",
+  "verified_against": {
+    "content_version": "16.23.8406595+branch.releases-16-23.content.release",
+    "bin_sha256": "6b90c0d9f5c40564363adc6047b4e5ca35eaecc1932d393e4fd2d16ce049c0c2",
+    "evidence": "odd/tasks/champion-kits-wave-1.md",
+    "result": "Bin del cliente 16.23 convertido con python -m binmodel.batch_kits y compilado con esta especificación curada (CH-01 oleada 1)"
+  },
+  "abilities": {
+    "P": {
+      "name": "Perseverancia",
+      "max_rank": 1,
+      "not_modelled": [
+        "Regeneración de vida máxima fuera de combate (RegenCalc)"
+      ]
+    },
+    "Q": {
+      "name": "Golpe decisivo",
+      "tooltip": "spell_garenq_tooltip",
+      "cases": [
+        {
+          "id": "strike",
+          "name": "Daño físico adicional",
+          "parts": [
+            {
+              "calculation": "TotalDamage"
+            }
+          ]
+        }
+      ],
+      "not_modelled": [
+        "Limpieza de ralentizaciones, velocidad de movimiento, silencio y ataque básico aparte"
+      ]
+    },
+    "W": {
+      "name": "Coraje",
+      "tooltip": "spell_garenw_tooltip",
+      "not_modelled": [
+        "Armadura y RM acumulables por asesinatos (ResistsForTooltip)",
+        "Reducción de daño, tenacidad y escudo (TotalShield)"
+      ]
+    },
+    "E": {
+      "name": "Juicio",
+      "tooltip": "spell_garene_tooltip",
+      "cases": [
+        {
+          "id": "tick",
+          "name": "Un giro (objetivo secundario)",
+          "parts": [
+            {
+              "calculation": "TotalDamage"
+            }
+          ]
+        },
+        {
+          "id": "tick_nearest",
+          "name": "Un giro (enemigo más cercano, +25 %)",
+          "parts": [
+            {
+              "tooltip_reference": "NearestEnemyBonus",
+              "damage_type": "physical",
+              "source_note": "TotalDamage × (1 + DataValues.NearestEnemyBonus)",
+              "formula": {
+                "op": "mul",
+                "operands": [
+                  {
+                    "op": "calculation",
+                    "name": "TotalDamage"
+                  },
+                  {
+                    "op": "add",
+                    "operands": [
+                      {
+                        "op": "constant",
+                        "value": 1
+                      },
+                      {
+                        "op": "data_value",
+                        "name": "NearestEnemyBonus"
+                      }
+                    ]
+                  }
+                ]
+              }
+            }
+          ]
+        }
+      ],
+      "not_modelled": [
+        "Número total de giros escalado con velocidad de ataque adicional (base 7)",
+        "Golpes críticos de Juicio y reducción del 25 % de armadura tras 6 giros"
+      ]
+    },
+    "R": {
+      "name": "Justicia demaciana",
+      "tooltip": "spell_garenr_tooltip",
+      "cases": [
+        {
+          "id": "execute",
+          "name": "Ejecución (daño verdadero)",
+          "parts": [
+            {
+              "tooltip_reference": "BaseDamage",
+              "damage_type": "true",
+              "source_note": "BaseDamage + ExecuteDamage × vida que falta del objetivo",
+              "formula": {
+                "op": "add",
+                "operands": [
+                  {
+                    "op": "data_value",
+                    "name": "BaseDamage"
+                  },
+                  {
+                    "op": "mul",
+                    "operands": [
+                      {
+                        "op": "data_value",
+                        "name": "ExecuteDamage"
+                      },
+                      {
+                        "op": "stat",
+                        "stat": "health",
+                        "scope": "max",
+                        "subject": "target"
+                      },
+                      {
+                        "op": "stat",
+                        "stat": "health",
+                        "scope": "missing_fraction",
+                        "subject": "target"
+                      }
+                    ]
+                  }
+                ]
+              }
+            }
+          ]
+        }
+      ],
+      "not_modelled": [
+        "Revelación breve del objetivo"
+      ]
+    }
+  }
+}

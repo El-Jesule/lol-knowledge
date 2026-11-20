@@ -1,0 +1,124 @@
+{
+  "champion": "Orianna",
+  "game_version": "16.23",
+  "verified_against": {
+    "content_version": "16.23.8406595+branch.releases-16-23.content.release",
+    "bin_sha256": "a6988e7b216cc2ed2d4283ff28733369afd31ebdccd49a417886843334d269ed",
+    "evidence": "odd/tasks/champion-kits-wave-1.md",
+    "result": "Bin del cliente 16.23 convertido con python -m binmodel.batch_kits y compilado con esta especificación curada (CH-01 oleada 1)"
+  },
+  "abilities": {
+    "P": {
+      "name": "Dando cuerda",
+      "tooltip": "spell_oriannap_tooltip",
+      "max_rank": 1,
+      "cases": [
+        {
+          "id": "hit",
+          "name": "Daño mágico adicional base",
+          "parts": [
+            {
+              "calculation": "TotalDamage"
+            }
+          ]
+        },
+        {
+          "id": "stack_bonus",
+          "name": "Aumento por golpe consecutivo",
+          "parts": [
+            {
+              "calculation": "StackDamage"
+            }
+          ]
+        },
+        {
+          "id": "max_stacks",
+          "name": "Daño adicional máximo (2 cargas)",
+          "parts": [
+            {
+              "calculation": "StackDamageMax"
+            }
+          ]
+        }
+      ]
+    },
+    "Q": {
+      "name": "Orden: atacar",
+      "tooltip": "spell_orianaizunacommand_tooltip",
+      "cases": [
+        {
+          "id": "first",
+          "name": "Primer objetivo",
+          "parts": [
+            {
+              "calculation": "TotalDamage"
+            }
+          ]
+        },
+        {
+          "id": "reduced",
+          "name": "Objetivos sucesivos (reducido)",
+          "parts": [
+            {
+              "calculation": "ReducedDamage"
+            }
+          ]
+        }
+      ]
+    },
+    "W": {
+      "name": "Orden: disonancia",
+      "tooltip": "spell_orianadissonancecommand_tooltip",
+      "cases": [
+        {
+          "id": "pulse",
+          "name": "Pulso eléctrico",
+          "parts": [
+            {
+              "calculation": "TotalDamage"
+            }
+          ]
+        }
+      ],
+      "not_modelled": [
+        "Ralentización a enemigos y aceleración a aliados"
+      ]
+    },
+    "E": {
+      "name": "Orden: proteger",
+      "tooltip": "spell_orianaredactcommand_tooltip",
+      "cases": [
+        {
+          "id": "passthrough",
+          "name": "Daño al atravesar enemigos",
+          "parts": [
+            {
+              "calculation": "TotalDamageTooltip"
+            }
+          ]
+        }
+      ],
+      "not_modelled": [
+        "Escudo (TotalShieldTooltip) y armadura/RM pasivas al portador de la bola (DefenseBonus)"
+      ]
+    },
+    "R": {
+      "name": "Orden: onda de choque",
+      "tooltip": "spell_orianadetonatecommand_tooltip",
+      "cases": [
+        {
+          "id": "shockwave",
+          "name": "Onda de choque",
+          "parts": [
+            {
+              "calculation": "TotalDamage"
+            }
+          ]
+        }
+      ],
+      "not_modelled": [
+        "Atracción y derribo"
+      ]
+    }
+  }
+}

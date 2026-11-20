@@ -1,0 +1,100 @@
+{
+  "champion": "Leona",
+  "game_version": "16.23",
+  "verified_against": {
+    "content_version": "16.23.8406595+branch.releases-16-23.content.release",
+    "bin_sha256": "c2dbbf4297d9a94b72027206979f21fe4d84aeb0f87c677bf626989634fbc3d3",
+    "evidence": "odd/tasks/champion-kits-wave-1.md",
+    "result": "Bin del cliente 16.23 convertido con python -m binmodel.batch_kits y compilado con esta especificación curada (CH-01 oleada 1)"
+  },
+  "abilities": {
+    "P": {
+      "name": "Luz solar",
+      "tooltip": "spell_leonasunlightpassive_tooltip",
+      "max_rank": 1,
+      "cases": [
+        {
+          "id": "mark",
+          "name": "Detonación aliada de marca",
+          "parts": [
+            {
+              "calculation": "TotalDamage"
+            }
+          ]
+        }
+      ]
+    },
+    "Q": {
+      "name": "Escudo del amanecer",
+      "tooltip": "spell_leonashieldofdaybreak_tooltip",
+      "cases": [
+        {
+          "id": "strike",
+          "name": "Daño mágico adicional",
+          "parts": [
+            {
+              "calculation": "TotalDamageTooltip"
+            }
+          ]
+        }
+      ],
+      "not_modelled": [
+        "Aturdimiento (StunDuration) y daño del ataque básico aparte"
+      ]
+    },
+    "W": {
+      "name": "Eclipse",
+      "tooltip": "spell_leonasolarbarrier_tooltip",
+      "cases": [
+        {
+          "id": "explode",
+          "name": "Explosión del escudo",
+          "parts": [
+            {
+              "calculation": "TotalDamageTooltip"
+            }
+          ]
+        }
+      ],
+      "not_modelled": [
+        "Reducción plana de daño recibido y armadura/RM temporales (BonusArmorTooltip, BonusMRTooltip)"
+      ]
+    },
+    "E": {
+      "name": "Hoja del cénit",
+      "tooltip": "spell_leonazenithblade_tooltip",
+      "cases": [
+        {
+          "id": "blade",
+          "name": "Estocada",
+          "parts": [
+            {
+              "calculation": "TotalDamageTooltip"
+            }
+          ]
+        }
+      ],
+      "not_modelled": [
+        "Inmovilización y desplazamiento hacia el último campeón alcanzado"
+      ]
+    },
+    "R": {
+      "name": "Llamarada solar",
+      "tooltip": "spell_leonasolarflare_tooltip",
+      "cases": [
+        {
+          "id": "flare",
+          "name": "Impacto solar",
+          "parts": [
+            {
+              "calculation": "ExplosionCalculatedDamage"
+            }
+          ]
+        }
+      ],
+      "not_modelled": [
+        "Aturdimiento en el centro y ralentización en el borde"
+      ]
+    }
+  }
+}

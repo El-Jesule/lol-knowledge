@@ -1,0 +1,86 @@
+{
+  "champion": "Karthus",
+  "game_version": "16.23",
+  "verified_against": {
+    "content_version": "16.23.8406595+branch.releases-16-23.content.release",
+    "bin_sha256": "9daa799618c11927514f8e2a941d9a4d99cb4348108f1562d2c9ac8fe22a374a",
+    "evidence": "odd/tasks/champion-kits-wave-1.md",
+    "result": "Bin del cliente 16.23 convertido con python -m binmodel.batch_kits y compilado con esta especificación curada (CH-01 oleada 1)"
+  },
+  "abilities": {
+    "P": {
+      "name": "Desafío a la muerte",
+      "max_rank": 1,
+      "not_modelled": [
+        "7 s de lanzamiento gratuito tras morir"
+      ]
+    },
+    "Q": {
+      "name": "Sembrar la destrucción",
+      "tooltip": "spell_karthuslaywastea1_tooltip",
+      "cases": [
+        {
+          "id": "multi",
+          "name": "Varios objetivos",
+          "parts": [
+            {
+              "calculation": "QDamage"
+            }
+          ]
+        },
+        {
+          "id": "isolated",
+          "name": "Objetivo aislado (daño doble)",
+          "parts": [
+            {
+              "calculation": "QSingleTargetDamage"
+            }
+          ]
+        }
+      ]
+    },
+    "W": {
+      "name": "Muro de dolor",
+      "tooltip": "spell_karthuswallofpain_tooltip",
+      "not_modelled": [
+        "Reducción de resistencia mágica (MagicResistShred) y ralentización"
+      ]
+    },
+    "E": {
+      "name": "Profanación",
+      "tooltip": "spell_karthusdefile_tooltip",
+      "cases": [
+        {
+          "id": "per_second",
+          "name": "Aura por segundo",
+          "parts": [
+            {
+              "calculation": "TotalDPS"
+            }
+          ]
+        }
+      ],
+      "not_modelled": [
+        "Restauración pasiva de maná al matar unidades y consumo continuo de maná"
+      ]
+    },
+    "R": {
+      "name": "Réquiem",
+      "tooltip": "spell_karthusfallenone_tooltip",
+      "cases": [
+        {
+          "id": "requiem",
+          "name": "Impacto global",
+          "parts": [
+            {
+              "calculation": "TotalDamage"
+            }
+          ]
+        }
+      ],
+      "not_modelled": [
+        "Canalización de 3 s y efecto sobre los 5 campeones enemigos"
+      ]
+    }
+  }
+}

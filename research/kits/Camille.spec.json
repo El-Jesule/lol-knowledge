@@ -1,0 +1,165 @@
+{
+  "champion": "Camille",
+  "game_version": "16.23",
+  "verified_against": {
+    "content_version": "16.23.8406595+branch.releases-16-23.content.release",
+    "bin_sha256": "f713dc24191acd9c7e9af2b9e8a8e65458fd30859c1e2c8a7b033b1fb0a319e5",
+    "evidence": "odd/tasks/champion-kits-wave-1.md",
+    "result": "Bin del cliente 16.23 convertido con python -m binmodel.batch_kits y compilado con esta especificación curada (CH-01 oleada 1)"
+  },
+  "abilities": {
+    "P": {
+      "name": "Defensa adaptable",
+      "max_rank": 1,
+      "not_modelled": [
+        "Escudo físico o mágico adaptable (ShieldAmount, PassiveCooldown)"
+      ]
+    },
+    "Q": {
+      "name": "Protocolo de precisión",
+      "tooltip": "spell_camilleq_tooltip",
+      "cases": [
+        {
+          "id": "first_hit",
+          "name": "Primer golpe: daño adicional",
+          "parts": [
+            {
+              "calculation": "BonusDamage"
+            }
+          ]
+        },
+        {
+          "id": "recast_early",
+          "name": "Reactivación inmediata",
+          "recast": true,
+          "parts": [
+            {
+              "calculation": "BonusDamage"
+            }
+          ]
+        },
+        {
+          "id": "recast_empowered",
+          "name": "Reactivación cargada (sin conversión a verdadero)",
+          "recast": true,
+          "parts": [
+            {
+              "calculation": "EmpoweredBonusDamage"
+            }
+          ]
+        }
+      ],
+      "recast_window_seconds": {
+        "data_value": "QTotalRecastTime"
+      },
+      "not_modelled": [
+        "Conversión progresiva a daño verdadero tras 1,5 s (DamageConversionPercentage, 40 %–100 % según nivel)",
+        "Velocidad de movimiento (MSBonus) y daño del propio ataque básico"
+      ]
+    },
+    "W": {
+      "name": "Barrido táctico",
+      "tooltip": "spell_camillew_tooltip",
+      "cases": [
+        {
+          "id": "inner",
+          "name": "Mitad interior",
+          "parts": [
+            {
+              "calculation": "BaseDamageTotal"
+            }
+          ]
+        },
+        {
+          "id": "outer",
+          "name": "Mitad exterior (+ % vida máxima)",
+          "parts": [
+            {
+              "calculation": "BaseDamageTotal"
+            },
+            {
+              "tooltip_reference": "OuterEdgeTooltip",
+              "damage_type": "physical",
+              "source_note": "OuterEdgeTooltip × vida máxima del objetivo",
+              "formula": {
+                "op": "mul",
+                "operands": [
+                  {
+                    "op": "calculation",
+                    "name": "OuterEdgeTooltip"
+                  },
+                  {
+                    "op": "stat",
+                    "stat": "health",
+                    "scope": "max",
+                    "subject": "target"
+                  }
+                ]
+              }
+            }
+          ]
+        }
+      ],
+      "not_modelled": [
+        "Ralentización, curación del borde exterior y tope contra monstruos"
+      ]
+    },
+    "E": {
+      "name": "Tiro de gancho",
+      "tooltip": "spell_camillee_tooltip",
+      "cases": [
+        {
+          "id": "hit",
+          "name": "Impacto tras reactivar",
+          "parts": [
+            {
+              "calculation": "TotalDamage"
+            }
+          ]
+        }
+      ],
+      "not_modelled": [
+        "Desplazamiento en muro, aturdimiento y velocidad de ataque (ASBuff)"
+      ]
+    },
+    "R": {
+      "name": "Ultimátum hextech",
+      "tooltip": "spell_camiller_tooltip",
+      "cases": [
+        {
+          "id": "on_hit",
+          "name": "Daño mágico adicional por ataque (% vida actual)",
+          "parts": [
+            {
+              "tooltip_reference": "RPercentCurrentHPDamage",
+              "damage_type": "magic",
+              "source_note": "DataValues.RPercentCurrentHPDamage % × vida actual del objetivo",
+              "formula": {
+                "op": "mul",
+                "operands": [
+                  {
+                    "op": "data_value",
+                    "name": "RPercentCurrentHPDamage"
+                  },
+                  {
+                    "op": "constant",
+                    "value": 0.01
+                  },
+                  {
+                    "op": "stat",
+                    "stat": "health",
+                    "scope": "current",
+                    "subject": "target"
+                  }
+                ]
+              }
+            }
+          ]
+        }
+      ],
+      "not_modelled": [
+        "Inalcanzabilidad, zona de encerramiento y empuje de otros enemigos"
+      ]
+    }
+  }
+}

@@ -1,0 +1,321 @@
+{
+  "schema": "lol-champion-kit/1",
+  "champion": "Nautilus",
+  "label": "Derivado",
+  "game_version": "16.23",
+  "content_version": "16.23.8406595+branch.releases-16-23.content.release",
+  "verified_against": {
+    "content_version": "16.23.8406595+branch.releases-16-23.content.release",
+    "bin_sha256": "7d3de93d01f79bc0837813aab2f3aa2dd40f9ea578bc2255a87e9d1257b0a08e",
+    "evidence": "odd/tasks/champion-kits-wave-1.md",
+    "result": "Bin del cliente 16.23 convertido con python -m binmodel.batch_kits y compilado con esta especificación curada (CH-01 oleada 1)"
+  },
+  "source": "Árboles de cálculo del bin del cliente (python -m binmodel) y marcado de los tooltips del cliente; estructura de casos curada en research/kits/",
+  "abilities": {
+    "P": {
+      "name": "Golpe maestro",
+      "max_rank": 1,
+      "cases": [
+        {
+          "id": "root_hit",
+          "name": "Daño físico adicional",
+          "parts": [
+            {
+              "damage_type": "physical",
+              "formula": {
+                "op": "add",
+                "operands": [
+                  {
+                    "op": "by_level",
+                    "values": [
+                      14,
+                      20,
+                      26,
+                      32,
+                      38,
+                      44,
+                      50,
+                      56,
+                      62,
+                      68,
+                      74,
+                      80,
+                      86,
+                      92,
+                      98,
+                      104,
+                      110,
+                      116
+                    ]
+                  },
+                  {
+                    "op": "mul",
+                    "operands": [
+                      {
+                        "op": "constant",
+                        "value": 1
+                      },
+                      {
+                        "op": "stat",
+                        "stat": "attack_damage",
+                        "scope": "total"
+                      }
+                    ]
+                  }
+                ]
+              },
+              "label": "Derivado",
+              "source": "Characters/Nautilus/Spells/NautilusPassiveAbility/NautilusPassive.mSpellCalculations.TotalDamageTooltip (16.23.8406595+branch.releases-16-23.content.release)",
+              "damage_type_source": "spell_nautiluspassive_tooltip <physicalDamage>"
+            }
+          ]
+        }
+      ],
+      "passive_stats": [],
+      "not_modelled": [
+        "Inmovilización (RootDuration) y enfriamiento por objetivo"
+      ]
+    },
+    "Q": {
+      "name": "Línea de dragado",
+      "max_rank": 5,
+      "cases": [
+        {
+          "id": "hook",
+          "name": "Ancla",
+          "parts": [
+            {
+              "damage_type": "magic",
+              "formula": {
+                "op": "add",
+                "operands": [
+                  {
+                    "op": "by_rank",
+                    "values": [
+                      85,
+                      125,
+                      165,
+                      205,
+                      245
+                    ]
+                  },
+                  {
+                    "op": "mul",
+                    "operands": [
+                      {
+                        "op": "constant",
+                        "value": 0.9
+                      },
+                      {
+                        "op": "stat",
+                        "stat": "ability_power",
+                        "scope": "total"
+                      }
+                    ]
+                  }
+                ]
+              },
+              "label": "Derivado",
+              "source": "Characters/Nautilus/Spells/NautilusAnchorDragAbility/NautilusAnchorDrag.mSpellCalculations.QDamageCalc (16.23.8406595+branch.releases-16-23.content.release)",
+              "damage_type_source": "spell_nautilusanchordrag_tooltip <magicDamage>"
+            }
+          ]
+        }
+      ],
+      "passive_stats": [],
+      "not_modelled": [
+        "Atracción, aturdimiento y devolución parcial en muros"
+      ]
+    },
+    "W": {
+      "name": "Ira del titán",
+      "max_rank": 5,
+      "cases": [
+        {
+          "id": "dot",
+          "name": "Daño mágico adicional en 2 s",
+          "parts": [
+            {
+              "damage_type": "magic",
+              "formula": {
+                "op": "add",
+                "operands": [
+                  {
+                    "op": "by_rank",
+                    "values": [
+                      30,
+                      40,
+                      50,
+                      60,
+                      70
+                    ]
+                  },
+                  {
+                    "op": "mul",
+                    "operands": [
+                      {
+                        "op": "constant",
+                        "value": 0.4
+                      },
+                      {
+                        "op": "stat",
+                        "stat": "ability_power",
+                        "scope": "total"
+                      }
+                    ]
+                  }
+                ]
+              },
+              "label": "Derivado",
+              "source": "Characters/Nautilus/Spells/NautilusPiercingGazeAbility/NautilusPiercingGaze.mSpellCalculations.DotDamageCalc (16.23.8406595+branch.releases-16-23.content.release)",
+              "damage_type_source": "spell_nautiluspiercinggaze_tooltip <magicDamage>"
+            }
+          ]
+        }
+      ],
+      "passive_stats": [],
+      "not_modelled": [
+        "Escudo (ShieldCalc) y daño en área alrededor del objetivo"
+      ]
+    },
+    "E": {
+      "name": "Aguas revueltas",
+      "max_rank": 5,
+      "cases": [
+        {
+          "id": "one_wave",
+          "name": "Una onda",
+          "parts": [
+            {
+              "damage_type": "magic",
+              "formula": {
+                "op": "add",
+                "operands": [
+                  {
+                    "op": "by_rank",
+                    "values": [
+                      55,
+                      90,
+                      125,
+                      160,
+                      195
+                    ]
+                  },
+                  {
+                    "op": "mul",
+                    "operands": [
+                      {
+                        "op": "constant",
+                        "value": 0.5
+                      },
+                      {
+                        "op": "stat",
+                        "stat": "ability_power",
+                        "scope": "total"
+                      }
+                    ]
+                  }
+                ]
+              },
+              "label": "Derivado",
+              "source": "Characters/Nautilus/Spells/NautilusSplashZoneAbility/NautilusSplashZone.mSpellCalculations.DamageCalc (16.23.8406595+branch.releases-16-23.content.release)",
+              "damage_type_source": "spell_nautilussplashzone_tooltip <magicDamage>"
+            }
+          ]
+        }
+      ],
+      "passive_stats": [],
+      "not_modelled": [
+        "Ondas adicionales al 50 %, ralentización y daño extra a monstruos (MonsterBonusCalc)"
+      ]
+    },
+    "R": {
+      "name": "Carga de profundidad",
+      "max_rank": 3,
+      "cases": [
+        {
+          "id": "primary",
+          "name": "Objetivo principal",
+          "parts": [
+            {
+              "damage_type": "magic",
+              "formula": {
+                "op": "add",
+                "operands": [
+                  {
+                    "op": "by_rank",
+                    "values": [
+                      150,
+                      275,
+                      400
+                    ]
+                  },
+                  {
+                    "op": "mul",
+                    "operands": [
+                      {
+                        "op": "constant",
+                        "value": 0.8
+                      },
+                      {
+                        "op": "stat",
+                        "stat": "ability_power",
+                        "scope": "total"
+                      }
+                    ]
+                  }
+                ]
+              },
+              "label": "Derivado",
+              "source": "Characters/Nautilus/Spells/NautilusGrandLineAbility/NautilusGrandLine.mSpellCalculations.PrimaryTargetDamage (16.23.8406595+branch.releases-16-23.content.release)",
+              "damage_type_source": "spell_nautilusgrandline_tooltip <magicDamage>"
+            }
+          ]
+        },
+        {
+          "id": "secondary",
+          "name": "Objetivos secundarios",
+          "parts": [
+            {
+              "damage_type": "magic",
+              "formula": {
+                "op": "add",
+                "operands": [
+                  {
+                    "op": "by_rank",
+                    "values": [
+                      125,
+                      175,
+                      225
+                    ]
+                  },
+                  {
+                    "op": "mul",
+                    "operands": [
+                      {
+                        "op": "constant",
+                        "value": 0.4
+                      },
+                      {
+                        "op": "stat",
+                        "stat": "ability_power",
+                        "scope": "total"
+                      }
+                    ]
+                  }
+                ]
+              },
+              "label": "Derivado",
+              "source": "Characters/Nautilus/Spells/NautilusGrandLineAbility/NautilusGrandLine.mSpellCalculations.SecondaryTargetDamage (16.23.8406595+branch.releases-16-23.content.release)",
+              "damage_type_source": "spell_nautilusgrandline_tooltip <magicDamage>"
+            }
+          ]
+        }
+      ],
+      "passive_stats": [],
+      "not_modelled": [
+        "Lanzamiento por los aires y aturdimiento (StunDuration)"
+      ]
+    }
+  }
+}

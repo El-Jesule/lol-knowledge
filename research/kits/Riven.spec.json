@@ -1,0 +1,113 @@
+{
+  "champion": "Riven",
+  "game_version": "16.23",
+  "verified_against": {
+    "content_version": "16.23.8406595+branch.releases-16-23.content.release",
+    "bin_sha256": "7e248f8669c6081f0b76da9d9cb7c72411b7ed316953a31f64ce658b7ac98868",
+    "evidence": "odd/tasks/champion-kits-wave-1.md",
+    "result": "Bin del cliente 16.23 convertido con python -m binmodel.batch_kits y compilado con esta especificación curada (CH-01 oleada 1)"
+  },
+  "abilities": {
+    "P": {
+      "name": "Hoja rúnica",
+      "tooltip": "spell_rivenpassive_tooltip",
+      "max_rank": 1,
+      "cases": [
+        {
+          "id": "proc",
+          "name": "Daño adicional por carga",
+          "parts": [
+            {
+              "calculation": "TotalDamage"
+            }
+          ]
+        }
+      ],
+      "not_modelled": [
+        "Gestión de hasta 3 cargas, reducción del 50 % a torretas y bonificación a monstruos"
+      ]
+    },
+    "Q": {
+      "name": "Alas rotas",
+      "tooltip": "spell_riventricleave_tooltip",
+      "cases": [
+        {
+          "id": "slash",
+          "name": "Primer golpe (Q1)",
+          "parts": [
+            {
+              "calculation": "FirstSlashDamage"
+            }
+          ]
+        },
+        {
+          "id": "recast",
+          "name": "Reactivación (Q2 / Q3)",
+          "recast": true,
+          "parts": [
+            {
+              "calculation": "FirstSlashDamage"
+            }
+          ]
+        }
+      ],
+      "max_recasts": 2,
+      "not_modelled": [
+        "Ventana de reactivación de 4 s y lanzamiento por los aires en Q3"
+      ]
+    },
+    "W": {
+      "name": "Estallido de ki",
+      "tooltip": "spell_rivenmartyr_tooltip",
+      "cases": [
+        {
+          "id": "burst",
+          "name": "Estallido",
+          "parts": [
+            {
+              "calculation": "TotalDamage"
+            }
+          ]
+        }
+      ],
+      "not_modelled": [
+        "Aturdimiento (StunDuration)"
+      ]
+    },
+    "E": {
+      "name": "Valor",
+      "tooltip": "spell_rivenfeint_tooltip",
+      "not_modelled": [
+        "Escudo (TotalShield) y desplazamiento"
+      ]
+    },
+    "R": {
+      "name": "Hoja del exilio",
+      "tooltip": "spell_rivenfengshuiengine_tooltip",
+      "cases": [
+        {
+          "id": "wind_slash_min",
+          "name": "Cuchillada de viento (mínimo)",
+          "parts": [
+            {
+              "calculation": "MinDamage"
+            }
+          ]
+        },
+        {
+          "id": "wind_slash_max",
+          "name": "Cuchillada de viento (máximo, <= 25 % vida)",
+          "parts": [
+            {
+              "calculation": "MaxDamage"
+            }
+          ]
+        }
+      ],
+      "not_modelled": [
+        "Mejora activa de +20 % DA (BonusAD) y alcance adicional durante 15 s",
+        "Interpolación continua de Cuchillada de viento según vida perdida"
+      ]
+    }
+  }
+}

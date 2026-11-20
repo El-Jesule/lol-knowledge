@@ -1,0 +1,484 @@
+{
+  "schema": "lol-champion-kit/1",
+  "champion": "Viktor",
+  "label": "Derivado",
+  "game_version": "16.23",
+  "content_version": "16.23.8406595+branch.releases-16-23.content.release",
+  "verified_against": {
+    "content_version": "16.23.8406595+branch.releases-16-23.content.release",
+    "bin_sha256": "aa99bdd28c77f4c254faf21f083efa987a3a3a94faaff957317eb41ddd756edf",
+    "evidence": "odd/tasks/champion-kits-wave-1.md",
+    "result": "Bin del cliente 16.23 convertido con python -m binmodel.batch_kits y compilado con esta especificación curada (CH-01 oleada 1)"
+  },
+  "source": "Árboles de cálculo del bin del cliente (python -m binmodel) y marcado de los tooltips del cliente; estructura de casos curada en research/kits/",
+  "abilities": {
+    "P": {
+      "name": "Gloriosa evolución",
+      "max_rank": 1,
+      "cases": [],
+      "passive_stats": [],
+      "not_modelled": [
+        "Fragmentos hextech y mejoras de habilidades"
+      ]
+    },
+    "Q": {
+      "name": "Transferencia de potencia",
+      "max_rank": 5,
+      "cases": [
+        {
+          "id": "missile",
+          "name": "Proyectil inicial",
+          "parts": [
+            {
+              "damage_type": "magic",
+              "formula": {
+                "op": "add",
+                "operands": [
+                  {
+                    "op": "by_rank",
+                    "values": [
+                      60,
+                      75,
+                      90,
+                      105,
+                      120
+                    ]
+                  },
+                  {
+                    "op": "mul",
+                    "operands": [
+                      {
+                        "op": "constant",
+                        "value": 0.4
+                      },
+                      {
+                        "op": "stat",
+                        "stat": "ability_power",
+                        "scope": "total"
+                      }
+                    ]
+                  }
+                ]
+              },
+              "label": "Derivado",
+              "source": "Characters/Viktor/Spells/ViktorQAbility/ViktorQ.mSpellCalculations.TotalMissileDamage (16.23.8406595+branch.releases-16-23.content.release)",
+              "damage_type_source": "game_spell_tooltip_viktorpowertransfer <magicDamage>"
+            }
+          ]
+        },
+        {
+          "id": "attack",
+          "name": "Ataque potenciado",
+          "parts": [
+            {
+              "damage_type": "magic",
+              "formula": {
+                "op": "add",
+                "operands": [
+                  {
+                    "op": "by_rank",
+                    "values": [
+                      20,
+                      45,
+                      70,
+                      95,
+                      120
+                    ]
+                  },
+                  {
+                    "op": "mul",
+                    "operands": [
+                      {
+                        "op": "constant",
+                        "value": 0.5
+                      },
+                      {
+                        "op": "stat",
+                        "stat": "ability_power",
+                        "scope": "total"
+                      }
+                    ]
+                  },
+                  {
+                    "op": "mul",
+                    "operands": [
+                      {
+                        "op": "constant",
+                        "value": 1
+                      },
+                      {
+                        "op": "stat",
+                        "stat": "attack_damage",
+                        "scope": "total"
+                      }
+                    ]
+                  }
+                ]
+              },
+              "label": "Derivado",
+              "source": "Characters/Viktor/Spells/ViktorQAbility/ViktorQ.mSpellCalculations.AttackTotalDMG (16.23.8406595+branch.releases-16-23.content.release)",
+              "damage_type_source": "game_spell_tooltip_viktorpowertransfer <magicDamage>"
+            }
+          ]
+        },
+        {
+          "id": "full",
+          "name": "Proyectil + ataque potenciado",
+          "parts": [
+            {
+              "damage_type": "magic",
+              "formula": {
+                "op": "add",
+                "operands": [
+                  {
+                    "op": "by_rank",
+                    "values": [
+                      60,
+                      75,
+                      90,
+                      105,
+                      120
+                    ]
+                  },
+                  {
+                    "op": "mul",
+                    "operands": [
+                      {
+                        "op": "constant",
+                        "value": 0.4
+                      },
+                      {
+                        "op": "stat",
+                        "stat": "ability_power",
+                        "scope": "total"
+                      }
+                    ]
+                  }
+                ]
+              },
+              "label": "Derivado",
+              "source": "Characters/Viktor/Spells/ViktorQAbility/ViktorQ.mSpellCalculations.TotalMissileDamage (16.23.8406595+branch.releases-16-23.content.release)",
+              "damage_type_source": "game_spell_tooltip_viktorpowertransfer <magicDamage>"
+            },
+            {
+              "damage_type": "magic",
+              "formula": {
+                "op": "add",
+                "operands": [
+                  {
+                    "op": "by_rank",
+                    "values": [
+                      20,
+                      45,
+                      70,
+                      95,
+                      120
+                    ]
+                  },
+                  {
+                    "op": "mul",
+                    "operands": [
+                      {
+                        "op": "constant",
+                        "value": 0.5
+                      },
+                      {
+                        "op": "stat",
+                        "stat": "ability_power",
+                        "scope": "total"
+                      }
+                    ]
+                  },
+                  {
+                    "op": "mul",
+                    "operands": [
+                      {
+                        "op": "constant",
+                        "value": 1
+                      },
+                      {
+                        "op": "stat",
+                        "stat": "attack_damage",
+                        "scope": "total"
+                      }
+                    ]
+                  }
+                ]
+              },
+              "label": "Derivado",
+              "source": "Characters/Viktor/Spells/ViktorQAbility/ViktorQ.mSpellCalculations.AttackTotalDMG (16.23.8406595+branch.releases-16-23.content.release)",
+              "damage_type_source": "game_spell_tooltip_viktorpowertransfer <magicDamage>"
+            }
+          ]
+        }
+      ],
+      "passive_stats": [],
+      "not_modelled": [
+        "Escudo (ShieldLevelScaling, TotalAugmentedShieldValue) y velocidad de movimiento evolucionada"
+      ]
+    },
+    "W": {
+      "name": "Campo gravitatorio",
+      "max_rank": 5,
+      "cases": [],
+      "passive_stats": [],
+      "not_modelled": [
+        "Ralentización y aturdimiento en área"
+      ]
+    },
+    "E": {
+      "name": "Rayo hextech",
+      "max_rank": 5,
+      "cases": [
+        {
+          "id": "laser",
+          "name": "Rayo inicial",
+          "parts": [
+            {
+              "damage_type": "magic",
+              "formula": {
+                "op": "add",
+                "operands": [
+                  {
+                    "op": "by_rank",
+                    "values": [
+                      70,
+                      110,
+                      150,
+                      190,
+                      230
+                    ]
+                  },
+                  {
+                    "op": "mul",
+                    "operands": [
+                      {
+                        "op": "constant",
+                        "value": 0.5
+                      },
+                      {
+                        "op": "stat",
+                        "stat": "ability_power",
+                        "scope": "total"
+                      }
+                    ]
+                  }
+                ]
+              },
+              "label": "Derivado",
+              "source": "Characters/Viktor/Spells/ViktorEAbility/ViktorE.mSpellCalculations.LaserDamage (16.23.8406595+branch.releases-16-23.content.release)",
+              "damage_type_source": "spell_viktordeathray_tooltip <magicDamage>"
+            }
+          ]
+        },
+        {
+          "id": "aftershock",
+          "name": "Reverberación (evolucionada)",
+          "parts": [
+            {
+              "damage_type": "magic",
+              "formula": {
+                "op": "add",
+                "operands": [
+                  {
+                    "op": "by_rank",
+                    "values": [
+                      20,
+                      50,
+                      80,
+                      110,
+                      140
+                    ]
+                  },
+                  {
+                    "op": "mul",
+                    "operands": [
+                      {
+                        "op": "constant",
+                        "value": 0.8
+                      },
+                      {
+                        "op": "stat",
+                        "stat": "ability_power",
+                        "scope": "total"
+                      }
+                    ]
+                  }
+                ]
+              },
+              "label": "Derivado",
+              "source": "Characters/Viktor/Spells/ViktorEAbility/ViktorE.mSpellCalculations.AftershockDamage (16.23.8406595+branch.releases-16-23.content.release)",
+              "damage_type_source": "spell_viktordeathray_tooltip <magicDamage>"
+            }
+          ]
+        },
+        {
+          "id": "evolved_both",
+          "name": "Rayo + reverberación",
+          "parts": [
+            {
+              "damage_type": "magic",
+              "formula": {
+                "op": "add",
+                "operands": [
+                  {
+                    "op": "by_rank",
+                    "values": [
+                      70,
+                      110,
+                      150,
+                      190,
+                      230
+                    ]
+                  },
+                  {
+                    "op": "mul",
+                    "operands": [
+                      {
+                        "op": "constant",
+                        "value": 0.5
+                      },
+                      {
+                        "op": "stat",
+                        "stat": "ability_power",
+                        "scope": "total"
+                      }
+                    ]
+                  }
+                ]
+              },
+              "label": "Derivado",
+              "source": "Characters/Viktor/Spells/ViktorEAbility/ViktorE.mSpellCalculations.LaserDamage (16.23.8406595+branch.releases-16-23.content.release)",
+              "damage_type_source": "spell_viktordeathray_tooltip <magicDamage>"
+            },
+            {
+              "damage_type": "magic",
+              "formula": {
+                "op": "add",
+                "operands": [
+                  {
+                    "op": "by_rank",
+                    "values": [
+                      20,
+                      50,
+                      80,
+                      110,
+                      140
+                    ]
+                  },
+                  {
+                    "op": "mul",
+                    "operands": [
+                      {
+                        "op": "constant",
+                        "value": 0.8
+                      },
+                      {
+                        "op": "stat",
+                        "stat": "ability_power",
+                        "scope": "total"
+                      }
+                    ]
+                  }
+                ]
+              },
+              "label": "Derivado",
+              "source": "Characters/Viktor/Spells/ViktorEAbility/ViktorE.mSpellCalculations.AftershockDamage (16.23.8406595+branch.releases-16-23.content.release)",
+              "damage_type_source": "spell_viktordeathray_tooltip <magicDamage>"
+            }
+          ]
+        }
+      ],
+      "passive_stats": [],
+      "not_modelled": []
+    },
+    "R": {
+      "name": "Tormenta arcana",
+      "max_rank": 3,
+      "cases": [
+        {
+          "id": "burst",
+          "name": "Impacto inicial",
+          "parts": [
+            {
+              "damage_type": "magic",
+              "formula": {
+                "op": "add",
+                "operands": [
+                  {
+                    "op": "by_rank",
+                    "values": [
+                      100,
+                      175,
+                      250
+                    ]
+                  },
+                  {
+                    "op": "mul",
+                    "operands": [
+                      {
+                        "op": "constant",
+                        "value": 0.6
+                      },
+                      {
+                        "op": "stat",
+                        "stat": "ability_power",
+                        "scope": "total"
+                      }
+                    ]
+                  }
+                ]
+              },
+              "label": "Derivado",
+              "source": "Characters/Viktor/Spells/ViktorRAbility/ViktorR.mSpellCalculations.InitialBurstDamage (16.23.8406595+branch.releases-16-23.content.release)",
+              "damage_type_source": "game_spell_tooltip_viktorchaosstorm <magicDamage>"
+            }
+          ]
+        },
+        {
+          "id": "per_second",
+          "name": "Daño por segundo",
+          "parts": [
+            {
+              "damage_type": "magic",
+              "formula": {
+                "op": "add",
+                "operands": [
+                  {
+                    "op": "by_rank",
+                    "values": [
+                      65,
+                      105,
+                      145
+                    ]
+                  },
+                  {
+                    "op": "mul",
+                    "operands": [
+                      {
+                        "op": "constant",
+                        "value": 0.35
+                      },
+                      {
+                        "op": "stat",
+                        "stat": "ability_power",
+                        "scope": "total"
+                      }
+                    ]
+                  }
+                ]
+              },
+              "label": "Derivado",
+              "source": "Characters/Viktor/Spells/ViktorRAbility/ViktorR.mSpellCalculations.SubsequentBurstDamage (16.23.8406595+branch.releases-16-23.content.release)",
+              "damage_type_source": "game_spell_tooltip_viktorchaosstorm <magicDamage>"
+            }
+          ]
+        }
+      ],
+      "passive_stats": [],
+      "not_modelled": [
+        "Interrupción de canalizaciones y ampliación de duración al derribar campeones"
+      ]
+    }
+  }
+}

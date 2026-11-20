@@ -1,0 +1,160 @@
+{
+  "champion": "Sett",
+  "game_version": "16.23",
+  "verified_against": {
+    "content_version": "16.23.8406595+branch.releases-16-23.content.release",
+    "bin_sha256": "908c58118107634a029cc1b386f004867e4421e40c78a381b867b1455b274850",
+    "evidence": "odd/tasks/champion-kits-wave-1.md",
+    "result": "Bin del cliente 16.23 convertido con python -m binmodel.batch_kits y compilado con esta especificación curada (CH-01 oleada 1)"
+  },
+  "abilities": {
+    "P": {
+      "name": "Coraje del foso",
+      "tooltip": "spell_settpassive_tooltip",
+      "max_rank": 1,
+      "cases": [
+        {
+          "id": "right_punch",
+          "name": "Daño adicional del puñetazo derecho",
+          "parts": [
+            {
+              "calculation": "RightPunchBonus"
+            }
+          ]
+        }
+      ],
+      "not_modelled": [
+        "Alternancia izquierda/derecha y mayor velocidad de ataque del golpe derecho",
+        "Regeneración adicional por vida perdida (TooltipRegenPerMissingHealthCalc)"
+      ]
+    },
+    "Q": {
+      "name": "Nudillos a punto",
+      "tooltip": "spell_settw_tooltip",
+      "cases": [
+        {
+          "id": "hit",
+          "name": "Daño adicional por golpe",
+          "parts": [
+            {
+              "tooltip_reference": "BaseDamage",
+              "damage_type": "physical",
+              "source_note": "DataValues.BaseDamage + MaxHealthDamageCalc × vida máxima del objetivo",
+              "formula": {
+                "op": "add",
+                "operands": [
+                  {
+                    "op": "data_value",
+                    "name": "BaseDamage"
+                  },
+                  {
+                    "op": "mul",
+                    "operands": [
+                      {
+                        "op": "calculation",
+                        "name": "MaxHealthDamageCalc"
+                      },
+                      {
+                        "op": "stat",
+                        "stat": "health",
+                        "scope": "max",
+                        "subject": "target"
+                      }
+                    ]
+                  }
+                ]
+              }
+            }
+          ]
+        }
+      ],
+      "not_modelled": [
+        "Velocidad de movimiento hacia campeones y tope de 400 contra monstruos",
+        "El daño de los dos ataques básicos potenciados: se suma aparte"
+      ]
+    },
+    "W": {
+      "name": "Trastazo",
+      "tooltip": "spell_sette_tooltip",
+      "cases": [
+        {
+          "id": "center_base",
+          "name": "Centro sin coraje (daño verdadero)",
+          "parts": [
+            {
+              "calculation": "DamageCalc"
+            }
+          ]
+        },
+        {
+          "id": "center_max_grit",
+          "name": "Centro con coraje máximo (daño verdadero)",
+          "parts": [
+            {
+              "calculation": "DamageCalc"
+            },
+            {
+              "tooltip_reference": "DamageConversion",
+              "damage_type": "true",
+              "source_note": "MaxGrit × DamageConversion (coraje máximo = 50 % vida máxima)",
+              "formula": {
+                "op": "mul",
+                "operands": [
+                  {
+                    "op": "calculation",
+                    "name": "MaxGrit"
+                  },
+                  {
+                    "op": "calculation",
+                    "name": "DamageConversion"
+                  }
+                ]
+              }
+            }
+          ]
+        }
+      ],
+      "not_modelled": [
+        "Daño físico en los bordes exteriores",
+        "Acumulación dinámica de coraje por daño recibido y escudo (ShieldConversion)"
+      ]
+    },
+    "E": {
+      "name": "Rompecaras",
+      "tooltip": "spell_settq_tooltip",
+      "cases": [
+        {
+          "id": "slam",
+          "name": "Choque",
+          "parts": [
+            {
+              "calculation": "DamageCalc"
+            }
+          ]
+        }
+      ],
+      "not_modelled": [
+        "Ralentización, aturdimiento bilateral y bonificación contra monstruos"
+      ]
+    },
+    "R": {
+      "name": "El gran espectáculo",
+      "tooltip": "spell_settr_tooltip",
+      "cases": [
+        {
+          "id": "base",
+          "name": "Daño base (sin vida adicional del objetivo)",
+          "parts": [
+            {
+              "calculation": "DamageCalc"
+            }
+          ]
+        }
+      ],
+      "not_modelled": [
+        "Daño adicional según la vida adicional del campeón agarrado (MaxHealthDamage × vida adicional del objetivo)",
+        "Supresión y ralentización"
+      ]
+    }
+  }
+}

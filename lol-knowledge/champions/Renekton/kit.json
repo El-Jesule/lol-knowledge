@@ -1,0 +1,382 @@
+{
+  "schema": "lol-champion-kit/1",
+  "champion": "Renekton",
+  "label": "Derivado",
+  "game_version": "16.23",
+  "content_version": "16.23.8406595+branch.releases-16-23.content.release",
+  "verified_against": {
+    "content_version": "16.23.8406595+branch.releases-16-23.content.release",
+    "bin_sha256": "00873a941018958ddbab406c6c2988284738240fa3fa7a34ae88e97cb8f81aab",
+    "evidence": "odd/tasks/champion-kits-wave-1.md",
+    "result": "Bin del cliente 16.23 convertido con python -m binmodel.batch_kits y compilado con esta especificación curada (CH-01 oleada 1)"
+  },
+  "source": "Árboles de cálculo del bin del cliente (python -m binmodel) y marcado de los tooltips del cliente; estructura de casos curada en research/kits/",
+  "abilities": {
+    "P": {
+      "name": "Reino de la ira",
+      "max_rank": 1,
+      "cases": [],
+      "passive_stats": [],
+      "not_modelled": [
+        "Generación, consumo y decaimiento de Furia"
+      ]
+    },
+    "Q": {
+      "name": "Preferencia por el dócil",
+      "max_rank": 5,
+      "cases": [
+        {
+          "id": "basic",
+          "name": "Sin furia",
+          "parts": [
+            {
+              "damage_type": "physical",
+              "formula": {
+                "op": "add",
+                "operands": [
+                  {
+                    "op": "by_rank",
+                    "values": [
+                      60,
+                      90,
+                      120,
+                      150,
+                      180
+                    ]
+                  },
+                  {
+                    "op": "mul",
+                    "operands": [
+                      {
+                        "op": "constant",
+                        "value": 1
+                      },
+                      {
+                        "op": "stat",
+                        "stat": "attack_damage",
+                        "scope": "bonus"
+                      }
+                    ]
+                  }
+                ]
+              },
+              "label": "Derivado",
+              "source": "Characters/Renekton/Spells/RenektonCleaveAbility/RenektonCleave.mSpellCalculations.BasicDamage (16.23.8406595+branch.releases-16-23.content.release)",
+              "damage_type_source": "spell_renektoncleave_tooltip <physicalDamage>"
+            }
+          ]
+        },
+        {
+          "id": "empowered",
+          "name": "Potenciada (50 furia)",
+          "parts": [
+            {
+              "damage_type": "physical",
+              "formula": {
+                "op": "add",
+                "operands": [
+                  {
+                    "op": "by_rank",
+                    "values": [
+                      90,
+                      135,
+                      180,
+                      225,
+                      270
+                    ]
+                  },
+                  {
+                    "op": "mul",
+                    "operands": [
+                      {
+                        "op": "constant",
+                        "value": 1.4
+                      },
+                      {
+                        "op": "stat",
+                        "stat": "attack_damage",
+                        "scope": "bonus"
+                      }
+                    ]
+                  }
+                ]
+              },
+              "label": "Derivado",
+              "source": "Characters/Renekton/Spells/RenektonCleaveAbility/RenektonCleave.mSpellCalculations.EmpDamage (16.23.8406595+branch.releases-16-23.content.release)",
+              "damage_type_source": "spell_renektoncleave_tooltip <physicalDamage>"
+            }
+          ]
+        }
+      ],
+      "passive_stats": [],
+      "not_modelled": [
+        "Curación por unidad golpeada (ChampHealing, NonChampHealing y versiones potenciadas)"
+      ]
+    },
+    "W": {
+      "name": "Depredador implacable",
+      "max_rank": 5,
+      "cases": [
+        {
+          "id": "basic",
+          "name": "Sin furia (2 golpes)",
+          "parts": [
+            {
+              "damage_type": "physical",
+              "formula": {
+                "op": "mul",
+                "operands": [
+                  {
+                    "op": "add",
+                    "operands": [
+                      {
+                        "op": "by_rank",
+                        "values": [
+                          5,
+                          20,
+                          35,
+                          50,
+                          65
+                        ]
+                      },
+                      {
+                        "op": "mul",
+                        "operands": [
+                          {
+                            "op": "constant",
+                            "value": 0.75
+                          },
+                          {
+                            "op": "stat",
+                            "stat": "attack_damage",
+                            "scope": "total"
+                          }
+                        ]
+                      }
+                    ]
+                  },
+                  {
+                    "op": "constant",
+                    "value": 2
+                  }
+                ]
+              },
+              "label": "Derivado",
+              "source": "Characters/Renekton/Spells/RenektonPreExecuteAbility/RenektonPreExecute.mSpellCalculations.BasicTotalDamage (16.23.8406595+branch.releases-16-23.content.release)",
+              "damage_type_source": "spell_renektonpreexecute_tooltip <physicalDamage>"
+            }
+          ]
+        },
+        {
+          "id": "empowered",
+          "name": "Potenciada (3 golpes)",
+          "parts": [
+            {
+              "damage_type": "physical",
+              "formula": {
+                "op": "mul",
+                "operands": [
+                  {
+                    "op": "add",
+                    "operands": [
+                      {
+                        "op": "by_rank",
+                        "values": [
+                          5,
+                          20,
+                          35,
+                          50,
+                          65
+                        ]
+                      },
+                      {
+                        "op": "mul",
+                        "operands": [
+                          {
+                            "op": "constant",
+                            "value": 0.75
+                          },
+                          {
+                            "op": "stat",
+                            "stat": "attack_damage",
+                            "scope": "total"
+                          }
+                        ]
+                      }
+                    ]
+                  },
+                  {
+                    "op": "constant",
+                    "value": 3
+                  }
+                ]
+              },
+              "label": "Derivado",
+              "source": "Characters/Renekton/Spells/RenektonPreExecuteAbility/RenektonPreExecute.mSpellCalculations.EmpTotalDamage (16.23.8406595+branch.releases-16-23.content.release)",
+              "damage_type_source": "spell_renektonpreexecute_tooltip <physicalDamage>"
+            }
+          ]
+        }
+      ],
+      "passive_stats": [],
+      "not_modelled": [
+        "Aturdimiento y destrucción de escudos en la versión potenciada"
+      ]
+    },
+    "E": {
+      "name": "Cortar y trocear",
+      "max_rank": 5,
+      "cases": [
+        {
+          "id": "slice",
+          "name": "Cortar / Trocear sin furia",
+          "parts": [
+            {
+              "damage_type": "physical",
+              "formula": {
+                "op": "add",
+                "operands": [
+                  {
+                    "op": "by_rank",
+                    "values": [
+                      40,
+                      70,
+                      100,
+                      130,
+                      160
+                    ]
+                  },
+                  {
+                    "op": "mul",
+                    "operands": [
+                      {
+                        "op": "constant",
+                        "value": 0.9
+                      },
+                      {
+                        "op": "stat",
+                        "stat": "attack_damage",
+                        "scope": "bonus"
+                      }
+                    ]
+                  }
+                ]
+              },
+              "label": "Derivado",
+              "source": "Characters/Renekton/Spells/RenektonSliceAndDiceAbility/RenektonSliceAndDice.mSpellCalculations.BasicDamage (16.23.8406595+branch.releases-16-23.content.release)",
+              "damage_type_source": "spell_renektonsliceanddice_tooltip <physicalDamage>"
+            }
+          ]
+        },
+        {
+          "id": "empowered_dice",
+          "name": "Trocear potenciado (50 furia)",
+          "parts": [
+            {
+              "damage_type": "physical",
+              "formula": {
+                "op": "add",
+                "operands": [
+                  {
+                    "op": "by_rank",
+                    "values": [
+                      70,
+                      115,
+                      160,
+                      205,
+                      250
+                    ]
+                  },
+                  {
+                    "op": "mul",
+                    "operands": [
+                      {
+                        "op": "constant",
+                        "value": 1.35
+                      },
+                      {
+                        "op": "stat",
+                        "stat": "attack_damage",
+                        "scope": "bonus"
+                      }
+                    ]
+                  }
+                ]
+              },
+              "label": "Derivado",
+              "source": "Characters/Renekton/Spells/RenektonSliceAndDiceAbility/RenektonSliceAndDice.mSpellCalculations.EmpDamage (16.23.8406595+branch.releases-16-23.content.release)",
+              "damage_type_source": "spell_renektonsliceanddice_tooltip <physicalDamage>"
+            }
+          ]
+        }
+      ],
+      "passive_stats": [],
+      "not_modelled": [
+        "Reducción porcentual de armadura en Trocear potenciado"
+      ]
+    },
+    "R": {
+      "name": "Dominus",
+      "max_rank": 3,
+      "cases": [
+        {
+          "id": "per_second",
+          "name": "Daño mágico por segundo",
+          "parts": [
+            {
+              "damage_type": "magic",
+              "formula": {
+                "op": "add",
+                "operands": [
+                  {
+                    "op": "by_rank",
+                    "values": [
+                      60,
+                      150,
+                      240
+                    ]
+                  },
+                  {
+                    "op": "mul",
+                    "operands": [
+                      {
+                        "op": "constant",
+                        "value": 0.1
+                      },
+                      {
+                        "op": "stat",
+                        "stat": "ability_power",
+                        "scope": "total"
+                      }
+                    ]
+                  },
+                  {
+                    "op": "mul",
+                    "operands": [
+                      {
+                        "op": "constant",
+                        "value": 0.1
+                      },
+                      {
+                        "op": "stat",
+                        "stat": "attack_damage",
+                        "scope": "bonus"
+                      }
+                    ]
+                  }
+                ]
+              },
+              "label": "Derivado",
+              "source": "Characters/Renekton/Spells/RenektonReignOfTheTyrantAbility/RenektonReignOfTheTyrant.mSpellCalculations.TotalDamagePerSecond (16.23.8406595+branch.releases-16-23.content.release)",
+              "damage_type_source": "spell_renektonreignofthetyrant_tooltip <magicDamage>"
+            }
+          ]
+        }
+      ],
+      "passive_stats": [],
+      "not_modelled": [
+        "Vida máxima temporal (HealthGain) y generación de furia"
+      ]
+    }
+  }
+}

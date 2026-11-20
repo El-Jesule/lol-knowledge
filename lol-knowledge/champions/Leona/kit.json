@@ -1,0 +1,261 @@
+{
+  "schema": "lol-champion-kit/1",
+  "champion": "Leona",
+  "label": "Derivado",
+  "game_version": "16.23",
+  "content_version": "16.23.8406595+branch.releases-16-23.content.release",
+  "verified_against": {
+    "content_version": "16.23.8406595+branch.releases-16-23.content.release",
+    "bin_sha256": "c2dbbf4297d9a94b72027206979f21fe4d84aeb0f87c677bf626989634fbc3d3",
+    "evidence": "odd/tasks/champion-kits-wave-1.md",
+    "result": "Bin del cliente 16.23 convertido con python -m binmodel.batch_kits y compilado con esta especificación curada (CH-01 oleada 1)"
+  },
+  "source": "Árboles de cálculo del bin del cliente (python -m binmodel) y marcado de los tooltips del cliente; estructura de casos curada en research/kits/",
+  "abilities": {
+    "P": {
+      "name": "Luz solar",
+      "max_rank": 1,
+      "cases": [
+        {
+          "id": "mark",
+          "name": "Detonación aliada de marca",
+          "parts": [
+            {
+              "damage_type": "magic",
+              "formula": {
+                "op": "by_level",
+                "values": [
+                  32,
+                  39,
+                  46,
+                  53,
+                  60,
+                  67,
+                  74,
+                  81,
+                  88,
+                  95,
+                  102,
+                  109,
+                  116,
+                  123,
+                  130,
+                  137,
+                  144,
+                  151
+                ]
+              },
+              "label": "Derivado",
+              "source": "Characters/Leona/Spells/LeonaSunlightPassiveAbility/LeonaSunlightPassive.mSpellCalculations.TotalDamage (16.23.8406595+branch.releases-16-23.content.release)",
+              "damage_type_source": "spell_leonasunlightpassive_tooltip <magicDamage>"
+            }
+          ]
+        }
+      ],
+      "passive_stats": [],
+      "not_modelled": []
+    },
+    "Q": {
+      "name": "Escudo del amanecer",
+      "max_rank": 5,
+      "cases": [
+        {
+          "id": "strike",
+          "name": "Daño mágico adicional",
+          "parts": [
+            {
+              "damage_type": "magic",
+              "formula": {
+                "op": "add",
+                "operands": [
+                  {
+                    "op": "by_rank",
+                    "values": [
+                      10,
+                      35,
+                      60,
+                      85,
+                      110
+                    ]
+                  },
+                  {
+                    "op": "mul",
+                    "operands": [
+                      {
+                        "op": "constant",
+                        "value": 0.3
+                      },
+                      {
+                        "op": "stat",
+                        "stat": "ability_power",
+                        "scope": "total"
+                      }
+                    ]
+                  }
+                ]
+              },
+              "label": "Derivado",
+              "source": "Characters/Leona/Spells/LeonaShieldOfDaybreakAbility/LeonaShieldOfDaybreak.mSpellCalculations.TotalDamageTooltip (16.23.8406595+branch.releases-16-23.content.release)",
+              "damage_type_source": "spell_leonashieldofdaybreak_tooltip <magicDamage>"
+            }
+          ]
+        }
+      ],
+      "passive_stats": [],
+      "not_modelled": [
+        "Aturdimiento (StunDuration) y daño del ataque básico aparte"
+      ]
+    },
+    "W": {
+      "name": "Eclipse",
+      "max_rank": 5,
+      "cases": [
+        {
+          "id": "explode",
+          "name": "Explosión del escudo",
+          "parts": [
+            {
+              "damage_type": "magic",
+              "formula": {
+                "op": "add",
+                "operands": [
+                  {
+                    "op": "by_rank",
+                    "values": [
+                      55,
+                      85,
+                      115,
+                      145,
+                      175
+                    ]
+                  },
+                  {
+                    "op": "mul",
+                    "operands": [
+                      {
+                        "op": "constant",
+                        "value": 0.4
+                      },
+                      {
+                        "op": "stat",
+                        "stat": "ability_power",
+                        "scope": "total"
+                      }
+                    ]
+                  }
+                ]
+              },
+              "label": "Derivado",
+              "source": "Characters/Leona/Spells/LeonaSolarBarrierAbility/LeonaSolarBarrier.mSpellCalculations.TotalDamageTooltip (16.23.8406595+branch.releases-16-23.content.release)",
+              "damage_type_source": "spell_leonasolarbarrier_tooltip <magicDamage>"
+            }
+          ]
+        }
+      ],
+      "passive_stats": [],
+      "not_modelled": [
+        "Reducción plana de daño recibido y armadura/RM temporales (BonusArmorTooltip, BonusMRTooltip)"
+      ]
+    },
+    "E": {
+      "name": "Hoja del cénit",
+      "max_rank": 5,
+      "cases": [
+        {
+          "id": "blade",
+          "name": "Estocada",
+          "parts": [
+            {
+              "damage_type": "magic",
+              "formula": {
+                "op": "add",
+                "operands": [
+                  {
+                    "op": "by_rank",
+                    "values": [
+                      50,
+                      90,
+                      130,
+                      170,
+                      210
+                    ]
+                  },
+                  {
+                    "op": "mul",
+                    "operands": [
+                      {
+                        "op": "constant",
+                        "value": 0.4
+                      },
+                      {
+                        "op": "stat",
+                        "stat": "ability_power",
+                        "scope": "total"
+                      }
+                    ]
+                  }
+                ]
+              },
+              "label": "Derivado",
+              "source": "Characters/Leona/Spells/LeonaZenithBladeAbility/LeonaZenithBlade.mSpellCalculations.TotalDamageTooltip (16.23.8406595+branch.releases-16-23.content.release)",
+              "damage_type_source": "spell_leonazenithblade_tooltip <magicDamage>"
+            }
+          ]
+        }
+      ],
+      "passive_stats": [],
+      "not_modelled": [
+        "Inmovilización y desplazamiento hacia el último campeón alcanzado"
+      ]
+    },
+    "R": {
+      "name": "Llamarada solar",
+      "max_rank": 3,
+      "cases": [
+        {
+          "id": "flare",
+          "name": "Impacto solar",
+          "parts": [
+            {
+              "damage_type": "magic",
+              "formula": {
+                "op": "add",
+                "operands": [
+                  {
+                    "op": "by_rank",
+                    "values": [
+                      150,
+                      225,
+                      300
+                    ]
+                  },
+                  {
+                    "op": "mul",
+                    "operands": [
+                      {
+                        "op": "constant",
+                        "value": 0.8
+                      },
+                      {
+                        "op": "stat",
+                        "stat": "ability_power",
+                        "scope": "total"
+                      }
+                    ]
+                  }
+                ]
+              },
+              "label": "Derivado",
+              "source": "Characters/Leona/Spells/LeonaSolarFlareAbility/LeonaSolarFlare.mSpellCalculations.ExplosionCalculatedDamage (16.23.8406595+branch.releases-16-23.content.release)",
+              "damage_type_source": "spell_leonasolarflare_tooltip <magicDamage>"
+            }
+          ]
+        }
+      ],
+      "passive_stats": [],
+      "not_modelled": [
+        "Aturdimiento en el centro y ralentización en el borde"
+      ]
+    }
+  }
+}

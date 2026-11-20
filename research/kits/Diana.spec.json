@@ -1,0 +1,130 @@
+{
+  "champion": "Diana",
+  "game_version": "16.23",
+  "verified_against": {
+    "content_version": "16.23.8406595+branch.releases-16-23.content.release",
+    "bin_sha256": "7da0740c3be54b1fa805f0d4ed554981eb2cc3c6ae3fb0f8e86aaaeb31513044",
+    "evidence": "odd/tasks/champion-kits-wave-1.md",
+    "result": "Bin del cliente 16.23 convertido con python -m binmodel.batch_kits y compilado con esta especificación curada (CH-01 oleada 1)"
+  },
+  "abilities": {
+    "P": {
+      "name": "Hoja lunaplata",
+      "tooltip": "spell_dianapassive_tooltip",
+      "max_rank": 1,
+      "cases": [
+        {
+          "id": "cleave",
+          "name": "Tercer ataque en área",
+          "parts": [
+            {
+              "calculation": "CleaveDamage"
+            }
+          ]
+        }
+      ],
+      "not_modelled": [
+        "Velocidad de ataque pasiva y potenciada tras lanzar habilidades (BonusAS, EmpoweredAS)"
+      ]
+    },
+    "Q": {
+      "name": "Impacto creciente",
+      "tooltip": "spell_dianaq_tooltip",
+      "cases": [
+        {
+          "id": "hit",
+          "name": "Arco lunar",
+          "parts": [
+            {
+              "calculation": "TotalDamage"
+            }
+          ]
+        }
+      ],
+      "not_modelled": [
+        "Marca de Luz lunar y revelación"
+      ]
+    },
+    "W": {
+      "name": "Cascada pálida",
+      "tooltip": "spell_dianaorbs_tooltip",
+      "cases": [
+        {
+          "id": "one_orb",
+          "name": "Una esfera",
+          "parts": [
+            {
+              "calculation": "TotalDamage"
+            }
+          ]
+        },
+        {
+          "id": "all_orbs",
+          "name": "Las tres esferas",
+          "parts": [
+            {
+              "calculation": "TotalMaxDamage"
+            }
+          ]
+        }
+      ],
+      "not_modelled": [
+        "Escudo inicial y renovación al detonar las tres esferas (ShieldValue)"
+      ]
+    },
+    "E": {
+      "name": "Torrente lunar",
+      "tooltip": "spell_dianateleport_tooltip",
+      "cases": [
+        {
+          "id": "dash",
+          "name": "Deslizamiento",
+          "parts": [
+            {
+              "calculation": "TotalDamage"
+            }
+          ]
+        }
+      ],
+      "not_modelled": [
+        "Reinicio de enfriamiento al consumir Luz lunar"
+      ]
+    },
+    "R": {
+      "name": "Lluvia de luna",
+      "tooltip": "spell_dianar_tooltip",
+      "cases": [
+        {
+          "id": "one_champ",
+          "name": "1 campeón alcanzado",
+          "parts": [
+            {
+              "calculation": "RExplosionDamage"
+            }
+          ]
+        },
+        {
+          "id": "extra_champ",
+          "name": "Bonificación por campeón adicional",
+          "parts": [
+            {
+              "calculation": "RMultihitAmplification"
+            }
+          ]
+        },
+        {
+          "id": "max_champs",
+          "name": "5 campeones alcanzados (máximo)",
+          "parts": [
+            {
+              "calculation": "MaxDamage"
+            }
+          ]
+        }
+      ],
+      "not_modelled": [
+        "Atracción y ralentización (SlowTooltip)"
+      ]
+    }
+  }
+}

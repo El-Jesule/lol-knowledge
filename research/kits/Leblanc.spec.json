@@ -1,0 +1,163 @@
+{
+  "champion": "Leblanc",
+  "game_version": "16.23",
+  "verified_against": {
+    "content_version": "16.23.8406595+branch.releases-16-23.content.release",
+    "bin_sha256": "a53de8d351c7c4523dad00bbd4dd207a2d8c423e2241554638dfcb0ffdf42c6f",
+    "evidence": "odd/tasks/champion-kits-wave-1.md",
+    "result": "Bin del cliente 16.23 convertido con python -m binmodel.batch_kits y compilado con esta especificación curada (CH-01 oleada 1)"
+  },
+  "abilities": {
+    "P": {
+      "name": "Imagen especular",
+      "max_rank": 1,
+      "not_modelled": [
+        "Invisibilidad y clon al bajar del 40 % de vida"
+      ]
+    },
+    "Q": {
+      "name": "Sello de malicia",
+      "tooltip": "spell_leblancq_tooltip",
+      "cases": [
+        {
+          "id": "hit",
+          "name": "Impacto inicial",
+          "parts": [
+            {
+              "calculation": "Damage"
+            }
+          ]
+        },
+        {
+          "id": "mark",
+          "name": "Detonación de la marca",
+          "parts": [
+            {
+              "calculation": "MarkDamage"
+            }
+          ]
+        },
+        {
+          "id": "both",
+          "name": "Impacto + detonación",
+          "parts": [
+            {
+              "calculation": "Damage"
+            },
+            {
+              "calculation": "MarkDamage"
+            }
+          ]
+        }
+      ],
+      "not_modelled": [
+        "Daño adicional a súbditos (BonusMinionDamage) y devolución de maná/enfriamiento al matar"
+      ]
+    },
+    "W": {
+      "name": "Distorsión",
+      "tooltip": "spell_leblancw_tooltip",
+      "cases": [
+        {
+          "id": "dash",
+          "name": "Impacto en zona",
+          "parts": [
+            {
+              "calculation": "TotalDamage"
+            }
+          ]
+        }
+      ],
+      "not_modelled": [
+        "Reactivación de regreso sin daño"
+      ]
+    },
+    "E": {
+      "name": "Cadenas etéreas",
+      "tooltip": "spell_leblance_tooltip",
+      "cases": [
+        {
+          "id": "initial",
+          "name": "Impacto inicial",
+          "parts": [
+            {
+              "calculation": "InitialDamage"
+            }
+          ]
+        },
+        {
+          "id": "snare",
+          "name": "Detonación tras 1,5 s",
+          "parts": [
+            {
+              "calculation": "DelayedDamage"
+            }
+          ]
+        },
+        {
+          "id": "both",
+          "name": "Impacto + detonación",
+          "parts": [
+            {
+              "calculation": "InitialDamage"
+            },
+            {
+              "calculation": "DelayedDamage"
+            }
+          ]
+        }
+      ],
+      "not_modelled": [
+        "Inmovilización y visión verdadera"
+      ]
+    },
+    "R": {
+      "name": "Mímica",
+      "tooltip": "spell_leblancr_tooltip",
+      "cases": [
+        {
+          "id": "rq_hit",
+          "name": "Mímica Q: impacto",
+          "parts": [
+            {
+              "calculation": "RQ1Damage"
+            }
+          ]
+        },
+        {
+          "id": "rq_both",
+          "name": "Mímica Q: impacto + marca",
+          "parts": [
+            {
+              "calculation": "RQ1Damage"
+            },
+            {
+              "calculation": "RQ2Damage"
+            }
+          ]
+        },
+        {
+          "id": "rw",
+          "name": "Mímica W: impacto",
+          "parts": [
+            {
+              "calculation": "RWDamage"
+            }
+          ]
+        },
+        {
+          "id": "re_both",
+          "name": "Mímica E: impacto + detonación",
+          "parts": [
+            {
+              "calculation": "RE1Damage"
+            },
+            {
+              "calculation": "RE2Damage"
+            }
+          ]
+        }
+      ]
+    }
+  }
+}

@@ -1,0 +1,121 @@
+{
+  "champion": "Amumu",
+  "game_version": "16.23",
+  "verified_against": {
+    "content_version": "16.23.8406595+branch.releases-16-23.content.release",
+    "bin_sha256": "56031f03c570d35b7c472251acfcd794ae2a2bd6d2ab32195fe99f19b656e49b",
+    "evidence": "odd/tasks/champion-kits-wave-1.md",
+    "result": "Bin del cliente 16.23 convertido con python -m binmodel.batch_kits y compilado con esta especificación curada (CH-01 oleada 1)"
+  },
+  "abilities": {
+    "P": {
+      "name": "Toque maldito",
+      "max_rank": 1,
+      "not_modelled": [
+        "Maldición: +10 % de daño verdadero adicional sobre el daño mágico recibido (DamageAmp)"
+      ]
+    },
+    "Q": {
+      "name": "Lanzamiento de vendas",
+      "tooltip": "spell_bandagetoss_tooltip",
+      "cases": [
+        {
+          "id": "hit",
+          "name": "Impacto",
+          "parts": [
+            {
+              "calculation": "TotalDamage"
+            }
+          ]
+        }
+      ],
+      "not_modelled": [
+        "Aturdimiento (StunDuration) y sistema de 2 cargas"
+      ]
+    },
+    "W": {
+      "name": "Desesperación",
+      "tooltip": "spell_auraofdespair_tooltip",
+      "cases": [
+        {
+          "id": "per_second",
+          "name": "Daño mágico por segundo",
+          "parts": [
+            {
+              "tooltip_reference": "BaseDamage",
+              "damage_type": "magic",
+              "source_note": "BaseDamage + (TotalHealthDamage %) × vida máxima del objetivo",
+              "formula": {
+                "op": "add",
+                "operands": [
+                  {
+                    "op": "data_value",
+                    "name": "BaseDamage"
+                  },
+                  {
+                    "op": "mul",
+                    "operands": [
+                      {
+                        "op": "calculation",
+                        "name": "TotalHealthDamage"
+                      },
+                      {
+                        "op": "constant",
+                        "value": 0.01
+                      },
+                      {
+                        "op": "stat",
+                        "stat": "health",
+                        "scope": "max",
+                        "subject": "target"
+                      }
+                    ]
+                  }
+                ]
+              }
+            }
+          ]
+        }
+      ],
+      "not_modelled": [
+        "Coste continuo de maná por segundo y renovación de Maldición"
+      ]
+    },
+    "E": {
+      "name": "Berrinche",
+      "tooltip": "spell_tantrum_tooltip",
+      "cases": [
+        {
+          "id": "active",
+          "name": "Activa en área",
+          "parts": [
+            {
+              "calculation": "TantrumDamage"
+            }
+          ]
+        }
+      ],
+      "not_modelled": [
+        "Reducción plana pasiva de daño físico (DamageReduction) y reducción de CD al recibir ataques"
+      ]
+    },
+    "R": {
+      "name": "Maldición de la momia triste",
+      "tooltip": "spell_curseofthesadmummy_tooltip",
+      "cases": [
+        {
+          "id": "burst",
+          "name": "Explosión en área",
+          "parts": [
+            {
+              "calculation": "RCalculatedDamage"
+            }
+          ]
+        }
+      ],
+      "not_modelled": [
+        "Aturdimiento (RDuration) y aplicación de Maldición"
+      ]
+    }
+  }
+}

@@ -1,0 +1,112 @@
+{
+  "champion": "Nautilus",
+  "game_version": "16.23",
+  "verified_against": {
+    "content_version": "16.23.8406595+branch.releases-16-23.content.release",
+    "bin_sha256": "7d3de93d01f79bc0837813aab2f3aa2dd40f9ea578bc2255a87e9d1257b0a08e",
+    "evidence": "odd/tasks/champion-kits-wave-1.md",
+    "result": "Bin del cliente 16.23 convertido con python -m binmodel.batch_kits y compilado con esta especificación curada (CH-01 oleada 1)"
+  },
+  "abilities": {
+    "P": {
+      "name": "Golpe maestro",
+      "tooltip": "spell_nautiluspassive_tooltip",
+      "max_rank": 1,
+      "cases": [
+        {
+          "id": "root_hit",
+          "name": "Daño físico adicional",
+          "parts": [
+            {
+              "calculation": "TotalDamageTooltip"
+            }
+          ]
+        }
+      ],
+      "not_modelled": [
+        "Inmovilización (RootDuration) y enfriamiento por objetivo"
+      ]
+    },
+    "Q": {
+      "name": "Línea de dragado",
+      "tooltip": "spell_nautilusanchordrag_tooltip",
+      "cases": [
+        {
+          "id": "hook",
+          "name": "Ancla",
+          "parts": [
+            {
+              "calculation": "QDamageCalc"
+            }
+          ]
+        }
+      ],
+      "not_modelled": [
+        "Atracción, aturdimiento y devolución parcial en muros"
+      ]
+    },
+    "W": {
+      "name": "Ira del titán",
+      "tooltip": "spell_nautiluspiercinggaze_tooltip",
+      "cases": [
+        {
+          "id": "dot",
+          "name": "Daño mágico adicional en 2 s",
+          "parts": [
+            {
+              "calculation": "DotDamageCalc"
+            }
+          ]
+        }
+      ],
+      "not_modelled": [
+        "Escudo (ShieldCalc) y daño en área alrededor del objetivo"
+      ]
+    },
+    "E": {
+      "name": "Aguas revueltas",
+      "tooltip": "spell_nautilussplashzone_tooltip",
+      "cases": [
+        {
+          "id": "one_wave",
+          "name": "Una onda",
+          "parts": [
+            {
+              "calculation": "DamageCalc"
+            }
+          ]
+        }
+      ],
+      "not_modelled": [
+        "Ondas adicionales al 50 %, ralentización y daño extra a monstruos (MonsterBonusCalc)"
+      ]
+    },
+    "R": {
+      "name": "Carga de profundidad",
+      "tooltip": "spell_nautilusgrandline_tooltip",
+      "cases": [
+        {
+          "id": "primary",
+          "name": "Objetivo principal",
+          "parts": [
+            {
+              "calculation": "PrimaryTargetDamage"
+            }
+          ]
+        },
+        {
+          "id": "secondary",
+          "name": "Objetivos secundarios",
+          "parts": [
+            {
+              "calculation": "SecondaryTargetDamage"
+            }
+          ]
+        }
+      ],
+      "not_modelled": [
+        "Lanzamiento por los aires y aturdimiento (StunDuration)"
+      ]
+    }
+  }
+}

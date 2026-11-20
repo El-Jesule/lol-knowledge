@@ -1,0 +1,174 @@
+{
+  "champion": "Pantheon",
+  "game_version": "16.23",
+  "verified_against": {
+    "content_version": "16.23.8406595+branch.releases-16-23.content.release",
+    "bin_sha256": "b9e8e87de93a586c1c0d3d97ea2b08e2a678c2ca5386d158b0f16e9426f2d898",
+    "evidence": "odd/tasks/champion-kits-wave-1.md",
+    "result": "Bin del cliente 16.23 convertido con python -m binmodel.batch_kits y compilado con esta especificación curada (CH-01 oleada 1)"
+  },
+  "abilities": {
+    "P": {
+      "name": "Voluntad mortal",
+      "max_rank": 1,
+      "not_modelled": [
+        "Contador de 5 acciones para potenciar la siguiente habilidad básica"
+      ]
+    },
+    "Q": {
+      "name": "Lanza cometa",
+      "tooltip": "spell_pantheonq_tooltip",
+      "cases": [
+        {
+          "id": "tap",
+          "name": "Pulsar (estocada)",
+          "parts": [
+            {
+              "calculation": "TapDamageCalc"
+            }
+          ]
+        },
+        {
+          "id": "hold",
+          "name": "Mantener pulsado (lanzamiento)",
+          "parts": [
+            {
+              "calculation": "HoldDamageCalc"
+            }
+          ]
+        },
+        {
+          "id": "execute",
+          "name": "Ejecución (< 20 % vida)",
+          "parts": [
+            {
+              "calculation": "ExecuteDamageCalcModified"
+            }
+          ]
+        },
+        {
+          "id": "empowered_bonus",
+          "name": "Daño adicional de Voluntad mortal",
+          "parts": [
+            {
+              "calculation": "EmpoweredDamageCalc"
+            }
+          ]
+        }
+      ],
+      "not_modelled": [
+        "Devolución del 60 % de enfriamiento al pulsar",
+        "Reducción tras el primer objetivo (DamageFalloff) y contra súbditos/monstruos"
+      ]
+    },
+    "W": {
+      "name": "Salto con escudo",
+      "tooltip": "spell_pantheonw_tooltip",
+      "cases": [
+        {
+          "id": "leap",
+          "name": "Salto (% vida máxima)",
+          "parts": [
+            {
+              "tooltip_reference": "MaxHealthDamageCalc",
+              "damage_type": "physical",
+              "source_note": "MaxHealthDamageCalc × vida máxima del objetivo",
+              "formula": {
+                "op": "mul",
+                "operands": [
+                  {
+                    "op": "calculation",
+                    "name": "MaxHealthDamageCalc"
+                  },
+                  {
+                    "op": "stat",
+                    "stat": "health",
+                    "scope": "max",
+                    "subject": "target"
+                  }
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "id": "empowered_strikes",
+          "name": "Voluntad mortal: triple golpe posterior",
+          "parts": [
+            {
+              "calculation": "EmpoweredDamageMultCalcModified"
+            }
+          ]
+        }
+      ],
+      "not_modelled": [
+        "Aturdimiento (StunDuration) y límites de daño contra monstruos"
+      ]
+    },
+    "E": {
+      "name": "Asalto protector",
+      "tooltip": "spell_pantheone_tooltip",
+      "cases": [
+        {
+          "id": "channel",
+          "name": "Canalización completa",
+          "parts": [
+            {
+              "calculation": "DamageCalc"
+            }
+          ]
+        },
+        {
+          "id": "slam",
+          "name": "Golpe final de escudo",
+          "parts": [
+            {
+              "calculation": "ShieldDamageCalc"
+            }
+          ]
+        },
+        {
+          "id": "full",
+          "name": "Canalización + golpe de escudo",
+          "parts": [
+            {
+              "calculation": "DamageCalc"
+            },
+            {
+              "calculation": "ShieldDamageCalc"
+            }
+          ]
+        }
+      ],
+      "not_modelled": [
+        "Invulnerabilidad direccional, velocidad de movimiento y resistencias potenciadas (ResistsCalc)",
+        "Reducción de daño a súbditos"
+      ]
+    },
+    "R": {
+      "name": "Gran descarga estelar",
+      "tooltip": "spell_pantheonrjump_tooltip",
+      "cases": [
+        {
+          "id": "impact",
+          "name": "Impacto central",
+          "parts": [
+            {
+              "calculation": "DamageCalc"
+            }
+          ]
+        }
+      ],
+      "passive_stats": [
+        {
+          "stat": "armor_penetration_percent",
+          "data_value": "ArmorPenetration",
+          "condition": "pasiva de la R: activa con la R aprendida, también en enfriamiento"
+        }
+      ],
+      "not_modelled": [
+        "Lanza previa al aterrizaje (HoldDamageCalc de la Q) y daño reducido en los bordes (MinDamage)"
+      ]
+    }
+  }
+}

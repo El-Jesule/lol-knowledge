@@ -1,0 +1,270 @@
+{
+  "schema": "lol-champion-kit/1",
+  "champion": "Veigar",
+  "label": "Derivado",
+  "game_version": "16.23",
+  "content_version": "16.23.8406595+branch.releases-16-23.content.release",
+  "verified_against": {
+    "content_version": "16.23.8406595+branch.releases-16-23.content.release",
+    "bin_sha256": "b05997d66a2cb2f446244026f4a2aa829c4c6f4f7c10de440ea1bc6461cc904d",
+    "evidence": "odd/tasks/champion-kits-wave-1.md",
+    "result": "Bin del cliente 16.23 convertido con python -m binmodel.batch_kits y compilado con esta especificación curada (CH-01 oleada 1)"
+  },
+  "source": "Árboles de cálculo del bin del cliente (python -m binmodel) y marcado de los tooltips del cliente; estructura de casos curada en research/kits/",
+  "abilities": {
+    "P": {
+      "name": "Poder de Maldad increíble",
+      "max_rank": 1,
+      "cases": [],
+      "passive_stats": [],
+      "not_modelled": [
+        "Cargas adicionales por asesinatos/asistencias (dTakedownStacks) y reducción de enfriamiento de W cada 50 cargas"
+      ],
+      "passive_effects": [
+        {
+          "id": "phenomenal_evil",
+          "name": "Maldad increíble",
+          "kind": "stat_bonus",
+          "formula": {
+            "op": "constant",
+            "value": 1
+          },
+          "label": "Derivado",
+          "source": "Characters/Veigar/Spells/VeigarPassiveAbility/VeigarPassive.mSpellCalculations.APPerStack (16.23.8406595+branch.releases-16-23.content.release)",
+          "stat": "ability_power",
+          "mode": "flat",
+          "input_name": "phenomenal_evil_stacks",
+          "condition": "PH acumulado por acumulaciones de Maldad increíble (--input phenomenal_evil_stacks)"
+        }
+      ]
+    },
+    "Q": {
+      "name": "Ataque maligno",
+      "max_rank": 5,
+      "cases": [
+        {
+          "id": "hit",
+          "name": "Rayo oscuro",
+          "parts": [
+            {
+              "damage_type": "magic",
+              "formula": {
+                "op": "add",
+                "operands": [
+                  {
+                    "op": "by_rank",
+                    "values": [
+                      80,
+                      120,
+                      160,
+                      200,
+                      240
+                    ]
+                  },
+                  {
+                    "op": "mul",
+                    "operands": [
+                      {
+                        "op": "by_rank",
+                        "values": [
+                          0.5,
+                          0.55,
+                          0.6,
+                          0.65,
+                          0.7
+                        ]
+                      },
+                      {
+                        "op": "stat",
+                        "stat": "ability_power",
+                        "scope": "total"
+                      }
+                    ]
+                  }
+                ]
+              },
+              "label": "Derivado",
+              "source": "Characters/Veigar/Spells/VeigarBalefulStrikeAbility/VeigarBalefulStrike.mSpellCalculations.TotalDamage (16.23.8406595+branch.releases-16-23.content.release)",
+              "damage_type_source": "spell_veigarbalefulstrike_tooltip <magicDamage>"
+            }
+          ]
+        }
+      ],
+      "passive_stats": [],
+      "not_modelled": [
+        "Cargas de Maldad increíble al matar unidades"
+      ]
+    },
+    "W": {
+      "name": "Materia oscura",
+      "max_rank": 5,
+      "cases": [
+        {
+          "id": "hit",
+          "name": "Impacto",
+          "parts": [
+            {
+              "damage_type": "magic",
+              "formula": {
+                "op": "add",
+                "operands": [
+                  {
+                    "op": "by_rank",
+                    "values": [
+                      85,
+                      140,
+                      195,
+                      250,
+                      305
+                    ]
+                  },
+                  {
+                    "op": "mul",
+                    "operands": [
+                      {
+                        "op": "by_rank",
+                        "values": [
+                          0.7,
+                          0.8,
+                          0.9,
+                          1,
+                          1.1
+                        ]
+                      },
+                      {
+                        "op": "stat",
+                        "stat": "ability_power",
+                        "scope": "total"
+                      }
+                    ]
+                  }
+                ]
+              },
+              "label": "Derivado",
+              "source": "Characters/Veigar/Spells/VeigarDarkMatterAbility/VeigarDarkMatter.mSpellCalculations.TotalDamage (16.23.8406595+branch.releases-16-23.content.release)",
+              "damage_type_source": "spell_veigardarkmatter_tooltip <magicDamage>"
+            }
+          ]
+        }
+      ],
+      "passive_stats": [],
+      "not_modelled": [
+        "Reducción de enfriamiento por acumulaciones de Maldad increíble"
+      ]
+    },
+    "E": {
+      "name": "Horizonte de sucesos",
+      "max_rank": 5,
+      "cases": [],
+      "passive_stats": [],
+      "not_modelled": [
+        "Cárcel con aturdimiento (StunDuration)"
+      ]
+    },
+    "R": {
+      "name": "Estallido primordial",
+      "max_rank": 3,
+      "cases": [
+        {
+          "id": "min",
+          "name": "Objetivo con 100 % vida",
+          "parts": [
+            {
+              "damage_type": "magic",
+              "formula": {
+                "op": "add",
+                "operands": [
+                  {
+                    "op": "by_rank",
+                    "values": [
+                      175,
+                      250,
+                      325
+                    ]
+                  },
+                  {
+                    "op": "mul",
+                    "operands": [
+                      {
+                        "op": "by_rank",
+                        "values": [
+                          0.65,
+                          0.7,
+                          0.75
+                        ]
+                      },
+                      {
+                        "op": "stat",
+                        "stat": "ability_power",
+                        "scope": "total"
+                      }
+                    ]
+                  }
+                ]
+              },
+              "label": "Derivado",
+              "source": "Characters/Veigar/Spells/VeigarRAbility/VeigarR.mSpellCalculations.MinDamage (16.23.8406595+branch.releases-16-23.content.release)",
+              "damage_type_source": "spell_veigarr_tooltip <magicDamage>"
+            }
+          ]
+        },
+        {
+          "id": "max",
+          "name": "Objetivo <= 33 % vida (máximo)",
+          "parts": [
+            {
+              "damage_type": "magic",
+              "formula": {
+                "op": "mul",
+                "operands": [
+                  {
+                    "op": "add",
+                    "operands": [
+                      {
+                        "op": "by_rank",
+                        "values": [
+                          175,
+                          250,
+                          325
+                        ]
+                      },
+                      {
+                        "op": "mul",
+                        "operands": [
+                          {
+                            "op": "by_rank",
+                            "values": [
+                              0.65,
+                              0.7,
+                              0.75
+                            ]
+                          },
+                          {
+                            "op": "stat",
+                            "stat": "ability_power",
+                            "scope": "total"
+                          }
+                        ]
+                      }
+                    ]
+                  },
+                  {
+                    "op": "constant",
+                    "value": 2
+                  }
+                ]
+              },
+              "label": "Derivado",
+              "source": "Characters/Veigar/Spells/VeigarRAbility/VeigarR.mSpellCalculations.MaxDamage (16.23.8406595+branch.releases-16-23.content.release)",
+              "damage_type_source": "spell_veigarr_tooltip <magicDamage>"
+            }
+          ]
+        }
+      ],
+      "passive_stats": [],
+      "not_modelled": [
+        "Interpolación continua entre 100 % y 33 % de vida del objetivo"
+      ]
+    }
+  }
+}

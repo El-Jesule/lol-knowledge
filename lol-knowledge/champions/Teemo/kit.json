@@ -1,0 +1,376 @@
+{
+  "schema": "lol-champion-kit/1",
+  "champion": "Teemo",
+  "label": "Derivado",
+  "game_version": "16.23",
+  "content_version": "16.23.8406595+branch.releases-16-23.content.release",
+  "verified_against": {
+    "content_version": "16.23.8406595+branch.releases-16-23.content.release",
+    "bin_sha256": "cb045f4640fabe83b1373e900f8d6bef0f733c64cc318493403650a4410dacbc",
+    "evidence": "odd/tasks/champion-kits-wave-1.md",
+    "result": "Bin del cliente 16.23 convertido con python -m binmodel.batch_kits y compilado con esta especificación curada (CH-01 oleada 1)"
+  },
+  "source": "Árboles de cálculo del bin del cliente (python -m binmodel) y marcado de los tooltips del cliente; estructura de casos curada en research/kits/",
+  "abilities": {
+    "P": {
+      "name": "Guerra de guerrillas",
+      "max_rank": 1,
+      "cases": [],
+      "passive_stats": [],
+      "not_modelled": [
+        "Invisibilidad y velocidad de ataque al salir de sigilo (BonusAttackSpeed)"
+      ]
+    },
+    "Q": {
+      "name": "Dardo cegador",
+      "max_rank": 5,
+      "cases": [
+        {
+          "id": "dart",
+          "name": "Dardo",
+          "parts": [
+            {
+              "damage_type": "magic",
+              "formula": {
+                "op": "add",
+                "operands": [
+                  {
+                    "op": "by_rank",
+                    "values": [
+                      80,
+                      125,
+                      170,
+                      215,
+                      260
+                    ]
+                  },
+                  {
+                    "op": "mul",
+                    "operands": [
+                      {
+                        "op": "constant",
+                        "value": 0.7
+                      },
+                      {
+                        "op": "stat",
+                        "stat": "ability_power",
+                        "scope": "total"
+                      }
+                    ]
+                  }
+                ]
+              },
+              "label": "Derivado",
+              "source": "Characters/Teemo/Spells/TeemoQAbility/TeemoQ.mSpellCalculations.CalculatedDamage (16.23.8406595+branch.releases-16-23.content.release)",
+              "damage_type_source": "spell_teemoq_tooltip <magicDamage>"
+            }
+          ]
+        }
+      ],
+      "passive_stats": [],
+      "not_modelled": [
+        "Ceguera (BlindDuration)"
+      ]
+    },
+    "W": {
+      "name": "Movimiento rápido",
+      "max_rank": 5,
+      "cases": [],
+      "passive_stats": [],
+      "not_modelled": [
+        "Velocidad de movimiento pasiva y activa"
+      ]
+    },
+    "E": {
+      "name": "Tiro tóxico",
+      "max_rank": 5,
+      "cases": [
+        {
+          "id": "on_hit",
+          "name": "Impacto inicial",
+          "parts": [
+            {
+              "damage_type": "magic",
+              "formula": {
+                "op": "add",
+                "operands": [
+                  {
+                    "op": "by_rank",
+                    "values": [
+                      9,
+                      23,
+                      37,
+                      51,
+                      65
+                    ]
+                  },
+                  {
+                    "op": "mul",
+                    "operands": [
+                      {
+                        "op": "constant",
+                        "value": 0.3
+                      },
+                      {
+                        "op": "stat",
+                        "stat": "ability_power",
+                        "scope": "total"
+                      }
+                    ]
+                  },
+                  {
+                    "op": "mul",
+                    "operands": [
+                      {
+                        "op": "constant",
+                        "value": 0.05
+                      },
+                      {
+                        "op": "stat",
+                        "stat": "attack_damage",
+                        "scope": "bonus"
+                      }
+                    ]
+                  }
+                ]
+              },
+              "label": "Derivado",
+              "source": "Characters/Teemo/Spells/TeemoEAbility/TeemoE.mSpellCalculations.ImpactCalculatedDamage (16.23.8406595+branch.releases-16-23.content.release)",
+              "damage_type_source": "spell_teemoe_tooltip <magicDamage>"
+            }
+          ]
+        },
+        {
+          "id": "poison_total",
+          "name": "Veneno completo (4 s)",
+          "parts": [
+            {
+              "damage_type": "magic",
+              "formula": {
+                "op": "mul",
+                "operands": [
+                  {
+                    "op": "add",
+                    "operands": [
+                      {
+                        "op": "by_rank",
+                        "values": [
+                          6,
+                          12,
+                          18,
+                          24,
+                          30
+                        ]
+                      },
+                      {
+                        "op": "mul",
+                        "operands": [
+                          {
+                            "op": "constant",
+                            "value": 0.1
+                          },
+                          {
+                            "op": "stat",
+                            "stat": "ability_power",
+                            "scope": "total"
+                          }
+                        ]
+                      },
+                      {
+                        "op": "mul",
+                        "operands": [
+                          {
+                            "op": "constant",
+                            "value": 0.025
+                          },
+                          {
+                            "op": "stat",
+                            "stat": "attack_damage",
+                            "scope": "bonus"
+                          }
+                        ]
+                      }
+                    ]
+                  },
+                  {
+                    "op": "constant",
+                    "value": 4
+                  }
+                ]
+              },
+              "label": "Derivado",
+              "source": "Characters/Teemo/Spells/TeemoEAbility/TeemoE.mSpellCalculations.TotalDotDamage (16.23.8406595+branch.releases-16-23.content.release)",
+              "damage_type_source": "spell_teemoe_tooltip <magicDamage>"
+            }
+          ]
+        },
+        {
+          "id": "hit_and_poison",
+          "name": "Impacto + veneno completo",
+          "parts": [
+            {
+              "damage_type": "magic",
+              "formula": {
+                "op": "add",
+                "operands": [
+                  {
+                    "op": "by_rank",
+                    "values": [
+                      9,
+                      23,
+                      37,
+                      51,
+                      65
+                    ]
+                  },
+                  {
+                    "op": "mul",
+                    "operands": [
+                      {
+                        "op": "constant",
+                        "value": 0.3
+                      },
+                      {
+                        "op": "stat",
+                        "stat": "ability_power",
+                        "scope": "total"
+                      }
+                    ]
+                  },
+                  {
+                    "op": "mul",
+                    "operands": [
+                      {
+                        "op": "constant",
+                        "value": 0.05
+                      },
+                      {
+                        "op": "stat",
+                        "stat": "attack_damage",
+                        "scope": "bonus"
+                      }
+                    ]
+                  }
+                ]
+              },
+              "label": "Derivado",
+              "source": "Characters/Teemo/Spells/TeemoEAbility/TeemoE.mSpellCalculations.ImpactCalculatedDamage (16.23.8406595+branch.releases-16-23.content.release)",
+              "damage_type_source": "spell_teemoe_tooltip <magicDamage>"
+            },
+            {
+              "damage_type": "magic",
+              "formula": {
+                "op": "mul",
+                "operands": [
+                  {
+                    "op": "add",
+                    "operands": [
+                      {
+                        "op": "by_rank",
+                        "values": [
+                          6,
+                          12,
+                          18,
+                          24,
+                          30
+                        ]
+                      },
+                      {
+                        "op": "mul",
+                        "operands": [
+                          {
+                            "op": "constant",
+                            "value": 0.1
+                          },
+                          {
+                            "op": "stat",
+                            "stat": "ability_power",
+                            "scope": "total"
+                          }
+                        ]
+                      },
+                      {
+                        "op": "mul",
+                        "operands": [
+                          {
+                            "op": "constant",
+                            "value": 0.025
+                          },
+                          {
+                            "op": "stat",
+                            "stat": "attack_damage",
+                            "scope": "bonus"
+                          }
+                        ]
+                      }
+                    ]
+                  },
+                  {
+                    "op": "constant",
+                    "value": 4
+                  }
+                ]
+              },
+              "label": "Derivado",
+              "source": "Characters/Teemo/Spells/TeemoEAbility/TeemoE.mSpellCalculations.TotalDotDamage (16.23.8406595+branch.releases-16-23.content.release)",
+              "damage_type_source": "spell_teemoe_tooltip <magicDamage>"
+            }
+          ]
+        }
+      ],
+      "passive_stats": [],
+      "not_modelled": [
+        "Ticks individuales de veneno y daño aumentado contra monstruos"
+      ]
+    },
+    "R": {
+      "name": "Trampa ponzoñosa",
+      "max_rank": 3,
+      "cases": [
+        {
+          "id": "shroom",
+          "name": "Explosión completa (4 s)",
+          "parts": [
+            {
+              "damage_type": "magic",
+              "formula": {
+                "op": "add",
+                "operands": [
+                  {
+                    "op": "by_rank",
+                    "values": [
+                      200,
+                      325,
+                      450
+                    ]
+                  },
+                  {
+                    "op": "mul",
+                    "operands": [
+                      {
+                        "op": "constant",
+                        "value": 0.5
+                      },
+                      {
+                        "op": "stat",
+                        "stat": "ability_power",
+                        "scope": "total"
+                      }
+                    ]
+                  }
+                ]
+              },
+              "label": "Derivado",
+              "source": "Characters/Teemo/Spells/TeemoRAbility/TeemoR.mSpellCalculations.TotalDamage (16.23.8406595+branch.releases-16-23.content.release)",
+              "damage_type_source": "spell_teemor_tooltip <magicDamage>"
+            }
+          ]
+        }
+      ],
+      "passive_stats": [],
+      "not_modelled": [
+        "Ralentización, visión y munición de trampas"
+      ]
+    }
+  }
+}

@@ -1,0 +1,279 @@
+{
+  "schema": "lol-champion-kit/1",
+  "champion": "Annie",
+  "label": "Derivado",
+  "game_version": "16.23",
+  "content_version": "16.23.8406595+branch.releases-16-23.content.release",
+  "verified_against": {
+    "content_version": "16.23.8406595+branch.releases-16-23.content.release",
+    "bin_sha256": "e36fdb0ecaf87d1b85f0957462e6591bab70bdb88f04eaa9cb4ee61b60beb912",
+    "evidence": "odd/tasks/champion-kits-wave-1.md",
+    "result": "Bin del cliente 16.23 convertido con python -m binmodel.batch_kits y compilado con esta especificación curada (CH-01 oleada 1)"
+  },
+  "source": "Árboles de cálculo del bin del cliente (python -m binmodel) y marcado de los tooltips del cliente; estructura de casos curada en research/kits/",
+  "abilities": {
+    "P": {
+      "name": "Piromanía",
+      "max_rank": 1,
+      "cases": [],
+      "passive_stats": [],
+      "not_modelled": [
+        "Aturdimiento cada 4 habilidades (StunDuration)"
+      ]
+    },
+    "Q": {
+      "name": "Desintegración",
+      "max_rank": 5,
+      "cases": [
+        {
+          "id": "hit",
+          "name": "Bola de fuego",
+          "parts": [
+            {
+              "damage_type": "magic",
+              "formula": {
+                "op": "add",
+                "operands": [
+                  {
+                    "op": "by_rank",
+                    "values": [
+                      80,
+                      125,
+                      170,
+                      215,
+                      260
+                    ]
+                  },
+                  {
+                    "op": "mul",
+                    "operands": [
+                      {
+                        "op": "constant",
+                        "value": 0.8
+                      },
+                      {
+                        "op": "stat",
+                        "stat": "ability_power",
+                        "scope": "total"
+                      }
+                    ]
+                  }
+                ]
+              },
+              "label": "Derivado",
+              "source": "Characters/Annie/Spells/AnnieQAbility/AnnieQ.mSpellCalculations.TotalDamage (16.23.8406595+branch.releases-16-23.content.release)",
+              "damage_type_source": "spell_annieq_tooltip <magicDamage>"
+            }
+          ]
+        }
+      ],
+      "passive_stats": [],
+      "not_modelled": [
+        "Devolución de maná y 50 % de enfriamiento al matar al objetivo"
+      ]
+    },
+    "W": {
+      "name": "Incineración",
+      "max_rank": 5,
+      "cases": [
+        {
+          "id": "cone",
+          "name": "Ola de fuego",
+          "parts": [
+            {
+              "damage_type": "magic",
+              "formula": {
+                "op": "add",
+                "operands": [
+                  {
+                    "op": "by_rank",
+                    "values": [
+                      70,
+                      110,
+                      150,
+                      190,
+                      230
+                    ]
+                  },
+                  {
+                    "op": "mul",
+                    "operands": [
+                      {
+                        "op": "constant",
+                        "value": 0.8
+                      },
+                      {
+                        "op": "stat",
+                        "stat": "ability_power",
+                        "scope": "total"
+                      }
+                    ]
+                  }
+                ]
+              },
+              "label": "Derivado",
+              "source": "Characters/Annie/Spells/AnnieWAbility/AnnieW.mSpellCalculations.TotalDamage (16.23.8406595+branch.releases-16-23.content.release)",
+              "damage_type_source": "spell_anniew_tooltip <magicDamage>"
+            }
+          ]
+        }
+      ],
+      "passive_stats": [],
+      "not_modelled": []
+    },
+    "E": {
+      "name": "Escudo fundido",
+      "max_rank": 5,
+      "cases": [
+        {
+          "id": "reflect",
+          "name": "Daño reflejado al atacante",
+          "parts": [
+            {
+              "damage_type": "magic",
+              "formula": {
+                "op": "add",
+                "operands": [
+                  {
+                    "op": "by_rank",
+                    "values": [
+                      25,
+                      35,
+                      45,
+                      55,
+                      65
+                    ]
+                  },
+                  {
+                    "op": "mul",
+                    "operands": [
+                      {
+                        "op": "constant",
+                        "value": 0.4
+                      },
+                      {
+                        "op": "stat",
+                        "stat": "ability_power",
+                        "scope": "total"
+                      }
+                    ]
+                  }
+                ]
+              },
+              "label": "Derivado",
+              "source": "Characters/Annie/Spells/AnnieEAbility/AnnieE.mSpellCalculations.DamageReturn (16.23.8406595+branch.releases-16-23.content.release)",
+              "damage_type_source": "spell_anniee_tooltip <magicDamage>"
+            }
+          ]
+        }
+      ],
+      "passive_stats": [],
+      "not_modelled": [
+        "Escudo (ShieldBlockTotal) y velocidad de movimiento (MoveSpeedCalc)"
+      ]
+    },
+    "R": {
+      "name": "Invocar: Tibbers",
+      "max_rank": 3,
+      "cases": [
+        {
+          "id": "burst",
+          "name": "Invocación inicial",
+          "parts": [
+            {
+              "damage_type": "magic",
+              "formula": {
+                "op": "add",
+                "operands": [
+                  {
+                    "op": "by_rank",
+                    "values": [
+                      150,
+                      275,
+                      400
+                    ]
+                  },
+                  {
+                    "op": "mul",
+                    "operands": [
+                      {
+                        "op": "constant",
+                        "value": 0.75
+                      },
+                      {
+                        "op": "stat",
+                        "stat": "ability_power",
+                        "scope": "total"
+                      }
+                    ]
+                  }
+                ]
+              },
+              "label": "Derivado",
+              "source": "Characters/Annie/Spells/AnnieRAbility/AnnieR.mSpellCalculations.InitialBurstDamage (16.23.8406595+branch.releases-16-23.content.release)",
+              "damage_type_source": "spell_annier_tooltip <magicDamage>"
+            }
+          ]
+        },
+        {
+          "id": "aura_tick",
+          "name": "Aura de Tibbers (por segundo)",
+          "parts": [
+            {
+              "damage_type": "magic",
+              "formula": {
+                "op": "add",
+                "operands": [
+                  {
+                    "op": "by_rank",
+                    "values": [
+                      10,
+                      15,
+                      20
+                    ]
+                  },
+                  {
+                    "op": "mul",
+                    "operands": [
+                      {
+                        "op": "constant",
+                        "value": 0.04
+                      },
+                      {
+                        "op": "stat",
+                        "stat": "ability_power",
+                        "scope": "total"
+                      }
+                    ]
+                  }
+                ]
+              },
+              "label": "Derivado",
+              "source": "Characters/Annie/Spells/AnnieRAbility/AnnieR.mSpellCalculations.TibbersAuraDamage (16.23.8406595+branch.releases-16-23.content.release)",
+              "damage_type_source": "spell_annier_tooltip <magicDamage>"
+            }
+          ]
+        }
+      ],
+      "passive_stats": [
+        {
+          "stat": "magic_penetration_percent",
+          "formula": {
+            "op": "by_rank",
+            "values": [
+              0.1,
+              0.15,
+              0.2
+            ]
+          },
+          "label": "Derivado",
+          "source": "Characters/Annie/Spells/AnnieRAbility/AnnieR.DataValues.RPercentPenBuff (16.23.8406595+branch.releases-16-23.content.release)",
+          "condition": "pasiva de la R: activa con la R aprendida, también en enfriamiento"
+        }
+      ],
+      "not_modelled": [
+        "Ataques y estadísticas de la mascota Tibbers (TibbersAADamage, TibbersTotalHP, TibbersTotalResists)"
+      ]
+    }
+  }
+}

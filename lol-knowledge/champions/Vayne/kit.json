@@ -1,0 +1,274 @@
+{
+  "schema": "lol-champion-kit/1",
+  "champion": "Vayne",
+  "label": "Derivado",
+  "game_version": "16.23",
+  "content_version": "16.23.8406595+branch.releases-16-23.content.release",
+  "verified_against": {
+    "content_version": "16.23.8406595+branch.releases-16-23.content.release",
+    "bin_sha256": "8be1a1339bb3af2f0872e3eb5c75e084ad1910123316a12be41307dccc99085f",
+    "evidence": "odd/tasks/champion-kits-wave-1.md",
+    "result": "Bin del cliente 16.23 convertido con python -m binmodel.batch_kits y compilado con esta especificación curada (CH-01 oleada 1)"
+  },
+  "source": "Árboles de cálculo del bin del cliente (python -m binmodel) y marcado de los tooltips del cliente; estructura de casos curada en research/kits/",
+  "abilities": {
+    "P": {
+      "name": "Cazadora noctívaga",
+      "max_rank": 1,
+      "cases": [],
+      "passive_stats": [],
+      "not_modelled": [
+        "Velocidad de movimiento hacia campeones enemigos"
+      ]
+    },
+    "Q": {
+      "name": "Pirueta",
+      "max_rank": 5,
+      "cases": [
+        {
+          "id": "tumble",
+          "name": "Daño físico adicional",
+          "parts": [
+            {
+              "damage_type": "physical",
+              "formula": {
+                "op": "add",
+                "operands": [
+                  {
+                    "op": "mul",
+                    "operands": [
+                      {
+                        "op": "by_rank",
+                        "values": [
+                          0.75,
+                          0.85,
+                          0.95,
+                          1.05,
+                          1.15
+                        ]
+                      },
+                      {
+                        "op": "stat",
+                        "stat": "attack_damage",
+                        "scope": "total"
+                      }
+                    ]
+                  },
+                  {
+                    "op": "mul",
+                    "operands": [
+                      {
+                        "op": "constant",
+                        "value": 0.5
+                      },
+                      {
+                        "op": "stat",
+                        "stat": "ability_power",
+                        "scope": "total"
+                      }
+                    ]
+                  }
+                ]
+              },
+              "label": "Derivado",
+              "source": "Characters/Vayne/Spells/VayneTumbleAbility/VayneTumble.mSpellCalculations.ADRatioBonus (16.23.8406595+branch.releases-16-23.content.release)",
+              "damage_type_source": "spell_vayneq_tooltip <physicalDamage>"
+            }
+          ]
+        }
+      ],
+      "passive_stats": [],
+      "not_modelled": [
+        "Desplazamiento, invisibilidad durante R y daño del ataque básico aparte"
+      ]
+    },
+    "W": {
+      "name": "Proyectiles de plata",
+      "max_rank": 5,
+      "cases": [
+        {
+          "id": "proc",
+          "name": "Tercer golpe (% vida máxima, daño verdadero)",
+          "parts": [
+            {
+              "damage_type": "true",
+              "formula": {
+                "op": "mul",
+                "operands": [
+                  {
+                    "op": "by_rank",
+                    "values": [
+                      0.04,
+                      0.055,
+                      0.07,
+                      0.085,
+                      0.1
+                    ]
+                  },
+                  {
+                    "op": "stat",
+                    "stat": "health",
+                    "scope": "max",
+                    "subject": "target"
+                  }
+                ]
+              },
+              "label": "Derivado",
+              "source": "Characters/Vayne/Spells/VayneSilveredBoltsAbility/VayneSilveredBolts · TotalDamage × vida máxima del objetivo (16.23.8406595+branch.releases-16-23.content.release)",
+              "damage_type_source": "spell_vayne_w_tooltip <trueDamage>"
+            }
+          ]
+        }
+      ],
+      "passive_stats": [],
+      "not_modelled": [
+        "Suelo mínimo de daño (DamageFloor) y tope contra monstruos (DamageVsMonsters)"
+      ]
+    },
+    "E": {
+      "name": "Condena",
+      "max_rank": 5,
+      "cases": [
+        {
+          "id": "hit",
+          "name": "Impacto sin muro",
+          "parts": [
+            {
+              "damage_type": "physical",
+              "formula": {
+                "op": "add",
+                "operands": [
+                  {
+                    "op": "by_rank",
+                    "values": [
+                      50,
+                      85,
+                      120,
+                      155,
+                      190
+                    ]
+                  },
+                  {
+                    "op": "mul",
+                    "operands": [
+                      {
+                        "op": "constant",
+                        "value": 0.5
+                      },
+                      {
+                        "op": "stat",
+                        "stat": "attack_damage",
+                        "scope": "bonus"
+                      }
+                    ]
+                  }
+                ]
+              },
+              "label": "Derivado",
+              "source": "Characters/Vayne/Spells/VayneCondemnAbility/VayneCondemn.mSpellCalculations.TotalDamage (16.23.8406595+branch.releases-16-23.content.release)",
+              "damage_type_source": "spell_vaynee_tooltip <physicalDamage>"
+            }
+          ]
+        },
+        {
+          "id": "wall_stun",
+          "name": "Impacto contra muro",
+          "parts": [
+            {
+              "damage_type": "physical",
+              "formula": {
+                "op": "add",
+                "operands": [
+                  {
+                    "op": "by_rank",
+                    "values": [
+                      50,
+                      85,
+                      120,
+                      155,
+                      190
+                    ]
+                  },
+                  {
+                    "op": "mul",
+                    "operands": [
+                      {
+                        "op": "constant",
+                        "value": 0.5
+                      },
+                      {
+                        "op": "stat",
+                        "stat": "attack_damage",
+                        "scope": "bonus"
+                      }
+                    ]
+                  }
+                ]
+              },
+              "label": "Derivado",
+              "source": "Characters/Vayne/Spells/VayneCondemnAbility/VayneCondemn.mSpellCalculations.TotalDamage (16.23.8406595+branch.releases-16-23.content.release)",
+              "damage_type_source": "spell_vaynee_tooltip <physicalDamage>"
+            },
+            {
+              "damage_type": "physical",
+              "formula": {
+                "op": "mul",
+                "operands": [
+                  {
+                    "op": "add",
+                    "operands": [
+                      {
+                        "op": "by_rank",
+                        "values": [
+                          50,
+                          85,
+                          120,
+                          155,
+                          190
+                        ]
+                      },
+                      {
+                        "op": "mul",
+                        "operands": [
+                          {
+                            "op": "constant",
+                            "value": 0.5
+                          },
+                          {
+                            "op": "stat",
+                            "stat": "attack_damage",
+                            "scope": "bonus"
+                          }
+                        ]
+                      }
+                    ]
+                  },
+                  {
+                    "op": "constant",
+                    "value": 1.5
+                  }
+                ]
+              },
+              "label": "Derivado",
+              "source": "Characters/Vayne/Spells/VayneCondemnAbility/VayneCondemn.mSpellCalculations.EmpoweredDamageTT (16.23.8406595+branch.releases-16-23.content.release)",
+              "damage_type_source": "spell_vaynee_tooltip <physicalDamage>"
+            }
+          ]
+        }
+      ],
+      "passive_stats": [],
+      "not_modelled": [
+        "Empuje y aturdimiento contra terreno (StunDuration)"
+      ]
+    },
+    "R": {
+      "name": "Hora final",
+      "max_rank": 3,
+      "cases": [],
+      "passive_stats": [],
+      "not_modelled": [
+        "DA adicional temporal (BonusAttackDamage), velocidad de movimiento e invisibilidad en Q"
+      ]
+    }
+  }
+}

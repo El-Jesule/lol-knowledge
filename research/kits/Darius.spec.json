@@ -1,0 +1,163 @@
+{
+  "champion": "Darius",
+  "game_version": "16.23",
+  "verified_against": {
+    "content_version": "16.23.8406595+branch.releases-16-23.content.release",
+    "bin_sha256": "c5a4b0c35367e10ff5fe8d22a4ac376ed4f4bfdb085b0021ff6cbdd89fee66ea",
+    "evidence": "odd/tasks/champion-kits-wave-1.md",
+    "result": "Bin del cliente 16.23 convertido con python -m binmodel.batch_kits y compilado con esta especificación curada (CH-01 oleada 1)"
+  },
+  "abilities": {
+    "P": {
+      "name": "Hemorragia",
+      "tooltip": "spell_dariushemomarker_tooltip",
+      "max_rank": 1,
+      "cases": [
+        {
+          "id": "bleed_stack",
+          "name": "Sangrado de 1 acumulación (5 s)",
+          "parts": [
+            {
+              "calculation": "BleedDamagePerStack"
+            }
+          ]
+        },
+        {
+          "id": "bleed_max",
+          "name": "Sangrado con 5 acumulaciones (5 s)",
+          "parts": [
+            {
+              "calculation": "BleedDamagePerStack"
+            },
+            {
+              "calculation": "BleedDamagePerStack"
+            },
+            {
+              "calculation": "BleedDamagePerStack"
+            },
+            {
+              "calculation": "BleedDamagePerStack"
+            },
+            {
+              "calculation": "BleedDamagePerStack"
+            }
+          ]
+        }
+      ],
+      "not_modelled": [
+        "Poderío noxiano: DA adicional al alcanzar 5 acumulaciones o asesinar con R (NoxianMightBonusAD)",
+        "Multiplicador de daño contra monstruos (MonsterMod)"
+      ]
+    },
+    "Q": {
+      "name": "Diezmar",
+      "tooltip": "spell_dariusq_tooltip",
+      "cases": [
+        {
+          "id": "blade",
+          "name": "Filo exterior",
+          "parts": [
+            {
+              "calculation": "BladeDamage"
+            }
+          ]
+        },
+        {
+          "id": "handle",
+          "name": "Mango interior",
+          "parts": [
+            {
+              "calculation": "HandleDamage"
+            }
+          ]
+        }
+      ],
+      "not_modelled": [
+        "Curación según vida que falta por campeón alcanzado con el filo (MissingHealPercent)"
+      ]
+    },
+    "W": {
+      "name": "Golpe atroz",
+      "tooltip": "spell_dariusw_tooltip",
+      "cases": [
+        {
+          "id": "strike",
+          "name": "Ataque potenciado",
+          "parts": [
+            {
+              "calculation": "EmpoweredAttackDamage"
+            }
+          ]
+        }
+      ],
+      "not_modelled": [
+        "Ralentización (SlowPercent) y devolución de maná/enfriamiento al matar"
+      ]
+    },
+    "E": {
+      "name": "Atrapar",
+      "tooltip": "spell_dariuse_tooltip",
+      "passive_stats": [
+        {
+          "stat": "armor_penetration_percent",
+          "data_value": "PassivePercentArmorPen",
+          "scale": 0.01,
+          "condition": "pasiva de la E: activa con la E aprendida, también en enfriamiento"
+        }
+      ],
+      "not_modelled": [
+        "Atracción, levantamiento por los aires y ralentización (SlowPercent)"
+      ]
+    },
+    "R": {
+      "name": "Guillotina noxiana",
+      "tooltip": "spell_dariusr_tooltip",
+      "cases": [
+        {
+          "id": "base",
+          "name": "0 acumulaciones de Hemorragia",
+          "parts": [
+            {
+              "calculation": "Damage"
+            }
+          ]
+        },
+        {
+          "id": "max_stacks",
+          "name": "5 acumulaciones de Hemorragia",
+          "parts": [
+            {
+              "calculation": "MaximumDamage"
+            }
+          ]
+        },
+        {
+          "id": "recast",
+          "name": "Reactivación tras asesinato (0 cargas)",
+          "recast": true,
+          "parts": [
+            {
+              "calculation": "Damage"
+            }
+          ]
+        },
+        {
+          "id": "recast_max",
+          "name": "Reactivación tras asesinato (5 cargas)",
+          "recast": true,
+          "parts": [
+            {
+              "calculation": "MaximumDamage"
+            }
+          ]
+        }
+      ],
+      "recast_window_seconds": {
+        "data_value": "RRecastDuration"
+      },
+      "not_modelled": [
+        "Reinicio completo de enfriamiento y coste 0 en rango 3 tras asesinato"
+      ]
+    }
+  }
+}

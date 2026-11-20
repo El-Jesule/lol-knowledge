@@ -1,0 +1,189 @@
+{
+  "champion": "Evelynn",
+  "game_version": "16.23",
+  "verified_against": {
+    "content_version": "16.23.8406595+branch.releases-16-23.content.release",
+    "bin_sha256": "c74965360dea108be4e9ae0f97b52f11ccd9dfa2b795e0207ade6805b540a850",
+    "evidence": "odd/tasks/champion-kits-wave-1.md",
+    "result": "Bin del cliente 16.23 convertido con python -m binmodel.batch_kits y compilado con esta especificación curada (CH-01 oleada 1)"
+  },
+  "abilities": {
+    "P": {
+      "name": "Sombra demoníaca",
+      "max_rank": 1,
+      "not_modelled": [
+        "Camuflaje a partir del nivel 6 y regeneración de vida (HealPerSecondTOOLTIP)"
+      ]
+    },
+    "Q": {
+      "name": "Púa de odio",
+      "tooltip": "spell_evelynnq_tooltip",
+      "cases": [
+        {
+          "id": "lash",
+          "name": "Látigo inicial",
+          "parts": [
+            {
+              "calculation": "MissileDamage"
+            }
+          ]
+        },
+        {
+          "id": "bonus_proc",
+          "name": "Daño adicional de marca (1 de 3)",
+          "parts": [
+            {
+              "calculation": "TotalBonusDamage"
+            }
+          ]
+        },
+        {
+          "id": "spike",
+          "name": "Reactivación: púa",
+          "recast": true,
+          "parts": [
+            {
+              "calculation": "MissileDamage"
+            }
+          ]
+        }
+      ],
+      "max_recasts": 3,
+      "not_modelled": [
+        "Reducción de enfriamiento contra monstruos"
+      ]
+    },
+    "W": {
+      "name": "Sed de lujuria",
+      "tooltip": "spell_evelynnw_tooltip",
+      "cases": [
+        {
+          "id": "monster_proc",
+          "name": "Daño adicional a monstruos (marca completa)",
+          "parts": [
+            {
+              "calculation": "MonsterDamageTotalTOOLTIP"
+            }
+          ]
+        }
+      ],
+      "not_modelled": [
+        "Hechizo, ralentización y reducción porcentual de RM contra campeones (MRShred)"
+      ]
+    },
+    "E": {
+      "name": "Latigazo",
+      "tooltip": "spell_evelynne_tooltip",
+      "cases": [
+        {
+          "id": "base",
+          "name": "Sin potenciar",
+          "parts": [
+            {
+              "tooltip_reference": "BaseDamage",
+              "damage_type": "magic",
+              "source_note": "BaseDamage + (PercentHealthBaseTOOLTIP %) × vida máxima del objetivo",
+              "formula": {
+                "op": "add",
+                "operands": [
+                  {
+                    "op": "data_value",
+                    "name": "BaseDamage"
+                  },
+                  {
+                    "op": "mul",
+                    "operands": [
+                      {
+                        "op": "calculation",
+                        "name": "PercentHealthBaseTOOLTIP"
+                      },
+                      {
+                        "op": "constant",
+                        "value": 0.01
+                      },
+                      {
+                        "op": "stat",
+                        "stat": "health",
+                        "scope": "max",
+                        "subject": "target"
+                      }
+                    ]
+                  }
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "id": "empowered",
+          "name": "Potenciado (desde Sombra demoníaca)",
+          "parts": [
+            {
+              "tooltip_reference": "EmpoweredDamage",
+              "damage_type": "magic",
+              "source_note": "EmpoweredDamage + (PercentHealthEmpoweredTOOLTIP %) × vida máxima del objetivo",
+              "formula": {
+                "op": "add",
+                "operands": [
+                  {
+                    "op": "data_value",
+                    "name": "EmpoweredDamage"
+                  },
+                  {
+                    "op": "mul",
+                    "operands": [
+                      {
+                        "op": "calculation",
+                        "name": "PercentHealthEmpoweredTOOLTIP"
+                      },
+                      {
+                        "op": "constant",
+                        "value": 0.01
+                      },
+                      {
+                        "op": "stat",
+                        "stat": "health",
+                        "scope": "max",
+                        "subject": "target"
+                      }
+                    ]
+                  }
+                ]
+              }
+            }
+          ]
+        }
+      ],
+      "not_modelled": [
+        "Velocidad de movimiento y tope de 450 contra monstruos"
+      ]
+    },
+    "R": {
+      "name": "Hacedora de viudas",
+      "tooltip": "spell_evelynnr_tooltip",
+      "cases": [
+        {
+          "id": "normal",
+          "name": "Objetivo >= 30 % vida",
+          "parts": [
+            {
+              "calculation": "Damage"
+            }
+          ]
+        },
+        {
+          "id": "execute",
+          "name": "Objetivo < 30 % vida",
+          "parts": [
+            {
+              "calculation": "CritDamage"
+            }
+          ]
+        }
+      ],
+      "not_modelled": [
+        "Inalcanzabilidad y teletransporte hacia atrás"
+      ]
+    }
+  }
+}
