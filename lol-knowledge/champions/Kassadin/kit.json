@@ -1,0 +1,222 @@
+{
+  "schema": "lol-champion-kit/1",
+  "champion": "Kassadin",
+  "label": "Derivado",
+  "game_version": "16.23",
+  "content_version": "16.23.8406595+branch.releases-16-23.content.release",
+  "verified_against": {
+    "content_version": "16.23.8406595+branch.releases-16-23.content.release",
+    "bin_sha256": "b6edee11ce2c97377d7fbc92fc82917c8425668b009026d721546d412d5d193e",
+    "evidence": "odd/tasks/champion-kits-wave-2.md",
+    "result": "Bin del cliente 16.23 convertido con python -m binmodel.batch_kits y compilado con esta especificación curada (CH-01 oleada 2)"
+  },
+  "source": "Árboles de cálculo del bin del cliente (python -m binmodel) y marcado de los tooltips del cliente; estructura de casos curada en research/kits/",
+  "abilities": {
+    "P": {
+      "name": "Piedra del Vacío",
+      "max_rank": 1,
+      "cases": [],
+      "passive_stats": [],
+      "not_modelled": [
+        "Reducción del 10 % del daño mágico recibido (DamageReductionPercent) y movimiento fantasmal"
+      ]
+    },
+    "Q": {
+      "name": "Esfera negativa",
+      "max_rank": 5,
+      "cases": [
+        {
+          "id": "sphere",
+          "name": "Impacto",
+          "parts": [
+            {
+              "damage_type": "magic",
+              "formula": {
+                "op": "add",
+                "operands": [
+                  {
+                    "op": "by_rank",
+                    "values": [
+                      65,
+                      95,
+                      125,
+                      155,
+                      185
+                    ]
+                  },
+                  {
+                    "op": "mul",
+                    "operands": [
+                      {
+                        "op": "constant",
+                        "value": 0.8
+                      },
+                      {
+                        "op": "stat",
+                        "stat": "ability_power",
+                        "scope": "total"
+                      }
+                    ]
+                  }
+                ]
+              },
+              "label": "Derivado",
+              "source": "Characters/Kassadin/Spells/NullLanceAbility/NullLance.mSpellCalculations.TotalDamage (16.23.8406595+branch.releases-16-23.content.release)",
+              "damage_type_source": "spell_nulllance_tooltip <magicDamage>"
+            }
+          ]
+        }
+      ],
+      "passive_stats": [],
+      "not_modelled": [
+        "Escudo mágico (TotalShield) e interrupción de canalizaciones"
+      ]
+    },
+    "W": {
+      "name": "Cuchilla infernal",
+      "max_rank": 5,
+      "cases": [
+        {
+          "id": "passive_on_hit",
+          "name": "Pasiva al impactar",
+          "parts": [
+            {
+              "damage_type": "magic",
+              "formula": {
+                "op": "add",
+                "operands": [
+                  {
+                    "op": "constant",
+                    "value": 25
+                  },
+                  {
+                    "op": "mul",
+                    "operands": [
+                      {
+                        "op": "constant",
+                        "value": 0.1
+                      },
+                      {
+                        "op": "stat",
+                        "stat": "ability_power",
+                        "scope": "total"
+                      }
+                    ]
+                  }
+                ]
+              },
+              "label": "Derivado",
+              "source": "Characters/Kassadin/Spells/NetherBladeAbility/NetherBlade.mSpellCalculations.OnHitDamage (16.23.8406595+branch.releases-16-23.content.release)",
+              "damage_type_source": "spell_netherblade_tooltip <magicDamage>"
+            }
+          ]
+        },
+        {
+          "id": "active",
+          "name": "Activa: daño mágico adicional",
+          "parts": [
+            {
+              "damage_type": "magic",
+              "formula": {
+                "op": "add",
+                "operands": [
+                  {
+                    "op": "by_rank",
+                    "values": [
+                      50,
+                      75,
+                      100,
+                      125,
+                      150
+                    ]
+                  },
+                  {
+                    "op": "mul",
+                    "operands": [
+                      {
+                        "op": "constant",
+                        "value": 0.8
+                      },
+                      {
+                        "op": "stat",
+                        "stat": "ability_power",
+                        "scope": "total"
+                      }
+                    ]
+                  }
+                ]
+              },
+              "label": "Derivado",
+              "source": "Characters/Kassadin/Spells/NetherBladeAbility/NetherBlade.mSpellCalculations.ActiveDamage (16.23.8406595+branch.releases-16-23.content.release)",
+              "damage_type_source": "spell_netherblade_tooltip <magicDamage>"
+            }
+          ]
+        }
+      ],
+      "passive_stats": [],
+      "not_modelled": [
+        "Restauración porcentual de maná faltante y ataque básico aparte"
+      ]
+    },
+    "E": {
+      "name": "Pulso de fuerza",
+      "max_rank": 5,
+      "cases": [
+        {
+          "id": "pulse",
+          "name": "Pulso en cono",
+          "parts": [
+            {
+              "damage_type": "magic",
+              "formula": {
+                "op": "add",
+                "operands": [
+                  {
+                    "op": "by_rank",
+                    "values": [
+                      70,
+                      100,
+                      130,
+                      160,
+                      190
+                    ]
+                  },
+                  {
+                    "op": "mul",
+                    "operands": [
+                      {
+                        "op": "constant",
+                        "value": 0.7
+                      },
+                      {
+                        "op": "stat",
+                        "stat": "ability_power",
+                        "scope": "total"
+                      }
+                    ]
+                  }
+                ]
+              },
+              "label": "Derivado",
+              "source": "Characters/Kassadin/Spells/ForcePulseAbility/ForcePulse.mSpellCalculations.TotalDamage (16.23.8406595+branch.releases-16-23.content.release)",
+              "damage_type_source": "spell_forcepulse_tooltip <magicDamage>"
+            }
+          ]
+        }
+      ],
+      "passive_stats": [],
+      "not_modelled": [
+        "Reducción de enfriamiento por habilidades cercanas y ralentización"
+      ]
+    },
+    "R": {
+      "name": "Camino del Vacío",
+      "max_rank": 3,
+      "cases": [],
+      "passive_stats": [],
+      "not_modelled": [
+        "BaseDamage y BonusDamage usan nodos de escalado de maná máximo sin traducir en el bin; duplicación de coste por cargas"
+      ]
+    }
+  }
+}

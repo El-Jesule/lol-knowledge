@@ -1,0 +1,351 @@
+{
+  "schema": "lol-champion-kit/1",
+  "champion": "Fiddlesticks",
+  "label": "Derivado",
+  "game_version": "16.23",
+  "content_version": "16.23.8406595+branch.releases-16-23.content.release",
+  "verified_against": {
+    "content_version": "16.23.8406595+branch.releases-16-23.content.release",
+    "bin_sha256": "11d87daed7b109cec29357b24e341ae0d3c584344c08508c49eb2ef56687cc04",
+    "evidence": "odd/tasks/champion-kits-wave-2.md",
+    "result": "Bin del cliente 16.23 convertido con python -m binmodel.batch_kits y compilado con esta especificación curada (CH-01 oleada 2)"
+  },
+  "source": "Árboles de cálculo del bin del cliente (python -m binmodel) y marcado de los tooltips del cliente; estructura de casos curada en research/kits/",
+  "abilities": {
+    "P": {
+      "name": "Un simple espantapájaros",
+      "max_rank": 1,
+      "cases": [],
+      "passive_stats": [],
+      "not_modelled": [
+        "Figuras de espantapájaros (sustituyen al talismán)"
+      ]
+    },
+    "Q": {
+      "name": "Terror",
+      "max_rank": 5,
+      "cases": [
+        {
+          "id": "normal",
+          "name": "Objetivo sin terror reciente (% vida actual)",
+          "parts": [
+            {
+              "damage_type": "magic",
+              "formula": {
+                "op": "mul",
+                "operands": [
+                  {
+                    "op": "add",
+                    "operands": [
+                      {
+                        "op": "by_rank",
+                        "values": [
+                          0.04,
+                          0.045,
+                          0.05,
+                          0.055,
+                          0.06
+                        ]
+                      },
+                      {
+                        "op": "mul",
+                        "operands": [
+                          {
+                            "op": "constant",
+                            "value": 0.0003
+                          },
+                          {
+                            "op": "stat",
+                            "stat": "ability_power",
+                            "scope": "total"
+                          }
+                        ]
+                      }
+                    ]
+                  },
+                  {
+                    "op": "stat",
+                    "stat": "health",
+                    "scope": "current",
+                    "subject": "target"
+                  }
+                ]
+              },
+              "label": "Derivado",
+              "source": "Characters/Fiddlesticks/Spells/FiddleSticksQAbility/FiddleSticksQ · TotalPercentHealthDamage × vida actual del objetivo (16.23.8406595+branch.releases-16-23.content.release)",
+              "damage_type_source": "spell_fiddlesticksq_tooltip <magicDamage>"
+            }
+          ]
+        },
+        {
+          "id": "feared",
+          "name": "Objetivo aterrorizado recientemente (daño doble)",
+          "parts": [
+            {
+              "damage_type": "magic",
+              "formula": {
+                "op": "mul",
+                "operands": [
+                  {
+                    "op": "mul",
+                    "operands": [
+                      {
+                        "op": "add",
+                        "operands": [
+                          {
+                            "op": "by_rank",
+                            "values": [
+                              0.04,
+                              0.045,
+                              0.05,
+                              0.055,
+                              0.06
+                            ]
+                          },
+                          {
+                            "op": "mul",
+                            "operands": [
+                              {
+                                "op": "constant",
+                                "value": 0.0003
+                              },
+                              {
+                                "op": "stat",
+                                "stat": "ability_power",
+                                "scope": "total"
+                              }
+                            ]
+                          }
+                        ]
+                      },
+                      {
+                        "op": "constant",
+                        "value": 2
+                      }
+                    ]
+                  },
+                  {
+                    "op": "stat",
+                    "stat": "health",
+                    "scope": "current",
+                    "subject": "target"
+                  }
+                ]
+              },
+              "label": "Derivado",
+              "source": "Characters/Fiddlesticks/Spells/FiddleSticksQAbility/FiddleSticksQ · TotalPercentHealthDamageFeared × vida actual del objetivo (16.23.8406595+branch.releases-16-23.content.release)",
+              "damage_type_source": "spell_fiddlesticksq_tooltip <magicDamage>"
+            }
+          ]
+        }
+      ],
+      "passive_stats": [],
+      "not_modelled": [
+        "Terror (FearDuration), suelo mínimo de daño y tope contra monstruos"
+      ]
+    },
+    "W": {
+      "name": "Cosecha abundante",
+      "max_rank": 5,
+      "cases": [
+        {
+          "id": "drain_per_second",
+          "name": "Drenaje por segundo",
+          "parts": [
+            {
+              "damage_type": "magic",
+              "formula": {
+                "op": "add",
+                "operands": [
+                  {
+                    "op": "by_rank",
+                    "values": [
+                      60,
+                      90,
+                      120,
+                      150,
+                      180
+                    ]
+                  },
+                  {
+                    "op": "mul",
+                    "operands": [
+                      {
+                        "op": "constant",
+                        "value": 0.45
+                      },
+                      {
+                        "op": "stat",
+                        "stat": "ability_power",
+                        "scope": "total"
+                      }
+                    ]
+                  }
+                ]
+              },
+              "label": "Derivado",
+              "source": "Characters/Fiddlesticks/Spells/FiddleSticksWAbility/FiddleSticksW.mSpellCalculations.DrainDamageCalc (16.23.8406595+branch.releases-16-23.content.release)",
+              "damage_type_source": "spell_fiddlesticksw_tooltip <magicDamage>"
+            }
+          ]
+        },
+        {
+          "id": "final_tick",
+          "name": "Pulso final (% vida que falta)",
+          "parts": [
+            {
+              "damage_type": "magic",
+              "formula": {
+                "op": "mul",
+                "operands": [
+                  {
+                    "op": "by_rank",
+                    "values": [
+                      12,
+                      14.5,
+                      17,
+                      19.5,
+                      22
+                    ]
+                  },
+                  {
+                    "op": "constant",
+                    "value": 0.01
+                  },
+                  {
+                    "op": "stat",
+                    "stat": "health",
+                    "scope": "max",
+                    "subject": "target"
+                  },
+                  {
+                    "op": "stat",
+                    "stat": "health",
+                    "scope": "missing_fraction",
+                    "subject": "target"
+                  }
+                ]
+              },
+              "label": "Derivado",
+              "source": "Characters/Fiddlesticks/Spells/FiddleSticksWAbility/FiddleSticksW · DataValues.PercentForTooltip % × vida que falta del objetivo (16.23.8406595+branch.releases-16-23.content.release)",
+              "damage_type_source": "spell_fiddlesticksw_tooltip <magicDamage>"
+            }
+          ]
+        }
+      ],
+      "passive_stats": [],
+      "not_modelled": [
+        "Curación porcentual del daño infligido y devolución del 60 % de enfriamiento al terminar"
+      ]
+    },
+    "E": {
+      "name": "Segar",
+      "max_rank": 5,
+      "cases": [
+        {
+          "id": "reap",
+          "name": "Guadaña",
+          "parts": [
+            {
+              "damage_type": "magic",
+              "formula": {
+                "op": "add",
+                "operands": [
+                  {
+                    "op": "by_rank",
+                    "values": [
+                      70,
+                      105,
+                      140,
+                      175,
+                      210
+                    ]
+                  },
+                  {
+                    "op": "mul",
+                    "operands": [
+                      {
+                        "op": "constant",
+                        "value": 0.5
+                      },
+                      {
+                        "op": "stat",
+                        "stat": "ability_power",
+                        "scope": "total"
+                      }
+                    ]
+                  }
+                ]
+              },
+              "label": "Derivado",
+              "source": "Characters/Fiddlesticks/Spells/FiddleSticksEAbility/FiddleSticksE.mSpellCalculations.Damage (16.23.8406595+branch.releases-16-23.content.release)",
+              "damage_type_source": "spell_fiddlestickse_tooltip <magicDamage>"
+            }
+          ]
+        }
+      ],
+      "passive_stats": [],
+      "not_modelled": [
+        "Ralentización y silencio en el centro"
+      ]
+    },
+    "R": {
+      "name": "Tormenta de cuervos",
+      "max_rank": 3,
+      "cases": [
+        {
+          "id": "full",
+          "name": "Daño total (5 s)",
+          "parts": [
+            {
+              "damage_type": "magic",
+              "formula": {
+                "op": "mul",
+                "operands": [
+                  {
+                    "op": "add",
+                    "operands": [
+                      {
+                        "op": "by_rank",
+                        "values": [
+                          150,
+                          250,
+                          350
+                        ]
+                      },
+                      {
+                        "op": "mul",
+                        "operands": [
+                          {
+                            "op": "constant",
+                            "value": 0.5
+                          },
+                          {
+                            "op": "stat",
+                            "stat": "ability_power",
+                            "scope": "total"
+                          }
+                        ]
+                      }
+                    ]
+                  },
+                  {
+                    "op": "constant",
+                    "value": 5
+                  }
+                ]
+              },
+              "label": "Derivado",
+              "source": "Characters/Fiddlesticks/Spells/FiddleSticksRAbility/FiddleSticksR.mSpellCalculations.TotalDamage (16.23.8406595+branch.releases-16-23.content.release)",
+              "damage_type_source": "spell_fiddlesticksr_tooltip <magicDamage>"
+            }
+          ]
+        }
+      ],
+      "passive_stats": [],
+      "not_modelled": [
+        "Canalización de 1,5 s y teletransporte"
+      ]
+    }
+  }
+}

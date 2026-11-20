@@ -1,0 +1,339 @@
+{
+  "schema": "lol-champion-kit/1",
+  "champion": "Velkoz",
+  "label": "Derivado",
+  "game_version": "16.23",
+  "content_version": "16.23.8406595+branch.releases-16-23.content.release",
+  "verified_against": {
+    "content_version": "16.23.8406595+branch.releases-16-23.content.release",
+    "bin_sha256": "cb46b8bc9614ab554a254a81cf3be55cddd8fe9c87af45c5a4f7b8e67c43697a",
+    "evidence": "odd/tasks/champion-kits-wave-2.md",
+    "result": "Bin del cliente 16.23 convertido con python -m binmodel.batch_kits y compilado con esta especificación curada (CH-01 oleada 2)"
+  },
+  "source": "Árboles de cálculo del bin del cliente (python -m binmodel) y marcado de los tooltips del cliente; estructura de casos curada en research/kits/",
+  "abilities": {
+    "P": {
+      "name": "Deconstrucción orgánica",
+      "max_rank": 1,
+      "cases": [
+        {
+          "id": "proc",
+          "name": "3 acumulaciones (daño verdadero)",
+          "parts": [
+            {
+              "damage_type": "true",
+              "formula": {
+                "op": "add",
+                "operands": [
+                  {
+                    "op": "mul",
+                    "operands": [
+                      {
+                        "op": "constant",
+                        "value": 0.65
+                      },
+                      {
+                        "op": "stat",
+                        "stat": "ability_power",
+                        "scope": "total"
+                      }
+                    ]
+                  },
+                  {
+                    "op": "linear_by_level",
+                    "min": 35,
+                    "max": 205
+                  }
+                ]
+              },
+              "label": "Derivado",
+              "source": "Characters/Velkoz/Spells/VelkozPassiveAbility/VelkozPassive.mSpellCalculations.TotalDamage (16.23.8406595+branch.releases-16-23.content.release)",
+              "damage_type_source": "spell_velkozpassive_tooltip <trueDamage>"
+            }
+          ]
+        }
+      ],
+      "passive_stats": [],
+      "not_modelled": []
+    },
+    "Q": {
+      "name": "Fisión de plasma",
+      "max_rank": 5,
+      "cases": [
+        {
+          "id": "bolt",
+          "name": "Rayo de plasma",
+          "parts": [
+            {
+              "damage_type": "magic",
+              "formula": {
+                "op": "add",
+                "operands": [
+                  {
+                    "op": "by_rank",
+                    "values": [
+                      80,
+                      120,
+                      160,
+                      200,
+                      240
+                    ]
+                  },
+                  {
+                    "op": "mul",
+                    "operands": [
+                      {
+                        "op": "constant",
+                        "value": 0.9
+                      },
+                      {
+                        "op": "stat",
+                        "stat": "ability_power",
+                        "scope": "total"
+                      }
+                    ]
+                  }
+                ]
+              },
+              "label": "Derivado",
+              "source": "Characters/Velkoz/Spells/VelkozQAbility/VelkozQ.mSpellCalculations.TotalDamage (16.23.8406595+branch.releases-16-23.content.release)",
+              "damage_type_source": "spell_velkozq_tooltip <magicDamage>"
+            }
+          ]
+        }
+      ],
+      "passive_stats": [],
+      "not_modelled": [
+        "Ralentización y devolución de maná al matar unidades"
+      ]
+    },
+    "W": {
+      "name": "Grieta del Vacío",
+      "max_rank": 5,
+      "cases": [
+        {
+          "id": "initial",
+          "name": "Grieta inicial",
+          "parts": [
+            {
+              "damage_type": "magic",
+              "formula": {
+                "op": "add",
+                "operands": [
+                  {
+                    "op": "by_rank",
+                    "values": [
+                      30,
+                      50,
+                      70,
+                      90,
+                      110
+                    ]
+                  },
+                  {
+                    "op": "mul",
+                    "operands": [
+                      {
+                        "op": "constant",
+                        "value": 0.2
+                      },
+                      {
+                        "op": "stat",
+                        "stat": "ability_power",
+                        "scope": "total"
+                      }
+                    ]
+                  }
+                ]
+              },
+              "label": "Derivado",
+              "source": "Characters/Velkoz/Spells/VelkozWAbility/VelkozW.mSpellCalculations.InitialDamage (16.23.8406595+branch.releases-16-23.content.release)",
+              "damage_type_source": "spell_velkozw_tooltip <magicDamage>"
+            }
+          ]
+        },
+        {
+          "id": "detonate",
+          "name": "Erupción posterior",
+          "parts": [
+            {
+              "damage_type": "magic",
+              "formula": {
+                "op": "add",
+                "operands": [
+                  {
+                    "op": "by_rank",
+                    "values": [
+                      45,
+                      75,
+                      105,
+                      135,
+                      165
+                    ]
+                  },
+                  {
+                    "op": "mul",
+                    "operands": [
+                      {
+                        "op": "constant",
+                        "value": 0.25
+                      },
+                      {
+                        "op": "stat",
+                        "stat": "ability_power",
+                        "scope": "total"
+                      }
+                    ]
+                  }
+                ]
+              },
+              "label": "Derivado",
+              "source": "Characters/Velkoz/Spells/VelkozWAbility/VelkozW.mSpellCalculations.SecondaryDamage (16.23.8406595+branch.releases-16-23.content.release)",
+              "damage_type_source": "spell_velkozw_tooltip <magicDamage>"
+            }
+          ]
+        },
+        {
+          "id": "both",
+          "name": "Grieta + erupción",
+          "parts": [
+            {
+              "damage_type": "magic",
+              "formula": {
+                "op": "add",
+                "operands": [
+                  {
+                    "op": "by_rank",
+                    "values": [
+                      30,
+                      50,
+                      70,
+                      90,
+                      110
+                    ]
+                  },
+                  {
+                    "op": "mul",
+                    "operands": [
+                      {
+                        "op": "constant",
+                        "value": 0.2
+                      },
+                      {
+                        "op": "stat",
+                        "stat": "ability_power",
+                        "scope": "total"
+                      }
+                    ]
+                  }
+                ]
+              },
+              "label": "Derivado",
+              "source": "Characters/Velkoz/Spells/VelkozWAbility/VelkozW.mSpellCalculations.InitialDamage (16.23.8406595+branch.releases-16-23.content.release)",
+              "damage_type_source": "spell_velkozw_tooltip <magicDamage>"
+            },
+            {
+              "damage_type": "magic",
+              "formula": {
+                "op": "add",
+                "operands": [
+                  {
+                    "op": "by_rank",
+                    "values": [
+                      45,
+                      75,
+                      105,
+                      135,
+                      165
+                    ]
+                  },
+                  {
+                    "op": "mul",
+                    "operands": [
+                      {
+                        "op": "constant",
+                        "value": 0.25
+                      },
+                      {
+                        "op": "stat",
+                        "stat": "ability_power",
+                        "scope": "total"
+                      }
+                    ]
+                  }
+                ]
+              },
+              "label": "Derivado",
+              "source": "Characters/Velkoz/Spells/VelkozWAbility/VelkozW.mSpellCalculations.SecondaryDamage (16.23.8406595+branch.releases-16-23.content.release)",
+              "damage_type_source": "spell_velkozw_tooltip <magicDamage>"
+            }
+          ]
+        }
+      ],
+      "passive_stats": [],
+      "not_modelled": [
+        "Sistema de 2 cargas"
+      ]
+    },
+    "E": {
+      "name": "Perturbación tectónica",
+      "max_rank": 5,
+      "cases": [
+        {
+          "id": "disrupt",
+          "name": "Explosión",
+          "parts": [
+            {
+              "damage_type": "magic",
+              "formula": {
+                "op": "add",
+                "operands": [
+                  {
+                    "op": "by_rank",
+                    "values": [
+                      70,
+                      100,
+                      130,
+                      160,
+                      190
+                    ]
+                  },
+                  {
+                    "op": "mul",
+                    "operands": [
+                      {
+                        "op": "constant",
+                        "value": 0.3
+                      },
+                      {
+                        "op": "stat",
+                        "stat": "ability_power",
+                        "scope": "total"
+                      }
+                    ]
+                  }
+                ]
+              },
+              "label": "Derivado",
+              "source": "Characters/Velkoz/Spells/VelkozEAbility/VelkozE.mSpellCalculations.TotalDamage (16.23.8406595+branch.releases-16-23.content.release)",
+              "damage_type_source": "spell_velkoze_tooltip <magicDamage>"
+            }
+          ]
+        }
+      ],
+      "passive_stats": [],
+      "not_modelled": [
+        "Lanzamiento por los aires y empuje cercano"
+      ]
+    },
+    "R": {
+      "name": "Rayo desintegrador de seres vivos",
+      "max_rank": 3,
+      "cases": [],
+      "passive_stats": [],
+      "not_modelled": [
+        "TotalDamage usa EffectValueCalculationPart en el bin; conversión a daño verdadero sobre investigados y ralentización"
+      ]
+    }
+  }
+}

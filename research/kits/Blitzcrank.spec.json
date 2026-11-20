@@ -1,0 +1,80 @@
+{
+  "champion": "Blitzcrank",
+  "game_version": "16.23",
+  "verified_against": {
+    "content_version": "16.23.8406595+branch.releases-16-23.content.release",
+    "bin_sha256": "92e182cb79a761b35ecd70e9e79ecc932792e09b6c7a7ac09651454aeae70482",
+    "evidence": "odd/tasks/champion-kits-wave-2.md",
+    "result": "Bin del cliente 16.23 convertido con python -m binmodel.batch_kits y compilado con esta especificación curada (CH-01 oleada 2)"
+  },
+  "abilities": {
+    "P": {
+      "name": "Barrera de maná",
+      "max_rank": 1,
+      "not_modelled": [
+        "Escudo por maná máximo al caer por debajo del 30 % de vida (ShieldAmount)"
+      ]
+    },
+    "Q": {
+      "name": "Agarre misil",
+      "tooltip": "spell_rocketgrab_tooltip",
+      "cases": [
+        {
+          "id": "grab",
+          "name": "Agarre",
+          "parts": [
+            {
+              "calculation": "TotalDamage"
+            }
+          ]
+        }
+      ],
+      "not_modelled": [
+        "Atracción y aturdimiento"
+      ]
+    },
+    "W": {
+      "name": "Sobrecarga",
+      "tooltip": "spell_overdrive_tooltip",
+      "not_modelled": [
+        "Velocidad de movimiento, velocidad de ataque y autorralentización posterior"
+      ]
+    },
+    "E": {
+      "name": "Puño de poder",
+      "tooltip": "spell_powerfist_tooltip",
+      "cases": [
+        {
+          "id": "fist",
+          "name": "Ataque potenciado",
+          "parts": [
+            {
+              "calculation": "TotalDamage"
+            }
+          ]
+        }
+      ],
+      "not_modelled": [
+        "Lanzamiento por los aires (CCDuration)"
+      ]
+    },
+    "R": {
+      "name": "Campo estático",
+      "tooltip": "spell_staticfield_tooltip",
+      "cases": [
+        {
+          "id": "active",
+          "name": "Activa en área",
+          "parts": [
+            {
+              "calculation": "ActiveDamage"
+            }
+          ]
+        }
+      ],
+      "not_modelled": [
+        "Descarga pasiva (PassiveDamage usa nodo unresolved en el bin), destrucción de escudos y silencio"
+      ]
+    }
+  }
+}

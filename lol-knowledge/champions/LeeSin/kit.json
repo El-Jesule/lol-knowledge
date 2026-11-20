@@ -1,0 +1,279 @@
+{
+  "schema": "lol-champion-kit/1",
+  "champion": "LeeSin",
+  "label": "Derivado",
+  "game_version": "16.23",
+  "content_version": "16.23.8406595+branch.releases-16-23.content.release",
+  "verified_against": {
+    "content_version": "16.23.8406595+branch.releases-16-23.content.release",
+    "bin_sha256": "b03c14cf3c08a2690bebb155b272d6b4f612e28ba5c2f60b64747c1bc3cd8362",
+    "evidence": "odd/tasks/champion-kits-wave-2.md",
+    "result": "Bin del cliente 16.23 convertido con python -m binmodel.batch_kits y compilado con esta especificación curada (CH-01 oleada 2)"
+  },
+  "source": "Árboles de cálculo del bin del cliente (python -m binmodel) y marcado de los tooltips del cliente; estructura de casos curada en research/kits/",
+  "abilities": {
+    "P": {
+      "name": "Ráfaga",
+      "max_rank": 1,
+      "cases": [],
+      "passive_stats": [],
+      "not_modelled": [
+        "Velocidad de ataque durante 2 ataques y restauración de energía (TTFirstHitEnergy, EnergyReturn)"
+      ]
+    },
+    "Q": {
+      "name": "Onda sónica / Golpe resonante",
+      "max_rank": 5,
+      "cases": [
+        {
+          "id": "sonic_wave",
+          "name": "Onda sónica (Q1)",
+          "parts": [
+            {
+              "damage_type": "physical",
+              "formula": {
+                "op": "add",
+                "operands": [
+                  {
+                    "op": "by_rank",
+                    "values": [
+                      60,
+                      90,
+                      120,
+                      150,
+                      180
+                    ]
+                  },
+                  {
+                    "op": "mul",
+                    "operands": [
+                      {
+                        "op": "constant",
+                        "value": 0.9
+                      },
+                      {
+                        "op": "stat",
+                        "stat": "attack_damage",
+                        "scope": "bonus"
+                      }
+                    ]
+                  }
+                ]
+              },
+              "label": "Derivado",
+              "source": "Characters/LeeSin/Spells/LeeSinQOneAbility/LeeSinQOne.mSpellCalculations.InitialDamage (16.23.8406595+branch.releases-16-23.content.release)",
+              "damage_type_source": "spell_blindmonkqone_tooltip <physicalDamage>"
+            }
+          ]
+        },
+        {
+          "id": "resonating_min",
+          "name": "Golpe resonante (Q2 mínimo)",
+          "parts": [
+            {
+              "damage_type": "physical",
+              "formula": {
+                "op": "add",
+                "operands": [
+                  {
+                    "op": "by_rank",
+                    "values": [
+                      60,
+                      90,
+                      120,
+                      150,
+                      180
+                    ]
+                  },
+                  {
+                    "op": "mul",
+                    "operands": [
+                      {
+                        "op": "constant",
+                        "value": 0.9
+                      },
+                      {
+                        "op": "stat",
+                        "stat": "attack_damage",
+                        "scope": "bonus"
+                      }
+                    ]
+                  }
+                ]
+              },
+              "label": "Derivado",
+              "source": "Characters/LeeSin/Spells/LeeSinQOneAbility/LeeSinQOne.mSpellCalculations.RecastDamage (16.23.8406595+branch.releases-16-23.content.release)",
+              "damage_type_source": "spell_blindmonkqone_tooltip <physicalDamage>"
+            }
+          ],
+          "recast": true
+        },
+        {
+          "id": "resonating_max",
+          "name": "Golpe resonante (Q2 máximo)",
+          "parts": [
+            {
+              "damage_type": "physical",
+              "formula": {
+                "op": "mul",
+                "operands": [
+                  {
+                    "op": "add",
+                    "operands": [
+                      {
+                        "op": "by_rank",
+                        "values": [
+                          60,
+                          90,
+                          120,
+                          150,
+                          180
+                        ]
+                      },
+                      {
+                        "op": "mul",
+                        "operands": [
+                          {
+                            "op": "constant",
+                            "value": 0.9
+                          },
+                          {
+                            "op": "stat",
+                            "stat": "attack_damage",
+                            "scope": "bonus"
+                          }
+                        ]
+                      }
+                    ]
+                  },
+                  {
+                    "op": "constant",
+                    "value": 2
+                  }
+                ]
+              },
+              "label": "Derivado",
+              "source": "Characters/LeeSin/Spells/LeeSinQOneAbility/LeeSinQOne.mSpellCalculations.EmpoweredDamage (16.23.8406595+branch.releases-16-23.content.release)",
+              "damage_type_source": "spell_blindmonkqone_tooltip <physicalDamage>"
+            }
+          ],
+          "recast": true
+        }
+      ],
+      "passive_stats": [],
+      "not_modelled": [
+        "Interpolación continua de Q2 según vida que falta y visión verdadera"
+      ],
+      "recast_window_seconds": 3
+    },
+    "W": {
+      "name": "Salvaguarda / Voluntad de hierro",
+      "max_rank": 5,
+      "cases": [],
+      "passive_stats": [],
+      "not_modelled": [
+        "Escudo (ShieldAmount), robo de vida y omnivampirismo temporales (LifestealAndSpellVamp)"
+      ]
+    },
+    "E": {
+      "name": "Tempestad / Incapacitar",
+      "max_rank": 5,
+      "cases": [
+        {
+          "id": "tempest",
+          "name": "Tempestad (E1)",
+          "parts": [
+            {
+              "damage_type": "magic",
+              "formula": {
+                "op": "add",
+                "operands": [
+                  {
+                    "op": "by_rank",
+                    "values": [
+                      35,
+                      60,
+                      85,
+                      110,
+                      135
+                    ]
+                  },
+                  {
+                    "op": "mul",
+                    "operands": [
+                      {
+                        "op": "constant",
+                        "value": 0.9
+                      },
+                      {
+                        "op": "stat",
+                        "stat": "attack_damage",
+                        "scope": "total"
+                      }
+                    ]
+                  }
+                ]
+              },
+              "label": "Derivado",
+              "source": "Characters/LeeSin/Spells/LeeSinEOneAbility/LeeSinEOne.mSpellCalculations.InitialDamage (16.23.8406595+branch.releases-16-23.content.release)",
+              "damage_type_source": "spell_blindmonkeone_tooltip <magicDamage>"
+            }
+          ]
+        }
+      ],
+      "passive_stats": [],
+      "not_modelled": [
+        "Revelación y ralentización de Incapacitar (E2)"
+      ]
+    },
+    "R": {
+      "name": "Ira del dragón",
+      "max_rank": 3,
+      "cases": [
+        {
+          "id": "kick",
+          "name": "Patada sobre objetivo principal",
+          "parts": [
+            {
+              "damage_type": "physical",
+              "formula": {
+                "op": "add",
+                "operands": [
+                  {
+                    "op": "by_rank",
+                    "values": [
+                      150,
+                      350,
+                      550
+                    ]
+                  },
+                  {
+                    "op": "mul",
+                    "operands": [
+                      {
+                        "op": "constant",
+                        "value": 2
+                      },
+                      {
+                        "op": "stat",
+                        "stat": "attack_damage",
+                        "scope": "bonus"
+                      }
+                    ]
+                  }
+                ]
+              },
+              "label": "Derivado",
+              "source": "Characters/LeeSin/Spells/LeeSinRAbility/LeeSinR.mSpellCalculations.Damage (16.23.8406595+branch.releases-16-23.content.release)",
+              "damage_type_source": "spell_blindmonkrkick_tooltip <physicalDamage>"
+            }
+          ]
+        }
+      ],
+      "passive_stats": [],
+      "not_modelled": [
+        "Daño adicional por vida adicional del objetivo pateado a enemigos secundarios (PercentHPCarryThrough)"
+      ]
+    }
+  }
+}

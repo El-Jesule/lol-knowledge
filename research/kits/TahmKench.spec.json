@@ -1,0 +1,118 @@
+{
+  "champion": "TahmKench",
+  "game_version": "16.23",
+  "verified_against": {
+    "content_version": "16.23.8406595+branch.releases-16-23.content.release",
+    "bin_sha256": "35b877da3d4707331d65780fa3fd8b86dc1c54112a4e4b550c14277acacc79db",
+    "evidence": "odd/tasks/champion-kits-wave-2.md",
+    "result": "Bin del cliente 16.23 convertido con python -m binmodel.batch_kits y compilado con esta especificación curada (CH-01 oleada 2)"
+  },
+  "abilities": {
+    "P": {
+      "name": "Paladar peculiar",
+      "tooltip": "spell_tahmkenchpassive_tooltip",
+      "max_rank": 1,
+      "cases": [
+        {
+          "id": "on_hit",
+          "name": "Daño mágico adicional al impactar",
+          "parts": [
+            {
+              "calculation": "TotalDamage"
+            }
+          ]
+        }
+      ],
+      "not_modelled": [
+        "Acumulación de 3 marcas sobre campeones para potenciar Q y habilitar R"
+      ]
+    },
+    "Q": {
+      "name": "Lengüetazo",
+      "tooltip": "spell_tahmkenchq_tooltip",
+      "cases": [
+        {
+          "id": "lash",
+          "name": "Impacto",
+          "parts": [
+            {
+              "calculation": "TotalDamage"
+            }
+          ]
+        }
+      ],
+      "not_modelled": [
+        "Ralentización, curación por vida que falta, aturdimiento a 3 marcas y daño de Paladar peculiar"
+      ]
+    },
+    "W": {
+      "name": "Inmersión abisal",
+      "tooltip": "spell_tahmkenchw_tooltip",
+      "cases": [
+        {
+          "id": "dive",
+          "name": "Aparición",
+          "parts": [
+            {
+              "calculation": "TotalDamage"
+            }
+          ]
+        }
+      ],
+      "not_modelled": [
+        "Lanzamiento por los aires y devolución de enfriamiento/maná al golpear campeones"
+      ]
+    },
+    "E": {
+      "name": "Piel gruesa",
+      "tooltip": "spell_tahmkenche_tooltip",
+      "not_modelled": [
+        "Vida gris, regeneración fuera de combate y escudo activo"
+      ]
+    },
+    "R": {
+      "name": "Devorar",
+      "tooltip": "spell_tahmkenchr_tooltip",
+      "cases": [
+        {
+          "id": "devour",
+          "name": "Devorar a campeón enemigo (+ % vida máxima)",
+          "parts": [
+            {
+              "tooltip_reference": "BaseDamage",
+              "damage_type": "magic",
+              "source_note": "DataValues.BaseDamage + PercentHPDamage × vida máxima del objetivo",
+              "formula": {
+                "op": "add",
+                "operands": [
+                  {
+                    "op": "data_value",
+                    "name": "BaseDamage"
+                  },
+                  {
+                    "op": "mul",
+                    "operands": [
+                      {
+                        "op": "calculation",
+                        "name": "PercentHPDamage"
+                      },
+                      {
+                        "op": "stat",
+                        "stat": "health",
+                        "scope": "max",
+                        "subject": "target"
+                      }
+                    ]
+                  }
+                ]
+              }
+            }
+          ]
+        }
+      ],
+      "not_modelled": [
+        "Supresión durante 3 s y escudo al devorar a un aliado (TotalShield)"
+      ]
+    }
+  }
+}

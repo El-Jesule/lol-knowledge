@@ -1,0 +1,377 @@
+{
+  "schema": "lol-champion-kit/1",
+  "champion": "Neeko",
+  "label": "Derivado",
+  "game_version": "16.23",
+  "content_version": "16.23.8406595+branch.releases-16-23.content.release",
+  "verified_against": {
+    "content_version": "16.23.8406595+branch.releases-16-23.content.release",
+    "bin_sha256": "562f902efa5814625ed88976b4dd271ba50ec6664291cb59635a9918f1a42085",
+    "evidence": "odd/tasks/champion-kits-wave-2.md",
+    "result": "Bin del cliente 16.23 convertido con python -m binmodel.batch_kits y compilado con esta especificación curada (CH-01 oleada 2)"
+  },
+  "source": "Árboles de cálculo del bin del cliente (python -m binmodel) y marcado de los tooltips del cliente; estructura de casos curada en research/kits/",
+  "abilities": {
+    "P": {
+      "name": "Encanto innato",
+      "max_rank": 1,
+      "cases": [],
+      "passive_stats": [],
+      "not_modelled": [
+        "Disfraz de campeón, súbdito o unidad neutral"
+      ]
+    },
+    "Q": {
+      "name": "Estallido floreciente",
+      "max_rank": 5,
+      "cases": [
+        {
+          "id": "first",
+          "name": "Primer brote",
+          "parts": [
+            {
+              "damage_type": "magic",
+              "formula": {
+                "op": "add",
+                "operands": [
+                  {
+                    "op": "by_rank",
+                    "values": [
+                      60,
+                      110,
+                      160,
+                      210,
+                      260
+                    ]
+                  },
+                  {
+                    "op": "mul",
+                    "operands": [
+                      {
+                        "op": "constant",
+                        "value": 0.6
+                      },
+                      {
+                        "op": "stat",
+                        "stat": "ability_power",
+                        "scope": "total"
+                      }
+                    ]
+                  }
+                ]
+              },
+              "label": "Derivado",
+              "source": "Characters/Neeko/Spells/NeekoQAbility/NeekoQ.mSpellCalculations.ExplosionDamage (16.23.8406595+branch.releases-16-23.content.release)",
+              "damage_type_source": "spell_neekoq_tooltip <magicDamage>"
+            }
+          ]
+        },
+        {
+          "id": "extra_bloom",
+          "name": "Un brote adicional",
+          "parts": [
+            {
+              "damage_type": "magic",
+              "formula": {
+                "op": "add",
+                "operands": [
+                  {
+                    "op": "by_rank",
+                    "values": [
+                      35,
+                      60,
+                      85,
+                      110,
+                      135
+                    ]
+                  },
+                  {
+                    "op": "mul",
+                    "operands": [
+                      {
+                        "op": "constant",
+                        "value": 0.25
+                      },
+                      {
+                        "op": "stat",
+                        "stat": "ability_power",
+                        "scope": "total"
+                      }
+                    ]
+                  }
+                ]
+              },
+              "label": "Derivado",
+              "source": "Characters/Neeko/Spells/NeekoQAbility/NeekoQ.mSpellCalculations.SecondDamage (16.23.8406595+branch.releases-16-23.content.release)",
+              "damage_type_source": "spell_neekoq_tooltip <magicDamage>"
+            }
+          ]
+        },
+        {
+          "id": "all_three",
+          "name": "Los tres brotes",
+          "parts": [
+            {
+              "damage_type": "magic",
+              "formula": {
+                "op": "add",
+                "operands": [
+                  {
+                    "op": "by_rank",
+                    "values": [
+                      60,
+                      110,
+                      160,
+                      210,
+                      260
+                    ]
+                  },
+                  {
+                    "op": "mul",
+                    "operands": [
+                      {
+                        "op": "constant",
+                        "value": 0.6
+                      },
+                      {
+                        "op": "stat",
+                        "stat": "ability_power",
+                        "scope": "total"
+                      }
+                    ]
+                  }
+                ]
+              },
+              "label": "Derivado",
+              "source": "Characters/Neeko/Spells/NeekoQAbility/NeekoQ.mSpellCalculations.ExplosionDamage (16.23.8406595+branch.releases-16-23.content.release)",
+              "damage_type_source": "spell_neekoq_tooltip <magicDamage>"
+            },
+            {
+              "damage_type": "magic",
+              "formula": {
+                "op": "add",
+                "operands": [
+                  {
+                    "op": "by_rank",
+                    "values": [
+                      35,
+                      60,
+                      85,
+                      110,
+                      135
+                    ]
+                  },
+                  {
+                    "op": "mul",
+                    "operands": [
+                      {
+                        "op": "constant",
+                        "value": 0.25
+                      },
+                      {
+                        "op": "stat",
+                        "stat": "ability_power",
+                        "scope": "total"
+                      }
+                    ]
+                  }
+                ]
+              },
+              "label": "Derivado",
+              "source": "Characters/Neeko/Spells/NeekoQAbility/NeekoQ.mSpellCalculations.SecondDamage (16.23.8406595+branch.releases-16-23.content.release)",
+              "damage_type_source": "spell_neekoq_tooltip <magicDamage>"
+            },
+            {
+              "damage_type": "magic",
+              "formula": {
+                "op": "add",
+                "operands": [
+                  {
+                    "op": "by_rank",
+                    "values": [
+                      35,
+                      60,
+                      85,
+                      110,
+                      135
+                    ]
+                  },
+                  {
+                    "op": "mul",
+                    "operands": [
+                      {
+                        "op": "constant",
+                        "value": 0.25
+                      },
+                      {
+                        "op": "stat",
+                        "stat": "ability_power",
+                        "scope": "total"
+                      }
+                    ]
+                  }
+                ]
+              },
+              "label": "Derivado",
+              "source": "Characters/Neeko/Spells/NeekoQAbility/NeekoQ.mSpellCalculations.SecondDamage (16.23.8406595+branch.releases-16-23.content.release)",
+              "damage_type_source": "spell_neekoq_tooltip <magicDamage>"
+            }
+          ]
+        }
+      ],
+      "passive_stats": [],
+      "not_modelled": []
+    },
+    "W": {
+      "name": "Duplicaformas",
+      "max_rank": 5,
+      "cases": [
+        {
+          "id": "third_hit",
+          "name": "Pasiva: cada tercer ataque",
+          "parts": [
+            {
+              "damage_type": "magic",
+              "formula": {
+                "op": "add",
+                "operands": [
+                  {
+                    "op": "by_rank",
+                    "values": [
+                      30,
+                      65,
+                      100,
+                      135,
+                      170
+                    ]
+                  },
+                  {
+                    "op": "mul",
+                    "operands": [
+                      {
+                        "op": "constant",
+                        "value": 0.6
+                      },
+                      {
+                        "op": "stat",
+                        "stat": "ability_power",
+                        "scope": "total"
+                      }
+                    ]
+                  }
+                ]
+              },
+              "label": "Derivado",
+              "source": "Characters/Neeko/Spells/NeekoWAbility/NeekoW.mSpellCalculations.PassiveBonusDamageCalc (16.23.8406595+branch.releases-16-23.content.release)",
+              "damage_type_source": "spell_neekow_tooltip <magicDamage>"
+            }
+          ]
+        }
+      ],
+      "passive_stats": [],
+      "not_modelled": [
+        "Velocidad de movimiento, invisibilidad breve y clon"
+      ]
+    },
+    "E": {
+      "name": "Maraña de púas",
+      "max_rank": 5,
+      "cases": [
+        {
+          "id": "tangle",
+          "name": "Impacto",
+          "parts": [
+            {
+              "damage_type": "magic",
+              "formula": {
+                "op": "add",
+                "operands": [
+                  {
+                    "op": "by_rank",
+                    "values": [
+                      80,
+                      115,
+                      150,
+                      185,
+                      220
+                    ]
+                  },
+                  {
+                    "op": "mul",
+                    "operands": [
+                      {
+                        "op": "constant",
+                        "value": 0.65
+                      },
+                      {
+                        "op": "stat",
+                        "stat": "ability_power",
+                        "scope": "total"
+                      }
+                    ]
+                  }
+                ]
+              },
+              "label": "Derivado",
+              "source": "Characters/Neeko/Spells/NeekoEAbility/NeekoE.mSpellCalculations.BaseDamage (16.23.8406595+branch.releases-16-23.content.release)",
+              "damage_type_source": "spell_neekoe_tooltip <magicDamage>"
+            }
+          ]
+        }
+      ],
+      "passive_stats": [],
+      "not_modelled": [
+        "Inmovilización simple y potenciada (MinRootDuration, MaxRootDuration)"
+      ]
+    },
+    "R": {
+      "name": "Brote sorpresa",
+      "max_rank": 3,
+      "cases": [
+        {
+          "id": "pop_blossom",
+          "name": "Explosión en área",
+          "parts": [
+            {
+              "damage_type": "magic",
+              "formula": {
+                "op": "add",
+                "operands": [
+                  {
+                    "op": "by_rank",
+                    "values": [
+                      150,
+                      350,
+                      550
+                    ]
+                  },
+                  {
+                    "op": "mul",
+                    "operands": [
+                      {
+                        "op": "constant",
+                        "value": 1.2
+                      },
+                      {
+                        "op": "stat",
+                        "stat": "ability_power",
+                        "scope": "total"
+                      }
+                    ]
+                  }
+                ]
+              },
+              "label": "Derivado",
+              "source": "Characters/Neeko/Spells/NeekoRAbility/NeekoR.mSpellCalculations.TotalDamage (16.23.8406595+branch.releases-16-23.content.release)",
+              "damage_type_source": "spell_neekor_tooltip <magicDamage>"
+            }
+          ]
+        }
+      ],
+      "passive_stats": [],
+      "not_modelled": [
+        "Lanzamiento por los aires y aturdimiento"
+      ]
+    }
+  }
+}

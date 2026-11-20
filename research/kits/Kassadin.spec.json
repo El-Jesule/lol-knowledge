@@ -1,0 +1,89 @@
+{
+  "champion": "Kassadin",
+  "game_version": "16.23",
+  "verified_against": {
+    "content_version": "16.23.8406595+branch.releases-16-23.content.release",
+    "bin_sha256": "b6edee11ce2c97377d7fbc92fc82917c8425668b009026d721546d412d5d193e",
+    "evidence": "odd/tasks/champion-kits-wave-2.md",
+    "result": "Bin del cliente 16.23 convertido con python -m binmodel.batch_kits y compilado con esta especificación curada (CH-01 oleada 2)"
+  },
+  "abilities": {
+    "P": {
+      "name": "Piedra del Vacío",
+      "max_rank": 1,
+      "not_modelled": [
+        "Reducción del 10 % del daño mágico recibido (DamageReductionPercent) y movimiento fantasmal"
+      ]
+    },
+    "Q": {
+      "name": "Esfera negativa",
+      "tooltip": "spell_nulllance_tooltip",
+      "cases": [
+        {
+          "id": "sphere",
+          "name": "Impacto",
+          "parts": [
+            {
+              "calculation": "TotalDamage"
+            }
+          ]
+        }
+      ],
+      "not_modelled": [
+        "Escudo mágico (TotalShield) e interrupción de canalizaciones"
+      ]
+    },
+    "W": {
+      "name": "Cuchilla infernal",
+      "tooltip": "spell_netherblade_tooltip",
+      "cases": [
+        {
+          "id": "passive_on_hit",
+          "name": "Pasiva al impactar",
+          "parts": [
+            {
+              "calculation": "OnHitDamage"
+            }
+          ]
+        },
+        {
+          "id": "active",
+          "name": "Activa: daño mágico adicional",
+          "parts": [
+            {
+              "calculation": "ActiveDamage"
+            }
+          ]
+        }
+      ],
+      "not_modelled": [
+        "Restauración porcentual de maná faltante y ataque básico aparte"
+      ]
+    },
+    "E": {
+      "name": "Pulso de fuerza",
+      "tooltip": "spell_forcepulse_tooltip",
+      "cases": [
+        {
+          "id": "pulse",
+          "name": "Pulso en cono",
+          "parts": [
+            {
+              "calculation": "TotalDamage"
+            }
+          ]
+        }
+      ],
+      "not_modelled": [
+        "Reducción de enfriamiento por habilidades cercanas y ralentización"
+      ]
+    },
+    "R": {
+      "name": "Camino del Vacío",
+      "tooltip": "spell_riftwalk_tooltip",
+      "not_modelled": [
+        "BaseDamage y BonusDamage usan nodos de escalado de maná máximo sin traducir en el bin; duplicación de coste por cargas"
+      ]
+    }
+  }
+}

@@ -1,0 +1,153 @@
+{
+  "champion": "Skarner",
+  "game_version": "16.23",
+  "verified_against": {
+    "content_version": "16.23.8406595+branch.releases-16-23.content.release",
+    "bin_sha256": "49fbffabbe15189af07a82729f012928f5120340059b8665dc05ca71d6558023",
+    "evidence": "odd/tasks/champion-kits-wave-2.md",
+    "result": "Bin del cliente 16.23 convertido con python -m binmodel.batch_kits y compilado con esta especificación curada (CH-01 oleada 2)"
+  },
+  "abilities": {
+    "P": {
+      "name": "Hebras vibrantes",
+      "tooltip": "spell_skarner_passive_tooltip",
+      "max_rank": 1,
+      "cases": [
+        {
+          "id": "quaking",
+          "name": "Seísmo (3 cargas, % vida máxima)",
+          "parts": [
+            {
+              "tooltip_reference": "PercentHealthDamage",
+              "damage_type": "magic",
+              "source_note": "(PercentHealthDamage %) × vida máxima del objetivo",
+              "formula": {
+                "op": "mul",
+                "operands": [
+                  {
+                    "op": "calculation",
+                    "name": "PercentHealthDamage"
+                  },
+                  {
+                    "op": "constant",
+                    "value": 0.01
+                  },
+                  {
+                    "op": "stat",
+                    "stat": "health",
+                    "scope": "max",
+                    "subject": "target"
+                  }
+                ]
+              }
+            }
+          ]
+        }
+      ],
+      "not_modelled": [
+        "Tope de daño contra monstruos (DamageMonsterCap)"
+      ]
+    },
+    "Q": {
+      "name": "Tierra fragmentada / Alzamiento",
+      "tooltip": "spell_skarner_q_tooltip",
+      "cases": [
+        {
+          "id": "hit",
+          "name": "Ataque potenciado (1.º o 2.º)",
+          "parts": [
+            {
+              "calculation": "AbilityDamage"
+            }
+          ]
+        },
+        {
+          "id": "final_hit",
+          "name": "Tercer ataque / lanzamiento (+ % vida máxima)",
+          "parts": [
+            {
+              "calculation": "AbilityDamage"
+            },
+            {
+              "tooltip_reference": "MaxHPPercent",
+              "damage_type": "physical",
+              "source_note": "DataValues.MaxHPPercent × vida máxima del objetivo",
+              "formula": {
+                "op": "mul",
+                "operands": [
+                  {
+                    "op": "data_value",
+                    "name": "MaxHPPercent"
+                  },
+                  {
+                    "op": "stat",
+                    "stat": "health",
+                    "scope": "max",
+                    "subject": "target"
+                  }
+                ]
+              }
+            }
+          ]
+        }
+      ],
+      "not_modelled": [
+        "Velocidad de ataque de los 3 ataques, ralentización y ataque básico aparte"
+      ]
+    },
+    "W": {
+      "name": "Bastión sísmico",
+      "tooltip": "spell_skarner_w_tooltip",
+      "cases": [
+        {
+          "id": "quake",
+          "name": "Terremoto",
+          "parts": [
+            {
+              "calculation": "Damage"
+            }
+          ]
+        }
+      ],
+      "not_modelled": [
+        "Escudo (InitialShield) y ralentización"
+      ]
+    },
+    "E": {
+      "name": "Hostilidad ixtalí",
+      "tooltip": "spell_skarner_e_tooltip",
+      "cases": [
+        {
+          "id": "pin",
+          "name": "Impacto contra muro",
+          "parts": [
+            {
+              "calculation": "PinDamage"
+            }
+          ]
+        }
+      ],
+      "not_modelled": [
+        "Arrastre a través de terreno y aturdimiento contra muro"
+      ]
+    },
+    "R": {
+      "name": "Empalar",
+      "tooltip": "spell_skarner_r_tooltip",
+      "cases": [
+        {
+          "id": "impale",
+          "name": "Impacto",
+          "parts": [
+            {
+              "calculation": "Damage"
+            }
+          ]
+        }
+      ],
+      "not_modelled": [
+        "Supresión hasta 3 campeones y velocidad de movimiento"
+      ]
+    }
+  }
+}

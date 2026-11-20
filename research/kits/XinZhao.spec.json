@@ -1,0 +1,159 @@
+{
+  "champion": "XinZhao",
+  "game_version": "16.23",
+  "verified_against": {
+    "content_version": "16.23.8406595+branch.releases-16-23.content.release",
+    "bin_sha256": "1c4e811bef2c6021e17eab425cee7884d311a0c11535fe01a41de5f07236d14b",
+    "evidence": "odd/tasks/champion-kits-wave-2.md",
+    "result": "Bin del cliente 16.23 convertido con python -m binmodel.batch_kits y compilado con esta especificación curada (CH-01 oleada 2)"
+  },
+  "abilities": {
+    "P": {
+      "name": "Determinación",
+      "tooltip": "spell_xinzhaop_tooltip",
+      "max_rank": 1,
+      "cases": [
+        {
+          "id": "third_hit",
+          "name": "Cada tercer golpe",
+          "parts": [
+            {
+              "calculation": "TotalDamage"
+            }
+          ]
+        }
+      ],
+      "not_modelled": [
+        "Curación cada tercer golpe (TotalHealing)"
+      ]
+    },
+    "Q": {
+      "name": "Golpe de tres garras",
+      "tooltip": "spell_xinzhaoq_tooltip",
+      "cases": [
+        {
+          "id": "bonus_hit",
+          "name": "Daño adicional por golpe",
+          "parts": [
+            {
+              "calculation": "BonusDamage"
+            }
+          ]
+        },
+        {
+          "id": "all_three",
+          "name": "Los tres golpes potenciados",
+          "parts": [
+            {
+              "calculation": "BonusDamage"
+            },
+            {
+              "calculation": "BonusDamage"
+            },
+            {
+              "calculation": "BonusDamage"
+            }
+          ]
+        }
+      ],
+      "not_modelled": [
+        "Reducción de 1 s de enfriamientos por golpe, levantamiento en el 3.er golpe y ataques básicos aparte"
+      ]
+    },
+    "W": {
+      "name": "El viento se convierte en rayo",
+      "tooltip": "spell_xinzhaow_tooltip",
+      "cases": [
+        {
+          "id": "slash",
+          "name": "Tajo inicial",
+          "parts": [
+            {
+              "calculation": "SlashDamage"
+            }
+          ]
+        },
+        {
+          "id": "thrust",
+          "name": "Estocada",
+          "parts": [
+            {
+              "calculation": "ThrustDamage"
+            }
+          ]
+        },
+        {
+          "id": "both",
+          "name": "Tajo + estocada",
+          "parts": [
+            {
+              "calculation": "SlashDamage"
+            },
+            {
+              "calculation": "ThrustDamage"
+            }
+          ]
+        }
+      ],
+      "not_modelled": [
+        "Ralentización, marca Desafiado y escalado con probabilidad de crítico (CritChanceAmp)"
+      ]
+    },
+    "E": {
+      "name": "Carga audaz",
+      "tooltip": "spell_xinzhaoe_tooltip",
+      "cases": [
+        {
+          "id": "charge",
+          "name": "Impacto",
+          "parts": [
+            {
+              "calculation": "ChargeDamage"
+            }
+          ]
+        }
+      ],
+      "not_modelled": [
+        "Ralentización y velocidad de ataque temporal"
+      ]
+    },
+    "R": {
+      "name": "Guardia de media luna",
+      "tooltip": "spell_xinzhaor_tooltip",
+      "cases": [
+        {
+          "id": "sweep",
+          "name": "Barrido (+ 15 % vida actual)",
+          "parts": [
+            {
+              "calculation": "TotalDamage"
+            },
+            {
+              "tooltip_reference": "PercentCurrentHealthDamage",
+              "damage_type": "physical",
+              "source_note": "DataValues.PercentCurrentHealthDamage × vida actual del objetivo",
+              "formula": {
+                "op": "mul",
+                "operands": [
+                  {
+                    "op": "data_value",
+                    "name": "PercentCurrentHealthDamage"
+                  },
+                  {
+                    "op": "stat",
+                    "stat": "health",
+                    "scope": "current",
+                    "subject": "target"
+                  }
+                ]
+              }
+            }
+          ]
+        }
+      ],
+      "not_modelled": [
+        "Empuje de objetivos no desafiados e invulnerabilidad al daño exterior"
+      ]
+    }
+  }
+}

@@ -1,0 +1,114 @@
+{
+  "champion": "Vladimir",
+  "game_version": "16.23",
+  "verified_against": {
+    "content_version": "16.23.8406595+branch.releases-16-23.content.release",
+    "bin_sha256": "b3daaf1ad44f0af0f729d38765b45549a073e27656bab932358c0326a5ea08b4",
+    "evidence": "odd/tasks/champion-kits-wave-2.md",
+    "result": "Bin del cliente 16.23 convertido con python -m binmodel.batch_kits y compilado con esta especificación curada (CH-01 oleada 2)"
+  },
+  "abilities": {
+    "P": {
+      "name": "Pacto carmesí",
+      "max_rank": 1,
+      "not_modelled": [
+        "Conversión cruzada de vida adicional en PH y PH en vida adicional (MEC-31)"
+      ]
+    },
+    "Q": {
+      "name": "Transfusión",
+      "tooltip": "spell_vladimirq_tooltip",
+      "cases": [
+        {
+          "id": "base",
+          "name": "Transfusión normal",
+          "parts": [
+            {
+              "calculation": "BaseDamageTooltip"
+            }
+          ]
+        },
+        {
+          "id": "crimson_rush",
+          "name": "Impulso carmesí (3.er lanzamiento)",
+          "parts": [
+            {
+              "calculation": "EmpoweredDamageTooltip"
+            }
+          ]
+        }
+      ],
+      "not_modelled": [
+        "Curación normal y potenciada (BaseHealTooltip, EmpoweredHealTooltip) y velocidad de movimiento"
+      ]
+    },
+    "W": {
+      "name": "Estanque sangriento",
+      "tooltip": "spell_vladimirsanguinepool_tooltip",
+      "cases": [
+        {
+          "id": "pool",
+          "name": "Daño total (2 s)",
+          "parts": [
+            {
+              "calculation": "TotalDamage"
+            }
+          ]
+        }
+      ],
+      "not_modelled": [
+        "Coste del 15 % de la vida actual, inalcanzabilidad, ralentización y curación (TotalHeal)"
+      ]
+    },
+    "E": {
+      "name": "Mareas de sangre",
+      "tooltip": "spell_vladimire_tooltip",
+      "cases": [
+        {
+          "id": "min",
+          "name": "Sin cargar",
+          "parts": [
+            {
+              "calculation": "MinDamageTooltip"
+            }
+          ]
+        },
+        {
+          "id": "max",
+          "name": "Carga completa",
+          "parts": [
+            {
+              "calculation": "MaxDamageTooltip"
+            }
+          ]
+        }
+      ],
+      "cost": {
+        "resource": "health",
+        "calculation": "ChargeHealthTooltip",
+        "source_note": "coste máximo de carga (8 % de la vida máxima)"
+      },
+      "not_modelled": [
+        "Ralentización al enemigo y autorralentización del 20 % con carga completa"
+      ]
+    },
+    "R": {
+      "name": "Hemoplaga",
+      "tooltip": "spell_vladimirhemoplague_tooltip",
+      "cases": [
+        {
+          "id": "detonate",
+          "name": "Detonación tras 4 s",
+          "parts": [
+            {
+              "calculation": "Damage"
+            }
+          ]
+        }
+      ],
+      "not_modelled": [
+        "Aumento del 10 % de todo el daño recibido durante 4 s (DamageAmp) y curación por campeón"
+      ]
+    }
+  }
+}

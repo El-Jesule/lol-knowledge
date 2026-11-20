@@ -1,0 +1,337 @@
+{
+  "schema": "lol-champion-kit/1",
+  "champion": "Ornn",
+  "label": "Derivado",
+  "game_version": "16.23",
+  "content_version": "16.23.8406595+branch.releases-16-23.content.release",
+  "verified_against": {
+    "content_version": "16.23.8406595+branch.releases-16-23.content.release",
+    "bin_sha256": "082202886d8585bf66de2b4c85cadfa073d75640c86eee7faf7b622cc78e544b",
+    "evidence": "odd/tasks/champion-kits-wave-2.md",
+    "result": "Bin del cliente 16.23 convertido con python -m binmodel.batch_kits y compilado con esta especificación curada (CH-01 oleada 2)"
+  },
+  "source": "Árboles de cálculo del bin del cliente (python -m binmodel) y marcado de los tooltips del cliente; estructura de casos curada en research/kits/",
+  "abilities": {
+    "P": {
+      "name": "Forja viviente",
+      "max_rank": 1,
+      "cases": [],
+      "passive_stats": [],
+      "not_modelled": [
+        "Aumento porcentual de vida/armadura/RM adicionales, forja fuera de base y mejoras de Ornn"
+      ]
+    },
+    "Q": {
+      "name": "Ruptura volcánica",
+      "max_rank": 5,
+      "cases": [
+        {
+          "id": "rupture",
+          "name": "Fisura",
+          "parts": [
+            {
+              "damage_type": "physical",
+              "formula": {
+                "op": "add",
+                "operands": [
+                  {
+                    "op": "by_rank",
+                    "values": [
+                      20,
+                      45,
+                      70,
+                      95,
+                      120
+                    ]
+                  },
+                  {
+                    "op": "mul",
+                    "operands": [
+                      {
+                        "op": "constant",
+                        "value": 1.1
+                      },
+                      {
+                        "op": "stat",
+                        "stat": "attack_damage",
+                        "scope": "total"
+                      }
+                    ]
+                  }
+                ]
+              },
+              "label": "Derivado",
+              "source": "Characters/Ornn/Spells/OrnnQAbility/OrnnQ.mSpellCalculations.TotalDamage (16.23.8406595+branch.releases-16-23.content.release)",
+              "damage_type_source": "spell_ornnq_tooltip <physicalDamage>"
+            }
+          ]
+        }
+      ],
+      "passive_stats": [],
+      "not_modelled": [
+        "Ralentización y creación de pilar de terreno"
+      ]
+    },
+    "W": {
+      "name": "Aliento de fuelle",
+      "max_rank": 5,
+      "cases": [
+        {
+          "id": "breath",
+          "name": "Llamarada completa (% vida máxima)",
+          "parts": [
+            {
+              "damage_type": "magic",
+              "formula": {
+                "op": "mul",
+                "operands": [
+                  {
+                    "op": "by_rank",
+                    "values": [
+                      12,
+                      13,
+                      14,
+                      15,
+                      16
+                    ]
+                  },
+                  {
+                    "op": "constant",
+                    "value": 0.01
+                  },
+                  {
+                    "op": "stat",
+                    "stat": "health",
+                    "scope": "max",
+                    "subject": "target"
+                  }
+                ]
+              },
+              "label": "Derivado",
+              "source": "Characters/Ornn/Spells/OrnnWAbility/OrnnW · DataValues.MaxPercentHPPerTickTooltip % × vida máxima del objetivo (16.23.8406595+branch.releases-16-23.content.release)",
+              "damage_type_source": "spell_ornnw_tooltip <magicDamage>"
+            }
+          ]
+        },
+        {
+          "id": "brittle",
+          "name": "Detonación de Quebradizo (% vida máxima)",
+          "parts": [
+            {
+              "damage_type": "magic",
+              "formula": {
+                "op": "mul",
+                "operands": [
+                  {
+                    "op": "linear_by_level",
+                    "min": 0.09,
+                    "max": 0.17
+                  },
+                  {
+                    "op": "stat",
+                    "stat": "health",
+                    "scope": "max",
+                    "subject": "target"
+                  }
+                ]
+              },
+              "label": "Derivado",
+              "source": "Characters/Ornn/Spells/OrnnWAbility/OrnnW · BrittlePercentMaxHPCalc × vida máxima del objetivo (16.23.8406595+branch.releases-16-23.content.release)",
+              "damage_type_source": "spell_ornnw_tooltip <magicDamage>"
+            }
+          ]
+        }
+      ],
+      "passive_stats": [],
+      "not_modelled": [
+        "Imparabilidad, daño mínimo (TotalMinimumDamage) y tope contra monstruos (TotalMonsterDamageCap)"
+      ]
+    },
+    "E": {
+      "name": "Carga candente",
+      "max_rank": 5,
+      "cases": [
+        {
+          "id": "charge",
+          "name": "Impacto o explosión contra muro",
+          "parts": [
+            {
+              "damage_type": "physical",
+              "formula": {
+                "op": "add",
+                "operands": [
+                  {
+                    "op": "by_rank",
+                    "values": [
+                      80,
+                      125,
+                      170,
+                      215,
+                      260
+                    ]
+                  },
+                  {
+                    "op": "mul",
+                    "operands": [
+                      {
+                        "op": "constant",
+                        "value": 0.4
+                      },
+                      {
+                        "op": "stat",
+                        "stat": "armor",
+                        "scope": "bonus"
+                      }
+                    ]
+                  },
+                  {
+                    "op": "mul",
+                    "operands": [
+                      {
+                        "op": "constant",
+                        "value": 0.4
+                      },
+                      {
+                        "op": "stat",
+                        "stat": "magic_resist",
+                        "scope": "bonus"
+                      }
+                    ]
+                  }
+                ]
+              },
+              "label": "Derivado",
+              "source": "Characters/Ornn/Spells/OrnnEAbility/OrnnE.mSpellCalculations.TotalDamage (16.23.8406595+branch.releases-16-23.content.release)",
+              "damage_type_source": "spell_ornne_tooltip <physicalDamage>"
+            }
+          ]
+        }
+      ],
+      "passive_stats": [],
+      "not_modelled": [
+        "Lanzamiento por los aires al chocar con terreno (KnockupDuration)"
+      ]
+    },
+    "R": {
+      "name": "Llamada del dios de la forja",
+      "max_rank": 3,
+      "cases": [
+        {
+          "id": "wave",
+          "name": "Una pasada del gólem",
+          "parts": [
+            {
+              "damage_type": "magic",
+              "formula": {
+                "op": "add",
+                "operands": [
+                  {
+                    "op": "by_rank",
+                    "values": [
+                      125,
+                      175,
+                      225
+                    ]
+                  },
+                  {
+                    "op": "mul",
+                    "operands": [
+                      {
+                        "op": "constant",
+                        "value": 0.2
+                      },
+                      {
+                        "op": "stat",
+                        "stat": "ability_power",
+                        "scope": "total"
+                      }
+                    ]
+                  }
+                ]
+              },
+              "label": "Derivado",
+              "source": "Characters/Ornn/Spells/OrnnRAbility/OrnnR.mSpellCalculations.RDamageCalc (16.23.8406595+branch.releases-16-23.content.release)",
+              "damage_type_source": "spell_ornnr_tooltip <magicDamage>"
+            }
+          ]
+        },
+        {
+          "id": "both_waves",
+          "name": "Ida + cabezazo de vuelta",
+          "parts": [
+            {
+              "damage_type": "magic",
+              "formula": {
+                "op": "add",
+                "operands": [
+                  {
+                    "op": "by_rank",
+                    "values": [
+                      125,
+                      175,
+                      225
+                    ]
+                  },
+                  {
+                    "op": "mul",
+                    "operands": [
+                      {
+                        "op": "constant",
+                        "value": 0.2
+                      },
+                      {
+                        "op": "stat",
+                        "stat": "ability_power",
+                        "scope": "total"
+                      }
+                    ]
+                  }
+                ]
+              },
+              "label": "Derivado",
+              "source": "Characters/Ornn/Spells/OrnnRAbility/OrnnR.mSpellCalculations.RDamageCalc (16.23.8406595+branch.releases-16-23.content.release)",
+              "damage_type_source": "spell_ornnr_tooltip <magicDamage>"
+            },
+            {
+              "damage_type": "magic",
+              "formula": {
+                "op": "add",
+                "operands": [
+                  {
+                    "op": "by_rank",
+                    "values": [
+                      125,
+                      175,
+                      225
+                    ]
+                  },
+                  {
+                    "op": "mul",
+                    "operands": [
+                      {
+                        "op": "constant",
+                        "value": 0.2
+                      },
+                      {
+                        "op": "stat",
+                        "stat": "ability_power",
+                        "scope": "total"
+                      }
+                    ]
+                  }
+                ]
+              },
+              "label": "Derivado",
+              "source": "Characters/Ornn/Spells/OrnnRAbility/OrnnR.mSpellCalculations.RDamageCalc (16.23.8406595+branch.releases-16-23.content.release)",
+              "damage_type_source": "spell_ornnr_tooltip <magicDamage>"
+            }
+          ]
+        }
+      ],
+      "passive_stats": [],
+      "not_modelled": [
+        "Aplicación de Quebradizo, ralentización y lanzamiento por los aires en el segundo impacto"
+      ]
+    }
+  }
+}

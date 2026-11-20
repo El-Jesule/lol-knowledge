@@ -1,0 +1,131 @@
+{
+  "champion": "Kayle",
+  "game_version": "16.23",
+  "verified_against": {
+    "content_version": "16.23.8406595+branch.releases-16-23.content.release",
+    "bin_sha256": "62cb57423f914655a8236ea0a909e0cfb0dd5a4cee4540804e9fce42b1aec9aa",
+    "evidence": "odd/tasks/champion-kits-wave-2.md",
+    "result": "Bin del cliente 16.23 convertido con python -m binmodel.batch_kits y compilado con esta especificación curada (CH-01 oleada 2)"
+  },
+  "abilities": {
+    "P": {
+      "name": "Ascenso divino",
+      "tooltip": "spell_kaylepassive_tooltip",
+      "max_rank": 1,
+      "cases": [
+        {
+          "id": "wave",
+          "name": "Oleada de fuego (nivel >= 11)",
+          "parts": [
+            {
+              "calculation": "PassiveWaveDamage"
+            }
+          ]
+        }
+      ],
+      "not_modelled": [
+        "Velocidad de ataque acumulable hasta 5 cargas (EnrageTotalASPerStack) y mejoras de alcance por nivel"
+      ]
+    },
+    "Q": {
+      "name": "Ráfaga radiante",
+      "tooltip": "spell_kayleq_tooltip",
+      "cases": [
+        {
+          "id": "blast",
+          "name": "Impacto",
+          "parts": [
+            {
+              "calculation": "TotalDamage"
+            }
+          ]
+        }
+      ],
+      "not_modelled": [
+        "Ralentización y reducción del 15 % de armadura y RM (ShredPercent)"
+      ]
+    },
+    "W": {
+      "name": "Gracia celestial",
+      "tooltip": "spell_kaylew_tooltip",
+      "not_modelled": [
+        "Curación (TotalHeal) y velocidad de movimiento (TotalHaste)"
+      ]
+    },
+    "E": {
+      "name": "Filo purificador",
+      "tooltip": "spell_kaylee_tooltip",
+      "cases": [
+        {
+          "id": "passive_on_hit",
+          "name": "Pasiva al impactar",
+          "parts": [
+            {
+              "calculation": "EPassiveTotalDamage"
+            }
+          ]
+        },
+        {
+          "id": "active_execute",
+          "name": "Activa (+ % vida que falta)",
+          "parts": [
+            {
+              "calculation": "EPassiveTotalDamage"
+            },
+            {
+              "tooltip_reference": "ActiveTotalExecuteDamage",
+              "damage_type": "magic",
+              "source_note": "(ActiveTotalExecuteDamage %) × vida que falta del objetivo",
+              "formula": {
+                "op": "mul",
+                "operands": [
+                  {
+                    "op": "calculation",
+                    "name": "ActiveTotalExecuteDamage"
+                  },
+                  {
+                    "op": "constant",
+                    "value": 0.01
+                  },
+                  {
+                    "op": "stat",
+                    "stat": "health",
+                    "scope": "max",
+                    "subject": "target"
+                  },
+                  {
+                    "op": "stat",
+                    "stat": "health",
+                    "scope": "missing_fraction",
+                    "subject": "target"
+                  }
+                ]
+              }
+            }
+          ]
+        }
+      ],
+      "not_modelled": [
+        "El daño del propio ataque básico: se suma aparte"
+      ]
+    },
+    "R": {
+      "name": "Veredicto divino",
+      "tooltip": "spell_kayler_tooltip",
+      "cases": [
+        {
+          "id": "swords",
+          "name": "Lluvia de espadas",
+          "parts": [
+            {
+              "calculation": "TotalDamage"
+            }
+          ]
+        }
+      ],
+      "not_modelled": [
+        "Invulnerabilidad del objetivo aliado (InvulnDuration)"
+      ]
+    }
+  }
+}

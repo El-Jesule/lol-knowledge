@@ -1,0 +1,112 @@
+{
+  "champion": "Neeko",
+  "game_version": "16.23",
+  "verified_against": {
+    "content_version": "16.23.8406595+branch.releases-16-23.content.release",
+    "bin_sha256": "562f902efa5814625ed88976b4dd271ba50ec6664291cb59635a9918f1a42085",
+    "evidence": "odd/tasks/champion-kits-wave-2.md",
+    "result": "Bin del cliente 16.23 convertido con python -m binmodel.batch_kits y compilado con esta especificación curada (CH-01 oleada 2)"
+  },
+  "abilities": {
+    "P": {
+      "name": "Encanto innato",
+      "max_rank": 1,
+      "not_modelled": [
+        "Disfraz de campeón, súbdito o unidad neutral"
+      ]
+    },
+    "Q": {
+      "name": "Estallido floreciente",
+      "tooltip": "spell_neekoq_tooltip",
+      "cases": [
+        {
+          "id": "first",
+          "name": "Primer brote",
+          "parts": [
+            {
+              "calculation": "ExplosionDamage"
+            }
+          ]
+        },
+        {
+          "id": "extra_bloom",
+          "name": "Un brote adicional",
+          "parts": [
+            {
+              "calculation": "SecondDamage"
+            }
+          ]
+        },
+        {
+          "id": "all_three",
+          "name": "Los tres brotes",
+          "parts": [
+            {
+              "calculation": "ExplosionDamage"
+            },
+            {
+              "calculation": "SecondDamage"
+            },
+            {
+              "calculation": "SecondDamage"
+            }
+          ]
+        }
+      ]
+    },
+    "W": {
+      "name": "Duplicaformas",
+      "tooltip": "spell_neekow_tooltip",
+      "cases": [
+        {
+          "id": "third_hit",
+          "name": "Pasiva: cada tercer ataque",
+          "parts": [
+            {
+              "calculation": "PassiveBonusDamageCalc"
+            }
+          ]
+        }
+      ],
+      "not_modelled": [
+        "Velocidad de movimiento, invisibilidad breve y clon"
+      ]
+    },
+    "E": {
+      "name": "Maraña de púas",
+      "tooltip": "spell_neekoe_tooltip",
+      "cases": [
+        {
+          "id": "tangle",
+          "name": "Impacto",
+          "parts": [
+            {
+              "calculation": "BaseDamage"
+            }
+          ]
+        }
+      ],
+      "not_modelled": [
+        "Inmovilización simple y potenciada (MinRootDuration, MaxRootDuration)"
+      ]
+    },
+    "R": {
+      "name": "Brote sorpresa",
+      "tooltip": "spell_neekor_tooltip",
+      "cases": [
+        {
+          "id": "pop_blossom",
+          "name": "Explosión en área",
+          "parts": [
+            {
+              "calculation": "TotalDamage"
+            }
+          ]
+        }
+      ],
+      "not_modelled": [
+        "Lanzamiento por los aires y aturdimiento"
+      ]
+    }
+  }
+}

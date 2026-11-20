@@ -1,0 +1,329 @@
+{
+  "schema": "lol-champion-kit/1",
+  "champion": "Cassiopeia",
+  "label": "Derivado",
+  "game_version": "16.23",
+  "content_version": "16.23.8406595+branch.releases-16-23.content.release",
+  "verified_against": {
+    "content_version": "16.23.8406595+branch.releases-16-23.content.release",
+    "bin_sha256": "a2eff3dd2f31832c08f886e8492fe1432b4fe422e6bdfa11207b7db7b2ee0d96",
+    "evidence": "odd/tasks/champion-kits-wave-2.md",
+    "result": "Bin del cliente 16.23 convertido con python -m binmodel.batch_kits y compilado con esta especificación curada (CH-01 oleada 2)"
+  },
+  "source": "Árboles de cálculo del bin del cliente (python -m binmodel) y marcado de los tooltips del cliente; estructura de casos curada en research/kits/",
+  "abilities": {
+    "P": {
+      "name": "Elegancia serpentina",
+      "max_rank": 1,
+      "cases": [],
+      "passive_stats": [],
+      "not_modelled": [
+        "Aumento porcentual de bonificaciones de velocidad de movimiento (PercentHasteMod, CH-04)"
+      ]
+    },
+    "Q": {
+      "name": "Explosión perjudicial",
+      "max_rank": 5,
+      "cases": [
+        {
+          "id": "poison",
+          "name": "Veneno completo (3 s)",
+          "parts": [
+            {
+              "damage_type": "magic",
+              "formula": {
+                "op": "add",
+                "operands": [
+                  {
+                    "op": "by_rank",
+                    "values": [
+                      65,
+                      100,
+                      135,
+                      170,
+                      205
+                    ]
+                  },
+                  {
+                    "op": "mul",
+                    "operands": [
+                      {
+                        "op": "constant",
+                        "value": 0.75
+                      },
+                      {
+                        "op": "stat",
+                        "stat": "ability_power",
+                        "scope": "total"
+                      }
+                    ]
+                  }
+                ]
+              },
+              "label": "Derivado",
+              "source": "Characters/Cassiopeia/Spells/CassiopeiaQAbility/CassiopeiaQ.mSpellCalculations.TooltipTotalDamage (16.23.8406595+branch.releases-16-23.content.release)",
+              "damage_type_source": "spell_cassiopeiaq_tooltip <magicDamage>"
+            }
+          ]
+        }
+      ],
+      "passive_stats": [],
+      "not_modelled": [
+        "Velocidad de movimiento al golpear campeones (ChampHitMSBonus)"
+      ]
+    },
+    "W": {
+      "name": "Miasma",
+      "max_rank": 5,
+      "cases": [
+        {
+          "id": "per_second",
+          "name": "Por segundo en el área",
+          "parts": [
+            {
+              "damage_type": "magic",
+              "formula": {
+                "op": "add",
+                "operands": [
+                  {
+                    "op": "by_rank",
+                    "values": [
+                      20,
+                      25,
+                      30,
+                      35,
+                      40
+                    ]
+                  },
+                  {
+                    "op": "mul",
+                    "operands": [
+                      {
+                        "op": "constant",
+                        "value": 0.1
+                      },
+                      {
+                        "op": "stat",
+                        "stat": "ability_power",
+                        "scope": "total"
+                      }
+                    ]
+                  }
+                ]
+              },
+              "label": "Derivado",
+              "source": "Characters/Cassiopeia/Spells/CassiopeiaWAbility/CassiopeiaW.mSpellCalculations.DamagePerSecond (16.23.8406595+branch.releases-16-23.content.release)",
+              "damage_type_source": "spell_cassiopeiaw_tooltip <magicDamage>"
+            }
+          ]
+        }
+      ],
+      "passive_stats": [],
+      "not_modelled": [
+        "Anclaje y ralentización"
+      ]
+    },
+    "E": {
+      "name": "Colmillo doble",
+      "max_rank": 5,
+      "cases": [
+        {
+          "id": "base",
+          "name": "Objetivo sin veneno",
+          "parts": [
+            {
+              "damage_type": "magic",
+              "formula": {
+                "op": "add",
+                "operands": [
+                  {
+                    "op": "by_level",
+                    "values": [
+                      50,
+                      54.1176,
+                      58.2352,
+                      62.3528,
+                      66.4704,
+                      70.588,
+                      74.7056,
+                      78.8232,
+                      82.9408,
+                      87.0584,
+                      91.176,
+                      95.2936,
+                      99.4112,
+                      103.5288,
+                      107.6464,
+                      111.764,
+                      115.8816,
+                      119.9992
+                    ]
+                  },
+                  {
+                    "op": "mul",
+                    "operands": [
+                      {
+                        "op": "constant",
+                        "value": 0.2
+                      },
+                      {
+                        "op": "stat",
+                        "stat": "ability_power",
+                        "scope": "total"
+                      }
+                    ]
+                  }
+                ]
+              },
+              "label": "Derivado",
+              "source": "Characters/Cassiopeia/Spells/CassiopeiaEAbility/CassiopeiaE.mSpellCalculations.BasicDamage (16.23.8406595+branch.releases-16-23.content.release)",
+              "damage_type_source": "spell_cassiopeiae_tooltip <magicDamage>"
+            }
+          ]
+        },
+        {
+          "id": "poisoned",
+          "name": "Objetivo envenenado",
+          "parts": [
+            {
+              "damage_type": "magic",
+              "formula": {
+                "op": "add",
+                "operands": [
+                  {
+                    "op": "by_level",
+                    "values": [
+                      50,
+                      54.1176,
+                      58.2352,
+                      62.3528,
+                      66.4704,
+                      70.588,
+                      74.7056,
+                      78.8232,
+                      82.9408,
+                      87.0584,
+                      91.176,
+                      95.2936,
+                      99.4112,
+                      103.5288,
+                      107.6464,
+                      111.764,
+                      115.8816,
+                      119.9992
+                    ]
+                  },
+                  {
+                    "op": "mul",
+                    "operands": [
+                      {
+                        "op": "constant",
+                        "value": 0.2
+                      },
+                      {
+                        "op": "stat",
+                        "stat": "ability_power",
+                        "scope": "total"
+                      }
+                    ]
+                  }
+                ]
+              },
+              "label": "Derivado",
+              "source": "Characters/Cassiopeia/Spells/CassiopeiaEAbility/CassiopeiaE.mSpellCalculations.BasicDamage (16.23.8406595+branch.releases-16-23.content.release)",
+              "damage_type_source": "spell_cassiopeiae_tooltip <magicDamage>"
+            },
+            {
+              "damage_type": "magic",
+              "formula": {
+                "op": "add",
+                "operands": [
+                  {
+                    "op": "by_rank",
+                    "values": [
+                      20,
+                      45,
+                      70,
+                      95,
+                      120
+                    ]
+                  },
+                  {
+                    "op": "mul",
+                    "operands": [
+                      {
+                        "op": "constant",
+                        "value": 0.45
+                      },
+                      {
+                        "op": "stat",
+                        "stat": "ability_power",
+                        "scope": "total"
+                      }
+                    ]
+                  }
+                ]
+              },
+              "label": "Derivado",
+              "source": "Characters/Cassiopeia/Spells/CassiopeiaEAbility/CassiopeiaE.mSpellCalculations.BonusPoisonedDamage (16.23.8406595+branch.releases-16-23.content.release)",
+              "damage_type_source": "spell_cassiopeiae_tooltip <magicDamage>"
+            }
+          ]
+        }
+      ],
+      "passive_stats": [],
+      "not_modelled": [
+        "Curación contra objetivos envenenados (HealCalc) y devolución de maná al matar"
+      ]
+    },
+    "R": {
+      "name": "Mirada petrificante",
+      "max_rank": 3,
+      "cases": [
+        {
+          "id": "gaze",
+          "name": "Impacto en cono",
+          "parts": [
+            {
+              "damage_type": "magic",
+              "formula": {
+                "op": "add",
+                "operands": [
+                  {
+                    "op": "by_rank",
+                    "values": [
+                      125,
+                      225,
+                      325
+                    ]
+                  },
+                  {
+                    "op": "mul",
+                    "operands": [
+                      {
+                        "op": "constant",
+                        "value": 0.75
+                      },
+                      {
+                        "op": "stat",
+                        "stat": "ability_power",
+                        "scope": "total"
+                      }
+                    ]
+                  }
+                ]
+              },
+              "label": "Derivado",
+              "source": "Characters/Cassiopeia/Spells/CassiopeiaRAbility/CassiopeiaR.mSpellCalculations.RDamage (16.23.8406595+branch.releases-16-23.content.release)",
+              "damage_type_source": "spell_cassiopeiar_tooltip <magicDamage>"
+            }
+          ]
+        }
+      ],
+      "passive_stats": [],
+      "not_modelled": [
+        "Aturdimiento de frente o ralentización de espaldas"
+      ]
+    }
+  }
+}

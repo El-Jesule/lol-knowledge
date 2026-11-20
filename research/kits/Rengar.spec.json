@@ -1,0 +1,118 @@
+{
+  "champion": "Rengar",
+  "game_version": "16.23",
+  "verified_against": {
+    "content_version": "16.23.8406595+branch.releases-16-23.content.release",
+    "bin_sha256": "358379c11464be75e5921fd7e65641be000ab656cb0089bd3a66eda05cb2be4a",
+    "evidence": "odd/tasks/champion-kits-wave-2.md",
+    "result": "Bin del cliente 16.23 convertido con python -m binmodel.batch_kits y compilado con esta especificación curada (CH-01 oleada 2)"
+  },
+  "abilities": {
+    "P": {
+      "name": "Depredador invisible",
+      "max_rank": 1,
+      "not_modelled": [
+        "Saltos desde maleza, sistema de 4 de Ferocidad, Collar dientehueso y velocidad potenciada (EmpoweredMS)"
+      ]
+    },
+    "Q": {
+      "name": "Fiereza",
+      "tooltip": "spell_rengarq_tooltip",
+      "cases": [
+        {
+          "id": "base",
+          "name": "Fiereza normal",
+          "parts": [
+            {
+              "calculation": "QTotalDamage"
+            }
+          ]
+        },
+        {
+          "id": "empowered",
+          "name": "Ferocidad máxima",
+          "parts": [
+            {
+              "calculation": "EmpoweredQTotalDamage"
+            }
+          ]
+        }
+      ],
+      "not_modelled": [
+        "Velocidad de ataque de los siguientes golpes (ASBonus, EmpoweredQAS) y escalado de crítico"
+      ]
+    },
+    "W": {
+      "name": "Rugido de batalla",
+      "tooltip": "spell_rengarw_tooltip",
+      "cases": [
+        {
+          "id": "base",
+          "name": "Rugido normal",
+          "parts": [
+            {
+              "calculation": "TotalDamage"
+            }
+          ]
+        },
+        {
+          "id": "empowered",
+          "name": "Ferocidad máxima",
+          "parts": [
+            {
+              "calculation": "TotalDamageEmpowered"
+            }
+          ]
+        }
+      ],
+      "not_modelled": [
+        "Curación del 50 % del daño reciente, limpieza de CC en Ferocidad y daño extra a monstruos"
+      ]
+    },
+    "E": {
+      "name": "Golpe bola",
+      "tooltip": "spell_rengare_tooltip",
+      "cases": [
+        {
+          "id": "base",
+          "name": "Boleadora normal",
+          "parts": [
+            {
+              "calculation": "TotalDamage"
+            }
+          ]
+        },
+        {
+          "id": "empowered",
+          "name": "Ferocidad máxima",
+          "parts": [
+            {
+              "calculation": "TotalEmpoweredDamage"
+            }
+          ]
+        }
+      ],
+      "not_modelled": [
+        "Ralentización, revelación e inmovilización en Ferocidad máxima"
+      ]
+    },
+    "R": {
+      "name": "Emoción por la cacería",
+      "tooltip": "spell_rengarr_tooltip",
+      "cases": [
+        {
+          "id": "leap_bonus",
+          "name": "Daño físico adicional del salto",
+          "parts": [
+            {
+              "calculation": "BonusDamage"
+            }
+          ]
+        }
+      ],
+      "not_modelled": [
+        "Camuflaje, velocidad de movimiento, visión verdadera y reducción de armadura del objetivo"
+      ]
+    }
+  }
+}

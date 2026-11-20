@@ -1,0 +1,335 @@
+{
+  "schema": "lol-champion-kit/1",
+  "champion": "Irelia",
+  "label": "Derivado",
+  "game_version": "16.23",
+  "content_version": "16.23.8406595+branch.releases-16-23.content.release",
+  "verified_against": {
+    "content_version": "16.23.8406595+branch.releases-16-23.content.release",
+    "bin_sha256": "17b9772995e8e1bce6c5eaf98eca5f293ce0f7d368d2c3f31211c865e26e15c3",
+    "evidence": "odd/tasks/champion-kits-wave-2.md",
+    "result": "Bin del cliente 16.23 convertido con python -m binmodel.batch_kits y compilado con esta especificación curada (CH-01 oleada 2)"
+  },
+  "source": "Árboles de cálculo del bin del cliente (python -m binmodel) y marcado de los tooltips del cliente; estructura de casos curada en research/kits/",
+  "abilities": {
+    "P": {
+      "name": "Fervor jonio",
+      "max_rank": 1,
+      "cases": [],
+      "passive_stats": [],
+      "not_modelled": [
+        "Velocidad de ataque acumulable hasta 4 cargas (SingleStackAS) y daño mágico al impactar (OnHitBonus)"
+      ]
+    },
+    "Q": {
+      "name": "Embate de espada",
+      "max_rank": 5,
+      "cases": [
+        {
+          "id": "dash",
+          "name": "Contra campeones",
+          "parts": [
+            {
+              "damage_type": "physical",
+              "formula": {
+                "op": "add",
+                "operands": [
+                  {
+                    "op": "by_rank",
+                    "values": [
+                      5,
+                      25,
+                      45,
+                      65,
+                      85
+                    ]
+                  },
+                  {
+                    "op": "mul",
+                    "operands": [
+                      {
+                        "op": "constant",
+                        "value": 0.8
+                      },
+                      {
+                        "op": "stat",
+                        "stat": "attack_damage",
+                        "scope": "total"
+                      }
+                    ]
+                  }
+                ]
+              },
+              "label": "Derivado",
+              "source": "Characters/Irelia/Spells/IreliaQAbility/IreliaQ.mSpellCalculations.ChampionDamage (16.23.8406595+branch.releases-16-23.content.release)",
+              "damage_type_source": "spell_ireliaq_tooltip <physicalDamage>"
+            }
+          ]
+        }
+      ],
+      "passive_stats": [],
+      "not_modelled": [
+        "Curación (HealAmount), daño extra a súbditos (MinionDamage), efectos al impactar y reinicio de CD"
+      ]
+    },
+    "W": {
+      "name": "Danza desafiante",
+      "max_rank": 5,
+      "cases": [
+        {
+          "id": "min",
+          "name": "Sin cargar",
+          "parts": [
+            {
+              "damage_type": "physical",
+              "formula": {
+                "op": "add",
+                "operands": [
+                  {
+                    "op": "by_rank",
+                    "values": [
+                      10,
+                      20,
+                      30,
+                      40,
+                      50
+                    ]
+                  },
+                  {
+                    "op": "mul",
+                    "operands": [
+                      {
+                        "op": "constant",
+                        "value": 0.4
+                      },
+                      {
+                        "op": "stat",
+                        "stat": "attack_damage",
+                        "scope": "total"
+                      }
+                    ]
+                  },
+                  {
+                    "op": "mul",
+                    "operands": [
+                      {
+                        "op": "constant",
+                        "value": 0.5
+                      },
+                      {
+                        "op": "stat",
+                        "stat": "ability_power",
+                        "scope": "total"
+                      }
+                    ]
+                  }
+                ]
+              },
+              "label": "Derivado",
+              "source": "Characters/Irelia/Spells/IreliaWAbility/IreliaW.mSpellCalculations.MinDamageCalc (16.23.8406595+branch.releases-16-23.content.release)",
+              "damage_type_source": "spell_ireliaw_tooltip <physicalDamage>"
+            }
+          ]
+        },
+        {
+          "id": "max",
+          "name": "Carga completa (>= 0,75 s)",
+          "parts": [
+            {
+              "damage_type": "physical",
+              "formula": {
+                "op": "add",
+                "operands": [
+                  {
+                    "op": "by_rank",
+                    "values": [
+                      30,
+                      60,
+                      90,
+                      120,
+                      150
+                    ]
+                  },
+                  {
+                    "op": "mul",
+                    "operands": [
+                      {
+                        "op": "constant",
+                        "value": 1.2
+                      },
+                      {
+                        "op": "stat",
+                        "stat": "attack_damage",
+                        "scope": "total"
+                      }
+                    ]
+                  },
+                  {
+                    "op": "mul",
+                    "operands": [
+                      {
+                        "op": "constant",
+                        "value": 1.5
+                      },
+                      {
+                        "op": "stat",
+                        "stat": "ability_power",
+                        "scope": "total"
+                      }
+                    ]
+                  }
+                ]
+              },
+              "label": "Derivado",
+              "source": "Characters/Irelia/Spells/IreliaWAbility/IreliaW.mSpellCalculations.MaxDamageCalc (16.23.8406595+branch.releases-16-23.content.release)",
+              "damage_type_source": "spell_ireliaw_tooltip <physicalDamage>"
+            }
+          ]
+        }
+      ],
+      "passive_stats": [],
+      "not_modelled": [
+        "Reducción de daño físico y mágico durante la canalización (FinalPhysicalDR, FinalMagicDR)"
+      ]
+    },
+    "E": {
+      "name": "Dúo impecable",
+      "max_rank": 5,
+      "cases": [
+        {
+          "id": "stun",
+          "name": "Convergencia de cuchillas",
+          "parts": [
+            {
+              "damage_type": "magic",
+              "formula": {
+                "op": "add",
+                "operands": [
+                  {
+                    "op": "by_rank",
+                    "values": [
+                      70,
+                      110,
+                      150,
+                      190,
+                      230
+                    ]
+                  },
+                  {
+                    "op": "mul",
+                    "operands": [
+                      {
+                        "op": "constant",
+                        "value": 1
+                      },
+                      {
+                        "op": "stat",
+                        "stat": "ability_power",
+                        "scope": "total"
+                      }
+                    ]
+                  }
+                ]
+              },
+              "label": "Derivado",
+              "source": "Characters/Irelia/Spells/IreliaEAbility/IreliaE.mSpellCalculations.TotalDamage (16.23.8406595+branch.releases-16-23.content.release)",
+              "damage_type_source": "spell_ireliae_tooltip <magicDamage>"
+            }
+          ]
+        }
+      ],
+      "passive_stats": [],
+      "not_modelled": [
+        "Aturdimiento (StunDuration) y marca Inestable"
+      ]
+    },
+    "R": {
+      "name": "Filo de la vanguardia",
+      "max_rank": 3,
+      "cases": [
+        {
+          "id": "barrage",
+          "name": "Impacto inicial de andanada",
+          "parts": [
+            {
+              "damage_type": "magic",
+              "formula": {
+                "op": "add",
+                "operands": [
+                  {
+                    "op": "by_rank",
+                    "values": [
+                      125,
+                      200,
+                      275
+                    ]
+                  },
+                  {
+                    "op": "mul",
+                    "operands": [
+                      {
+                        "op": "constant",
+                        "value": 1
+                      },
+                      {
+                        "op": "stat",
+                        "stat": "ability_power",
+                        "scope": "total"
+                      }
+                    ]
+                  }
+                ]
+              },
+              "label": "Derivado",
+              "source": "Characters/Irelia/Spells/IreliaRAbility/IreliaR.mSpellCalculations.MissileDamage (16.23.8406595+branch.releases-16-23.content.release)",
+              "damage_type_source": "spell_ireliar_tooltip <magicDamage>"
+            }
+          ]
+        },
+        {
+          "id": "wall",
+          "name": "Atravesar el muro de cuchillas",
+          "parts": [
+            {
+              "damage_type": "magic",
+              "formula": {
+                "op": "add",
+                "operands": [
+                  {
+                    "op": "by_rank",
+                    "values": [
+                      125,
+                      200,
+                      275
+                    ]
+                  },
+                  {
+                    "op": "mul",
+                    "operands": [
+                      {
+                        "op": "constant",
+                        "value": 1
+                      },
+                      {
+                        "op": "stat",
+                        "stat": "ability_power",
+                        "scope": "total"
+                      }
+                    ]
+                  }
+                ]
+              },
+              "label": "Derivado",
+              "source": "Characters/Irelia/Spells/IreliaRAbility/IreliaR.mSpellCalculations.ZoneDamage (16.23.8406595+branch.releases-16-23.content.release)",
+              "damage_type_source": "spell_ireliar_tooltip <magicDamage>"
+            }
+          ]
+        }
+      ],
+      "passive_stats": [],
+      "not_modelled": [
+        "Ralentización del 90 % y marca Inestable"
+      ]
+    }
+  }
+}

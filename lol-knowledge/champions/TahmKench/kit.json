@@ -1,0 +1,293 @@
+{
+  "schema": "lol-champion-kit/1",
+  "champion": "TahmKench",
+  "label": "Derivado",
+  "game_version": "16.23",
+  "content_version": "16.23.8406595+branch.releases-16-23.content.release",
+  "verified_against": {
+    "content_version": "16.23.8406595+branch.releases-16-23.content.release",
+    "bin_sha256": "35b877da3d4707331d65780fa3fd8b86dc1c54112a4e4b550c14277acacc79db",
+    "evidence": "odd/tasks/champion-kits-wave-2.md",
+    "result": "Bin del cliente 16.23 convertido con python -m binmodel.batch_kits y compilado con esta especificación curada (CH-01 oleada 2)"
+  },
+  "source": "Árboles de cálculo del bin del cliente (python -m binmodel) y marcado de los tooltips del cliente; estructura de casos curada en research/kits/",
+  "abilities": {
+    "P": {
+      "name": "Paladar peculiar",
+      "max_rank": 1,
+      "cases": [
+        {
+          "id": "on_hit",
+          "name": "Daño mágico adicional al impactar",
+          "parts": [
+            {
+              "damage_type": "magic",
+              "formula": {
+                "op": "add",
+                "operands": [
+                  {
+                    "op": "by_level",
+                    "values": [
+                      5,
+                      10,
+                      15,
+                      20,
+                      25,
+                      30,
+                      35,
+                      40,
+                      45,
+                      50,
+                      55,
+                      65,
+                      70,
+                      75,
+                      80,
+                      85,
+                      90,
+                      95
+                    ]
+                  },
+                  {
+                    "op": "mul",
+                    "operands": [
+                      {
+                        "op": "constant",
+                        "value": 0.04
+                      },
+                      {
+                        "op": "stat",
+                        "stat": "health",
+                        "scope": "bonus"
+                      }
+                    ]
+                  },
+                  {
+                    "op": "mul",
+                    "operands": [
+                      {
+                        "op": "mul",
+                        "operands": [
+                          {
+                            "op": "mul",
+                            "operands": [
+                              {
+                                "op": "constant",
+                                "value": 0.0125
+                              },
+                              {
+                                "op": "stat",
+                                "stat": "health",
+                                "scope": "bonus"
+                              }
+                            ]
+                          },
+                          {
+                            "op": "constant",
+                            "value": 0.01
+                          }
+                        ]
+                      },
+                      {
+                        "op": "stat",
+                        "stat": "ability_power",
+                        "scope": "total"
+                      }
+                    ]
+                  }
+                ]
+              },
+              "label": "Derivado",
+              "source": "Characters/TahmKench/Spells/TahmKenchPassiveAbility/TahmKenchPassive.mSpellCalculations.TotalDamage (16.23.8406595+branch.releases-16-23.content.release)",
+              "damage_type_source": "spell_tahmkenchpassive_tooltip <magicDamage>"
+            }
+          ]
+        }
+      ],
+      "passive_stats": [],
+      "not_modelled": [
+        "Acumulación de 3 marcas sobre campeones para potenciar Q y habilitar R"
+      ]
+    },
+    "Q": {
+      "name": "Lengüetazo",
+      "max_rank": 5,
+      "cases": [
+        {
+          "id": "lash",
+          "name": "Impacto",
+          "parts": [
+            {
+              "damage_type": "magic",
+              "formula": {
+                "op": "add",
+                "operands": [
+                  {
+                    "op": "by_rank",
+                    "values": [
+                      75,
+                      120,
+                      165,
+                      210,
+                      255
+                    ]
+                  },
+                  {
+                    "op": "mul",
+                    "operands": [
+                      {
+                        "op": "constant",
+                        "value": 1
+                      },
+                      {
+                        "op": "stat",
+                        "stat": "ability_power",
+                        "scope": "total"
+                      }
+                    ]
+                  }
+                ]
+              },
+              "label": "Derivado",
+              "source": "Characters/TahmKench/Spells/TahmKenchQAbility/TahmKenchQ.mSpellCalculations.TotalDamage (16.23.8406595+branch.releases-16-23.content.release)",
+              "damage_type_source": "spell_tahmkenchq_tooltip <magicDamage>"
+            }
+          ]
+        }
+      ],
+      "passive_stats": [],
+      "not_modelled": [
+        "Ralentización, curación por vida que falta, aturdimiento a 3 marcas y daño de Paladar peculiar"
+      ]
+    },
+    "W": {
+      "name": "Inmersión abisal",
+      "max_rank": 5,
+      "cases": [
+        {
+          "id": "dive",
+          "name": "Aparición",
+          "parts": [
+            {
+              "damage_type": "magic",
+              "formula": {
+                "op": "add",
+                "operands": [
+                  {
+                    "op": "by_rank",
+                    "values": [
+                      100,
+                      135,
+                      170,
+                      205,
+                      240
+                    ]
+                  },
+                  {
+                    "op": "mul",
+                    "operands": [
+                      {
+                        "op": "constant",
+                        "value": 1.5
+                      },
+                      {
+                        "op": "stat",
+                        "stat": "ability_power",
+                        "scope": "total"
+                      }
+                    ]
+                  }
+                ]
+              },
+              "label": "Derivado",
+              "source": "Characters/TahmKench/Spells/TahmKenchWAbility/TahmKenchW.mSpellCalculations.TotalDamage (16.23.8406595+branch.releases-16-23.content.release)",
+              "damage_type_source": "spell_tahmkenchw_tooltip <magicDamage>"
+            }
+          ]
+        }
+      ],
+      "passive_stats": [],
+      "not_modelled": [
+        "Lanzamiento por los aires y devolución de enfriamiento/maná al golpear campeones"
+      ]
+    },
+    "E": {
+      "name": "Piel gruesa",
+      "max_rank": 5,
+      "cases": [],
+      "passive_stats": [],
+      "not_modelled": [
+        "Vida gris, regeneración fuera de combate y escudo activo"
+      ]
+    },
+    "R": {
+      "name": "Devorar",
+      "max_rank": 3,
+      "cases": [
+        {
+          "id": "devour",
+          "name": "Devorar a campeón enemigo (+ % vida máxima)",
+          "parts": [
+            {
+              "damage_type": "magic",
+              "formula": {
+                "op": "add",
+                "operands": [
+                  {
+                    "op": "by_rank",
+                    "values": [
+                      100,
+                      250,
+                      400
+                    ]
+                  },
+                  {
+                    "op": "mul",
+                    "operands": [
+                      {
+                        "op": "add",
+                        "operands": [
+                          {
+                            "op": "constant",
+                            "value": 0.15
+                          },
+                          {
+                            "op": "mul",
+                            "operands": [
+                              {
+                                "op": "constant",
+                                "value": 0.0007
+                              },
+                              {
+                                "op": "stat",
+                                "stat": "ability_power",
+                                "scope": "total"
+                              }
+                            ]
+                          }
+                        ]
+                      },
+                      {
+                        "op": "stat",
+                        "stat": "health",
+                        "scope": "max",
+                        "subject": "target"
+                      }
+                    ]
+                  }
+                ]
+              },
+              "label": "Derivado",
+              "source": "Characters/TahmKench/Spells/TahmKenchRWrapperAbility/TahmKenchRWrapper · DataValues.BaseDamage + PercentHPDamage × vida máxima del objetivo (16.23.8406595+branch.releases-16-23.content.release)",
+              "damage_type_source": "spell_tahmkenchr_tooltip <magicDamage>"
+            }
+          ]
+        }
+      ],
+      "passive_stats": [],
+      "not_modelled": [
+        "Supresión durante 3 s y escudo al devorar a un aliado (TotalShield)"
+      ]
+    }
+  }
+}

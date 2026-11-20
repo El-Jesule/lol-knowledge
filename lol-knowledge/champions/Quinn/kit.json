@@ -1,0 +1,242 @@
+{
+  "schema": "lol-champion-kit/1",
+  "champion": "Quinn",
+  "label": "Derivado",
+  "game_version": "16.23",
+  "content_version": "16.23.8406595+branch.releases-16-23.content.release",
+  "verified_against": {
+    "content_version": "16.23.8406595+branch.releases-16-23.content.release",
+    "bin_sha256": "b40d5167444e7a9a9c543c0c9ed46a8e994e4b06d8897d54667ebdd8d0d9d95f",
+    "evidence": "odd/tasks/champion-kits-wave-2.md",
+    "result": "Bin del cliente 16.23 convertido con python -m binmodel.batch_kits y compilado con esta especificación curada (CH-01 oleada 2)"
+  },
+  "source": "Árboles de cálculo del bin del cliente (python -m binmodel) y marcado de los tooltips del cliente; estructura de casos curada en research/kits/",
+  "abilities": {
+    "P": {
+      "name": "Acosar",
+      "max_rank": 1,
+      "cases": [
+        {
+          "id": "harrier",
+          "name": "Consumo de marca al impactar",
+          "parts": [
+            {
+              "damage_type": "physical",
+              "formula": {
+                "op": "add",
+                "operands": [
+                  {
+                    "op": "linear_by_level",
+                    "min": 15,
+                    "max": 120
+                  },
+                  {
+                    "op": "mul",
+                    "operands": [
+                      {
+                        "op": "constant",
+                        "value": 0.4
+                      },
+                      {
+                        "op": "stat",
+                        "stat": "attack_damage",
+                        "scope": "bonus"
+                      }
+                    ]
+                  }
+                ]
+              },
+              "label": "Derivado",
+              "source": "Characters/Quinn/Spells/QuinnPassiveAbility/QuinnPassive.mSpellCalculations.BonusDamage (16.23.8406595+branch.releases-16-23.content.release)",
+              "damage_type_source": "spell_quinnpassive_tooltip <physicalDamage>"
+            }
+          ]
+        }
+      ],
+      "passive_stats": [],
+      "not_modelled": [
+        "Reducción de enfriamiento por probabilidad de crítico y bonificación contra monstruos"
+      ]
+    },
+    "Q": {
+      "name": "Asalto cegador",
+      "max_rank": 5,
+      "cases": [
+        {
+          "id": "assault",
+          "name": "Impacto",
+          "parts": [
+            {
+              "damage_type": "physical",
+              "formula": {
+                "op": "add",
+                "operands": [
+                  {
+                    "op": "by_rank",
+                    "values": [
+                      65,
+                      100,
+                      135,
+                      170,
+                      205
+                    ]
+                  },
+                  {
+                    "op": "mul",
+                    "operands": [
+                      {
+                        "op": "by_rank",
+                        "values": [
+                          0.8,
+                          0.85,
+                          0.9,
+                          0.95,
+                          1
+                        ]
+                      },
+                      {
+                        "op": "stat",
+                        "stat": "attack_damage",
+                        "scope": "bonus"
+                      }
+                    ]
+                  },
+                  {
+                    "op": "mul",
+                    "operands": [
+                      {
+                        "op": "constant",
+                        "value": 0.5
+                      },
+                      {
+                        "op": "stat",
+                        "stat": "ability_power",
+                        "scope": "total"
+                      }
+                    ]
+                  }
+                ]
+              },
+              "label": "Derivado",
+              "source": "Characters/Quinn/Spells/QuinnQAbility/QuinnQ.mSpellCalculations.TotalDamage (16.23.8406595+branch.releases-16-23.content.release)",
+              "damage_type_source": "spell_quinnq_tooltip <physicalDamage>"
+            }
+          ]
+        }
+      ],
+      "passive_stats": [],
+      "not_modelled": [
+        "Reducción de visión (VisionReductionDuration) y aplicación de Acosar"
+      ]
+    },
+    "W": {
+      "name": "Sentidos aguzados",
+      "max_rank": 5,
+      "cases": [],
+      "passive_stats": [],
+      "not_modelled": [
+        "Velocidad de ataque y movimiento al consumir Acosar, y revelación activa"
+      ]
+    },
+    "E": {
+      "name": "Acoso y derribo",
+      "max_rank": 5,
+      "cases": [
+        {
+          "id": "vault",
+          "name": "Embiste",
+          "parts": [
+            {
+              "damage_type": "physical",
+              "formula": {
+                "op": "add",
+                "operands": [
+                  {
+                    "op": "by_rank",
+                    "values": [
+                      40,
+                      65,
+                      90,
+                      115,
+                      140
+                    ]
+                  },
+                  {
+                    "op": "mul",
+                    "operands": [
+                      {
+                        "op": "constant",
+                        "value": 0.2
+                      },
+                      {
+                        "op": "stat",
+                        "stat": "attack_damage",
+                        "scope": "bonus"
+                      }
+                    ]
+                  }
+                ]
+              },
+              "label": "Derivado",
+              "source": "Characters/Quinn/Spells/QuinnEAbility/QuinnE.mSpellCalculations.TotalDamage (16.23.8406595+branch.releases-16-23.content.release)",
+              "damage_type_source": "spell_quinne_tooltip <physicalDamage>"
+            }
+          ]
+        }
+      ],
+      "passive_stats": [],
+      "not_modelled": [
+        "Empuje breve, ralentización y aplicación de Acosar"
+      ]
+    },
+    "R": {
+      "name": "Tras las líneas enemigas",
+      "max_rank": 3,
+      "cases": [
+        {
+          "id": "skystrike",
+          "name": "Golpe aéreo",
+          "parts": [
+            {
+              "damage_type": "physical",
+              "formula": {
+                "op": "add",
+                "operands": [
+                  {
+                    "op": "by_rank",
+                    "values": [
+                      60,
+                      90,
+                      120
+                    ]
+                  },
+                  {
+                    "op": "mul",
+                    "operands": [
+                      {
+                        "op": "constant",
+                        "value": 0.35
+                      },
+                      {
+                        "op": "stat",
+                        "stat": "attack_damage",
+                        "scope": "bonus"
+                      }
+                    ]
+                  }
+                ]
+              },
+              "label": "Derivado",
+              "source": "Characters/Quinn/Spells/QuinnRAbility/QuinnR.mSpellCalculations.Damage (16.23.8406595+branch.releases-16-23.content.release)",
+              "damage_type_source": "spell_quinnr_tooltip <physicalDamage>"
+            }
+          ]
+        }
+      ],
+      "passive_stats": [],
+      "not_modelled": [
+        "Canalización de 2 s y velocidad de movimiento fuera de combate"
+      ]
+    }
+  }
+}

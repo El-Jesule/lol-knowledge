@@ -1,0 +1,185 @@
+{
+  "schema": "lol-champion-kit/1",
+  "champion": "Rakan",
+  "label": "Derivado",
+  "game_version": "16.23",
+  "content_version": "16.23.8406595+branch.releases-16-23.content.release",
+  "verified_against": {
+    "content_version": "16.23.8406595+branch.releases-16-23.content.release",
+    "bin_sha256": "718dbc5031d8453b0411adea26117cc0b92a04c4c222ba07817f7363e5d85ed5",
+    "evidence": "odd/tasks/champion-kits-wave-2.md",
+    "result": "Bin del cliente 16.23 convertido con python -m binmodel.batch_kits y compilado con esta especificación curada (CH-01 oleada 2)"
+  },
+  "source": "Árboles de cálculo del bin del cliente (python -m binmodel) y marcado de los tooltips del cliente; estructura de casos curada en research/kits/",
+  "abilities": {
+    "P": {
+      "name": "Plumas encantadas",
+      "max_rank": 1,
+      "cases": [],
+      "passive_stats": [],
+      "not_modelled": [
+        "Escudo periódico (TotalShield, ShieldCooldown)"
+      ]
+    },
+    "Q": {
+      "name": "Péndola reluciente",
+      "max_rank": 5,
+      "cases": [
+        {
+          "id": "quill",
+          "name": "Pluma mágica",
+          "parts": [
+            {
+              "damage_type": "magic",
+              "formula": {
+                "op": "add",
+                "operands": [
+                  {
+                    "op": "by_rank",
+                    "values": [
+                      70,
+                      115,
+                      160,
+                      205,
+                      250
+                    ]
+                  },
+                  {
+                    "op": "mul",
+                    "operands": [
+                      {
+                        "op": "constant",
+                        "value": 0.7
+                      },
+                      {
+                        "op": "stat",
+                        "stat": "ability_power",
+                        "scope": "total"
+                      }
+                    ]
+                  }
+                ]
+              },
+              "label": "Derivado",
+              "source": "Characters/Rakan/Spells/RakanQAbility/RakanQ.mSpellCalculations.TotalDamage (16.23.8406595+branch.releases-16-23.content.release)",
+              "damage_type_source": "spell_rakanq_tooltip <magicDamage>"
+            }
+          ]
+        }
+      ],
+      "passive_stats": [],
+      "not_modelled": [
+        "Curación propia y aliada al golpear campeones o monstruos épicos (TotalHeal)"
+      ]
+    },
+    "W": {
+      "name": "Entrada grandiosa",
+      "max_rank": 5,
+      "cases": [
+        {
+          "id": "knockup",
+          "name": "Impacto en área",
+          "parts": [
+            {
+              "damage_type": "magic",
+              "formula": {
+                "op": "add",
+                "operands": [
+                  {
+                    "op": "by_rank",
+                    "values": [
+                      70,
+                      120,
+                      170,
+                      220,
+                      270
+                    ]
+                  },
+                  {
+                    "op": "mul",
+                    "operands": [
+                      {
+                        "op": "constant",
+                        "value": 0.8
+                      },
+                      {
+                        "op": "stat",
+                        "stat": "ability_power",
+                        "scope": "total"
+                      }
+                    ]
+                  }
+                ]
+              },
+              "label": "Derivado",
+              "source": "Characters/Rakan/Spells/RakanWAbility/RakanW.mSpellCalculations.TotalDamage (16.23.8406595+branch.releases-16-23.content.release)",
+              "damage_type_source": "spell_rakanw_tooltip <magicDamage>"
+            }
+          ]
+        }
+      ],
+      "passive_stats": [],
+      "not_modelled": [
+        "Lanzamiento por los aires (KnockupDuration)"
+      ]
+    },
+    "E": {
+      "name": "Danza de batalla",
+      "max_rank": 5,
+      "cases": [],
+      "passive_stats": [],
+      "not_modelled": [
+        "Desplazamiento a aliado y escudo con reactivación (TotalShield)"
+      ]
+    },
+    "R": {
+      "name": "La premura",
+      "max_rank": 3,
+      "cases": [
+        {
+          "id": "touch",
+          "name": "Impacto por campeón tocado",
+          "parts": [
+            {
+              "damage_type": "magic",
+              "formula": {
+                "op": "add",
+                "operands": [
+                  {
+                    "op": "by_rank",
+                    "values": [
+                      100,
+                      200,
+                      300
+                    ]
+                  },
+                  {
+                    "op": "mul",
+                    "operands": [
+                      {
+                        "op": "constant",
+                        "value": 0.5
+                      },
+                      {
+                        "op": "stat",
+                        "stat": "ability_power",
+                        "scope": "total"
+                      }
+                    ]
+                  }
+                ]
+              },
+              "label": "Derivado",
+              "source": "Characters/Rakan/Spells/RakanRAbility/RakanR.mSpellCalculations.TotalDamageTooltip (16.23.8406595+branch.releases-16-23.content.release)",
+              "damage_type_source": "spell_rakanr_tooltip <magicDamage>"
+            }
+          ]
+        }
+      ],
+      "passive_stats": [],
+      "not_modelled": [
+        "Velocidad de movimiento y hechizo (CharmDuration)"
+      ]
+    }
+  }
+}

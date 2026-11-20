@@ -1,0 +1,122 @@
+{
+  "champion": "Sylas",
+  "game_version": "16.23",
+  "verified_against": {
+    "content_version": "16.23.8406595+branch.releases-16-23.content.release",
+    "bin_sha256": "8d1fca72d2dbbab77c42699e0094fad1d9c926ffbe2557ee699131fb5215bc83",
+    "evidence": "odd/tasks/champion-kits-wave-2.md",
+    "result": "Bin del cliente 16.23 convertido con python -m binmodel.batch_kits y compilado con esta especificación curada (CH-01 oleada 2)"
+  },
+  "abilities": {
+    "P": {
+      "name": "Arranque de petricita",
+      "tooltip": "spell_sylaspassive_tooltip",
+      "max_rank": 1,
+      "cases": [
+        {
+          "id": "primary",
+          "name": "Objetivo principal",
+          "parts": [
+            {
+              "calculation": "PassiveDamage"
+            }
+          ]
+        },
+        {
+          "id": "aoe",
+          "name": "Objetivos secundarios en área",
+          "parts": [
+            {
+              "calculation": "PassiveAoEDamage"
+            }
+          ]
+        }
+      ],
+      "not_modelled": [
+        "Gestión de hasta 3 cargas y velocidad de ataque al consumirlas"
+      ]
+    },
+    "Q": {
+      "name": "Latigazo de cadenas",
+      "tooltip": "spell_sylasq_tooltip",
+      "cases": [
+        {
+          "id": "lash",
+          "name": "Latigazo inicial",
+          "parts": [
+            {
+              "calculation": "Damage"
+            }
+          ]
+        },
+        {
+          "id": "detonate",
+          "name": "Explosión del cruce",
+          "parts": [
+            {
+              "calculation": "ExplosionDamage"
+            }
+          ]
+        },
+        {
+          "id": "both",
+          "name": "Latigazo + explosión",
+          "parts": [
+            {
+              "calculation": "Damage"
+            },
+            {
+              "calculation": "ExplosionDamage"
+            }
+          ]
+        }
+      ],
+      "not_modelled": [
+        "Ralentización (SlowAmountCalc)"
+      ]
+    },
+    "W": {
+      "name": "Matarreyes",
+      "tooltip": "spell_sylasw_tooltip",
+      "cases": [
+        {
+          "id": "kingslayer",
+          "name": "Impacto",
+          "parts": [
+            {
+              "calculation": "MinDamage"
+            }
+          ]
+        }
+      ],
+      "not_modelled": [
+        "Curación escalada por vida que falta de Sylas (MinHealing, MaxHealing)"
+      ]
+    },
+    "E": {
+      "name": "Fuga / Rapto",
+      "tooltip": "spell_sylase_tooltip",
+      "cases": [
+        {
+          "id": "abduct",
+          "name": "Rapto (E2)",
+          "parts": [
+            {
+              "calculation": "Damage"
+            }
+          ]
+        }
+      ],
+      "not_modelled": [
+        "Desplazamiento inicial (E1) y lanzamiento por los aires"
+      ]
+    },
+    "R": {
+      "name": "Apropiación",
+      "tooltip": "spell_sylasr_tooltip",
+      "not_modelled": [
+        "Robo de la definitiva del campeón enemigo (depende del objetivo)"
+      ]
+    }
+  }
+}

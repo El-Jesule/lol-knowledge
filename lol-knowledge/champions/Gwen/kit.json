@@ -1,0 +1,556 @@
+{
+  "schema": "lol-champion-kit/1",
+  "champion": "Gwen",
+  "label": "Derivado",
+  "game_version": "16.23",
+  "content_version": "16.23.8406595+branch.releases-16-23.content.release",
+  "verified_against": {
+    "content_version": "16.23.8406595+branch.releases-16-23.content.release",
+    "bin_sha256": "72ba731baa0828e35ef50854e64118136ebd1e840980cfc2ef68243236defa3d",
+    "evidence": "odd/tasks/champion-kits-wave-2.md",
+    "result": "Bin del cliente 16.23 convertido con python -m binmodel.batch_kits y compilado con esta especificación curada (CH-01 oleada 2)"
+  },
+  "source": "Árboles de cálculo del bin del cliente (python -m binmodel) y marcado de los tooltips del cliente; estructura de casos curada en research/kits/",
+  "abilities": {
+    "P": {
+      "name": "Mil cortes",
+      "max_rank": 1,
+      "cases": [
+        {
+          "id": "cut",
+          "name": "Un corte (% vida máxima)",
+          "parts": [
+            {
+              "damage_type": "magic",
+              "formula": {
+                "op": "mul",
+                "operands": [
+                  {
+                    "op": "mul",
+                    "operands": [
+                      {
+                        "op": "add",
+                        "operands": [
+                          {
+                            "op": "constant",
+                            "value": 1
+                          },
+                          {
+                            "op": "mul",
+                            "operands": [
+                              {
+                                "op": "constant",
+                                "value": 0.006
+                              },
+                              {
+                                "op": "stat",
+                                "stat": "ability_power",
+                                "scope": "total"
+                              }
+                            ]
+                          }
+                        ]
+                      },
+                      {
+                        "op": "constant",
+                        "value": 0.01
+                      }
+                    ]
+                  },
+                  {
+                    "op": "stat",
+                    "stat": "health",
+                    "scope": "max",
+                    "subject": "target"
+                  }
+                ]
+              },
+              "label": "Derivado",
+              "source": "Characters/Gwen/Spells/GwenPAbility/GwenP · PercentHealth1000Cuts × vida máxima del objetivo (16.23.8406595+branch.releases-16-23.content.release)",
+              "damage_type_source": "spell_gwenp_tooltip <magicDamage>"
+            }
+          ]
+        }
+      ],
+      "passive_stats": [],
+      "not_modelled": [
+        "Curación del daño infligido a campeones (HealingPercent), ejecución a súbditos y tope a monstruos"
+      ]
+    },
+    "Q": {
+      "name": "¡Corta, corta!",
+      "max_rank": 5,
+      "cases": [
+        {
+          "id": "mini_snip",
+          "name": "Un corte menor",
+          "parts": [
+            {
+              "damage_type": "magic",
+              "formula": {
+                "op": "add",
+                "operands": [
+                  {
+                    "op": "by_rank",
+                    "values": [
+                      10,
+                      14,
+                      18,
+                      22,
+                      26
+                    ]
+                  },
+                  {
+                    "op": "mul",
+                    "operands": [
+                      {
+                        "op": "constant",
+                        "value": 0.05
+                      },
+                      {
+                        "op": "stat",
+                        "stat": "ability_power",
+                        "scope": "total"
+                      }
+                    ]
+                  }
+                ]
+              },
+              "label": "Derivado",
+              "source": "Characters/Gwen/Spells/GwenQAbility/GwenQ.mSpellCalculations.MiniSwipeDamage (16.23.8406595+branch.releases-16-23.content.release)",
+              "damage_type_source": "spell_gwenq_tooltip <magicDamage>"
+            }
+          ]
+        },
+        {
+          "id": "final_snip",
+          "name": "Corte final",
+          "parts": [
+            {
+              "damage_type": "magic",
+              "formula": {
+                "op": "add",
+                "operands": [
+                  {
+                    "op": "by_rank",
+                    "values": [
+                      60,
+                      85,
+                      110,
+                      135,
+                      160
+                    ]
+                  },
+                  {
+                    "op": "mul",
+                    "operands": [
+                      {
+                        "op": "constant",
+                        "value": 0.35
+                      },
+                      {
+                        "op": "stat",
+                        "stat": "ability_power",
+                        "scope": "total"
+                      }
+                    ]
+                  }
+                ]
+              },
+              "label": "Derivado",
+              "source": "Characters/Gwen/Spells/GwenQAbility/GwenQ.mSpellCalculations.FinalSwipeDamage (16.23.8406595+branch.releases-16-23.content.release)",
+              "damage_type_source": "spell_gwenq_tooltip <magicDamage>"
+            }
+          ]
+        },
+        {
+          "id": "full_4_stacks",
+          "name": "4 cargas (4 cortes menores + corte final)",
+          "parts": [
+            {
+              "damage_type": "magic",
+              "formula": {
+                "op": "add",
+                "operands": [
+                  {
+                    "op": "by_rank",
+                    "values": [
+                      10,
+                      14,
+                      18,
+                      22,
+                      26
+                    ]
+                  },
+                  {
+                    "op": "mul",
+                    "operands": [
+                      {
+                        "op": "constant",
+                        "value": 0.05
+                      },
+                      {
+                        "op": "stat",
+                        "stat": "ability_power",
+                        "scope": "total"
+                      }
+                    ]
+                  }
+                ]
+              },
+              "label": "Derivado",
+              "source": "Characters/Gwen/Spells/GwenQAbility/GwenQ.mSpellCalculations.MiniSwipeDamage (16.23.8406595+branch.releases-16-23.content.release)",
+              "damage_type_source": "spell_gwenq_tooltip <magicDamage>"
+            },
+            {
+              "damage_type": "magic",
+              "formula": {
+                "op": "add",
+                "operands": [
+                  {
+                    "op": "by_rank",
+                    "values": [
+                      10,
+                      14,
+                      18,
+                      22,
+                      26
+                    ]
+                  },
+                  {
+                    "op": "mul",
+                    "operands": [
+                      {
+                        "op": "constant",
+                        "value": 0.05
+                      },
+                      {
+                        "op": "stat",
+                        "stat": "ability_power",
+                        "scope": "total"
+                      }
+                    ]
+                  }
+                ]
+              },
+              "label": "Derivado",
+              "source": "Characters/Gwen/Spells/GwenQAbility/GwenQ.mSpellCalculations.MiniSwipeDamage (16.23.8406595+branch.releases-16-23.content.release)",
+              "damage_type_source": "spell_gwenq_tooltip <magicDamage>"
+            },
+            {
+              "damage_type": "magic",
+              "formula": {
+                "op": "add",
+                "operands": [
+                  {
+                    "op": "by_rank",
+                    "values": [
+                      10,
+                      14,
+                      18,
+                      22,
+                      26
+                    ]
+                  },
+                  {
+                    "op": "mul",
+                    "operands": [
+                      {
+                        "op": "constant",
+                        "value": 0.05
+                      },
+                      {
+                        "op": "stat",
+                        "stat": "ability_power",
+                        "scope": "total"
+                      }
+                    ]
+                  }
+                ]
+              },
+              "label": "Derivado",
+              "source": "Characters/Gwen/Spells/GwenQAbility/GwenQ.mSpellCalculations.MiniSwipeDamage (16.23.8406595+branch.releases-16-23.content.release)",
+              "damage_type_source": "spell_gwenq_tooltip <magicDamage>"
+            },
+            {
+              "damage_type": "magic",
+              "formula": {
+                "op": "add",
+                "operands": [
+                  {
+                    "op": "by_rank",
+                    "values": [
+                      10,
+                      14,
+                      18,
+                      22,
+                      26
+                    ]
+                  },
+                  {
+                    "op": "mul",
+                    "operands": [
+                      {
+                        "op": "constant",
+                        "value": 0.05
+                      },
+                      {
+                        "op": "stat",
+                        "stat": "ability_power",
+                        "scope": "total"
+                      }
+                    ]
+                  }
+                ]
+              },
+              "label": "Derivado",
+              "source": "Characters/Gwen/Spells/GwenQAbility/GwenQ.mSpellCalculations.MiniSwipeDamage (16.23.8406595+branch.releases-16-23.content.release)",
+              "damage_type_source": "spell_gwenq_tooltip <magicDamage>"
+            },
+            {
+              "damage_type": "magic",
+              "formula": {
+                "op": "add",
+                "operands": [
+                  {
+                    "op": "by_rank",
+                    "values": [
+                      60,
+                      85,
+                      110,
+                      135,
+                      160
+                    ]
+                  },
+                  {
+                    "op": "mul",
+                    "operands": [
+                      {
+                        "op": "constant",
+                        "value": 0.35
+                      },
+                      {
+                        "op": "stat",
+                        "stat": "ability_power",
+                        "scope": "total"
+                      }
+                    ]
+                  }
+                ]
+              },
+              "label": "Derivado",
+              "source": "Characters/Gwen/Spells/GwenQAbility/GwenQ.mSpellCalculations.FinalSwipeDamage (16.23.8406595+branch.releases-16-23.content.release)",
+              "damage_type_source": "spell_gwenq_tooltip <magicDamage>"
+            }
+          ]
+        }
+      ],
+      "passive_stats": [],
+      "not_modelled": [
+        "Conversión del 50 % a daño verdadero en el centro y aplicación de Mil cortes por corte"
+      ]
+    },
+    "W": {
+      "name": "Niebla consagrada",
+      "max_rank": 5,
+      "cases": [],
+      "passive_stats": [],
+      "not_modelled": [
+        "Inalcanzabilidad desde fuera de la niebla y armadura/RM (TotalResists)"
+      ]
+    },
+    "E": {
+      "name": "Salto y corte",
+      "max_rank": 5,
+      "cases": [
+        {
+          "id": "on_hit",
+          "name": "Daño mágico al impactar",
+          "parts": [
+            {
+              "damage_type": "magic",
+              "formula": {
+                "op": "add",
+                "operands": [
+                  {
+                    "op": "constant",
+                    "value": 15
+                  },
+                  {
+                    "op": "mul",
+                    "operands": [
+                      {
+                        "op": "constant",
+                        "value": 0.2
+                      },
+                      {
+                        "op": "stat",
+                        "stat": "ability_power",
+                        "scope": "total"
+                      }
+                    ]
+                  }
+                ]
+              },
+              "label": "Derivado",
+              "source": "Characters/Gwen/Spells/GwenEAbility/GwenE.mSpellCalculations.OnHitDamage (16.23.8406595+branch.releases-16-23.content.release)",
+              "damage_type_source": "spell_gwene_tooltip <magicDamage>"
+            }
+          ]
+        }
+      ],
+      "passive_stats": [],
+      "not_modelled": [
+        "Velocidad de ataque temporal (BonusAttackSpeed), alcance adicional y reducción de enfriamiento"
+      ]
+    },
+    "R": {
+      "name": "Bordado",
+      "max_rank": 3,
+      "cases": [
+        {
+          "id": "cast1",
+          "name": "Primer lanzamiento (1 aguja)",
+          "parts": [
+            {
+              "damage_type": "magic",
+              "formula": {
+                "op": "add",
+                "operands": [
+                  {
+                    "op": "by_rank",
+                    "values": [
+                      30,
+                      50,
+                      70
+                    ]
+                  },
+                  {
+                    "op": "mul",
+                    "operands": [
+                      {
+                        "op": "constant",
+                        "value": 0.1
+                      },
+                      {
+                        "op": "stat",
+                        "stat": "ability_power",
+                        "scope": "total"
+                      }
+                    ]
+                  }
+                ]
+              },
+              "label": "Derivado",
+              "source": "Characters/Gwen/Spells/GwenRAbility/GwenR.mSpellCalculations.TotalDamage (16.23.8406595+branch.releases-16-23.content.release)",
+              "damage_type_source": "spell_gwenr_tooltip <magicDamage>"
+            }
+          ]
+        },
+        {
+          "id": "cast2",
+          "name": "Segunda reactivación (3 agujas)",
+          "parts": [
+            {
+              "damage_type": "magic",
+              "formula": {
+                "op": "mul",
+                "operands": [
+                  {
+                    "op": "add",
+                    "operands": [
+                      {
+                        "op": "by_rank",
+                        "values": [
+                          30,
+                          50,
+                          70
+                        ]
+                      },
+                      {
+                        "op": "mul",
+                        "operands": [
+                          {
+                            "op": "constant",
+                            "value": 0.1
+                          },
+                          {
+                            "op": "stat",
+                            "stat": "ability_power",
+                            "scope": "total"
+                          }
+                        ]
+                      }
+                    ]
+                  },
+                  {
+                    "op": "constant",
+                    "value": 3
+                  }
+                ]
+              },
+              "label": "Derivado",
+              "source": "Characters/Gwen/Spells/GwenRAbility/GwenR.mSpellCalculations.TotalDamage3 (16.23.8406595+branch.releases-16-23.content.release)",
+              "damage_type_source": "spell_gwenr_tooltip <magicDamage>"
+            }
+          ],
+          "recast": true
+        },
+        {
+          "id": "cast3",
+          "name": "Tercera reactivación (5 agujas)",
+          "parts": [
+            {
+              "damage_type": "magic",
+              "formula": {
+                "op": "mul",
+                "operands": [
+                  {
+                    "op": "add",
+                    "operands": [
+                      {
+                        "op": "by_rank",
+                        "values": [
+                          30,
+                          50,
+                          70
+                        ]
+                      },
+                      {
+                        "op": "mul",
+                        "operands": [
+                          {
+                            "op": "constant",
+                            "value": 0.1
+                          },
+                          {
+                            "op": "stat",
+                            "stat": "ability_power",
+                            "scope": "total"
+                          }
+                        ]
+                      }
+                    ]
+                  },
+                  {
+                    "op": "constant",
+                    "value": 5
+                  }
+                ]
+              },
+              "label": "Derivado",
+              "source": "Characters/Gwen/Spells/GwenRAbility/GwenR.mSpellCalculations.TotalDamage5 (16.23.8406595+branch.releases-16-23.content.release)",
+              "damage_type_source": "spell_gwenr_tooltip <magicDamage>"
+            }
+          ],
+          "recast": true
+        }
+      ],
+      "passive_stats": [],
+      "not_modelled": [
+        "Ralentización y aplicación de Mil cortes por aguja"
+      ],
+      "max_recasts": 2
+    }
+  }
+}

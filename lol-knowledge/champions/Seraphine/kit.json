@@ -1,0 +1,272 @@
+{
+  "schema": "lol-champion-kit/1",
+  "champion": "Seraphine",
+  "label": "Derivado",
+  "game_version": "16.23",
+  "content_version": "16.23.8406595+branch.releases-16-23.content.release",
+  "verified_against": {
+    "content_version": "16.23.8406595+branch.releases-16-23.content.release",
+    "bin_sha256": "331b119059aa01d88238033c25558d82e51b6939a39e3fbf075a81113a473cce",
+    "evidence": "odd/tasks/champion-kits-wave-2.md",
+    "result": "Bin del cliente 16.23 convertido con python -m binmodel.batch_kits y compilado con esta especificación curada (CH-01 oleada 2)"
+  },
+  "source": "Árboles de cálculo del bin del cliente (python -m binmodel) y marcado de los tooltips del cliente; estructura de casos curada en research/kits/",
+  "abilities": {
+    "P": {
+      "name": "Presencia escénica",
+      "max_rank": 1,
+      "cases": [
+        {
+          "id": "note_hit",
+          "name": "Daño adicional por 1 nota",
+          "parts": [
+            {
+              "damage_type": "magic",
+              "formula": {
+                "op": "add",
+                "operands": [
+                  {
+                    "op": "linear_by_level",
+                    "min": 4,
+                    "max": 25
+                  },
+                  {
+                    "op": "mul",
+                    "operands": [
+                      {
+                        "op": "constant",
+                        "value": 0.04
+                      },
+                      {
+                        "op": "stat",
+                        "stat": "ability_power",
+                        "scope": "total"
+                      }
+                    ]
+                  }
+                ]
+              },
+              "label": "Derivado",
+              "source": "Characters/Seraphine/Spells/SeraphinePassiveAbility/SeraphinePassive.mSpellCalculations.AutoDamage (16.23.8406595+branch.releases-16-23.content.release)",
+              "damage_type_source": "spell_seraphinepassive_tooltip <magicDamage>"
+            }
+          ]
+        }
+      ],
+      "passive_stats": [],
+      "not_modelled": [
+        "Eco de cada tercera habilidad básica y acumulación de notas con aliados"
+      ]
+    },
+    "Q": {
+      "name": "Nota alta",
+      "max_rank": 5,
+      "cases": [
+        {
+          "id": "min",
+          "name": "Objetivo al 100 % vida",
+          "parts": [
+            {
+              "damage_type": "magic",
+              "formula": {
+                "op": "add",
+                "operands": [
+                  {
+                    "op": "by_rank",
+                    "values": [
+                      60,
+                      85,
+                      110,
+                      135,
+                      160
+                    ]
+                  },
+                  {
+                    "op": "mul",
+                    "operands": [
+                      {
+                        "op": "constant",
+                        "value": 0.4
+                      },
+                      {
+                        "op": "stat",
+                        "stat": "ability_power",
+                        "scope": "total"
+                      }
+                    ]
+                  }
+                ]
+              },
+              "label": "Derivado",
+              "source": "Characters/Seraphine/Spells/SeraphineQAbility/SeraphineQ.mSpellCalculations.ExplosionDamage (16.23.8406595+branch.releases-16-23.content.release)",
+              "damage_type_source": "spell_seraphineq_tooltip <magicDamage>"
+            }
+          ]
+        },
+        {
+          "id": "max",
+          "name": "Daño máximo por vida perdida",
+          "parts": [
+            {
+              "damage_type": "magic",
+              "formula": {
+                "op": "mul",
+                "operands": [
+                  {
+                    "op": "add",
+                    "operands": [
+                      {
+                        "op": "by_rank",
+                        "values": [
+                          60,
+                          85,
+                          110,
+                          135,
+                          160
+                        ]
+                      },
+                      {
+                        "op": "mul",
+                        "operands": [
+                          {
+                            "op": "constant",
+                            "value": 0.4
+                          },
+                          {
+                            "op": "stat",
+                            "stat": "ability_power",
+                            "scope": "total"
+                          }
+                        ]
+                      }
+                    ]
+                  },
+                  {
+                    "op": "constant",
+                    "value": 1.75
+                  }
+                ]
+              },
+              "label": "Derivado",
+              "source": "Characters/Seraphine/Spells/SeraphineQAbility/SeraphineQ.mSpellCalculations.TotalEmpoweredDamage (16.23.8406595+branch.releases-16-23.content.release)",
+              "damage_type_source": "spell_seraphineq_tooltip <magicDamage>"
+            }
+          ]
+        }
+      ],
+      "passive_stats": [],
+      "not_modelled": [
+        "Interpolación continua según vida que falta del objetivo"
+      ]
+    },
+    "W": {
+      "name": "Sonido envolvente",
+      "max_rank": 5,
+      "cases": [],
+      "passive_stats": [],
+      "not_modelled": [
+        "Escudo a aliados (ShieldValueSeraphine), velocidad de movimiento y curación con escudo activo"
+      ]
+    },
+    "E": {
+      "name": "Clímax musical",
+      "max_rank": 5,
+      "cases": [
+        {
+          "id": "beat_drop",
+          "name": "Onda de sonido",
+          "parts": [
+            {
+              "damage_type": "magic",
+              "formula": {
+                "op": "add",
+                "operands": [
+                  {
+                    "op": "by_rank",
+                    "values": [
+                      70,
+                      100,
+                      130,
+                      160,
+                      190
+                    ]
+                  },
+                  {
+                    "op": "mul",
+                    "operands": [
+                      {
+                        "op": "constant",
+                        "value": 0.5
+                      },
+                      {
+                        "op": "stat",
+                        "stat": "ability_power",
+                        "scope": "total"
+                      }
+                    ]
+                  }
+                ]
+              },
+              "label": "Derivado",
+              "source": "Characters/Seraphine/Spells/SeraphineEAbility/SeraphineE.mSpellCalculations.FinalDamage (16.23.8406595+branch.releases-16-23.content.release)",
+              "damage_type_source": "spell_seraphinee_tooltip <magicDamage>"
+            }
+          ]
+        }
+      ],
+      "passive_stats": [],
+      "not_modelled": [
+        "Ralentización, inmovilización o aturdimiento según estado previo"
+      ]
+    },
+    "R": {
+      "name": "Bis",
+      "max_rank": 3,
+      "cases": [
+        {
+          "id": "encore",
+          "name": "Onda musical",
+          "parts": [
+            {
+              "damage_type": "magic",
+              "formula": {
+                "op": "add",
+                "operands": [
+                  {
+                    "op": "by_rank",
+                    "values": [
+                      150,
+                      200,
+                      250
+                    ]
+                  },
+                  {
+                    "op": "mul",
+                    "operands": [
+                      {
+                        "op": "constant",
+                        "value": 0.4
+                      },
+                      {
+                        "op": "stat",
+                        "stat": "ability_power",
+                        "scope": "total"
+                      }
+                    ]
+                  }
+                ]
+              },
+              "label": "Derivado",
+              "source": "Characters/Seraphine/Spells/SeraphineRAbility/SeraphineR.mSpellCalculations.R1TotalDamage (16.23.8406595+branch.releases-16-23.content.release)",
+              "damage_type_source": "spell_seraphiner_tooltip <magicDamage>"
+            }
+          ]
+        }
+      ],
+      "passive_stats": [],
+      "not_modelled": [
+        "Hechizo (RChannelDuration) y extensión de alcance al atravesar campeones"
+      ]
+    }
+  }
+}

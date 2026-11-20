@@ -1,0 +1,151 @@
+{
+  "champion": "Ekko",
+  "game_version": "16.23",
+  "verified_against": {
+    "content_version": "16.23.8406595+branch.releases-16-23.content.release",
+    "bin_sha256": "681c215a58d98aa10c4854ce5c5fc7aeb707bec531399de32efd13a99cccab69",
+    "evidence": "odd/tasks/champion-kits-wave-2.md",
+    "result": "Bin del cliente 16.23 convertido con python -m binmodel.batch_kits y compilado con esta especificación curada (CH-01 oleada 2)"
+  },
+  "abilities": {
+    "P": {
+      "name": "Resonancia Z",
+      "tooltip": "spell_ekkopassive_tooltip",
+      "max_rank": 1,
+      "cases": [
+        {
+          "id": "proc",
+          "name": "Tercer impacto",
+          "parts": [
+            {
+              "calculation": "ThreeHitDamage"
+            }
+          ]
+        }
+      ],
+      "not_modelled": [
+        "Velocidad de movimiento contra campeones (BonusMS) y enfriamiento por objetivo"
+      ]
+    },
+    "Q": {
+      "name": "Engranaje temporal",
+      "tooltip": "spell_ekkoq_tooltip",
+      "cases": [
+        {
+          "id": "out",
+          "name": "Ida",
+          "parts": [
+            {
+              "calculation": "InitialDamage"
+            }
+          ]
+        },
+        {
+          "id": "back",
+          "name": "Vuelta",
+          "parts": [
+            {
+              "calculation": "RecallDamage"
+            }
+          ]
+        },
+        {
+          "id": "both",
+          "name": "Ida y vuelta",
+          "parts": [
+            {
+              "calculation": "InitialDamage"
+            },
+            {
+              "calculation": "RecallDamage"
+            }
+          ]
+        }
+      ],
+      "not_modelled": [
+        "Ralentización de la zona expandida"
+      ]
+    },
+    "W": {
+      "name": "Convergencia paralela",
+      "tooltip": "spell_ekkow_tooltip",
+      "cases": [
+        {
+          "id": "passive_execute",
+          "name": "Pasiva (< 30 % vida, % vida que falta)",
+          "parts": [
+            {
+              "tooltip_reference": "MissingHealthPercent",
+              "damage_type": "magic",
+              "source_note": "(MissingHealthPercent %) × vida que falta del objetivo",
+              "formula": {
+                "op": "mul",
+                "operands": [
+                  {
+                    "op": "calculation",
+                    "name": "MissingHealthPercent"
+                  },
+                  {
+                    "op": "constant",
+                    "value": 0.01
+                  },
+                  {
+                    "op": "stat",
+                    "stat": "health",
+                    "scope": "max",
+                    "subject": "target"
+                  },
+                  {
+                    "op": "stat",
+                    "stat": "health",
+                    "scope": "missing_fraction",
+                    "subject": "target"
+                  }
+                ]
+              }
+            }
+          ]
+        }
+      ],
+      "not_modelled": [
+        "Umbral automático del 30 % de vida, escudo (TotalShield) y aturdimiento"
+      ]
+    },
+    "E": {
+      "name": "Salto de fase",
+      "tooltip": "spell_ekkoe_tooltip",
+      "cases": [
+        {
+          "id": "blink_hit",
+          "name": "Daño mágico adicional",
+          "parts": [
+            {
+              "calculation": "TotalDamage"
+            }
+          ]
+        }
+      ],
+      "not_modelled": [
+        "Desplazamiento, teletransporte y daño del ataque básico aparte"
+      ]
+    },
+    "R": {
+      "name": "Fisura temporal",
+      "tooltip": "spell_ekkor_tooltip",
+      "cases": [
+        {
+          "id": "burst",
+          "name": "Explosión temporal",
+          "parts": [
+            {
+              "calculation": "TotalDamage"
+            }
+          ]
+        }
+      ],
+      "not_modelled": [
+        "Estasis, regreso 4 s atrás y curación (TotalBaseHeal)"
+      ]
+    }
+  }
+}

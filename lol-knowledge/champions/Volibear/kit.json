@@ -1,0 +1,501 @@
+{
+  "schema": "lol-champion-kit/1",
+  "champion": "Volibear",
+  "label": "Derivado",
+  "game_version": "16.23",
+  "content_version": "16.23.8406595+branch.releases-16-23.content.release",
+  "verified_against": {
+    "content_version": "16.23.8406595+branch.releases-16-23.content.release",
+    "bin_sha256": "15c01ae174494944c99cad46e4808482dc717a5c1a2c0862f670db2354ba0b3e",
+    "evidence": "odd/tasks/champion-kits-wave-2.md",
+    "result": "Bin del cliente 16.23 convertido con python -m binmodel.batch_kits y compilado con esta especificación curada (CH-01 oleada 2)"
+  },
+  "source": "Árboles de cálculo del bin del cliente (python -m binmodel) y marcado de los tooltips del cliente; estructura de casos curada en research/kits/",
+  "abilities": {
+    "P": {
+      "name": "Tormenta incesante",
+      "max_rank": 1,
+      "cases": [
+        {
+          "id": "lightning",
+          "name": "Relámpago al impactar (5 cargas)",
+          "parts": [
+            {
+              "damage_type": "magic",
+              "formula": {
+                "op": "add",
+                "operands": [
+                  {
+                    "op": "by_level",
+                    "values": [
+                      11,
+                      12,
+                      13,
+                      14,
+                      16,
+                      18,
+                      20,
+                      23,
+                      26,
+                      29,
+                      32,
+                      35,
+                      38,
+                      41,
+                      45,
+                      49,
+                      53,
+                      57
+                    ]
+                  },
+                  {
+                    "op": "mul",
+                    "operands": [
+                      {
+                        "op": "constant",
+                        "value": 0.45
+                      },
+                      {
+                        "op": "stat",
+                        "stat": "ability_power",
+                        "scope": "total"
+                      }
+                    ]
+                  },
+                  {
+                    "op": "mul",
+                    "operands": [
+                      {
+                        "op": "constant",
+                        "value": 0.2
+                      },
+                      {
+                        "op": "stat",
+                        "stat": "attack_damage",
+                        "scope": "bonus"
+                      }
+                    ]
+                  }
+                ]
+              },
+              "label": "Derivado",
+              "source": "Characters/Volibear/Spells/VolibearPAbility/VolibearP.mSpellCalculations.ChainLightningDamage (16.23.8406595+branch.releases-16-23.content.release)",
+              "damage_type_source": "spell_volibearp_tooltip <magicDamage>"
+            }
+          ]
+        }
+      ],
+      "passive_stats": [],
+      "not_modelled": [
+        "Velocidad de ataque acumulable hasta 5 cargas (AttackSpeedCalc)"
+      ]
+    },
+    "Q": {
+      "name": "Impacto atronador",
+      "max_rank": 5,
+      "cases": [
+        {
+          "id": "strike",
+          "name": "Daño físico adicional",
+          "parts": [
+            {
+              "damage_type": "physical",
+              "formula": {
+                "op": "add",
+                "operands": [
+                  {
+                    "op": "by_rank",
+                    "values": [
+                      10,
+                      20,
+                      30,
+                      40,
+                      50
+                    ]
+                  },
+                  {
+                    "op": "mul",
+                    "operands": [
+                      {
+                        "op": "constant",
+                        "value": 1
+                      },
+                      {
+                        "op": "stat",
+                        "stat": "attack_damage",
+                        "scope": "total"
+                      }
+                    ]
+                  },
+                  {
+                    "op": "mul",
+                    "operands": [
+                      {
+                        "op": "constant",
+                        "value": 1.6
+                      },
+                      {
+                        "op": "stat",
+                        "stat": "attack_damage",
+                        "scope": "bonus"
+                      }
+                    ]
+                  }
+                ]
+              },
+              "label": "Derivado",
+              "source": "Characters/Volibear/Spells/VolibearQAbility/VolibearQ.mSpellCalculations.CalculatedDamage (16.23.8406595+branch.releases-16-23.content.release)",
+              "damage_type_source": "spell_volibearq_tooltip <physicalDamage>"
+            }
+          ]
+        }
+      ],
+      "passive_stats": [],
+      "not_modelled": [
+        "Velocidad de movimiento (MinSpeedCalc, MaxSpeedCalc), aturdimiento y ataque básico aparte"
+      ]
+    },
+    "W": {
+      "name": "Acometida frenética",
+      "max_rank": 5,
+      "cases": [
+        {
+          "id": "base",
+          "name": "Primer mordisco",
+          "parts": [
+            {
+              "damage_type": "physical",
+              "formula": {
+                "op": "add",
+                "operands": [
+                  {
+                    "op": "by_rank",
+                    "values": [
+                      5,
+                      30,
+                      55,
+                      80,
+                      105
+                    ]
+                  },
+                  {
+                    "op": "mul",
+                    "operands": [
+                      {
+                        "op": "constant",
+                        "value": 1.1
+                      },
+                      {
+                        "op": "stat",
+                        "stat": "attack_damage",
+                        "scope": "total"
+                      }
+                    ]
+                  },
+                  {
+                    "op": "mul",
+                    "operands": [
+                      {
+                        "op": "constant",
+                        "value": 0.06
+                      },
+                      {
+                        "op": "stat",
+                        "stat": "health",
+                        "scope": "bonus"
+                      }
+                    ]
+                  }
+                ]
+              },
+              "label": "Derivado",
+              "source": "Characters/Volibear/Spells/VolibearWAbility/VolibearW.mSpellCalculations.TotalDamage (16.23.8406595+branch.releases-16-23.content.release)",
+              "damage_type_source": "spell_volibearw_tooltip <physicalDamage>"
+            }
+          ]
+        },
+        {
+          "id": "wounded",
+          "name": "Objetivo marcado (+50 %)",
+          "parts": [
+            {
+              "damage_type": "physical",
+              "formula": {
+                "op": "mul",
+                "operands": [
+                  {
+                    "op": "add",
+                    "operands": [
+                      {
+                        "op": "by_rank",
+                        "values": [
+                          5,
+                          30,
+                          55,
+                          80,
+                          105
+                        ]
+                      },
+                      {
+                        "op": "mul",
+                        "operands": [
+                          {
+                            "op": "constant",
+                            "value": 1.1
+                          },
+                          {
+                            "op": "stat",
+                            "stat": "attack_damage",
+                            "scope": "total"
+                          }
+                        ]
+                      },
+                      {
+                        "op": "mul",
+                        "operands": [
+                          {
+                            "op": "constant",
+                            "value": 0.06
+                          },
+                          {
+                            "op": "stat",
+                            "stat": "health",
+                            "scope": "bonus"
+                          }
+                        ]
+                      }
+                    ]
+                  },
+                  {
+                    "op": "add",
+                    "operands": [
+                      {
+                        "op": "constant",
+                        "value": 1.5
+                      },
+                      {
+                        "op": "mul",
+                        "operands": [
+                          {
+                            "op": "constant",
+                            "value": 0.0025
+                          },
+                          {
+                            "op": "stat",
+                            "stat": "attack_damage",
+                            "scope": "bonus"
+                          }
+                        ]
+                      }
+                    ]
+                  }
+                ]
+              },
+              "label": "Derivado",
+              "source": "Characters/Volibear/Spells/VolibearWAbility/VolibearW.mSpellCalculations.EmpoweredDamage (16.23.8406595+branch.releases-16-23.content.release)",
+              "damage_type_source": "spell_volibearw_tooltip <physicalDamage>"
+            }
+          ]
+        }
+      ],
+      "passive_stats": [],
+      "not_modelled": [
+        "Curación del segundo mordisco (BaseHeal, PercentMissingHealthHealingRatio)"
+      ]
+    },
+    "E": {
+      "name": "Rompecielos",
+      "max_rank": 5,
+      "cases": [
+        {
+          "id": "strike",
+          "name": "Rayo (+ % vida máxima)",
+          "parts": [
+            {
+              "damage_type": "magic",
+              "formula": {
+                "op": "add",
+                "operands": [
+                  {
+                    "op": "by_rank",
+                    "values": [
+                      80,
+                      110,
+                      140,
+                      170,
+                      200
+                    ]
+                  },
+                  {
+                    "op": "mul",
+                    "operands": [
+                      {
+                        "op": "constant",
+                        "value": 0.7
+                      },
+                      {
+                        "op": "stat",
+                        "stat": "ability_power",
+                        "scope": "total"
+                      }
+                    ]
+                  }
+                ]
+              },
+              "label": "Derivado",
+              "source": "Characters/Volibear/Spells/VolibearEAbility/VolibearE.mSpellCalculations.TotalDamageTooltip (16.23.8406595+branch.releases-16-23.content.release)",
+              "damage_type_source": "spell_volibeare_tooltip <magicDamage>"
+            },
+            {
+              "damage_type": "magic",
+              "formula": {
+                "op": "mul",
+                "operands": [
+                  {
+                    "op": "by_rank",
+                    "values": [
+                      0.11,
+                      0.12,
+                      0.13,
+                      0.14,
+                      0.15
+                    ]
+                  },
+                  {
+                    "op": "stat",
+                    "stat": "health",
+                    "scope": "max",
+                    "subject": "target"
+                  }
+                ]
+              },
+              "label": "Derivado",
+              "source": "Characters/Volibear/Spells/VolibearEAbility/VolibearE · DataValues.PercentDamage × vida máxima del objetivo (16.23.8406595+branch.releases-16-23.content.release)",
+              "damage_type_source": "spell_volibeare_tooltip <magicDamage>"
+            }
+          ]
+        }
+      ],
+      "passive_stats": [],
+      "not_modelled": [
+        "Ralentización, escudo propio y tope contra monstruos (MonsterDamageCap)"
+      ]
+    },
+    "R": {
+      "name": "Heraldo de la tormenta",
+      "max_rank": 3,
+      "cases": [
+        {
+          "id": "impact",
+          "name": "Impacto central (campeones)",
+          "parts": [
+            {
+              "damage_type": "physical",
+              "formula": {
+                "op": "add",
+                "operands": [
+                  {
+                    "op": "by_rank",
+                    "values": [
+                      300,
+                      500,
+                      700
+                    ]
+                  },
+                  {
+                    "op": "mul",
+                    "operands": [
+                      {
+                        "op": "constant",
+                        "value": 1.25
+                      },
+                      {
+                        "op": "stat",
+                        "stat": "ability_power",
+                        "scope": "total"
+                      }
+                    ]
+                  },
+                  {
+                    "op": "mul",
+                    "operands": [
+                      {
+                        "op": "constant",
+                        "value": 2.5
+                      },
+                      {
+                        "op": "stat",
+                        "stat": "attack_damage",
+                        "scope": "bonus"
+                      }
+                    ]
+                  }
+                ]
+              },
+              "label": "Derivado",
+              "source": "Characters/Volibear/Spells/VolibearRAbility/VolibearR.mSpellCalculations.SweetSpotDamageTooltip (16.23.8406595+branch.releases-16-23.content.release)",
+              "damage_type_source": "spell_volibearr_tooltip <physicalDamage>"
+            }
+          ]
+        },
+        {
+          "id": "tower",
+          "name": "Contra torretas",
+          "parts": [
+            {
+              "damage_type": "physical",
+              "formula": {
+                "op": "add",
+                "operands": [
+                  {
+                    "op": "by_rank",
+                    "values": [
+                      300,
+                      500,
+                      700
+                    ]
+                  },
+                  {
+                    "op": "mul",
+                    "operands": [
+                      {
+                        "op": "constant",
+                        "value": 1.25
+                      },
+                      {
+                        "op": "stat",
+                        "stat": "ability_power",
+                        "scope": "total"
+                      }
+                    ]
+                  },
+                  {
+                    "op": "mul",
+                    "operands": [
+                      {
+                        "op": "constant",
+                        "value": 2.5
+                      },
+                      {
+                        "op": "stat",
+                        "stat": "attack_damage",
+                        "scope": "bonus"
+                      }
+                    ]
+                  }
+                ]
+              },
+              "label": "Derivado",
+              "source": "Characters/Volibear/Spells/VolibearRAbility/VolibearR.mSpellCalculations.TowerDamageTooltip (16.23.8406595+branch.releases-16-23.content.release)",
+              "damage_type_source": "spell_volibearr_tooltip <physicalDamage>"
+            }
+          ]
+        }
+      ],
+      "passive_stats": [],
+      "not_modelled": [
+        "Vida adicional temporal (HealthAmount), alcance extra, desactivación de torretas y ralentización"
+      ]
+    }
+  }
+}

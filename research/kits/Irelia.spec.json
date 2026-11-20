@@ -1,0 +1,109 @@
+{
+  "champion": "Irelia",
+  "game_version": "16.23",
+  "verified_against": {
+    "content_version": "16.23.8406595+branch.releases-16-23.content.release",
+    "bin_sha256": "17b9772995e8e1bce6c5eaf98eca5f293ce0f7d368d2c3f31211c865e26e15c3",
+    "evidence": "odd/tasks/champion-kits-wave-2.md",
+    "result": "Bin del cliente 16.23 convertido con python -m binmodel.batch_kits y compilado con esta especificación curada (CH-01 oleada 2)"
+  },
+  "abilities": {
+    "P": {
+      "name": "Fervor jonio",
+      "max_rank": 1,
+      "not_modelled": [
+        "Velocidad de ataque acumulable hasta 4 cargas (SingleStackAS) y daño mágico al impactar (OnHitBonus)"
+      ]
+    },
+    "Q": {
+      "name": "Embate de espada",
+      "tooltip": "spell_ireliaq_tooltip",
+      "cases": [
+        {
+          "id": "dash",
+          "name": "Contra campeones",
+          "parts": [
+            {
+              "calculation": "ChampionDamage"
+            }
+          ]
+        }
+      ],
+      "not_modelled": [
+        "Curación (HealAmount), daño extra a súbditos (MinionDamage), efectos al impactar y reinicio de CD"
+      ]
+    },
+    "W": {
+      "name": "Danza desafiante",
+      "tooltip": "spell_ireliaw_tooltip",
+      "cases": [
+        {
+          "id": "min",
+          "name": "Sin cargar",
+          "parts": [
+            {
+              "calculation": "MinDamageCalc"
+            }
+          ]
+        },
+        {
+          "id": "max",
+          "name": "Carga completa (>= 0,75 s)",
+          "parts": [
+            {
+              "calculation": "MaxDamageCalc"
+            }
+          ]
+        }
+      ],
+      "not_modelled": [
+        "Reducción de daño físico y mágico durante la canalización (FinalPhysicalDR, FinalMagicDR)"
+      ]
+    },
+    "E": {
+      "name": "Dúo impecable",
+      "tooltip": "spell_ireliae_tooltip",
+      "cases": [
+        {
+          "id": "stun",
+          "name": "Convergencia de cuchillas",
+          "parts": [
+            {
+              "calculation": "TotalDamage"
+            }
+          ]
+        }
+      ],
+      "not_modelled": [
+        "Aturdimiento (StunDuration) y marca Inestable"
+      ]
+    },
+    "R": {
+      "name": "Filo de la vanguardia",
+      "tooltip": "spell_ireliar_tooltip",
+      "cases": [
+        {
+          "id": "barrage",
+          "name": "Impacto inicial de andanada",
+          "parts": [
+            {
+              "calculation": "MissileDamage"
+            }
+          ]
+        },
+        {
+          "id": "wall",
+          "name": "Atravesar el muro de cuchillas",
+          "parts": [
+            {
+              "calculation": "ZoneDamage"
+            }
+          ]
+        }
+      ],
+      "not_modelled": [
+        "Ralentización del 90 % y marca Inestable"
+      ]
+    }
+  }
+}

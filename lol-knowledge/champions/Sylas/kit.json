@@ -1,0 +1,395 @@
+{
+  "schema": "lol-champion-kit/1",
+  "champion": "Sylas",
+  "label": "Derivado",
+  "game_version": "16.23",
+  "content_version": "16.23.8406595+branch.releases-16-23.content.release",
+  "verified_against": {
+    "content_version": "16.23.8406595+branch.releases-16-23.content.release",
+    "bin_sha256": "8d1fca72d2dbbab77c42699e0094fad1d9c926ffbe2557ee699131fb5215bc83",
+    "evidence": "odd/tasks/champion-kits-wave-2.md",
+    "result": "Bin del cliente 16.23 convertido con python -m binmodel.batch_kits y compilado con esta especificación curada (CH-01 oleada 2)"
+  },
+  "source": "Árboles de cálculo del bin del cliente (python -m binmodel) y marcado de los tooltips del cliente; estructura de casos curada en research/kits/",
+  "abilities": {
+    "P": {
+      "name": "Arranque de petricita",
+      "max_rank": 1,
+      "cases": [
+        {
+          "id": "primary",
+          "name": "Objetivo principal",
+          "parts": [
+            {
+              "damage_type": "magic",
+              "formula": {
+                "op": "add",
+                "operands": [
+                  {
+                    "op": "mul",
+                    "operands": [
+                      {
+                        "op": "constant",
+                        "value": 1.3
+                      },
+                      {
+                        "op": "stat",
+                        "stat": "attack_damage",
+                        "scope": "total"
+                      }
+                    ]
+                  },
+                  {
+                    "op": "mul",
+                    "operands": [
+                      {
+                        "op": "constant",
+                        "value": 0.3
+                      },
+                      {
+                        "op": "stat",
+                        "stat": "ability_power",
+                        "scope": "total"
+                      }
+                    ]
+                  }
+                ]
+              },
+              "label": "Derivado",
+              "source": "Characters/Sylas/Spells/SylasPassiveAbility/SylasPassive.mSpellCalculations.PassiveDamage (16.23.8406595+branch.releases-16-23.content.release)",
+              "damage_type_source": "spell_sylaspassive_tooltip <magicDamage>"
+            }
+          ]
+        },
+        {
+          "id": "aoe",
+          "name": "Objetivos secundarios en área",
+          "parts": [
+            {
+              "damage_type": "magic",
+              "formula": {
+                "op": "add",
+                "operands": [
+                  {
+                    "op": "mul",
+                    "operands": [
+                      {
+                        "op": "constant",
+                        "value": 0.4
+                      },
+                      {
+                        "op": "stat",
+                        "stat": "attack_damage",
+                        "scope": "total"
+                      }
+                    ]
+                  },
+                  {
+                    "op": "mul",
+                    "operands": [
+                      {
+                        "op": "constant",
+                        "value": 0.2
+                      },
+                      {
+                        "op": "stat",
+                        "stat": "ability_power",
+                        "scope": "total"
+                      }
+                    ]
+                  }
+                ]
+              },
+              "label": "Derivado",
+              "source": "Characters/Sylas/Spells/SylasPassiveAbility/SylasPassive.mSpellCalculations.PassiveAoEDamage (16.23.8406595+branch.releases-16-23.content.release)",
+              "damage_type_source": "spell_sylaspassive_tooltip <magicDamage>"
+            }
+          ]
+        }
+      ],
+      "passive_stats": [],
+      "not_modelled": [
+        "Gestión de hasta 3 cargas y velocidad de ataque al consumirlas"
+      ]
+    },
+    "Q": {
+      "name": "Latigazo de cadenas",
+      "max_rank": 5,
+      "cases": [
+        {
+          "id": "lash",
+          "name": "Latigazo inicial",
+          "parts": [
+            {
+              "damage_type": "magic",
+              "formula": {
+                "op": "add",
+                "operands": [
+                  {
+                    "op": "by_rank",
+                    "values": [
+                      40,
+                      60,
+                      80,
+                      100,
+                      120
+                    ]
+                  },
+                  {
+                    "op": "mul",
+                    "operands": [
+                      {
+                        "op": "constant",
+                        "value": 0.4
+                      },
+                      {
+                        "op": "stat",
+                        "stat": "ability_power",
+                        "scope": "total"
+                      }
+                    ]
+                  }
+                ]
+              },
+              "label": "Derivado",
+              "source": "Characters/Sylas/Spells/SylasQAbility/SylasQ.mSpellCalculations.Damage (16.23.8406595+branch.releases-16-23.content.release)",
+              "damage_type_source": "spell_sylasq_tooltip <magicDamage>"
+            }
+          ]
+        },
+        {
+          "id": "detonate",
+          "name": "Explosión del cruce",
+          "parts": [
+            {
+              "damage_type": "magic",
+              "formula": {
+                "op": "add",
+                "operands": [
+                  {
+                    "op": "by_rank",
+                    "values": [
+                      60,
+                      115,
+                      170,
+                      225,
+                      280
+                    ]
+                  },
+                  {
+                    "op": "mul",
+                    "operands": [
+                      {
+                        "op": "constant",
+                        "value": 0.8
+                      },
+                      {
+                        "op": "stat",
+                        "stat": "ability_power",
+                        "scope": "total"
+                      }
+                    ]
+                  }
+                ]
+              },
+              "label": "Derivado",
+              "source": "Characters/Sylas/Spells/SylasQAbility/SylasQ.mSpellCalculations.ExplosionDamage (16.23.8406595+branch.releases-16-23.content.release)",
+              "damage_type_source": "spell_sylasq_tooltip <magicDamage>"
+            }
+          ]
+        },
+        {
+          "id": "both",
+          "name": "Latigazo + explosión",
+          "parts": [
+            {
+              "damage_type": "magic",
+              "formula": {
+                "op": "add",
+                "operands": [
+                  {
+                    "op": "by_rank",
+                    "values": [
+                      40,
+                      60,
+                      80,
+                      100,
+                      120
+                    ]
+                  },
+                  {
+                    "op": "mul",
+                    "operands": [
+                      {
+                        "op": "constant",
+                        "value": 0.4
+                      },
+                      {
+                        "op": "stat",
+                        "stat": "ability_power",
+                        "scope": "total"
+                      }
+                    ]
+                  }
+                ]
+              },
+              "label": "Derivado",
+              "source": "Characters/Sylas/Spells/SylasQAbility/SylasQ.mSpellCalculations.Damage (16.23.8406595+branch.releases-16-23.content.release)",
+              "damage_type_source": "spell_sylasq_tooltip <magicDamage>"
+            },
+            {
+              "damage_type": "magic",
+              "formula": {
+                "op": "add",
+                "operands": [
+                  {
+                    "op": "by_rank",
+                    "values": [
+                      60,
+                      115,
+                      170,
+                      225,
+                      280
+                    ]
+                  },
+                  {
+                    "op": "mul",
+                    "operands": [
+                      {
+                        "op": "constant",
+                        "value": 0.8
+                      },
+                      {
+                        "op": "stat",
+                        "stat": "ability_power",
+                        "scope": "total"
+                      }
+                    ]
+                  }
+                ]
+              },
+              "label": "Derivado",
+              "source": "Characters/Sylas/Spells/SylasQAbility/SylasQ.mSpellCalculations.ExplosionDamage (16.23.8406595+branch.releases-16-23.content.release)",
+              "damage_type_source": "spell_sylasq_tooltip <magicDamage>"
+            }
+          ]
+        }
+      ],
+      "passive_stats": [],
+      "not_modelled": [
+        "Ralentización (SlowAmountCalc)"
+      ]
+    },
+    "W": {
+      "name": "Matarreyes",
+      "max_rank": 5,
+      "cases": [
+        {
+          "id": "kingslayer",
+          "name": "Impacto",
+          "parts": [
+            {
+              "damage_type": "magic",
+              "formula": {
+                "op": "add",
+                "operands": [
+                  {
+                    "op": "by_rank",
+                    "values": [
+                      75,
+                      110,
+                      145,
+                      180,
+                      215
+                    ]
+                  },
+                  {
+                    "op": "mul",
+                    "operands": [
+                      {
+                        "op": "constant",
+                        "value": 0.6
+                      },
+                      {
+                        "op": "stat",
+                        "stat": "ability_power",
+                        "scope": "total"
+                      }
+                    ]
+                  }
+                ]
+              },
+              "label": "Derivado",
+              "source": "Characters/Sylas/Spells/SylasWAbility/SylasW.mSpellCalculations.MinDamage (16.23.8406595+branch.releases-16-23.content.release)",
+              "damage_type_source": "spell_sylasw_tooltip <magicDamage>"
+            }
+          ]
+        }
+      ],
+      "passive_stats": [],
+      "not_modelled": [
+        "Curación escalada por vida que falta de Sylas (MinHealing, MaxHealing)"
+      ]
+    },
+    "E": {
+      "name": "Fuga / Rapto",
+      "max_rank": 5,
+      "cases": [
+        {
+          "id": "abduct",
+          "name": "Rapto (E2)",
+          "parts": [
+            {
+              "damage_type": "magic",
+              "formula": {
+                "op": "add",
+                "operands": [
+                  {
+                    "op": "by_rank",
+                    "values": [
+                      80,
+                      130,
+                      180,
+                      230,
+                      280
+                    ]
+                  },
+                  {
+                    "op": "mul",
+                    "operands": [
+                      {
+                        "op": "constant",
+                        "value": 0.8
+                      },
+                      {
+                        "op": "stat",
+                        "stat": "ability_power",
+                        "scope": "total"
+                      }
+                    ]
+                  }
+                ]
+              },
+              "label": "Derivado",
+              "source": "Characters/Sylas/Spells/SylasEAbility/SylasE.mSpellCalculations.Damage (16.23.8406595+branch.releases-16-23.content.release)",
+              "damage_type_source": "spell_sylase_tooltip <magicDamage>"
+            }
+          ]
+        }
+      ],
+      "passive_stats": [],
+      "not_modelled": [
+        "Desplazamiento inicial (E1) y lanzamiento por los aires"
+      ]
+    },
+    "R": {
+      "name": "Apropiación",
+      "max_rank": 3,
+      "cases": [],
+      "passive_stats": [],
+      "not_modelled": [
+        "Robo de la definitiva del campeón enemigo (depende del objetivo)"
+      ]
+    }
+  }
+}

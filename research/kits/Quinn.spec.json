@@ -1,0 +1,92 @@
+{
+  "champion": "Quinn",
+  "game_version": "16.23",
+  "verified_against": {
+    "content_version": "16.23.8406595+branch.releases-16-23.content.release",
+    "bin_sha256": "b40d5167444e7a9a9c543c0c9ed46a8e994e4b06d8897d54667ebdd8d0d9d95f",
+    "evidence": "odd/tasks/champion-kits-wave-2.md",
+    "result": "Bin del cliente 16.23 convertido con python -m binmodel.batch_kits y compilado con esta especificación curada (CH-01 oleada 2)"
+  },
+  "abilities": {
+    "P": {
+      "name": "Acosar",
+      "tooltip": "spell_quinnpassive_tooltip",
+      "max_rank": 1,
+      "cases": [
+        {
+          "id": "harrier",
+          "name": "Consumo de marca al impactar",
+          "parts": [
+            {
+              "calculation": "BonusDamage"
+            }
+          ]
+        }
+      ],
+      "not_modelled": [
+        "Reducción de enfriamiento por probabilidad de crítico y bonificación contra monstruos"
+      ]
+    },
+    "Q": {
+      "name": "Asalto cegador",
+      "tooltip": "spell_quinnq_tooltip",
+      "cases": [
+        {
+          "id": "assault",
+          "name": "Impacto",
+          "parts": [
+            {
+              "calculation": "TotalDamage"
+            }
+          ]
+        }
+      ],
+      "not_modelled": [
+        "Reducción de visión (VisionReductionDuration) y aplicación de Acosar"
+      ]
+    },
+    "W": {
+      "name": "Sentidos aguzados",
+      "tooltip": "spell_quinnw_tooltip",
+      "not_modelled": [
+        "Velocidad de ataque y movimiento al consumir Acosar, y revelación activa"
+      ]
+    },
+    "E": {
+      "name": "Acoso y derribo",
+      "tooltip": "spell_quinne_tooltip",
+      "cases": [
+        {
+          "id": "vault",
+          "name": "Embiste",
+          "parts": [
+            {
+              "calculation": "TotalDamage"
+            }
+          ]
+        }
+      ],
+      "not_modelled": [
+        "Empuje breve, ralentización y aplicación de Acosar"
+      ]
+    },
+    "R": {
+      "name": "Tras las líneas enemigas",
+      "tooltip": "spell_quinnr_tooltip",
+      "cases": [
+        {
+          "id": "skystrike",
+          "name": "Golpe aéreo",
+          "parts": [
+            {
+              "calculation": "Damage"
+            }
+          ]
+        }
+      ],
+      "not_modelled": [
+        "Canalización de 2 s y velocidad de movimiento fuera de combate"
+      ]
+    }
+  }
+}

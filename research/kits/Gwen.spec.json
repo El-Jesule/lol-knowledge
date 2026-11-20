@@ -1,0 +1,160 @@
+{
+  "champion": "Gwen",
+  "game_version": "16.23",
+  "verified_against": {
+    "content_version": "16.23.8406595+branch.releases-16-23.content.release",
+    "bin_sha256": "72ba731baa0828e35ef50854e64118136ebd1e840980cfc2ef68243236defa3d",
+    "evidence": "odd/tasks/champion-kits-wave-2.md",
+    "result": "Bin del cliente 16.23 convertido con python -m binmodel.batch_kits y compilado con esta especificación curada (CH-01 oleada 2)"
+  },
+  "abilities": {
+    "P": {
+      "name": "Mil cortes",
+      "tooltip": "spell_gwenp_tooltip",
+      "max_rank": 1,
+      "cases": [
+        {
+          "id": "cut",
+          "name": "Un corte (% vida máxima)",
+          "parts": [
+            {
+              "tooltip_reference": "PercentHealth1000Cuts",
+              "damage_type": "magic",
+              "source_note": "PercentHealth1000Cuts × vida máxima del objetivo",
+              "formula": {
+                "op": "mul",
+                "operands": [
+                  {
+                    "op": "calculation",
+                    "name": "PercentHealth1000Cuts"
+                  },
+                  {
+                    "op": "stat",
+                    "stat": "health",
+                    "scope": "max",
+                    "subject": "target"
+                  }
+                ]
+              }
+            }
+          ]
+        }
+      ],
+      "not_modelled": [
+        "Curación del daño infligido a campeones (HealingPercent), ejecución a súbditos y tope a monstruos"
+      ]
+    },
+    "Q": {
+      "name": "¡Corta, corta!",
+      "tooltip": "spell_gwenq_tooltip",
+      "cases": [
+        {
+          "id": "mini_snip",
+          "name": "Un corte menor",
+          "parts": [
+            {
+              "calculation": "MiniSwipeDamage"
+            }
+          ]
+        },
+        {
+          "id": "final_snip",
+          "name": "Corte final",
+          "parts": [
+            {
+              "calculation": "FinalSwipeDamage"
+            }
+          ]
+        },
+        {
+          "id": "full_4_stacks",
+          "name": "4 cargas (4 cortes menores + corte final)",
+          "parts": [
+            {
+              "calculation": "MiniSwipeDamage"
+            },
+            {
+              "calculation": "MiniSwipeDamage"
+            },
+            {
+              "calculation": "MiniSwipeDamage"
+            },
+            {
+              "calculation": "MiniSwipeDamage"
+            },
+            {
+              "calculation": "FinalSwipeDamage"
+            }
+          ]
+        }
+      ],
+      "not_modelled": [
+        "Conversión del 50 % a daño verdadero en el centro y aplicación de Mil cortes por corte"
+      ]
+    },
+    "W": {
+      "name": "Niebla consagrada",
+      "tooltip": "spell_gwenw_tooltip",
+      "not_modelled": [
+        "Inalcanzabilidad desde fuera de la niebla y armadura/RM (TotalResists)"
+      ]
+    },
+    "E": {
+      "name": "Salto y corte",
+      "tooltip": "spell_gwene_tooltip",
+      "cases": [
+        {
+          "id": "on_hit",
+          "name": "Daño mágico al impactar",
+          "parts": [
+            {
+              "calculation": "OnHitDamage"
+            }
+          ]
+        }
+      ],
+      "not_modelled": [
+        "Velocidad de ataque temporal (BonusAttackSpeed), alcance adicional y reducción de enfriamiento"
+      ]
+    },
+    "R": {
+      "name": "Bordado",
+      "tooltip": "spell_gwenr_tooltip",
+      "cases": [
+        {
+          "id": "cast1",
+          "name": "Primer lanzamiento (1 aguja)",
+          "parts": [
+            {
+              "calculation": "TotalDamage"
+            }
+          ]
+        },
+        {
+          "id": "cast2",
+          "name": "Segunda reactivación (3 agujas)",
+          "recast": true,
+          "parts": [
+            {
+              "calculation": "TotalDamage3"
+            }
+          ]
+        },
+        {
+          "id": "cast3",
+          "name": "Tercera reactivación (5 agujas)",
+          "recast": true,
+          "parts": [
+            {
+              "calculation": "TotalDamage5"
+            }
+          ]
+        }
+      ],
+      "max_recasts": 2,
+      "not_modelled": [
+        "Ralentización y aplicación de Mil cortes por aguja"
+      ]
+    }
+  }
+}

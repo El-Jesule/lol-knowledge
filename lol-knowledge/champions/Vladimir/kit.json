@@ -1,0 +1,365 @@
+{
+  "schema": "lol-champion-kit/1",
+  "champion": "Vladimir",
+  "label": "Derivado",
+  "game_version": "16.23",
+  "content_version": "16.23.8406595+branch.releases-16-23.content.release",
+  "verified_against": {
+    "content_version": "16.23.8406595+branch.releases-16-23.content.release",
+    "bin_sha256": "b3daaf1ad44f0af0f729d38765b45549a073e27656bab932358c0326a5ea08b4",
+    "evidence": "odd/tasks/champion-kits-wave-2.md",
+    "result": "Bin del cliente 16.23 convertido con python -m binmodel.batch_kits y compilado con esta especificación curada (CH-01 oleada 2)"
+  },
+  "source": "Árboles de cálculo del bin del cliente (python -m binmodel) y marcado de los tooltips del cliente; estructura de casos curada en research/kits/",
+  "abilities": {
+    "P": {
+      "name": "Pacto carmesí",
+      "max_rank": 1,
+      "cases": [],
+      "passive_stats": [],
+      "not_modelled": [
+        "Conversión cruzada de vida adicional en PH y PH en vida adicional (MEC-31)"
+      ]
+    },
+    "Q": {
+      "name": "Transfusión",
+      "max_rank": 5,
+      "cases": [
+        {
+          "id": "base",
+          "name": "Transfusión normal",
+          "parts": [
+            {
+              "damage_type": "magic",
+              "formula": {
+                "op": "add",
+                "operands": [
+                  {
+                    "op": "by_rank",
+                    "values": [
+                      80,
+                      100,
+                      120,
+                      140,
+                      160
+                    ]
+                  },
+                  {
+                    "op": "mul",
+                    "operands": [
+                      {
+                        "op": "constant",
+                        "value": 0.6
+                      },
+                      {
+                        "op": "stat",
+                        "stat": "ability_power",
+                        "scope": "total"
+                      }
+                    ]
+                  }
+                ]
+              },
+              "label": "Derivado",
+              "source": "Characters/Vladimir/Spells/VladimirQAbility/VladimirQ.mSpellCalculations.BaseDamageTooltip (16.23.8406595+branch.releases-16-23.content.release)",
+              "damage_type_source": "spell_vladimirq_tooltip <magicDamage>"
+            }
+          ]
+        },
+        {
+          "id": "crimson_rush",
+          "name": "Impulso carmesí (3.er lanzamiento)",
+          "parts": [
+            {
+              "damage_type": "magic",
+              "formula": {
+                "op": "mul",
+                "operands": [
+                  {
+                    "op": "add",
+                    "operands": [
+                      {
+                        "op": "by_rank",
+                        "values": [
+                          80,
+                          100,
+                          120,
+                          140,
+                          160
+                        ]
+                      },
+                      {
+                        "op": "mul",
+                        "operands": [
+                          {
+                            "op": "constant",
+                            "value": 0.6
+                          },
+                          {
+                            "op": "stat",
+                            "stat": "ability_power",
+                            "scope": "total"
+                          }
+                        ]
+                      }
+                    ]
+                  },
+                  {
+                    "op": "constant",
+                    "value": 1.85
+                  }
+                ]
+              },
+              "label": "Derivado",
+              "source": "Characters/Vladimir/Spells/VladimirQAbility/VladimirQ.mSpellCalculations.EmpoweredDamageTooltip (16.23.8406595+branch.releases-16-23.content.release)",
+              "damage_type_source": "spell_vladimirq_tooltip <magicDamage>"
+            }
+          ]
+        }
+      ],
+      "passive_stats": [],
+      "not_modelled": [
+        "Curación normal y potenciada (BaseHealTooltip, EmpoweredHealTooltip) y velocidad de movimiento"
+      ]
+    },
+    "W": {
+      "name": "Estanque sangriento",
+      "max_rank": 5,
+      "cases": [
+        {
+          "id": "pool",
+          "name": "Daño total (2 s)",
+          "parts": [
+            {
+              "damage_type": "magic",
+              "formula": {
+                "op": "add",
+                "operands": [
+                  {
+                    "op": "by_rank",
+                    "values": [
+                      80,
+                      135,
+                      190,
+                      245,
+                      300
+                    ]
+                  },
+                  {
+                    "op": "mul",
+                    "operands": [
+                      {
+                        "op": "constant",
+                        "value": 0.15
+                      },
+                      {
+                        "op": "stat",
+                        "stat": "health",
+                        "scope": "bonus"
+                      }
+                    ]
+                  }
+                ]
+              },
+              "label": "Derivado",
+              "source": "Characters/Vladimir/Spells/VladimirSanguinePoolAbility/VladimirSanguinePool.mSpellCalculations.TotalDamage (16.23.8406595+branch.releases-16-23.content.release)",
+              "damage_type_source": "spell_vladimirsanguinepool_tooltip <magicDamage>"
+            }
+          ]
+        }
+      ],
+      "passive_stats": [],
+      "not_modelled": [
+        "Coste del 15 % de la vida actual, inalcanzabilidad, ralentización y curación (TotalHeal)"
+      ]
+    },
+    "E": {
+      "name": "Mareas de sangre",
+      "max_rank": 5,
+      "cases": [
+        {
+          "id": "min",
+          "name": "Sin cargar",
+          "parts": [
+            {
+              "damage_type": "magic",
+              "formula": {
+                "op": "add",
+                "operands": [
+                  {
+                    "op": "by_rank",
+                    "values": [
+                      30,
+                      45,
+                      60,
+                      75,
+                      90
+                    ]
+                  },
+                  {
+                    "op": "mul",
+                    "operands": [
+                      {
+                        "op": "constant",
+                        "value": 0.015
+                      },
+                      {
+                        "op": "stat",
+                        "stat": "health",
+                        "scope": "total"
+                      }
+                    ]
+                  },
+                  {
+                    "op": "mul",
+                    "operands": [
+                      {
+                        "op": "constant",
+                        "value": 0.35
+                      },
+                      {
+                        "op": "stat",
+                        "stat": "ability_power",
+                        "scope": "total"
+                      }
+                    ]
+                  }
+                ]
+              },
+              "label": "Derivado",
+              "source": "Characters/Vladimir/Spells/VladimirEAbility/VladimirE.mSpellCalculations.MinDamageTooltip (16.23.8406595+branch.releases-16-23.content.release)",
+              "damage_type_source": "spell_vladimire_tooltip <magicDamage>"
+            }
+          ]
+        },
+        {
+          "id": "max",
+          "name": "Carga completa",
+          "parts": [
+            {
+              "damage_type": "magic",
+              "formula": {
+                "op": "add",
+                "operands": [
+                  {
+                    "op": "by_rank",
+                    "values": [
+                      60,
+                      90,
+                      120,
+                      150,
+                      180
+                    ]
+                  },
+                  {
+                    "op": "mul",
+                    "operands": [
+                      {
+                        "op": "constant",
+                        "value": 0.06
+                      },
+                      {
+                        "op": "stat",
+                        "stat": "health",
+                        "scope": "total"
+                      }
+                    ]
+                  },
+                  {
+                    "op": "mul",
+                    "operands": [
+                      {
+                        "op": "constant",
+                        "value": 0.8
+                      },
+                      {
+                        "op": "stat",
+                        "stat": "ability_power",
+                        "scope": "total"
+                      }
+                    ]
+                  }
+                ]
+              },
+              "label": "Derivado",
+              "source": "Characters/Vladimir/Spells/VladimirEAbility/VladimirE.mSpellCalculations.MaxDamageTooltip (16.23.8406595+branch.releases-16-23.content.release)",
+              "damage_type_source": "spell_vladimire_tooltip <magicDamage>"
+            }
+          ]
+        }
+      ],
+      "passive_stats": [],
+      "not_modelled": [
+        "Ralentización al enemigo y autorralentización del 20 % con carga completa"
+      ],
+      "cost": {
+        "resource": "health",
+        "formula": {
+          "op": "mul",
+          "operands": [
+            {
+              "op": "constant",
+              "value": 0.08
+            },
+            {
+              "op": "stat",
+              "stat": "health",
+              "scope": "total"
+            }
+          ]
+        },
+        "label": "Derivado",
+        "source": "Characters/Vladimir/Spells/VladimirEAbility/VladimirE.mSpellCalculations.ChargeHealthTooltip (16.23.8406595+branch.releases-16-23.content.release); coste máximo de carga (8 % de la vida máxima)"
+      }
+    },
+    "R": {
+      "name": "Hemoplaga",
+      "max_rank": 3,
+      "cases": [
+        {
+          "id": "detonate",
+          "name": "Detonación tras 4 s",
+          "parts": [
+            {
+              "damage_type": "magic",
+              "formula": {
+                "op": "add",
+                "operands": [
+                  {
+                    "op": "by_rank",
+                    "values": [
+                      150,
+                      250,
+                      350
+                    ]
+                  },
+                  {
+                    "op": "mul",
+                    "operands": [
+                      {
+                        "op": "constant",
+                        "value": 0.7
+                      },
+                      {
+                        "op": "stat",
+                        "stat": "ability_power",
+                        "scope": "total"
+                      }
+                    ]
+                  }
+                ]
+              },
+              "label": "Derivado",
+              "source": "Characters/Vladimir/Spells/VladimirHemoplagueAbility/VladimirHemoplague.mSpellCalculations.Damage (16.23.8406595+branch.releases-16-23.content.release)",
+              "damage_type_source": "spell_vladimirhemoplague_tooltip <magicDamage>"
+            }
+          ]
+        }
+      ],
+      "passive_stats": [],
+      "not_modelled": [
+        "Aumento del 10 % de todo el daño recibido durante 4 s (DamageAmp) y curación por campeón"
+      ]
+    }
+  }
+}

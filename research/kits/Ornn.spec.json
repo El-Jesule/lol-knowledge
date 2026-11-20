@@ -1,0 +1,150 @@
+{
+  "champion": "Ornn",
+  "game_version": "16.23",
+  "verified_against": {
+    "content_version": "16.23.8406595+branch.releases-16-23.content.release",
+    "bin_sha256": "082202886d8585bf66de2b4c85cadfa073d75640c86eee7faf7b622cc78e544b",
+    "evidence": "odd/tasks/champion-kits-wave-2.md",
+    "result": "Bin del cliente 16.23 convertido con python -m binmodel.batch_kits y compilado con esta especificación curada (CH-01 oleada 2)"
+  },
+  "abilities": {
+    "P": {
+      "name": "Forja viviente",
+      "max_rank": 1,
+      "not_modelled": [
+        "Aumento porcentual de vida/armadura/RM adicionales, forja fuera de base y mejoras de Ornn"
+      ]
+    },
+    "Q": {
+      "name": "Ruptura volcánica",
+      "tooltip": "spell_ornnq_tooltip",
+      "cases": [
+        {
+          "id": "rupture",
+          "name": "Fisura",
+          "parts": [
+            {
+              "calculation": "TotalDamage"
+            }
+          ]
+        }
+      ],
+      "not_modelled": [
+        "Ralentización y creación de pilar de terreno"
+      ]
+    },
+    "W": {
+      "name": "Aliento de fuelle",
+      "tooltip": "spell_ornnw_tooltip",
+      "cases": [
+        {
+          "id": "breath",
+          "name": "Llamarada completa (% vida máxima)",
+          "parts": [
+            {
+              "tooltip_reference": "MaxPercentHPPerTickTooltip",
+              "damage_type": "magic",
+              "source_note": "DataValues.MaxPercentHPPerTickTooltip % × vida máxima del objetivo",
+              "formula": {
+                "op": "mul",
+                "operands": [
+                  {
+                    "op": "data_value",
+                    "name": "MaxPercentHPPerTickTooltip"
+                  },
+                  {
+                    "op": "constant",
+                    "value": 0.01
+                  },
+                  {
+                    "op": "stat",
+                    "stat": "health",
+                    "scope": "max",
+                    "subject": "target"
+                  }
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "id": "brittle",
+          "name": "Detonación de Quebradizo (% vida máxima)",
+          "parts": [
+            {
+              "tooltip_reference": "BrittlePercentMaxHPCalc",
+              "damage_type": "magic",
+              "source_note": "BrittlePercentMaxHPCalc × vida máxima del objetivo",
+              "formula": {
+                "op": "mul",
+                "operands": [
+                  {
+                    "op": "calculation",
+                    "name": "BrittlePercentMaxHPCalc"
+                  },
+                  {
+                    "op": "stat",
+                    "stat": "health",
+                    "scope": "max",
+                    "subject": "target"
+                  }
+                ]
+              }
+            }
+          ]
+        }
+      ],
+      "not_modelled": [
+        "Imparabilidad, daño mínimo (TotalMinimumDamage) y tope contra monstruos (TotalMonsterDamageCap)"
+      ]
+    },
+    "E": {
+      "name": "Carga candente",
+      "tooltip": "spell_ornne_tooltip",
+      "cases": [
+        {
+          "id": "charge",
+          "name": "Impacto o explosión contra muro",
+          "parts": [
+            {
+              "calculation": "TotalDamage"
+            }
+          ]
+        }
+      ],
+      "not_modelled": [
+        "Lanzamiento por los aires al chocar con terreno (KnockupDuration)"
+      ]
+    },
+    "R": {
+      "name": "Llamada del dios de la forja",
+      "tooltip": "spell_ornnr_tooltip",
+      "cases": [
+        {
+          "id": "wave",
+          "name": "Una pasada del gólem",
+          "parts": [
+            {
+              "calculation": "RDamageCalc"
+            }
+          ]
+        },
+        {
+          "id": "both_waves",
+          "name": "Ida + cabezazo de vuelta",
+          "parts": [
+            {
+              "calculation": "RDamageCalc"
+            },
+            {
+              "calculation": "RDamageCalc"
+            }
+          ]
+        }
+      ],
+      "not_modelled": [
+        "Aplicación de Quebradizo, ralentización y lanzamiento por los aires en el segundo impacto"
+      ]
+    }
+  }
+}

@@ -1,0 +1,101 @@
+{
+  "champion": "Seraphine",
+  "game_version": "16.23",
+  "verified_against": {
+    "content_version": "16.23.8406595+branch.releases-16-23.content.release",
+    "bin_sha256": "331b119059aa01d88238033c25558d82e51b6939a39e3fbf075a81113a473cce",
+    "evidence": "odd/tasks/champion-kits-wave-2.md",
+    "result": "Bin del cliente 16.23 convertido con python -m binmodel.batch_kits y compilado con esta especificación curada (CH-01 oleada 2)"
+  },
+  "abilities": {
+    "P": {
+      "name": "Presencia escénica",
+      "tooltip": "spell_seraphinepassive_tooltip",
+      "max_rank": 1,
+      "cases": [
+        {
+          "id": "note_hit",
+          "name": "Daño adicional por 1 nota",
+          "parts": [
+            {
+              "calculation": "AutoDamage"
+            }
+          ]
+        }
+      ],
+      "not_modelled": [
+        "Eco de cada tercera habilidad básica y acumulación de notas con aliados"
+      ]
+    },
+    "Q": {
+      "name": "Nota alta",
+      "tooltip": "spell_seraphineq_tooltip",
+      "cases": [
+        {
+          "id": "min",
+          "name": "Objetivo al 100 % vida",
+          "parts": [
+            {
+              "calculation": "ExplosionDamage"
+            }
+          ]
+        },
+        {
+          "id": "max",
+          "name": "Daño máximo por vida perdida",
+          "parts": [
+            {
+              "calculation": "TotalEmpoweredDamage"
+            }
+          ]
+        }
+      ],
+      "not_modelled": [
+        "Interpolación continua según vida que falta del objetivo"
+      ]
+    },
+    "W": {
+      "name": "Sonido envolvente",
+      "tooltip": "spell_seraphinew_tooltip",
+      "not_modelled": [
+        "Escudo a aliados (ShieldValueSeraphine), velocidad de movimiento y curación con escudo activo"
+      ]
+    },
+    "E": {
+      "name": "Clímax musical",
+      "tooltip": "spell_seraphinee_tooltip",
+      "cases": [
+        {
+          "id": "beat_drop",
+          "name": "Onda de sonido",
+          "parts": [
+            {
+              "calculation": "FinalDamage"
+            }
+          ]
+        }
+      ],
+      "not_modelled": [
+        "Ralentización, inmovilización o aturdimiento según estado previo"
+      ]
+    },
+    "R": {
+      "name": "Bis",
+      "tooltip": "spell_seraphiner_tooltip",
+      "cases": [
+        {
+          "id": "encore",
+          "name": "Onda musical",
+          "parts": [
+            {
+              "calculation": "R1TotalDamage"
+            }
+          ]
+        }
+      ],
+      "not_modelled": [
+        "Hechizo (RChannelDuration) y extensión de alcance al atravesar campeones"
+      ]
+    }
+  }
+}

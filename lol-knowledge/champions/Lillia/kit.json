@@ -1,0 +1,398 @@
+{
+  "schema": "lol-champion-kit/1",
+  "champion": "Lillia",
+  "label": "Derivado",
+  "game_version": "16.23",
+  "content_version": "16.23.8406595+branch.releases-16-23.content.release",
+  "verified_against": {
+    "content_version": "16.23.8406595+branch.releases-16-23.content.release",
+    "bin_sha256": "3d32ba798e17d9963ec99809c52c33494806b9fd4c5190ce426aefb0085adc09",
+    "evidence": "odd/tasks/champion-kits-wave-2.md",
+    "result": "Bin del cliente 16.23 convertido con python -m binmodel.batch_kits y compilado con esta especificación curada (CH-01 oleada 2)"
+  },
+  "source": "Árboles de cálculo del bin del cliente (python -m binmodel) y marcado de los tooltips del cliente; estructura de casos curada en research/kits/",
+  "abilities": {
+    "P": {
+      "name": "Rama de los sueños",
+      "max_rank": 1,
+      "cases": [
+        {
+          "id": "burn",
+          "name": "Polvo de los sueños (3 s, % vida máxima)",
+          "parts": [
+            {
+              "damage_type": "magic",
+              "formula": {
+                "op": "mul",
+                "operands": [
+                  {
+                    "op": "mul",
+                    "operands": [
+                      {
+                        "op": "add",
+                        "operands": [
+                          {
+                            "op": "constant",
+                            "value": 5
+                          },
+                          {
+                            "op": "mul",
+                            "operands": [
+                              {
+                                "op": "constant",
+                                "value": 0.0125
+                              },
+                              {
+                                "op": "stat",
+                                "stat": "ability_power",
+                                "scope": "total"
+                              }
+                            ]
+                          }
+                        ]
+                      },
+                      {
+                        "op": "constant",
+                        "value": 0.01
+                      }
+                    ]
+                  },
+                  {
+                    "op": "stat",
+                    "stat": "health",
+                    "scope": "max",
+                    "subject": "target"
+                  }
+                ]
+              },
+              "label": "Derivado",
+              "source": "Characters/Lillia/Spells/LilliaPAbility/LilliaP · DotPercentTooltip × vida máxima del objetivo (16.23.8406595+branch.releases-16-23.content.release)",
+              "damage_type_source": "spell_lilliap_tooltip <magicDamage>"
+            }
+          ]
+        }
+      ],
+      "passive_stats": [],
+      "not_modelled": [
+        "Curación contra campeones y monstruos (ChampionHealTT, MonsterHealTT) y tope a monstruos"
+      ]
+    },
+    "Q": {
+      "name": "Golpes florecientes",
+      "max_rank": 5,
+      "cases": [
+        {
+          "id": "inner",
+          "name": "Zona interior (solo daño mágico)",
+          "parts": [
+            {
+              "damage_type": "magic",
+              "formula": {
+                "op": "add",
+                "operands": [
+                  {
+                    "op": "by_rank",
+                    "values": [
+                      35,
+                      45,
+                      55,
+                      65,
+                      75
+                    ]
+                  },
+                  {
+                    "op": "mul",
+                    "operands": [
+                      {
+                        "op": "constant",
+                        "value": 0.35
+                      },
+                      {
+                        "op": "stat",
+                        "stat": "ability_power",
+                        "scope": "total"
+                      }
+                    ]
+                  }
+                ]
+              },
+              "label": "Derivado",
+              "source": "Characters/Lillia/Spells/LilliaQAbility/LilliaQ.mSpellCalculations.TotalDamage (16.23.8406595+branch.releases-16-23.content.release)",
+              "damage_type_source": "spell_lilliaq_tooltip <magicDamage>"
+            }
+          ]
+        },
+        {
+          "id": "outer",
+          "name": "Borde exterior (mágico + verdadero)",
+          "parts": [
+            {
+              "damage_type": "magic",
+              "formula": {
+                "op": "add",
+                "operands": [
+                  {
+                    "op": "by_rank",
+                    "values": [
+                      35,
+                      45,
+                      55,
+                      65,
+                      75
+                    ]
+                  },
+                  {
+                    "op": "mul",
+                    "operands": [
+                      {
+                        "op": "constant",
+                        "value": 0.35
+                      },
+                      {
+                        "op": "stat",
+                        "stat": "ability_power",
+                        "scope": "total"
+                      }
+                    ]
+                  }
+                ]
+              },
+              "label": "Derivado",
+              "source": "Characters/Lillia/Spells/LilliaQAbility/LilliaQ.mSpellCalculations.TotalDamage (16.23.8406595+branch.releases-16-23.content.release)",
+              "damage_type_source": "spell_lilliaq_tooltip <magicDamage>"
+            },
+            {
+              "damage_type": "true",
+              "formula": {
+                "op": "add",
+                "operands": [
+                  {
+                    "op": "by_rank",
+                    "values": [
+                      35,
+                      45,
+                      55,
+                      65,
+                      75
+                    ]
+                  },
+                  {
+                    "op": "mul",
+                    "operands": [
+                      {
+                        "op": "constant",
+                        "value": 0.35
+                      },
+                      {
+                        "op": "stat",
+                        "stat": "ability_power",
+                        "scope": "total"
+                      }
+                    ]
+                  }
+                ]
+              },
+              "label": "Derivado",
+              "source": "Characters/Lillia/Spells/LilliaQAbility/LilliaQ.mSpellCalculations.BonusTrueDamage (16.23.8406595+branch.releases-16-23.content.release)",
+              "damage_type_source": "spell_lilliaq_tooltip <trueDamage>"
+            }
+          ]
+        }
+      ],
+      "passive_stats": [],
+      "not_modelled": [
+        "Velocidad de movimiento acumulable de Pingo (PranceSpeed, hasta 4 cargas)"
+      ]
+    },
+    "W": {
+      "name": "¡Cuidado! ¡Yip!",
+      "max_rank": 5,
+      "cases": [
+        {
+          "id": "outer",
+          "name": "Zona exterior",
+          "parts": [
+            {
+              "damage_type": "magic",
+              "formula": {
+                "op": "add",
+                "operands": [
+                  {
+                    "op": "by_rank",
+                    "values": [
+                      80,
+                      100,
+                      120,
+                      140,
+                      160
+                    ]
+                  },
+                  {
+                    "op": "mul",
+                    "operands": [
+                      {
+                        "op": "constant",
+                        "value": 0.35
+                      },
+                      {
+                        "op": "stat",
+                        "stat": "ability_power",
+                        "scope": "total"
+                      }
+                    ]
+                  }
+                ]
+              },
+              "label": "Derivado",
+              "source": "Characters/Lillia/Spells/LilliaWAbility/LilliaW.mSpellCalculations.FlatDamage (16.23.8406595+branch.releases-16-23.content.release)",
+              "damage_type_source": "spell_lilliaw_tooltip <magicDamage>"
+            }
+          ]
+        },
+        {
+          "id": "center",
+          "name": "Centro potenciado",
+          "parts": [
+            {
+              "damage_type": "magic",
+              "formula": {
+                "op": "add",
+                "operands": [
+                  {
+                    "op": "by_rank",
+                    "values": [
+                      80,
+                      100,
+                      120,
+                      140,
+                      160
+                    ]
+                  },
+                  {
+                    "op": "mul",
+                    "operands": [
+                      {
+                        "op": "constant",
+                        "value": 0.35
+                      },
+                      {
+                        "op": "stat",
+                        "stat": "ability_power",
+                        "scope": "total"
+                      }
+                    ]
+                  }
+                ]
+              },
+              "label": "Derivado",
+              "source": "Characters/Lillia/Spells/LilliaWAbility/LilliaW.mSpellCalculations.FlatDamageSweetSpot (16.23.8406595+branch.releases-16-23.content.release)",
+              "damage_type_source": "spell_lilliaw_tooltip <magicDamage>"
+            }
+          ]
+        }
+      ],
+      "passive_stats": [],
+      "not_modelled": []
+    },
+    "E": {
+      "name": "Semilla rodante",
+      "max_rank": 5,
+      "cases": [
+        {
+          "id": "seed",
+          "name": "Impacto",
+          "parts": [
+            {
+              "damage_type": "magic",
+              "formula": {
+                "op": "add",
+                "operands": [
+                  {
+                    "op": "by_rank",
+                    "values": [
+                      60,
+                      85,
+                      110,
+                      135,
+                      160
+                    ]
+                  },
+                  {
+                    "op": "mul",
+                    "operands": [
+                      {
+                        "op": "constant",
+                        "value": 0.5
+                      },
+                      {
+                        "op": "stat",
+                        "stat": "ability_power",
+                        "scope": "total"
+                      }
+                    ]
+                  }
+                ]
+              },
+              "label": "Derivado",
+              "source": "Characters/Lillia/Spells/LilliaEAbility/LilliaE.mSpellCalculations.ImpactDamageTotal (16.23.8406595+branch.releases-16-23.content.release)",
+              "damage_type_source": "spell_lilliae_tooltip <magicDamage>"
+            }
+          ]
+        }
+      ],
+      "passive_stats": [],
+      "not_modelled": [
+        "Ralentización y revelación"
+      ]
+    },
+    "R": {
+      "name": "Nana rítmica",
+      "max_rank": 3,
+      "cases": [
+        {
+          "id": "wake_up",
+          "name": "Daño al despertar",
+          "parts": [
+            {
+              "damage_type": "magic",
+              "formula": {
+                "op": "add",
+                "operands": [
+                  {
+                    "op": "by_rank",
+                    "values": [
+                      100,
+                      150,
+                      200
+                    ]
+                  },
+                  {
+                    "op": "mul",
+                    "operands": [
+                      {
+                        "op": "constant",
+                        "value": 0.4
+                      },
+                      {
+                        "op": "stat",
+                        "stat": "ability_power",
+                        "scope": "total"
+                      }
+                    ]
+                  }
+                ]
+              },
+              "label": "Derivado",
+              "source": "Characters/Lillia/Spells/LilliaRAbility/LilliaR.mSpellCalculations.TotalDamage (16.23.8406595+branch.releases-16-23.content.release)",
+              "damage_type_source": "spell_lilliar_tooltip <magicDamage>"
+            }
+          ]
+        }
+      ],
+      "passive_stats": [],
+      "not_modelled": [
+        "Letargo y sueño sobre enemigos con Polvo de los sueños"
+      ]
+    }
+  }
+}

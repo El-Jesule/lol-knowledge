@@ -1,0 +1,364 @@
+{
+  "schema": "lol-champion-kit/1",
+  "champion": "Skarner",
+  "label": "Derivado",
+  "game_version": "16.23",
+  "content_version": "16.23.8406595+branch.releases-16-23.content.release",
+  "verified_against": {
+    "content_version": "16.23.8406595+branch.releases-16-23.content.release",
+    "bin_sha256": "49fbffabbe15189af07a82729f012928f5120340059b8665dc05ca71d6558023",
+    "evidence": "odd/tasks/champion-kits-wave-2.md",
+    "result": "Bin del cliente 16.23 convertido con python -m binmodel.batch_kits y compilado con esta especificación curada (CH-01 oleada 2)"
+  },
+  "source": "Árboles de cálculo del bin del cliente (python -m binmodel) y marcado de los tooltips del cliente; estructura de casos curada en research/kits/",
+  "abilities": {
+    "P": {
+      "name": "Hebras vibrantes",
+      "max_rank": 1,
+      "cases": [
+        {
+          "id": "quaking",
+          "name": "Seísmo (3 cargas, % vida máxima)",
+          "parts": [
+            {
+              "damage_type": "magic",
+              "formula": {
+                "op": "mul",
+                "operands": [
+                  {
+                    "op": "linear_by_level",
+                    "min": 5,
+                    "max": 9
+                  },
+                  {
+                    "op": "constant",
+                    "value": 0.01
+                  },
+                  {
+                    "op": "stat",
+                    "stat": "health",
+                    "scope": "max",
+                    "subject": "target"
+                  }
+                ]
+              },
+              "label": "Derivado",
+              "source": "Characters/Skarner/Spells/SkarnerPassiveAbility/SkarnerPassive · (PercentHealthDamage %) × vida máxima del objetivo (16.23.8406595+branch.releases-16-23.content.release)",
+              "damage_type_source": "spell_skarner_passive_tooltip <magicDamage>"
+            }
+          ]
+        }
+      ],
+      "passive_stats": [],
+      "not_modelled": [
+        "Tope de daño contra monstruos (DamageMonsterCap)"
+      ]
+    },
+    "Q": {
+      "name": "Tierra fragmentada / Alzamiento",
+      "max_rank": 5,
+      "cases": [
+        {
+          "id": "hit",
+          "name": "Ataque potenciado (1.º o 2.º)",
+          "parts": [
+            {
+              "damage_type": "physical",
+              "formula": {
+                "op": "add",
+                "operands": [
+                  {
+                    "op": "by_rank",
+                    "values": [
+                      10,
+                      20,
+                      30,
+                      40,
+                      50
+                    ]
+                  },
+                  {
+                    "op": "mul",
+                    "operands": [
+                      {
+                        "op": "constant",
+                        "value": 0.9
+                      },
+                      {
+                        "op": "stat",
+                        "stat": "attack_damage",
+                        "scope": "bonus"
+                      }
+                    ]
+                  },
+                  {
+                    "op": "mul",
+                    "operands": [
+                      {
+                        "op": "constant",
+                        "value": 0.03
+                      },
+                      {
+                        "op": "stat",
+                        "stat": "health",
+                        "scope": "bonus"
+                      }
+                    ]
+                  }
+                ]
+              },
+              "label": "Derivado",
+              "source": "Characters/Skarner/Spells/SkarnerQAbility/SkarnerQ.mSpellCalculations.AbilityDamage (16.23.8406595+branch.releases-16-23.content.release)",
+              "damage_type_source": "spell_skarner_q_tooltip <physicalDamage>"
+            }
+          ]
+        },
+        {
+          "id": "final_hit",
+          "name": "Tercer ataque / lanzamiento (+ % vida máxima)",
+          "parts": [
+            {
+              "damage_type": "physical",
+              "formula": {
+                "op": "add",
+                "operands": [
+                  {
+                    "op": "by_rank",
+                    "values": [
+                      10,
+                      20,
+                      30,
+                      40,
+                      50
+                    ]
+                  },
+                  {
+                    "op": "mul",
+                    "operands": [
+                      {
+                        "op": "constant",
+                        "value": 0.9
+                      },
+                      {
+                        "op": "stat",
+                        "stat": "attack_damage",
+                        "scope": "bonus"
+                      }
+                    ]
+                  },
+                  {
+                    "op": "mul",
+                    "operands": [
+                      {
+                        "op": "constant",
+                        "value": 0.03
+                      },
+                      {
+                        "op": "stat",
+                        "stat": "health",
+                        "scope": "bonus"
+                      }
+                    ]
+                  }
+                ]
+              },
+              "label": "Derivado",
+              "source": "Characters/Skarner/Spells/SkarnerQAbility/SkarnerQ.mSpellCalculations.AbilityDamage (16.23.8406595+branch.releases-16-23.content.release)",
+              "damage_type_source": "spell_skarner_q_tooltip <physicalDamage>"
+            },
+            {
+              "damage_type": "physical",
+              "formula": {
+                "op": "mul",
+                "operands": [
+                  {
+                    "op": "constant",
+                    "value": 0.11
+                  },
+                  {
+                    "op": "stat",
+                    "stat": "health",
+                    "scope": "max",
+                    "subject": "target"
+                  }
+                ]
+              },
+              "label": "Derivado",
+              "source": "Characters/Skarner/Spells/SkarnerQAbility/SkarnerQ · DataValues.MaxHPPercent × vida máxima del objetivo (16.23.8406595+branch.releases-16-23.content.release)",
+              "damage_type_source": "spell_skarner_q_tooltip <physicalDamage>"
+            }
+          ]
+        }
+      ],
+      "passive_stats": [],
+      "not_modelled": [
+        "Velocidad de ataque de los 3 ataques, ralentización y ataque básico aparte"
+      ]
+    },
+    "W": {
+      "name": "Bastión sísmico",
+      "max_rank": 5,
+      "cases": [
+        {
+          "id": "quake",
+          "name": "Terremoto",
+          "parts": [
+            {
+              "damage_type": "magic",
+              "formula": {
+                "op": "add",
+                "operands": [
+                  {
+                    "op": "by_rank",
+                    "values": [
+                      50,
+                      70,
+                      90,
+                      110,
+                      130
+                    ]
+                  },
+                  {
+                    "op": "mul",
+                    "operands": [
+                      {
+                        "op": "constant",
+                        "value": 0.8
+                      },
+                      {
+                        "op": "stat",
+                        "stat": "ability_power",
+                        "scope": "total"
+                      }
+                    ]
+                  }
+                ]
+              },
+              "label": "Derivado",
+              "source": "Characters/Skarner/Spells/SkarnerWAbility/SkarnerW.mSpellCalculations.Damage (16.23.8406595+branch.releases-16-23.content.release)",
+              "damage_type_source": "spell_skarner_w_tooltip <magicDamage>"
+            }
+          ]
+        }
+      ],
+      "passive_stats": [],
+      "not_modelled": [
+        "Escudo (InitialShield) y ralentización"
+      ]
+    },
+    "E": {
+      "name": "Hostilidad ixtalí",
+      "max_rank": 5,
+      "cases": [
+        {
+          "id": "pin",
+          "name": "Impacto contra muro",
+          "parts": [
+            {
+              "damage_type": "physical",
+              "formula": {
+                "op": "add",
+                "operands": [
+                  {
+                    "op": "by_rank",
+                    "values": [
+                      30,
+                      60,
+                      90,
+                      120,
+                      150
+                    ]
+                  },
+                  {
+                    "op": "mul",
+                    "operands": [
+                      {
+                        "op": "constant",
+                        "value": 1.2
+                      },
+                      {
+                        "op": "stat",
+                        "stat": "attack_damage",
+                        "scope": "bonus"
+                      }
+                    ]
+                  },
+                  {
+                    "op": "mul",
+                    "operands": [
+                      {
+                        "op": "constant",
+                        "value": 0.06
+                      },
+                      {
+                        "op": "stat",
+                        "stat": "health",
+                        "scope": "total"
+                      }
+                    ]
+                  }
+                ]
+              },
+              "label": "Derivado",
+              "source": "Characters/Skarner/Spells/SkarnerEAbility/SkarnerE.mSpellCalculations.PinDamage (16.23.8406595+branch.releases-16-23.content.release)",
+              "damage_type_source": "spell_skarner_e_tooltip <physicalDamage>"
+            }
+          ]
+        }
+      ],
+      "passive_stats": [],
+      "not_modelled": [
+        "Arrastre a través de terreno y aturdimiento contra muro"
+      ]
+    },
+    "R": {
+      "name": "Empalar",
+      "max_rank": 3,
+      "cases": [
+        {
+          "id": "impale",
+          "name": "Impacto",
+          "parts": [
+            {
+              "damage_type": "magic",
+              "formula": {
+                "op": "add",
+                "operands": [
+                  {
+                    "op": "by_rank",
+                    "values": [
+                      150,
+                      250,
+                      350
+                    ]
+                  },
+                  {
+                    "op": "mul",
+                    "operands": [
+                      {
+                        "op": "constant",
+                        "value": 1
+                      },
+                      {
+                        "op": "stat",
+                        "stat": "ability_power",
+                        "scope": "total"
+                      }
+                    ]
+                  }
+                ]
+              },
+              "label": "Derivado",
+              "source": "Characters/Skarner/Spells/SkarnerRAbility/SkarnerR.mSpellCalculations.Damage (16.23.8406595+branch.releases-16-23.content.release)",
+              "damage_type_source": "spell_skarner_r_tooltip <magicDamage>"
+            }
+          ]
+        }
+      ],
+      "passive_stats": [],
+      "not_modelled": [
+        "Supresión hasta 3 campeones y velocidad de movimiento"
+      ]
+    }
+  }
+}

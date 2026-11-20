@@ -1,0 +1,129 @@
+{
+  "champion": "Qiyana",
+  "game_version": "16.23",
+  "verified_against": {
+    "content_version": "16.23.8406595+branch.releases-16-23.content.release",
+    "bin_sha256": "b7304611f25d3a5ec10c2e678643eeaeb18adf5e6c7af3541ef7a82723969a2a",
+    "evidence": "odd/tasks/champion-kits-wave-2.md",
+    "result": "Bin del cliente 16.23 convertido con python -m binmodel.batch_kits y compilado con esta especificación curada (CH-01 oleada 2)"
+  },
+  "abilities": {
+    "P": {
+      "name": "Privilegio real",
+      "tooltip": "passive_qiyanapv1_tooltip",
+      "max_rank": 1,
+      "cases": [
+        {
+          "id": "proc",
+          "name": "Daño físico adicional por elemento",
+          "parts": [
+            {
+              "calculation": "FinalDamage"
+            }
+          ]
+        }
+      ],
+      "not_modelled": [
+        "Enfriamiento de 25 s por objetivo y reinicio al cambiar de elemento"
+      ]
+    },
+    "Q": {
+      "name": "Ira elemental / Filo de Ixtal",
+      "tooltip": "spell_qiyanaqv2_tooltip",
+      "cases": [
+        {
+          "id": "base",
+          "name": "Sin elemento o elemento normal",
+          "parts": [
+            {
+              "calculation": "VanillaDamage"
+            }
+          ]
+        },
+        {
+          "id": "rock_execute",
+          "name": "Elemento tierra (< 50 % vida)",
+          "parts": [
+            {
+              "calculation": "TremorDamage"
+            }
+          ]
+        }
+      ],
+      "not_modelled": [
+        "Reducción del 25 % tras el primer objetivo (FalloffDamage), inmovilización de río y sigilo de maleza"
+      ]
+    },
+    "W": {
+      "name": "Terraformar",
+      "tooltip": "spell_qiyanaenchant_tooltip",
+      "cases": [
+        {
+          "id": "on_hit",
+          "name": "Pasiva con arma encantada (al impactar)",
+          "parts": [
+            {
+              "calculation": "OnHitDamage"
+            }
+          ]
+        }
+      ],
+      "not_modelled": [
+        "Velocidad de ataque y velocidad de movimiento pasivas con elemento activo"
+      ]
+    },
+    "E": {
+      "name": "Audacia",
+      "tooltip": "spell_qiyanaev3_tooltip",
+      "cases": [
+        {
+          "id": "dash",
+          "name": "Deslizamiento",
+          "parts": [
+            {
+              "calculation": "Damage"
+            }
+          ]
+        }
+      ]
+    },
+    "R": {
+      "name": "Muestra absoluta de talento",
+      "tooltip": "spell_qiyanarv2_tooltip",
+      "cases": [
+        {
+          "id": "wall_blast",
+          "name": "Explosión en muro/río/maleza (+ 10 % vida máxima)",
+          "parts": [
+            {
+              "calculation": "Damage"
+            },
+            {
+              "tooltip_reference": "MissingHealthDamageRock",
+              "damage_type": "physical",
+              "source_note": "MissingHealthDamageRock × vida máxima del objetivo",
+              "formula": {
+                "op": "mul",
+                "operands": [
+                  {
+                    "op": "calculation",
+                    "name": "MissingHealthDamageRock"
+                  },
+                  {
+                    "op": "stat",
+                    "stat": "health",
+                    "scope": "max",
+                    "subject": "target"
+                  }
+                ]
+              }
+            }
+          ]
+        }
+      ],
+      "not_modelled": [
+        "Empuje y aturdimiento (StunDuration)"
+      ]
+    }
+  }
+}

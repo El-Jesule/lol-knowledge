@@ -1,0 +1,94 @@
+{
+  "champion": "Kennen",
+  "game_version": "16.23",
+  "verified_against": {
+    "content_version": "16.23.8406595+branch.releases-16-23.content.release",
+    "bin_sha256": "73f5b74bde0ba446aff0cb5fa6e4bc73e618edfaca2b304a125411ba941c4660",
+    "evidence": "odd/tasks/champion-kits-wave-2.md",
+    "result": "Bin del cliente 16.23 convertido con python -m binmodel.batch_kits y compilado con esta especificación curada (CH-01 oleada 2)"
+  },
+  "abilities": {
+    "P": {
+      "name": "Marca de la tormenta",
+      "max_rank": 1,
+      "not_modelled": [
+        "Aturdimiento a 3 marcas (StunDuration) y restauración de energía (EnergyRestore)"
+      ]
+    },
+    "Q": {
+      "name": "Shuriken atronador",
+      "tooltip": "spell_kennenshurikenhurlmissile1_tooltip",
+      "cases": [
+        {
+          "id": "shuriken",
+          "name": "Impacto",
+          "parts": [
+            {
+              "calculation": "TotalDamage"
+            }
+          ]
+        }
+      ]
+    },
+    "W": {
+      "name": "Tensión eléctrica",
+      "tooltip": "spell_kennenbringthelight_tooltip",
+      "cases": [
+        {
+          "id": "passive_5th",
+          "name": "Pasiva: cada 5.º ataque",
+          "parts": [
+            {
+              "calculation": "TotalDamagePassive"
+            }
+          ]
+        },
+        {
+          "id": "active",
+          "name": "Activa sobre objetivos marcados",
+          "parts": [
+            {
+              "calculation": "TotalDamageActive"
+            }
+          ]
+        }
+      ]
+    },
+    "E": {
+      "name": "Ataque del rayo",
+      "tooltip": "spell_kennenlightningrush_tooltip",
+      "cases": [
+        {
+          "id": "rush",
+          "name": "Impacto al atravesar",
+          "parts": [
+            {
+              "calculation": "TotalDamage"
+            }
+          ]
+        }
+      ],
+      "not_modelled": [
+        "Velocidad de movimiento, velocidad de ataque al salir y devolución de energía"
+      ]
+    },
+    "R": {
+      "name": "Tempestad cercenante",
+      "tooltip": "spell_kennenshurikenstorm_tooltip",
+      "cases": [
+        {
+          "id": "tick",
+          "name": "Un pulso de la tormenta",
+          "parts": [
+            {
+              "calculation": "PerTickDamageCalculated"
+            }
+          ]
+        }
+      ],
+      "not_modelled": [
+        "Armadura y RM temporales (KennenRDefenses) y 6 pulsos totales a lo largo de 3 s"
+      ]
+    }
+  }
+}

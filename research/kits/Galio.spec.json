@@ -1,0 +1,163 @@
+{
+  "champion": "Galio",
+  "game_version": "16.23",
+  "verified_against": {
+    "content_version": "16.23.8406595+branch.releases-16-23.content.release",
+    "bin_sha256": "c4f0ce2b51f9db97cf3b92d5b3cb7db407d58df683ee22ff826962c961f97002",
+    "evidence": "odd/tasks/champion-kits-wave-2.md",
+    "result": "Bin del cliente 16.23 convertido con python -m binmodel.batch_kits y compilado con esta especificación curada (CH-01 oleada 2)"
+  },
+  "abilities": {
+    "P": {
+      "name": "Aplastamiento colosal",
+      "tooltip": "spell_galiopassive_tooltip",
+      "max_rank": 1,
+      "cases": [
+        {
+          "id": "smash",
+          "name": "Ataque potenciado en área",
+          "parts": [
+            {
+              "calculation": "TotalDamage"
+            }
+          ]
+        }
+      ],
+      "not_modelled": [
+        "Reducción de enfriamiento al acertar habilidades"
+      ]
+    },
+    "Q": {
+      "name": "Vientos de guerra",
+      "tooltip": "spell_galioq_tooltip",
+      "cases": [
+        {
+          "id": "gust",
+          "name": "Un remolino",
+          "parts": [
+            {
+              "calculation": "QMissileDamage"
+            }
+          ]
+        },
+        {
+          "id": "both_gusts",
+          "name": "Ambos remolinos",
+          "parts": [
+            {
+              "calculation": "QMissileDamage"
+            },
+            {
+              "calculation": "QMissileDamage"
+            }
+          ]
+        },
+        {
+          "id": "tornado",
+          "name": "Tornado completo (2 s, % vida máxima)",
+          "parts": [
+            {
+              "tooltip_reference": "PercentSuperQDamageTT",
+              "damage_type": "magic",
+              "source_note": "(PercentSuperQDamageTT %) × vida máxima del objetivo",
+              "formula": {
+                "op": "mul",
+                "operands": [
+                  {
+                    "op": "calculation",
+                    "name": "PercentSuperQDamageTT"
+                  },
+                  {
+                    "op": "constant",
+                    "value": 0.01
+                  },
+                  {
+                    "op": "stat",
+                    "stat": "health",
+                    "scope": "max",
+                    "subject": "target"
+                  }
+                ]
+              }
+            }
+          ]
+        }
+      ],
+      "not_modelled": [
+        "Tope del tornado contra monstruos (SuperQMonsterMaxDamageTotal)"
+      ]
+    },
+    "W": {
+      "name": "Escudo de Durand",
+      "tooltip": "spell_galiow_tooltip",
+      "cases": [
+        {
+          "id": "min",
+          "name": "Sin cargar",
+          "parts": [
+            {
+              "calculation": "MinTotalDamage"
+            }
+          ]
+        },
+        {
+          "id": "max",
+          "name": "Carga completa",
+          "parts": [
+            {
+              "calculation": "MaxTotalDamage"
+            }
+          ]
+        }
+      ],
+      "not_modelled": [
+        "Escudo mágico pasivo (TotalPassiveShield), reducción de daño durante carga y provocación"
+      ]
+    },
+    "E": {
+      "name": "Puñetazo justiciero",
+      "tooltip": "spell_galioe_tooltip",
+      "cases": [
+        {
+          "id": "champion",
+          "name": "Contra campeones",
+          "parts": [
+            {
+              "calculation": "TotalDamage"
+            }
+          ]
+        },
+        {
+          "id": "non_champion",
+          "name": "Contra no campeones (80 %)",
+          "parts": [
+            {
+              "calculation": "PVEDamage"
+            }
+          ]
+        }
+      ],
+      "not_modelled": [
+        "Lanzamiento por los aires (KnockupDuration)"
+      ]
+    },
+    "R": {
+      "name": "Entrada heroica",
+      "tooltip": "spell_galior_tooltip",
+      "cases": [
+        {
+          "id": "impact",
+          "name": "Aterrizaje",
+          "parts": [
+            {
+              "calculation": "TotalDamage"
+            }
+          ]
+        }
+      ],
+      "not_modelled": [
+        "Escudo mágico a aliados en la zona y lanzamiento por los aires"
+      ]
+    }
+  }
+}

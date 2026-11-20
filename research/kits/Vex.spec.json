@@ -1,0 +1,111 @@
+{
+  "champion": "Vex",
+  "game_version": "16.23",
+  "verified_against": {
+    "content_version": "16.23.8406595+branch.releases-16-23.content.release",
+    "bin_sha256": "6b60807ce10414dc8bd779b8622d24a3a005fd5e45b896e3d75579562f6eb5da",
+    "evidence": "odd/tasks/champion-kits-wave-2.md",
+    "result": "Bin del cliente 16.23 convertido con python -m binmodel.batch_kits y compilado con esta especificación curada (CH-01 oleada 2)"
+  },
+  "abilities": {
+    "P": {
+      "name": "Miseria y pesimismo",
+      "tooltip": "spell_vexp_tooltip",
+      "max_rank": 1,
+      "cases": [
+        {
+          "id": "gloom",
+          "name": "Consumo de marca de Pesimismo",
+          "parts": [
+            {
+              "calculation": "GloomProcCalc"
+            }
+          ]
+        }
+      ],
+      "not_modelled": [
+        "Terror de Fatalidad (FearDuration, DoomCD) y reducción contra súbditos (GloomMinionMod)"
+      ]
+    },
+    "Q": {
+      "name": "Proyectil mistral",
+      "tooltip": "spell_vexq_tooltip",
+      "cases": [
+        {
+          "id": "bolt",
+          "name": "Oleada de niebla",
+          "parts": [
+            {
+              "calculation": "QDamageCalc"
+            }
+          ]
+        }
+      ]
+    },
+    "W": {
+      "name": "Espacio personal",
+      "tooltip": "spell_vexw_tooltip",
+      "cases": [
+        {
+          "id": "pulse",
+          "name": "Onda de choque",
+          "parts": [
+            {
+              "calculation": "WDamageCalc"
+            }
+          ]
+        }
+      ],
+      "not_modelled": [
+        "Escudo (ShieldCalc)"
+      ]
+    },
+    "E": {
+      "name": "Oscuridad amenazante",
+      "tooltip": "spell_vexe_tooltip",
+      "cases": [
+        {
+          "id": "zone",
+          "name": "Explosión en área",
+          "parts": [
+            {
+              "calculation": "EDamageCalc"
+            }
+          ]
+        }
+      ],
+      "not_modelled": [
+        "Ralentización y aplicación de Pesimismo"
+      ]
+    },
+    "R": {
+      "name": "Estallido sombrío",
+      "tooltip": "spell_vexr_tooltip",
+      "cases": [
+        {
+          "id": "bolt",
+          "name": "Proyectil inicial (R1)",
+          "parts": [
+            {
+              "calculation": "RDamageCalc"
+            }
+          ]
+        },
+        {
+          "id": "recast",
+          "name": "Reactivación: deslizamiento (R2)",
+          "recast": true,
+          "parts": [
+            {
+              "calculation": "RecastDamageCalc"
+            }
+          ]
+        }
+      ],
+      "recast_window_seconds": 4,
+      "not_modelled": [
+        "Reinicio temporal del enfriamiento al derribar al campeón marcado"
+      ]
+    }
+  }
+}

@@ -1,0 +1,414 @@
+{
+  "schema": "lol-champion-kit/1",
+  "champion": "Ekko",
+  "label": "Derivado",
+  "game_version": "16.23",
+  "content_version": "16.23.8406595+branch.releases-16-23.content.release",
+  "verified_against": {
+    "content_version": "16.23.8406595+branch.releases-16-23.content.release",
+    "bin_sha256": "681c215a58d98aa10c4854ce5c5fc7aeb707bec531399de32efd13a99cccab69",
+    "evidence": "odd/tasks/champion-kits-wave-2.md",
+    "result": "Bin del cliente 16.23 convertido con python -m binmodel.batch_kits y compilado con esta especificación curada (CH-01 oleada 2)"
+  },
+  "source": "Árboles de cálculo del bin del cliente (python -m binmodel) y marcado de los tooltips del cliente; estructura de casos curada en research/kits/",
+  "abilities": {
+    "P": {
+      "name": "Resonancia Z",
+      "max_rank": 1,
+      "cases": [
+        {
+          "id": "proc",
+          "name": "Tercer impacto",
+          "parts": [
+            {
+              "damage_type": "magic",
+              "formula": {
+                "op": "add",
+                "operands": [
+                  {
+                    "op": "by_level",
+                    "values": [
+                      30,
+                      40,
+                      50,
+                      60,
+                      70,
+                      80,
+                      90,
+                      95,
+                      100,
+                      105,
+                      110,
+                      115,
+                      120,
+                      125,
+                      130,
+                      135,
+                      140,
+                      145
+                    ]
+                  },
+                  {
+                    "op": "mul",
+                    "operands": [
+                      {
+                        "op": "constant",
+                        "value": 0.8
+                      },
+                      {
+                        "op": "stat",
+                        "stat": "ability_power",
+                        "scope": "total"
+                      }
+                    ]
+                  }
+                ]
+              },
+              "label": "Derivado",
+              "source": "Characters/Ekko/Spells/EkkoPassiveAbility/EkkoPassive.mSpellCalculations.ThreeHitDamage (16.23.8406595+branch.releases-16-23.content.release)",
+              "damage_type_source": "spell_ekkopassive_tooltip <magicDamage>"
+            }
+          ]
+        }
+      ],
+      "passive_stats": [],
+      "not_modelled": [
+        "Velocidad de movimiento contra campeones (BonusMS) y enfriamiento por objetivo"
+      ]
+    },
+    "Q": {
+      "name": "Engranaje temporal",
+      "max_rank": 5,
+      "cases": [
+        {
+          "id": "out",
+          "name": "Ida",
+          "parts": [
+            {
+              "damage_type": "magic",
+              "formula": {
+                "op": "add",
+                "operands": [
+                  {
+                    "op": "by_rank",
+                    "values": [
+                      80,
+                      95,
+                      110,
+                      125,
+                      140
+                    ]
+                  },
+                  {
+                    "op": "mul",
+                    "operands": [
+                      {
+                        "op": "constant",
+                        "value": 0.3
+                      },
+                      {
+                        "op": "stat",
+                        "stat": "ability_power",
+                        "scope": "total"
+                      }
+                    ]
+                  }
+                ]
+              },
+              "label": "Derivado",
+              "source": "Characters/Ekko/Spells/EkkoQAbility/EkkoQ.mSpellCalculations.InitialDamage (16.23.8406595+branch.releases-16-23.content.release)",
+              "damage_type_source": "spell_ekkoq_tooltip <magicDamage>"
+            }
+          ]
+        },
+        {
+          "id": "back",
+          "name": "Vuelta",
+          "parts": [
+            {
+              "damage_type": "magic",
+              "formula": {
+                "op": "add",
+                "operands": [
+                  {
+                    "op": "by_rank",
+                    "values": [
+                      40,
+                      65,
+                      90,
+                      115,
+                      140
+                    ]
+                  },
+                  {
+                    "op": "mul",
+                    "operands": [
+                      {
+                        "op": "constant",
+                        "value": 0.7
+                      },
+                      {
+                        "op": "stat",
+                        "stat": "ability_power",
+                        "scope": "total"
+                      }
+                    ]
+                  }
+                ]
+              },
+              "label": "Derivado",
+              "source": "Characters/Ekko/Spells/EkkoQAbility/EkkoQ.mSpellCalculations.RecallDamage (16.23.8406595+branch.releases-16-23.content.release)",
+              "damage_type_source": "spell_ekkoq_tooltip <magicDamage>"
+            }
+          ]
+        },
+        {
+          "id": "both",
+          "name": "Ida y vuelta",
+          "parts": [
+            {
+              "damage_type": "magic",
+              "formula": {
+                "op": "add",
+                "operands": [
+                  {
+                    "op": "by_rank",
+                    "values": [
+                      80,
+                      95,
+                      110,
+                      125,
+                      140
+                    ]
+                  },
+                  {
+                    "op": "mul",
+                    "operands": [
+                      {
+                        "op": "constant",
+                        "value": 0.3
+                      },
+                      {
+                        "op": "stat",
+                        "stat": "ability_power",
+                        "scope": "total"
+                      }
+                    ]
+                  }
+                ]
+              },
+              "label": "Derivado",
+              "source": "Characters/Ekko/Spells/EkkoQAbility/EkkoQ.mSpellCalculations.InitialDamage (16.23.8406595+branch.releases-16-23.content.release)",
+              "damage_type_source": "spell_ekkoq_tooltip <magicDamage>"
+            },
+            {
+              "damage_type": "magic",
+              "formula": {
+                "op": "add",
+                "operands": [
+                  {
+                    "op": "by_rank",
+                    "values": [
+                      40,
+                      65,
+                      90,
+                      115,
+                      140
+                    ]
+                  },
+                  {
+                    "op": "mul",
+                    "operands": [
+                      {
+                        "op": "constant",
+                        "value": 0.7
+                      },
+                      {
+                        "op": "stat",
+                        "stat": "ability_power",
+                        "scope": "total"
+                      }
+                    ]
+                  }
+                ]
+              },
+              "label": "Derivado",
+              "source": "Characters/Ekko/Spells/EkkoQAbility/EkkoQ.mSpellCalculations.RecallDamage (16.23.8406595+branch.releases-16-23.content.release)",
+              "damage_type_source": "spell_ekkoq_tooltip <magicDamage>"
+            }
+          ]
+        }
+      ],
+      "passive_stats": [],
+      "not_modelled": [
+        "Ralentización de la zona expandida"
+      ]
+    },
+    "W": {
+      "name": "Convergencia paralela",
+      "max_rank": 5,
+      "cases": [
+        {
+          "id": "passive_execute",
+          "name": "Pasiva (< 30 % vida, % vida que falta)",
+          "parts": [
+            {
+              "damage_type": "magic",
+              "formula": {
+                "op": "mul",
+                "operands": [
+                  {
+                    "op": "add",
+                    "operands": [
+                      {
+                        "op": "constant",
+                        "value": 3
+                      },
+                      {
+                        "op": "mul",
+                        "operands": [
+                          {
+                            "op": "constant",
+                            "value": 0.03
+                          },
+                          {
+                            "op": "stat",
+                            "stat": "ability_power",
+                            "scope": "total"
+                          }
+                        ]
+                      }
+                    ]
+                  },
+                  {
+                    "op": "constant",
+                    "value": 0.01
+                  },
+                  {
+                    "op": "stat",
+                    "stat": "health",
+                    "scope": "max",
+                    "subject": "target"
+                  },
+                  {
+                    "op": "stat",
+                    "stat": "health",
+                    "scope": "missing_fraction",
+                    "subject": "target"
+                  }
+                ]
+              },
+              "label": "Derivado",
+              "source": "Characters/Ekko/Spells/EkkoWAbility/EkkoW · (MissingHealthPercent %) × vida que falta del objetivo (16.23.8406595+branch.releases-16-23.content.release)",
+              "damage_type_source": "spell_ekkow_tooltip <magicDamage>"
+            }
+          ]
+        }
+      ],
+      "passive_stats": [],
+      "not_modelled": [
+        "Umbral automático del 30 % de vida, escudo (TotalShield) y aturdimiento"
+      ]
+    },
+    "E": {
+      "name": "Salto de fase",
+      "max_rank": 5,
+      "cases": [
+        {
+          "id": "blink_hit",
+          "name": "Daño mágico adicional",
+          "parts": [
+            {
+              "damage_type": "magic",
+              "formula": {
+                "op": "add",
+                "operands": [
+                  {
+                    "op": "by_rank",
+                    "values": [
+                      50,
+                      75,
+                      100,
+                      125,
+                      150
+                    ]
+                  },
+                  {
+                    "op": "mul",
+                    "operands": [
+                      {
+                        "op": "constant",
+                        "value": 0.4
+                      },
+                      {
+                        "op": "stat",
+                        "stat": "ability_power",
+                        "scope": "total"
+                      }
+                    ]
+                  }
+                ]
+              },
+              "label": "Derivado",
+              "source": "Characters/Ekko/Spells/EkkoEAbility/EkkoE.mSpellCalculations.TotalDamage (16.23.8406595+branch.releases-16-23.content.release)",
+              "damage_type_source": "spell_ekkoe_tooltip <magicDamage>"
+            }
+          ]
+        }
+      ],
+      "passive_stats": [],
+      "not_modelled": [
+        "Desplazamiento, teletransporte y daño del ataque básico aparte"
+      ]
+    },
+    "R": {
+      "name": "Fisura temporal",
+      "max_rank": 3,
+      "cases": [
+        {
+          "id": "burst",
+          "name": "Explosión temporal",
+          "parts": [
+            {
+              "damage_type": "magic",
+              "formula": {
+                "op": "add",
+                "operands": [
+                  {
+                    "op": "by_rank",
+                    "values": [
+                      200,
+                      350,
+                      500
+                    ]
+                  },
+                  {
+                    "op": "mul",
+                    "operands": [
+                      {
+                        "op": "constant",
+                        "value": 1.75
+                      },
+                      {
+                        "op": "stat",
+                        "stat": "ability_power",
+                        "scope": "total"
+                      }
+                    ]
+                  }
+                ]
+              },
+              "label": "Derivado",
+              "source": "Characters/Ekko/Spells/EkkoRAbility/EkkoR.mSpellCalculations.TotalDamage (16.23.8406595+branch.releases-16-23.content.release)",
+              "damage_type_source": "spell_ekkor_tooltip <magicDamage>"
+            }
+          ]
+        }
+      ],
+      "passive_stats": [],
+      "not_modelled": [
+        "Estasis, regreso 4 s atrás y curación (TotalBaseHeal)"
+      ]
+    }
+  }
+}

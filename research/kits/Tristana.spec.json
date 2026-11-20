@@ -1,0 +1,98 @@
+{
+  "champion": "Tristana",
+  "game_version": "16.23",
+  "verified_against": {
+    "content_version": "16.23.8406595+branch.releases-16-23.content.release",
+    "bin_sha256": "8e5e883c4190458c9c0e4f04ece118c08d408260947309dbf96a7c1e1e1037a3",
+    "evidence": "odd/tasks/champion-kits-wave-2.md",
+    "result": "Bin del cliente 16.23 convertido con python -m binmodel.batch_kits y compilado con esta especificación curada (CH-01 oleada 2)"
+  },
+  "abilities": {
+    "P": {
+      "name": "Tiro certero",
+      "max_rank": 1,
+      "not_modelled": [
+        "Alcance adicional por nivel (BonusPassiveRange)"
+      ]
+    },
+    "Q": {
+      "name": "Tiro rápido",
+      "tooltip": "spell_tristanaq_tooltip",
+      "not_modelled": [
+        "Velocidad de ataque activa durante 7 s (AttackSpeedMod)"
+      ]
+    },
+    "W": {
+      "name": "Salto misil",
+      "tooltip": "spell_tristanaw_tooltip",
+      "cases": [
+        {
+          "id": "land",
+          "name": "Aterrizaje",
+          "parts": [
+            {
+              "calculation": "LandingDamage"
+            }
+          ]
+        }
+      ],
+      "not_modelled": [
+        "Ralentización y reinicio de enfriamiento al derribar o detonar E con 4 cargas"
+      ]
+    },
+    "E": {
+      "name": "Carga explosiva",
+      "tooltip": "spell_tristanae_tooltip",
+      "cases": [
+        {
+          "id": "passive_blast",
+          "name": "Pasiva al matar (daño mágico)",
+          "parts": [
+            {
+              "calculation": "PassiveDamage"
+            }
+          ]
+        },
+        {
+          "id": "active_min",
+          "name": "Activa sin cargas (0 ataques)",
+          "parts": [
+            {
+              "calculation": "ActiveDamage"
+            }
+          ]
+        },
+        {
+          "id": "active_max",
+          "name": "Activa al máximo (4 cargas)",
+          "parts": [
+            {
+              "calculation": "ActiveMaxDamage"
+            }
+          ]
+        }
+      ],
+      "not_modelled": [
+        "Escalado adicional con probabilidad de crítico (CritChanceModifier)"
+      ]
+    },
+    "R": {
+      "name": "Tiro destructor",
+      "tooltip": "spell_tristanar_tooltip",
+      "cases": [
+        {
+          "id": "shot",
+          "name": "Bola de cañón",
+          "parts": [
+            {
+              "calculation": "DamageCalc"
+            }
+          ]
+        }
+      ],
+      "not_modelled": [
+        "Empuje y aturdimiento"
+      ]
+    }
+  }
+}
