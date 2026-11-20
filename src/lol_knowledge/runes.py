@@ -852,6 +852,22 @@ def minor_rune_effects(
             notes.append(f"rune {rune_id} {rune.name}: {NON_COMBAT_MINOR_RUNES[rune.key]}")
             continue
 
+        if rune.key == "Revitalize":
+            flats.append(
+                (
+                    "heal_and_shield_power",
+                    Contribution(_value(rune, "HealShieldPower"), "bonus", source, base),
+                )
+            )
+            if rune.key in COMBAT_RUNE_KEYS:
+                combat_runes.append(rune_id)
+            else:
+                notes.append(
+                    f"rune {rune_id} {rune.name}: +10% healing/shielding below 40% HP "
+                    "applies in rotation"
+                )
+            continue
+
         if rune.key in COMBAT_RUNE_KEYS:
             combat_runes.append(rune_id)
             continue

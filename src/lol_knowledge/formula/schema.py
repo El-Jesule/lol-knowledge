@@ -24,6 +24,7 @@ STAT_SCOPES_BY_STAT: dict[str, frozenset[str]] = {
     "crit_damage_bonus": frozenset({"total"}),
     "attack_speed": frozenset({"total"}),
     "life_steal": frozenset({"total"}),
+    "heal_and_shield_power": frozenset({"total"}),
     "lethality": frozenset({"total"}),
     "armor_penetration_percent": frozenset({"total"}),
     "magic_penetration_percent": frozenset({"total"}),

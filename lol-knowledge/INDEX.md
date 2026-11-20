@@ -27,6 +27,7 @@
 | Calcular un impacto crítico o la probabilidad de crítico | [Impacto crítico](mechanics/critical-strike.md) |
 | Calcular la velocidad de ataque (base, ratio, crecimiento y tope) | [Velocidad de ataque](mechanics/attack-speed.md) |
 | Calcular la curación por robo de vida y omnivampirismo | [Robo de vida y omnivampirismo](mechanics/life-steal-and-omnivamp.md) |
+| Calcular escudos, curación de efectos, Heridas graves y poder de curaciones y escudos | [Supervivencia](mechanics/survival.md) |
 | Calcular la tenacidad y cómo se combinan sus fuentes | [Tenacidad](mechanics/tenacity.md) |
 | Calcular la regeneración de vida y maná | [Regeneración](mechanics/regeneration.md) |
 | Calcular la velocidad de movimiento y sus límites suaves | [Velocidad de movimiento](mechanics/move-speed.md) |
