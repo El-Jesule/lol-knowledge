@@ -56,6 +56,8 @@ CRIT_CHANCE_KIT_MULTIPLIER = 2
 EXCESS_CRIT_AD = 50  # bonus AD per 1.0 (100 %) of excess crit chance: 0.5 per 1 %
 MANA_STATS = frozenset({"mana", "mana_regen"})
 MANA_RESOURCE = {"es_ES": "Maná", "en_US": "Mana"}
+ENERGY_RESOURCE = {"es_ES": "Energía", "en_US": "Energy"}
+NO_RESOURCE = {"es_ES": frozenset({"", "Nada"}), "en_US": frozenset({"", "None"})}
 
 
 @dataclass(frozen=True)

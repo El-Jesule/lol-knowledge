@@ -26,6 +26,17 @@ SCHEMA = "lol-champion-kit/1"
 KIT_FILENAME = "kit.json"
 SLOTS = ("P", "Q", "W", "E", "R")
 CASE_ID = re.compile(r"[a-z][a-z0-9_]*")
+COST_RESOURCES = frozenset({"mana", "energy", "health", "none"})
+
+
+@dataclass(frozen=True)
+class CostSpec:
+    """Explicit ability or case resource cost declared by a champion kit."""
+
+    resource: str  # "mana", "energy", "health" or "none"
+    formula: Mapping[str, Any]
+    label: Label
+    source: str
 
 
 @dataclass(frozen=True)
@@ -44,6 +55,7 @@ class CaseSpec:
     parts: tuple[DamagePartSpec, ...]
     # A recast of an ability already cast: it starts no cooldown (timeline.md).
     recast: bool = False
+    cost: CostSpec | None = None
 
 
 @dataclass(frozen=True)
@@ -68,6 +80,7 @@ class AbilitySpec:
     # Recasts allowed per cast (Ahri's R: 2), and the least time between two casts.
     max_recasts: int = 1
     recast_interval: Fraction | None = None
+    cost: CostSpec | None = None
 
     def case(self, case_id: str) -> CaseSpec:
         for case in self.cases:
@@ -136,6 +149,24 @@ def _list(record: Mapping[str, Any], key: str, context: str) -> Sequence[Any]:
     return value
 
 
+def _cost(record: Mapping[str, Any], max_rank: int, context: str) -> CostSpec | None:
+    raw = record.get("cost")
+    if raw is None:
+        return None
+    cost_context = f"{context}.cost"
+    if not isinstance(raw, Mapping):
+        raise KitError(f"{cost_context}: must be an object")
+    resource = _text(raw, "resource", cost_context)
+    if resource not in COST_RESOURCES:
+        raise KitError(f"{cost_context}: resource must be one of {sorted(COST_RESOURCES)}")
+    return CostSpec(
+        resource,
+        _formula(raw, max_rank, cost_context),
+        _label(raw, cost_context),
+        _text(raw, "source", cost_context),
+    )
+
+
 def _ability(slot: str, record: Any) -> AbilitySpec:
     context = f"kit.{slot}"
     if not isinstance(record, Mapping):
@@ -177,7 +208,10 @@ def _ability(slot: str, record: Any) -> AbilitySpec:
         recast = case.get("recast", False)
         if not isinstance(recast, bool):
             raise KitError(f"{case_context}: recast must be true or false")
-        cases.append(CaseSpec(case_id, _text(case, "name", case_context), tuple(parts), recast))
+        case_cost = _cost(case, max_rank, case_context)
+        cases.append(
+            CaseSpec(case_id, _text(case, "name", case_context), tuple(parts), recast, case_cost)
+        )
     passive_stats = []
     for index, entry in enumerate(_list(record, "passive_stats", context)):
         entry_context = f"{context}.passive_stats[{index}]"
@@ -227,6 +261,7 @@ def _ability(slot: str, record: Any) -> AbilitySpec:
         None if window is None else Fraction(str(window)),
         max_recasts,
         None if interval is None else Fraction(str(interval)),
+        _cost(record, max_rank, context),
     )
 
 

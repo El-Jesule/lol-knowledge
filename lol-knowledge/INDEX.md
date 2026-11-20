@@ -1,7 +1,7 @@
 # Índice de la base de conocimiento
 
 - **Parche:** 16.23.1
-- **Última actualización:** 2026-11-19
+- **Última actualización:** 2026-11-20
 
 ## Por intención
 
@@ -31,6 +31,7 @@
 | Simular cuánto aguanta un campeón (daño recibido, tiempo hasta morir, Sterak, Revestimiento de huesos) | `python -m lol_knowledge survive` y [Supervivencia](mechanics/survival.md) |
 | Calcular la tenacidad y cómo se combinan sus fuentes | [Tenacidad](mechanics/tenacity.md) |
 | Calcular la regeneración de vida y maná | [Regeneración](mechanics/regeneration.md) |
+| Calcular costes de habilidades, reservas (maná, energía, vida), Segador de esencia y Claridad mental | [Recursos y costes](mechanics/resources.md) |
 | Calcular la velocidad de movimiento y sus límites suaves | [Velocidad de movimiento](mechanics/move-speed.md) |
 | Aplicar aumentos y reducciones de daño | [Modificadores de daño](mechanics/damage-modifiers.md) |
 | Encadenar ataques, daño al impactar y vida del objetivo | [Ataques básicos y daño al impactar](mechanics/basic-attacks-and-on-hit.md) |

@@ -39,6 +39,7 @@ from .schema import (
     MODEL_STATUS_RANK,
     MODEL_STATUSES,
     OBJECT_SCHEMA_VERSION,
+    RESTORE_RESOURCES,
     SCENARIOS,
     STAT_SCOPES_BY_STAT,
     TARGET_KINDS,
@@ -106,6 +107,7 @@ _COMPONENT_KEYS = {
     "stacks",
     "note",
     "applies_life_steal",
+    "resource",
 }
 _LIFE_STEAL_KEYS = {"value", "source"}
 _LIMIT_KEYS = {"kind", "value", "unit", "condition"}
@@ -784,6 +786,14 @@ class _CatalogChecker:
                     f"{pointer}.mode",
                     f"{kind} mode must be one of {sorted(HEALING_MODES)}",
                 )
+        elif kind == "resource_restore":
+            if component.get("resource") not in RESTORE_RESOURCES:
+                self.fail(
+                    f"{pointer}.resource",
+                    f"resource_restore resource must be one of {sorted(RESTORE_RESOURCES)}",
+                )
+            if "formula" not in component:
+                self.fail(f"{pointer}.formula", "resource_restore components need a formula")
         elif kind == "stat_modifier":
             stat = component.get("stat")
             scope = component.get("scope")

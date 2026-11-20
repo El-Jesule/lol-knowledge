@@ -423,6 +423,18 @@ def _add_rotation_parser(subparsers: argparse._SubParsersAction) -> None:
         choices=("melee", "ranged"),
         help="The attacker's melee/ranged classification, for effects that branch on it.",
     )
+    rotation.add_argument(
+        "--attacker-resource",
+        help="Attacker starting mana or energy (defaults to maximum resource).",
+    )
+    rotation.add_argument(
+        "--allow-insufficient-resource",
+        action="store_true",
+        help=(
+            "Calculate even when an ability costs more mana or energy than available "
+            "(clamps to 0 and marks the step Pendiente de verificación)."
+        ),
+    )
     rotation.add_argument("--item", action="append", default=[], metavar="ID")
     rotation.add_argument(
         "--timeline",
@@ -734,6 +746,7 @@ def _run_rotation(args: argparse.Namespace) -> int:
         rune_ids = _rune_ids(args.rune, "--rune")
         rune_data = load_runes(root) if rune_ids else None
         ap_weight = derived.value(champion.id, "adaptiveforceapweight") if derived else None
+        start_resource = _number(args.attacker_resource, "--attacker-resource")
         outcome = evaluate_rotation(
             kit,
             sheet,
@@ -747,6 +760,8 @@ def _run_rotation(args: argparse.Namespace) -> int:
             runes=rune_ids,
             rune_data=rune_data,
             ap_weight=ap_weight,
+            start_resource=start_resource,
+            allow_insufficient_resource=args.allow_insufficient_resource,
         )
     except (StatsError, KitError, DamageInputError, RotationError) as exc:
         print(f"error: {exc}", file=sys.stderr)

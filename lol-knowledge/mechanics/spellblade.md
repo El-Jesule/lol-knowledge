@@ -1,8 +1,8 @@
 # Hoja encantada (Spellblade)
 
 - **Ámbito:** el golpe potenciado que siete objetos dan al primer ataque básico tras usar una habilidad. Lo usa `python -m lol_knowledge rotation`.
-- **Parche de referencia:** cliente 16.22 y Data Dragon 16.22.1.
-- **Fecha de consulta:** 2026-11-16
+- **Parche de referencia:** cliente 16.23 y Data Dragon 16.23.1.
+- **Fecha de consulta:** 2026-11-20
 
 ## Fuentes
 
@@ -19,9 +19,9 @@
 | Brillo (3057) | 100 % del DA base, físico | — |
 | Fuerza de trinidad (3078) | 200 % del DA base, físico | ¡Adelante!: velocidad de movimiento al atacar (no se aplica) |
 | Perdición del liche (3100) | 75 % del DA base + 45 % del AP, mágico | +50 % de velocidad de ataque para ese ataque (no cambia una rotación sin tiempo) |
-| Segador de esencia (3508) | 125 % del DA base + 50 × probabilidad de crítico, físico | Devuelve maná: 50 % del daño (no se aplica: no hay maná) |
+| Segador de esencia (3508) | 125 % del DA base + 50 × probabilidad de crítico, físico | Devuelve maná: 50 % del daño previo a mitigación (`62,5 % DA base + 25 × crítico`; **sí se aplica**, cliente 16.23 y `Module:ItemData/data` rev `4095269`, [`resources.md`](resources.md)) |
 | Guantelete de hielo (6662) | 150 % del DA base, físico | Campo de escarcha que ralentiza 2 s (no se aplica) |
-| Amanecer y anochecer (2510) | 75 % del DA base + 10 % del AP, mágico | Cura 10 % del AP + 3 % de la vida adicional (no se aplica); vuelve a aplicar los efectos al impactar (S3, sí se aplica) |
+| Amanecer y anochecer (2510) | 75 % del DA base + 10 % del AP, mágico | Cura 10 % del AP + 3 % de la vida adicional (**sí se aplica**, [`survival.md`](survival.md)); vuelve a aplicar los efectos al impactar (S3, sí se aplica) |
 | Tonada sanguina (3877) | 100 % del DA base, físico | El campeón recibe un 8 % más de daño (5 % a distancia) durante 4 s (solo con `--timeline`) |
 
 En Segador de esencia, `mStat 8` se toma como probabilidad de crítico, como dice el nombre del valor (`CritChanceMultiplier`); con 25 % de crítico suma 12,5.
@@ -38,5 +38,5 @@ En Segador de esencia, `mStat 8` se toma como probabilidad de crítico, como dic
 
 ## Fuera de alcance
 
-- La curación, el maná, las ralentizaciones y la velocidad de movimiento de estos objetos.
+- Las ralentizaciones (Guantelete de hielo) y la velocidad de movimiento (Fuerza de trinidad) de estos objetos.
 - Los efectos al impactar de las habilidades del campeón (no hay ninguno modelado).
