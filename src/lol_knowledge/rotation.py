@@ -29,6 +29,8 @@ from .damage import DamageResult, DamageType, format_number, mitigate
 from .errors import KitError, RotationError
 from .formula import FormulaError, evaluate_formula
 from .kit import Kit, ability_damage, sheet_stats
+from .rune_combat import RuneCombat
+from .runes import RuneData
 from .scenario import PENETRATION, Target, penetration_modifiers
 from .stats import (
     EVIDENCE_LABEL,
@@ -571,6 +573,9 @@ class _Rotation:
         holder_range: str | None,
         inputs: Mapping[str, Any],
         timeline: bool = False,
+        runes: Sequence[int] = (),
+        rune_data: RuneData | None = None,
+        has_ultimate_step: bool = False,
     ) -> None:
         self.kit, self.sheet, self.ranks, self.target = kit, sheet, ranks, target
         self.base_sheet = sheet
@@ -580,8 +585,20 @@ class _Rotation:
         self.life_steal, self.omnivamp = sheet["life_steal"], sheet["omnivamp"]
         attacker, notes, weakened = _effects(sheet.items, "attacker", target.kind)
         defender, target_notes, target_weakened = _effects(target.items, "target")
-        self.notes = notes + target_notes + list(sheet.pending_effects)
-        self.weakened = weakened or target_weakened or bool(sheet.pending_effects)
+        self.rune_combat = RuneCombat(
+            runes,
+            rune_data,
+            sheet,
+            target,
+            has_ultimate_step=has_ultimate_step,
+            holder_range=holder_range,
+            inputs=inputs,
+            timeline=timeline,
+        )
+        self.notes = notes + target_notes + list(sheet.pending_effects) + self.rune_combat.notes
+        self.weakened = (
+            weakened or target_weakened or bool(sheet.pending_effects) or self.rune_combat.weakened
+        )
         self.on_hit: list[_Effect] = []
         self.dealt: list[_Effect] = []
         self.taken: list[_Effect] = []
@@ -829,11 +846,17 @@ class _Rotation:
         crit: bool,
         target_stats: Mapping[str, Fraction],
         damage_type: DamageType,
+        slot: str | None = None,
     ) -> tuple[list[tuple[str, Fraction]], list[tuple[str, Fraction]], list[Label], list[str]]:
         dealt: list[tuple[str, Fraction]] = []
         taken: list[tuple[str, Fraction]] = []
         labels: list[Label] = []
         notes: list[str] = []
+        for rune_mod in self.rune_combat.dealt_modifiers(part_kind, slot, target_stats):
+            dealt.append((rune_mod.source, rune_mod.percent))
+            labels.append(rune_mod.label)
+            if rune_mod.note:
+                notes.append(f"{rune_mod.source}: {rune_mod.note}")
         for effect in self.dealt:
             types = effect.component.get("damage_types")
             if types is not None and damage_type.value not in types:
@@ -892,6 +915,7 @@ class _Rotation:
         target_stats: Mapping[str, Fraction],
         notes: Sequence[str] = (),
         life_steal_tag: Mapping[str, Any] | None = None,
+        slot: str | None = None,
     ) -> Part:
         modifiers = penetration_modifiers(self.sheet, damage_type)
         shred = self.shred.get(damage_type, [])
@@ -914,7 +938,7 @@ class _Rotation:
             percent, flat = PENETRATION[damage_type]
             labels = [*labels, self.sheet[percent].label, self.sheet[flat].label]
         dealt, taken, modifier_labels, modifier_notes = self._modifiers(
-            kind, crit, target_stats, damage_type
+            kind, crit, target_stats, damage_type, slot
         )
         part = Part(
             kind,
@@ -956,8 +980,8 @@ class _Rotation:
             elif part.kind == "on_hit":
                 labels.append(Label.PENDING)
                 notes.append("the catalog does not declare whether it applies life steal")
-            elif part.kind == "burn":
-                pass  # life steal comes from attacks; an item burn is not one (burns.md)
+            elif part.kind in ("burn", "rune"):
+                pass  # life steal comes from attacks; burns and rune procs are not attacks
             else:
                 labels.append(Label.PENDING)
                 notes.append("the kit does not declare whether it applies life steal")
@@ -1184,7 +1208,7 @@ class _Rotation:
         uses the timed effects in force during it.
         """
         start = self.accrued
-        if until <= start or not self.burning:
+        if until <= start or (not self.burning and not self.rune_combat.has_due_procs(until)):
             self.accrued = max(start, until)
             return [], health
         ends = {
@@ -1199,6 +1223,7 @@ class _Rotation:
                 ),
                 # Seconds in combat change the in-combat increases on whole seconds.
                 *(Fraction(second) for second in range(math.ceil(until)) if self.combat),
+                *self.rune_combat.due_times(until),
             ]
             if start < end < until
         }
@@ -1232,6 +1257,22 @@ class _Rotation:
                 )
                 parts.append(part)
                 health = max(Fraction(0), health - part.damage)
+            due_procs = self.rune_combat.pop_due(finish)
+            if due_procs:
+                self._set_moment(finish)
+                for proc in due_procs:
+                    part = self._part(
+                        "rune",
+                        proc.source,
+                        proc.damage_type,
+                        proc.raw,
+                        [proc.label],
+                        False,
+                        self._target_stats(health),
+                        proc.notes,
+                    )
+                    parts.append(part)
+                    health = max(Fraction(0), health - part.damage)
         self.accrued = until
         self.burning = {key: burn for key, burn in self.burning.items() if burn.end > until}
         return parts, health
@@ -1472,6 +1513,7 @@ class _Rotation:
                 False,
                 target_stats,
                 notes,
+                slot=ability.slot,
             )
             for part in raw_parts
         ]
@@ -1593,6 +1635,20 @@ class _Rotation:
                     )
                     if self.timeline is not None and self._open("energized", clock, target_stats):
                         extra.append(Label.PENDING)
+            step_dealt = bool(parts) if step.slot is None else bool(ability_parts)
+            for proc in self.rune_combat.on_step(step.slot, step_dealt, clock, self.sheet):
+                parts.append(
+                    self._part(
+                        "rune",
+                        proc.source,
+                        proc.damage_type,
+                        proc.raw,
+                        [proc.label],
+                        False,
+                        target_stats,
+                        proc.notes,
+                    )
+                )
             parts += self._execute(parts, before, target_stats)
             outcome = StepOutcome(
                 index,
@@ -1609,13 +1665,22 @@ class _Rotation:
                 # The next attack: 1 / the attack speed just after this one (timeline.md).
                 self._set_moment(clock)
                 next_attack = clock + 1 / self.sheet["attack_speed"].total()
-        if self.burning:
-            end = max(burn.end for burn in self.burning.values())
+        pending_end = self.rune_combat.last_pending_time()
+        if self.burning or pending_end is not None:
+            ends = [*(burn.end for burn in self.burning.values())]
+            if pending_end is not None:
+                ends.append(pending_end)
+            end = max(ends)
+            tail_name = (
+                f"burns until {format_number(end)} s"
+                if self.burning
+                else f"delayed effects until {format_number(end)} s"
+            )
             outcomes.append(
                 self._burn_outcome(
                     len(steps) + 1,
                     Step("burns"),
-                    f"burns until {format_number(end)} s",
+                    tail_name,
                     end,
                     health,
                 )
@@ -1687,6 +1752,8 @@ def evaluate_rotation(
     holder_range: str | None = None,
     inputs: Mapping[str, Any] | None = None,
     timeline: bool = False,
+    runes: Sequence[int] = (),
+    rune_data: RuneData | None = None,
 ) -> RotationOutcome:
     """Damage of every step against ``target``, carrying its current health forward.
 
@@ -1698,5 +1765,18 @@ def evaluate_rotation(
     """
     if not steps:
         raise RotationError("the rotation has no steps")
-    rotation = _Rotation(kit, sheet, ranks, target, crit_base, holder_range, inputs or {}, timeline)
+    has_ultimate = any(step.slot == "R" for step in steps)
+    rotation = _Rotation(
+        kit,
+        sheet,
+        ranks,
+        target,
+        crit_base,
+        holder_range,
+        inputs or {},
+        timeline,
+        runes=runes,
+        rune_data=rune_data,
+        has_ultimate_step=has_ultimate,
+    )
     return rotation.run(steps)

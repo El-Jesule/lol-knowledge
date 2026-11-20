@@ -638,6 +638,8 @@ def test_rotation_timeline_uses_basic_ability_haste_from_legend_haste(capsys):
         "40",
         "--target-max-health",
         "2000",
+        "--target-kind",
+        "champion",
         "--steps",
         "Q.out, wait:6, Q.out",
         "--timeline",
