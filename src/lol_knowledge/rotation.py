@@ -66,7 +66,10 @@ PATCH_CRIT_MULTIPLIER = Fraction(2)
 # -10% => -5%" for Yasuo and Yone in the 26.17 patch notes (critical-strike.md, C10).
 CRIT_DAMAGE_REDUCTIONS = {"Yasuo": Fraction(5, 100), "Yone": Fraction(5, 100)}
 # Limit conditions of the catalog, as the target kinds they apply to.
-LIMIT_CONDITIONS = {"target is a minion or monster": frozenset({"minion", "monster"})}
+LIMIT_CONDITIONS = {
+    "target is a minion or monster": frozenset({"minion", "monster"}),
+    "target is a monster": frozenset({"monster"}),
+}
 # Effect components that change the damage of a rotation when not applied.
 DAMAGE_KINDS = frozenset(
     {"damage", "damage_modifier", "stat_modifier", "burn", "execute", "repeat_on_hit"}
@@ -888,10 +891,6 @@ class _Rotation:
             if not (self._mode(effect) and _conditions_hold(effect, self.target, part_kind, crit)):
                 continue
             source = effect.component.get("source")
-            if source == "attack" and part_kind == "on_hit":
-                notes.append(f"{effect.title}: unknown whether it reduces on-hit item damage")
-                labels.append(Label.PENDING)
-                continue
             if source == "attack" and part_kind != "attack":
                 continue
             if source not in {"all", "attack"}:
@@ -1095,6 +1094,7 @@ class _Rotation:
             burned.add(effect.title)
             duration = Fraction(str(effect.component.get("duration_seconds")))
             per_second, stat_labels = self._value(effect, target_stats)
+            per_second = self._limited(effect, per_second)
             if self.timeline is not None:
                 self.burning[effect.title] = _Burn(
                     effect, clock + duration, per_second, (effect.label, *stat_labels)

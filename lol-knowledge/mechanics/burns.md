@@ -1,23 +1,24 @@
 # Quemaduras y amplificadores por tiempo en combate
 
 - **Ámbito:** daño a lo largo del tiempo de objetos (quemaduras) y aumentos de daño que crecen con los segundos en combate. Los usa `python -m lol_knowledge rotation`.
-- **Parche de referencia:** cliente 16.22 y Data Dragon 16.22.1.
-- **Fecha de consulta:** 2026-11-16
+- **Parche de referencia:** cliente 16.23 y Data Dragon 16.23.1.
+- **Fecha de consulta:** 2026-11-20
 
 ## Fuentes
 
 | Id | Fuente | Qué cubre | Naturaleza |
 |---|---|---|---|
-| B1 | Data Dragon 16.22.1: Tormento de Liandry, Antorcha de fuego negro, Cenizas predestinadas, Malignidad, Convergencia de Zeke, Disfraz encantado | Disparador, duración y, cuando la da, la cifra | Oficial de Riot |
-| B2 | Cliente 16.22: [`../derived/item-effects.json`](../derived/item-effects.json) | Cifras que Data Dragon omite: Antorcha 20 (+2 % de AP) por segundo (40 contra monstruos), Cenizas 5 por segundo, Malignidad 60 (+5 % de AP) por segundo y −10 de resistencia mágica, tope de Liandry contra monstruos (40) | `Derivado` |
+| B1 | Data Dragon 16.23.1: Tormento de Liandry, Antorcha de fuego negro, Cenizas predestinadas, Malignidad, Convergencia de Zeke, Disfraz encantado | Disparador, duración y, cuando la da, la cifra | Oficial de Riot |
+| B2 | Cliente 16.23: [`../derived/item-effects.json`](../derived/item-effects.json) | Cifras que Data Dragon omite: Antorcha 20 (+2 % de AP) por segundo (40 contra monstruos), Cenizas 5 por segundo, Malignidad 60 (+5 % de AP) por segundo y −10 de resistencia mágica, tope de Liandry contra monstruos (`MonsterDamageCap = 40`, `TickFrequency = 0,5`) | `Derivado` |
 | B3 | Regla del motor sobre el omnivampirismo: 33 % contra súbditos y monstruos para el daño a lo largo del tiempo ([`life-steal-and-omnivamp.md`](life-steal-and-omnivamp.md)) | Curación de las quemaduras | Ya documentada |
+| B4 | Wiki oficial de League of Legends (`wiki.leagueoflegends.com/en-us/Module:ItemData/data`, rev `4095269`, consultada el 2026-11-20) | Tope de Tormento de Liandry contra monstruos: 20 por tic de 0,5 s (40 por segundo, 120 en 3 s), corroborando el `40` de B2 | Fuente comunitaria secundaria |
 
 ## Regla del motor (`Calculado`; decisiones del usuario del 2026-11-16)
 
 1. **Quemadura entera:** el daño por segundo × la duración se suma como una sola parte `burn` en el paso que la inicia, con su tipo de daño, su mitigación y los modificadores de daño (Llamasombría incluida).
 2. **Una por rotación:** reaplicar una quemadura reinicia su duración en el juego; sin tiempo, se cuenta **una sola quemadura completa por efecto y rotación** (decisión del usuario). Con `--timeline`, la quemadura se reparte en el tiempo y cada aplicación reinicia su duración ([`timeline.md`](timeline.md), regla 7).
 3. **Disparadores:** `damaging_ability` (la primera habilidad que hace daño en el paso) y `cast` (la primera habilidad lanzada, haga o no daño). La condición `ultimate_ability` exige que sea la R.
-4. **Tipos de objetivo:** cuando el efecto cambia contra súbditos o monstruos, el catálogo declara un efecto por tipo de objetivo. El tope de Liandry contra monstruos no se aplica porque no está claro si es por tic o por segundo; contra un monstruo, la rotación queda `Pendiente de verificación`.
+4. **Tipos de objetivo:** cuando el efecto cambia contra súbditos o monstruos, el catálogo declara un efecto por tipo de objetivo. El tope de Liandry contra monstruos (`MonsterDamageCap = 40` en B2, corroborado en B4 como 20 por tic de 0,5 s = 40/s = 120 en 3 s) se aplica como límite máximo por segundo (`limits`) tanto sin línea de tiempo como en `--timeline`.
 5. **Curación:** las quemaduras no aplican robo de vida; el omnivampirismo cura un 33 % contra súbditos y monstruos y un 100 % contra campeones.
 6. **Amplificadores por tiempo en combate** (Sufrimiento de Liandry, Locura del Disfraz encantado): desde la fase 32 empiezan en 0 y suben un 2 % por segundo completo en combate, hasta un 6 %; sin línea de tiempo se quedan en 0 ([`combat-stacks.md`](combat-stacks.md)).
 

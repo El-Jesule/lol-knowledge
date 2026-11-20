@@ -1,8 +1,8 @@
 # Modificadores de daño infligido y recibido
 
 - **Ámbito:** regla general para los aumentos de daño del atacante (por ejemplo, Verdugo de gigantes de Recuerdos de lord Dominik) y las reducciones de daño del objetivo (por ejemplo, Placas de las Botas blindadas o Adaptabilidad de Presagio de Randuin). La usa `python -m lol_knowledge rotation`.
-- **Parche de referencia:** cliente 16.22 (2026-11-15). La suma de los modificadores de daño infligido es así desde la V26.09, según M1.
-- **Fecha de consulta:** 2026-11-15
+- **Parche de referencia:** cliente 16.23 y Data Dragon 16.23.1. La suma de los modificadores de daño infligido es así desde la V26.09, según M1.
+- **Fecha de consulta:** 2026-11-20
 
 ## Fuentes
 
@@ -11,7 +11,8 @@
 | M1 | LoL Wiki, `Damage_modifier`, consultada el 2026-11-15 (CC BY-SA 3.0) | El modificador cambia el daño en bruto y luego se aplica; los de daño infligido se suman entre sí desde la V26.09; los de daño recibido se multiplican | Fuente comunitaria secundaria |
 | M2 | LoL Wiki, `Stacking` (revisión 3992485), consultada el 2026-11-15 | Los aumentos se multiplican con las reducciones salvo que se indique otra cosa | Fuente comunitaria secundaria |
 | M3 | LoL Wiki, artículo `Damage` (copia de `leagueoflegends.fandom.com`, texto en inglés), consultada el 2026-11-15 | Los modificadores se multiplican con la armadura y la resistencia mágica | Fuente comunitaria secundaria |
-| M4 | Descripción de Data Dragon 16.22.1 de cada efecto, en el [catálogo de objetos](../objects/catalog.json) | Valor y condición de Placas (−10 % de los ataques) y Adaptabilidad (−30 % de los críticos) | Oficial de Riot |
+| M4 | Descripción de Data Dragon 16.23.1 de cada efecto, en el [catálogo de objetos](../objects/catalog.json) | Valor y condición de Placas (−10 % de los ataques) y Adaptabilidad (−30 % de los críticos) | Oficial de Riot |
+| M5 | Wiki oficial de League of Legends (`wiki.leagueoflegends.com/en-us/Plated_Steelcaps`, rev `4022248`, consultada el 2026-11-20) | Placas **no reduce** el daño de efectos al impactar (`on-hit`); sí reduce fuentes etiquetadas como daño básico (`basic damage`) | Fuente comunitaria secundaria |
 
 Ninguna fuente de la regla general es oficial de Riot. Las tres son de la misma wiki comunitaria y coinciden.
 
@@ -35,7 +36,7 @@ daño final = daño mitigado × (1 + Σ infligido_i / 100) × Π (1 + recibido_j
 | Fuente `attack` (Placas) | La parte es el daño del propio ataque básico. No afecta a las habilidades. |
 | Fuente `all` | Cualquier parte. |
 
-**Pendiente de verificación:** si Placas reduce también el daño al impactar de los objetos (por ejemplo, Filo de la niebla). Desde el parche 25.4 reduce también las instancias de daño básico que llevan daño adicional en la misma instancia (resumen de notas en `riftpatchnotes.com`), pero no consta si el daño al impactar de un objeto es una instancia aparte. El motor no aplica Placas a ese daño y marca la parte `Pendiente de verificación` con una nota.
+- **Daño al impactar (`Derivado`, M5):** Placas **no** reduce el daño de los efectos al impactar (`on-hit`) de objetos como Filo de la niebla; el motor solo aplica Placas a las partes de tipo `attack` (daño básico del propio ataque).
 
 ## Etiquetas
 
