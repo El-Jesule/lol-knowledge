@@ -45,7 +45,7 @@ from .propbin import (
 from .wad import WadError, read_entry
 
 HASH_LISTS = ("hashes.binentries.txt", "hashes.binfields.txt", "hashes.bintypes.txt")
-PLACEHOLDER = re.compile(r"@([A-Za-z_][A-Za-z0-9_.]*)[^@]*@")
+PLACEHOLDER = re.compile(r"@(?:[A-Za-z0-9_.]+:)?([A-Za-z_][A-Za-z0-9_.]*)[^@]*@")
 # Game mode keys of ``DataValuesModeOverride``, spelled as the exports spell them.
 MODE_NAMES = ("CLASSIC", "ARAM", "cherry", "KIWI", "URF")
 
