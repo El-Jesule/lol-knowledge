@@ -2,7 +2,8 @@
 
 - **Fecha:** 2026-11-18
 - **Estado de partida:** fase 33 (kit de Ahri), `dev` en `b363a1b`, parche 16.22.1.
-- **Avance del 2026-11-19:** fases 34 a 37 (documentación, parche 16.23 con procedimiento repetible, legalidad de builds, runas y fragmentos); `dev` en `85fc4be`, parche 16.23.1. Siguiente según la sección 12: resto de RUN-04 (piedras angulares), después CH-02 y CH-03.
+- **Avance del 2026-11-19:** fases 34 a 37 (documentación, parche 16.23 con procedimiento repetible, legalidad de builds, runas y fragmentos); `dev` en `85fc4be`, parche 16.23.1.
+- **Avance del 2026-11-20:** decisiones `DEC-01` a `DEC-05` cerradas, validación en Windows superada (`OP-02`), CI de GitHub Actions añadido (`OP-03`, `e965d47`) y 52 ramas locales integradas eliminadas (`OP-04`). Siguiente paso (DEC-01): resto de `RUN-04` (runas menores y piedras angulares), después `CH-02` y `CH-03`.
 - **Método:** revisión de `README.md`, `lol-knowledge/` (fichas, reglas de `mechanics/`, `objects/README.md`), `odd/tasks/`, `research/`, los dos `kit.json` (campo `not_modelled`), el catálogo de objetos y los registros derivados. Cada punto cita el archivo donde consta. Si un punto procede de una tarea antigua y no se ha comprobado que siga vigente, se dice.
 - **Objetivo final** (descripción del proyecto): a partir de una petición en lenguaje natural («la build de Jax que maximice su burst con AP»), una IA prepara el escenario, el motor determinista calcula y la IA explica el resultado, para cualquier campeón, objeto y runa, con todas las cifras trazables.
 
@@ -18,9 +19,9 @@ Cada punto lleva un identificador para poder citarlo en tareas y commits. Priori
 ## 1. Operativo y repositorio
 
 - [x] **OP-01 (P0)** *Hecho: el 2026-11-19 `dev` e `integration` coinciden con `origin`.* Publicar el trabajo local: `dev` va 8 commits por delante de `origin/dev` e `integration` 125 por delante de `origin/integration`. El entorno del agente no puede hacer push (403); lo hace el usuario con `git push origin dev integration`.
-- [ ] **OP-02 (P0)** Ejecutar las cuatro validaciones de [`AGENTS.md`](../AGENTS.md) §5 en Windows con `.\.venv\Scripts\python.exe`. Desde la fase 30 solo se han ejecutado en el shell Linux del agente; en Windows constan como no ejecutadas.
-- [ ] **OP-03 (P2)** Integración continua: no hay CI ([`README.md`](../README.md), «Limitaciones conocidas»). Un flujo de GitHub Actions con las cuatro validaciones evitaría depender de ejecuciones manuales.
-- [ ] **OP-04 (P3)** Limpiar las ramas de tarea ya integradas (hay más de 40 locales). Solo con autorización: borrar ramas no está en el flujo de `AGENTS.md`.
+- [x] **OP-02 (P0)** *Hecho el 2026-11-20: las cuatro validaciones de [`AGENTS.md`](../AGENTS.md) §5 y `pytest research/tests -q` pasan en Windows con `.\.venv\Scripts\python.exe` (995 + 216 pruebas, ruff check/format y `validate` con 215 archivos).* Ejecutar las cuatro validaciones de [`AGENTS.md`](../AGENTS.md) §5 en Windows con `.\.venv\Scripts\python.exe`.
+- [x] **OP-03 (P2)** *Hecho el 2026-11-20 (`e965d47`, autorizado en DEC-04): flujo [`.github/workflows/ci.yml`](../.github/workflows/ci.yml) en Linux y Windows con Python 3.14.* Integración continua con las cuatro validaciones y la suite de `research/tests/`.
+- [x] **OP-04 (P3)** *Hecho el 2026-11-20 (autorizado en DEC-04): eliminadas las 52 ramas locales de tarea tras verificar que tenían 0 commits sin integrar en `dev` (no se tocaron ramas remotas).* Limpiar las ramas de tarea ya integradas.
 - [ ] **OP-05 (P2)** Resolver las cuatro cuestiones de [`research/evidence/usage-conditions.md`](../research/evidence/usage-conditions.md): si los recortes de `fixtures/` son redistribuibles, obligaciones de la licencia CC BY-SA 3.0 de la wiki sobre cifras, política de redistribución de CommunityDragon y aviso de no afiliación si el proyecto se publica.
 
 ## 2. Deuda de documentación (textos desactualizados)
@@ -109,7 +110,9 @@ El motor debe servir también para vida, resistencias, curación y supervivencia
 - [ ] **OBJ-09 (P3)** Persistencia entre objetivos de las acumulaciones de Hoja del rey arruinado, modificadores por modo, radio de Humildad, aceleración de objetos en las activas de Zhonya y Randuin ([`objects/README.md`](../lol-knowledge/objects/README.md) §7).
 - [ ] **OBJ-10 (P2)** Inicio de la alternancia de El final (se supone luminoso) y si las acumulaciones de Kraken se renuevan con cada golpe al campeón ([`combat-stacks.md`](../lol-knowledge/mechanics/combat-stacks.md), [`timeline.md`](../lol-knowledge/mechanics/timeline.md)).
 - [ ] **OBJ-11 (P2)** Pendiente lineal de Verdugo de gigantes: solo hay fuente secundaria ([`damage-modifiers.md`](../lol-knowledge/mechanics/damage-modifiers.md)).
-- [ ] **OBJ-12 (P3)** Consumibles, centinelas, trinkets, generación de oro, compañeros de jungla, mejoras de Ornn y variantes de otros modos: fuera de alcance declarado; decidir si entran.
+- [ ] **OBJ-12 (P2)** *Alcance decidido en DEC-03 (2026-11-20):*
+  - **Entran:** **consumibles** y **mejoras de Ornn**, con la condición de que **solo un objeto de la build** puede ser el mejorado y asegurando que sea el que más contribuya al objetivo de la build (regla de legalidad + optimizador).
+  - **Quedan fuera:** **trinkets** (abalorios/centinelas) y **variantes de otros modos** (solo Grieta del Invocador). Generación de oro y compañeros de jungla siguen fuera de alcance salvo decisión posterior.
 - [x] **OBJ-13 (P1)** *Hecho en la fase 36: grupos del cliente en `item-groups.json`, regla en [`build-legality.md`](../lol-knowledge/mechanics/build-legality.md) y comprobación en `stats`, `ability` y `rotation`.* Legalidad de la build: objetos únicos, un solo par de botas, grupos exclusivos y número de huecos. La hoja no lo valida ([`README.md`](../README.md)). Es imprescindible para el optimizador.
 
 ## 6. Campeones
@@ -154,7 +157,7 @@ El motor debe servir también para vida, resistencias, curación y supervivencia
 - [ ] **IA-01 (P1)** Contrato entre la IA y el motor: una entrada estructurada (JSON) para escenarios y una salida con cifras, etiquetas y supuestos. La CLI ya da `--json`; falta un esquema único y versionado para `stats`, `ability`, `rotation` y el optimizador.
 - [ ] **IA-02 (P1)** Interpretar la petición en lenguaje natural y traducirla a un escenario: campeón, nivel, objetivo, restricciones y métrica. La IA nunca calcula; si falta un dato, pregunta o lo declara como supuesto.
 - [ ] **IA-03 (P1)** Explicar el resultado citando las etiquetas y lo no modelado, sin redondear las incertidumbres.
-- [ ] **IA-04 (P2)** Elegir la interfaz: CLI con un agente, servidor MCP local o aplicación. [`AGENTS.md`](../AGENTS.md) §1 prohíbe web, servicio o base de datos sin necesidad demostrada y aprobada; requiere decisión del usuario.
+- [ ] **IA-04 (P1)** *Interfaz decidida y aprobada en DEC-02 (2026-11-20):* **servidor MCP local** para poder usarlo desde OpenCode, Antigravity o cualquier cliente MCP compatible (aprobado como excepción a la ausencia de servicio de [`AGENTS.md`](../AGENTS.md) §1). Pendiente su implementación sobre el contrato de `IA-01`.
 
 ## 10. Calidad y verificación
 
@@ -162,22 +165,22 @@ El motor debe servir también para vida, resistencias, curación y supervivencia
 - [ ] **QA-02 (P2)** Pruebas de mutación periódicas sobre `rotation.py` y `stats/sheet.py`, que son los módulos más grandes (1702 y 704 líneas).
 - [ ] **QA-03 (P3)** Dividir `rotation.py` cuando crezca más: ya concentra tiempo, acumulaciones, ventanas y efectos.
 
-## 11. Decisiones que necesitan al usuario
+## 11. Decisiones del usuario (resueltas el 2026-11-20)
 
-- [ ] **DEC-01** Orden de trabajo entre runas (RUN), kits (CH-01/02) y efectos de objeto (OBJ-01). Recomendación: runas primero, porque sin ellas el optimizador no compara builds completas.
-- [ ] **DEC-02** Interfaz de la capa de IA (IA-04).
-- [ ] **DEC-03** Alcance de objetos fuera de la Grieta y de los modos (OBJ-12).
-- [ ] **DEC-04** Autorización para borrar ramas integradas (OP-04) y para añadir CI (OP-03).
-- [ ] **DEC-05** Si se admiten estadísticas comunitarias (win rate, builds populares) y con qué condiciones ([`lol-knowledge/champions/Zaahen/build.md`](../lol-knowledge/champions/Zaahen/build.md)).
+- [x] **DEC-01** *Resuelta:* terminar **runas** primero (`RUN-04`), después kits (`CH-02`, `CH-03`, `CH-01`) y efectos de objeto (`OBJ-01`).
+- [x] **DEC-02** *Resuelta:* **servidor MCP local** para poder usarlo desde OpenCode, Antigravity o cualquier cliente MCP compatible (`IA-04`).
+- [x] **DEC-03** *Resuelta:* entran **consumibles** y **mejoras de Ornn** (con la condición de que solo un objeto de la build puede ser el mejorado, asegurando que sea el que más contribuya al objetivo de la build); **no** entran **trinkets** ni **otros modos** (`OBJ-12`).
+- [x] **DEC-04** *Resuelta:* autorizados el CI (`OP-03`) y el borrado de ramas locales integradas (`OP-04`) tras verificar que no haya código sin integrar en `dev` (o que solo sea código antiguo obsoleto). Ambas tareas ejecutadas el 2026-11-20 (0 commits sin integrar en las 52 ramas locales eliminadas).
+- [x] **DEC-05** *Resuelta:* **no se admiten estadísticas comunitarias** (win rate, builds populares) bajo ninguna condición ([`lol-knowledge/champions/Zaahen/build.md`](../lol-knowledge/champions/Zaahen/build.md)).
 
 ## 12. Orden propuesto (`Recomendación`)
 
-1. OP-01, OP-02 (publicar y validar en Windows).
-2. DOC-01 a DOC-07 (una sola fase pequeña de documentación).
-3. RUN-01 a RUN-04 y OBJ-13 (runas y legalidad de builds).
+1. ~~OP-01, OP-02~~ (hechos), ~~OP-03, OP-04~~ (hechos).
+2. ~~DOC-01 a DOC-07~~ (hechos en fase 34).
+3. ~~RUN-01 a RUN-03 y OBJ-13~~ (hechos en fases 36–37); **siguiente:** resto de **RUN-04** (runas menores en `stats` y piedras angulares en `rotation`).
 4. CH-02 y CH-03 (automatizar kits y pasivas), y después CH-01 por lotes de campeones.
 5. MEC-01, MEC-04 a MEC-07 y MEC-09 (recursos y supervivencia).
-6. OBJ-01 por mecánicas.
-7. IA-01 y OPT-01 a OPT-03 (contrato y primer optimizador).
-8. DAT-01 y DAT-02 (actualizar al parche vigente con un procedimiento repetible).
+6. OBJ-01 por mecánicas, OBJ-02 y alcance decidido de OBJ-12 (consumibles y mejoras de Ornn).
+7. IA-01, IA-04 (servidor MCP local) y OPT-01 a OPT-03 (contrato, servidor MCP y primer optimizador).
+8. ~~DAT-01 y DAT-02~~ (hechos en fase 35).
 9. El resto según su prioridad.
