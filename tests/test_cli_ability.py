@@ -177,7 +177,8 @@ def test_invalid_requests_exit_2(capsys, args, message):
     assert message in captured.err
 
 
-def test_champion_without_kit(capsys):
+def test_champion_without_kit(capsys, monkeypatch):
+    monkeypatch.setattr("lol_knowledge.cli.load_kit", lambda _root, _champion: None)
     code = main(
         ["ability", "--root", str(ROOT), "--champion", "Lux", "--level", "1", "--ability", "Q",
          "--rank", "1", "--target-armor", "1", "--target-mr", "1"]
