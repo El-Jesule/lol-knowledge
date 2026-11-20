@@ -363,9 +363,23 @@ def draft_spec(
 
         if tooltip:
             damage_refs = _tooltip_references(tooltip, TAG_PATTERN)
-            for calc_name in helper.calculations:
+            for calc_name, calc_tree in helper.calculations.items():
                 found_types = sorted(tooltip_damage_types(tooltip, calc_name))
                 if not found_types:
+                    continue
+                if calc_tree.get("display_as_percent") is True:
+                    findings.append(
+                        {
+                            "slot": slot,
+                            "kind": "percent_damage_calc",
+                            "reference": calc_name,
+                            "message": (
+                                f"{slot}.{calc_name}: display_as_percent=true wrapped in "
+                                f"{found_types} (curate tooltip_reference × target stat)"
+                            ),
+                            "details": {"damage_types": found_types},
+                        }
+                    )
                     continue
                 referenced_calcs.add(calc_name)
                 is_recast_calc = any(token in calc_name.lower() for token in RECAST_CALC_TOKENS)

@@ -241,10 +241,13 @@ class _Ability:
         return {"op": "by_level", "values": values}
 
     def custom(self, formula: Any) -> Any:
-        """Resolve ``{"op": "data_value", "name": …}`` placeholders in a curated formula."""
+        """Resolve ``data_value`` and ``calculation`` placeholders in a curated formula."""
         if isinstance(formula, Mapping):
-            if formula.get("op") == "data_value":
+            op = formula.get("op")
+            if op == "data_value":
                 return self.data_value(str(formula["name"]))
+            if op == "calculation":
+                return self.calculation(str(formula["name"]))
             return {key: self.custom(value) for key, value in formula.items()}
         if isinstance(formula, list):
             return [self.custom(item) for item in formula]
@@ -301,6 +304,11 @@ def _scale_formula(formula: dict[str, Any], scale: float | int) -> dict[str, Any
             "op": "linear_by_level",
             "min": _clean(formula["min"] * scale),
             "max": _clean(formula["max"] * scale),
+        }
+    if formula.get("op") == "by_rank":
+        return {
+            "op": "by_rank",
+            "values": [_clean(value * scale) for value in formula["values"]],
         }
     if formula.get("op") == "constant":
         return {"op": "constant", "value": _clean(formula["value"] * scale)}
@@ -447,10 +455,15 @@ def compile_kit(
         for item in entry.get("passive_stats", []):
             if ability is None:
                 raise KitGenError(f"{context}: no bin data for this ability")
+            p_formula = ability.data_value(item["data_value"])
+            if "scale" in item:
+                if not _is_num(item["scale"]):
+                    raise KitGenError(f"{context}.passive_stats: scale must be numeric")
+                p_formula = _scale_formula(p_formula, item["scale"])
             passive_stats.append(
                 {
                     "stat": item["stat"],
-                    "formula": ability.data_value(item["data_value"]),
+                    "formula": p_formula,
                     "label": "Derivado",
                     "source": f"{ability.record['path']}.DataValues.{item['data_value']} "
                     f"({content_version})",

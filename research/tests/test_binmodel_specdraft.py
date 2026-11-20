@@ -384,3 +384,94 @@ def test_batch_kits_cli_rejects_bad_environment(tmp_path, capsys):
     code = batch_main(["--game", str(tmp_path), "--hashes", str(tmp_path), "--survey"])
     assert code == 2
     assert "content-metadata.json not found" in capsys.readouterr().err
+
+
+def test_kitgen_custom_calculation_scaled_passive_stat_and_percent_guard(zaahen_extract):
+    tooltips = _tooltips("zaahen")
+    # Synthetic ability with display_as_percent=True damage calc and percentage-point passive stat
+    extract_doc = {
+        "champion": {"id": "TestChamp", "name": "TestChamp"},
+        "game_version": "16.23",
+        "content_version": "16.23.test",
+        "abilities": [
+            {
+                "slot": "W",
+                "name": "W",
+                "path": "Characters/TestChamp/Spells/W",
+                "level_count": 5,
+                "tooltip": {"loc_keys": {"keyTooltip": "spell_test_w"}},
+                "data_values": [
+                    {"name": "PctPen", "mode": "base", "ranks": [20, 25, 30, 35, 40]},
+                    {"name": "MaxHpPct", "mode": "base", "ranks": [0.04, 0.05, 0.06, 0.07, 0.08]},
+                ],
+                "calculations": [
+                    {
+                        "name": "PctDmg",
+                        "tree": {
+                            "kind": "game_calculation",
+                            "display_as_percent": True,
+                            "parts": [{"kind": "data_value", "name": "MaxHpPct"}],
+                        },
+                    }
+                ],
+            }
+        ],
+    }
+    tt = {"spell_test_w": "Inflige <trueDamage>@PctDmg@ de vida máxima</trueDamage>."}
+    drafted = draft_spec(extract_doc, tt)
+    assert any(f["kind"] == "percent_damage_calc" for f in drafted["review"]["findings"])
+    assert "cases" not in drafted["spec"]["abilities"]["W"]
+
+    spec = {
+        "champion": "TestChamp",
+        "game_version": "16.23",
+        "abilities": {
+            "W": {
+                "name": "W",
+                "tooltip": "spell_test_w",
+                "cases": [
+                    {
+                        "id": "proc",
+                        "name": "Impacto",
+                        "parts": [
+                            {
+                                "tooltip_reference": "PctDmg",
+                                "source_note": "PctDmg × vida máxima del objetivo",
+                                "formula": {
+                                    "op": "mul",
+                                    "operands": [
+                                        {"op": "calculation", "name": "PctDmg"},
+                                        {
+                                            "op": "stat",
+                                            "stat": "health",
+                                            "scope": "max",
+                                            "subject": "target",
+                                        },
+                                    ],
+                                },
+                            }
+                        ],
+                    }
+                ],
+                "passive_stats": [
+                    {
+                        "stat": "armor_penetration_percent",
+                        "data_value": "PctPen",
+                        "scale": 0.01,
+                        "condition": "pasiva de W",
+                    }
+                ],
+            }
+        },
+    }
+    compiled = compile_kit(extract_doc, tt, spec)
+    assert compiled["abilities"]["W"]["passive_stats"][0]["formula"] == {
+        "op": "by_rank",
+        "values": [0.2, 0.25, 0.3, 0.35, 0.4],
+    }
+    assert compiled["abilities"]["W"]["cases"][0]["parts"][0]["formula"]["operands"][0] == {
+        "op": "by_rank",
+        "values": [0.04, 0.05, 0.06, 0.07, 0.08],
+    }
+    assert zaahen_extract["champion"]["name"] == "Zaahen"
+    assert isinstance(tooltips, dict)
