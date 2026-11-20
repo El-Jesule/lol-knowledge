@@ -27,6 +27,7 @@ from .runes import (
 )
 from .scenario import Target
 from .stats import Label, StatBlocked, StatSheet, weakest
+from .survival import HealEvent
 
 
 @dataclass(frozen=True)
@@ -197,6 +198,7 @@ class KeystoneCombat:
         self._grasp_ready = False
         self._grasp_next_at = Fraction(0)
         self._grasp_fired = False
+        self._step_heals: list[HealEvent] = []
 
         if not rune_ids or data is None:
             return
@@ -317,8 +319,8 @@ class KeystoneCombat:
                 self._grasp_next_at = rune_value(rune, "TriggerTime")
             self._keystone = rune
             self.notes.append(
-                f"rune {rune.id} {rune.name}: healing and permanent max health gain are not "
-                "modelled (MEC-05)"
+                f"rune {rune.id} {rune.name}: permanent max health gain (+5 melee / +2 ranged "
+                "per proc) is not modelled"
             )
 
     def _refresh_expirations(self, at: Fraction) -> None:
@@ -604,8 +606,23 @@ class KeystoneCombat:
                 except StatBlocked as exc:
                     raise RotationError(f"rune {rune.id} {rune.name}: {exc}") from exc
                 pct = rune_value(rune, "PercentHealthDamage")
+                heal_pct = rune_value(rune, "PercentHealthHeal")
                 if self.holder_range == "ranged":
-                    pct *= rune_value(rune, "RangedPenaltyMod")
+                    mod = rune_value(rune, "RangedPenaltyMod")
+                    pct *= mod
+                    heal_pct *= mod
+                heal_raw = max_hp * heal_pct
+                self._step_heals.append(
+                    HealEvent(
+                        src,
+                        heal_raw,
+                        heal_raw,
+                        True,
+                        False,
+                        weakest((self._base, health.label)),
+                        (f"grasp heal ({self.holder_range})",),
+                    )
+                )
                 procs.append(
                     RuneProc(
                         src,
@@ -836,6 +853,11 @@ class KeystoneCombat:
             weakest(self._dft_labels),
             notes,
         )
+
+    def pop_step_heals(self) -> list[HealEvent]:
+        heals = list(self._step_heals)
+        self._step_heals.clear()
+        return heals
 
     def clear_expired_burns(self, until: Fraction) -> None:
         if self._dft_end is not None and self._dft_end <= until:

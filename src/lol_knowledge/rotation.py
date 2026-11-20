@@ -26,11 +26,11 @@ from fractions import Fraction
 from typing import Any
 
 from .damage import DamageResult, DamageType, format_number, mitigate
-from .errors import KitError, RotationError
+from .errors import KitError, RotationError, StatsError
 from .formula import FormulaError, evaluate_formula
 from .kit import Kit, ability_damage, sheet_stats
 from .rune_combat import RuneCombat
-from .runes import RuneData
+from .runes import RuneData, fraction_input, int_input
 from .scenario import PENETRATION, Target, penetration_modifiers
 from .stats import (
     EVIDENCE_LABEL,
@@ -45,6 +45,14 @@ from .stats import (
     with_amplifier,
     with_bonus,
 )
+from .survival import (
+    GRIEVOUS_WOUNDS_REDUCTION,
+    HealEvent,
+    ShieldEvent,
+    absorb_shield,
+    scale_healing,
+    scale_shield,
+)
 
 RULES = (
     "lol-knowledge/mechanics/basic-attacks-and-on-hit.md",
@@ -53,6 +61,7 @@ RULES = (
     "lol-knowledge/mechanics/damage-mitigation.md",
     "lol-knowledge/mechanics/stat-growth.md",
     "lol-knowledge/mechanics/life-steal-and-omnivamp.md",
+    "lol-knowledge/mechanics/survival.md",
 )
 HOLDER_RANGES = frozenset({"melee", "ranged"})
 ATTACK_MODIFIERS = frozenset({"crit", "nospellblade"})
@@ -213,39 +222,59 @@ class StepOutcome:
     label: Label
     # Seconds from the start of the rotation, with the timeline (timeline.md).
     time: Fraction | None = None
+    shield_before: Fraction = Fraction(0)
+    shield_absorbed: Fraction = Fraction(0)
+    heal_events: tuple[HealEvent, ...] = ()
+    shield_events: tuple[ShieldEvent, ...] = ()
 
     @property
     def total(self) -> Fraction:
         return sum((part.damage for part in self.parts), start=Fraction(0))
 
     @property
+    def shield_after(self) -> Fraction:
+        return self.shield_before - self.shield_absorbed
+
+    @property
+    def health_damage(self) -> Fraction:
+        return self.total - self.shield_absorbed
+
+    @property
     def health_after(self) -> Fraction:
-        return max(Fraction(0), self.health_before - self.total)
+        return max(Fraction(0), self.health_before - self.health_damage)
 
     @property
     def overkill(self) -> bool:
-        """Whether the step deals more damage than the health the target had left."""
-        return self.total > self.health_before
+        """Whether the step deals more damage to health than the target had left."""
+        return self.health_damage > self.health_before
 
     @property
     def healing(self) -> Fraction:
-        return sum((part.healing.amount for part in self.parts), start=Fraction(0))
+        vamp = sum((part.healing.amount for part in self.parts), start=Fraction(0))
+        direct = sum((event.amount for event in self.heal_events), start=Fraction(0))
+        return vamp + direct
 
     @property
     def healing_label(self) -> Label:
-        labels = [part.healing.label for part in self.parts]
-        if self.overkill and self.healing:
+        labels = [part.healing.label for part in self.parts] + [
+            event.label for event in self.heal_events
+        ]
+        if self.overkill and any(part.healing.amount for part in self.parts):
             labels.append(Label.PENDING)
         return weakest(labels)
 
     @property
     def healing_notes(self) -> tuple[str, ...]:
-        if self.overkill and self.healing:
+        if self.overkill and any(part.healing.amount for part in self.parts):
             return (
                 "the step deals more damage than the target's remaining health; healing uses "
                 "the full damage, which is not verified",
             )
         return ()
+
+    @property
+    def shield_granted(self) -> Fraction:
+        return sum((event.amount for event in self.shield_events), start=Fraction(0))
 
 
 @dataclass(frozen=True)
@@ -266,6 +295,13 @@ class RotationOutcome:
     label: Label
     notes: tuple[str, ...]
     timeline: Timeline | None = None
+    start_shield: Fraction = Fraction(0)
+    shield_type: str = "normal"
+    attacker_start_health: Fraction | None = None
+    attacker_max_health: Fraction | None = None
+    attacker_remaining_health: Fraction | None = None
+    effective_healing: Fraction | None = None
+    grievous_wounds_applied: bool = False
 
     @property
     def total(self) -> Fraction:
@@ -286,8 +322,16 @@ class RotationOutcome:
         return self.total / duration
 
     @property
+    def total_shield_absorbed(self) -> Fraction:
+        return sum((step.shield_absorbed for step in self.steps), start=Fraction(0))
+
+    @property
+    def remaining_shield(self) -> Fraction:
+        return self.start_shield - self.total_shield_absorbed
+
+    @property
     def remaining_health(self) -> Fraction:
-        return max(Fraction(0), self.start_health - self.total)
+        return self.steps[-1].health_after if self.steps else self.start_health
 
     @property
     def healing(self) -> Fraction:
@@ -296,6 +340,10 @@ class RotationOutcome:
     @property
     def healing_label(self) -> Label:
         return weakest(step.healing_label for step in self.steps)
+
+    @property
+    def total_shield_granted(self) -> Fraction:
+        return sum((step.shield_granted for step in self.steps), start=Fraction(0))
 
     @property
     def lethal_step(self) -> int | None:
@@ -587,6 +635,36 @@ class _Rotation:
         self.crit_base, self.holder_range, self.inputs = crit_base, holder_range, inputs
         self.stats, self.origin = sheet_stats(sheet)
         self.life_steal, self.omnivamp = sheet["life_steal"], sheet["omnivamp"]
+        self.hsp = sheet["heal_and_shield_power"]
+        try:
+            gw_input = int_input(inputs, "grievous_wounds", minimum=0, maximum=1)
+            atk_hp_pct = fraction_input(inputs, "attacker_health_percent")
+        except StatsError as exc:
+            raise RotationError(str(exc)) from exc
+        self.grievous_permanent = GRIEVOUS_WOUNDS_REDUCTION if gw_input == 1 else Fraction(0)
+        self.grievous_timed_rate = Fraction(0)
+        self.grievous_timed_until: Fraction | None = None
+        self.grievous_timed_source = ""
+        self.grievous_timed_label = Label.DERIVED
+        self.grievous_used = gw_input == 1
+        self.attacker_max_hp: Fraction | None = None
+        self.attacker_start_hp: Fraction | None = None
+        self.attacker_hp: Fraction | None = None
+        self.effective_healing_total: Fraction | None = None
+        if atk_hp_pct is not None:
+            try:
+                max_hp = sheet["health"].total()
+            except StatBlocked as exc:
+                raise RotationError(
+                    f"attacker_health_percent needs attacker health: {exc}"
+                ) from exc
+            self.attacker_max_hp = max_hp
+            self.attacker_start_hp = max_hp * atk_hp_pct
+            self.attacker_hp = self.attacker_start_hp
+            self.effective_healing_total = Fraction(0)
+        self.item_heals: list[_Effect] = []
+        self.item_shields: list[_Effect] = []
+        self.defender_grievous: list[_Effect] = []
         attacker, notes, weakened = _effects(sheet.items, "attacker", target.kind)
         defender, target_notes, target_weakened = _effects(target.items, "target")
         self.rune_combat = RuneCombat(
@@ -682,6 +760,20 @@ class _Rotation:
                             f"(scenario {effect.scenario})"
                         )
             elif (
+                kind == "healing"
+                and effect.component.get("mode") == "absolute"
+                and effect.affects == "self"
+                and effect.trigger in {"spellblade", "on_hit", "damaging_ability", "cast"}
+            ):
+                self.item_heals.append(effect)
+            elif (
+                kind == "shield"
+                and effect.component.get("mode") == "absolute"
+                and effect.affects == "self"
+                and effect.trigger in {"spellblade", "on_hit", "damaging_ability", "cast"}
+            ):
+                self.item_shields.append(effect)
+            elif (
                 effect.duration is not None
                 and kind in TIMED_KINDS
                 and effect.trigger in TIMED_TRIGGERS
@@ -698,8 +790,193 @@ class _Rotation:
             kind = effect.component.get("kind")
             if kind == "damage_modifier" and effect.component.get("direction") == "taken":
                 self.taken.append(effect)
+            elif (
+                effect.trigger == "taking_attack"
+                and kind == "status"
+                and effect.component.get("effect") == "grievous_wounds"
+            ):
+                self.defender_grievous.append(effect)
             else:
                 self._skip(effect, f"{effect.trigger} {kind}", owner="target")
+
+    def _current_grievous(self, clock: Fraction) -> tuple[Fraction, Label, str]:
+        """Active Grievous Wounds reduction (0 or 0.4, non-stacking) at ``clock``."""
+        rate = self.grievous_permanent
+        label = Label.DERIVED
+        source = "Grievous Wounds (-40%, scenario)" if rate else ""
+        timed_active = self.grievous_timed_rate > 0 and (
+            self.timeline is None
+            or self.grievous_timed_until is None
+            or clock < self.grievous_timed_until
+        )
+        if timed_active and self.grievous_timed_rate >= rate:
+            rate = self.grievous_timed_rate
+            label = self.grievous_timed_label
+            source = self.grievous_timed_source
+        return rate, label, source
+
+    def _trigger_defender_grievous(self, clock: Fraction) -> None:
+        """Apply Grievous Wounds from defender's taking_attack items (Thornmail, rev 4025130)."""
+        for effect in self.defender_grievous:
+            mag = effect.component.get("magnitude")
+            pct = (
+                Fraction(str(mag["value"]))
+                if isinstance(mag, Mapping) and mag.get("op") == "constant"
+                else Fraction(40)
+            )
+            rate = pct / 100
+            dur = _seconds_of(effect.component.get("duration_seconds"))
+            if rate >= self.grievous_timed_rate:
+                self.grievous_timed_rate = rate
+                self.grievous_timed_label = effect.label
+                self.grievous_timed_source = (
+                    f"Grievous Wounds (-{format_number(pct)}% from target {effect.title})"
+                )
+            if self.timeline is not None and dur is not None:
+                until = clock + dur
+                self.grievous_timed_until = (
+                    until
+                    if self.grievous_timed_until is None
+                    else max(self.grievous_timed_until, until)
+                )
+            self.grievous_used = True
+
+    def _revitalize_amp(self) -> Fraction:
+        """Revitalize's extra +10% healing/shielding below 40% attacker HP."""
+        if self.attacker_hp is None or self.attacker_max_hp is None or self.attacker_max_hp <= 0:
+            return Fraction(0)
+        return self.rune_combat.revitalize_low_hp_amp(self.attacker_hp / self.attacker_max_hp)
+
+    def _make_heal_event(
+        self,
+        source: str,
+        raw: Fraction,
+        label: Label,
+        clock: Fraction,
+        *,
+        uses_hsp: bool = True,
+        notes: tuple[str, ...] = (),
+    ) -> HealEvent:
+        hsp_val = self.hsp.total() if uses_hsp else Fraction(0)
+        rev_amp = self._revitalize_amp()
+        gw_rate, gw_label, gw_source = self._current_grievous(clock)
+        amount = scale_healing(
+            raw, hsp=hsp_val, revitalize_amp=rev_amp, grievous=gw_rate, uses_hsp=uses_hsp
+        )
+        labels = [label]
+        out_notes = list(notes)
+        if uses_hsp and hsp_val:
+            labels.append(self.hsp.label)
+            out_notes.append(f"heal & shield power +{format_number(hsp_val * 100)}%")
+        if rev_amp:
+            labels.append(Label.DERIVED)
+            out_notes.append(f"Revitalize <40% HP +{format_number(rev_amp * 100)}%")
+        if gw_rate:
+            labels.append(gw_label)
+            out_notes.append(gw_source)
+            self.grievous_used = True
+        return HealEvent(
+            source,
+            raw,
+            amount,
+            uses_hsp,
+            gw_rate > 0,
+            weakest(labels),
+            tuple(out_notes),
+        )
+
+    def _make_shield_event(
+        self,
+        source: str,
+        raw: Fraction,
+        label: Label,
+        *,
+        shield_type: str = "normal",
+        duration: Fraction | None = None,
+        notes: tuple[str, ...] = (),
+    ) -> ShieldEvent:
+        hsp_val = self.hsp.total()
+        rev_amp = self._revitalize_amp()
+        amount = scale_shield(raw, hsp=hsp_val, revitalize_amp=rev_amp)
+        labels = [label]
+        out_notes = list(notes)
+        if hsp_val:
+            labels.append(self.hsp.label)
+            out_notes.append(f"heal & shield power +{format_number(hsp_val * 100)}%")
+        if rev_amp:
+            labels.append(Label.DERIVED)
+            out_notes.append(f"Revitalize <40% HP +{format_number(rev_amp * 100)}%")
+        return ShieldEvent(
+            source,
+            raw,
+            amount,
+            shield_type,
+            duration,
+            weakest(labels),
+            tuple(out_notes),
+        )
+
+    def _item_survival_events(
+        self, trigger: str, target_stats: Mapping[str, Fraction], clock: Fraction
+    ) -> tuple[list[HealEvent], list[ShieldEvent]]:
+        heals: list[HealEvent] = []
+        shields: list[ShieldEvent] = []
+        for effect in self.item_heals:
+            if effect.trigger != trigger:
+                continue
+            if not _conditions_hold(effect, self.target, "healing", False, target_stats):
+                continue
+            raw, stat_labels = self._value(effect, target_stats)
+            heals.append(
+                self._make_heal_event(
+                    f"{effect.title} ({effect.name})",
+                    raw,
+                    weakest([effect.label, *stat_labels]),
+                    clock,
+                )
+            )
+        for effect in self.item_shields:
+            if effect.trigger != trigger:
+                continue
+            if not _conditions_hold(effect, self.target, "shield", False, target_stats):
+                continue
+            raw, stat_labels = self._value(effect, target_stats)
+            shields.append(
+                self._make_shield_event(
+                    f"{effect.title} ({effect.name})",
+                    raw,
+                    weakest([effect.label, *stat_labels]),
+                    duration=effect.duration,
+                )
+            )
+        return heals, shields
+
+    def _absorb_parts(
+        self, parts: Sequence[Part], health: Fraction, shield: Fraction
+    ) -> tuple[Fraction, Fraction, Fraction]:
+        """Apply ``parts`` against ``shield`` then ``health`` (Shield rev 4093144)."""
+        absorbed_total = Fraction(0)
+        for part in parts:
+            absorbed, hp_dmg = absorb_shield(
+                part.damage,
+                part.damage_type,
+                shield,
+                self.target.shield_type,
+                bypass_shield=part.kind == "execute",
+            )
+            shield -= absorbed
+            absorbed_total += absorbed
+            health = max(Fraction(0), health - hp_dmg)
+        return health, shield, absorbed_total
+
+    def _record_attacker_healing(self, amount: Fraction) -> None:
+        if self.attacker_hp is None or self.attacker_max_hp is None or amount <= 0:
+            return
+        missing = max(Fraction(0), self.attacker_max_hp - self.attacker_hp)
+        gained = min(amount, missing)
+        self.attacker_hp += gained
+        assert self.effective_healing_total is not None
+        self.effective_healing_total += gained
 
     def _skip(self, effect: _Effect, why: str, owner: str = "attacker") -> None:
         self.notes.append(f"{owner} {effect.title}: {why} is not part of rotations, not applied")
@@ -1014,9 +1291,25 @@ class _Rotation:
             labels.append(Label.PENDING)
             notes.append("life steal and omnivamp on the same damage: their sum is not verified")
         rate = applied_life_steal + omnivamp
-        return Healing(
-            applied_life_steal, omnivamp, part.damage * rate, weakest(labels), tuple(notes)
+        raw_heal = part.damage * rate
+        rev_amp = self._revitalize_amp()
+        gw_rate, gw_label, gw_source = self._current_grievous(self.now)
+        amount = scale_healing(
+            raw_heal,
+            hsp=Fraction(0),
+            revitalize_amp=rev_amp,
+            grievous=gw_rate,
+            uses_hsp=False,
         )
+        if raw_heal > 0:
+            if rev_amp:
+                labels.append(Label.DERIVED)
+                notes.append(f"Revitalize <40% HP +{format_number(rev_amp * 100)}%")
+            if gw_rate:
+                labels.append(gw_label)
+                notes.append(gw_source)
+                self.grievous_used = True
+        return Healing(applied_life_steal, omnivamp, amount, weakest(labels), tuple(notes))
 
     def _attack(
         self, step: Step, target_stats: Mapping[str, Fraction], empowered: bool = False
@@ -1216,7 +1509,9 @@ class _Rotation:
             seconds = effect.refund[1] if crit else effect.refund[0]
             self.timed_ready[effect.title] = max(clock, ready - seconds)
 
-    def _accrue(self, until: Fraction, health: Fraction) -> tuple[list[Part], Fraction]:
+    def _accrue(
+        self, until: Fraction, health: Fraction, shield: Fraction = Fraction(0)
+    ) -> tuple[list[Part], Fraction, Fraction, Fraction]:
         """Burn damage from the last count to ``until``, split where an effect ends.
 
         Burns deal their damage per second continuously (burns.md); each piece
@@ -1229,7 +1524,7 @@ class _Rotation:
             and not self.rune_combat.has_due_procs(until)
         ):
             self.accrued = max(start, until)
-            return [], health
+            return [], health, shield, Fraction(0)
         ends = {
             end
             for end in [
@@ -1249,6 +1544,7 @@ class _Rotation:
         }
         points = sorted({start, until, *ends})
         parts: list[Part] = []
+        total_absorbed = Fraction(0)
         for begin, finish in zip(points, points[1:], strict=False):
             self._set_moment(begin)
             target_stats = self._target_stats(health)
@@ -1276,7 +1572,8 @@ class _Rotation:
                     notes,
                 )
                 parts.append(part)
-                health = max(Fraction(0), health - part.damage)
+                health, shield, absorbed = self._absorb_parts([part], health, shield)
+                total_absorbed += absorbed
             rune_burn = self.rune_combat.accrue_burn(begin, finish)
             if rune_burn is not None:
                 part = self._part(
@@ -1290,7 +1587,8 @@ class _Rotation:
                     rune_burn.notes,
                 )
                 parts.append(part)
-                health = max(Fraction(0), health - part.damage)
+                health, shield, absorbed = self._absorb_parts([part], health, shield)
+                total_absorbed += absorbed
             due_procs = self.rune_combat.pop_due(finish)
             if due_procs:
                 self._set_moment(finish)
@@ -1307,11 +1605,12 @@ class _Rotation:
                         apply_modifiers=proc.apply_modifiers,
                     )
                     parts.append(part)
-                    health = max(Fraction(0), health - part.damage)
+                    health, shield, absorbed = self._absorb_parts([part], health, shield)
+                    total_absorbed += absorbed
         self.accrued = until
         self.burning = {key: burn for key, burn in self.burning.items() if burn.end > until}
         self.rune_combat.clear_expired_burns(until)
-        return parts, health
+        return parts, health, shield, total_absorbed
 
     def _timeline(self) -> Timeline:
         """Attack interval (1 / attack speed) and the checks the timeline needs."""
@@ -1400,10 +1699,14 @@ class _Rotation:
         open_casts[step.slot] = (clock, 0, clock)
 
     def _execute(
-        self, parts: Sequence[Part], health: Fraction, target_stats: Mapping[str, Fraction]
+        self,
+        parts: Sequence[Part],
+        health: Fraction,
+        target_stats: Mapping[str, Fraction],
+        shield_absorbed: Fraction = Fraction(0),
     ) -> list[Part]:
         """An execute: the target's remaining health as true damage (execute.md)."""
-        left = health - sum((part.damage for part in parts), start=Fraction(0))
+        left = health - (sum((part.damage for part in parts), start=Fraction(0)) - shield_absorbed)
         for effect in self.executes:
             if left <= 0 or not parts:
                 return []
@@ -1556,13 +1859,19 @@ class _Rotation:
         return f"{ability.slot} {ability.name} rank {rank}", parts
 
     def _burn_outcome(
-        self, index: int, step: Step, name: str, clock: Fraction, health: Fraction
+        self,
+        index: int,
+        step: Step,
+        name: str,
+        clock: Fraction,
+        health: Fraction,
+        shield: Fraction = Fraction(0),
     ) -> StepOutcome:
         """A step with no damage of its own: the burn damage up to ``clock``."""
-        parts, left = self._accrue(clock, health)
+        parts, left, _, absorbed = self._accrue(clock, health, shield)
         if parts:
-            parts += self._execute(parts, health, self._target_stats(left))
-        return StepOutcome(
+            parts += self._execute(parts, health, self._target_stats(left), absorbed)
+        outcome = StepOutcome(
             index,
             step,
             name,
@@ -1570,7 +1879,11 @@ class _Rotation:
             health,
             weakest(part.label for part in parts),
             clock,
+            shield_before=shield,
+            shield_absorbed=absorbed,
         )
+        self._record_attacker_healing(outcome.healing)
+        return outcome
 
     def run(self, steps: Sequence[Step]) -> RotationOutcome:
         if "max_health" not in self.target.stats:
@@ -1582,6 +1895,7 @@ class _Rotation:
             raise RotationError(f"attacker range must be melee or ranged, not {self.holder_range}")
         start = self.target.stats["current_health"]
         health = start
+        shield = self.target.shield
         outcomes = []
         # Spellblade: an ability charges the next attack; that attack uses the charge
         # (or drops it with attack:nospellblade). Its cooldown is taken as ready.
@@ -1600,8 +1914,10 @@ class _Rotation:
             if step.wait is not None:
                 if self.timeline is None:
                     raise RotationError(f"step {step.text}: waits need the timeline (--timeline)")
-                outcomes.append(self._burn_outcome(index, step, "wait", clock, health))
-                health = outcomes[-1].health_after
+                outcome = self._burn_outcome(index, step, "wait", clock, health, shield)
+                outcomes.append(outcome)
+                health = outcome.health_after
+                shield = outcome.shield_after
                 clock += step.wait
                 continue
             if self.timeline is not None and step.slot is None:
@@ -1609,14 +1925,20 @@ class _Rotation:
             elif self.timeline is not None:
                 self._cast(step, clock, ready, open_casts)
             parts: list[Part] = []
+            heal_events: list[HealEvent] = []
+            shield_events: list[ShieldEvent] = []
             before = health
+            shield_before = shield
+            accrued_absorbed = Fraction(0)
             if self.timeline is not None:
-                parts, health = self._accrue(clock, health)
+                parts, health, shield, accrued_absorbed = self._accrue(clock, health, shield)
             accrued_count = len(parts)
             self._set_moment(clock)
             target_stats = self._target_stats(health)
             extra: list[Label] = []
             if step.slot is None:
+                # Thornmail's Grievous Wounds applies before the triggering attack's own heal.
+                self._trigger_defender_grievous(clock)
                 if charged and window is not None and clock - charged_at > window:
                     charged = False
                     extra.append(Label.PENDING)
@@ -1630,6 +1952,15 @@ class _Rotation:
                 if empowered:
                     name += " with Spellblade"
                 parts += self._attack(step, target_stats, empowered)
+                oh_heals, oh_shields = self._item_survival_events("on_hit", target_stats, clock)
+                heal_events += oh_heals
+                shield_events += oh_shields
+                if empowered:
+                    sb_heals, sb_shields = self._item_survival_events(
+                        "spellblade", target_stats, clock
+                    )
+                    heal_events += sb_heals
+                    shield_events += sb_shields
                 if empowered and self.timeline is not None:
                     spellblade_ready = clock + self._spellblade_cooldown()
                     if self._open("spellblade", clock, target_stats):
@@ -1651,6 +1982,15 @@ class _Rotation:
             else:
                 name, ability_parts = self._ability(step, target_stats)
                 parts += ability_parts
+                c_heals, c_shields = self._item_survival_events("cast", target_stats, clock)
+                heal_events += c_heals
+                shield_events += c_shields
+                if ability_parts:
+                    da_heals, da_shields = self._item_survival_events(
+                        "damaging_ability", target_stats, clock
+                    )
+                    heal_events += da_heals
+                    shield_events += da_shields
                 # An ability cast while Spellblade is on cooldown does not charge it.
                 if self.timeline is None or clock >= spellblade_ready:
                     charged, charged_at = True, clock
@@ -1672,6 +2012,8 @@ class _Rotation:
                     )
                     if self.timeline is not None and self._open("energized", clock, target_stats):
                         extra.append(Label.PENDING)
+            for ev in shield_events:
+                self.rune_combat.on_attacker_shield(ev.amount, clock)
             step_dealt = bool(parts[accrued_count:]) if step.slot is None else bool(ability_parts)
             for proc in self.rune_combat.on_step(step.slot, step_dealt, clock, self.sheet):
                 parts.append(
@@ -1688,7 +2030,11 @@ class _Rotation:
                     )
                 )
             step_damage = sum((p.damage for p in parts[accrued_count:]), start=Fraction(0))
-            step_after = max(Fraction(0), health - step_damage)
+            step_after, shield_after, step_absorbed = self._absorb_parts(
+                parts[accrued_count:], health, shield
+            )
+            total_absorbed = accrued_absorbed + step_absorbed
+            complete_parts: list[Part] = []
             for proc in self.rune_combat.on_step_complete(
                 step_damage,
                 clock,
@@ -1697,7 +2043,7 @@ class _Rotation:
                 step_after,
                 self.target.stats["max_health"],
             ):
-                parts.append(
+                complete_parts.append(
                     self._part(
                         "rune",
                         proc.source,
@@ -1710,22 +2056,63 @@ class _Rotation:
                         apply_modifiers=proc.apply_modifiers,
                     )
                 )
+            if complete_parts:
+                parts.extend(complete_parts)
+                step_after, shield_after, extra_absorbed = self._absorb_parts(
+                    complete_parts, step_after, shield_after
+                )
+                total_absorbed += extra_absorbed
+            parts += self._execute(parts, before, target_stats, total_absorbed)
+            final_hp = max(
+                Fraction(0), before - (sum((p.damage for p in parts), Fraction(0)) - total_absorbed)
+            )
+            killed_now = before > 0 and final_hp == 0
+            for raw_heal in self.rune_combat.on_step_heals(
+                step.slot,
+                step_dealt,
+                killed_now,
+                clock,
+                self.sheet,
+                self.attacker_hp,
+                self.attacker_max_hp,
+            ):
+                heal_events.append(
+                    self._make_heal_event(
+                        raw_heal.source,
+                        raw_heal.raw,
+                        raw_heal.label,
+                        clock,
+                        uses_hsp=raw_heal.uses_hsp,
+                        notes=raw_heal.notes,
+                    )
+                )
             new_notes, kw_weak = self.rune_combat.drain_runtime_updates()
             self.notes.extend(new_notes)
             self.weakened |= kw_weak
             self.speed_changed |= self.rune_combat.speed_changed
-            parts += self._execute(parts, before, target_stats)
             outcome = StepOutcome(
                 index,
                 step,
                 name,
                 tuple(parts),
                 before,
-                weakest([*(part.label for part in parts), *extra]),
+                weakest(
+                    [
+                        *(part.label for part in parts),
+                        *(ev.label for ev in shield_events),
+                        *extra,
+                    ]
+                ),
                 None if self.timeline is None else clock,
+                shield_before=shield_before,
+                shield_absorbed=total_absorbed,
+                heal_events=tuple(heal_events),
+                shield_events=tuple(shield_events),
             )
             outcomes.append(outcome)
+            self._record_attacker_healing(outcome.healing)
             health = outcome.health_after
+            shield = outcome.shield_after
             if self.timeline is not None and step.slot is None:
                 # The next attack: 1 / the attack speed just after this one (timeline.md).
                 self._set_moment(clock)
@@ -1748,6 +2135,7 @@ class _Rotation:
                     tail_name,
                     end,
                     health,
+                    shield,
                 )
             )
         if self.energized:
@@ -1803,6 +2191,13 @@ class _Rotation:
             weakest(labels),
             tuple(notes),
             self.timeline,
+            start_shield=self.target.shield,
+            shield_type=self.target.shield_type,
+            attacker_start_health=self.attacker_start_hp,
+            attacker_max_health=self.attacker_max_hp,
+            attacker_remaining_health=self.attacker_hp,
+            effective_healing=self.effective_healing_total,
+            grievous_wounds_applied=self.grievous_used,
         )
 
 

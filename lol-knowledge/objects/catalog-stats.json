@@ -513,19 +513,19 @@
       "name": "Diadema susurrante",
       "stats": [
         {
+          "id": "heal_and_shield_power",
+          "kind": "percent",
+          "value": 8,
+          "quote": "8% de poder de curaciones y escudos"
+        },
+        {
           "id": "mana_regen",
           "kind": "percent",
           "value": 75,
           "quote": "75% de regeneración de maná básica"
         }
       ],
-      "effects_in_description": true,
-      "unmodelled_stats": [
-        {
-          "quote": "8% de poder de curaciones y escudos",
-          "reason": "heal and shield power is not a stat of the engine"
-        }
-      ]
+      "effects_in_description": true
     },
     {
       "id": "3003",
@@ -986,15 +986,15 @@
           "kind": "percent",
           "value": 100,
           "quote": "100% de regeneración de maná básica"
+        },
+        {
+          "id": "heal_and_shield_power",
+          "kind": "percent",
+          "value": 10,
+          "quote": "10% de poder de curaciones y escudos"
         }
       ],
-      "effects_in_description": true,
-      "unmodelled_stats": [
-        {
-          "quote": "10% de poder de curaciones y escudos",
-          "reason": "heal and shield power is not a stat of the engine"
-        }
-      ]
+      "effects_in_description": true
     },
     {
       "id": "3108",
@@ -1075,15 +1075,15 @@
           "kind": "percent",
           "value": 50,
           "quote": "50% de regeneración de maná básica"
+        },
+        {
+          "id": "heal_and_shield_power",
+          "kind": "percent",
+          "value": 8,
+          "quote": "8% de poder de curaciones y escudos"
         }
       ],
-      "effects_in_description": false,
-      "unmodelled_stats": [
-        {
-          "quote": "8% de poder de curaciones y escudos",
-          "reason": "heal and shield power is not a stat of the engine"
-        }
-      ]
+      "effects_in_description": false
     },
     {
       "id": "3115",
@@ -1495,19 +1495,19 @@
           "quote": "100% de regeneración de maná básica"
         },
         {
+          "id": "heal_and_shield_power",
+          "kind": "percent",
+          "value": 12,
+          "quote": "12% de poder de curaciones y escudos"
+        },
+        {
           "id": "ability_haste",
           "kind": "flat",
           "value": 15,
           "quote": "15 de velocidad de habilidades"
         }
       ],
-      "effects_in_description": true,
-      "unmodelled_stats": [
-        {
-          "quote": "12% de poder de curaciones y escudos",
-          "reason": "heal and shield power is not a stat of the engine"
-        }
-      ]
+      "effects_in_description": true
     },
     {
       "id": "3302",
@@ -1544,19 +1544,19 @@
       "name": "Incensario ardiente",
       "stats": [
         {
+          "id": "heal_and_shield_power",
+          "kind": "percent",
+          "value": 10,
+          "quote": "10% de poder de curaciones y escudos"
+        },
+        {
           "id": "mana_regen",
           "kind": "percent",
           "value": 125,
           "quote": "125% de regeneración de maná básica"
         }
       ],
-      "effects_in_description": true,
-      "unmodelled_stats": [
-        {
-          "quote": "10% de poder de curaciones y escudos",
-          "reason": "heal and shield power is not a stat of the engine"
-        }
-      ]
+      "effects_in_description": true
     },
     {
       "id": "3508",
@@ -1949,6 +1949,12 @@
       "name": "Bastón de aguas fluidas",
       "stats": [
         {
+          "id": "heal_and_shield_power",
+          "kind": "percent",
+          "value": 10,
+          "quote": "10% de poder de curaciones y escudos"
+        },
+        {
           "id": "mana_regen",
           "kind": "percent",
           "value": 125,
@@ -1961,13 +1967,7 @@
           "quote": "10 de velocidad de habilidades"
         }
       ],
-      "effects_in_description": true,
-      "unmodelled_stats": [
-        {
-          "quote": "10% de poder de curaciones y escudos",
-          "reason": "heal and shield power is not a stat of the engine"
-        }
-      ]
+      "effects_in_description": true
     },
     {
       "id": "6617",
@@ -2012,19 +2012,19 @@
       "name": "Núcleo albar",
       "stats": [
         {
+          "id": "heal_and_shield_power",
+          "kind": "percent",
+          "value": 16,
+          "quote": "16% de poder de curaciones y escudos"
+        },
+        {
           "id": "mana_regen",
           "kind": "percent",
           "value": 100,
           "quote": "100% de regeneración de maná básica"
         }
       ],
-      "effects_in_description": true,
-      "unmodelled_stats": [
-        {
-          "quote": "16% de poder de curaciones y escudos",
-          "reason": "heal and shield power is not a stat of the engine"
-        }
-      ]
+      "effects_in_description": true
     },
     {
       "id": "6631",

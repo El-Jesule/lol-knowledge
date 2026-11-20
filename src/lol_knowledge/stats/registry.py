@@ -24,6 +24,7 @@ VAMP_RULES = f"{MECHANICS}/life-steal-and-omnivamp.md"
 TENACITY_RULES = f"{MECHANICS}/tenacity.md"
 REGEN_RULES = f"{MECHANICS}/regeneration.md"
 MOVE_SPEED_RULES = f"{MECHANICS}/move-speed.md"
+SURVIVAL_RULES = f"{MECHANICS}/survival.md"
 # Attacks per second; "Baseline Attack Speed Cap: 2.5 => 3.0" in the 25.S1.3 patch notes.
 ATTACK_SPEED_CAP = Fraction(3)
 CRIT_CHANCE_CAP = Fraction(1)  # 100 %; the excess stays visible in the scopes
@@ -179,6 +180,13 @@ STATS: dict[str, StatDef] = {
         StatDef("omnivamp", "Omnivampirismo", Stacking.ADDITIVE, Unit.FRACTION, VAMP_RULES),
         # Group A sources (every item) multiply; other groups add up (tenacity.md).
         StatDef("tenacity", "Tenacidad", Stacking.MULTIPLICATIVE, Unit.FRACTION, TENACITY_RULES),
+        StatDef(
+            "heal_and_shield_power",
+            "Poder de curaciones y escudos",
+            Stacking.ADDITIVE,
+            Unit.FRACTION,
+            SURVIVAL_RULES,
+        ),
     )
 }
 

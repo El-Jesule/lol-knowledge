@@ -14,6 +14,7 @@ from .damage import DamageResult, DamageType, Modifiers, mitigate
 from .errors import StatsError
 from .kit import DamagePart, Kit, ability_damage
 from .stats import ItemData, Label, StatSheet, weakest
+from .survival import validate_shield_type
 
 # Unit kinds that item conditions and limits distinguish.
 TARGET_KINDS = frozenset({"champion", "monster", "minion", "structure"})
@@ -40,6 +41,8 @@ class Target:
     description: str
     kind: str | None = None
     items: tuple[ItemData, ...] = ()
+    shield: Fraction = Fraction(0)
+    shield_type: str = "normal"
 
     def resistance(self, damage_type: DamageType) -> Fraction | None:
         if damage_type is DamageType.PHYSICAL:
@@ -76,6 +79,15 @@ def _health(
     return stats
 
 
+def _validated_shield(shield: Fraction | None, shield_type: str) -> tuple[Fraction, str]:
+    kind = validate_shield_type(shield_type)
+    if shield is None:
+        return Fraction(0), kind
+    if shield < 0:
+        raise StatsError("target shield must not be negative")
+    return shield, kind
+
+
 def target_from_values(
     armor: Fraction,
     magic_resist: Fraction,
@@ -84,6 +96,8 @@ def target_from_values(
     current_health: Fraction | None = None,
     bonus_health: Fraction | None = None,
     kind: str | None = None,
+    shield: Fraction | None = None,
+    shield_type: str = "normal",
 ) -> Target:
     """A target given by hand.
 
@@ -91,6 +105,7 @@ def target_from_values(
     """
     if kind is not None and kind not in TARGET_KINDS:
         raise StatsError(f"unknown target kind {kind!r} (use {', '.join(sorted(TARGET_KINDS))})")
+    shield_amount, shield_kind = _validated_shield(shield, shield_type)
     description = f"armor {armor}, magic resist {magic_resist}"
     if kind is not None:
         description = f"{kind}, {description}"
@@ -101,12 +116,21 @@ def target_from_values(
         Label.OFFICIAL,
         description,
         kind,
+        shield=shield_amount,
+        shield_type=shield_kind,
     )
 
 
-def target_from_sheet(sheet: StatSheet, *, current_health: Fraction | None = None) -> Target:
+def target_from_sheet(
+    sheet: StatSheet,
+    *,
+    current_health: Fraction | None = None,
+    shield: Fraction | None = None,
+    shield_type: str = "normal",
+) -> Target:
     """A target champion resolved with the same stat sheet as the attacker."""
     armor, magic_resist, health = sheet["armor"], sheet["magic_resist"], sheet["health"]
+    shield_amount, shield_kind = _validated_shield(shield, shield_type)
     items = ", ".join(item.id for item in sheet.items) or "no items"
     return Target(
         armor.total(),
@@ -116,6 +140,8 @@ def target_from_sheet(sheet: StatSheet, *, current_health: Fraction | None = Non
         f"{sheet.champion.id} level {sheet.level} ({items})",
         "champion",
         sheet.items,
+        shield=shield_amount,
+        shield_type=shield_kind,
     )
 
 

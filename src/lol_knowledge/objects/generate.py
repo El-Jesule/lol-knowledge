@@ -55,6 +55,7 @@ STAT_PHRASES: dict[str, tuple[str, str | None]] = {
     "robo de vida": ("life_steal", "percent"),
     "omnisucción": ("omnivamp", "percent"),
     "tenacidad": ("tenacity", "percent"),
+    "poder de curaciones y escudos": ("heal_and_shield_power", "percent"),
     "regeneración de vida básica": ("health_regen", "percent"),
     "regeneración de maná básica": ("mana_regen", "percent"),
     "penetración de armadura": ("armor_penetration_percent", "percent"),
@@ -67,7 +68,6 @@ SIGNED_PHRASES: dict[str, tuple[str, str]] = {
 ZERO_REASON = "the description shows 0, which Data Dragon also uses for unpublished amounts"
 # Lines that are not a stat of the engine; they are kept, with the reason.
 UNMODELLED_PHRASES: dict[str, str] = {
-    "poder de curaciones y escudos": "heal and shield power is not a stat of the engine",
     "oro cada 10 segundos": "gold income is not a champion stat",
 }
 

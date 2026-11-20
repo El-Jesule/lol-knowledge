@@ -110,13 +110,26 @@ def test_a_zero_is_unknown_not_a_real_zero():
     }
 
 
-def test_lines_without_an_engine_stat_are_kept_with_their_reason():
+def test_heal_and_shield_power_is_extracted_as_an_engine_stat():
     entry = entry_for({"1001": snapshot_item(line("8%", "poder de curaciones y escudos"))})
+    assert entry["stats"] == [
+        {
+            "id": "heal_and_shield_power",
+            "kind": "percent",
+            "value": 8,
+            "quote": "8% de poder de curaciones y escudos",
+        }
+    ]
+    assert "unmodelled_stats" not in entry
+
+
+def test_lines_without_an_engine_stat_are_kept_with_their_reason():
+    entry = entry_for({"1001": snapshot_item(line("5", "oro cada 10 segundos"))})
     assert entry["stats"] == []
     assert entry["unmodelled_stats"] == [
         {
-            "quote": "8% de poder de curaciones y escudos",
-            "reason": "heal and shield power is not a stat of the engine",
+            "quote": "5 de oro cada 10 segundos",
+            "reason": "gold income is not a champion stat",
         }
     ]
     assert "unmodelled_stats" not in entry_for({"1001": snapshot_item(line("10", "letalidad"))})
@@ -273,7 +286,7 @@ def test_the_generate_command_rewrites_the_file(project, capsys):
     path = project / GENERATED_STATS_RELATIVE_PATH
     path.write_text("{}", encoding="utf-8")
     assert objects_main(["--root", str(project), "--generate-stats"]) == 0
-    assert "218 items, 134 stats" in capsys.readouterr().out
+    assert "218 items, 141 stats" in capsys.readouterr().out
     assert path.read_text(encoding="utf-8") == (ROOT / GENERATED_STATS_RELATIVE_PATH).read_text(
         encoding="utf-8"
     )

@@ -193,8 +193,8 @@ def test_an_illegal_page_is_refused_unless_allowed(capsys):
 
 
 def test_tree_runes_weaken_ability_and_rotation_damage(capsys):
-    # Precision with unmodelled Fleet Footwork (8021) + Absorb Life (9101)
-    unmodelled_page = [8021, 9101, 9104, 8014, 8226, 8210]
+    # Precision with unmodelled Fleet Footwork (8021) + Presence of Mind (8009)
+    unmodelled_page = [8021, 8009, 9104, 8014, 8226, 8210]
     target = [
         "--target-armor",
         "60",
