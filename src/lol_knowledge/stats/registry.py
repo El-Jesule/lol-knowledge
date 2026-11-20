@@ -98,6 +98,8 @@ STATS: dict[str, StatDef] = {
         _amount("attack_damage", "Daño de ataque", GROWTH_RULES),
         _amount("ability_power", "Poder de habilidad"),
         _amount("ability_haste", "Aceleración de habilidades", HASTE_RULES),
+        _amount("basic_ability_haste", "Aceleración de habilidades básicas", HASTE_RULES),
+        _amount("ultimate_haste", "Aceleración de definitiva", HASTE_RULES),
         _amount("lethality", "Letalidad", MITIGATION_RULES),
         _amount("magic_penetration_flat", "Penetración mágica plana", MITIGATION_RULES),
         StatDef(

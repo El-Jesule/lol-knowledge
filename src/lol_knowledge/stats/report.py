@@ -68,6 +68,8 @@ def _ehp_dict(item: EffectiveHealth) -> dict[str, Any]:
 def _cooldowns_dict(item: Cooldowns) -> dict[str, Any]:
     return {
         "ability_haste": _num(item.haste),
+        "basic_ability_haste": _num(item.basic_haste),
+        "ultimate_haste": _num(item.ultimate_haste),
         "factor": _num(item.factor),
         "label": item.label.value,
         "blocked": item.blocked,
@@ -173,9 +175,12 @@ def format_text(sheet: StatSheet) -> str:
     if cooldowns.blocked:
         lines.append(f"cooldowns: blocked: {cooldowns.blocked}")
     else:
-        lines.append(
-            f"cooldowns (ability haste {format_number(cooldowns.haste)}): [{cooldowns.label.value}]"
-        )
+        parts = [f"ability haste {format_number(cooldowns.haste)}"]
+        if cooldowns.basic_haste:
+            parts.append(f"basic {format_number(cooldowns.basic_haste)}")
+        if cooldowns.ultimate_haste:
+            parts.append(f"ultimate {format_number(cooldowns.ultimate_haste)}")
+        lines.append(f"cooldowns ({', '.join(parts)}): [{cooldowns.label.value}]")
         for spell in cooldowns.spells:
             effective = "/".join(format_number(value) for value in spell.effective)
             lines.append(f"  {spell.slot} {spell.name}: {effective}")

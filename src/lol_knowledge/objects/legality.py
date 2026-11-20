@@ -64,6 +64,19 @@ class ItemGroups:
     def matches_patch(self, patch: str) -> bool:
         return ".".join(patch.split(".")[:2]) == self.game_version
 
+    def has_boots(self, item_ids: Sequence[str]) -> bool:
+        """Whether any item in ``item_ids`` belongs to the client's Boots group."""
+        for item_id in item_ids:
+            limits = self.items.get(str(item_id))
+            if limits is None:
+                continue
+            if any(
+                key in self.groups and self.groups[key].name in {"Items/ItemGroups/Boots", "Boots"}
+                for key in limits.groups
+            ):
+                return True
+        return False
+
 
 @dataclass(frozen=True)
 class Violation:

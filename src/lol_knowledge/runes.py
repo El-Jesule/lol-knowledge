@@ -21,8 +21,9 @@ from fractions import Fraction
 from pathlib import Path
 from typing import Any
 
+from .damage import format_number
 from .errors import StatsError
-from .stats import Label
+from .stats import ItemData, Label, StatAmplifier, weakest
 from .stats.sheet import Contribution
 
 RUNES_PATH = Path("lol-knowledge") / "derived" / "runes.json"
@@ -55,6 +56,32 @@ SHARD_STATS = {
     "Tenacity": ("tenacity", "StatGain", "percent"),
 }
 LEVELS = 18
+ADAPTIVE_AD_PER_AP = Fraction(3, 5)  # 0.6 AD per 1.0 AP (Adaptive shard 5.4/9, AbsoluteFocus *0.6)
+BOUNTY_MAX_STACKS = 5  # five enemy champions on Summoner's Rift
+ADAPTIVE_RUNE_KEYS = frozenset(
+    {"Adaptive", "JackOfAllTrades", "AbsoluteFocus", "Waterwalking", "GatheringStorm"}
+)
+NON_COMBAT_MINOR_RUNES: Mapping[str, str] = {
+    "SixthSense": "vision/wards only; no combat stats or damage",
+    "GrislyMementos": "trinket haste only on Summoner's Rift (trinkets out of scope)",
+    "DeepWard": "vision/wards only; no combat stats or damage",
+    "TreasureHunter": "bonus gold only; no combat stats or damage",
+    "RelentlessHunter": "out-of-combat movement speed only (lol-knowledge/mechanics/move-speed.md)",
+    "HextechFlashtraption": "summoner spell replacement only; no combat stats or damage",
+    "CashBack": "gold refund only; no combat stats or damage",
+}
+
+
+@dataclass(frozen=True)
+class RuneEffects:
+    """Stat-sheet contributions and notes produced by the tree runes of a page."""
+
+    flats: tuple[tuple[str, Contribution], ...] = ()
+    percents: tuple[tuple[str, Contribution], ...] = ()
+    amplifiers: tuple[StatAmplifier, ...] = ()
+    move_speed_bonus_amp: Contribution | None = None
+    notes: tuple[str, ...] = ()
+    pending: tuple[str, ...] = ()
 
 
 @dataclass(frozen=True)
@@ -419,3 +446,508 @@ def tree_rune_notes(runes: Collection[int], data: RuneData) -> list[str]:
         name = rune.name if rune else str(rune_id)
         notes.append(f"rune {rune_id} {name}: effects not modelled (RUN-04)")
     return notes
+
+
+def needs_adaptive_stat(runes: Sequence[int], shards: Sequence[int], data: RuneData) -> bool:
+    """Whether any rune or shard on the page grants adaptive force."""
+    for rune_id in (*runes, *shards):
+        rune = data.runes.get(rune_id)
+        if rune is not None and rune.key in ADAPTIVE_RUNE_KEYS:
+            return True
+    return False
+
+
+def _int_input(
+    inputs: Mapping[str, Fraction],
+    name: str,
+    *,
+    minimum: int = 0,
+    maximum: int | None = None,
+) -> int | None:
+    if name not in inputs:
+        return None
+    raw = inputs[name]
+    if raw.denominator != 1:
+        raise StatsError(f"input {name}: must be an integer, got {format_number(raw)}")
+    value = int(raw)
+    if value < minimum or (maximum is not None and value > maximum):
+        bound = f"between {minimum} and {maximum}" if maximum is not None else f">= {minimum}"
+        raise StatsError(f"input {name}: must be {bound}, got {value}")
+    return value
+
+
+def _nonneg_input(inputs: Mapping[str, Fraction], name: str) -> Fraction | None:
+    if name not in inputs:
+        return None
+    value = inputs[name]
+    if value < 0:
+        raise StatsError(f"input {name}: must not be negative, got {format_number(value)}")
+    return value
+
+
+def _fraction_input(inputs: Mapping[str, Fraction], name: str) -> Fraction | None:
+    if name not in inputs:
+        return None
+    value = inputs[name]
+    if not 0 <= value <= 1:
+        raise StatsError(f"input {name}: must be between 0 and 1, got {format_number(value)}")
+    return value
+
+
+def _linear_by_level(low: Fraction, high: Fraction, level: int) -> Fraction:
+    return low + (high - low) * (level - 1) / (LEVELS - 1)
+
+
+def _adaptive_contribution(
+    ap_amount: Fraction,
+    source: str,
+    base_label: Label,
+    note: str,
+    *,
+    adaptive: str | None,
+    adaptive_label: Label,
+    adaptive_note: str,
+) -> tuple[str, Contribution]:
+    if adaptive not in ("attack_damage", "ability_power"):
+        raise StatsError("adaptive runes need the adaptive stat (attack_damage or ability_power)")
+    value = ap_amount if adaptive == "ability_power" else ap_amount * ADAPTIVE_AD_PER_AP
+    label = weakest((base_label, adaptive_label))
+    full_note = f"{note}; {adaptive_note}" if (note and adaptive_note) else (note or adaptive_note)
+    return adaptive, Contribution(value, "bonus", source, label, full_note)
+
+
+def _jack_distinct_stats(items: Sequence[ItemData]) -> tuple[int, bool]:
+    """Count distinct non-zero item stats for Jack of All Trades; flag unknown item stats."""
+    distinct: set[tuple[str, str]] = set()
+    has_unknown = False
+    for item in items:
+        for entry in item.stats:
+            if entry.value > 0:
+                distinct.add((entry.stat, entry.kind))
+            elif entry.value == 0 and entry.label is Label.PENDING:
+                has_unknown = True
+        for reason in item.unmodelled_stats:
+            if "heal and shield power" in reason.lower():
+                distinct.add(("heal_shield_power", "percent"))
+    return len(distinct), has_unknown
+
+
+def _apply_legend(
+    rune: Rune,
+    source: str,
+    base: Label,
+    inputs: Mapping[str, Fraction],
+    flats: list[tuple[str, Contribution]],
+) -> None:
+    max_stacks = int(_value(rune, "MaxLegendStacks"))
+    given = _int_input(inputs, "legend_stacks", minimum=0, maximum=max_stacks)
+    stacks = max_stacks if given is None else given
+    note = (
+        f"scenario: maximum stacks ({stacks})"
+        if given is None
+        else f"scenario: legend_stacks={stacks}"
+    )
+    if rune.key == "LegendAlacrity":
+        total = _value(rune, "AttackSpeedBase") + stacks * _value(rune, "AttackSpeedPerStack")
+        flats.append(("attack_speed_bonus", Contribution(total, "bonus", source, base, note)))
+    elif rune.key == "LegendHaste":
+        total = _value(rune, "HasteBase") + stacks * _value(rune, "HasteperStack")
+        flats.append(("basic_ability_haste", Contribution(total, "bonus", source, base, note)))
+    elif rune.key == "LegendBloodline":
+        lifesteal = stacks * _value(rune, "LifeStealPerStack") / 100
+        flats.append(("life_steal", Contribution(lifesteal, "bonus", source, base, note)))
+        if stacks == max_stacks:
+            flats.append(
+                ("health", Contribution(_value(rune, "BonusHealth"), "bonus", source, base, note))
+            )
+
+
+def _apply_time_or_conditional(
+    rune: Rune,
+    source: str,
+    base: Label,
+    *,
+    level: int,
+    inputs: Mapping[str, Fraction],
+    adaptive: str | None,
+    adaptive_label: Label,
+    adaptive_note: str,
+    flats: list[tuple[str, Contribution]],
+    amplifiers: list[StatAmplifier],
+    notes: list[str],
+    pending: list[str],
+) -> bool:
+    """Apply scenario-input stat runes; return False when ``rune`` is not one of them."""
+    if rune.key == "GatheringStorm":
+        minutes = _nonneg_input(inputs, "game_minutes")
+        if minutes is None:
+            pending.append(
+                f"rune {rune.id} {rune.name}: needs --input game_minutes=<min> ({RULES})"
+            )
+            return True
+        interval = _value(rune, "UpdateAfterMinutes")
+        step_ap = _value(rune, "{969826da}")
+        steps = int(minutes // interval)
+        if steps == 0:
+            notes.append(
+                f"rune {rune.id} {rune.name}: inactive before {format_number(interval)} min"
+            )
+            return True
+        ap_amount = step_ap * steps * (steps + 1) / 2
+        note = f"scenario: game_minutes={format_number(minutes)} ({steps} x {int(interval)} min)"
+        flats.append(
+            _adaptive_contribution(
+                ap_amount,
+                source,
+                base,
+                note,
+                adaptive=adaptive,
+                adaptive_label=adaptive_label,
+                adaptive_note=adaptive_note,
+            )
+        )
+        return True
+
+    if rune.key == "Conditioning":
+        minutes = _nonneg_input(inputs, "game_minutes")
+        required = _value(rune, "MinutesRequired")
+        if minutes is None:
+            pending.append(
+                f"rune {rune.id} {rune.name}: needs --input game_minutes=<min> "
+                f"(active from {format_number(required)} min)"
+            )
+            return True
+        if minutes < required:
+            notes.append(
+                f"rune {rune.id} {rune.name}: inactive before {format_number(required)} min"
+            )
+            return True
+        note = f"scenario: game_minutes={format_number(minutes)}"
+        flats.append(
+            ("armor", Contribution(_value(rune, "ArmorBase"), "bonus", source, base, note))
+        )
+        flats.append(
+            ("magic_resist", Contribution(_value(rune, "MRBase"), "bonus", source, base, note))
+        )
+        pct = _value(rune, "ExtraResist") * 100
+        amplifiers.append(StatAmplifier("armor", pct, source, base, note))
+        amplifiers.append(StatAmplifier("magic_resist", pct, source, base, note))
+        return True
+
+    if rune.key == "Overgrowth":
+        units = _int_input(inputs, "overgrowth_units", minimum=0)
+        if units is None:
+            pending.append(
+                f"rune {rune.id} {rune.name}: needs --input overgrowth_units=<count> (no cap)"
+            )
+            return True
+        per_tier = int(_value(rune, "UnitsPerTier"))
+        tiers = units // per_tier
+        note = f"scenario: overgrowth_units={units}"
+        if tiers > 0:
+            flats.append(
+                (
+                    "health",
+                    Contribution(
+                        tiers * _value(rune, "FlatHealthPerTier"), "bonus", source, base, note
+                    ),
+                )
+            )
+        else:
+            notes.append(f"rune {rune.id} {rune.name}: {units} units absorbed (< {per_tier})")
+        if units >= int(_value(rune, "ThresholdUnits")):
+            pct = _value(rune, "ThresholdMaxHealthRatio") * 100
+            amplifiers.append(StatAmplifier("health", pct, source, base, note))
+        return True
+
+    if rune.key == "AbsoluteFocus":
+        hp_pct = _fraction_input(inputs, "attacker_health_percent")
+        threshold = _value(rune, "HealthPercent")
+        if hp_pct is None:
+            pending.append(
+                f"rune {rune.id} {rune.name}: needs --input attacker_health_percent=<0..1> "
+                f"(active above {format_number(threshold * 100)}%)"
+            )
+            return True
+        if hp_pct < threshold:
+            pct_text = format_number(threshold * 100)
+            notes.append(f"rune {rune.id} {rune.name}: inactive below {pct_text}% health")
+            return True
+        ap_amount = _linear_by_level(
+            _value(rune, "MinAdaptive"), _value(rune, "MaxAdaptive"), level
+        )
+        label = base
+        note = f"scenario: attacker_health_percent={format_number(hp_pct)}"
+        if hp_pct == threshold:
+            label = Label.PENDING
+            note += "; at exact threshold (> vs >= not measured)"
+        flats.append(
+            _adaptive_contribution(
+                ap_amount,
+                source,
+                label,
+                note,
+                adaptive=adaptive,
+                adaptive_label=adaptive_label,
+                adaptive_note=adaptive_note,
+            )
+        )
+        return True
+
+    if rune.key == "Waterwalking":
+        in_river = _int_input(inputs, "in_river", minimum=0, maximum=1)
+        if in_river is None:
+            pending.append(
+                f"rune {rune.id} {rune.name}: needs --input in_river=0|1 (only active in the river)"
+            )
+            return True
+        if in_river == 0:
+            notes.append(f"rune {rune.id} {rune.name}: inactive outside the river")
+            return True
+        note = "scenario: in_river=1"
+        flats.append(
+            ("move_speed", Contribution(_value(rune, "MovementSpeed"), "bonus", source, base, note))
+        )
+        ap_amount = _linear_by_level(
+            _value(rune, "MinAdaptive"), _value(rune, "MaxAdaptive"), level
+        )
+        flats.append(
+            _adaptive_contribution(
+                ap_amount,
+                source,
+                base,
+                note,
+                adaptive=adaptive,
+                adaptive_label=adaptive_label,
+                adaptive_note=adaptive_note,
+            )
+        )
+        return True
+
+    return False
+
+
+def minor_rune_effects(
+    runes: Sequence[int],
+    data: RuneData,
+    *,
+    level: int,
+    patch: str,
+    items: Sequence[ItemData] = (),
+    uses_mana: bool = True,
+    has_boots: bool | None = None,
+    inputs: Mapping[str, Fraction] | None = None,
+    adaptive: str | None = None,
+    adaptive_label: Label = Label.DERIVED,
+    adaptive_note: str = "",
+) -> RuneEffects:
+    """Stat contributions, informational notes and pending effects for ``runes``."""
+    base = Label.DERIVED if data.matches_patch(patch) else Label.PENDING
+    scenario = inputs or {}
+    flats: list[tuple[str, Contribution]] = []
+    percents: list[tuple[str, Contribution]] = []
+    amplifiers: list[StatAmplifier] = []
+    move_speed_bonus_amp: Contribution | None = None
+    notes: list[str] = []
+    pending: list[str] = []
+    seen: set[int] = set()
+
+    for rune_id in runes:
+        if rune_id in seen:
+            continue
+        seen.add(rune_id)
+        rune = data.runes.get(rune_id)
+        if rune is None:
+            pending.append(f"rune {rune_id} {rune_id}: effects not modelled (RUN-04)")
+            continue
+        source = f"rune:{rune_id} {rune.key} ({data.content_version})"
+
+        if rune.key in NON_COMBAT_MINOR_RUNES:
+            notes.append(f"rune {rune_id} {rune.name}: {NON_COMBAT_MINOR_RUNES[rune.key]}")
+            continue
+
+        if rune.key == "Transcendence":
+            lvl1 = int(_value(rune, "LevelToTurnOn"))
+            lvl2 = int(_value(rune, "LevelToTurnOn2"))
+            lvl3 = int(_value(rune, "LevelToTurnOn3"))
+            haste = Fraction(0)
+            if level >= lvl1:
+                haste += _value(rune, "HasteBonus1") * 100
+            if level >= lvl2:
+                haste += _value(rune, "HasteBonus2") * 100
+            if haste > 0:
+                tier = lvl2 if level >= lvl2 else lvl1
+                flats.append(
+                    (
+                        "ability_haste",
+                        Contribution(haste, "bonus", source, base, f"level >= {tier}"),
+                    )
+                )
+            else:
+                notes.append(f"rune {rune_id} {rune.name}: active from level {lvl1}")
+            if level >= lvl3:
+                notes.append(
+                    f"rune {rune_id} {rune.name}: basic cooldown refund on takedown is not modelled"
+                )
+            continue
+
+        if rune.key in ("LegendAlacrity", "LegendHaste", "LegendBloodline"):
+            _apply_legend(rune, source, base, scenario, flats)
+            continue
+
+        if rune.key == "ManaflowBand":
+            if uses_mana:
+                flats.append(
+                    (
+                        "mana",
+                        Contribution(
+                            _value(rune, "MaxManaIncrease"),
+                            "bonus",
+                            source,
+                            base,
+                            "scenario: maximum stacks",
+                        ),
+                    )
+                )
+                notes.append(
+                    f"rune {rune_id} {rune.name}: missing mana regeneration is not modelled"
+                )
+            else:
+                notes.append(f"rune {rune_id} {rune.name}: champion does not use mana")
+            continue
+
+        if rune.key == "UltimateHunter":
+            given = _int_input(scenario, "bounty_stacks", minimum=0, maximum=BOUNTY_MAX_STACKS)
+            stacks = BOUNTY_MAX_STACKS if given is None else given
+            note = (
+                f"scenario: maximum stacks ({stacks})"
+                if given is None
+                else f"scenario: bounty_stacks={stacks}"
+            )
+            total = _value(rune, "StartingUltAH") + stacks * _value(rune, "AdditionalUltAH")
+            flats.append(("ultimate_haste", Contribution(total, "bonus", source, base, note)))
+            continue
+
+        if rune.key == "Celerity":
+            percents.append(
+                ("move_speed", Contribution(_value(rune, "PercentMS"), "bonus", source, base))
+            )
+            move_speed_bonus_amp = Contribution(
+                _value(rune, "PercentHasteMod"),
+                "bonus",
+                source,
+                Label.PENDING,
+                f"self-amplification and bonus order not measured ({RULES})",
+            )
+            continue
+
+        if rune.key == "JackOfAllTrades":
+            stacks, has_unknown = _jack_distinct_stats(items)
+            haste_label = Label.PENDING if has_unknown else base
+            if stacks == 0:
+                notes.append(f"rune {rune_id} {rune.name}: 0 distinct item stats")
+                continue
+            note = f"{stacks} distinct item stats"
+            if has_unknown:
+                note += "; item has unknown stat value"
+            flats.append(
+                (
+                    "ability_haste",
+                    Contribution(
+                        stacks * _value(rune, "HasteperStack"), "bonus", source, haste_label, note
+                    ),
+                )
+            )
+            ap_amount = (
+                _value(rune, "Adaptive10")
+                if stacks >= 10
+                else (_value(rune, "Adaptive5") if stacks >= 5 else Fraction(0))
+            )
+            if ap_amount > 0:
+                flats.append(
+                    _adaptive_contribution(
+                        ap_amount,
+                        source,
+                        haste_label,
+                        note,
+                        adaptive=adaptive,
+                        adaptive_label=adaptive_label,
+                        adaptive_note=adaptive_note,
+                    )
+                )
+            continue
+
+        if rune.key == "MagicalFootwear":
+            if has_boots is None:
+                pending.append(
+                    f"rune {rune_id} {rune.name}: item-groups.json missing, cannot check for boots"
+                )
+            elif has_boots:
+                flats.append(
+                    (
+                        "move_speed",
+                        Contribution(
+                            _value(rune, "AdditionalMovementSpeed"),
+                            "bonus",
+                            source,
+                            base,
+                            "boots upgraded from Slightly Magical Footwear",
+                        ),
+                    )
+                )
+            else:
+                notes.append(
+                    f"rune {rune_id} {rune.name}: no boots in build "
+                    "(+10 move speed applies to boots)"
+                )
+            continue
+
+        if rune.key == "BiscuitDelivery":
+            interval = _value(rune, "BiscuitMinuteInterval")
+            end = _value(rune, "SwapOverMinute")
+            max_biscuits = int(end // interval)
+            minutes = _nonneg_input(scenario, "game_minutes")
+            if minutes is None:
+                biscuits = max_biscuits
+                note = f"scenario: maximum stacks ({biscuits} biscuits)"
+            else:
+                biscuits = min(max_biscuits, int(minutes // interval))
+                note = f"scenario: game_minutes={format_number(minutes)} ({biscuits} biscuits)"
+            if biscuits > 0:
+                flats.append(
+                    (
+                        "health",
+                        Contribution(
+                            biscuits * _value(rune, "PermanentHP"), "bonus", source, base, note
+                        ),
+                    )
+                )
+            notes.append(f"rune {rune_id} {rune.name}: consumable healing is not modelled")
+            continue
+
+        if _apply_time_or_conditional(
+            rune,
+            source,
+            base,
+            level=level,
+            inputs=scenario,
+            adaptive=adaptive,
+            adaptive_label=adaptive_label,
+            adaptive_note=adaptive_note,
+            flats=flats,
+            amplifiers=amplifiers,
+            notes=notes,
+            pending=pending,
+        ):
+            continue
+
+        pending.append(f"rune {rune_id} {rune.name}: effects not modelled (RUN-04)")
+
+    return RuneEffects(
+        flats=tuple(flats),
+        percents=tuple(percents),
+        amplifiers=tuple(amplifiers),
+        move_speed_bonus_amp=move_speed_bonus_amp,
+        notes=tuple(notes),
+        pending=tuple(pending),
+    )

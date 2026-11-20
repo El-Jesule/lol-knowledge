@@ -3,7 +3,7 @@
 - **Fecha:** 2026-11-18
 - **Estado de partida:** fase 33 (kit de Ahri), `dev` en `b363a1b`, parche 16.22.1.
 - **Avance del 2026-11-19:** fases 34 a 37 (documentación, parche 16.23 con procedimiento repetible, legalidad de builds, runas y fragmentos); `dev` en `85fc4be`, parche 16.23.1.
-- **Avance del 2026-11-20:** decisiones `DEC-01` a `DEC-05` cerradas, validación en Windows superada (`OP-02`), CI de GitHub Actions añadido (`OP-03`, `e965d47`) y 52 ramas locales integradas eliminadas (`OP-04`). Siguiente paso (DEC-01): resto de `RUN-04` (runas menores y piedras angulares), después `CH-02` y `CH-03`.
+- **Avance del 2026-11-20:** decisiones `DEC-01` a `DEC-05` cerradas, validación en Windows superada (`OP-02`), CI de GitHub Actions añadido (`OP-03`, `e965d47`), 52 ramas locales integradas eliminadas (`OP-04`) y **fase 38** (runas menores de estadísticas en la hoja, `basic_ability_haste` y `ultimate_haste`, `--input` en `stats`). Siguiente paso (DEC-01): resto de `RUN-04` (fase 39: runas menores de combate; fase 40: piedras angulares), después `CH-02` y `CH-03`.
 - **Método:** revisión de `README.md`, `lol-knowledge/` (fichas, reglas de `mechanics/`, `objects/README.md`), `odd/tasks/`, `research/`, los dos `kit.json` (campo `not_modelled`), el catálogo de objetos y los registros derivados. Cada punto cita el archivo donde consta. Si un punto procede de una tarea antigua y no se ha comprobado que siga vigente, se dice.
 - **Objetivo final** (descripción del proyecto): a partir de una petición en lenguaje natural («la build de Jax que maximice su burst con AP»), una IA prepara el escenario, el motor determinista calcula y la IA explica el resultado, para cualquier campeón, objeto y runa, con todas las cifras trazables.
 
@@ -89,7 +89,7 @@ El motor debe servir también para vida, resistencias, curación y supervivencia
 - [ ] **MEC-26 (P2)** Controles de masas y su duración con tenacidad: hoy la tenacidad no cambia ningún cálculo ([`tenacity.md`](../lol-knowledge/mechanics/tenacity.md)). Falta también el grupo B de tenacidad y la tenacidad condicional.
 - [ ] **MEC-27 (P3)** Ralentizaciones, resistencia a ralentizaciones y aportes multiplicativos de velocidad de movimiento ([`odd/tasks/move-speed.md`](tasks/move-speed.md)).
 - [ ] **MEC-28 (P3)** Multiplicadores de regeneración y regeneración por vida o maná máximos ([`odd/tasks/regeneration.md`](tasks/regeneration.md)).
-- [ ] **MEC-29 (P2)** Aceleración de definitiva y de hechizos de invocador, y enfriamientos que no son de habilidad ([`ability-haste.md`](../lol-knowledge/mechanics/ability-haste.md)). Tope de 500 sin confirmar.
+- [ ] **MEC-29 (P2)** *Parcial (fase 38): `basic_ability_haste` (Q/W/E) y `ultimate_haste` (R) ya se aplican en `ability_cooldowns` y `--timeline`.* Falta la aceleración de hechizos de invocador y de objetos, y enfriamientos que no son de habilidad ([`ability-haste.md`](../lol-knowledge/mechanics/ability-haste.md)). Tope de 500 sin confirmar.
 - [ ] **MEC-30 (P3)** Estadísticas por encima del nivel 18 ([`stat-growth.md`](../lol-knowledge/mechanics/stat-growth.md)).
 - [ ] **MEC-31 (P2)** Efectos de estadística a partir de otra estadística (por ejemplo, vida adicional que da DA) y auras.
 - [ ] **MEC-32 (P3)** Mejoras y buffs externos: dragones, barón, elixires.
@@ -142,7 +142,7 @@ El motor debe servir también para vida, resistencias, curación y supervivencia
 - [x] **RUN-01 (P1)** *Hecho en la fase 37: [`runes.json`](../lol-knowledge/derived/runes.json) y [`runes.md`](../lol-knowledge/mechanics/runes.md).* Modelo de runas: no hay ninguno. El snapshot trae los 5 árboles de Data Dragon (62 runas), pero solo con descripciones, sin cifras estructuradas.
 - [x] **RUN-02 (P1)** *Hecho en la fase 37: `binmodel.perks`, valores con nombre cuando un texto lo da (332 de 463).* Cifras de las runas desde el cliente, con el mismo método que `item-effects.json` (bin + textos), etiquetadas `Derivado`.
 - [x] **RUN-03 (P1)** *Hecho en la fase 37: los fragmentos salen del cliente y se aplican en la hoja; progresión de vida lineal y empates de la fuerza adaptable, `Pendiente de verificación`.* Fragmentos de estadísticas: no están en `runes.json` de Data Dragon; hacen falta fuente y modelo.
-- [ ] **RUN-04 (P1)** *Parcial (fase 37): legalidad de la página hecha; faltan las piedras angulares en la rotación y las runas menores en la hoja.* Piedras angulares en la rotación (Electrocutar, Conquistador, Cometa, Primer golpe…) y runas menores en la hoja; legalidad de la página (árbol principal y secundario, una por fila).
+- [ ] **RUN-04 (P1)** *Parcial (fases 37 y 38): legalidad de página, 15 runas menores de estadísticas en la hoja (10 permanentes/directas y 5 con `--input`) y 7 runas menores no-combate hechas; faltan las 23 runas menores de combate/curación/defensa (fase 39) y las 17 piedras angulares en la rotación (fase 40).* Piedras angulares en la rotación (Electrocutar, Conquistador, Cometa, Primer golpe…) y runas menores en la hoja; legalidad de la página (árbol principal y secundario, una por fila).
 
 ## 8. Optimizador de builds
 

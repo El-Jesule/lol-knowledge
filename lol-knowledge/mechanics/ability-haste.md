@@ -18,15 +18,17 @@ reducción    = aceleración / (100 + aceleración)
 ```
 
 - `enfriamiento_base`: el de Data Dragon para el rango (`spells[].cooldown`), `Oficial`.
-- `aceleración`: suma de todas las fuentes de aceleración de habilidades (se apila de forma aditiva).
+- `aceleración`: suma de todas las fuentes aplicables (se apila de forma aditiva):
+  - Habilidades básicas (`Q`, `W`, `E`): `ability_haste + basic_ability_haste` (por ejemplo, Leyenda: Velocidad).
+  - Definitiva (`R`): `ability_haste + ultimate_haste` (por ejemplo, Cazador definitivo).
 - Sin aceleración, el enfriamiento es el de Data Dragon y conserva la etiqueta `Oficial`.
 
 ## Pendiente de verificación
 
 - **Tope:** algunas fuentes citan un máximo de 500 de aceleración y otras dicen que no hay tope. El motor no aplica ninguno; por debajo de 500 la diferencia no existe.
-- **Aceleración de definitiva y de hechizos de invocador:** son estadísticas aparte. No están en el catálogo de objetos y no se modelan.
+- **Aceleración de hechizos de invocador y de objetos:** no se modelan todavía.
 - **Enfriamientos que no son de habilidad** (pasivas, efectos de objeto): no se modelan.
 
 ## Implementación (`Calculado`)
 
-`src/lol_knowledge/stats/metrics.py` (`ability_cooldowns`). Las pruebas fijan los ejemplos de S1.
+`src/lol_knowledge/stats/metrics.py` (`ability_cooldowns`) y `src/lol_knowledge/stats/registry.py` (`ability_haste`, `basic_ability_haste`, `ultimate_haste`). Las pruebas fijan los ejemplos de S1 y la separación entre habilidades básicas y definitiva.

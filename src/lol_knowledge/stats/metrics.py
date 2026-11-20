@@ -55,25 +55,56 @@ class Cooldowns:
     spells: tuple[SpellCooldown, ...]
     blocked: str | None = None
     rules: str = HASTE_RULES
+    basic_haste: Fraction = Fraction(0)
+    ultimate_haste: Fraction = Fraction(0)
+
+
+def _haste_factor(haste: Fraction) -> Fraction:
+    return Fraction(100) / (100 + haste)
 
 
 def ability_cooldowns(sheet: StatSheet) -> Cooldowns:
-    """Cooldown of every rank of Q, W, E and R after ability haste."""
+    """Cooldown of every rank of Q, W, E and R after ability, basic and ultimate haste."""
     haste_value = sheet["ability_haste"]
+    basic_value = sheet["basic_ability_haste"]
+    ultimate_value = sheet["ultimate_haste"]
     try:
         haste = haste_value.total()
+        basic_haste = basic_value.total()
+        ultimate_haste = ultimate_value.total()
     except StatBlocked as exc:
         return Cooldowns(None, None, Label.PENDING, (), str(exc))
-    factor = Fraction(100) / (100 + haste)
+    factor = _haste_factor(haste)
+    basic_factor = _haste_factor(haste + basic_haste)
+    ultimate_factor = _haste_factor(haste + ultimate_haste)
     spells = tuple(
         SpellCooldown(
             spell.slot,
             spell.id,
             spell.name,
             spell.cooldowns,
-            tuple(value * factor for value in spell.cooldowns),
+            tuple(
+                value * (ultimate_factor if spell.slot == "R" else basic_factor)
+                for value in spell.cooldowns
+            ),
         )
         for spell in sheet.champion.spells
     )
-    label = Label.OFFICIAL if haste == 0 else weakest((haste_value.label, Label.DERIVED))
-    return Cooldowns(haste, factor, label, spells)
+    active_labels = [
+        stat_val.label
+        for stat_val, amount in (
+            (haste_value, haste),
+            (basic_value, basic_haste),
+            (ultimate_value, ultimate_haste),
+        )
+        if amount != 0
+    ]
+    label = Label.OFFICIAL if not active_labels else weakest((*active_labels, Label.DERIVED))
+    return Cooldowns(
+        haste,
+        factor,
+        label,
+        spells,
+        basic_haste=basic_haste,
+        ultimate_haste=ultimate_haste,
+    )
