@@ -30,6 +30,8 @@ class SpellData:
     id: str
     name: str
     cooldowns: tuple[Fraction, ...]
+    costs: tuple[Fraction, ...] = ()
+    cost_type: str = ""
 
 
 @dataclass(frozen=True)
@@ -122,7 +124,31 @@ def champion_from_document(document: Mapping[str, Any], *, patch: str, locale: s
         values = tuple(_number(value, f"{champion_id}.{slot}.cooldown") for value in cooldowns)
         if any(value < 0 for value in values):
             raise StatsError(f"{champion_id}.{slot}: negative cooldown")
-        spells.append(SpellData(slot, str(spell.get("id", "")), str(spell.get("name", "")), values))
+        raw_costs = spell.get("cost")
+        if raw_costs is None:
+            costs = (Fraction(0),) * maxrank
+        else:
+            if (
+                not isinstance(raw_costs, Sequence)
+                or isinstance(raw_costs, (str, bytes))
+                or len(raw_costs) != maxrank
+            ):
+                raise StatsError(f"{champion_id}.{slot}: cost must list one value per rank")
+            costs = tuple(_number(value, f"{champion_id}.{slot}.cost") for value in raw_costs)
+            if any(value < 0 for value in costs):
+                raise StatsError(f"{champion_id}.{slot}: negative cost")
+        raw_cost_type = spell.get("costType")
+        cost_type = raw_cost_type.strip() if isinstance(raw_cost_type, str) else ""
+        spells.append(
+            SpellData(
+                slot,
+                str(spell.get("id", "")),
+                str(spell.get("name", "")),
+                values,
+                costs,
+                cost_type,
+            )
+        )
     resource = document.get("partype")
     return ChampionData(
         id=champion_id,

@@ -2,9 +2,11 @@
 
 from .evaluate import DamagePart, ability_damage, passive_contributions, sheet_stats
 from .model import (
+    COST_RESOURCES,
     SCHEMA,
     AbilitySpec,
     CaseSpec,
+    CostSpec,
     DamagePartSpec,
     Kit,
     PassiveStatSpec,
@@ -14,9 +16,11 @@ from .model import (
 )
 
 __all__ = [
+    "COST_RESOURCES",
     "SCHEMA",
     "AbilitySpec",
     "CaseSpec",
+    "CostSpec",
     "DamagePart",
     "DamagePartSpec",
     "Kit",

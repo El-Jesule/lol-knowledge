@@ -6,7 +6,16 @@ from fractions import Fraction
 from typing import Any
 
 from ..damage import DamageType, format_number, format_percent
-from .metrics import Cooldowns, EffectiveHealth, ability_cooldowns, effective_health
+from .metrics import (
+    AbilityCosts,
+    Cooldowns,
+    EffectiveHealth,
+    ResourcePool,
+    ability_cooldowns,
+    ability_costs,
+    champion_resource,
+    effective_health,
+)
 from .registry import Stacking, Unit
 from .sheet import StatSheet, StatValue
 
@@ -87,6 +96,42 @@ def _cooldowns_dict(item: Cooldowns) -> dict[str, Any]:
     }
 
 
+def _resource_dict(item: ResourcePool) -> dict[str, Any]:
+    return {
+        "kind": item.kind,
+        "name": item.name,
+        "maximum": _num(item.maximum),
+        "exact_maximum": None if item.maximum is None else str(item.maximum),
+        "regen_per_5s": _num(item.regen_per_5s),
+        "exact_regen_per_5s": None if item.regen_per_5s is None else str(item.regen_per_5s),
+        "regen_per_second": _num(item.regen_per_second),
+        "uses_casting_pool": item.uses_casting_pool,
+        "label": item.label.value,
+        "blocked": item.blocked,
+        "notes": list(item.notes),
+        "rules": item.rules,
+    }
+
+
+def _costs_dict(item: AbilityCosts) -> dict[str, Any]:
+    return {
+        "resource_kind": item.resource_kind,
+        "resource_name": item.resource_name,
+        "label": item.label.value,
+        "rules": item.rules,
+        "spells": [
+            {
+                "slot": spell.slot,
+                "id": spell.spell_id,
+                "name": spell.name,
+                "costs": [float(value) for value in spell.costs],
+                "cost_type": spell.cost_type,
+            }
+            for spell in item.spells
+        ],
+    }
+
+
 def to_dict(sheet: StatSheet) -> dict[str, Any]:
     champion = sheet.champion
     return {
@@ -103,6 +148,8 @@ def to_dict(sheet: StatSheet) -> dict[str, Any]:
                 kind.value: _ehp_dict(effective_health(sheet, kind)) for kind in EHP_TYPES
             },
             "cooldowns": _cooldowns_dict(ability_cooldowns(sheet)),
+            "resource": _resource_dict(champion_resource(sheet)),
+            "ability_costs": _costs_dict(ability_costs(sheet)),
         },
     }
 
@@ -184,5 +231,31 @@ def format_text(sheet: StatSheet) -> str:
         for spell in cooldowns.spells:
             effective = "/".join(format_number(value) for value in spell.effective)
             lines.append(f"  {spell.slot} {spell.name}: {effective}")
+    pool = champion_resource(sheet)
+    if pool.blocked:
+        lines.append(f"resource pool: blocked: {pool.blocked}")
+    elif pool.uses_casting_pool:
+        assert pool.maximum is not None and pool.regen_per_5s is not None
+        assert pool.regen_per_second is not None
+        lines.append(
+            f"resource pool: {pool.name} {format_number(pool.maximum)}, "
+            f"regen {format_number(pool.regen_per_5s)} / 5 s "
+            f"({format_number(pool.regen_per_second)} / s) [{pool.label.value}]"
+        )
+    elif pool.kind == "other":
+        assert pool.maximum is not None
+        lines.append(
+            f"resource pool: {pool.name} {format_number(pool.maximum)} "
+            f"(secondary resource) [{pool.label.value}]"
+        )
+    else:
+        lines.append(f"resource pool: {pool.name} (no casting pool) [{pool.label.value}]")
+    lines += [f"  note: {note}" for note in pool.notes]
+    costs = ability_costs(sheet)
+    if any(any(value > 0 for value in spell.costs) for spell in costs.spells):
+        lines.append(f"ability costs ({costs.resource_name}): [{costs.label.value}]")
+        for spell in costs.spells:
+            cost_str = "/".join(format_number(value) for value in spell.costs)
+            lines.append(f"  {spell.slot} {spell.name}: {cost_str}")
     lines.append(f"label: {RESULT_LABEL}")
     return "\n".join(lines)

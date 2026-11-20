@@ -14,10 +14,23 @@ from .derived import DerivedRecords, load_records, parse_records
 from .growth import growth_multiplier
 from .issues import DataIssue, load_issues, parse_issues
 from .labels import EVIDENCE_LABEL, Label, weakest
-from .metrics import Cooldowns, EffectiveHealth, ability_cooldowns, effective_health
+from .metrics import (
+    AbilityCosts,
+    Cooldowns,
+    EffectiveHealth,
+    ResourcePool,
+    SpellCost,
+    ability_cooldowns,
+    ability_costs,
+    champion_resource,
+    effective_health,
+)
 from .registry import STATS, Stacking, StatDef, Unit, stat
 from .report import format_text, to_dict
 from .sheet import (
+    ENERGY_RESOURCE,
+    MANA_RESOURCE,
+    NO_RESOURCE,
     AttackSpeedRatio,
     Contribution,
     StatAmplifier,
@@ -32,7 +45,13 @@ from .sheet import (
 )
 
 __all__ = [
+    "AbilityCosts",
     "AttackSpeedRatio",
+    "ENERGY_RESOURCE",
+    "MANA_RESOURCE",
+    "NO_RESOURCE",
+    "ResourcePool",
+    "SpellCost",
     "effect_amount",
     "EVIDENCE_LABEL",
     "STATS",
@@ -54,9 +73,11 @@ __all__ = [
     "StatValue",
     "Unit",
     "ability_cooldowns",
+    "ability_costs",
     "sheet_effect_reason",
     "build_stat_sheet",
     "champion_from_document",
+    "champion_resource",
     "effective_health",
     "format_text",
     "growth_multiplier",

@@ -8,9 +8,10 @@ from fractions import Fraction
 from ..damage import DamageType, damage_multiplier
 from .labels import Label, weakest
 from .registry import HASTE_RULES
-from .sheet import StatBlocked, StatSheet
+from .sheet import ENERGY_RESOURCE, MANA_RESOURCE, NO_RESOURCE, StatBlocked, StatSheet
 
 EHP_RULES = "lol-knowledge/mechanics/effective-health.md"
+RESOURCES_RULES = "lol-knowledge/mechanics/resources.md"
 RESISTANCE_FOR = {DamageType.PHYSICAL: "armor", DamageType.MAGIC: "magic_resist"}
 
 
@@ -108,3 +109,138 @@ def ability_cooldowns(sheet: StatSheet) -> Cooldowns:
         basic_haste=basic_haste,
         ultimate_haste=ultimate_haste,
     )
+
+
+@dataclass(frozen=True)
+class ResourcePool:
+    """Champion resource pool and passive regeneration resolved from the stat sheet.
+
+    Covers mana (from ``sheet["mana"]`` and ``sheet["mana_regen"]``), energy (fixed
+    Data Dragon pool and 50/5 s regen, unaffected by mana items or level growth),
+    resourceless champions, and other champion-specific secondary bars (fury, flow,
+    heat, courage, shield, ferocity, crimson rush).
+    """
+
+    kind: str  # "mana", "energy", "none" or "other"
+    name: str
+    maximum: Fraction | None
+    regen_per_5s: Fraction | None
+    label: Label
+    uses_casting_pool: bool
+    blocked: str | None = None
+    notes: tuple[str, ...] = ()
+    rules: str = RESOURCES_RULES
+
+    @property
+    def regen_per_second(self) -> Fraction | None:
+        return None if self.regen_per_5s is None else self.regen_per_5s / 5
+
+
+def champion_resource(sheet: StatSheet) -> ResourcePool:
+    """Resolve the champion's casting or secondary resource pool (resources.md)."""
+    champion = sheet.champion
+    locale = champion.locale
+    mana_name = MANA_RESOURCE.get(locale)
+    energy_name = ENERGY_RESOURCE.get(locale)
+    none_names = NO_RESOURCE.get(locale, frozenset({"", "Nada", "None"}))
+    partype = champion.resource
+
+    if mana_name is not None and partype == mana_name:
+        mana_val = sheet["mana"]
+        regen_val = sheet["mana_regen"]
+        try:
+            maximum = mana_val.total()
+            regen = regen_val.total()
+        except StatBlocked as exc:
+            return ResourcePool("mana", partype, None, None, Label.PENDING, True, str(exc))
+        return ResourcePool(
+            "mana",
+            partype,
+            maximum,
+            regen,
+            weakest((mana_val.label, regen_val.label)),
+            uses_casting_pool=True,
+        )
+
+    if energy_name is not None and partype == energy_name:
+        maximum = champion.stats.get("mp", Fraction(0))
+        regen = champion.stats.get("mpregen", Fraction(0))
+        mp_growth = champion.stats.get("mpperlevel", Fraction(0))
+        regen_growth = champion.stats.get("mpregenperlevel", Fraction(0))
+        notes: list[str] = []
+        label = Label.OFFICIAL
+        if mp_growth or regen_growth:
+            label = Label.PENDING
+            notes.append("unexpected non-zero energy growth in Data Dragon")
+        if any(
+            entry.stat in {"mana", "mana_regen"} for item in sheet.items for entry in item.stats
+        ):
+            notes.append("mana and mana regeneration items do not affect energy")
+        return ResourcePool(
+            "energy",
+            partype,
+            maximum,
+            regen,
+            label,
+            uses_casting_pool=True,
+            notes=tuple(notes),
+        )
+
+    maximum = champion.stats.get("mp", Fraction(0))
+    regen = champion.stats.get("mpregen", Fraction(0))
+    if partype in none_names or (maximum == 0 and regen == 0):
+        return ResourcePool(
+            "none",
+            partype or "none",
+            Fraction(0),
+            Fraction(0),
+            Label.OFFICIAL,
+            uses_casting_pool=False,
+            notes=("champion has no mana or energy casting pool",),
+        )
+    return ResourcePool(
+        "other",
+        partype,
+        maximum,
+        regen,
+        Label.OFFICIAL,
+        uses_casting_pool=False,
+        notes=(
+            f"{partype} is a champion-specific secondary resource; generation and decay are "
+            "not modelled as a standard casting pool",
+        ),
+    )
+
+
+@dataclass(frozen=True)
+class SpellCost:
+    slot: str
+    spell_id: str
+    name: str
+    costs: tuple[Fraction, ...]
+    cost_type: str
+
+
+@dataclass(frozen=True)
+class AbilityCosts:
+    resource_kind: str
+    resource_name: str
+    label: Label
+    spells: tuple[SpellCost, ...]
+    rules: str = RESOURCES_RULES
+
+
+def ability_costs(sheet: StatSheet) -> AbilityCosts:
+    """Official Data Dragon resource costs per rank for Q, W, E and R."""
+    pool = champion_resource(sheet)
+    spells = tuple(
+        SpellCost(
+            spell.slot,
+            spell.id,
+            spell.name,
+            spell.costs or (Fraction(0),) * len(spell.cooldowns),
+            spell.cost_type,
+        )
+        for spell in sheet.champion.spells
+    )
+    return AbilityCosts(pool.kind, pool.name, Label.OFFICIAL, spells)
