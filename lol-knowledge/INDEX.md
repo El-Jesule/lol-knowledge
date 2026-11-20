@@ -54,7 +54,7 @@
 
 ## Cobertura actual
 
-Dos campeones con kit calculable (Zaahen, con análisis completo, y Ahri), datos oficiales de los 173 campeones en `data/current/` y sus estadísticas base y por nivel del cliente en [champion-records.json](derived/champion-records.json). La cobertura de kits crece de uno en uno: cada campeón nuevo reutiliza esta estructura.
+**40 campeones con kit calculable** (`lol-knowledge/champions/<Id>/kit.json`): Zaahen (con análisis completo), Ahri (con fichas) y 38 campeones de la oleada 1 repartidos en los cinco roles (`Jax`, `Darius`, `Malphite`, `Pantheon`, `Renekton`, `Riven`, `Teemo`, `Sett`, `Camille`, `Garen`, `Amumu`, `Diana`, `Evelynn`, `Karthus`, `Sejuani`, `Vi`, `Nocturne`, `Annie`, `Lux`, `Veigar`, `Orianna`, `Syndra`, `Viktor`, `Xerath`, `Ziggs`, `Anivia`, `Leblanc`, `Lissandra`, `Brand`, `Ezreal`, `Jinx`, `Xayah`, `Vayne`, `Morgana`, `Leona`, `Nautilus`, `Alistar` y `Nami`). Datos oficiales de los 173 campeones en `data/current/` y sus estadísticas base y por nivel del cliente en [champion-records.json](derived/champion-records.json). La cobertura restante de `CH-01` (133 campeones) crece por oleadas con `research/binmodel/batch_kits.py`.
 
 El modelo de objetos tiene las estadísticas de los **218 objetos comprables de la Grieta**; los efectos están curados en **43 objetos** (66 efectos), elegidos por mecánica, y el resto queda `pending`. Las cifras que Data Dragon no publica se registran con fuente citada: la wiki (`secondary`) o los datos del cliente 16.23 (`derived`, `corroborated` si coinciden). Los límites están en [Modelo de objetos](objects/README.md).
 
