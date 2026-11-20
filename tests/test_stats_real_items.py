@@ -160,3 +160,10 @@ def test_guinsoo_stacks_are_computed_by_the_rotation():
     assert "attacker 3124 phantom-hit: excluded, not applied" not in outcome.notes
     assert not any("3124 seething-strike" in note for note in outcome.notes)
     assert outcome.label is not Label.PENDING
+
+
+def test_steraks_gage_adds_half_of_base_attack_damage_as_bonus_ad():
+    data = sheet(16, "3053")
+    ad = data["attack_damage"]
+    assert ad.scoped("bonus") == ad.scoped("base") / 2
+    assert ad.label is Label.DERIVED

@@ -246,15 +246,22 @@ class StatAmplifier:
 
 
 def _sheet_effects(
-    item: ItemData, level: int
+    item: ItemData,
+    level: int,
+    base_stats: Mapping[str, Fraction] = (),
+    base_labels: Mapping[str, Label] = (),
+    blocked_stats: Mapping[str, str] = (),
 ) -> tuple[list[tuple[str, Contribution]], list[StatAmplifier]]:
     """Stats from the effects of ``item`` that the sheet applies (``sheet_effect_reason``).
 
     A ``flat`` component adds its amount in the catalog unit: percentage points
     for fraction stats (25 -> 0.25), the stat's own unit otherwise. A
     ``percent`` component with scope ``total`` amplifies the total of an amount
-    stat (Rabadon's Deathcap: +30 % ability power).
+    stat (Rabadon's Deathcap: +30 % ability power). Formulas may read resolved
+    champion ``base_*`` stats (e.g. Sterak's Gage: 50 % base AD).
     """
+    stat_env = dict(base_stats)
+    label_env = dict(base_labels)
     flat: list[tuple[str, Contribution]] = []
     amplifiers: list[StatAmplifier] = []
     for effect in item.effects:
@@ -288,16 +295,22 @@ def _sheet_effects(
                 )
                 continue
             try:
-                amount = evaluate_formula(component.get("formula"), {}, level=level).exact
+                evaluated = evaluate_formula(component.get("formula"), stat_env, level=level)
             except FormulaError as exc:
+                if definition.id in blocked_stats:
+                    continue
                 raise StatsError(f"{title}: {exc}") from exc
+            amount = evaluated.exact
+            part_label = weakest(
+                [label, *(label_env[k] for k in evaluated.dependencies if k in label_env)]
+            )
             if mode == "percent":
-                amplifiers.append(StatAmplifier(definition.id, amount, source, label))
+                amplifiers.append(StatAmplifier(definition.id, amount, source, part_label))
                 continue
             value = effect_amount(definition.id, amount)
             if definition.unit is Unit.FRACTION and not 0 <= value <= 1:
                 raise StatsError(f"{title}: {value} is not a fraction 0..1")
-            flat.append((definition.id, Contribution(value, "bonus", source, label, note)))
+            flat.append((definition.id, Contribution(value, "bonus", source, part_label, note)))
     return flat, amplifiers
 
 
@@ -664,6 +677,16 @@ def build_stat_sheet(
     else:
         contributions["crit_chance"].append(crit_base)
 
+    base_stats: dict[str, Fraction] = {}
+    base_labels: dict[str, Label] = {}
+    for stat_id, items_list in contributions.items():
+        if stat_id in blocked:
+            continue
+        base_items = [c for c in items_list if c.scope == "base"]
+        if base_items:
+            base_stats[f"base_{stat_id}"] = sum((c.value for c in base_items), start=Fraction(0))
+            base_labels[f"base_{stat_id}"] = weakest(c.label for c in base_items)
+
     for item in items:
         for entry in item.stats:
             definition = _receiver(entry.stat)
@@ -694,7 +717,9 @@ def build_stat_sheet(
             )
             target = percents if deferred else contributions
             target.setdefault(definition.id, []).append(contribution)
-        effect_stats, item_amplifiers = _sheet_effects(item, level)
+        effect_stats, item_amplifiers = _sheet_effects(
+            item, level, base_stats, base_labels, blocked
+        )
         for stat_id, contribution in effect_stats:
             contributions[stat_id].append(contribution)
         amplifiers += item_amplifiers
