@@ -130,9 +130,10 @@ def test_press_the_attack_bursts_on_3rd_attack_and_amplifies_subsequent_damage()
     assert burst[0].label is Label.DERIVED  # level 18 endpoint
     assert out.steps[3].parts[0].dealt == (("rune:8005 PressTheAttack", F(8)),)
 
-    # Intermediate level (11) marks linear curve Pending.
+    # Intermediate level (11) follows corroborated linear curve 40..160 (Derivado).
     mid = simulate("Zaahen", [8005], "attack, attack, attack", level=11, items=["1036"])
-    assert [p for p in mid.steps[2].parts if p.kind == "rune"][0].label is Label.PENDING
+    mid_proc = [p for p in mid.steps[2].parts if p.kind == "rune"][0]
+    assert mid_proc.raw == F(40) + F(120) * F(10, 17) and mid_proc.label is Label.DERIVED
 
 
 def test_conqueror_stacks_adaptive_force_and_heals_at_max_stacks():
@@ -152,6 +153,12 @@ def test_conqueror_stacks_adaptive_force_and_heals_at_max_stacks():
     assert out.steps[5].healing == 0  # 10 stacks before step 6
     assert out.steps[6].healing == out.steps[6].total * F(8, 100)
 
+    # Intermediate level (10) follows corroborated linear curve 1.8..4.0 (Derivado).
+    mid = simulate(
+        "Zaahen", [8010], "attack, attack", level=10, items=["1036"], holder_range="melee"
+    )
+    assert mid.label is Label.DERIVED
+
 
 def test_lethal_tempo_stacks_attack_speed_and_deals_on_hit_damage_at_max_stacks():
     # Zaahen lvl 18 melee with Long Sword (1036 -> physical adaptive):
@@ -170,7 +177,8 @@ def test_lethal_tempo_stacks_attack_speed_and_deals_on_hit_damage_at_max_stacks(
     assert len(procs) == 1 and procs[0].damage_type is DamageType.PHYSICAL
     assert procs[0].raw > 30  # amplified by bonus attack speed
 
-    # Ranged marks client 16.23 tooltip-vs-calc discrepancy as Pending.
+    # Ranged uses client 16.23 calculation multipliers: 6% * 0.8 = 4.8% AS/stack (28.8% max)
+    # and 30 * 0.667 = 20.01 base note damage at lvl 18 (corroborated by LoL Wiki -> Derivado).
     ranged = simulate(
         "Ahri",
         [8008],
@@ -179,7 +187,13 @@ def test_lethal_tempo_stacks_attack_speed_and_deals_on_hit_damage_at_max_stacks(
         holder_range="ranged",
         timeline=True,
     )
-    assert [p for p in ranged.steps[6].parts if p.kind == "rune"][0].label is Label.PENDING
+    ranged_proc = [p for p in ranged.steps[6].parts if p.kind == "rune"][0]
+    ahri_base_as_bonus = build_stat_sheet(
+        load_champion(ROOT, "Ahri"), 18, load_items(ROOT, ("1036",)), ISSUES, {}, DERIVED
+    )["attack_speed_bonus"].total()
+    expected_bonus_as = ahri_base_as_bonus + 6 * F(6, 100) * F(8, 10)
+    assert ranged_proc.raw == F(30) * F(667, 1000) * (1 + expected_bonus_as)
+    assert ranged_proc.label is Label.DERIVED
 
 
 def test_hail_of_blades_boosts_3_attacks_and_deals_true_damage():
@@ -201,22 +215,45 @@ def test_hail_of_blades_boosts_3_attacks_and_deals_true_damage():
     dt_normal = out.steps[3].time - out.steps[2].time
     assert dt_boosted < dt_normal
 
+    # Intermediate level (10) follows decoded linear curve {ee18a47b} (Derivado).
+    mid = simulate("Zaahen", [9923], "attack", level=10, items=["1036"], holder_range="melee")
+    mid_proc = [p for p in mid.steps[0].parts if p.kind == "rune"][0]
+    assert mid_proc.raw == F(2) + F(18) * F(9, 17) + F(12, 100) * 10
+    assert mid_proc.label is Label.DERIVED
 
-def test_summon_aery_fires_once_and_warns_on_subsequent_hits():
+
+def test_summon_aery_fires_once_and_supports_explicit_return_seconds():
     # Single step: clean Derivado proc (50 + 0.05 * 169 = 58.45 magic damage).
     one = simulate("Ahri", [8214], "Q.out", items=["3089"])
     procs = [p for p in one.steps[0].parts if p.kind == "rune"]
     assert len(procs) == 1 and procs[0].raw == F(50) + F(5, 100) * F(169)
     assert one.label is Label.DERIVED
 
-    # Second step: cannot model return time -> warns and weakens.
+    # Second step without aery_return_seconds: warns and weakens.
     two = simulate("Ahri", [8214], "Q.out, W.one", items=["3089"])
     assert not any(p.kind == "rune" for p in two.steps[1].parts)
     assert two.label is Label.PENDING
     assert any("return travel time" in note for note in two.notes)
 
+    # Explicit aery_return_seconds in timeline models repeated procs cleanly.
+    rep = simulate(
+        "Ahri",
+        [8214],
+        "Q.out, wait:1, W.one, wait:2, E",
+        items=["3089"],
+        inputs={"aery_return_seconds": F(3)},
+        timeline=True,
+    )
+    assert any(p.kind == "rune" for p in rep.steps[0].parts)
+    assert not any(p.kind == "rune" for p in rep.steps[2].parts)  # at t=1s (< 3s)
+    assert any(p.kind == "rune" for p in rep.steps[4].parts)  # at t=3s (>= 3s)
+    assert rep.label is Label.DERIVED
 
-def test_arcane_comet_scales_with_distance_and_refunds_cooldown():
+    with pytest.raises(RotationError, match="aery_return_seconds"):
+        simulate("Ahri", [8214], "Q.out", inputs={"aery_return_seconds": F(0)})
+
+
+def test_arcane_comet_scales_linearly_with_distance_without_legacy_refund():
     missing = simulate("Ahri", [8229], "Q.out", items=["3089"])
     assert missing.label is Label.PENDING
     assert any("comet_distance" in note for note in missing.notes)
@@ -226,23 +263,30 @@ def test_arcane_comet_scales_with_distance_and_refunds_cooldown():
     p0 = [p for p in d0.steps[0].parts if p.kind == "rune"][0]
     assert p0.raw == F(100) + F(5, 100) * F(169) and p0.label is Label.DERIVED
 
+    # Intermediate distance 375: +50% amp = 1.5x damage (Derivado, corroborated linear 0..750).
+    d375 = simulate("Ahri", [8229], "Q.out", items=["3089"], inputs={"comet_distance": F(375)})
+    p375 = [p for p in d375.steps[0].parts if p.kind == "rune"][0]
+    assert p375.raw == p0.raw * F(3, 2) and p375.label is Label.DERIVED
+
     # At distance 750: +100% amp = 2x damage (Derivado).
     d750 = simulate("Ahri", [8229], "Q.out", items=["3089"], inputs={"comet_distance": F(750)})
     p750 = [p for p in d750.steps[0].parts if p.kind == "rune"][0]
     assert p750.raw == p0.raw * 2 and p750.label is Label.DERIVED
 
-    # Timeline CD at lvl 18 is 8 s; hitting W.one at 0s refunds 20% -> ready at 6.4s!
+    # Timeline CD at lvl 18 is 8 s with NO refund (removed in V26.09):
+    # W.one at 0s does not reduce CD, so E at 7s does NOT fire, while R.dash at 8s DOES fire!
     tl = simulate(
         "Ahri",
         [8229],
-        "Q.out, W.one, wait:7, E",
+        "Q.out, W.one, wait:7, E, wait:1, R.dash",
         items=["3089"],
         inputs={"comet_distance": F(0)},
         timeline=True,
     )
     assert any(p.kind == "rune" for p in tl.steps[0].parts)
     assert not any(p.kind == "rune" for p in tl.steps[1].parts)
-    assert any(p.kind == "rune" for p in tl.steps[3].parts)
+    assert not any(p.kind == "rune" for p in tl.steps[3].parts)
+    assert any(p.kind == "rune" for p in tl.steps[5].parts)
 
 
 def test_deathfire_touch_burns_and_amplifies_after_3_seconds():

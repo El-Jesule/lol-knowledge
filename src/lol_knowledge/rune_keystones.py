@@ -16,13 +16,13 @@ from .errors import RotationError, StatsError
 from .runes import (
     ADAPTIVE_AD_PER_AP,
     COMBAT_KEYSTONE_KEYS,
-    LEVELS,
     RULES,
     Rune,
     RuneData,
     adaptive_stat,
     int_input,
     linear_by_level,
+    rune_ranged_multiplier,
     rune_value,
 )
 from .scenario import Target
@@ -175,6 +175,8 @@ class KeystoneCombat:
 
         self._aery_fired = False
         self._aery_warned = False
+        self._aery_return: Fraction | None = None
+        self._aery_ready = Fraction(0)
 
         self._comet_dist: Fraction | None = None
         self._comet_ready = Fraction(0)
@@ -213,8 +215,20 @@ class KeystoneCombat:
         if self.target.kind not in (None, "champion"):
             return  # all 11 offensive keystones trigger only against champions
 
-        if rune.key in ("Electrocute", "PressTheAttack", "SummonAery"):
+        if rune.key in ("Electrocute", "PressTheAttack"):
             require_target_kind(rune, self.target)
+            self._keystone = rune
+            return
+
+        if rune.key == "SummonAery":
+            require_target_kind(rune, self.target)
+            if "aery_return_seconds" in inputs:
+                ret = inputs["aery_return_seconds"]
+                if ret <= 0:
+                    raise RotationError(
+                        f"input aery_return_seconds: must be positive, got {format_number(ret)}"
+                    )
+                self._aery_return = ret
             self._keystone = rune
             return
 
@@ -349,25 +363,20 @@ class KeystoneCombat:
             )
             ap_amount = per_stack * self._conq_stacks
             amount = ap_amount if stat_name == "ability_power" else ap_amount * ADAPTIVE_AD_PER_AP
-            curve_label = self._base if base_sheet.level in (1, LEVELS) else Label.PENDING
             note = f"{self._conq_stacks} stacks"
-            if base_sheet.level not in (1, LEVELS):
-                note += "; per-level curve taken as linear (not in bin)"
             if ad_note:
                 note += f"; {ad_note}"
-            return [RuneStatBonus(stat_name, amount, src, weakest((curve_label, ad_label)), note)]
+            return [RuneStatBonus(stat_name, amount, src, weakest((self._base, ad_label)), note)]
 
         if rune.key == "LethalTempo" and self._lt_stacks > 0:
-            if self.holder_range == "melee":
-                per_stack = rune_value(rune, "TTASPerStackMelee")
-                label = self._base
-                note = f"{self._lt_stacks} stacks (melee)"
-            else:
-                per_stack = rune_value(rune, "TTASPerStackRanged")
-                label = Label.PENDING
-                note = f"{self._lt_stacks} stacks (ranged: tooltip 4% vs calc 4.8% in client 16.23)"
+            per_stack = rune_value(rune, "TTASPerStackMelee")
+            if self.holder_range == "ranged":
+                per_stack *= rune_ranged_multiplier(rune, "ASPerStack")
+            note = f"{self._lt_stacks} stacks ({self.holder_range})"
             return [
-                RuneStatBonus("attack_speed_bonus", per_stack * self._lt_stacks, src, label, note)
+                RuneStatBonus(
+                    "attack_speed_bonus", per_stack * self._lt_stacks, src, self._base, note
+                )
             ]
 
         if rune.key == "HailOfBlades" and self._hob_remaining > 0:
@@ -453,15 +462,8 @@ class KeystoneCombat:
                     raw = linear_by_level(
                         rune_value(rune, "MinDamage"), rune_value(rune, "MaxDamage"), sheet.level
                     )
-                    curve_label = self._base if sheet.level in (1, LEVELS) else Label.PENDING
-                    notes = []
-                    if sheet.level not in (1, LEVELS):
-                        notes.append("per-level curve taken as linear (not in bin)")
-                    if ad_note:
-                        notes.append(ad_note)
-                    procs.append(
-                        RuneProc(src, dtype, raw, weakest((curve_label, ad_label)), tuple(notes))
-                    )
+                    notes = (ad_note,) if ad_note else ()
+                    procs.append(RuneProc(src, dtype, raw, weakest((self._base, ad_label)), notes))
             return procs
 
         if rune.key == "Conqueror":
@@ -502,29 +504,27 @@ class KeystoneCombat:
             return procs
 
         if rune.key == "SummonAery":
-            if not self._aery_fired:
-                self._aery_fired = True
-                _, dtype, ad_label, ad_note = _sheet_adaptive(sheet, self.ap_weight)
-                bonus_ad, ap, stat_labels = _bonus_ad_and_ap(sheet)
-                raw = (
-                    linear_by_level(
-                        rune_value(rune, "DamageBase"),
-                        rune_value(rune, "DamageMax"),
-                        sheet.level,
+            if self._aery_return is not None and self.timeline:
+                if clock >= self._aery_ready:
+                    self._aery_ready = clock + self._aery_return
+                    procs.append(
+                        self._aery_proc(
+                            rune,
+                            src,
+                            sheet,
+                            f"scenario: aery_return_seconds={format_number(self._aery_return)}",
+                        )
                     )
-                    + bonus_ad * rune_value(rune, "DamageADRatio")
-                    + ap * rune_value(rune, "DamageAPRatio")
-                )
-                notes = (ad_note,) if ad_note else ()
-                procs.append(
-                    RuneProc(src, dtype, raw, weakest([self._base, ad_label, *stat_labels]), notes)
-                )
+            elif not self._aery_fired:
+                self._aery_fired = True
+                procs.append(self._aery_proc(rune, src, sheet))
             elif not self._aery_warned:
                 self._aery_warned = True
                 self.weakened = True
                 self.notes.append(
                     f"rune {rune.id} {rune.name}: return travel time depends on distance "
-                    "(fires once; subsequent procs not modelled)"
+                    "(fires once; give --input aery_return_seconds=<s > 0> with --timeline "
+                    "to model repeated procs)"
                 )
             return procs
 
@@ -541,10 +541,6 @@ class KeystoneCombat:
                 )
                 self._comet_ready = clock + cd
                 procs.append(self._comet_proc(rune, src, sheet, timeline=True))
-            else:
-                remaining = self._comet_ready - clock
-                refund = remaining * rune_value(rune, "PercentRefund")
-                self._comet_ready = max(clock, self._comet_ready - refund)
             return procs
 
         if rune.key == "DeathfireTouch" and slot is not None:
@@ -735,6 +731,23 @@ class KeystoneCombat:
             src, dtype, raw, weakest([self._base, ad_label, *stat_labels]), tuple(notes)
         )
 
+    def _aery_proc(
+        self, rune: Rune, src: str, sheet: StatSheet, scenario_note: str = ""
+    ) -> RuneProc:
+        _, dtype, ad_label, ad_note = _sheet_adaptive(sheet, self.ap_weight)
+        bonus_ad, ap, stat_labels = _bonus_ad_and_ap(sheet)
+        raw = (
+            linear_by_level(
+                rune_value(rune, "DamageBase"),
+                rune_value(rune, "DamageMax"),
+                sheet.level,
+            )
+            + bonus_ad * rune_value(rune, "DamageADRatio")
+            + ap * rune_value(rune, "DamageAPRatio")
+        )
+        notes = tuple(note for note in (scenario_note, ad_note) if note)
+        return RuneProc(src, dtype, raw, weakest([self._base, ad_label, *stat_labels]), notes)
+
     def _lethal_tempo_proc(self, rune: Rune, src: str, sheet: StatSheet) -> RuneProc:
         _, dtype, ad_label, ad_note = _sheet_adaptive(sheet, self.ap_weight)
         as_bonus_val = sheet["attack_speed_bonus"]
@@ -742,25 +755,16 @@ class KeystoneCombat:
             as_bonus = as_bonus_val.total()
         except StatBlocked as exc:
             raise RotationError(f"rune {rune.id} {rune.name}: {exc}") from exc
-        if self.holder_range == "melee":
-            base_dmg = linear_by_level(
-                rune_value(rune, "TTMinNoteDamageMelee"),
-                rune_value(rune, "TTMaxNoteDamageMelee"),
-                sheet.level,
-            )
-            label = weakest((self._base, ad_label, as_bonus_val.label))
-            notes = []
-        else:
-            base_dmg = linear_by_level(
-                rune_value(rune, "TTMinNoteDamageRanged"),
-                rune_value(rune, "TTMaxNoteDamageRanged"),
-                sheet.level,
-            )
-            label = Label.PENDING
-            notes = ["ranged max damage: tooltip 24 vs calc 20 in client 16.23"]
-        if ad_note:
-            notes.append(ad_note)
-        return RuneProc(src, dtype, base_dmg * (1 + as_bonus), label, tuple(notes))
+        base_dmg = linear_by_level(
+            rune_value(rune, "TTMinNoteDamageMelee"),
+            rune_value(rune, "TTMaxNoteDamageMelee"),
+            sheet.level,
+        )
+        if self.holder_range == "ranged":
+            base_dmg *= rune_ranged_multiplier(rune, "NoteDamage")
+        label = weakest((self._base, ad_label, as_bonus_val.label))
+        notes = (ad_note,) if ad_note else ()
+        return RuneProc(src, dtype, base_dmg * (1 + as_bonus), label, notes)
 
     def _hob_proc(self, rune: Rune, src: str, sheet: StatSheet) -> RuneProc:
         bonus_ad, ap, stat_labels = _bonus_ad_and_ap(sheet)
@@ -771,13 +775,7 @@ class KeystoneCombat:
             + bonus_ad * rune_value(rune, "BonusADRatio")
             + ap * rune_value(rune, "APRatio")
         )
-        curve_label = self._base if sheet.level in (1, LEVELS) else Label.PENDING
-        notes = []
-        if sheet.level not in (1, LEVELS):
-            notes.append("per-level curve {ee18a47b} taken as linear (not decoded)")
-        return RuneProc(
-            src, DamageType.TRUE, raw, weakest([curve_label, *stat_labels]), tuple(notes)
-        )
+        return RuneProc(src, DamageType.TRUE, raw, weakest([self._base, *stat_labels]))
 
     def _comet_proc(self, rune: Rune, src: str, sheet: StatSheet, *, timeline: bool) -> RuneProc:
         assert self._comet_dist is not None
@@ -793,16 +791,13 @@ class KeystoneCombat:
             + bonus_ad * rune_value(rune, "ADRatio")
             + ap * rune_value(rune, "APRatio")
         ) * amp
-        dist_label = self._base if clamped in (0, max_range) else Label.PENDING
         notes = [f"scenario: comet_distance={format_number(self._comet_dist)}"]
-        if clamped not in (0, max_range):
-            notes.append("distance amplification taken as linear")
         if not timeline:
-            notes.append("cooldown and 20% refund apply with --timeline")
+            notes.append("cooldown applies with --timeline")
         if ad_note:
             notes.append(ad_note)
         return RuneProc(
-            src, dtype, raw, weakest([dist_label, ad_label, *stat_labels]), tuple(notes)
+            src, dtype, raw, weakest([self._base, ad_label, *stat_labels]), tuple(notes)
         )
 
     def has_active_burn(self) -> bool:
