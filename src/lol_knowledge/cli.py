@@ -25,6 +25,7 @@ from .errors import (
 )
 from .kit import load_kit, passive_contributions
 from .objects.legality import ITEM_GROUPS_PATH, check_build, load_item_groups
+from .passives import sheet_passive_effects
 from .rotation import CritBase, evaluate_rotation, parse_steps
 from .rotation_report import format_text as format_rotation_text
 from .rotation_report import to_dict as rotation_to_dict
@@ -306,11 +307,26 @@ def _build_sheet(
     inputs=None,
     *,
     combat_context: str = "stats",
+    kit=None,
 ):
-    """The attacker's stat sheet, with the rune page of ``--rune``/``--shard`` if any."""
+    """The attacker's stat sheet, with champion passive and rune page if any."""
+    passive = sheet_passive_effects(
+        kit, args.level, inputs, include_stacking=combat_context != "rotation"
+    )
+    base_extras = (*extras, *passive.flats)
     runes, shards = _rune_ids(args.rune, "--rune"), _rune_ids(args.shard, "--shard")
     if not runes and not shards:
-        return build_stat_sheet(champion, args.level, items, issues, assumptions, derived, extras)
+        return build_stat_sheet(
+            champion,
+            args.level,
+            items,
+            issues,
+            assumptions,
+            derived,
+            base_extras,
+            extra_amplifiers=passive.amplifiers,
+            extra_notes=passive.notes,
+        )
     data = load_runes(root)
     if data is None:
         raise StatsError("lol-knowledge/derived/runes.json is missing; runes cannot be used")
@@ -366,7 +382,7 @@ def _build_sheet(
         adaptive_label=label,
         adaptive_note=note,
     )
-    extra_notes = list(rune_effects.notes)
+    extra_notes = [*passive.notes, *rune_effects.notes]
     pending = list(rune_effects.pending)
     if combat_context == "stats":
         extra_notes += combat_rune_notes(rune_effects.combat_runes, data, in_ability=False)
@@ -379,10 +395,10 @@ def _build_sheet(
         issues,
         assumptions,
         derived,
-        (*extras, *flats, *rune_effects.flats),
+        (*base_extras, *flats, *rune_effects.flats),
         (*percents, *rune_effects.percents),
         pending,
-        extra_amplifiers=rune_effects.amplifiers,
+        extra_amplifiers=(*passive.amplifiers, *rune_effects.amplifiers),
         extra_notes=extra_notes,
         move_speed_bonus_amp=rune_effects.move_speed_bonus_amp,
     )
@@ -677,6 +693,7 @@ def _run_ability(args: argparse.Namespace) -> int:
             passive_contributions(kit, ranks),
             inputs=inputs,
             combat_context="ability",
+            kit=kit,
         )
         _check_build(root, args.item, champion, allow=args.allow_illegal_build, who="attacker")
         target = _ability_target(args, root, issues, derived)
@@ -739,6 +756,7 @@ def _run_rotation(args: argparse.Namespace) -> int:
             passive_contributions(kit, ranks),
             inputs=inputs,
             combat_context="rotation",
+            kit=kit,
         )
         _check_build(root, args.item, champion, allow=args.allow_illegal_build, who="attacker")
         target = _ability_target(args, root, issues, derived)
@@ -792,10 +810,11 @@ def _run_stats(args: argparse.Namespace) -> int:
         _check_build(root, args.item, champion, allow=args.allow_illegal_build, who="champion")
         issues = load_issues(root)
         derived = load_records(root)
+        kit = load_kit(root, champion.id)
         sheet = _build_sheet(
-            args, root, champion, items, issues, assumptions, derived, inputs=inputs
+            args, root, champion, items, issues, assumptions, derived, inputs=inputs, kit=kit
         )
-    except StatsError as exc:
+    except (StatsError, KitError) as exc:
         print(f"error: {exc}", file=sys.stderr)
         return 2
     except OSError as exc:

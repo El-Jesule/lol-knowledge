@@ -18,8 +18,28 @@
       "cases": [],
       "passive_stats": [],
       "not_modelled": [
-        "DA por acumulación (PercentBonusADCalc): depende de la interpolación por nivel {ee18a47b}, sin regla medida",
         "Revivir (RevivePercentCalc, ReviveCooldownCalc): faltan valores en el bin"
+      ],
+      "passive_effects": [
+        {
+          "id": "determination",
+          "name": "Determinación",
+          "kind": "stacking_stat",
+          "formula": {
+            "op": "linear_by_level",
+            "min": 1.5,
+            "max": 2.8
+          },
+          "label": "Derivado",
+          "source": "Characters/Zaahen/Spells/ZaahenPassiveAbility/ZaahenPassive.mSpellCalculations.PercentBonusADCalc (16.20.8248524+branch.releases-16-20.content.release); wiki Template:Data_Zaahen/Cultivation_of_War rev 4060321",
+          "stat": "attack_damage",
+          "mode": "percent",
+          "trigger": "champion_hit",
+          "input_name": "determination_stacks",
+          "max_stacks": 12,
+          "max_stacks_multiplier": 2,
+          "duration_seconds": 5
+        }
       ]
     },
     "Q": {

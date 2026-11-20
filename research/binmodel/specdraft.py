@@ -545,12 +545,16 @@ def main(argv: list[str] | None = None) -> int:
     if args.output is not None:
         args.output.parent.mkdir(parents=True, exist_ok=True)
         args.output.write_text(
-            json.dumps(result["spec"], indent=2, ensure_ascii=False) + "\n", encoding="utf-8"
+            json.dumps(result["spec"], indent=2, ensure_ascii=False) + "\n",
+            encoding="utf-8",
+            newline="\n",
         )
     if args.review is not None:
         args.review.parent.mkdir(parents=True, exist_ok=True)
         args.review.write_text(
-            json.dumps(result["review"], indent=2, ensure_ascii=False) + "\n", encoding="utf-8"
+            json.dumps(result["review"], indent=2, ensure_ascii=False) + "\n",
+            encoding="utf-8",
+            newline="\n",
         )
     if args.output is None and args.review is None:
         print(json.dumps(result, indent=2, ensure_ascii=False))
