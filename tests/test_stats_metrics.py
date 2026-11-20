@@ -7,6 +7,7 @@ from fractions import Fraction as F
 import pytest
 
 from lol_knowledge.stats import (
+    Contribution,
     DataIssue,
     Label,
     ability_cooldowns,
@@ -68,3 +69,23 @@ def test_cooldowns_follow_the_haste_formula(haste, factor):
 def test_haste_from_several_sources_adds_up():
     items = [item("1", ("ability_haste", "flat", 40)), item("2", ("ability_haste", "flat", 60))]
     assert ability_cooldowns(build_stat_sheet(champion(), 1, items)).factor == F(1, 2)
+
+
+def test_basic_and_ultimate_haste_apply_only_to_their_slots():
+    extras = [
+        ("basic_ability_haste", Contribution(F(15), "bonus", "rune:9105", Label.DERIVED)),
+        ("ultimate_haste", Contribution(F(31), "bonus", "rune:8106", Label.DERIVED)),
+    ]
+    sheet = build_stat_sheet(
+        champion(), 1, [item("1", ("ability_haste", "flat", 10))], extras=extras
+    )
+    result = ability_cooldowns(sheet)
+    assert result.haste == 10
+    assert result.basic_haste == 15
+    assert result.ultimate_haste == 31
+    assert result.label is Label.DERIVED
+    # Q, W, E get 10 + 15 = 25 haste (factor 100/125 = 4/5); R gets 10 + 31 = 41 (100/141).
+    assert result.spells[0].effective == tuple(v * F(4, 5) for v in result.spells[0].base)
+    assert result.spells[1].effective == tuple(v * F(4, 5) for v in result.spells[1].base)
+    assert result.spells[2].effective == tuple(v * F(4, 5) for v in result.spells[2].base)
+    assert result.spells[3].effective == tuple(v * F(100, 141) for v in result.spells[3].base)

@@ -235,18 +235,19 @@ def sheet_effect_reason(effect: Mapping[str, Any]) -> str | None:
 
 
 @dataclass(frozen=True)
-class _Amplifier:
+class StatAmplifier:
     """``percent`` % of a stat's total, added once every other amount is known."""
 
     stat: str
     percent: Fraction
     source: str
     label: Label
+    note: str = ""
 
 
 def _sheet_effects(
     item: ItemData, level: int
-) -> tuple[list[tuple[str, Contribution]], list[_Amplifier]]:
+) -> tuple[list[tuple[str, Contribution]], list[StatAmplifier]]:
     """Stats from the effects of ``item`` that the sheet applies (``sheet_effect_reason``).
 
     A ``flat`` component adds its amount in the catalog unit: percentage points
@@ -255,7 +256,7 @@ def _sheet_effects(
     stat (Rabadon's Deathcap: +30 % ability power).
     """
     flat: list[tuple[str, Contribution]] = []
-    amplifiers: list[_Amplifier] = []
+    amplifiers: list[StatAmplifier] = []
     for effect in item.effects:
         reason = sheet_effect_reason(effect)
         if reason is None:
@@ -291,7 +292,7 @@ def _sheet_effects(
             except FormulaError as exc:
                 raise StatsError(f"{title}: {exc}") from exc
             if mode == "percent":
-                amplifiers.append(_Amplifier(definition.id, amount, source, label))
+                amplifiers.append(StatAmplifier(definition.id, amount, source, label))
                 continue
             value = effect_amount(definition.id, amount)
             if definition.unit is Unit.FRACTION and not 0 <= value <= 1:
@@ -300,15 +301,24 @@ def _sheet_effects(
     return flat, amplifiers
 
 
-def _amplified(amplifier: _Amplifier, current: Sequence[Contribution]) -> Contribution:
+def _amplified(
+    amplifier: StatAmplifier, current: Sequence[Contribution], *, compounded: bool = False
+) -> Contribution:
     """The amplifier's share of the total of ``current`` (amplifiers do not compound)."""
     total = sum((item.value for item in current), start=Fraction(0))
+    note = f"{format_number(amplifier.percent)}% of the total"
+    if amplifier.note:
+        note = f"{amplifier.note}; {note}"
+    label = weakest([amplifier.label, *(item.label for item in current)])
+    if compounded:
+        label = Label.PENDING
+        note += "; added to another amplifier of the same total, which is not verified"
     return Contribution(
         total * amplifier.percent / 100,
         "bonus",
         amplifier.source,
-        weakest([amplifier.label, *(item.label for item in current)]),
-        f"{format_number(amplifier.percent)}% of the total",
+        label,
+        note,
         amplifier=True,
     )
 
@@ -367,16 +377,10 @@ def with_amplifier(
     """
     current = sheet[_receiver(stat_id).id].contributions
     contribution = _amplified(
-        _Amplifier(stat_id, percent, source, label),
+        StatAmplifier(stat_id, percent, source, label),
         [item for item in current if not item.amplifier],
+        compounded=any(item.amplifier for item in current),
     )
-    if any(item.amplifier for item in current):
-        contribution = replace(
-            contribution,
-            label=Label.PENDING,
-            note=f"{contribution.note}; added to another amplifier of the same total, "
-            "which is not verified",
-        )
     return _added(sheet, stat_id, contribution)
 
 
@@ -516,6 +520,40 @@ def _crit_chance_passive(
         )
 
 
+def _apply_move_speed_bonus_amp(
+    amp: Contribution,
+    flats: list[Contribution],
+    percents: list[Contribution],
+) -> None:
+    """Increase effectiveness of other bonus flat and percent movement speed (e.g. Celerity)."""
+    bonus_flat = [item for item in flats if item.scope == "bonus"]
+    other_pct = [item for item in percents if item.source != amp.source]
+    flat_total = sum((item.value for item in bonus_flat), start=Fraction(0))
+    if flat_total > 0:
+        flats.append(
+            Contribution(
+                flat_total * amp.value,
+                "bonus",
+                amp.source,
+                Label.PENDING,
+                f"{format_percent(amp.value)} of bonus flat move speed "
+                f"{format_number(flat_total)}; {amp.note}",
+            )
+        )
+    pct_total = sum((item.value for item in other_pct), start=Fraction(0))
+    if pct_total > 0:
+        percents.append(
+            Contribution(
+                pct_total * amp.value,
+                "bonus",
+                amp.source,
+                Label.PENDING,
+                f"{format_percent(amp.value)} of other % move speed bonuses "
+                f"{format_percent(pct_total)}; {amp.note}",
+            )
+        )
+
+
 def build_stat_sheet(
     champion: ChampionData,
     level: int,
@@ -526,6 +564,10 @@ def build_stat_sheet(
     extras: Sequence[tuple[str, Contribution]] = (),
     percent_extras: Sequence[tuple[str, Contribution]] = (),
     pending_effects: Sequence[str] = (),
+    *,
+    extra_amplifiers: Sequence[StatAmplifier] = (),
+    extra_notes: Sequence[str] = (),
+    move_speed_bonus_amp: Contribution | None = None,
 ) -> StatSheet:
     """Resolve the champion's statistics at ``level`` with ``items``.
 
@@ -556,7 +598,7 @@ def build_stat_sheet(
 
     contributions: dict[str, list[Contribution]] = {stat_id: [] for stat_id in STATS}
     percents: dict[str, list[Contribution]] = {}
-    amplifiers: list[_Amplifier] = []
+    amplifiers: list[StatAmplifier] = []
     blocked: dict[str, str] = {}
     notes: list[str] = []
     mana_resource = MANA_RESOURCE.get(champion.locale)
@@ -669,6 +711,19 @@ def build_stat_sheet(
         if definition.percent_of is None:
             raise StatsError(f"extra {stat_id}: the stat takes no percentage")
         percents.setdefault(definition.id, []).append(extra)
+    for extra_amp in extra_amplifiers:
+        definition = _receiver(extra_amp.stat)
+        if definition.unit is not Unit.AMOUNT:
+            raise StatsError(
+                f"extra amplifier {extra_amp.stat}: only amount stats can be amplified"
+            )
+        amplifiers.append(replace(extra_amp, stat=definition.id))
+    if move_speed_bonus_amp is not None:
+        _apply_move_speed_bonus_amp(
+            move_speed_bonus_amp,
+            contributions["move_speed"],
+            percents.setdefault("move_speed", []),
+        )
 
     # Percentages last, once every flat amount is known (regeneration.md, move-speed.md).
     for stat_id, pending in percents.items():
@@ -676,7 +731,7 @@ def build_stat_sheet(
         contributions[stat_id] += [
             _percent_amount(STATS[stat_id], percent, reference) for percent in pending
         ]
-    # Amplifiers of a total last, all on the same total (only Rabadon's Deathcap today).
+    # Amplifiers of a total last, all on the same total (Rabadon, Conditioning, Overgrowth).
     reference = {amplifier.stat: list(contributions[amplifier.stat]) for amplifier in amplifiers}
     for amplifier in amplifiers:
         contributions[amplifier.stat].append(_amplified(amplifier, reference[amplifier.stat]))
@@ -711,6 +766,7 @@ def build_stat_sheet(
     for issue in applicable:
         if level == 1:
             notes.append(f"{issue.id} does not affect level 1 (no growth applies)")
+    notes += list(extra_notes)
     notes += list(pending_effects)
 
     values = {

@@ -29,8 +29,9 @@ from .runes import (
     adaptive_stat,
     check_page,
     load_runes,
+    minor_rune_effects,
+    needs_adaptive_stat,
     shard_contributions,
-    tree_rune_notes,
 )
 from .scenario import evaluate_ability, target_from_sheet, target_from_values
 from .scenario_report import format_text as format_ability_text
@@ -46,6 +47,7 @@ from .stats import (
 )
 from .stats import format_text as format_stats_text
 from .stats import to_dict as stats_to_dict
+from .stats.sheet import MANA_RESOURCE
 from .validate import validate_project
 
 DEFAULT_DATA_DIR = "data"
@@ -152,6 +154,13 @@ def _add_stats_parser(subparsers: argparse._SubParsersAction) -> None:
         metavar="FIELD=VALUE",
         help="Value for a Data Dragon field with an open data issue (repeat).",
     )
+    stats.add_argument(
+        "--input",
+        action="append",
+        default=[],
+        metavar="NAME=VALUE",
+        help="Scenario input for conditional or stacking runes (e.g. game_minutes=20).",
+    )
     _add_build_option(stats)
     stats.add_argument(
         "--root", type=Path, default=Path("."), help="Project root (default: current directory)."
@@ -220,7 +229,8 @@ def _add_build_option(command: argparse.ArgumentParser) -> None:
         metavar="ID",
         help=(
             "Tree rune of the page (repeat 6 times: keystone, 3 primary, 2 secondary); "
-            "their effects are not modelled yet (lol-knowledge/mechanics/runes.md)."
+            "stat-sheet minor runes are applied, combat minor runes and keystones remain "
+            "pending (lol-knowledge/mechanics/runes.md)."
         ),
     )
     command.add_argument(
@@ -272,7 +282,9 @@ def _rune_ids(values: list[str], option: str) -> list[int]:
         raise StatsError(f"{option} expects numeric rune ids, got {values}") from exc
 
 
-def _build_sheet(args, root: Path, champion, items, issues, assumptions, derived, extras=()):
+def _build_sheet(
+    args, root: Path, champion, items, issues, assumptions, derived, extras=(), inputs=None
+):
     """The attacker's stat sheet, with the rune page of ``--rune``/``--shard`` if any."""
     runes, shards = _rune_ids(args.rune, "--rune"), _rune_ids(args.shard, "--shard")
     if not runes and not shards:
@@ -295,7 +307,7 @@ def _build_sheet(args, root: Path, champion, items, issues, assumptions, derived
             )
         print(f"warning: rune page is not legal [{report.label}]: {problems}", file=sys.stderr)
     adaptive, label, note = None, Label.DERIVED, ""
-    if any(data.runes.get(shard) and data.runes[shard].key == "Adaptive" for shard in shards):
+    if needs_adaptive_stat(runes, shards, data):
         before = build_stat_sheet(champion, args.level, items, issues, assumptions, derived, extras)
         bonus_ad = sum(
             (part.value for part in before["attack_damage"].contributions if part.scope == "bonus"),
@@ -313,6 +325,25 @@ def _build_sheet(args, root: Path, champion, items, issues, assumptions, derived
         adaptive_label=label,
         adaptive_note=note,
     )
+    if not items:
+        has_boots: bool | None = False
+    else:
+        groups = load_item_groups(root)
+        has_boots = None if groups is None else groups.has_boots([item.id for item in items])
+    uses_mana = champion.resource == MANA_RESOURCE.get(champion.locale)
+    rune_effects = minor_rune_effects(
+        runes,
+        data,
+        level=args.level,
+        patch=champion.patch,
+        items=items,
+        uses_mana=uses_mana,
+        has_boots=has_boots,
+        inputs=inputs,
+        adaptive=adaptive,
+        adaptive_label=label,
+        adaptive_note=note,
+    )
     return build_stat_sheet(
         champion,
         args.level,
@@ -320,9 +351,12 @@ def _build_sheet(args, root: Path, champion, items, issues, assumptions, derived
         issues,
         assumptions,
         derived,
-        (*extras, *flats),
-        percents,
-        tree_rune_notes(runes, data),
+        (*extras, *flats, *rune_effects.flats),
+        (*percents, *rune_effects.percents),
+        rune_effects.pending,
+        extra_amplifiers=rune_effects.amplifiers,
+        extra_notes=rune_effects.notes,
+        move_speed_bonus_amp=rune_effects.move_speed_bonus_amp,
     )
 
 
@@ -545,6 +579,7 @@ def _run_ability(args: argparse.Namespace) -> int:
             assumptions,
             derived,
             passive_contributions(kit, ranks),
+            inputs=inputs,
         )
         _check_build(root, args.item, champion, allow=args.allow_illegal_build, who="attacker")
         target = _ability_target(args, root, issues, derived)
@@ -605,6 +640,7 @@ def _run_rotation(args: argparse.Namespace) -> int:
             assumptions,
             derived,
             passive_contributions(kit, ranks),
+            inputs=inputs,
         )
         _check_build(root, args.item, champion, allow=args.allow_illegal_build, who="attacker")
         target = _ability_target(args, root, issues, derived)
@@ -640,12 +676,18 @@ def _run_stats(args: argparse.Namespace) -> int:
     root: Path = args.root
     try:
         assumptions = _parse_assume(args.assume)
+        inputs = {
+            key: _number(value, f"--input {key}")
+            for key, value in _pairs(args.input, "--input").items()
+        }
         champion = load_champion(root, args.champion)
         items = load_items(root, args.item)
         _check_build(root, args.item, champion, allow=args.allow_illegal_build, who="champion")
         issues = load_issues(root)
         derived = load_records(root)
-        sheet = _build_sheet(args, root, champion, items, issues, assumptions, derived)
+        sheet = _build_sheet(
+            args, root, champion, items, issues, assumptions, derived, inputs=inputs
+        )
     except StatsError as exc:
         print(f"error: {exc}", file=sys.stderr)
         return 2

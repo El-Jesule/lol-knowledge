@@ -20,6 +20,7 @@ from .report import format_text, to_dict
 from .sheet import (
     AttackSpeedRatio,
     Contribution,
+    StatAmplifier,
     StatBlocked,
     StatSheet,
     StatValue,
@@ -46,6 +47,7 @@ __all__ = [
     "Label",
     "SpellData",
     "Stacking",
+    "StatAmplifier",
     "StatBlocked",
     "StatDef",
     "StatSheet",

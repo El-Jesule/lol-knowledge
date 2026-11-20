@@ -65,6 +65,8 @@ class ItemData:
     effects: tuple[Mapping[str, Any], ...] = field(default=(), compare=False, hash=False)
     # "complete" when every effect of the description is in ``effects``.
     effect_review: str = "complete"
+    # Reasons of description stats the engine does not model yet (e.g. heal/shield power).
+    unmodelled_stats: tuple[str, ...] = ()
 
 
 def _number(value: Any, context: str) -> Fraction:
@@ -217,6 +219,10 @@ def items_from_model(model: Mapping[str, Any], item_ids: Sequence[str]) -> tuple
                 tuple(stats),
                 tuple(obj.get("effects") or ()),
                 str(obj.get("effect_review")),
+                tuple(
+                    str(entry.get("reason", ""))
+                    for entry in obj.get("unmodelled_description_stats") or ()
+                ),
             )
         )
     return tuple(selected)
