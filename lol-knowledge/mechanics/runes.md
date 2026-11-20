@@ -18,6 +18,7 @@
 | R7 | League of Legends Wiki / Fandom, artículos de «Coup de Grace», «Cut Down», «Last Stand», «Axiom Arcanist», «Scorch» y «Omnivamp» (extractos consultados el 2026-11-20) | Amplificación también sobre daño verdadero (desde el parche 15.3); interpolación lineal de Último esfuerzo entre 60 % y 30 %; reducción en área de Arcanólogo axiomático; retardo de 1 s y enfriamiento de 10 s de Piroláser; omnivampirismo sobre procs de runas | Fuente comunitaria secundaria |
 | R8 | Wiki oficial de League of Legends (`wiki.leagueoflegends.com`, consultada el 2026-11-20; `V26.23` rev `4096203` confirma sin cambios en runas): `Rune` (`4094440`), `Lethal_Tempo` (`4060427`) y `Template:Rune_data_Lethal_Tempo` (`4065934`), `Template:Rune_data_Press_the_Attack` (`4015574`), `Template:Rune_data_Conqueror` (`4060685`), `Template:Rune_data_Hail_of_Blades` (`4060661`), `Arcane_Comet` (`4024412`, `V26.09` rev `4050133`) y `Template:Rune_data_Arcane_Comet` (`4060639`), `Template:Rune_data_Summon_Aery` (`4062237`) | Progresión lineal `10 × nivel` del fragmento de vida; multiplicadores reales a distancia de Compás letal (`× 0,8` VA y `× 0,667` daño, error conocido en el texto de lobby); curvas lineales 1–18 de Ataque intensificado, Conquistador y Lluvia de cuchillas (corroborando `{ee18a47b}` = `ByCharLevelNamedDataValuesInterpolationCalculationPart` sin multiplicador de crecimiento); eliminación del reembolso de enfriamiento de Cometa arcano en V26.09 y rampa lineal `0–100 %` en `0–750` unidades; retorno de Aery dependiente de distancia | Fuente comunitaria secundaria (corrobora los cálculos de R1) |
 | R9 | Wiki oficial de League of Legends (`wiki.leagueoflegends.com`, consultada el 2026-11-20): `Template:Rune_data_Revitalize` (`3825912`), `Template:Rune_data_Shield_Bash` (`4044093`), `Template:Rune_data_Taste_of_Blood` (`3997097`), `Template:Rune_data_Absorb_Life` (`3997095`), `Template:Rune_data_Triumph` (`3825924`), `Template:Rune_data_Font_of_Life` (`3996429`) y `Template:Healing_modifiers` (`4021803`) | Curva por tramos de Absorber vida (`1..23`), exclusión a vida completa de Sabor a sangre, multiplicador de Revitalizar (< 40 % de vida) sobre robo de vida, omnivampirismo, curaciones y escudos, y fórmulas de Golpe de escudo, Triunfo y Fuente de vida | Fuente comunitaria secundaria (corrobora los valores de R1) |
+| R10 | Wiki oficial de League of Legends (`wiki.leagueoflegends.com`, consultada el 2026-11-20): `Presence_of_Mind` (`4062635`), `Template:Rune_data_Presence_of_Mind` (`3985219`) y `Manaflow_Band` (`4058511`) | Curva por nivel 1–18 de Claridad mental (`6..44` maná, `× 0,8` a distancia, `6` de energía, `8 s` CD, `15 %` al derribar y sustitución por Triunfo en campeones sin maná ni energía) y regeneración de Banda de maná (`1 %` del maná faltante cada `5 s`) | Fuente comunitaria secundaria (corrobora los valores de R1) |
 
 `validate` comprueba que los árboles, las filas y los ids de R1 coinciden exactamente con R3.
 
@@ -57,7 +58,7 @@ Siguiendo la convención de [`combat-stacks.md`](combat-stacks.md), las acumulac
 | 9104 | `LegendAlacrity` | +3 % de velocidad de ataque base + 1,5 % por acumulación, hasta 10 (+18 %) | `legend_stacks` (`0..10`; por defecto 10) |
 | 9105 | `LegendHaste` | +1,5 de `basic_ability_haste` (Q, W, E) por acumulación, hasta 10 (+15) ([regla](ability-haste.md)) | `legend_stacks` (`0..10`; por defecto 10) |
 | 9103 | `LegendBloodline` | +0,45 % de robo de vida por acumulación hasta 15 (+6,75 %) y +85 de vida al máximo | `legend_stacks` (`0..15`; por defecto 15) |
-| 8226 | `ManaflowBand` | +250 de maná máximo (solo campeones con maná). La regeneración de maná perdido se anota fuera de la hoja | Tope permanente (250) |
+| 8226 | `ManaflowBand` | +250 de maná máximo (solo campeones con maná). La regeneración del 1 % del maná faltante cada 5 s se aplica en `rotation --timeline` ([`resources.md`](resources.md)) | Tope permanente (250) |
 | 8106 | `UltimateHunter` | +6 de `ultimate_haste` (R) + 5 por eliminación única, hasta 5 (+31) ([regla](ability-haste.md)) | `bounty_stacks` (`0..5`; por defecto 5) |
 | 8234 | `Celerity` | +1 % de velocidad de movimiento (`Derivado`) y +7 % de eficacia sobre otras bonificaciones planas y porcentuales de velocidad (`Pendiente de verificación`: no se ha medido el orden ni si amplifica su propio 1 %) | Siempre activa |
 | 8316 | `JackOfAllTrades` | +1 de aceleración de habilidades por estadística distinta de objetos (separando planas y porcentuales, incluido poder de curaciones y escudos; excluyendo oro cada 10 s); +8 de fuerza adaptable con 5–9 o +20 con ≥ 10 (× 0,6 para DA, × 1 para PH). Si un objeto tiene una estadística desconocida queda `Pendiente de verificación` | Calculada desde `--item` |
@@ -102,6 +103,7 @@ Se aplican en `python -m lol_knowledge rotation` (en `stats` se anotan como info
 | 9101 | `AbsorbLife` | Curación al matar (`survival.md`) | `--target-kind` (no estructura) | En el paso letal (`health_after == 0`), cura `1–23` por tramos de nivel (R1 + R9; escalada con HSP y Heridas graves) |
 | 9111 | `Triumph` | Curación al derribar (`survival.md`) | `--target-kind` (`champion`) | En el paso letal contra campeón, cura `2,5 % vida máxima + 5 % vida perdida` del atacante (escalada con HSP y Heridas graves; +20 de oro anotado fuera; R1 + R9) |
 | 8463 | `FontOfLife` | Curación directa (`survival.md`) | `target_impaired` (`0` o `1`), `--target-kind` y `--attacker-range` | Con `1`, al dañar a un campeón cura `10–50` (`× 0,7` a distancia; `BaseHeal` en R1 + R9), enfriamiento 20 s en `--timeline`, escalada con HSP y Heridas graves |
+| 8009 | `PresenceOfMind` | Restauración de recurso (`resources.md`) | `--target-kind` (`champion`) y `--attacker-range` (si usa maná) | Al dañar a un campeón (enfriamiento `8 s` en `--timeline`): restaura `6..44` de maná por tabla de nivel 1–18 (`× 0,8` a distancia) o `6` de energía; al derribar restaura un `15 %` del maná o energía máximos. En campeones sin maná ni energía se anota su sustitución por Triunfo (R1 + R10) |
 
 Si el objetivo no coincide con el tipo de una runa (por ejemplo, Demoler contra un campeón o Golpe de gracia contra un súbdito), la runa no se aplica y no debilita la etiqueta. Si falta un `--input` condicional en una runa aplicable, queda en `not_applied` y deja el resultado en `Pendiente de verificación`.
 
@@ -135,11 +137,10 @@ Se evalúan en la simulación inversa `python -m lol_knowledge survive` (en `sta
 
 ## Lo que no se modela todavía (dependencias de futuras mecánicas)
 
-Las **5 piedras angulares** y **7 runas menores** restantes dependen de mecánicas aún no construidas; siguen en `pending_effects` y dejan `ability` y `rotation` en `Pendiente de verificación`:
+Las **5 piedras angulares** y **6 runas menores** restantes dependen de mecánicas aún no construidas; siguen en `pending_effects` y dejan `ability` y `rotation` en `Pendiente de verificación`:
 
 - **Piedras angulares (5):** `8021` Pies veloces (`OBJ-04`), `8230` Tensión del saqueador de tormentas (`MEC-27`), `8351` Mejora glacial (`MEC-26`), `8360` Libro de hechizos (`DAT-06`) y `8439` Reverberacción (`MEC-26`).
-- **Runas menores (7):**
-  - Recursos / maná (`MEC-01`): `8009` Claridad mental.
+- **Runas menores (6):**
   - CC / velocidad condicional (`MEC-26`): `8410` Velocidad de acercamiento y `8242` Inquebrantable.
   - Hechizos de invocador / aceleración de objetos (`DAT-06`, `MEC-29`): `8275` Capa del nimbo y `8347` Perspicacia cósmica.
   - Consumibles / elixires (`OBJ-12`): `8313` Tónico triple y `8352` Tónico de distorsión temporal.
