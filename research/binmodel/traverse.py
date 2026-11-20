@@ -96,6 +96,10 @@ def find_champion_root(document: Mapping[str, Any]) -> tuple[str, Mapping[str, A
             "mCharacterName" in node and "baseDamageModifiable" in node
         ):
             candidates.append((path, node))
+    if len(candidates) > 1:
+        roots = [item for item in candidates if item[0].lower().endswith("/characterrecords/root")]
+        if len(roots) == 1:
+            return roots[0]
     if len(candidates) != 1:
         raise TraversalError(f"expected exactly one CharacterRecord, found {len(candidates)}")
     return candidates[0]

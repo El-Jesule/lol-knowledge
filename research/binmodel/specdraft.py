@@ -281,11 +281,14 @@ def _display_name(
 
 def draft_spec(
     extract: Mapping[str, Any],
-    tooltips: Mapping[str, str],
+    tooltips: Mapping[str, Any],
     *,
     ddragon: Mapping[str, Any] | None = None,
 ) -> dict[str, Any]:
     """Generate a draft kit spec and structured curation findings for one champion."""
+    raw_strings = tooltips.get("strings") if isinstance(tooltips, Mapping) else None
+    if isinstance(raw_strings, Mapping):
+        tooltips = raw_strings
     champion_info = extract.get("champion") or {}
     champion_id = str(champion_info.get("id") or champion_info.get("name") or "Unknown")
     game_version = str(extract.get("game_version") or "16.23")
@@ -298,7 +301,27 @@ def draft_spec(
         slot = str(record["slot"])
         if slot not in {"P", "Q", "W", "E", "R"}:
             continue
-        helper = _Ability(record)
+        dd_spell = dd_spells.get(slot)
+        effective_record = record
+        explicit_max_rank: int | None = None
+        if record.get("level_count") is None:
+            dd_max = dd_spell.get("maxrank") if isinstance(dd_spell, Mapping) else None
+            if isinstance(dd_max, int) and dd_max >= 1:
+                explicit_max_rank = dd_max
+                effective_record = dict(record, level_count=dd_max)
+            findings.append(
+                {
+                    "slot": slot,
+                    "kind": "missing_level_count",
+                    "reference": str(record.get("name", slot)),
+                    "message": (
+                        f"{slot}: bin level_count is missing "
+                        f"(fallback max_rank={explicit_max_rank})"
+                    ),
+                    "details": {"fallback_max_rank": explicit_max_rank},
+                }
+            )
+        helper = _Ability(effective_record)
         tooltip_key = _find_tooltip_key(record, tooltips, champion_id)
         tooltip = tooltips.get(tooltip_key, "") if tooltip_key else ""
         if tooltip_key is None:
@@ -479,11 +502,24 @@ def draft_spec(
         }
         if slot == "P":
             ability_entry["max_rank"] = 1
+        elif explicit_max_rank is not None:
+            ability_entry["max_rank"] = explicit_max_rank
         if tooltip_key:
             ability_entry["tooltip"] = tooltip_key
+        if recast_settings and cases and not any(case.get("recast") for case in cases):
+            primary = cases[0]
+            cases.append(
+                {
+                    "id": _unique_id("recast", used_case_ids),
+                    "name": f"{primary['name']} (recast)",
+                    "recast": True,
+                    "parts": list(primary["parts"]),
+                }
+            )
         if cases:
             ability_entry["cases"] = cases
-        ability_entry.update(recast_settings)
+        if recast_settings and any(case.get("recast") for case in cases):
+            ability_entry.update(recast_settings)
         if not_modelled:
             ability_entry["not_modelled"] = not_modelled
         abilities_spec[slot] = ability_entry

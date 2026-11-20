@@ -75,7 +75,8 @@ class _Ability:
     def __init__(self, record: Mapping[str, Any]) -> None:
         self.record = record
         self.slot = str(record["slot"])
-        self.max_rank = int(record["level_count"])
+        raw_levels = record.get("level_count")
+        self.max_rank: int | None = int(raw_levels) if raw_levels is not None else None
         self.calculations = {item["name"]: item["tree"] for item in record.get("calculations", [])}
         self.data_values = {
             item["name"]: item
@@ -84,6 +85,8 @@ class _Ability:
         }
 
     def data_value(self, name: str) -> dict[str, Any]:
+        if self.max_rank is None:
+            raise KitGenError(f"{self.slot}: unknown level_count for data value {name!r}")
         entry = self.data_values.get(name)
         ranks = entry.get("ranks") if entry else None
         if (
@@ -122,7 +125,10 @@ class _Ability:
                 return {"op": "mul", "operands": [result, self.node(multiplier, stack)]}
             return result
         if kind == "number":
-            return {"op": "constant", "value": _clean(node["value"])}
+            value = node.get("value")
+            if not _is_num(value):
+                raise KitGenError(f"{self.slot}: number node missing numeric value")
+            return {"op": "constant", "value": _clean(value)}
         if kind == "data_value":
             return self.data_value(str(node["name"]))
         if kind == "sum":
@@ -171,6 +177,8 @@ class _Ability:
             return {"op": "by_level", "values": [_clean(v) for v in selected]}
         if kind == "by_char_level_breakpoints":
             return _breakpoints_formula(node, self.slot)
+        if kind == "by_char_level_named_breakpoints":
+            return self._named_breakpoints_formula(node)
         if kind == "stat_scaled":
             stat = node.get("stat") or {}
             name, scope = stat.get("stat"), stat.get("formula")
@@ -180,6 +188,9 @@ class _Ability:
                 and stat.get("formula_confidence") == "corroborated"
             ):
                 raise KitGenError(f"{self.slot}: stat {name}/{scope} is not corroborated")
+            # Base ability power is identically 0 in League of Legends, so bonus AP == total AP.
+            if name == "ability_power" and scope == "bonus":
+                scope = "total"
             if scope not in STAT_SCOPES.get(name, set()):
                 raise KitGenError(f"{self.slot}: stat {name}/{scope} has no kit equivalent")
             factor = self.node(node["factor"], stack)
@@ -196,6 +207,38 @@ class _Ability:
         if resolved.get("op") != "constant":
             raise KitGenError(f"{self.slot}: data value {name!r} changes with the rank")
         return resolved["value"]
+
+    def _named_breakpoints_formula(self, node: Mapping[str, Any]) -> dict[str, Any]:
+        level1_dv = node.get("level1_data_value")
+        if not isinstance(level1_dv, str) or not level1_dv:
+            raise KitGenError(f"{self.slot}: named breakpoints node missing level1_data_value")
+        level1 = float(self.constant_data_value(level1_dv))
+        per_dv = node.get("bonus_per_level_data_value")
+        rate = (
+            float(self.constant_data_value(per_dv)) if isinstance(per_dv, str) and per_dv else 0.0
+        )
+        raw_bps = node.get("breakpoints")
+        if raw_bps is not None and not isinstance(raw_bps, Sequence):
+            raise KitGenError(f"{self.slot}: named breakpoints must be a list")
+        by_level: dict[int, list[Mapping[str, Any]]] = {}
+        for bp in raw_bps or ():
+            if not isinstance(bp, Mapping) or not isinstance(bp.get("level"), int):
+                raise KitGenError(f"{self.slot}: malformed named breakpoint entry")
+            by_level.setdefault(int(bp["level"]), []).append(bp)
+        current = level1
+        values: list[float | int] = []
+        for level in range(1, 19):
+            if level > 1:
+                current += rate
+            for bp in by_level.get(level, ()):
+                add_dv = bp.get("additional_bonus_data_value")
+                if isinstance(add_dv, str) and add_dv:
+                    current += float(self.constant_data_value(add_dv))
+                rate_dv = bp.get("bonus_per_level_at_and_after_data_value")
+                if isinstance(rate_dv, str) and rate_dv:
+                    rate = float(self.constant_data_value(rate_dv))
+            values.append(_clean(current))
+        return {"op": "by_level", "values": values}
 
     def custom(self, formula: Any) -> Any:
         """Resolve ``{"op": "data_value", "name": …}`` placeholders in a curated formula."""
@@ -347,8 +390,11 @@ def _compile_passive_effect(
 
 
 def compile_kit(
-    extract: Mapping[str, Any], tooltips: Mapping[str, str], spec: Mapping[str, Any]
+    extract: Mapping[str, Any], tooltips: Mapping[str, Any], spec: Mapping[str, Any]
 ) -> dict[str, Any]:
+    raw_strings = tooltips.get("strings") if isinstance(tooltips, Mapping) else None
+    if isinstance(raw_strings, Mapping):
+        tooltips = raw_strings
     by_slot = {str(item["slot"]): _Ability(item) for item in extract["abilities"]}
     content_version = extract.get("content_version")
     abilities: dict[str, Any] = {}
@@ -411,7 +457,12 @@ def compile_kit(
                     "condition": item["condition"],
                 }
             )
-        max_rank = ability.max_rank if ability is not None else int(entry["max_rank"])
+        if ability is not None and ability.max_rank is not None:
+            max_rank = ability.max_rank
+        elif "max_rank" in entry:
+            max_rank = int(entry["max_rank"])
+        else:
+            raise KitGenError(f"{context}: unknown max_rank (declare max_rank in spec)")
         abilities[slot] = {
             "name": entry["name"],
             "max_rank": max_rank,
