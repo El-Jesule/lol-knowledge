@@ -9,11 +9,19 @@ and Demolish.
 from __future__ import annotations
 
 from collections.abc import Mapping, Sequence
-from dataclasses import dataclass
 from fractions import Fraction
 
 from .damage import DamageType, format_number
 from .errors import RotationError, StatsError
+from .rune_keystones import (
+    DelayedRuneProc,
+    KeystoneCombat,
+    RuneModifier,
+    RuneProc,
+    RuneStatBonus,
+    require_target_kind,
+    rune_source,
+)
 from .runes import (
     COMBAT_MINOR_RUNE_KEYS,
     RULES,
@@ -27,46 +35,8 @@ from .runes import (
 from .scenario import Target
 from .stats import Label, StatBlocked, StatSheet, weakest
 
-
-@dataclass(frozen=True)
-class RuneModifier:
-    """One damage-dealt percentage modifier from a rune."""
-
-    source: str
-    percent: Fraction
-    label: Label
-    note: str = ""
-
-
-@dataclass(frozen=True)
-class RuneProc:
-    """One bonus damage instance dealt by a rune."""
-
-    source: str
-    damage_type: DamageType
-    raw: Fraction
-    label: Label
-    notes: tuple[str, ...] = ()
-
-
-@dataclass(frozen=True)
-class DelayedRuneProc:
-    """A rune proc scheduled to land at ``at`` seconds in the timeline."""
-
-    at: Fraction
-    proc: RuneProc
-
-
-def _require_target_kind(rune: Rune, target: Target) -> str:
-    if target.kind is None:
-        raise RotationError(
-            f"rune {rune.id} {rune.name} depends on the target kind; give --target-kind"
-        )
-    return target.kind
-
-
-def _rune_source(rune: Rune, data: RuneData) -> str:
-    return f"rune:{rune.id} {rune.key} ({data.content_version})"
+_require_target_kind = require_target_kind
+_rune_source = rune_source
 
 
 class RuneCombat:
@@ -83,6 +53,7 @@ class RuneCombat:
         holder_range: str | None,
         inputs: Mapping[str, Fraction],
         timeline: bool,
+        ap_weight: Fraction | None = None,
     ) -> None:
         self.data = data
         self.sheet = sheet
@@ -91,6 +62,19 @@ class RuneCombat:
         self.timeline = timeline
         self.notes: list[str] = []
         self.weakened = False
+        self._keystones = KeystoneCombat(
+            rune_ids,
+            data,
+            sheet,
+            target,
+            holder_range=holder_range,
+            inputs=inputs,
+            timeline=timeline,
+            ap_weight=ap_weight,
+        )
+        self.notes.extend(self._keystones.notes)
+        self.weakened |= self._keystones.weakened
+        self._reported_keystone_notes = len(self._keystones.notes)
 
         self._coup: tuple[Rune, Fraction, Fraction] | None = None
         self._cut_down: tuple[Rune, Fraction, Fraction] | None = None
@@ -275,7 +259,24 @@ class RuneCombat:
             result.append(self._last_stand)
         if self._axiom is not None and part_kind == "ability" and slot == "R":
             result.append(self._axiom)
+        result.extend(self._keystones.dealt_modifiers())
         return result
+
+    @property
+    def speed_changed(self) -> bool:
+        return self._keystones.speed_changed
+
+    def active_stat_bonuses(self, at: Fraction, base_sheet: StatSheet) -> list[RuneStatBonus]:
+        return self._keystones.active_stat_bonuses(at, base_sheet)
+
+    def healing_rate(self) -> tuple[Fraction, Label, str] | None:
+        return self._keystones.healing_rate()
+
+    def drain_runtime_updates(self) -> tuple[list[str], bool]:
+        """New notes or weakening produced by keystones during rotation steps."""
+        new_notes = self._keystones.notes[self._reported_keystone_notes :]
+        self._reported_keystone_notes = len(self._keystones.notes)
+        return new_notes, self._keystones.weakened
 
     def _can_fire(self, rune: Rune, clock: Fraction) -> bool:
         if not self.timeline:
@@ -411,7 +412,33 @@ class RuneCombat:
                         )
                     )
 
+        procs.extend(self._keystones.on_step(slot, dealt_damage, clock, sheet))
         return procs
+
+    def on_step_complete(
+        self,
+        step_damage: Fraction,
+        clock: Fraction,
+        sheet: StatSheet,
+        health_before: Fraction,
+        health_after: Fraction,
+        max_health: Fraction,
+    ) -> list[RuneProc]:
+        return self._keystones.on_step_complete(
+            step_damage, clock, sheet, health_before, health_after, max_health
+        )
+
+    def has_active_burn(self) -> bool:
+        return self._keystones.has_active_burn()
+
+    def burn_split_times(self, start: Fraction, until: Fraction) -> list[Fraction]:
+        return self._keystones.burn_split_times(start, until)
+
+    def accrue_burn(self, begin: Fraction, finish: Fraction) -> RuneProc | None:
+        return self._keystones.accrue_burn(begin, finish)
+
+    def clear_expired_burns(self, until: Fraction) -> None:
+        self._keystones.clear_expired_burns(until)
 
     def has_due_procs(self, until: Fraction) -> bool:
         return any(item.at <= until for item in self._delayed)
@@ -426,6 +453,8 @@ class RuneCombat:
         return due
 
     def last_pending_time(self) -> Fraction | None:
-        if not self._delayed:
-            return None
-        return max(item.at for item in self._delayed)
+        times = [item.at for item in self._delayed]
+        burn_end = self._keystones.burn_end()
+        if burn_end is not None:
+            times.append(burn_end)
+        return max(times) if times else None

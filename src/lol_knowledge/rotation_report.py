@@ -88,7 +88,7 @@ def format_text(
             f"critical multiplier: {format_number(crit_base.value)} [{crit_base.label.value}] "
             f"({crit_base.source})"
         )
-    heals = bool(sheet["life_steal"].total() or sheet["omnivamp"].total())
+    heals = bool(sheet["life_steal"].total() or sheet["omnivamp"].total() or outcome.healing)
     if heals:
         lines.append(
             f"life steal: {_percent(sheet['life_steal'].total())} "

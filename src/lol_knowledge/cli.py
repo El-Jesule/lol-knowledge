@@ -230,8 +230,8 @@ def _add_build_option(command: argparse.ArgumentParser) -> None:
         metavar="ID",
         help=(
             "Tree rune of the page (repeat 6 times: keystone, 3 primary, 2 secondary); "
-            "stat-sheet and combat minor runes are applied, keystones and remaining "
-            "healing/defense runes remain pending (lol-knowledge/mechanics/runes.md)."
+            "stat-sheet minor runes, combat minor runes and offensive keystones are applied "
+            "(lol-knowledge/mechanics/runes.md)."
         ),
     )
     command.add_argument(
@@ -666,6 +666,7 @@ def _run_rotation(args: argparse.Namespace) -> int:
         crit_base = _crit_base(champion.id, champion.patch, derived)
         rune_ids = _rune_ids(args.rune, "--rune")
         rune_data = load_runes(root) if rune_ids else None
+        ap_weight = derived.value(champion.id, "adaptiveforceapweight") if derived else None
         outcome = evaluate_rotation(
             kit,
             sheet,
@@ -678,6 +679,7 @@ def _run_rotation(args: argparse.Namespace) -> int:
             timeline=args.timeline,
             runes=rune_ids,
             rune_data=rune_data,
+            ap_weight=ap_weight,
         )
     except (StatsError, KitError, DamageInputError, RotationError) as exc:
         print(f"error: {exc}", file=sys.stderr)

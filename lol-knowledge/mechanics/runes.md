@@ -1,9 +1,9 @@
 # Runas y fragmentos
 
-- **Ámbito:** estructura de una página de runas, su legalidad, los fragmentos de estadísticas, las runas menores de estadísticas en la hoja y las runas menores de combate en `rotation`. Lo usan `stats`, `ability` y `rotation` con `--rune`, `--shard` y `--input`.
+- **Ámbito:** estructura de una página de runas, su legalidad, los fragmentos de estadísticas, las runas menores de estadísticas en la hoja y las runas menores de combate y piedras angulares en `rotation`. Lo usan `stats`, `ability` y `rotation` con `--rune`, `--shard` y `--input`.
 - **Parche de referencia:** cliente 16.23 y Data Dragon 16.23.1.
 - **Fecha de consulta:** 2026-11-20
-- **Código:** [`src/lol_knowledge/runes.py`](../../src/lol_knowledge/runes.py) y [`src/lol_knowledge/rune_combat.py`](../../src/lol_knowledge/rune_combat.py). Datos: [`../derived/runes.json`](../derived/runes.json), generado con `python -m binmodel.perks` ([`research/README.md`](../../research/README.md)).
+- **Código:** [`src/lol_knowledge/runes.py`](../../src/lol_knowledge/runes.py), [`src/lol_knowledge/rune_combat.py`](../../src/lol_knowledge/rune_combat.py) y [`src/lol_knowledge/rune_keystones.py`](../../src/lol_knowledge/rune_keystones.py). Datos: [`../derived/runes.json`](../derived/runes.json), generado con `python -m binmodel.perks` ([`research/README.md`](../../research/README.md)).
 
 ## Fuentes
 
@@ -97,10 +97,30 @@ Se aplican en `python -m lol_knowledge rotation` (en `stats` se anotan como info
 
 Si el objetivo no coincide con el tipo de una runa (por ejemplo, Demoler contra un campeón o Golpe de gracia contra un súbdito), la runa no se aplica y no debilita la etiqueta. Si falta un `--input` condicional en una runa aplicable, queda en `not_applied` y deja el resultado en `Pendiente de verificación`.
 
-## Lo que no se modela todavía (RUN-04)
+## Piedras angulares ofensivas en `rotation` (`Derivado`, R1, R2 y R4, salvo donde se indica)
 
-- **Las 17 piedras angulares** (fase 40).
-- **Las 15 runas menores dependientes de mecánicas aún no construidas** (siguen en `pending_effects` y dejan `ability` y `rotation` en `Pendiente de verificación`):
+Se aplican contra campeones en `python -m lol_knowledge rotation` (en `stats` constan como nota informativa; en `ability` permanecen en `pending_effects`). El daño adaptable usa la misma regla que los fragmentos (DA adicional > PH → físico; PH > DA adicional → mágico; empate decidido por `adaptiveforceapweight` con etiqueta `Pendiente de verificación`).
+
+| Id | Clave del cliente | `--input` / requisito | Efecto en `rotation` |
+|---|---|---|---|
+| 8112 | `Electrocute` | `--target-kind` | Al 3.º golpe en 3 s (`WindowDuration`): 70–240 lineal + 10 % DA adicional + 5 % PH adaptable (`TotalDamage` en R1); enfriamiento 20 s en `--timeline` |
+| 8128 | `DarkHarvest` | `dark_harvest_souls` (≥ 0) y `--target-kind` | Al dañar a un campeón por debajo del 50 % de vida: `30 + 11 × almas + 10 % DA adicional + 5 % PH` adaptable; suma 1 alma; enfriamiento 35 s en `--timeline` |
+| 8005 | `PressTheAttack` | `--target-kind` | Al 3.º ataque básico: 40–160 adaptable (`Pendiente de verificación` en niveles 2–17, sin curva en el bin) y activa +8 % de daño infligido en los golpes siguientes (caduca tras 6 s sin golpear en `--timeline`) |
+| 8010 | `Conqueror` | `--target-kind`, `--attacker-range` | 2 acumulaciones por golpe (1 en ataques a distancia) hasta 12 durante 5 s: `1,8–4,0` de fuerza adaptable por acumulación (`Pendiente de verificación` en niveles 2–17) desde el paso siguiente (`combat-stacks.md`). Con 12 acumulaciones, cura 8 % (cuerpo a cuerpo) o 5 % (distancia) del daño infligido a campeones |
+| 8008 | `LethalTempo` | `--target-kind`, `--attacker-range` | +6 % VA por ataque cuerpo a cuerpo (`Derivado`) o +4 % a distancia (`Pendiente de verificación`: discrepancia 4 % tooltip frente a 4,8 % `ASPerStack` en 16.23), hasta 6 durante 6 s. Al máximo, cada ataque inflige `9–30` (cuerpo a cuerpo) o `6–24` (a distancia, `Pendiente de verificación`: 24 frente a 20 en `NoteDamage`) × `(1 + VA adicional)` de daño adaptable |
+| 9923 | `HailOfBlades` | `--target-kind`, `--attacker-range` | Hasta 3 ataques (ventana de 3 s entre golpes, 10 s de enfriamiento en `--timeline`): +90 % / +60 % VA adicional entre ataques y `2–20 + 12 % DA adicional + 10 % PH` de daño verdadero (`Pendiente de verificación` en niveles 2–17 por la curva `{ee18a47b}`) |
+| 8214 | `SummonAery` | `--target-kind` | En el primer golpe dañino: 10–50 lineal + 10 % DA adicional + 5 % PH adaptable (`DamageCalc` en R1). Como el retorno depende de la distancia, solo dispara una vez; si hay más golpes dañinos se anota y debilita a `Pendiente de verificación` |
+| 8229 | `ArcaneComet` | `comet_distance` (≥ 0) y `--target-kind` | Al golpear con una habilidad de daño: `(15–100 + 10 % DA adicional + 5 % PH) × (1 + min(dist, 750) / 750)` adaptable (`Pendiente de verificación` para distancias intermedias `0 < dist < 750`). En `--timeline`: enfriamiento 20–8 s con reembolso del 20 % por habilidad de daño |
+| 8992 | `DeathfireTouch` | `deathfire_duration` (`1`, `2` o `4`) y `--target-kind` | Quemadura mágica al golpear con habilidad: `3–12 + 2,5 % PH + 7 % DA adicional` por segundo (`DamageCalc` en R1); tras arder 3 s continuos (`TimeToAmp`) se amplifica un +75 % (`DamageMultiplier`). En `--timeline` se acumula de forma continua en `_accrue` |
+| 8369 | `FirstStrike` | `first_strike` (`0` o `1`) y `--target-kind` si `1` | Ventana de 3 s (enfriamiento 25–15 s en `--timeline`): +7 % del daño posmitigación del paso como parte aparte de daño verdadero (sin volver a aplicar modificadores de daño). Oro adicional anotado fuera |
+| 8437 | `GraspOfTheUndying` | `grasp_ready` (`0` o `1`), `--target-kind`, `--attacker-range` | En el siguiente ataque listo (o cada 4 s en combate en `--timeline`): 3,5 % de vida máxima (× 0,4 a distancia) como daño mágico. Curación y vida permanente anotadas como no modeladas (`MEC-05`) |
+
+## Lo que no se modela todavía (dependencias de futuras mecánicas)
+
+Las **6 piedras angulares** y **15 runas menores** restantes dependen de mecánicas aún no construidas; siguen en `pending_effects` y dejan `ability` y `rotation` en `Pendiente de verificación`:
+
+- **Piedras angulares (6):** `8021` Pies veloces (`MEC-05`, `OBJ-04`), `8230` Tensión del saqueador de tormentas (`MEC-27`), `8351` Mejora glacial (`MEC-26`), `8360` Libro de hechizos (`DAT-06`), `8439` Reverberacción (`MEC-26`, `MEC-09`) y `8465` Protector (`MEC-04`, `MEC-09`).
+- **Runas menores (15):**
   - Curación de efectos / vida del atacante (`MEC-05`): `9101` Absorber vida, `9111` Triunfo, `8139` Sabor a sangre, `8463` Fuente de vida y `8444` Fuerzas renovadas.
   - Recursos / maná (`MEC-01`): `8009` Claridad mental.
   - Escudos (`MEC-04`) y poder de curaciones/escudos (`MEC-07`): `8401` Golpe de escudo y `8453` Revitalizar.

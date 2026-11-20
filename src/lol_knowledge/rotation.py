@@ -576,6 +576,7 @@ class _Rotation:
         runes: Sequence[int] = (),
         rune_data: RuneData | None = None,
         has_ultimate_step: bool = False,
+        ap_weight: Fraction | None = None,
     ) -> None:
         self.kit, self.sheet, self.ranks, self.target = kit, sheet, ranks, target
         self.base_sheet = sheet
@@ -594,6 +595,7 @@ class _Rotation:
             holder_range=holder_range,
             inputs=inputs,
             timeline=timeline,
+            ap_weight=ap_weight,
         )
         self.notes = notes + target_notes + list(sheet.pending_effects) + self.rune_combat.notes
         self.weakened = (
@@ -916,6 +918,7 @@ class _Rotation:
         notes: Sequence[str] = (),
         life_steal_tag: Mapping[str, Any] | None = None,
         slot: str | None = None,
+        apply_modifiers: bool = True,
     ) -> Part:
         modifiers = penetration_modifiers(self.sheet, damage_type)
         shred = self.shred.get(damage_type, [])
@@ -937,9 +940,12 @@ class _Rotation:
         if damage_type in PENETRATION:
             percent, flat = PENETRATION[damage_type]
             labels = [*labels, self.sheet[percent].label, self.sheet[flat].label]
-        dealt, taken, modifier_labels, modifier_notes = self._modifiers(
-            kind, crit, target_stats, damage_type, slot
-        )
+        if apply_modifiers:
+            dealt, taken, modifier_labels, modifier_notes = self._modifiers(
+                kind, crit, target_stats, damage_type, slot
+            )
+        else:
+            dealt, taken, modifier_labels, modifier_notes = [], [], [], []
         part = Part(
             kind,
             source,
@@ -956,7 +962,8 @@ class _Rotation:
     def _healing(self, part: Part, tag: Mapping[str, Any] | None) -> Healing:
         """Life steal and omnivamp healing of ``part`` (life-steal-and-omnivamp.md)."""
         life_steal, omnivamp = self.life_steal.total(), self.omnivamp.total()
-        if not life_steal and not omnivamp:
+        rune_heal = self.rune_combat.healing_rate()
+        if not life_steal and not omnivamp and rune_heal is None:
             return NO_HEALING
         if self.target.kind == "structure":
             return Healing(
@@ -1000,6 +1007,10 @@ class _Rotation:
                         f"omnivamp against a {kind} is 33% for pets, damage over time and "
                         "area spells; the kit does not say which, healed at 100%"
                     )
+        if rune_heal is not None and self.target.kind == "champion":
+            omnivamp += rune_heal[0]
+            labels.append(rune_heal[1])
+            notes.append(rune_heal[2])
         if applied_life_steal and omnivamp:
             labels.append(Label.PENDING)
             notes.append("life steal and omnivamp on the same damage: their sum is not verified")
@@ -1155,6 +1166,10 @@ class _Rotation:
             else:
                 damage_type = RESISTANCE_STATS[str(component.get("stat"))]
                 self.shred.setdefault(damage_type, []).append(window)
+        for bonus in self.rune_combat.active_stat_bonuses(at, self.base_sheet):
+            sheet = with_bonus(
+                sheet, bonus.stat_id, bonus.amount, bonus.source, bonus.label, bonus.note
+            )
         if sheet is not self.sheet:
             self.sheet = sheet
             self.stats, self.origin = sheet_stats(sheet)
@@ -1208,7 +1223,11 @@ class _Rotation:
         uses the timed effects in force during it.
         """
         start = self.accrued
-        if until <= start or (not self.burning and not self.rune_combat.has_due_procs(until)):
+        if until <= start or (
+            not self.burning
+            and not self.rune_combat.has_active_burn()
+            and not self.rune_combat.has_due_procs(until)
+        ):
             self.accrued = max(start, until)
             return [], health
         ends = {
@@ -1223,6 +1242,7 @@ class _Rotation:
                 ),
                 # Seconds in combat change the in-combat increases on whole seconds.
                 *(Fraction(second) for second in range(math.ceil(until)) if self.combat),
+                *self.rune_combat.burn_split_times(start, until),
                 *self.rune_combat.due_times(until),
             ]
             if start < end < until
@@ -1257,6 +1277,20 @@ class _Rotation:
                 )
                 parts.append(part)
                 health = max(Fraction(0), health - part.damage)
+            rune_burn = self.rune_combat.accrue_burn(begin, finish)
+            if rune_burn is not None:
+                part = self._part(
+                    "burn",
+                    rune_burn.source,
+                    rune_burn.damage_type,
+                    rune_burn.raw,
+                    [rune_burn.label],
+                    False,
+                    target_stats,
+                    rune_burn.notes,
+                )
+                parts.append(part)
+                health = max(Fraction(0), health - part.damage)
             due_procs = self.rune_combat.pop_due(finish)
             if due_procs:
                 self._set_moment(finish)
@@ -1270,11 +1304,13 @@ class _Rotation:
                         False,
                         self._target_stats(health),
                         proc.notes,
+                        apply_modifiers=proc.apply_modifiers,
                     )
                     parts.append(part)
                     health = max(Fraction(0), health - part.damage)
         self.accrued = until
         self.burning = {key: burn for key, burn in self.burning.items() if burn.end > until}
+        self.rune_combat.clear_expired_burns(until)
         return parts, health
 
     def _timeline(self) -> Timeline:
@@ -1576,6 +1612,7 @@ class _Rotation:
             before = health
             if self.timeline is not None:
                 parts, health = self._accrue(clock, health)
+            accrued_count = len(parts)
             self._set_moment(clock)
             target_stats = self._target_stats(health)
             extra: list[Label] = []
@@ -1635,7 +1672,7 @@ class _Rotation:
                     )
                     if self.timeline is not None and self._open("energized", clock, target_stats):
                         extra.append(Label.PENDING)
-            step_dealt = bool(parts) if step.slot is None else bool(ability_parts)
+            step_dealt = bool(parts[accrued_count:]) if step.slot is None else bool(ability_parts)
             for proc in self.rune_combat.on_step(step.slot, step_dealt, clock, self.sheet):
                 parts.append(
                     self._part(
@@ -1647,8 +1684,36 @@ class _Rotation:
                         False,
                         target_stats,
                         proc.notes,
+                        apply_modifiers=proc.apply_modifiers,
                     )
                 )
+            step_damage = sum((p.damage for p in parts[accrued_count:]), start=Fraction(0))
+            step_after = max(Fraction(0), health - step_damage)
+            for proc in self.rune_combat.on_step_complete(
+                step_damage,
+                clock,
+                self.sheet,
+                health,
+                step_after,
+                self.target.stats["max_health"],
+            ):
+                parts.append(
+                    self._part(
+                        "rune",
+                        proc.source,
+                        proc.damage_type,
+                        proc.raw,
+                        [proc.label],
+                        False,
+                        target_stats,
+                        proc.notes,
+                        apply_modifiers=proc.apply_modifiers,
+                    )
+                )
+            new_notes, kw_weak = self.rune_combat.drain_runtime_updates()
+            self.notes.extend(new_notes)
+            self.weakened |= kw_weak
+            self.speed_changed |= self.rune_combat.speed_changed
             parts += self._execute(parts, before, target_stats)
             outcome = StepOutcome(
                 index,
@@ -1673,7 +1738,7 @@ class _Rotation:
             end = max(ends)
             tail_name = (
                 f"burns until {format_number(end)} s"
-                if self.burning
+                if (self.burning or self.rune_combat.has_active_burn())
                 else f"delayed effects until {format_number(end)} s"
             )
             outcomes.append(
@@ -1754,6 +1819,7 @@ def evaluate_rotation(
     timeline: bool = False,
     runes: Sequence[int] = (),
     rune_data: RuneData | None = None,
+    ap_weight: Fraction | None = None,
 ) -> RotationOutcome:
     """Damage of every step against ``target``, carrying its current health forward.
 
@@ -1778,5 +1844,6 @@ def evaluate_rotation(
         runes=runes,
         rune_data=rune_data,
         has_ultimate_step=has_ultimate,
+        ap_weight=ap_weight,
     )
     return rotation.run(steps)
