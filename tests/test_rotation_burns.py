@@ -69,9 +69,15 @@ def test_each_target_kind_has_its_own_burn():
     assert [part.source.split(" (")[0] for part in burns(minion.steps[0])] == [
         "6653 torment-minions"
     ]
+    # 3000 HP monster: 2%/s = 60/s, capped at 40/s -> 120 over 3 s (Derivado).
     monster = run("Q.first_hit", "6653", kind="monster")
-    assert not burns(monster.steps[0])
-    assert monster.label is Label.PENDING
+    (m_burn,) = burns(monster.steps[0])
+    assert m_burn.source == "6653 torment-monsters (Tormento (monstruos)) over 3 s"
+    assert m_burn.raw == 120
+    assert m_burn.label is Label.DERIVED
+    # Low-HP monster (1000 HP): 2%/s = 20/s (below 40/s cap) -> 60 over 3 s.
+    small_monster = run("Q.first_hit", "6653", kind="monster", health=1000)
+    assert [part.raw for part in burns(small_monster.steps[0])] == [60]
     ashes = run("Q.first_hit", "2508", kind="monster")
     assert [part.raw for part in burns(ashes.steps[0])] == [45]
 

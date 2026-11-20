@@ -114,9 +114,9 @@ def test_shard_values_come_from_the_client():
         ("health", 180),
         ("health", 65),
     ]
-    # The health curve between levels 1 and 18 is not published: linear, pending.
+    # Linear 10/level (10..180), corroborated by client 16.23 + LoL Wiki (Rune rev 4094440).
     ((_, scaling),) = shard_contributions([5001], DATA, level=10, patch=PATCH)[0]
-    assert scaling.value == 100 and scaling.label is Label.PENDING
+    assert scaling.value == 100 and scaling.label is Label.DERIVED
 
 
 def test_adaptive_shards_need_and_follow_the_adaptive_stat():

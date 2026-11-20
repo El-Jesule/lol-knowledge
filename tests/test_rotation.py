@@ -279,13 +279,13 @@ def test_target_items_reduce_attacks_and_crits_multiplicatively():
     assert any("humility" in note for note in outcome.notes)
 
 
-def test_plates_on_on_hit_damage_is_pending():
+def test_plates_do_not_reduce_on_hit_damage():
     defender = sheet("Ahri", 16, ("3047",), ranks=None)
     (step,) = run(sheet(items=("3153",)), target_from_sheet(defender), "attack").steps
     attack, on_hit = step.parts
+    assert attack.taken == (("3047 plates", F(-10)),)
     assert on_hit.taken == ()
-    assert on_hit.label is Label.PENDING
-    assert any("on-hit" in note for note in on_hit.notes)
+    assert on_hit.label is Label.DERIVED
 
 
 def test_unmodelled_conditions_are_refused():

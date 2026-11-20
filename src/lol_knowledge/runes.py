@@ -16,7 +16,7 @@ from __future__ import annotations
 import json
 import re
 from collections.abc import Collection, Mapping, Sequence
-from dataclasses import dataclass
+from dataclasses import dataclass, field
 from fractions import Fraction
 from pathlib import Path
 from typing import Any
@@ -130,6 +130,7 @@ class Rune:
     key: str
     name: str
     values: Mapping[str, Fraction]
+    ranged_multipliers: Mapping[str, Fraction] = field(default_factory=dict)
 
 
 @dataclass(frozen=True)
@@ -273,6 +274,29 @@ def runes_problems(document: Any, *, patch: str | None = None, official: Any = N
     return problems
 
 
+def _parse_ranged_multipliers(calculations: Any) -> dict[str, Fraction]:
+    if not isinstance(calculations, Mapping):
+        return {}
+    result: dict[str, Fraction] = {}
+    for name, calc in calculations.items():
+        if not isinstance(calc, Mapping):
+            continue
+        mult = calc.get("mRangedMultiplier")
+        if (
+            isinstance(mult, Mapping)
+            and isinstance(mult.get("mNumber"), (int, float))
+            and not isinstance(mult.get("mNumber"), bool)
+        ):
+            result[str(name)] = Fraction(str(mult["mNumber"]))
+    return result
+
+
+def rune_ranged_multiplier(rune: Rune, name: str) -> Fraction:
+    if name not in rune.ranged_multipliers:
+        raise StatsError(f"rune {rune.id} {rune.key}: client data has no ranged multiplier {name}")
+    return rune.ranged_multipliers[name]
+
+
 def parse_runes(document: Any, path: str = RUNES_PATH.as_posix()) -> RuneData:
     problems = runes_problems(document)
     if problems:
@@ -293,6 +317,7 @@ def parse_runes(document: Any, path: str = RUNES_PATH.as_posix()) -> RuneData:
             perk["key"],
             perk["texts"].get("name", perk["key"]),
             {name: Fraction(str(value)) for name, value in perk["effect_amounts"].items()},
+            _parse_ranged_multipliers(perk.get("calculations")),
         )
         for perk_id, perk in document["perks"].items()
     }
@@ -435,8 +460,8 @@ def shard_contributions(
         elif rune.key == "HealthScaling":
             low, high = _value(rune, "StatGainMin"), _value(rune, "StatGainMax")
             value = low + (high - low) * (level - 1) / (LEVELS - 1)
-            note = f"{low}–{high} by level, taken as linear ({RULES})"
-            flats.append(("health", Contribution(value, "bonus", source, Label.PENDING, note)))
+            note = f"{low}–{high} by level, linear 10/level ({RULES})"
+            flats.append(("health", Contribution(value, "bonus", source, base, note)))
         elif rune.key == "Adaptive":
             if adaptive not in ("attack_damage", "ability_power"):
                 raise StatsError(
