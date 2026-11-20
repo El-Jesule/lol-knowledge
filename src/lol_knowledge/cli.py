@@ -28,6 +28,7 @@ from .rotation_report import to_dict as rotation_to_dict
 from .runes import (
     adaptive_stat,
     check_page,
+    combat_rune_notes,
     load_runes,
     minor_rune_effects,
     needs_adaptive_stat,
@@ -229,8 +230,8 @@ def _add_build_option(command: argparse.ArgumentParser) -> None:
         metavar="ID",
         help=(
             "Tree rune of the page (repeat 6 times: keystone, 3 primary, 2 secondary); "
-            "stat-sheet minor runes are applied, combat minor runes and keystones remain "
-            "pending (lol-knowledge/mechanics/runes.md)."
+            "stat-sheet and combat minor runes are applied, keystones and remaining "
+            "healing/defense runes remain pending (lol-knowledge/mechanics/runes.md)."
         ),
     )
     command.add_argument(
@@ -283,7 +284,17 @@ def _rune_ids(values: list[str], option: str) -> list[int]:
 
 
 def _build_sheet(
-    args, root: Path, champion, items, issues, assumptions, derived, extras=(), inputs=None
+    args,
+    root: Path,
+    champion,
+    items,
+    issues,
+    assumptions,
+    derived,
+    extras=(),
+    inputs=None,
+    *,
+    combat_context: str = "stats",
 ):
     """The attacker's stat sheet, with the rune page of ``--rune``/``--shard`` if any."""
     runes, shards = _rune_ids(args.rune, "--rune"), _rune_ids(args.shard, "--shard")
@@ -344,6 +355,12 @@ def _build_sheet(
         adaptive_label=label,
         adaptive_note=note,
     )
+    extra_notes = list(rune_effects.notes)
+    pending = list(rune_effects.pending)
+    if combat_context == "stats":
+        extra_notes += combat_rune_notes(rune_effects.combat_runes, data, in_ability=False)
+    elif combat_context == "ability":
+        pending += combat_rune_notes(rune_effects.combat_runes, data, in_ability=True)
     return build_stat_sheet(
         champion,
         args.level,
@@ -353,9 +370,9 @@ def _build_sheet(
         derived,
         (*extras, *flats, *rune_effects.flats),
         (*percents, *rune_effects.percents),
-        rune_effects.pending,
+        pending,
         extra_amplifiers=rune_effects.amplifiers,
-        extra_notes=rune_effects.notes,
+        extra_notes=extra_notes,
         move_speed_bonus_amp=rune_effects.move_speed_bonus_amp,
     )
 
@@ -580,6 +597,7 @@ def _run_ability(args: argparse.Namespace) -> int:
             derived,
             passive_contributions(kit, ranks),
             inputs=inputs,
+            combat_context="ability",
         )
         _check_build(root, args.item, champion, allow=args.allow_illegal_build, who="attacker")
         target = _ability_target(args, root, issues, derived)
@@ -641,10 +659,13 @@ def _run_rotation(args: argparse.Namespace) -> int:
             derived,
             passive_contributions(kit, ranks),
             inputs=inputs,
+            combat_context="rotation",
         )
         _check_build(root, args.item, champion, allow=args.allow_illegal_build, who="attacker")
         target = _ability_target(args, root, issues, derived)
         crit_base = _crit_base(champion.id, champion.patch, derived)
+        rune_ids = _rune_ids(args.rune, "--rune")
+        rune_data = load_runes(root) if rune_ids else None
         outcome = evaluate_rotation(
             kit,
             sheet,
@@ -655,6 +676,8 @@ def _run_rotation(args: argparse.Namespace) -> int:
             holder_range=args.attacker_range,
             inputs=inputs,
             timeline=args.timeline,
+            runes=rune_ids,
+            rune_data=rune_data,
         )
     except (StatsError, KitError, DamageInputError, RotationError) as exc:
         print(f"error: {exc}", file=sys.stderr)

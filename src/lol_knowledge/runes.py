@@ -70,6 +70,19 @@ NON_COMBAT_MINOR_RUNES: Mapping[str, str] = {
     "HextechFlashtraption": "summoner spell replacement only; no combat stats or damage",
     "CashBack": "gold refund only; no combat stats or damage",
 }
+# Minor runes whose combat damage or damage modifiers are evaluated by rotations (rune_combat.py).
+COMBAT_MINOR_RUNE_KEYS = frozenset(
+    {
+        "CoupDeGrace",
+        "CutDown",
+        "LastStand",
+        "NullifyingOrb",
+        "Scorch",
+        "CheapShot",
+        "SuddenImpact",
+        "Demolish",
+    }
+)
 
 
 @dataclass(frozen=True)
@@ -82,6 +95,7 @@ class RuneEffects:
     move_speed_bonus_amp: Contribution | None = None
     notes: tuple[str, ...] = ()
     pending: tuple[str, ...] = ()
+    combat_runes: tuple[int, ...] = ()
 
 
 @dataclass(frozen=True)
@@ -346,11 +360,14 @@ def check_page(
     )
 
 
-def _value(rune: Rune, name: str) -> Fraction:
+def rune_value(rune: Rune, name: str) -> Fraction:
     try:
         return rune.values[name]
     except KeyError as exc:
         raise StatsError(f"rune {rune.id} {rune.key}: no client value {name!r}") from exc
+
+
+_value = rune_value
 
 
 def shard_contributions(
@@ -457,7 +474,24 @@ def needs_adaptive_stat(runes: Sequence[int], shards: Sequence[int], data: RuneD
     return False
 
 
-def _int_input(
+def combat_rune_notes(
+    runes: Sequence[int], data: RuneData, *, in_ability: bool = False
+) -> list[str]:
+    """Notes explaining combat runes in commands that do not evaluate them."""
+    tail = (
+        "combat effect (applied in rotation, not in ability)"
+        if in_ability
+        else ("combat effect (applied in rotation)")
+    )
+    notes = []
+    for rune_id in runes:
+        rune = data.runes.get(rune_id)
+        name = rune.name if rune else str(rune_id)
+        notes.append(f"rune {rune_id} {name}: {tail}")
+    return notes
+
+
+def int_input(
     inputs: Mapping[str, Fraction],
     name: str,
     *,
@@ -476,6 +510,9 @@ def _int_input(
     return value
 
 
+_int_input = int_input
+
+
 def _nonneg_input(inputs: Mapping[str, Fraction], name: str) -> Fraction | None:
     if name not in inputs:
         return None
@@ -485,7 +522,7 @@ def _nonneg_input(inputs: Mapping[str, Fraction], name: str) -> Fraction | None:
     return value
 
 
-def _fraction_input(inputs: Mapping[str, Fraction], name: str) -> Fraction | None:
+def fraction_input(inputs: Mapping[str, Fraction], name: str) -> Fraction | None:
     if name not in inputs:
         return None
     value = inputs[name]
@@ -494,8 +531,14 @@ def _fraction_input(inputs: Mapping[str, Fraction], name: str) -> Fraction | Non
     return value
 
 
-def _linear_by_level(low: Fraction, high: Fraction, level: int) -> Fraction:
+_fraction_input = fraction_input
+
+
+def linear_by_level(low: Fraction, high: Fraction, level: int) -> Fraction:
     return low + (high - low) * (level - 1) / (LEVELS - 1)
+
+
+_linear_by_level = linear_by_level
 
 
 def _adaptive_contribution(
@@ -750,6 +793,7 @@ def minor_rune_effects(
     move_speed_bonus_amp: Contribution | None = None
     notes: list[str] = []
     pending: list[str] = []
+    combat_runes: list[int] = []
     seen: set[int] = set()
 
     for rune_id in runes:
@@ -764,6 +808,10 @@ def minor_rune_effects(
 
         if rune.key in NON_COMBAT_MINOR_RUNES:
             notes.append(f"rune {rune_id} {rune.name}: {NON_COMBAT_MINOR_RUNES[rune.key]}")
+            continue
+
+        if rune.key in COMBAT_MINOR_RUNE_KEYS:
+            combat_runes.append(rune_id)
             continue
 
         if rune.key == "Transcendence":
@@ -950,4 +998,5 @@ def minor_rune_effects(
         move_speed_bonus_amp=move_speed_bonus_amp,
         notes=tuple(notes),
         pending=tuple(pending),
+        combat_runes=tuple(combat_runes),
     )

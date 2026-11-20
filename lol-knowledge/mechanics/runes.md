@@ -1,9 +1,9 @@
 # Runas y fragmentos
 
-- **Ámbito:** estructura de una página de runas, su legalidad, los fragmentos de estadísticas y las runas menores de estadísticas en la hoja. Lo usan `stats`, `ability` y `rotation` con `--rune`, `--shard` y `--input`.
+- **Ámbito:** estructura de una página de runas, su legalidad, los fragmentos de estadísticas, las runas menores de estadísticas en la hoja y las runas menores de combate en `rotation`. Lo usan `stats`, `ability` y `rotation` con `--rune`, `--shard` y `--input`.
 - **Parche de referencia:** cliente 16.23 y Data Dragon 16.23.1.
 - **Fecha de consulta:** 2026-11-20
-- **Código:** [`src/lol_knowledge/runes.py`](../../src/lol_knowledge/runes.py). Datos: [`../derived/runes.json`](../derived/runes.json), generado con `python -m binmodel.perks` ([`research/README.md`](../../research/README.md)).
+- **Código:** [`src/lol_knowledge/runes.py`](../../src/lol_knowledge/runes.py) y [`src/lol_knowledge/rune_combat.py`](../../src/lol_knowledge/rune_combat.py). Datos: [`../derived/runes.json`](../derived/runes.json), generado con `python -m binmodel.perks` ([`research/README.md`](../../research/README.md)).
 
 ## Fuentes
 
@@ -15,6 +15,7 @@
 | R4 | League of Legends Wiki, «Rune (League of Legends)» y «Adaptive force» (consultadas el 2026-11-19) | Valores de los fragmentos; la fuerza adaptable da el que sea mayor de DA adicional y PH; en un empate, depende del campeón (1 PH = 0,6 DA) | Fuente comunitaria secundaria |
 | R5 | Cliente 16.23, `CharacterRecords/Root.mAdaptiveForceToAbilityPowerWeight` de cada campeón ([`champion-records.json`](../derived/champion-records.json), campo `adaptiveforceapweight`) | Vale 1 en 77 campeones (Ahri, Lux, Annie, Malphite…) y falta en los otros 96 | Datos del cliente; su significado es una interpretación |
 | R6 | League of Legends Wiki / Fandom, artículos de «Celerity», «Conditioning», «Overgrowth» y «Jack of All Trades» (extractos consultados el 2026-11-20) | Amplificación del total en Condicionamiento y Sobrecrecimiento; separación entre estadísticas planas y porcentuales en Manitas; efecto del 7 % de Celeridad sobre bonificaciones de velocidad | Fuente comunitaria secundaria |
+| R7 | League of Legends Wiki / Fandom, artículos de «Coup de Grace», «Cut Down», «Last Stand», «Axiom Arcanist», «Scorch» y «Omnivamp» (extractos consultados el 2026-11-20) | Amplificación también sobre daño verdadero (desde el parche 15.3); interpolación lineal de Último esfuerzo entre 60 % y 30 %; reducción en área de Arcanólogo axiomático; retardo de 1 s y enfriamiento de 10 s de Piroláser; omnivampirismo sobre procs de runas | Fuente comunitaria secundaria |
 
 `validate` comprueba que los árboles, las filas y los ids de R1 coinciden exactamente con R3.
 
@@ -79,9 +80,34 @@ Las runas estrictamente de visión, oro, abalorios (excluidos por DEC-03), veloc
 
 - `8137` Sexto sentido, `8140` Recuerdo macabro, `8141` Guardián de profundidad, `8135` Cazador de tesoros, `8105` Cazador incesante, `8306` Destello hextech y `8321` Reembolso.
 
+## Runas menores de combate en `rotation` (`Derivado`, R1, R2 y R7, salvo donde se indica)
+
+Se aplican en `python -m lol_knowledge rotation` (en `stats` se anotan como informativas; en `ability` siguen en `pending_effects` porque `ability` no evalúa efectos de combate). Los modificadores de daño infligido se suman aditivamente con los de los objetos ([regla](damage-modifiers.md)) y afectan a daño físico, mágico y verdadero (R7). Los procs de daño de runas (`kind: "rune"`) no aplican robo de vida y sí aplican omnivampirismo contra campeones (R7).
+
+| Id | Clave del cliente | Tipo | `--input` / requisito | Efecto en `rotation` |
+|---|---|---|---|---|
+| 8014 | `CoupDeGrace` | Modificador (`dealt`) | `--target-kind` | +8 % de daño contra campeones por debajo del 40 % de vida actual |
+| 8017 | `CutDown` | Modificador (`dealt`) | `--target-kind` | +8 % de daño contra campeones por encima del 60 % de vida actual |
+| 8299 | `LastStand` | Modificador (`dealt`) | `attacker_health_percent` (`0..1`) y `--target-kind` si ≤ 0,6 | +5 % a +11 % lineal contra campeones entre el 60 % y el 30 % de vida del atacante (+11 % ≤ 30 %; en el límite exacto 0,6 queda `Pendiente de verificación`) |
+| 8224 | `NullifyingOrb` (Arcanólogo axiomático) | Modificador (`dealt`, solo `R`) | `ultimate_aoe` (`0` o `1`, solo si la rotación lanza `R`) | +12 % (`0`) o +8 % (`1`) al daño de la definitiva (`R`). La curación/escudo y la reducción de enfriamiento al eliminar se anotan fuera |
+| 8237 | `Scorch` | Proc mágico (`rune`) | `--target-kind` | Al golpear a un campeón con una habilidad de daño: 20–40 de daño mágico lineal por nivel (`DamageCalc` en R1). Sin `--timeline` salta una vez; con `--timeline` aterriza tras 1 s (`dotduration`) con 10 s de enfriamiento (`BurnlockoutDuration`) |
+| 8126 | `CheapShot` | Proc verdadero (`rune`) | `target_impaired` (`0` o `1`) y `--target-kind` si `1` | Con `1`, al dañar a un campeón: 10–45 de daño verdadero lineal por nivel (`DamageCalc` en R1), con 4 s de enfriamiento en `--timeline` (una vez sin línea de tiempo) |
+| 8143 | `SuddenImpact` | Proc verdadero (`rune`) | `sudden_impact` (`0` o `1`) y `--target-kind` si `1` | Con `1`, al dañar a un campeón: 20–80 de daño verdadero lineal por nivel (`BaseDamage` en R1), con 10 s de enfriamiento en `--timeline` (una vez sin línea de tiempo; repetir en línea de tiempo anota el supuesto de rearmado) |
+| 8446 | `Demolish` | Proc físico (`rune`) | `--target-kind` y `--attacker-range` si es `structure` | Solo contra estructuras: cada 3.º ataque básico inflige 85 + 28 % de vida máxima (cuerpo a cuerpo) o 50 + 20 % (a distancia) de daño físico, con 30 s de enfriamiento en `--timeline` |
+
+Si el objetivo no coincide con el tipo de una runa (por ejemplo, Demoler contra un campeón o Golpe de gracia contra un súbdito), la runa no se aplica y no debilita la etiqueta. Si falta un `--input` condicional en una runa aplicable, queda en `not_applied` y deja el resultado en `Pendiente de verificación`.
+
 ## Lo que no se modela todavía (RUN-04)
 
-- **Las 23 runas menores de combate, curación, defensa, recursos o consumibles** (Golpe de gracia, Derribado, Último esfuerzo, Golpe bajo, Impacto repentino, Arcanólogo axiomático, Piroláser, Demoler, Golpe de escudo, Absorber vida, Triunfo, Claridad mental, Sabor a sangre, Capa del nimbo, Tónico triple, Tónico de distorsión temporal, Perspicacia cósmica, Velocidad de acercamiento, Fuente de vida, Fuerzas renovadas, Revestimiento de huesos, Revitalizar e Inquebrantable) y **las 17 piedras angulares**. Siguen en `pending_effects` y dejan `ability` y `rotation` en `Pendiente de verificación`.
+- **Las 17 piedras angulares** (fase 40).
+- **Las 15 runas menores dependientes de mecánicas aún no construidas** (siguen en `pending_effects` y dejan `ability` y `rotation` en `Pendiente de verificación`):
+  - Curación de efectos / vida del atacante (`MEC-05`): `9101` Absorber vida, `9111` Triunfo, `8139` Sabor a sangre, `8463` Fuente de vida y `8444` Fuerzas renovadas.
+  - Recursos / maná (`MEC-01`): `8009` Claridad mental.
+  - Escudos (`MEC-04`) y poder de curaciones/escudos (`MEC-07`): `8401` Golpe de escudo y `8453` Revitalizar.
+  - Reducción plana de daño (`MEC-08`): `8473` Revestimiento de huesos.
+  - CC / velocidad condicional (`MEC-26`): `8410` Velocidad de acercamiento y `8242` Inquebrantable.
+  - Hechizos de invocador / aceleración de objetos (`DAT-06`, `MEC-29`): `8275` Capa del nimbo y `8347` Perspicacia cósmica.
+  - Consumibles / elixires (`OBJ-12`): `8313` Tónico triple y `8352` Tónico de distorsión temporal.
 - **La runa extra por árbol secundario** (`secondary_bonus`): sus valores son 0 en 16.23 y no se aplica.
 - Las variantes por modo de juego (`mode_overrides`).
 - Las runas del campeón objetivo: solo se aceptan para el atacante.
