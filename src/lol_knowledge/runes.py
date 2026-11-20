@@ -70,6 +70,8 @@ NON_COMBAT_MINOR_RUNES: Mapping[str, str] = {
     "HextechFlashtraption": "summoner spell replacement only; no combat stats or damage",
     "CashBack": "gold refund only; no combat stats or damage",
 }
+# Defensive runes evaluated during reverse survival simulations (defense.py / survive).
+DEFENSE_RUNE_KEYS = frozenset({"BonePlating", "SecondWind", "Guardian"})
 # Minor runes whose combat damage or damage modifiers are evaluated by rotations (rune_combat.py).
 COMBAT_MINOR_RUNE_KEYS = frozenset(
     {
@@ -888,6 +890,10 @@ def minor_rune_effects(
 
         if rune.key in NON_COMBAT_MINOR_RUNES:
             notes.append(f"rune {rune_id} {rune.name}: {NON_COMBAT_MINOR_RUNES[rune.key]}")
+            continue
+
+        if rune.key in DEFENSE_RUNE_KEYS:
+            notes.append(f"rune {rune_id} {rune.name}: defensive rune (applied in survive)")
             continue
 
         if rune.key == "Revitalize":
