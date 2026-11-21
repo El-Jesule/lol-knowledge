@@ -45,8 +45,9 @@ def test_linear_by_level_formula_exact_arithmetic_and_validation():
         evaluate_formula(formula, {}, ops=ABILITY_OPS)
     with pytest.raises(FormulaError, match="outside 1..18"):
         evaluate_formula(formula, {}, level=19, ops=ABILITY_OPS)
+    assert evaluate_formula(formula, {}, level=1).exact == F(3, 2)  # OBJECT_OPS supports it
     with pytest.raises(FormulaError, match="unsupported formula op"):
-        evaluate_formula(formula, {}, level=1)  # OBJECT_OPS rejects linear_by_level
+        evaluate_formula({"op": "input", "name": "x"}, {}, level=1)  # OBJECT_OPS rejects input
 
 
 def test_passive_effect_spec_parsing_and_validation():
