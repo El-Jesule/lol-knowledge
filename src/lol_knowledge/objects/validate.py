@@ -108,7 +108,15 @@ _COMPONENT_KEYS = {
     "note",
     "applies_life_steal",
     "resource",
+    "secondary_only",
+    "max_targets",
+    "echo",
+    "repeats_on_hit",
+    "can_crit",
+    "shield_type",
 }
+_ECHO_KEYS = {"charges", "repeat_ratio"}
+_SHIELD_TYPES = frozenset({"normal", "physical", "magic"})
 _LIFE_STEAL_KEYS = {"value", "source"}
 _LIMIT_KEYS = {"kind", "value", "unit", "condition"}
 _SCALAR_KEYS = {"status", "reason"}
@@ -778,6 +786,26 @@ class _CatalogChecker:
                 )
             if "formula" not in component:
                 self.fail(f"{pointer}.formula", "damage components need a formula")
+            for flag in ("secondary_only", "repeats_on_hit", "can_crit"):
+                if flag in component and not isinstance(component[flag], bool):
+                    self.fail(f"{pointer}.{flag}", f"{flag} must be a boolean")
+            if "max_targets" in component:
+                mt = component["max_targets"]
+                if isinstance(mt, bool) or not isinstance(mt, int) or mt < 1:
+                    self.fail(f"{pointer}.max_targets", "max_targets must be an integer >= 1")
+            if "echo" in component:
+                echo = component["echo"]
+                if not isinstance(echo, Mapping) or set(echo) != _ECHO_KEYS:
+                    self.fail(f"{pointer}.echo", f"echo must have keys {sorted(_ECHO_KEYS)}")
+                else:
+                    charges, ratio = echo["charges"], echo["repeat_ratio"]
+                    if isinstance(charges, bool) or not isinstance(charges, int) or charges < 2:
+                        self.fail(f"{pointer}.echo.charges", "echo.charges must be an integer >= 2")
+                    if not _is_number(ratio) or not 0 < float(ratio) <= 1:
+                        self.fail(
+                            f"{pointer}.echo.repeat_ratio",
+                            "echo.repeat_ratio must be a number in (0, 1]",
+                        )
         elif kind in {"healing", "shield"}:
             if "formula" not in component:
                 self.fail(f"{pointer}.formula", f"{kind} components need a formula")
@@ -785,6 +813,15 @@ class _CatalogChecker:
                 self.fail(
                     f"{pointer}.mode",
                     f"{kind} mode must be one of {sorted(HEALING_MODES)}",
+                )
+            if (
+                kind == "shield"
+                and "shield_type" in component
+                and component["shield_type"] not in _SHIELD_TYPES
+            ):
+                self.fail(
+                    f"{pointer}.shield_type",
+                    f"shield_type must be one of {sorted(_SHIELD_TYPES)}",
                 )
         elif kind == "resource_restore":
             if component.get("resource") not in RESTORE_RESOURCES:

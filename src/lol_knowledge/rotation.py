@@ -77,8 +77,8 @@ HOLDER_RANGES = frozenset({"melee", "ranged"})
 ATTACK_MODIFIERS = frozenset({"crit", "nospellblade"})
 # Triggers whose ``stacks.required`` counts basic attacks (attack-counters.md).
 COUNTED_TRIGGERS = frozenset({"on_hit", "on_attack"})
-# A burn starts when an ability deals damage, or when one is cast (burns.md).
-BURN_TRIGGERS = frozenset({"damaging_ability", "cast"})
+# A burn starts when an ability deals damage, is cast, or on any damaging hit (burns.md).
+BURN_TRIGGERS = frozenset({"damaging_ability", "cast", "on_damage"})
 # Base critical strike multiplier of the patch notes (26.1); records that differ are flagged.
 PATCH_CRIT_MULTIPLIER = Fraction(2)
 # Passives that reduce total critical strike damage: "Critical Strike Damage Reduction:
@@ -101,7 +101,7 @@ DAMAGE_KINDS = frozenset(
 
 # Effects that last a while once triggered; only the timeline applies them (timeline.md).
 TIMED_KINDS = frozenset({"damage_modifier", "stat_modifier"})
-TIMED_TRIGGERS = frozenset({"spellblade", "energized", "damaging_ability", "on_attack"})
+TIMED_TRIGGERS = frozenset({"spellblade", "energized", "damaging_ability", "on_attack", "cast"})
 # Triggers on a hit: whether that hit benefits from its own effect is not verified.
 UNCERTAIN_START_TRIGGERS = frozenset({"spellblade", "energized"})
 # Target resistances a timed effect can reduce, by the damage type they mitigate.
@@ -206,7 +206,7 @@ NO_HEALING = Healing(Fraction(0), Fraction(0), Fraction(0), Label.OFFICIAL)
 
 @dataclass(frozen=True)
 class Part:
-    kind: str  # "attack", "on_hit", "ability", "burn", "rune" or "execute"
+    kind: str  # "attack", "on_hit", "ability", "burn", "rune", "item" or "execute"
     source: str
     damage_type: DamageType
     raw: Fraction
@@ -219,6 +219,7 @@ class Part:
     targets_hit: int = 1
     secondary_damage_ratio: Fraction = Fraction(1)
     aoe: bool | None = None
+    hits_primary: bool = True
 
     @property
     def dealt_factor(self) -> Fraction:
@@ -236,12 +237,17 @@ class Part:
     @property
     def primary_damage(self) -> Fraction:
         """Post-mitigation and post-modifier damage dealt to the primary target."""
+        if not self.hits_primary:
+            return Fraction(0)
         return self.mitigation.damage * self.dealt_factor * self.taken_factor
 
     @property
     def secondary_damage(self) -> Fraction:
         """Total post-mitigation and post-modifier damage dealt to secondary targets."""
-        return self.primary_damage * (self.targets_hit - 1) * self.secondary_damage_ratio
+        unit = self.mitigation.damage * self.dealt_factor * self.taken_factor
+        if not self.hits_primary:
+            return unit * self.targets_hit * self.secondary_damage_ratio
+        return unit * (self.targets_hit - 1) * self.secondary_damage_ratio
 
     @property
     def damage(self) -> Fraction:
@@ -444,6 +450,8 @@ class _Effect:
     # turn they take with other effects of a group (``alternation``).
     max_stacks: int | None = None
     alternation: tuple[str, int, int] | None = None
+    # Combo hits required for ``on_damage`` triggers (e.g. Eclipse: 2 hits in 2 s).
+    combo_required: int | None = None
 
     @property
     def title(self) -> str:
@@ -565,6 +573,7 @@ def _effects(
                         _window(effect),
                         _max_stacks(effect),
                         _alternation(effect),
+                        _combo_required(effect),
                     )
                 )
     return effects, notes, weakened
@@ -622,6 +631,17 @@ def _excluded(effect: _Effect, target_kind: str | None) -> bool:
         for condition in effect.conditions
         if condition in TARGET_KIND_CONDITIONS
     )
+
+
+def _combo_required(effect: Mapping[str, Any]) -> int | None:
+    """``N`` for an ``on_damage`` combo proc (e.g. Eclipse: 2 hits in 2 s)."""
+    if (effect.get("trigger") or {}).get("event") != "on_damage":
+        return None
+    stacks = effect.get("stacks")
+    required = stacks.get("required") if isinstance(stacks, Mapping) else None
+    if isinstance(required, int) and not isinstance(required, bool) and required >= 2:
+        return required
+    return None
 
 
 def _every(effect: Mapping[str, Any]) -> int | None:
@@ -779,6 +799,10 @@ class _Rotation:
             or self.resources.weakened
         )
         self.on_hit: list[_Effect] = []
+        self.secondary_attacks: list[_Effect] = []
+        self.ability_procs: list[_Effect] = []
+        self.on_damage_procs: list[_Effect] = []
+        self.ability_stacked: list[_Effect] = []
         self.dealt: list[_Effect] = []
         self.taken: list[_Effect] = []
         self.spellblade: list[_Effect] = []
@@ -793,6 +817,12 @@ class _Rotation:
         # Timeline state: timed effects and burns in force, and how far burns are counted.
         self.windows: dict[str, _Window] = {}
         self.timed_ready: dict[str, Fraction] = {}  # cooldowns of timed effects
+        self.proc_ready: dict[str, Fraction] = {}  # cooldowns of ability/on_damage procs
+        self.proc_fired: set[str] = set()  # non-timeline one-shot cooldown procs
+        self.combo_hits: dict[str, list[Fraction]] = {}  # timeline on_damage combo hits
+        self.combo_counts: dict[str, int] = {}  # non-timeline on_damage combo hits
+        self.ability_stacks: dict[str, int] = {}  # stacks gained per damaging ability (Shojin)
+        self.ability_stacked_at: dict[str, Fraction] = {}
         self.last_counted: dict[str, Fraction] = {}  # last attack of each counter
         self.speed_changed = False  # a timed effect changed the attack speed
         # Stacks gained per attack and seconds in combat, from 0 (combat-stacks.md).
@@ -827,8 +857,24 @@ class _Rotation:
                 self.counted.append(effect)
             elif effect.every is not None and kind == "repeat_on_hit":
                 self.counted_repeats.append(effect)
+            elif (
+                effect.trigger in {"on_attack", "on_hit"}
+                and kind == "damage"
+                and effect.component.get("secondary_only") is True
+            ):
+                self.secondary_attacks.append(effect)
             elif effect.trigger == "on_hit" and kind == "damage":
                 self.on_hit.append(effect)
+            elif effect.trigger == "damaging_ability" and kind == "damage":
+                self.ability_procs.append(effect)
+            elif (
+                effect.trigger == "damaging_ability"
+                and kind == "damage_modifier"
+                and effect.max_stacks is not None
+            ):
+                self._ability_stacking(effect)
+            elif effect.trigger == "on_damage" and kind in {"damage", "shield"}:
+                self.on_damage_procs.append(effect)
             elif effect.trigger == "energized" and kind == "damage":
                 self.energized.append(effect)
             elif kind == "execute":
@@ -1129,6 +1175,42 @@ class _Rotation:
             raise RotationError(f"{effect.title}: only flat stats of the attacker stack per attack")
         self.stacked.append(effect)
 
+    def _ability_stacking(self, effect: _Effect) -> None:
+        component = effect.component
+        if component.get("direction") != "dealt" or component.get("source") not in {
+            "ability",
+            "all",
+        }:
+            raise RotationError(
+                f"{effect.title}: only dealt damage modifiers stack on damaging abilities"
+            )
+        self._mode(effect)
+        self.ability_stacked.append(effect)
+
+    def _ability_stack_expired(self, effect: _Effect, at: Fraction) -> bool:
+        last = self.ability_stacked_at.get(effect.title)
+        return (
+            self.timeline is not None
+            and effect.window is not None
+            and last is not None
+            and at - last >= effect.window
+        )
+
+    def _stack_ability(
+        self, clock: Fraction, target_stats: Mapping[str, Fraction], slot: str | None
+    ) -> None:
+        """Each damaging ability adds one stack up to ``max_stacks`` (Spear of Shojin)."""
+        for effect in self.ability_stacked:
+            if not _conditions_hold(effect, self.target, "ability", False, target_stats, slot):
+                continue
+            if self._ability_stack_expired(effect, clock):
+                self.ability_stacks[effect.title] = 0
+            assert effect.max_stacks is not None
+            self.ability_stacks[effect.title] = min(
+                effect.max_stacks, self.ability_stacks.get(effect.title, 0) + 1
+            )
+            self.ability_stacked_at[effect.title] = clock
+
     def _in_combat(self, effect: _Effect) -> None:
         component = effect.component
         if (
@@ -1280,12 +1362,30 @@ class _Rotation:
             if types is not None and damage_type.value not in types:
                 continue
             if self._mode(effect) and _conditions_hold(
-                effect, self.target, part_kind, crit, target_stats
+                effect, self.target, part_kind, crit, target_stats, slot
             ):
-                if effect.component.get("source") != "all":
+                source = effect.component.get("source")
+                if source == "ability":
+                    if part_kind != "ability":
+                        continue
+                elif source != "all":
                     raise RotationError(f"{effect.title}: source is not modelled")
                 value, stat_labels = self._value(effect, target_stats)
                 dealt.append((effect.title, value))
+                labels += [effect.label, *stat_labels]
+        for effect in self.ability_stacked:
+            source = effect.component.get("source")
+            if source == "ability" and part_kind != "ability":
+                continue
+            types = effect.component.get("damage_types")
+            if types is not None and damage_type.value not in types:
+                continue
+            count = self.ability_stacks.get(effect.title, 0)
+            if not count or self._ability_stack_expired(effect, self.now):
+                continue
+            if _conditions_hold(effect, self.target, part_kind, crit, target_stats, slot):
+                per_stack, stat_labels = self._value(effect, target_stats)
+                dealt.append((f"{effect.title} ({count}x)", per_stack * count))
                 labels += [effect.label, *stat_labels]
         for effect in self.combat:
             if _conditions_hold(effect, self.target, part_kind, crit, target_stats):
@@ -1334,6 +1434,7 @@ class _Rotation:
         targets_hit: int = 1,
         secondary_damage_ratio: Fraction = Fraction(1),
         aoe: bool | None = None,
+        hits_primary: bool = True,
     ) -> Part:
         modifiers = penetration_modifiers(self.sheet, damage_type)
         shred = self.shred.get(damage_type, [])
@@ -1374,6 +1475,7 @@ class _Rotation:
             targets_hit=targets_hit,
             secondary_damage_ratio=secondary_damage_ratio,
             aoe=aoe,
+            hits_primary=hits_primary,
         )
         return replace(part, healing=self._healing(part, life_steal_tag))
 
@@ -1405,6 +1507,11 @@ class _Rotation:
             elif part.kind == "on_hit":
                 labels.append(Label.PENDING)
                 notes.append("the catalog does not declare whether it applies life steal")
+            elif part.kind == "item":
+                if tag is not None and tag.get("value") is True:
+                    applied_life_steal = life_steal
+                    confidence = str((tag.get("source") or {}).get("confidence"))
+                    labels.append(EVIDENCE_LABEL.get(confidence, Label.PENDING))
             elif part.kind in ("burn", "rune"):
                 pass  # life steal comes from attacks; burns and rune procs are not attacks
             else:
@@ -1417,6 +1524,13 @@ class _Rotation:
             if part.kind == "burn" and self.target.kind in REDUCED_OMNIVAMP_KINDS:
                 omnivamp /= 3
                 notes.append(f"omnivamp from damage over time against a {self.target.kind}: 33%")
+            elif (
+                part.kind == "item"
+                and part.aoe is True
+                and self.target.kind in REDUCED_OMNIVAMP_KINDS
+            ):
+                omnivamp /= 3
+                notes.append(f"omnivamp from an area item effect against a {self.target.kind}: 33%")
             elif part.kind == "ability":
                 kind = _target_kind(self.target, "omnivamp healing from an ability")
                 if kind in REDUCED_OMNIVAMP_KINDS:
@@ -1457,14 +1571,10 @@ class _Rotation:
                 self.grievous_used = True
         return Healing(applied_life_steal, omnivamp, amount, weakest(labels), tuple(notes))
 
-    def _attack(
-        self, step: Step, target_stats: Mapping[str, Fraction], empowered: bool = False
-    ) -> list[Part]:
-        attack_damage = self.sheet["attack_damage"]
-        raw = attack_damage.total()
-        labels = [attack_damage.label]
+    def _crit_multiplier(self, step: Step) -> tuple[Fraction, list[Label], list[str], str] | None:
+        """Champion critical multiplier (including Ashe Frost Shot and passive reductions)."""
+        labels: list[Label] = []
         notes: list[str] = []
-        source = "basic attack: total attack damage"
         if self.sheet.champion.id == "Ashe":
             crit_chance = self.sheet["crit_chance"]
             bonus = self.sheet["crit_damage_bonus"]
@@ -1475,7 +1585,6 @@ class _Rotation:
                         "(lol-knowledge/derived/champion-records.json has no critdamagemultiplier)"
                     )
                 multiplier = 1 + crit_chance.total() * (1 + bonus.total())
-                raw *= multiplier
                 labels += [Label.DERIVED, crit_chance.label, bonus.label]
                 if step.crit and self.crit_base is not None:
                     labels.append(self.crit_base.label)
@@ -1483,53 +1592,315 @@ class _Rotation:
                         "Ashe's critical strikes deal Frost Shot damage without extra crit "
                         "damage (they double the slow)"
                     )
-                source += f" x Frost Shot multiplier {format_number(multiplier)}"
                 if len(bonus.sources()) > 1:
                     labels.append(Label.PENDING)
                     notes.append("several crit damage sources: their stacking is not verified")
-        elif step.crit:
-            if self.crit_base is None:
-                raise RotationError(
-                    f"step {step.text}: no critical multiplier for {self.sheet.champion.id} "
-                    "(lol-knowledge/derived/champion-records.json has no critdamagemultiplier)"
+                return (
+                    multiplier,
+                    labels,
+                    notes,
+                    f" x Frost Shot multiplier {format_number(multiplier)}",
                 )
-            bonus = self.sheet["crit_damage_bonus"]
-            multiplier = self.crit_base.value + bonus.total()
-            labels += [self.crit_base.label, bonus.label]
-            reduction = CRIT_DAMAGE_REDUCTIONS.get(self.sheet.champion.id)
-            if reduction is not None:
-                multiplier *= 1 - reduction
-                labels.append(Label.DERIVED)
-                notes.append(
-                    f"{self.sheet.champion.id}'s passive reduces total critical strike damage "
-                    f"by {format_number(reduction * 100)}%"
-                )
+            return None
+        if not step.crit:
+            return None
+        if self.crit_base is None:
+            raise RotationError(
+                f"step {step.text}: no critical multiplier for {self.sheet.champion.id} "
+                "(lol-knowledge/derived/champion-records.json has no critdamagemultiplier)"
+            )
+        bonus = self.sheet["crit_damage_bonus"]
+        multiplier = self.crit_base.value + bonus.total()
+        labels += [self.crit_base.label, bonus.label]
+        reduction = CRIT_DAMAGE_REDUCTIONS.get(self.sheet.champion.id)
+        if reduction is not None:
+            multiplier *= 1 - reduction
+            labels.append(Label.DERIVED)
+            notes.append(
+                f"{self.sheet.champion.id}'s passive reduces total critical strike damage "
+                f"by {format_number(reduction * 100)}%"
+            )
+        if len(bonus.sources()) > 1:
+            labels.append(Label.PENDING)
+            notes.append("several crit damage sources: their stacking is not verified")
+        if self.crit_base.value != PATCH_CRIT_MULTIPLIER:
+            labels.append(Label.PENDING)
+            notes.append(
+                f"{self.sheet.champion.id}'s record has a {self.crit_base.value} critical "
+                f"multiplier, not the patch's {PATCH_CRIT_MULTIPLIER}; its kit may change "
+                "crits"
+            )
+        return multiplier, labels, notes, f" x critical multiplier {format_number(multiplier)}"
+
+    def _attack(
+        self, step: Step, target_stats: Mapping[str, Fraction], empowered: bool = False
+    ) -> list[Part]:
+        attack_damage = self.sheet["attack_damage"]
+        raw = attack_damage.total()
+        labels = [attack_damage.label]
+        notes: list[str] = []
+        source = "basic attack: total attack damage"
+        crit_info = self._crit_multiplier(step)
+        if crit_info is not None:
+            multiplier, crit_labels, crit_notes, crit_suffix = crit_info
             raw *= multiplier
-            source += f" x critical multiplier {format_number(multiplier)}"
-            if len(bonus.sources()) > 1:
-                labels.append(Label.PENDING)
-                notes.append("several crit damage sources: their stacking is not verified")
-            if self.crit_base.value != PATCH_CRIT_MULTIPLIER:
-                labels.append(Label.PENDING)
-                notes.append(
-                    f"{self.sheet.champion.id}'s record has a {self.crit_base.value} critical "
-                    f"multiplier, not the patch's {PATCH_CRIT_MULTIPLIER}; its kit may change "
-                    "crits"
-                )
+            labels += crit_labels
+            notes += crit_notes
+            source += crit_suffix
         parts = [
             self._part(
                 "attack", source, DamageType.PHYSICAL, raw, labels, step.crit, target_stats, notes
             )
         ]
         parts += self._on_hit(self.on_hit, step, target_stats)
-        if not empowered:
-            return parts
-        parts += self._on_hit(self.spellblade, step, target_stats)
-        for repeat in self.repeats:
-            parts += self._on_hit(
-                self.on_hit, step, target_stats, f" - again by {repeat.title}", repeat.label
-            )
+        if empowered:
+            parts += self._on_hit(self.spellblade, step, target_stats)
+            for repeat in self.repeats:
+                parts += self._on_hit(
+                    self.on_hit, step, target_stats, f" - again by {repeat.title}", repeat.label
+                )
+        parts += self._secondary_attacks(step, target_stats)
         return parts
+
+    def _secondary_attacks(self, step: Step, target_stats: Mapping[str, Fraction]) -> list[Part]:
+        """Secondary-only attack splash and bolts (Runaan's Hurricane, Tiamat/Hydras)."""
+        if self.target_count <= 1 or not self.secondary_attacks:
+            return []
+        parts: list[Part] = []
+        for effect in self.secondary_attacks:
+            part_kind = "on_hit" if effect.trigger == "on_hit" else "item"
+            if not _conditions_hold(effect, self.target, part_kind, step.crit, target_stats):
+                continue
+            secondary_count = self.target_count - 1
+            max_targets = effect.component.get("max_targets")
+            if isinstance(max_targets, int) and not isinstance(max_targets, bool):
+                secondary_count = min(secondary_count, max_targets)
+            if secondary_count <= 0:
+                continue
+            raw, stat_labels = self._value(effect, target_stats)
+            raw = self._limited(effect, raw)
+            labels = [effect.label, *stat_labels]
+            notes = [
+                f"hits {secondary_count} secondary target{'' if secondary_count == 1 else 's'}"
+            ]
+            source = f"{effect.title} ({effect.name})"
+            can_crit = effect.component.get("can_crit") is True
+            if can_crit:
+                crit_info = self._crit_multiplier(step)
+                if crit_info is not None:
+                    multiplier, crit_labels, crit_notes, crit_suffix = crit_info
+                    raw *= multiplier
+                    labels += crit_labels
+                    notes += crit_notes
+                    source += crit_suffix
+            damage_type = DamageType(str(effect.component.get("damage_type")))
+            repeats_oh = effect.component.get("repeats_on_hit") is True
+            parts.append(
+                self._part(
+                    part_kind,
+                    source,
+                    damage_type,
+                    raw,
+                    labels,
+                    step.crit and can_crit,
+                    target_stats,
+                    notes,
+                    life_steal_tag=effect.component.get("applies_life_steal"),
+                    targets_hit=secondary_count,
+                    aoe=not repeats_oh,
+                    hits_primary=False,
+                )
+            )
+            if repeats_oh and self.on_hit:
+                parts += self._on_hit(
+                    self.on_hit,
+                    step,
+                    target_stats,
+                    f" - bolt by {effect.title}",
+                    effect.label,
+                    targets_hit=secondary_count,
+                    hits_primary=False,
+                )
+        return parts
+
+    def _ability_procs(
+        self,
+        step: Step,
+        ability_parts: Sequence[Part],
+        target_stats: Mapping[str, Fraction],
+        clock: Fraction,
+    ) -> list[Part]:
+        """Item damage procs triggered by a damaging ability (e.g. Luden's Companion)."""
+        if not ability_parts or not self.ability_procs:
+            return []
+        parts: list[Part] = []
+        step_targets = step.targets if step.targets is not None else self.target_count
+        for effect in self.ability_procs:
+            if not _conditions_hold(effect, self.target, "item", False, target_stats, step.slot):
+                continue
+            if effect.cooldown is not None:
+                if self.timeline is not None:
+                    if clock < self.proc_ready.get(effect.title, Fraction(0)):
+                        continue
+                    self.proc_ready[effect.title] = clock + effect.cooldown
+                else:
+                    if effect.title in self.proc_fired:
+                        continue
+                    self.proc_fired.add(effect.title)
+                    self.notes.append(
+                        f"attacker {effect.title}: cooldown ({format_number(effect.cooldown)} s) "
+                        "fires once without --timeline"
+                    )
+            base_raw, stat_labels = self._value(effect, target_stats)
+            base_raw = self._limited(effect, base_raw)
+            damage_type = DamageType(str(effect.component.get("damage_type")))
+            labels = [effect.label, *stat_labels]
+            echo = effect.component.get("echo")
+            if isinstance(echo, Mapping):
+                charges = int(echo["charges"])
+                repeat_ratio = Fraction(str(echo["repeat_ratio"]))
+                targets_hit = min(step_targets, charges)
+                extra_hits = charges - targets_hit
+                primary_raw = base_raw * (1 + extra_hits * repeat_ratio)
+                primary_notes: tuple[str, ...] = (
+                    (
+                        f"1 full shot + {extra_hits} repeat shots at "
+                        f"{format_number(repeat_ratio * 100)}%",
+                    )
+                    if extra_hits > 0
+                    else (f"1 full shot (all {charges} charges split across targets)",)
+                )
+                parts.append(
+                    self._part(
+                        "item",
+                        f"{effect.title} ({effect.name})",
+                        damage_type,
+                        primary_raw,
+                        labels,
+                        False,
+                        target_stats,
+                        primary_notes,
+                        life_steal_tag=effect.component.get("applies_life_steal"),
+                    )
+                )
+                if targets_hit > 1:
+                    sec_count = targets_hit - 1
+                    parts.append(
+                        self._part(
+                            "item",
+                            f"{effect.title} ({effect.name}) secondary shots",
+                            damage_type,
+                            base_raw,
+                            labels,
+                            False,
+                            target_stats,
+                            (f"{sec_count} secondary shot{'' if sec_count == 1 else 's'} at 100%",),
+                            life_steal_tag=effect.component.get("applies_life_steal"),
+                            targets_hit=sec_count,
+                            hits_primary=False,
+                        )
+                    )
+            else:
+                parts.append(
+                    self._part(
+                        "item",
+                        f"{effect.title} ({effect.name})",
+                        damage_type,
+                        base_raw,
+                        labels,
+                        False,
+                        target_stats,
+                        life_steal_tag=effect.component.get("applies_life_steal"),
+                    )
+                )
+        return parts
+
+    def _on_damage_procs(
+        self,
+        step: Step,
+        target_stats: Mapping[str, Fraction],
+        clock: Fraction,
+        slot: str | None,
+    ) -> tuple[list[Part], list[ShieldEvent]]:
+        """Item damage/shield procs triggered on dealing damage (Eclipse, Alternator, Slingshot)."""
+        if not self.on_damage_procs:
+            return [], []
+        grouped: dict[str, list[_Effect]] = {}
+        for effect in self.on_damage_procs:
+            grouped.setdefault(effect.title, []).append(effect)
+        parts: list[Part] = []
+        shields: list[ShieldEvent] = []
+        for title, group in grouped.items():
+            lead = group[0]
+            if not any(
+                _conditions_hold(e, self.target, "item", False, target_stats, slot) for e in group
+            ):
+                continue
+            if lead.cooldown is not None:
+                if self.timeline is not None:
+                    if clock < self.proc_ready.get(title, Fraction(0)):
+                        continue
+                elif title in self.proc_fired:
+                    continue
+            if lead.combo_required is not None:
+                if self.timeline is not None:
+                    hits = self.combo_hits.setdefault(title, [])
+                    if lead.window is not None:
+                        hits[:] = [t for t in hits if clock - t < lead.window]
+                    hits.append(clock)
+                    if len(hits) < lead.combo_required:
+                        continue
+                    hits.clear()
+                else:
+                    count = self.combo_counts.get(title, 0) + 1
+                    if count < lead.combo_required:
+                        self.combo_counts[title] = count
+                        continue
+                    self.combo_counts[title] = 0
+                    if lead.window is not None:
+                        self.notes.append(
+                            f"attacker {title}: combo window ({format_number(lead.window)} s) "
+                            "ignored without --timeline"
+                        )
+            if lead.cooldown is not None:
+                if self.timeline is not None:
+                    self.proc_ready[title] = clock + lead.cooldown
+                else:
+                    self.proc_fired.add(title)
+                    self.notes.append(
+                        f"attacker {title}: cooldown ({format_number(lead.cooldown)} s) "
+                        "fires once without --timeline"
+                    )
+            for effect in group:
+                if not _conditions_hold(effect, self.target, "item", False, target_stats, slot):
+                    continue
+                raw, stat_labels = self._value(effect, target_stats)
+                raw = self._limited(effect, raw)
+                kind = effect.component.get("kind")
+                if kind == "damage":
+                    parts.append(
+                        self._part(
+                            "item",
+                            f"{effect.title} ({effect.name})",
+                            DamageType(str(effect.component.get("damage_type"))),
+                            raw,
+                            [effect.label, *stat_labels],
+                            False,
+                            target_stats,
+                            life_steal_tag=effect.component.get("applies_life_steal"),
+                        )
+                    )
+                elif kind == "shield":
+                    shields.append(
+                        self._make_shield_event(
+                            f"{effect.title} ({effect.name})",
+                            raw,
+                            weakest([effect.label, *stat_labels]),
+                            shield_type=str(effect.component.get("shield_type", "normal")),
+                            duration=effect.duration,
+                        )
+                    )
+        return parts, shields
 
     def _burns(
         self,
@@ -1539,14 +1910,18 @@ class _Rotation:
         burned: set[str],
         clock: Fraction = Fraction(0),
     ) -> list[Part]:
-        """Each burn's full duration, once, on the first ability step that starts it.
+        """Each burn's full duration, once, on the first qualifying step that starts it.
 
         With the timeline, the step (re)starts the burn instead; its damage is
         counted as time passes (``_accrue``).
         """
         result: list[Part] = []
         for effect in self.burns:
-            if effect.trigger == "damaging_ability" and not parts:
+            if effect.trigger == "damaging_ability" and (step.slot is None or not parts):
+                continue
+            if effect.trigger == "cast" and step.slot is None:
+                continue
+            if effect.trigger == "on_damage" and not parts:
                 continue
             if self.timeline is None and effect.title in burned:
                 continue
@@ -1676,13 +2051,23 @@ class _Rotation:
         return uncertain
 
     def _refund(self, clock: Fraction, crit: bool) -> None:
-        """An attack hit shortens the cooldowns that attacks reduce (Yun Tal's Flurry)."""
+        """An attack hit shortens the cooldowns that attacks reduce (Yun Tal, Scout's Slingshot)."""
         for effect in self.timed:
             ready = self.timed_ready.get(effect.title)
             if effect.refund is None or ready is None or ready <= clock:
                 continue
             seconds = effect.refund[1] if crit else effect.refund[0]
             self.timed_ready[effect.title] = max(clock, ready - seconds)
+        seen: set[str] = set()
+        for effect in self.on_damage_procs:
+            if effect.title in seen or effect.refund is None:
+                continue
+            seen.add(effect.title)
+            ready = self.proc_ready.get(effect.title)
+            if ready is None or ready <= clock:
+                continue
+            seconds = effect.refund[1] if crit else effect.refund[0]
+            self.proc_ready[effect.title] = max(clock, ready - seconds)
 
     def _accrue(
         self, until: Fraction, health: Fraction, shield: Fraction = Fraction(0)
@@ -1963,6 +2348,9 @@ class _Rotation:
         target_stats: Mapping[str, Fraction],
         suffix: str = "",
         extra: Label | None = None,
+        *,
+        targets_hit: int = 1,
+        hits_primary: bool = True,
     ) -> list[Part]:
         parts = []
         for effect in effects:
@@ -1984,6 +2372,8 @@ class _Rotation:
                     step.crit,
                     target_stats,
                     life_steal_tag=effect.component.get("applies_life_steal"),
+                    targets_hit=targets_hit,
+                    hits_primary=hits_primary,
                 )
             )
         return parts
@@ -2171,7 +2561,9 @@ class _Rotation:
                 name = "critical basic attack" if step.crit else "basic attack"
                 if empowered:
                     name += " with Spellblade"
-                parts += self._attack(step, target_stats, empowered)
+                attack_parts = self._attack(step, target_stats, empowered)
+                parts += attack_parts
+                parts += self._burns(step, attack_parts, target_stats, burned, clock)
                 oh_heals, oh_shields = self._item_survival_events("on_hit", target_stats, clock)
                 heal_events += oh_heals
                 shield_events += oh_shields
@@ -2243,10 +2635,14 @@ class _Rotation:
                     resource_events.extend(
                         self._item_resource_restores("damaging_ability", target_stats)
                     )
+                    parts += self._ability_procs(step, ability_parts, target_stats, clock)
+                    self._stack_ability(clock, target_stats, step.slot)
                 # An ability cast while Spellblade is on cooldown does not charge it.
                 if self.timeline is None or clock >= spellblade_ready:
                     charged, charged_at = True, clock
                 parts += self._burns(step, ability_parts, target_stats, burned, clock)
+                if self.timeline is not None:
+                    self._open("cast", clock, target_stats, step.slot)
                 if ability_parts and self.timeline is not None:
                     self._open("damaging_ability", clock, target_stats, step.slot)
                 if (
@@ -2264,9 +2660,13 @@ class _Rotation:
                     )
                     if self.timeline is not None and self._open("energized", clock, target_stats):
                         extra.append(Label.PENDING)
+            step_dealt = bool(parts[accrued_count:]) if step.slot is None else bool(ability_parts)
+            if step_dealt:
+                od_parts, od_shields = self._on_damage_procs(step, target_stats, clock, step.slot)
+                parts += od_parts
+                shield_events += od_shields
             for ev in shield_events:
                 self.rune_combat.on_attacker_shield(ev.amount, clock)
-            step_dealt = bool(parts[accrued_count:]) if step.slot is None else bool(ability_parts)
             for proc in self.rune_combat.on_step(step.slot, step_dealt, clock, self.sheet):
                 parts.append(
                     self._part(

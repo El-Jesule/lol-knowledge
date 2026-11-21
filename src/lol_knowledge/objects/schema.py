@@ -128,6 +128,7 @@ TRIGGER_EVENTS = frozenset(
         "energized",
         "taking_attack",
         "taking_damage",
+        "on_damage",
         "damaging_ability",
         "on_heal_or_shield",
         "cast",

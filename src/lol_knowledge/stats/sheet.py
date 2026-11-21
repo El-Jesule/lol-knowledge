@@ -313,12 +313,6 @@ def _sheet_effects(
             if component.get("kind") != "stat_modifier" or mode not in {"flat", "percent"}:
                 raise StatsError(f"{title}: only stat modifiers can be sheet stats")
             definition = _receiver(str(component.get("stat")))
-            if mode == "percent" and (
-                scenario is not None
-                or component.get("scope") != "total"
-                or definition.unit is not Unit.AMOUNT
-            ):
-                raise StatsError(f"{title}: only always effects amplify a total amount")
             if status != "evaluable":
                 why = f"effect {status}, not applied"
                 why = f"{note}; {why}" if note else why
@@ -326,6 +320,12 @@ def _sheet_effects(
                     (definition.id, Contribution(Fraction(0), "bonus", source, Label.PENDING, why))
                 )
                 continue
+            if mode == "percent" and (
+                scenario is not None
+                or component.get("scope") != "total"
+                or definition.unit is not Unit.AMOUNT
+            ):
+                raise StatsError(f"{title}: only always effects amplify a total amount")
             try:
                 evaluated = evaluate_formula(component.get("formula"), stat_env, level=level)
             except FormulaError as exc:
@@ -761,16 +761,6 @@ def build_stat_sheet(
     else:
         contributions["crit_chance"].append(crit_base)
 
-    base_stats: dict[str, Fraction] = {}
-    base_labels: dict[str, Label] = {}
-    for stat_id, items_list in contributions.items():
-        if stat_id in blocked:
-            continue
-        base_items = [c for c in items_list if c.scope == "base"]
-        if base_items:
-            base_stats[f"base_{stat_id}"] = sum((c.value for c in base_items), start=Fraction(0))
-            base_labels[f"base_{stat_id}"] = weakest(c.label for c in base_items)
-
     for item in items:
         for entry in item.stats:
             definition = _receiver(entry.stat)
@@ -801,12 +791,6 @@ def build_stat_sheet(
             )
             target = percents if deferred else contributions
             target.setdefault(definition.id, []).append(contribution)
-        effect_stats, item_amplifiers = _sheet_effects(
-            item, level, base_stats, base_labels, blocked
-        )
-        for stat_id, contribution in effect_stats:
-            contributions[stat_id].append(contribution)
-        amplifiers += item_amplifiers
 
     for stat_id, extra in extras:
         definition = _receiver(stat_id)
@@ -827,6 +811,40 @@ def build_stat_sheet(
                 f"extra amplifier {extra_amp.stat}: only amount stats can be amplified"
             )
         amplifiers.append(replace(extra_amp, stat=definition.id))
+
+    # Build the resolved stat environment after flat item stats and extras so
+    # stat-from-stat conversion passives (Sterak, Overlord's, Riftmaker, Tear items)
+    # can read base_*, bonus_* and total stats before amplifiers (Rabadon) run.
+    stat_env: dict[str, Fraction] = {}
+    label_env: dict[str, Label] = {}
+    for stat_id, items_list in contributions.items():
+        if stat_id in blocked:
+            if stat_id == "mana" and champion.resource != MANA_RESOURCE.get(champion.locale):
+                stat_env["mana"] = Fraction(0)
+                stat_env["base_mana"] = Fraction(0)
+                stat_env["bonus_mana"] = Fraction(0)
+                label_env["mana"] = Label.OFFICIAL
+                label_env["base_mana"] = Label.OFFICIAL
+                label_env["bonus_mana"] = Label.OFFICIAL
+            continue
+        base_items = [c for c in items_list if c.scope == "base"]
+        bonus_items = [c for c in items_list if c.scope == "bonus"]
+        stat_env[stat_id] = sum((c.value for c in items_list), start=Fraction(0))
+        label_env[stat_id] = weakest(c.label for c in items_list)
+        if base_items:
+            stat_env[f"base_{stat_id}"] = sum((c.value for c in base_items), start=Fraction(0))
+            label_env[f"base_{stat_id}"] = weakest(c.label for c in base_items)
+        else:
+            stat_env[f"base_{stat_id}"] = Fraction(0)
+            label_env[f"base_{stat_id}"] = Label.OFFICIAL
+        stat_env[f"bonus_{stat_id}"] = sum((c.value for c in bonus_items), start=Fraction(0))
+        label_env[f"bonus_{stat_id}"] = weakest(c.label for c in bonus_items)
+
+    for item in items:
+        effect_stats, item_amplifiers = _sheet_effects(item, level, stat_env, label_env, blocked)
+        for stat_id, contribution in effect_stats:
+            contributions[stat_id].append(contribution)
+        amplifiers += item_amplifiers
     if champion.id == "Cassiopeia":
         _apply_cassiopeia_move_speed_passive(
             level,

@@ -156,12 +156,15 @@ def test_formula_requirements_separate_target_stats(object_model) -> None:
     assert requirements == {
         "champion": (
             "ability_power",
+            "attack_damage",
             "base_attack_damage",
             "bonus_armor",
             "bonus_attack_damage",
             "bonus_health",
+            "bonus_mana",
             "crit_chance",
             "health",
+            "mana",
         ),
         "target": ("bonus_health", "current_health", "max_health", "missing_fraction_health"),
     }

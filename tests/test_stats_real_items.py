@@ -99,10 +99,10 @@ def test_an_item_without_effects_keeps_the_rotation_label_and_heals():
 
 
 def test_an_item_with_unreviewed_effects_makes_the_rotation_pending():
-    outcome = run("3046")
+    outcome = run("1054")
     assert outcome.label is Label.PENDING
     assert (
-        "attacker 3046: effect review pending; effects missing from the catalog are not applied"
+        "attacker 1054: effect review pending; effects missing from the catalog are not applied"
         in outcome.notes
     )
 
