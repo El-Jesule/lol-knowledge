@@ -1,7 +1,7 @@
 # Índice de la base de conocimiento
 
 - **Parche:** 16.23.1
-- **Última actualización:** 2026-11-20
+- **Última actualización:** 2026-11-21
 
 ## Por intención
 
@@ -49,6 +49,8 @@
 | Ver el catálogo curado de objetos | [catalog.json](objects/catalog.json) |
 | Ver las runas, sus valores y si una página es legal; aplicar los fragmentos | [Runas y fragmentos](mechanics/runes.md) y [runes.json](derived/runes.json) |
 | Saber si unos objetos pueden ir juntos (únicos, botas, grupos exclusivos, huecos) | [Legalidad de la build](mechanics/build-legality.md) y [item-groups.json](derived/item-groups.json) |
+| Optimizar una build legal por daño, DPS, vida efectiva, supervivencia o curación | `python -m lol_knowledge optimize` y [Optimizador de builds](../odd/tasks/build-optimizer.md) |
+| Conectar una IA mediante contrato JSON o servidor MCP local | [Capa de IA y servidor MCP](ai-layer.md) y `python -m lol_knowledge mcp` |
 | Ver la evidencia de las mecánicas de objetos | [Informe de mecánicas](../research/reports/object-mechanics-2026-10-20.md) |
 | Continuar la investigación de datos de Zaahen | [Documento de continuidad](../research/zaahen-research-handoff.md) |
 
@@ -56,7 +58,7 @@
 
 **173 de 173 campeones con kit calculable** (`lol-knowledge/champions/<Id>/kit.json`, **100 % del plantel**): Zaahen (con análisis completo), Ahri (con fichas) y los 171 campeones restantes completados en cuatro oleadas sobre el cliente `16.23` (ver [`champion-kits-wave-1.md`](../odd/tasks/champion-kits-wave-1.md), [`champion-kits-wave-2.md`](../odd/tasks/champion-kits-wave-2.md), [`champion-kits-wave-3.md`](../odd/tasks/champion-kits-wave-3.md) y [`champion-kits-wave-4.md`](../odd/tasks/champion-kits-wave-4.md)). Datos oficiales de los 173 campeones en `data/current/` y sus estadísticas base y por nivel del cliente en [champion-records.json](derived/champion-records.json).
 
-El modelo de objetos tiene las estadísticas de los **218 objetos comprables de la Grieta**; los efectos están curados en **43 objetos** (66 efectos), elegidos por mecánica, y el resto queda `pending`. Las cifras que Data Dragon no publica se registran con fuente citada: la wiki (`secondary`) o los datos del cliente 16.23 (`derived`, `corroborated` si coinciden). Los límites están en [Modelo de objetos](objects/README.md).
+El modelo de objetos tiene las estadísticas de los **218 objetos comprables de la Grieta**; hay **75 entradas curadas** en `catalog.json` (`119` objetos en `effect_review: complete` —`67` con `112` efectos curados y `52` solo estadísticas— y `99` en `pending`). Las cifras que Data Dragon no publica se registran con fuente citada: la wiki (`secondary`) o los datos del cliente 16.23 (`derived`, `corroborated` si coinciden). Los límites están en [Modelo de objetos](objects/README.md).
 
 ## Aviso de fuentes
 
