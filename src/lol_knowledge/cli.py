@@ -10,6 +10,7 @@ from fractions import Fraction
 from pathlib import Path
 
 from . import __version__
+from .contract import execute_request
 from .damage import DamageType, Modifiers, format_text, mitigate, to_dict, to_fraction
 from .defense import evaluate_defense, hits_from_rotation, parse_incoming
 from .defense_report import format_text as format_defense_text
@@ -24,6 +25,7 @@ from .errors import (
     StatsError,
 )
 from .kit import load_kit, passive_contributions
+from .mcp_server import MCPServer
 from .objects.legality import ITEM_GROUPS_PATH, check_build, load_item_groups
 from .optimizer import (
     OBJECTIVES,
@@ -111,6 +113,8 @@ def build_parser() -> argparse.ArgumentParser:
     _add_rotation_parser(subparsers)
     _add_survive_parser(subparsers)
     _add_optimize_parser(subparsers)
+    _add_contract_parser(subparsers)
+    _add_mcp_parser(subparsers)
 
     return parser
 
@@ -637,6 +641,27 @@ def _add_optimize_parser(subparsers: argparse._SubParsersAction) -> None:
     opt.add_argument("--json", action="store_true", help="Print a JSON report.")
 
 
+def _add_contract_parser(subparsers: argparse._SubParsersAction) -> None:
+    contract = subparsers.add_parser(
+        "contract",
+        help="Execute one versioned lol-knowledge-contract/1 JSON request (IA-01).",
+    )
+    contract.add_argument(
+        "--input-file",
+        type=Path,
+        help="Path to a JSON request file (reads stdin when omitted).",
+    )
+    contract.add_argument("--root", type=Path, default=Path("."))
+
+
+def _add_mcp_parser(subparsers: argparse._SubParsersAction) -> None:
+    mcp = subparsers.add_parser(
+        "mcp",
+        help="Run the local MCP (Model Context Protocol) server over stdio (IA-04).",
+    )
+    mcp.add_argument("--root", type=Path, default=Path("."))
+
+
 def _pairs(values: list[str], option: str) -> dict[str, str]:
     parsed: dict[str, str] = {}
     for entry in values:
@@ -715,6 +740,8 @@ def main(argv: list[str] | None = None) -> int:
         "rotation": _run_rotation,
         "survive": _run_survive,
         "optimize": _run_optimize,
+        "contract": _run_contract,
+        "mcp": _run_mcp,
     }
     handler = handlers[args.command]
     return handler(args)
@@ -1190,6 +1217,37 @@ def _run_optimize(args: argparse.Namespace) -> int:
     else:
         print(format_optimize_text(outcome))
     return 0
+
+
+def _run_contract(args: argparse.Namespace) -> int:
+    try:
+        if args.input_file is not None:
+            raw = args.input_file.read_text(encoding="utf-8")
+        else:
+            raw = sys.stdin.read()
+        request = json.loads(raw)
+    except (OSError, json.JSONDecodeError) as exc:
+        envelope = {
+            "schema": "lol-knowledge-contract/1",
+            "ok": False,
+            "operation": None,
+            "error": {"code": "invalid_input", "message": f"cannot parse JSON request: {exc}"},
+        }
+        print(json.dumps(envelope, indent=2, ensure_ascii=False))
+        return 2
+    envelope = execute_request(request, args.root)
+    print(json.dumps(envelope, indent=2, ensure_ascii=False))
+    return 0 if envelope.get("ok") else 2
+
+
+def _run_mcp(args: argparse.Namespace) -> int:
+    if sys.stdin is sys.__stdin__ and hasattr(sys.stdin, "reconfigure"):
+        sys.stdin.reconfigure(encoding="utf-8")
+    logging.basicConfig(
+        stream=sys.stderr, level=logging.WARNING, format="%(levelname)s %(message)s"
+    )
+    server = MCPServer(args.root)
+    return server.serve_stdio()
 
 
 def _run_validate(args: argparse.Namespace) -> int:

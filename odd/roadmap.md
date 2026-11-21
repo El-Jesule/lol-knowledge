@@ -154,10 +154,10 @@ El motor debe servir también para vida, resistencias, curación y supervivencia
 
 ## 9. Capa de IA
 
-- [ ] **IA-01 (P1)** Contrato entre la IA y el motor: una entrada estructurada (JSON) para escenarios y una salida con cifras, etiquetas y supuestos. La CLI ya da `--json`; falta un esquema único y versionado para `stats`, `ability`, `rotation` y el optimizador.
-- [ ] **IA-02 (P1)** Interpretar la petición en lenguaje natural y traducirla a un escenario: campeón, nivel, objetivo, restricciones y métrica. La IA nunca calcula; si falta un dato, pregunta o lo declara como supuesto.
-- [ ] **IA-03 (P1)** Explicar el resultado citando las etiquetas y lo no modelado, sin redondear las incertidumbres.
-- [ ] **IA-04 (P1)** *Interfaz decidida y aprobada en DEC-02 (2026-11-20):* **servidor MCP local** para poder usarlo desde OpenCode, Antigravity o cualquier cliente MCP compatible (aprobado como excepción a la ausencia de servicio de [`AGENTS.md`](../AGENTS.md) §1). Pendiente su implementación sobre el contrato de `IA-01`.
+- [x] **IA-01 (P1)** *Hecho en la fase 55 (2026-11-21, [`ai-contract-mcp-server.md`](tasks/ai-contract-mcp-server.md), [`ai-layer.md`](../lol-knowledge/ai-layer.md)): esquema único versionado `lol-knowledge-contract/1` (`src/lol_knowledge/contract.py` y `python -m lol_knowledge contract`) para `lookup`, `stats`, `ability`, `rotation`, `survive` y `optimize`, con `result_label`, `weakest_input_label`, `inputs`, `assumptions`, `not_modelled` y errores estructurados con `missing_fields`.* Contrato entre la IA y el motor.
+- [x] **IA-02 (P1)** *Hecho en la fase 55 (2026-11-21, [`ai-layer.md`](../lol-knowledge/ai-layer.md)): operación `lol_lookup` (campeones/kits/casos, objetos y runas sin adivinar IDs), validación estricta de campos faltantes (`missing_fields`), instrucciones del servidor y prompt MCP `translate_scenario`.* Traducción de lenguaje natural a escenario sin cálculo mental.
+- [x] **IA-03 (P1)** *Hecho en la fase 55 (2026-11-21, [`ai-layer.md`](../lol-knowledge/ai-layer.md)): bloque `explanation_contract` en toda respuesta, instrucciones obligatorias de cita de etiquetas/`not_modelled`/separación de `verified_builds` frente a `pending_builds`, y prompt MCP `explain_result`.* Explicación trazable de resultados sin ocultar incertidumbres.
+- [x] **IA-04 (P1)** *Hecho en la fase 55 (2026-11-21, aprobado en `DEC-02`, [`ai-contract-mcp-server.md`](tasks/ai-contract-mcp-server.md)): servidor MCP local JSON-RPC 2.0 sobre `stdio` sin dependencias externas (`src/lol_knowledge/mcp_server.py`, `python -m lol_knowledge mcp`) con 6 herramientas (`lol_lookup`, `lol_stats`, `lol_ability`, `lol_rotation`, `lol_survive`, `lol_optimize`), 2 prompts y 2 recursos (`lol-knowledge://index`, `lol-knowledge://ai-layer`).* Servidor MCP local sobre `IA-01`.
 
 ## 10. Calidad y verificación
 
