@@ -34,6 +34,7 @@ STAT_SCOPES_BY_STAT: dict[str, frozenset[str]] = {
     "ability_haste": frozenset({"total"}),
     "basic_ability_haste": frozenset({"total"}),
     "ultimate_haste": frozenset({"total"}),
+    "adaptive_force": frozenset({"bonus"}),
 }
 # Operations allowed in the item catalog. ``by_level`` (one value per champion
 # level) was added in catalog version 12 for client level breakpoints.

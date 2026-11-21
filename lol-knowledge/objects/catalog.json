@@ -1,9 +1,9 @@
 {
   "schema_version": 1,
   "kind": "lol-object-model-catalog",
-  "catalog_version": 24,
+  "catalog_version": 25,
   "game_version": "16.23.1",
-  "notes": "Curated overlay for a mechanically diverse sample. Data Dragon derivatives (stats, gold, maps, recipes) are not repeated here; see lol-knowledge/objects/README.md. Numeric mechanics absent from Data Dragon carry declared sources and secondary confidence. Catalog version 3 (2026-11-15): moved to snapshot 16.22.1; stats, gold, descriptions and recipes of the 15 objects are identical to 16.20.1 in Data Dragon; the secondary evidence was not re-checked against the 16.21 and 16.22 patch notes. Catalog version 6 (2026-11-15): damage components may declare applies_life_steal with its own source; Mist's Edge declares it from the LoL Wiki (secondary). Catalog version 7 (2026-11-16): adds 3111 (Mercury's Treads) for its tenacity, declared from the 16.22.1 description. Catalog version 8 (2026-11-16): description stats of every Summoner's Rift item, curated ones included, come from catalog-stats.json (generated); this file keeps effects and reviews. Catalog version 9 (2026-11-16): adds 3032 (Yun Tal Wildarrows). Effects may declare scenario max_stacks (the stat sheet applies them at full stacks) and objects may confirm a generated 0 as a real zero (confirmed_zero_stats). Catalog version 10 (2026-11-16): adds the on-hit damage of 1043, 3091, 3115, 3124 and 3302, with client values (evidence derived) where Data Dragon omits them; stat effects that are always active (Rabadon) are applied by the stat sheet. Catalog version 11 (2026-11-16): adds Spellblade (trigger spellblade) to Sheen, Trinity Force, Lich Bane, Essence Reaver, Iceborn Gauntlet, Dusk and Dawn and Bloodsong, the repeat_on_hit component and patch notes as a source kind (Terminus is now corroborated by the 26.15 notes). Catalog version 12 (2026-11-16): attack counters (stacks.required on on-hit effects), the energized trigger and trigger_energized component, by_level formulas for client level breakpoints and the target_is_structure condition; adds Kraken Slayer, Rapid Firecannon, Statikk Shiv, Voltaic Cyclosword and Hullbreaker, applies Guinsoo's phantom hits and Terminus's light-hit resistances. Catalog version 13 (2026-11-16): the target's missing health in formulas (scope missing_fraction), target_health_below in rotations, damage_types on damage modifiers and the execute component; Kraken Slayer's missing-health increase, Shadowflame and The Collector. Catalog version 14 (2026-11-16): burns (component burn, triggers damaging_ability and cast, condition ultimate_ability), applied once per rotation for their full duration; max_stacks damage modifiers; adds Liandry's Torment, Blackfire Torch, Fated Ashes, Malignance, Zeke's Convergence and Haunting Guise. Catalog version 15 (2026-11-16): timed effects (duration_seconds with a damage or stat modifier on a spellblade, energized or damaging_ability trigger) are applied by the rotation timeline only; Bloodsong's mark, Voltaic Cyclosword's lethality, Blackfire Torch's ability power and Malignance's magic resist reduction become evaluable, and burns under the timeline deal their damage continuously and restart when applied again. Catalog version 16 (2026-11-16): Spellblade effects declare their 10-second window (LoL Wiki, secondary) as duration_seconds; effects may declare cooldown_reduced_by_attacks (seconds per attack hit and per critical hit); Yun Tal Wildarrows's Flurry becomes evaluable as a timed attack speed effect (trigger on_attack); stack windows (stacks.window_seconds) are applied by the rotation timeline. Catalog version 17 (2026-11-16): stacks that expire in combat never start at maximum (user decision): Guinsoo's Seething Strike, Terminus's Juxtaposition (alternation, light first) and the per-second increases of Liandry's Torment and Haunting Guise (trigger in_combat with a maximum limit) are computed by rotations from 0; stacks.required 1 means one stack per attack; Guinsoo's phantom hits need full stacks (condition stacks_full). The max_stacks scenario stays for permanent stacks (Yun Tal's critical strike chance). Catalog version 18 (2026-11-19): moved to snapshot 16.23.1. Data Dragon stats, gold, descriptions and recipes of the curated objects are identical to 16.22.1, and the client item data of the 218 items is identical except Voltaic Cyclosword's Firmament (9 % / 7 % ⇒ 8 % / 6 % of current health, also in the 26.23 patch notes); client_data sources now cite client 16.23 (research/reports/client-16.23.md). Catalog version 19 (2026-11-20): Liandry's Torment monster burn (6653 torment-monsters) becomes evaluable with its 40/s cap (20 per 0.5 s tick, 120 over 3 s), corroborating client 16.23 MonsterDamageCap=40 against wiki.leagueoflegends.com (Module:ItemData/data rev 4095269). Catalog version 20 (2026-11-20): Dusk and Dawn's Spellblade heal (2510 dusk-heal, 10% AP + 3% bonus health from client 16.23) becomes evaluable with effect healing (MEC-05). Catalog version 21 (2026-11-20): adds 3053 Sterak's Gage (The Claws that Catch: 50% base AD on the stat sheet; Lifeline: 60% bonus health shield below 30% max health on taking_damage, 4.5 s duration, 90 s cooldown; client 16.23 + wiki rev 4095269). Catalog version 22 (2026-11-20): adds resource_restore component and models 3508 Essence Reaver Spellblade mana refund (0.5 × SpellbladeDamage = 62.5% base AD + 25 × crit chance; client 16.23 + wiki Module:ItemData/data rev 4095269, MEC-03).",
+  "notes": "Curated overlay for a mechanically diverse sample. Data Dragon derivatives (stats, gold, maps, recipes) are not repeated here; see lol-knowledge/objects/README.md. Numeric mechanics absent from Data Dragon carry declared sources and secondary confidence. Catalog version 3 (2026-11-15): moved to snapshot 16.22.1; stats, gold, descriptions and recipes of the 15 objects are identical to 16.20.1 in Data Dragon; the secondary evidence was not re-checked against the 16.21 and 16.22 patch notes. Catalog version 6 (2026-11-15): damage components may declare applies_life_steal with its own source; Mist's Edge declares it from the LoL Wiki (secondary). Catalog version 7 (2026-11-16): adds 3111 (Mercury's Treads) for its tenacity, declared from the 16.22.1 description. Catalog version 8 (2026-11-16): description stats of every Summoner's Rift item, curated ones included, come from catalog-stats.json (generated); this file keeps effects and reviews. Catalog version 9 (2026-11-16): adds 3032 (Yun Tal Wildarrows). Effects may declare scenario max_stacks (the stat sheet applies them at full stacks) and objects may confirm a generated 0 as a real zero (confirmed_zero_stats). Catalog version 10 (2026-11-16): adds the on-hit damage of 1043, 3091, 3115, 3124 and 3302, with client values (evidence derived) where Data Dragon omits them; stat effects that are always active (Rabadon) are applied by the stat sheet. Catalog version 11 (2026-11-16): adds Spellblade (trigger spellblade) to Sheen, Trinity Force, Lich Bane, Essence Reaver, Iceborn Gauntlet, Dusk and Dawn and Bloodsong, the repeat_on_hit component and patch notes as a source kind (Terminus is now corroborated by the 26.15 notes). Catalog version 12 (2026-11-16): attack counters (stacks.required on on-hit effects), the energized trigger and trigger_energized component, by_level formulas for client level breakpoints and the target_is_structure condition; adds Kraken Slayer, Rapid Firecannon, Statikk Shiv, Voltaic Cyclosword and Hullbreaker, applies Guinsoo's phantom hits and Terminus's light-hit resistances. Catalog version 13 (2026-11-16): the target's missing health in formulas (scope missing_fraction), target_health_below in rotations, damage_types on damage modifiers and the execute component; Kraken Slayer's missing-health increase, Shadowflame and The Collector. Catalog version 14 (2026-11-16): burns (component burn, triggers damaging_ability and cast, condition ultimate_ability), applied once per rotation for their full duration; max_stacks damage modifiers; adds Liandry's Torment, Blackfire Torch, Fated Ashes, Malignance, Zeke's Convergence and Haunting Guise. Catalog version 15 (2026-11-16): timed effects (duration_seconds with a damage or stat modifier on a spellblade, energized or damaging_ability trigger) are applied by the rotation timeline only; Bloodsong's mark, Voltaic Cyclosword's lethality, Blackfire Torch's ability power and Malignance's magic resist reduction become evaluable, and burns under the timeline deal their damage continuously and restart when applied again. Catalog version 16 (2026-11-16): Spellblade effects declare their 10-second window (LoL Wiki, secondary) as duration_seconds; effects may declare cooldown_reduced_by_attacks (seconds per attack hit and per critical hit); Yun Tal Wildarrows's Flurry becomes evaluable as a timed attack speed effect (trigger on_attack); stack windows (stacks.window_seconds) are applied by the rotation timeline. Catalog version 17 (2026-11-16): stacks that expire in combat never start at maximum (user decision): Guinsoo's Seething Strike, Terminus's Juxtaposition (alternation, light first) and the per-second increases of Liandry's Torment and Haunting Guise (trigger in_combat with a maximum limit) are computed by rotations from 0; stacks.required 1 means one stack per attack; Guinsoo's phantom hits need full stacks (condition stacks_full). The max_stacks scenario stays for permanent stacks (Yun Tal's critical strike chance). Catalog version 18 (2026-11-19): moved to snapshot 16.23.1. Data Dragon stats, gold, descriptions and recipes of the curated objects are identical to 16.22.1, and the client item data of the 218 items is identical except Voltaic Cyclosword's Firmament (9 % / 7 % ⇒ 8 % / 6 % of current health, also in the 26.23 patch notes); client_data sources now cite client 16.23 (research/reports/client-16.23.md). Catalog version 19 (2026-11-20): Liandry's Torment monster burn (6653 torment-monsters) becomes evaluable with its 40/s cap (20 per 0.5 s tick, 120 over 3 s), corroborating client 16.23 MonsterDamageCap=40 against wiki.leagueoflegends.com (Module:ItemData/data rev 4095269). Catalog version 20 (2026-11-20): Dusk and Dawn's Spellblade heal (2510 dusk-heal, 10% AP + 3% bonus health from client 16.23) becomes evaluable with effect healing (MEC-05). Catalog version 21 (2026-11-20): adds 3053 Sterak's Gage (The Claws that Catch: 50% base AD on the stat sheet; Lifeline: 60% bonus health shield below 30% max health on taking_damage, 4.5 s duration, 90 s cooldown; client 16.23 + wiki rev 4095269). Catalog version 22 (2026-11-20): adds resource_restore component and models 3508 Essence Reaver Spellblade mana refund (0.5 × SpellbladeDamage = 62.5% base AD + 25 × crit chance; client 16.23 + wiki Module:ItemData/data rev 4095269, MEC-03). Catalog version 25 (2026-11-21): models move-speed-to-damage coupling — 3170 Swiftmarch Noxian Fervor (5% total MS as adaptive force) and timed combat move speed buffs (3078 go, 3044 rage, 3071 fervor, 4629 spelldance, 3073 overdrive MS, 3095 bolt MS, 3171 noxian-haste) feeding Hecarim Warpath, Janna Tailwind/Zephyr and Swiftmarch.",
   "objects": [
     {
       "id": "1036",
@@ -1499,13 +1499,14 @@
           },
           "components": [
             {
-              "kind": "status",
-              "effect": "move_speed",
-              "magnitude": {
+              "kind": "stat_modifier",
+              "stat": "move_speed",
+              "scope": "bonus",
+              "mode": "flat",
+              "formula": {
                 "op": "constant",
                 "value": 20
-              },
-              "duration_seconds": 2
+              }
             }
           ],
           "cooldown_seconds": null,
@@ -1513,8 +1514,8 @@
           "duration_seconds": 2,
           "limits": [],
           "evidence_confidence": "official",
-          "model_status": "excluded",
-          "note": "Movement speed after attacking; rotations have no movement."
+          "model_status": "evaluable",
+          "note": "Timed: applied with --timeline after attacking (+20 flat move speed for 2 s); feeds MS-scaling damage (Hecarim, Janna, Swiftmarch)."
         }
       ]
     },
@@ -6022,6 +6023,23 @@
                   "value": 25
                 }
               }
+            },
+            {
+              "kind": "stat_modifier",
+              "stat": "move_speed",
+              "scope": "total",
+              "mode": "percent",
+              "formula": {
+                "op": "by_holder_range",
+                "melee": {
+                  "op": "constant",
+                  "value": 20
+                },
+                "ranged": {
+                  "op": "constant",
+                  "value": 10
+                }
+              }
             }
           ],
           "cooldown_seconds": 30,
@@ -6032,7 +6050,7 @@
             {
               "kind": "client_data",
               "reference": "Cliente 16.23.8399929+branch.releases-16-23.content.release: lol-knowledge/derived/item-effects.json -> items.3073 (research/reports/client-16.23.md)",
-              "quote": "BonusASMelee = 50; BonusASRanged = 25; HasteDuration = 8; Cooldown = 30",
+              "quote": "BonusASMelee = 50; BonusASRanged = 25; BonusMSMelee = 20; BonusMSRanged = 10; HasteDuration = 8; Cooldown = 30",
               "retrieved_at": "2026-11-21",
               "confidence": "derived"
             },
@@ -6046,7 +6064,7 @@
           ],
           "evidence_confidence": "derived",
           "model_status": "evaluable",
-          "note": "Timed: applied with --timeline after casting R (+50% melee / +25% ranged bonus attack speed for 8 s, 30 s cooldown). Bonus movement speed is non-damage and omitted."
+          "note": "Timed: applied with --timeline after casting R (+50%/+25% bonus AS and +20%/+10% bonus MS for 8 s, 30 s cooldown)."
         }
       ]
     },
@@ -7080,11 +7098,25 @@
                 "op": "constant",
                 "value": 100
               }
+            },
+            {
+              "kind": "stat_modifier",
+              "target": {
+                "kind": "self"
+              },
+              "stat": "move_speed",
+              "scope": "total",
+              "mode": "percent",
+              "duration_seconds": 1.5,
+              "formula": {
+                "op": "constant",
+                "value": 45
+              }
             }
           ],
           "cooldown_seconds": null,
           "stacks": null,
-          "duration_seconds": null,
+          "duration_seconds": 1.5,
           "limits": [],
           "sources": [
             {
@@ -7104,7 +7136,7 @@
           ],
           "evidence_confidence": "derived",
           "model_status": "evaluable",
-          "note": "Energized starts ready and fires once for 100 magic damage; 45% move speed buff is non-damage."
+          "note": "Energized starts ready and fires once for 100 magic damage and +45% move speed for 1.5 s (applied with --timeline)."
         }
       ]
     },
@@ -7941,21 +7973,51 @@
           "kind": "passive",
           "name": "Fervor",
           "quote": "Infligir daño físico te otorga 0 de velocidad de movimiento durante 2 s.",
-          "basis": "description_explicit",
+          "basis": "external_evidence_explicit",
           "trigger": {
             "event": "on_damage"
           },
           "target": {
             "kind": "self"
           },
-          "components": [],
+          "components": [
+            {
+              "kind": "stat_modifier",
+              "stat": "move_speed",
+              "scope": "bonus",
+              "mode": "flat",
+              "damage_types": [
+                "physical"
+              ],
+              "formula": {
+                "op": "by_holder_range",
+                "melee": {
+                  "op": "constant",
+                  "value": 20
+                },
+                "ranged": {
+                  "op": "constant",
+                  "value": 10
+                }
+              }
+            }
+          ],
           "cooldown_seconds": null,
           "stacks": null,
-          "duration_seconds": null,
+          "duration_seconds": 2,
           "limits": [],
-          "evidence_confidence": "official",
-          "model_status": "excluded",
-          "note": "20 melee / 10 ranged bonus move speed on physical damage; non-damage."
+          "sources": [
+            {
+              "kind": "client_data",
+              "reference": "Cliente 16.23.8399929+branch.releases-16-23.content.release: lol-knowledge/derived/item-effects.json -> items.3071 (research/reports/client-16.23.md)",
+              "quote": "MoveSpeedBonus = 20; RangedMod = 0.5 (10 ranged); MoveSpeedDuration = 2",
+              "retrieved_at": "2026-11-21",
+              "confidence": "derived"
+            }
+          ],
+          "evidence_confidence": "derived",
+          "model_status": "evaluable",
+          "note": "Timed: applied with --timeline on dealing physical damage (+20 melee / +10 ranged flat move speed for 2 s)."
         }
       ]
     },
@@ -8530,21 +8592,48 @@
           "kind": "passive",
           "name": "Furia",
           "quote": "Los ataques otorgan velocidad de movimiento durante 2 s.",
-          "basis": "description_explicit",
+          "basis": "external_evidence_explicit",
           "trigger": {
             "event": "on_attack"
           },
           "target": {
             "kind": "self"
           },
-          "components": [],
+          "components": [
+            {
+              "kind": "stat_modifier",
+              "stat": "move_speed",
+              "scope": "bonus",
+              "mode": "flat",
+              "formula": {
+                "op": "by_holder_range",
+                "melee": {
+                  "op": "constant",
+                  "value": 20
+                },
+                "ranged": {
+                  "op": "constant",
+                  "value": 10
+                }
+              }
+            }
+          ],
           "cooldown_seconds": null,
           "stacks": null,
-          "duration_seconds": null,
+          "duration_seconds": 2,
           "limits": [],
-          "evidence_confidence": "official",
-          "model_status": "excluded",
-          "note": "Bonus move speed on attack (20 melee / 10 ranged for 2 s); non-damage."
+          "sources": [
+            {
+              "kind": "client_data",
+              "reference": "Cliente 16.23.8399929+branch.releases-16-23.content.release: lol-knowledge/derived/item-effects.json -> items.3044 (research/reports/client-16.23.md)",
+              "quote": "MoveSpeedBonus = 20; RangedMod = 0.5 (10 ranged); MoveSpeedDuration = 2",
+              "retrieved_at": "2026-11-21",
+              "confidence": "derived"
+            }
+          ],
+          "evidence_confidence": "derived",
+          "model_status": "evaluable",
+          "note": "Timed: applied with --timeline after attacking (+20 melee / +10 ranged flat move speed for 2 s)."
         }
       ]
     },
@@ -8869,21 +8958,53 @@
           "kind": "passive",
           "name": "Prisa noxiana",
           "quote": "Potenciar o proteger a los aliados con habilidades, infligir daño a los campeones enemigos con habilidades o lanzar un hechizo de invocador otorga un 0 de velocidad de movimiento durante 4 s.",
-          "basis": "description_explicit",
+          "basis": "external_evidence_explicit",
           "trigger": {
-            "event": "cast"
+            "event": "damaging_ability"
           },
           "target": {
             "kind": "self"
           },
-          "components": [],
+          "conditions": [
+            {
+              "kind": "target_is_champion"
+            }
+          ],
+          "components": [
+            {
+              "kind": "stat_modifier",
+              "stat": "move_speed",
+              "scope": "total",
+              "mode": "percent",
+              "formula": {
+                "op": "by_holder_range",
+                "melee": {
+                  "op": "constant",
+                  "value": 10
+                },
+                "ranged": {
+                  "op": "constant",
+                  "value": 8
+                }
+              }
+            }
+          ],
           "cooldown_seconds": null,
           "stacks": null,
-          "duration_seconds": null,
+          "duration_seconds": 4,
           "limits": [],
-          "evidence_confidence": "official",
-          "model_status": "excluded",
-          "note": "10% melee / 8% ranged bonus move speed for 4 s on ability/summoner; non-damage."
+          "sources": [
+            {
+              "kind": "client_data",
+              "reference": "Cliente 16.23.8399929+branch.releases-16-23.content.release: lol-knowledge/derived/item-effects.json -> items.3171 (research/reports/client-16.23.md)",
+              "quote": "MeleeMS = 0.1 (10%); RangedMSMultiplier = 0.8 (8% ranged); Duration = 4",
+              "retrieved_at": "2026-11-21",
+              "confidence": "derived"
+            }
+          ],
+          "evidence_confidence": "derived",
+          "model_status": "evaluable",
+          "note": "Timed: applied with --timeline on damaging ability to a champion (+10% melee / +8% ranged move speed for 4 s; ally-buff and summoner triggers not modelled)."
         }
       ]
     },
@@ -9289,21 +9410,50 @@
           "kind": "passive",
           "name": "Danza de hechizos",
           "quote": "Infligir daño mágico o daño verdadero a campeones te otorga velocidad de movimiento durante 4 s.",
-          "basis": "description_explicit",
+          "basis": "external_evidence_explicit",
           "trigger": {
             "event": "on_damage"
           },
           "target": {
             "kind": "self"
           },
-          "components": [],
+          "conditions": [
+            {
+              "kind": "target_is_champion"
+            }
+          ],
+          "components": [
+            {
+              "kind": "stat_modifier",
+              "stat": "move_speed",
+              "scope": "bonus",
+              "mode": "flat",
+              "damage_types": [
+                "magic",
+                "true"
+              ],
+              "formula": {
+                "op": "constant",
+                "value": 20
+              }
+            }
+          ],
           "cooldown_seconds": null,
           "stacks": null,
-          "duration_seconds": null,
+          "duration_seconds": 4,
           "limits": [],
-          "evidence_confidence": "official",
-          "model_status": "excluded",
-          "note": "Bonus movement speed on magic/true damage to champions; non-damage."
+          "sources": [
+            {
+              "kind": "client_data",
+              "reference": "Cliente 16.23.8399929+branch.releases-16-23.content.release: lol-knowledge/derived/item-effects.json -> items.4629 (research/reports/client-16.23.md)",
+              "quote": "MovespeedAmount = 20; StackDuration = 4",
+              "retrieved_at": "2026-11-21",
+              "confidence": "derived"
+            }
+          ],
+          "evidence_confidence": "derived",
+          "model_status": "evaluable",
+          "note": "Timed: applied with --timeline on dealing magic or true damage to a champion (+20 flat move speed for 4 s)."
         }
       ]
     },
@@ -10316,7 +10466,7 @@
           "kind": "passive",
           "name": "Fervor noxiano",
           "quote": "Otorga un 5% de tu velocidad de movimiento como fuerza adaptable.",
-          "basis": "description_partial",
+          "basis": "description_explicit",
           "trigger": {
             "event": "always"
           },
@@ -10326,12 +10476,14 @@
           "components": [
             {
               "kind": "stat_modifier",
-              "stat": "attack_damage",
+              "stat": "adaptive_force",
               "scope": "bonus",
               "mode": "flat",
               "formula": {
-                "op": "unknown",
-                "reason": "Move-speed-to-adaptive-force conversion (5% MS); adaptive force resolution from items is not yet on the stat sheet."
+                "op": "percent_of",
+                "percent": 5,
+                "stat": "move_speed",
+                "scope": "total"
               }
             }
           ],
@@ -10339,18 +10491,9 @@
           "stacks": null,
           "duration_seconds": null,
           "limits": [],
-          "sources": [
-            {
-              "kind": "client_data",
-              "reference": "Cliente 16.23.8399929+branch.releases-16-23.content.release: lol-knowledge/derived/item-effects.json -> items.3170 (research/reports/client-16.23.md)",
-              "quote": "MSAdaptiveRatio = 0.05 (5% move speed as adaptive force)",
-              "retrieved_at": "2026-11-21",
-              "confidence": "derived"
-            }
-          ],
-          "evidence_confidence": "derived",
-          "model_status": "excluded",
-          "note": "Move-speed-to-adaptive-force conversion (5% MS); adaptive force resolution from items is not yet on the stat sheet."
+          "evidence_confidence": "official",
+          "model_status": "evaluable",
+          "note": "Applied on the stat sheet after move speed soft caps: 5% of total move speed as adaptive force (0.6 bonus AD or 1.0 AP)."
         }
       ]
     },

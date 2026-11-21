@@ -28,30 +28,37 @@ from .metrics import (
 from .registry import STATS, Stacking, StatDef, Unit, stat
 from .report import format_text, to_dict
 from .sheet import (
+    ADAPTIVE_AD_PER_AP,
     ENERGY_RESOURCE,
     MANA_RESOURCE,
     NO_RESOURCE,
     AttackSpeedRatio,
     Contribution,
+    PostMsEffect,
     StatAmplifier,
     StatBlocked,
     StatSheet,
     StatValue,
+    adaptive_stat,
     build_stat_sheet,
     effect_amount,
     sheet_effect_reason,
     with_amplifier,
     with_bonus,
+    with_percent_bonus,
 )
 
 __all__ = [
+    "ADAPTIVE_AD_PER_AP",
     "AbilityCosts",
     "AttackSpeedRatio",
     "ENERGY_RESOURCE",
     "MANA_RESOURCE",
     "NO_RESOURCE",
+    "PostMsEffect",
     "ResourcePool",
     "SpellCost",
+    "adaptive_stat",
     "effect_amount",
     "EVIDENCE_LABEL",
     "STATS",
@@ -93,4 +100,5 @@ __all__ = [
     "weakest",
     "with_amplifier",
     "with_bonus",
+    "with_percent_bonus",
 ]
