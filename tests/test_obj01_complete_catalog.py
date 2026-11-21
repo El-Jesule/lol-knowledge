@@ -330,7 +330,7 @@ def test_curated_non_damage_utility_items_do_not_weaken_rotations(item_id: str) 
     assert res.label is not Label.PENDING
 
 
-@pytest.mark.parametrize("item_id", ["4628", "2523", "3146", "3152", "6610", "1082", "3041"])
+@pytest.mark.parametrize("item_id", ["4628", "2523", "3084", "3742", "6610", "1082", "3041"])
 def test_excluded_combat_effect_items_honestly_weaken_rotations(item_id: str) -> None:
     kit = load_kit(ROOT, "Ahri")
     assert kit is not None

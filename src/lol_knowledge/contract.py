@@ -807,6 +807,7 @@ def _handle_optimize(params: Mapping[str, Any], root: Path) -> dict[str, Any]:
         beam_width=_optional_int(params, "beam_width", 12) or 12,
         pool_limit=_optional_int(params, "pool_limit", 16) or 16,
         damage_mix_physical=damage_mix,
+        use_item_actives=bool(params.get("use_item_actives", False)),
     )
     runes = _int_list(params, "runes")
     shards = _int_list(params, "shards")

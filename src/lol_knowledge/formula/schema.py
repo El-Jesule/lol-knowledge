@@ -41,6 +41,7 @@ STAT_SCOPES_BY_STAT: dict[str, frozenset[str]] = {
 OBJECT_OPS = frozenset(
     {
         "by_level",
+        "linear_by_level",
         "constant",
         "stat",
         "percent_of",
@@ -52,6 +53,6 @@ OBJECT_OPS = frozenset(
         "unsupported",
     }
 )
-# Champion kits also need per-rank and per-level values, linear 1..18 curves and scenario inputs.
-ABILITY_OPS = OBJECT_OPS | {"by_rank", "linear_by_level", "input"}
+# Champion kits also need per-rank values and scenario inputs.
+ABILITY_OPS = OBJECT_OPS | {"by_rank", "input"}
 ALL_OPS = ABILITY_OPS

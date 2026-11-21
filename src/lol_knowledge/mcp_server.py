@@ -231,6 +231,7 @@ TOOLS: tuple[dict[str, Any], ...] = (
                 "require_boots": {"type": "boolean"},
                 "tier": {"type": "string", "enum": ["completed", "all"]},
                 "only_verified": {"type": "boolean"},
+                "use_item_actives": {"type": "boolean"},
                 "top": {"type": "integer", "minimum": 1, "maximum": 20},
                 "beam_width": {"type": "integer", "minimum": 1, "maximum": 64},
                 "pool_limit": {"type": "integer", "minimum": 4, "maximum": 64},

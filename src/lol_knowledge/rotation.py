@@ -117,11 +117,14 @@ REDUCED_OMNIVAMP_KINDS = frozenset({"minion", "monster"})
 
 WAIT_SECONDS = re.compile(r"\d+(?:\.\d+)?")
 _ABILITY_STEP = re.compile(r"(?P<slot>[QWER])(?:\.(?P<case>[a-z0-9_]+))?(?:@(?P<targets>\d+))?")
+_ITEM_STEP = re.compile(r"item:(?P<id>\d+)(?:@(?P<targets>\d+))?", re.IGNORECASE)
+# Active component kinds executable via ``item:<id>`` steps.
+ACTIVE_COMBAT_KINDS = frozenset({"damage", "healing", "shield", "stat_modifier", "damage_modifier"})
 
 
 @dataclass(frozen=True)
 class Step:
-    """One rotation step: a basic attack (``slot`` is ``None``) or an ability case."""
+    """One rotation step: basic attack, ability case, ``wait:<seconds>`` or ``item:<id>``."""
 
     text: str
     slot: str | None = None
@@ -131,12 +134,14 @@ class Step:
     spellblade: bool = True
     # Seconds to wait, for ``wait:<seconds>`` (timeline only, timeline.md).
     wait: Fraction | None = None
-    # Explicit target count override for an ability step (e.g. ``R.dash@3``).
+    # Explicit target count override for an ability or item active step (e.g. ``R.dash@3``).
     targets: int | None = None
+    # Item id for an active item step (e.g. ``item:3074``, ``item:3748``).
+    item_id: str | None = None
 
 
 def parse_steps(text: str) -> tuple[Step, ...]:
-    """Read ``attack``, ``attack:crit``, ``attack:nospellblade``, ``Q``, ``E.edge``, ``R.dash@3``…
+    """Read ``attack``, ``attack:crit``, ``Q``, ``E.edge``, ``item:3074``, ``wait:0.5``…
 
     Steps are separated by commas or spaces; an attack takes any of the
     modifiers ``crit`` and ``nospellblade``, once each and in any order.
@@ -146,6 +151,16 @@ def parse_steps(text: str) -> tuple[Step, ...]:
         raise RotationError("the rotation has no steps")
     steps = []
     for token in tokens:
+        item_match = _ITEM_STEP.fullmatch(token)
+        if item_match is not None:
+            raw_targets = item_match.group("targets")
+            step_targets: int | None = None
+            if raw_targets is not None:
+                step_targets = int(raw_targets)
+                if step_targets < 1:
+                    raise RotationError(f"step {token!r}: target count must be at least 1")
+            steps.append(Step(token, item_id=item_match.group("id"), targets=step_targets))
+            continue
         head, *modifiers = token.lower().split(":")
         if head == "wait":
             steps.append(Step(token, wait=_seconds(token, modifiers)))
@@ -163,10 +178,10 @@ def parse_steps(text: str) -> tuple[Step, ...]:
         if match is None:
             raise RotationError(
                 f"unknown step {token!r}: use attack, attack:crit, attack:nospellblade, "
-                "Q, W, E, R or SLOT.case"
+                "Q, W, E, R, SLOT.case or item:<id>"
             )
         raw_targets = match.group("targets")
-        step_targets: int | None = None
+        step_targets = None
         if raw_targets is not None:
             step_targets = int(raw_targets)
             if step_targets < 1:
@@ -455,6 +470,13 @@ class _Effect:
     alternation: tuple[str, int, int] | None = None
     # Combo hits required for ``on_damage`` triggers (e.g. Eclipse: 2 hits in 2 s).
     combo_required: int | None = None
+    # ``"passive"`` or ``"active"`` (active effects are cast via ``item:<id>`` steps).
+    kind: str = "passive"
+    # Optional ranged duration override (e.g. Youmuu's Wraith Step: 6 s melee / 4 s ranged).
+    ranged_duration: Fraction | None = None
+    # Active empowers the next basic attack (Titanic Hydra) and optionally resets attack timer.
+    empowers_next_attack: bool = False
+    resets_attack_timer: bool = False
 
     @property
     def title(self) -> str:
@@ -577,6 +599,10 @@ def _effects(
                         _max_stacks(effect),
                         _alternation(effect),
                         _combo_required(effect),
+                        str(effect.get("kind", "passive")),
+                        _seconds_of(effect.get("ranged_duration_seconds")),
+                        bool(effect.get("empowers_next_attack", False)),
+                        bool(effect.get("resets_attack_timer", False)),
                     )
                 )
     return effects, notes, weakened
@@ -888,6 +914,10 @@ class _Rotation:
         self.accrued = Fraction(0)
         self.active_dealt: list[_Window] = []
         self.shred: dict[DamageType, list[_Window]] = {}
+        self.item_actives: dict[str, list[_Effect]] = {}
+        self.active_ready: dict[str, Fraction] = {}
+        self.empowered_attacks: dict[str, list[_Effect]] = {}
+        self.cast_actives: set[str] = set()
         owners = sorted(
             {
                 item.id
@@ -905,6 +935,12 @@ class _Rotation:
             )
         for effect in attacker:
             kind = effect.component.get("kind")
+            if effect.kind == "active":
+                if kind in ACTIVE_COMBAT_KINDS:
+                    self.item_actives.setdefault(effect.item, []).append(effect)
+                else:
+                    self._skip(effect, f"{effect.trigger} {kind}")
+                continue
             if effect.every is not None and kind == "damage":
                 self.counted.append(effect)
             elif effect.every is not None and kind == "repeat_on_hit":
@@ -1491,6 +1527,9 @@ class _Rotation:
             types = window.effect.component.get("damage_types")
             if types is not None and damage_type.value not in types:
                 continue
+            source = window.effect.component.get("source")
+            if source == "ability" and part_kind != "ability":
+                continue
             if _conditions_hold(window.effect, self.target, part_kind, crit, target_stats):
                 dealt.append((window.effect.title, window.value))
                 labels += window.labels
@@ -1762,7 +1801,11 @@ class _Rotation:
         return multiplier, labels, notes, f" x critical multiplier {format_number(multiplier)}"
 
     def _attack(
-        self, step: Step, target_stats: Mapping[str, Fraction], empowered: bool = False
+        self,
+        step: Step,
+        target_stats: Mapping[str, Fraction],
+        empowered: bool = False,
+        active_empowers: Sequence[_Effect] = (),
     ) -> list[Part]:
         attack_damage = self.sheet["attack_damage"]
         raw = attack_damage.total()
@@ -1781,22 +1824,35 @@ class _Rotation:
                 "attack", source, DamageType.PHYSICAL, raw, labels, step.crit, target_stats, notes
             )
         ]
-        parts += self._on_hit(self.on_hit, step, target_stats)
+        replaced = {eff.item for eff in active_empowers}
+        active_on_hit = [e for e in self.on_hit if e.item not in replaced] + [
+            e for e in active_empowers if not e.component.get("secondary_only")
+        ]
+        parts += self._on_hit(active_on_hit, step, target_stats)
         if empowered:
             parts += self._on_hit(self.spellblade, step, target_stats)
             for repeat in self.repeats:
                 parts += self._on_hit(
-                    self.on_hit, step, target_stats, f" - again by {repeat.title}", repeat.label
+                    active_on_hit, step, target_stats, f" - again by {repeat.title}", repeat.label
                 )
-        parts += self._secondary_attacks(step, target_stats)
+        active_secondary = [e for e in self.secondary_attacks if e.item not in replaced] + [
+            e for e in active_empowers if e.component.get("secondary_only") is True
+        ]
+        parts += self._secondary_attacks(step, target_stats, active_secondary)
         return parts
 
-    def _secondary_attacks(self, step: Step, target_stats: Mapping[str, Fraction]) -> list[Part]:
+    def _secondary_attacks(
+        self,
+        step: Step,
+        target_stats: Mapping[str, Fraction],
+        effects: Sequence[_Effect] | None = None,
+    ) -> list[Part]:
         """Secondary-only attack splash and bolts (Runaan's Hurricane, Tiamat/Hydras)."""
-        if self.target_count <= 1 or not self.secondary_attacks:
+        candidates = self.secondary_attacks if effects is None else effects
+        if self.target_count <= 1 or not candidates:
             return []
         parts: list[Part] = []
-        for effect in self.secondary_attacks:
+        for effect in candidates:
             part_kind = "on_hit" if effect.trigger == "on_hit" else "item"
             if not _conditions_hold(effect, self.target, part_kind, step.crit, target_stats):
                 continue
@@ -2685,6 +2741,105 @@ class _Rotation:
                 value = min(value, Fraction(str(limit["value"])))
         return value
 
+    def _item_active(
+        self,
+        step: Step,
+        target_stats: Mapping[str, Fraction],
+        clock: Fraction,
+    ) -> tuple[str, list[Part], list[HealEvent], list[ShieldEvent], bool]:
+        """Execute an ``item:<id>`` active step (damage, heal, shield, buff or attack empower)."""
+        assert step.item_id is not None
+        item_id = step.item_id
+        equipped = {item.id for item in self.sheet.items}
+        if item_id not in equipped:
+            raise RotationError(f"step {step.text!r}: item {item_id} is not equipped")
+        effects = self.item_actives.get(item_id)
+        if not effects:
+            raise RotationError(
+                f"step {step.text!r}: item {item_id} has no modelled combat active effect"
+            )
+        if self.timeline is not None:
+            ready_at = self.active_ready.get(item_id, Fraction(0))
+            if clock < ready_at:
+                raise RotationError(
+                    f"step {step.text!r}: item {item_id} is on cooldown until "
+                    f"{format_number(ready_at)} s"
+                )
+            cd = effects[0].cooldown
+            if cd is not None:
+                self.active_ready[item_id] = clock + cd
+        self.cast_actives.add(item_id)
+        label_name = effects[0].name or effects[0].id
+        step_name = f"item {item_id} ({label_name})"
+        parts: list[Part] = []
+        heals: list[HealEvent] = []
+        shields: list[ShieldEvent] = []
+        reset_attack = any(eff.resets_attack_timer for eff in effects)
+
+        empower_effects = [eff for eff in effects if eff.empowers_next_attack]
+        if empower_effects:
+            self.empowered_attacks[item_id] = empower_effects
+            return step_name, parts, heals, shields, reset_attack
+
+        step_targets = step.targets if step.targets is not None else self.target_count
+        for eff in effects:
+            kind = eff.component.get("kind")
+            if not _conditions_hold(eff, self.target, "trigger", False, target_stats):
+                continue
+            value, stat_labels = self._value(eff, target_stats)
+            labels = [eff.label, *stat_labels]
+            source = f"{eff.title} ({eff.name})"
+            if kind == "damage":
+                aoe = eff.component.get("aoe")
+                hits = step_targets if aoe is True else 1
+                damage_type = DamageType(str(eff.component.get("damage_type")))
+                parts.append(
+                    self._part(
+                        "item",
+                        source,
+                        damage_type,
+                        value,
+                        labels,
+                        False,
+                        target_stats,
+                        life_steal_tag=eff.component.get("applies_life_steal"),
+                        targets_hit=hits,
+                        aoe=aoe if isinstance(aoe, bool) else None,
+                    )
+                )
+            elif kind == "healing" and eff.affects == "self":
+                heals.append(self._make_heal_event(source, value, weakest(labels), clock))
+            elif kind == "shield" and eff.affects == "self":
+                sh_type = str(eff.component.get("shield_type", "normal"))
+                shields.append(
+                    self._make_shield_event(source, value, weakest(labels), shield_type=sh_type)
+                )
+            elif kind in TIMED_KINDS and eff.affects == "self":
+                dur = eff.duration
+                if eff.ranged_duration is not None:
+                    if self.holder_range is None:
+                        raise RotationError(
+                            f"{eff.title}: ranged_duration_seconds needs --attacker-range "
+                            "melee|ranged"
+                        )
+                    if self.holder_range == "ranged":
+                        dur = eff.ranged_duration
+                if self.timeline is None:
+                    self.notes.append(
+                        f"attacker {eff.title}: lasts {format_number(dur or Fraction(0))} s; "
+                        "applied only with --timeline"
+                    )
+                    ms_only = (
+                        kind == "stat_modifier" and str(eff.component.get("stat")) == "move_speed"
+                    )
+                    if not ms_only or self.ms_affects_damage:
+                        self.weakened = True
+                elif dur is not None:
+                    self.windows[_key(eff)] = _Window(eff, clock + dur, value, tuple(labels))
+                    if kind == "stat_modifier":
+                        self.speed_changed |= str(eff.component.get("stat")) in ATTACK_SPEED_STATS
+        return step_name, parts, heals, shields, reset_attack
+
     def _ability(self, step: Step, target_stats: Mapping[str, Fraction]) -> tuple[str, list[Part]]:
         assert step.slot is not None
         ability = self.kit.ability(step.slot)
@@ -2823,9 +2978,9 @@ class _Rotation:
                 shield = outcome.shield_after
                 clock += step.wait
                 continue
-            if self.timeline is not None and step.slot is None:
+            if self.timeline is not None and step.slot is None and step.item_id is None:
                 clock = max(clock, next_attack)
-            elif self.timeline is not None:
+            elif self.timeline is not None and step.slot is not None:
                 self._cast(step, clock, ready, open_casts)
             parts: list[Part] = []
             heal_events: list[HealEvent] = []
@@ -2843,7 +2998,16 @@ class _Rotation:
             self._set_moment(clock)
             target_stats = self._target_stats(health)
             extra: list[Label] = []
-            if step.slot is None:
+            if step.item_id is not None:
+                name, active_parts, act_heals, act_shields, reset_attack = self._item_active(
+                    step, target_stats, clock
+                )
+                parts += active_parts
+                heal_events += act_heals
+                shield_events += act_shields
+                if reset_attack and self.timeline is not None:
+                    next_attack = clock
+            elif step.slot is None:
                 # Thornmail's Grievous Wounds applies before the triggering attack's own heal.
                 self._trigger_defender_grievous(clock)
                 if charged and window is not None and clock - charged_at > window:
@@ -2855,10 +3019,16 @@ class _Rotation:
                     )
                 empowered = charged and step.spellblade and bool(self.spellblade)
                 charged = False
+                active_empowers = [eff for effs in self.empowered_attacks.values() for eff in effs]
+                if active_empowers:
+                    self.empowered_attacks.clear()
                 name = "critical basic attack" if step.crit else "basic attack"
                 if empowered:
                     name += " with Spellblade"
-                attack_parts = self._attack(step, target_stats, empowered)
+                if active_empowers:
+                    seen_names = list(dict.fromkeys(e.name or e.id for e in active_empowers))
+                    name += f" ({', '.join(seen_names)})"
+                attack_parts = self._attack(step, target_stats, empowered, active_empowers)
                 parts += attack_parts
                 parts += self._burns(step, attack_parts, target_stats, burned, clock)
                 oh_heals, oh_shields = self._item_survival_events("on_hit", target_stats, clock)
@@ -2958,7 +3128,12 @@ class _Rotation:
                     )
                     if self.timeline is not None and self._open("energized", clock, target_stats):
                         extra.append(Label.PENDING)
-            step_dealt = bool(parts[accrued_count:]) if step.slot is None else bool(ability_parts)
+            if step.item_id is not None:
+                step_dealt = False
+            else:
+                step_dealt = (
+                    bool(parts[accrued_count:]) if step.slot is None else bool(ability_parts)
+                )
             if step_dealt:
                 od_parts, od_shields = self._on_damage_procs(step, target_stats, clock, step.slot)
                 parts += od_parts
@@ -3120,10 +3295,16 @@ class _Rotation:
             self._record_attacker_healing(outcome.healing)
             health = outcome.health_after
             shield = outcome.shield_after
-            if self.timeline is not None and step.slot is None:
+            if self.timeline is not None and step.slot is None and step.item_id is None:
                 # The next attack: 1 / the attack speed just after this one (timeline.md).
                 self._set_moment(clock)
                 next_attack = clock + 1 / self.sheet["attack_speed"].total()
+        for item_id, active_effs in self.item_actives.items():
+            if item_id not in self.cast_actives:
+                self.notes.append(
+                    f"attacker {active_effs[0].title}: active available "
+                    f"(use step item:{item_id} to cast it)"
+                )
         pending_end = self.rune_combat.last_pending_time()
         delayed_item_end = (
             max((t for t, _, _, _ in self.delayed_item_procs), default=None)
