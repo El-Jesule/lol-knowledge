@@ -58,8 +58,19 @@ COMPLETED_MIN_GOLD = 800
 SYNERGY_ITEMS = frozenset({"3089", "3031", "3135", "3036", "3033", "3137", "3124", "3085"})
 
 
+def _has_excluded_defensive_effect(item: ItemData) -> bool:
+    """Whether ``item`` has an excluded defensive passive that could alter EHP/survival."""
+    for effect in item.effects:
+        if effect.get("model_status") == "evaluable":
+            continue
+        trigger = (effect.get("trigger") or {}).get("event")
+        if trigger in {"taking_damage", "taking_attack"}:
+            return True
+    return False
+
+
 def _is_verified_clean(item: ItemData) -> bool:
-    """Whether ``item`` has complete effect review and no pending/excluded damage components."""
+    """Whether ``item`` has complete effect review and no pending/excluded combat components."""
     if item.effect_review != "complete":
         return False
     if any(stat.label is Label.PENDING for stat in item.stats):
@@ -407,11 +418,15 @@ class _BuildEvaluator:
                 score = ehp_mixed
                 base_labels = [ehp_p.label, ehp_m.label]
             notes: list[str] = []
-            if any(c.item.effect_review != "complete" for c in candidates):
+            unmodelled_def = [
+                c.item.id
+                for c in candidates
+                if c.item.effect_review != "complete" or _has_excluded_defensive_effect(c.item)
+            ]
+            if unmodelled_def:
                 base_labels.append(Label.PENDING)
-                pending_ids = [c.item.id for c in candidates if c.item.effect_review != "complete"]
                 notes.append(
-                    f"items with pending effect review ({', '.join(pending_ids)}): "
+                    f"items with unmodelled defensive effects ({', '.join(unmodelled_def)}): "
                     "defensive passives not modelled"
                 )
             if sheet.pending_effects:
@@ -527,11 +542,15 @@ class _BuildEvaluator:
                 secondary = -outcome.total_damage_taken
             notes_def = list(outcome.notes)
             labels_def = [outcome.label, self.legality_label]
-            if any(c.item.effect_review != "complete" for c in candidates):
+            unmodelled_def = [
+                c.item.id
+                for c in candidates
+                if c.item.effect_review != "complete" or _has_excluded_defensive_effect(c.item)
+            ]
+            if unmodelled_def:
                 labels_def.append(Label.PENDING)
-                pending_ids = [c.item.id for c in candidates if c.item.effect_review != "complete"]
                 notes_def.append(
-                    f"items with pending effect review ({', '.join(pending_ids)}): "
+                    f"items with unmodelled defensive effects ({', '.join(unmodelled_def)}): "
                     "defensive passives not modelled"
                 )
             return BuildResult(
@@ -784,7 +803,15 @@ def optimize_build(
         and (cfg.tier == "all" or cand.is_completed)
     ]
     eligible.sort(key=lambda c: int(c.item.id))
-    verified_eligible = [c for c in eligible if c.verified_clean]
+    verified_eligible = [
+        c
+        for c in eligible
+        if c.verified_clean
+        and (
+            objective not in (EHP_OBJECTIVES | DEFENSE_OBJECTIVES)
+            or not _has_excluded_defensive_effect(c.item)
+        )
+    ]
 
     evaluator = _BuildEvaluator(
         objective=objective,

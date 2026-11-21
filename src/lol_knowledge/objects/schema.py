@@ -162,10 +162,11 @@ COMPONENT_KINDS = frozenset(
         "trigger_energized",
         "execute",
         "burn",
+        "cooldown_refund",
     }
 )
 DAMAGE_TYPES = frozenset({"physical", "magic", "true"})
-HEALING_MODES = frozenset({"absolute", "percent_of_trigger"})
+HEALING_MODES = frozenset({"absolute", "percent_of_trigger", "percent"})
 RESTORE_RESOURCES = frozenset({"mana", "energy"})
 LIMIT_KINDS = frozenset({"maximum", "minimum", "threshold", "cap"})
 CONDITION_KINDS = frozenset(

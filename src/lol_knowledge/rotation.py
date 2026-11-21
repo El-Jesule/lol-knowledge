@@ -802,7 +802,14 @@ class _Rotation:
         self.secondary_attacks: list[_Effect] = []
         self.ability_procs: list[_Effect] = []
         self.on_damage_procs: list[_Effect] = []
+        self.threshold_procs: list[_Effect] = []
+        self.shred_percent_effects: list[_Effect] = []
+        self.cooldown_refunds: list[_Effect] = []
         self.ability_stacked: list[_Effect] = []
+        self.self_heal_amp = Fraction(1)
+        self.self_shield_amp = Fraction(1)
+        self.self_amp_labels: list[Label] = []
+        self.self_amp_notes: list[str] = []
         self.dealt: list[_Effect] = []
         self.taken: list[_Effect] = []
         self.spellblade: list[_Effect] = []
@@ -823,6 +830,12 @@ class _Rotation:
         self.combo_counts: dict[str, int] = {}  # non-timeline on_damage combo hits
         self.ability_stacks: dict[str, int] = {}  # stacks gained per damaging ability (Shojin)
         self.ability_stacked_at: dict[str, Fraction] = {}
+        self.shred_stacks: dict[
+            str, int
+        ] = {}  # percent resistance shred stacks (Cleaver, Bloodletter)
+        self.shred_stacked_at: dict[str, Fraction] = {}
+        self.threshold_damage_log: dict[str, list[tuple[Fraction, Fraction]]] = {}
+        self.delayed_item_procs: list[tuple[Fraction, _Effect, Fraction, tuple[Label, ...]]] = []
         self.last_counted: dict[str, Fraction] = {}  # last attack of each counter
         self.speed_changed = False  # a timed effect changed the attack speed
         # Stacks gained per attack and seconds in combat, from 0 (combat-stacks.md).
@@ -873,8 +886,39 @@ class _Rotation:
                 and effect.max_stacks is not None
             ):
                 self._ability_stacking(effect)
+            elif (
+                effect.trigger in {"on_damage", "damaging_ability"}
+                and kind == "stat_modifier"
+                and effect.component.get("mode") == "percent"
+                and str(effect.component.get("stat")) in RESISTANCE_STATS
+                and effect.max_stacks is not None
+            ):
+                self.shred_percent_effects.append(effect)
+            elif (
+                effect.trigger == "on_damage"
+                and kind == "damage"
+                and "damage_threshold_percent" in effect.component
+            ):
+                self.threshold_procs.append(effect)
             elif effect.trigger == "on_damage" and kind in {"damage", "shield"}:
                 self.on_damage_procs.append(effect)
+            elif effect.trigger == "on_attack" and kind == "cooldown_refund":
+                self.cooldown_refunds.append(effect)
+            elif (
+                effect.trigger == "always"
+                and effect.affects == "self"
+                and kind in {"healing", "shield"}
+                and effect.component.get("mode") == "percent"
+            ):
+                pct, stat_labels = self._value(effect, self.target.stats)
+                if kind == "healing":
+                    self.self_heal_amp *= 1 + pct / 100
+                    self.self_amp_labels.extend([effect.label, *stat_labels])
+                    self.self_amp_notes.append(f"{effect.title} +{format_number(pct)}% healing")
+                else:
+                    self.self_shield_amp *= 1 + pct / 100
+                    self.self_amp_labels.extend([effect.label, *stat_labels])
+                    self.self_amp_notes.append(f"{effect.title} +{format_number(pct)}% shielding")
             elif effect.trigger == "energized" and kind == "damage":
                 self.energized.append(effect)
             elif kind == "execute":
@@ -1008,8 +1052,11 @@ class _Rotation:
         hsp_val = self.hsp.total() if uses_hsp else Fraction(0)
         rev_amp = self._revitalize_amp()
         gw_rate, gw_label, gw_source = self._current_grievous(clock)
-        amount = scale_healing(
-            raw, hsp=hsp_val, revitalize_amp=rev_amp, grievous=gw_rate, uses_hsp=uses_hsp
+        amount = (
+            scale_healing(
+                raw, hsp=hsp_val, revitalize_amp=rev_amp, grievous=gw_rate, uses_hsp=uses_hsp
+            )
+            * self.self_heal_amp
         )
         labels = [label]
         out_notes = list(notes)
@@ -1019,6 +1066,9 @@ class _Rotation:
         if rev_amp:
             labels.append(Label.DERIVED)
             out_notes.append(f"Revitalize <40% HP +{format_number(rev_amp * 100)}%")
+        if self.self_heal_amp != 1:
+            labels.extend(self.self_amp_labels)
+            out_notes.extend(n for n in self.self_amp_notes if "healing" in n)
         if gw_rate:
             labels.append(gw_label)
             out_notes.append(gw_source)
@@ -1045,7 +1095,7 @@ class _Rotation:
     ) -> ShieldEvent:
         hsp_val = self.hsp.total()
         rev_amp = self._revitalize_amp()
-        amount = scale_shield(raw, hsp=hsp_val, revitalize_amp=rev_amp)
+        amount = scale_shield(raw, hsp=hsp_val, revitalize_amp=rev_amp) * self.self_shield_amp
         labels = [label]
         out_notes = list(notes)
         if hsp_val:
@@ -1054,6 +1104,9 @@ class _Rotation:
         if rev_amp:
             labels.append(Label.DERIVED)
             out_notes.append(f"Revitalize <40% HP +{format_number(rev_amp * 100)}%")
+        if self.self_shield_amp != 1:
+            labels.extend(self.self_amp_labels)
+            out_notes.extend(n for n in self.self_amp_notes if "shielding" in n)
         return ShieldEvent(
             source,
             raw,
@@ -1452,6 +1505,35 @@ class _Rotation:
                     for window in shred
                 ),
             )
+        pct_shreds: list[Fraction] = []
+        for eff in self.shred_percent_effects:
+            if RESISTANCE_STATS.get(str(eff.component.get("stat"))) is not damage_type:
+                continue
+            count = self.shred_stacks.get(eff.title, 0)
+            if not count:
+                continue
+            last = self.shred_stacked_at.get(eff.title)
+            if (
+                self.timeline is not None
+                and eff.window is not None
+                and last is not None
+                and self.now - last >= eff.window
+            ):
+                continue
+            per_stack, stat_labels = self._value(eff, target_stats)
+            pct = abs(per_stack) * count / 100
+            pct_shreds.append(pct)
+            labels = [*labels, eff.label, *stat_labels]
+            notes = (
+                *notes,
+                f"{eff.title} ({eff.name}): -{format_number(pct * 100)}% "
+                f"{eff.component.get('stat')} ({count}x)",
+            )
+        if pct_shreds:
+            modifiers = replace(
+                modifiers,
+                percent_reduction=(*modifiers.percent_reduction, *pct_shreds),
+            )
         mitigation = mitigate(raw, damage_type, self.target.resistance(damage_type), modifiers)
         if damage_type in PENETRATION:
             percent, flat = PENETRATION[damage_type]
@@ -1554,17 +1636,23 @@ class _Rotation:
         raw_heal = part.damage * rate
         rev_amp = self._revitalize_amp()
         gw_rate, gw_label, gw_source = self._current_grievous(self.now)
-        amount = scale_healing(
-            raw_heal,
-            hsp=Fraction(0),
-            revitalize_amp=rev_amp,
-            grievous=gw_rate,
-            uses_hsp=False,
+        amount = (
+            scale_healing(
+                raw_heal,
+                hsp=Fraction(0),
+                revitalize_amp=rev_amp,
+                grievous=gw_rate,
+                uses_hsp=False,
+            )
+            * self.self_heal_amp
         )
         if raw_heal > 0:
             if rev_amp:
                 labels.append(Label.DERIVED)
                 notes.append(f"Revitalize <40% HP +{format_number(rev_amp * 100)}%")
+            if self.self_heal_amp != 1:
+                labels.extend(self.self_amp_labels)
+                notes.extend(n for n in self.self_amp_notes if "healing" in n)
             if gw_rate:
                 labels.append(gw_label)
                 notes.append(gw_source)
@@ -2069,6 +2157,137 @@ class _Rotation:
             seconds = effect.refund[1] if crit else effect.refund[0]
             self.proc_ready[effect.title] = max(clock, ready - seconds)
 
+    def _apply_shred_stacks(
+        self,
+        step_parts: Sequence[Part],
+        clock: Fraction,
+        target_stats: Mapping[str, Fraction],
+        slot: str | None,
+    ) -> None:
+        """Stack percent resistance shred (Black Cleaver, Bloodletter's Curse)."""
+        if not self.shred_percent_effects or not step_parts:
+            return
+        for effect in self.shred_percent_effects:
+            if not _conditions_hold(effect, self.target, "item", False, target_stats, slot):
+                continue
+            allowed = effect.component.get("damage_types")
+            matched = False
+            for part in step_parts:
+                if not part.hits_primary or part.primary_damage <= 0:
+                    continue
+                if effect.trigger == "damaging_ability" and part.kind != "ability":
+                    continue
+                if allowed is not None and part.damage_type.value not in allowed:
+                    continue
+                matched = True
+                break
+            if not matched:
+                continue
+            last = self.shred_stacked_at.get(effect.title)
+            if (
+                self.timeline is not None
+                and effect.window is not None
+                and last is not None
+                and clock - last >= effect.window
+            ):
+                self.shred_stacks[effect.title] = 0
+            assert effect.max_stacks is not None
+            self.shred_stacks[effect.title] = min(
+                effect.max_stacks, self.shred_stacks.get(effect.title, 0) + 1
+            )
+            self.shred_stacked_at[effect.title] = clock
+
+    def _check_threshold_procs(
+        self,
+        step_damage: Fraction,
+        clock: Fraction,
+        target_stats: Mapping[str, Fraction],
+    ) -> list[Part]:
+        """Damage-threshold procs (Stormsurge: 25% max HP in 2.5 s -> delayed strike)."""
+        if not self.threshold_procs or step_damage <= 0:
+            return []
+        immediate: list[Part] = []
+        max_hp = target_stats["max_health"]
+        for effect in self.threshold_procs:
+            if not _conditions_hold(effect, self.target, "item", False, target_stats):
+                continue
+            if effect.cooldown is not None:
+                if self.timeline is not None:
+                    if clock < self.proc_ready.get(effect.title, Fraction(0)):
+                        continue
+                elif effect.title in self.proc_fired:
+                    continue
+            threshold_pct = Fraction(str(effect.component["damage_threshold_percent"])) / 100
+            win_val = effect.component.get("threshold_window_seconds")
+            win = Fraction(str(win_val)) if win_val is not None else None
+            log = self.threshold_damage_log.setdefault(effect.title, [])
+            if self.timeline is not None and win is not None:
+                log[:] = [(t, d) for t, d in log if clock - t <= win]
+            log.append((clock, step_damage))
+            if sum((d for _, d in log), start=Fraction(0)) < threshold_pct * max_hp:
+                continue
+            log.clear()
+            if effect.cooldown is not None:
+                if self.timeline is not None:
+                    self.proc_ready[effect.title] = clock + effect.cooldown
+                else:
+                    self.proc_fired.add(effect.title)
+                    self.notes.append(
+                        f"attacker {effect.title}: cooldown ({format_number(effect.cooldown)} s) "
+                        "fires once without --timeline"
+                    )
+            raw, stat_labels = self._value(effect, target_stats)
+            delay_val = effect.component.get("delay_seconds")
+            delay = Fraction(str(delay_val)) if delay_val is not None else Fraction(0)
+            if self.timeline is not None and delay > 0:
+                self.delayed_item_procs.append(
+                    (clock + delay, effect, raw, (effect.label, *stat_labels))
+                )
+            else:
+                notes_p: tuple[str, ...] = (
+                    (
+                        f"triggered after >= {format_number(threshold_pct * 100)}% target max HP; "
+                        f"{format_number(delay)} s delay fires immediately without --timeline",
+                    )
+                    if delay > 0
+                    else ()
+                )
+                immediate.append(
+                    self._part(
+                        "item",
+                        f"{effect.title} ({effect.name})",
+                        DamageType(str(effect.component.get("damage_type"))),
+                        raw,
+                        [effect.label, *stat_labels],
+                        False,
+                        target_stats,
+                        notes_p,
+                    )
+                )
+        return immediate
+
+    def _apply_cooldown_refunds(
+        self, clock: Fraction, ready: dict[str, Fraction], target_stats: Mapping[str, Fraction]
+    ) -> None:
+        """Basic-attack remaining cooldown refunds (Navori Flickerblade: -15% basic CD)."""
+        if self.timeline is None or not self.cooldown_refunds:
+            return
+        for effect in self.cooldown_refunds:
+            if not _conditions_hold(effect, self.target, "trigger", False, target_stats):
+                continue
+            pct, _ = self._value(effect, target_stats)
+            factor = 1 - pct / 100
+            scope = effect.component.get("scope", "basic")
+            slots = (
+                ("Q", "W", "E")
+                if scope == "basic"
+                else (("R",) if scope == "ultimate" else ("Q", "W", "E", "R"))
+            )
+            for slot in slots:
+                until = ready.get(slot)
+                if until is not None and until > clock:
+                    ready[slot] = clock + (until - clock) * factor
+
     def _accrue(
         self, until: Fraction, health: Fraction, shield: Fraction = Fraction(0)
     ) -> tuple[list[Part], Fraction, Fraction, Fraction]:
@@ -2082,6 +2301,7 @@ class _Rotation:
             not self.burning
             and not self.rune_combat.has_active_burn()
             and not self.rune_combat.has_due_procs(until)
+            and not any(t <= until for t, _, _, _ in self.delayed_item_procs)
         ):
             self.accrued = max(start, until)
             return [], health, shield, Fraction(0)
@@ -2099,6 +2319,7 @@ class _Rotation:
                 *(Fraction(second) for second in range(math.ceil(until)) if self.combat),
                 *self.rune_combat.burn_split_times(start, until),
                 *self.rune_combat.due_times(until),
+                *(t for t, _, _, _ in self.delayed_item_procs if t <= until),
                 *self.passive_combat.stack_expiry_times(start, until),
             ]
             if start < end < until
@@ -2164,6 +2385,25 @@ class _Rotation:
                         self._target_stats(health),
                         proc.notes,
                         apply_modifiers=proc.apply_modifiers,
+                    )
+                    parts.append(part)
+                    health, shield, absorbed = self._absorb_parts([part], health, shield)
+                    total_absorbed += absorbed
+            due_items = [entry for entry in self.delayed_item_procs if entry[0] <= finish]
+            if due_items:
+                self.delayed_item_procs = [
+                    entry for entry in self.delayed_item_procs if entry[0] > finish
+                ]
+                self._set_moment(finish)
+                for due_at, effect, raw_val, eff_labels in due_items:
+                    part = self._part(
+                        "item",
+                        f"{effect.title} ({effect.name}) at {format_number(due_at)} s",
+                        DamageType(str(effect.component.get("damage_type"))),
+                        raw_val,
+                        list(eff_labels),
+                        False,
+                        self._target_stats(health),
                     )
                     parts.append(part)
                     health, shield, absorbed = self._absorb_parts([part], health, shield)
@@ -2587,6 +2827,7 @@ class _Rotation:
                 if timed:
                     self._open("on_attack", clock, target_stats)
                     self._refund(clock, step.crit)
+                    self._apply_cooldown_refunds(clock, ready, target_stats)
                 if energized:
                     energized = False
                     name += " (Energized)"
@@ -2722,12 +2963,14 @@ class _Rotation:
                         apply_modifiers=proc.apply_modifiers,
                     )
                 )
+            complete_parts.extend(self._check_threshold_procs(step_damage, clock, target_stats))
             if complete_parts:
                 parts.extend(complete_parts)
                 step_after, shield_after, extra_absorbed = self._absorb_parts(
                     complete_parts, step_after, shield_after
                 )
                 total_absorbed += extra_absorbed
+            self._apply_shred_stacks(parts[accrued_count:], clock, target_stats, step.slot)
             parts += self._execute(parts, before, target_stats, total_absorbed)
             final_hp = max(
                 Fraction(0),
@@ -2820,10 +3063,17 @@ class _Rotation:
                 self._set_moment(clock)
                 next_attack = clock + 1 / self.sheet["attack_speed"].total()
         pending_end = self.rune_combat.last_pending_time()
-        if self.burning or pending_end is not None:
+        delayed_item_end = (
+            max((t for t, _, _, _ in self.delayed_item_procs), default=None)
+            if self.delayed_item_procs
+            else None
+        )
+        if self.burning or pending_end is not None or delayed_item_end is not None:
             ends = [*(burn.end for burn in self.burning.values())]
             if pending_end is not None:
                 ends.append(pending_end)
+            if delayed_item_end is not None:
+                ends.append(delayed_item_end)
             end = max(ends)
             tail_name = (
                 f"burns until {format_number(end)} s"

@@ -9,6 +9,7 @@ from lol_knowledge.kit import load_kit
 from lol_knowledge.rotation import CritBase, evaluate_rotation, parse_steps
 from lol_knowledge.scenario import target_from_values
 from lol_knowledge.stats import (
+    ItemData,
     Label,
     build_stat_sheet,
     format_text,
@@ -99,10 +100,22 @@ def test_an_item_without_effects_keeps_the_rotation_label_and_heals():
 
 
 def test_an_item_with_unreviewed_effects_makes_the_rotation_pending():
-    outcome = run("1054")
+    pending_item = ItemData("9999", "Objeto sin revisar", "16.23.1", (), (), "pending")
+    pending_sheet = build_stat_sheet(
+        CHAMPION, 16, [pending_item], load_issues(ROOT), {}, load_records(ROOT)
+    )
+    outcome = evaluate_rotation(
+        KIT,
+        pending_sheet,
+        {"R": 3},
+        target_from_values(F(100), F(50), max_health=F(3000), kind="champion"),
+        parse_steps("attack"),
+        CritBase(F(2), Label.DERIVED, "test"),
+        holder_range="melee",
+    )
     assert outcome.label is Label.PENDING
     assert (
-        "attacker 1054: effect review pending; effects missing from the catalog are not applied"
+        "attacker 9999: effect review pending; effects missing from the catalog are not applied"
         in outcome.notes
     )
 
