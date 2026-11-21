@@ -223,6 +223,7 @@ def _build_sheet_for_contract(
                 base_extras,
                 extra_amplifiers=passive.amplifiers,
                 extra_notes=passive.notes,
+                inputs=inputs,
             ),
             warnings,
         )
@@ -238,7 +239,14 @@ def _build_sheet_for_contract(
     adaptive, a_label, a_note = None, Label.DERIVED, ""
     if needs_adaptive_stat(runes, shards, rune_data):
         before = build_stat_sheet(
-            champion, level, items, issues, assumptions, derived, extra_contributions
+            champion,
+            level,
+            items,
+            issues,
+            assumptions,
+            derived,
+            extra_contributions,
+            inputs=inputs,
         )
         bonus_ad = sum(
             (
@@ -296,6 +304,7 @@ def _build_sheet_for_contract(
         extra_amplifiers=(*passive.amplifiers, *rune_fx.amplifiers),
         extra_notes=tuple(extra_notes),
         move_speed_bonus_amp=rune_fx.move_speed_bonus_amp,
+        inputs=inputs,
     )
     return sheet, warnings
 
@@ -759,6 +768,11 @@ def _handle_survive(params: Mapping[str, Any], root: Path) -> dict[str, Any]:
             ap_weight=derived.value(e_champ.id, "adaptiveforceapweight") if derived else None,
         )
         hits = hits_from_rotation(rot)
+        if any(it.id == "6695" for it in e_sheet.items) and "shield_reaver" not in inputs:
+            inputs = {
+                **inputs,
+                "shield_reaver": Fraction(35, 100) if e_range == "ranged" else Fraction(50, 100),
+            }
         enemy_desc = f"{e_champ.name} level {e_level}: {enemy['steps']}"
     rune_data = load_runes(root) if runes else None
     outcome = evaluate_defense(

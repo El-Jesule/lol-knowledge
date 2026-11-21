@@ -23,6 +23,7 @@ from typing import Any
 
 from ..errors import StatsError
 from ..stats.labels import Label
+from .transforms import TEAR_TRANSFORM_TO_BASE
 
 ITEM_GROUPS_PATH = Path("lol-knowledge") / "derived" / "item-groups.json"
 SCHEMA = "lol-derived-item-groups/1"
@@ -264,20 +265,26 @@ def check_build(
     notes: list[str] = []
     violations: list[Violation] = []
     counts = Counter(str(item_id) for item_id in item_ids)
-    unknown = sorted(item_id for item_id in counts if item_id not in data.items)
+    # Transformed Tear items inherit the item groups of their base purchasable Tear item.
+    group_lookup = {
+        iid: data.items[iid] if iid in data.items else data.items[TEAR_TRANSFORM_TO_BASE[iid]]
+        for iid in counts
+        if iid in data.items or TEAR_TRANSFORM_TO_BASE.get(iid) in data.items
+    }
+    unknown = sorted(item_id for item_id in counts if item_id not in group_lookup)
     if unknown:
         violations.append(
             Violation("no_group_data", f"items without group data: {unknown}", tuple(unknown))
         )
-    known = {item_id: count for item_id, count in counts.items() if item_id in data.items}
+    known = {item_id: count for item_id, count in counts.items() if item_id in group_lookup}
     # A group counts held stacks: five Health Potions (maxStack 5) are one.
     stacks = {
-        item_id: _slots(item_id, count, data.items[item_id], notes)
+        item_id: _slots(item_id, count, group_lookup[item_id], notes)
         for item_id, count in sorted(known.items())
     }
     members: dict[str, list[str]] = {}
     for item_id, used in stacks.items():
-        for key in data.items[item_id].groups:
+        for key in group_lookup[item_id].groups:
             members.setdefault(key, []).extend([item_id] * used)
     for key, held in sorted(members.items()):
         group = data.groups[key]
@@ -293,7 +300,7 @@ def check_build(
     pinned: dict[int, list[str]] = {}
     ordinary = 0
     for item_id in sorted(known):
-        limits = data.items[item_id]
+        limits = group_lookup[item_id]
         slots = {data.groups[key].slot for key in limits.groups} - {None}
         if len(slots) > 1:
             violations.append(
@@ -325,7 +332,7 @@ def check_build(
                 )
             )
     for item_id in sorted(known):
-        required = data.items[item_id].required_champion
+        required = group_lookup[item_id].required_champion
         if required is None:
             continue
         if champion is None:

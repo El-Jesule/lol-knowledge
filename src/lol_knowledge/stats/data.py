@@ -18,6 +18,7 @@ from ..damage import to_fraction
 from ..ddragon import validate_champion_id
 from ..errors import DamageInputError, PayloadError, StatsError
 from ..objects import ObjectModelError, load_model
+from ..objects.transforms import TRANSFORMED_TEAR_SPECS
 from .labels import Label
 
 CURRENT = Path("data") / "current"
@@ -193,14 +194,44 @@ def load_champion(root: Path, name: str) -> ChampionData:
     return champion_from_document(document, patch=patch, locale=locale)
 
 
+def transformed_tear_item(item_id: str, game_version: str) -> ItemData | None:
+    """Build an ``ItemData`` for a non-purchasable transformed Tear item (3040/3042/3121/2530)."""
+    spec = TRANSFORMED_TEAR_SPECS.get(str(item_id))
+    if spec is None:
+        return None
+    stats = tuple(
+        ItemStat(
+            stat=stat_id,
+            kind=kind,
+            value=_number(val, f"item {item_id}.{stat_id}"),
+            source=source,
+            label=Label.OFFICIAL,
+        )
+        for stat_id, kind, val, source in spec["stats"]
+    )
+    return ItemData(
+        id=str(spec["id"]),
+        name=str(spec["name"]),
+        game_version=str(game_version),
+        stats=stats,
+        effects=tuple(spec["effects"]),
+        effect_review="complete",
+        unmodelled_stats=(),
+    )
+
+
 def items_from_model(model: Mapping[str, Any], item_ids: Sequence[str]) -> tuple[ItemData, ...]:
     """Select curated items from the object model; uncurated ids are rejected."""
-    game_version = model.get("game_version")
+    game_version = str(model.get("game_version"))
     objects = {str(obj.get("id")): obj for obj in model.get("objects") or []}
     selected = []
     for item_id in item_ids:
         obj = objects.get(str(item_id))
         if obj is None:
+            transformed = transformed_tear_item(str(item_id), game_version)
+            if transformed is not None:
+                selected.append(transformed)
+                continue
             raise StatsError(
                 f"item {item_id!r} is not in the object catalog (purchasable Summoner's Rift "
                 "items and curated objects); mode variants are not modelled"

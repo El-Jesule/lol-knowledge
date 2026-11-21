@@ -11,7 +11,8 @@ from typing import Any
 from ..damage import format_number, format_percent, to_fraction
 from ..errors import DamageInputError, StatsError
 from ..formula import FormulaError, evaluate_formula
-from .data import ChampionData, ItemData
+from ..objects.transforms import TEAR_BASE_TO_TRANSFORM, TEAR_STACK_MAX
+from .data import ChampionData, ItemData, transformed_tear_item
 from .derived import DerivedRecords
 from .growth import check_level, growth_multiplier
 from .issues import DataIssue
@@ -950,6 +951,291 @@ def _apply_ms_conversions(
             )
 
 
+def _parse_stack_input(
+    inputs: Mapping[str, Fraction],
+    key: str,
+    *,
+    minimum: int = 0,
+    maximum: int | None = None,
+    integer: bool = True,
+) -> Fraction | None:
+    """Validate an optional numeric scenario input for an item passive."""
+    if key not in inputs:
+        return None
+    val = inputs[key]
+    if val < minimum or (maximum is not None and val > maximum):
+        bound = f"{minimum}..{maximum}" if maximum is not None else f">= {minimum}"
+        raise StatsError(f"input {key} must be {bound}, got {format_number(val)}")
+    if integer and val.denominator != 1:
+        raise StatsError(f"input {key} must be an integer, got {format_number(val)}")
+    return val
+
+
+def _resolve_tear_transforms(
+    items: Sequence[ItemData],
+    inputs: Mapping[str, Fraction],
+    notes: list[str],
+) -> tuple[ItemData, ...]:
+    """Upgrade Tear items (3003/3004/3119/2526) into their 360-stack forms when requested."""
+    stacks = _parse_stack_input(inputs, "manaflow_stacks", minimum=0, maximum=TEAR_STACK_MAX)
+    if stacks is None or stacks < TEAR_STACK_MAX:
+        return tuple(items)
+    resolved: list[ItemData] = []
+    for item in items:
+        target_id = TEAR_BASE_TO_TRANSFORM.get(item.id)
+        if target_id is None:
+            resolved.append(item)
+            continue
+        upgraded = transformed_tear_item(target_id, item.game_version)
+        if upgraded is not None:
+            resolved.append(upgraded)
+            notes.append(
+                f"item {item.id} transformed into data:item:{upgraded.id} ({upgraded.name}) "
+                f"at {TEAR_STACK_MAX} Manaflow stacks"
+            )
+        else:
+            resolved.append(item)
+    return tuple(resolved)
+
+
+def _apply_item_input_and_consumable_stats(
+    items: Sequence[ItemData],
+    level: int,
+    inputs: Mapping[str, Fraction],
+    uses_mana: bool,
+    champ_range: str | None,
+    contributions: dict[str, list[Contribution]],
+    percents: dict[str, list[Contribution]],
+    amplifiers: list[StatAmplifier],
+    notes: list[str],
+    pending: list[str],
+) -> None:
+    """Apply stackable/conditional item passives and active elixirs (client 16.23)."""
+    manaflow = _parse_stack_input(inputs, "manaflow_stacks", minimum=0, maximum=TEAR_STACK_MAX)
+    for item in items:
+        iid = item.id
+        src_base = f"data:item:{iid} ({item.game_version})"
+        if iid in {"3070", "3003", "3004", "3119", "2526"}:
+            if manaflow is not None and manaflow > 0 and uses_mana:
+                contributions["mana"].append(
+                    Contribution(
+                        manaflow,
+                        "bonus",
+                        f"{src_base} effect manaflow",
+                        Label.OFFICIAL,
+                        f"manaflow_stacks={int(manaflow)}",
+                    )
+                )
+        elif iid == "1082":
+            glory = _parse_stack_input(inputs, "glory_stacks", minimum=0, maximum=10)
+            if glory is None:
+                notes.append("1082 Glory: 0 stacks (pass --input glory_stacks=0..10)")
+            elif glory > 0:
+                contributions["ability_power"].append(
+                    Contribution(
+                        glory * 4,
+                        "bonus",
+                        f"{src_base} effect glory",
+                        Label.OFFICIAL,
+                        f"glory_stacks={int(glory)} x 4 AP",
+                    )
+                )
+        elif iid == "3041":
+            glory = _parse_stack_input(inputs, "glory_stacks", minimum=0, maximum=25)
+            if glory is None:
+                notes.append("3041 Glory: 0 stacks (pass --input glory_stacks=0..25)")
+            else:
+                if glory > 0:
+                    contributions["ability_power"].append(
+                        Contribution(
+                            glory * 5,
+                            "bonus",
+                            f"{src_base} effect glory",
+                            Label.OFFICIAL,
+                            f"glory_stacks={int(glory)} x 5 AP",
+                        )
+                    )
+                if glory >= 10:
+                    percents.setdefault("move_speed", []).append(
+                        Contribution(
+                            Fraction(10, 100),
+                            "bonus",
+                            f"{src_base} effect glory",
+                            Label.OFFICIAL,
+                            f"glory_stacks={int(glory)} >= 10 (+10% MS)",
+                        )
+                    )
+        elif iid == "6697":
+            statues = _parse_stack_input(inputs, "hubris_stacks", minimum=0)
+            if statues is None:
+                notes.append("6697 Eminence: inactive (pass --input hubris_stacks=<n>)")
+            else:
+                ranged_mult = Fraction(667, 1000) if champ_range == "ranged" else Fraction(1)
+                ad_gain = (Fraction(15) + Fraction(3) * statues) * ranged_mult
+                contributions["attack_damage"].append(
+                    Contribution(
+                        ad_gain,
+                        "bonus",
+                        f"{src_base} effect eminence",
+                        Label.DERIVED,
+                        f"hubris_stacks={int(statues)} (15 + 3x{int(statues)})"
+                        + (" x 0.667 ranged" if champ_range == "ranged" else ""),
+                    )
+                )
+        elif iid == "6657":
+            roa = _parse_stack_input(inputs, "roa_stacks", minimum=0, maximum=10)
+            if roa is None:
+                notes.append("6657 Timeless: 0 stacks (pass --input roa_stacks=0..10)")
+            elif roa > 0:
+                contributions["health"].append(
+                    Contribution(
+                        roa * 10,
+                        "bonus",
+                        f"{src_base} effect timeless",
+                        Label.OFFICIAL,
+                        f"roa_stacks={int(roa)} x 10 HP",
+                    )
+                )
+                if uses_mana:
+                    contributions["mana"].append(
+                        Contribution(
+                            roa * 30,
+                            "bonus",
+                            f"{src_base} effect timeless",
+                            Label.OFFICIAL,
+                            f"roa_stacks={int(roa)} x 30 mana",
+                        )
+                    )
+                contributions["ability_power"].append(
+                    Contribution(
+                        roa * 3,
+                        "bonus",
+                        f"{src_base} effect timeless",
+                        Label.OFFICIAL,
+                        f"roa_stacks={int(roa)} x 3 AP",
+                    )
+                )
+        elif iid in {"3008", "3168"}:
+            murder = _parse_stack_input(inputs, "murder_stacks", minimum=0, maximum=10)
+            stacks = Fraction(10) if murder is None else murder
+            if stacks > 0:
+                contributions["omnivamp"].append(
+                    Contribution(
+                        stacks * Fraction(6, 1000),
+                        "bonus",
+                        f"{src_base} effect murder",
+                        Label.OFFICIAL,
+                        (
+                            f"murder_stacks={int(stacks)}"
+                            if murder is not None
+                            else "scenario: maximum stacks (10)"
+                        ),
+                    )
+                )
+            if iid == "3168":
+                hp_pct = _parse_stack_input(
+                    inputs, "attacker_health_percent", minimum=0, maximum=1, integer=False
+                )
+                if hp_pct is not None and hp_pct < Fraction(1, 2):
+                    contributions["heal_and_shield_power"].append(
+                        Contribution(
+                            Fraction(12, 100),
+                            "bonus",
+                            f"{src_base} effect now-and-forever",
+                            Label.OFFICIAL,
+                            f"attacker_health_percent={format_number(hp_pct)} < 0.5 (+12% HSP)",
+                        )
+                    )
+                    percents.setdefault("health_regen", []).append(
+                        Contribution(
+                            Fraction(12, 100),
+                            "bonus",
+                            f"{src_base} effect now-and-forever",
+                            Label.OFFICIAL,
+                            "<50% HP (+12% health regen)",
+                        )
+                    )
+        elif iid == "2501":
+            hp_pct = _parse_stack_input(
+                inputs, "attacker_health_percent", minimum=0, maximum=1, integer=False
+            )
+            if hp_pct is not None and hp_pct < 1:
+                missing_frac = min(Fraction(1) - hp_pct, Fraction(7, 10)) / Fraction(7, 10)
+                amp_pct = missing_frac * Fraction(10)
+                if amp_pct > 0:
+                    amplifiers.append(
+                        StatAmplifier(
+                            "attack_damage",
+                            amp_pct,
+                            f"{src_base} effect retribution",
+                            Label.DERIVED,
+                            f"Retribution: +{format_number(amp_pct)}% AD at "
+                            f"{format_percent(hp_pct)} HP",
+                        )
+                    )
+        elif iid == "3742":
+            mom = _parse_stack_input(inputs, "momentum_stacks", minimum=0, maximum=100)
+            if mom is not None and mom > 0:
+                contributions["move_speed"].append(
+                    Contribution(
+                        mom * Fraction(1, 5),
+                        "bonus",
+                        f"{src_base} effect shipwrecker",
+                        Label.DERIVED,
+                        f"momentum_stacks={int(mom)} (+{format_number(mom * Fraction(1, 5))} MS)",
+                    )
+                )
+        elif iid == "2138":
+            if level < 9:
+                notes.append(f"2138 Elixir of Iron requires level 9 (champion is level {level})")
+            else:
+                contributions["health"].append(
+                    Contribution(
+                        Fraction(300), "bonus", f"{src_base} effect elixir-of-iron", Label.OFFICIAL
+                    )
+                )
+                contributions["tenacity"].append(
+                    Contribution(
+                        Fraction(25, 100),
+                        "bonus",
+                        f"{src_base} effect elixir-of-iron",
+                        Label.OFFICIAL,
+                        tenacity_group="A",
+                    )
+                )
+        elif iid == "2139":
+            if level < 9:
+                notes.append(f"2139 Elixir of Sorcery requires level 9 (champion is level {level})")
+            else:
+                contributions["ability_power"].append(
+                    Contribution(
+                        Fraction(50),
+                        "bonus",
+                        f"{src_base} effect elixir-of-sorcery",
+                        Label.OFFICIAL,
+                    )
+                )
+                if uses_mana:
+                    contributions["mana_regen"].append(
+                        Contribution(
+                            Fraction(15),
+                            "bonus",
+                            f"{src_base} effect elixir-of-sorcery",
+                            Label.DERIVED,
+                            "flat +15 mana regen per 5 s",
+                        )
+                    )
+        elif iid == "2140":
+            if level < 9:
+                notes.append(f"2140 Elixir of Wrath requires level 9 (champion is level {level})")
+            else:
+                contributions["attack_damage"].append(
+                    Contribution(
+                        Fraction(30), "bonus", f"{src_base} effect elixir-of-wrath", Label.OFFICIAL
+                    )
+                )
+
+
 def build_stat_sheet(
     champion: ChampionData,
     level: int,
@@ -964,6 +1250,7 @@ def build_stat_sheet(
     extra_amplifiers: Sequence[StatAmplifier] = (),
     extra_notes: Sequence[str] = (),
     move_speed_bonus_amp: Contribution | None = None,
+    inputs: Mapping[str, Fraction] = (),
 ) -> StatSheet:
     """Resolve the champion's statistics at ``level`` with ``items``.
 
@@ -997,6 +1284,8 @@ def build_stat_sheet(
     amplifiers: list[StatAmplifier] = []
     blocked: dict[str, str] = {}
     notes: list[str] = []
+    extra_pending: list[str] = list(pending_effects)
+    items = _resolve_tear_transforms(items, inputs, notes)
     mana_resource = MANA_RESOURCE.get(champion.locale)
     if mana_resource is None:
         raise StatsError(f"snapshot locale {champion.locale!r} has no known name for mana")
@@ -1124,8 +1413,24 @@ def build_stat_sheet(
             )
         amplifiers.append(replace(extra_amp, stat=definition.id))
 
+    atk_range = champion.stats.get("attackrange")
+    champ_range = None if atk_range is None else ("melee" if atk_range < 300 else "ranged")
+
+    _apply_item_input_and_consumable_stats(
+        items,
+        level,
+        inputs,
+        uses_mana,
+        champ_range,
+        contributions,
+        percents,
+        amplifiers,
+        notes,
+        extra_pending,
+    )
+
     # Build the resolved stat environment after flat item stats and extras so
-    # stat-from-stat conversion passives (Sterak, Overlord's, Riftmaker, Tear items)
+    # stat-from-stat conversion passives (Sterak, Overlord's, Riftmaker, Tear items, Dawncore)
     # can read base_*, bonus_* and total stats before amplifiers (Rabadon) run.
     stat_env: dict[str, Fraction] = {}
     label_env: dict[str, Label] = {}
@@ -1152,8 +1457,14 @@ def build_stat_sheet(
         stat_env[f"bonus_{stat_id}"] = sum((c.value for c in bonus_items), start=Fraction(0))
         label_env[f"bonus_{stat_id}"] = weakest(c.label for c in bonus_items)
 
-    atk_range = champion.stats.get("attackrange")
-    champ_range = None if atk_range is None else ("melee" if atk_range < 300 else "ranged")
+    mr_percents = percents.get("mana_regen", ())
+    stat_env["bonus_mana_regen_percent"] = (
+        sum((c.value for c in mr_percents), start=Fraction(0)) * 100
+    )
+    label_env["bonus_mana_regen_percent"] = (
+        weakest(c.label for c in mr_percents) if mr_percents else Label.OFFICIAL
+    )
+
     post_ms_effects: list[PostMsEffect] = []
     for item in items:
         effect_stats, item_amplifiers, item_post_ms = _sheet_effects(
@@ -1282,7 +1593,7 @@ def build_stat_sheet(
         if level == 1:
             notes.append(f"{issue.id} does not affect level 1 (no growth applies)")
     notes += list(extra_notes)
-    notes += list(pending_effects)
+    notes += list(extra_pending)
 
     def _stat_def(stat_id: str) -> StatDef:
         definition = STATS[stat_id]
@@ -1305,7 +1616,7 @@ def build_stat_sheet(
         values,
         tuple(notes),
         ratio,
-        tuple(pending_effects),
+        tuple(extra_pending),
         move_speed_percents=raw_ms_percents,
         move_speed_bonus_amp=move_speed_bonus_amp,
         post_ms_effects=tuple(post_ms_effects),

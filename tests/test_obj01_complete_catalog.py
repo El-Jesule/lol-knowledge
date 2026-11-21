@@ -330,8 +330,10 @@ def test_curated_non_damage_utility_items_do_not_weaken_rotations(item_id: str) 
     assert res.label is not Label.PENDING
 
 
-@pytest.mark.parametrize("item_id", ["4628", "2523", "3084", "3742", "6610", "1082", "3041"])
-def test_excluded_combat_effect_items_honestly_weaken_rotations(item_id: str) -> None:
+@pytest.mark.parametrize("item_id,steps", [("4628", "E"), ("2523", "attack")])
+def test_conditional_distance_items_honestly_weaken_without_distance_input(
+    item_id: str, steps: str
+) -> None:
     kit = load_kit(ROOT, "Ahri")
     assert kit is not None
     res = evaluate_rotation(
@@ -339,7 +341,7 @@ def test_excluded_combat_effect_items_honestly_weaken_rotations(item_id: str) ->
         _sheet("Ahri", 9, [item_id]),
         {"Q": 5, "W": 1, "E": 1, "R": 1},
         _target(hp=2000),
-        parse_steps("E"),
+        parse_steps(steps),
         CRIT_BASE,
         holder_range="ranged",
     )
