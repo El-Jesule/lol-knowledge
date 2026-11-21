@@ -44,6 +44,7 @@ class OptimizeConstraints:
     beam_width: int = 12
     pool_limit: int = 16
     damage_mix_physical: Fraction = Fraction(1, 2)
+    use_item_actives: bool = False
 
 
 @dataclass(frozen=True)

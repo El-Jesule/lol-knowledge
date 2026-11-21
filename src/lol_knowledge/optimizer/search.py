@@ -15,7 +15,7 @@ from ..kit import Kit
 from ..objects import load_model
 from ..objects.legality import INVENTORY_SLOTS, ItemGroups, check_build, load_item_groups
 from ..passives import sheet_passive_effects
-from ..rotation import DAMAGE_KINDS, CritBase, Step, evaluate_rotation
+from ..rotation import ACTIVE_COMBAT_KINDS, DAMAGE_KINDS, CritBase, Step, evaluate_rotation
 from ..runes import (
     RuneData,
     adaptive_stat,
@@ -82,6 +82,52 @@ def _is_verified_clean(item: ItemData) -> bool:
         if any(comp.get("kind") in DAMAGE_KINDS for comp in components):
             return False
     return True
+
+
+def _steps_with_item_actives(
+    base_steps: Sequence[Step], items: Sequence[ItemData], *, timeline: bool
+) -> tuple[Step, ...]:
+    """Weave equipped items' evaluable combat actives into ``base_steps`` once each."""
+    already = {step.item_id for step in base_steps if step.item_id is not None}
+    prefix: list[Step] = []
+    suffix: list[Step] = []
+    empowers: list[Step] = []
+    for item in items:
+        if item.id in already:
+            continue
+        active_effects = [
+            eff
+            for eff in item.effects
+            if eff.get("kind") == "active" and eff.get("model_status") == "evaluable"
+        ]
+        if not active_effects:
+            continue
+        comp_kinds = {
+            str(comp.get("kind"))
+            for eff in active_effects
+            for comp in (eff.get("components") or ())
+        }
+        if not (comp_kinds & ACTIVE_COMBAT_KINDS):
+            continue
+        step = Step(f"item:{item.id}", item_id=item.id)
+        if any(eff.get("empowers_next_attack") for eff in active_effects):
+            empowers.append(step)
+        elif comp_kinds & {"damage", "healing", "shield"}:
+            suffix.append(step)
+        elif timeline:
+            prefix.append(step)
+    result = [*prefix, *base_steps]
+    if empowers:
+        attack_indices = [
+            idx
+            for idx, s in enumerate(result)
+            if s.slot is None and s.item_id is None and s.wait is None
+        ]
+        if attack_indices:
+            insert_at = attack_indices[-1]
+            result[insert_at:insert_at] = empowers
+    result.extend(suffix)
+    return tuple(result)
 
 
 def _has_spellblade(item: ItemData) -> bool:
@@ -460,13 +506,18 @@ class _BuildEvaluator:
 
         if obj in ROTATION_OBJECTIVES:
             assert self.kit is not None and self.target is not None
+            eval_steps = (
+                _steps_with_item_actives(self.steps, sheet.items, timeline=self.timeline)
+                if self.constraints.use_item_actives
+                else self.steps
+            )
             try:
                 outcome = evaluate_rotation(
                     self.kit,
                     sheet,
                     self.ranks,
                     self.target,
-                    self.steps,
+                    eval_steps,
                     self.crit_base,
                     holder_range=self.holder_range,
                     inputs=self.inputs,

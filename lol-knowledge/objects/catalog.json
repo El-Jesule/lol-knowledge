@@ -1,9 +1,9 @@
 {
   "schema_version": 1,
   "kind": "lol-object-model-catalog",
-  "catalog_version": 25,
+  "catalog_version": 26,
   "game_version": "16.23.1",
-  "notes": "Curated overlay for a mechanically diverse sample. Data Dragon derivatives (stats, gold, maps, recipes) are not repeated here; see lol-knowledge/objects/README.md. Numeric mechanics absent from Data Dragon carry declared sources and secondary confidence. Catalog version 3 (2026-11-15): moved to snapshot 16.22.1; stats, gold, descriptions and recipes of the 15 objects are identical to 16.20.1 in Data Dragon; the secondary evidence was not re-checked against the 16.21 and 16.22 patch notes. Catalog version 6 (2026-11-15): damage components may declare applies_life_steal with its own source; Mist's Edge declares it from the LoL Wiki (secondary). Catalog version 7 (2026-11-16): adds 3111 (Mercury's Treads) for its tenacity, declared from the 16.22.1 description. Catalog version 8 (2026-11-16): description stats of every Summoner's Rift item, curated ones included, come from catalog-stats.json (generated); this file keeps effects and reviews. Catalog version 9 (2026-11-16): adds 3032 (Yun Tal Wildarrows). Effects may declare scenario max_stacks (the stat sheet applies them at full stacks) and objects may confirm a generated 0 as a real zero (confirmed_zero_stats). Catalog version 10 (2026-11-16): adds the on-hit damage of 1043, 3091, 3115, 3124 and 3302, with client values (evidence derived) where Data Dragon omits them; stat effects that are always active (Rabadon) are applied by the stat sheet. Catalog version 11 (2026-11-16): adds Spellblade (trigger spellblade) to Sheen, Trinity Force, Lich Bane, Essence Reaver, Iceborn Gauntlet, Dusk and Dawn and Bloodsong, the repeat_on_hit component and patch notes as a source kind (Terminus is now corroborated by the 26.15 notes). Catalog version 12 (2026-11-16): attack counters (stacks.required on on-hit effects), the energized trigger and trigger_energized component, by_level formulas for client level breakpoints and the target_is_structure condition; adds Kraken Slayer, Rapid Firecannon, Statikk Shiv, Voltaic Cyclosword and Hullbreaker, applies Guinsoo's phantom hits and Terminus's light-hit resistances. Catalog version 13 (2026-11-16): the target's missing health in formulas (scope missing_fraction), target_health_below in rotations, damage_types on damage modifiers and the execute component; Kraken Slayer's missing-health increase, Shadowflame and The Collector. Catalog version 14 (2026-11-16): burns (component burn, triggers damaging_ability and cast, condition ultimate_ability), applied once per rotation for their full duration; max_stacks damage modifiers; adds Liandry's Torment, Blackfire Torch, Fated Ashes, Malignance, Zeke's Convergence and Haunting Guise. Catalog version 15 (2026-11-16): timed effects (duration_seconds with a damage or stat modifier on a spellblade, energized or damaging_ability trigger) are applied by the rotation timeline only; Bloodsong's mark, Voltaic Cyclosword's lethality, Blackfire Torch's ability power and Malignance's magic resist reduction become evaluable, and burns under the timeline deal their damage continuously and restart when applied again. Catalog version 16 (2026-11-16): Spellblade effects declare their 10-second window (LoL Wiki, secondary) as duration_seconds; effects may declare cooldown_reduced_by_attacks (seconds per attack hit and per critical hit); Yun Tal Wildarrows's Flurry becomes evaluable as a timed attack speed effect (trigger on_attack); stack windows (stacks.window_seconds) are applied by the rotation timeline. Catalog version 17 (2026-11-16): stacks that expire in combat never start at maximum (user decision): Guinsoo's Seething Strike, Terminus's Juxtaposition (alternation, light first) and the per-second increases of Liandry's Torment and Haunting Guise (trigger in_combat with a maximum limit) are computed by rotations from 0; stacks.required 1 means one stack per attack; Guinsoo's phantom hits need full stacks (condition stacks_full). The max_stacks scenario stays for permanent stacks (Yun Tal's critical strike chance). Catalog version 18 (2026-11-19): moved to snapshot 16.23.1. Data Dragon stats, gold, descriptions and recipes of the curated objects are identical to 16.22.1, and the client item data of the 218 items is identical except Voltaic Cyclosword's Firmament (9 % / 7 % ⇒ 8 % / 6 % of current health, also in the 26.23 patch notes); client_data sources now cite client 16.23 (research/reports/client-16.23.md). Catalog version 19 (2026-11-20): Liandry's Torment monster burn (6653 torment-monsters) becomes evaluable with its 40/s cap (20 per 0.5 s tick, 120 over 3 s), corroborating client 16.23 MonsterDamageCap=40 against wiki.leagueoflegends.com (Module:ItemData/data rev 4095269). Catalog version 20 (2026-11-20): Dusk and Dawn's Spellblade heal (2510 dusk-heal, 10% AP + 3% bonus health from client 16.23) becomes evaluable with effect healing (MEC-05). Catalog version 21 (2026-11-20): adds 3053 Sterak's Gage (The Claws that Catch: 50% base AD on the stat sheet; Lifeline: 60% bonus health shield below 30% max health on taking_damage, 4.5 s duration, 90 s cooldown; client 16.23 + wiki rev 4095269). Catalog version 22 (2026-11-20): adds resource_restore component and models 3508 Essence Reaver Spellblade mana refund (0.5 × SpellbladeDamage = 62.5% base AD + 25 × crit chance; client 16.23 + wiki Module:ItemData/data rev 4095269, MEC-03). Catalog version 25 (2026-11-21): models move-speed-to-damage coupling — 3170 Swiftmarch Noxian Fervor (5% total MS as adaptive force) and timed combat move speed buffs (3078 go, 3044 rage, 3071 fervor, 4629 spelldance, 3073 overdrive MS, 3095 bolt MS, 3171 noxian-haste) feeding Hecarim Warpath, Janna Tailwind/Zephyr and Swiftmarch.",
+  "notes": "Curated overlay for a mechanically diverse sample. Data Dragon derivatives (stats, gold, maps, recipes) are not repeated here; see lol-knowledge/objects/README.md. Numeric mechanics absent from Data Dragon carry declared sources and secondary confidence. Catalog version 3 (2026-11-15): moved to snapshot 16.22.1; stats, gold, descriptions and recipes of the 15 objects are identical to 16.20.1 in Data Dragon; the secondary evidence was not re-checked against the 16.21 and 16.22 patch notes. Catalog version 6 (2026-11-15): damage components may declare applies_life_steal with its own source; Mist's Edge declares it from the LoL Wiki (secondary). Catalog version 7 (2026-11-16): adds 3111 (Mercury's Treads) for its tenacity, declared from the 16.22.1 description. Catalog version 8 (2026-11-16): description stats of every Summoner's Rift item, curated ones included, come from catalog-stats.json (generated); this file keeps effects and reviews. Catalog version 9 (2026-11-16): adds 3032 (Yun Tal Wildarrows). Effects may declare scenario max_stacks (the stat sheet applies them at full stacks) and objects may confirm a generated 0 as a real zero (confirmed_zero_stats). Catalog version 10 (2026-11-16): adds the on-hit damage of 1043, 3091, 3115, 3124 and 3302, with client values (evidence derived) where Data Dragon omits them; stat effects that are always active (Rabadon) are applied by the stat sheet. Catalog version 11 (2026-11-16): adds Spellblade (trigger spellblade) to Sheen, Trinity Force, Lich Bane, Essence Reaver, Iceborn Gauntlet, Dusk and Dawn and Bloodsong, the repeat_on_hit component and patch notes as a source kind (Terminus is now corroborated by the 26.15 notes). Catalog version 12 (2026-11-16): attack counters (stacks.required on on-hit effects), the energized trigger and trigger_energized component, by_level formulas for client level breakpoints and the target_is_structure condition; adds Kraken Slayer, Rapid Firecannon, Statikk Shiv, Voltaic Cyclosword and Hullbreaker, applies Guinsoo's phantom hits and Terminus's light-hit resistances. Catalog version 13 (2026-11-16): the target's missing health in formulas (scope missing_fraction), target_health_below in rotations, damage_types on damage modifiers and the execute component; Kraken Slayer's missing-health increase, Shadowflame and The Collector. Catalog version 14 (2026-11-16): burns (component burn, triggers damaging_ability and cast, condition ultimate_ability), applied once per rotation for their full duration; max_stacks damage modifiers; adds Liandry's Torment, Blackfire Torch, Fated Ashes, Malignance, Zeke's Convergence and Haunting Guise. Catalog version 15 (2026-11-16): timed effects (duration_seconds with a damage or stat modifier on a spellblade, energized or damaging_ability trigger) are applied by the rotation timeline only; Bloodsong's mark, Voltaic Cyclosword's lethality, Blackfire Torch's ability power and Malignance's magic resist reduction become evaluable, and burns under the timeline deal their damage continuously and restart when applied again. Catalog version 16 (2026-11-16): Spellblade effects declare their 10-second window (LoL Wiki, secondary) as duration_seconds; effects may declare cooldown_reduced_by_attacks (seconds per attack hit and per critical hit); Yun Tal Wildarrows's Flurry becomes evaluable as a timed attack speed effect (trigger on_attack); stack windows (stacks.window_seconds) are applied by the rotation timeline. Catalog version 17 (2026-11-16): stacks that expire in combat never start at maximum (user decision): Guinsoo's Seething Strike, Terminus's Juxtaposition (alternation, light first) and the per-second increases of Liandry's Torment and Haunting Guise (trigger in_combat with a maximum limit) are computed by rotations from 0; stacks.required 1 means one stack per attack; Guinsoo's phantom hits need full stacks (condition stacks_full). The max_stacks scenario stays for permanent stacks (Yun Tal's critical strike chance). Catalog version 18 (2026-11-19): moved to snapshot 16.23.1. Data Dragon stats, gold, descriptions and recipes of the curated objects are identical to 16.22.1, and the client item data of the 218 items is identical except Voltaic Cyclosword's Firmament (9 % / 7 % ⇒ 8 % / 6 % of current health, also in the 26.23 patch notes); client_data sources now cite client 16.23 (research/reports/client-16.23.md). Catalog version 19 (2026-11-20): Liandry's Torment monster burn (6653 torment-monsters) becomes evaluable with its 40/s cap (20 per 0.5 s tick, 120 over 3 s), corroborating client 16.23 MonsterDamageCap=40 against wiki.leagueoflegends.com (Module:ItemData/data rev 4095269). Catalog version 20 (2026-11-20): Dusk and Dawn's Spellblade heal (2510 dusk-heal, 10% AP + 3% bonus health from client 16.23) becomes evaluable with effect healing (MEC-05). Catalog version 21 (2026-11-20): adds 3053 Sterak's Gage (The Claws that Catch: 50% base AD on the stat sheet; Lifeline: 60% bonus health shield below 30% max health on taking_damage, 4.5 s duration, 90 s cooldown; client 16.23 + wiki rev 4095269). Catalog version 22 (2026-11-20): adds resource_restore component and models 3508 Essence Reaver Spellblade mana refund (0.5 × SpellbladeDamage = 62.5% base AD + 25 × crit chance; client 16.23 + wiki Module:ItemData/data rev 4095269, MEC-03). Catalog version 25 (2026-11-21): models move-speed-to-damage coupling — 3170 Swiftmarch Noxian Fervor (5% total MS as adaptive force) and timed combat move speed buffs (3078 go, 3044 rage, 3071 fervor, 4629 spelldance, 3073 overdrive MS, 3095 bolt MS, 3171 noxian-haste) feeding Hecarim Warpath, Janna Tailwind/Zephyr and Swiftmarch. Catalog version 26 (2026-11-21): models 14 combat and utility item actives executable via item:<id> rotation steps (3077, 3074, 6698, 6631, 3748 auto-reset/cleave empower, 3152, 3146, 3107, 3190, 3222, 3142, 2065, 3139, 2522) using client 16.23 data values.",
   "objects": [
     {
       "id": "1036",
@@ -4347,24 +4347,67 @@
           "kind": "active",
           "name": "Creciente titánico",
           "quote": "Potencia tu siguiente Hender para infligir daño físico adicional al impactar al objetivo y daño físico adicional a los enemigos que se encuentren tras él.",
-          "basis": "description_partial",
+          "basis": "external_evidence_explicit",
           "trigger": {
             "event": "cast"
           },
           "target": {
             "kind": "enemy_unit"
           },
+          "empowers_next_attack": true,
+          "resets_attack_timer": true,
           "components": [
             {
               "kind": "damage",
               "damage_type": "physical",
+              "applies_life_steal": {
+                "value": true,
+                "source": {
+                  "kind": "community_wiki",
+                  "reference": "https://wiki.leagueoflegends.com/en-us/Module:ItemData/data?oldid=4095269",
+                  "quote": "Titanic Crescent empowers the next basic attack Cleave primary on-hit damage (applies life steal).",
+                  "retrieved_at": "2026-11-21",
+                  "confidence": "secondary"
+                }
+              },
               "formula": {
-                "op": "unknown",
-                "reason": "item actives are not modelled as rotation steps"
+                "op": "by_holder_range",
+                "melee": {
+                  "op": "percent_of",
+                  "percent": 4,
+                  "stat": "health",
+                  "scope": "total"
+                },
+                "ranged": {
+                  "op": "percent_of",
+                  "percent": 2,
+                  "stat": "health",
+                  "scope": "total"
+                }
+              }
+            },
+            {
+              "kind": "damage",
+              "damage_type": "physical",
+              "secondary_only": true,
+              "formula": {
+                "op": "by_holder_range",
+                "melee": {
+                  "op": "percent_of",
+                  "percent": 9,
+                  "stat": "health",
+                  "scope": "total"
+                },
+                "ranged": {
+                  "op": "percent_of",
+                  "percent": 4.5,
+                  "stat": "health",
+                  "scope": "total"
+                }
               }
             }
           ],
-          "cooldown_seconds": null,
+          "cooldown_seconds": 10,
           "stacks": null,
           "duration_seconds": null,
           "limits": [],
@@ -4372,14 +4415,14 @@
             {
               "kind": "client_data",
               "reference": "Cliente 16.23.8399929+branch.releases-16-23.content.release: lol-knowledge/derived/item-effects.json -> items.3748 (research/reports/client-16.23.md)",
-              "quote": "ActivePrimaryTargetHPRatio = 0.04; ActiveSplashHPRatio = 0.09; Cooldown = 10",
+              "quote": "ActivePrimaryTargetHPRatio = 0.04 (4% melee / 2% ranged); ActiveSplashHPRatio = 0.09 (9% melee / 4.5% ranged); RangedEffectiveness = 0.5; Cooldown = 10",
               "retrieved_at": "2026-11-21",
               "confidence": "derived"
             }
           ],
           "evidence_confidence": "derived",
-          "model_status": "excluded",
-          "note": "Active auto-reset empowering next Cleave to 4%/2% primary and 9%/4.5% splash (10 s cooldown); actives are not modelled as rotation steps."
+          "model_status": "evaluable",
+          "note": "Cast via step item:3748: resets attack timer and empowers next attack Cleave to 4%/2% max HP primary on-hit and 9%/4.5% max HP secondary cone (10 s cooldown)."
         }
       ]
     },
@@ -4460,7 +4503,7 @@
           "kind": "active",
           "name": "Creciente voraz",
           "quote": "Inflige daño físico a los enemigos a tu alrededor. El robo de vida se aplica a este daño.",
-          "basis": "description_partial",
+          "basis": "external_evidence_explicit",
           "trigger": {
             "event": "cast"
           },
@@ -4471,13 +4514,26 @@
             {
               "kind": "damage",
               "damage_type": "physical",
+              "aoe": true,
               "formula": {
-                "op": "unknown",
-                "reason": "item actives are not modelled as rotation steps"
+                "op": "percent_of",
+                "percent": 80,
+                "stat": "attack_damage",
+                "scope": "total"
+              },
+              "applies_life_steal": {
+                "value": true,
+                "source": {
+                  "kind": "ddragon_description",
+                  "reference": "data:item:3074 description (16.23.1)",
+                  "quote": "El robo de vida se aplica a este daño.",
+                  "retrieved_at": "2026-11-21",
+                  "confidence": "official"
+                }
               }
             }
           ],
-          "cooldown_seconds": null,
+          "cooldown_seconds": 10,
           "stacks": null,
           "duration_seconds": null,
           "limits": [],
@@ -4485,14 +4541,14 @@
             {
               "kind": "client_data",
               "reference": "Cliente 16.23.8399929+branch.releases-16-23.content.release: lol-knowledge/derived/item-effects.json -> items.3074 (research/reports/client-16.23.md)",
-              "quote": "ActiveADRatio = 0.8; Cooldown = 10; Radius = 450",
+              "quote": "PrimaryDamage: ActiveADRatio = 0.8 (80% AD); Cooldown = 10; Radius = 450; VampAmp = 1.0",
               "retrieved_at": "2026-11-21",
               "confidence": "derived"
             }
           ],
           "evidence_confidence": "derived",
-          "model_status": "excluded",
-          "note": "Active 80% AD AoE with 100% life steal (10 s cooldown); actives are not modelled as rotation steps."
+          "model_status": "evaluable",
+          "note": "Cast via step item:3074: 80% total AD physical AoE damage with 100% life steal (10 s cooldown)."
         }
       ]
     },
@@ -4563,7 +4619,7 @@
           "kind": "active",
           "name": "Onda de choque",
           "quote": "Inflige daño físico y ralentiza un 35% a los enemigos cercanos. Obtienes un 35% de velocidad de movimiento que disminuye por campeón golpeado durante 3 s.",
-          "basis": "description_partial",
+          "basis": "external_evidence_explicit",
           "trigger": {
             "event": "cast"
           },
@@ -4574,13 +4630,16 @@
             {
               "kind": "damage",
               "damage_type": "physical",
+              "aoe": true,
               "formula": {
-                "op": "unknown",
-                "reason": "item actives are not modelled as rotation steps"
+                "op": "percent_of",
+                "percent": 80,
+                "stat": "attack_damage",
+                "scope": "total"
               }
             }
           ],
-          "cooldown_seconds": null,
+          "cooldown_seconds": 15,
           "stacks": null,
           "duration_seconds": null,
           "limits": [],
@@ -4588,14 +4647,14 @@
             {
               "kind": "client_data",
               "reference": "Cliente 16.23.8399929+branch.releases-16-23.content.release: lol-knowledge/derived/item-effects.json -> items.6631 (research/reports/client-16.23.md)",
-              "quote": "ADRatio = 0.8; Cooldown = 15; MSSlow = -0.35; Duration = 3",
+              "quote": "SlashDamage: ADRatio = 0.8 (80% AD); Cooldown = 15; MSSlow = -0.35; ActiveMS = 0.35 decaying over 3 s",
               "retrieved_at": "2026-11-21",
               "confidence": "derived"
             }
           ],
           "evidence_confidence": "derived",
-          "model_status": "excluded",
-          "note": "Active 80% AD AoE + slow + move speed (15 s cooldown); actives are not modelled as rotation steps."
+          "model_status": "evaluable",
+          "note": "Cast via step item:6631: 80% total AD physical AoE damage (15 s cooldown; 35% slow and decaying MS per champion hit are not modelled)."
         }
       ]
     },
@@ -4666,7 +4725,7 @@
           "kind": "active",
           "name": "Cuchillada sacrílega",
           "quote": "Inflige daño físico a tu alrededor.",
-          "basis": "description_partial",
+          "basis": "external_evidence_explicit",
           "trigger": {
             "event": "cast"
           },
@@ -4677,13 +4736,16 @@
             {
               "kind": "damage",
               "damage_type": "physical",
+              "aoe": true,
               "formula": {
-                "op": "unknown",
-                "reason": "item actives are not modelled as rotation steps"
+                "op": "percent_of",
+                "percent": 80,
+                "stat": "attack_damage",
+                "scope": "total"
               }
             }
           ],
-          "cooldown_seconds": null,
+          "cooldown_seconds": 10,
           "stacks": null,
           "duration_seconds": null,
           "limits": [],
@@ -4691,14 +4753,14 @@
             {
               "kind": "client_data",
               "reference": "Cliente 16.23.8399929+branch.releases-16-23.content.release: lol-knowledge/derived/item-effects.json -> items.6698 (research/reports/client-16.23.md)",
-              "quote": "SlashDamageBase: mCoefficient 0.8; Cooldown = 10; ActiveRadius = 450",
+              "quote": "SlashDamageBase: mStat 2 mCoefficient = 0.8 (80% AD); Cooldown = 10; ActiveRadius = 450",
               "retrieved_at": "2026-11-21",
               "confidence": "derived"
             }
           ],
           "evidence_confidence": "derived",
-          "model_status": "excluded",
-          "note": "Active 80% AD AoE (10 s cooldown); actives are not modelled as rotation steps."
+          "model_status": "evaluable",
+          "note": "Cast via step item:6698: 80% total AD physical AoE damage (10 s cooldown)."
         }
       ]
     },
@@ -4769,7 +4831,7 @@
           "kind": "active",
           "name": "Creciente",
           "quote": "Inflige daño físico a los enemigos a tu alrededor.",
-          "basis": "description_partial",
+          "basis": "external_evidence_explicit",
           "trigger": {
             "event": "cast"
           },
@@ -4780,13 +4842,16 @@
             {
               "kind": "damage",
               "damage_type": "physical",
+              "aoe": true,
               "formula": {
-                "op": "unknown",
-                "reason": "item actives are not modelled as rotation steps"
+                "op": "percent_of",
+                "percent": 75,
+                "stat": "attack_damage",
+                "scope": "total"
               }
             }
           ],
-          "cooldown_seconds": null,
+          "cooldown_seconds": 10,
           "stacks": null,
           "duration_seconds": null,
           "limits": [],
@@ -4794,14 +4859,14 @@
             {
               "kind": "client_data",
               "reference": "Cliente 16.23.8399929+branch.releases-16-23.content.release: lol-knowledge/derived/item-effects.json -> items.3077 (research/reports/client-16.23.md)",
-              "quote": "ActiveADRatio = 0.75; Cooldown = 10; Radius = 450",
+              "quote": "PrimaryDamage: ActiveADRatio = 0.75 (75% AD); Cooldown = 10; Radius = 450",
               "retrieved_at": "2026-11-21",
               "confidence": "derived"
             }
           ],
           "evidence_confidence": "derived",
-          "model_status": "excluded",
-          "note": "Active 75% AD AoE (10 s cooldown); actives are not modelled as rotation steps."
+          "model_status": "evaluable",
+          "note": "Cast via step item:3077: 75% total AD physical AoE damage (10 s cooldown)."
         }
       ]
     },
@@ -8430,21 +8495,41 @@
           "kind": "active",
           "name": "Discurso inspirador",
           "quote": "Otorga un 30% de velocidad de movimiento a los aliados cercanos durante 4 s.",
-          "basis": "description_explicit",
+          "basis": "external_evidence_explicit",
           "trigger": {
             "event": "cast"
           },
           "target": {
-            "kind": "area"
+            "kind": "self"
           },
-          "components": [],
-          "cooldown_seconds": null,
+          "components": [
+            {
+              "kind": "stat_modifier",
+              "stat": "move_speed",
+              "scope": "total",
+              "mode": "percent",
+              "formula": {
+                "op": "constant",
+                "value": 30
+              }
+            }
+          ],
+          "cooldown_seconds": 75,
           "stacks": null,
-          "duration_seconds": null,
+          "duration_seconds": 4,
           "limits": [],
-          "evidence_confidence": "official",
-          "model_status": "excluded",
-          "note": "Ally movement speed active (75 s CD); non-damage utility."
+          "sources": [
+            {
+              "kind": "client_data",
+              "reference": "Cliente 16.23.8399929+branch.releases-16-23.content.release: lol-knowledge/derived/item-effects.json -> items.2065 (research/reports/client-16.23.md)",
+              "quote": "ActiveMoveSpeed = 0.3 (30% MS); BuffDuration = 4; ActiveCooldown = 75",
+              "retrieved_at": "2026-11-21",
+              "confidence": "derived"
+            }
+          ],
+          "evidence_confidence": "derived",
+          "model_status": "evaluable",
+          "note": "Cast via step item:2065 with --timeline: +30% self move speed for 4 s (75 s cooldown; ally AoE buff not modelled)."
         }
       ]
     },
@@ -8806,23 +8891,43 @@
         {
           "id": "quicksilver",
           "kind": "active",
-          "name": "Fajín de mercurio",
+          "name": "Mercurio",
           "quote": "Elimina todos los efectos de control de adversario (menos los levantamientos en el aire ) y otorga velocidad de movimiento.",
-          "basis": "description_explicit",
+          "basis": "external_evidence_explicit",
           "trigger": {
             "event": "cast"
           },
           "target": {
             "kind": "self"
           },
-          "components": [],
-          "cooldown_seconds": null,
+          "components": [
+            {
+              "kind": "stat_modifier",
+              "stat": "move_speed",
+              "scope": "total",
+              "mode": "percent",
+              "formula": {
+                "op": "constant",
+                "value": 50
+              }
+            }
+          ],
+          "cooldown_seconds": 90,
           "stacks": null,
-          "duration_seconds": null,
+          "duration_seconds": 2,
           "limits": [],
-          "evidence_confidence": "official",
-          "model_status": "excluded",
-          "note": "Cleanse + 50% MS active (90 s CD); non-damage."
+          "sources": [
+            {
+              "kind": "client_data",
+              "reference": "Cliente 16.23.8399929+branch.releases-16-23.content.release: lol-knowledge/derived/item-effects.json -> items.3139 (research/reports/client-16.23.md)",
+              "quote": "MoveSpeed = 0.5 (50% MS); MSDuration = 2; Cooldown = 90",
+              "retrieved_at": "2026-11-21",
+              "confidence": "derived"
+            }
+          ],
+          "evidence_confidence": "derived",
+          "model_status": "evaluable",
+          "note": "Cast via step item:3139 with --timeline: +50% move speed for 2 s (90 s cooldown; CC cleanse not modelled)."
         }
       ]
     },
@@ -8883,21 +8988,49 @@
           "kind": "active",
           "name": "Pasos de espectro",
           "quote": "Otorga velocidad de movimiento y Fantasmal durante 0 s.",
-          "basis": "description_explicit",
+          "basis": "external_evidence_explicit",
           "trigger": {
             "event": "cast"
           },
           "target": {
             "kind": "self"
           },
-          "components": [],
-          "cooldown_seconds": null,
+          "components": [
+            {
+              "kind": "stat_modifier",
+              "stat": "move_speed",
+              "scope": "total",
+              "mode": "percent",
+              "formula": {
+                "op": "by_holder_range",
+                "melee": {
+                  "op": "constant",
+                  "value": 20
+                },
+                "ranged": {
+                  "op": "constant",
+                  "value": 15
+                }
+              }
+            }
+          ],
+          "cooldown_seconds": 45,
           "stacks": null,
-          "duration_seconds": null,
+          "duration_seconds": 6,
+          "ranged_duration_seconds": 4,
           "limits": [],
-          "evidence_confidence": "official",
-          "model_status": "excluded",
-          "note": "Move speed + ghosted active (45 s CD); non-damage."
+          "sources": [
+            {
+              "kind": "client_data",
+              "reference": "Cliente 16.23.8399929+branch.releases-16-23.content.release: lol-knowledge/derived/item-effects.json -> items.3142 (research/reports/client-16.23.md)",
+              "quote": "MeleeItemCalcValueB = 20 (20% MS); RangedItemCalcValueB = 15 (15% MS); Duration = 6 s melee / 4 s ranged (0.667x); Cooldown = 45",
+              "retrieved_at": "2026-11-21",
+              "confidence": "derived"
+            }
+          ],
+          "evidence_confidence": "derived",
+          "model_status": "evaluable",
+          "note": "Cast via step item:3142 with --timeline: +20% melee (6 s) / +15% ranged (4 s) move speed (45 s cooldown; ghosting not modelled)."
         }
       ]
     },
@@ -9017,21 +9150,59 @@
           "kind": "active",
           "name": "Devoción",
           "quote": "Otorga a los aliados cercanos un escudo de 290 - 360 que disminuye a lo largo de 2.5 s.",
-          "basis": "description_explicit",
+          "basis": "external_evidence_explicit",
           "trigger": {
             "event": "cast"
           },
           "target": {
-            "kind": "area"
+            "kind": "self"
           },
-          "components": [],
-          "cooldown_seconds": null,
+          "components": [
+            {
+              "kind": "shield",
+              "mode": "absolute",
+              "shield_type": "normal",
+              "formula": {
+                "op": "by_level",
+                "values": [
+                  290,
+                  290,
+                  290,
+                  290,
+                  290,
+                  290,
+                  290,
+                  290,
+                  297,
+                  304,
+                  311,
+                  318,
+                  325,
+                  332,
+                  339,
+                  346,
+                  353,
+                  360
+                ]
+              }
+            }
+          ],
+          "cooldown_seconds": 90,
           "stacks": null,
-          "duration_seconds": null,
+          "duration_seconds": 2.5,
           "limits": [],
-          "evidence_confidence": "official",
-          "model_status": "excluded",
-          "note": "Ally AoE shield active (90 s CD); active item utility, non-damage."
+          "sources": [
+            {
+              "kind": "client_data",
+              "reference": "Cliente 16.23.8399929+branch.releases-16-23.content.release: lol-knowledge/derived/item-effects.json -> items.3190 (research/reports/client-16.23.md)",
+              "quote": "ByCharLevelBreakpoints: mLevel1Value = 290, mLevel = 9, mBonusPerLevelAtAndAfter = 7 (290..360); ShieldDuration = 2.5; Cooldown = 90",
+              "retrieved_at": "2026-11-21",
+              "confidence": "derived"
+            }
+          ],
+          "evidence_confidence": "derived",
+          "model_status": "evaluable",
+          "note": "Cast via step item:3190: 290..360 self-shield scaled by HSP (90 s cooldown; 2.5 s decay and ally AoE shielding not modelled)."
         }
       ]
     },
@@ -9044,21 +9215,40 @@
           "kind": "active",
           "name": "Purificar",
           "quote": "Elimina todos los efectos de control de adversario (excepto levantamientos en el aire y supresión ) de un campeón aliado y restaura 100 - 250 de vida .",
-          "basis": "description_explicit",
+          "basis": "external_evidence_explicit",
           "trigger": {
             "event": "cast"
           },
           "target": {
-            "kind": "ally_champion"
+            "kind": "self"
           },
-          "components": [],
-          "cooldown_seconds": null,
+          "components": [
+            {
+              "kind": "healing",
+              "mode": "absolute",
+              "formula": {
+                "op": "linear_by_level",
+                "min": 100,
+                "max": 250
+              }
+            }
+          ],
+          "cooldown_seconds": 120,
           "stacks": null,
           "duration_seconds": null,
           "limits": [],
-          "evidence_confidence": "official",
-          "model_status": "excluded",
-          "note": "Ally cleanse + heal active (120 s CD); non-damage."
+          "sources": [
+            {
+              "kind": "client_data",
+              "reference": "Cliente 16.23.8399929+branch.releases-16-23.content.release: lol-knowledge/derived/item-effects.json -> items.3222 (research/reports/client-16.23.md)",
+              "quote": "HealAmountMin = 100; HealAmountMax = 250 (ByCharLevelInterpolation); Cooldown = 120",
+              "retrieved_at": "2026-11-21",
+              "confidence": "derived"
+            }
+          ],
+          "evidence_confidence": "derived",
+          "model_status": "evaluable",
+          "note": "Cast via step item:3222: 100..250 self-heal scaled by HSP (120 s cooldown; CC cleanse and ally targeting not modelled)."
         }
       ]
     },
@@ -9927,7 +10117,7 @@
           "kind": "active",
           "name": "Maná hecho realidad",
           "quote": "Durante 8 s, tu maná se potencia. Mientras está potenciado, tus habilidades cuestan un 100% de maná adicional; obtienes un 0 de daño, escudos y curaciones adicionales con habilidades; y los enfriamientos de las habilidades básicas son un 30% más rápidos.",
-          "basis": "description_partial",
+          "basis": "external_evidence_explicit",
           "trigger": {
             "event": "cast"
           },
@@ -9941,27 +10131,46 @@
               "source": "ability",
               "mode": "percent",
               "formula": {
-                "op": "unknown",
-                "reason": "Active 8 s empowered-mana steroid (60 s CD); item actives are not modelled as rotation steps."
+                "op": "add",
+                "operands": [
+                  {
+                    "op": "constant",
+                    "value": 15
+                  },
+                  {
+                    "op": "mul",
+                    "operands": [
+                      {
+                        "op": "constant",
+                        "value": 0.005
+                      },
+                      {
+                        "op": "stat",
+                        "stat": "mana",
+                        "scope": "bonus"
+                      }
+                    ]
+                  }
+                ]
               }
             }
           ],
-          "cooldown_seconds": null,
+          "cooldown_seconds": 60,
           "stacks": null,
-          "duration_seconds": null,
+          "duration_seconds": 8,
           "limits": [],
           "sources": [
             {
               "kind": "client_data",
               "reference": "Cliente 16.23.8399929+branch.releases-16-23.content.release: lol-knowledge/derived/item-effects.json -> items.2522 (research/reports/client-16.23.md)",
-              "quote": "Cooldown = 60; Duration = 8; ManaCalc = 15% + 0.005% bonus mana ability amp; CooldownTick = 0.3",
+              "quote": "ManaCalc: (15 + 0.005 * bonus_mana)% ability damage/heal/shield; Duration = 8; Cooldown = 60",
               "retrieved_at": "2026-11-21",
               "confidence": "derived"
             }
           ],
           "evidence_confidence": "derived",
-          "model_status": "excluded",
-          "note": "Active 8 s empowered-mana steroid (60 s CD); item actives are not modelled as rotation steps."
+          "model_status": "evaluable",
+          "note": "Cast via step item:2522 with --timeline: +(15 + 0.005 * bonus_mana)% ability damage for 8 s (60 s cooldown; +100% mana cost, ability heal/shield amp and 30% faster basic cooldown ticks are not modelled)."
         }
       ]
     },
@@ -10283,7 +10492,7 @@
           "kind": "active",
           "name": "Intervención",
           "quote": "Después de 2,5 s, restaura 150 - 350 de vida a las unidades aliadas e inflige un 10% de daño verdadero en función de la vida máxima a los campeones enemigos.",
-          "basis": "description_partial",
+          "basis": "external_evidence_explicit",
           "trigger": {
             "event": "cast"
           },
@@ -10294,13 +10503,34 @@
             {
               "kind": "damage",
               "damage_type": "true",
+              "aoe": true,
+              "conditions": [
+                {
+                  "kind": "target_is_champion"
+                }
+              ],
               "formula": {
-                "op": "unknown",
-                "reason": "Targeted delayed active (10% target max HP true damage + ally heal, 90 s CD); actives are not rotation steps."
+                "op": "percent_of",
+                "percent": 10,
+                "stat": "health",
+                "scope": "max",
+                "subject": "target"
+              }
+            },
+            {
+              "kind": "healing",
+              "mode": "absolute",
+              "target": {
+                "kind": "self"
+              },
+              "formula": {
+                "op": "linear_by_level",
+                "min": 150,
+                "max": 350
               }
             }
           ],
-          "cooldown_seconds": null,
+          "cooldown_seconds": 90,
           "stacks": null,
           "duration_seconds": null,
           "limits": [],
@@ -10308,14 +10538,14 @@
             {
               "kind": "client_data",
               "reference": "Cliente 16.23.8399929+branch.releases-16-23.content.release: lol-knowledge/derived/item-effects.json -> items.3107 (research/reports/client-16.23.md)",
-              "quote": "HealMin = 150; HealMax = 350; DamageToChampions = 0.1; Cooldown = 90",
+              "quote": "HealMin = 150; HealMax = 350 (ByCharLevelInterpolation); DamageToChampions = 0.1 (10% target max HP); Cooldown = 90",
               "retrieved_at": "2026-11-21",
               "confidence": "derived"
             }
           ],
           "evidence_confidence": "derived",
-          "model_status": "excluded",
-          "note": "Targeted delayed active (10% target max HP true damage + ally heal, 90 s CD); actives are not rotation steps."
+          "model_status": "evaluable",
+          "note": "Cast via step item:3107: 10% target max HP AoE true damage vs champions + 150..350 self-heal scaled by HSP (90 s cooldown; 2.5 s impact delay and ally healing not modelled)."
         }
       ]
     },
@@ -10355,24 +10585,42 @@
           "kind": "active",
           "name": "Relámpago",
           "quote": "Electrocuta al campeón enemigo objetivo, le inflige 0 de daño mágico y lo ralentiza un 25% durante 1.5 s.",
-          "basis": "description_partial",
+          "basis": "external_evidence_explicit",
           "trigger": {
             "event": "cast"
           },
           "target": {
             "kind": "enemy_champion"
           },
+          "conditions": [
+            {
+              "kind": "target_is_champion"
+            }
+          ],
           "components": [
             {
               "kind": "damage",
               "damage_type": "magic",
+              "aoe": false,
               "formula": {
-                "op": "unknown",
-                "reason": "Point-and-click active (175..253 + 30% AP magic damage, 60 s CD); actives are not modelled as rotation steps."
+                "op": "add",
+                "operands": [
+                  {
+                    "op": "linear_by_level",
+                    "min": 175,
+                    "max": 253
+                  },
+                  {
+                    "op": "percent_of",
+                    "percent": 30,
+                    "stat": "ability_power",
+                    "scope": "total"
+                  }
+                ]
               }
             }
           ],
-          "cooldown_seconds": null,
+          "cooldown_seconds": 60,
           "stacks": null,
           "duration_seconds": null,
           "limits": [],
@@ -10380,14 +10628,14 @@
             {
               "kind": "client_data",
               "reference": "Cliente 16.23.8399929+branch.releases-16-23.content.release: lol-knowledge/derived/item-effects.json -> items.3146 (research/reports/client-16.23.md)",
-              "quote": "ActiveDamage = 175..253 + 0.3 AP; SlowAmount = 0.25; SlowDuration = 1.5; Cooldown = 60",
+              "quote": "ActiveDamage: ByCharLevelInterpolation(175..253) + 0.3 AP (30% AP); SlowAmount = 0.25; SlowDuration = 1.5; Cooldown = 60",
               "retrieved_at": "2026-11-21",
               "confidence": "derived"
             }
           ],
           "evidence_confidence": "derived",
-          "model_status": "excluded",
-          "note": "Point-and-click active (175..253 + 30% AP magic damage, 60 s CD); actives are not modelled as rotation steps."
+          "model_status": "evaluable",
+          "note": "Cast via step item:3146: 175..253 (linear 1-18) + 30% AP single-target magic damage vs champion (60 s cooldown; 25% slow not modelled)."
         }
       ]
     },
@@ -10400,24 +10648,36 @@
           "kind": "active",
           "name": "Supersónico",
           "quote": "Te deslizas hacia la dirección seleccionada y lanzas proyectiles mágicos que infligen daño mágico .",
-          "basis": "description_partial",
+          "basis": "external_evidence_explicit",
           "trigger": {
             "event": "cast"
           },
           "target": {
-            "kind": "enemy_champion"
+            "kind": "enemy_unit"
           },
           "components": [
             {
               "kind": "damage",
               "damage_type": "magic",
+              "aoe": true,
               "formula": {
-                "op": "unknown",
-                "reason": "Dash bolt active (135 + 15% AP magic damage, 50 s CD); actives are not modelled as rotation steps."
+                "op": "add",
+                "operands": [
+                  {
+                    "op": "constant",
+                    "value": 135
+                  },
+                  {
+                    "op": "percent_of",
+                    "percent": 15,
+                    "stat": "ability_power",
+                    "scope": "total"
+                  }
+                ]
               }
             }
           ],
-          "cooldown_seconds": null,
+          "cooldown_seconds": 50,
           "stacks": null,
           "duration_seconds": null,
           "limits": [],
@@ -10425,14 +10685,14 @@
             {
               "kind": "client_data",
               "reference": "Cliente 16.23.8399929+branch.releases-16-23.content.release: lol-knowledge/derived/item-effects.json -> items.3152 (research/reports/client-16.23.md)",
-              "quote": "BaseDamage = 135; APRatio = 0.15; Cooldown = 50",
+              "quote": "FireboltDamage: BaseDamage = 135; APRatio = 0.15 (15% AP); Cooldown = 50",
               "retrieved_at": "2026-11-21",
               "confidence": "derived"
             }
           ],
           "evidence_confidence": "derived",
-          "model_status": "excluded",
-          "note": "Dash bolt active (135 + 15% AP magic damage, 50 s CD); actives are not modelled as rotation steps."
+          "model_status": "evaluable",
+          "note": "Cast via step item:3152: 135 + 15% AP magic AoE damage (50 s cooldown; dash distance not modelled)."
         }
       ]
     },

@@ -82,6 +82,9 @@ _EFFECT_KEYS = {
     "alternation",
     "stacks",
     "duration_seconds",
+    "ranged_duration_seconds",
+    "empowers_next_attack",
+    "resets_attack_timer",
     "limits",
     "model_status",
     "note",
@@ -109,6 +112,7 @@ _COMPONENT_KEYS = {
     "applies_life_steal",
     "resource",
     "secondary_only",
+    "aoe",
     "max_targets",
     "echo",
     "repeats_on_hit",
@@ -204,6 +208,11 @@ def _collect_constants(formula: Any, output: list[float]) -> None:
         if _is_number(formula.get("percent")):
             output.append(float(formula["percent"]))
         return
+    if operation == "linear_by_level":
+        for bound in ("min", "max"):
+            if _is_number(formula.get(bound)):
+                output.append(float(formula[bound]))
+        return
     if operation == "by_holder_range":
         for branch in ("melee", "ranged"):
             _collect_constants(formula.get(branch), output)
@@ -226,7 +235,7 @@ def _effect_numbers(effect: Mapping[str, Any]) -> list[float]:
         duration = component.get("duration_seconds")
         if _is_number(duration):
             numbers.append(float(duration))
-    for key in ("cooldown_seconds", "duration_seconds"):
+    for key in ("cooldown_seconds", "duration_seconds", "ranged_duration_seconds"):
         value = effect.get(key)
         if _is_number(value):
             numbers.append(float(value))
@@ -519,6 +528,13 @@ class _CatalogChecker:
         self._check_alternation(effect.get("alternation"), f"{pointer}.alternation")
         self._check_stacking(effect, pointer)
         self._check_scalar(effect.get("duration_seconds"), f"{pointer}.duration_seconds")
+        if "ranged_duration_seconds" in effect:
+            self._check_scalar(
+                effect.get("ranged_duration_seconds"), f"{pointer}.ranged_duration_seconds"
+            )
+        for flag in ("empowers_next_attack", "resets_attack_timer"):
+            if flag in effect and not isinstance(effect[flag], bool):
+                self.fail(f"{pointer}.{flag}", f"{flag} must be a boolean")
         self._check_stacks(effect.get("stacks"), f"{pointer}.stacks")
         self._check_limits(effect.get("limits"), f"{pointer}.limits")
         self._check_scenario(effect, f"{pointer}.scenario")
@@ -790,7 +806,7 @@ class _CatalogChecker:
                 )
             if "formula" not in component:
                 self.fail(f"{pointer}.formula", "damage components need a formula")
-            for flag in ("secondary_only", "repeats_on_hit", "can_crit"):
+            for flag in ("secondary_only", "aoe", "repeats_on_hit", "can_crit"):
                 if flag in component and not isinstance(component[flag], bool):
                     self.fail(f"{pointer}.{flag}", f"{flag} must be a boolean")
             if "max_targets" in component:

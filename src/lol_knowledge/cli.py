@@ -598,6 +598,11 @@ def _add_optimize_parser(subparsers: argparse._SubParsersAction) -> None:
         action="store_true",
         help="Exclude items with pending effect review or excluded damage effects.",
     )
+    opt.add_argument(
+        "--use-item-actives",
+        action="store_true",
+        help="Automatically cast equipped items' evaluable combat actives during rotation scoring.",
+    )
     opt.add_argument("--top", type=int, default=5, help="Builds to return per bucket (default: 5).")
     opt.add_argument(
         "--beam-width",
@@ -1107,6 +1112,7 @@ def _run_optimize(args: argparse.Namespace) -> int:
             beam_width=args.beam_width,
             pool_limit=args.pool_limit,
             damage_mix_physical=damage_mix,
+            use_item_actives=args.use_item_actives,
         )
         runes = _rune_ids(args.rune, "--rune")
         shards = _rune_ids(args.shard, "--shard")
