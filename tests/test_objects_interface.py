@@ -161,6 +161,7 @@ def test_formula_requirements_separate_target_stats(object_model) -> None:
             "bonus_armor",
             "bonus_attack_damage",
             "bonus_health",
+            "bonus_magic_resist",
             "bonus_mana",
             "crit_chance",
             "health",

@@ -232,9 +232,10 @@ def _effect_numbers(effect: Mapping[str, Any]) -> list[float]:
             _collect_constants(component.get("formula"), numbers)
         if "magnitude" in component:
             _collect_constants(component.get("magnitude"), numbers)
-        duration = component.get("duration_seconds")
-        if _is_number(duration):
-            numbers.append(float(duration))
+        for key in ("duration_seconds", "delay_seconds"):
+            val = component.get(key)
+            if _is_number(val):
+                numbers.append(float(val))
     for key in ("cooldown_seconds", "duration_seconds", "ranged_duration_seconds"):
         value = effect.get(key)
         if _is_number(value):
@@ -874,6 +875,24 @@ class _CatalogChecker:
                 self.fail(f"{pointer}.mode", "stat_modifier mode must be 'flat' or 'percent'")
             if "formula" not in component:
                 self.fail(f"{pointer}.formula", "stat_modifier components need a formula")
+            if "delay_seconds" in component and (
+                not _is_number(component["delay_seconds"]) or float(component["delay_seconds"]) <= 0
+            ):
+                self.fail(f"{pointer}.delay_seconds", "delay_seconds must be a positive number")
+        elif kind == "damage_stagger":
+            types = component.get("damage_types")
+            if types is not None and (
+                not isinstance(types, list) or not types or not set(types) <= DAMAGE_TYPES
+            ):
+                self.fail(
+                    f"{pointer}.damage_types",
+                    f"damage_types must be a non-empty list of {sorted(DAMAGE_TYPES)}",
+                )
+            if "formula" not in component:
+                self.fail(f"{pointer}.formula", "damage_stagger components need a formula")
+            duration = component.get("duration_seconds")
+            if not _is_number(duration) or duration <= 0:
+                self.fail(f"{pointer}.duration_seconds", "damage_stagger needs a positive duration")
         elif kind == "burn":
             if component.get("damage_type") not in DAMAGE_TYPES:
                 self.fail(
@@ -908,8 +927,8 @@ class _CatalogChecker:
                 self.fail(f"{pointer}.direction", "direction must be 'dealt' or 'taken'")
             if component.get("source") not in {"attack", "ability", "all"}:
                 self.fail(f"{pointer}.source", "source must be 'attack', 'ability' or 'all'")
-            if component.get("mode") != "percent":
-                self.fail(f"{pointer}.mode", "damage_modifier mode must be 'percent'")
+            if component.get("mode") not in {"percent", "flat"}:
+                self.fail(f"{pointer}.mode", "damage_modifier mode must be 'percent' or 'flat'")
             if "formula" not in component:
                 self.fail(f"{pointer}.formula", "damage_modifier components need a formula")
         elif kind in {"crowd_control", "status"}:

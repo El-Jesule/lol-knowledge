@@ -163,6 +163,7 @@ COMPONENT_KINDS = frozenset(
         "execute",
         "burn",
         "cooldown_refund",
+        "damage_stagger",
     }
 )
 DAMAGE_TYPES = frozenset({"physical", "magic", "true"})
