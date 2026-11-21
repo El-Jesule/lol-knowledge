@@ -952,7 +952,7 @@ def _apply_ms_conversions(
 
 
 def _parse_stack_input(
-    inputs: Mapping[str, Fraction],
+    inputs: Mapping[str, Fraction] | None,
     key: str,
     *,
     minimum: int = 0,
@@ -960,7 +960,7 @@ def _parse_stack_input(
     integer: bool = True,
 ) -> Fraction | None:
     """Validate an optional numeric scenario input for an item passive."""
-    if key not in inputs:
+    if not inputs or key not in inputs:
         return None
     val = inputs[key]
     if val < minimum or (maximum is not None and val > maximum):

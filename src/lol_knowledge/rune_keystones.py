@@ -63,13 +63,14 @@ class DelayedRuneProc:
 
 @dataclass(frozen=True)
 class RuneStatBonus:
-    """A temporary stat bonus granted by a keystone (Conqueror, Lethal Tempo, Hail of Blades)."""
+    """A temporary stat bonus granted by a keystone (Conqueror, Lethal Tempo, Aftershock...)."""
 
     stat_id: str
     amount: Fraction
     source: str
     label: Label
     note: str = ""
+    percent: bool = False
 
 
 def require_target_kind(rune: Rune, target: Target) -> str:
@@ -200,6 +201,34 @@ class KeystoneCombat:
         self._grasp_fired = False
         self._step_heals: list[HealEvent] = []
 
+        # 8021 Fleet Footwork (Energized: starts at 100, +6 per attack or +15 with Statikk)
+        self._fleet_stacks = 100
+        self._fleet_ms_end: Fraction | None = None
+        self._fleet_ms_active = False
+        self._has_statikk = any(it.id == "3087" for it in sheet.items)
+
+        # 8230 Stormraider's Surge / PhaseRush (25% max HP in 3 s -> +48%/+36% MS for 4 s)
+        self._sr_damage_log: list[tuple[Fraction, Fraction]] = []
+        self._sr_ms_end: Fraction | None = None
+        self._sr_ms_active = False
+        self._sr_ready = Fraction(0)
+        self._sr_fired = False
+
+        # 8439 Aftershock (on immobilize: +Armor/+MR for 2.5 s -> magic burst, 20 s CD)
+        self._aftershock_impaired = False
+        self._aftershock_end: Fraction | None = None
+        self._aftershock_active = False
+        self._aftershock_ready = Fraction(0)
+        self._aftershock_fired = False
+        self._aftershock_armor = Fraction(0)
+        self._aftershock_mr = Fraction(0)
+        self._delayed: list[DelayedRuneProc] = []
+
+        # 8351 Glacial Augment (on immobilize: slow zone + 15% ally DR for 3 s, 25 s CD)
+        self._glacial_impaired = False
+        self._glacial_ready = Fraction(0)
+        self._glacial_fired = False
+
         if not rune_ids or data is None:
             return
         self._base = Label.DERIVED if data.matches_patch(sheet.champion.patch) else Label.PENDING
@@ -214,8 +243,48 @@ class KeystoneCombat:
             break  # a legal page has at most one keystone
 
     def _configure(self, rune: Rune, inputs: Mapping[str, Fraction]) -> None:
+        if rune.key == "FleetFootwork":
+            if self.target.kind == "structure":
+                return
+            require_target_kind(rune, self.target)
+            _range_required(rune, self.holder_range)
+            self._keystone = rune
+            return
+
         if self.target.kind not in (None, "champion"):
-            return  # all 11 offensive keystones trigger only against champions
+            return  # remaining keystones trigger only against champions
+
+        if rune.key == "PhaseRush":
+            require_target_kind(rune, self.target)
+            _range_required(rune, self.holder_range)
+            self._keystone = rune
+            return
+
+        if rune.key == "Aftershock":
+            require_target_kind(rune, self.target)
+            imp = int_input(inputs, "target_impaired", minimum=0, maximum=1)
+            if imp == 1:
+                self._aftershock_impaired = True
+                self._keystone = rune
+            else:
+                self.notes.append(
+                    f"rune {rune.id} {rune.name}: triggers on immobilizing a champion "
+                    "(pass --input target_impaired=1)"
+                )
+            return
+
+        if rune.key == "GlacialAugment":
+            require_target_kind(rune, self.target)
+            imp = int_input(inputs, "target_impaired", minimum=0, maximum=1)
+            if imp == 1:
+                self._glacial_impaired = True
+                self._keystone = rune
+            else:
+                self.notes.append(
+                    f"rune {rune.id} {rune.name}: freeze zones trigger on immobilizing a "
+                    "champion (pass --input target_impaired=1)"
+                )
+            return
 
         if rune.key in ("Electrocute", "PressTheAttack"):
             require_target_kind(rune, self.target)
@@ -386,6 +455,72 @@ class KeystoneCombat:
             boost = rune_value(rune, key)
             note = f"{self._hob_remaining} empowered attacks remaining"
             return [RuneStatBonus("attack_speed_bonus", boost, src, self._base, note)]
+
+        if rune.key == "FleetFootwork":
+            active = (
+                (self._fleet_ms_end is not None and at < self._fleet_ms_end)
+                if self.timeline
+                else self._fleet_ms_active
+            )
+            if active:
+                ms = rune_value(rune, "MSBuff")
+                if self.holder_range == "ranged":
+                    ms *= rune_value(rune, "RangedMSMod")
+                return [
+                    RuneStatBonus(
+                        "move_speed",
+                        ms,
+                        src,
+                        self._base,
+                        f"Energized MS ({self.holder_range}, 1 s)",
+                        percent=True,
+                    )
+                ]
+
+        if rune.key == "PhaseRush":
+            active = (
+                (self._sr_ms_end is not None and at < self._sr_ms_end)
+                if self.timeline
+                else self._sr_ms_active
+            )
+            if active:
+                ms = rune_value(rune, "HasteMax")
+                if self.holder_range == "ranged":
+                    ms *= rune_value(rune, "RangedEffectiveness")
+                return [
+                    RuneStatBonus(
+                        "move_speed",
+                        ms,
+                        src,
+                        self._base,
+                        f"Stormraider's Surge ({self.holder_range}, 4 s, 50% slow resist)",
+                        percent=True,
+                    )
+                ]
+
+        if rune.key == "Aftershock":
+            active = (
+                (self._aftershock_end is not None and at < self._aftershock_end)
+                if self.timeline
+                else self._aftershock_active
+            )
+            if active:
+                return [
+                    RuneStatBonus(
+                        "armor",
+                        self._aftershock_armor,
+                        src,
+                        self._base,
+                        "Aftershock resistances (2.5 s)",
+                    ),
+                    RuneStatBonus(
+                        "magic_resist",
+                        self._aftershock_mr,
+                        src,
+                        self._base,
+                        "Aftershock resistances (2.5 s)",
+                    ),
+                ]
 
         return []
 
@@ -634,6 +769,114 @@ class KeystoneCombat:
                 )
             return procs
 
+        if rune.key == "FleetFootwork" and slot is None:
+            if self._fleet_stacks >= 100:
+                self._fleet_stacks = 0
+                bonus_ad, ap, stat_labels = _bonus_ad_and_ap(sheet)
+                raw = (
+                    linear_by_level(
+                        rune_value(rune, "HealBase"), rune_value(rune, "HealMax"), sheet.level
+                    )
+                    + bonus_ad * rune_value(rune, "HealBonusADRatio")
+                    + ap * rune_value(rune, "HealAPRatio")
+                )
+                f_notes = [f"Energized heal ({self.holder_range})"]
+                if self.holder_range == "ranged":
+                    raw *= rune_value(rune, "RangedHealMod")
+                if self.target.kind == "minion":
+                    raw *= rune_value(rune, "MinionHealMod")
+                    f_notes.append("15% effectiveness vs minions")
+                self._step_heals.append(
+                    HealEvent(
+                        src,
+                        raw,
+                        raw,
+                        True,
+                        False,
+                        weakest([self._base, *stat_labels]),
+                        tuple(f_notes),
+                    )
+                )
+                self._fleet_ms_active = True
+                if self.timeline:
+                    self._fleet_ms_end = clock + rune_value(rune, "MSDuration")
+            else:
+                gain = 15 if self._has_statikk else 6
+                self._fleet_stacks = min(100, self._fleet_stacks + gain)
+            return procs
+
+        if rune.key == "Aftershock" and self._aftershock_impaired:
+            can_fire = (
+                (not self._aftershock_fired)
+                if not self.timeline
+                else (clock >= self._aftershock_ready)
+            )
+            if can_fire:
+                self._aftershock_fired = True
+                delay = rune_value(rune, "DelayBeforeBurst")
+                cd = rune_value(rune, "Cooldown")
+                flat_r = rune_value(rune, "FlatResists")
+                pct_r = rune_value(rune, "PercentBonusResist")
+                cap_r = linear_by_level(
+                    rune_value(rune, "BonusResistMin"),
+                    rune_value(rune, "BonusResistMax"),
+                    sheet.level,
+                )
+                self._aftershock_armor = min(cap_r, flat_r + sheet["armor"].scoped("bonus") * pct_r)
+                self._aftershock_mr = min(
+                    cap_r, flat_r + sheet["magic_resist"].scoped("bonus") * pct_r
+                )
+                self._aftershock_active = True
+                if self.timeline:
+                    self._aftershock_end = clock + delay
+                    self._aftershock_ready = clock + cd
+                bonus_hp = sheet["health"].scoped("bonus")
+                raw = linear_by_level(
+                    rune_value(rune, "StartingBaseDamage"),
+                    rune_value(rune, "MaxBaseDamage"),
+                    sheet.level,
+                ) + bonus_hp * rune_value(rune, "HealthRatio")
+                burst = RuneProc(
+                    src,
+                    DamageType.MAGIC,
+                    raw,
+                    weakest((self._base, sheet["health"].label)),
+                    (
+                        f"Aftershock (+{format_number(self._aftershock_armor)} Armor, "
+                        f"+{format_number(self._aftershock_mr)} MR for {format_number(delay)} s)",
+                    ),
+                )
+                if self.timeline:
+                    self._delayed.append(DelayedRuneProc(clock + delay, burst))
+                else:
+                    procs.append(burst)
+            return procs
+
+        if rune.key == "GlacialAugment" and self._glacial_impaired:
+            can_fire = (
+                (not self._glacial_fired) if not self.timeline else (clock >= self._glacial_ready)
+            )
+            if can_fire:
+                self._glacial_fired = True
+                if self.timeline:
+                    self._glacial_ready = clock + rune_value(rune, "Cooldown")
+                bonus_ad, ap, _ = _bonus_ad_and_ap(sheet)
+                hsp = sheet["heal_and_shield_power"].total()
+                slow_pct = (
+                    rune_value(rune, "SlowZoneSlowBase")
+                    + ap * rune_value(rune, "SlowZoneSlowAPRatio")
+                    + bonus_ad * rune_value(rune, "SlowZoneSlowbADRatio")
+                    + hsp * rune_value(rune, "SlowZoneSlowHealShieldRatio")
+                )
+                dr_pct = rune_value(rune, "DmgReduction") * 100
+                dur = rune_value(rune, "SlowZoneDuration")
+                self.notes.append(
+                    f"rune {rune.id} {rune.name}: freeze zones active for {format_number(dur)} s "
+                    f"({format_number(slow_pct)}% slow, -{format_number(dr_pct)}% enemy damage "
+                    "vs allies)"
+                )
+            return procs
+
         return procs
 
     def on_step_complete(
@@ -722,6 +965,35 @@ class KeystoneCombat:
                             ("scenario: first_strike=1",),
                             apply_modifiers=False,
                         )
+                    )
+            return procs
+
+        if rune.key == "PhaseRush" and max_health > 0:
+            can_fire = (not self._sr_fired) if not self.timeline else (clock >= self._sr_ready)
+            if can_fire:
+                win = rune_value(rune, "Window")
+                if self.timeline:
+                    self._sr_damage_log = [
+                        (t, d) for t, d in self._sr_damage_log if clock - t <= win
+                    ]
+                self._sr_damage_log.append((clock, step_damage))
+                cum = sum((d for _, d in self._sr_damage_log), start=Fraction(0))
+                if cum >= rune_value(rune, "DamageThreshold") * max_health:
+                    self._sr_damage_log.clear()
+                    self._sr_fired = True
+                    self._sr_ms_active = True
+                    if self.timeline:
+                        dur = rune_value(rune, "Duration")
+                        cd = linear_by_level(
+                            rune_value(rune, "MaxCooldown"),
+                            rune_value(rune, "MinCooldown"),
+                            sheet.level,
+                        )
+                        self._sr_ms_end = clock + dur
+                        self._sr_ready = clock + cd
+                    self.notes.append(
+                        f"rune {rune.id} {rune.name}: triggered after >=25% max HP damage "
+                        f"(+48%/+36% MS and 50% slow resist for 4 s)"
                     )
             return procs
 
@@ -853,6 +1125,21 @@ class KeystoneCombat:
             weakest(self._dft_labels),
             notes,
         )
+
+    def has_due_procs(self, until: Fraction) -> bool:
+        return any(item.at <= until for item in self._delayed)
+
+    def due_times(self, until: Fraction) -> list[Fraction]:
+        return [item.at for item in self._delayed if item.at <= until]
+
+    def pop_due(self, at: Fraction) -> list[RuneProc]:
+        due = [item.proc for item in self._delayed if item.at <= at]
+        if due:
+            self._delayed = [item for item in self._delayed if item.at > at]
+        return due
+
+    def last_delayed_time(self) -> Fraction | None:
+        return max((item.at for item in self._delayed), default=None)
 
     def pop_step_heals(self) -> list[HealEvent]:
         heals = list(self._step_heals)

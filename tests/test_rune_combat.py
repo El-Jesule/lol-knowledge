@@ -308,13 +308,15 @@ def test_cli_ability_keeps_combat_runes_pending_while_rotation_applies_them(caps
     stats_notes = json.loads(captured.out)["notes"]
     assert "rune 8014 Golpe de gracia: combat effect (applied in rotation)" in stats_notes
 
-    # `rotation` applies Coup de Grace (+8%), Axiom Arcanist (+12% on R), and Scorch!
+    # `rotation` applies Coup de Grace (+8%), Axiom Arcanist (+12% on R), Scorch, and PhaseRush!
     code, captured = run(
         capsys,
         "rotation",
         *common,
         "--learned",
         "R=3",
+        "--attacker-range",
+        "ranged",
         "--target-kind",
         "champion",
         "--target-current-health",
@@ -337,8 +339,8 @@ def test_cli_ability_keeps_combat_runes_pending_while_rotation_applies_them(caps
     scorch_part = step["parts"][1]
     assert scorch_part["kind"] == "rune"
     assert scorch_part["dealt_modifiers"] == [{"effect": "rune:8014 CoupDeGrace", "percent": 8.0}]
-    # Only unmodelled keystone 8230 remains in not_applied!
-    assert any("8230" in note for note in rot_report["not_applied"])
+    # All runes in the page (including 8230 Stormraider's Surge) are now modelled!
+    assert not any("8230" in note for note in rot_report["not_applied"])
     assert not any("8014" in note for note in rot_report["not_applied"])
     assert not any("8237" in note for note in rot_report["not_applied"])
 

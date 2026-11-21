@@ -225,6 +225,20 @@ def _add_target_options(command: argparse.ArgumentParser) -> None:
     command.add_argument("--target-champion", help="Target champion.")
     command.add_argument("--target-level", type=int, help="Target champion level.")
     command.add_argument("--target-item", action="append", default=[], metavar="ID")
+    command.add_argument(
+        "--target-rune",
+        action="append",
+        default=[],
+        metavar="ID",
+        help="Target champion tree rune id (repeat; requires --target-champion).",
+    )
+    command.add_argument(
+        "--target-shard",
+        action="append",
+        default=[],
+        metavar="ID",
+        help="Target champion stat shard id (repeat 3 times; requires --target-champion).",
+    )
     command.add_argument("--target-armor", help="Target armor (manual target).")
     command.add_argument("--target-mr", help="Target magic resistance (manual target).")
     command.add_argument("--target-max-health", help="Target max health (manual target).")
@@ -316,30 +330,32 @@ def _rune_ids(values: list[str], option: str) -> list[int]:
         raise StatsError(f"{option} expects numeric rune ids, got {values}") from exc
 
 
-def _build_sheet(
-    args,
+def _build_sheet_with_runes(
     root: Path,
     champion,
+    level: int,
     items,
+    runes: list[int],
+    shards: list[int],
     issues,
     assumptions,
     derived,
+    *,
     extras=(),
     inputs=None,
-    *,
     combat_context: str = "stats",
     kit=None,
+    allow_illegal: bool = False,
 ):
-    """The attacker's stat sheet, with champion passive and rune page if any."""
+    """Build a StatSheet for either attacker or target, with passive and rune page if any."""
     passive = sheet_passive_effects(
-        kit, args.level, inputs, include_stacking=combat_context != "rotation"
+        kit, level, inputs, include_stacking=combat_context != "rotation"
     )
     base_extras = (*extras, *passive.flats)
-    runes, shards = _rune_ids(args.rune, "--rune"), _rune_ids(args.shard, "--shard")
     if not runes and not shards:
         return build_stat_sheet(
             champion,
-            args.level,
+            level,
             items,
             issues,
             assumptions,
@@ -360,7 +376,7 @@ def _build_sheet(
         )
     if not report.legal:
         problems = "; ".join(report.violations)
-        if not args.allow_illegal_build:
+        if not allow_illegal:
             raise StatsError(
                 f"rune page is not legal [{report.label}]: {problems} "
                 "(--allow-illegal-build calculates it anyway)"
@@ -369,7 +385,7 @@ def _build_sheet(
     adaptive, label, note = None, Label.DERIVED, ""
     if needs_adaptive_stat(runes, shards, data):
         before = build_stat_sheet(
-            champion, args.level, items, issues, assumptions, derived, extras, inputs=inputs
+            champion, level, items, issues, assumptions, derived, extras, inputs=inputs
         )
         bonus_ad = sum(
             (
@@ -388,7 +404,7 @@ def _build_sheet(
     flats, percents = shard_contributions(
         shards,
         data,
-        level=args.level,
+        level=level,
         patch=champion.patch,
         adaptive=adaptive,
         adaptive_label=label,
@@ -403,7 +419,7 @@ def _build_sheet(
     rune_effects = minor_rune_effects(
         runes,
         data,
-        level=args.level,
+        level=level,
         patch=champion.patch,
         items=items,
         uses_mana=uses_mana,
@@ -421,7 +437,7 @@ def _build_sheet(
         pending += combat_rune_notes(rune_effects.combat_runes, data, in_ability=True)
     return build_stat_sheet(
         champion,
-        args.level,
+        level,
         items,
         issues,
         assumptions,
@@ -433,6 +449,40 @@ def _build_sheet(
         extra_notes=extra_notes,
         move_speed_bonus_amp=rune_effects.move_speed_bonus_amp,
         inputs=inputs,
+    )
+
+
+def _build_sheet(
+    args,
+    root: Path,
+    champion,
+    items,
+    issues,
+    assumptions,
+    derived,
+    extras=(),
+    inputs=None,
+    *,
+    combat_context: str = "stats",
+    kit=None,
+):
+    """The attacker's stat sheet, with champion passive and rune page if any."""
+    runes, shards = _rune_ids(args.rune, "--rune"), _rune_ids(args.shard, "--shard")
+    return _build_sheet_with_runes(
+        root,
+        champion,
+        args.level,
+        items,
+        runes,
+        shards,
+        issues,
+        assumptions,
+        derived,
+        extras=extras,
+        inputs=inputs,
+        combat_context=combat_context,
+        kit=kit,
+        allow_illegal=args.allow_illegal_build,
     )
 
 
@@ -783,7 +833,7 @@ def _run_damage(args: argparse.Namespace) -> int:
     return 0
 
 
-def _ability_target(args: argparse.Namespace, root: Path, issues, derived):
+def _ability_target(args: argparse.Namespace, root: Path, issues, derived, inputs=None):
     manual = [
         args.target_armor,
         args.target_mr,
@@ -791,23 +841,46 @@ def _ability_target(args: argparse.Namespace, root: Path, issues, derived):
         args.target_bonus_health,
         args.target_kind,
     ]
+    target_runes = _rune_ids(getattr(args, "target_rune", []), "--target-rune")
+    target_shards = _rune_ids(getattr(args, "target_shard", []), "--target-shard")
     if args.target_champion:
         if any(value is not None for value in manual):
             raise StatsError("give either --target-champion or manual target values, not both")
         if args.target_level is None:
             raise StatsError("--target-champion needs --target-level")
         champion = load_champion(root, args.target_champion)
-        sheet = build_stat_sheet(
-            champion, args.target_level, load_items(root, args.target_item), issues, {}, derived
-        )
+        target_items = load_items(root, args.target_item)
+        if target_runes or target_shards:
+            sheet = _build_sheet_with_runes(
+                root,
+                champion,
+                args.target_level,
+                target_items,
+                target_runes,
+                target_shards,
+                issues,
+                {},
+                derived,
+                inputs=inputs,
+                combat_context="stats",
+                allow_illegal=args.allow_illegal_build,
+            )
+        else:
+            sheet = build_stat_sheet(champion, args.target_level, target_items, issues, {}, derived)
         _check_build(root, args.target_item, champion, allow=args.allow_illegal_build, who="target")
         current = _number(args.target_current_health, "--target-current-health")
         shield = _number(args.target_shield, "--target-shield")
         return target_from_sheet(
-            sheet, current_health=current, shield=shield, shield_type=args.target_shield_type
+            sheet,
+            current_health=current,
+            shield=shield,
+            shield_type=args.target_shield_type,
+            runes=target_runes,
         )
     if args.target_level is not None or args.target_item:
         raise StatsError("--target-level and --target-item need --target-champion")
+    if target_runes or target_shards:
+        raise StatsError("--target-rune and --target-shard need --target-champion")
     if args.target_armor is None or args.target_mr is None:
         raise StatsError("give --target-champion, or both --target-armor and --target-mr")
     return target_from_values(
@@ -857,7 +930,7 @@ def _run_ability(args: argparse.Namespace) -> int:
             kit=kit,
         )
         _check_build(root, args.item, champion, allow=args.allow_illegal_build, who="attacker")
-        target = _ability_target(args, root, issues, derived)
+        target = _ability_target(args, root, issues, derived, inputs=inputs)
         outcome = evaluate_ability(
             kit,
             sheet,
@@ -927,10 +1000,10 @@ def _run_rotation(args: argparse.Namespace) -> int:
             kit=kit,
         )
         _check_build(root, args.item, champion, allow=args.allow_illegal_build, who="attacker")
-        target = _ability_target(args, root, issues, derived)
+        target = _ability_target(args, root, issues, derived, inputs=inputs)
         crit_base = _crit_base(champion.id, champion.patch, derived)
         rune_ids = _rune_ids(args.rune, "--rune")
-        rune_data = load_runes(root) if rune_ids else None
+        rune_data = load_runes(root) if (rune_ids or target.runes) else None
         ap_weight = derived.value(champion.id, "adaptiveforceapweight") if derived else None
         start_resource = _number(args.attacker_resource, "--attacker-resource")
         outcome = evaluate_rotation(
@@ -1143,7 +1216,9 @@ def _run_optimize(args: argparse.Namespace) -> int:
             if not args.steps:
                 raise StatsError(f"--objective {args.objective} requires --steps")
             steps = parse_steps(args.steps)
-            target = _ability_target(args, root, issues, derived)
+            target = _ability_target(args, root, issues, derived, inputs=inputs)
+            if rune_data is None and target.runes:
+                rune_data = load_runes(root)
 
         incoming_hits = ()
         incoming_hits_for_sheet = None
