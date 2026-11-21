@@ -25,6 +25,13 @@ from .errors import (
 )
 from .kit import load_kit, passive_contributions
 from .objects.legality import ITEM_GROUPS_PATH, check_build, load_item_groups
+from .optimizer import (
+    OBJECTIVES,
+    OptimizeConstraints,
+    optimize_build,
+)
+from .optimizer import format_text as format_optimize_text
+from .optimizer import to_dict as optimize_to_dict
 from .passives import sheet_passive_effects
 from .rotation import CritBase, evaluate_rotation, parse_steps
 from .rotation_report import format_text as format_rotation_text
@@ -103,6 +110,7 @@ def build_parser() -> argparse.ArgumentParser:
     _add_ability_parser(subparsers)
     _add_rotation_parser(subparsers)
     _add_survive_parser(subparsers)
+    _add_optimize_parser(subparsers)
 
     return parser
 
@@ -529,6 +537,106 @@ def _add_survive_parser(subparsers: argparse._SubParsersAction) -> None:
     survive.add_argument("--json", action="store_true", help="Print a JSON report.")
 
 
+def _add_optimize_parser(subparsers: argparse._SubParsersAction) -> None:
+    opt = subparsers.add_parser(
+        "optimize",
+        help="Search legal builds optimizing a measurable combat or survival objective.",
+        description=(
+            "Pruned deterministic search over legal Summoner's Rift builds (OPT-01..OPT-03). "
+            "Propagates weakest input labels and separates verified (Oficial/Derivado) builds "
+            "from builds depending on Pendiente de verificación effects."
+        ),
+    )
+    opt.add_argument("--champion", required=True, help="Champion id, e.g. Ahri or Garen.")
+    opt.add_argument("--level", required=True, type=int, help="Champion level (1..18).")
+    opt.add_argument(
+        "--objective",
+        required=True,
+        choices=sorted(OBJECTIVES),
+        help="Metric to maximize.",
+    )
+    opt.add_argument("--budget", type=int, help="Maximum total build gold.")
+    opt.add_argument("--slots", type=int, default=6, help="Max item slots (1..6, default: 6).")
+    opt.add_argument(
+        "--require-item",
+        action="append",
+        default=[],
+        metavar="ID",
+        help="Item that must be included in every candidate build (repeat).",
+    )
+    opt.add_argument(
+        "--forbid-item",
+        action="append",
+        default=[],
+        metavar="ID",
+        help="Item excluded from the candidate pool (repeat).",
+    )
+    opt.add_argument(
+        "--require-boots",
+        action="store_true",
+        help="Require one pair of boots in every returned build.",
+    )
+    opt.add_argument(
+        "--tier",
+        choices=("completed", "all"),
+        default="completed",
+        help="Candidate tier: completed items + tier-2 boots (default) or all purchasable items.",
+    )
+    opt.add_argument(
+        "--only-verified",
+        action="store_true",
+        help="Exclude items with pending effect review or excluded damage effects.",
+    )
+    opt.add_argument("--top", type=int, default=5, help="Builds to return per bucket (default: 5).")
+    opt.add_argument(
+        "--beam-width",
+        type=int,
+        default=12,
+        help="Beam search width per slot (default: 12).",
+    )
+    opt.add_argument(
+        "--pool-limit",
+        type=int,
+        default=16,
+        help="Max non-boots items kept after marginal relevance pre-filter (default: 16).",
+    )
+    opt.add_argument(
+        "--damage-mix",
+        default="0.5",
+        help="Physical damage weight (0..1) for effective_health_mixed (default: 0.5).",
+    )
+    # Rotation inputs (rotation_damage, dps, healing)
+    opt.add_argument(
+        "--steps", help="Rotation steps (for rotation_damage, dps, healing, or enemy)."
+    )
+    opt.add_argument(
+        "--learned",
+        action="append",
+        default=[],
+        metavar="SLOT=RANK",
+        help="Learned ability rank (repeat).",
+    )
+    opt.add_argument(
+        "--attacker-range",
+        choices=("melee", "ranged"),
+        help="Holder range (defaults from champion attackrange < 300 if omitted).",
+    )
+    opt.add_argument("--timeline", action="store_true", help="Simulate timestamps and durations.")
+    _add_target_options(opt)
+    # Defense inputs (time_to_die)
+    opt.add_argument("--incoming", help='Manual incoming hits for time_to_die, e.g. "attack:500".')
+    opt.add_argument("--enemy-champion", help="Enemy champion for time_to_die.")
+    opt.add_argument("--enemy-level", type=int, help="Enemy champion level.")
+    opt.add_argument("--enemy-item", action="append", default=[], metavar="ID")
+    opt.add_argument("--enemy-learned", action="append", default=[], metavar="SLOT=RANK")
+    opt.add_argument("--enemy-range", choices=("melee", "ranged"))
+    opt.add_argument("--assume", action="append", default=[], metavar="FIELD=VALUE")
+    opt.add_argument("--input", action="append", default=[], metavar="NAME=VALUE")
+    _add_build_option(opt)
+    opt.add_argument("--root", type=Path, default=Path("."))
+    opt.add_argument("--json", action="store_true", help="Print a JSON report.")
+
+
 def _pairs(values: list[str], option: str) -> dict[str, str]:
     parsed: dict[str, str] = {}
     for entry in values:
@@ -606,6 +714,7 @@ def main(argv: list[str] | None = None) -> int:
         "ability": _run_ability,
         "rotation": _run_rotation,
         "survive": _run_survive,
+        "optimize": _run_optimize,
     }
     handler = handlers[args.command]
     return handler(args)
@@ -936,6 +1045,150 @@ def _run_survive(args: argparse.Namespace) -> int:
         print(json.dumps(defense_to_dict(outcome, defender_sheet), indent=2, ensure_ascii=False))
     else:
         print(format_defense_text(outcome, defender_sheet))
+    return 0
+
+
+def _run_optimize(args: argparse.Namespace) -> int:
+    root: Path = args.root
+    try:
+        champion = load_champion(root, args.champion)
+        issues = load_issues(root)
+        derived = load_records(root)
+        assumptions = _parse_assume(args.assume)
+        inputs = {
+            key: _number(value, f"--input {key}")
+            for key, value in _pairs(args.input, "--input").items()
+        }
+        damage_mix = _number(args.damage_mix, "--damage-mix")
+        assert damage_mix is not None
+        constraints = OptimizeConstraints(
+            budget=args.budget,
+            slots=args.slots,
+            required_items=tuple(args.require_item),
+            forbidden_items=tuple(args.forbid_item),
+            require_boots=args.require_boots,
+            tier=args.tier,
+            only_verified=args.only_verified,
+            top=args.top,
+            beam_width=args.beam_width,
+            pool_limit=args.pool_limit,
+            damage_mix_physical=damage_mix,
+        )
+        runes = _rune_ids(args.rune, "--rune")
+        shards = _rune_ids(args.shard, "--shard")
+        rune_data = load_runes(root) if (runes or shards) else None
+        kit = load_kit(root, champion.id)
+        ranks = _parse_ranks(args.learned)
+        holder_range = args.attacker_range
+        if holder_range is None:
+            atk_range = champion.stats.get("attackrange")
+            if atk_range is not None:
+                holder_range = "melee" if atk_range < 300 else "ranged"
+
+        target = None
+        steps = ()
+        crit_base = _crit_base(champion.id, champion.patch, derived)
+        if args.objective in {"rotation_damage", "dps", "healing"}:
+            if not args.steps:
+                raise StatsError(f"--objective {args.objective} requires --steps")
+            steps = parse_steps(args.steps)
+            target = _ability_target(args, root, issues, derived)
+
+        incoming_hits = ()
+        incoming_hits_for_sheet = None
+        if args.objective == "time_to_die":
+            if bool(args.incoming) == bool(args.enemy_champion):
+                raise StatsError(
+                    "--objective time_to_die needs either --incoming or --enemy-champion"
+                )
+            if args.incoming:
+                incoming_hits = parse_incoming(args.incoming)
+            else:
+                if args.enemy_level is None or not args.steps:
+                    raise StatsError("--enemy-champion requires --enemy-level and --steps")
+                enemy_champ = load_champion(root, args.enemy_champion)
+                enemy_kit = load_kit(root, enemy_champ.id)
+                if enemy_kit is None:
+                    raise KitError(f"{enemy_champ.id} has no kit yet")
+                enemy_items = load_items(root, args.enemy_item)
+                enemy_ranks = _parse_ranks(args.enemy_learned)
+                enemy_steps = parse_steps(args.steps)
+                enemy_passive = sheet_passive_effects(
+                    enemy_kit, args.enemy_level, inputs, include_stacking=False
+                )
+                enemy_sheet = build_stat_sheet(
+                    enemy_champ,
+                    args.enemy_level,
+                    enemy_items,
+                    issues,
+                    assumptions,
+                    derived,
+                    (*passive_contributions(enemy_kit, enemy_ranks), *enemy_passive.flats),
+                    extra_amplifiers=enemy_passive.amplifiers,
+                    extra_notes=enemy_passive.notes,
+                )
+                enemy_crit = _crit_base(enemy_champ.id, enemy_champ.patch, derived)
+                enemy_ap_w = (
+                    derived.value(enemy_champ.id, "adaptiveforceapweight") if derived else None
+                )
+                enemy_range = args.enemy_range
+                if enemy_range is None:
+                    er = enemy_champ.stats.get("attackrange")
+                    if er is not None:
+                        enemy_range = "melee" if er < 300 else "ranged"
+
+                def _enemy_hits(def_sheet):
+                    rot = evaluate_rotation(
+                        enemy_kit,
+                        enemy_sheet,
+                        enemy_ranks,
+                        target_from_sheet(def_sheet),
+                        enemy_steps,
+                        enemy_crit,
+                        holder_range=enemy_range,
+                        inputs=inputs,
+                        timeline=args.timeline,
+                        ap_weight=enemy_ap_w,
+                    )
+                    return hits_from_rotation(rot)
+
+                incoming_hits_for_sheet = _enemy_hits
+
+        outcome = optimize_build(
+            root,
+            champion,
+            args.level,
+            args.objective,
+            constraints=constraints,
+            issues=issues,
+            derived=derived,
+            assumptions=assumptions,
+            inputs=inputs,
+            kit=kit,
+            ranks=ranks,
+            target=target,
+            steps=steps,
+            crit_base=crit_base,
+            holder_range=holder_range,
+            timeline=args.timeline,
+            target_count=args.target_count,
+            incoming_hits=incoming_hits,
+            incoming_hits_for_sheet=incoming_hits_for_sheet,
+            runes=runes,
+            shards=shards,
+            rune_data=rune_data,
+        )
+    except (StatsError, KitError, DamageInputError, RotationError) as exc:
+        print(f"error: {exc}", file=sys.stderr)
+        return 2
+    except OSError as exc:
+        print(f"error: {exc}", file=sys.stderr)
+        return 2
+
+    if args.json:
+        print(json.dumps(optimize_to_dict(outcome), indent=2, ensure_ascii=False))
+    else:
+        print(format_optimize_text(outcome))
     return 0
 
 

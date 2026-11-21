@@ -146,9 +146,9 @@ El motor debe servir también para vida, resistencias, curación y supervivencia
 
 ## 8. Optimizador de builds
 
-- [ ] **OPT-01 (P1)** Definir objetivos medibles: daño de una rotación, DPS en N segundos, vida efectiva, tiempo hasta morir, curación, con restricciones (oro, nivel, objetos obligatorios o prohibidos).
-- [ ] **OPT-02 (P1)** Búsqueda sobre builds legales (OBJ-13, RUN-04) con poda; el espacio completo es enorme y hay que medir antes de optimizar ([`AGENTS.md`](../AGENTS.md) §9).
-- [ ] **OPT-03 (P1)** Que el resultado arrastre la etiqueta más débil de sus entradas y separe las builds con todo `Derivado` de las que dependen de efectos `Pendiente de verificación`.
+- [x] **OPT-01 (P1)** *Hecho en la fase 54 (2026-11-21, [`build-optimizer.md`](tasks/build-optimizer.md)): `src/lol_knowledge/optimizer/` y `python -m lol_knowledge optimize` con 7 objetivos medibles (`rotation_damage`, `dps`, `effective_health_physical`, `effective_health_magic`, `effective_health_mixed`, `time_to_die`, `healing`) y restricciones (`--budget`, `--slots`, `--require-item`, `--forbid-item`, `--require-boots`, `--tier`, `--only-verified`, `--damage-mix`, nivel y runas).* Definir objetivos medibles y restricciones.
+- [x] **OPT-02 (P1)** *Hecho en la fase 54 (2026-11-21, [`build-optimizer.md`](tasks/build-optimizer.md)): búsqueda determinista en 3 etapas (relevancia marginal + `beam search` + refinamiento `1-swap`) con poda incremental de legalidad (`OBJ-13`, `RUN-04`) y presupuesto, y telemetría medida (`SearchStats`: estados evaluados, podas y `elapsed_ms`).* Búsqueda sobre builds legales con poda y medición.
+- [x] **OPT-03 (P1)** *Hecho en la fase 54 (2026-11-21, [`build-optimizer.md`](tasks/build-optimizer.md)): propagación exacta de la etiqueta más débil en cada build y dos pasadas de búsqueda separadas que devuelven `verified_builds` (`Oficial`/`Derivado`) y `pending_builds` (`Pendiente de verificación`) sin mezclarlas.* Etiqueta más débil y separación de builds verificadas frente a pendientes.
 - [ ] **OPT-04 (P2)** Orden de compra y builds parciales por oro (curva de potencia por tiempo de partida).
 - [ ] **OPT-05 (P2)** Elección de la rotación: hoy la escribe quien llama; el optimizador necesita rotaciones tipo por campeón o generarlas.
 
