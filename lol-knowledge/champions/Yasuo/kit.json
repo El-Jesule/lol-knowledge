@@ -7,8 +7,8 @@
   "verified_against": {
     "content_version": "16.23.8406595+branch.releases-16-23.content.release",
     "bin_sha256": "c7f04ae7aacfbb20052209e520356424ab3ec98bcf80cf15c63beff6b500f66b",
-    "evidence": "odd/tasks/champion-kits-wave-3.md",
-    "result": "Bin del cliente 16.23 convertido con python -m binmodel.batch_kits y compilado con esta especificación curada (CH-01 oleada 3)"
+    "evidence": "odd/tasks/champion-wave-mechanics.md",
+    "result": "Bin del cliente 16.23 convertido con python -m binmodel.batch_kits y compilado con esta especificación curada (CH-04 mecánicas de oleadas)"
   },
   "source": "Árboles de cálculo del bin del cliente (python -m binmodel) y marcado de los tooltips del cliente; estructura de casos curada en research/kits/",
   "abilities": {
@@ -27,7 +27,7 @@
       "cases": [
         {
           "id": "thrust",
-          "name": "Estocada / torbellino (sin crítico)",
+          "name": "Estocada normal",
           "parts": [
             {
               "damage_type": "physical",
@@ -63,6 +63,66 @@
               "label": "Derivado",
               "source": "Characters/Yasuo/Spells/YasuoQ1WrapperAbility/YasuoQ1Wrapper.mSpellCalculations.TotalDamage (16.23.8406595+branch.releases-16-23.content.release)",
               "damage_type_source": "spell_yasuoq1wrapper_tooltip <physicalDamage>"
+            }
+          ]
+        },
+        {
+          "id": "crit",
+          "name": "Estocada crítica",
+          "parts": [
+            {
+              "damage_type": "physical",
+              "formula": {
+                "op": "add",
+                "operands": [
+                  {
+                    "op": "by_rank",
+                    "values": [
+                      20,
+                      45,
+                      70,
+                      95,
+                      120
+                    ]
+                  },
+                  {
+                    "op": "mul",
+                    "operands": [
+                      {
+                        "op": "mul",
+                        "operands": [
+                          {
+                            "op": "constant",
+                            "value": 1
+                          },
+                          {
+                            "op": "add",
+                            "operands": [
+                              {
+                                "op": "constant",
+                                "value": 2
+                              },
+                              {
+                                "op": "stat",
+                                "stat": "crit_damage_bonus",
+                                "scope": "total"
+                              }
+                            ]
+                          }
+                        ]
+                      },
+                      {
+                        "op": "stat",
+                        "stat": "attack_damage",
+                        "scope": "total"
+                      }
+                    ]
+                  }
+                ]
+              },
+              "label": "Derivado",
+              "source": "Characters/Yasuo/Spells/YasuoQ1WrapperAbility/YasuoQ1Wrapper.mSpellCalculations.TotalDamageCrit (16.23.8406595+branch.releases-16-23.content.release)",
+              "damage_type_source": "spell_yasuoq1wrapper_tooltipextendedbelowline <physicalDamage>"
             }
           ]
         }

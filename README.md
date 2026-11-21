@@ -158,7 +158,7 @@ parts = ability_damage(kit, "E", 5, sheet, case="edge", target={"max_health": 25
 - El borrador de la especificación se genera automáticamente con `python -m binmodel.specdraft` (detecta tipos de daño dobles, reactivaciones, escalados sin `mStat`, curaciones y costes de vida) y se compila con `python -m binmodel.kitgen` desde los árboles del bin y el marcado de los tooltips; la estructura final de casos se cura en `research/kits/<Id>.spec.json`.
 - Las pasivas de campeón (`abilities.P.passive_effects` en `kit.json`) se aplican automáticamente en `stats`, `ability` y `rotation` ([regla](lol-knowledge/mechanics/passives.md)): por ejemplo, Determinación de Zaahen (`--input determination_stacks` en hoja o acumulación paso a paso en rotación) y Robo de esencias de Ahri.
 - `validate` comprueba el esquema, el campeón y que el número de rangos coincida con Data Dragon.
-- Hay **173 kits publicados** (100 % del plantel del snapshot `16.23.1`, completados en las oleadas 1 a 4 de `CH-01`); los límites y reglas especiales de campeón siguen abiertos en [`odd/roadmap.md`](odd/roadmap.md) (`CH-04`).
+- Hay **173 kits publicados** (100 % del plantel del snapshot `16.23.1`, completados en las oleadas 1 a 4 de `CH-01` y ampliados en la fase 50 con `EffectValue`, tramos `level1=0`, escalados por maná/crítico/letalidad/velocidad de movimiento/velocidad de ataque, acumuladores `--input` con `default: 0` y casos multiforma); los límites globales de hoja por campeón siguen abiertos en [`odd/roadmap.md`](odd/roadmap.md) (`CH-04`).
 
 ## Daño de una habilidad contra un objetivo
 

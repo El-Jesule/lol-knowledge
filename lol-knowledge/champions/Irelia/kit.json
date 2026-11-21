@@ -7,18 +7,93 @@
   "verified_against": {
     "content_version": "16.23.8406595+branch.releases-16-23.content.release",
     "bin_sha256": "17b9772995e8e1bce6c5eaf98eca5f293ce0f7d368d2c3f31211c865e26e15c3",
-    "evidence": "odd/tasks/champion-kits-wave-2.md",
-    "result": "Bin del cliente 16.23 convertido con python -m binmodel.batch_kits y compilado con esta especificación curada (CH-01 oleada 2)"
+    "evidence": "odd/tasks/champion-wave-mechanics.md",
+    "result": "Bin del cliente 16.23 convertido con python -m binmodel.batch_kits y compilado con esta especificación curada (CH-04 mecánicas de oleadas)"
   },
   "source": "Árboles de cálculo del bin del cliente (python -m binmodel) y marcado de los tooltips del cliente; estructura de casos curada en research/kits/",
   "abilities": {
     "P": {
       "name": "Fervor jonio",
       "max_rank": 1,
-      "cases": [],
+      "cases": [
+        {
+          "id": "on_hit_4_stacks",
+          "name": "Daño mágico al impactar (4 cargas)",
+          "parts": [
+            {
+              "damage_type": "magic",
+              "formula": {
+                "op": "add",
+                "operands": [
+                  {
+                    "op": "by_level",
+                    "values": [
+                      10,
+                      13,
+                      16,
+                      19,
+                      22,
+                      25,
+                      28,
+                      31,
+                      34,
+                      37,
+                      40,
+                      43,
+                      46,
+                      49,
+                      52,
+                      55,
+                      58,
+                      61
+                    ]
+                  },
+                  {
+                    "op": "mul",
+                    "operands": [
+                      {
+                        "op": "constant",
+                        "value": 0.2
+                      },
+                      {
+                        "op": "stat",
+                        "stat": "attack_damage",
+                        "scope": "bonus"
+                      }
+                    ]
+                  }
+                ]
+              },
+              "label": "Derivado",
+              "source": "Characters/Irelia/Spells/IreliaPassiveAbility/IreliaPassive.mSpellCalculations.OnHitBonus (16.23.8406595+branch.releases-16-23.content.release)",
+              "damage_type_source": "spell_ireliapassive_tooltip <magicDamage>"
+            }
+          ]
+        }
+      ],
       "passive_stats": [],
       "not_modelled": [
-        "Velocidad de ataque acumulable hasta 4 cargas (SingleStackAS) y daño mágico al impactar (OnHitBonus)"
+        "El daño mágico al impactar (OnHitBonus) solo se activa al alcanzar el máximo de 4 cargas"
+      ],
+      "passive_effects": [
+        {
+          "id": "ionian_fervor_as",
+          "name": "Fervor jonio (VA por carga)",
+          "kind": "stacking_stat",
+          "formula": {
+            "op": "linear_by_level",
+            "min": 10,
+            "max": 25
+          },
+          "label": "Derivado",
+          "source": "Characters/Irelia/Spells/IreliaPassiveAbility/IreliaPassive.mSpellCalculations.SingleStackAS (16.23.8406595+branch.releases-16-23.content.release)",
+          "stat": "attack_speed_bonus",
+          "mode": "flat",
+          "trigger": "ability_hit",
+          "input_name": "ionian_fervor_stacks",
+          "max_stacks": 4,
+          "duration_seconds": 6
+        }
       ]
     },
     "Q": {

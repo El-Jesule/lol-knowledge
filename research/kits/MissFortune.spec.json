@@ -4,8 +4,8 @@
   "verified_against": {
     "content_version": "16.23.8406595+branch.releases-16-23.content.release",
     "bin_sha256": "a9f7c7fb2d16ab34e431d2e99df7a588ee75dbfc74e4d462cacd1a271935ab8d",
-    "evidence": "odd/tasks/champion-kits-wave-3.md",
-    "result": "Bin del cliente 16.23 convertido con python -m binmodel.batch_kits y compilado con esta especificación curada (CH-01 oleada 3)"
+    "evidence": "odd/tasks/champion-wave-mechanics.md",
+    "result": "Bin del cliente 16.23 convertido con python -m binmodel.batch_kits y compilado con esta especificación curada (CH-04 mecánicas de oleadas)"
   },
   "abilities": {
     "P": {
@@ -33,10 +33,19 @@
       "cases": [
         {
           "id": "shot",
-          "name": "Disparo (primer o segundo objetivo sin crítico)",
+          "name": "Primer impacto (o rebote sin crítico)",
           "parts": [
             {
               "calculation": "TotalDamageTooltip"
+            }
+          ]
+        },
+        {
+          "id": "crit_bounce",
+          "name": "Rebote crítico",
+          "parts": [
+            {
+              "calculation": "TotalDamageCrit"
             }
           ]
         }
@@ -85,7 +94,7 @@
       "cases": [
         {
           "id": "per_wave",
-          "name": "Una oleada (sin crítico)",
+          "name": "Una oleada (normal)",
           "parts": [
             {
               "calculation": "PhysicalDamagePerWave"
@@ -93,8 +102,17 @@
           ]
         },
         {
+          "id": "crit_per_wave",
+          "name": "Una oleada (crítica)",
+          "parts": [
+            {
+              "calculation": "CritDamagePerWave"
+            }
+          ]
+        },
+        {
           "id": "total",
-          "name": "Canalización completa (14/16/18 oleadas, sin crítico)",
+          "name": "Canalización completa (14/16/18 oleadas sin crítico)",
           "parts": [
             {
               "calculation": "TotalPhysicalDamage"

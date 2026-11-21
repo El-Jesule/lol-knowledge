@@ -7,8 +7,8 @@
   "verified_against": {
     "content_version": "16.23.8406595+branch.releases-16-23.content.release",
     "bin_sha256": "92e182cb79a761b35ecd70e9e79ecc932792e09b6c7a7ac09651454aeae70482",
-    "evidence": "odd/tasks/champion-kits-wave-2.md",
-    "result": "Bin del cliente 16.23 convertido con python -m binmodel.batch_kits y compilado con esta especificación curada (CH-01 oleada 2)"
+    "evidence": "odd/tasks/champion-wave-mechanics.md",
+    "result": "Bin del cliente 16.23 convertido con python -m binmodel.batch_kits y compilado con esta especificación curada (CH-04 mecánicas de oleadas)"
   },
   "source": "Árboles de cálculo del bin del cliente (python -m binmodel) y marcado de los tooltips del cliente; estructura de casos curada en research/kits/",
   "abilities": {
@@ -141,8 +141,65 @@
       "max_rank": 3,
       "cases": [
         {
+          "id": "passive_bolt",
+          "name": "Rayo pasivo por ataque",
+          "parts": [
+            {
+              "damage_type": "magic",
+              "formula": {
+                "op": "add",
+                "operands": [
+                  {
+                    "op": "by_rank",
+                    "values": [
+                      50,
+                      100,
+                      150
+                    ]
+                  },
+                  {
+                    "op": "mul",
+                    "operands": [
+                      {
+                        "op": "by_rank",
+                        "values": [
+                          0.3,
+                          0.4,
+                          0.5
+                        ]
+                      },
+                      {
+                        "op": "stat",
+                        "stat": "ability_power",
+                        "scope": "total"
+                      }
+                    ]
+                  },
+                  {
+                    "op": "mul",
+                    "operands": [
+                      {
+                        "op": "constant",
+                        "value": 0.02
+                      },
+                      {
+                        "op": "stat",
+                        "stat": "mana",
+                        "scope": "total"
+                      }
+                    ]
+                  }
+                ]
+              },
+              "label": "Derivado",
+              "source": "Characters/Blitzcrank/Spells/StaticFieldAbility/StaticField.mSpellCalculations.PassiveDamage (16.23.8406595+branch.releases-16-23.content.release)",
+              "damage_type_source": "spell_staticfield_tooltip <magicDamage>"
+            }
+          ]
+        },
+        {
           "id": "active",
-          "name": "Activa en área",
+          "name": "Detonación activa",
           "parts": [
             {
               "damage_type": "magic",
@@ -182,7 +239,7 @@
       ],
       "passive_stats": [],
       "not_modelled": [
-        "Descarga pasiva (PassiveDamage usa nodo unresolved en el bin), destrucción de escudos y silencio"
+        "Destrucción de escudos y silencio de 0,75 s en la activación"
       ]
     }
   }

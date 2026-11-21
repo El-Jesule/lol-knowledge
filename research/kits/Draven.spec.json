@@ -4,8 +4,8 @@
   "verified_against": {
     "content_version": "16.23.8406595+branch.releases-16-23.content.release",
     "bin_sha256": "2aed9484380d92535186a52b73a19f6ad96c9768b93c4c6a7d98d02f83646db8",
-    "evidence": "odd/tasks/champion-kits-wave-3.md",
-    "result": "Bin del cliente 16.23 convertido con python -m binmodel.batch_kits y compilado con esta especificación curada (CH-01 oleada 3)"
+    "evidence": "odd/tasks/champion-wave-mechanics.md",
+    "result": "Bin del cliente 16.23 convertido con python -m binmodel.batch_kits y compilado con esta especificación curada (CH-04 mecánicas de oleadas)"
   },
   "abilities": {
     "P": {
@@ -65,8 +65,20 @@
       "cases": [
         {
           "id": "hit",
-          "name": "Un pase (ida o vuelta)",
+          "name": "Un trayecto (ida o vuelta)",
           "parts": [
+            {
+              "calculation": "RCalculatedDamage"
+            }
+          ]
+        },
+        {
+          "id": "both_passes",
+          "name": "Ida y vuelta (2 impactos)",
+          "parts": [
+            {
+              "calculation": "RCalculatedDamage"
+            },
             {
               "calculation": "RCalculatedDamage"
             }

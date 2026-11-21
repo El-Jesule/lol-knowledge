@@ -4,8 +4,8 @@
   "verified_against": {
     "content_version": "16.23.8406595+branch.releases-16-23.content.release",
     "bin_sha256": "1a56629726be50325cf7a37c419c13866cbb77dbb70a7469bb4515d62ca39b18",
-    "evidence": "odd/tasks/champion-kits-wave-4.md",
-    "result": "Bin del cliente 16.23 convertido con python -m binmodel.batch_kits y compilado con esta especificación curada (CH-01 oleada 4 — cierre 173/173)"
+    "evidence": "odd/tasks/champion-wave-mechanics.md",
+    "result": "Bin del cliente 16.23 convertido con python -m binmodel.batch_kits y compilado con esta especificación curada (CH-04 mecánicas de oleadas)"
   },
   "abilities": {
     "P": {
@@ -90,7 +90,18 @@
       "name": "Buscador del Vacío",
       "tooltip": "spell_kaisaw_tooltip",
       "not_modelled": [
-        "Proyectil de daño mágico (W.TotalDamage usa EffectValue en el bin), aplicación de 2/3 cargas de Plasma y devolución de 75 % de enfriamiento evolucionada"
+        "Aplicación de 2/3 cargas de Plasma y reembolso de enfriamiento al evolucionar"
+      ],
+      "cases": [
+        {
+          "id": "bolt",
+          "name": "Rayo del Vacío (sin detonación de Plasma)",
+          "parts": [
+            {
+              "calculation": "TotalDamage"
+            }
+          ]
+        }
       ]
     },
     "E": {

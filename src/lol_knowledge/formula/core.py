@@ -79,7 +79,7 @@ _ALLOWED_FORMULA_KEYS = {
     "by_rank": {"op", "values"},
     "by_level": {"op", "values"},
     "linear_by_level": {"op", "min", "max"},
-    "input": {"op", "name"},
+    "input": {"op", "name", "default"},
     "unknown": {"op", "reason"},
     "unsupported": {"op", "reason", "needed"},
 }
@@ -149,6 +149,8 @@ def _formula_issues(formula: Any, depth: int, ops: frozenset[str]) -> list[str]:
         name = formula.get("name")
         if not isinstance(name, str) or not name.strip():
             return ["input formula needs a non-empty name"]
+        if "default" in formula and not _is_number(formula.get("default")):
+            return ["input formula default must be a finite numeric value"]
         return []
     if operation == "by_holder_range":
         problems = []
@@ -326,6 +328,8 @@ def _evaluate(formula: Any, ctx: _Context, depth: int) -> tuple[Fraction, list[s
     if operation == "input":
         name = formula.get("name")
         value = ctx.inputs.get(name)
+        if value is None and "default" in formula:
+            value = formula.get("default")
         if not _is_number(value):
             raise FormulaError(f"missing input {name!r}", code="missing_input", node=formula)
         return _exact(value), [f"input:{name}"]

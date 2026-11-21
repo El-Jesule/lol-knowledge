@@ -7,15 +7,51 @@
   "verified_against": {
     "content_version": "16.23.8406595+branch.releases-16-23.content.release",
     "bin_sha256": "7c38b86bc38a56bb0d031acfa4c1aa98be423401807ce0197629eef5ffd7807a",
-    "evidence": "odd/tasks/champion-kits-wave-4.md",
-    "result": "Bin del cliente 16.23 convertido con python -m binmodel.batch_kits y compilado con esta especificación curada (CH-01 oleada 4 — cierre 173/173)"
+    "evidence": "odd/tasks/champion-wave-mechanics.md",
+    "result": "Bin del cliente 16.23 convertido con python -m binmodel.batch_kits y compilado con esta especificación curada (CH-04 mecánicas de oleadas)"
   },
   "source": "Árboles de cálculo del bin del cliente (python -m binmodel) y marcado de los tooltips del cliente; estructura de casos curada en research/kits/",
   "abilities": {
     "P": {
       "name": "Juramento a las Tierras Primigenias",
       "max_rank": 1,
-      "cases": [],
+      "cases": [
+        {
+          "id": "crit_bonus_magic",
+          "name": "Amplificación de daño mágico en golpes críticos",
+          "parts": [
+            {
+              "damage_type": "magic",
+              "formula": {
+                "op": "add",
+                "operands": [
+                  {
+                    "op": "constant",
+                    "value": 0.1
+                  },
+                  {
+                    "op": "mul",
+                    "operands": [
+                      {
+                        "op": "constant",
+                        "value": 0.001
+                      },
+                      {
+                        "op": "stat",
+                        "stat": "ability_power",
+                        "scope": "total"
+                      }
+                    ]
+                  }
+                ]
+              },
+              "label": "Derivado",
+              "source": "Characters/Yunara/Spells/YunaraPassiveAbility/YunaraPassive.mSpellCalculations.Calc_Damage_Amp (16.23.8406595+branch.releases-16-23.content.release)",
+              "damage_type_source": "spell_yunarap_tooltip <magicDamage>"
+            }
+          ]
+        }
+      ],
       "passive_stats": [],
       "not_modelled": [
         "Daño mágico adicional porcentual en golpes críticos (Calc_Damage_Amp: 10 % + 10 % por 100 PH del golpe crítico)"
@@ -280,7 +316,61 @@
     "R": {
       "name": "Trascender",
       "max_rank": 3,
-      "cases": [],
+      "cases": [
+        {
+          "id": "transcendent_w",
+          "name": "Arco de ruina (W potenciada durante R)",
+          "parts": [
+            {
+              "damage_type": "magic",
+              "formula": {
+                "op": "add",
+                "operands": [
+                  {
+                    "op": "by_rank",
+                    "values": [
+                      160,
+                      320,
+                      480
+                    ]
+                  },
+                  {
+                    "op": "mul",
+                    "operands": [
+                      {
+                        "op": "constant",
+                        "value": 1.2
+                      },
+                      {
+                        "op": "stat",
+                        "stat": "attack_damage",
+                        "scope": "bonus"
+                      }
+                    ]
+                  },
+                  {
+                    "op": "mul",
+                    "operands": [
+                      {
+                        "op": "constant",
+                        "value": 0.75
+                      },
+                      {
+                        "op": "stat",
+                        "stat": "ability_power",
+                        "scope": "total"
+                      }
+                    ]
+                  }
+                ]
+              },
+              "label": "Derivado",
+              "source": "Characters/Yunara/Spells/YunaraRAbility/YunaraR.mSpellCalculations.Calc_RW_Damage (16.23.8406595+branch.releases-16-23.content.release)",
+              "damage_type_source": "spell_yunaraw_tooltip <magicDamage>"
+            }
+          ]
+        }
+      ],
       "passive_stats": [],
       "not_modelled": [
         "Estado de Trascendencia (activa Q automáticamente y potencia W a Arco de la ruina: Calc_RW_Damage y E a Sombras incorpóreas)"

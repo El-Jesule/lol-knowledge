@@ -7,8 +7,8 @@
   "verified_against": {
     "content_version": "16.23.8406595+branch.releases-16-23.content.release",
     "bin_sha256": "c3813711923cfde1260d748ee7d8a4088bbde213a6851c83e928adbb62603b3f",
-    "evidence": "odd/tasks/champion-kits-wave-4.md",
-    "result": "Bin del cliente 16.23 convertido con python -m binmodel.batch_kits y compilado con esta especificación curada (CH-01 oleada 4 — cierre 173/173)"
+    "evidence": "odd/tasks/champion-wave-mechanics.md",
+    "result": "Bin del cliente 16.23 convertido con python -m binmodel.batch_kits y compilado con esta especificación curada (CH-04 mecánicas de oleadas)"
   },
   "source": "Árboles de cálculo del bin del cliente (python -m binmodel) y marcado de los tooltips del cliente; estructura de casos curada en research/kits/",
   "abilities": {
@@ -78,7 +78,7 @@
       "cases": [
         {
           "id": "wolf_bite_0_marks",
-          "name": "Mordisco de Lobo (0 marcas: base + 1,5 % vida actual)",
+          "name": "Mordisco de Lobo (base + % vida actual con --input kindred_marks)",
           "parts": [
             {
               "damage_type": "magic",
@@ -135,8 +135,27 @@
                 "op": "mul",
                 "operands": [
                   {
-                    "op": "constant",
-                    "value": 0.015
+                    "op": "add",
+                    "operands": [
+                      {
+                        "op": "constant",
+                        "value": 0.015
+                      },
+                      {
+                        "op": "mul",
+                        "operands": [
+                          {
+                            "op": "input",
+                            "name": "kindred_marks",
+                            "default": 0
+                          },
+                          {
+                            "op": "constant",
+                            "value": 0.01
+                          }
+                        ]
+                      }
+                    ]
                   },
                   {
                     "op": "stat",
@@ -147,7 +166,7 @@
                 ]
               },
               "label": "Derivado",
-              "source": "Characters/Kindred/Spells/KindredWAbility/KindredW · DataValues.CloneBasePercentDamage × vida actual del objetivo (0 marcas) (16.23.8406595+branch.releases-16-23.content.release)",
+              "source": "Characters/Kindred/Spells/KindredWAbility/KindredW · mSpellCalculations.PercentWolfDamage × vida actual del objetivo (--input kindred_marks) (16.23.8406595+branch.releases-16-23.content.release)",
               "damage_type_source": "spell_kindredw_tooltip <magicDamage>"
             }
           ]
@@ -164,7 +183,7 @@
       "cases": [
         {
           "id": "bite_0_marks",
-          "name": "Detonación de 3 ataques (0 marcas: base + 5 % vida faltante)",
+          "name": "Detonación de 3 ataques (base + % vida faltante con --input kindred_marks)",
           "parts": [
             {
               "damage_type": "physical",
@@ -207,8 +226,27 @@
                 "op": "mul",
                 "operands": [
                   {
-                    "op": "constant",
-                    "value": 0.05
+                    "op": "add",
+                    "operands": [
+                      {
+                        "op": "constant",
+                        "value": 0.05
+                      },
+                      {
+                        "op": "mul",
+                        "operands": [
+                          {
+                            "op": "input",
+                            "name": "kindred_marks",
+                            "default": 0
+                          },
+                          {
+                            "op": "constant",
+                            "value": 0.005
+                          }
+                        ]
+                      }
+                    ]
                   },
                   {
                     "op": "stat",
@@ -225,7 +263,7 @@
                 ]
               },
               "label": "Derivado",
-              "source": "Characters/Kindred/Spells/KindredEWrapperAbility/KindredEWrapper · DataValues.BasePercentDamage × vida faltante del objetivo (0 marcas) (16.23.8406595+branch.releases-16-23.content.release)",
+              "source": "Characters/Kindred/Spells/KindredEWrapperAbility/KindredEWrapper · mSpellCalculations.PercentBiteDamage × vida faltante del objetivo (--input kindred_marks) (16.23.8406595+branch.releases-16-23.content.release)",
               "damage_type_source": "spell_kindredewrapper_tooltip <physicalDamage>"
             }
           ]

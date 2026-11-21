@@ -4,8 +4,8 @@
   "verified_against": {
     "content_version": "16.23.8406595+branch.releases-16-23.content.release",
     "bin_sha256": "37a8886a56a4c8a2f7912151a30cfdd801186fc78a511c7e72fe6932cc82140a",
-    "evidence": "odd/tasks/champion-kits-wave-4.md",
-    "result": "Bin del cliente 16.23 convertido con python -m binmodel.batch_kits y compilado con esta especificación curada (CH-01 oleada 4 — cierre 173/173)"
+    "evidence": "odd/tasks/champion-wave-mechanics.md",
+    "result": "Bin del cliente 16.23 convertido con python -m binmodel.batch_kits y compilado con esta especificación curada (CH-04 mecánicas de oleadas)"
   },
   "abilities": {
     "P": {
@@ -14,7 +14,8 @@
       "max_rank": 1,
       "not_modelled": [
         "Acumulaciones infinitas de Entrenamiento dracónico (daño en Q/W/E y umbrales 25/125/225 en Q)"
-      ]
+      ],
+      "cases": []
     },
     "Q": {
       "name": "Aliento supermegaabrasador",
@@ -22,10 +23,36 @@
       "cases": [
         {
           "id": "base",
-          "name": "Aliento base (0 cargas, sin crítico)",
+          "name": "Aliento base (componente físico)",
           "parts": [
             {
               "calculation": "TotalDamage"
+            }
+          ]
+        },
+        {
+          "id": "tier3_burn",
+          "name": "Quemadura verdadera con 225+ cargas (3 s, escala con DA adicional y --input dragon_practice_stacks)",
+          "parts": [
+            {
+              "tooltip_reference": "Tier3_Burn",
+              "damage_type": "true",
+              "source_note": "mSpellCalculations.Tier3_Burn × vida máxima del objetivo (--input dragon_practice_stacks)",
+              "formula": {
+                "op": "mul",
+                "operands": [
+                  {
+                    "op": "calculation",
+                    "name": "Tier3_Burn"
+                  },
+                  {
+                    "op": "stat",
+                    "stat": "health",
+                    "scope": "max",
+                    "subject": "target"
+                  }
+                ]
+              }
             }
           ]
         }

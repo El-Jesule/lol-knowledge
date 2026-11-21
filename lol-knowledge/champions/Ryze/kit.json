@@ -7,8 +7,8 @@
   "verified_against": {
     "content_version": "16.23.8406595+branch.releases-16-23.content.release",
     "bin_sha256": "edb3ee342f3161ec0e4f1651c5490828393d1042de16a677f2efd7a6cf049623",
-    "evidence": "odd/tasks/champion-kits-wave-4.md",
-    "result": "Bin del cliente 16.23 convertido con python -m binmodel.batch_kits y compilado con esta especificación curada (CH-01 oleada 4 — cierre 173/173)"
+    "evidence": "odd/tasks/champion-wave-mechanics.md",
+    "result": "Bin del cliente 16.23 convertido con python -m binmodel.batch_kits y compilado con esta especificación curada (CH-04 mecánicas de oleadas)"
   },
   "source": "Árboles de cálculo del bin del cliente (python -m binmodel) y marcado de los tooltips del cliente; estructura de casos curada en research/kits/",
   "abilities": {
@@ -24,28 +24,196 @@
     "Q": {
       "name": "Descarga eléctrica",
       "max_rank": 5,
-      "cases": [],
+      "cases": [
+        {
+          "id": "overload",
+          "name": "Descarga (sin amplificación de Flujo)",
+          "parts": [
+            {
+              "damage_type": "magic",
+              "formula": {
+                "op": "add",
+                "operands": [
+                  {
+                    "op": "by_rank",
+                    "values": [
+                      75,
+                      95,
+                      115,
+                      135,
+                      155
+                    ]
+                  },
+                  {
+                    "op": "mul",
+                    "operands": [
+                      {
+                        "op": "constant",
+                        "value": 0.55
+                      },
+                      {
+                        "op": "stat",
+                        "stat": "ability_power",
+                        "scope": "total"
+                      }
+                    ]
+                  },
+                  {
+                    "op": "mul",
+                    "operands": [
+                      {
+                        "op": "constant",
+                        "value": 0.02
+                      },
+                      {
+                        "op": "stat",
+                        "stat": "mana",
+                        "scope": "bonus"
+                      }
+                    ]
+                  }
+                ]
+              },
+              "label": "Derivado",
+              "source": "Characters/Ryze/Spells/RyzeQWrapperAbility/RyzeQWrapper.mSpellCalculations.QDamageCalc (16.23.8406595+branch.releases-16-23.content.release)",
+              "damage_type_source": "spell_ryzeqwrapper_tooltip <magicDamage>"
+            }
+          ]
+        }
+      ],
       "passive_stats": [],
       "not_modelled": [
-        "QDamageCalc incluye término de maná adicional no resuelto en el bin (unresolved); reinicio de CD por W/E, 2 runas de velocidad de movimiento y amplificación contra Flujo"
+        "Amplificación del 40/55/70/85/100 % (según rango de R) al consumir Flujo de hechizos (E) y velocidad de movimiento con 2 runas"
       ]
     },
     "W": {
       "name": "Prisión rúnica",
       "max_rank": 5,
-      "cases": [],
+      "cases": [
+        {
+          "id": "prison",
+          "name": "Prisión rúnica",
+          "parts": [
+            {
+              "damage_type": "magic",
+              "formula": {
+                "op": "add",
+                "operands": [
+                  {
+                    "op": "by_rank",
+                    "values": [
+                      60,
+                      90,
+                      120,
+                      150,
+                      180
+                    ]
+                  },
+                  {
+                    "op": "mul",
+                    "operands": [
+                      {
+                        "op": "constant",
+                        "value": 0.7
+                      },
+                      {
+                        "op": "stat",
+                        "stat": "ability_power",
+                        "scope": "total"
+                      }
+                    ]
+                  },
+                  {
+                    "op": "mul",
+                    "operands": [
+                      {
+                        "op": "constant",
+                        "value": 0.03
+                      },
+                      {
+                        "op": "stat",
+                        "stat": "mana",
+                        "scope": "bonus"
+                      }
+                    ]
+                  }
+                ]
+              },
+              "label": "Derivado",
+              "source": "Characters/Ryze/Spells/RyzeWAbility/RyzeW.mSpellCalculations.WDamageCalc (16.23.8406595+branch.releases-16-23.content.release)",
+              "damage_type_source": "spell_ryzew_tooltip <magicDamage>"
+            }
+          ]
+        }
+      ],
       "passive_stats": [],
       "not_modelled": [
-        "WDamageCalc incluye término de maná adicional no resuelto en el bin; ralentización o raíz sobre Flujo"
+        "Ralentización del 50 % (o inmovilización al consumir Flujo)"
       ]
     },
     "E": {
       "name": "Tormenta eléctrica",
       "max_rank": 5,
-      "cases": [],
+      "cases": [
+        {
+          "id": "flux",
+          "name": "Flujo de hechizos",
+          "parts": [
+            {
+              "damage_type": "magic",
+              "formula": {
+                "op": "add",
+                "operands": [
+                  {
+                    "op": "by_rank",
+                    "values": [
+                      60,
+                      90,
+                      120,
+                      150,
+                      180
+                    ]
+                  },
+                  {
+                    "op": "mul",
+                    "operands": [
+                      {
+                        "op": "constant",
+                        "value": 0.5
+                      },
+                      {
+                        "op": "stat",
+                        "stat": "ability_power",
+                        "scope": "total"
+                      }
+                    ]
+                  },
+                  {
+                    "op": "mul",
+                    "operands": [
+                      {
+                        "op": "constant",
+                        "value": 0.02
+                      },
+                      {
+                        "op": "stat",
+                        "stat": "mana",
+                        "scope": "bonus"
+                      }
+                    ]
+                  }
+                ]
+              },
+              "label": "Derivado",
+              "source": "Characters/Ryze/Spells/RyzeEAbility/RyzeE.mSpellCalculations.EDamageCalc (16.23.8406595+branch.releases-16-23.content.release)",
+              "damage_type_source": "spell_ryzee_tooltip <magicDamage>"
+            }
+          ]
+        }
+      ],
       "passive_stats": [],
       "not_modelled": [
-        "EDamageCalc incluye término de maná adicional no resuelto en el bin; aplicación y propagación de Flujo"
+        "Propagación de Flujo a enemigos cercanos y reinicio de enfriamiento de Q"
       ]
     },
     "R": {

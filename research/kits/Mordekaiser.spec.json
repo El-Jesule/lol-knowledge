@@ -4,8 +4,8 @@
   "verified_against": {
     "content_version": "16.23.8406595+branch.releases-16-23.content.release",
     "bin_sha256": "59df2c462e15d2c6c8e188241bf5d79979e89f09010628fc064fd1826f4a63d9",
-    "evidence": "odd/tasks/champion-kits-wave-4.md",
-    "result": "Bin del cliente 16.23 convertido con python -m binmodel.batch_kits y compilado con esta especificación curada (CH-01 oleada 4 — cierre 173/173)"
+    "evidence": "odd/tasks/champion-wave-mechanics.md",
+    "result": "Bin del cliente 16.23 convertido con python -m binmodel.batch_kits y compilado con esta especificación curada (CH-04 mecánicas de oleadas)"
   },
   "abilities": {
     "P": {
@@ -63,8 +63,26 @@
     "Q": {
       "name": "Aniquilación",
       "tooltip": "spell_mordekaiserq_tooltip",
-      "not_modelled": [
-        "Mazo en área y bonificación aislado (QDamage usa un nodo breakpoints sin level1_value en el bin, no traducido por kitgen)"
+      "not_modelled": [],
+      "cases": [
+        {
+          "id": "multi_target",
+          "name": "Impacto en múltiples objetivos",
+          "parts": [
+            {
+              "calculation": "QDamage"
+            }
+          ]
+        },
+        {
+          "id": "isolated",
+          "name": "Objetivo aislado",
+          "parts": [
+            {
+              "calculation": "EmpoweredDamageTooltip"
+            }
+          ]
+        }
       ]
     },
     "W": {

@@ -4,8 +4,8 @@
   "verified_against": {
     "content_version": "16.23.8406595+branch.releases-16-23.content.release",
     "bin_sha256": "0b5d75f12f867a8ace14a88e73bfe097ca56cc22254939008709f4e1e015a390",
-    "evidence": "odd/tasks/champion-kits-wave-4.md",
-    "result": "Bin del cliente 16.23 convertido con python -m binmodel.batch_kits y compilado con esta especificación curada (CH-01 oleada 4 — cierre 173/173)"
+    "evidence": "odd/tasks/champion-wave-mechanics.md",
+    "result": "Bin del cliente 16.23 convertido con python -m binmodel.batch_kits y compilado con esta especificación curada (CH-04 mecánicas de oleadas)"
   },
   "abilities": {
     "P": {
@@ -94,6 +94,28 @@
       "tooltip": "spell_eliser_tooltip",
       "not_modelled": [
         "Transformación entre forma humana y forma de araña, daño/curación al impactar en araña (PassiveTotalDamage, PassiveTotalHealing) y ataques de crías (SpiderlingTotalDamage)"
+      ],
+      "cases": [
+        {
+          "id": "spider_on_hit",
+          "name": "Forma de araña: daño mágico adicional al impactar",
+          "tooltip": "spell_elisepassive_tooltip",
+          "parts": [
+            {
+              "calculation": "PassiveTotalDamage"
+            }
+          ]
+        },
+        {
+          "id": "spiderling_attack",
+          "name": "Ataque de una arañita",
+          "tooltip": "spell_eliser_jade_tooltip",
+          "parts": [
+            {
+              "calculation": "SpiderlingTotalDamage"
+            }
+          ]
+        }
       ]
     }
   }

@@ -222,3 +222,183 @@ def test_explicit_max_rank_in_spec_overrides_bin_level_count(ahri_extract):
     spec["abilities"]["W"]["max_rank"] = 6
     compiled = compile_kit(ahri_extract, ahri_tooltips(), spec)
     assert compiled["abilities"]["W"]["max_rank"] == 6
+
+
+def test_wave_mechanics_translation_in_kitgen():
+    from binmodel.registry import Registry
+    from binmodel.traverse import TraversalContext, extract_effect_amounts, parse_part
+
+    ctx = TraversalContext(
+        document={},
+        registry=Registry(),
+        source_sha256="sha256:test",
+        content_version="16.23.test",
+        spell_path="TestSpell",
+    )
+    spell = {
+        "mEffectAmount": [
+            {"value": [50.0, 80.0, 130.0, 180.0, 230.0, 280.0, 330.0]},
+            {},
+        ]
+    }
+    effect_dvs = [
+        dv.to_dict()
+        for dv in extract_effect_amounts(
+            spell, spell_path="TestSpell", level_count=5, source_sha256="s", content_version="v"
+        )
+    ]
+    assert len(effect_dvs) == 1
+    assert effect_dvs[0]["name"] == "Effect1Amount"
+    assert effect_dvs[0]["ranks"] == [80.0, 130.0, 180.0, 230.0, 280.0]
+
+    eff_part = parse_part(
+        {"__type": "EffectValueCalculationPart", "mEffectIndex": 1},
+        context=ctx,
+        pointer="/Test/0",
+    )
+    bp_part = parse_part(
+        {
+            "__type": "ByCharLevelBreakpointsCalculationPart",
+            "mBreakpoints": [{"mLevel": 10, "mBonusPerLevelAtAndAfter": 8.0}],
+        },
+        context=ctx,
+        pointer="/Test/1",
+    )
+    mana_part = parse_part(
+        {
+            "__type": "AbilityResourceByCoefficientCalculationPart",
+            "mCoefficient": 0.02,
+            "mStatFormula": 2,
+        },
+        context=ctx,
+        pointer="/Test/2",
+    )
+    buff_part = parse_part(
+        {
+            "__type": "BuffCounterByCoefficientCalculationPart",
+            "mBuffName": "NasusQStacks",
+            "mCoefficient": 1.0,
+        },
+        context=ctx,
+        pointer="/Test/3",
+    )
+    irelia_part = parse_part(
+        {
+            "__type": "{b22609db}",
+            "{91d404a5}": "OnHitBaseDamage",
+            "{b2cd0eb0}": "OnHitPerLevel",
+        },
+        context=ctx,
+        pointer="/Test/4",
+    )
+    crit_part = parse_part(
+        {
+            "__type": "StatByCoefficientCalculationPart",
+            "mStat": 9,
+            "mStatFormula": 0,
+            "mCoefficient": 1.0,
+        },
+        context=ctx,
+        pointer="/Test/5",
+    )
+
+    extract = {
+        "content_version": "16.23.test",
+        "abilities": [
+            {
+                "slot": "P",
+                "path": "TestP",
+                "level_count": 1,
+                "data_values": [
+                    {"name": "OnHitBaseDamage", "mode": "base", "ranks": [10.0]},
+                    {"name": "OnHitPerLevel", "mode": "base", "ranks": [3.0]},
+                ],
+                "calculations": [
+                    {
+                        "name": "OnHitBonus",
+                        "tree": {"kind": "game_calculation", "parts": [irelia_part]},
+                    }
+                ],
+            },
+            {
+                "slot": "Q",
+                "path": "TestQ",
+                "level_count": 5,
+                "data_values": effect_dvs,
+                "calculations": [
+                    {
+                        "name": "TotalDamage",
+                        "tree": {
+                            "kind": "game_calculation",
+                            "parts": [eff_part, bp_part, mana_part, buff_part, crit_part],
+                        },
+                    }
+                ],
+            },
+        ],
+    }
+    tooltips = {
+        "tip_p": "<magicDamage>@OnHitBonus@</magicDamage>",
+        "tip_q_sub": "<physicalDamage>@TotalDamage@</physicalDamage>",
+        "tip_q": "{{tip_q_sub}}",
+    }
+    spec = {
+        "champion": "TestChamp",
+        "game_version": "16.23",
+        "abilities": {
+            "P": {
+                "name": "Passive",
+                "tooltip": "tip_p",
+                "cases": [
+                    {"id": "on_hit", "name": "On hit", "parts": [{"calculation": "OnHitBonus"}]}
+                ],
+            },
+            "Q": {
+                "name": "Strike",
+                "tooltip": "tip_q",
+                "cases": [
+                    {"id": "hit", "name": "Hit", "parts": [{"calculation": "TotalDamage"}]},
+                    {
+                        "id": "cross_p",
+                        "name": "Cross slot",
+                        "tooltip": "tip_p",
+                        "parts": [{"ability": "P", "calculation": "OnHitBonus"}],
+                    },
+                ],
+            },
+        },
+    }
+    kit = compile_kit(extract, tooltips, spec)
+    p_formula = kit["abilities"]["P"]["cases"][0]["parts"][0]["formula"]
+    assert p_formula == {"op": "by_level", "values": [10 + 3 * i for i in range(18)]}
+    q_ops = kit["abilities"]["Q"]["cases"][0]["parts"][0]["formula"]["operands"]
+    assert q_ops[0] == {"op": "by_rank", "values": [80, 130, 180, 230, 280]}
+    assert q_ops[1]["values"][:10] == [0] * 10 and q_ops[1]["values"][-1] == 64
+    assert q_ops[2] == {
+        "op": "mul",
+        "operands": [
+            {"op": "constant", "value": 0.02},
+            {"op": "stat", "stat": "mana", "scope": "bonus"},
+        ],
+    }
+    assert q_ops[3] == {
+        "op": "mul",
+        "operands": [
+            {"op": "input", "name": "siphoning_strike_stacks", "default": 0},
+            {"op": "constant", "value": 1},
+        ],
+    }
+    assert q_ops[4] == {
+        "op": "mul",
+        "operands": [
+            {"op": "constant", "value": 1},
+            {
+                "op": "add",
+                "operands": [
+                    {"op": "constant", "value": 2},
+                    {"op": "stat", "stat": "crit_damage_bonus", "scope": "total"},
+                ],
+            },
+        ],
+    }
+    assert kit["abilities"]["Q"]["cases"][1]["parts"][0]["formula"] == p_formula

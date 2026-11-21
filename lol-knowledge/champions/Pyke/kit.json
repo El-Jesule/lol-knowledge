@@ -7,8 +7,8 @@
   "verified_against": {
     "content_version": "16.23.8406595+branch.releases-16-23.content.release",
     "bin_sha256": "8a3781337a0fcb08172c376d85d7b3299f2a8bb4d0493dec4c190de952ba6aca",
-    "evidence": "odd/tasks/champion-kits-wave-4.md",
-    "result": "Bin del cliente 16.23 convertido con python -m binmodel.batch_kits y compilado con esta especificación curada (CH-01 oleada 4 — cierre 173/173)"
+    "evidence": "odd/tasks/champion-wave-mechanics.md",
+    "result": "Bin del cliente 16.23 convertido con python -m binmodel.batch_kits y compilado con esta especificación curada (CH-04 mecánicas de oleadas)"
   },
   "source": "Árboles de cálculo del bin del cliente (python -m binmodel) y marcado de los tooltips del cliente; estructura de casos curada en research/kits/",
   "abilities": {
@@ -135,10 +135,88 @@
     "R": {
       "name": "Muerte de las profundidades",
       "max_rank": 3,
-      "cases": [],
+      "cases": [
+        {
+          "id": "non_execute_physical",
+          "name": "Impacto físico sobre el umbral (50 % del umbral)",
+          "parts": [
+            {
+              "damage_type": "physical",
+              "formula": {
+                "op": "mul",
+                "operands": [
+                  {
+                    "op": "add",
+                    "operands": [
+                      {
+                        "op": "by_level",
+                        "values": [
+                          250,
+                          250,
+                          250,
+                          250,
+                          250,
+                          250,
+                          250,
+                          290,
+                          330,
+                          370,
+                          400,
+                          430,
+                          450,
+                          470,
+                          490,
+                          510,
+                          530,
+                          540
+                        ]
+                      },
+                      {
+                        "op": "mul",
+                        "operands": [
+                          {
+                            "op": "constant",
+                            "value": 0.8
+                          },
+                          {
+                            "op": "stat",
+                            "stat": "attack_damage",
+                            "scope": "bonus"
+                          }
+                        ]
+                      },
+                      {
+                        "op": "mul",
+                        "operands": [
+                          {
+                            "op": "constant",
+                            "value": 1.5
+                          },
+                          {
+                            "op": "stat",
+                            "stat": "lethality",
+                            "scope": "total"
+                          }
+                        ]
+                      }
+                    ]
+                  },
+                  {
+                    "op": "constant",
+                    "value": 0.5
+                  }
+                ]
+              },
+              "label": "Derivado",
+              "source": "Characters/Pyke/Spells/PykeRAbility/PykeR.mSpellCalculations.ReducedDamageFinal (16.23.8406595+branch.releases-16-23.content.release)",
+              "damage_type_source": "spell_pyker_tooltip <physicalDamage>"
+            }
+          ]
+        }
+      ],
       "passive_stats": [],
       "not_modelled": [
-        "Umbral de ejecución verdadero y 50 % daño físico por encima del umbral (RDamage escala con letalidad, stat no corroborado en kitgen); reinicio y reparto de oro"
+        "Ejecución bajo umbral (RDamage = 250..540 + 80 % DA adicional + 1,5 por letalidad), reinicio y oro de Tu parte"
       ]
     }
   }

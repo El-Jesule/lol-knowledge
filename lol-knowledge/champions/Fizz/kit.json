@@ -7,8 +7,8 @@
   "verified_against": {
     "content_version": "16.23.8406595+branch.releases-16-23.content.release",
     "bin_sha256": "8be835281ec7d06232c7795568e29248729161d52a3555a1104dc613173cc36e",
-    "evidence": "odd/tasks/champion-kits-wave-2.md",
-    "result": "Bin del cliente 16.23 convertido con python -m binmodel.batch_kits y compilado con esta especificación curada (CH-01 oleada 2)"
+    "evidence": "odd/tasks/champion-wave-mechanics.md",
+    "result": "Bin del cliente 16.23 convertido con python -m binmodel.batch_kits y compilado con esta especificación curada (CH-04 mecánicas de oleadas)"
   },
   "source": "Árboles de cálculo del bin del cliente (python -m binmodel) y marcado de los tooltips del cliente; estructura de casos curada en research/kits/",
   "abilities": {
@@ -26,8 +26,69 @@
       "max_rank": 5,
       "cases": [
         {
+          "id": "dash",
+          "name": "Embestida completa (100 % DA físico + daño mágico)",
+          "parts": [
+            {
+              "damage_type": "physical",
+              "formula": {
+                "op": "mul",
+                "operands": [
+                  {
+                    "op": "constant",
+                    "value": 1
+                  },
+                  {
+                    "op": "stat",
+                    "stat": "attack_damage",
+                    "scope": "total"
+                  }
+                ]
+              },
+              "label": "Derivado",
+              "source": "Characters/Fizz/Spells/FizzQAbility/FizzQ.mSpellCalculations.TotalDamage (16.23.8406595+branch.releases-16-23.content.release)",
+              "damage_type_source": "spell_fizzq_tooltip <physicalDamage>"
+            },
+            {
+              "damage_type": "magic",
+              "formula": {
+                "op": "add",
+                "operands": [
+                  {
+                    "op": "by_rank",
+                    "values": [
+                      10,
+                      25,
+                      40,
+                      55,
+                      70
+                    ]
+                  },
+                  {
+                    "op": "mul",
+                    "operands": [
+                      {
+                        "op": "constant",
+                        "value": 0.55
+                      },
+                      {
+                        "op": "stat",
+                        "stat": "ability_power",
+                        "scope": "total"
+                      }
+                    ]
+                  }
+                ]
+              },
+              "label": "Derivado",
+              "source": "Characters/Fizz/Spells/FizzQAbility/FizzQ.mSpellCalculations.QDamage (16.23.8406595+branch.releases-16-23.content.release)",
+              "damage_type_source": "spell_fizzq_tooltip <magicDamage>"
+            }
+          ]
+        },
+        {
           "id": "physical_part",
-          "name": "Parte física (100 % DA)",
+          "name": "Componente físico (100 % DA)",
           "parts": [
             {
               "damage_type": "physical",
@@ -54,7 +115,7 @@
       ],
       "passive_stats": [],
       "not_modelled": [
-        "Parte mágica adicional (QDamage usa EffectValueCalculationPart en el bin) y aplicación de efectos al impactar"
+        "Aplica efectos de impacto"
       ]
     },
     "W": {

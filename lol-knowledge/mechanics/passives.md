@@ -23,7 +23,7 @@ El motor no codifica nombres de campeón en Python: cualquier campeón declara s
 | `heal` | `rotation` (`HealEvent`) | Curación directa al cumplirse `trigger` (`on_champion_takedown`, `on_minion_monster_kill`, `on_hit`, `on_ability_hit`), con `stacks_required` / `input_name` opcionales; escala con `heal_and_shield_power`, Revitalizar y Heridas graves ([`survival.md`](survival.md)) |
 | `damage_proc` | `rotation` (`kind: "ability"`, slot `P`) | Daño adicional pasivo por disparo (`on_attack`, `on_hit`, `every_n_attacks`) con enfriamiento opcional `cooldown_seconds` en `--timeline` |
 
-Para interpolaciones lineales `1..18` del cliente (`ByCharLevelInterpolationCalculationPart` y `{ee18a47b}` sin multiplicador de crecimiento), las fórmulas de kit disponen del operador exacto `linear_by_level` (`min + (max - min) × (nivel - 1) / 17` en `Fraction`).
+Para interpolaciones lineales `1..18` del cliente (`ByCharLevelInterpolationCalculationPart` y `{ee18a47b}` sin multiplicador de crecimiento), las fórmulas de kit disponen del operador exacto `linear_by_level` (`min + (max - min) × (nivel - 1) / 17` en `Fraction`). Los contadores de cargas del bin (`BuffCounterByCoefficientCalculationPart` y `BuffCounterByNamedDataValueCalculationPart`) se compilan a `{"op": "input", "name": "<cargas>", "default": 0}`, evaluando a `0` cargas por defecto y escalando al pasar `--input <cargas>=N` (p. ej. `siphoning_strike_stacks`, `feast_stacks`, `stardust_stacks`, `kindred_marks`, `dragon_practice_stacks`, `souls`, `soul_fragments`, `accelerando_stacks`, `courage_stacks`).
 
 ## 2. Pasivas modeladas hoy (`Derivado`, P1 + P2)
 

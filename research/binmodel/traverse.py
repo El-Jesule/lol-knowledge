@@ -406,6 +406,58 @@ def extract_mode_overrides(
     return result
 
 
+def extract_effect_amounts(
+    spell: Mapping[str, Any],
+    *,
+    spell_path: str,
+    level_count: int | None,
+    source_sha256: str = "",
+    content_version: str = "",
+) -> list[DataValue]:
+    """Extract ``mSpell.mEffectAmount`` arrays as 1-indexed ``Effect{i}Amount`` entries."""
+    entries = spell.get("mEffectAmount")
+    if not isinstance(entries, Sequence) or isinstance(entries, (str, bytes)):
+        return []
+    source_base = f"{spell_path}.mSpell.mEffectAmount"
+    pointer_base = json_pointer(f"{spell_path}/mSpell/mEffectAmount")
+    values: list[DataValue] = []
+    for index, entry in enumerate(entries):
+        if not isinstance(entry, Mapping) or "value" not in entry:
+            continue
+        name = f"Effect{index + 1}Amount"
+        raw = _number_list(entry.get("value"), f"{source_base}[{index}].value")
+        if raw is None:
+            continue
+        local_diagnostics: list[Diagnostic] = []
+        ranks = ranked_values(
+            raw,
+            level_count,
+            f"{source_base}[{index}].value",
+            local_diagnostics,
+        )
+        values.append(
+            DataValue(
+                name=name,
+                source_path=f"{source_base}[{index}]",
+                raw_values=raw,
+                ranks=ranks,
+                level_count=level_count,
+                mode="effect_amount",
+                status="source_explicit" if ranks is not None else "unverified",
+                notes=""
+                if ranks is not None
+                else "Rank selection failed; raw values are preserved.",
+                provenance={
+                    "source_path": spell_path,
+                    "json_pointer": f"{pointer_base}/{index}",
+                    "source_sha256": source_sha256,
+                    "content_version": content_version,
+                },
+            )
+        )
+    return values
+
+
 def _vector(
     spell: Mapping[str, Any],
     key: str,
@@ -756,6 +808,8 @@ def parse_part(
         node["level1_value"] = part.get("mLevel1Value")
         node["initial_bonus_per_level"] = part.get("mInitialBonusPerLevel")
         absent_fields: list[str] = []
+        if "mLevel1Value" not in part:
+            absent_fields.append("level1_value")
         if "mInitialBonusPerLevel" not in part:
             absent_fields.append("initial_bonus_per_level")
         raw_breakpoints = part.get("mBreakpoints")
@@ -850,6 +904,90 @@ def parse_part(
             for index, item in enumerate(_field(part, "9823b29a") or [])
             if isinstance(item, Mapping)
         ]
+        return node
+
+    if type_value == "{b22609db}":
+        node = _node_base(context, part, pointer)
+        node["kind"] = "by_char_level_named_breakpoints"
+        node["level1_data_value"] = _field(part, "91d404a5")
+        node["bonus_per_level_data_value"] = _field(part, "b2cd0eb0")
+        node["breakpoints"] = []
+        return node
+
+    if type_value == "AbilityResourceByCoefficientCalculationPart":
+        from .stats import STAT_FORMULAS
+
+        resource_code = part.get("mAbilityResource", 0)
+        formula_code = part.get("mStatFormula", 0)
+        try:
+            formula_num = int(formula_code) if formula_code is not None else 0
+        except TypeError, ValueError:
+            formula_num = None
+        formula_entry = STAT_FORMULAS.get(formula_num) if formula_num is not None else None
+        is_mana = resource_code in (None, 0)
+        resolved = bool(is_mana and formula_entry)
+        coefficient = part.get("mCoefficient")
+        node = _node_base(context, part, pointer)
+        node["kind"] = "stat_scaled"
+        node["stat"] = {
+            "mAbilityResource": 0 if resource_code is None else resource_code,
+            "mStatFormula": formula_num,
+            "stat": "mana" if is_mana else None,
+            "formula": formula_entry[0] if formula_entry else None,
+            "resolved": resolved,
+            "confidence": (
+                "corroborated"
+                if resolved and formula_entry[1] == "corroborated"
+                else ("inferred" if resolved else "unverified")
+            ),
+            "stat_confidence": "corroborated" if is_mana else "unverified",
+            "formula_confidence": formula_entry[1] if formula_entry else "unverified",
+            "evidence": {
+                "stat": "Ryze Q/W/E, Kassadin R, Blitzcrank P/R mana scaling",
+                "formula": formula_entry[2] if formula_entry else None,
+            },
+        }
+        node["confidence"] = node["stat"]["confidence"]
+        node["factor"] = {
+            "kind": "number",
+            "value": coefficient,
+            "confidence": (
+                "source_explicit"
+                if isinstance(coefficient, (int, float)) and not isinstance(coefficient, bool)
+                else "unverified"
+            ),
+            "provenance": context.provenance(f"{pointer}/mCoefficient"),
+        }
+        return node
+
+    if type_value == "BuffCounterByCoefficientCalculationPart":
+        node = _node_base(context, part, pointer)
+        node["kind"] = "buff_counter"
+        node["buff_name"] = part.get("mBuffName")
+        coefficient = part.get("mCoefficient")
+        node["factor"] = {
+            "kind": "number",
+            "value": coefficient,
+            "confidence": (
+                "source_explicit"
+                if isinstance(coefficient, (int, float)) and not isinstance(coefficient, bool)
+                else "unverified"
+            ),
+            "provenance": context.provenance(f"{pointer}/mCoefficient"),
+        }
+        return node
+
+    if type_value == "BuffCounterByNamedDataValueCalculationPart":
+        node = _node_base(context, part, pointer)
+        node["kind"] = "buff_counter"
+        node["buff_name"] = part.get("mBuffName")
+        name = part.get("mDataValue")
+        node["factor"] = {
+            "kind": "data_value",
+            "name": name,
+            "confidence": "source_explicit" if isinstance(name, str) and name else "unverified",
+            "provenance": context.provenance(f"{pointer}/mDataValue"),
+        }
         return node
 
     if type_value == "{f3cbe7b2}":

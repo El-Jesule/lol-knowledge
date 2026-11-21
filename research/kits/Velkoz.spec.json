@@ -4,8 +4,8 @@
   "verified_against": {
     "content_version": "16.23.8406595+branch.releases-16-23.content.release",
     "bin_sha256": "cb46b8bc9614ab554a254a81cf3be55cddd8fe9c87af45c5a4f7b8e67c43697a",
-    "evidence": "odd/tasks/champion-kits-wave-2.md",
-    "result": "Bin del cliente 16.23 convertido con python -m binmodel.batch_kits y compilado con esta especificación curada (CH-01 oleada 2)"
+    "evidence": "odd/tasks/champion-wave-mechanics.md",
+    "result": "Bin del cliente 16.23 convertido con python -m binmodel.batch_kits y compilado con esta especificación curada (CH-04 mecánicas de oleadas)"
   },
   "abilities": {
     "P": {
@@ -103,7 +103,18 @@
       "name": "Rayo desintegrador de seres vivos",
       "tooltip": "spell_velkozr_tooltip",
       "not_modelled": [
-        "TotalDamage usa EffectValueCalculationPart en el bin; conversión a daño verdadero sobre investigados y ralentización"
+        "Conversión a daño verdadero contra objetivos investigados por Desconstrucción orgánica y ralentización"
+      ],
+      "cases": [
+        {
+          "id": "full_channel",
+          "name": "Canalización completa (2,5 s)",
+          "parts": [
+            {
+              "calculation": "TotalDamage"
+            }
+          ]
+        }
       ]
     }
   }

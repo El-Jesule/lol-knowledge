@@ -7,8 +7,8 @@
   "verified_against": {
     "content_version": "16.23.8406595+branch.releases-16-23.content.release",
     "bin_sha256": "4f238a4cd522e77e18654f9d107e4fcfa1adc1c84472659fc218c6b7632b9de3",
-    "evidence": "odd/tasks/champion-kits-wave-3.md",
-    "result": "Bin del cliente 16.23 convertido con python -m binmodel.batch_kits y compilado con esta especificación curada (CH-01 oleada 3)"
+    "evidence": "odd/tasks/champion-wave-mechanics.md",
+    "result": "Bin del cliente 16.23 convertido con python -m binmodel.batch_kits y compilado con esta especificación curada (CH-04 mecánicas de oleadas)"
   },
   "source": "Árboles de cálculo del bin del cliente (python -m binmodel) y marcado de los tooltips del cliente; estructura de casos curada en research/kits/",
   "abilities": {
@@ -75,10 +75,52 @@
     "W": {
       "name": "Grito salvaje",
       "max_rank": 5,
-      "cases": [],
+      "cases": [
+        {
+          "id": "scream",
+          "name": "Cono de grito",
+          "parts": [
+            {
+              "damage_type": "magic",
+              "formula": {
+                "op": "add",
+                "operands": [
+                  {
+                    "op": "by_rank",
+                    "values": [
+                      80,
+                      130,
+                      180,
+                      230,
+                      280
+                    ]
+                  },
+                  {
+                    "op": "mul",
+                    "operands": [
+                      {
+                        "op": "constant",
+                        "value": 0.7
+                      },
+                      {
+                        "op": "stat",
+                        "stat": "ability_power",
+                        "scope": "total"
+                      }
+                    ]
+                  }
+                ]
+              },
+              "label": "Derivado",
+              "source": "Characters/Chogath/Spells/FeralScreamAbility/FeralScream.mSpellCalculations.TotalDamageTooltip (16.23.8406595+branch.releases-16-23.content.release)",
+              "damage_type_source": "spell_feralscream_tooltip <magicDamage>"
+            }
+          ]
+        }
+      ],
       "passive_stats": [],
       "not_modelled": [
-        "El cálculo de daño de W en el bin usa un nodo EffectValue no traducido por kitgen; silencio en cono"
+        "Silencio en cono durante 1,6..2 s"
       ]
     },
     "E": {
@@ -87,7 +129,7 @@
       "cases": [
         {
           "id": "spike",
-          "name": "Un pincho (0 cargas de Festín: plano + % vida máxima)",
+          "name": "Un pincho (plano + % vida máxima con cargas de Festín)",
           "parts": [
             {
               "damage_type": "magic",
@@ -130,13 +172,32 @@
                 "op": "mul",
                 "operands": [
                   {
-                    "op": "by_rank",
-                    "values": [
-                      2.5,
-                      2.85,
-                      3.2,
-                      3.55,
-                      3.9
+                    "op": "add",
+                    "operands": [
+                      {
+                        "op": "by_rank",
+                        "values": [
+                          2.5,
+                          2.85,
+                          3.2,
+                          3.55,
+                          3.9
+                        ]
+                      },
+                      {
+                        "op": "mul",
+                        "operands": [
+                          {
+                            "op": "input",
+                            "name": "feast_stacks",
+                            "default": 0
+                          },
+                          {
+                            "op": "constant",
+                            "value": 0.5
+                          }
+                        ]
+                      }
                     ]
                   },
                   {
@@ -152,7 +213,7 @@
                 ]
               },
               "label": "Derivado",
-              "source": "Characters/Chogath/Spells/VorpalSpikesAbility/VorpalSpikes · DataValues.PercentHealthDamage % × vida máxima del objetivo (sin cargas de Festín) (16.23.8406595+branch.releases-16-23.content.release)",
+              "source": "Characters/Chogath/Spells/VorpalSpikesAbility/VorpalSpikes · mSpellCalculations.MaxHealthPercentCalc × 0,01 × vida máxima del objetivo (--input feast_stacks) (16.23.8406595+branch.releases-16-23.content.release)",
               "damage_type_source": "spell_vorpalspikes_tooltip <magicDamage>"
             }
           ]
@@ -160,7 +221,7 @@
       ],
       "passive_stats": [],
       "not_modelled": [
-        "Escalado adicional de +0,5 % vida máxima por cada carga de Festín (FeastStackMultiplier), ralentización y tope contra monstruos"
+        "Ralentización decreciente y tope contra monstruos"
       ]
     },
     "R": {

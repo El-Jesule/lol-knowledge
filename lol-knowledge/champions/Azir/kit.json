@@ -7,8 +7,8 @@
   "verified_against": {
     "content_version": "16.23.8406595+branch.releases-16-23.content.release",
     "bin_sha256": "2464330a09b0a0625c19fec10c81b9b1c97f6c1fa8b10dbb801616a1e8edcde9",
-    "evidence": "odd/tasks/champion-kits-wave-3.md",
-    "result": "Bin del cliente 16.23 convertido con python -m binmodel.batch_kits y compilado con esta especificación curada (CH-01 oleada 3)"
+    "evidence": "odd/tasks/champion-wave-mechanics.md",
+    "result": "Bin del cliente 16.23 convertido con python -m binmodel.batch_kits y compilado con esta especificación curada (CH-04 mecánicas de oleadas)"
   },
   "source": "Árboles de cálculo del bin del cliente (python -m binmodel) y marcado de los tooltips del cliente; estructura de casos curada en research/kits/",
   "abilities": {
@@ -136,10 +136,81 @@
     "W": {
       "name": "¡Alzaos!",
       "max_rank": 5,
-      "cases": [],
+      "cases": [
+        {
+          "id": "soldier_stab",
+          "name": "Estocada de soldado de arena",
+          "parts": [
+            {
+              "damage_type": "magic",
+              "formula": {
+                "op": "add",
+                "operands": [
+                  {
+                    "op": "by_rank",
+                    "values": [
+                      50,
+                      65,
+                      80,
+                      95,
+                      110
+                    ]
+                  },
+                  {
+                    "op": "by_level",
+                    "values": [
+                      0,
+                      0,
+                      0,
+                      0,
+                      0,
+                      0,
+                      0,
+                      0,
+                      0,
+                      0,
+                      8,
+                      16,
+                      24,
+                      32,
+                      40,
+                      48,
+                      56,
+                      64
+                    ]
+                  },
+                  {
+                    "op": "mul",
+                    "operands": [
+                      {
+                        "op": "by_rank",
+                        "values": [
+                          0.35,
+                          0.425,
+                          0.5,
+                          0.575,
+                          0.65
+                        ]
+                      },
+                      {
+                        "op": "stat",
+                        "stat": "ability_power",
+                        "scope": "total"
+                      }
+                    ]
+                  }
+                ]
+              },
+              "label": "Derivado",
+              "source": "Characters/Azir/Spells/AzirWAbility/AzirW.mSpellCalculations.TotalDamage (16.23.8406595+branch.releases-16-23.content.release)",
+              "damage_type_source": "spell_azirw_tooltip <magicDamage>"
+            }
+          ]
+        }
+      ],
       "passive_stats": [],
       "not_modelled": [
-        "Ataque de soldado de arena (W.TotalDamage en el bin usa breakpoints sin level1_value) y daño reducido a objetivos secundarios (SecondaryTargetDamageMod)"
+        "Efectos de impacto al 50 %, daño en área pasante y multiplicador por múltiples soldados al mismo objetivo"
       ]
     },
     "E": {

@@ -7,8 +7,8 @@
   "verified_against": {
     "content_version": "16.23.8406595+branch.releases-16-23.content.release",
     "bin_sha256": "648253b4c2c55983c397834584c924498a4530269777b092c3bdb10f72e264d6",
-    "evidence": "odd/tasks/champion-kits-wave-3.md",
-    "result": "Bin del cliente 16.23 convertido con python -m binmodel.batch_kits y compilado con esta especificación curada (CH-01 oleada 3)"
+    "evidence": "odd/tasks/champion-wave-mechanics.md",
+    "result": "Bin del cliente 16.23 convertido con python -m binmodel.batch_kits y compilado con esta especificación curada (CH-04 mecánicas de oleadas)"
   },
   "source": "Árboles de cálculo del bin del cliente (python -m binmodel) y marcado de los tooltips del cliente; estructura de casos curada en research/kits/",
   "abilities": {
@@ -208,6 +208,83 @@
               "label": "Derivado",
               "source": "Characters/MasterYi/Spells/AlphaStrikeAbility/AlphaStrike.mSpellCalculations.SingleTotalDamage (16.23.8406595+branch.releases-16-23.content.release)",
               "damage_type_source": "spell_alphastrike_tooltip <physicalDamage>"
+            }
+          ]
+        },
+        {
+          "id": "single_target_4_hits_crit",
+          "name": "Objetivo único (4 impactos críticos)",
+          "parts": [
+            {
+              "damage_type": "physical",
+              "formula": {
+                "op": "mul",
+                "operands": [
+                  {
+                    "op": "add",
+                    "operands": [
+                      {
+                        "op": "by_rank",
+                        "values": [
+                          20,
+                          40,
+                          60,
+                          80,
+                          100
+                        ]
+                      },
+                      {
+                        "op": "mul",
+                        "operands": [
+                          {
+                            "op": "constant",
+                            "value": 0.6
+                          },
+                          {
+                            "op": "stat",
+                            "stat": "attack_damage",
+                            "scope": "total"
+                          }
+                        ]
+                      }
+                    ]
+                  },
+                  {
+                    "op": "add",
+                    "operands": [
+                      {
+                        "op": "constant",
+                        "value": 1
+                      },
+                      {
+                        "op": "mul",
+                        "operands": [
+                          {
+                            "op": "constant",
+                            "value": 0.25
+                          },
+                          {
+                            "op": "add",
+                            "operands": [
+                              {
+                                "op": "constant",
+                                "value": -1
+                              },
+                              {
+                                "op": "constant",
+                                "value": 4
+                              }
+                            ]
+                          }
+                        ]
+                      }
+                    ]
+                  }
+                ]
+              },
+              "label": "Derivado",
+              "source": "Characters/MasterYi/Spells/AlphaStrikeAbility/AlphaStrike.mSpellCalculations.SingleCritTotalDamage (16.23.8406595+branch.releases-16-23.content.release)",
+              "damage_type_source": "spell_alphastrike_tooltipextendedbelowline <physicalDamage>"
             }
           ]
         }

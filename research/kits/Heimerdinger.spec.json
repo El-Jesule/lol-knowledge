@@ -4,8 +4,8 @@
   "verified_against": {
     "content_version": "16.23.8406595+branch.releases-16-23.content.release",
     "bin_sha256": "eec638a80642c4defc34a12205db270088f177c5867b42ec8c2514ba43e95d94",
-    "evidence": "odd/tasks/champion-kits-wave-3.md",
-    "result": "Bin del cliente 16.23 convertido con python -m binmodel.batch_kits y compilado con esta especificación curada (CH-01 oleada 3)"
+    "evidence": "odd/tasks/champion-wave-mechanics.md",
+    "result": "Bin del cliente 16.23 convertido con python -m binmodel.batch_kits y compilado con esta especificación curada (CH-04 mecánicas de oleadas)"
   },
   "abilities": {
     "P": {
@@ -18,9 +18,29 @@
     },
     "Q": {
       "name": "Torreta evolucionada H-28 G",
-      "tooltip": "spell_heimerdingerq_tooltip",
+      "tooltip": "spell_heimerdingerq_tooltipextendedbelowline",
       "not_modelled": [
-        "Los disparos (Damage) y el rayo (DamageBeam) de la torreta usan referencias internas no expuestas como casos planos en el tooltip principal; vida de torreta (TurretHealth)"
+        "Vida/resistencias de la torreta y recarga de kits"
+      ],
+      "cases": [
+        {
+          "id": "turret_shot",
+          "name": "Disparo básico de torreta H-28G",
+          "parts": [
+            {
+              "calculation": "Damage"
+            }
+          ]
+        },
+        {
+          "id": "turret_beam",
+          "name": "Rayo láser cargado de torreta",
+          "parts": [
+            {
+              "calculation": "DamageBeam"
+            }
+          ]
+        }
       ]
     },
     "W": {

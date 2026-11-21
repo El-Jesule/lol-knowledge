@@ -7,8 +7,8 @@
   "verified_against": {
     "content_version": "16.23.8406595+branch.releases-16-23.content.release",
     "bin_sha256": "cef65540cca7d9fc1e222d1800ffb17b29c88a11c370c284900f195706683020",
-    "evidence": "odd/tasks/champion-kits-wave-2.md",
-    "result": "Bin del cliente 16.23 convertido con python -m binmodel.batch_kits y compilado con esta especificación curada (CH-01 oleada 2)"
+    "evidence": "odd/tasks/champion-wave-mechanics.md",
+    "result": "Bin del cliente 16.23 convertido con python -m binmodel.batch_kits y compilado con esta especificación curada (CH-04 mecánicas de oleadas)"
   },
   "source": "Árboles de cálculo del bin del cliente (python -m binmodel) y marcado de los tooltips del cliente; estructura de casos curada en research/kits/",
   "abilities": {
@@ -121,10 +121,93 @@
     "W": {
       "name": "Ferromancia - Caída / Montura",
       "max_rank": 5,
-      "cases": [],
+      "cases": [
+        {
+          "id": "crash_down",
+          "name": "Aterrizaje al desmontar",
+          "parts": [
+            {
+              "damage_type": "magic",
+              "formula": {
+                "op": "add",
+                "operands": [
+                  {
+                    "op": "by_rank",
+                    "values": [
+                      60,
+                      90,
+                      120,
+                      150,
+                      180
+                    ]
+                  },
+                  {
+                    "op": "mul",
+                    "operands": [
+                      {
+                        "op": "constant",
+                        "value": 0.6
+                      },
+                      {
+                        "op": "stat",
+                        "stat": "ability_power",
+                        "scope": "total"
+                      }
+                    ]
+                  }
+                ]
+              },
+              "label": "Derivado",
+              "source": "Characters/Rell/Spells/RellW_DismountAbility/RellW_Dismount.mSpellCalculations.DismountDamage (16.23.8406595+branch.releases-16-23.content.release)",
+              "damage_type_source": "spell_rellw_dismount_tooltip <magicDamage>"
+            }
+          ]
+        },
+        {
+          "id": "mount_up_flip",
+          "name": "Volteo al montar",
+          "parts": [
+            {
+              "damage_type": "magic",
+              "formula": {
+                "op": "add",
+                "operands": [
+                  {
+                    "op": "by_rank",
+                    "values": [
+                      10,
+                      25,
+                      40,
+                      55,
+                      70
+                    ]
+                  },
+                  {
+                    "op": "mul",
+                    "operands": [
+                      {
+                        "op": "constant",
+                        "value": 0.4
+                      },
+                      {
+                        "op": "stat",
+                        "stat": "ability_power",
+                        "scope": "total"
+                      }
+                    ]
+                  }
+                ]
+              },
+              "label": "Derivado",
+              "source": "Characters/Rell/Spells/RellW_DismountAbility/RellW_Dismount.mSpellCalculations.FlipDamage (16.23.8406595+branch.releases-16-23.content.release)",
+              "damage_type_source": "spell_rellw_mountup_tooltip3 <magicDamage>"
+            }
+          ]
+        }
+      ],
       "passive_stats": [],
       "not_modelled": [
-        "Escudo (Shield), lanzamiento por los aires y doble forma montada/a pie"
+        "Escudo al desmontar (Shield) y lanzamiento por los aires"
       ]
     },
     "E": {

@@ -7,15 +7,74 @@
   "verified_against": {
     "content_version": "16.23.8406595+branch.releases-16-23.content.release",
     "bin_sha256": "12a5bed25996ce9d38b4cca217202d3df619168b0f012c8ad22e9a3bb2fd8ecb",
-    "evidence": "odd/tasks/champion-kits-wave-4.md",
-    "result": "Bin del cliente 16.23 convertido con python -m binmodel.batch_kits y compilado con esta especificación curada (CH-01 oleada 4 — cierre 173/173)"
+    "evidence": "odd/tasks/champion-wave-mechanics.md",
+    "result": "Bin del cliente 16.23 convertido con python -m binmodel.batch_kits y compilado con esta especificación curada (CH-04 mecánicas de oleadas)"
   },
   "source": "Árboles de cálculo del bin del cliente (python -m binmodel) y marcado de los tooltips del cliente; estructura de casos curada en research/kits/",
   "abilities": {
     "P": {
       "name": "Batería cargada",
       "max_rank": 1,
-      "cases": [],
+      "cases": [
+        {
+          "id": "full_charge_zap",
+          "name": "Ataque básico cargado al máximo",
+          "parts": [
+            {
+              "damage_type": "magic",
+              "formula": {
+                "op": "add",
+                "operands": [
+                  {
+                    "op": "linear_by_level",
+                    "min": 75,
+                    "max": 160
+                  },
+                  {
+                    "op": "mul",
+                    "operands": [
+                      {
+                        "op": "constant",
+                        "value": 1.1
+                      },
+                      {
+                        "op": "stat",
+                        "stat": "ability_power",
+                        "scope": "total"
+                      }
+                    ]
+                  }
+                ]
+              },
+              "label": "Derivado",
+              "source": "Characters/Zeri/Spells/ZeriQAbility/ZeriQ.mSpellCalculations.PassiveMaxDamage (16.23.8406595+branch.releases-16-23.content.release)",
+              "damage_type_source": "spell_zeripassive_tooltip <magicDamage>"
+            },
+            {
+              "damage_type": "magic",
+              "formula": {
+                "op": "mul",
+                "operands": [
+                  {
+                    "op": "linear_by_level",
+                    "min": 0.01,
+                    "max": 0.11
+                  },
+                  {
+                    "op": "stat",
+                    "stat": "health",
+                    "scope": "max",
+                    "subject": "target"
+                  }
+                ]
+              },
+              "label": "Derivado",
+              "source": "Characters/Zeri/Spells/ZeriQAbility/ZeriQ · ZeriQ.mSpellCalculations.PassiveMaxChargePercentHealth × vida máxima del objetivo (16.23.8406595+branch.releases-16-23.content.release)",
+              "damage_type_source": "spell_zeripassive_tooltip <magicDamage>"
+            }
+          ]
+        }
+      ],
       "passive_stats": [],
       "not_modelled": [
         "Descarga de ataque básico sin carga (ZeriQ.MinDamage) y cargada al máximo (ZeriQ.PassiveMaxDamage + ZeriQ.PassiveMaxChargePercentHealth % vida máxima), ejecución bajo umbral y robo de escudos"
@@ -136,11 +195,121 @@
               "damage_type_source": "spell_zeriw_tooltip <physicalDamage>"
             }
           ]
+        },
+        {
+          "id": "wall_laser",
+          "name": "Láser crítico a través de muro",
+          "parts": [
+            {
+              "damage_type": "physical",
+              "formula": {
+                "op": "mul",
+                "operands": [
+                  {
+                    "op": "add",
+                    "operands": [
+                      {
+                        "op": "by_rank",
+                        "values": [
+                          30,
+                          70,
+                          110,
+                          150,
+                          190
+                        ]
+                      },
+                      {
+                        "op": "mul",
+                        "operands": [
+                          {
+                            "op": "constant",
+                            "value": 1
+                          },
+                          {
+                            "op": "stat",
+                            "stat": "attack_damage",
+                            "scope": "total"
+                          }
+                        ]
+                      },
+                      {
+                        "op": "mul",
+                        "operands": [
+                          {
+                            "op": "constant",
+                            "value": 0.5
+                          },
+                          {
+                            "op": "stat",
+                            "stat": "ability_power",
+                            "scope": "total"
+                          }
+                        ]
+                      }
+                    ]
+                  },
+                  {
+                    "op": "add",
+                    "operands": [
+                      {
+                        "op": "constant",
+                        "value": 1
+                      },
+                      {
+                        "op": "mul",
+                        "operands": [
+                          {
+                            "op": "constant",
+                            "value": 0.5
+                          },
+                          {
+                            "op": "add",
+                            "operands": [
+                              {
+                                "op": "mul",
+                                "operands": [
+                                  {
+                                    "op": "constant",
+                                    "value": 1
+                                  },
+                                  {
+                                    "op": "add",
+                                    "operands": [
+                                      {
+                                        "op": "constant",
+                                        "value": 2
+                                      },
+                                      {
+                                        "op": "stat",
+                                        "stat": "crit_damage_bonus",
+                                        "scope": "total"
+                                      }
+                                    ]
+                                  }
+                                ]
+                              },
+                              {
+                                "op": "constant",
+                                "value": -1
+                              }
+                            ]
+                          }
+                        ]
+                      }
+                    ]
+                  }
+                ]
+              },
+              "label": "Derivado",
+              "source": "Characters/Zeri/Spells/ZeriWAbility/ZeriW.mSpellCalculations.WallDamage (16.23.8406595+branch.releases-16-23.content.release)",
+              "damage_type_source": "spell_zeriw_tooltip <physicalDamage>"
+            }
+          ]
         }
       ],
       "passive_stats": [],
       "not_modelled": [
-        "Láser crítico garantizado al atravesar muros (WallDamage usa critical_strike_damage/total) y ralentización"
+        "Ralentización y visión revelada"
       ]
     },
     "E": {

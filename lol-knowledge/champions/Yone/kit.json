@@ -7,8 +7,8 @@
   "verified_against": {
     "content_version": "16.23.8406595+branch.releases-16-23.content.release",
     "bin_sha256": "e29efc73d40268ea89612351d66b3bafccc18b14f0b45363f5147d1ec375ab50",
-    "evidence": "odd/tasks/champion-kits-wave-4.md",
-    "result": "Bin del cliente 16.23 convertido con python -m binmodel.batch_kits y compilado con esta especificación curada (CH-01 oleada 4 — cierre 173/173)"
+    "evidence": "odd/tasks/champion-wave-mechanics.md",
+    "result": "Bin del cliente 16.23 convertido con python -m binmodel.batch_kits y compilado con esta especificación curada (CH-04 mecánicas de oleadas)"
   },
   "source": "Árboles de cálculo del bin del cliente (python -m binmodel) y marcado de los tooltips del cliente; estructura de casos curada en research/kits/",
   "abilities": {
@@ -27,7 +27,7 @@
       "cases": [
         {
           "id": "thrust",
-          "name": "Estocada / ola de viento (sin crítico)",
+          "name": "Estocada normal",
           "parts": [
             {
               "damage_type": "physical",
@@ -63,6 +63,66 @@
               "label": "Derivado",
               "source": "Characters/Yone/Spells/YoneQAbility/YoneQ.mSpellCalculations.QDamage (16.23.8406595+branch.releases-16-23.content.release)",
               "damage_type_source": "spell_yoneq_tooltip <physicalDamage>"
+            }
+          ]
+        },
+        {
+          "id": "crit",
+          "name": "Estocada crítica",
+          "parts": [
+            {
+              "damage_type": "physical",
+              "formula": {
+                "op": "add",
+                "operands": [
+                  {
+                    "op": "by_rank",
+                    "values": [
+                      25,
+                      50,
+                      75,
+                      100,
+                      125
+                    ]
+                  },
+                  {
+                    "op": "mul",
+                    "operands": [
+                      {
+                        "op": "mul",
+                        "operands": [
+                          {
+                            "op": "constant",
+                            "value": 1.05
+                          },
+                          {
+                            "op": "add",
+                            "operands": [
+                              {
+                                "op": "constant",
+                                "value": 2
+                              },
+                              {
+                                "op": "stat",
+                                "stat": "crit_damage_bonus",
+                                "scope": "total"
+                              }
+                            ]
+                          }
+                        ]
+                      },
+                      {
+                        "op": "stat",
+                        "stat": "attack_damage",
+                        "scope": "total"
+                      }
+                    ]
+                  }
+                ]
+              },
+              "label": "Derivado",
+              "source": "Characters/Yone/Spells/YoneQAbility/YoneQ.mSpellCalculations.TotalDamageCrit (16.23.8406595+branch.releases-16-23.content.release)",
+              "damage_type_source": "spell_yoneq_tooltipextendedbelowline <physicalDamage>"
             }
           ]
         }

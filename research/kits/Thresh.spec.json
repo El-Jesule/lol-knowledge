@@ -4,8 +4,8 @@
   "verified_against": {
     "content_version": "16.23.8406595+branch.releases-16-23.content.release",
     "bin_sha256": "1a40c12025e241bfa91409fefcb4c79af5f4b89018bde0c98cee33871847e583",
-    "evidence": "odd/tasks/champion-kits-wave-3.md",
-    "result": "Bin del cliente 16.23 convertido con python -m binmodel.batch_kits y compilado con esta especificación curada (CH-01 oleada 3)"
+    "evidence": "odd/tasks/champion-wave-mechanics.md",
+    "result": "Bin del cliente 16.23 convertido con python -m binmodel.batch_kits y compilado con esta especificación curada (CH-04 mecánicas de oleadas)"
   },
   "abilities": {
     "P": {
@@ -73,10 +73,19 @@
               "calculation": "TotalDamage"
             }
           ]
+        },
+        {
+          "id": "passive_max",
+          "name": "Pasiva al impactar (carga máxima: almas + % DA)",
+          "parts": [
+            {
+              "calculation": "PAttackDamageMax"
+            }
+          ]
         }
       ],
       "not_modelled": [
-        "Desplazamiento, ralentización y daño mágico pasivo cargado en ataques básicos por almas + DA"
+        "Desplazamiento, ralentización del barrido activo y pasiva descargada (PAttackDamageMin = 1,7 × almas)"
       ]
     },
     "R": {

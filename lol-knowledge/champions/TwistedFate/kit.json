@@ -7,8 +7,8 @@
   "verified_against": {
     "content_version": "16.23.8406595+branch.releases-16-23.content.release",
     "bin_sha256": "a9377f5bd3808f1a0af321a9b3efdb5a55678c300b3cf29b07a504d3180cad61",
-    "evidence": "odd/tasks/champion-kits-wave-4.md",
-    "result": "Bin del cliente 16.23 convertido con python -m binmodel.batch_kits y compilado con esta especificación curada (CH-01 oleada 4 — cierre 173/173)"
+    "evidence": "odd/tasks/champion-wave-mechanics.md",
+    "result": "Bin del cliente 16.23 convertido con python -m binmodel.batch_kits y compilado con esta especificación curada (CH-04 mecánicas de oleadas)"
   },
   "source": "Árboles de cálculo del bin del cliente (python -m binmodel) y marcado de los tooltips del cliente; estructura de casos curada en research/kits/",
   "abilities": {
@@ -87,10 +87,362 @@
     "W": {
       "name": "Escoge una carta",
       "max_rank": 5,
-      "cases": [],
+      "cases": [
+        {
+          "id": "blue_card",
+          "name": "Carta azul",
+          "parts": [
+            {
+              "damage_type": "magic",
+              "formula": {
+                "op": "add",
+                "operands": [
+                  {
+                    "op": "by_rank",
+                    "values": [
+                      40,
+                      60,
+                      80,
+                      100,
+                      120
+                    ]
+                  },
+                  {
+                    "op": "mul",
+                    "operands": [
+                      {
+                        "op": "constant",
+                        "value": 1
+                      },
+                      {
+                        "op": "stat",
+                        "stat": "attack_damage",
+                        "scope": "total"
+                      }
+                    ]
+                  },
+                  {
+                    "op": "mul",
+                    "operands": [
+                      {
+                        "op": "constant",
+                        "value": 1
+                      },
+                      {
+                        "op": "stat",
+                        "stat": "ability_power",
+                        "scope": "total"
+                      }
+                    ]
+                  },
+                  {
+                    "op": "mul",
+                    "operands": [
+                      {
+                        "op": "mul",
+                        "operands": [
+                          {
+                            "op": "constant",
+                            "value": 0.575
+                          },
+                          {
+                            "op": "add",
+                            "operands": [
+                              {
+                                "op": "by_rank",
+                                "values": [
+                                  40,
+                                  60,
+                                  80,
+                                  100,
+                                  120
+                                ]
+                              },
+                              {
+                                "op": "mul",
+                                "operands": [
+                                  {
+                                    "op": "constant",
+                                    "value": 1
+                                  },
+                                  {
+                                    "op": "stat",
+                                    "stat": "attack_damage",
+                                    "scope": "total"
+                                  }
+                                ]
+                              },
+                              {
+                                "op": "mul",
+                                "operands": [
+                                  {
+                                    "op": "constant",
+                                    "value": 1
+                                  },
+                                  {
+                                    "op": "stat",
+                                    "stat": "ability_power",
+                                    "scope": "total"
+                                  }
+                                ]
+                              }
+                            ]
+                          }
+                        ]
+                      },
+                      {
+                        "op": "stat",
+                        "stat": "crit_chance",
+                        "scope": "total"
+                      }
+                    ]
+                  }
+                ]
+              },
+              "label": "Derivado",
+              "source": "Characters/TwistedFate/Spells/PickACardAbility/PickACard.mSpellCalculations.BlueDamage (16.23.8406595+branch.releases-16-23.content.release)",
+              "damage_type_source": "spell_pickacard_tooltip <magicDamage>"
+            }
+          ]
+        },
+        {
+          "id": "red_card",
+          "name": "Carta roja (área)",
+          "parts": [
+            {
+              "damage_type": "magic",
+              "formula": {
+                "op": "add",
+                "operands": [
+                  {
+                    "op": "by_rank",
+                    "values": [
+                      30,
+                      45,
+                      60,
+                      75,
+                      90
+                    ]
+                  },
+                  {
+                    "op": "mul",
+                    "operands": [
+                      {
+                        "op": "constant",
+                        "value": 1
+                      },
+                      {
+                        "op": "stat",
+                        "stat": "attack_damage",
+                        "scope": "total"
+                      }
+                    ]
+                  },
+                  {
+                    "op": "mul",
+                    "operands": [
+                      {
+                        "op": "constant",
+                        "value": 0.7
+                      },
+                      {
+                        "op": "stat",
+                        "stat": "ability_power",
+                        "scope": "total"
+                      }
+                    ]
+                  },
+                  {
+                    "op": "mul",
+                    "operands": [
+                      {
+                        "op": "mul",
+                        "operands": [
+                          {
+                            "op": "constant",
+                            "value": 0.35
+                          },
+                          {
+                            "op": "add",
+                            "operands": [
+                              {
+                                "op": "by_rank",
+                                "values": [
+                                  30,
+                                  45,
+                                  60,
+                                  75,
+                                  90
+                                ]
+                              },
+                              {
+                                "op": "mul",
+                                "operands": [
+                                  {
+                                    "op": "constant",
+                                    "value": 1
+                                  },
+                                  {
+                                    "op": "stat",
+                                    "stat": "attack_damage",
+                                    "scope": "total"
+                                  }
+                                ]
+                              },
+                              {
+                                "op": "mul",
+                                "operands": [
+                                  {
+                                    "op": "constant",
+                                    "value": 0.7
+                                  },
+                                  {
+                                    "op": "stat",
+                                    "stat": "ability_power",
+                                    "scope": "total"
+                                  }
+                                ]
+                              }
+                            ]
+                          }
+                        ]
+                      },
+                      {
+                        "op": "stat",
+                        "stat": "crit_chance",
+                        "scope": "total"
+                      }
+                    ]
+                  }
+                ]
+              },
+              "label": "Derivado",
+              "source": "Characters/TwistedFate/Spells/PickACardAbility/PickACard.mSpellCalculations.RedDamage (16.23.8406595+branch.releases-16-23.content.release)",
+              "damage_type_source": "spell_pickacard_tooltip <magicDamage>"
+            }
+          ]
+        },
+        {
+          "id": "gold_card",
+          "name": "Carta dorada (aturde)",
+          "parts": [
+            {
+              "damage_type": "magic",
+              "formula": {
+                "op": "add",
+                "operands": [
+                  {
+                    "op": "by_rank",
+                    "values": [
+                      15,
+                      22.5,
+                      30,
+                      37.5,
+                      45
+                    ]
+                  },
+                  {
+                    "op": "mul",
+                    "operands": [
+                      {
+                        "op": "constant",
+                        "value": 1
+                      },
+                      {
+                        "op": "stat",
+                        "stat": "attack_damage",
+                        "scope": "total"
+                      }
+                    ]
+                  },
+                  {
+                    "op": "mul",
+                    "operands": [
+                      {
+                        "op": "constant",
+                        "value": 0.5
+                      },
+                      {
+                        "op": "stat",
+                        "stat": "ability_power",
+                        "scope": "total"
+                      }
+                    ]
+                  },
+                  {
+                    "op": "mul",
+                    "operands": [
+                      {
+                        "op": "mul",
+                        "operands": [
+                          {
+                            "op": "constant",
+                            "value": 0.25
+                          },
+                          {
+                            "op": "add",
+                            "operands": [
+                              {
+                                "op": "by_rank",
+                                "values": [
+                                  15,
+                                  22.5,
+                                  30,
+                                  37.5,
+                                  45
+                                ]
+                              },
+                              {
+                                "op": "mul",
+                                "operands": [
+                                  {
+                                    "op": "constant",
+                                    "value": 1
+                                  },
+                                  {
+                                    "op": "stat",
+                                    "stat": "attack_damage",
+                                    "scope": "total"
+                                  }
+                                ]
+                              },
+                              {
+                                "op": "mul",
+                                "operands": [
+                                  {
+                                    "op": "constant",
+                                    "value": 0.5
+                                  },
+                                  {
+                                    "op": "stat",
+                                    "stat": "ability_power",
+                                    "scope": "total"
+                                  }
+                                ]
+                              }
+                            ]
+                          }
+                        ]
+                      },
+                      {
+                        "op": "stat",
+                        "stat": "crit_chance",
+                        "scope": "total"
+                      }
+                    ]
+                  }
+                ]
+              },
+              "label": "Derivado",
+              "source": "Characters/TwistedFate/Spells/PickACardAbility/PickACard.mSpellCalculations.GoldDamage (16.23.8406595+branch.releases-16-23.content.release)",
+              "damage_type_source": "spell_pickacard_tooltip <magicDamage>"
+            }
+          ]
+        }
+      ],
       "passive_stats": [],
       "not_modelled": [
-        "Cartas azul, roja y dorada (BlueDamage, RedDamage y GoldDamage escalan con critical_strike_chance/total, no traducido aún en kitgen); restauración de maná, ralentización y aturdimiento"
+        "Restauración de maná de carta azul, ralentización de carta roja y aturdimiento de carta dorada"
       ]
     },
     "E": {

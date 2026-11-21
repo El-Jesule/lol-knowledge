@@ -4,8 +4,8 @@
   "verified_against": {
     "content_version": "16.23.8406595+branch.releases-16-23.content.release",
     "bin_sha256": "c4858e0355a07a66c96d222aeabd238c20ca7bb94e34639d4d7c197a4a905c58",
-    "evidence": "odd/tasks/champion-kits-wave-3.md",
-    "result": "Bin del cliente 16.23 convertido con python -m binmodel.batch_kits y compilado con esta especificación curada (CH-01 oleada 3)"
+    "evidence": "odd/tasks/champion-wave-mechanics.md",
+    "result": "Bin del cliente 16.23 convertido con python -m binmodel.batch_kits y compilado con esta especificación curada (CH-04 mecánicas de oleadas)"
   },
   "abilities": {
     "P": {
@@ -80,7 +80,18 @@
         }
       ],
       "not_modelled": [
-        "Daño mágico al caer el estandarte (TotalDamage usa EffectValue en el bin) y aura activa de velocidad de ataque"
+        "Aura activa de velocidad de ataque para aliados cercanos y anclaje para el desplazamiento con Q"
+      ],
+      "cases": [
+        {
+          "id": "standard",
+          "name": "Caída del estandarte",
+          "parts": [
+            {
+              "calculation": "TotalDamage"
+            }
+          ]
+        }
       ]
     },
     "R": {

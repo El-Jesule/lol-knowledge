@@ -18,11 +18,26 @@ STAT_NAMES: dict[int, tuple[str, str, str]] = {
     ),
     1: ("armor", "corroborated", "Malphite W / Rammus W / Poppy W armor ratios"),
     2: ("attack_damage", "corroborated", "Kha'Zix Q BonusADRatio, Garen Q tADRatio"),
-    4: ("attack_speed", "inferred", "Jhin passive attack-speed conversion"),
+    4: (
+        "attack_speed",
+        "corroborated",
+        "Jhin passive attack-speed conversion, Katarina R BonusAttackSpeedAmount, Zeri P/W",
+    ),
     6: ("magic_resist", "corroborated", "Rammus W / Poppy W magic-resist ratios"),
-    8: ("critical_strike_chance", "inferred", "Caitlyn passive / Jhin passive"),
+    7: (
+        "move_speed",
+        "corroborated",
+        "Hecarim P BonusAD and Janna P BonusDamage move-speed ratios",
+    ),
+    8: (
+        "critical_strike_chance",
+        "corroborated",
+        "Caitlyn passive / Jhin passive / Tristana E / Sivir Q / Xayah E crit-chance ratios",
+    ),
     9: ("critical_strike_damage", "corroborated", "Nasus Q, Yasuo passive, Caitlyn, Senna"),
     12: ("health", "corroborated", "Sett W StoredHealth, Sion W, Poppy passive"),
+    18: ("life_steal", "corroborated", "Zaahen passive life-steal ratio"),
+    29: ("lethality", "corroborated", "Pyke W/E/R lethality scaling"),
 }
 
 STAT_FORMULAS: dict[int, tuple[str, str, str]] = {

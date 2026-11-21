@@ -7,8 +7,8 @@
   "verified_against": {
     "content_version": "16.23.8406595+branch.releases-16-23.content.release",
     "bin_sha256": "72f4e6c368bfc12335c9749b3902e4d92d67cac107ba5a4ed2d441d08a096906",
-    "evidence": "odd/tasks/champion-kits-wave-3.md",
-    "result": "Bin del cliente 16.23 convertido con python -m binmodel.batch_kits y compilado con esta especificación curada (CH-01 oleada 3)"
+    "evidence": "odd/tasks/champion-wave-mechanics.md",
+    "result": "Bin del cliente 16.23 convertido con python -m binmodel.batch_kits y compilado con esta especificación curada (CH-04 mecánicas de oleadas)"
   },
   "source": "Árboles de cálculo del bin del cliente (python -m binmodel) y marcado de los tooltips del cliente; estructura de casos curada en research/kits/",
   "abilities": {
@@ -18,7 +18,7 @@
       "cases": [],
       "passive_stats": [],
       "not_modelled": [
-        "Conversión de velocidad de movimiento adicional en DA (BonusAD usa stat no corroborado en bin)"
+        "Conversión del 12..24 % de la velocidad de movimiento adicional en DA adicional (BonusAD) e ignorar colisión con unidades"
       ]
     },
     "Q": {

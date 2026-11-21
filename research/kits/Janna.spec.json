@@ -4,8 +4,8 @@
   "verified_against": {
     "content_version": "16.23.8406595+branch.releases-16-23.content.release",
     "bin_sha256": "0f4a601874840d8decd2970a07600b76d99c62b586bb40b61e70fa93e3fa4e37",
-    "evidence": "odd/tasks/champion-kits-wave-3.md",
-    "result": "Bin del cliente 16.23 convertido con python -m binmodel.batch_kits y compilado con esta especificación curada (CH-01 oleada 3)"
+    "evidence": "odd/tasks/champion-wave-mechanics.md",
+    "result": "Bin del cliente 16.23 convertido con python -m binmodel.batch_kits y compilado con esta especificación curada (CH-04 mecánicas de oleadas)"
   },
   "abilities": {
     "P": {
@@ -13,7 +13,18 @@
       "tooltip": "spell_tailwindself_tooltip",
       "max_rank": 1,
       "not_modelled": [
-        "Velocidad de movimiento de aliados hacia Janna (6 %) y daño mágico al impactar equivalente al 30 % de su velocidad de movimiento adicional (BonusDamage usa stat no modelado en hoja de stats)"
+        "Bonificación del 6 % de velocidad de movimiento a aliados que avanzan hacia Janna"
+      ],
+      "cases": [],
+      "passive_effects": [
+        {
+          "id": "tailwind_on_hit",
+          "name": "Empuje (Daño mágico al impactar por VM adicional)",
+          "kind": "damage_proc",
+          "trigger": "on_hit",
+          "damage_type": "magic",
+          "calculation": "BonusDamage"
+        }
       ]
     },
     "Q": {
@@ -49,10 +60,35 @@
       "cases": [
         {
           "id": "hit",
-          "name": "Impacto de Céfiro",
+          "name": "Céfiro (base + 30 % VM adicional)",
           "parts": [
             {
-              "calculation": "TotalDamage"
+              "tooltip_reference": "TotalDamage",
+              "damage_type": "magic",
+              "source_note": "mSpellCalculations.TotalDamage + 30 % velocidad de movimiento adicional (Empuje)",
+              "formula": {
+                "op": "add",
+                "operands": [
+                  {
+                    "op": "calculation",
+                    "name": "TotalDamage"
+                  },
+                  {
+                    "op": "mul",
+                    "operands": [
+                      {
+                        "op": "constant",
+                        "value": 0.3
+                      },
+                      {
+                        "op": "stat",
+                        "stat": "move_speed",
+                        "scope": "bonus"
+                      }
+                    ]
+                  }
+                ]
+              }
             }
           ]
         }

@@ -7,8 +7,8 @@
   "verified_against": {
     "content_version": "16.23.8406595+branch.releases-16-23.content.release",
     "bin_sha256": "ba2a11d8fb2889dc76211dab7c43dfc696a8ffa70fa3d0c4e6cc4ef201c415cb",
-    "evidence": "odd/tasks/champion-kits-wave-2.md",
-    "result": "Bin del cliente 16.23 convertido con python -m binmodel.batch_kits y compilado con esta especificación curada (CH-01 oleada 2)"
+    "evidence": "odd/tasks/champion-wave-mechanics.md",
+    "result": "Bin del cliente 16.23 convertido con python -m binmodel.batch_kits y compilado con esta especificación curada (CH-04 mecánicas de oleadas)"
   },
   "source": "Árboles de cálculo del bin del cliente (python -m binmodel) y marcado de los tooltips del cliente; estructura de casos curada en research/kits/",
   "abilities": {
@@ -147,7 +147,7 @@
       "cases": [
         {
           "id": "shot",
-          "name": "Disparo o tajo (sin crítico)",
+          "name": "Disparo o tajo normal",
           "parts": [
             {
               "damage_type": "physical",
@@ -183,6 +183,102 @@
               "label": "Derivado",
               "source": "Characters/Samira/Spells/SamiraQAbility/SamiraQ.mSpellCalculations.DamageCalc (16.23.8406595+branch.releases-16-23.content.release)",
               "damage_type_source": "spell_samiraq_tooltip <physicalDamage>"
+            }
+          ]
+        },
+        {
+          "id": "crit",
+          "name": "Disparo o tajo crítico",
+          "parts": [
+            {
+              "damage_type": "physical",
+              "formula": {
+                "op": "mul",
+                "operands": [
+                  {
+                    "op": "add",
+                    "operands": [
+                      {
+                        "op": "by_rank",
+                        "values": [
+                          0,
+                          5,
+                          10,
+                          15,
+                          20
+                        ]
+                      },
+                      {
+                        "op": "mul",
+                        "operands": [
+                          {
+                            "op": "constant",
+                            "value": 1.1
+                          },
+                          {
+                            "op": "stat",
+                            "stat": "attack_damage",
+                            "scope": "total"
+                          }
+                        ]
+                      }
+                    ]
+                  },
+                  {
+                    "op": "add",
+                    "operands": [
+                      {
+                        "op": "constant",
+                        "value": 1
+                      },
+                      {
+                        "op": "mul",
+                        "operands": [
+                          {
+                            "op": "constant",
+                            "value": 0.5
+                          },
+                          {
+                            "op": "add",
+                            "operands": [
+                              {
+                                "op": "mul",
+                                "operands": [
+                                  {
+                                    "op": "constant",
+                                    "value": 1
+                                  },
+                                  {
+                                    "op": "add",
+                                    "operands": [
+                                      {
+                                        "op": "constant",
+                                        "value": 2
+                                      },
+                                      {
+                                        "op": "stat",
+                                        "stat": "crit_damage_bonus",
+                                        "scope": "total"
+                                      }
+                                    ]
+                                  }
+                                ]
+                              },
+                              {
+                                "op": "constant",
+                                "value": -1
+                              }
+                            ]
+                          }
+                        ]
+                      }
+                    ]
+                  }
+                ]
+              },
+              "label": "Derivado",
+              "source": "Characters/Samira/Spells/SamiraQAbility/SamiraQ.mSpellCalculations.CriticalDamageCalc (16.23.8406595+branch.releases-16-23.content.release)",
+              "damage_type_source": "spell_samiraq_tooltipextendedbelowline <physicalDamage>"
             }
           ]
         }
