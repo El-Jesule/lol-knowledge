@@ -166,6 +166,7 @@ def test_formula_requirements_separate_target_stats(object_model) -> None:
             "health",
             "lethality",
             "mana",
+            "move_speed",
         ),
         "target": ("bonus_health", "current_health", "max_health", "missing_fraction_health"),
     }

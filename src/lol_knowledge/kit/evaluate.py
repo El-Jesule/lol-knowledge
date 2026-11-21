@@ -52,7 +52,11 @@ def sheet_stats(sheet: StatSheet) -> tuple[dict[str, Fraction], dict[str, tuple[
         if value.definition.stacking is Stacking.ADDITIVE:
             for scope in ("base", "bonus"):
                 key = f"{scope}_{stat_id}"
-                values[key] = value.scoped(scope)
+                if scope == "bonus" and value.definition.soft_cap is not None:
+                    # Effective bonus after soft caps (e.g. Janna Tailwind/Zephyr, Hecarim Warpath).
+                    values[key] = max(Fraction(0), value.total() - value.scoped("base"))
+                else:
+                    values[key] = value.scoped(scope)
                 origin[key] = (stat_id, value.label)
     return values, origin
 

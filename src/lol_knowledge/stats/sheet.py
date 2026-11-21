@@ -79,6 +79,31 @@ CRIT_FIELDS = ("crit", "critperlevel")
 # 5% + 1.8% * (level - 1) = 5%..35.6% (move-speed.md, M5; CassiopeiaPassive.PercentHasteMod).
 CASSIOPEIA_MS_AMP_BASE = Fraction(5, 100)
 CASSIOPEIA_MS_AMP_PER_LEVEL = Fraction(18, 1000)
+# Hecarim's passive (Warpath, HecarimPassive in client 16.23): converts 12..24% of
+# effective (post-soft-cap) bonus movement speed into bonus AD, +2% at levels 3/6/9/12/15/18.
+HECARIM_WARPATH_BY_LEVEL: tuple[Fraction, ...] = (
+    Fraction(12, 100),
+    Fraction(12, 100),
+    Fraction(14, 100),
+    Fraction(14, 100),
+    Fraction(14, 100),
+    Fraction(16, 100),
+    Fraction(16, 100),
+    Fraction(16, 100),
+    Fraction(18, 100),
+    Fraction(18, 100),
+    Fraction(18, 100),
+    Fraction(20, 100),
+    Fraction(20, 100),
+    Fraction(20, 100),
+    Fraction(22, 100),
+    Fraction(22, 100),
+    Fraction(22, 100),
+    Fraction(24, 100),
+)
+# Adaptive force conversion: 1 adaptive force = 0.6 bonus AD or 1.0 AP (runes.md).
+ADAPTIVE_AD_PER_AP = Fraction(3, 5)
+RUNES_RULES = "lol-knowledge/mechanics/runes.md"
 # Yasuo's and Yone's passives (critical-strike.md, C9): their crit chance from every
 # other source is doubled, and each 1 % above 100 % becomes 0.5 bonus attack damage.
 CRIT_CHANCE_KITS = frozenset({"Yasuo", "Yone"})
@@ -88,6 +113,26 @@ MANA_STATS = frozenset({"mana", "mana_regen"})
 MANA_RESOURCE = {"es_ES": "Maná", "en_US": "Mana"}
 ENERGY_RESOURCE = {"es_ES": "Energía", "en_US": "Energy"}
 NO_RESOURCE = {"es_ES": frozenset({"", "Nada"}), "en_US": frozenset({"", "None"})}
+
+
+def adaptive_stat(
+    bonus_attack_damage: Fraction, ability_power: Fraction, ap_weight: Fraction | None
+) -> tuple[str, Label, str]:
+    """Which stat adaptive force gives: the higher bonus; on a tie, the champion's.
+
+    On a tie the client's ``mAdaptiveForceToAbilityPowerWeight`` decides: 1 gives
+    ability power; absent gives attack damage. That reading is not confirmed.
+    """
+    if bonus_attack_damage > ability_power:
+        return "attack_damage", Label.DERIVED, "adaptive: bonus AD is higher than AP"
+    if ability_power > bonus_attack_damage:
+        return "ability_power", Label.DERIVED, "adaptive: AP is higher than bonus AD"
+    chosen = "ability_power" if ap_weight == 1 else "attack_damage"
+    note = (
+        f"adaptive: bonus AD and AP are equal; the champion's adaptiveforceapweight "
+        f"({'1' if ap_weight == 1 else 'absent'}) is read as {chosen} ({RUNES_RULES})"
+    )
+    return chosen, Label.PENDING, note
 
 
 @dataclass(frozen=True)
@@ -104,6 +149,12 @@ class Contribution:
     scaled: bool = False
     # Tenacity stacking group when a non-item source declares it (tenacity.md).
     tenacity_group: str | None = None
+    # True when granted as adaptive force (excluded when resolving adaptive tie-breakers).
+    adaptive: bool = False
+    # True for move_speed entries derived from percent MS, Cassiopeia passive, or Celerity.
+    ms_derived: bool = False
+    # True for stat conversions fed by resolved move_speed (Hecarim Warpath, Swiftmarch).
+    derived_from_ms: bool = False
 
 
 class StatBlocked(StatsError):
@@ -195,6 +246,17 @@ class AttackSpeedRatio:
 
 
 @dataclass(frozen=True)
+class PostMsEffect:
+    """An always-on item stat modifier evaluated after move_speed soft caps (e.g. Swiftmarch)."""
+
+    stat: str  # target stat id or "adaptive_force"
+    formula: Mapping[str, Any]
+    source: str
+    label: Label
+    note: str = ""
+
+
+@dataclass(frozen=True)
 class StatSheet:
     champion: ChampionData
     level: int
@@ -207,6 +269,13 @@ class StatSheet:
     # Sources given to the sheet whose effects are not modelled (tree runes): they
     # weaken any damage computed from the sheet.
     pending_effects: tuple[str, ...] = ()
+    # Move-speed context for dynamic rotation buffs (flat/% MS -> Warpath / Swiftmarch).
+    move_speed_percents: tuple[Contribution, ...] = ()
+    move_speed_bonus_amp: Contribution | None = None
+    post_ms_effects: tuple[PostMsEffect, ...] = ()
+    ap_weight: Fraction | None = None
+    holder_range: str | None = None
+    amplifiers: tuple[StatAmplifier, ...] = ()
 
     def __getitem__(self, stat_id: str) -> StatValue:
         try:
@@ -277,6 +346,24 @@ class StatAmplifier:
     note: str = ""
 
 
+def _formula_uses_stat(formula: Any, stat_name: str) -> bool:
+    """Whether ``formula`` references ``stat_name`` anywhere in its tree."""
+    if not isinstance(formula, Mapping):
+        return False
+    if formula.get("stat") == stat_name:
+        return True
+    for value in formula.values():
+        if isinstance(value, Mapping) and _formula_uses_stat(value, stat_name):
+            return True
+        if (
+            isinstance(value, Sequence)
+            and not isinstance(value, (str, bytes))
+            and any(_formula_uses_stat(item, stat_name) for item in value)
+        ):
+            return True
+    return False
+
+
 def _sheet_effects(
     item: ItemData,
     level: int,
@@ -284,19 +371,22 @@ def _sheet_effects(
     base_labels: Mapping[str, Label] = (),
     blocked_stats: Mapping[str, str] = (),
     holder_range: str | None = None,
-) -> tuple[list[tuple[str, Contribution]], list[StatAmplifier]]:
+) -> tuple[list[tuple[str, Contribution]], list[StatAmplifier], list[PostMsEffect]]:
     """Stats from the effects of ``item`` that the sheet applies (``sheet_effect_reason``).
 
     A ``flat`` component adds its amount in the catalog unit: percentage points
     for fraction stats (25 -> 0.25), the stat's own unit otherwise. A
     ``percent`` component with scope ``total`` amplifies the total of an amount
     stat (Rabadon's Deathcap: +30 % ability power). Formulas may read resolved
-    champion ``base_*`` stats (e.g. Sterak's Gage: 50 % base AD).
+    champion ``base_*`` stats (e.g. Sterak's Gage: 50 % base AD). Effects that
+    read ``move_speed`` or grant ``adaptive_force`` are returned in
+    ``post_ms_effects`` so they run after movement speed percentages and soft caps.
     """
     stat_env = dict(base_stats)
     label_env = dict(base_labels)
     flat: list[tuple[str, Contribution]] = []
     amplifiers: list[StatAmplifier] = []
+    post_ms: list[PostMsEffect] = []
     for effect in item.effects:
         reason = sheet_effect_reason(effect)
         if reason is None:
@@ -313,14 +403,25 @@ def _sheet_effects(
             mode = component.get("mode")
             if component.get("kind") != "stat_modifier" or mode not in {"flat", "percent"}:
                 raise StatsError(f"{title}: only stat modifiers can be sheet stats")
-            definition = _receiver(str(component.get("stat")))
+            raw_stat = str(component.get("stat"))
+            formula = component.get("formula")
+            is_adaptive = raw_stat == "adaptive_force"
             if status != "evaluable":
                 why = f"effect {status}, not applied"
                 why = f"{note}; {why}" if note else why
+                target_id = "attack_damage" if is_adaptive else _receiver(raw_stat).id
                 flat.append(
-                    (definition.id, Contribution(Fraction(0), "bonus", source, Label.PENDING, why))
+                    (target_id, Contribution(Fraction(0), "bonus", source, Label.PENDING, why))
                 )
                 continue
+            if is_adaptive or (mode == "flat" and _formula_uses_stat(formula, "move_speed")):
+                if mode != "flat":
+                    raise StatsError(f"{title}: post-move-speed effects must be flat")
+                if not is_adaptive:
+                    raw_stat = _receiver(raw_stat).id
+                post_ms.append(PostMsEffect(raw_stat, formula, source, label, note))
+                continue
+            definition = _receiver(raw_stat)
             if mode == "percent" and (
                 scenario is not None
                 or component.get("scope") != "total"
@@ -329,7 +430,7 @@ def _sheet_effects(
                 raise StatsError(f"{title}: only always effects amplify a total amount")
             try:
                 evaluated = evaluate_formula(
-                    component.get("formula"), stat_env, holder_range=holder_range, level=level
+                    formula, stat_env, holder_range=holder_range, level=level
                 )
             except FormulaError as exc:
                 if definition.id in blocked_stats:
@@ -346,7 +447,7 @@ def _sheet_effects(
             if definition.unit is Unit.FRACTION and not 0 <= value <= 1:
                 raise StatsError(f"{title}: {value} is not a fraction 0..1")
             flat.append((definition.id, Contribution(value, "bonus", source, part_label, note)))
-    return flat, amplifiers
+    return flat, amplifiers, post_ms
 
 
 def _amplified(
@@ -381,8 +482,71 @@ def effect_amount(stat_id: str, value: Fraction) -> Fraction:
     return value / 100 if _receiver(stat_id).unit is Unit.FRACTION else value
 
 
+def _recompute_move_speed(
+    sheet: StatSheet,
+    *,
+    extra_flat: Contribution | None = None,
+    extra_percent: Contribution | None = None,
+) -> StatSheet:
+    """Recompute move_speed (with % MS, Cassiopeia, Celerity, soft caps) and MS->damage stats."""
+    raw_flats = [item for item in sheet["move_speed"].contributions if not item.ms_derived]
+    if extra_flat is not None:
+        raw_flats.append(extra_flat)
+    raw_percents = list(sheet.move_speed_percents)
+    if extra_percent is not None:
+        raw_percents.append(extra_percent)
+    resolved_ms = _resolve_move_speed(
+        sheet.champion.id,
+        sheet.level,
+        raw_flats,
+        raw_percents,
+        sheet.move_speed_bonus_amp,
+    )
+    values = dict(sheet.values)
+    ms_value = replace(sheet["move_speed"], contributions=tuple(resolved_ms))
+    values["move_speed"] = ms_value
+
+    if sheet.champion.id == "Hecarim" or sheet.post_ms_effects:
+        target_ids = {"attack_damage", "ability_power"}
+        for eff in sheet.post_ms_effects:
+            if eff.stat != "adaptive_force":
+                target_ids.add(eff.stat)
+        static_amps_by_stat: dict[str, list[StatAmplifier]] = {}
+        static_amp_sources: dict[str, set[str]] = {}
+        for amp in sheet.amplifiers:
+            if amp.stat in target_ids:
+                static_amps_by_stat.setdefault(amp.stat, []).append(amp)
+                static_amp_sources.setdefault(amp.stat, set()).add(amp.source)
+        contrib_map: dict[str, list[Contribution]] = {}
+        for stat_id in target_ids:
+            amp_sources = static_amp_sources.get(stat_id, set())
+            contrib_map[stat_id] = [
+                c
+                for c in values[stat_id].contributions
+                if not c.derived_from_ms and not (c.amplifier and c.source in amp_sources)
+            ]
+        _apply_ms_conversions(
+            sheet.champion.id,
+            sheet.level,
+            ms_value,
+            sheet.post_ms_effects,
+            contrib_map,
+            ap_weight=sheet.ap_weight,
+            holder_range=sheet.holder_range,
+        )
+        for stat_id, amps in static_amps_by_stat.items():
+            ref = [c for c in contrib_map[stat_id] if not c.amplifier]
+            for amp in amps:
+                contrib_map[stat_id].append(_amplified(amp, ref))
+        for stat_id, items_list in contrib_map.items():
+            values[stat_id] = replace(values[stat_id], contributions=tuple(items_list))
+    return replace(sheet, values=values, move_speed_percents=tuple(raw_percents))
+
+
 def _added(sheet: StatSheet, stat_id: str, contribution: Contribution) -> StatSheet:
     definition = _receiver(stat_id)
+    if definition.id == "move_speed":
+        return _recompute_move_speed(sheet, extra_flat=contribution)
     speed = definition.id == "attack_speed_bonus"
     if definition.id in _FEEDING_STATS:
         raise StatsError(f"{definition.id}: feeds other stats; it takes no temporary bonus")
@@ -413,6 +577,21 @@ def with_bonus(
 ) -> StatSheet:
     """``sheet`` with a temporary flat bonus to an additive amount (rotations)."""
     return _added(sheet, stat_id, Contribution(amount, "bonus", source, label, note))
+
+
+def with_percent_bonus(
+    sheet: StatSheet, stat_id: str, percent: Fraction, source: str, label: Label, note: str = ""
+) -> StatSheet:
+    """``sheet`` with a temporary additive percentage bonus (e.g. +20% move speed, fraction 0.2)."""
+    definition = _receiver(stat_id)
+    if definition.id != "move_speed":
+        raise StatsError(
+            f"{definition.id}: temporary additive percent bonuses are only for move_speed"
+        )
+    return _recompute_move_speed(
+        sheet,
+        extra_percent=Contribution(percent, "bonus", source, label, note),
+    )
 
 
 def with_amplifier(
@@ -591,6 +770,7 @@ def _apply_cassiopeia_move_speed_passive(
                 weakest([Label.DERIVED, *(item.label for item in bonus_flat)]),
                 f"passive increases bonus flat move speed {format_number(flat_total)} by "
                 f"{format_percent(amp)}",
+                ms_derived=True,
             )
         )
     pct_total = sum((item.value for item in percents), start=Fraction(0))
@@ -603,6 +783,7 @@ def _apply_cassiopeia_move_speed_passive(
                 weakest([Label.DERIVED, *(item.label for item in percents)]),
                 f"passive increases % move speed bonuses {format_percent(pct_total)} by "
                 f"{format_percent(amp)}",
+                ms_derived=True,
             )
         )
 
@@ -625,6 +806,7 @@ def _apply_move_speed_bonus_amp(
                 Label.PENDING,
                 f"{format_percent(amp.value)} of bonus flat move speed "
                 f"{format_number(flat_total)}; {amp.note}",
+                ms_derived=True,
             )
         )
     pct_total = sum((item.value for item in other_pct), start=Fraction(0))
@@ -637,8 +819,135 @@ def _apply_move_speed_bonus_amp(
                 Label.PENDING,
                 f"{format_percent(amp.value)} of other % move speed bonuses "
                 f"{format_percent(pct_total)}; {amp.note}",
+                ms_derived=True,
             )
         )
+
+
+def _resolve_move_speed(
+    champion_id: str,
+    level: int,
+    raw_flats: Sequence[Contribution],
+    raw_percents: Sequence[Contribution],
+    move_speed_bonus_amp: Contribution | None = None,
+) -> list[Contribution]:
+    """Resolve move_speed flats + Cassiopeia/Celerity amps + additive percentages."""
+    flats = list(raw_flats)
+    percents = list(raw_percents)
+    if champion_id == "Cassiopeia":
+        _apply_cassiopeia_move_speed_passive(level, flats, percents)
+    if move_speed_bonus_amp is not None:
+        _apply_move_speed_bonus_amp(move_speed_bonus_amp, flats, percents)
+    reference = list(flats)
+    ms_def = STATS["move_speed"]
+    for percent in percents:
+        flats.append(replace(_percent_amount(ms_def, percent, reference), ms_derived=True))
+    return flats
+
+
+def _effective_bonus_move_speed(ms_value: StatValue) -> Fraction:
+    """Effective bonus move speed after percentages and soft caps (total - base, >= 0)."""
+    return max(Fraction(0), ms_value.total() - ms_value.scoped("base"))
+
+
+def _apply_ms_conversions(
+    champion_id: str,
+    level: int,
+    ms_value: StatValue,
+    post_ms_effects: Sequence[PostMsEffect],
+    contributions: Mapping[str, list[Contribution]],
+    *,
+    ap_weight: Fraction | None,
+    holder_range: str | None,
+) -> None:
+    """Apply champion/item conversions that read resolved post-soft-cap move_speed."""
+    if ms_value.status != "resolved":
+        return
+    total_ms = ms_value.total()
+    base_ms = ms_value.scoped("base")
+    bonus_ms = _effective_bonus_move_speed(ms_value)
+    ms_label = ms_value.label
+
+    if champion_id == "Hecarim" and bonus_ms > 0:
+        ratio = HECARIM_WARPATH_BY_LEVEL[min(level, 18) - 1]
+        contributions["attack_damage"].append(
+            Contribution(
+                bonus_ms * ratio,
+                "bonus",
+                f"{MOVE_SPEED_RULES} (Hecarim passive)",
+                weakest([Label.DERIVED, ms_label]),
+                f"Warpath: {format_percent(ratio)} of effective bonus move speed "
+                f"{format_number(bonus_ms)}",
+                derived_from_ms=True,
+            )
+        )
+
+    if not post_ms_effects:
+        return
+    ms_env: dict[str, Fraction] = {
+        "move_speed": total_ms,
+        "base_move_speed": base_ms,
+        "bonus_move_speed": bonus_ms,
+    }
+    for eff in post_ms_effects:
+        try:
+            evaluated = evaluate_formula(
+                eff.formula, ms_env, holder_range=holder_range, level=level
+            )
+        except FormulaError as exc:
+            raise StatsError(f"{eff.source}: {exc}") from exc
+        if eff.stat == "adaptive_force":
+            bonus_ad = sum(
+                (
+                    c.value
+                    for c in contributions["attack_damage"]
+                    if c.scope == "bonus" and not c.adaptive
+                ),
+                start=Fraction(0),
+            )
+            ap = sum(
+                (c.value for c in contributions["ability_power"] if not c.adaptive),
+                start=Fraction(0),
+            )
+            target_stat, ad_label, ad_note = adaptive_stat(bonus_ad, ap, ap_weight)
+            if target_stat == "attack_damage":
+                amount = evaluated.exact * ADAPTIVE_AD_PER_AP
+                kind_label = "bonus AD"
+            else:
+                amount = evaluated.exact
+                kind_label = "AP"
+            note = (
+                f"{format_number(evaluated.exact)} adaptive force -> "
+                f"{format_number(amount)} {kind_label}; {ad_note}"
+            )
+            if eff.note:
+                note = f"{eff.note}; {note}"
+            contributions[target_stat].append(
+                Contribution(
+                    amount,
+                    "bonus",
+                    eff.source,
+                    weakest([eff.label, ms_label, ad_label]),
+                    note,
+                    adaptive=True,
+                    derived_from_ms=True,
+                )
+            )
+        else:
+            definition = _receiver(eff.stat)
+            val = effect_amount(definition.id, evaluated.exact)
+            if definition.unit is Unit.FRACTION and not 0 <= val <= 1:
+                raise StatsError(f"{eff.source}: {val} is not a fraction 0..1")
+            contributions[definition.id].append(
+                Contribution(
+                    val,
+                    "bonus",
+                    eff.source,
+                    weakest([eff.label, ms_label]),
+                    eff.note,
+                    derived_from_ms=True,
+                )
+            )
 
 
 def build_stat_sheet(
@@ -845,27 +1154,27 @@ def build_stat_sheet(
 
     atk_range = champion.stats.get("attackrange")
     champ_range = None if atk_range is None else ("melee" if atk_range < 300 else "ranged")
+    post_ms_effects: list[PostMsEffect] = []
     for item in items:
-        effect_stats, item_amplifiers = _sheet_effects(
+        effect_stats, item_amplifiers, item_post_ms = _sheet_effects(
             item, level, stat_env, label_env, blocked, holder_range=champ_range
         )
         for stat_id, contribution in effect_stats:
             contributions[stat_id].append(contribution)
         amplifiers += item_amplifiers
-    if champion.id == "Cassiopeia":
-        _apply_cassiopeia_move_speed_passive(
-            level,
-            contributions["move_speed"],
-            percents.setdefault("move_speed", []),
-        )
-    if move_speed_bonus_amp is not None:
-        _apply_move_speed_bonus_amp(
-            move_speed_bonus_amp,
-            contributions["move_speed"],
-            percents.setdefault("move_speed", []),
-        )
+        post_ms_effects += item_post_ms
 
-    # Percentages last, once every flat amount is known (regeneration.md, move-speed.md).
+    # Move speed: apply Cassiopeia/Celerity amps and additive % before soft-cap conversions.
+    raw_ms_percents = tuple(percents.pop("move_speed", ()))
+    contributions["move_speed"] = _resolve_move_speed(
+        champion.id,
+        level,
+        contributions["move_speed"],
+        raw_ms_percents,
+        move_speed_bonus_amp,
+    )
+
+    # Remaining percentages (regeneration.md) once every flat amount is known.
     for stat_id, pending in percents.items():
         reference = list(contributions[stat_id])
         contributions[stat_id] += [
@@ -907,6 +1216,20 @@ def build_stat_sheet(
             )
         else:
             _crit_chance_passive(champion, contributions)
+
+    ap_weight = derived.value(champion.id, "adaptiveforceapweight") if derived else None
+    ms_value = StatValue(
+        STATS["move_speed"], tuple(contributions["move_speed"]), blocked.get("move_speed")
+    )
+    _apply_ms_conversions(
+        champion.id,
+        level,
+        ms_value,
+        post_ms_effects,
+        contributions,
+        ap_weight=ap_weight,
+        holder_range=champ_range,
+    )
 
     if champion.id == "Jhin":
         if "crit_chance" in blocked:
@@ -975,5 +1298,18 @@ def build_stat_sheet(
         for stat_id in STATS
     }
     return StatSheet(
-        champion, level, tuple(items), assumed, values, tuple(notes), ratio, tuple(pending_effects)
+        champion,
+        level,
+        tuple(items),
+        assumed,
+        values,
+        tuple(notes),
+        ratio,
+        tuple(pending_effects),
+        move_speed_percents=raw_ms_percents,
+        move_speed_bonus_amp=move_speed_bonus_amp,
+        post_ms_effects=tuple(post_ms_effects),
+        ap_weight=ap_weight,
+        holder_range=champ_range,
+        amplifiers=tuple(amplifiers),
     )

@@ -24,7 +24,8 @@ from typing import Any
 from .damage import format_number
 from .errors import StatsError
 from .stats import ItemData, Label, StatAmplifier, weakest
-from .stats.sheet import Contribution
+from .stats.sheet import ADAPTIVE_AD_PER_AP, Contribution
+from .stats.sheet import adaptive_stat as adaptive_stat
 
 RUNES_PATH = Path("lol-knowledge") / "derived" / "runes.json"
 SCHEMA = "lol-derived-runes/1"
@@ -56,7 +57,6 @@ SHARD_STATS = {
     "Tenacity": ("tenacity", "StatGain", "percent"),
 }
 LEVELS = 18
-ADAPTIVE_AD_PER_AP = Fraction(3, 5)  # 0.6 AD per 1.0 AP (Adaptive shard 5.4/9, AbsoluteFocus *0.6)
 BOUNTY_MAX_STACKS = 5  # five enemy champions on Summoner's Rift
 ADAPTIVE_RUNE_KEYS = frozenset(
     {"Adaptive", "JackOfAllTrades", "AbsoluteFocus", "Waterwalking", "GatheringStorm"}
@@ -545,31 +545,16 @@ def shard_contributions(
             name = "StatGain1" if adaptive == "attack_damage" else "StatGain2"
             label = Label.PENDING if Label.PENDING in (adaptive_label, base) else base
             flats.append(
-                (adaptive, Contribution(_value(rune, name), "bonus", source, label, adaptive_note))
+                (
+                    adaptive,
+                    Contribution(
+                        _value(rune, name), "bonus", source, label, adaptive_note, adaptive=True
+                    ),
+                )
             )
         else:
             raise StatsError(f"shard {shard} {rune.key} has no stat rule ({RULES})")
     return flats, percents
-
-
-def adaptive_stat(
-    bonus_attack_damage: Fraction, ability_power: Fraction, ap_weight: Fraction | None
-) -> tuple[str, Label, str]:
-    """Which stat adaptive force gives: the higher bonus; on a tie, the champion's.
-
-    On a tie the client's ``mAdaptiveForceToAbilityPowerWeight`` decides: 1 gives
-    ability power; absent gives attack damage. That reading is not confirmed.
-    """
-    if bonus_attack_damage > ability_power:
-        return "attack_damage", Label.DERIVED, "adaptive: bonus AD is higher than AP"
-    if ability_power > bonus_attack_damage:
-        return "ability_power", Label.DERIVED, "adaptive: AP is higher than bonus AD"
-    stat = "ability_power" if ap_weight == 1 else "attack_damage"
-    note = (
-        f"adaptive: bonus AD and AP are equal; the champion's adaptiveforceapweight "
-        f"({'1' if ap_weight == 1 else 'absent'}) is read as {stat} ({RULES})"
-    )
-    return stat, Label.PENDING, note
 
 
 def tree_rune_notes(runes: Collection[int], data: RuneData) -> list[str]:

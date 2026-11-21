@@ -369,10 +369,17 @@ def _build_sheet(
     if needs_adaptive_stat(runes, shards, data):
         before = build_stat_sheet(champion, args.level, items, issues, assumptions, derived, extras)
         bonus_ad = sum(
-            (part.value for part in before["attack_damage"].contributions if part.scope == "bonus"),
+            (
+                part.value
+                for part in before["attack_damage"].contributions
+                if part.scope == "bonus" and not part.adaptive
+            ),
             start=Fraction(0),
         )
-        power = sum((part.value for part in before["ability_power"].contributions), Fraction(0))
+        power = sum(
+            (part.value for part in before["ability_power"].contributions if not part.adaptive),
+            Fraction(0),
+        )
         weight = derived.value(champion.id, "adaptiveforceapweight") if derived else None
         adaptive, label, note = adaptive_stat(bonus_ad, power, weight)
     flats, percents = shard_contributions(

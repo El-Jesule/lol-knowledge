@@ -241,10 +241,17 @@ def _build_sheet_for_contract(
             champion, level, items, issues, assumptions, derived, extra_contributions
         )
         bonus_ad = sum(
-            (p.value for p in before["attack_damage"].contributions if p.scope == "bonus"),
+            (
+                p.value
+                for p in before["attack_damage"].contributions
+                if p.scope == "bonus" and not p.adaptive
+            ),
             start=Fraction(0),
         )
-        power = sum((p.value for p in before["ability_power"].contributions), Fraction(0))
+        power = sum(
+            (p.value for p in before["ability_power"].contributions if not p.adaptive),
+            Fraction(0),
+        )
         weight = derived.value(champion.id, "adaptiveforceapweight") if derived else None
         adaptive, a_label, a_note = adaptive_stat(bonus_ad, power, weight)
     flats, percents = shard_contributions(

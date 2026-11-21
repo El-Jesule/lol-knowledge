@@ -52,6 +52,7 @@ from .stats import (
     weakest,
     with_amplifier,
     with_bonus,
+    with_percent_bonus,
 )
 from .survival import (
     GRIEVOUS_WOUNDS_REDUCTION,
@@ -101,7 +102,9 @@ DAMAGE_KINDS = frozenset(
 
 # Effects that last a while once triggered; only the timeline applies them (timeline.md).
 TIMED_KINDS = frozenset({"damage_modifier", "stat_modifier"})
-TIMED_TRIGGERS = frozenset({"spellblade", "energized", "damaging_ability", "on_attack", "cast"})
+TIMED_TRIGGERS = frozenset(
+    {"spellblade", "energized", "damaging_ability", "on_attack", "on_damage", "cast"}
+)
 # Triggers on a hit: whether that hit benefits from its own effect is not verified.
 UNCERTAIN_START_TRIGGERS = frozenset({"spellblade", "energized"})
 # Target resistances a timed effect can reduce, by the damage type they mitigate.
@@ -566,8 +569,8 @@ def _effects(
                             if "value" in entry
                         },
                         effect.get("scenario"),
-                        _duration(effect),
-                        (effect.get("target") or {}).get("kind"),
+                        _seconds_of(component.get("duration_seconds")) or _duration(effect),
+                        (component.get("target") or effect.get("target") or {}).get("kind"),
                         _seconds_of(effect.get("cooldown_seconds")),
                         _refund(effect),
                         _window(effect),
@@ -617,6 +620,37 @@ def _alternation(effect: Mapping[str, Any]) -> tuple[str, int, int] | None:
     if not isinstance(entry, Mapping):
         return None
     return str(entry["group"]), int(entry["position"]), int(entry["of"])
+
+
+def _formula_references_stat(formula: Any, stat_name: str) -> bool:
+    if not isinstance(formula, Mapping):
+        return False
+    if formula.get("stat") == stat_name:
+        return True
+    for value in formula.values():
+        if isinstance(value, Mapping) and _formula_references_stat(value, stat_name):
+            return True
+        if (
+            isinstance(value, Sequence)
+            and not isinstance(value, (str, bytes))
+            and any(_formula_references_stat(item, stat_name) for item in value)
+        ):
+            return True
+    return False
+
+
+def _kit_uses_move_speed(kit: Kit | None) -> bool:
+    if kit is None:
+        return False
+    for ability in kit.abilities.values():
+        for case in ability.cases:
+            if any(_formula_references_stat(part.formula, "move_speed") for part in case.parts):
+                return True
+        if any(
+            _formula_references_stat(pe.formula, "move_speed") for pe in ability.passive_effects
+        ):
+            return True
+    return False
 
 
 def _key(effect: _Effect) -> str:
@@ -797,6 +831,11 @@ class _Rotation:
             or bool(sheet.pending_effects)
             or self.rune_combat.weakened
             or self.resources.weakened
+        )
+        self.ms_affects_damage = (
+            sheet.champion.id == "Hecarim"
+            or bool(sheet.post_ms_effects)
+            or _kit_uses_move_speed(kit)
         )
         self.on_hit: list[_Effect] = []
         self.secondary_attacks: list[_Effect] = []
@@ -1340,15 +1379,17 @@ class _Rotation:
     def _timed(self, effect: _Effect) -> None:
         """Keep a timed effect for the timeline, or note that it needs one."""
         assert effect.duration is not None
+        component = effect.component
+        kind = component.get("kind")
         if self.timeline is None:
             self.notes.append(
                 f"attacker {effect.title}: lasts {format_number(effect.duration)} s; "
                 "applied only with --timeline"
             )
-            self.weakened |= not _excluded(effect, self.target.kind)
+            ms_only = kind == "stat_modifier" and str(component.get("stat")) == "move_speed"
+            if not ms_only or self.ms_affects_damage:
+                self.weakened |= not _excluded(effect, self.target.kind)
             return
-        component = effect.component
-        kind = component.get("kind")
         if kind == "damage_modifier":
             if component.get("direction") != "dealt" or component.get("source") != "all":
                 raise RotationError(f"{effect.title}: only dealt modifiers of all damage are timed")
@@ -2085,6 +2126,8 @@ class _Rotation:
                 if component.get("mode") == "flat":
                     amount = effect_amount(stat_id, window.value)
                     sheet = with_bonus(sheet, stat_id, amount, source, label)
+                elif stat_id == "move_speed":
+                    sheet = with_percent_bonus(sheet, stat_id, window.value / 100, source, label)
                 else:
                     sheet = with_amplifier(sheet, stat_id, window.value, source, label)
             else:
@@ -2111,31 +2154,45 @@ class _Rotation:
         clock: Fraction,
         target_stats: Mapping[str, Fraction],
         slot: str | None = None,
+        *,
+        damage_types: frozenset[str] | None = None,
     ) -> bool:
         """(Re)start the timed effects of ``trigger``; True when one starts on a hit."""
         uncertain = False
+        opened_cooldowns: dict[str, Fraction] = {}
         for effect in self.timed:
             if effect.trigger != trigger:
                 continue
             if not _conditions_hold(effect, self.target, "trigger", False, target_stats, slot):
                 continue
+            allowed_types = effect.component.get("damage_types")
+            if allowed_types is not None and (
+                damage_types is None or not any(dt in allowed_types for dt in damage_types)
+            ):
+                continue
             if effect.cooldown is not None:
                 if clock < self.timed_ready.get(effect.title, Fraction(0)):
                     continue
-                self.timed_ready[effect.title] = clock + effect.cooldown
+                opened_cooldowns[effect.title] = clock + effect.cooldown
             assert effect.duration is not None
             value, labels = self._value(effect, target_stats)
-            self.windows[effect.title] = _Window(
+            self.windows[_key(effect)] = _Window(
                 effect, clock + effect.duration, value, (effect.label, *labels)
             )
             if effect.component.get("kind") == "stat_modifier" and effect.affects == "self":
                 self.speed_changed |= str(effect.component.get("stat")) in ATTACK_SPEED_STATS
             if trigger in UNCERTAIN_START_TRIGGERS:
-                uncertain = True
-                self.notes.append(
-                    f"{effect.title}: starts after the hit that triggers it; whether that hit "
-                    "benefits is not verified"
+                ms_only = (
+                    effect.component.get("kind") == "stat_modifier"
+                    and str(effect.component.get("stat")) == "move_speed"
                 )
+                if not ms_only or self.ms_affects_damage:
+                    uncertain = True
+                    self.notes.append(
+                        f"{effect.title}: starts after the hit that triggers it; whether that hit "
+                        "benefits is not verified"
+                    )
+        self.timed_ready.update(opened_cooldowns)
         return uncertain
 
     def _refund(self, clock: Fraction, crit: bool) -> None:
@@ -2906,6 +2963,11 @@ class _Rotation:
                 od_parts, od_shields = self._on_damage_procs(step, target_stats, clock, step.slot)
                 parts += od_parts
                 shield_events += od_shields
+                if self.timeline is not None:
+                    dealt_types = frozenset(p.damage_type.value for p in parts[accrued_count:])
+                    self._open(
+                        "on_damage", clock, target_stats, step.slot, damage_types=dealt_types
+                    )
             for ev in shield_events:
                 self.rune_combat.on_attacker_shield(ev.amount, clock)
             for proc in self.rune_combat.on_step(step.slot, step_dealt, clock, self.sheet):
