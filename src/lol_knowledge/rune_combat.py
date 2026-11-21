@@ -99,6 +99,8 @@ class RuneCombat:
         self._font_of_life: Rune | None = None
         self._presence_of_mind: Rune | None = None
         self._manaflow_band: Rune | None = None
+        self._time_warp_tonic: Rune | None = None
+        self.item_haste = Fraction(0)
 
         self._fired: set[int] = set()
         self._ready: dict[int, Fraction] = {}
@@ -118,6 +120,12 @@ class RuneCombat:
                 continue
             if rune.key == "ManaflowBand":
                 self._manaflow_band = rune
+                continue
+            if rune.key == "CosmicInsight":
+                self.item_haste += rune_value(rune, "ItemHaste")
+                continue
+            if rune.key == "TimeWarpTonic":
+                self._time_warp_tonic = rune
                 continue
             if rune.key not in COMBAT_MINOR_RUNE_KEYS:
                 continue
@@ -568,16 +576,28 @@ class RuneCombat:
     def clear_expired_burns(self, until: Fraction) -> None:
         self._keystones.clear_expired_burns(until)
 
+    def time_warp_ratio(self) -> Fraction:
+        """Upfront potion restoration fraction from 8352 Time Warp Tonic (0.40 or 0)."""
+        if self._time_warp_tonic is None:
+            return Fraction(0)
+        return rune_value(self._time_warp_tonic, "RestorationPercentage")
+
     def has_due_procs(self, until: Fraction) -> bool:
-        return any(item.at <= until for item in self._delayed)
+        return any(item.at <= until for item in self._delayed) or self._keystones.has_due_procs(
+            until
+        )
 
     def due_times(self, until: Fraction) -> list[Fraction]:
-        return [item.at for item in self._delayed if item.at <= until]
+        return [
+            *(item.at for item in self._delayed if item.at <= until),
+            *self._keystones.due_times(until),
+        ]
 
     def pop_due(self, at: Fraction) -> list[RuneProc]:
         due = [item.proc for item in self._delayed if item.at <= at]
         if due:
             self._delayed = [item for item in self._delayed if item.at > at]
+        due.extend(self._keystones.pop_due(at))
         return due
 
     def last_pending_time(self) -> Fraction | None:
@@ -585,6 +605,9 @@ class RuneCombat:
         burn_end = self._keystones.burn_end()
         if burn_end is not None:
             times.append(burn_end)
+        ks_delayed = self._keystones.last_delayed_time()
+        if ks_delayed is not None:
+            times.append(ks_delayed)
         return max(times) if times else None
 
     def revitalize_low_hp_amp(self, attacker_hp_fraction: Fraction) -> Fraction:

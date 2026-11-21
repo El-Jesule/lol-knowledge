@@ -43,6 +43,8 @@ class Target:
     items: tuple[ItemData, ...] = ()
     shield: Fraction = Fraction(0)
     shield_type: str = "normal"
+    runes: tuple[int, ...] = ()
+    level: int | None = None
 
     def resistance(self, damage_type: DamageType) -> Fraction | None:
         if damage_type is DamageType.PHYSICAL:
@@ -127,6 +129,7 @@ def target_from_sheet(
     current_health: Fraction | None = None,
     shield: Fraction | None = None,
     shield_type: str = "normal",
+    runes: tuple[int, ...] = (),
 ) -> Target:
     """A target champion resolved with the same stat sheet as the attacker."""
     armor, magic_resist, health = sheet["armor"], sheet["magic_resist"], sheet["health"]
@@ -142,6 +145,8 @@ def target_from_sheet(
         sheet.items,
         shield=shield_amount,
         shield_type=shield_kind,
+        runes=tuple(runes),
+        level=sheet.level,
     )
 
 

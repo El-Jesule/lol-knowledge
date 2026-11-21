@@ -1,8 +1,8 @@
 # Runas y fragmentos
 
-- **Ámbito:** estructura de una página de runas, su legalidad, los fragmentos de estadísticas, las runas menores de estadísticas en la hoja y las runas menores de combate y piedras angulares en `rotation`. Lo usan `stats`, `ability` y `rotation` con `--rune`, `--shard` y `--input`.
+- **Ámbito:** estructura de una página de runas, su legalidad, los fragmentos de estadísticas, las runas menores de estadísticas en la hoja, las runas menores de combate y piedras angulares en `rotation` y `survive`, y las runas del campeón objetivo (`--target-rune`, `--target-shard`, `target.runes`/`target.shards`). Lo usan `stats`, `ability`, `rotation`, `survive`, `optimize` y `contract`/`mcp`.
 - **Parche de referencia:** cliente 16.23 y Data Dragon 16.23.1.
-- **Fecha de consulta:** 2026-11-20
+- **Fecha de consulta:** 2026-11-21
 - **Código:** [`src/lol_knowledge/runes.py`](../../src/lol_knowledge/runes.py), [`src/lol_knowledge/rune_combat.py`](../../src/lol_knowledge/rune_combat.py) y [`src/lol_knowledge/rune_keystones.py`](../../src/lol_knowledge/rune_keystones.py). Datos: [`../derived/runes.json`](../derived/runes.json), generado con `python -m binmodel.perks` ([`research/README.md`](../../research/README.md)).
 
 ## Fuentes
@@ -19,6 +19,7 @@
 | R8 | Wiki oficial de League of Legends (`wiki.leagueoflegends.com`, consultada el 2026-11-20; `V26.23` rev `4096203` confirma sin cambios en runas): `Rune` (`4094440`), `Lethal_Tempo` (`4060427`) y `Template:Rune_data_Lethal_Tempo` (`4065934`), `Template:Rune_data_Press_the_Attack` (`4015574`), `Template:Rune_data_Conqueror` (`4060685`), `Template:Rune_data_Hail_of_Blades` (`4060661`), `Arcane_Comet` (`4024412`, `V26.09` rev `4050133`) y `Template:Rune_data_Arcane_Comet` (`4060639`), `Template:Rune_data_Summon_Aery` (`4062237`) | Progresión lineal `10 × nivel` del fragmento de vida; multiplicadores reales a distancia de Compás letal (`× 0,8` VA y `× 0,667` daño, error conocido en el texto de lobby); curvas lineales 1–18 de Ataque intensificado, Conquistador y Lluvia de cuchillas (corroborando `{ee18a47b}` = `ByCharLevelNamedDataValuesInterpolationCalculationPart` sin multiplicador de crecimiento); eliminación del reembolso de enfriamiento de Cometa arcano en V26.09 y rampa lineal `0–100 %` en `0–750` unidades; retorno de Aery dependiente de distancia | Fuente comunitaria secundaria (corrobora los cálculos de R1) |
 | R9 | Wiki oficial de League of Legends (`wiki.leagueoflegends.com`, consultada el 2026-11-20): `Template:Rune_data_Revitalize` (`3825912`), `Template:Rune_data_Shield_Bash` (`4044093`), `Template:Rune_data_Taste_of_Blood` (`3997097`), `Template:Rune_data_Absorb_Life` (`3997095`), `Template:Rune_data_Triumph` (`3825924`), `Template:Rune_data_Font_of_Life` (`3996429`) y `Template:Healing_modifiers` (`4021803`) | Curva por tramos de Absorber vida (`1..23`), exclusión a vida completa de Sabor a sangre, multiplicador de Revitalizar (< 40 % de vida) sobre robo de vida, omnivampirismo, curaciones y escudos, y fórmulas de Golpe de escudo, Triunfo y Fuente de vida | Fuente comunitaria secundaria (corrobora los valores de R1) |
 | R10 | Wiki oficial de League of Legends (`wiki.leagueoflegends.com`, consultada el 2026-11-20): `Presence_of_Mind` (`4062635`), `Template:Rune_data_Presence_of_Mind` (`3985219`) y `Manaflow_Band` (`4058511`) | Curva por nivel 1–18 de Claridad mental (`6..44` maná, `× 0,8` a distancia, `6` de energía, `8 s` CD, `15 %` al derribar y sustitución por Triunfo en campeones sin maná ni energía) y regeneración de Banda de maná (`1 %` del maná faltante cada `5 s`) | Fuente comunitaria secundaria (corrobora los valores de R1) |
+| R11 | Data Dragon 16.23.1 (`data/current/items.json`, objetos `2150`, `2151`, `2152`) + cliente 16.23 (R1) | Valores de Tónico triple (`2152` Elixir de fuerza: +25 de fuerza adaptable durante 60 s desde nivel 6), Tónico de distorsión temporal (`40 %` instantáneo, `20 s` CD), Perspicacia cósmica (`+10` aceleración de objetos, `+18` de invocador), Capa del nimbo (`15 %`/`35 %`/`45 %` VM), Inquebrantable (`+10` armadura/RM), Velocidad de acercamiento (`+15 %`/`+7,5 %` VM), Pies veloces, Tensión del saqueador de tormentas, Reverberacción y Mejora glacial | Oficial (elixires DD) + Datos del cliente (R1) |
 
 `validate` comprueba que los árboles, las filas y los ids de R1 coinciden exactamente con R3.
 
@@ -76,12 +77,17 @@ El motor no inventa el minuto de partida, las unidades absorbidas ni la posició
 | 8451 | `Overgrowth` | `overgrowth_units` (entero ≥ 0) | +3 de vida por cada 8 unidades absorbidas y, desde 120 unidades, +3,5 % de vida máxima (como amplificador) |
 | 8233 | `AbsoluteFocus` | `attacker_health_percent` (`0..1`) | Por encima del 70 % de vida: fuerza adaptable lineal 3–30 por nivel (`AdaptiveForceCalc` en R1; en el límite exacto 0,7 queda `Pendiente de verificación`) |
 | 8232 | `Waterwalking` | `in_river` (`0` o `1`) | Con `1`: +10 de velocidad de movimiento plana y fuerza adaptable lineal 13–30 por nivel (`AdaptiveForceCalc` en R1) |
+| 8242 | `Unflinching` | `defender_impaired` o `cc_taken` (`0` o `1`, opcional) | Con `1`: +10 de armadura y +10 de RM (`ResistMax` en R1, duración 2 s) mientras sufre control de adversario; también se aplica dinámicamente en `survive` |
+| 8410 | `ApproachVelocity` | `target_impaired` (`0` o `1`, opcional; `ally_cc=1` para aliado) | Con `1`: +15 % de velocidad de movimiento porcentual (+7,5 % si `ally_cc=1`, R1) hacia enemigos con movimiento reducido |
+| 8275 | `NimbusCloak` | `summoner_spell_cd` (segundos ≥ 0, opcional) | Al lanzar un hechizo de invocador (2 s): +15 % VM (< 100 s), +35 % VM (100–249 s) o +45 % VM (≥ 250 s) en R1 |
+| 8313 | `PerfectTiming` (Tónico triple) | `triple_tonic_force` (`0` o `1`, opcional; nivel ≥ 6) | Con `1` y nivel ≥ 6: +25 de fuerza adaptable durante 60 s (`2152` Elixir de fuerza en R11). Elixir de avaricia (nivel 3, +5 daño verdadero a súbditos) y Elixir de habilidad (nivel 9, +1 punto) se anotan fuera |
+| 8347 | `CosmicInsight` | Ninguno | +10 de aceleración de objetos (`ItemHaste`, aplicada al enfriamiento de objetos en `rotation` y `survive` mediante `CD / (1 + 10/100)`) y +18 de aceleración de hechizos de invocador (anotado, R1) |
 
-### Runas menores sin efecto en estadísticas ni daño 1v1
+### Runas sin efecto en estadísticas ni daño 1v1
 
-Las runas estrictamente de visión, oro, abalorios (excluidos por DEC-03), velocidad fuera de combate (`move-speed.md`) o sustitución de Destello se listan como nota informativa y **no** degradan la etiqueta de daño:
+Las runas estrictamente de visión, oro, abalorios (excluidos por DEC-03), velocidad fuera de combate (`move-speed.md`) o sustitución de hechizos de invocador fuera de combate se listan como nota informativa y **no** degradan la etiqueta de daño:
 
-- `8137` Sexto sentido, `8140` Recuerdo macabro, `8141` Guardián de profundidad, `8135` Cazador de tesoros, `8105` Cazador incesante, `8306` Destello hextech y `8321` Reembolso.
+- `8137` Sexto sentido, `8140` Recuerdo macabro, `8141` Guardián de profundidad, `8135` Cazador de tesoros, `8105` Cazador incesante, `8306` Destello hextech, `8321` Reembolso y `8360` Libro de hechizos (`UnsealedSpellbook`, piedra angular de intercambio de hechizos fuera de combate).
 
 ## Runas menores de combate en `rotation` (`Derivado`, R1, R2 y R7, salvo donde se indica)
 
@@ -104,6 +110,7 @@ Se aplican en `python -m lol_knowledge rotation` (en `stats` se anotan como info
 | 9111 | `Triumph` | Curación al derribar (`survival.md`) | `--target-kind` (`champion`) | En el paso letal contra campeón, cura `2,5 % vida máxima + 5 % vida perdida` del atacante (escalada con HSP y Heridas graves; +20 de oro anotado fuera; R1 + R9) |
 | 8463 | `FontOfLife` | Curación directa (`survival.md`) | `target_impaired` (`0` o `1`), `--target-kind` y `--attacker-range` | Con `1`, al dañar a un campeón cura `10–50` (`× 0,7` a distancia; `BaseHeal` en R1 + R9), enfriamiento 20 s en `--timeline`, escalada con HSP y Heridas graves |
 | 8009 | `PresenceOfMind` | Restauración de recurso (`resources.md`) | `--target-kind` (`champion`) y `--attacker-range` (si usa maná) | Al dañar a un campeón (enfriamiento `8 s` en `--timeline`): restaura `6..44` de maná por tabla de nivel 1–18 (`× 0,8` a distancia) o `6` de energía; al derribar restaura un `15 %` del maná o energía máximos. En campeones sin maná ni energía se anota su sustitución por Triunfo (R1 + R10) |
+| 8352 | `TimeWarpTonic` | Consumibles (`survival.md`) | Poción en `rotation` (`item:2003` / `item:2031`) o `survive` (`potion_active=1`) | Al consumir una poción de vida (enfriamiento `20 s`), restaura inmediatamente el `40 %` de la curación total (`RestorationPercentage` en R1) y el `60 %` restante a lo largo de la duración de la poción en `--timeline` |
 
 Si el objetivo no coincide con el tipo de una runa (por ejemplo, Demoler contra un campeón o Golpe de gracia contra un súbdito), la runa no se aplica y no debilita la etiqueta. Si falta un `--input` condicional en una runa aplicable, queda en `not_applied` y deja el resultado en `Pendiente de verificación`.
 
@@ -124,26 +131,37 @@ Se aplican contra campeones en `python -m lol_knowledge rotation` (en `stats` co
 | 8992 | `DeathfireTouch` | `deathfire_duration` (`1`, `2` o `4`) y `--target-kind` | Quemadura mágica al golpear con habilidad: `3–12 + 2,5 % PH + 7 % DA adicional` por segundo (`DamageCalc` en R1); tras arder 3 s continuos (`TimeToAmp`) se amplifica un +75 % (`DamageMultiplier`). En `--timeline` se acumula de forma continua en `_accrue` |
 | 8369 | `FirstStrike` | `first_strike` (`0` o `1`) y `--target-kind` si `1` | Ventana de 3 s (enfriamiento 25–15 s en `--timeline`): +7 % del daño posmitigación del paso como parte aparte de daño verdadero (sin volver a aplicar modificadores de daño). Oro adicional anotado fuera |
 | 8437 | `GraspOfTheUndying` | `grasp_ready` (`0` o `1`), `--target-kind`, `--attacker-range` | En el siguiente ataque listo (o cada 4 s en combate en `--timeline`): inflige 3,5 % de vida máxima (× 0,4 a distancia) como daño mágico y **cura** 1,3 % de vida máxima (× 0,4 a distancia, escalada con HSP y Heridas graves; [`survival.md`](survival.md)). La vida máxima permanente (+5 / +2 por proc) se anota fuera |
+| 8021 | `FleetFootwork` | `--target-kind`, `--attacker-range` | Energizado (empieza cargado a 100; +6 por ataque o +15 con `3087` Puñal de Statikk): al atacar cura `15–160 + 10 % DA adicional + 5 % PH` (`× 0,6` a distancia, `× 0,15` contra súbditos; escalada con HSP y Heridas graves) y otorga `+20 %` (`+15 %` a distancia) de velocidad de movimiento porcentual durante 1 s (R1 + R11, acoplado con pasivas de VM como Senda de guerra de Hecarim) |
+| 8230 | `PhaseRush` (Tensión del saqueador de tormentas) | `--target-kind`, `--attacker-range` | Al infligir `≥ 25 %` de la vida máxima de un campeón en `3 s`: otorga `+48 %` (`+36 %` a distancia) de velocidad de movimiento porcentual y `50 %` de resistencia a ralentizaciones (anotada) durante `4 s` (enfriamiento lineal `20–10 s` por nivel en `--timeline`, R1 + R11) |
+| 8439 | `Aftershock` | `target_impaired` (`0` o `1`), `--target-kind` | Con `1` contra campeón (enfriamiento `20 s`): otorga `min(45 + 75 % armadura/RM adicional, 80–150 lineal)` de armadura y RM durante `2,5 s` y detona `25–120 lineal + 8 % vida adicional` de daño mágico tras `2,5 s` en `--timeline` (o inmediato sin línea de tiempo, R1 + R11) |
+| 8351 | `GlacialAugment` | `target_impaired` (`0` o `1`), `--target-kind` | Con `1` contra campeón (enfriamiento `25 s`): crea zonas heladas durante `3 s` con ralentización `20 % + 90 % HSP + 6 % × (PH / 100) + 7 % × (DA adicional / 100)` y reduce un `15 %` el daño enemigo hacia aliados (anotado en `rotation`, modelado en `survive` con `glacial_ally=1`, R1 + R11) |
 
-## Runas defensivas en `survive` (`Derivado`, R1 y V7 de [`survival.md`](survival.md))
+## Runas defensivas en `survive` y runas del objetivo (`Derivado`, R1, R11 y V7 de [`survival.md`](survival.md))
 
-Se evalúan en la simulación inversa `python -m lol_knowledge survive` (en `stats` y `rotation` ofensiva constan como nota informativa sin debilitar el daño ofensivo):
+Se evalúan en la simulación inversa `python -m lol_knowledge survive` (en `stats` y `rotation` ofensiva del atacante constan como nota informativa sin debilitar el daño ofensivo):
 
 | Id | Clave del cliente | `--input` / requisito | Efecto en `survive` |
 |---|---|---|---|
 | 8473 | `BonePlating` | Ninguno | Al recibir > 0 de daño real a la vida (no solo a escudos), activa 3 cargas durante 1,5 s (55 s CD en `--timeline`): los siguientes 3 golpes (incluido daño verdadero) infligen `30–60` menos de daño posmitigación (`MEC-08`) |
 | 8444 | `SecondWind` | Ninguno | Tras recibir daño de campeón, regenera un `4 %` de la vida perdida durante 10 s (continuo y reiniciable en `--timeline`), reducido por Heridas graves y sin escalar con HSP ni Revitalizar |
 | 8465 | `Guardian` | `guardian_ally` (`0` o `1`) | Con `1`, al recibir `50–165` de daño en 2,5 s o daño letal, otorga escudo `40–150 + 20 % PH + 6 % vida adicional` durante 1,5 s (`ShieldDuration` del cliente 16.23; 75–40 s CD), escalado con HSP y Revitalizar |
+| 8439 | `Aftershock` | `aftershock_active` o `target_impaired` (`0` o `1`) | Con `1`, suma `min(45 + 75 % armadura/RM adicional, 80–150 lineal)` a la armadura y RM del defensor durante `2,5 s` (`20 s` CD en `--timeline`) |
+| 8242 | `Unflinching` | `defender_impaired` o `cc_taken` (`0` o `1`) | Con `1`, suma `+10` de armadura y `+10` de RM al defensor mientras sufre CC (sin duplicarlo si ya está en la hoja) |
+| 8351 | `GlacialAugment` (aliado) | `glacial_ally` (`0` o `1`) | Con `1`, reduce un `15 %` el daño físico y mágico entrante durante `3 s` (`DmgReduction` en R1) |
+| 8347 | `CosmicInsight` | Ninguno | Reduce los enfriamientos de objetos defensivos (Escudo de hechizos, Salvavidas, Ángel de la guarda, reducciones activas) con `+10` de aceleración de objetos |
+| 8352 | `TimeWarpTonic` | `potion_active` (`1`) | Con poción en el inventario del defensor, aplica el `40 %` de curación al instante (`20 s` CD) y el `60 %` restante en el tiempo |
 
-## Lo que no se modela todavía (dependencias de futuras mecánicas)
+### Runas del campeón objetivo (`--target-rune`, `--target-shard`, `target.runes`/`target.shards`)
 
-Las **5 piedras angulares** y **6 runas menores** restantes dependen de mecánicas aún no construidas; siguen en `pending_effects` y dejan `ability` y `rotation` en `Pendiente de verificación`:
+`ability`, `rotation`, `optimize` y el contrato JSON/MCP aceptan runas y fragmentos para el campeón objetivo (requiere `--target-champion` / `target.champion`):
 
-- **Piedras angulares (5):** `8021` Pies veloces (`OBJ-04`), `8230` Tensión del saqueador de tormentas (`MEC-27`), `8351` Mejora glacial (`MEC-26`), `8360` Libro de hechizos (`DAT-06`) y `8439` Reverberacción (`MEC-26`).
-- **Runas menores (6):**
-  - CC / velocidad condicional (`MEC-26`): `8410` Velocidad de acercamiento y `8242` Inquebrantable.
-  - Hechizos de invocador / aceleración de objetos (`DAT-06`, `MEC-29`): `8275` Capa del nimbo y `8347` Perspicacia cósmica.
-  - Consumibles / elixires (`OBJ-12`): `8313` Tónico triple y `8352` Tónico de distorsión temporal.
+- Los fragmentos y runas de estadísticas (p. ej. `8429` Condicionamiento, `8451` Sobrecrecimiento, `8242` Inquebrantable) modifican directamente la hoja de estadísticas del objetivo (armadura, RM, vida máxima).
+- En `rotation`, si el objetivo lleva `8473` Revestimiento de huesos (`BonePlating`), se activa al recibir > 0 de daño real a la vida y reduce los 3 pasos dañinos siguientes en `30–60` según el nivel del objetivo (`1,5 s`, `55 s` CD en `--timeline`). Si lleva `8444` Fuerzas renovadas (`SecondWind`), queda anotado como regeneración defensiva fuera del daño puro del atacante.
+
+## Alcance y limitaciones restantes
+
+Las **62 de 62 runas** (17 piedras angulares y 45 runas menores) y los **7 fragmentos** del cliente 16.23 están cubiertos por el modelo. Limitaciones conocidas:
+
 - **La runa extra por árbol secundario** (`secondary_bonus`): sus valores son 0 en 16.23 y no se aplica.
-- Las variantes por modo de juego (`mode_overrides`).
-- Las runas del campeón objetivo: solo se aceptan para el atacante.
+- **Variantes por modo de juego** (`mode_overrides`, p. ej. ARAM/Arena): no se aplican; el motor modela Grieta del Invocador.
+- **Movimiento y duración de CC:** la carga de Energizado por desplazamiento (Pies veloces), la resistencia a ralentizaciones (Tensión del saqueador de tormentas, fragmento de tenacidad), el intercambio de hechizos fuera de combate (Libro de hechizos) y la reducción de enfriamiento de invocadores (Perspicacia cósmica) se anotan explícitamente sin inventar geometría ni posiciones.

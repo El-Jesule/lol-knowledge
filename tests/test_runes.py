@@ -193,8 +193,9 @@ def test_an_illegal_page_is_refused_unless_allowed(capsys):
 
 
 def test_tree_runes_weaken_ability_and_rotation_damage(capsys):
-    # Precision with unmodelled Fleet Footwork (8021) + modelled Presence of Mind (8009)
-    unmodelled_page = [8021, 8009, 9104, 8014, 8226, 8210]
+    # Precision with modelled Fleet Footwork (8021) + Presence of Mind (8009):
+    # `ability` keeps combat runes pending; `rotation` now models all of them cleanly.
+    combat_page = [8021, 8009, 9104, 8014, 8226, 8210]
     target = [
         "--target-armor",
         "60",
@@ -221,7 +222,7 @@ def test_tree_runes_weaken_ability_and_rotation_damage(capsys):
         "5",
         "--case",
         "out",
-        *page_args(runes=unmodelled_page),
+        *page_args(runes=combat_page),
         "--json",
     )
     assert code == 0, captured.err
@@ -236,13 +237,32 @@ def test_tree_runes_weaken_ability_and_rotation_damage(capsys):
         "ranged",
         "--target-current-health",
         "2000",
-        *page_args(runes=unmodelled_page),
+        *page_args(runes=combat_page),
         "--json",
     )
     assert code == 0, captured.err
     report = json.loads(captured.out)
-    assert report["weakest_input_label"] == "Pendiente de verificación"
-    assert "rune 8021 Pies veloces: effects not modelled (RUN-04)" in report["not_applied"]
+    assert not any("8021" in note for note in report["not_applied"])
+    # Missing conditional input on a keystone (e.g. 8439 Aftershock without target_impaired)
+    # still weakens rotation to Pendiente de verificación.
+    conditional_page = [8439, 8463, 8429, 8451, 8226, 8210]
+    code, captured = run(
+        capsys,
+        "rotation",
+        *base,
+        "--steps",
+        "Q.out",
+        "--attacker-range",
+        "ranged",
+        "--target-current-health",
+        "2000",
+        *page_args(runes=conditional_page),
+        "--json",
+    )
+    assert code == 0, captured.err
+    cond_report = json.loads(captured.out)
+    assert cond_report["weakest_input_label"] == "Pendiente de verificación"
+    assert any("8439" in note and "target_impaired" in note for note in cond_report["not_applied"])
 
 
 def test_transcendence_scales_at_levels_5_and_8():

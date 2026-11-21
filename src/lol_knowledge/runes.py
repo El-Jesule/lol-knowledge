@@ -59,7 +59,14 @@ SHARD_STATS = {
 LEVELS = 18
 BOUNTY_MAX_STACKS = 5  # five enemy champions on Summoner's Rift
 ADAPTIVE_RUNE_KEYS = frozenset(
-    {"Adaptive", "JackOfAllTrades", "AbsoluteFocus", "Waterwalking", "GatheringStorm"}
+    {
+        "Adaptive",
+        "JackOfAllTrades",
+        "AbsoluteFocus",
+        "Waterwalking",
+        "GatheringStorm",
+        "PerfectTiming",
+    }
 )
 NON_COMBAT_MINOR_RUNES: Mapping[str, str] = {
     "SixthSense": "vision/wards only; no combat stats or damage",
@@ -69,9 +76,12 @@ NON_COMBAT_MINOR_RUNES: Mapping[str, str] = {
     "RelentlessHunter": "out-of-combat movement speed only (lol-knowledge/mechanics/move-speed.md)",
     "HextechFlashtraption": "summoner spell replacement only; no combat stats or damage",
     "CashBack": "gold refund only; no combat stats or damage",
+    "UnsealedSpellbook": "out-of-combat summoner spell swap only; no direct combat stats or damage",
 }
 # Defensive runes evaluated during reverse survival simulations (defense.py / survive).
-DEFENSE_RUNE_KEYS = frozenset({"BonePlating", "SecondWind", "Guardian"})
+DEFENSE_RUNE_KEYS = frozenset(
+    {"BonePlating", "SecondWind", "Guardian", "Aftershock", "GlacialAugment", "Unflinching"}
+)
 # Minor runes whose combat damage or damage modifiers are evaluated by rotations (rune_combat.py).
 COMBAT_MINOR_RUNE_KEYS = frozenset(
     {
@@ -90,6 +100,7 @@ COMBAT_MINOR_RUNE_KEYS = frozenset(
         "Triumph",
         "FontOfLife",
         "PresenceOfMind",
+        "TimeWarpTonic",
     }
 )
 # Keystones whose combat effects are evaluated by rotations (rune_keystones.py).
@@ -106,9 +117,33 @@ COMBAT_KEYSTONE_KEYS = frozenset(
         "DeathfireTouch",
         "FirstStrike",
         "GraspOfTheUndying",
+        "FleetFootwork",
+        "PhaseRush",
+        "Aftershock",
+        "GlacialAugment",
     }
 )
 COMBAT_RUNE_KEYS = COMBAT_MINOR_RUNE_KEYS | COMBAT_KEYSTONE_KEYS
+TRIPLE_TONIC_FORCE_ADAPTIVE = Fraction(25)  # Data Dragon 2152 Elixir de fuerza: 25 adaptive force
+
+
+def item_haste_from_runes(runes: Sequence[int], data: RuneData | None) -> Fraction:
+    """Total Item Haste from ``runes`` (e.g. +10 from 8347 Cosmic Insight)."""
+    if not runes or data is None:
+        return Fraction(0)
+    total = Fraction(0)
+    for rid in dict.fromkeys(runes):
+        rune = data.runes.get(rid)
+        if rune is not None and rune.key == "CosmicInsight":
+            total += _value(rune, "ItemHaste")
+    return total
+
+
+def scale_item_cooldown(cooldown: Fraction, item_haste: Fraction) -> Fraction:
+    """Apply Item Haste formula: ``cooldown * 100 / (100 + item_haste)``."""
+    if item_haste <= 0:
+        return cooldown
+    return cooldown * Fraction(100) / (Fraction(100) + item_haste)
 
 
 @dataclass(frozen=True)
@@ -912,8 +947,96 @@ def minor_rune_effects(
             notes.append(f"rune {rune_id} {rune.name}: {NON_COMBAT_MINOR_RUNES[rune.key]}")
             continue
 
-        if rune.key in DEFENSE_RUNE_KEYS:
-            notes.append(f"rune {rune_id} {rune.name}: defensive rune (applied in survive)")
+        if rune.key == "Unflinching":
+            impaired = _int_input(scenario, "defender_impaired", minimum=0, maximum=1)
+            if impaired is None:
+                impaired = _int_input(scenario, "cc_taken", minimum=0, maximum=1)
+            if impaired == 1:
+                resist = _value(rune, "ResistMax")
+                note = "scenario: defender_impaired=1 (CC'd / +2 s)"
+                flats.append(("armor", Contribution(resist, "bonus", source, base, note)))
+                flats.append(("magic_resist", Contribution(resist, "bonus", source, base, note)))
+            else:
+                notes.append(
+                    f"rune {rune_id} {rune.name}: +10 Armor/MR while CC'd "
+                    "(pass --input defender_impaired=1 or evaluate in survive)"
+                )
+            continue
+
+        if rune.key == "ApproachVelocity":
+            impaired = _int_input(scenario, "target_impaired", minimum=0, maximum=1)
+            ally_cc = _int_input(scenario, "ally_cc", minimum=0, maximum=1)
+            if impaired == 1:
+                full_bonus = _value(rune, "MovementSpeedPercentBonus")
+                ms_val = full_bonus / 2 if ally_cc == 1 else full_bonus
+                note = (
+                    "scenario: target_impaired=1, ally_cc=1 (+7.5% MS)"
+                    if ally_cc == 1
+                    else "scenario: target_impaired=1 (+15% MS)"
+                )
+                percents.append(("move_speed", Contribution(ms_val, "bonus", source, base, note)))
+            else:
+                notes.append(
+                    f"rune {rune_id} {rune.name}: bonus MS toward impaired champions "
+                    "(pass --input target_impaired=1)"
+                )
+            continue
+
+        if rune.key == "NimbusCloak":
+            sum_cd = _nonneg_input(scenario, "summoner_spell_cd")
+            if sum_cd is not None:
+                if sum_cd >= 250:
+                    ms_val = _value(rune, "HighCDMSBoost")
+                elif sum_cd >= 100:
+                    ms_val = _value(rune, "{1c32110c}")
+                else:
+                    ms_val = _value(rune, "LowCDMSBoost")
+                note = (
+                    f"scenario: summoner_spell_cd={format_number(sum_cd)} s "
+                    f"(+{format_number(ms_val * 100)}% MS for 2 s)"
+                )
+                percents.append(("move_speed", Contribution(ms_val, "bonus", source, base, note)))
+            else:
+                notes.append(
+                    f"rune {rune_id} {rune.name}: +15%-45% MS for 2 s after summoner cast "
+                    "(pass --input summoner_spell_cd=<seconds>)"
+                )
+            continue
+
+        if rune.key == "CosmicInsight":
+            ih = _value(rune, "ItemHaste")
+            sh = _value(rune, "SummonerHaste")
+            notes.append(
+                f"rune {rune_id} {rune.name}: +{format_number(ih)} item haste "
+                f"(scales item cooldowns), +{format_number(sh)} summoner spell haste"
+            )
+            continue
+
+        if rune.key == "PerfectTiming":
+            force_on = _int_input(scenario, "triple_tonic_force", minimum=0, maximum=1)
+            force_lvl = int(_value(rune, "SecondElixirLevel"))
+            if force_on == 1:
+                if level >= force_lvl:
+                    flats.append(
+                        _adaptive_contribution(
+                            TRIPLE_TONIC_FORCE_ADAPTIVE,
+                            source,
+                            base,
+                            "scenario: triple_tonic_force=1 (Elixir of Force, 60 s)",
+                            adaptive=adaptive,
+                            adaptive_label=adaptive_label,
+                            adaptive_note=adaptive_note,
+                        )
+                    )
+                else:
+                    notes.append(
+                        f"rune {rune_id} {rune.name}: Elixir of Force requires level {force_lvl}"
+                    )
+            else:
+                notes.append(
+                    f"rune {rune_id} {rune.name}: Elixir of Force (+25 adaptive at level "
+                    f">= {force_lvl}, pass --input triple_tonic_force=1); Avarice/Skill noted"
+                )
             continue
 
         if rune.key == "Revitalize":
@@ -934,6 +1057,10 @@ def minor_rune_effects(
 
         if rune.key in COMBAT_RUNE_KEYS:
             combat_runes.append(rune_id)
+            continue
+
+        if rune.key in DEFENSE_RUNE_KEYS:
+            notes.append(f"rune {rune_id} {rune.name}: defensive rune (applied in survive)")
             continue
 
         if rune.key == "Transcendence":

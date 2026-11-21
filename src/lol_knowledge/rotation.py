@@ -45,7 +45,15 @@ from .resources import (
     resolve_ability_cost,
 )
 from .rune_combat import RuneCombat
-from .runes import RuneData, fraction_input, int_input
+from .runes import (
+    Rune,
+    RuneData,
+    fraction_input,
+    int_input,
+    linear_by_level,
+    rune_value,
+    scale_item_cooldown,
+)
 from .scenario import PENETRATION, Target, penetration_modifiers
 from .stats import (
     EVIDENCE_LABEL,
@@ -245,6 +253,7 @@ class Part:
     secondary_damage_ratio: Fraction = Fraction(1)
     aoe: bool | None = None
     hits_primary: bool = True
+    flat_reduction: Fraction = Fraction(0)
 
     @property
     def dealt_factor(self) -> Fraction:
@@ -264,7 +273,10 @@ class Part:
         """Post-mitigation and post-modifier damage dealt to the primary target."""
         if not self.hits_primary:
             return Fraction(0)
-        return self.mitigation.damage * self.dealt_factor * self.taken_factor
+        return max(
+            Fraction(0),
+            self.mitigation.damage * self.dealt_factor * self.taken_factor - self.flat_reduction,
+        )
 
     @property
     def secondary_damage(self) -> Fraction:
@@ -938,9 +950,35 @@ class _Rotation:
             self.inputs,
             timeline=timeline,
             target_count=self.target_count,
+            item_haste=self.rune_combat.item_haste,
+            time_warp_ratio=self.rune_combat.time_warp_ratio(),
         )
         self._pending_accrued_heals: list[HealEvent] = []
         self._knights_vow_applied = False
+
+        # Defender combat runes (8473 Bone Plating, 8444 Second Wind) when target.runes provided
+        self.def_bone_rune: Rune | None = None
+        self.def_bone_charges = 0
+        self.def_bone_expires: Fraction | None = None
+        self.def_bone_ready = Fraction(0)
+        self.def_bone_used_once = False
+        self.def_rune_base = (
+            Label.DERIVED
+            if (rune_data is not None and rune_data.matches_patch(sheet.champion.patch))
+            else Label.PENDING
+        )
+        if target.runes and rune_data is not None:
+            for rid in dict.fromkeys(target.runes):
+                dr = rune_data.runes.get(rid)
+                if dr is None:
+                    continue
+                if dr.key == "BonePlating":
+                    self.def_bone_rune = dr
+                elif dr.key == "SecondWind":
+                    self.notes.append(
+                        f"target rune:{dr.id} {dr.name}: 4% missing HP regen over 10 s "
+                        "after taking damage (evaluate exact survival in survive)"
+                    )
         owners = sorted(
             {
                 item.id
@@ -2323,9 +2361,14 @@ class _Rotation:
                 damage_type = RESISTANCE_STATS[str(component.get("stat"))]
                 self.shred.setdefault(damage_type, []).append(window)
         for bonus in self.rune_combat.active_stat_bonuses(at, self.base_sheet):
-            sheet = with_bonus(
-                sheet, bonus.stat_id, bonus.amount, bonus.source, bonus.label, bonus.note
-            )
+            if bonus.percent:
+                sheet = with_percent_bonus(
+                    sheet, bonus.stat_id, bonus.amount, bonus.source, bonus.label, bonus.note
+                )
+            else:
+                sheet = with_bonus(
+                    sheet, bonus.stat_id, bonus.amount, bonus.source, bonus.label, bonus.note
+                )
         p_flats, p_amps = self.passive_combat.active_stat_modifiers(at, self.base_sheet.level)
         for p_bonus in p_flats:
             sheet = with_bonus(
@@ -2716,7 +2759,9 @@ class _Rotation:
                 if (effect.get("trigger") or {}).get("event") == "spellblade" and isinstance(
                     effect.get("cooldown_seconds"), (int, float)
                 ):
-                    return Fraction(str(effect["cooldown_seconds"]))
+                    return scale_item_cooldown(
+                        Fraction(str(effect["cooldown_seconds"])), self.rune_combat.item_haste
+                    )
         raise RotationError("the Spellblade item declares no cooldown")
 
     def _spellblade_window(self) -> Fraction | None:
@@ -2934,7 +2979,9 @@ class _Rotation:
                 )
             cd = effects[0].cooldown
             if cd is not None:
-                self.active_ready[item_id] = clock + cd
+                self.active_ready[item_id] = clock + scale_item_cooldown(
+                    cd, self.rune_combat.item_haste
+                )
         self.cast_actives.add(item_id)
         label_name = effects[0].name or effects[0].id
         step_name = f"item {item_id} ({label_name})"
@@ -3396,10 +3443,67 @@ class _Rotation:
                         slot="P",
                     )
                 )
+            # Defender Bone Plating (8473): reduce damage on up to 3 subsequent hits within 1.5 s
+            if (
+                self.def_bone_rune is not None
+                and self.def_bone_charges > 0
+                and (
+                    self.timeline is None
+                    or (self.def_bone_expires is not None and clock <= self.def_bone_expires)
+                )
+            ):
+                def_lvl = self.target.level if self.target.level is not None else self.sheet.level
+                block = linear_by_level(
+                    rune_value(self.def_bone_rune, "BlockBase"),
+                    rune_value(self.def_bone_rune, "BlockMax"),
+                    def_lvl,
+                )
+                for p_idx in range(accrued_count, len(parts)):
+                    part = parts[p_idx]
+                    if part.primary_damage > 0 and part.kind != "execute":
+                        applied = min(part.primary_damage, block)
+                        self.def_bone_charges -= 1
+                        parts[p_idx] = replace(
+                            part,
+                            flat_reduction=part.flat_reduction + applied,
+                            label=weakest((part.label, self.def_rune_base)),
+                            notes=(
+                                *part.notes,
+                                f"target rune:{self.def_bone_rune.id} {self.def_bone_rune.name} "
+                                f"-{format_number(applied)} ({self.def_bone_charges} left)",
+                            ),
+                        )
+                        break
+
             step_damage = sum((p.primary_damage for p in parts[accrued_count:]), start=Fraction(0))
             step_after, shield_after, step_absorbed = self._absorb_parts(
                 parts[accrued_count:], health, shield
             )
+            # Trigger Defender Bone Plating AFTER taking >0 real HP damage (not shield-only)
+            if (
+                self.def_bone_rune is not None
+                and health - step_after > 0
+                and step_after > 0
+                and self.def_bone_charges == 0
+            ):
+                can_bp = (
+                    (not self.def_bone_used_once)
+                    if self.timeline is None
+                    else (clock >= self.def_bone_ready)
+                )
+                if can_bp:
+                    self.def_bone_used_once = True
+                    self.def_bone_charges = int(rune_value(self.def_bone_rune, "BlockCount"))
+                    dur = rune_value(self.def_bone_rune, "BlockDuration")
+                    if self.timeline is not None:
+                        self.def_bone_expires = clock + dur
+                        self.def_bone_ready = (
+                            clock + dur + rune_value(self.def_bone_rune, "Cooldown")
+                        )
+                    self.notes.append(
+                        f"target rune:{self.def_bone_rune.id} {self.def_bone_rune.name} "
+                        f"activated ({self.def_bone_charges} charges)"
+                    )
             total_absorbed = accrued_absorbed + step_absorbed
             complete_parts: list[Part] = []
             for proc in self.rune_combat.on_step_complete(

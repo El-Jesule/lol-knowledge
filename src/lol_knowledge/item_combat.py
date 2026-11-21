@@ -29,7 +29,7 @@ from fractions import Fraction
 
 from .damage import DamageType, format_number
 from .errors import RotationError, StatsError
-from .runes import int_input
+from .runes import int_input, scale_item_cooldown
 from .stats.data import ItemData
 from .stats.labels import Label
 from .stats.sheet import StatSheet
@@ -210,6 +210,8 @@ class ItemCombat:
         inputs: Mapping[str, Fraction],
         timeline: bool,
         target_count: int = 1,
+        item_haste: Fraction = Fraction(0),
+        time_warp_ratio: Fraction = Fraction(0),
     ) -> None:
         self.sheet = sheet
         self.item_ids: frozenset[str] = frozenset(item.id for item in items)
@@ -218,6 +220,9 @@ class ItemCombat:
         self.inputs = inputs
         self.timeline = timeline
         self.target_count = target_count
+        self.item_haste = item_haste
+        self.time_warp_ratio = time_warp_ratio
+        self.time_warp_ready = Fraction(0)
 
         self.notes: list[str] = []
         self.weakened = False
@@ -539,14 +544,31 @@ class ItemCombat:
                     notes=(f"{format_number(total_heal)} HP over {format_number(dur)} s",),
                 )
             ]
+        # 8352 Time Warp Tonic: 40% immediate upfront heal (20 s CD), remaining 60% over duration
+        instant_heals: list[ItemHeal] = []
+        hot_total = total_heal
+        if self.time_warp_ratio > 0 and clock >= self.time_warp_ready:
+            self.time_warp_ready = clock + 20
+            upfront = total_heal * self.time_warp_ratio
+            hot_total = total_heal - upfront
+            instant_heals.append(
+                ItemHeal(
+                    f"{item_id} consume (Time Warp Tonic instant "
+                    f"{format_number(self.time_warp_ratio * 100)}%)",
+                    upfront,
+                    Label.DERIVED,
+                    uses_hsp=False,
+                    notes=("8352 Time Warp Tonic upfront restoration",),
+                )
+            )
         # In timeline mode, queue/extend continuous regeneration accrued across steps/waits.
-        self.potion_rate = total_heal / dur
+        self.potion_rate = hot_total / dur
         self.potion_source = f"{item_id} consume"
         self.potion_end = (
             max(self.potion_end, clock) + dur if self.potion_end is not None else clock + dur
         )
         self.potion_accrued = clock
-        return name, []
+        return name, instant_heals
 
     def accrue_potion(self, until: Fraction) -> list[ItemHeal]:
         """Accrue active potion HoT up to ``until`` in timeline mode."""
@@ -632,7 +654,7 @@ class ItemCombat:
             if can_proc:
                 self.sundered_used = True
                 if self.timeline:
-                    self.sundered_ready = clock + 10
+                    self.sundered_ready = clock + scale_item_cooldown(Fraction(10), self.item_haste)
                 if not step_crit and normal_crit_multiplier is not None:
                     crit_override = normal_crit_multiplier * Fraction(80, 100)
                     labels.append(Label.DERIVED)
@@ -695,7 +717,9 @@ class ItemCombat:
             if charged and can_proc:
                 self.heartsteel_used = True
                 if self.timeline:
-                    self.heartsteel_ready = clock + 30
+                    self.heartsteel_ready = clock + scale_item_cooldown(
+                        Fraction(30), self.item_haste
+                    )
                 max_hp = self.sheet["health"].total()
                 raw = Fraction(70) + max_hp * Fraction(6, 100)
                 perm_hp = raw * Fraction(10, 100)
@@ -832,7 +856,7 @@ class ItemCombat:
                 self.speed_changed = True
                 if self.timeline:
                     self.barrage_until = clock + 8
-                    self.barrage_ready = clock + 45
+                    self.barrage_ready = clock + scale_item_cooldown(Fraction(45), self.item_haste)
 
         if ({"6657", "3803"} & self.item_ids) and mana_spent > 0:
             can_proc = (not self.timeline) or (clock >= self.eternity_ready)
@@ -971,7 +995,7 @@ class ItemCombat:
             if can_f:
                 self.fimbul_used = True
                 if self.timeline:
-                    self.fimbul_ready = clock + 8
+                    self.fimbul_ready = clock + scale_item_cooldown(Fraction(8), self.item_haste)
                 mana_val = (
                     current_mana
                     if current_mana is not None
@@ -1007,7 +1031,7 @@ class ItemCombat:
             if can_s:
                 self.sleigh_used = True
                 if self.timeline:
-                    self.sleigh_ready = clock + 30
+                    self.sleigh_ready = clock + scale_item_cooldown(Fraction(30), self.item_haste)
                 raw = _solstice_sleigh_hp(self.sheet.level)
                 heals.append(
                     ItemHeal(
@@ -1079,7 +1103,9 @@ class ItemCombat:
             if can_c:
                 self.cryptbloom_used = True
                 if self.timeline:
-                    self.cryptbloom_ready = clock + 60
+                    self.cryptbloom_ready = clock + scale_item_cooldown(
+                        Fraction(60), self.item_haste
+                    )
                 ap = self.sheet["ability_power"].total()
                 raw = Fraction(100) + ap * Fraction(20, 100)
                 heals.append(

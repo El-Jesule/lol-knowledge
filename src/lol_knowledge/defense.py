@@ -24,7 +24,7 @@ from .errors import RotationError, StatsError
 from .formula import FormulaError, evaluate_formula
 from .kit import sheet_stats
 from .rotation import RotationOutcome
-from .runes import Rune, RuneData, int_input, linear_by_level, rune_value
+from .runes import Rune, RuneData, int_input, linear_by_level, rune_value, scale_item_cooldown
 from .stats import EVIDENCE_LABEL, Label, StatBlocked, StatSheet, weakest
 from .survival import (
     GRIEVOUS_WOUNDS_REDUCTION,
@@ -401,7 +401,23 @@ class _DefenseSimulator:
         self.second_wind_rune: Rune | None = None
         self.guardian_rune: Rune | None = None
         self.revitalize_rune: Rune | None = None
+        self.aftershock_rune: Rune | None = None
+        self.unflinching_rune: Rune | None = None
+        self.item_haste = Fraction(0)
+        self.time_warp_ratio = Fraction(0)
         self.guardian_ally = False
+        try:
+            self.aftershock_active = (
+                int_input(inputs, "aftershock_active", minimum=0, maximum=1) == 1
+                or int_input(inputs, "target_impaired", minimum=0, maximum=1) == 1
+            )
+            self.defender_impaired = (
+                int_input(inputs, "defender_impaired", minimum=0, maximum=1) == 1
+                or int_input(inputs, "cc_taken", minimum=0, maximum=1) == 1
+            )
+            self.glacial_ally = int_input(inputs, "glacial_ally", minimum=0, maximum=1) == 1
+        except StatsError as exc:
+            raise RotationError(str(exc)) from exc
         if runes and rune_data is not None:
             for rid in dict.fromkeys(runes):
                 rune = rune_data.runes.get(rid)
@@ -413,6 +429,19 @@ class _DefenseSimulator:
                     self.second_wind_rune = rune
                 elif rune.key == "Revitalize":
                     self.revitalize_rune = rune
+                elif rune.key == "Aftershock":
+                    self.aftershock_rune = rune
+                elif rune.key == "Unflinching":
+                    # Avoid double-counting if minor_rune_effects already added Unflinching to sheet
+                    already_in_sheet = any(
+                        "Unflinching" in c.source for c in sheet["armor"].contributions
+                    )
+                    if not already_in_sheet:
+                        self.unflinching_rune = rune
+                elif rune.key == "CosmicInsight":
+                    self.item_haste += rune_value(rune, "ItemHaste")
+                elif rune.key == "TimeWarpTonic":
+                    self.time_warp_ratio = rune_value(rune, "RestorationPercentage")
                 elif rune.key == "Guardian":
                     try:
                         ally = int_input(inputs, "guardian_ally", minimum=0, maximum=1)
@@ -675,16 +704,22 @@ class _DefenseSimulator:
         potion_end: Fraction | None = None
         potion_rate = Fraction(0)
         potion_source = ""
+        potion_upfront = Fraction(0)
         if self.potion_active_flag and ("2003" in self.item_ids or "2031" in self.item_ids):
-            if "2003" in self.item_ids:
-                potion_rate = Fraction(120, 15)
-                potion_end = Fraction(15) if self.timeline else None
-                potion_source = "2003 consume (Poción de vida)"
-            else:
-                potion_rate = Fraction(100, 12)
-                potion_end = Fraction(12) if self.timeline else None
-                potion_source = "2031 consume (Poción reutilizable)"
+            total_pot = Fraction(120) if "2003" in self.item_ids else Fraction(100)
+            dur_pot = Fraction(15) if "2003" in self.item_ids else Fraction(12)
+            potion_source = (
+                "2003 consume (Poción de vida)"
+                if "2003" in self.item_ids
+                else "2031 consume (Poción reutilizable)"
+            )
+            if self.time_warp_ratio > 0:
+                potion_upfront = total_pot * self.time_warp_ratio
+                total_pot -= potion_upfront
+            potion_rate = total_pot / dur_pot
+            potion_end = dur_pot if self.timeline else None
         potion_used_once = False
+        potion_upfront_applied = False
 
         dream_dr_armed = self.dream_maker_active
         knights_vow_applied = False
@@ -702,6 +737,42 @@ class _DefenseSimulator:
             extra_bonus_mr = Fraction(0)
             res_labels: list[Label] = []
             res_notes: list[str] = []
+
+            # 8242 Unflinching (+10 Armor/MR while CC'd / 2 s after)
+            if self.unflinching_rune is not None and self.defender_impaired:
+                u_val = rune_value(self.unflinching_rune, "ResistMax")
+                cur_armor += u_val
+                cur_mr += u_val
+                extra_bonus_armor += u_val
+                extra_bonus_mr += u_val
+                res_labels.append(self.rune_base)
+                res_notes.append(
+                    f"rune:{self.unflinching_rune.id} Unflinching "
+                    f"(+{format_number(u_val)} Armor/MR)"
+                )
+
+            # 8439 Aftershock (+45 + 75% bonus resist, capped 80..150 for 2.5 s)
+            if self.aftershock_rune is not None and self.aftershock_active:
+                as_dur = rune_value(self.aftershock_rune, "DelayBeforeBurst")
+                if not self.timeline or at < as_dur:
+                    flat_r = rune_value(self.aftershock_rune, "FlatResists")
+                    pct_r = rune_value(self.aftershock_rune, "PercentBonusResist")
+                    cap_r = linear_by_level(
+                        rune_value(self.aftershock_rune, "BonusResistMin"),
+                        rune_value(self.aftershock_rune, "BonusResistMax"),
+                        self.sheet.level,
+                    )
+                    a_gain = min(cap_r, flat_r + self.bonus_armor * pct_r)
+                    m_gain = min(cap_r, flat_r + self.bonus_mr * pct_r)
+                    cur_armor += a_gain
+                    cur_mr += m_gain
+                    extra_bonus_armor += a_gain
+                    extra_bonus_mr += m_gain
+                    res_labels.append(self.rune_base)
+                    res_notes.append(
+                        f"rune:{self.aftershock_rune.id} Aftershock "
+                        f"(+{format_number(a_gain)} Armor, +{format_number(m_gain)} MR)"
+                    )
 
             for title, eff, comp, eff_label in self.stacking_resist_effects:
                 active = (
@@ -1178,6 +1249,40 @@ class _DefenseSimulator:
                 )
                 step_labels.append(Label.OFFICIAL)
 
+            # 8352 Time Warp Tonic: if potion is popped while already injured, heal 40% upfront
+            if (
+                self.potion_active_flag
+                and potion_upfront > 0
+                and not potion_upfront_applied
+                and health > 0
+                and health < current_max_health
+            ):
+                potion_upfront_applied = True
+                amt = (
+                    scale_healing(
+                        potion_upfront,
+                        hsp=Fraction(0),
+                        revitalize_amp=Fraction(0),
+                        grievous=self.grievous,
+                        uses_hsp=False,
+                    )
+                    * self.self_heal_amp
+                )
+                missing = max(Fraction(0), current_max_health - health)
+                gained = min(amt, missing)
+                health += gained
+                heals.append(
+                    HealEvent(
+                        f"{potion_source} (Time Warp Tonic instant)",
+                        potion_upfront,
+                        gained,
+                        False,
+                        self.grievous > 0,
+                        self.rune_base,
+                        ("8352 Time Warp Tonic 40% upfront heal",),
+                    )
+                )
+
             # 0. Spell Shield (3102 Banshee's, 3814 Edge of Night, 4632 Verdant Barrier)
             spell_blocked = False
             if hit.kind == "ability" and hit.amount > 0 and health > 0:
@@ -1190,8 +1295,8 @@ class _DefenseSimulator:
                     if can_block:
                         spell_shield_used.add(title)
                         if self.timeline and eff.get("cooldown_seconds"):
-                            spell_shield_ready[title] = clock + Fraction(
-                                str(eff["cooldown_seconds"])
+                            spell_shield_ready[title] = clock + scale_item_cooldown(
+                                Fraction(str(eff["cooldown_seconds"])), self.item_haste
                             )
                         spell_blocked = True
                         step_labels.append(eff_label)
@@ -1237,6 +1342,18 @@ class _DefenseSimulator:
                 step_labels.extend([*mit_labels, *res_labels])
                 step_notes.extend([*mit_notes, *res_notes])
 
+            # 8351 Glacial Augment ally freeze zone (-15% incoming physical & magic damage for 3 s)
+            if (
+                self.glacial_ally
+                and incoming > 0
+                and health > 0
+                and hit.damage_type in {DamageType.PHYSICAL, DamageType.MAGIC}
+                and (not self.timeline or clock < 3)
+            ):
+                incoming *= Fraction(85, 100)
+                step_labels.append(self.rune_base)
+                step_notes.append("rune:8351 GlacialAugment (-15% enemy damage vs allies)")
+
             # Timed percent damage reduction (e.g. 3869 Celestial Opposition -35%/-25% for 2 s)
             if incoming > 0 and health > 0 and hit.damage_type is not None:
                 for title, eff, comp, eff_label in self.timed_taken_modifiers:
@@ -1261,8 +1378,8 @@ class _DefenseSimulator:
                                 dur = Fraction(str(eff["duration_seconds"]))
                                 timed_dr_end[title] = clock + dur
                                 if eff.get("cooldown_seconds"):
-                                    timed_dr_ready[title] = clock + Fraction(
-                                        str(eff["cooldown_seconds"])
+                                    timed_dr_ready[title] = clock + scale_item_cooldown(
+                                        Fraction(str(eff["cooldown_seconds"])), self.item_haste
                                     )
                     if is_active:
                         pct = evaluate_formula(
@@ -1447,10 +1564,11 @@ class _DefenseSimulator:
                             if eff.get("duration_seconds")
                             else None
                         )
-                        cd = (
+                        cd = scale_item_cooldown(
                             Fraction(str(eff["cooldown_seconds"]))
                             if eff.get("cooldown_seconds")
-                            else Fraction(90)
+                            else Fraction(90),
+                            self.item_haste,
                         )
                         lifeline_used.add(title)
                         if self.timeline:
@@ -1689,7 +1807,7 @@ class _DefenseSimulator:
                     health = min(current_max_health, revive_hp)
                     if self.timeline:
                         ga_stasis_until = clock + 4
-                        ga_ready = clock + 4 + 300
+                        ga_ready = clock + 4 + scale_item_cooldown(Fraction(300), self.item_haste)
                     step_labels.append(Label.OFFICIAL)
                     step_notes.append(
                         f"3026 rebirth: 4 s stasis, revived with {format_number(health)} HP "
@@ -1747,6 +1865,40 @@ class _DefenseSimulator:
                         )
                     )
 
+            # 8352 Time Warp Tonic immediate 40% potion restoration on first damage
+            if (
+                self.potion_active_flag
+                and potion_upfront > 0
+                and not potion_upfront_applied
+                and health > 0
+                and health < current_max_health
+            ):
+                potion_upfront_applied = True
+                amt = (
+                    scale_healing(
+                        potion_upfront,
+                        hsp=Fraction(0),
+                        revitalize_amp=Fraction(0),
+                        grievous=self.grievous,
+                        uses_hsp=False,
+                    )
+                    * self.self_heal_amp
+                )
+                missing = max(Fraction(0), current_max_health - health)
+                gained = min(amt, missing)
+                health += gained
+                heals.append(
+                    HealEvent(
+                        f"{potion_source} (Time Warp Tonic instant)",
+                        potion_upfront,
+                        gained,
+                        False,
+                        self.grievous > 0,
+                        self.rune_base,
+                        ("8352 Time Warp Tonic 40% upfront heal",),
+                    )
+                )
+
             # 2003 / 2031 Potion without timeline (single full HoT heal on first damage)
             if (
                 not self.timeline
@@ -1756,7 +1908,8 @@ class _DefenseSimulator:
                 and health > 0
             ):
                 potion_used_once = True
-                raw_pot = Fraction(120) if "2003" in self.item_ids else Fraction(100)
+                base_pot = Fraction(120) if "2003" in self.item_ids else Fraction(100)
+                raw_pot = base_pot - potion_upfront if potion_upfront_applied else base_pot
                 amt = (
                     scale_healing(
                         raw_pot,

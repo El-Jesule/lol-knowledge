@@ -41,12 +41,16 @@ SERVER_INSTRUCTIONS = (
 _TARGET_SCHEMA: dict[str, Any] = {
     "type": "object",
     "description": (
-        "Enemy target: either {champion, level, items?} or {armor, mr, max_health?, kind?}."
+        "Enemy target: either {champion, level, items?, runes?, shards?, inputs?} "
+        "or {armor, mr, max_health?, kind?}."
     ),
     "properties": {
         "champion": {"type": "string"},
         "level": {"type": "integer", "minimum": 1, "maximum": 18},
         "items": {"type": "array", "items": {"type": "string"}},
+        "runes": {"type": "array", "items": {"type": "integer"}},
+        "shards": {"type": "array", "items": {"type": "integer"}},
+        "inputs": {"type": "object", "additionalProperties": {"type": "number"}},
         "armor": {"type": "number"},
         "mr": {"type": "number"},
         "max_health": {"type": "number"},

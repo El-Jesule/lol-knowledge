@@ -309,7 +309,15 @@ def _build_sheet_for_contract(
     return sheet, warnings
 
 
-def _resolve_target(params: Mapping[str, Any], root: Path, issues, derived):
+def _resolve_target(
+    params: Mapping[str, Any],
+    root: Path,
+    issues,
+    derived,
+    *,
+    inputs: Mapping[str, Fraction] | None = None,
+    allow_illegal: bool = False,
+):
     target_cfg = params.get("target")
     if not isinstance(target_cfg, Mapping):
         raise ContractInputError(
@@ -317,16 +325,42 @@ def _resolve_target(params: Mapping[str, Any], root: Path, issues, derived):
             "missing required 'target' object (manual armor/mr/max_health or champion/level)",
             missing_fields=("target",),
         )
+    t_runes = _int_list(target_cfg, "runes")
+    t_shards = _int_list(target_cfg, "shards")
     if target_cfg.get("champion"):
         t_champ = load_champion(root, _require_str(target_cfg, "champion"))
         t_level = _require_int(target_cfg, "level", minimum=1)
         t_items = _str_list(target_cfg, "items")
-        t_sheet = build_stat_sheet(t_champ, t_level, load_items(root, t_items), issues, {}, derived)
+        t_inputs = {**(inputs or {}), **_parse_inputs_dict(target_cfg, "inputs")}
+        if t_runes or t_shards:
+            t_sheet, _ = _build_sheet_for_contract(
+                root,
+                t_champ,
+                t_level,
+                t_items,
+                t_runes,
+                t_shards,
+                issues,
+                {},
+                derived,
+                t_inputs,
+                combat_context="stats",
+                allow_illegal=allow_illegal,
+            )
+        else:
+            t_sheet = build_stat_sheet(
+                t_champ, t_level, load_items(root, t_items), issues, {}, derived
+            )
         return target_from_sheet(
             t_sheet,
             current_health=_optional_fraction(target_cfg, "current_health"),
             shield=_optional_fraction(target_cfg, "shield") or Fraction(0),
             shield_type=str(target_cfg.get("shield_type", "normal")),
+            runes=t_runes,
+        )
+    if t_runes or t_shards:
+        raise ContractInputError(
+            "invalid_input", "target.runes and target.shards require target.champion"
         )
     armor = _optional_fraction(target_cfg, "armor")
     mr = _optional_fraction(target_cfg, "mr")
@@ -601,7 +635,14 @@ def _handle_ability(params: Mapping[str, Any], root: Path) -> dict[str, Any]:
         kit=kit,
         allow_illegal=bool(params.get("allow_illegal_build", False)),
     )
-    target = _resolve_target(params, root, issues, derived)
+    target = _resolve_target(
+        params,
+        root,
+        issues,
+        derived,
+        inputs=inputs,
+        allow_illegal=bool(params.get("allow_illegal_build", False)),
+    )
     outcome = evaluate_ability(
         kit,
         sheet,
@@ -658,9 +699,16 @@ def _handle_rotation(params: Mapping[str, Any], root: Path) -> dict[str, Any]:
         kit=kit,
         allow_illegal=bool(params.get("allow_illegal_build", False)),
     )
-    target = _resolve_target(params, root, issues, derived)
+    target = _resolve_target(
+        params,
+        root,
+        issues,
+        derived,
+        inputs=inputs,
+        allow_illegal=bool(params.get("allow_illegal_build", False)),
+    )
     crit_base = _crit_base(champ.id, champ.patch, derived)
-    rune_data = load_runes(root) if runes else None
+    rune_data = load_runes(root) if (runes or target.runes) else None
     ap_weight = derived.value(champ.id, "adaptiveforceapweight") if derived else None
     outcome = evaluate_rotation(
         kit,
@@ -836,7 +884,16 @@ def _handle_optimize(params: Mapping[str, Any], root: Path) -> dict[str, Any]:
     steps = ()
     if objective in {"rotation_damage", "dps", "healing"}:
         steps = parse_steps(_require_str(params, "steps"))
-        target = _resolve_target(params, root, issues, derived)
+        target = _resolve_target(
+            params,
+            root,
+            issues,
+            derived,
+            inputs=inputs,
+            allow_illegal=bool(params.get("allow_illegal_build", False)),
+        )
+        if rune_data is None and target.runes:
+            rune_data = load_runes(root)
 
     incoming_hits = ()
     if objective == "time_to_die":
