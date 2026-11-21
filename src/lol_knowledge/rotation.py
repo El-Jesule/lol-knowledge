@@ -1055,7 +1055,12 @@ class _Rotation:
             self.weakened = True
         for effect in defender:
             kind = effect.component.get("kind")
-            if kind == "damage_modifier" and effect.component.get("direction") == "taken":
+            if (
+                kind == "damage_modifier"
+                and effect.component.get("direction") == "taken"
+                and effect.component.get("mode") == "percent"
+                and effect.duration is None
+            ):
                 self.taken.append(effect)
             elif (
                 effect.trigger == "taking_attack"
@@ -1290,7 +1295,11 @@ class _Rotation:
 
     def _skip(self, effect: _Effect, why: str, owner: str = "attacker") -> None:
         self.notes.append(f"{owner} {effect.title}: {why} is not part of rotations, not applied")
-        if effect.component.get("kind") in DAMAGE_KINDS and owner == "attacker":
+        if (
+            effect.component.get("kind") in DAMAGE_KINDS
+            and owner == "attacker"
+            and effect.trigger not in {"taking_damage", "taking_attack"}
+        ):
             self.weakened = True
 
     def _stacking(self, effect: _Effect) -> None:

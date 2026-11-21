@@ -57,6 +57,16 @@
 - **Reflejo reactivo:** `3075` Malla de espinas informa el daño mágico en bruto reflejado (`20 + 10 %` armadura adicional) por cada ataque básico recibido.
 - **Métricas de salida:** daño total recibido, reducción plana total, escudos otorgados/absorbidos, curación defensiva, vida restante, supervivencia (`survived`), paso letal, **tiempo hasta morir** (`time_to_die`) y **daño recibido por segundo** (`damage_taken_per_second`) con `--timeline`.
 
+## Pasivas defensivas de objetos en `defense.py` / `survive` (`Derivado`, cliente `16.23`, `catalog_version: 27`)
+- **Malla del guardián (`data:item:3082`, *Como una roca*):** reducción plana posmitigación de `15` contra ataques básicos (`attack`/`crit`), limitada al `20 %` del daño posmitigación del ataque.
+- **Jak'Sho el Proteico (`data:item:6665`, *Resiliencia del Vacío*, `Oficial`):** en `--timeline`, tras `5 s` de combate desde el primer golpe recibido, aumenta la armadura y la resistencia mágica adicionales en un `30 %` para el resto del combate (incluyendo la RM adicional activa de Fuerza de la naturaleza si coexisten).
+- **Fuerza de la naturaleza (`data:item:4401`, *Entereza*):** tras recibir `8` instancias de daño mágico (ventana/duración de `7 s` en `--timeline`), otorga `+70` de resistencia mágica adicional renovable al recibir daño mágico.
+- **Arnés de protoplasma (`data:item:2525`, *Salvavidas*):** al bajar del `30 %` de vida máxima (`90 s` CD), otorga `100..300` de vida máxima y actual temporal durante `5 s` y regenera `100..400 + 175 % armadura adicional + 175 % RM adicional` a lo largo de `5 s` (integrado de forma continua en `--timeline`, afectado por Heridas graves y Rostro espiritual).
+- **Baile de la muerte (`data:item:6333`, *Ignora el dolor*):** en `--timeline`, difiere el `30 %` (cuerpo a cuerpo) o `10 %` (a distancia) del daño físico y mágico posmitigación en una hemorragia continua de daño verdadero durante `3 s`, con cálculo exacto del instante letal (`time_to_die`) combinado con regeneración activa.
+- **Detracción celestial (`data:item:3869`, *Bendición de la montaña*):** reduce un `35 %` (cuerpo a cuerpo) o `25 %` (a distancia) el daño físico y mágico recibido en el primer golpe y durante los `2 s` siguientes (`18 s` CD en `--timeline`).
+- **Escudos de hechizos (`data:item:3102` Velo del hada, `data:item:3814` Filo de la noche, `data:item:4632` Barrera frondosa, *Anular*):** bloquean por completo el siguiente golpe de tipo `ability` (`40 s` CD en `3102`/`3814`, `60 s` CD en `4632`).
+
 ## Limitaciones
 - La curva de decaimiento del escudo de `3053` Salvavidas (`4,5 s` tras `0,75 s`) se anota como pendiente dentro de `--timeline`; el escudo caduca completo al final de los `4,5 s`.
-- La interacción de `Serpent's Fang` (reducción de escudos) y `Spirit Visage` (+25 % a curaciones/escudos entrantes) entrará al curar esos objetos en `OBJ-01`.
+- En objetivos estáticos de EHP (`effective_health_*`), las pasivas defensivas activadas en combate (`6665`, `4401`, `3082`, `2525`, `6333`, `3869`) siguen marcándose como no modeladas en EHP estático; su efecto verificado se evalúa en `survive` y en el objetivo `time_to_die` del optimizador.
+- Siguen excluidos `3026` Ángel de la guarda (*Renacer* tras estasis de `4 s`), `1054` Escudo de Doran (curva no lineal por vida faltante) y la reducción de escudos de Colmillo de serpiente (`6695`).

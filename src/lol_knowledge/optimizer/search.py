@@ -59,13 +59,36 @@ SYNERGY_ITEMS = frozenset({"3089", "3031", "3135", "3036", "3033", "3137", "3124
 
 
 def _has_excluded_defensive_effect(item: ItemData) -> bool:
-    """Whether ``item`` has an excluded defensive passive that could alter EHP/survival."""
+    """Whether ``item`` has an excluded defensive passive not yet modelled in ``defense.py``."""
     for effect in item.effects:
         if effect.get("model_status") == "evaluable":
             continue
         trigger = (effect.get("trigger") or {}).get("event")
         if trigger in {"taking_damage", "taking_attack"}:
             return True
+    return False
+
+
+# Component kinds on reactive defensive triggers not reflected in static t=0 EHP.
+_COMBAT_ONLY_EHP_KINDS = frozenset({"stat_modifier", "damage_stagger", "healing"})
+
+
+def _has_unmodelled_ehp_effect(item: ItemData) -> bool:
+    """Whether ``item`` has defensive triggers that static EHP (HP * (1 + Res/100)) omits."""
+    if _has_excluded_defensive_effect(item):
+        return True
+    for effect in item.effects:
+        trigger = (effect.get("trigger") or {}).get("event")
+        if trigger not in {"taking_damage", "taking_attack"}:
+            continue
+        for comp in effect.get("components") or ():
+            kind = comp.get("kind")
+            if kind in _COMBAT_ONLY_EHP_KINDS:
+                return True
+            if kind == "damage_modifier" and (
+                comp.get("mode") == "flat" or effect.get("duration_seconds") is not None
+            ):
+                return True
     return False
 
 
@@ -474,7 +497,7 @@ class _BuildEvaluator:
             unmodelled_def = [
                 c.item.id
                 for c in candidates
-                if c.item.effect_review != "complete" or _has_excluded_defensive_effect(c.item)
+                if c.item.effect_review != "complete" or _has_unmodelled_ehp_effect(c.item)
             ]
             if unmodelled_def:
                 base_labels.append(Label.PENDING)
@@ -865,10 +888,8 @@ def optimize_build(
         c
         for c in eligible
         if c.verified_clean
-        and (
-            objective not in (EHP_OBJECTIVES | DEFENSE_OBJECTIVES)
-            or not _has_excluded_defensive_effect(c.item)
-        )
+        and (objective not in EHP_OBJECTIVES or not _has_unmodelled_ehp_effect(c.item))
+        and (objective not in DEFENSE_OBJECTIVES or not _has_excluded_defensive_effect(c.item))
     ]
 
     evaluator = _BuildEvaluator(

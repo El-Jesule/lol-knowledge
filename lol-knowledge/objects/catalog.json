@@ -1,9 +1,9 @@
 {
   "schema_version": 1,
   "kind": "lol-object-model-catalog",
-  "catalog_version": 26,
+  "catalog_version": 27,
   "game_version": "16.23.1",
-  "notes": "Curated overlay for a mechanically diverse sample. Data Dragon derivatives (stats, gold, maps, recipes) are not repeated here; see lol-knowledge/objects/README.md. Numeric mechanics absent from Data Dragon carry declared sources and secondary confidence. Catalog version 3 (2026-11-15): moved to snapshot 16.22.1; stats, gold, descriptions and recipes of the 15 objects are identical to 16.20.1 in Data Dragon; the secondary evidence was not re-checked against the 16.21 and 16.22 patch notes. Catalog version 6 (2026-11-15): damage components may declare applies_life_steal with its own source; Mist's Edge declares it from the LoL Wiki (secondary). Catalog version 7 (2026-11-16): adds 3111 (Mercury's Treads) for its tenacity, declared from the 16.22.1 description. Catalog version 8 (2026-11-16): description stats of every Summoner's Rift item, curated ones included, come from catalog-stats.json (generated); this file keeps effects and reviews. Catalog version 9 (2026-11-16): adds 3032 (Yun Tal Wildarrows). Effects may declare scenario max_stacks (the stat sheet applies them at full stacks) and objects may confirm a generated 0 as a real zero (confirmed_zero_stats). Catalog version 10 (2026-11-16): adds the on-hit damage of 1043, 3091, 3115, 3124 and 3302, with client values (evidence derived) where Data Dragon omits them; stat effects that are always active (Rabadon) are applied by the stat sheet. Catalog version 11 (2026-11-16): adds Spellblade (trigger spellblade) to Sheen, Trinity Force, Lich Bane, Essence Reaver, Iceborn Gauntlet, Dusk and Dawn and Bloodsong, the repeat_on_hit component and patch notes as a source kind (Terminus is now corroborated by the 26.15 notes). Catalog version 12 (2026-11-16): attack counters (stacks.required on on-hit effects), the energized trigger and trigger_energized component, by_level formulas for client level breakpoints and the target_is_structure condition; adds Kraken Slayer, Rapid Firecannon, Statikk Shiv, Voltaic Cyclosword and Hullbreaker, applies Guinsoo's phantom hits and Terminus's light-hit resistances. Catalog version 13 (2026-11-16): the target's missing health in formulas (scope missing_fraction), target_health_below in rotations, damage_types on damage modifiers and the execute component; Kraken Slayer's missing-health increase, Shadowflame and The Collector. Catalog version 14 (2026-11-16): burns (component burn, triggers damaging_ability and cast, condition ultimate_ability), applied once per rotation for their full duration; max_stacks damage modifiers; adds Liandry's Torment, Blackfire Torch, Fated Ashes, Malignance, Zeke's Convergence and Haunting Guise. Catalog version 15 (2026-11-16): timed effects (duration_seconds with a damage or stat modifier on a spellblade, energized or damaging_ability trigger) are applied by the rotation timeline only; Bloodsong's mark, Voltaic Cyclosword's lethality, Blackfire Torch's ability power and Malignance's magic resist reduction become evaluable, and burns under the timeline deal their damage continuously and restart when applied again. Catalog version 16 (2026-11-16): Spellblade effects declare their 10-second window (LoL Wiki, secondary) as duration_seconds; effects may declare cooldown_reduced_by_attacks (seconds per attack hit and per critical hit); Yun Tal Wildarrows's Flurry becomes evaluable as a timed attack speed effect (trigger on_attack); stack windows (stacks.window_seconds) are applied by the rotation timeline. Catalog version 17 (2026-11-16): stacks that expire in combat never start at maximum (user decision): Guinsoo's Seething Strike, Terminus's Juxtaposition (alternation, light first) and the per-second increases of Liandry's Torment and Haunting Guise (trigger in_combat with a maximum limit) are computed by rotations from 0; stacks.required 1 means one stack per attack; Guinsoo's phantom hits need full stacks (condition stacks_full). The max_stacks scenario stays for permanent stacks (Yun Tal's critical strike chance). Catalog version 18 (2026-11-19): moved to snapshot 16.23.1. Data Dragon stats, gold, descriptions and recipes of the curated objects are identical to 16.22.1, and the client item data of the 218 items is identical except Voltaic Cyclosword's Firmament (9 % / 7 % ⇒ 8 % / 6 % of current health, also in the 26.23 patch notes); client_data sources now cite client 16.23 (research/reports/client-16.23.md). Catalog version 19 (2026-11-20): Liandry's Torment monster burn (6653 torment-monsters) becomes evaluable with its 40/s cap (20 per 0.5 s tick, 120 over 3 s), corroborating client 16.23 MonsterDamageCap=40 against wiki.leagueoflegends.com (Module:ItemData/data rev 4095269). Catalog version 20 (2026-11-20): Dusk and Dawn's Spellblade heal (2510 dusk-heal, 10% AP + 3% bonus health from client 16.23) becomes evaluable with effect healing (MEC-05). Catalog version 21 (2026-11-20): adds 3053 Sterak's Gage (The Claws that Catch: 50% base AD on the stat sheet; Lifeline: 60% bonus health shield below 30% max health on taking_damage, 4.5 s duration, 90 s cooldown; client 16.23 + wiki rev 4095269). Catalog version 22 (2026-11-20): adds resource_restore component and models 3508 Essence Reaver Spellblade mana refund (0.5 × SpellbladeDamage = 62.5% base AD + 25 × crit chance; client 16.23 + wiki Module:ItemData/data rev 4095269, MEC-03). Catalog version 25 (2026-11-21): models move-speed-to-damage coupling — 3170 Swiftmarch Noxian Fervor (5% total MS as adaptive force) and timed combat move speed buffs (3078 go, 3044 rage, 3071 fervor, 4629 spelldance, 3073 overdrive MS, 3095 bolt MS, 3171 noxian-haste) feeding Hecarim Warpath, Janna Tailwind/Zephyr and Swiftmarch. Catalog version 26 (2026-11-21): models 14 combat and utility item actives executable via item:<id> rotation steps (3077, 3074, 6698, 6631, 3748 auto-reset/cleave empower, 3152, 3146, 3107, 3190, 3222, 3142, 2065, 3139, 2522) using client 16.23 data values.",
+  "notes": "Curated overlay for a mechanically diverse sample. Data Dragon derivatives (stats, gold, maps, recipes) are not repeated here; see lol-knowledge/objects/README.md. Numeric mechanics absent from Data Dragon carry declared sources and secondary confidence. Catalog version 3 (2026-11-15): moved to snapshot 16.22.1; stats, gold, descriptions and recipes of the 15 objects are identical to 16.20.1 in Data Dragon; the secondary evidence was not re-checked against the 16.21 and 16.22 patch notes. Catalog version 6 (2026-11-15): damage components may declare applies_life_steal with its own source; Mist's Edge declares it from the LoL Wiki (secondary). Catalog version 7 (2026-11-16): adds 3111 (Mercury's Treads) for its tenacity, declared from the 16.22.1 description. Catalog version 8 (2026-11-16): description stats of every Summoner's Rift item, curated ones included, come from catalog-stats.json (generated); this file keeps effects and reviews. Catalog version 9 (2026-11-16): adds 3032 (Yun Tal Wildarrows). Effects may declare scenario max_stacks (the stat sheet applies them at full stacks) and objects may confirm a generated 0 as a real zero (confirmed_zero_stats). Catalog version 10 (2026-11-16): adds the on-hit damage of 1043, 3091, 3115, 3124 and 3302, with client values (evidence derived) where Data Dragon omits them; stat effects that are always active (Rabadon) are applied by the stat sheet. Catalog version 11 (2026-11-16): adds Spellblade (trigger spellblade) to Sheen, Trinity Force, Lich Bane, Essence Reaver, Iceborn Gauntlet, Dusk and Dawn and Bloodsong, the repeat_on_hit component and patch notes as a source kind (Terminus is now corroborated by the 26.15 notes). Catalog version 12 (2026-11-16): attack counters (stacks.required on on-hit effects), the energized trigger and trigger_energized component, by_level formulas for client level breakpoints and the target_is_structure condition; adds Kraken Slayer, Rapid Firecannon, Statikk Shiv, Voltaic Cyclosword and Hullbreaker, applies Guinsoo's phantom hits and Terminus's light-hit resistances. Catalog version 13 (2026-11-16): the target's missing health in formulas (scope missing_fraction), target_health_below in rotations, damage_types on damage modifiers and the execute component; Kraken Slayer's missing-health increase, Shadowflame and The Collector. Catalog version 14 (2026-11-16): burns (component burn, triggers damaging_ability and cast, condition ultimate_ability), applied once per rotation for their full duration; max_stacks damage modifiers; adds Liandry's Torment, Blackfire Torch, Fated Ashes, Malignance, Zeke's Convergence and Haunting Guise. Catalog version 15 (2026-11-16): timed effects (duration_seconds with a damage or stat modifier on a spellblade, energized or damaging_ability trigger) are applied by the rotation timeline only; Bloodsong's mark, Voltaic Cyclosword's lethality, Blackfire Torch's ability power and Malignance's magic resist reduction become evaluable, and burns under the timeline deal their damage continuously and restart when applied again. Catalog version 16 (2026-11-16): Spellblade effects declare their 10-second window (LoL Wiki, secondary) as duration_seconds; effects may declare cooldown_reduced_by_attacks (seconds per attack hit and per critical hit); Yun Tal Wildarrows's Flurry becomes evaluable as a timed attack speed effect (trigger on_attack); stack windows (stacks.window_seconds) are applied by the rotation timeline. Catalog version 17 (2026-11-16): stacks that expire in combat never start at maximum (user decision): Guinsoo's Seething Strike, Terminus's Juxtaposition (alternation, light first) and the per-second increases of Liandry's Torment and Haunting Guise (trigger in_combat with a maximum limit) are computed by rotations from 0; stacks.required 1 means one stack per attack; Guinsoo's phantom hits need full stacks (condition stacks_full). The max_stacks scenario stays for permanent stacks (Yun Tal's critical strike chance). Catalog version 18 (2026-11-19): moved to snapshot 16.23.1. Data Dragon stats, gold, descriptions and recipes of the curated objects are identical to 16.22.1, and the client item data of the 218 items is identical except Voltaic Cyclosword's Firmament (9 % / 7 % ⇒ 8 % / 6 % of current health, also in the 26.23 patch notes); client_data sources now cite client 16.23 (research/reports/client-16.23.md). Catalog version 19 (2026-11-20): Liandry's Torment monster burn (6653 torment-monsters) becomes evaluable with its 40/s cap (20 per 0.5 s tick, 120 over 3 s), corroborating client 16.23 MonsterDamageCap=40 against wiki.leagueoflegends.com (Module:ItemData/data rev 4095269). Catalog version 20 (2026-11-20): Dusk and Dawn's Spellblade heal (2510 dusk-heal, 10% AP + 3% bonus health from client 16.23) becomes evaluable with effect healing (MEC-05). Catalog version 21 (2026-11-20): adds 3053 Sterak's Gage (The Claws that Catch: 50% base AD on the stat sheet; Lifeline: 60% bonus health shield below 30% max health on taking_damage, 4.5 s duration, 90 s cooldown; client 16.23 + wiki rev 4095269). Catalog version 22 (2026-11-20): adds resource_restore component and models 3508 Essence Reaver Spellblade mana refund (0.5 × SpellbladeDamage = 62.5% base AD + 25 × crit chance; client 16.23 + wiki Module:ItemData/data rev 4095269, MEC-03). Catalog version 25 (2026-11-21): models move-speed-to-damage coupling — 3170 Swiftmarch Noxian Fervor (5% total MS as adaptive force) and timed combat move speed buffs (3078 go, 3044 rage, 3071 fervor, 4629 spelldance, 3073 overdrive MS, 3095 bolt MS, 3171 noxian-haste) feeding Hecarim Warpath, Janna Tailwind/Zephyr and Swiftmarch. Catalog version 26 (2026-11-21): models 14 combat and utility item actives executable via item:<id> rotation steps (3077, 3074, 6698, 6631, 3748 auto-reset/cleave empower, 3152, 3146, 3107, 3190, 3222, 3142, 2065, 3139, 2522) using client 16.23 data values. Catalog version 27 (2026-11-21): models 9 defensive passives in defense.py/survive and time_to_die optimization (3082 rock-solid, 6665 voidborn-resilience, 4401 steadfast, 2525 lifeline, 6333 ignore-pain, 3869 blessing-of-the-mountain, and spell shields 3102/3814/4632).",
   "objects": [
     {
       "id": "1036",
@@ -8758,21 +8758,39 @@
           "kind": "passive",
           "name": "Anular",
           "quote": "Otorga un escudo de hechizos que bloquea la siguiente habilidad enemiga.",
-          "basis": "description_explicit",
+          "basis": "external_evidence_explicit",
           "trigger": {
             "event": "taking_damage"
           },
           "target": {
             "kind": "self"
           },
-          "components": [],
-          "cooldown_seconds": null,
+          "components": [
+            {
+              "kind": "status",
+              "effect": "spell_shield",
+              "magnitude": {
+                "op": "constant",
+                "value": 1
+              }
+            }
+          ],
+          "cooldown_seconds": 40,
           "stacks": null,
           "duration_seconds": null,
           "limits": [],
-          "evidence_confidence": "official",
-          "model_status": "excluded",
-          "note": "Spell shield blocking next enemy ability (40 s CD); non-damage."
+          "sources": [
+            {
+              "kind": "client_data",
+              "reference": "Cliente 16.23.8399929+branch.releases-16-23.content.release: lol-knowledge/derived/item-effects.json -> items.3102 (research/reports/client-16.23.md)",
+              "quote": "SpellShield blocks 1 incoming enemy ability; Cooldown = 40",
+              "retrieved_at": "2026-11-21",
+              "confidence": "derived"
+            }
+          ],
+          "evidence_confidence": "derived",
+          "model_status": "evaluable",
+          "note": "Evaluated in defense.py/survive: blocks the next incoming enemy ability hit completely (40 s cooldown)."
         }
       ]
     },
@@ -9477,21 +9495,39 @@
           "kind": "passive",
           "name": "Anular",
           "quote": "Otorga un escudo de hechizos que bloquea la siguiente habilidad enemiga.",
-          "basis": "description_explicit",
+          "basis": "external_evidence_explicit",
           "trigger": {
             "event": "taking_damage"
           },
           "target": {
             "kind": "self"
           },
-          "components": [],
-          "cooldown_seconds": null,
+          "components": [
+            {
+              "kind": "status",
+              "effect": "spell_shield",
+              "magnitude": {
+                "op": "constant",
+                "value": 1
+              }
+            }
+          ],
+          "cooldown_seconds": 40,
           "stacks": null,
           "duration_seconds": null,
           "limits": [],
-          "evidence_confidence": "official",
-          "model_status": "excluded",
-          "note": "Spell shield blocking next enemy ability (40 s CD); non-damage."
+          "sources": [
+            {
+              "kind": "client_data",
+              "reference": "Cliente 16.23.8399929+branch.releases-16-23.content.release: lol-knowledge/derived/item-effects.json -> items.3814 (research/reports/client-16.23.md)",
+              "quote": "SpellShield blocks 1 incoming enemy ability; Cooldown = 40",
+              "retrieved_at": "2026-11-21",
+              "confidence": "derived"
+            }
+          ],
+          "evidence_confidence": "derived",
+          "model_status": "evaluable",
+          "note": "Evaluated in defense.py/survive: blocks the next incoming enemy ability hit completely (40 s cooldown)."
         }
       ]
     },
@@ -9504,21 +9540,52 @@
           "kind": "passive",
           "name": "Bendición de la montaña",
           "quote": "Reduce el daño recibido por parte de campeones durante 2 s tras recibir daño de un campeón. Cuando el efecto termina, ralentiza a los enemigos cercanos un 50% durante 1.5 s.",
-          "basis": "description_explicit",
+          "basis": "external_evidence_explicit",
           "trigger": {
             "event": "taking_damage"
           },
           "target": {
             "kind": "self"
           },
-          "components": [],
-          "cooldown_seconds": null,
+          "components": [
+            {
+              "kind": "damage_modifier",
+              "direction": "taken",
+              "source": "all",
+              "mode": "percent",
+              "damage_types": [
+                "physical",
+                "magic"
+              ],
+              "formula": {
+                "op": "by_holder_range",
+                "melee": {
+                  "op": "constant",
+                  "value": -35
+                },
+                "ranged": {
+                  "op": "constant",
+                  "value": -25
+                }
+              }
+            }
+          ],
+          "cooldown_seconds": 18,
           "stacks": null,
-          "duration_seconds": null,
+          "duration_seconds": 2,
           "limits": [],
-          "evidence_confidence": "official",
-          "model_status": "excluded",
-          "note": "Reactive 35%/25% damage reduction for 2 s (18 s CD) + 50% slow; defensive support effect."
+          "sources": [
+            {
+              "kind": "client_data",
+              "reference": "Cliente 16.23.8399929+branch.releases-16-23.content.release: lol-knowledge/derived/item-effects.json -> items.3869 (research/reports/client-16.23.md)",
+              "quote": "MeleeShieldDRPercentage = 0.35 (-35%); RangedShieldDRPercentage = 0.25 (-25%); ShieldLingerAfterInitiallyPopped = 2; Cooldown = 18",
+              "retrieved_at": "2026-11-21",
+              "confidence": "derived"
+            }
+          ],
+          "evidence_confidence": "derived",
+          "model_status": "evaluable",
+          "note": "Evaluated in defense.py/survive: reduces incoming physical and magic damage by 35% melee / 25% ranged for 2 s on first hit (18 s CD; ending slow not modelled)."
         },
         {
           "id": "ward",
@@ -9656,21 +9723,39 @@
           "kind": "passive",
           "name": "Anular",
           "quote": "Otorga un escudo de hechizos que bloquea la siguiente habilidad enemiga.",
-          "basis": "description_explicit",
+          "basis": "external_evidence_explicit",
           "trigger": {
             "event": "taking_damage"
           },
           "target": {
             "kind": "self"
           },
-          "components": [],
-          "cooldown_seconds": null,
+          "components": [
+            {
+              "kind": "status",
+              "effect": "spell_shield",
+              "magnitude": {
+                "op": "constant",
+                "value": 1
+              }
+            }
+          ],
+          "cooldown_seconds": 60,
           "stacks": null,
           "duration_seconds": null,
           "limits": [],
-          "evidence_confidence": "official",
-          "model_status": "excluded",
-          "note": "Spell shield blocking next enemy ability (60 s CD); non-damage."
+          "sources": [
+            {
+              "kind": "client_data",
+              "reference": "Cliente 16.23.8399929+branch.releases-16-23.content.release: lol-knowledge/derived/item-effects.json -> items.4632 (research/reports/client-16.23.md)",
+              "quote": "SpellShield blocks 1 incoming enemy ability; Cooldown = 60",
+              "retrieved_at": "2026-11-21",
+              "confidence": "derived"
+            }
+          ],
+          "evidence_confidence": "derived",
+          "model_status": "evaluable",
+          "note": "Evaluated in defense.py/survive: blocks the next incoming enemy ability hit completely (60 s cooldown)."
         }
       ]
     },
@@ -9683,21 +9768,50 @@
           "kind": "passive",
           "name": "Ignora el dolor",
           "quote": "Un porcentaje del daño que recibas te afecta a lo largo de 3 s.",
-          "basis": "description_explicit",
+          "basis": "external_evidence_explicit",
           "trigger": {
             "event": "taking_damage"
           },
           "target": {
             "kind": "self"
           },
-          "components": [],
+          "components": [
+            {
+              "kind": "damage_stagger",
+              "damage_types": [
+                "physical",
+                "magic"
+              ],
+              "duration_seconds": 3,
+              "formula": {
+                "op": "by_holder_range",
+                "melee": {
+                  "op": "constant",
+                  "value": 30
+                },
+                "ranged": {
+                  "op": "constant",
+                  "value": 10
+                }
+              }
+            }
+          ],
           "cooldown_seconds": null,
           "stacks": null,
-          "duration_seconds": null,
+          "duration_seconds": 3,
           "limits": [],
-          "evidence_confidence": "official",
-          "model_status": "excluded",
-          "note": "Defensive 30% melee / 10% ranged damage stagger over 3 s; does not modify offensive damage."
+          "sources": [
+            {
+              "kind": "client_data",
+              "reference": "Cliente 16.23.8399929+branch.releases-16-23.content.release: lol-knowledge/derived/item-effects.json -> items.6333 (research/reports/client-16.23.md)",
+              "quote": "Ignore Pain: 0.3 (30% melee) / 0.1 (10% ranged) post-mitigation physical & magic damage staggered over BleedDurationWorst = 3 s as true damage",
+              "retrieved_at": "2026-11-21",
+              "confidence": "derived"
+            }
+          ],
+          "evidence_confidence": "derived",
+          "model_status": "evaluable",
+          "note": "Evaluated in defense.py/survive with --timeline: defers 30% melee / 10% ranged post-mitigation physical and magic damage into a continuous 3 s true-damage bleed."
         },
         {
           "id": "defy",
@@ -10298,21 +10412,75 @@
           "kind": "passive",
           "name": "Salvavidas",
           "quote": "Al recibir daño que reduzca la vida por debajo del 30%, obtienes 0 de vida máxima durante 5 s y recuperas 0 de vida a lo largo del efecto.",
-          "basis": "description_explicit",
+          "basis": "external_evidence_explicit",
           "trigger": {
             "event": "taking_damage"
           },
           "target": {
             "kind": "self"
           },
-          "components": [],
-          "cooldown_seconds": null,
+          "components": [
+            {
+              "kind": "stat_modifier",
+              "stat": "health",
+              "scope": "bonus",
+              "mode": "flat",
+              "formula": {
+                "op": "linear_by_level",
+                "min": 100,
+                "max": 300
+              }
+            },
+            {
+              "kind": "healing",
+              "mode": "absolute",
+              "formula": {
+                "op": "add",
+                "operands": [
+                  {
+                    "op": "linear_by_level",
+                    "min": 100,
+                    "max": 400
+                  },
+                  {
+                    "op": "percent_of",
+                    "percent": 175,
+                    "stat": "armor",
+                    "scope": "bonus"
+                  },
+                  {
+                    "op": "percent_of",
+                    "percent": 175,
+                    "stat": "magic_resist",
+                    "scope": "bonus"
+                  }
+                ]
+              }
+            }
+          ],
+          "cooldown_seconds": 90,
           "stacks": null,
-          "duration_seconds": null,
-          "limits": [],
-          "evidence_confidence": "official",
-          "model_status": "excluded",
-          "note": "Lifeline temporary max HP (+100..300) + healing over 5 s (100..400 + 175% bonus armor/MR, 90 s CD); dynamic max-HP increase not yet modelled in defense.py."
+          "duration_seconds": 5,
+          "limits": [
+            {
+              "kind": "threshold",
+              "value": 30,
+              "unit": "percent",
+              "condition": "max_health"
+            }
+          ],
+          "sources": [
+            {
+              "kind": "client_data",
+              "reference": "Cliente 16.23.8399929+branch.releases-16-23.content.release: lol-knowledge/derived/item-effects.json -> items.2525 (research/reports/client-16.23.md)",
+              "quote": "LowHealthThreshold = 0.3; Duration = 5; Cooldown = 90; MaxHealthGain = 100..300; TotalHealthRegen = 100..400 + 1.75 bonus armor (175%) + 1.75 bonus MR (175%)",
+              "retrieved_at": "2026-11-21",
+              "confidence": "derived"
+            }
+          ],
+          "evidence_confidence": "derived",
+          "model_status": "evaluable",
+          "note": "Evaluated in defense.py/survive: below 30% HP grants +100..300 temporary max/current HP for 5 s and heals 100..400 + 175% bonus armor + 175% bonus MR over 5 s (90 s CD; +10% MS and +25% tenacity not modelled)."
         }
       ]
     },
@@ -10420,21 +10588,48 @@
           "kind": "passive",
           "name": "Como una roca",
           "quote": "Reduce el daño sufrido por ataques.",
-          "basis": "description_explicit",
+          "basis": "external_evidence_explicit",
           "trigger": {
             "event": "taking_attack"
           },
           "target": {
             "kind": "self"
           },
-          "components": [],
+          "components": [
+            {
+              "kind": "damage_modifier",
+              "direction": "taken",
+              "source": "attack",
+              "mode": "flat",
+              "formula": {
+                "op": "constant",
+                "value": -15
+              }
+            }
+          ],
           "cooldown_seconds": null,
           "stacks": null,
           "duration_seconds": null,
-          "limits": [],
-          "evidence_confidence": "official",
-          "model_status": "excluded",
-          "note": "Defensive flat basic-attack reduction (15 + 0.5% max HP, capped at 20% of attack damage); defensive-only."
+          "limits": [
+            {
+              "kind": "cap",
+              "value": 20,
+              "unit": "percent",
+              "condition": "post-mitigation attack damage"
+            }
+          ],
+          "sources": [
+            {
+              "kind": "client_data",
+              "reference": "Cliente 16.23.8399929+branch.releases-16-23.content.release: lol-knowledge/derived/item-effects.json -> items.3082 (research/reports/client-16.23.md)",
+              "quote": "BlockBase = 15 (-15 flat attack reduction); WardenDamageMax = 0.2 (20% cap)",
+              "retrieved_at": "2026-11-21",
+              "confidence": "derived"
+            }
+          ],
+          "evidence_confidence": "derived",
+          "model_status": "evaluable",
+          "note": "Evaluated in defense.py/survive: flat -15 post-mitigation basic attack damage reduction, capped at 20% of the attack damage."
         }
       ]
     },
@@ -11038,21 +11233,47 @@
           "kind": "passive",
           "name": "Entereza",
           "quote": "Obtienes 70 de resistencia mágica y un 6% de velocidad de movimiento adicional tras recibir daño mágico de campeones 8 veces.",
-          "basis": "description_explicit",
+          "basis": "external_evidence_explicit",
           "trigger": {
             "event": "taking_damage"
           },
           "target": {
             "kind": "self"
           },
-          "components": [],
+          "components": [
+            {
+              "kind": "stat_modifier",
+              "stat": "magic_resist",
+              "scope": "bonus",
+              "mode": "flat",
+              "damage_types": [
+                "magic"
+              ],
+              "formula": {
+                "op": "constant",
+                "value": 70
+              }
+            }
+          ],
           "cooldown_seconds": null,
-          "stacks": null,
-          "duration_seconds": null,
+          "stacks": {
+            "required": 8,
+            "window_seconds": 7
+          },
+          "duration_seconds": 7,
           "limits": [],
-          "evidence_confidence": "official",
-          "model_status": "excluded",
-          "note": "Defensive stacking +70 MR and +6% MS after 8 magic damage instances (7 s duration); not yet tracked in defense.py."
+          "sources": [
+            {
+              "kind": "client_data",
+              "reference": "Cliente 16.23.8399929+branch.releases-16-23.content.release: lol-knowledge/derived/item-effects.json -> items.4401 (research/reports/client-16.23.md)",
+              "quote": "BonusMagicResist = 70; MaxStacks = 8; BuffDuration = 7; MoveSpeed = 0.06",
+              "retrieved_at": "2026-11-21",
+              "confidence": "derived"
+            }
+          ],
+          "evidence_confidence": "derived",
+          "model_status": "evaluable",
+          "note": "Evaluated in defense.py/survive: +70 bonus MR for 7 s after taking 8 magic damage hits (immobilize double-stacking and +6% MS not modelled in defense)."
         }
       ]
     },
@@ -11353,14 +11574,37 @@
           "target": {
             "kind": "self"
           },
-          "components": [],
+          "components": [
+            {
+              "kind": "stat_modifier",
+              "stat": "armor",
+              "scope": "bonus",
+              "mode": "percent",
+              "delay_seconds": 5,
+              "formula": {
+                "op": "constant",
+                "value": 30
+              }
+            },
+            {
+              "kind": "stat_modifier",
+              "stat": "magic_resist",
+              "scope": "bonus",
+              "mode": "percent",
+              "delay_seconds": 5,
+              "formula": {
+                "op": "constant",
+                "value": 30
+              }
+            }
+          ],
           "cooldown_seconds": null,
           "stacks": null,
           "duration_seconds": null,
           "limits": [],
           "evidence_confidence": "official",
-          "model_status": "excluded",
-          "note": "Defensive +30% bonus armor and bonus MR after 5 s in combat with champions; not yet tracked in defense.py."
+          "model_status": "evaluable",
+          "note": "Evaluated in defense.py/survive with --timeline: after 5 s in combat, increases bonus armor and bonus magic resist by 30% for the rest of combat."
         }
       ]
     },
