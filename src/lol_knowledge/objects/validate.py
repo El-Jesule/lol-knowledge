@@ -114,9 +114,13 @@ _COMPONENT_KEYS = {
     "repeats_on_hit",
     "can_crit",
     "shield_type",
+    "damage_threshold_percent",
+    "threshold_window_seconds",
+    "delay_seconds",
 }
 _ECHO_KEYS = {"charges", "repeat_ratio"}
 _SHIELD_TYPES = frozenset({"normal", "physical", "magic"})
+_COOLDOWN_SCOPES = frozenset({"basic", "ultimate", "all"})
 _LIFE_STEAL_KEYS = {"value", "source"}
 _LIMIT_KEYS = {"kind", "value", "unit", "condition"}
 _SCALAR_KEYS = {"status", "reason"}
@@ -806,6 +810,15 @@ class _CatalogChecker:
                             f"{pointer}.echo.repeat_ratio",
                             "echo.repeat_ratio must be a number in (0, 1]",
                         )
+            for num_key in (
+                "damage_threshold_percent",
+                "threshold_window_seconds",
+                "delay_seconds",
+            ):
+                if num_key in component and (
+                    not _is_number(component[num_key]) or float(component[num_key]) <= 0
+                ):
+                    self.fail(f"{pointer}.{num_key}", f"{num_key} must be a positive number")
         elif kind in {"healing", "shield"}:
             if "formula" not in component:
                 self.fail(f"{pointer}.formula", f"{kind} components need a formula")
@@ -858,6 +871,14 @@ class _CatalogChecker:
         elif kind == "execute":
             if "formula" not in component:
                 self.fail(f"{pointer}.formula", "execute components need a threshold formula")
+        elif kind == "cooldown_refund":
+            if "formula" not in component:
+                self.fail(f"{pointer}.formula", "cooldown_refund components need a formula")
+            if component.get("scope") not in _COOLDOWN_SCOPES:
+                self.fail(
+                    f"{pointer}.scope",
+                    f"cooldown_refund scope must be one of {sorted(_COOLDOWN_SCOPES)}",
+                )
         elif kind == "damage_modifier":
             types = component.get("damage_types")
             if types is not None and (

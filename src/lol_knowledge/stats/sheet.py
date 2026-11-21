@@ -283,6 +283,7 @@ def _sheet_effects(
     base_stats: Mapping[str, Fraction] = (),
     base_labels: Mapping[str, Label] = (),
     blocked_stats: Mapping[str, str] = (),
+    holder_range: str | None = None,
 ) -> tuple[list[tuple[str, Contribution]], list[StatAmplifier]]:
     """Stats from the effects of ``item`` that the sheet applies (``sheet_effect_reason``).
 
@@ -327,7 +328,9 @@ def _sheet_effects(
             ):
                 raise StatsError(f"{title}: only always effects amplify a total amount")
             try:
-                evaluated = evaluate_formula(component.get("formula"), stat_env, level=level)
+                evaluated = evaluate_formula(
+                    component.get("formula"), stat_env, holder_range=holder_range, level=level
+                )
             except FormulaError as exc:
                 if definition.id in blocked_stats:
                     continue
@@ -840,8 +843,12 @@ def build_stat_sheet(
         stat_env[f"bonus_{stat_id}"] = sum((c.value for c in bonus_items), start=Fraction(0))
         label_env[f"bonus_{stat_id}"] = weakest(c.label for c in bonus_items)
 
+    atk_range = champion.stats.get("attackrange")
+    champ_range = None if atk_range is None else ("melee" if atk_range < 300 else "ranged")
     for item in items:
-        effect_stats, item_amplifiers = _sheet_effects(item, level, stat_env, label_env, blocked)
+        effect_stats, item_amplifiers = _sheet_effects(
+            item, level, stat_env, label_env, blocked, holder_range=champ_range
+        )
         for stat_id, contribution in effect_stats:
             contributions[stat_id].append(contribution)
         amplifiers += item_amplifiers

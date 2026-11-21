@@ -368,10 +368,14 @@ class _DefenseSimulator:
                         self.guardian_rune = rune
                         self.guardian_ally = True
 
-        # Parse defender item effects: taken percent modifiers, Lifeline shields, Thornmail reflect
+        # Parse defender item effects: taken percent modifiers, reactive shields, reflect, self-amps
         self.taken_modifiers: list[tuple[str, Mapping[str, Any], Label]] = []
         self.lifeline_effects: list[tuple[str, Mapping[str, Any], Mapping[str, Any], Label]] = []
         self.reflect_effects: list[tuple[str, Mapping[str, Any], Label]] = []
+        self.self_heal_amp = Fraction(1)
+        self.self_shield_amp = Fraction(1)
+        self.self_amp_labels: list[Label] = []
+        self.self_amp_notes: list[str] = []
         for item in sheet.items:
             for effect in item.effects:
                 if effect.get("model_status") != "evaluable":
@@ -387,6 +391,19 @@ class _DefenseSimulator:
                         self.lifeline_effects.append((title, effect, comp, label))
                     elif trigger == "taking_attack" and kind == "damage":
                         self.reflect_effects.append((title, comp, label))
+                    elif trigger == "always" and comp.get("mode") == "percent":
+                        pct = evaluate_formula(
+                            comp.get("formula"), self.stats_env, level=self.sheet.level
+                        ).exact
+                        assert pct is not None
+                        if kind == "healing":
+                            self.self_heal_amp *= 1 + pct / 100
+                            self.self_amp_labels.append(label)
+                            self.self_amp_notes.append(f"{title} +{format_number(pct)}% healing")
+                        elif kind == "shield":
+                            self.self_shield_amp *= 1 + pct / 100
+                            self.self_amp_labels.append(label)
+                            self.self_amp_notes.append(f"{title} +{format_number(pct)}% shielding")
 
     def _revitalize_amp(self, health: Fraction) -> Fraction:
         if self.revitalize_rune is None or self.max_health <= 0:
@@ -528,12 +545,15 @@ class _DefenseSimulator:
                 raw = sw_rate * span
                 # Second Wind is health regeneration: reduced by Grievous Wounds,
                 # unaffected by HSP or Revitalize (Template:Healing_modifiers rev 4021803).
-                amt = scale_healing(
-                    raw,
-                    hsp=Fraction(0),
-                    revitalize_amp=Fraction(0),
-                    grievous=self.grievous,
-                    uses_hsp=False,
+                amt = (
+                    scale_healing(
+                        raw,
+                        hsp=Fraction(0),
+                        revitalize_amp=Fraction(0),
+                        grievous=self.grievous,
+                        uses_hsp=False,
+                    )
+                    * self.self_heal_amp
                 )
                 missing = max(Fraction(0), self.max_health - health)
                 gained = min(amt, missing)
@@ -672,11 +692,11 @@ class _DefenseSimulator:
                     )
                     if not can_proc:
                         continue
-                    threshold = Fraction(30, 100)
+                    threshold: Fraction | None = None
                     for lim in eff.get("limits") or ():
                         if lim.get("kind") == "threshold":
                             threshold = Fraction(str(lim["value"])) / 100
-                    if projected_hp < threshold * self.max_health:
+                    if threshold is None or projected_hp < threshold * self.max_health:
                         evaluated_sh = evaluate_formula(
                             comp.get("formula"),
                             self.stats_env,
@@ -686,7 +706,10 @@ class _DefenseSimulator:
                         raw_sh = evaluated_sh.exact
                         assert raw_sh is not None
                         rev_amp = self._revitalize_amp(health)
-                        sh_amt = scale_shield(raw_sh, hsp=self.hsp, revitalize_amp=rev_amp)
+                        sh_amt = (
+                            scale_shield(raw_sh, hsp=self.hsp, revitalize_amp=rev_amp)
+                            * self.self_shield_amp
+                        )
                         dur = (
                             Fraction(str(eff["duration_seconds"]))
                             if eff.get("duration_seconds")
@@ -702,6 +725,8 @@ class _DefenseSimulator:
                             lifeline_ready[title] = clock + cd
                         sh_notes = [
                             f"triggered before dropping below {format_number(threshold * 100)}% HP"
+                            if threshold is not None
+                            else f"triggered on taking {shield_kind} damage"
                         ]
                         if self.hsp:
                             sh_notes.append(
@@ -709,6 +734,8 @@ class _DefenseSimulator:
                             )
                         if rev_amp:
                             sh_notes.append(f"Revitalize <40% HP +{format_number(rev_amp * 100)}%")
+                        if self.self_shield_amp != 1:
+                            sh_notes.extend(n for n in self.self_amp_notes if "shielding" in n)
                         if dur is not None:
                             sh_notes.append(
                                 f"lasts {format_number(dur)} s (decay curve not modelled)"
@@ -726,7 +753,14 @@ class _DefenseSimulator:
                             sh_amt,
                             shield_kind,
                             dur,
-                            weakest([eff_label, self.sheet["health"].label, *dep_labels]),
+                            weakest(
+                                [
+                                    eff_label,
+                                    self.sheet["health"].label,
+                                    *dep_labels,
+                                    *self.self_amp_labels,
+                                ]
+                            ),
                             tuple(sh_notes),
                         )
                         granted.append(ev)

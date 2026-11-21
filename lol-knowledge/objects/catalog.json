@@ -1,7 +1,7 @@
 {
   "schema_version": 1,
   "kind": "lol-object-model-catalog",
-  "catalog_version": 23,
+  "catalog_version": 24,
   "game_version": "16.23.1",
   "notes": "Curated overlay for a mechanically diverse sample. Data Dragon derivatives (stats, gold, maps, recipes) are not repeated here; see lol-knowledge/objects/README.md. Numeric mechanics absent from Data Dragon carry declared sources and secondary confidence. Catalog version 3 (2026-11-15): moved to snapshot 16.22.1; stats, gold, descriptions and recipes of the 15 objects are identical to 16.20.1 in Data Dragon; the secondary evidence was not re-checked against the 16.21 and 16.22 patch notes. Catalog version 6 (2026-11-15): damage components may declare applies_life_steal with its own source; Mist's Edge declares it from the LoL Wiki (secondary). Catalog version 7 (2026-11-16): adds 3111 (Mercury's Treads) for its tenacity, declared from the 16.22.1 description. Catalog version 8 (2026-11-16): description stats of every Summoner's Rift item, curated ones included, come from catalog-stats.json (generated); this file keeps effects and reviews. Catalog version 9 (2026-11-16): adds 3032 (Yun Tal Wildarrows). Effects may declare scenario max_stacks (the stat sheet applies them at full stacks) and objects may confirm a generated 0 as a real zero (confirmed_zero_stats). Catalog version 10 (2026-11-16): adds the on-hit damage of 1043, 3091, 3115, 3124 and 3302, with client values (evidence derived) where Data Dragon omits them; stat effects that are always active (Rabadon) are applied by the stat sheet. Catalog version 11 (2026-11-16): adds Spellblade (trigger spellblade) to Sheen, Trinity Force, Lich Bane, Essence Reaver, Iceborn Gauntlet, Dusk and Dawn and Bloodsong, the repeat_on_hit component and patch notes as a source kind (Terminus is now corroborated by the 26.15 notes). Catalog version 12 (2026-11-16): attack counters (stacks.required on on-hit effects), the energized trigger and trigger_energized component, by_level formulas for client level breakpoints and the target_is_structure condition; adds Kraken Slayer, Rapid Firecannon, Statikk Shiv, Voltaic Cyclosword and Hullbreaker, applies Guinsoo's phantom hits and Terminus's light-hit resistances. Catalog version 13 (2026-11-16): the target's missing health in formulas (scope missing_fraction), target_health_below in rotations, damage_types on damage modifiers and the execute component; Kraken Slayer's missing-health increase, Shadowflame and The Collector. Catalog version 14 (2026-11-16): burns (component burn, triggers damaging_ability and cast, condition ultimate_ability), applied once per rotation for their full duration; max_stacks damage modifiers; adds Liandry's Torment, Blackfire Torch, Fated Ashes, Malignance, Zeke's Convergence and Haunting Guise. Catalog version 15 (2026-11-16): timed effects (duration_seconds with a damage or stat modifier on a spellblade, energized or damaging_ability trigger) are applied by the rotation timeline only; Bloodsong's mark, Voltaic Cyclosword's lethality, Blackfire Torch's ability power and Malignance's magic resist reduction become evaluable, and burns under the timeline deal their damage continuously and restart when applied again. Catalog version 16 (2026-11-16): Spellblade effects declare their 10-second window (LoL Wiki, secondary) as duration_seconds; effects may declare cooldown_reduced_by_attacks (seconds per attack hit and per critical hit); Yun Tal Wildarrows's Flurry becomes evaluable as a timed attack speed effect (trigger on_attack); stack windows (stacks.window_seconds) are applied by the rotation timeline. Catalog version 17 (2026-11-16): stacks that expire in combat never start at maximum (user decision): Guinsoo's Seething Strike, Terminus's Juxtaposition (alternation, light first) and the per-second increases of Liandry's Torment and Haunting Guise (trigger in_combat with a maximum limit) are computed by rotations from 0; stacks.required 1 means one stack per attack; Guinsoo's phantom hits need full stacks (condition stacks_full). The max_stacks scenario stays for permanent stacks (Yun Tal's critical strike chance). Catalog version 18 (2026-11-19): moved to snapshot 16.23.1. Data Dragon stats, gold, descriptions and recipes of the curated objects are identical to 16.22.1, and the client item data of the 218 items is identical except Voltaic Cyclosword's Firmament (9 % / 7 % ⇒ 8 % / 6 % of current health, also in the 26.23 patch notes); client_data sources now cite client 16.23 (research/reports/client-16.23.md). Catalog version 19 (2026-11-20): Liandry's Torment monster burn (6653 torment-monsters) becomes evaluable with its 40/s cap (20 per 0.5 s tick, 120 over 3 s), corroborating client 16.23 MonsterDamageCap=40 against wiki.leagueoflegends.com (Module:ItemData/data rev 4095269). Catalog version 20 (2026-11-20): Dusk and Dawn's Spellblade heal (2510 dusk-heal, 10% AP + 3% bonus health from client 16.23) becomes evaluable with effect healing (MEC-05). Catalog version 21 (2026-11-20): adds 3053 Sterak's Gage (The Claws that Catch: 50% base AD on the stat sheet; Lifeline: 60% bonus health shield below 30% max health on taking_damage, 4.5 s duration, 90 s cooldown; client 16.23 + wiki rev 4095269). Catalog version 22 (2026-11-20): adds resource_restore component and models 3508 Essence Reaver Spellblade mana refund (0.5 × SpellbladeDamage = 62.5% base AD + 25 × crit chance; client 16.23 + wiki Module:ItemData/data rev 4095269, MEC-03).",
   "objects": [
@@ -6766,6 +6766,4245 @@
           "evidence_confidence": "derived",
           "model_status": "evaluable",
           "note": "Reactive Thorns reflect (10 magic damage) and 40% Grievous Wounds for 3 s against champion basic attackers."
+        }
+      ]
+    },
+    {
+      "id": "1054",
+      "effect_review": "complete",
+      "effects": [
+        {
+          "id": "helping-hand",
+          "kind": "passive",
+          "name": "Mano amiga",
+          "quote": "Los ataques infligen 5 de daño físico adicional a los súbditos.",
+          "basis": "description_explicit",
+          "trigger": {
+            "event": "on_hit"
+          },
+          "target": {
+            "kind": "enemy_unit"
+          },
+          "conditions": [
+            {
+              "kind": "target_is_minion"
+            }
+          ],
+          "components": [
+            {
+              "kind": "damage",
+              "damage_type": "physical",
+              "formula": {
+                "op": "constant",
+                "value": 5
+              }
+            }
+          ],
+          "cooldown_seconds": null,
+          "stacks": null,
+          "duration_seconds": null,
+          "limits": [],
+          "evidence_confidence": "official",
+          "model_status": "evaluable",
+          "note": "+5 physical on-hit damage against minions."
+        },
+        {
+          "id": "enduring-focus",
+          "kind": "passive",
+          "name": "Concentración inquebrantable",
+          "quote": "Restaura 4 de vida cada 5 s. Tras recibir daño de un campeón, restaura vida a lo largo de 8 s.",
+          "basis": "description_explicit",
+          "trigger": {
+            "event": "taking_damage"
+          },
+          "target": {
+            "kind": "self"
+          },
+          "components": [],
+          "cooldown_seconds": null,
+          "stacks": null,
+          "duration_seconds": null,
+          "limits": [],
+          "evidence_confidence": "official",
+          "model_status": "excluded",
+          "note": "Flat regen and post-damage missing-HP regeneration over 8 s; non-damage sustain."
+        }
+      ]
+    },
+    {
+      "id": "1056",
+      "effect_review": "complete",
+      "effects": [
+        {
+          "id": "helping-hand",
+          "kind": "passive",
+          "name": "Mano amiga",
+          "quote": "Los ataques infligen 5 de daño físico adicional a los súbditos.",
+          "basis": "description_explicit",
+          "trigger": {
+            "event": "on_hit"
+          },
+          "target": {
+            "kind": "enemy_unit"
+          },
+          "conditions": [
+            {
+              "kind": "target_is_minion"
+            }
+          ],
+          "components": [
+            {
+              "kind": "damage",
+              "damage_type": "physical",
+              "formula": {
+                "op": "constant",
+                "value": 5
+              }
+            }
+          ],
+          "cooldown_seconds": null,
+          "stacks": null,
+          "duration_seconds": null,
+          "limits": [],
+          "evidence_confidence": "official",
+          "model_status": "evaluable",
+          "note": "+5 physical on-hit damage against minions."
+        },
+        {
+          "id": "drain",
+          "kind": "passive",
+          "name": "Drenaje",
+          "quote": "Recupera 1 de maná cada segundo, que aumenta hasta 2 de maná por segundo durante 5 s tras infligir daño a un campeón enemigo. Si no puedes obtener maná, cura un 45% de este valor.",
+          "basis": "description_explicit",
+          "trigger": {
+            "event": "periodic"
+          },
+          "target": {
+            "kind": "self"
+          },
+          "components": [],
+          "cooldown_seconds": null,
+          "stacks": null,
+          "duration_seconds": null,
+          "limits": [],
+          "evidence_confidence": "official",
+          "model_status": "excluded",
+          "note": "Passive mana/HP per second regeneration; non-damage sustain."
+        }
+      ]
+    },
+    {
+      "id": "1120",
+      "effect_review": "complete",
+      "effects": [
+        {
+          "id": "helping-hand",
+          "kind": "passive",
+          "name": "Mano amiga",
+          "quote": "Los ataques infligen 5 de daño físico adicional a los súbditos.",
+          "basis": "description_explicit",
+          "trigger": {
+            "event": "on_hit"
+          },
+          "target": {
+            "kind": "enemy_unit"
+          },
+          "conditions": [
+            {
+              "kind": "target_is_minion"
+            }
+          ],
+          "components": [
+            {
+              "kind": "damage",
+              "damage_type": "physical",
+              "formula": {
+                "op": "constant",
+                "value": 5
+              }
+            }
+          ],
+          "cooldown_seconds": null,
+          "stacks": null,
+          "duration_seconds": null,
+          "limits": [],
+          "evidence_confidence": "official",
+          "model_status": "evaluable",
+          "note": "+5 physical on-hit damage against minions."
+        }
+      ]
+    },
+    {
+      "id": "3070",
+      "effect_review": "complete",
+      "effects": [
+        {
+          "id": "helping-hand",
+          "kind": "passive",
+          "name": "Mano amiga",
+          "quote": "Los ataques infligen 5 de daño físico adicional a los súbditos.",
+          "basis": "description_explicit",
+          "trigger": {
+            "event": "on_hit"
+          },
+          "target": {
+            "kind": "enemy_unit"
+          },
+          "conditions": [
+            {
+              "kind": "target_is_minion"
+            }
+          ],
+          "components": [
+            {
+              "kind": "damage",
+              "damage_type": "physical",
+              "formula": {
+                "op": "constant",
+                "value": 5
+              }
+            }
+          ],
+          "cooldown_seconds": null,
+          "stacks": null,
+          "duration_seconds": null,
+          "limits": [],
+          "evidence_confidence": "official",
+          "model_status": "evaluable",
+          "note": "+5 physical on-hit damage against minions."
+        },
+        {
+          "id": "manaflow",
+          "kind": "passive",
+          "name": "Flujo de maná",
+          "quote": "Asestar habilidades otorga 3 de maná máximo (se duplica contra campeones), hasta 360 .",
+          "basis": "description_explicit",
+          "trigger": {
+            "event": "on_damage"
+          },
+          "target": {
+            "kind": "self"
+          },
+          "components": [],
+          "cooldown_seconds": null,
+          "stacks": null,
+          "duration_seconds": null,
+          "limits": [],
+          "evidence_confidence": "official",
+          "model_status": "excluded",
+          "note": "Long-horizon Tear mana stacking; not part of single-rotation damage."
+        }
+      ]
+    },
+    {
+      "id": "1083",
+      "effect_review": "complete",
+      "effects": [
+        {
+          "id": "reap",
+          "kind": "passive",
+          "name": "Segar",
+          "quote": "Restaura 3 de vida al impactar .",
+          "basis": "description_explicit",
+          "trigger": {
+            "event": "on_hit"
+          },
+          "target": {
+            "kind": "self"
+          },
+          "components": [
+            {
+              "kind": "healing",
+              "mode": "absolute",
+              "target": {
+                "kind": "self"
+              },
+              "formula": {
+                "op": "constant",
+                "value": 3
+              }
+            }
+          ],
+          "cooldown_seconds": null,
+          "stacks": null,
+          "duration_seconds": null,
+          "limits": [],
+          "evidence_confidence": "official",
+          "model_status": "evaluable",
+          "note": "Heals 3 HP on-hit (applied in rotations; gold quest on 100 minion kills is non-combat)."
+        },
+        {
+          "id": "reap-gold",
+          "kind": "passive",
+          "name": "Segar: oro",
+          "quote": "Asesinar súbditos otorga 1 de oro , hasta un máximo de 100 . Alcanzar el límite otorga 350 de oro .",
+          "basis": "description_explicit",
+          "trigger": {
+            "event": "on_kill"
+          },
+          "target": {
+            "kind": "self"
+          },
+          "components": [],
+          "cooldown_seconds": null,
+          "stacks": null,
+          "duration_seconds": null,
+          "limits": [],
+          "evidence_confidence": "official",
+          "model_status": "excluded",
+          "note": "Gold generation quest; non-combat."
+        }
+      ]
+    },
+    {
+      "id": "3095",
+      "effect_review": "complete",
+      "effects": [
+        {
+          "id": "bolt",
+          "kind": "passive",
+          "name": "Proyectil",
+          "quote": "Tus ataques con vigor infligen 0 de daño mágico adicional y otorgan un 45% de velocidad de movimiento durante 1.5 s.",
+          "basis": "external_evidence_explicit",
+          "trigger": {
+            "event": "energized"
+          },
+          "target": {
+            "kind": "enemy_unit"
+          },
+          "components": [
+            {
+              "kind": "damage",
+              "damage_type": "magic",
+              "formula": {
+                "op": "constant",
+                "value": 100
+              }
+            }
+          ],
+          "cooldown_seconds": null,
+          "stacks": null,
+          "duration_seconds": null,
+          "limits": [],
+          "sources": [
+            {
+              "kind": "client_data",
+              "reference": "Cliente 16.23.8399929+branch.releases-16-23.content.release: lol-knowledge/derived/item-effects.json -> items.3095 (research/reports/client-16.23.md)",
+              "quote": "Bolt damage calculation = 100; BuffStrength = 0.45; BuffDuration = 1.5",
+              "retrieved_at": "2026-11-21",
+              "confidence": "derived"
+            },
+            {
+              "kind": "community_wiki",
+              "reference": "https://wiki.leagueoflegends.com/en-us/Module:ItemData/data?oldid=4095269",
+              "quote": "When fully Energized, your next basic attack deals 100 bonus magic damage on-hit and grants 45% bonus movement speed for 1.5 s.",
+              "retrieved_at": "2026-11-21",
+              "confidence": "secondary"
+            }
+          ],
+          "evidence_confidence": "derived",
+          "model_status": "evaluable",
+          "note": "Energized starts ready and fires once for 100 magic damage; 45% move speed buff is non-damage."
+        }
+      ]
+    },
+    {
+      "id": "3871",
+      "effect_review": "complete",
+      "effects": [
+        {
+          "id": "void-explosion",
+          "kind": "passive",
+          "name": "Explosión del Vacío",
+          "quote": "Infligir daño con habilidades a un campeón provoca una explosión que inflige daño mágico .",
+          "basis": "external_evidence_explicit",
+          "trigger": {
+            "event": "damaging_ability"
+          },
+          "target": {
+            "kind": "enemy_champion"
+          },
+          "conditions": [
+            {
+              "kind": "target_is_champion"
+            }
+          ],
+          "components": [
+            {
+              "kind": "damage",
+              "damage_type": "magic",
+              "formula": {
+                "op": "add",
+                "operands": [
+                  {
+                    "op": "constant",
+                    "value": 10
+                  },
+                  {
+                    "op": "percent_of",
+                    "percent": 15,
+                    "stat": "ability_power",
+                    "scope": "total"
+                  },
+                  {
+                    "op": "percent_of",
+                    "percent": 3,
+                    "stat": "health",
+                    "scope": "max",
+                    "subject": "target"
+                  }
+                ]
+              }
+            }
+          ],
+          "cooldown_seconds": 10,
+          "stacks": null,
+          "duration_seconds": null,
+          "limits": [],
+          "sources": [
+            {
+              "kind": "client_data",
+              "reference": "Cliente 16.23.8399929+branch.releases-16-23.content.release: lol-knowledge/derived/item-effects.json -> items.3871 (research/reports/client-16.23.md)",
+              "quote": "Cooldown = 10; BaseDamage = 10; APRatio = 0.15; PercentHPDamage = 0.03; MonsterDamageCap = 300",
+              "retrieved_at": "2026-11-21",
+              "confidence": "derived"
+            },
+            {
+              "kind": "community_wiki",
+              "reference": "https://wiki.leagueoflegends.com/en-us/Module:ItemData/data?oldid=4095269",
+              "quote": "Dealing ability damage to an enemy champion creates an explosion dealing 10 (+15% AP) (+3% target maximum health) magic damage (10 s cooldown).",
+              "retrieved_at": "2026-11-21",
+              "confidence": "secondary"
+            }
+          ],
+          "evidence_confidence": "derived",
+          "model_status": "evaluable",
+          "note": "Triggers on damaging ability vs enemy champion (10 s CD); 0.5 s delay is collapsed onto the triggering step."
+        },
+        {
+          "id": "ward",
+          "kind": "active",
+          "name": "Activar: guardián",
+          "quote": "Coloca un guardián invisible que otorga visión.",
+          "basis": "description_explicit",
+          "trigger": {
+            "event": "cast"
+          },
+          "target": {
+            "kind": "self"
+          },
+          "components": [],
+          "cooldown_seconds": null,
+          "stacks": null,
+          "duration_seconds": null,
+          "limits": [],
+          "evidence_confidence": "official",
+          "model_status": "excluded",
+          "note": "Vision ward active; non-damage."
+        }
+      ]
+    },
+    {
+      "id": "2520",
+      "effect_review": "complete",
+      "effects": [
+        {
+          "id": "shaped-charge",
+          "kind": "passive",
+          "name": "Carga moldeada",
+          "quote": "Infligir daño con habilidades a un campeón o monstruo épico inflige 0 de daño verdadero adicional.",
+          "basis": "external_evidence_explicit",
+          "trigger": {
+            "event": "damaging_ability"
+          },
+          "target": {
+            "kind": "enemy_champion"
+          },
+          "conditions": [
+            {
+              "kind": "target_is_champion"
+            }
+          ],
+          "components": [
+            {
+              "kind": "damage",
+              "damage_type": "true",
+              "formula": {
+                "op": "by_holder_range",
+                "melee": {
+                  "op": "add",
+                  "operands": [
+                    {
+                      "op": "constant",
+                      "value": 40
+                    },
+                    {
+                      "op": "percent_of",
+                      "percent": 150,
+                      "stat": "lethality",
+                      "scope": "total"
+                    }
+                  ]
+                },
+                "ranged": {
+                  "op": "add",
+                  "operands": [
+                    {
+                      "op": "constant",
+                      "value": 20
+                    },
+                    {
+                      "op": "percent_of",
+                      "percent": 75,
+                      "stat": "lethality",
+                      "scope": "total"
+                    }
+                  ]
+                }
+              }
+            }
+          ],
+          "cooldown_seconds": 20,
+          "stacks": null,
+          "duration_seconds": null,
+          "limits": [],
+          "sources": [
+            {
+              "kind": "client_data",
+              "reference": "Cliente 16.23.8399929+branch.releases-16-23.content.release: lol-knowledge/derived/item-effects.json -> items.2520 (research/reports/client-16.23.md)",
+              "quote": "Cooldown = 20; AbilityDamageCalc = 40 + 1.5 lethality (mStat 29) * AbilityDamageRangeMod 0.5 ranged (20 + 0.75 lethality)",
+              "retrieved_at": "2026-11-21",
+              "confidence": "derived"
+            },
+            {
+              "kind": "community_wiki",
+              "reference": "https://wiki.leagueoflegends.com/en-us/Module:ItemData/data?oldid=4095269",
+              "quote": "Next ability damage to a champion or epic monster deals 40 (+1.5 per lethality) melee / 20 (+0.75 per lethality) ranged bonus true damage (20 s cooldown).",
+              "retrieved_at": "2026-11-21",
+              "confidence": "secondary"
+            }
+          ],
+          "evidence_confidence": "derived",
+          "model_status": "evaluable",
+          "note": "Evaluated against champions (20 s CD); also applies to epic monsters in game."
+        },
+        {
+          "id": "sabotage",
+          "kind": "passive",
+          "name": "Sabotaje",
+          "quote": "Mientras tienes Sabotaje, tu siguiente ataque contra un monstruo épico o torretas inflige 0 de daño verdadero adicional a lo largo de 3 s.",
+          "basis": "description_partial",
+          "trigger": {
+            "event": "on_hit"
+          },
+          "target": {
+            "kind": "enemy_unit"
+          },
+          "components": [
+            {
+              "kind": "damage",
+              "damage_type": "true",
+              "formula": {
+                "op": "unknown",
+                "reason": "Post-takedown bonus true damage against structures/epic monsters only; does not affect champion combat."
+              }
+            }
+          ],
+          "cooldown_seconds": null,
+          "stacks": null,
+          "duration_seconds": null,
+          "limits": [],
+          "sources": [
+            {
+              "kind": "client_data",
+              "reference": "Cliente 16.23.8399929+branch.releases-16-23.content.release: lol-knowledge/derived/item-effects.json -> items.2520 (research/reports/client-16.23.md)",
+              "quote": "DamageCalc = 300 + 25 lethality * 0.8 ranged over 3 s against structures/epic monsters after champion takedown",
+              "retrieved_at": "2026-11-21",
+              "confidence": "derived"
+            }
+          ],
+          "evidence_confidence": "derived",
+          "model_status": "excluded",
+          "note": "Post-takedown bonus true damage against structures/epic monsters only; does not affect champion combat.",
+          "conditions": [
+            {
+              "kind": "target_is_structure"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "2517",
+      "effect_review": "complete",
+      "effects": [
+        {
+          "id": "famine",
+          "kind": "passive",
+          "name": "Hambruna",
+          "quote": "Obtienes velocidad de habilidades según tu DA adicional.",
+          "basis": "external_evidence_explicit",
+          "trigger": {
+            "event": "always"
+          },
+          "target": {
+            "kind": "self"
+          },
+          "components": [
+            {
+              "kind": "stat_modifier",
+              "stat": "ability_haste",
+              "scope": "total",
+              "mode": "flat",
+              "formula": {
+                "op": "by_holder_range",
+                "melee": {
+                  "op": "add",
+                  "operands": [
+                    {
+                      "op": "constant",
+                      "value": 5
+                    },
+                    {
+                      "op": "percent_of",
+                      "percent": 13,
+                      "stat": "attack_damage",
+                      "scope": "bonus"
+                    }
+                  ]
+                },
+                "ranged": {
+                  "op": "add",
+                  "operands": [
+                    {
+                      "op": "constant",
+                      "value": 5
+                    },
+                    {
+                      "op": "percent_of",
+                      "percent": 10,
+                      "stat": "attack_damage",
+                      "scope": "bonus"
+                    }
+                  ]
+                }
+              }
+            }
+          ],
+          "cooldown_seconds": null,
+          "stacks": null,
+          "duration_seconds": null,
+          "limits": [],
+          "sources": [
+            {
+              "kind": "client_data",
+              "reference": "Cliente 16.23.8399929+branch.releases-16-23.content.release: lol-knowledge/derived/item-effects.json -> items.2517 (research/reports/client-16.23.md)",
+              "quote": "{e4d9f16b} = 5 + 0.13 bonus AD (melee); {87892572} = 5 + 0.10 bonus AD (ranged)",
+              "retrieved_at": "2026-11-21",
+              "confidence": "derived"
+            },
+            {
+              "kind": "community_wiki",
+              "reference": "https://wiki.leagueoflegends.com/en-us/Module:ItemData/data?oldid=4095269",
+              "quote": "Gain 5 (+13% melee / +10% ranged bonus AD) ability haste.",
+              "retrieved_at": "2026-11-21",
+              "confidence": "secondary"
+            }
+          ],
+          "evidence_confidence": "derived",
+          "model_status": "evaluable",
+          "note": "Applied on the stat sheet using champion attackrange (< 300 melee, >= 300 ranged)."
+        },
+        {
+          "id": "feast",
+          "kind": "passive",
+          "name": "Festín",
+          "quote": "Cuando un campeón al que has infligido daño recientemente muere, otorga omnisucción durante un tiempo.",
+          "basis": "description_explicit",
+          "trigger": {
+            "event": "on_kill"
+          },
+          "target": {
+            "kind": "self"
+          },
+          "components": [],
+          "cooldown_seconds": null,
+          "stacks": null,
+          "duration_seconds": null,
+          "limits": [],
+          "evidence_confidence": "official",
+          "model_status": "excluded",
+          "note": "On-takedown +15% omnivamp for 8 s; post-kill sustain, not part of pre-kill damage."
+        }
+      ]
+    },
+    {
+      "id": "2526",
+      "effect_review": "complete",
+      "effects": [
+        {
+          "id": "harmony",
+          "kind": "passive",
+          "name": "Armonía",
+          "quote": "Obtienes un 0% de poder de curaciones y escudos.",
+          "basis": "external_evidence_explicit",
+          "trigger": {
+            "event": "always"
+          },
+          "target": {
+            "kind": "self"
+          },
+          "components": [
+            {
+              "kind": "stat_modifier",
+              "stat": "heal_and_shield_power",
+              "scope": "total",
+              "mode": "flat",
+              "formula": {
+                "op": "percent_of",
+                "percent": 0.5,
+                "stat": "mana",
+                "scope": "bonus"
+              }
+            }
+          ],
+          "cooldown_seconds": null,
+          "stacks": null,
+          "duration_seconds": null,
+          "limits": [],
+          "sources": [
+            {
+              "kind": "client_data",
+              "reference": "Cliente 16.23.8399929+branch.releases-16-23.content.release: lol-knowledge/derived/item-effects.json -> items.2526 (research/reports/client-16.23.md)",
+              "quote": "BonusHSPCalc: AbilityResourceByCoefficientCalculationPart mCoefficient 0.005 mStatFormula 2 (0.5% bonus mana)",
+              "retrieved_at": "2026-11-21",
+              "confidence": "derived"
+            },
+            {
+              "kind": "community_wiki",
+              "reference": "https://wiki.leagueoflegends.com/en-us/Module:ItemData/data?oldid=4095269",
+              "quote": "Grants heal and shield power equal to 0.5% bonus mana.",
+              "retrieved_at": "2026-11-21",
+              "confidence": "secondary"
+            }
+          ],
+          "evidence_confidence": "derived",
+          "model_status": "evaluable",
+          "note": "Applied by the stat sheet: 0.5% of bonus mana added as heal & shield power percentage points."
+        },
+        {
+          "id": "manaflow",
+          "kind": "passive",
+          "name": "Flujo de maná",
+          "quote": "Acertar habilidades otorga 4 de maná máximo (se duplica contra campeones). Se transforma en Diadema melodiosa al conseguir 360 de maná máximo .",
+          "basis": "description_explicit",
+          "trigger": {
+            "event": "on_damage"
+          },
+          "target": {
+            "kind": "self"
+          },
+          "components": [],
+          "cooldown_seconds": null,
+          "stacks": null,
+          "duration_seconds": null,
+          "limits": [],
+          "evidence_confidence": "official",
+          "model_status": "excluded",
+          "note": "Long-horizon Tear mana stacking transformation."
+        }
+      ]
+    },
+    {
+      "id": "3083",
+      "effect_review": "complete",
+      "effects": [
+        {
+          "id": "warmogs-vitality",
+          "kind": "passive",
+          "name": "Vitalidad de Warmog",
+          "quote": "Obtienes vida adicional equivalente al 12% de la vida que te otorgan los objetos ( 0 ).",
+          "basis": "description_explicit",
+          "trigger": {
+            "event": "always"
+          },
+          "target": {
+            "kind": "self"
+          },
+          "components": [
+            {
+              "kind": "stat_modifier",
+              "stat": "health",
+              "scope": "bonus",
+              "mode": "flat",
+              "formula": {
+                "op": "percent_of",
+                "percent": 12,
+                "stat": "health",
+                "scope": "bonus"
+              }
+            }
+          ],
+          "cooldown_seconds": null,
+          "stacks": null,
+          "duration_seconds": null,
+          "limits": [],
+          "evidence_confidence": "official",
+          "model_status": "evaluable",
+          "note": "Applied on the stat sheet as +12% bonus health (exact for item-only builds; bonus health from runes/passives is not separated)."
+        },
+        {
+          "id": "warmogs-heart",
+          "kind": "passive",
+          "name": "Corazón de Warmog",
+          "quote": "Si tienes 2000 de vida adicional y no has recibido daño en 8 s, restaura 0 de vida por segundo.",
+          "basis": "description_explicit",
+          "trigger": {
+            "event": "periodic"
+          },
+          "target": {
+            "kind": "self"
+          },
+          "components": [],
+          "cooldown_seconds": null,
+          "stacks": null,
+          "duration_seconds": null,
+          "limits": [],
+          "evidence_confidence": "official",
+          "model_status": "excluded",
+          "note": "Out-of-combat health regeneration (1.5% max HP / 0.5 s after 8 s without champion damage); not active during combat."
+        }
+      ]
+    },
+    {
+      "id": "3065",
+      "effect_review": "complete",
+      "effects": [
+        {
+          "id": "boundless-vitality",
+          "kind": "passive",
+          "name": "Vitalidad ilimitada",
+          "quote": "Aumenta las curaciones y los escudos que recibes un 25%.",
+          "basis": "description_explicit",
+          "trigger": {
+            "event": "always"
+          },
+          "target": {
+            "kind": "self"
+          },
+          "components": [
+            {
+              "kind": "healing",
+              "mode": "percent",
+              "target": {
+                "kind": "self"
+              },
+              "formula": {
+                "op": "constant",
+                "value": 25
+              }
+            },
+            {
+              "kind": "shield",
+              "mode": "percent",
+              "target": {
+                "kind": "self"
+              },
+              "formula": {
+                "op": "constant",
+                "value": 25
+              }
+            }
+          ],
+          "cooldown_seconds": null,
+          "stacks": null,
+          "duration_seconds": null,
+          "limits": [],
+          "evidence_confidence": "official",
+          "model_status": "evaluable",
+          "note": "Increases all healing (including life steal, omnivamp, effect heals and Second Wind) and shielding received by +25%."
+        }
+      ]
+    },
+    {
+      "id": "2504",
+      "effect_review": "complete",
+      "effects": [
+        {
+          "id": "magebane",
+          "kind": "passive",
+          "name": "Perdición del mago",
+          "quote": "Tras 15 s sin recibir daño mágico, obtienes un escudo mágico .",
+          "basis": "external_evidence_explicit",
+          "trigger": {
+            "event": "taking_damage"
+          },
+          "target": {
+            "kind": "self"
+          },
+          "components": [
+            {
+              "kind": "shield",
+              "mode": "absolute",
+              "target": {
+                "kind": "self"
+              },
+              "shield_type": "magic",
+              "formula": {
+                "op": "percent_of",
+                "percent": 15,
+                "stat": "health",
+                "scope": "total"
+              }
+            }
+          ],
+          "cooldown_seconds": 15,
+          "stacks": null,
+          "duration_seconds": null,
+          "limits": [],
+          "sources": [
+            {
+              "kind": "client_data",
+              "reference": "Cliente 16.23.8399929+branch.releases-16-23.content.release: lol-knowledge/derived/item-effects.json -> items.2504 (research/reports/client-16.23.md)",
+              "quote": "ShieldAmount = 0.15 (ShieldCalc: mStat 12 total health); OutOfCombatDuration = 15",
+              "retrieved_at": "2026-11-21",
+              "confidence": "derived"
+            },
+            {
+              "kind": "community_wiki",
+              "reference": "https://wiki.leagueoflegends.com/en-us/Module:ItemData/data?oldid=4095269",
+              "quote": "After not taking magic damage for 15 s, gain a magic shield equal to 15% of maximum health until destroyed.",
+              "retrieved_at": "2026-11-21",
+              "confidence": "secondary"
+            }
+          ],
+          "evidence_confidence": "derived",
+          "model_status": "evaluable",
+          "note": "Assumes Magebane magic shield (15% max HP) is ready when taking the first magic hit in survive/defense simulations."
+        }
+      ]
+    },
+    {
+      "id": "3173",
+      "effect_review": "complete",
+      "effects": [
+        {
+          "id": "noxian-persistence",
+          "kind": "passive",
+          "name": "Perseverancia noxiana",
+          "quote": "Tras recibir daño mágico de un campeón, obtienes un escudo mágico de 0 durante 5 s.",
+          "basis": "external_evidence_explicit",
+          "trigger": {
+            "event": "taking_damage"
+          },
+          "target": {
+            "kind": "self"
+          },
+          "components": [
+            {
+              "kind": "shield",
+              "mode": "absolute",
+              "target": {
+                "kind": "self"
+              },
+              "shield_type": "magic",
+              "formula": {
+                "op": "add",
+                "operands": [
+                  {
+                    "op": "by_level",
+                    "values": [
+                      90,
+                      90,
+                      90,
+                      90,
+                      90,
+                      90,
+                      90,
+                      90,
+                      100,
+                      110,
+                      120,
+                      130,
+                      140,
+                      150,
+                      160,
+                      170,
+                      180,
+                      190
+                    ]
+                  },
+                  {
+                    "op": "percent_of",
+                    "percent": 8,
+                    "stat": "health",
+                    "scope": "bonus"
+                  }
+                ]
+              }
+            }
+          ],
+          "cooldown_seconds": 15,
+          "stacks": null,
+          "duration_seconds": 5,
+          "limits": [],
+          "sources": [
+            {
+              "kind": "client_data",
+              "reference": "Cliente 16.23.8399929+branch.releases-16-23.content.release: lol-knowledge/derived/item-effects.json -> items.3173 (research/reports/client-16.23.md)",
+              "quote": "Cooldown = 15; ShieldDuration = 5; ShieldAmount = 0.08 bonus HP; ByCharLevelBreakpoints(90, lvl 9 +10/lvl -> 190)",
+              "retrieved_at": "2026-11-21",
+              "confidence": "derived"
+            },
+            {
+              "kind": "community_wiki",
+              "reference": "https://wiki.leagueoflegends.com/en-us/Module:ItemData/data?oldid=4095269",
+              "quote": "Taking magic damage from champions grants a magic shield (+8% bonus health) for 5 s (15 s cooldown).",
+              "retrieved_at": "2026-11-21",
+              "confidence": "secondary"
+            }
+          ],
+          "evidence_confidence": "derived",
+          "model_status": "evaluable",
+          "note": "Evaluated in survive/defense simulations: grants a magic shield on taking magic damage (15 s CD, 5 s duration)."
+        }
+      ]
+    },
+    {
+      "id": "3174",
+      "effect_review": "complete",
+      "effects": [
+        {
+          "id": "plated",
+          "kind": "passive",
+          "name": "Placas",
+          "quote": "Reduce un 10% el daño sufrido por ataques.",
+          "basis": "description_explicit",
+          "trigger": {
+            "event": "taking_attack"
+          },
+          "target": {
+            "kind": "self"
+          },
+          "components": [
+            {
+              "kind": "damage_modifier",
+              "direction": "taken",
+              "source": "attack",
+              "mode": "percent",
+              "formula": {
+                "op": "constant",
+                "value": -10
+              }
+            }
+          ],
+          "cooldown_seconds": null,
+          "stacks": null,
+          "duration_seconds": null,
+          "limits": [],
+          "evidence_confidence": "official",
+          "model_status": "evaluable",
+          "note": "Reduces incoming basic attack damage by 10% (same Plated rule as Plated Steelcaps 3047)."
+        },
+        {
+          "id": "noxian-endurance",
+          "kind": "passive",
+          "name": "Resistencia noxiana",
+          "quote": "Tras recibir daño físico de un campeón, otorga un escudo físico de 0 durante 5 s.",
+          "basis": "external_evidence_explicit",
+          "trigger": {
+            "event": "taking_damage"
+          },
+          "target": {
+            "kind": "self"
+          },
+          "components": [
+            {
+              "kind": "shield",
+              "mode": "absolute",
+              "target": {
+                "kind": "self"
+              },
+              "shield_type": "physical",
+              "formula": {
+                "op": "add",
+                "operands": [
+                  {
+                    "op": "by_level",
+                    "values": [
+                      90,
+                      90,
+                      90,
+                      90,
+                      90,
+                      90,
+                      90,
+                      90,
+                      100,
+                      110,
+                      120,
+                      130,
+                      140,
+                      150,
+                      160,
+                      170,
+                      180,
+                      190
+                    ]
+                  },
+                  {
+                    "op": "percent_of",
+                    "percent": 8,
+                    "stat": "health",
+                    "scope": "bonus"
+                  }
+                ]
+              }
+            }
+          ],
+          "cooldown_seconds": 15,
+          "stacks": null,
+          "duration_seconds": 5,
+          "limits": [],
+          "sources": [
+            {
+              "kind": "client_data",
+              "reference": "Cliente 16.23.8399929+branch.releases-16-23.content.release: lol-knowledge/derived/item-effects.json -> items.3174 (research/reports/client-16.23.md)",
+              "quote": "Cooldown = 15; ShieldDuration = 5; ShieldAmount = 0.08 bonus HP; ByCharLevelBreakpoints(90, lvl 9 +10/lvl -> 190)",
+              "retrieved_at": "2026-11-21",
+              "confidence": "derived"
+            },
+            {
+              "kind": "community_wiki",
+              "reference": "https://wiki.leagueoflegends.com/en-us/Module:ItemData/data?oldid=4095269",
+              "quote": "Taking physical damage from champions grants a physical shield (+8% bonus health) for 5 s (15 s cooldown).",
+              "retrieved_at": "2026-11-21",
+              "confidence": "secondary"
+            }
+          ],
+          "evidence_confidence": "derived",
+          "model_status": "evaluable",
+          "note": "Evaluated in survive/defense simulations: grants a physical shield on taking physical damage (15 s CD, 5 s duration)."
+        }
+      ]
+    },
+    {
+      "id": "3071",
+      "effect_review": "complete",
+      "effects": [
+        {
+          "id": "carve",
+          "kind": "passive",
+          "name": "Trinchar",
+          "quote": "Infligir daño físico a campeones reduce la armadura del objetivo un 6% durante 6 s (se acumula 5 veces).",
+          "basis": "description_explicit",
+          "trigger": {
+            "event": "on_damage"
+          },
+          "target": {
+            "kind": "enemy_champion"
+          },
+          "conditions": [
+            {
+              "kind": "target_is_champion"
+            }
+          ],
+          "components": [
+            {
+              "kind": "stat_modifier",
+              "stat": "armor",
+              "scope": "total",
+              "mode": "percent",
+              "damage_types": [
+                "physical"
+              ],
+              "formula": {
+                "op": "constant",
+                "value": -6
+              }
+            }
+          ],
+          "cooldown_seconds": null,
+          "stacks": {
+            "required": 1,
+            "max_stacks": 5,
+            "window_seconds": 6
+          },
+          "duration_seconds": 6,
+          "limits": [],
+          "evidence_confidence": "official",
+          "model_status": "evaluable",
+          "note": "Each physical-damage step against a champion adds 1 stack (-6% target armor per stack, up to -30% at 5 stacks, 6 s duration)."
+        },
+        {
+          "id": "fervor",
+          "kind": "passive",
+          "name": "Fervor",
+          "quote": "Infligir daño físico te otorga 0 de velocidad de movimiento durante 2 s.",
+          "basis": "description_explicit",
+          "trigger": {
+            "event": "on_damage"
+          },
+          "target": {
+            "kind": "self"
+          },
+          "components": [],
+          "cooldown_seconds": null,
+          "stacks": null,
+          "duration_seconds": null,
+          "limits": [],
+          "evidence_confidence": "official",
+          "model_status": "excluded",
+          "note": "20 melee / 10 ranged bonus move speed on physical damage; non-damage."
+        }
+      ]
+    },
+    {
+      "id": "8010",
+      "effect_review": "complete",
+      "effects": [
+        {
+          "id": "vile-decay",
+          "kind": "passive",
+          "name": "Decadencia vil",
+          "quote": "Infligir daño mágico con habilidades o pasivas a campeones reduce su resistencia mágica un 7.5% durante 6 s. (Se acumula 4 veces).",
+          "basis": "description_explicit",
+          "trigger": {
+            "event": "damaging_ability"
+          },
+          "target": {
+            "kind": "enemy_champion"
+          },
+          "conditions": [
+            {
+              "kind": "target_is_champion"
+            }
+          ],
+          "components": [
+            {
+              "kind": "stat_modifier",
+              "stat": "magic_resist",
+              "scope": "total",
+              "mode": "percent",
+              "damage_types": [
+                "magic"
+              ],
+              "formula": {
+                "op": "constant",
+                "value": -7.5
+              }
+            }
+          ],
+          "cooldown_seconds": null,
+          "stacks": {
+            "required": 1,
+            "max_stacks": 4,
+            "window_seconds": 6
+          },
+          "duration_seconds": 6,
+          "limits": [],
+          "evidence_confidence": "official",
+          "model_status": "evaluable",
+          "note": "Each magic damaging ability step against a champion adds 1 stack (-7.5% target magic resist per stack, up to -30% at 4 stacks, 6 s duration)."
+        }
+      ]
+    },
+    {
+      "id": "4646",
+      "effect_review": "complete",
+      "effects": [
+        {
+          "id": "stormraider",
+          "kind": "passive",
+          "name": "Tensión tormentosa",
+          "quote": "Tras infligir un 25% de la vida máxima a un campeón en 2.5 s, le aplica Alarido . Alarido Tras 2 s, inflige daño mágico .",
+          "basis": "external_evidence_explicit",
+          "trigger": {
+            "event": "on_damage"
+          },
+          "target": {
+            "kind": "enemy_champion"
+          },
+          "conditions": [
+            {
+              "kind": "target_is_champion"
+            }
+          ],
+          "components": [
+            {
+              "kind": "damage",
+              "damage_type": "magic",
+              "damage_threshold_percent": 25,
+              "threshold_window_seconds": 2.5,
+              "delay_seconds": 2,
+              "formula": {
+                "op": "add",
+                "operands": [
+                  {
+                    "op": "constant",
+                    "value": 125
+                  },
+                  {
+                    "op": "percent_of",
+                    "percent": 10,
+                    "stat": "ability_power",
+                    "scope": "total"
+                  }
+                ]
+              }
+            }
+          ],
+          "cooldown_seconds": 30,
+          "stacks": null,
+          "duration_seconds": null,
+          "limits": [],
+          "sources": [
+            {
+              "kind": "client_data",
+              "reference": "Cliente 16.23.8399929+branch.releases-16-23.content.release: lol-knowledge/derived/item-effects.json -> items.4646 (research/reports/client-16.23.md)",
+              "quote": "DamageThreshold = 0.25; WindowDuration = 2.5; DelayDuration = 2; Cooldown = 30; BaseDamage = 125; APRatio = 0.1",
+              "retrieved_at": "2026-11-21",
+              "confidence": "derived"
+            },
+            {
+              "kind": "community_wiki",
+              "reference": "https://wiki.leagueoflegends.com/en-us/Module:ItemData/data?oldid=4095269",
+              "quote": "Dealing 25% of an enemy champion's maximum health within 2.5 s applies Squall (30 s CD); after 2 s deals 125 (+10% AP) magic damage.",
+              "retrieved_at": "2026-11-21",
+              "confidence": "secondary"
+            }
+          ],
+          "evidence_confidence": "derived",
+          "model_status": "evaluable",
+          "note": "Schedules 125 + 10% AP magic damage 2 s after dealing >= 25% target max HP within 2.5 s (30 s CD; fires immediately without --timeline)."
+        }
+      ]
+    },
+    {
+      "id": "6675",
+      "effect_review": "complete",
+      "effects": [
+        {
+          "id": "transcendence",
+          "kind": "passive",
+          "name": "Trascendencia",
+          "quote": "Tus ataques reducen un 15% el enfriamiento restante de las habilidades básicas.",
+          "basis": "description_explicit",
+          "trigger": {
+            "event": "on_attack"
+          },
+          "target": {
+            "kind": "self"
+          },
+          "components": [
+            {
+              "kind": "cooldown_refund",
+              "scope": "basic",
+              "formula": {
+                "op": "constant",
+                "value": 15
+              }
+            }
+          ],
+          "cooldown_seconds": null,
+          "stacks": null,
+          "duration_seconds": null,
+          "limits": [],
+          "evidence_confidence": "official",
+          "model_status": "evaluable",
+          "note": "Each basic attack reduces remaining Q/W/E cooldowns by 15% when running with --timeline."
+        }
+      ]
+    },
+    {
+      "id": "1101",
+      "effect_review": "complete",
+      "effects": [
+        {
+          "id": "jungle-companion",
+          "kind": "passive",
+          "name": "Compañeros de la jungla",
+          "quote": "Invoca un Garra ígnea que te ayudará a enfrentarte a los monstruos.",
+          "basis": "description_explicit",
+          "trigger": {
+            "event": "periodic"
+          },
+          "target": {
+            "kind": "self"
+          },
+          "components": [],
+          "cooldown_seconds": null,
+          "stacks": null,
+          "duration_seconds": null,
+          "limits": [],
+          "evidence_confidence": "official",
+          "model_status": "excluded",
+          "note": "Jungle companion quest / Smite upgrade; out of scope per DEC-03."
+        }
+      ]
+    },
+    {
+      "id": "1102",
+      "effect_review": "complete",
+      "effects": [
+        {
+          "id": "jungle-companion",
+          "kind": "passive",
+          "name": "Compañeros de la jungla",
+          "quote": "Invoca un Caminabrisas que te ayudará a enfrentarte a los monstruos.",
+          "basis": "description_explicit",
+          "trigger": {
+            "event": "periodic"
+          },
+          "target": {
+            "kind": "self"
+          },
+          "components": [],
+          "cooldown_seconds": null,
+          "stacks": null,
+          "duration_seconds": null,
+          "limits": [],
+          "evidence_confidence": "official",
+          "model_status": "excluded",
+          "note": "Jungle companion quest / Smite upgrade; out of scope per DEC-03."
+        }
+      ]
+    },
+    {
+      "id": "1103",
+      "effect_review": "complete",
+      "effects": [
+        {
+          "id": "jungle-companion",
+          "kind": "passive",
+          "name": "Compañeros de la jungla",
+          "quote": "Invoca un Brincamontes que te ayudará a enfrentarte a los monstruos.",
+          "basis": "description_explicit",
+          "trigger": {
+            "event": "periodic"
+          },
+          "target": {
+            "kind": "self"
+          },
+          "components": [],
+          "cooldown_seconds": null,
+          "stacks": null,
+          "duration_seconds": null,
+          "limits": [],
+          "evidence_confidence": "official",
+          "model_status": "excluded",
+          "note": "Jungle companion quest / Smite upgrade; out of scope per DEC-03."
+        }
+      ]
+    },
+    {
+      "id": "1105",
+      "effect_review": "complete",
+      "effects": [
+        {
+          "id": "jungle-companion",
+          "kind": "passive",
+          "name": "Compañeros de la jungla",
+          "quote": "Invoca un Brincamontes que te ayudará a enfrentarte a los monstruos.",
+          "basis": "description_explicit",
+          "trigger": {
+            "event": "periodic"
+          },
+          "target": {
+            "kind": "self"
+          },
+          "components": [],
+          "cooldown_seconds": null,
+          "stacks": null,
+          "duration_seconds": null,
+          "limits": [],
+          "evidence_confidence": "official",
+          "model_status": "excluded",
+          "note": "Jungle companion quest / Smite upgrade; out of scope per DEC-03."
+        }
+      ]
+    },
+    {
+      "id": "1106",
+      "effect_review": "complete",
+      "effects": [
+        {
+          "id": "jungle-companion",
+          "kind": "passive",
+          "name": "Compañeros de la jungla",
+          "quote": "Invoca un Caminabrisas que te ayudará a enfrentarte a los monstruos.",
+          "basis": "description_explicit",
+          "trigger": {
+            "event": "periodic"
+          },
+          "target": {
+            "kind": "self"
+          },
+          "components": [],
+          "cooldown_seconds": null,
+          "stacks": null,
+          "duration_seconds": null,
+          "limits": [],
+          "evidence_confidence": "official",
+          "model_status": "excluded",
+          "note": "Jungle companion quest / Smite upgrade; out of scope per DEC-03."
+        }
+      ]
+    },
+    {
+      "id": "1107",
+      "effect_review": "complete",
+      "effects": [
+        {
+          "id": "jungle-companion",
+          "kind": "passive",
+          "name": "Compañeros de la jungla",
+          "quote": "Invoca un Garra ígnea que te ayudará a enfrentarte a los monstruos.",
+          "basis": "description_explicit",
+          "trigger": {
+            "event": "periodic"
+          },
+          "target": {
+            "kind": "self"
+          },
+          "components": [],
+          "cooldown_seconds": null,
+          "stacks": null,
+          "duration_seconds": null,
+          "limits": [],
+          "evidence_confidence": "official",
+          "model_status": "excluded",
+          "note": "Jungle companion quest / Smite upgrade; out of scope per DEC-03."
+        }
+      ]
+    },
+    {
+      "id": "2003",
+      "effect_review": "complete",
+      "effects": [
+        {
+          "id": "consume",
+          "kind": "active",
+          "name": "Utilizar",
+          "quote": "Restaura 120 de vida a lo largo de 15 s.",
+          "basis": "description_explicit",
+          "trigger": {
+            "event": "cast"
+          },
+          "target": {
+            "kind": "self"
+          },
+          "components": [],
+          "cooldown_seconds": null,
+          "stacks": null,
+          "duration_seconds": null,
+          "limits": [],
+          "evidence_confidence": "official",
+          "model_status": "excluded",
+          "note": "Consumable potion regen over 15 s; actives/consumables are not rotation steps (OBJ-12)."
+        }
+      ]
+    },
+    {
+      "id": "2031",
+      "effect_review": "complete",
+      "effects": [
+        {
+          "id": "consume",
+          "kind": "active",
+          "name": "Activar",
+          "quote": "Restaura 100 de vida a lo largo de 12 s. Se rellena al visitar la tienda.",
+          "basis": "description_explicit",
+          "trigger": {
+            "event": "cast"
+          },
+          "target": {
+            "kind": "self"
+          },
+          "components": [],
+          "cooldown_seconds": null,
+          "stacks": null,
+          "duration_seconds": null,
+          "limits": [],
+          "evidence_confidence": "official",
+          "model_status": "excluded",
+          "note": "Refillable potion regen over 12 s; consumables are not rotation steps (OBJ-12)."
+        }
+      ]
+    },
+    {
+      "id": "2055",
+      "effect_review": "complete",
+      "effects": [
+        {
+          "id": "control-ward",
+          "kind": "active",
+          "name": "Utilizar",
+          "quote": "Coloca un guardián de control que otorga visión y revela los guardianes invisibles y las trampas enemigas, así como a los enemigos camuflados .",
+          "basis": "description_explicit",
+          "trigger": {
+            "event": "cast"
+          },
+          "target": {
+            "kind": "self"
+          },
+          "components": [],
+          "cooldown_seconds": null,
+          "stacks": null,
+          "duration_seconds": null,
+          "limits": [],
+          "evidence_confidence": "official",
+          "model_status": "excluded",
+          "note": "Vision ward consumable; non-combat."
+        }
+      ]
+    },
+    {
+      "id": "2065",
+      "effect_review": "complete",
+      "effects": [
+        {
+          "id": "inspiring-speech",
+          "kind": "active",
+          "name": "Discurso inspirador",
+          "quote": "Otorga un 30% de velocidad de movimiento a los aliados cercanos durante 4 s.",
+          "basis": "description_explicit",
+          "trigger": {
+            "event": "cast"
+          },
+          "target": {
+            "kind": "area"
+          },
+          "components": [],
+          "cooldown_seconds": null,
+          "stacks": null,
+          "duration_seconds": null,
+          "limits": [],
+          "evidence_confidence": "official",
+          "model_status": "excluded",
+          "note": "Ally movement speed active (75 s CD); non-damage utility."
+        }
+      ]
+    },
+    {
+      "id": "2141",
+      "effect_review": "complete",
+      "effects": [
+        {
+          "id": "consume",
+          "kind": "active",
+          "name": "Activa - Consumir",
+          "quote": "Este zumo no hace nada.",
+          "basis": "description_explicit",
+          "trigger": {
+            "event": "cast"
+          },
+          "target": {
+            "kind": "self"
+          },
+          "components": [],
+          "cooldown_seconds": null,
+          "stacks": null,
+          "duration_seconds": null,
+          "limits": [],
+          "evidence_confidence": "official",
+          "model_status": "excluded",
+          "note": "Cosmetic novelty consumable; no combat effect."
+        }
+      ]
+    },
+    {
+      "id": "2420",
+      "effect_review": "complete",
+      "effects": [
+        {
+          "id": "time-stop",
+          "kind": "active",
+          "name": "Tiempo detenido",
+          "quote": "Entras en estasis durante 2.5 s.",
+          "basis": "description_explicit",
+          "trigger": {
+            "event": "cast"
+          },
+          "target": {
+            "kind": "self"
+          },
+          "components": [],
+          "cooldown_seconds": null,
+          "stacks": null,
+          "duration_seconds": null,
+          "limits": [],
+          "evidence_confidence": "official",
+          "model_status": "excluded",
+          "note": "Single-use stasis active; non-damage."
+        }
+      ]
+    },
+    {
+      "id": "2421",
+      "effect_review": "complete",
+      "effects": [
+        {
+          "id": "shattered-time",
+          "kind": "passive",
+          "name": "Tiempo fragmentado",
+          "quote": "El Brazalete está estropeado, pero, aun así, puede mejorarse.",
+          "basis": "description_explicit",
+          "trigger": {
+            "event": "always"
+          },
+          "target": {
+            "kind": "self"
+          },
+          "components": [],
+          "cooldown_seconds": null,
+          "stacks": null,
+          "duration_seconds": null,
+          "limits": [],
+          "evidence_confidence": "official",
+          "model_status": "excluded",
+          "note": "Consumed Seeker's Armguard; no remaining combat effect."
+        }
+      ]
+    },
+    {
+      "id": "3009",
+      "effect_review": "complete",
+      "effects": [
+        {
+          "id": "fleetfooted",
+          "kind": "passive",
+          "name": "Pies ligeros",
+          "quote": "La eficacia de las ralentizaciones se reduce un 25%.",
+          "basis": "description_explicit",
+          "trigger": {
+            "event": "always"
+          },
+          "target": {
+            "kind": "self"
+          },
+          "components": [],
+          "cooldown_seconds": null,
+          "stacks": null,
+          "duration_seconds": null,
+          "limits": [],
+          "evidence_confidence": "official",
+          "model_status": "excluded",
+          "note": "Slow resist (25%); slows are not modelled (MEC-27)."
+        }
+      ]
+    },
+    {
+      "id": "3026",
+      "effect_review": "complete",
+      "effects": [
+        {
+          "id": "rebirth",
+          "kind": "passive",
+          "name": "Renacimiento",
+          "quote": "Al sufrir daño letal, restaura un 50% de la vida básica y un 100% del maná máximo tras 4 s de estasis .",
+          "basis": "description_explicit",
+          "trigger": {
+            "event": "taking_damage"
+          },
+          "target": {
+            "kind": "self"
+          },
+          "components": [],
+          "cooldown_seconds": null,
+          "stacks": null,
+          "duration_seconds": null,
+          "limits": [],
+          "evidence_confidence": "official",
+          "model_status": "excluded",
+          "note": "Post-lethal revive after 4 s stasis (300 s CD); does not modify offensive damage."
+        }
+      ]
+    },
+    {
+      "id": "3044",
+      "effect_review": "complete",
+      "effects": [
+        {
+          "id": "rage",
+          "kind": "passive",
+          "name": "Furia",
+          "quote": "Los ataques otorgan velocidad de movimiento durante 2 s.",
+          "basis": "description_explicit",
+          "trigger": {
+            "event": "on_attack"
+          },
+          "target": {
+            "kind": "self"
+          },
+          "components": [],
+          "cooldown_seconds": null,
+          "stacks": null,
+          "duration_seconds": null,
+          "limits": [],
+          "evidence_confidence": "official",
+          "model_status": "excluded",
+          "note": "Bonus move speed on attack (20 melee / 10 ranged for 2 s); non-damage."
+        }
+      ]
+    },
+    {
+      "id": "3072",
+      "effect_review": "complete",
+      "effects": [
+        {
+          "id": "ichor-shield",
+          "kind": "passive",
+          "name": "Escudo de icor",
+          "quote": "Convierte el exceso de curación de tu robo de vida en un escudo .",
+          "basis": "description_explicit",
+          "trigger": {
+            "event": "on_hit"
+          },
+          "target": {
+            "kind": "self"
+          },
+          "components": [],
+          "cooldown_seconds": null,
+          "stacks": null,
+          "duration_seconds": null,
+          "limits": [],
+          "evidence_confidence": "official",
+          "model_status": "excluded",
+          "note": "Overheal shield from excess life steal (165..315 by level); does not modify offensive damage."
+        }
+      ]
+    },
+    {
+      "id": "3102",
+      "effect_review": "complete",
+      "effects": [
+        {
+          "id": "annul",
+          "kind": "passive",
+          "name": "Anular",
+          "quote": "Otorga un escudo de hechizos que bloquea la siguiente habilidad enemiga.",
+          "basis": "description_explicit",
+          "trigger": {
+            "event": "taking_damage"
+          },
+          "target": {
+            "kind": "self"
+          },
+          "components": [],
+          "cooldown_seconds": null,
+          "stacks": null,
+          "duration_seconds": null,
+          "limits": [],
+          "evidence_confidence": "official",
+          "model_status": "excluded",
+          "note": "Spell shield blocking next enemy ability (40 s CD); non-damage."
+        }
+      ]
+    },
+    {
+      "id": "3110",
+      "effect_review": "complete",
+      "effects": [
+        {
+          "id": "winters-caress",
+          "kind": "passive",
+          "name": "Caricia invernal",
+          "quote": "Reduce un 20% la velocidad de ataque de los campeones cercanos.",
+          "basis": "description_explicit",
+          "trigger": {
+            "event": "always"
+          },
+          "target": {
+            "kind": "area"
+          },
+          "components": [],
+          "cooldown_seconds": null,
+          "stacks": null,
+          "duration_seconds": null,
+          "limits": [],
+          "evidence_confidence": "official",
+          "model_status": "excluded",
+          "note": "Enemy attack speed reduction aura (-20% within 700 units); enemy AS debuff not modelled (MEC-22)."
+        }
+      ]
+    },
+    {
+      "id": "3112",
+      "effect_review": "complete",
+      "effects": [
+        {
+          "id": "recovery",
+          "kind": "passive",
+          "name": "Recuperación",
+          "quote": "Restaura 10 de maná cada 5 s. Si no puedes obtener maná, restaura 15 de vida .",
+          "basis": "description_explicit",
+          "trigger": {
+            "event": "periodic"
+          },
+          "target": {
+            "kind": "self"
+          },
+          "components": [],
+          "cooldown_seconds": null,
+          "stacks": null,
+          "duration_seconds": null,
+          "limits": [],
+          "evidence_confidence": "official",
+          "model_status": "excluded",
+          "note": "ARAM starter regen passive; non-damage."
+        }
+      ]
+    },
+    {
+      "id": "3116",
+      "effect_review": "complete",
+      "effects": [
+        {
+          "id": "rimefrost",
+          "kind": "passive",
+          "name": "Escarcha helada",
+          "quote": "Las habilidades de daño ralentizan a los enemigos un 30% durante 1 s.",
+          "basis": "description_explicit",
+          "trigger": {
+            "event": "damaging_ability"
+          },
+          "target": {
+            "kind": "enemy_unit"
+          },
+          "components": [],
+          "cooldown_seconds": null,
+          "stacks": null,
+          "duration_seconds": null,
+          "limits": [],
+          "evidence_confidence": "official",
+          "model_status": "excluded",
+          "note": "30% slow for 1 s on damaging abilities; crowd control is not part of damage."
+        }
+      ]
+    },
+    {
+      "id": "3137",
+      "effect_review": "complete",
+      "effects": [
+        {
+          "id": "life-from-death",
+          "kind": "passive",
+          "name": "Vida en la muerte",
+          "quote": "Cuando muere un campeón al que has dañado en los últimos 3 s, su cuerpo libera una nova que cura .",
+          "basis": "description_explicit",
+          "trigger": {
+            "event": "on_kill"
+          },
+          "target": {
+            "kind": "area"
+          },
+          "components": [],
+          "cooldown_seconds": null,
+          "stacks": null,
+          "duration_seconds": null,
+          "limits": [],
+          "evidence_confidence": "official",
+          "model_status": "excluded",
+          "note": "On-takedown AoE heal nova (100 + 20% AP, 60 s CD); post-kill utility, non-damage."
+        }
+      ]
+    },
+    {
+      "id": "3139",
+      "effect_review": "complete",
+      "effects": [
+        {
+          "id": "quicksilver",
+          "kind": "active",
+          "name": "Fajín de mercurio",
+          "quote": "Elimina todos los efectos de control de adversario (menos los levantamientos en el aire ) y otorga velocidad de movimiento.",
+          "basis": "description_explicit",
+          "trigger": {
+            "event": "cast"
+          },
+          "target": {
+            "kind": "self"
+          },
+          "components": [],
+          "cooldown_seconds": null,
+          "stacks": null,
+          "duration_seconds": null,
+          "limits": [],
+          "evidence_confidence": "official",
+          "model_status": "excluded",
+          "note": "Cleanse + 50% MS active (90 s CD); non-damage."
+        }
+      ]
+    },
+    {
+      "id": "3140",
+      "effect_review": "complete",
+      "effects": [
+        {
+          "id": "quicksilver",
+          "kind": "active",
+          "name": "Fajín de mercurio",
+          "quote": "Elimina todas las debilitaciones de control de adversario (menos los levantamientos en el aire ).",
+          "basis": "description_explicit",
+          "trigger": {
+            "event": "cast"
+          },
+          "target": {
+            "kind": "self"
+          },
+          "components": [],
+          "cooldown_seconds": null,
+          "stacks": null,
+          "duration_seconds": null,
+          "limits": [],
+          "evidence_confidence": "official",
+          "model_status": "excluded",
+          "note": "Cleanse active (90 s CD); non-damage."
+        }
+      ]
+    },
+    {
+      "id": "3142",
+      "effect_review": "complete",
+      "effects": [
+        {
+          "id": "haunt",
+          "kind": "passive",
+          "name": "Aparición",
+          "quote": "Otorga 0 de velocidad de movimiento fuera de combate.",
+          "basis": "description_explicit",
+          "trigger": {
+            "event": "always"
+          },
+          "target": {
+            "kind": "self"
+          },
+          "components": [],
+          "cooldown_seconds": null,
+          "stacks": null,
+          "duration_seconds": null,
+          "limits": [],
+          "evidence_confidence": "official",
+          "model_status": "excluded",
+          "note": "Out-of-combat flat move speed (20 melee / 15 ranged); non-damage."
+        },
+        {
+          "id": "wraith-step",
+          "kind": "active",
+          "name": "Pasos de espectro",
+          "quote": "Otorga velocidad de movimiento y Fantasmal durante 0 s.",
+          "basis": "description_explicit",
+          "trigger": {
+            "event": "cast"
+          },
+          "target": {
+            "kind": "self"
+          },
+          "components": [],
+          "cooldown_seconds": null,
+          "stacks": null,
+          "duration_seconds": null,
+          "limits": [],
+          "evidence_confidence": "official",
+          "model_status": "excluded",
+          "note": "Move speed + ghosted active (45 s CD); non-damage."
+        }
+      ]
+    },
+    {
+      "id": "3158",
+      "effect_review": "complete",
+      "effects": [
+        {
+          "id": "ionian-insight",
+          "kind": "passive",
+          "name": "Perspicacia jonia",
+          "quote": "Obtienes 10 de velocidad de hechizos de invocador.",
+          "basis": "description_explicit",
+          "trigger": {
+            "event": "always"
+          },
+          "target": {
+            "kind": "self"
+          },
+          "components": [],
+          "cooldown_seconds": null,
+          "stacks": null,
+          "duration_seconds": null,
+          "limits": [],
+          "evidence_confidence": "official",
+          "model_status": "excluded",
+          "note": "+10 summoner spell haste; summoner spells are not modelled (DAT-06, MEC-29)."
+        }
+      ]
+    },
+    {
+      "id": "3171",
+      "effect_review": "complete",
+      "effects": [
+        {
+          "id": "ionian-insight",
+          "kind": "passive",
+          "name": "Perspicacia jonia",
+          "quote": "Obtienes 20 de velocidad de hechizos de invocador.",
+          "basis": "description_explicit",
+          "trigger": {
+            "event": "always"
+          },
+          "target": {
+            "kind": "self"
+          },
+          "components": [],
+          "cooldown_seconds": null,
+          "stacks": null,
+          "duration_seconds": null,
+          "limits": [],
+          "evidence_confidence": "official",
+          "model_status": "excluded",
+          "note": "+20 summoner spell haste; summoner spells are not modelled."
+        },
+        {
+          "id": "noxian-haste",
+          "kind": "passive",
+          "name": "Prisa noxiana",
+          "quote": "Potenciar o proteger a los aliados con habilidades, infligir daño a los campeones enemigos con habilidades o lanzar un hechizo de invocador otorga un 0 de velocidad de movimiento durante 4 s.",
+          "basis": "description_explicit",
+          "trigger": {
+            "event": "cast"
+          },
+          "target": {
+            "kind": "self"
+          },
+          "components": [],
+          "cooldown_seconds": null,
+          "stacks": null,
+          "duration_seconds": null,
+          "limits": [],
+          "evidence_confidence": "official",
+          "model_status": "excluded",
+          "note": "10% melee / 8% ranged bonus move speed for 4 s on ability/summoner; non-damage."
+        }
+      ]
+    },
+    {
+      "id": "3190",
+      "effect_review": "complete",
+      "effects": [
+        {
+          "id": "devotion",
+          "kind": "active",
+          "name": "Devoción",
+          "quote": "Otorga a los aliados cercanos un escudo de 290 - 360 que disminuye a lo largo de 2.5 s.",
+          "basis": "description_explicit",
+          "trigger": {
+            "event": "cast"
+          },
+          "target": {
+            "kind": "area"
+          },
+          "components": [],
+          "cooldown_seconds": null,
+          "stacks": null,
+          "duration_seconds": null,
+          "limits": [],
+          "evidence_confidence": "official",
+          "model_status": "excluded",
+          "note": "Ally AoE shield active (90 s CD); active item utility, non-damage."
+        }
+      ]
+    },
+    {
+      "id": "3222",
+      "effect_review": "complete",
+      "effects": [
+        {
+          "id": "purify",
+          "kind": "active",
+          "name": "Purificar",
+          "quote": "Elimina todos los efectos de control de adversario (excepto levantamientos en el aire y supresión ) de un campeón aliado y restaura 100 - 250 de vida .",
+          "basis": "description_explicit",
+          "trigger": {
+            "event": "cast"
+          },
+          "target": {
+            "kind": "ally_champion"
+          },
+          "components": [],
+          "cooldown_seconds": null,
+          "stacks": null,
+          "duration_seconds": null,
+          "limits": [],
+          "evidence_confidence": "official",
+          "model_status": "excluded",
+          "note": "Ally cleanse + heal active (120 s CD); non-damage."
+        }
+      ]
+    },
+    {
+      "id": "3330",
+      "effect_review": "complete",
+      "effects": [
+        {
+          "id": "trinket",
+          "kind": "active",
+          "name": "Talismán",
+          "quote": "Coloca una figura que dura 0 s y tiene la misma apariencia que Fiddlesticks para los enemigos.",
+          "basis": "description_explicit",
+          "trigger": {
+            "event": "cast"
+          },
+          "target": {
+            "kind": "self"
+          },
+          "components": [],
+          "cooldown_seconds": null,
+          "stacks": null,
+          "duration_seconds": null,
+          "limits": [],
+          "evidence_confidence": "official",
+          "model_status": "excluded",
+          "note": "Vision trinket; out of scope per DEC-03."
+        }
+      ]
+    },
+    {
+      "id": "3340",
+      "effect_review": "complete",
+      "effects": [
+        {
+          "id": "trinket",
+          "kind": "active",
+          "name": "Talismán",
+          "quote": "Coloca un guardián invisible que otorga visión durante 90 - 120 s.",
+          "basis": "description_explicit",
+          "trigger": {
+            "event": "cast"
+          },
+          "target": {
+            "kind": "self"
+          },
+          "components": [],
+          "cooldown_seconds": null,
+          "stacks": null,
+          "duration_seconds": null,
+          "limits": [],
+          "evidence_confidence": "official",
+          "model_status": "excluded",
+          "note": "Vision trinket; out of scope per DEC-03."
+        }
+      ]
+    },
+    {
+      "id": "3363",
+      "effect_review": "complete",
+      "effects": [
+        {
+          "id": "trinket",
+          "kind": "active",
+          "name": "Talismán",
+          "quote": "Revela una zona lejana durante 2 s y coloca un guardián que desaparece al detectar a un campeón enemigo.",
+          "basis": "description_explicit",
+          "trigger": {
+            "event": "cast"
+          },
+          "target": {
+            "kind": "self"
+          },
+          "components": [],
+          "cooldown_seconds": null,
+          "stacks": null,
+          "duration_seconds": null,
+          "limits": [],
+          "evidence_confidence": "official",
+          "model_status": "excluded",
+          "note": "Vision trinket; out of scope per DEC-03."
+        }
+      ]
+    },
+    {
+      "id": "3364",
+      "effect_review": "complete",
+      "effects": [
+        {
+          "id": "trinket",
+          "kind": "active",
+          "name": "Talismán",
+          "quote": "Revela guardianes invisibles enemigos y las trampas de tu alrededor durante 8 s.",
+          "basis": "description_explicit",
+          "trigger": {
+            "event": "cast"
+          },
+          "target": {
+            "kind": "self"
+          },
+          "components": [],
+          "cooldown_seconds": null,
+          "stacks": null,
+          "duration_seconds": null,
+          "limits": [],
+          "evidence_confidence": "official",
+          "model_status": "excluded",
+          "note": "Vision trinket; out of scope per DEC-03."
+        }
+      ]
+    },
+    {
+      "id": "3599",
+      "effect_review": "complete",
+      "effects": [
+        {
+          "id": "oathsworn",
+          "kind": "active",
+          "name": "Activa - Consumir",
+          "quote": "Ofrece un pacto a un aliado durante el resto de la partida, lo que os convierte en Juramentados.",
+          "basis": "description_explicit",
+          "trigger": {
+            "event": "cast"
+          },
+          "target": {
+            "kind": "ally_champion"
+          },
+          "components": [],
+          "cooldown_seconds": null,
+          "stacks": null,
+          "duration_seconds": null,
+          "limits": [],
+          "evidence_confidence": "official",
+          "model_status": "excluded",
+          "note": "Kalista Oathsworn binding item; non-damage utility."
+        }
+      ]
+    },
+    {
+      "id": "3600",
+      "effect_review": "complete",
+      "effects": [
+        {
+          "id": "oathsworn",
+          "kind": "active",
+          "name": "Activa - Consumir",
+          "quote": "Ofrece un pacto a un aliado durante el resto de la partida, lo que os convierte en Juramentados.",
+          "basis": "description_explicit",
+          "trigger": {
+            "event": "cast"
+          },
+          "target": {
+            "kind": "ally_champion"
+          },
+          "components": [],
+          "cooldown_seconds": null,
+          "stacks": null,
+          "duration_seconds": null,
+          "limits": [],
+          "evidence_confidence": "official",
+          "model_status": "excluded",
+          "note": "Kalista Oathsworn binding item; non-damage utility."
+        }
+      ]
+    },
+    {
+      "id": "3802",
+      "effect_review": "complete",
+      "effects": [
+        {
+          "id": "enlighten",
+          "kind": "passive",
+          "name": "Iluminar",
+          "quote": "Al subir de nivel, se recupera un 20% del maná máximo durante 3 s.",
+          "basis": "description_explicit",
+          "trigger": {
+            "event": "periodic"
+          },
+          "target": {
+            "kind": "self"
+          },
+          "components": [],
+          "cooldown_seconds": null,
+          "stacks": null,
+          "duration_seconds": null,
+          "limits": [],
+          "evidence_confidence": "official",
+          "model_status": "excluded",
+          "note": "Level-up mana restoration; outside single-combat rotation."
+        }
+      ]
+    },
+    {
+      "id": "3803",
+      "effect_review": "complete",
+      "effects": [
+        {
+          "id": "eternity",
+          "kind": "passive",
+          "name": "Eternidad",
+          "quote": "Restaura un 10% del daño recibido de campeones como maná . Al lanzar una habilidad, cura un 25% del maná gastado.",
+          "basis": "description_explicit",
+          "trigger": {
+            "event": "cast"
+          },
+          "target": {
+            "kind": "self"
+          },
+          "components": [],
+          "cooldown_seconds": null,
+          "stacks": null,
+          "duration_seconds": null,
+          "limits": [],
+          "evidence_confidence": "official",
+          "model_status": "excluded",
+          "note": "Mana on damage taken and 25% mana-spent heal (cap 20/cast); non-damage sustain."
+        }
+      ]
+    },
+    {
+      "id": "3814",
+      "effect_review": "complete",
+      "effects": [
+        {
+          "id": "annul",
+          "kind": "passive",
+          "name": "Anular",
+          "quote": "Otorga un escudo de hechizos que bloquea la siguiente habilidad enemiga.",
+          "basis": "description_explicit",
+          "trigger": {
+            "event": "taking_damage"
+          },
+          "target": {
+            "kind": "self"
+          },
+          "components": [],
+          "cooldown_seconds": null,
+          "stacks": null,
+          "duration_seconds": null,
+          "limits": [],
+          "evidence_confidence": "official",
+          "model_status": "excluded",
+          "note": "Spell shield blocking next enemy ability (40 s CD); non-damage."
+        }
+      ]
+    },
+    {
+      "id": "3869",
+      "effect_review": "complete",
+      "effects": [
+        {
+          "id": "blessing-of-the-mountain",
+          "kind": "passive",
+          "name": "Bendición de la montaña",
+          "quote": "Reduce el daño recibido por parte de campeones durante 2 s tras recibir daño de un campeón. Cuando el efecto termina, ralentiza a los enemigos cercanos un 50% durante 1.5 s.",
+          "basis": "description_explicit",
+          "trigger": {
+            "event": "taking_damage"
+          },
+          "target": {
+            "kind": "self"
+          },
+          "components": [],
+          "cooldown_seconds": null,
+          "stacks": null,
+          "duration_seconds": null,
+          "limits": [],
+          "evidence_confidence": "official",
+          "model_status": "excluded",
+          "note": "Reactive 35%/25% damage reduction for 2 s (18 s CD) + 50% slow; defensive support effect."
+        },
+        {
+          "id": "ward",
+          "kind": "active",
+          "name": "Activar",
+          "quote": "Coloca un guardián invisible que otorga visión.",
+          "basis": "description_explicit",
+          "trigger": {
+            "event": "cast"
+          },
+          "target": {
+            "kind": "self"
+          },
+          "components": [],
+          "cooldown_seconds": null,
+          "stacks": null,
+          "duration_seconds": null,
+          "limits": [],
+          "evidence_confidence": "official",
+          "model_status": "excluded",
+          "note": "Vision ward active; non-damage."
+        }
+      ]
+    },
+    {
+      "id": "3876",
+      "effect_review": "complete",
+      "effects": [
+        {
+          "id": "going-sledding",
+          "kind": "passive",
+          "name": "Cuesta abajo y sin frenos",
+          "quote": "Ralentizar o inmovilizar a un campeón enemigo junto a aliados restaura vida y te otorga a ti y a un aliado cercano un 20% de velocidad de movimiento que disminuye durante 2.5 s.",
+          "basis": "description_explicit",
+          "trigger": {
+            "event": "on_damage"
+          },
+          "target": {
+            "kind": "self"
+          },
+          "components": [],
+          "cooldown_seconds": null,
+          "stacks": null,
+          "duration_seconds": null,
+          "limits": [],
+          "evidence_confidence": "official",
+          "model_status": "excluded",
+          "note": "Ally-dependent CC heal + 20% MS burst (30 s CD); non-damage."
+        },
+        {
+          "id": "ward",
+          "kind": "active",
+          "name": "Activar",
+          "quote": "Coloca un guardián invisible que otorga visión.",
+          "basis": "description_explicit",
+          "trigger": {
+            "event": "cast"
+          },
+          "target": {
+            "kind": "self"
+          },
+          "components": [],
+          "cooldown_seconds": null,
+          "stacks": null,
+          "duration_seconds": null,
+          "limits": [],
+          "evidence_confidence": "official",
+          "model_status": "excluded",
+          "note": "Vision ward active; non-damage."
+        }
+      ]
+    },
+    {
+      "id": "4629",
+      "effect_review": "complete",
+      "effects": [
+        {
+          "id": "spelldance",
+          "kind": "passive",
+          "name": "Danza de hechizos",
+          "quote": "Infligir daño mágico o daño verdadero a campeones te otorga velocidad de movimiento durante 4 s.",
+          "basis": "description_explicit",
+          "trigger": {
+            "event": "on_damage"
+          },
+          "target": {
+            "kind": "self"
+          },
+          "components": [],
+          "cooldown_seconds": null,
+          "stacks": null,
+          "duration_seconds": null,
+          "limits": [],
+          "evidence_confidence": "official",
+          "model_status": "excluded",
+          "note": "Bonus movement speed on magic/true damage to champions; non-damage."
+        }
+      ]
+    },
+    {
+      "id": "4632",
+      "effect_review": "complete",
+      "effects": [
+        {
+          "id": "annul",
+          "kind": "passive",
+          "name": "Anular",
+          "quote": "Otorga un escudo de hechizos que bloquea la siguiente habilidad enemiga.",
+          "basis": "description_explicit",
+          "trigger": {
+            "event": "taking_damage"
+          },
+          "target": {
+            "kind": "self"
+          },
+          "components": [],
+          "cooldown_seconds": null,
+          "stacks": null,
+          "duration_seconds": null,
+          "limits": [],
+          "evidence_confidence": "official",
+          "model_status": "excluded",
+          "note": "Spell shield blocking next enemy ability (60 s CD); non-damage."
+        }
+      ]
+    },
+    {
+      "id": "6333",
+      "effect_review": "complete",
+      "effects": [
+        {
+          "id": "ignore-pain",
+          "kind": "passive",
+          "name": "Ignora el dolor",
+          "quote": "Un porcentaje del daño que recibas te afecta a lo largo de 3 s.",
+          "basis": "description_explicit",
+          "trigger": {
+            "event": "taking_damage"
+          },
+          "target": {
+            "kind": "self"
+          },
+          "components": [],
+          "cooldown_seconds": null,
+          "stacks": null,
+          "duration_seconds": null,
+          "limits": [],
+          "evidence_confidence": "official",
+          "model_status": "excluded",
+          "note": "Defensive 30% melee / 10% ranged damage stagger over 3 s; does not modify offensive damage."
+        },
+        {
+          "id": "defy",
+          "kind": "passive",
+          "name": "Reto",
+          "quote": "Cuando muere un campeón al que has infligido daño en los últimos 3 s, se elimina el daño restante de Ignora el dolor y te curas a lo largo de 2 s.",
+          "basis": "description_explicit",
+          "trigger": {
+            "event": "on_kill"
+          },
+          "target": {
+            "kind": "self"
+          },
+          "components": [],
+          "cooldown_seconds": null,
+          "stacks": null,
+          "duration_seconds": null,
+          "limits": [],
+          "evidence_confidence": "official",
+          "model_status": "excluded",
+          "note": "Post-takedown cleanse of bleed + 75% bonus AD heal over 2 s; non-damage."
+        }
+      ]
+    },
+    {
+      "id": "6694",
+      "effect_review": "complete",
+      "effects": [
+        {
+          "id": "bitter-cold",
+          "kind": "passive",
+          "name": "Frío punzante",
+          "quote": "Las habilidades de daño ralentizan a los enemigos con menos del 50% de vida un 30% durante 1 s.",
+          "basis": "description_explicit",
+          "trigger": {
+            "event": "damaging_ability"
+          },
+          "target": {
+            "kind": "enemy_unit"
+          },
+          "components": [],
+          "cooldown_seconds": null,
+          "stacks": null,
+          "duration_seconds": null,
+          "limits": [],
+          "evidence_confidence": "official",
+          "model_status": "excluded",
+          "note": "30% slow for 1 s on damaging abilities against targets below 50% HP; crowd control, non-damage."
+        }
+      ]
+    },
+    {
+      "id": "6695",
+      "effect_review": "complete",
+      "effects": [
+        {
+          "id": "shield-reaver",
+          "kind": "passive",
+          "name": "Siegaescudos",
+          "quote": "Infligir daño a un campeón enemigo reduce los escudos que obtiene un 0% durante 3 s.",
+          "basis": "description_explicit",
+          "trigger": {
+            "event": "on_damage"
+          },
+          "target": {
+            "kind": "enemy_champion"
+          },
+          "components": [],
+          "cooldown_seconds": null,
+          "stacks": null,
+          "duration_seconds": null,
+          "limits": [],
+          "evidence_confidence": "official",
+          "model_status": "excluded",
+          "note": "Reduces enemy shields by 50% melee / 35% ranged for 3 s; shield reduction debuff not yet integrated into rotation shield absorption."
+        }
+      ]
+    },
+    {
+      "id": "6696",
+      "effect_review": "complete",
+      "effects": [
+        {
+          "id": "flux",
+          "kind": "passive",
+          "name": "Flujo",
+          "quote": "Cuando muere un campeón al que has dañado en los últimos 3 s, recuperas parte del enfriamiento total de tu habilidad definitiva.",
+          "basis": "description_explicit",
+          "trigger": {
+            "event": "on_kill"
+          },
+          "target": {
+            "kind": "self"
+          },
+          "components": [],
+          "cooldown_seconds": null,
+          "stacks": null,
+          "duration_seconds": null,
+          "limits": [],
+          "evidence_confidence": "official",
+          "model_status": "excluded",
+          "note": "Ultimate cooldown refund on champion takedown; post-kill utility."
+        }
+      ]
+    },
+    {
+      "id": "1082",
+      "effect_review": "complete",
+      "effects": [
+        {
+          "id": "glory",
+          "kind": "passive",
+          "name": "Gloria",
+          "quote": "Obtienes 4 de poder de habilidad por Gloria .",
+          "basis": "description_partial",
+          "trigger": {
+            "event": "on_kill"
+          },
+          "target": {
+            "kind": "self"
+          },
+          "components": [
+            {
+              "kind": "stat_modifier",
+              "stat": "ability_power",
+              "scope": "total",
+              "mode": "flat",
+              "formula": {
+                "op": "unknown",
+                "reason": "Stacking AP from champion kills/assists (0..40 AP); depends on match kill history."
+              }
+            }
+          ],
+          "cooldown_seconds": null,
+          "stacks": null,
+          "duration_seconds": null,
+          "limits": [],
+          "sources": [
+            {
+              "kind": "client_data",
+              "reference": "Cliente 16.23.8399929+branch.releases-16-23.content.release: lol-knowledge/derived/item-effects.json -> items.1082 (research/reports/client-16.23.md)",
+              "quote": "MaxGloryStacks = 10; APPerGlory = 4 (up to +40 AP)",
+              "retrieved_at": "2026-11-21",
+              "confidence": "derived"
+            }
+          ],
+          "evidence_confidence": "derived",
+          "model_status": "excluded",
+          "note": "Stacking AP from champion kills/assists (0..40 AP); depends on match kill history."
+        }
+      ]
+    },
+    {
+      "id": "3041",
+      "effect_review": "complete",
+      "effects": [
+        {
+          "id": "glory",
+          "kind": "passive",
+          "name": "Gloria",
+          "quote": "Obtienes 5 de poder de habilidad por Gloria y un 10% de velocidad de movimiento con 10 de Gloria o más.",
+          "basis": "description_partial",
+          "trigger": {
+            "event": "on_kill"
+          },
+          "target": {
+            "kind": "self"
+          },
+          "components": [
+            {
+              "kind": "stat_modifier",
+              "stat": "ability_power",
+              "scope": "total",
+              "mode": "flat",
+              "formula": {
+                "op": "unknown",
+                "reason": "Stacking AP from champion kills/assists (0..125 AP); depends on match kill history."
+              }
+            }
+          ],
+          "cooldown_seconds": null,
+          "stacks": null,
+          "duration_seconds": null,
+          "limits": [],
+          "sources": [
+            {
+              "kind": "client_data",
+              "reference": "Cliente 16.23.8399929+branch.releases-16-23.content.release: lol-knowledge/derived/item-effects.json -> items.3041 (research/reports/client-16.23.md)",
+              "quote": "MaxGloryStacks = 25; APPerGlory = 5 (up to +125 AP); GloryThreshold = 10 (+10% MS)",
+              "retrieved_at": "2026-11-21",
+              "confidence": "derived"
+            }
+          ],
+          "evidence_confidence": "derived",
+          "model_status": "excluded",
+          "note": "Stacking AP from champion kills/assists (0..125 AP); depends on match kill history."
+        }
+      ]
+    },
+    {
+      "id": "2051",
+      "effect_review": "complete",
+      "effects": [
+        {
+          "id": "guardian-horn",
+          "kind": "passive",
+          "name": "Impávido",
+          "quote": "Bloquea 15 de daño de ataques y habilidades de campeones (25% de efectividad contra habilidades de daño prolongado).",
+          "basis": "description_explicit",
+          "trigger": {
+            "event": "taking_damage"
+          },
+          "target": {
+            "kind": "self"
+          },
+          "components": [],
+          "cooldown_seconds": null,
+          "stacks": null,
+          "duration_seconds": null,
+          "limits": [],
+          "evidence_confidence": "official",
+          "model_status": "excluded",
+          "note": "ARAM starter flat damage block (15) + 20 HP/5 s regen; ARAM-only defensive starter."
+        }
+      ]
+    },
+    {
+      "id": "2138",
+      "effect_review": "complete",
+      "effects": [
+        {
+          "id": "elixir-of-iron",
+          "kind": "active",
+          "name": "Utilizar",
+          "quote": "Obtienes 300 de vida , un 25% de tenacidad y aumentas de tamaño durante 3 min.",
+          "basis": "description_partial",
+          "trigger": {
+            "event": "cast"
+          },
+          "target": {
+            "kind": "self"
+          },
+          "components": [
+            {
+              "kind": "stat_modifier",
+              "stat": "health",
+              "scope": "bonus",
+              "mode": "flat",
+              "formula": {
+                "op": "unknown",
+                "reason": "Consumable 3-minute elixir buff (OBJ-12); not applied as permanent inventory stats."
+              }
+            }
+          ],
+          "cooldown_seconds": null,
+          "stacks": null,
+          "duration_seconds": null,
+          "limits": [],
+          "sources": [
+            {
+              "kind": "client_data",
+              "reference": "Cliente 16.23.8399929+branch.releases-16-23.content.release: lol-knowledge/derived/item-effects.json -> items.2138 (research/reports/client-16.23.md)",
+              "quote": "RequiredLevel = 9; +300 HP, +25% tenacity for 180 s on consume",
+              "retrieved_at": "2026-11-21",
+              "confidence": "derived"
+            }
+          ],
+          "evidence_confidence": "derived",
+          "model_status": "excluded",
+          "note": "Consumable 3-minute elixir buff (OBJ-12); not applied as permanent inventory stats."
+        }
+      ]
+    },
+    {
+      "id": "2139",
+      "effect_review": "complete",
+      "effects": [
+        {
+          "id": "elixir-of-sorcery",
+          "kind": "active",
+          "name": "Utilizar",
+          "quote": "Obtienes 50 de poder de habilidad y un 15% de regeneración de maná durante 3 min. Mientras está activo, al dañar a un campeón o una torreta, infliges 25 de daño verdadero adicional (5 s contra campeones).",
+          "basis": "description_partial",
+          "trigger": {
+            "event": "cast"
+          },
+          "target": {
+            "kind": "enemy_champion"
+          },
+          "components": [
+            {
+              "kind": "damage",
+              "damage_type": "true",
+              "formula": {
+                "op": "unknown",
+                "reason": "Consumable 3-minute elixir buff (OBJ-12); not applied as permanent inventory stats."
+              }
+            }
+          ],
+          "cooldown_seconds": null,
+          "stacks": null,
+          "duration_seconds": null,
+          "limits": [],
+          "sources": [
+            {
+              "kind": "client_data",
+              "reference": "Cliente 16.23.8399929+branch.releases-16-23.content.release: lol-knowledge/derived/item-effects.json -> items.2139 (research/reports/client-16.23.md)",
+              "quote": "RequiredLevel = 9; +50 AP, +25 bonus true damage (5 s CD) for 180 s on consume",
+              "retrieved_at": "2026-11-21",
+              "confidence": "derived"
+            }
+          ],
+          "evidence_confidence": "derived",
+          "model_status": "excluded",
+          "note": "Consumable 3-minute elixir buff (OBJ-12); not applied as permanent inventory stats."
+        }
+      ]
+    },
+    {
+      "id": "2140",
+      "effect_review": "complete",
+      "effects": [
+        {
+          "id": "elixir-of-wrath",
+          "kind": "active",
+          "name": "Utilizar",
+          "quote": "Obtienes 30 de daño de ataque y un 12% de succión física contra campeones durante 3 min.",
+          "basis": "description_partial",
+          "trigger": {
+            "event": "cast"
+          },
+          "target": {
+            "kind": "self"
+          },
+          "components": [
+            {
+              "kind": "stat_modifier",
+              "stat": "attack_damage",
+              "scope": "bonus",
+              "mode": "flat",
+              "formula": {
+                "op": "unknown",
+                "reason": "Consumable 3-minute elixir buff (OBJ-12); not applied as permanent inventory stats."
+              }
+            }
+          ],
+          "cooldown_seconds": null,
+          "stacks": null,
+          "duration_seconds": null,
+          "limits": [],
+          "sources": [
+            {
+              "kind": "client_data",
+              "reference": "Cliente 16.23.8399929+branch.releases-16-23.content.release: lol-knowledge/derived/item-effects.json -> items.2140 (research/reports/client-16.23.md)",
+              "quote": "RequiredLevel = 9; +30 AD, +12% physical vamp vs champions for 180 s on consume",
+              "retrieved_at": "2026-11-21",
+              "confidence": "derived"
+            }
+          ],
+          "evidence_confidence": "derived",
+          "model_status": "excluded",
+          "note": "Consumable 3-minute elixir buff (OBJ-12); not applied as permanent inventory stats."
+        }
+      ]
+    },
+    {
+      "id": "2502",
+      "effect_review": "complete",
+      "effects": [
+        {
+          "id": "anguish",
+          "kind": "passive",
+          "name": "Angustia",
+          "quote": "Cada 4 s y mientras estás en combate con campeones, infliges daño mágico a los campeones enemigos cercanos y te curas un 250% del daño infligido.",
+          "basis": "description_partial",
+          "trigger": {
+            "event": "periodic"
+          },
+          "target": {
+            "kind": "enemy_champion"
+          },
+          "components": [
+            {
+              "kind": "damage",
+              "damage_type": "magic",
+              "formula": {
+                "op": "unknown",
+                "reason": "Periodic 4 s AoE combat drain (3% bonus HP magic + 250% heal); periodic combat pulse not yet modelled."
+              }
+            }
+          ],
+          "cooldown_seconds": null,
+          "stacks": null,
+          "duration_seconds": null,
+          "limits": [],
+          "sources": [
+            {
+              "kind": "client_data",
+              "reference": "Cliente 16.23.8399929+branch.releases-16-23.content.release: lol-knowledge/derived/item-effects.json -> items.2502 (research/reports/client-16.23.md)",
+              "quote": "Cooldown = 4; BonusHealthDrainPercentage = 0.03; HealMultiplier = 2.5; DrainRange = 650",
+              "retrieved_at": "2026-11-21",
+              "confidence": "derived"
+            }
+          ],
+          "evidence_confidence": "derived",
+          "model_status": "excluded",
+          "note": "Periodic 4 s AoE combat drain (3% bonus HP magic + 250% heal); periodic combat pulse not yet modelled."
+        }
+      ]
+    },
+    {
+      "id": "2522",
+      "effect_review": "complete",
+      "effects": [
+        {
+          "id": "mana-made-real",
+          "kind": "active",
+          "name": "Maná hecho realidad",
+          "quote": "Durante 8 s, tu maná se potencia. Mientras está potenciado, tus habilidades cuestan un 100% de maná adicional; obtienes un 0 de daño, escudos y curaciones adicionales con habilidades; y los enfriamientos de las habilidades básicas son un 30% más rápidos.",
+          "basis": "description_partial",
+          "trigger": {
+            "event": "cast"
+          },
+          "target": {
+            "kind": "self"
+          },
+          "components": [
+            {
+              "kind": "damage_modifier",
+              "direction": "dealt",
+              "source": "ability",
+              "mode": "percent",
+              "formula": {
+                "op": "unknown",
+                "reason": "Active 8 s empowered-mana steroid (60 s CD); item actives are not modelled as rotation steps."
+              }
+            }
+          ],
+          "cooldown_seconds": null,
+          "stacks": null,
+          "duration_seconds": null,
+          "limits": [],
+          "sources": [
+            {
+              "kind": "client_data",
+              "reference": "Cliente 16.23.8399929+branch.releases-16-23.content.release: lol-knowledge/derived/item-effects.json -> items.2522 (research/reports/client-16.23.md)",
+              "quote": "Cooldown = 60; Duration = 8; ManaCalc = 15% + 0.005% bonus mana ability amp; CooldownTick = 0.3",
+              "retrieved_at": "2026-11-21",
+              "confidence": "derived"
+            }
+          ],
+          "evidence_confidence": "derived",
+          "model_status": "excluded",
+          "note": "Active 8 s empowered-mana steroid (60 s CD); item actives are not modelled as rotation steps."
+        }
+      ]
+    },
+    {
+      "id": "2523",
+      "effect_review": "complete",
+      "effects": [
+        {
+          "id": "magnification",
+          "kind": "passive",
+          "name": "Magnificación",
+          "quote": "Inflige hasta un 10% de daño adicional con ataques, según la distancia a la que se encuentre el enemigo (daño máximo a 500 de alcance).",
+          "basis": "description_partial",
+          "trigger": {
+            "event": "always"
+          },
+          "target": {
+            "kind": "enemy_unit"
+          },
+          "components": [
+            {
+              "kind": "damage_modifier",
+              "direction": "dealt",
+              "source": "attack",
+              "mode": "percent",
+              "formula": {
+                "op": "unknown",
+                "reason": "Distance-scaled attack damage increase (0..10% up to 500 units); target distance is not modelled."
+              }
+            }
+          ],
+          "cooldown_seconds": null,
+          "stacks": null,
+          "duration_seconds": null,
+          "limits": [],
+          "sources": [
+            {
+              "kind": "client_data",
+              "reference": "Cliente 16.23.8399929+branch.releases-16-23.content.release: lol-knowledge/derived/item-effects.json -> items.2523 (research/reports/client-16.23.md)",
+              "quote": "MaxDamageAmp = 0.1; MaxRange = 500",
+              "retrieved_at": "2026-11-21",
+              "confidence": "derived"
+            }
+          ],
+          "evidence_confidence": "derived",
+          "model_status": "excluded",
+          "note": "Distance-scaled attack damage increase (0..10% up to 500 units); target distance is not modelled."
+        },
+        {
+          "id": "arcane-aim",
+          "kind": "passive",
+          "name": "Puntería arcana",
+          "quote": "Cuando un campeón al que has infligido daño en los últimos 3 s muere, otorga 100 de alcance de ataque adicional durante 8 s.",
+          "basis": "description_explicit",
+          "trigger": {
+            "event": "on_kill"
+          },
+          "target": {
+            "kind": "self"
+          },
+          "components": [],
+          "cooldown_seconds": null,
+          "stacks": null,
+          "duration_seconds": null,
+          "limits": [],
+          "evidence_confidence": "official",
+          "model_status": "excluded",
+          "note": "Post-takedown +100 attack range for 8 s; non-damage."
+        }
+      ]
+    },
+    {
+      "id": "2524",
+      "effect_review": "complete",
+      "effects": [
+        {
+          "id": "fanfare",
+          "kind": "passive",
+          "name": "Fanfarria",
+          "quote": "Ralentizar o inmovilizar a un campeón enemigo otorga Fanfarria durante 0 s. Fanfarria otorga 20 de velocidad de movimiento . Mientras tengas Fanfarria, los aliados cercanos y tú obtenéis un 0 de velocidad de ataque .",
+          "basis": "description_partial",
+          "trigger": {
+            "event": "on_damage"
+          },
+          "target": {
+            "kind": "self"
+          },
+          "components": [
+            {
+              "kind": "stat_modifier",
+              "stat": "attack_speed",
+              "scope": "total",
+              "mode": "flat",
+              "formula": {
+                "op": "unknown",
+                "reason": "CC-triggered attack speed aura (+30% melee / +20% ranged for 8 s); CC triggers are not tracked."
+              }
+            }
+          ],
+          "cooldown_seconds": null,
+          "stacks": null,
+          "duration_seconds": null,
+          "limits": [],
+          "sources": [
+            {
+              "kind": "client_data",
+              "reference": "Cliente 16.23.8399929+branch.releases-16-23.content.release: lol-knowledge/derived/item-effects.json -> items.2524 (research/reports/client-16.23.md)",
+              "quote": "Duration = 8; MeleeAuraAttackSpeed = 0.3; RangedAttackSpeedMultiplier = 0.667; MoveSpeed = 20",
+              "retrieved_at": "2026-11-21",
+              "confidence": "derived"
+            }
+          ],
+          "evidence_confidence": "derived",
+          "model_status": "excluded",
+          "note": "CC-triggered attack speed aura (+30% melee / +20% ranged for 8 s); CC triggers are not tracked."
+        }
+      ]
+    },
+    {
+      "id": "2525",
+      "effect_review": "complete",
+      "effects": [
+        {
+          "id": "lifeline",
+          "kind": "passive",
+          "name": "Salvavidas",
+          "quote": "Al recibir daño que reduzca la vida por debajo del 30%, obtienes 0 de vida máxima durante 5 s y recuperas 0 de vida a lo largo del efecto.",
+          "basis": "description_explicit",
+          "trigger": {
+            "event": "taking_damage"
+          },
+          "target": {
+            "kind": "self"
+          },
+          "components": [],
+          "cooldown_seconds": null,
+          "stacks": null,
+          "duration_seconds": null,
+          "limits": [],
+          "evidence_confidence": "official",
+          "model_status": "excluded",
+          "note": "Lifeline temporary max HP (+100..300) + healing over 5 s (100..400 + 175% bonus armor/MR, 90 s CD); dynamic max-HP increase not yet modelled in defense.py."
+        }
+      ]
+    },
+    {
+      "id": "3008",
+      "effect_review": "complete",
+      "effects": [
+        {
+          "id": "murder",
+          "kind": "passive",
+          "name": "Asesinato",
+          "quote": "Otorga un 0.6% de omnisucción al participar en el asesinato de un campeón. Se acumula hasta 10 veces.",
+          "basis": "description_explicit",
+          "trigger": {
+            "event": "on_kill"
+          },
+          "target": {
+            "kind": "self"
+          },
+          "components": [],
+          "cooldown_seconds": null,
+          "stacks": null,
+          "duration_seconds": null,
+          "limits": [],
+          "evidence_confidence": "official",
+          "model_status": "excluded",
+          "note": "Stacking +0.6% omnivamp per champion takedown (up to +6%); does not modify damage."
+        }
+      ]
+    },
+    {
+      "id": "3168",
+      "effect_review": "complete",
+      "effects": [
+        {
+          "id": "murder",
+          "kind": "passive",
+          "name": "Asesinato",
+          "quote": "Otorga un 0.6% de omnisucción al participar en la eliminación de un campeón. Se acumula hasta 10 veces.",
+          "basis": "description_explicit",
+          "trigger": {
+            "event": "on_kill"
+          },
+          "target": {
+            "kind": "self"
+          },
+          "components": [],
+          "cooldown_seconds": null,
+          "stacks": null,
+          "duration_seconds": null,
+          "limits": [],
+          "evidence_confidence": "official",
+          "model_status": "excluded",
+          "note": "Stacking +0.6% omnivamp per champion takedown (up to +6%)."
+        },
+        {
+          "id": "now-and-forever",
+          "kind": "passive",
+          "name": "Ahora y siempre",
+          "quote": "Mientras tengas más de la mitad de la vida, infliges un 4% de daño adicional. Con menos de la mitad de la vida, obtienes un 12% de curación, escudos y regeneración adicionales.",
+          "basis": "description_partial",
+          "trigger": {
+            "event": "always"
+          },
+          "target": {
+            "kind": "enemy_unit"
+          },
+          "components": [
+            {
+              "kind": "damage_modifier",
+              "direction": "dealt",
+              "source": "all",
+              "mode": "percent",
+              "formula": {
+                "op": "unknown",
+                "reason": "Attacker-health-threshold +4% damage / +12% healing modifier; conditional attacker HP threshold not modelled."
+              }
+            }
+          ],
+          "cooldown_seconds": null,
+          "stacks": null,
+          "duration_seconds": null,
+          "limits": [],
+          "sources": [
+            {
+              "kind": "client_data",
+              "reference": "Cliente 16.23.8399929+branch.releases-16-23.content.release: lol-knowledge/derived/item-effects.json -> items.3168 (research/reports/client-16.23.md)",
+              "quote": "DamageMod = 0.04 (>50% attacker HP); HealingMod = 0.12 (<50% attacker HP)",
+              "retrieved_at": "2026-11-21",
+              "confidence": "derived"
+            }
+          ],
+          "evidence_confidence": "derived",
+          "model_status": "excluded",
+          "note": "Attacker-health-threshold +4% damage / +12% healing modifier; conditional attacker HP threshold not modelled."
+        }
+      ]
+    },
+    {
+      "id": "3082",
+      "effect_review": "complete",
+      "effects": [
+        {
+          "id": "rock-solid",
+          "kind": "passive",
+          "name": "Como una roca",
+          "quote": "Reduce el daño sufrido por ataques.",
+          "basis": "description_explicit",
+          "trigger": {
+            "event": "taking_attack"
+          },
+          "target": {
+            "kind": "self"
+          },
+          "components": [],
+          "cooldown_seconds": null,
+          "stacks": null,
+          "duration_seconds": null,
+          "limits": [],
+          "evidence_confidence": "official",
+          "model_status": "excluded",
+          "note": "Defensive flat basic-attack reduction (15 + 0.5% max HP, capped at 20% of attack damage); defensive-only."
+        }
+      ]
+    },
+    {
+      "id": "3084",
+      "effect_review": "complete",
+      "effects": [
+        {
+          "id": "colossal-consumption",
+          "kind": "passive",
+          "name": "Consumo colosal",
+          "quote": "Si un campeón enemigo está cerca durante unos segundos, tu siguiente ataque contra dicho campeón inflige 70 + 6% de la vida máxima como daño físico adicional y otorga un 10% del daño como vida máxima .",
+          "basis": "description_partial",
+          "trigger": {
+            "event": "on_hit"
+          },
+          "target": {
+            "kind": "enemy_champion"
+          },
+          "components": [
+            {
+              "kind": "damage",
+              "damage_type": "physical",
+              "formula": {
+                "op": "unknown",
+                "reason": "Requires 3 s proximity charge within 700 units before attacking (30 s CD); proximity charge is not modelled."
+              }
+            }
+          ],
+          "cooldown_seconds": null,
+          "stacks": null,
+          "duration_seconds": null,
+          "limits": [],
+          "sources": [
+            {
+              "kind": "client_data",
+              "reference": "Cliente 16.23.8399929+branch.releases-16-23.content.release: lol-knowledge/derived/item-effects.json -> items.3084 (research/reports/client-16.23.md)",
+              "quote": "BaseDamage = 70; HPRatio = 0.06; Cooldown = 30; NumTicksToTrigger = 6 (3 s proximity)",
+              "retrieved_at": "2026-11-21",
+              "confidence": "derived"
+            }
+          ],
+          "evidence_confidence": "derived",
+          "model_status": "excluded",
+          "note": "Requires 3 s proximity charge within 700 units before attacking (30 s CD); proximity charge is not modelled."
+        }
+      ]
+    },
+    {
+      "id": "3107",
+      "effect_review": "complete",
+      "effects": [
+        {
+          "id": "intervention",
+          "kind": "active",
+          "name": "Intervención",
+          "quote": "Después de 2,5 s, restaura 150 - 350 de vida a las unidades aliadas e inflige un 10% de daño verdadero en función de la vida máxima a los campeones enemigos.",
+          "basis": "description_partial",
+          "trigger": {
+            "event": "cast"
+          },
+          "target": {
+            "kind": "enemy_champion"
+          },
+          "components": [
+            {
+              "kind": "damage",
+              "damage_type": "true",
+              "formula": {
+                "op": "unknown",
+                "reason": "Targeted delayed active (10% target max HP true damage + ally heal, 90 s CD); actives are not rotation steps."
+              }
+            }
+          ],
+          "cooldown_seconds": null,
+          "stacks": null,
+          "duration_seconds": null,
+          "limits": [],
+          "sources": [
+            {
+              "kind": "client_data",
+              "reference": "Cliente 16.23.8399929+branch.releases-16-23.content.release: lol-knowledge/derived/item-effects.json -> items.3107 (research/reports/client-16.23.md)",
+              "quote": "HealMin = 150; HealMax = 350; DamageToChampions = 0.1; Cooldown = 90",
+              "retrieved_at": "2026-11-21",
+              "confidence": "derived"
+            }
+          ],
+          "evidence_confidence": "derived",
+          "model_status": "excluded",
+          "note": "Targeted delayed active (10% target max HP true damage + ally heal, 90 s CD); actives are not rotation steps."
+        }
+      ]
+    },
+    {
+      "id": "3109",
+      "effect_review": "complete",
+      "effects": [
+        {
+          "id": "sacrifice",
+          "kind": "passive",
+          "name": "Sacrificio",
+          "quote": "Mientras estás cerca de tu aliado digno , recibes un 14% del daño que este reciba y te curas un 12% del daño que inflija a campeones.",
+          "basis": "description_explicit",
+          "trigger": {
+            "event": "always"
+          },
+          "target": {
+            "kind": "self"
+          },
+          "components": [],
+          "cooldown_seconds": null,
+          "stacks": null,
+          "duration_seconds": null,
+          "limits": [],
+          "evidence_confidence": "official",
+          "model_status": "excluded",
+          "note": "Ally tether damage redirection (14%) and ally-damage healing (12%); requires allied champion simulation."
+        }
+      ]
+    },
+    {
+      "id": "3146",
+      "effect_review": "complete",
+      "effects": [
+        {
+          "id": "lightning-bolt",
+          "kind": "active",
+          "name": "Relámpago",
+          "quote": "Electrocuta al campeón enemigo objetivo, le inflige 0 de daño mágico y lo ralentiza un 25% durante 1.5 s.",
+          "basis": "description_partial",
+          "trigger": {
+            "event": "cast"
+          },
+          "target": {
+            "kind": "enemy_champion"
+          },
+          "components": [
+            {
+              "kind": "damage",
+              "damage_type": "magic",
+              "formula": {
+                "op": "unknown",
+                "reason": "Point-and-click active (175..253 + 30% AP magic damage, 60 s CD); actives are not modelled as rotation steps."
+              }
+            }
+          ],
+          "cooldown_seconds": null,
+          "stacks": null,
+          "duration_seconds": null,
+          "limits": [],
+          "sources": [
+            {
+              "kind": "client_data",
+              "reference": "Cliente 16.23.8399929+branch.releases-16-23.content.release: lol-knowledge/derived/item-effects.json -> items.3146 (research/reports/client-16.23.md)",
+              "quote": "ActiveDamage = 175..253 + 0.3 AP; SlowAmount = 0.25; SlowDuration = 1.5; Cooldown = 60",
+              "retrieved_at": "2026-11-21",
+              "confidence": "derived"
+            }
+          ],
+          "evidence_confidence": "derived",
+          "model_status": "excluded",
+          "note": "Point-and-click active (175..253 + 30% AP magic damage, 60 s CD); actives are not modelled as rotation steps."
+        }
+      ]
+    },
+    {
+      "id": "3152",
+      "effect_review": "complete",
+      "effects": [
+        {
+          "id": "supersonic",
+          "kind": "active",
+          "name": "Supersónico",
+          "quote": "Te deslizas hacia la dirección seleccionada y lanzas proyectiles mágicos que infligen daño mágico .",
+          "basis": "description_partial",
+          "trigger": {
+            "event": "cast"
+          },
+          "target": {
+            "kind": "enemy_champion"
+          },
+          "components": [
+            {
+              "kind": "damage",
+              "damage_type": "magic",
+              "formula": {
+                "op": "unknown",
+                "reason": "Dash bolt active (135 + 15% AP magic damage, 50 s CD); actives are not modelled as rotation steps."
+              }
+            }
+          ],
+          "cooldown_seconds": null,
+          "stacks": null,
+          "duration_seconds": null,
+          "limits": [],
+          "sources": [
+            {
+              "kind": "client_data",
+              "reference": "Cliente 16.23.8399929+branch.releases-16-23.content.release: lol-knowledge/derived/item-effects.json -> items.3152 (research/reports/client-16.23.md)",
+              "quote": "BaseDamage = 135; APRatio = 0.15; Cooldown = 50",
+              "retrieved_at": "2026-11-21",
+              "confidence": "derived"
+            }
+          ],
+          "evidence_confidence": "derived",
+          "model_status": "excluded",
+          "note": "Dash bolt active (135 + 15% AP magic damage, 50 s CD); actives are not modelled as rotation steps."
+        }
+      ]
+    },
+    {
+      "id": "3170",
+      "effect_review": "complete",
+      "effects": [
+        {
+          "id": "fleetfooted",
+          "kind": "passive",
+          "name": "Pies ligeros",
+          "quote": "La eficacia de las ralentizaciones se reduce un 25%.",
+          "basis": "description_explicit",
+          "trigger": {
+            "event": "always"
+          },
+          "target": {
+            "kind": "self"
+          },
+          "components": [],
+          "cooldown_seconds": null,
+          "stacks": null,
+          "duration_seconds": null,
+          "limits": [],
+          "evidence_confidence": "official",
+          "model_status": "excluded",
+          "note": "Slow resist (25%)."
+        },
+        {
+          "id": "noxian-fervor",
+          "kind": "passive",
+          "name": "Fervor noxiano",
+          "quote": "Otorga un 5% de tu velocidad de movimiento como fuerza adaptable.",
+          "basis": "description_partial",
+          "trigger": {
+            "event": "always"
+          },
+          "target": {
+            "kind": "self"
+          },
+          "components": [
+            {
+              "kind": "stat_modifier",
+              "stat": "attack_damage",
+              "scope": "bonus",
+              "mode": "flat",
+              "formula": {
+                "op": "unknown",
+                "reason": "Move-speed-to-adaptive-force conversion (5% MS); adaptive force resolution from items is not yet on the stat sheet."
+              }
+            }
+          ],
+          "cooldown_seconds": null,
+          "stacks": null,
+          "duration_seconds": null,
+          "limits": [],
+          "sources": [
+            {
+              "kind": "client_data",
+              "reference": "Cliente 16.23.8399929+branch.releases-16-23.content.release: lol-knowledge/derived/item-effects.json -> items.3170 (research/reports/client-16.23.md)",
+              "quote": "MSAdaptiveRatio = 0.05 (5% move speed as adaptive force)",
+              "retrieved_at": "2026-11-21",
+              "confidence": "derived"
+            }
+          ],
+          "evidence_confidence": "derived",
+          "model_status": "excluded",
+          "note": "Move-speed-to-adaptive-force conversion (5% MS); adaptive force resolution from items is not yet on the stat sheet."
+        }
+      ]
+    },
+    {
+      "id": "3179",
+      "effect_review": "complete",
+      "effects": [
+        {
+          "id": "nightstalker",
+          "kind": "passive",
+          "name": "Acechador nocturno",
+          "quote": "Cuando los enemigos no te hayan visto durante un breve periodo de tiempo, tu siguiente ataque contra un campeón inflige daño verdadero adicional.",
+          "basis": "description_partial",
+          "trigger": {
+            "event": "on_hit"
+          },
+          "target": {
+            "kind": "enemy_champion"
+          },
+          "components": [
+            {
+              "kind": "damage",
+              "damage_type": "true",
+              "formula": {
+                "op": "unknown",
+                "reason": "Out-of-vision empowered attack (50 + 150% lethality true damage); vision state is not modelled."
+              }
+            }
+          ],
+          "cooldown_seconds": null,
+          "stacks": null,
+          "duration_seconds": null,
+          "limits": [],
+          "sources": [
+            {
+              "kind": "client_data",
+              "reference": "Cliente 16.23.8399929+branch.releases-16-23.content.release: lol-knowledge/derived/item-effects.json -> items.3179 (research/reports/client-16.23.md)",
+              "quote": "ProcDamage = 50 + 1.5 lethality true damage after 1 s out of enemy vision",
+              "retrieved_at": "2026-11-21",
+              "confidence": "derived"
+            }
+          ],
+          "evidence_confidence": "derived",
+          "model_status": "excluded",
+          "note": "Out-of-vision empowered attack (50 + 150% lethality true damage); vision state is not modelled."
+        },
+        {
+          "id": "blackout",
+          "kind": "passive",
+          "name": "Apagón",
+          "quote": "Al estar cerca de guardianes invisibles y trampas de los rivales, los revelas brevemente. Mientras revelas un guardián, tus ataques le infligen daño adicional.",
+          "basis": "description_explicit",
+          "trigger": {
+            "event": "periodic"
+          },
+          "target": {
+            "kind": "self"
+          },
+          "components": [],
+          "cooldown_seconds": null,
+          "stacks": null,
+          "duration_seconds": null,
+          "limits": [],
+          "evidence_confidence": "official",
+          "model_status": "excluded",
+          "note": "Ward/trap reveal and bonus ward damage (90 s CD); non-champion vision utility."
+        }
+      ]
+    },
+    {
+      "id": "3504",
+      "effect_review": "complete",
+      "effects": [
+        {
+          "id": "sanctify",
+          "kind": "passive",
+          "name": "Santificar",
+          "quote": "Cuando usas tus curaciones o escudos sobre un aliado, ambos obtenéis durante 6 s un 25% de velocidad de ataque y 20 de daño mágico al impactar .",
+          "basis": "description_partial",
+          "trigger": {
+            "event": "on_heal_or_shield"
+          },
+          "target": {
+            "kind": "ally_champion"
+          },
+          "components": [
+            {
+              "kind": "damage",
+              "damage_type": "magic",
+              "formula": {
+                "op": "unknown",
+                "reason": "Triggered only when healing/shielding an ally champion; ally interactions are not modelled."
+              }
+            }
+          ],
+          "cooldown_seconds": null,
+          "stacks": null,
+          "duration_seconds": null,
+          "limits": [],
+          "sources": [
+            {
+              "kind": "client_data",
+              "reference": "Cliente 16.23.8399929+branch.releases-16-23.content.release: lol-knowledge/derived/item-effects.json -> items.3504 (research/reports/client-16.23.md)",
+              "quote": "AttackSpeedMin = 0.25; OnHitMin = 20; Duration = 6",
+              "retrieved_at": "2026-11-21",
+              "confidence": "derived"
+            }
+          ],
+          "evidence_confidence": "derived",
+          "model_status": "excluded",
+          "note": "Triggered only when healing/shielding an ally champion; ally interactions are not modelled."
+        }
+      ]
+    },
+    {
+      "id": "3742",
+      "effect_review": "complete",
+      "effects": [
+        {
+          "id": "shipwrecker",
+          "kind": "passive",
+          "name": "Naufragio",
+          "quote": "Mientras te mueves, generas hasta 20 de velocidad de movimiento adicional . Tu siguiente ataque descarga la velocidad de movimiento generada para infligir daño físico adicional .",
+          "basis": "description_partial",
+          "trigger": {
+            "event": "on_hit"
+          },
+          "target": {
+            "kind": "enemy_champion"
+          },
+          "components": [
+            {
+              "kind": "damage",
+              "damage_type": "physical",
+              "formula": {
+                "op": "unknown",
+                "reason": "Movement-charged attack proc (up to 40 + 100% base AD physical); movement charging is not modelled."
+              }
+            }
+          ],
+          "cooldown_seconds": null,
+          "stacks": null,
+          "duration_seconds": null,
+          "limits": [],
+          "sources": [
+            {
+              "kind": "client_data",
+              "reference": "Cliente 16.23.8399929+branch.releases-16-23.content.release: lol-knowledge/derived/item-effects.json -> items.3742 (research/reports/client-16.23.md)",
+              "quote": "MaxStacks = 100; BonusDamagePerStack = 0.4 (40); MaxStacksADRatio = 1.0 (100% base AD)",
+              "retrieved_at": "2026-11-21",
+              "confidence": "derived"
+            }
+          ],
+          "evidence_confidence": "derived",
+          "model_status": "excluded",
+          "note": "Movement-charged attack proc (up to 40 + 100% base AD physical); movement charging is not modelled."
+        },
+        {
+          "id": "unsinkable",
+          "kind": "passive",
+          "name": "A prueba de hundimientos",
+          "quote": "La eficacia de las ralentizaciones se reduce un 15%.",
+          "basis": "description_explicit",
+          "trigger": {
+            "event": "always"
+          },
+          "target": {
+            "kind": "self"
+          },
+          "components": [],
+          "cooldown_seconds": null,
+          "stacks": null,
+          "duration_seconds": null,
+          "limits": [],
+          "evidence_confidence": "official",
+          "model_status": "excluded",
+          "note": "15% slow resist."
+        }
+      ]
+    },
+    {
+      "id": "3870",
+      "effect_review": "complete",
+      "effects": [
+        {
+          "id": "dream-maker",
+          "kind": "passive",
+          "name": "Tejesueños",
+          "quote": "Al curar u otorgar escudos a un aliado, le lanzas burbujas oníricas durante 3 s. Su siguiente ataque inflige daño mágico adicional al impactar y recibe daño reducido en el siguiente ataque.",
+          "basis": "description_explicit",
+          "trigger": {
+            "event": "on_heal_or_shield"
+          },
+          "target": {
+            "kind": "ally_champion"
+          },
+          "components": [],
+          "cooldown_seconds": null,
+          "stacks": null,
+          "duration_seconds": null,
+          "limits": [],
+          "evidence_confidence": "official",
+          "model_status": "excluded",
+          "note": "Ally-only buff bubbles on heal/shield (8 s recharge); requires allied champion."
+        },
+        {
+          "id": "ward",
+          "kind": "active",
+          "name": "Activar",
+          "quote": "Coloca un guardián invisible que otorga visión.",
+          "basis": "description_explicit",
+          "trigger": {
+            "event": "cast"
+          },
+          "target": {
+            "kind": "self"
+          },
+          "components": [],
+          "cooldown_seconds": null,
+          "stacks": null,
+          "duration_seconds": null,
+          "limits": [],
+          "evidence_confidence": "official",
+          "model_status": "excluded",
+          "note": "Vision ward active; non-damage."
+        }
+      ]
+    },
+    {
+      "id": "4005",
+      "effect_review": "complete",
+      "effects": [
+        {
+          "id": "order",
+          "kind": "passive",
+          "name": "Orden",
+          "quote": "Al inmovilizar a un campeón enemigo, le aplica una vulnerabilidad del 7% durante 4 s.",
+          "basis": "description_partial",
+          "trigger": {
+            "event": "on_damage"
+          },
+          "target": {
+            "kind": "enemy_champion"
+          },
+          "components": [
+            {
+              "kind": "damage_modifier",
+              "direction": "dealt",
+              "source": "all",
+              "mode": "percent",
+              "formula": {
+                "op": "unknown",
+                "reason": "Immobilize-triggered +7% vulnerability (4 s) and +20 AH for immobilizing abilities; CC tags are not modelled."
+              }
+            }
+          ],
+          "cooldown_seconds": null,
+          "stacks": null,
+          "duration_seconds": null,
+          "limits": [],
+          "sources": [
+            {
+              "kind": "client_data",
+              "reference": "Cliente 16.23.8399929+branch.releases-16-23.content.release: lol-knowledge/derived/item-effects.json -> items.4005 (research/reports/client-16.23.md)",
+              "quote": "DamageAmp = 0.07; DamageAmpDuration = 4; ImmobilizingAbilityAH = 20",
+              "retrieved_at": "2026-11-21",
+              "confidence": "derived"
+            }
+          ],
+          "evidence_confidence": "derived",
+          "model_status": "excluded",
+          "note": "Immobilize-triggered +7% vulnerability (4 s) and +20 AH for immobilizing abilities; CC tags are not modelled."
+        }
+      ]
+    },
+    {
+      "id": "4401",
+      "effect_review": "complete",
+      "effects": [
+        {
+          "id": "steadfast",
+          "kind": "passive",
+          "name": "Entereza",
+          "quote": "Obtienes 70 de resistencia mágica y un 6% de velocidad de movimiento adicional tras recibir daño mágico de campeones 8 veces.",
+          "basis": "description_explicit",
+          "trigger": {
+            "event": "taking_damage"
+          },
+          "target": {
+            "kind": "self"
+          },
+          "components": [],
+          "cooldown_seconds": null,
+          "stacks": null,
+          "duration_seconds": null,
+          "limits": [],
+          "evidence_confidence": "official",
+          "model_status": "excluded",
+          "note": "Defensive stacking +70 MR and +6% MS after 8 magic damage instances (7 s duration); not yet tracked in defense.py."
+        }
+      ]
+    },
+    {
+      "id": "4628",
+      "effect_review": "complete",
+      "effects": [
+        {
+          "id": "hypershot",
+          "kind": "passive",
+          "name": "Hiperdisparo",
+          "quote": "Infligir daño con habilidades a los campeones a 600 de alcance o más los revela durante 6 s.",
+          "basis": "description_partial",
+          "trigger": {
+            "event": "damaging_ability"
+          },
+          "target": {
+            "kind": "enemy_champion"
+          },
+          "components": [
+            {
+              "kind": "damage_modifier",
+              "direction": "dealt",
+              "source": "all",
+              "mode": "percent",
+              "formula": {
+                "op": "unknown",
+                "reason": "Grants +10% damage amp (client DamageAmp = 0.1, wiki rev 4095269) and reveal at >= 600 range; cast distance is not modelled."
+              }
+            }
+          ],
+          "cooldown_seconds": null,
+          "stacks": null,
+          "duration_seconds": null,
+          "limits": [],
+          "sources": [
+            {
+              "kind": "client_data",
+              "reference": "Cliente 16.23.8399929+branch.releases-16-23.content.release: lol-knowledge/derived/item-effects.json -> items.4628 (research/reports/client-16.23.md)",
+              "quote": "SnipeRange = 600; BuffDuration = 6; DamageAmp = 0.1 (corroborated by wiki rev 4095269: +10% damage amp at >= 600 range)",
+              "retrieved_at": "2026-11-21",
+              "confidence": "derived"
+            }
+          ],
+          "evidence_confidence": "derived",
+          "model_status": "excluded",
+          "note": "Grants +10% damage amp (client DamageAmp = 0.1, wiki rev 4095269) and reveal at >= 600 range; cast distance is not modelled."
+        }
+      ]
+    },
+    {
+      "id": "6610",
+      "effect_review": "complete",
+      "effects": [
+        {
+          "id": "lightshield-strike",
+          "kind": "passive",
+          "name": "Golpe de Escudo de Luz",
+          "quote": "Tu primer ataque contra un campeón asesta un golpe crítico y restaura vida .",
+          "basis": "description_partial",
+          "trigger": {
+            "event": "on_attack"
+          },
+          "target": {
+            "kind": "enemy_champion"
+          },
+          "components": [
+            {
+              "kind": "damage",
+              "damage_type": "physical",
+              "formula": {
+                "op": "unknown",
+                "reason": "First-attack guaranteed 180% crit + missing-HP heal (10 s per-target CD); automatic crit override is not yet modelled."
+              }
+            }
+          ],
+          "cooldown_seconds": null,
+          "stacks": null,
+          "duration_seconds": null,
+          "limits": [],
+          "sources": [
+            {
+              "kind": "client_data",
+              "reference": "Cliente 16.23.8399929+branch.releases-16-23.content.release: lol-knowledge/derived/item-effects.json -> items.6610 (research/reports/client-16.23.md)",
+              "quote": "CritModifier = 0.8 (180% crit); Cooldown = 10; HealBaseADRatio = 0.9; MissingHealthHeal = 0.04; RangedHealMod = 0.5",
+              "retrieved_at": "2026-11-21",
+              "confidence": "derived"
+            }
+          ],
+          "evidence_confidence": "derived",
+          "model_status": "excluded",
+          "note": "First-attack guaranteed 180% crit + missing-HP heal (10 s per-target CD); automatic crit override is not yet modelled."
+        }
+      ]
+    },
+    {
+      "id": "6616",
+      "effect_review": "complete",
+      "effects": [
+        {
+          "id": "rapids",
+          "kind": "passive",
+          "name": "Rápidos",
+          "quote": "Al curar u otorgar un escudo a un aliado, ambos obtenéis 40 de poder de habilidad y 15 de velocidad de habilidades durante 6 s.",
+          "basis": "description_partial",
+          "trigger": {
+            "event": "on_heal_or_shield"
+          },
+          "target": {
+            "kind": "self"
+          },
+          "components": [
+            {
+              "kind": "stat_modifier",
+              "stat": "ability_power",
+              "scope": "total",
+              "mode": "flat",
+              "formula": {
+                "op": "unknown",
+                "reason": "Requires healing/shielding an ally champion (+40 AP, +15 AH for 6 s); ally triggers are not modelled."
+              }
+            }
+          ],
+          "cooldown_seconds": null,
+          "stacks": null,
+          "duration_seconds": null,
+          "limits": [],
+          "sources": [
+            {
+              "kind": "client_data",
+              "reference": "Cliente 16.23.8399929+branch.releases-16-23.content.release: lol-knowledge/derived/item-effects.json -> items.6616 (research/reports/client-16.23.md)",
+              "quote": "APMod = 40; AHMod = 15; BuffDuration = 6",
+              "retrieved_at": "2026-11-21",
+              "confidence": "derived"
+            }
+          ],
+          "evidence_confidence": "derived",
+          "model_status": "excluded",
+          "note": "Requires healing/shielding an ally champion (+40 AP, +15 AH for 6 s); ally triggers are not modelled."
+        }
+      ]
+    },
+    {
+      "id": "6620",
+      "effect_review": "complete",
+      "effects": [
+        {
+          "id": "soul-siphon",
+          "kind": "passive",
+          "name": "Absorbealmas",
+          "quote": "Otorga un 30% del daño premitigado infligido a campeones como cargas de alma. Curar u otorgar un escudo a un aliado consume todas las cargas de alma para restaurar vida .",
+          "basis": "description_explicit",
+          "trigger": {
+            "event": "on_heal_or_shield"
+          },
+          "target": {
+            "kind": "ally_champion"
+          },
+          "components": [],
+          "cooldown_seconds": null,
+          "stacks": null,
+          "duration_seconds": null,
+          "limits": [],
+          "evidence_confidence": "official",
+          "model_status": "excluded",
+          "note": "Stores 30% pre-mitigated champion damage to heal an ally on heal/shield; ally sustain utility."
+        }
+      ]
+    },
+    {
+      "id": "6621",
+      "effect_review": "complete",
+      "effects": [
+        {
+          "id": "first-light",
+          "kind": "passive",
+          "name": "Primera luz",
+          "quote": "Otorga un 2% de poder de curaciones y escudos , además de 15 de poder de habilidad por cada 100% de regeneración de maná básica.",
+          "basis": "description_partial",
+          "trigger": {
+            "event": "always"
+          },
+          "target": {
+            "kind": "self"
+          },
+          "components": [
+            {
+              "kind": "stat_modifier",
+              "stat": "ability_power",
+              "scope": "total",
+              "mode": "flat",
+              "formula": {
+                "op": "unknown",
+                "reason": "Converts bonus % base mana regen into +15 AP and +2% HSP per 100%; stat sheet tracks total mana_regen/5s rather than bonus % base mana regen."
+              }
+            }
+          ],
+          "cooldown_seconds": null,
+          "stacks": null,
+          "duration_seconds": null,
+          "limits": [],
+          "sources": [
+            {
+              "kind": "client_data",
+              "reference": "Cliente 16.23.8399929+branch.releases-16-23.content.release: lol-knowledge/derived/item-effects.json -> items.6621 (research/reports/client-16.23.md)",
+              "quote": "APPerManaRegen = 15; HSPowerPerManaRegen = 0.02 per +100% base mana regen",
+              "retrieved_at": "2026-11-21",
+              "confidence": "derived"
+            }
+          ],
+          "evidence_confidence": "derived",
+          "model_status": "excluded",
+          "note": "Converts bonus % base mana regen into +15 AP and +2% HSP per 100%; stat sheet tracks total mana_regen/5s rather than bonus % base mana regen."
+        }
+      ]
+    },
+    {
+      "id": "6657",
+      "effect_review": "complete",
+      "effects": [
+        {
+          "id": "timeless",
+          "kind": "passive",
+          "name": "Atemporal",
+          "quote": "Este objeto obtiene 10 de vida , 30 de maná y 3 de poder de habilidad cada 60 s hasta 10 veces. Al alcanzar el máximo de acumulaciones, sube un nivel.",
+          "basis": "description_partial",
+          "trigger": {
+            "event": "periodic"
+          },
+          "target": {
+            "kind": "self"
+          },
+          "components": [
+            {
+              "kind": "stat_modifier",
+              "stat": "ability_power",
+              "scope": "total",
+              "mode": "flat",
+              "formula": {
+                "op": "unknown",
+                "reason": "Time-scaling stats over 10 minutes (up to +100 HP, +300 mana, +30 AP and +1 level); purchase-time elapsed minutes are not modelled."
+              }
+            }
+          ],
+          "cooldown_seconds": null,
+          "stacks": null,
+          "duration_seconds": null,
+          "limits": [],
+          "sources": [
+            {
+              "kind": "client_data",
+              "reference": "Cliente 16.23.8399929+branch.releases-16-23.content.release: lol-knowledge/derived/item-effects.json -> items.6657 (research/reports/client-16.23.md)",
+              "quote": "HealthPerStack = 10; ManaPerStack = 30; APPerStack = 3; MaxStacks = 10; SecondsPerStack = 60",
+              "retrieved_at": "2026-11-21",
+              "confidence": "derived"
+            }
+          ],
+          "evidence_confidence": "derived",
+          "model_status": "excluded",
+          "note": "Time-scaling stats over 10 minutes (up to +100 HP, +300 mana, +30 AP and +1 level); purchase-time elapsed minutes are not modelled."
+        },
+        {
+          "id": "eternity",
+          "kind": "passive",
+          "name": "Eternidad",
+          "quote": "Recibir daño de campeones restaura un 10% del daño en forma de maná . Al lanzar una habilidad, cura un 25% del maná gastado.",
+          "basis": "description_explicit",
+          "trigger": {
+            "event": "cast"
+          },
+          "target": {
+            "kind": "self"
+          },
+          "components": [],
+          "cooldown_seconds": null,
+          "stacks": null,
+          "duration_seconds": null,
+          "limits": [],
+          "evidence_confidence": "official",
+          "model_status": "excluded",
+          "note": "Mana on damage taken and 25% mana-spent heal (cap 20/cast)."
+        }
+      ]
+    },
+    {
+      "id": "6665",
+      "effect_review": "complete",
+      "effects": [
+        {
+          "id": "voidborn-resilience",
+          "kind": "passive",
+          "name": "Resiliencia del Vacío",
+          "quote": "Tras 5 s de combate con campeones, aumenta tu armadura y resistencia mágica adicionales un 30% hasta el final del combate.",
+          "basis": "description_explicit",
+          "trigger": {
+            "event": "taking_damage"
+          },
+          "target": {
+            "kind": "self"
+          },
+          "components": [],
+          "cooldown_seconds": null,
+          "stacks": null,
+          "duration_seconds": null,
+          "limits": [],
+          "evidence_confidence": "official",
+          "model_status": "excluded",
+          "note": "Defensive +30% bonus armor and bonus MR after 5 s in combat with champions; not yet tracked in defense.py."
+        }
+      ]
+    },
+    {
+      "id": "6697",
+      "effect_review": "complete",
+      "effects": [
+        {
+          "id": "eminence",
+          "kind": "passive",
+          "name": "Eminencia",
+          "quote": "Cuando muere un campeón al que has dañado en los últimos 3 s, obtienes 0 de daño de ataque + 0 por campeón asesinado durante 90 s.",
+          "basis": "description_partial",
+          "trigger": {
+            "event": "on_kill"
+          },
+          "target": {
+            "kind": "self"
+          },
+          "components": [
+            {
+              "kind": "stat_modifier",
+              "stat": "attack_damage",
+              "scope": "bonus",
+              "mode": "flat",
+              "formula": {
+                "op": "unknown",
+                "reason": "Post-takedown bonus AD scaling with previous takedown statues; depends on match kill history."
+              }
+            }
+          ],
+          "cooldown_seconds": null,
+          "stacks": null,
+          "duration_seconds": null,
+          "limits": [],
+          "sources": [
+            {
+              "kind": "client_data",
+              "reference": "Cliente 16.23.8399929+branch.releases-16-23.content.release: lol-knowledge/derived/item-effects.json -> items.6697 (research/reports/client-16.23.md)",
+              "quote": "BaseADBonusMelee = 15 (10 ranged); ADPerStatueMelee = 3 (2 ranged); BuffDuration = 90",
+              "retrieved_at": "2026-11-21",
+              "confidence": "derived"
+            }
+          ],
+          "evidence_confidence": "derived",
+          "model_status": "excluded",
+          "note": "Post-takedown bonus AD scaling with previous takedown statues; depends on match kill history."
         }
       ]
     }

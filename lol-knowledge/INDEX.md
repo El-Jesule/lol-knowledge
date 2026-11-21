@@ -58,7 +58,7 @@
 
 **173 de 173 campeones con kit calculable** (`lol-knowledge/champions/<Id>/kit.json`, **100 % del plantel**): Zaahen (con análisis completo), Ahri (con fichas) y los 171 campeones restantes completados en cuatro oleadas sobre el cliente `16.23` (ver [`champion-kits-wave-1.md`](../odd/tasks/champion-kits-wave-1.md), [`champion-kits-wave-2.md`](../odd/tasks/champion-kits-wave-2.md), [`champion-kits-wave-3.md`](../odd/tasks/champion-kits-wave-3.md) y [`champion-kits-wave-4.md`](../odd/tasks/champion-kits-wave-4.md)). Datos oficiales de los 173 campeones en `data/current/` y sus estadísticas base y por nivel del cliente en [champion-records.json](derived/champion-records.json).
 
-El modelo de objetos tiene las estadísticas de los **218 objetos comprables de la Grieta**; hay **75 entradas curadas** en `catalog.json` (`119` objetos en `effect_review: complete` —`67` con `112` efectos curados y `52` solo estadísticas— y `99` en `pending`). Las cifras que Data Dragon no publica se registran con fuente citada: la wiki (`secondary`) o los datos del cliente 16.23 (`derived`, `corroborated` si coinciden). Los límites están en [Modelo de objetos](objects/README.md).
+El modelo de objetos cubre los **218 objetos comprables de la Grieta** con revisión completa (**218/218 en `effect_review: complete`**, `0` pendientes): **174 entradas curadas** en `catalog.json` (`166` objetos con `233` efectos documentados: `109` `evaluable` y `124` `excluded` explícitos, más `52` solo estadísticas). Las cifras que Data Dragon no publica se registran con fuente citada: la wiki (`secondary`) o los datos del cliente 16.23 (`derived`, `corroborated` si coinciden). Los límites están en [Modelo de objetos](objects/README.md).
 
 ## Aviso de fuentes
 
