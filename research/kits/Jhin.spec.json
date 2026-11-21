@@ -4,8 +4,8 @@
   "verified_against": {
     "content_version": "16.23.8406595+branch.releases-16-23.content.release",
     "bin_sha256": "f6eaa5243460f5a21217aaa9ebeea5c5913552ba0bc0720cca0ae7014d954595",
-    "evidence": "odd/tasks/champion-kits-wave-4.md",
-    "result": "Bin del cliente 16.23 convertido con python -m binmodel.batch_kits y compilado con esta especificación curada (CH-01 oleada 4 — cierre 173/173)"
+    "evidence": "odd/tasks/ch04-champion-mechanics.md",
+    "result": "Bin del cliente 16.23 convertido con python -m binmodel.batch_kits y compilado con esta especificación curada (CH-04 cierre de mecánicas de campeón)"
   },
   "abilities": {
     "P": {
@@ -15,7 +15,7 @@
       "cases": [
         {
           "id": "fourth_shot_execute",
-          "name": "Cuarto disparo (daño adicional % vida faltante)",
+          "name": "Cuarto disparo (solo componente % vida faltante)",
           "parts": [
             {
               "tooltip_reference": "FourthShotExecutePercent",
@@ -44,10 +44,75 @@
               }
             }
           ]
+        },
+        {
+          "id": "fourth_shot_total",
+          "name": "Cuarto disparo completo (crítico garantizado al 75 % + % vida faltante)",
+          "parts": [
+            {
+              "tooltip_reference": "FourthShotExecutePercent",
+              "damage_type": "physical",
+              "source_note": "0,75 × (2 + crit_damage_bonus) × DA total + mSpellCalculations.FourthShotExecutePercent × vida faltante",
+              "formula": {
+                "op": "add",
+                "operands": [
+                  {
+                    "op": "mul",
+                    "operands": [
+                      {
+                        "op": "constant",
+                        "value": 0.75
+                      },
+                      {
+                        "op": "add",
+                        "operands": [
+                          {
+                            "op": "constant",
+                            "value": 2
+                          },
+                          {
+                            "op": "stat",
+                            "stat": "crit_damage_bonus",
+                            "scope": "total"
+                          }
+                        ]
+                      },
+                      {
+                        "op": "stat",
+                        "stat": "attack_damage",
+                        "scope": "total"
+                      }
+                    ]
+                  },
+                  {
+                    "op": "mul",
+                    "operands": [
+                      {
+                        "op": "calculation",
+                        "name": "FourthShotExecutePercent"
+                      },
+                      {
+                        "op": "stat",
+                        "stat": "health",
+                        "scope": "max",
+                        "subject": "target"
+                      },
+                      {
+                        "op": "stat",
+                        "stat": "health",
+                        "scope": "missing_fraction",
+                        "subject": "target"
+                      }
+                    ]
+                  }
+                ]
+              }
+            }
+          ]
         }
       ],
       "not_modelled": [
-        "Velocidad de ataque fija y recarga de 4 balas, conversión de crítico y VA en % DA total (TotalADPercent), penalización del 25 % de daño crítico y VM al criticar (CritMoveSpeedPercent)"
+        "Recarga de 4 balas (2,5 s) y velocidad de movimiento al criticar (CritMoveSpeedPercent); la VA fija, el amplificador TotalADPercent y la reducción del 25 % de daño crítico están modelados en hoja y rotación"
       ]
     },
     "Q": {

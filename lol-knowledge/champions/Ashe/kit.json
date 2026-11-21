@@ -7,8 +7,8 @@
   "verified_against": {
     "content_version": "16.23.8406595+branch.releases-16-23.content.release",
     "bin_sha256": "a8149a3a2027cbb61354c2ff4bd3d0280503724ac422d55a52670c2134b56e37",
-    "evidence": "odd/tasks/champion-kits-wave-3.md",
-    "result": "Bin del cliente 16.23 convertido con python -m binmodel.batch_kits y compilado con esta especificación curada (CH-01 oleada 3)"
+    "evidence": "odd/tasks/ch04-champion-mechanics.md",
+    "result": "Bin del cliente 16.23 convertido con python -m binmodel.batch_kits y compilado con esta especificación curada (CH-04 cierre de mecánicas de campeón)"
   },
   "source": "Árboles de cálculo del bin del cliente (python -m binmodel) y marcado de los tooltips del cliente; estructura de casos curada en research/kits/",
   "abilities": {
@@ -18,7 +18,7 @@
       "cases": [],
       "passive_stats": [],
       "not_modelled": [
-        "Ralentización al atacar (SlowAmount, EmpoweredSlowAmount) y multiplicador de daño por crítico sobre objetivos congelados (DamageBonus usa critical_strike_damage/bonus)"
+        "Ralentización al atacar (SlowAmount, EmpoweredSlowAmount); el multiplicador de daño de Tiro congelador (1 + crit_chance × (1 + crit_damage_bonus)) está modelado en los ataques básicos de rotation"
       ]
     },
     "Q": {

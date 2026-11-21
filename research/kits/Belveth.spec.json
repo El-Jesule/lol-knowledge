@@ -4,8 +4,8 @@
   "verified_against": {
     "content_version": "16.23.8406595+branch.releases-16-23.content.release",
     "bin_sha256": "98b93c599e8f8a9e12687f7e64a7ad8e02dae4700e69fcbfcdf8a2ed3aafd363",
-    "evidence": "odd/tasks/champion-kits-wave-4.md",
-    "result": "Bin del cliente 16.23 convertido con python -m binmodel.batch_kits y compilado con esta especificación curada (CH-01 oleada 4 — cierre 173/173)"
+    "evidence": "odd/tasks/ch04-champion-mechanics.md",
+    "result": "Bin del cliente 16.23 convertido con python -m binmodel.batch_kits y compilado con esta especificación curada (CH-04 cierre de mecánicas de campeón)"
   },
   "abilities": {
     "P": {
@@ -13,7 +13,19 @@
       "tooltip": "spell_belvethpassive_tooltip",
       "max_rank": 1,
       "not_modelled": [
-        "Velocidad de ataque temporal tras habilidad (SheenSpeedPerStack), acumulaciones infinitas de Lavanda (AttackSpeedPerStack) sin tope de VA y ataques básicos al 75 % de daño"
+        "Velocidad de ataque temporal tras habilidad (SheenSpeedPerStack, 2 cargas); la ausencia de tope de VA y las acumulaciones de lavanda (--input lavender_stacks) están modeladas en la hoja"
+      ],
+      "passive_effects": [
+        {
+          "id": "death_in_lavender",
+          "name": "Muerte en lavanda (VA adicional permanente por carga)",
+          "kind": "stat_bonus",
+          "stat": "attack_speed_bonus",
+          "mode": "flat",
+          "calculation": "AttackSpeedPerStack",
+          "input_name": "lavender_stacks",
+          "condition": "Velocidad de ataque permanente por acumulación de lavanda (--input lavender_stacks)"
+        }
       ]
     },
     "Q": {

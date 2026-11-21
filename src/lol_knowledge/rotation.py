@@ -82,8 +82,13 @@ BURN_TRIGGERS = frozenset({"damaging_ability", "cast"})
 # Base critical strike multiplier of the patch notes (26.1); records that differ are flagged.
 PATCH_CRIT_MULTIPLIER = Fraction(2)
 # Passives that reduce total critical strike damage: "Critical Strike Damage Reduction:
-# -10% => -5%" for Yasuo and Yone in the 26.17 patch notes (critical-strike.md, C10).
-CRIT_DAMAGE_REDUCTIONS = {"Yasuo": Fraction(5, 100), "Yone": Fraction(5, 100)}
+# -10% => -5%" for Yasuo and Yone in 26.17 (critical-strike.md, C10) and -25% for Jhin
+# (JhinPassive.DataValues.CritReductionPercent = 0.25).
+CRIT_DAMAGE_REDUCTIONS = {
+    "Yasuo": Fraction(5, 100),
+    "Yone": Fraction(5, 100),
+    "Jhin": Fraction(25, 100),
+}
 # Limit conditions of the catalog, as the target kinds they apply to.
 LIMIT_CONDITIONS = {
     "target is a minion or monster": frozenset({"minion", "monster"}),
@@ -1403,7 +1408,29 @@ class _Rotation:
         labels = [attack_damage.label]
         notes: list[str] = []
         source = "basic attack: total attack damage"
-        if step.crit:
+        if self.sheet.champion.id == "Ashe":
+            crit_chance = self.sheet["crit_chance"]
+            bonus = self.sheet["crit_damage_bonus"]
+            if crit_chance.total() > 0 or step.crit:
+                if step.crit and self.crit_base is None:
+                    raise RotationError(
+                        f"step {step.text}: no critical multiplier for {self.sheet.champion.id} "
+                        "(lol-knowledge/derived/champion-records.json has no critdamagemultiplier)"
+                    )
+                multiplier = 1 + crit_chance.total() * (1 + bonus.total())
+                raw *= multiplier
+                labels += [Label.DERIVED, crit_chance.label, bonus.label]
+                if step.crit and self.crit_base is not None:
+                    labels.append(self.crit_base.label)
+                    notes.append(
+                        "Ashe's critical strikes deal Frost Shot damage without extra crit "
+                        "damage (they double the slow)"
+                    )
+                source += f" x Frost Shot multiplier {format_number(multiplier)}"
+                if len(bonus.sources()) > 1:
+                    labels.append(Label.PENDING)
+                    notes.append("several crit damage sources: their stacking is not verified")
+        elif step.crit:
             if self.crit_base is None:
                 raise RotationError(
                     f"step {step.text}: no critical multiplier for {self.sheet.champion.id} "

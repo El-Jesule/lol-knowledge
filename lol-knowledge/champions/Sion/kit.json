@@ -7,8 +7,8 @@
   "verified_against": {
     "content_version": "16.23.8406595+branch.releases-16-23.content.release",
     "bin_sha256": "3919d03ca2fc621db1bcfecdc8878ad0cac61091a3324885099ff2184a87ffd9",
-    "evidence": "odd/tasks/champion-kits-wave-2.md",
-    "result": "Bin del cliente 16.23 convertido con python -m binmodel.batch_kits y compilado con esta especificación curada (CH-01 oleada 2)"
+    "evidence": "odd/tasks/ch04-champion-mechanics.md",
+    "result": "Bin del cliente 16.23 convertido con python -m binmodel.batch_kits y compilado con esta especificación curada (CH-04 cierre de mecánicas de campeón)"
   },
   "source": "Árboles de cálculo del bin del cliente (python -m binmodel) y marcado de los tooltips del cliente; estructura de casos curada en research/kits/",
   "abilities": {
@@ -47,6 +47,38 @@
       "passive_stats": [],
       "not_modelled": [
         "Reanimación tras morir, robo de vida (Lifesteal) y velocidad de ataque fija"
+      ],
+      "passive_effects": [
+        {
+          "id": "soul_furnace_small_hp",
+          "name": "Horno del alma (Vida máxima por súbdito/monstruo pequeño)",
+          "kind": "stat_bonus",
+          "formula": {
+            "op": "constant",
+            "value": 4
+          },
+          "label": "Derivado",
+          "source": "Characters/Sion/Spells/SionWAbility/SionW.DataValues.HPPerKill (16.23.8406595+branch.releases-16-23.content.release)",
+          "stat": "health",
+          "mode": "flat",
+          "input_name": "soul_furnace_small_kills",
+          "condition": "Vida máxima permanente por unidad pequeña asesinada (--input soul_furnace_small_kills)"
+        },
+        {
+          "id": "soul_furnace_large_hp",
+          "name": "Horno del alma (Vida máxima por campeón/monstruo grande)",
+          "kind": "stat_bonus",
+          "formula": {
+            "op": "constant",
+            "value": 15
+          },
+          "label": "Derivado",
+          "source": "Characters/Sion/Spells/SionWAbility/SionW.DataValues.HPPerChampKill (16.23.8406595+branch.releases-16-23.content.release)",
+          "stat": "health",
+          "mode": "flat",
+          "input_name": "soul_furnace_large_kills",
+          "condition": "Vida máxima permanente por derribo o unidad grande (--input soul_furnace_large_kills)"
+        }
       ]
     },
     "Q": {
@@ -226,7 +258,7 @@
       ],
       "passive_stats": [],
       "not_modelled": [
-        "Vida máxima permanente por asesinatos (HPPerKill, HPPerChampKill) y escudo (TotalShield)"
+        "Escudo activo (TotalShield); la vida máxima permanente por asesinatos se modela con --input soul_furnace_small_kills y --input soul_furnace_large_kills"
       ]
     },
     "E": {

@@ -7,8 +7,8 @@
   "verified_against": {
     "content_version": "16.23.8406595+branch.releases-16-23.content.release",
     "bin_sha256": "bdb31150dd208900310895607d6c30f12b9f2557c45f55b3dc0466ee2a9e850b",
-    "evidence": "odd/tasks/champion-kits-wave-4.md",
-    "result": "Bin del cliente 16.23 convertido con python -m binmodel.batch_kits y compilado con esta especificación curada (CH-01 oleada 4 — cierre 173/173)"
+    "evidence": "odd/tasks/ch04-champion-mechanics.md",
+    "result": "Bin del cliente 16.23 convertido con python -m binmodel.batch_kits y compilado con esta especificación curada (CH-04 cierre de mecánicas de campeón)"
   },
   "source": "Árboles de cálculo del bin del cliente (python -m binmodel) y marcado de los tooltips del cliente; estructura de casos curada en research/kits/",
   "abilities": {
@@ -18,7 +18,7 @@
       "cases": [
         {
           "id": "true_bonus",
-          "name": "Daño verdadero adicional por ataque (20 % DA)",
+          "name": "Daño verdadero adicional por ataque básico (20 % DA)",
           "parts": [
             {
               "damage_type": "true",
@@ -38,6 +38,60 @@
               },
               "label": "Derivado",
               "source": "Characters/Corki/Spells/RapidReloadAbility/RapidReload.mSpellCalculations.BasicAttackTOOLTIP (16.23.8406595+branch.releases-16-23.content.release)",
+              "damage_type_source": "spell_rapidreload_tooltip <trueDamage>"
+            }
+          ]
+        },
+        {
+          "id": "true_bonus_crit",
+          "name": "Daño verdadero adicional por ataque crítico",
+          "parts": [
+            {
+              "damage_type": "true",
+              "formula": {
+                "op": "mul",
+                "operands": [
+                  {
+                    "op": "mul",
+                    "operands": [
+                      {
+                        "op": "constant",
+                        "value": 0.2
+                      },
+                      {
+                        "op": "stat",
+                        "stat": "attack_damage",
+                        "scope": "total"
+                      }
+                    ]
+                  },
+                  {
+                    "op": "mul",
+                    "operands": [
+                      {
+                        "op": "constant",
+                        "value": 1
+                      },
+                      {
+                        "op": "add",
+                        "operands": [
+                          {
+                            "op": "constant",
+                            "value": 2
+                          },
+                          {
+                            "op": "stat",
+                            "stat": "crit_damage_bonus",
+                            "scope": "total"
+                          }
+                        ]
+                      }
+                    ]
+                  }
+                ]
+              },
+              "label": "Derivado",
+              "source": "Characters/Corki/Spells/RapidReloadAbility/RapidReload.mSpellCalculations.CriticalStrikeTOOLTIP (16.23.8406595+branch.releases-16-23.content.release)",
               "damage_type_source": "spell_rapidreload_tooltip <trueDamage>"
             }
           ]

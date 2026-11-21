@@ -351,7 +351,9 @@ class _Ability:
             for bp in by_level.get(level, ()):
                 add_dv = bp.get("additional_bonus_data_value")
                 if isinstance(add_dv, str) and add_dv:
-                    current += float(self.constant_data_value(add_dv))
+                    entry = self.data_values.get(add_dv)
+                    if not (entry and entry.get("raw_values") is None):
+                        current += float(self.constant_data_value(add_dv))
                 rate_dv = bp.get("bonus_per_level_at_and_after_data_value")
                 if isinstance(rate_dv, str) and rate_dv:
                     rate = float(self.constant_data_value(rate_dv))

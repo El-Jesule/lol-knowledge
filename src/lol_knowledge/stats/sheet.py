@@ -43,12 +43,42 @@ CHAMPION_FIELDS: tuple[tuple[str, str, str | None], ...] = (
 )
 ATTACK_SPEED_GROWTH = "attackspeedperlevel"  # percentage points per level
 ATTACK_SPEED_RATIO = "attackspeedratio"  # derived from the client; not in Data Dragon
-# Champions whose kit removes or changes the attack speed cap (attack-speed.md, V3).
-ATTACK_SPEED_CAP_KITS = frozenset({"Belveth", "Graves", "Jhin", "Sion", "Zeri"})
+# Champion-specific attack speed rules (attack-speed.md):
+# - Bel'Veth: passive removes the 3.0 attack speed cap (cap = None).
+# - Zeri: Q caps attack speed at 1.5 and converts 60% of excess bonus AS into bonus AD.
+# - Jhin: Whisper fixes attack speed (+3% per level growth curve, 0 ratio) and amplifies
+#   total AD by (4..44% by level + 35% of crit chance + 30% of bonus attack speed).
+ZERI_ATTACK_SPEED_CAP = Fraction(3, 2)
+ZERI_EXCESS_AS_AD = Fraction(60)  # 0.6 AD per 1% (0.01) of excess bonus attack speed
+JHIN_FIXED_AS_GROWTH = Fraction(3, 100)  # +3% per level with standard growth_multiplier
+JHIN_AD_PERCENT_BY_LEVEL: tuple[int, ...] = (
+    4,
+    5,
+    6,
+    7,
+    8,
+    9,
+    10,
+    11,
+    12,
+    14,
+    16,
+    20,
+    24,
+    28,
+    32,
+    36,
+    40,
+    44,
+)
+JHIN_CRIT_TO_AD_PERCENT = Fraction(35)  # +35% total AD per 100% crit chance
+JHIN_AS_TO_AD_PERCENT = Fraction(30)  # +30% total AD per 100% bonus attack speed
 # Data Dragon crit chance base and growth; 0 for every champion (critical-strike.md, C8).
 CRIT_FIELDS = ("crit", "critperlevel")
-# Cassiopeia's passive increases the effectiveness of movement speed bonuses (move-speed.md, M5).
-MOVE_SPEED_KITS = frozenset({"Cassiopeia"})
+# Cassiopeia's passive increases the effectiveness of movement speed bonuses by
+# 5% + 1.8% * (level - 1) = 5%..35.6% (move-speed.md, M5; CassiopeiaPassive.PercentHasteMod).
+CASSIOPEIA_MS_AMP_BASE = Fraction(5, 100)
+CASSIOPEIA_MS_AMP_PER_LEVEL = Fraction(18, 1000)
 # Yasuo's and Yone's passives (critical-strike.md, C9): their crit chance from every
 # other source is doubled, and each 1 % above 100 % becomes 0.5 bonus attack damage.
 CRIT_CHANCE_KITS = frozenset({"Yasuo", "Yone"})
@@ -465,6 +495,8 @@ def _scaled_attack_speed(
 
     ``None`` means there is no bonus attack speed, so the total is the base.
     """
+    if champion.id == "Jhin":
+        return None
     total_bonus = sum((item.value for item in bonus), start=Fraction(0))
     if not total_bonus:
         return None
@@ -474,6 +506,8 @@ def _scaled_attack_speed(
             f"which Data Dragon does not publish, and the derived records have no "
             f"{champion.id}.{ATTACK_SPEED_RATIO} (see {ATTACK_SPEED_RULES})"
         )
+    if ratio.value == 0:
+        return None
     return Contribution(
         ratio.value * total_bonus,
         "bonus",
@@ -531,6 +565,41 @@ def _crit_chance_passive(
                 passive,
                 weakest(labels),
                 f"excess critical strike chance {format_percent(excess)} x 0.5 per 1%",
+            )
+        )
+
+
+def _apply_cassiopeia_move_speed_passive(
+    level: int,
+    flats: list[Contribution],
+    percents: list[Contribution],
+) -> None:
+    """Cassiopeia: increase effectiveness of all flat and % move speed bonuses by 5%..35.6%."""
+    amp = CASSIOPEIA_MS_AMP_BASE + CASSIOPEIA_MS_AMP_PER_LEVEL * (min(level, 18) - 1)
+    source = f"{MOVE_SPEED_RULES} (Cassiopeia passive)"
+    bonus_flat = [item for item in flats if item.scope == "bonus"]
+    flat_total = sum((item.value for item in bonus_flat), start=Fraction(0))
+    if flat_total > 0:
+        flats.append(
+            Contribution(
+                flat_total * amp,
+                "bonus",
+                source,
+                weakest([Label.DERIVED, *(item.label for item in bonus_flat)]),
+                f"passive increases bonus flat move speed {format_number(flat_total)} by "
+                f"{format_percent(amp)}",
+            )
+        )
+    pct_total = sum((item.value for item in percents), start=Fraction(0))
+    if pct_total > 0:
+        percents.append(
+            Contribution(
+                pct_total * amp,
+                "bonus",
+                source,
+                weakest([Label.DERIVED, *(item.label for item in percents)]),
+                f"passive increases % move speed bonuses {format_percent(pct_total)} by "
+                f"{format_percent(amp)}",
             )
         )
 
@@ -670,9 +739,22 @@ def build_stat_sheet(
             Contribution(growth * multiplier, "base", source, label, note)
         )
     if level > 1:
-        contributions["attack_speed_bonus"].append(
-            _attack_speed_growth(champion, level, multiplier)
-        )
+        if champion.id == "Jhin":
+            if ATTACK_SPEED_GROWTH not in champion.stats:
+                raise StatsError(f"{champion.id}: stats.{ATTACK_SPEED_GROWTH} is missing")
+            contributions["attack_speed"].append(
+                Contribution(
+                    champion.stats["attackspeed"] * JHIN_FIXED_AS_GROWTH * multiplier,
+                    "base",
+                    f"{ATTACK_SPEED_RULES} (Jhin passive)",
+                    Label.DERIVED,
+                    f"Whisper fixed attack speed growth to level {level}",
+                )
+            )
+        else:
+            contributions["attack_speed_bonus"].append(
+                _attack_speed_growth(champion, level, multiplier)
+            )
     crit_base = _crit_chance_base(champion)
     if isinstance(crit_base, str):
         blocked["crit_chance"] = crit_base
@@ -745,6 +827,12 @@ def build_stat_sheet(
                 f"extra amplifier {extra_amp.stat}: only amount stats can be amplified"
             )
         amplifiers.append(replace(extra_amp, stat=definition.id))
+    if champion.id == "Cassiopeia":
+        _apply_cassiopeia_move_speed_passive(
+            level,
+            contributions["move_speed"],
+            percents.setdefault("move_speed", []),
+        )
     if move_speed_bonus_amp is not None:
         _apply_move_speed_bonus_amp(
             move_speed_bonus_amp,
@@ -758,16 +846,6 @@ def build_stat_sheet(
         contributions[stat_id] += [
             _percent_amount(STATS[stat_id], percent, reference) for percent in pending
         ]
-    # Amplifiers of a total last, all on the same total (Rabadon, Conditioning, Overgrowth).
-    reference = {amplifier.stat: list(contributions[amplifier.stat]) for amplifier in amplifiers}
-    for amplifier in amplifiers:
-        contributions[amplifier.stat].append(_amplified(amplifier, reference[amplifier.stat]))
-    if champion.id in MOVE_SPEED_KITS:
-        reason = f"{champion.id}'s passive changes the effectiveness of movement speed bonuses"
-        contributions["move_speed"].append(
-            Contribution(Fraction(0), "bonus", MOVE_SPEED_RULES, Label.PENDING, reason)
-        )
-        notes.append(reason)
 
     ratio = _attack_speed_ratio(champion, derived)
     scaled = _scaled_attack_speed(champion, contributions["attack_speed_bonus"], ratio)
@@ -775,12 +853,27 @@ def build_stat_sheet(
         blocked["attack_speed"] = scaled
     elif scaled is not None:
         contributions["attack_speed"].append(scaled)
-    if champion.id in ATTACK_SPEED_CAP_KITS:
-        reason = f"{champion.id}'s kit changes the attack speed cap; not modelled"
-        contributions["attack_speed"].append(
-            Contribution(Fraction(0), "bonus", ATTACK_SPEED_RULES, Label.PENDING, reason)
+
+    if champion.id == "Zeri" and ratio is not None and ratio.value > 0:
+        base_as = sum(
+            (c.value for c in contributions["attack_speed"] if c.scope == "base"),
+            start=Fraction(0),
         )
-        notes.append(reason)
+        bonus_as_list = contributions["attack_speed_bonus"]
+        total_bonus_as = sum((c.value for c in bonus_as_list), start=Fraction(0))
+        max_bonus_as = (ZERI_ATTACK_SPEED_CAP - base_as) / ratio.value
+        if total_bonus_as > max_bonus_as:
+            excess_as = total_bonus_as - max_bonus_as
+            contributions["attack_damage"].append(
+                Contribution(
+                    excess_as * ZERI_EXCESS_AS_AD,
+                    "bonus",
+                    f"{ATTACK_SPEED_RULES} (Zeri Q passive)",
+                    weakest([Label.DERIVED, ratio.label, *(c.label for c in bonus_as_list)]),
+                    f"excess bonus attack speed {format_percent(excess_as)} x 0.6 per 1%",
+                )
+            )
+
     if champion.id in CRIT_CHANCE_KITS:
         if "crit_chance" in blocked:
             blocked["attack_damage"] = (
@@ -790,14 +883,70 @@ def build_stat_sheet(
         else:
             _crit_chance_passive(champion, contributions)
 
+    if champion.id == "Jhin":
+        if "crit_chance" in blocked:
+            blocked["attack_damage"] = (
+                "Jhin's passive scales attack damage with crit chance, and crit chance is blocked"
+            )
+        else:
+            crit_sources = contributions["crit_chance"]
+            crit_total = min(
+                sum((c.value for c in crit_sources), start=Fraction(0)),
+                STATS["crit_chance"].cap,
+            )
+            as_sources = contributions["attack_speed_bonus"]
+            bonus_as_total = sum((c.value for c in as_sources), start=Fraction(0))
+            level_pct = Fraction(JHIN_AD_PERCENT_BY_LEVEL[min(level, 18) - 1])
+            whisper_pct = (
+                level_pct
+                + crit_total * JHIN_CRIT_TO_AD_PERCENT
+                + bonus_as_total * JHIN_AS_TO_AD_PERCENT
+            )
+            whisper_labels = [
+                Label.DERIVED,
+                *(c.label for c in crit_sources if c.value),
+                *(c.label for c in as_sources if c.value),
+            ]
+            whisper_note = (
+                f"Whisper: {format_number(level_pct)}% level + "
+                f"{format_number(crit_total * JHIN_CRIT_TO_AD_PERCENT)}% from crit + "
+                f"{format_number(bonus_as_total * JHIN_AS_TO_AD_PERCENT)}% from bonus AS"
+            )
+            amplifiers.append(
+                StatAmplifier(
+                    "attack_damage",
+                    whisper_pct,
+                    f"{ATTACK_SPEED_RULES} (Jhin passive)",
+                    weakest(whisper_labels),
+                    whisper_note,
+                )
+            )
+
+    if champion.id == "Graves":
+        notes.append("Graves fires 2 shells before reloading; attack_speed is his inter-shot rate")
+
+    # Amplifiers of a total last, all on the same total (Rabadon, Conditioning, Overgrowth, Jhin).
+    reference = {amplifier.stat: list(contributions[amplifier.stat]) for amplifier in amplifiers}
+    for amplifier in amplifiers:
+        contributions[amplifier.stat].append(_amplified(amplifier, reference[amplifier.stat]))
+
     for issue in applicable:
         if level == 1:
             notes.append(f"{issue.id} does not affect level 1 (no growth applies)")
     notes += list(extra_notes)
     notes += list(pending_effects)
 
+    def _stat_def(stat_id: str) -> StatDef:
+        definition = STATS[stat_id]
+        if stat_id == "attack_speed":
+            if champion.id == "Belveth":
+                return replace(definition, cap=None)
+            if champion.id == "Zeri":
+                return replace(definition, cap=ZERI_ATTACK_SPEED_CAP)
+        return definition
+
     values = {
-        stat_id: StatValue(STATS[stat_id], tuple(contributions[stat_id]), blocked.get(stat_id))
+        stat_id: StatValue(_stat_def(stat_id), tuple(contributions[stat_id]), blocked.get(stat_id))
         for stat_id in STATS
     }
     return StatSheet(

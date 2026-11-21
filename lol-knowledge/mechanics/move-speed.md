@@ -27,7 +27,7 @@ velocidad = bruto                         si 220 ≤ bruto ≤ 415
 - **Orden:** primero se suman los aportes planos a la base y después se aplican los porcentajes, todos a la vez (M1, M2, M3). Dos aportes del 10 % dan un 20 %.
 - **Límites suaves:** los tramos se encadenan. 600 en bruto: 415 + 75 × 0,8 + 110 × 0,5 = 530 (M1). Las fórmulas simplificadas de M2 dan lo mismo: 600 × 0,5 + 230 = 530.
 - **Por debajo de 220:** solo con ralentizaciones; sin ellas, ninguna base de Data Dragon baja de 315.
-- **Cassiopeia (`Pendiente de verificación`):** su pasiva aumenta la eficacia de todos los aumentos de velocidad (M5). No está modelada.
+- **Cassiopeia (`Derivado`, `CassiopeiaPassive.mSpellCalculations.PercentHasteMod` en el cliente `16.23`):** su pasiva *Elegancia serpentina* aumenta la eficacia de todas las bonificaciones planas y porcentuales de velocidad de movimiento en `5 % + 1,8 % × (nivel − 1)` (`5 %` a nivel 1 hasta `35,6 %` a nivel 18). Sin bonificaciones de velocidad de movimiento, su velocidad base (`335`) permanece `Oficial`.
 
 ## Implementación (`Calculado`)
 

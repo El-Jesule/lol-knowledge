@@ -4,8 +4,8 @@
   "verified_against": {
     "content_version": "16.23.8406595+branch.releases-16-23.content.release",
     "bin_sha256": "bdb31150dd208900310895607d6c30f12b9f2557c45f55b3dc0466ee2a9e850b",
-    "evidence": "odd/tasks/champion-kits-wave-4.md",
-    "result": "Bin del cliente 16.23 convertido con python -m binmodel.batch_kits y compilado con esta especificación curada (CH-01 oleada 4 — cierre 173/173)"
+    "evidence": "odd/tasks/ch04-champion-mechanics.md",
+    "result": "Bin del cliente 16.23 convertido con python -m binmodel.batch_kits y compilado con esta especificación curada (CH-04 cierre de mecánicas de campeón)"
   },
   "abilities": {
     "P": {
@@ -15,10 +15,19 @@
       "cases": [
         {
           "id": "true_bonus",
-          "name": "Daño verdadero adicional por ataque (20 % DA)",
+          "name": "Daño verdadero adicional por ataque básico (20 % DA)",
           "parts": [
             {
               "calculation": "BasicAttackTOOLTIP"
+            }
+          ]
+        },
+        {
+          "id": "true_bonus_crit",
+          "name": "Daño verdadero adicional por ataque crítico",
+          "parts": [
+            {
+              "calculation": "CriticalStrikeTOOLTIP"
             }
           ]
         }

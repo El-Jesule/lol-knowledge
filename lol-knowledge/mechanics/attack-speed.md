@@ -37,7 +37,11 @@ Comprobación con el ejemplo de V3: Twisted Fate (base 0,625 y ratio 0,651 en el
 
 - La base es `Oficial`. El crecimiento es `Derivado` (fórmula de fuentes secundarias). El aporte escalado por el ratio es `Derivado` si el cliente y el snapshot son del mismo parche, y `Pendiente de verificación` si no.
 - Sin registro del cliente para el campeón, la velocidad solo se calcula cuando no hay nada adicional (nivel 1 sin aportes). En los demás casos queda bloqueada con el motivo.
-- **Campeones cuyo kit cambia el tope** (V3): Bel'Veth lo elimina; Graves, Jhin, Sion y Zeri lo cambian. El motor no modela sus kits: para ellos la velocidad queda `Pendiente de verificación` con una nota. La lista viene de V3 (2024) y no se ha revisado contra las notas de 2025 y 2026.
+- **Campeones cuyo kit modifica el tope o el ratio (`Derivado`, cliente `16.23`):**
+  - **Bel'Veth (`BelvethPassive`):** no tiene tope de velocidad de ataque (`cap = None`) y gana `0,1 %..1,8 %` de velocidad de ataque adicional permanente por acumulación de lavanda (`--input lavender_stacks`).
+  - **Zeri (`ZeriQ`):** tiene un tope de `1,5` ataques por segundo (`AttackSpeedCap = 1.5`) y convierte el exceso de velocidad de ataque adicional (`> 134,72 %`) en daño de ataque adicional a razón de `0,6` DA por cada `1 %` de exceso (`ExcessAttackSpeedToADMult = 0.6`).
+  - **Jhin (`JhinPassive`):** tiene velocidad de ataque fija por nivel (`0,625 × (1 + 0,03 × growth_multiplier(n))`, de `0,625` a `0,94375`, con `attackspeedratio = 0`), y convierte su probabilidad de crítico y velocidad de ataque adicional externa en un amplificador del daño de ataque total (`TotalADPercent = [4..44] % por nivel + 35 % de crit_chance + 30 % de attack_speed_bonus`).
+  - **Sion y Graves:** Sion usa el tope normal de `3,0` mientras está vivo; Graves calcula su cadencia entre los 2 cartuchos (`0,475 + 0,490 × attack_speed_bonus`) y añade una nota informativa sobre su recarga.
 
 ## Implementación (`Calculado`)
 

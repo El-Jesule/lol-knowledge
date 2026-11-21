@@ -712,3 +712,68 @@ def test_wave_mechanics_representative_kits_verify_exact_numbers():
     gnar_mini_q = ability_damage(gnar_kit, "Q", 5, _sheet("Gnar", 18), case="mini")[0]
     gnar_mega_q = ability_damage(gnar_kit, "Q", 5, _sheet("Gnar", 18), case="mega")[0]
     assert gnar_mega_q.raw > gnar_mini_q.raw
+
+    # 8. CH-04 special champion mechanics: Belveth, Zeri, Jhin, Graves, Sion, Kaisa, Corki
+    bel0 = _sheet("Belveth", 1, inputs={"lavender_stacks": F(0)})
+    bel50 = _sheet("Belveth", 1, inputs={"lavender_stacks": F(50)})
+    assert bel50["attack_speed_bonus"].total() - bel0["attack_speed_bonus"].total() == F(5, 100)
+
+    zeri_kit = load_kit(ROOT, "Zeri")
+    assert zeri_kit is not None
+    zeri_uncharged = ability_damage(zeri_kit, "P", 1, _sheet("Zeri", 18), case="uncharged_zap")[0]
+    assert (zeri_uncharged.damage_type, zeri_uncharged.raw) == ("magic", F(25))
+
+    jhin_kit = load_kit(ROOT, "Jhin")
+    assert jhin_kit is not None
+    jhin_sheet = _sheet("Jhin", 18)
+    jhin_exec = ability_damage(
+        jhin_kit,
+        "P",
+        1,
+        jhin_sheet,
+        case="fourth_shot_execute",
+        target={"max_health": F(2000), "missing_fraction_health": F(1, 2)},
+    )[0]
+    jhin_tot = ability_damage(
+        jhin_kit,
+        "P",
+        1,
+        jhin_sheet,
+        case="fourth_shot_total",
+        target={"max_health": F(2000), "missing_fraction_health": F(1, 2)},
+    )[0]
+    assert jhin_exec.raw == F(250)  # 25% of 1000 missing HP
+    assert jhin_tot.raw == jhin_sheet["attack_damage"].total() * F(3, 2) + F(250)
+
+    graves_kit = load_kit(ROOT, "Graves")
+    assert graves_kit is not None
+    graves_sheet = _sheet("Graves", 18)
+    g1 = ability_damage(graves_kit, "P", 1, graves_sheet, case="one_pellet")[0]
+    g4 = ability_damage(graves_kit, "P", 1, graves_sheet, case="four_pellets")[0]
+    g6c = ability_damage(graves_kit, "P", 1, graves_sheet, case="six_pellets_crit")[0]
+    assert g4.raw == g1.raw * F("1.999")  # 1 + 3 * 0.333
+    assert g6c.raw > g4.raw
+
+    sion0 = _sheet("Sion", 18)
+    sion_stacks = _sheet(
+        "Sion",
+        18,
+        inputs={"soul_furnace_small_kills": F(50), "soul_furnace_large_kills": F(10)},
+    )
+    assert sion_stacks["health"].total() - sion0["health"].total() == F(50 * 4 + 10 * 15)
+
+    kaisa_kit = load_kit(ROOT, "Kaisa")
+    assert kaisa_kit is not None
+    kaisa_sheet = _sheet("Kaisa", 18)
+    kq1 = ability_damage(kaisa_kit, "Q", 5, kaisa_sheet, case="one_missile")[0]
+    kq6 = ability_damage(kaisa_kit, "Q", 5, kaisa_sheet, case="six_missiles")[0]
+    kq12 = ability_damage(kaisa_kit, "Q", 5, kaisa_sheet, case="twelve_missiles_evolved")[0]
+    assert kq6.raw == kq1.raw * F(9, 4)  # 2.25x
+    assert kq12.raw == kq1.raw * F(15, 4)  # 3.75x
+
+    corki_kit = load_kit(ROOT, "Corki")
+    assert corki_kit is not None
+    corki_sheet = _sheet("Corki", 18)
+    cp_norm = ability_damage(corki_kit, "P", 1, corki_sheet, case="true_bonus")[0]
+    cp_crit = ability_damage(corki_kit, "P", 1, corki_sheet, case="true_bonus_crit")[0]
+    assert cp_crit.raw == cp_norm.raw * 2
