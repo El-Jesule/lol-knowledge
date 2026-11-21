@@ -4,8 +4,8 @@
   "verified_against": {
     "content_version": "16.23.8406595+branch.releases-16-23.content.release",
     "bin_sha256": "c7f04ae7aacfbb20052209e520356424ab3ec98bcf80cf15c63beff6b500f66b",
-    "evidence": "odd/tasks/champion-kits-wave-3.md",
-    "result": "Bin del cliente 16.23 convertido con python -m binmodel.batch_kits y compilado con esta especificación curada (CH-01 oleada 3)"
+    "evidence": "odd/tasks/champion-wave-mechanics.md",
+    "result": "Bin del cliente 16.23 convertido con python -m binmodel.batch_kits y compilado con esta especificación curada (CH-04 mecánicas de oleadas)"
   },
   "abilities": {
     "P": {
@@ -22,10 +22,20 @@
       "cases": [
         {
           "id": "thrust",
-          "name": "Estocada / torbellino (sin crítico)",
+          "name": "Estocada normal",
           "parts": [
             {
               "calculation": "TotalDamage"
+            }
+          ]
+        },
+        {
+          "id": "crit",
+          "name": "Estocada crítica",
+          "tooltip": "spell_yasuoq1wrapper_tooltipextendedbelowline",
+          "parts": [
+            {
+              "calculation": "TotalDamageCrit"
             }
           ]
         }

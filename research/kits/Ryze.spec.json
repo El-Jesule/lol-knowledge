@@ -4,8 +4,8 @@
   "verified_against": {
     "content_version": "16.23.8406595+branch.releases-16-23.content.release",
     "bin_sha256": "edb3ee342f3161ec0e4f1651c5490828393d1042de16a677f2efd7a6cf049623",
-    "evidence": "odd/tasks/champion-kits-wave-4.md",
-    "result": "Bin del cliente 16.23 convertido con python -m binmodel.batch_kits y compilado con esta especificación curada (CH-01 oleada 4 — cierre 173/173)"
+    "evidence": "odd/tasks/champion-wave-mechanics.md",
+    "result": "Bin del cliente 16.23 convertido con python -m binmodel.batch_kits y compilado con esta especificación curada (CH-04 mecánicas de oleadas)"
   },
   "abilities": {
     "P": {
@@ -20,21 +20,54 @@
       "name": "Descarga eléctrica",
       "tooltip": "spell_ryzeqwrapper_tooltip",
       "not_modelled": [
-        "QDamageCalc incluye término de maná adicional no resuelto en el bin (unresolved); reinicio de CD por W/E, 2 runas de velocidad de movimiento y amplificación contra Flujo"
+        "Amplificación del 40/55/70/85/100 % (según rango de R) al consumir Flujo de hechizos (E) y velocidad de movimiento con 2 runas"
+      ],
+      "cases": [
+        {
+          "id": "overload",
+          "name": "Descarga (sin amplificación de Flujo)",
+          "parts": [
+            {
+              "calculation": "QDamageCalc"
+            }
+          ]
+        }
       ]
     },
     "W": {
       "name": "Prisión rúnica",
       "tooltip": "spell_ryzew_tooltip",
       "not_modelled": [
-        "WDamageCalc incluye término de maná adicional no resuelto en el bin; ralentización o raíz sobre Flujo"
+        "Ralentización del 50 % (o inmovilización al consumir Flujo)"
+      ],
+      "cases": [
+        {
+          "id": "prison",
+          "name": "Prisión rúnica",
+          "parts": [
+            {
+              "calculation": "WDamageCalc"
+            }
+          ]
+        }
       ]
     },
     "E": {
       "name": "Tormenta eléctrica",
       "tooltip": "spell_ryzee_tooltip",
       "not_modelled": [
-        "EDamageCalc incluye término de maná adicional no resuelto en el bin; aplicación y propagación de Flujo"
+        "Propagación de Flujo a enemigos cercanos y reinicio de enfriamiento de Q"
+      ],
+      "cases": [
+        {
+          "id": "flux",
+          "name": "Flujo de hechizos",
+          "parts": [
+            {
+              "calculation": "EDamageCalc"
+            }
+          ]
+        }
       ]
     },
     "R": {

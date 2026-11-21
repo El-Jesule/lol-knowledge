@@ -4,8 +4,8 @@
   "verified_against": {
     "content_version": "16.23.8406595+branch.releases-16-23.content.release",
     "bin_sha256": "322ea45b4146ccafe3875b283ed57c51ef1b2111d91ff817dd6ae5a5ea3af5fd",
-    "evidence": "odd/tasks/champion-kits-wave-4.md",
-    "result": "Bin del cliente 16.23 convertido con python -m binmodel.batch_kits y compilado con esta especificación curada (CH-01 oleada 4 — cierre 173/173)"
+    "evidence": "odd/tasks/champion-wave-mechanics.md",
+    "result": "Bin del cliente 16.23 convertido con python -m binmodel.batch_kits y compilado con esta especificación curada (CH-04 mecánicas de oleadas)"
   },
   "abilities": {
     "P": {
@@ -76,7 +76,7 @@
       "cases": [
         {
           "id": "per_dagger_magic",
-          "name": "Una daga (parte mágica)",
+          "name": "Una daga (componente mágico)",
           "parts": [
             {
               "calculation": "DamageCalc"
@@ -84,11 +84,53 @@
           ]
         },
         {
+          "id": "per_dagger_physical",
+          "name": "Una daga (componente físico con DA y VA)",
+          "parts": [
+            {
+              "calculation": "ADDamageCalc"
+            }
+          ]
+        },
+        {
+          "id": "per_dagger_total",
+          "name": "Una daga completa (mágico + físico)",
+          "parts": [
+            {
+              "calculation": "DamageCalc"
+            },
+            {
+              "calculation": "ADDamageCalc"
+            }
+          ]
+        },
+        {
           "id": "total_magic",
-          "name": "Canalización completa de 15 dagas (parte mágica)",
+          "name": "Canalización completa 15 dagas (mágico)",
           "parts": [
             {
               "calculation": "TotalDamageCalc"
+            }
+          ]
+        },
+        {
+          "id": "total_physical",
+          "name": "Canalización completa 15 dagas (físico)",
+          "parts": [
+            {
+              "calculation": "TotalADDamageCalc"
+            }
+          ]
+        },
+        {
+          "id": "total_15_daggers",
+          "name": "Canalización completa 15 dagas (mágico + físico)",
+          "parts": [
+            {
+              "calculation": "TotalDamageCalc"
+            },
+            {
+              "calculation": "TotalADDamageCalc"
             }
           ]
         }

@@ -7,8 +7,8 @@
   "verified_against": {
     "content_version": "16.23.8406595+branch.releases-16-23.content.release",
     "bin_sha256": "1a8235e2c1dcc9d1560e88d8a465301a4e5bc8ee792ced0b07144a1586a0c00a",
-    "evidence": "odd/tasks/champion-kits-wave-4.md",
-    "result": "Bin del cliente 16.23 convertido con python -m binmodel.batch_kits y compilado con esta especificación curada (CH-01 oleada 4 — cierre 173/173)"
+    "evidence": "odd/tasks/champion-wave-mechanics.md",
+    "result": "Bin del cliente 16.23 convertido con python -m binmodel.batch_kits y compilado con esta especificación curada (CH-04 mecánicas de oleadas)"
   },
   "source": "Árboles de cálculo del bin del cliente (python -m binmodel) y marcado de los tooltips del cliente; estructura de casos curada en research/kits/",
   "abilities": {
@@ -79,28 +79,204 @@
     "Q": {
       "name": "Saborea su miedo",
       "max_rank": 5,
-      "cases": [],
+      "cases": [
+        {
+          "id": "normal",
+          "name": "Objetivo no aislado",
+          "parts": [
+            {
+              "damage_type": "physical",
+              "formula": {
+                "op": "add",
+                "operands": [
+                  {
+                    "op": "by_rank",
+                    "values": [
+                      80,
+                      105,
+                      130,
+                      155,
+                      180
+                    ]
+                  },
+                  {
+                    "op": "mul",
+                    "operands": [
+                      {
+                        "op": "constant",
+                        "value": 1.05
+                      },
+                      {
+                        "op": "stat",
+                        "stat": "attack_damage",
+                        "scope": "bonus"
+                      }
+                    ]
+                  }
+                ]
+              },
+              "label": "Derivado",
+              "source": "Characters/Khazix/Spells/KhazixQAbility/KhazixQ.mSpellCalculations.BaseDamage (16.23.8406595+branch.releases-16-23.content.release)",
+              "damage_type_source": "spell_khazixq_tooltip_0 <physicalDamage>"
+            }
+          ]
+        },
+        {
+          "id": "isolated",
+          "name": "Objetivo aislado (+110 %)",
+          "parts": [
+            {
+              "damage_type": "physical",
+              "formula": {
+                "op": "mul",
+                "operands": [
+                  {
+                    "op": "add",
+                    "operands": [
+                      {
+                        "op": "by_rank",
+                        "values": [
+                          80,
+                          105,
+                          130,
+                          155,
+                          180
+                        ]
+                      },
+                      {
+                        "op": "mul",
+                        "operands": [
+                          {
+                            "op": "constant",
+                            "value": 1.05
+                          },
+                          {
+                            "op": "stat",
+                            "stat": "attack_damage",
+                            "scope": "bonus"
+                          }
+                        ]
+                      }
+                    ]
+                  },
+                  {
+                    "op": "constant",
+                    "value": 2.1
+                  }
+                ]
+              },
+              "label": "Derivado",
+              "source": "Characters/Khazix/Spells/KhazixQAbility/KhazixQ.mSpellCalculations.IsoDamage (16.23.8406595+branch.releases-16-23.content.release)",
+              "damage_type_source": "spell_khazixq_tooltip_0 <physicalDamage>"
+            }
+          ]
+        }
+      ],
       "passive_stats": [],
       "not_modelled": [
-        "Q.BaseDamage y Q.IsoDamage (+110 % aislado) usan EffectValue en el bin (no traducible por kitgen); evolución con alcance y 45 % devolución de CD"
+        "Alcance adicional y reembolso del 45 % del enfriamiento contra objetivos aislados al evolucionar Q"
       ]
     },
     "W": {
       "name": "Pincho del Vacío",
       "max_rank": 5,
-      "cases": [],
+      "cases": [
+        {
+          "id": "spike",
+          "name": "Pincho explosivo",
+          "parts": [
+            {
+              "damage_type": "physical",
+              "formula": {
+                "op": "add",
+                "operands": [
+                  {
+                    "op": "by_rank",
+                    "values": [
+                      75,
+                      105,
+                      135,
+                      165,
+                      195
+                    ]
+                  },
+                  {
+                    "op": "mul",
+                    "operands": [
+                      {
+                        "op": "constant",
+                        "value": 1
+                      },
+                      {
+                        "op": "stat",
+                        "stat": "attack_damage",
+                        "scope": "bonus"
+                      }
+                    ]
+                  }
+                ]
+              },
+              "label": "Derivado",
+              "source": "Characters/Khazix/Spells/KhazixWAbility/KhazixW.mSpellCalculations.BaseDamage (16.23.8406595+branch.releases-16-23.content.release)",
+              "damage_type_source": "spell_khazixw_tooltip_0 <physicalDamage>"
+            }
+          ]
+        }
+      ],
       "passive_stats": [],
       "not_modelled": [
-        "W.BaseDamage usa EffectValue en el bin; curación cercana (HealAmount) y evolución de 3 pinchos con ralentización"
+        "Curación propia al estar cerca de la explosión y cono triple evolucionado"
       ]
     },
     "E": {
       "name": "Salto",
       "max_rank": 5,
-      "cases": [],
+      "cases": [
+        {
+          "id": "leap",
+          "name": "Aterrizaje del salto",
+          "parts": [
+            {
+              "damage_type": "physical",
+              "formula": {
+                "op": "add",
+                "operands": [
+                  {
+                    "op": "by_rank",
+                    "values": [
+                      65,
+                      100,
+                      135,
+                      170,
+                      205
+                    ]
+                  },
+                  {
+                    "op": "mul",
+                    "operands": [
+                      {
+                        "op": "constant",
+                        "value": 0.4
+                      },
+                      {
+                        "op": "stat",
+                        "stat": "attack_damage",
+                        "scope": "bonus"
+                      }
+                    ]
+                  }
+                ]
+              },
+              "label": "Derivado",
+              "source": "Characters/Khazix/Spells/KhazixEAbility/KhazixE.mSpellCalculations.TotalDamage (16.23.8406595+branch.releases-16-23.content.release)",
+              "damage_type_source": "spell_khazixe_tooltip_0 <physicalDamage>"
+            }
+          ]
+        }
+      ],
       "passive_stats": [],
       "not_modelled": [
-        "E.TotalDamage usa EffectValue en el bin; evolución de alcance (1000) y reinicio por derribo"
+        "Alcance adicional y reinicio de enfriamiento en derribos al evolucionar E"
       ]
     },
     "R": {

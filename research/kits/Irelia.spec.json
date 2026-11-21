@@ -4,15 +4,45 @@
   "verified_against": {
     "content_version": "16.23.8406595+branch.releases-16-23.content.release",
     "bin_sha256": "17b9772995e8e1bce6c5eaf98eca5f293ce0f7d368d2c3f31211c865e26e15c3",
-    "evidence": "odd/tasks/champion-kits-wave-2.md",
-    "result": "Bin del cliente 16.23 convertido con python -m binmodel.batch_kits y compilado con esta especificación curada (CH-01 oleada 2)"
+    "evidence": "odd/tasks/champion-wave-mechanics.md",
+    "result": "Bin del cliente 16.23 convertido con python -m binmodel.batch_kits y compilado con esta especificación curada (CH-04 mecánicas de oleadas)"
   },
   "abilities": {
     "P": {
       "name": "Fervor jonio",
       "max_rank": 1,
       "not_modelled": [
-        "Velocidad de ataque acumulable hasta 4 cargas (SingleStackAS) y daño mágico al impactar (OnHitBonus)"
+        "El daño mágico al impactar (OnHitBonus) solo se activa al alcanzar el máximo de 4 cargas"
+      ],
+      "tooltip": "spell_ireliapassive_tooltip",
+      "cases": [
+        {
+          "id": "on_hit_4_stacks",
+          "name": "Daño mágico al impactar (4 cargas)",
+          "parts": [
+            {
+              "calculation": "OnHitBonus"
+            }
+          ]
+        }
+      ],
+      "passive_effects": [
+        {
+          "id": "ionian_fervor_as",
+          "name": "Fervor jonio (VA por carga)",
+          "kind": "stacking_stat",
+          "stat": "attack_speed_bonus",
+          "mode": "flat",
+          "trigger": "ability_hit",
+          "max_stacks": {
+            "data_value": "MaxStacks"
+          },
+          "duration_seconds": {
+            "data_value": "BuffDuration"
+          },
+          "input_name": "ionian_fervor_stacks",
+          "calculation": "SingleStackAS"
+        }
       ]
     },
     "Q": {

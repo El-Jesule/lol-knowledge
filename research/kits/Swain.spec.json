@@ -4,8 +4,8 @@
   "verified_against": {
     "content_version": "16.23.8406595+branch.releases-16-23.content.release",
     "bin_sha256": "34fc3f0672a1fb945c67796185cdcd20e1cb5c8e15e18c7fc807ecf7e1e6b6cf",
-    "evidence": "odd/tasks/champion-kits-wave-2.md",
-    "result": "Bin del cliente 16.23 convertido con python -m binmodel.batch_kits y compilado con esta especificación curada (CH-01 oleada 2)"
+    "evidence": "odd/tasks/champion-wave-mechanics.md",
+    "result": "Bin del cliente 16.23 convertido con python -m binmodel.batch_kits y compilado con esta especificación curada (CH-04 mecánicas de oleadas)"
   },
   "abilities": {
     "P": {
@@ -13,6 +13,18 @@
       "max_rank": 1,
       "not_modelled": [
         "Curación del 6 % de vida máxima por fragmento de alma y vida máxima permanente (MaxHealthGained)"
+      ],
+      "passive_effects": [
+        {
+          "id": "ravenous_flock_hp",
+          "name": "Parvada voraz (Vida máxima por fragmento de alma)",
+          "kind": "stat_bonus",
+          "stat": "health",
+          "mode": "flat",
+          "data_value": "HealthIncrement",
+          "input_name": "soul_fragments",
+          "condition": "Vida máxima permanente por fragmento de alma (--input soul_fragments)"
+        }
       ]
     },
     "Q": {

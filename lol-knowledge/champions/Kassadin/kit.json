@@ -7,8 +7,8 @@
   "verified_against": {
     "content_version": "16.23.8406595+branch.releases-16-23.content.release",
     "bin_sha256": "b6edee11ce2c97377d7fbc92fc82917c8425668b009026d721546d412d5d193e",
-    "evidence": "odd/tasks/champion-kits-wave-2.md",
-    "result": "Bin del cliente 16.23 convertido con python -m binmodel.batch_kits y compilado con esta especificación curada (CH-01 oleada 2)"
+    "evidence": "odd/tasks/champion-wave-mechanics.md",
+    "result": "Bin del cliente 16.23 convertido con python -m binmodel.batch_kits y compilado con esta especificación curada (CH-04 mecánicas de oleadas)"
   },
   "source": "Árboles de cálculo del bin del cliente (python -m binmodel) y marcado de los tooltips del cliente; estructura de casos curada en research/kits/",
   "abilities": {
@@ -212,10 +212,226 @@
     "R": {
       "name": "Camino del Vacío",
       "max_rank": 3,
-      "cases": [],
+      "cases": [
+        {
+          "id": "base",
+          "name": "Salto base (0 cargas)",
+          "parts": [
+            {
+              "damage_type": "magic",
+              "formula": {
+                "op": "add",
+                "operands": [
+                  {
+                    "op": "by_rank",
+                    "values": [
+                      80,
+                      95,
+                      110
+                    ]
+                  },
+                  {
+                    "op": "mul",
+                    "operands": [
+                      {
+                        "op": "constant",
+                        "value": 0.5
+                      },
+                      {
+                        "op": "stat",
+                        "stat": "ability_power",
+                        "scope": "total"
+                      }
+                    ]
+                  },
+                  {
+                    "op": "mul",
+                    "operands": [
+                      {
+                        "op": "constant",
+                        "value": 0.02
+                      },
+                      {
+                        "op": "stat",
+                        "stat": "mana",
+                        "scope": "total"
+                      }
+                    ]
+                  }
+                ]
+              },
+              "label": "Derivado",
+              "source": "Characters/Kassadin/Spells/RiftWalkAbility/RiftWalk.mSpellCalculations.BaseDamage (16.23.8406595+branch.releases-16-23.content.release)",
+              "damage_type_source": "spell_riftwalk_tooltip <magicDamage>"
+            }
+          ]
+        },
+        {
+          "id": "per_stack",
+          "name": "Daño adicional por carga (hasta 4)",
+          "parts": [
+            {
+              "damage_type": "magic",
+              "formula": {
+                "op": "add",
+                "operands": [
+                  {
+                    "op": "by_rank",
+                    "values": [
+                      35,
+                      45,
+                      55
+                    ]
+                  },
+                  {
+                    "op": "mul",
+                    "operands": [
+                      {
+                        "op": "constant",
+                        "value": 0.07
+                      },
+                      {
+                        "op": "stat",
+                        "stat": "ability_power",
+                        "scope": "total"
+                      }
+                    ]
+                  },
+                  {
+                    "op": "mul",
+                    "operands": [
+                      {
+                        "op": "constant",
+                        "value": 0.01
+                      },
+                      {
+                        "op": "stat",
+                        "stat": "mana",
+                        "scope": "total"
+                      }
+                    ]
+                  }
+                ]
+              },
+              "label": "Derivado",
+              "source": "Characters/Kassadin/Spells/RiftWalkAbility/RiftWalk.mSpellCalculations.BonusDamage (16.23.8406595+branch.releases-16-23.content.release)",
+              "damage_type_source": "spell_riftwalk_tooltip <magicDamage>"
+            }
+          ]
+        },
+        {
+          "id": "max_4_stacks",
+          "name": "Salto con 4 cargas máximas",
+          "parts": [
+            {
+              "damage_type": "magic",
+              "formula": {
+                "op": "add",
+                "operands": [
+                  {
+                    "op": "by_rank",
+                    "values": [
+                      80,
+                      95,
+                      110
+                    ]
+                  },
+                  {
+                    "op": "mul",
+                    "operands": [
+                      {
+                        "op": "constant",
+                        "value": 0.5
+                      },
+                      {
+                        "op": "stat",
+                        "stat": "ability_power",
+                        "scope": "total"
+                      }
+                    ]
+                  },
+                  {
+                    "op": "mul",
+                    "operands": [
+                      {
+                        "op": "constant",
+                        "value": 0.02
+                      },
+                      {
+                        "op": "stat",
+                        "stat": "mana",
+                        "scope": "total"
+                      }
+                    ]
+                  }
+                ]
+              },
+              "label": "Derivado",
+              "source": "Characters/Kassadin/Spells/RiftWalkAbility/RiftWalk.mSpellCalculations.BaseDamage (16.23.8406595+branch.releases-16-23.content.release)",
+              "damage_type_source": "spell_riftwalk_tooltip <magicDamage>"
+            },
+            {
+              "damage_type": "magic",
+              "formula": {
+                "op": "mul",
+                "operands": [
+                  {
+                    "op": "constant",
+                    "value": 4
+                  },
+                  {
+                    "op": "add",
+                    "operands": [
+                      {
+                        "op": "by_rank",
+                        "values": [
+                          35,
+                          45,
+                          55
+                        ]
+                      },
+                      {
+                        "op": "mul",
+                        "operands": [
+                          {
+                            "op": "constant",
+                            "value": 0.07
+                          },
+                          {
+                            "op": "stat",
+                            "stat": "ability_power",
+                            "scope": "total"
+                          }
+                        ]
+                      },
+                      {
+                        "op": "mul",
+                        "operands": [
+                          {
+                            "op": "constant",
+                            "value": 0.01
+                          },
+                          {
+                            "op": "stat",
+                            "stat": "mana",
+                            "scope": "total"
+                          }
+                        ]
+                      }
+                    ]
+                  }
+                ]
+              },
+              "label": "Derivado",
+              "source": "Characters/Kassadin/Spells/RiftWalkAbility/RiftWalk · 4 × mSpellCalculations.BonusDamage (16.23.8406595+branch.releases-16-23.content.release)",
+              "damage_type_source": "spell_riftwalk_tooltip <magicDamage>"
+            }
+          ]
+        }
+      ],
       "passive_stats": [],
       "not_modelled": [
-        "BaseDamage y BonusDamage usan nodos de escalado de maná máximo sin traducir en el bin; duplicación de coste por cargas"
+        "Duplicación del coste de maná por carga durante 12 s"
       ]
     }
   }

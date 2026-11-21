@@ -4,8 +4,8 @@
   "verified_against": {
     "content_version": "16.23.8406595+branch.releases-16-23.content.release",
     "bin_sha256": "67a656b0d262bfd4232fb869c701b6c3b9ce59539e736fb5675511d39479703a",
-    "evidence": "odd/tasks/champion-kits-wave-4.md",
-    "result": "Bin del cliente 16.23 convertido con python -m binmodel.batch_kits y compilado con esta especificación curada (CH-01 oleada 4 — cierre 173/173)"
+    "evidence": "odd/tasks/champion-wave-mechanics.md",
+    "result": "Bin del cliente 16.23 convertido con python -m binmodel.batch_kits y compilado con esta especificación curada (CH-04 mecánicas de oleadas)"
   },
   "abilities": {
     "P": {
@@ -22,7 +22,7 @@
       "cases": [
         {
           "id": "dps",
-          "name": "Daño mágico por segundo",
+          "name": "Canalización por segundo",
           "parts": [
             {
               "calculation": "DamagePerSecond"
@@ -31,16 +31,42 @@
         },
         {
           "id": "burst",
-          "name": "Estallido cada 1 s (sin cargas de Polvo estelar)",
+          "name": "Estallido cada segundo (base + % vida máxima por Polvo estelar)",
           "parts": [
             {
-              "calculation": "BurstDamage"
+              "tooltip_reference": "BurstDamage",
+              "damage_type": "magic",
+              "source_note": "mSpellCalculations.BurstDamage + mSpellCalculations.BurstBonusTrueDamageToChamps × vida máxima del objetivo (--input stardust_stacks)",
+              "formula": {
+                "op": "add",
+                "operands": [
+                  {
+                    "op": "calculation",
+                    "name": "BurstDamage"
+                  },
+                  {
+                    "op": "mul",
+                    "operands": [
+                      {
+                        "op": "calculation",
+                        "name": "BurstBonusTrueDamageToChamps"
+                      },
+                      {
+                        "op": "stat",
+                        "stat": "health",
+                        "scope": "max",
+                        "subject": "target"
+                      }
+                    ]
+                  }
+                ]
+              }
             }
           ]
         }
       ],
       "not_modelled": [
-        "Daño porcentual de vida máxima escalado con Polvo estelar en el estallido (BurstBonusTrueDamageToChamps), coste continuo de maná por segundo y tope contra monstruos"
+        "Tope de daño por porcentaje de vida contra monstruos"
       ]
     },
     "W": {

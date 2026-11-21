@@ -33,9 +33,61 @@ STAT_SCOPES = {
     "attack_damage": {"base", "bonus", "total"},
     "ability_power": {"total"},
     "health": {"base", "bonus", "total", "current", "max"},
+    "mana": {"base", "bonus", "total"},
     "armor": {"base", "bonus", "total"},
     "magic_resist": {"base", "bonus", "total"},
+    "move_speed": {"base", "bonus", "total"},
+    "attack_speed": {"bonus", "total"},
+    "critical_strike_chance": {"total"},
+    "critical_strike_damage": {"bonus", "total"},
+    "life_steal": {"total"},
+    "lethality": {"total"},
 }
+BUFF_COUNTER_INPUT_NAMES: dict[str, str] = {
+    "NasusQStacks": "siphoning_strike_stacks",
+    "Feast": "feast_stacks",
+    "AurelionSolPassive": "stardust_stacks",
+    "KindredMarkOfTheKindredStackCounter": "kindred_marks",
+    "SmolderQPassive": "dragon_practice_stacks",
+    "ThreshPassiveSoulsGain": "souls",
+    "SennaPassiveStacks": "mist_stacks",
+    "ShyvanaPassive": "passive_stacks",
+    "DravenPassiveStacks": "adoration_stacks",
+    "BelvethPassiveStacks": "lavender_stacks",
+    "GarenWPassive": "courage_stacks",
+    "SwainSoulCounter": "soul_fragments",
+    "SonaPassiveAccelerandoCount": "accelerando_stacks",
+    "KSanteRConversionArmor": "ksante_r_bonus_armor",
+    "KSanteRConversionMagicResist": "ksante_r_bonus_mr",
+}
+INCLUDE_PATTERN = re.compile(r"\{\{([A-Za-z0-9_]+)\}\}")
+
+
+def _resolve_tooltip(tooltips: Mapping[str, str], key: str | None) -> str:
+    """Return a tooltip string with ``{{other_key}}`` includes expanded."""
+    if not key:
+        return ""
+    text = tooltips.get(key, "")
+    for _ in range(2):
+        if "{{" not in text:
+            break
+        text = INCLUDE_PATTERN.sub(
+            lambda m: tooltips.get(m.group(1).lower(), m.group(0)),
+            text,
+        )
+    return text
+
+
+def _buff_input_name(buff_name: Any, slot: str) -> str:
+    if not isinstance(buff_name, str) or not buff_name.strip():
+        raise KitGenError(f"{slot}: buff_counter missing buff_name")
+    if buff_name in BUFF_COUNTER_INPUT_NAMES:
+        return BUFF_COUNTER_INPUT_NAMES[buff_name]
+    if buff_name.startswith("{") and buff_name.endswith("}"):
+        raise KitGenError(f"{slot}: unhashed buff counter {buff_name!r} is not translated")
+    snake = re.sub(r"([a-z0-9])([A-Z])", r"\1_\2", buff_name)
+    snake = re.sub(r"([A-Z]+)([A-Z][a-z])", r"\1_\2", snake).lower()
+    return snake
 
 
 class KitGenError(Exception):
@@ -47,7 +99,11 @@ def tooltip_damage_types(tooltip: str, reference: str) -> set[str]:
     return {
         DAMAGE_TAGS[tag]
         for tag, inner in TAG_PATTERN.findall(tooltip)
-        if re.search(rf"@(?:[A-Za-z0-9_.]+:)?{re.escape(reference)}(?:[*][^@]*)?@", inner)
+        if re.search(
+            rf"@(?:[A-Za-z0-9_.]+:)?{re.escape(reference)}(?:[*][^@]*)?@",
+            inner,
+            re.IGNORECASE,
+        )
     }
 
 
@@ -83,6 +139,32 @@ class _Ability:
             for item in record.get("data_values", [])
             if item.get("mode", "base") == "base"
         }
+        self.effect_amounts = {
+            item["name"]: item
+            for item in record.get("data_values", [])
+            if item.get("mode") == "effect_amount"
+        }
+
+    def effect_amount(self, index: Any) -> dict[str, Any]:
+        if not isinstance(index, int) or isinstance(index, bool) or index < 1:
+            raise KitGenError(f"{self.slot}: invalid effect_index {index!r}")
+        if self.max_rank is None:
+            raise KitGenError(f"{self.slot}: unknown level_count for effect amount {index}")
+        name = f"Effect{index}Amount"
+        entry = self.effect_amounts.get(name)
+        ranks = entry.get("ranks") if entry else None
+        if (
+            not isinstance(ranks, Sequence)
+            or len(ranks) != self.max_rank
+            or not all(_is_num(value) for value in ranks)
+        ):
+            raise KitGenError(
+                f"{self.slot}: effect amount {name!r} has no {self.max_rank} rank values"
+            )
+        values = [_clean(value) for value in ranks]
+        if len(set(values)) == 1:
+            return {"op": "constant", "value": values[0]}
+        return {"op": "by_rank", "values": values}
 
     def data_value(self, name: str) -> dict[str, Any]:
         if self.max_rank is None:
@@ -131,6 +213,21 @@ class _Ability:
             return {"op": "constant", "value": _clean(value)}
         if kind == "data_value":
             return self.data_value(str(node["name"]))
+        if kind == "effect_value":
+            return self.effect_amount(node.get("effect_index"))
+        if kind == "buff_counter":
+            input_name = _buff_input_name(node.get("buff_name"), self.slot)
+            factor_node = node.get("factor")
+            if not isinstance(factor_node, Mapping):
+                raise KitGenError(f"{self.slot}: buff_counter missing factor")
+            factor = self.node(factor_node, stack)
+            return {
+                "op": "mul",
+                "operands": [
+                    {"op": "input", "name": input_name, "default": 0},
+                    factor,
+                ],
+            }
         if kind == "sum":
             raw_ops = node.get("operands")
             if not isinstance(raw_ops, Sequence) or not raw_ops:
@@ -188,13 +285,34 @@ class _Ability:
                 and stat.get("formula_confidence") == "corroborated"
             ):
                 raise KitGenError(f"{self.slot}: stat {name}/{scope} is not corroborated")
-            # Base ability power is identically 0 in League of Legends, so bonus AP == total AP.
-            if name == "ability_power" and scope == "bonus":
+            # Base AP, lethality and life steal are identically 0 in League of Legends,
+            # so their bonus scope equals total.
+            if name in {"ability_power", "lethality", "life_steal"} and scope == "bonus":
                 scope = "total"
             if scope not in STAT_SCOPES.get(name, set()):
                 raise KitGenError(f"{self.slot}: stat {name}/{scope} has no kit equivalent")
             factor = self.node(node["factor"], stack)
-            return {"op": "mul", "operands": [factor, {"op": "stat", "stat": name, "scope": scope}]}
+            if name == "attack_speed" and scope == "bonus":
+                stat_expr: dict[str, Any] = {
+                    "op": "stat",
+                    "stat": "attack_speed_bonus",
+                    "scope": "total",
+                }
+            elif name == "critical_strike_chance":
+                stat_expr = {"op": "stat", "stat": "crit_chance", "scope": "total"}
+            elif name == "critical_strike_damage" and scope == "bonus":
+                stat_expr = {"op": "stat", "stat": "crit_damage_bonus", "scope": "total"}
+            elif name == "critical_strike_damage" and scope == "total":
+                stat_expr = {
+                    "op": "add",
+                    "operands": [
+                        {"op": "constant", "value": 2},
+                        {"op": "stat", "stat": "crit_damage_bonus", "scope": "total"},
+                    ],
+                }
+            else:
+                stat_expr = {"op": "stat", "stat": name, "scope": scope}
+            return {"op": "mul", "operands": [factor, stat_expr]}
         if kind == "modified":
             base = self.calculation(str(node["base_calculation"]), stack)
             return {"op": "mul", "operands": [base, self.node(node["multiplier"], stack)]}
@@ -246,6 +364,8 @@ class _Ability:
             op = formula.get("op")
             if op == "data_value":
                 return self.data_value(str(formula["name"]))
+            if op == "effect_amount":
+                return self.effect_amount(formula.get("index"))
             if op == "calculation":
                 return self.calculation(str(formula["name"]))
             return {key: self.custom(value) for key, value in formula.items()}
@@ -270,13 +390,24 @@ def _clean(value: float) -> float | int:
 def _breakpoints_formula(node: Mapping[str, Any], slot: str) -> dict[str, Any]:
     """Expand ``ByCharLevelBreakpointsCalculationPart`` into an 18-level ``by_level`` table."""
     level1 = node.get("level1_value")
-    if not _is_num(level1):
-        raise KitGenError(f"{slot}: breakpoints node missing level1_value")
     initial_per = node.get("initial_bonus_per_level")
-    rate = float(initial_per) if _is_num(initial_per) else 0.0
     raw_bps = node.get("breakpoints")
     if raw_bps is not None and not isinstance(raw_bps, Sequence):
         raise KitGenError(f"{slot}: breakpoints must be a list")
+    if level1 is None and node.get("default_policy") == "lol-bin-omitted-float-defaults/v1":
+        has_growth = _is_num(initial_per) or any(
+            isinstance(bp, Mapping)
+            and (
+                _is_num(bp.get("additional_bonus_at_this_level"))
+                or _is_num(bp.get("bonus_per_level_at_and_after"))
+            )
+            for bp in (raw_bps or ())
+        )
+        if has_growth:
+            level1 = 0.0
+    if not _is_num(level1):
+        raise KitGenError(f"{slot}: breakpoints node missing level1_value")
+    rate = float(initial_per) if _is_num(initial_per) else 0.0
     by_level: dict[int, list[Mapping[str, Any]]] = {}
     for bp in raw_bps or ():
         if not isinstance(bp, Mapping) or not isinstance(bp.get("level"), int):
@@ -408,27 +539,37 @@ def compile_kit(
     abilities: dict[str, Any] = {}
     for slot, entry in spec["abilities"].items():
         context = f"{spec['champion']} {slot}"
-        ability = by_slot.get(slot)
+        ability = by_slot.get(entry.get("ability") or slot)
         tooltip_key = entry.get("tooltip")
-        tooltip = tooltips.get(tooltip_key, "") if tooltip_key else ""
+        tooltip = _resolve_tooltip(tooltips, tooltip_key)
         cases = []
         for case in entry.get("cases", []):
             parts = []
             for part in case["parts"]:
-                if ability is None:
-                    raise KitGenError(f"{context}: no bin data for this ability")
+                part_slot = (
+                    part.get("ability") or case.get("ability") or entry.get("ability") or slot
+                )
+                part_ability = by_slot.get(part_slot)
+                if part_ability is None:
+                    raise KitGenError(f"{context}: no bin data for ability {part_slot!r}")
+                part_tooltip_key = part.get("tooltip") or case.get("tooltip") or tooltip_key
+                part_tooltip = (
+                    _resolve_tooltip(tooltips, part_tooltip_key)
+                    if part_tooltip_key != tooltip_key
+                    else tooltip
+                )
                 if "calculation" in part:
                     reference = part["calculation"]
-                    formula = ability.calculation(reference)
-                    source = f"{ability.record['path']}.mSpellCalculations.{reference}"
+                    formula = part_ability.calculation(reference)
+                    source = f"{part_ability.record['path']}.mSpellCalculations.{reference}"
                 else:
                     reference = part["tooltip_reference"]
-                    formula = ability.custom(part["formula"])
-                    source = f"{ability.record['path']} · {part['source_note']}"
-                if not tooltip:
-                    raise KitGenError(f"{context}: tooltip {tooltip_key!r} not found")
+                    formula = part_ability.custom(part["formula"])
+                    source = f"{part_ability.record['path']} · {part['source_note']}"
+                if not part_tooltip:
+                    raise KitGenError(f"{context}: tooltip {part_tooltip_key!r} not found")
                 declared = part.get("damage_type")
-                damage_type = tooltip_damage_type(tooltip, reference, declared)
+                damage_type = tooltip_damage_type(part_tooltip, reference, declared)
                 if declared is not None and declared != damage_type:
                     raise KitGenError(
                         f"{context}.{case['id']}: declared {declared!r}, "
@@ -440,7 +581,7 @@ def compile_kit(
                         "formula": formula,
                         "label": "Derivado",
                         "source": f"{source} ({content_version})",
-                        "damage_type_source": f"{tooltip_key} <{_tag(damage_type)}>",
+                        "damage_type_source": f"{part_tooltip_key} <{_tag(damage_type)}>",
                     }
                 )
             generated = {"id": case["id"], "name": case["name"], "parts": parts}
@@ -489,7 +630,12 @@ def compile_kit(
             )
         if entry.get("passive_effects"):
             abilities[slot]["passive_effects"] = [
-                _compile_passive_effect(ability, effect_spec, content_version, context)
+                _compile_passive_effect(
+                    by_slot.get(effect_spec["ability"]) if "ability" in effect_spec else ability,
+                    effect_spec,
+                    content_version,
+                    context,
+                )
                 for effect_spec in entry["passive_effects"]
             ]
         for key in ("recast_window_seconds", "max_recasts", "recast_interval_seconds"):

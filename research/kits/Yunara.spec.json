@@ -4,8 +4,8 @@
   "verified_against": {
     "content_version": "16.23.8406595+branch.releases-16-23.content.release",
     "bin_sha256": "7c38b86bc38a56bb0d031acfa4c1aa98be423401807ce0197629eef5ffd7807a",
-    "evidence": "odd/tasks/champion-kits-wave-4.md",
-    "result": "Bin del cliente 16.23 convertido con python -m binmodel.batch_kits y compilado con esta especificación curada (CH-01 oleada 4 — cierre 173/173)"
+    "evidence": "odd/tasks/champion-wave-mechanics.md",
+    "result": "Bin del cliente 16.23 convertido con python -m binmodel.batch_kits y compilado con esta especificación curada (CH-04 mecánicas de oleadas)"
   },
   "abilities": {
     "P": {
@@ -14,6 +14,17 @@
       "max_rank": 1,
       "not_modelled": [
         "Daño mágico adicional porcentual en golpes críticos (Calc_Damage_Amp: 10 % + 10 % por 100 PH del golpe crítico)"
+      ],
+      "cases": [
+        {
+          "id": "crit_bonus_magic",
+          "name": "Amplificación de daño mágico en golpes críticos",
+          "parts": [
+            {
+              "calculation": "Calc_Damage_Amp"
+            }
+          ]
+        }
       ]
     },
     "Q": {
@@ -88,9 +99,20 @@
     },
     "R": {
       "name": "Trascender",
-      "tooltip": "spell_yunarar_tooltip",
+      "tooltip": "spell_yunaraw_tooltip",
       "not_modelled": [
         "Estado de Trascendencia (activa Q automáticamente y potencia W a Arco de la ruina: Calc_RW_Damage y E a Sombras incorpóreas)"
+      ],
+      "cases": [
+        {
+          "id": "transcendent_w",
+          "name": "Arco de ruina (W potenciada durante R)",
+          "parts": [
+            {
+              "calculation": "Calc_RW_Damage"
+            }
+          ]
+        }
       ]
     }
   }

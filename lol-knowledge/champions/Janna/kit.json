@@ -7,8 +7,8 @@
   "verified_against": {
     "content_version": "16.23.8406595+branch.releases-16-23.content.release",
     "bin_sha256": "0f4a601874840d8decd2970a07600b76d99c62b586bb40b61e70fa93e3fa4e37",
-    "evidence": "odd/tasks/champion-kits-wave-3.md",
-    "result": "Bin del cliente 16.23 convertido con python -m binmodel.batch_kits y compilado con esta especificación curada (CH-01 oleada 3)"
+    "evidence": "odd/tasks/champion-wave-mechanics.md",
+    "result": "Bin del cliente 16.23 convertido con python -m binmodel.batch_kits y compilado con esta especificación curada (CH-04 mecánicas de oleadas)"
   },
   "source": "Árboles de cálculo del bin del cliente (python -m binmodel) y marcado de los tooltips del cliente; estructura de casos curada en research/kits/",
   "abilities": {
@@ -18,7 +18,32 @@
       "cases": [],
       "passive_stats": [],
       "not_modelled": [
-        "Velocidad de movimiento de aliados hacia Janna (6 %) y daño mágico al impactar equivalente al 30 % de su velocidad de movimiento adicional (BonusDamage usa stat no modelado en hoja de stats)"
+        "Bonificación del 6 % de velocidad de movimiento a aliados que avanzan hacia Janna"
+      ],
+      "passive_effects": [
+        {
+          "id": "tailwind_on_hit",
+          "name": "Empuje (Daño mágico al impactar por VM adicional)",
+          "kind": "damage_proc",
+          "formula": {
+            "op": "mul",
+            "operands": [
+              {
+                "op": "constant",
+                "value": 0.3
+              },
+              {
+                "op": "stat",
+                "stat": "move_speed",
+                "scope": "bonus"
+              }
+            ]
+          },
+          "label": "Derivado",
+          "source": "Characters/Janna/Spells/TailwindSelfAbility/TailwindSelf.mSpellCalculations.BonusDamage (16.23.8406595+branch.releases-16-23.content.release)",
+          "trigger": "on_hit",
+          "damage_type": "magic"
+        }
       ]
     },
     "Q": {
@@ -157,7 +182,7 @@
       "cases": [
         {
           "id": "hit",
-          "name": "Impacto de Céfiro",
+          "name": "Céfiro (base + 30 % VM adicional)",
           "parts": [
             {
               "damage_type": "magic",
@@ -165,13 +190,32 @@
                 "op": "add",
                 "operands": [
                   {
-                    "op": "by_rank",
-                    "values": [
-                      55,
-                      85,
-                      115,
-                      145,
-                      175
+                    "op": "add",
+                    "operands": [
+                      {
+                        "op": "by_rank",
+                        "values": [
+                          55,
+                          85,
+                          115,
+                          145,
+                          175
+                        ]
+                      },
+                      {
+                        "op": "mul",
+                        "operands": [
+                          {
+                            "op": "constant",
+                            "value": 0.5
+                          },
+                          {
+                            "op": "stat",
+                            "stat": "ability_power",
+                            "scope": "total"
+                          }
+                        ]
+                      }
                     ]
                   },
                   {
@@ -179,19 +223,19 @@
                     "operands": [
                       {
                         "op": "constant",
-                        "value": 0.5
+                        "value": 0.3
                       },
                       {
                         "op": "stat",
-                        "stat": "ability_power",
-                        "scope": "total"
+                        "stat": "move_speed",
+                        "scope": "bonus"
                       }
                     ]
                   }
                 ]
               },
               "label": "Derivado",
-              "source": "Characters/Janna/Spells/SowTheWindAbility/SowTheWind.mSpellCalculations.TotalDamage (16.23.8406595+branch.releases-16-23.content.release)",
+              "source": "Characters/Janna/Spells/SowTheWindAbility/SowTheWind · mSpellCalculations.TotalDamage + 30 % velocidad de movimiento adicional (Empuje) (16.23.8406595+branch.releases-16-23.content.release)",
               "damage_type_source": "spell_sowthewind_tooltip <magicDamage>"
             }
           ]

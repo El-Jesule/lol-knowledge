@@ -4,8 +4,8 @@
   "verified_against": {
     "content_version": "16.23.8406595+branch.releases-16-23.content.release",
     "bin_sha256": "cef65540cca7d9fc1e222d1800ffb17b29c88a11c370c284900f195706683020",
-    "evidence": "odd/tasks/champion-kits-wave-2.md",
-    "result": "Bin del cliente 16.23 convertido con python -m binmodel.batch_kits y compilado con esta especificación curada (CH-01 oleada 2)"
+    "evidence": "odd/tasks/champion-wave-mechanics.md",
+    "result": "Bin del cliente 16.23 convertido con python -m binmodel.batch_kits y compilado con esta especificación curada (CH-04 mecánicas de oleadas)"
   },
   "abilities": {
     "P": {
@@ -49,7 +49,28 @@
       "name": "Ferromancia - Caída / Montura",
       "tooltip": "spell_rellw_dismount_tooltip",
       "not_modelled": [
-        "Escudo (Shield), lanzamiento por los aires y doble forma montada/a pie"
+        "Escudo al desmontar (Shield) y lanzamiento por los aires"
+      ],
+      "cases": [
+        {
+          "id": "crash_down",
+          "name": "Aterrizaje al desmontar",
+          "parts": [
+            {
+              "calculation": "DismountDamage"
+            }
+          ]
+        },
+        {
+          "id": "mount_up_flip",
+          "name": "Volteo al montar",
+          "tooltip": "spell_rellw_mountup_tooltip3",
+          "parts": [
+            {
+              "calculation": "FlipDamage"
+            }
+          ]
+        }
       ]
     },
     "E": {

@@ -4,8 +4,8 @@
   "verified_against": {
     "content_version": "16.23.8406595+branch.releases-16-23.content.release",
     "bin_sha256": "7e5c02bf0c8ea7a803bd83f4e3c829c3092c63d90f32ca10fc31e233e0b93f7b",
-    "evidence": "odd/tasks/champion-kits-wave-4.md",
-    "result": "Bin del cliente 16.23 convertido con python -m binmodel.batch_kits y compilado con esta especificación curada (CH-01 oleada 4 — cierre 173/173)"
+    "evidence": "odd/tasks/champion-wave-mechanics.md",
+    "result": "Bin del cliente 16.23 convertido con python -m binmodel.batch_kits y compilado con esta especificación curada (CH-04 mecánicas de oleadas)"
   },
   "abilities": {
     "P": {
@@ -33,10 +33,20 @@
       "cases": [
         {
           "id": "shot",
-          "name": "Disparo (sin crítico)",
+          "name": "Disparo normal",
           "parts": [
             {
               "calculation": "ShotDamage"
+            }
+          ]
+        },
+        {
+          "id": "crit",
+          "name": "Disparo crítico",
+          "tooltip": "spell_gangplankqwrapper_tooltipextendedbelowline",
+          "parts": [
+            {
+              "calculation": "ShotCrit"
             }
           ]
         }

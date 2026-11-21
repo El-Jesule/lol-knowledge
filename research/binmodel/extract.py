@@ -15,6 +15,7 @@ from .traverse import (
     extract_calculations,
     extract_cooldown,
     extract_data_values,
+    extract_effect_amounts,
     extract_mode_overrides,
     extract_tooltip,
     find_champion_root,
@@ -154,6 +155,15 @@ def extract_champion(
                 content_version=content_version,
             )
         )
+        data_values.extend(
+            extract_effect_amounts(
+                spell,
+                spell_path=path,
+                level_count=level_count,
+                source_sha256=source_sha256,
+                content_version=content_version,
+            )
+        )
         calculations = extract_calculations(spell, spell_path=path, context=context)
         cooldown = extract_cooldown(
             spell,
@@ -236,6 +246,15 @@ def extract_champion(
                         spell_path=str(child_path),
                         level_count=child_rank_count,
                         diagnostics=diagnostics,
+                        source_sha256=source_sha256,
+                        content_version=content_version,
+                    )
+                )
+                child_data_values.extend(
+                    extract_effect_amounts(
+                        child_spell,
+                        spell_path=str(child_path),
+                        level_count=child_rank_count,
                         source_sha256=source_sha256,
                         content_version=content_version,
                     )

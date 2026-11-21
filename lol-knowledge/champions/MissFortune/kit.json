@@ -7,8 +7,8 @@
   "verified_against": {
     "content_version": "16.23.8406595+branch.releases-16-23.content.release",
     "bin_sha256": "a9f7c7fb2d16ab34e431d2e99df7a588ee75dbfc74e4d462cacd1a271935ab8d",
-    "evidence": "odd/tasks/champion-kits-wave-3.md",
-    "result": "Bin del cliente 16.23 convertido con python -m binmodel.batch_kits y compilado con esta especificación curada (CH-01 oleada 3)"
+    "evidence": "odd/tasks/champion-wave-mechanics.md",
+    "result": "Bin del cliente 16.23 convertido con python -m binmodel.batch_kits y compilado con esta especificación curada (CH-04 mecánicas de oleadas)"
   },
   "source": "Árboles de cálculo del bin del cliente (python -m binmodel) y marcado de los tooltips del cliente; estructura de casos curada en research/kits/",
   "abilities": {
@@ -73,7 +73,7 @@
       "cases": [
         {
           "id": "shot",
-          "name": "Disparo (primer o segundo objetivo sin crítico)",
+          "name": "Primer impacto (o rebote sin crítico)",
           "parts": [
             {
               "damage_type": "physical",
@@ -122,6 +122,116 @@
               },
               "label": "Derivado",
               "source": "Characters/MissFortune/Spells/MissFortuneRicochetShotAbility/MissFortuneRicochetShot.mSpellCalculations.TotalDamageTooltip (16.23.8406595+branch.releases-16-23.content.release)",
+              "damage_type_source": "spell_missfortuneq_tooltip <physicalDamage>"
+            }
+          ]
+        },
+        {
+          "id": "crit_bounce",
+          "name": "Rebote crítico",
+          "parts": [
+            {
+              "damage_type": "physical",
+              "formula": {
+                "op": "mul",
+                "operands": [
+                  {
+                    "op": "add",
+                    "operands": [
+                      {
+                        "op": "by_rank",
+                        "values": [
+                          20,
+                          45,
+                          70,
+                          95,
+                          120
+                        ]
+                      },
+                      {
+                        "op": "mul",
+                        "operands": [
+                          {
+                            "op": "constant",
+                            "value": 1
+                          },
+                          {
+                            "op": "stat",
+                            "stat": "attack_damage",
+                            "scope": "total"
+                          }
+                        ]
+                      },
+                      {
+                        "op": "mul",
+                        "operands": [
+                          {
+                            "op": "constant",
+                            "value": 0.35
+                          },
+                          {
+                            "op": "stat",
+                            "stat": "ability_power",
+                            "scope": "total"
+                          }
+                        ]
+                      }
+                    ]
+                  },
+                  {
+                    "op": "add",
+                    "operands": [
+                      {
+                        "op": "constant",
+                        "value": 1
+                      },
+                      {
+                        "op": "mul",
+                        "operands": [
+                          {
+                            "op": "constant",
+                            "value": 0.5
+                          },
+                          {
+                            "op": "add",
+                            "operands": [
+                              {
+                                "op": "mul",
+                                "operands": [
+                                  {
+                                    "op": "constant",
+                                    "value": 1
+                                  },
+                                  {
+                                    "op": "add",
+                                    "operands": [
+                                      {
+                                        "op": "constant",
+                                        "value": 2
+                                      },
+                                      {
+                                        "op": "stat",
+                                        "stat": "crit_damage_bonus",
+                                        "scope": "total"
+                                      }
+                                    ]
+                                  }
+                                ]
+                              },
+                              {
+                                "op": "constant",
+                                "value": -1
+                              }
+                            ]
+                          }
+                        ]
+                      }
+                    ]
+                  }
+                ]
+              },
+              "label": "Derivado",
+              "source": "Characters/MissFortune/Spells/MissFortuneRicochetShotAbility/MissFortuneRicochetShot.mSpellCalculations.TotalDamageCrit (16.23.8406595+branch.releases-16-23.content.release)",
               "damage_type_source": "spell_missfortuneq_tooltip <physicalDamage>"
             }
           ]
@@ -248,7 +358,7 @@
       "cases": [
         {
           "id": "per_wave",
-          "name": "Una oleada (sin crítico)",
+          "name": "Una oleada (normal)",
           "parts": [
             {
               "damage_type": "physical",
@@ -300,8 +410,116 @@
           ]
         },
         {
+          "id": "crit_per_wave",
+          "name": "Una oleada (crítica)",
+          "parts": [
+            {
+              "damage_type": "physical",
+              "formula": {
+                "op": "mul",
+                "operands": [
+                  {
+                    "op": "add",
+                    "operands": [
+                      {
+                        "op": "by_rank",
+                        "values": [
+                          20,
+                          30,
+                          40
+                        ]
+                      },
+                      {
+                        "op": "mul",
+                        "operands": [
+                          {
+                            "op": "constant",
+                            "value": 0.6
+                          },
+                          {
+                            "op": "stat",
+                            "stat": "attack_damage",
+                            "scope": "total"
+                          }
+                        ]
+                      },
+                      {
+                        "op": "mul",
+                        "operands": [
+                          {
+                            "op": "constant",
+                            "value": 0.25
+                          },
+                          {
+                            "op": "stat",
+                            "stat": "ability_power",
+                            "scope": "total"
+                          }
+                        ]
+                      }
+                    ]
+                  },
+                  {
+                    "op": "add",
+                    "operands": [
+                      {
+                        "op": "constant",
+                        "value": 1
+                      },
+                      {
+                        "op": "mul",
+                        "operands": [
+                          {
+                            "op": "constant",
+                            "value": 0.45
+                          },
+                          {
+                            "op": "add",
+                            "operands": [
+                              {
+                                "op": "mul",
+                                "operands": [
+                                  {
+                                    "op": "constant",
+                                    "value": 1
+                                  },
+                                  {
+                                    "op": "add",
+                                    "operands": [
+                                      {
+                                        "op": "constant",
+                                        "value": 2
+                                      },
+                                      {
+                                        "op": "stat",
+                                        "stat": "crit_damage_bonus",
+                                        "scope": "total"
+                                      }
+                                    ]
+                                  }
+                                ]
+                              },
+                              {
+                                "op": "constant",
+                                "value": -1
+                              }
+                            ]
+                          }
+                        ]
+                      }
+                    ]
+                  }
+                ]
+              },
+              "label": "Derivado",
+              "source": "Characters/MissFortune/Spells/MissFortuneBulletTimeAbility/MissFortuneBulletTime.mSpellCalculations.CritDamagePerWave (16.23.8406595+branch.releases-16-23.content.release)",
+              "damage_type_source": "spell_missfortuner_tooltip <physicalDamage>"
+            }
+          ]
+        },
+        {
           "id": "total",
-          "name": "Canalización completa (14/16/18 oleadas, sin crítico)",
+          "name": "Canalización completa (14/16/18 oleadas sin crítico)",
           "parts": [
             {
               "damage_type": "physical",

@@ -7,8 +7,8 @@
   "verified_against": {
     "content_version": "16.23.8406595+branch.releases-16-23.content.release",
     "bin_sha256": "8074d42e73acd5fd73a47a38ee9dfac8b1a4f24387891e48dd6134c9603de150",
-    "evidence": "odd/tasks/champion-kits-wave-4.md",
-    "result": "Bin del cliente 16.23 convertido con python -m binmodel.batch_kits y compilado con esta especificación curada (CH-01 oleada 4 — cierre 173/173)"
+    "evidence": "odd/tasks/champion-wave-mechanics.md",
+    "result": "Bin del cliente 16.23 convertido con python -m binmodel.batch_kits y compilado con esta especificación curada (CH-04 mecánicas de oleadas)"
   },
   "source": "Árboles de cálculo del bin del cliente (python -m binmodel) y marcado de los tooltips del cliente; estructura de casos curada en research/kits/",
   "abilities": {
@@ -27,7 +27,7 @@
       "cases": [
         {
           "id": "unburrowed",
-          "name": "Superficie: Ira de la reina (por ataque)",
+          "name": "Superficie: Ira de la reina (un ataque adicional)",
           "parts": [
             {
               "damage_type": "physical",
@@ -54,6 +54,61 @@
               "label": "Derivado",
               "source": "Characters/RekSai/Spells/RekSaiQAbility/RekSaiQ.mSpellCalculations.TotalDamageTooltip (16.23.8406595+branch.releases-16-23.content.release)",
               "damage_type_source": "spell_reksaiq_tooltip <physicalDamage>"
+            }
+          ]
+        },
+        {
+          "id": "burrowed",
+          "name": "Bajo tierra: Rastreadora",
+          "parts": [
+            {
+              "damage_type": "magic",
+              "formula": {
+                "op": "add",
+                "operands": [
+                  {
+                    "op": "by_rank",
+                    "values": [
+                      50,
+                      80,
+                      110,
+                      140,
+                      170
+                    ]
+                  },
+                  {
+                    "op": "mul",
+                    "operands": [
+                      {
+                        "op": "constant",
+                        "value": 0.25
+                      },
+                      {
+                        "op": "stat",
+                        "stat": "attack_damage",
+                        "scope": "bonus"
+                      }
+                    ]
+                  },
+                  {
+                    "op": "mul",
+                    "operands": [
+                      {
+                        "op": "constant",
+                        "value": 0.7
+                      },
+                      {
+                        "op": "stat",
+                        "stat": "ability_power",
+                        "scope": "total"
+                      }
+                    ]
+                  }
+                ]
+              },
+              "label": "Derivado",
+              "source": "Characters/RekSai/Spells/RekSaiQAbility/RekSaiQ.mSpellCalculations.BurrowDamageTooltip (16.23.8406595+branch.releases-16-23.content.release)",
+              "damage_type_source": "spell_reksaiqburrowed_tooltip <magicDamage>"
             }
           ]
         }

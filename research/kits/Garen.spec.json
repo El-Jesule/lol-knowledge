@@ -4,8 +4,8 @@
   "verified_against": {
     "content_version": "16.23.8406595+branch.releases-16-23.content.release",
     "bin_sha256": "6b90c0d9f5c40564363adc6047b4e5ca35eaecc1932d393e4fd2d16ce049c0c2",
-    "evidence": "odd/tasks/champion-kits-wave-1.md",
-    "result": "Bin del cliente 16.23 convertido con python -m binmodel.batch_kits y compilado con esta especificación curada (CH-01 oleada 1)"
+    "evidence": "odd/tasks/champion-wave-mechanics.md",
+    "result": "Bin del cliente 16.23 convertido con python -m binmodel.batch_kits y compilado con esta especificación curada (CH-04 mecánicas de oleadas)"
   },
   "abilities": {
     "P": {
@@ -13,6 +13,32 @@
       "max_rank": 1,
       "not_modelled": [
         "Regeneración de vida máxima fuera de combate (RegenCalc)"
+      ],
+      "passive_effects": [
+        {
+          "id": "courage_armor",
+          "name": "Coraje de W (Armadura por unidad asesinada)",
+          "ability": "W",
+          "kind": "stat_bonus",
+          "stat": "armor",
+          "mode": "flat",
+          "data_value": "ResistGainOnKill",
+          "input_name": "courage_stacks",
+          "max_stacks": 150,
+          "condition": "Armadura adicional por carga de Coraje de W (--input courage_stacks=0..150)"
+        },
+        {
+          "id": "courage_mr",
+          "name": "Coraje de W (Resistencia mágica por unidad asesinada)",
+          "ability": "W",
+          "kind": "stat_bonus",
+          "stat": "magic_resist",
+          "mode": "flat",
+          "data_value": "ResistGainOnKill",
+          "input_name": "courage_stacks",
+          "max_stacks": 150,
+          "condition": "Resistencia mágica adicional por carga de Coraje de W (--input courage_stacks=0..150)"
+        }
       ]
     },
     "Q": {

@@ -7,8 +7,8 @@
   "verified_against": {
     "content_version": "16.23.8406595+branch.releases-16-23.content.release",
     "bin_sha256": "79515b685fb9d876cb7f121fc8297755458b0240e9bd5de8cb7d2f8d9e5d832f",
-    "evidence": "odd/tasks/champion-kits-wave-4.md",
-    "result": "Bin del cliente 16.23 convertido con python -m binmodel.batch_kits y compilado con esta especificación curada (CH-01 oleada 4 — cierre 173/173)"
+    "evidence": "odd/tasks/champion-wave-mechanics.md",
+    "result": "Bin del cliente 16.23 convertido con python -m binmodel.batch_kits y compilado con esta especificación curada (CH-04 mecánicas de oleadas)"
   },
   "source": "Árboles de cálculo del bin del cliente (python -m binmodel) y marcado de los tooltips del cliente; estructura de casos curada en research/kits/",
   "abilities": {
@@ -217,7 +217,7 @@
       "cases": [
         {
           "id": "per_bullet",
-          "name": "Una bala (de 22 + escalado por crítico)",
+          "name": "Un disparo",
           "parts": [
             {
               "damage_type": "physical",
@@ -264,6 +264,124 @@
               },
               "label": "Derivado",
               "source": "Characters/Lucian/Spells/LucianRAbility/LucianR.mSpellCalculations.DamagePerBullet (16.23.8406595+branch.releases-16-23.content.release)",
+              "damage_type_source": "spell_lucianr_tooltip <physicalDamage>"
+            }
+          ]
+        },
+        {
+          "id": "total",
+          "name": "Ráfaga completa (escala con probabilidad de crítico)",
+          "parts": [
+            {
+              "damage_type": "physical",
+              "formula": {
+                "op": "mul",
+                "operands": [
+                  {
+                    "op": "add",
+                    "operands": [
+                      {
+                        "op": "constant",
+                        "value": 1
+                      },
+                      {
+                        "op": "mul",
+                        "operands": [
+                          {
+                            "op": "mul",
+                            "operands": [
+                              {
+                                "op": "constant",
+                                "value": 1
+                              },
+                              {
+                                "op": "stat",
+                                "stat": "crit_chance",
+                                "scope": "total"
+                              }
+                            ]
+                          },
+                          {
+                            "op": "add",
+                            "operands": [
+                              {
+                                "op": "mul",
+                                "operands": [
+                                  {
+                                    "op": "constant",
+                                    "value": 1
+                                  },
+                                  {
+                                    "op": "add",
+                                    "operands": [
+                                      {
+                                        "op": "constant",
+                                        "value": 2
+                                      },
+                                      {
+                                        "op": "stat",
+                                        "stat": "crit_damage_bonus",
+                                        "scope": "total"
+                                      }
+                                    ]
+                                  }
+                                ]
+                              },
+                              {
+                                "op": "constant",
+                                "value": -1
+                              }
+                            ]
+                          }
+                        ]
+                      }
+                    ]
+                  },
+                  {
+                    "op": "add",
+                    "operands": [
+                      {
+                        "op": "by_rank",
+                        "values": [
+                          15,
+                          30,
+                          45
+                        ]
+                      },
+                      {
+                        "op": "mul",
+                        "operands": [
+                          {
+                            "op": "constant",
+                            "value": 0.25
+                          },
+                          {
+                            "op": "stat",
+                            "stat": "attack_damage",
+                            "scope": "total"
+                          }
+                        ]
+                      },
+                      {
+                        "op": "mul",
+                        "operands": [
+                          {
+                            "op": "constant",
+                            "value": 0.15
+                          },
+                          {
+                            "op": "stat",
+                            "stat": "ability_power",
+                            "scope": "total"
+                          }
+                        ]
+                      }
+                    ]
+                  }
+                ]
+              },
+              "label": "Derivado",
+              "source": "Characters/Lucian/Spells/LucianRAbility/LucianR.mSpellCalculations.TotalDamage (16.23.8406595+branch.releases-16-23.content.release)",
               "damage_type_source": "spell_lucianr_tooltip <physicalDamage>"
             }
           ]

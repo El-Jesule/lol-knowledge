@@ -7,8 +7,8 @@
   "verified_against": {
     "content_version": "16.23.8406595+branch.releases-16-23.content.release",
     "bin_sha256": "e6cba8765110c0dabccac4b3edf978ac5568cf1b0af54150b2c8a3cce389e1fe",
-    "evidence": "odd/tasks/champion-kits-wave-4.md",
-    "result": "Bin del cliente 16.23 convertido con python -m binmodel.batch_kits y compilado con esta especificación curada (CH-01 oleada 4 — cierre 173/173)"
+    "evidence": "odd/tasks/champion-wave-mechanics.md",
+    "result": "Bin del cliente 16.23 convertido con python -m binmodel.batch_kits y compilado con esta especificación curada (CH-04 mecánicas de oleadas)"
   },
   "source": "Árboles de cálculo del bin del cliente (python -m binmodel) y marcado de los tooltips del cliente; estructura de casos curada en research/kits/",
   "abilities": {
@@ -185,7 +185,170 @@
     "R": {
       "name": "Aspecto felino",
       "max_rank": 4,
-      "cases": [],
+      "cases": [
+        {
+          "id": "cougar_takedown_min",
+          "name": "Puma Q: Derribo (objetivo al 100 % de vida, sin Caza)",
+          "parts": [
+            {
+              "damage_type": "magic",
+              "formula": {
+                "op": "add",
+                "operands": [
+                  {
+                    "op": "by_rank",
+                    "values": [
+                      5,
+                      30,
+                      55,
+                      80
+                    ]
+                  },
+                  {
+                    "op": "mul",
+                    "operands": [
+                      {
+                        "op": "constant",
+                        "value": 0.75
+                      },
+                      {
+                        "op": "stat",
+                        "stat": "attack_damage",
+                        "scope": "total"
+                      }
+                    ]
+                  },
+                  {
+                    "op": "mul",
+                    "operands": [
+                      {
+                        "op": "constant",
+                        "value": 0.4
+                      },
+                      {
+                        "op": "stat",
+                        "stat": "ability_power",
+                        "scope": "total"
+                      }
+                    ]
+                  }
+                ]
+              },
+              "label": "Derivado",
+              "source": "Characters/Nidalee/Spells/AspectOfTheCougarAbility/AspectOfTheCougar.mSpellCalculations.TotalTakedownDamage (16.23.8406595+branch.releases-16-23.content.release)",
+              "damage_type_source": "spell_takedown_tooltip <magicDamage>"
+            }
+          ]
+        },
+        {
+          "id": "cougar_pounce",
+          "name": "Puma W: Asalto",
+          "parts": [
+            {
+              "damage_type": "magic",
+              "formula": {
+                "op": "add",
+                "operands": [
+                  {
+                    "op": "by_rank",
+                    "values": [
+                      50,
+                      90,
+                      130,
+                      170
+                    ]
+                  },
+                  {
+                    "op": "mul",
+                    "operands": [
+                      {
+                        "op": "constant",
+                        "value": 0.5
+                      },
+                      {
+                        "op": "stat",
+                        "stat": "attack_damage",
+                        "scope": "bonus"
+                      }
+                    ]
+                  },
+                  {
+                    "op": "mul",
+                    "operands": [
+                      {
+                        "op": "constant",
+                        "value": 0.3
+                      },
+                      {
+                        "op": "stat",
+                        "stat": "ability_power",
+                        "scope": "total"
+                      }
+                    ]
+                  }
+                ]
+              },
+              "label": "Derivado",
+              "source": "Characters/Nidalee/Spells/AspectOfTheCougarAbility/AspectOfTheCougar.mSpellCalculations.TotalPounceDamage (16.23.8406595+branch.releases-16-23.content.release)",
+              "damage_type_source": "spell_pounce_tooltip <magicDamage>"
+            }
+          ]
+        },
+        {
+          "id": "cougar_swipe",
+          "name": "Puma E: Zarpazo",
+          "parts": [
+            {
+              "damage_type": "magic",
+              "formula": {
+                "op": "add",
+                "operands": [
+                  {
+                    "op": "by_rank",
+                    "values": [
+                      70,
+                      130,
+                      190,
+                      250
+                    ]
+                  },
+                  {
+                    "op": "mul",
+                    "operands": [
+                      {
+                        "op": "constant",
+                        "value": 0.7
+                      },
+                      {
+                        "op": "stat",
+                        "stat": "attack_damage",
+                        "scope": "bonus"
+                      }
+                    ]
+                  },
+                  {
+                    "op": "mul",
+                    "operands": [
+                      {
+                        "op": "constant",
+                        "value": 0.55
+                      },
+                      {
+                        "op": "stat",
+                        "stat": "ability_power",
+                        "scope": "total"
+                      }
+                    ]
+                  }
+                ]
+              },
+              "label": "Derivado",
+              "source": "Characters/Nidalee/Spells/AspectOfTheCougarAbility/AspectOfTheCougar.mSpellCalculations.TotalSwipeDamage (16.23.8406595+branch.releases-16-23.content.release)",
+              "damage_type_source": "spell_swipe_tooltip <magicDamage>"
+            }
+          ]
+        }
+      ],
       "passive_stats": [],
       "not_modelled": [
         "Cambio entre forma humana y felina desde nivel 1; los daños felinos (TotalTakedownDamage, TotalPounceDamage, TotalSwipeDamage) pertenecen a los hechizos de forma felina"

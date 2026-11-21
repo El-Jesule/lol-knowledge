@@ -7,8 +7,8 @@
   "verified_against": {
     "content_version": "16.23.8406595+branch.releases-16-23.content.release",
     "bin_sha256": "37a8886a56a4c8a2f7912151a30cfdd801186fc78a511c7e72fe6932cc82140a",
-    "evidence": "odd/tasks/champion-kits-wave-4.md",
-    "result": "Bin del cliente 16.23 convertido con python -m binmodel.batch_kits y compilado con esta especificación curada (CH-01 oleada 4 — cierre 173/173)"
+    "evidence": "odd/tasks/champion-wave-mechanics.md",
+    "result": "Bin del cliente 16.23 convertido con python -m binmodel.batch_kits y compilado con esta especificación curada (CH-04 mecánicas de oleadas)"
   },
   "source": "Árboles de cálculo del bin del cliente (python -m binmodel) y marcado de los tooltips del cliente; estructura de casos curada en research/kits/",
   "abilities": {
@@ -27,7 +27,7 @@
       "cases": [
         {
           "id": "base",
-          "name": "Aliento base (0 cargas, sin crítico)",
+          "name": "Aliento base (componente físico)",
           "parts": [
             {
               "damage_type": "physical",
@@ -63,6 +63,62 @@
               "label": "Derivado",
               "source": "Characters/Smolder/Spells/SmolderQAbility/SmolderQ.mSpellCalculations.TotalDamage (16.23.8406595+branch.releases-16-23.content.release)",
               "damage_type_source": "spell_smolderq_tooltip2 <physicalDamage>"
+            }
+          ]
+        },
+        {
+          "id": "tier3_burn",
+          "name": "Quemadura verdadera con 225+ cargas (3 s, escala con DA adicional y --input dragon_practice_stacks)",
+          "parts": [
+            {
+              "damage_type": "true",
+              "formula": {
+                "op": "mul",
+                "operands": [
+                  {
+                    "op": "add",
+                    "operands": [
+                      {
+                        "op": "mul",
+                        "operands": [
+                          {
+                            "op": "constant",
+                            "value": 0.00025
+                          },
+                          {
+                            "op": "stat",
+                            "stat": "attack_damage",
+                            "scope": "bonus"
+                          }
+                        ]
+                      },
+                      {
+                        "op": "mul",
+                        "operands": [
+                          {
+                            "op": "input",
+                            "name": "dragon_practice_stacks",
+                            "default": 0
+                          },
+                          {
+                            "op": "constant",
+                            "value": 5e-05
+                          }
+                        ]
+                      }
+                    ]
+                  },
+                  {
+                    "op": "stat",
+                    "stat": "health",
+                    "scope": "max",
+                    "subject": "target"
+                  }
+                ]
+              },
+              "label": "Derivado",
+              "source": "Characters/Smolder/Spells/SmolderQAbility/SmolderQ · mSpellCalculations.Tier3_Burn × vida máxima del objetivo (--input dragon_practice_stacks) (16.23.8406595+branch.releases-16-23.content.release)",
+              "damage_type_source": "spell_smolderq_tooltip2 <trueDamage>"
             }
           ]
         }

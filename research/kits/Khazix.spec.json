@@ -4,8 +4,8 @@
   "verified_against": {
     "content_version": "16.23.8406595+branch.releases-16-23.content.release",
     "bin_sha256": "1a8235e2c1dcc9d1560e88d8a465301a4e5bc8ee792ced0b07144a1586a0c00a",
-    "evidence": "odd/tasks/champion-kits-wave-4.md",
-    "result": "Bin del cliente 16.23 convertido con python -m binmodel.batch_kits y compilado con esta especificación curada (CH-01 oleada 4 — cierre 173/173)"
+    "evidence": "odd/tasks/champion-wave-mechanics.md",
+    "result": "Bin del cliente 16.23 convertido con python -m binmodel.batch_kits y compilado con esta especificación curada (CH-04 mecánicas de oleadas)"
   },
   "abilities": {
     "P": {
@@ -29,23 +29,65 @@
     },
     "Q": {
       "name": "Saborea su miedo",
-      "tooltip": "spell_khazixq_tooltip",
+      "tooltip": "spell_khazixq_tooltip_0",
       "not_modelled": [
-        "Q.BaseDamage y Q.IsoDamage (+110 % aislado) usan EffectValue en el bin (no traducible por kitgen); evolución con alcance y 45 % devolución de CD"
+        "Alcance adicional y reembolso del 45 % del enfriamiento contra objetivos aislados al evolucionar Q"
+      ],
+      "cases": [
+        {
+          "id": "normal",
+          "name": "Objetivo no aislado",
+          "parts": [
+            {
+              "calculation": "BaseDamage"
+            }
+          ]
+        },
+        {
+          "id": "isolated",
+          "name": "Objetivo aislado (+110 %)",
+          "parts": [
+            {
+              "calculation": "IsoDamage"
+            }
+          ]
+        }
       ]
     },
     "W": {
       "name": "Pincho del Vacío",
-      "tooltip": "spell_khazixw_tooltip",
+      "tooltip": "spell_khazixw_tooltip_0",
       "not_modelled": [
-        "W.BaseDamage usa EffectValue en el bin; curación cercana (HealAmount) y evolución de 3 pinchos con ralentización"
+        "Curación propia al estar cerca de la explosión y cono triple evolucionado"
+      ],
+      "cases": [
+        {
+          "id": "spike",
+          "name": "Pincho explosivo",
+          "parts": [
+            {
+              "calculation": "BaseDamage"
+            }
+          ]
+        }
       ]
     },
     "E": {
       "name": "Salto",
-      "tooltip": "spell_khazixe_tooltip",
+      "tooltip": "spell_khazixe_tooltip_0",
       "not_modelled": [
-        "E.TotalDamage usa EffectValue en el bin; evolución de alcance (1000) y reinicio por derribo"
+        "Alcance adicional y reinicio de enfriamiento en derribos al evolucionar E"
+      ],
+      "cases": [
+        {
+          "id": "leap",
+          "name": "Aterrizaje del salto",
+          "parts": [
+            {
+              "calculation": "TotalDamage"
+            }
+          ]
+        }
       ]
     },
     "R": {

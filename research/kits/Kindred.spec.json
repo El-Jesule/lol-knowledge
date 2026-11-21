@@ -4,8 +4,8 @@
   "verified_against": {
     "content_version": "16.23.8406595+branch.releases-16-23.content.release",
     "bin_sha256": "c3813711923cfde1260d748ee7d8a4088bbde213a6851c83e928adbb62603b3f",
-    "evidence": "odd/tasks/champion-kits-wave-4.md",
-    "result": "Bin del cliente 16.23 convertido con python -m binmodel.batch_kits y compilado con esta especificación curada (CH-01 oleada 4 — cierre 173/173)"
+    "evidence": "odd/tasks/champion-wave-mechanics.md",
+    "result": "Bin del cliente 16.23 convertido con python -m binmodel.batch_kits y compilado con esta especificación curada (CH-04 mecánicas de oleadas)"
   },
   "abilities": {
     "P": {
@@ -14,7 +14,8 @@
       "max_rank": 1,
       "not_modelled": [
         "Acumulaciones de Marca de Kindred (alcance en 4/+3 marcas, VA en Q y % vida en W/E)"
-      ]
+      ],
+      "cases": []
     },
     "Q": {
       "name": "Danza de flechas",
@@ -40,7 +41,7 @@
       "cases": [
         {
           "id": "wolf_bite_0_marks",
-          "name": "Mordisco de Lobo (0 marcas: base + 1,5 % vida actual)",
+          "name": "Mordisco de Lobo (base + % vida actual con --input kindred_marks)",
           "parts": [
             {
               "calculation": "BaseWolfDamage"
@@ -48,13 +49,13 @@
             {
               "tooltip_reference": "PercentWolfDamage",
               "damage_type": "magic",
-              "source_note": "DataValues.CloneBasePercentDamage × vida actual del objetivo (0 marcas)",
+              "source_note": "mSpellCalculations.PercentWolfDamage × vida actual del objetivo (--input kindred_marks)",
               "formula": {
                 "op": "mul",
                 "operands": [
                   {
-                    "op": "data_value",
-                    "name": "CloneBasePercentDamage"
+                    "op": "calculation",
+                    "name": "PercentWolfDamage"
                   },
                   {
                     "op": "stat",
@@ -78,7 +79,7 @@
       "cases": [
         {
           "id": "bite_0_marks",
-          "name": "Detonación de 3 ataques (0 marcas: base + 5 % vida faltante)",
+          "name": "Detonación de 3 ataques (base + % vida faltante con --input kindred_marks)",
           "parts": [
             {
               "calculation": "BaseBiteDamage"
@@ -86,13 +87,13 @@
             {
               "tooltip_reference": "PercentBiteDamage",
               "damage_type": "physical",
-              "source_note": "DataValues.BasePercentDamage × vida faltante del objetivo (0 marcas)",
+              "source_note": "mSpellCalculations.PercentBiteDamage × vida faltante del objetivo (--input kindred_marks)",
               "formula": {
                 "op": "mul",
                 "operands": [
                   {
-                    "op": "data_value",
-                    "name": "BasePercentDamage"
+                    "op": "calculation",
+                    "name": "PercentBiteDamage"
                   },
                   {
                     "op": "stat",

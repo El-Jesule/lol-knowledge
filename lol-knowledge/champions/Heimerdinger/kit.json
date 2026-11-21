@@ -7,8 +7,8 @@
   "verified_against": {
     "content_version": "16.23.8406595+branch.releases-16-23.content.release",
     "bin_sha256": "eec638a80642c4defc34a12205db270088f177c5867b42ec8c2514ba43e95d94",
-    "evidence": "odd/tasks/champion-kits-wave-3.md",
-    "result": "Bin del cliente 16.23 convertido con python -m binmodel.batch_kits y compilado con esta especificación curada (CH-01 oleada 3)"
+    "evidence": "odd/tasks/champion-wave-mechanics.md",
+    "result": "Bin del cliente 16.23 convertido con python -m binmodel.batch_kits y compilado con esta especificación curada (CH-04 mecánicas de oleadas)"
   },
   "source": "Árboles de cálculo del bin del cliente (python -m binmodel) y marcado de los tooltips del cliente; estructura de casos curada en research/kits/",
   "abilities": {
@@ -24,10 +24,93 @@
     "Q": {
       "name": "Torreta evolucionada H-28 G",
       "max_rank": 5,
-      "cases": [],
+      "cases": [
+        {
+          "id": "turret_shot",
+          "name": "Disparo básico de torreta H-28G",
+          "parts": [
+            {
+              "damage_type": "magic",
+              "formula": {
+                "op": "add",
+                "operands": [
+                  {
+                    "op": "by_rank",
+                    "values": [
+                      7,
+                      11,
+                      15,
+                      19,
+                      23
+                    ]
+                  },
+                  {
+                    "op": "mul",
+                    "operands": [
+                      {
+                        "op": "constant",
+                        "value": 0.35
+                      },
+                      {
+                        "op": "stat",
+                        "stat": "ability_power",
+                        "scope": "total"
+                      }
+                    ]
+                  }
+                ]
+              },
+              "label": "Derivado",
+              "source": "Characters/Heimerdinger/Spells/HeimerdingerQAbility/HeimerdingerQ.mSpellCalculations.Damage (16.23.8406595+branch.releases-16-23.content.release)",
+              "damage_type_source": "spell_heimerdingerq_tooltipextendedbelowline <magicDamage>"
+            }
+          ]
+        },
+        {
+          "id": "turret_beam",
+          "name": "Rayo láser cargado de torreta",
+          "parts": [
+            {
+              "damage_type": "magic",
+              "formula": {
+                "op": "add",
+                "operands": [
+                  {
+                    "op": "by_rank",
+                    "values": [
+                      40,
+                      60,
+                      80,
+                      100,
+                      120
+                    ]
+                  },
+                  {
+                    "op": "mul",
+                    "operands": [
+                      {
+                        "op": "constant",
+                        "value": 0.55
+                      },
+                      {
+                        "op": "stat",
+                        "stat": "ability_power",
+                        "scope": "total"
+                      }
+                    ]
+                  }
+                ]
+              },
+              "label": "Derivado",
+              "source": "Characters/Heimerdinger/Spells/HeimerdingerQAbility/HeimerdingerQ.mSpellCalculations.DamageBeam (16.23.8406595+branch.releases-16-23.content.release)",
+              "damage_type_source": "spell_heimerdingerq_tooltipextendedbelowline <magicDamage>"
+            }
+          ]
+        }
+      ],
       "passive_stats": [],
       "not_modelled": [
-        "Los disparos (Damage) y el rayo (DamageBeam) de la torreta usan referencias internas no expuestas como casos planos en el tooltip principal; vida de torreta (TurretHealth)"
+        "Vida/resistencias de la torreta y recarga de kits"
       ]
     },
     "W": {

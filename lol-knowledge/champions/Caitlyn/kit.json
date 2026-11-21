@@ -7,15 +7,117 @@
   "verified_against": {
     "content_version": "16.23.8406595+branch.releases-16-23.content.release",
     "bin_sha256": "a9ee373a5d7fc8533ca9fbd6d3af986731695e071beae0fd238c1ee611990ccf",
-    "evidence": "odd/tasks/champion-kits-wave-2.md",
-    "result": "Bin del cliente 16.23 convertido con python -m binmodel.batch_kits y compilado con esta especificación curada (CH-01 oleada 2)"
+    "evidence": "odd/tasks/champion-wave-mechanics.md",
+    "result": "Bin del cliente 16.23 convertido con python -m binmodel.batch_kits y compilado con esta especificación curada (CH-04 mecánicas de oleadas)"
   },
   "source": "Árboles de cálculo del bin del cliente (python -m binmodel) y marcado de los tooltips del cliente; estructura de casos curada en research/kits/",
   "abilities": {
     "P": {
       "name": "Disparo a la cabeza",
       "max_rank": 1,
-      "cases": [],
+      "cases": [
+        {
+          "id": "headshot_bonus",
+          "name": "Daño físico adicional de Disparo a la cabeza",
+          "parts": [
+            {
+              "damage_type": "physical",
+              "formula": {
+                "op": "mul",
+                "operands": [
+                  {
+                    "op": "add",
+                    "operands": [
+                      {
+                        "op": "by_level",
+                        "values": [
+                          0.6,
+                          0.6,
+                          0.6,
+                          0.6,
+                          0.6,
+                          0.6,
+                          0.7,
+                          0.7,
+                          0.7,
+                          0.7,
+                          0.7,
+                          0.7,
+                          0.8,
+                          0.8,
+                          0.8,
+                          0.8,
+                          0.8,
+                          0.8
+                        ]
+                      },
+                      {
+                        "op": "mul",
+                        "operands": [
+                          {
+                            "op": "mul",
+                            "operands": [
+                              {
+                                "op": "constant",
+                                "value": 0.8
+                              },
+                              {
+                                "op": "stat",
+                                "stat": "crit_chance",
+                                "scope": "total"
+                              }
+                            ]
+                          },
+                          {
+                            "op": "add",
+                            "operands": [
+                              {
+                                "op": "mul",
+                                "operands": [
+                                  {
+                                    "op": "constant",
+                                    "value": 1
+                                  },
+                                  {
+                                    "op": "add",
+                                    "operands": [
+                                      {
+                                        "op": "constant",
+                                        "value": 2
+                                      },
+                                      {
+                                        "op": "stat",
+                                        "stat": "crit_damage_bonus",
+                                        "scope": "total"
+                                      }
+                                    ]
+                                  }
+                                ]
+                              },
+                              {
+                                "op": "constant",
+                                "value": -1
+                              }
+                            ]
+                          }
+                        ]
+                      }
+                    ]
+                  },
+                  {
+                    "op": "stat",
+                    "stat": "attack_damage",
+                    "scope": "total"
+                  }
+                ]
+              },
+              "label": "Derivado",
+              "source": "Characters/Caitlyn/Spells/CaitlynPassiveAbility/CaitlynPassive.mSpellCalculations.HeadshotBonusDamage (16.23.8406595+branch.releases-16-23.content.release)",
+              "damage_type_source": "spell_caitlynp_tooltip <physicalDamage>"
+            }
+          ]
+        }
+      ],
       "passive_stats": [],
       "not_modelled": [
         "Daño adicional de Disparo a la cabeza cada 6 ataques (HeadshotBonusDamage depende de crítico)"
@@ -239,8 +341,8 @@
       "max_rank": 3,
       "cases": [
         {
-          "id": "shot",
-          "name": "Disparo (sin bonificación de crítico)",
+          "id": "ace",
+          "name": "Disparo francotirador (con escalado crítico)",
           "parts": [
             {
               "damage_type": "physical",

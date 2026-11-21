@@ -135,8 +135,8 @@ def test_every_published_kit_evaluates_all_cases_and_timeline_rotation(champion_
         non_recast = [case for case in ability.cases if not case.recast]
         if non_recast:
             step_tokens.append(f"{slot}.{non_recast[0].id}")
-    # Champions whose active slots all depend on unmodelled bin nodes (Khazix, Ryze) yield 1 step.
-    assert len(step_tokens) >= 1
+    # Every champion in the 173-kit catalog has at least one active damage slot plus basic attack.
+    assert len(step_tokens) >= 2
     out = evaluate_rotation(
         kit,
         sheet18,
@@ -571,3 +571,144 @@ def test_wave_4_spot_checks_ambessa_mordekaiser_tf_olaf_senna_yone_kayn_udyr_var
     assert [p.damage_type for p in bel_r] == ["true", "true"]
     assert bel_r[0].raw == F(250)
     assert bel_r[1].raw == F(200)  # 20% of 1000 missing HP
+
+
+def test_wave_mechanics_representative_kits_verify_exact_numbers():
+    # 1. EffectValueCalculationPart: Chogath W, Khazix Q/W/E, Fizz Q, JarvanIV E, Kaisa W, Velkoz R
+    chogath_kit = load_kit(ROOT, "Chogath")
+    assert chogath_kit is not None
+    chogath_w = ability_damage(chogath_kit, "W", 5, _sheet("Chogath", 18), case="scream")[0]
+    assert (chogath_w.damage_type, chogath_w.raw) == ("magic", F(280))
+
+    khazix_kit = load_kit(ROOT, "Khazix")
+    assert khazix_kit is not None
+    khazix_sheet = _sheet("Khazix", 18)
+    kz_norm = ability_damage(khazix_kit, "Q", 5, khazix_sheet, case="normal")[0]
+    kz_iso = ability_damage(khazix_kit, "Q", 5, khazix_sheet, case="isolated")[0]
+    assert kz_norm.raw == F(180)
+    assert kz_iso.raw == F(180) * F(21, 10)  # 378
+
+    velkoz_kit = load_kit(ROOT, "Velkoz")
+    assert velkoz_kit is not None
+    vk_r = ability_damage(velkoz_kit, "R", 3, _sheet("Velkoz", 18), case="full_channel")[0]
+    assert (vk_r.damage_type, vk_r.raw) == ("magic", F(950))
+
+    # 2. Breakpoints with omitted level1_value (0.0): Azir W, Mordekaiser Q, Heimerdinger Q
+    azir_kit = load_kit(ROOT, "Azir")
+    assert azir_kit is not None
+    azir_w1 = ability_damage(azir_kit, "W", 5, _sheet("Azir", 1), case="soldier_stab")[0]
+    azir_w18 = ability_damage(azir_kit, "W", 5, _sheet("Azir", 18), case="soldier_stab")[0]
+    assert azir_w1.raw == F(110)
+    assert azir_w18.raw == F(174)  # 110 + 8 * 8 levels (11..18)
+
+    morde_kit = load_kit(ROOT, "Mordekaiser")
+    assert morde_kit is not None
+    morde_q1 = ability_damage(morde_kit, "Q", 5, _sheet("Mordekaiser", 1), case="multi_target")[0]
+    morde_q18 = ability_damage(morde_kit, "Q", 5, _sheet("Mordekaiser", 18), case="multi_target")[0]
+    morde_iso18 = ability_damage(morde_kit, "Q", 5, _sheet("Mordekaiser", 18), case="isolated")[0]
+    assert morde_q1.raw == F(220)
+    assert morde_q18.raw == F(276)  # 220 + 7 * 8 levels (11..18)
+    assert morde_iso18.raw == morde_q18.raw * F(3, 2)  # 1.5x isolated at rank 5 (414)
+
+    # 3. Mana scaling (AbilityResourceByCoefficientCalculationPart): Ryze Q/W/E, Kassadin R
+    ryze_kit = load_kit(ROOT, "Ryze")
+    assert ryze_kit is not None
+    ryze_base = _sheet("Ryze", 18)
+    ryze_mana = _sheet("Ryze", 18, ("1027",))  # Sapphire Crystal: +300 bonus mana
+    rq0 = ability_damage(ryze_kit, "Q", 5, ryze_base, case="overload")[0]
+    rq1 = ability_damage(ryze_kit, "Q", 5, ryze_mana, case="overload")[0]
+    assert rq1.raw - rq0.raw == F(6)  # +2% of 300 bonus mana
+
+    kass_kit = load_kit(ROOT, "Kassadin")
+    assert kass_kit is not None
+    kr0 = ability_damage(kass_kit, "R", 3, _sheet("Kassadin", 18), case="base")[0]
+    kr4 = ability_damage(kass_kit, "R", 3, _sheet("Kassadin", 18), case="max_4_stacks")
+    assert sum(p.raw for p in kr4) > kr0.raw * 2
+
+    # 4. {b22609db} (Irelia P OnHitBonus): 10 + 3 * (level - 1)
+    irelia_kit = load_kit(ROOT, "Irelia")
+    assert irelia_kit is not None
+    ip1 = ability_damage(irelia_kit, "P", 1, _sheet("Irelia", 1), case="on_hit_4_stacks")[0]
+    ip18 = ability_damage(irelia_kit, "P", 1, _sheet("Irelia", 18), case="on_hit_4_stacks")[0]
+    assert (ip1.raw, ip18.raw) == (F(10), F(61))
+
+    # 5. Corroborated stats (lethality, move_speed, attack_speed, crit_chance, crit_damage)
+    pyke_kit = load_kit(ROOT, "Pyke")
+    assert pyke_kit is not None
+    pyke_r0 = ability_damage(pyke_kit, "R", 3, _sheet("Pyke", 18), case="non_execute_physical")[0]
+    pyke_r_dirk = ability_damage(
+        pyke_kit, "R", 3, _sheet("Pyke", 18, ("3134",)), case="non_execute_physical"
+    )[0]  # Serrated Dirk: +20 AD, +10 lethality -> 0.5 * (0.8*20 + 1.5*10) = 15.5
+    assert pyke_r0.raw == F(270)  # 0.5 * 540
+    assert pyke_r_dirk.raw - pyke_r0.raw == F(31, 2)
+
+    janna_kit = load_kit(ROOT, "Janna")
+    assert janna_kit is not None
+    jw0 = ability_damage(janna_kit, "W", 5, _sheet("Janna", 18), case="hit")[0]
+    jw_boots = ability_damage(janna_kit, "W", 5, _sheet("Janna", 18, ("1001",)), case="hit")[0]
+    assert jw_boots.raw - jw0.raw == F(15, 2)  # 30% of +25 bonus move speed = 7.5
+
+    # 6. BuffCounter stack scaling (--input <stacks>)
+    nasus_kit = load_kit(ROOT, "Nasus")
+    assert nasus_kit is not None
+    nq0 = ability_damage(nasus_kit, "Q", 5, _sheet("Nasus", 18), case="strike")[0]
+    nq120 = ability_damage(
+        nasus_kit,
+        "Q",
+        5,
+        _sheet("Nasus", 18),
+        case="strike",
+        inputs={"siphoning_strike_stacks": F(120)},
+    )[0]
+    assert nq120.raw - nq0.raw == F(120)
+
+    cho_e0 = ability_damage(
+        chogath_kit, "E", 5, _sheet("Chogath", 18), case="spike", target={"max_health": F(2000)}
+    )
+    cho_e10 = ability_damage(
+        chogath_kit,
+        "E",
+        5,
+        _sheet("Chogath", 18),
+        case="spike",
+        inputs={"feast_stacks": F(10)},
+        target={"max_health": F(2000)},
+    )
+    assert cho_e10[1].raw - cho_e0[1].raw == F(100)  # 10 * 0.5% = 5% of 2000 = 100
+
+    asol_kit = load_kit(ROOT, "AurelionSol")
+    assert asol_kit is not None
+    aq0 = ability_damage(
+        asol_kit, "Q", 5, _sheet("AurelionSol", 18), case="burst", target={"max_health": F(2000)}
+    )[0]
+    aq100 = ability_damage(
+        asol_kit,
+        "Q",
+        5,
+        _sheet("AurelionSol", 18),
+        case="burst",
+        inputs={"stardust_stacks": F(100)},
+        target={"max_health": F(2000)},
+    )[0]
+    assert aq100.raw - aq0.raw == F(62)  # 100 * 0.00031 * 2000 = 62
+
+    swain50 = _sheet("Swain", 18, inputs={"soul_fragments": F(50)})
+    swain0 = _sheet("Swain", 18, inputs={"soul_fragments": F(0)})
+    assert swain50["health"].total() - swain0["health"].total() == F(
+        750
+    )  # 50 * 15 HP per soul fragment
+
+    sona120 = _sheet("Sona", 18, inputs={"accelerando_stacks": F(120)})
+    assert sona120["ability_haste"].total() == F(60)
+
+    garen150 = _sheet("Garen", 18, inputs={"courage_stacks": F(150)})
+    garen0 = _sheet("Garen", 18, inputs={"courage_stacks": F(0)})
+    assert garen150["armor"].total() - garen0["armor"].total() == F(30)
+    assert garen150["magic_resist"].total() - garen0["magic_resist"].total() == F(30)
+
+    # 7. Multi-form / Cross-slot cases: Gnar Mega Q/W/E, RekSai Burrowed Q, Nidalee Cougar R
+    gnar_kit = load_kit(ROOT, "Gnar")
+    assert gnar_kit is not None
+    gnar_mini_q = ability_damage(gnar_kit, "Q", 5, _sheet("Gnar", 18), case="mini")[0]
+    gnar_mega_q = ability_damage(gnar_kit, "Q", 5, _sheet("Gnar", 18), case="mega")[0]
+    assert gnar_mega_q.raw > gnar_mini_q.raw

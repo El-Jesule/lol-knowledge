@@ -7,8 +7,8 @@
   "verified_against": {
     "content_version": "16.23.8406595+branch.releases-16-23.content.release",
     "bin_sha256": "6b90c0d9f5c40564363adc6047b4e5ca35eaecc1932d393e4fd2d16ce049c0c2",
-    "evidence": "odd/tasks/champion-kits-wave-1.md",
-    "result": "Bin del cliente 16.23 convertido con python -m binmodel.batch_kits y compilado con esta especificación curada (CH-01 oleada 1)"
+    "evidence": "odd/tasks/champion-wave-mechanics.md",
+    "result": "Bin del cliente 16.23 convertido con python -m binmodel.batch_kits y compilado con esta especificación curada (CH-04 mecánicas de oleadas)"
   },
   "source": "Árboles de cálculo del bin del cliente (python -m binmodel) y marcado de los tooltips del cliente; estructura de casos curada en research/kits/",
   "abilities": {
@@ -19,6 +19,40 @@
       "passive_stats": [],
       "not_modelled": [
         "Regeneración de vida máxima fuera de combate (RegenCalc)"
+      ],
+      "passive_effects": [
+        {
+          "id": "courage_armor",
+          "name": "Coraje de W (Armadura por unidad asesinada)",
+          "kind": "stat_bonus",
+          "formula": {
+            "op": "constant",
+            "value": 0.2
+          },
+          "label": "Derivado",
+          "source": "Characters/Garen/Spells/GarenWAbility/GarenW.DataValues.ResistGainOnKill (16.23.8406595+branch.releases-16-23.content.release)",
+          "stat": "armor",
+          "mode": "flat",
+          "input_name": "courage_stacks",
+          "condition": "Armadura adicional por carga de Coraje de W (--input courage_stacks=0..150)",
+          "max_stacks": 150
+        },
+        {
+          "id": "courage_mr",
+          "name": "Coraje de W (Resistencia mágica por unidad asesinada)",
+          "kind": "stat_bonus",
+          "formula": {
+            "op": "constant",
+            "value": 0.2
+          },
+          "label": "Derivado",
+          "source": "Characters/Garen/Spells/GarenWAbility/GarenW.DataValues.ResistGainOnKill (16.23.8406595+branch.releases-16-23.content.release)",
+          "stat": "magic_resist",
+          "mode": "flat",
+          "input_name": "courage_stacks",
+          "condition": "Resistencia mágica adicional por carga de Coraje de W (--input courage_stacks=0..150)",
+          "max_stacks": 150
+        }
       ]
     },
     "Q": {

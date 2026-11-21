@@ -4,8 +4,8 @@
   "verified_against": {
     "content_version": "16.23.8406595+branch.releases-16-23.content.release",
     "bin_sha256": "fac3cd68b312d5421a772129d6b4a6f0459388804f0fb43dd894bf2458659679",
-    "evidence": "odd/tasks/champion-kits-wave-3.md",
-    "result": "Bin del cliente 16.23 convertido con python -m binmodel.batch_kits y compilado con esta especificación curada (CH-01 oleada 3)"
+    "evidence": "odd/tasks/champion-wave-mechanics.md",
+    "result": "Bin del cliente 16.23 convertido con python -m binmodel.batch_kits y compilado con esta especificación curada (CH-04 mecánicas de oleadas)"
   },
   "abilities": {
     "P": {
@@ -25,6 +25,19 @@
       ],
       "not_modelled": [
         "Aceleración de habilidad permanente de Accelerando (AccelerandoAHCurrent) y efectos de W/E en Energía acorde"
+      ],
+      "passive_effects": [
+        {
+          "id": "accelerando_ah",
+          "name": "Accelerando (Velocidad de habilidades básica por carga)",
+          "kind": "stat_bonus",
+          "stat": "ability_haste",
+          "mode": "flat",
+          "data_value": "AccelerandoAHPerStack",
+          "input_name": "accelerando_stacks",
+          "max_stacks": 120,
+          "condition": "Velocidad de habilidades por carga de Accelerando (--input accelerando_stacks=0..120)"
+        }
       ]
     },
     "Q": {

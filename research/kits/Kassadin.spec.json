@@ -4,8 +4,8 @@
   "verified_against": {
     "content_version": "16.23.8406595+branch.releases-16-23.content.release",
     "bin_sha256": "b6edee11ce2c97377d7fbc92fc82917c8425668b009026d721546d412d5d193e",
-    "evidence": "odd/tasks/champion-kits-wave-2.md",
-    "result": "Bin del cliente 16.23 convertido con python -m binmodel.batch_kits y compilado con esta especificación curada (CH-01 oleada 2)"
+    "evidence": "odd/tasks/champion-wave-mechanics.md",
+    "result": "Bin del cliente 16.23 convertido con python -m binmodel.batch_kits y compilado con esta especificación curada (CH-04 mecánicas de oleadas)"
   },
   "abilities": {
     "P": {
@@ -82,7 +82,54 @@
       "name": "Camino del Vacío",
       "tooltip": "spell_riftwalk_tooltip",
       "not_modelled": [
-        "BaseDamage y BonusDamage usan nodos de escalado de maná máximo sin traducir en el bin; duplicación de coste por cargas"
+        "Duplicación del coste de maná por carga durante 12 s"
+      ],
+      "cases": [
+        {
+          "id": "base",
+          "name": "Salto base (0 cargas)",
+          "parts": [
+            {
+              "calculation": "BaseDamage"
+            }
+          ]
+        },
+        {
+          "id": "per_stack",
+          "name": "Daño adicional por carga (hasta 4)",
+          "parts": [
+            {
+              "calculation": "BonusDamage"
+            }
+          ]
+        },
+        {
+          "id": "max_4_stacks",
+          "name": "Salto con 4 cargas máximas",
+          "parts": [
+            {
+              "calculation": "BaseDamage"
+            },
+            {
+              "tooltip_reference": "BonusDamage",
+              "damage_type": "magic",
+              "source_note": "4 × mSpellCalculations.BonusDamage",
+              "formula": {
+                "op": "mul",
+                "operands": [
+                  {
+                    "op": "constant",
+                    "value": 4
+                  },
+                  {
+                    "op": "calculation",
+                    "name": "BonusDamage"
+                  }
+                ]
+              }
+            }
+          ]
+        }
       ]
     }
   }
