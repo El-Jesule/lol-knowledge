@@ -1842,7 +1842,7 @@ class _Rotation:
 
     def _normal_crit_value(self) -> Fraction | None:
         """Normal crit multiplier (e.g. 2.0, or 2.3 with IE) for forced-crit items (6610, 2512)."""
-        if self.crit_base is None:
+        if not isinstance(self.crit_base, CritBase):
             return None
         bonus = self.sheet["crit_damage_bonus"]
         multiplier = self.crit_base.value + bonus.total()

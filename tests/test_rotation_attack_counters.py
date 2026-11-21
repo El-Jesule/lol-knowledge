@@ -144,7 +144,9 @@ def test_cyclosword_against_a_minion_waits_for_an_attack_and_is_capped():
 
 
 def test_statikk_and_several_energized_items_are_pending():
-    assert run("attack", "3087").label is Label.PENDING
+    statikk = run("attack", "3087")
+    assert statikk.label is Label.DERIVED
+    assert any("3087 electrospark" in p.source for p in statikk.steps[0].parts)
     outcome = run("attack", "3094", "6699")
     assert "several Energized items: whether their Energized effects stack is not verified" in (
         outcome.notes
