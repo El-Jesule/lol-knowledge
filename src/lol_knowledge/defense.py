@@ -654,8 +654,17 @@ class _DefenseSimulator:
                 )
                 projected_hp = max(Fraction(0), health - preview_hp_dmg)
 
-                # 1. Sterak's Gage Lifeline (3053): triggers before dropping below 30% max HP
+                # 1. Lifeline items (3053 Sterak's, 6673 Shieldbow, 3156 Maw, 3155 Hexdrinker)
+                attack_range = self.sheet.champion.stats.get("attackrange")
+                defender_range = (
+                    None if attack_range is None else ("melee" if attack_range < 300 else "ranged")
+                )
                 for title, eff, comp, eff_label in self.lifeline_effects:
+                    shield_kind = str(comp.get("shield_type", "normal"))
+                    if shield_kind == "magic" and hit.damage_type is not DamageType.MAGIC:
+                        continue
+                    if shield_kind == "physical" and hit.damage_type is not DamageType.PHYSICAL:
+                        continue
                     can_proc = (
                         (title not in lifeline_used)
                         if not self.timeline
@@ -668,9 +677,13 @@ class _DefenseSimulator:
                         if lim.get("kind") == "threshold":
                             threshold = Fraction(str(lim["value"])) / 100
                     if projected_hp < threshold * self.max_health:
-                        raw_sh = evaluate_formula(
-                            comp.get("formula"), self.stats_env, level=self.sheet.level
-                        ).exact
+                        evaluated_sh = evaluate_formula(
+                            comp.get("formula"),
+                            self.stats_env,
+                            holder_range=defender_range,
+                            level=self.sheet.level,
+                        )
+                        raw_sh = evaluated_sh.exact
                         assert raw_sh is not None
                         rev_amp = self._revitalize_amp(health)
                         sh_amt = scale_shield(raw_sh, hsp=self.hsp, revitalize_amp=rev_amp)
@@ -698,15 +711,22 @@ class _DefenseSimulator:
                             sh_notes.append(f"Revitalize <40% HP +{format_number(rev_amp * 100)}%")
                         if dur is not None:
                             sh_notes.append(
-                                f"decays over {format_number(dur)} s (decay curve not modelled)"
+                                f"lasts {format_number(dur)} s (decay curve not modelled)"
+                                if title.startswith("3053 ")
+                                else f"lasts {format_number(dur)} s"
                             )
+                        dep_labels = [
+                            self.stat_origin[k][1]
+                            for k in evaluated_sh.dependencies
+                            if k in self.stat_origin
+                        ]
                         ev = ShieldEvent(
                             f"{title} ({eff.get('name', 'Lifeline')})",
                             raw_sh,
                             sh_amt,
-                            "normal",
+                            shield_kind,
                             dur,
-                            weakest((eff_label, self.sheet["health"].label)),
+                            weakest([eff_label, self.sheet["health"].label, *dep_labels]),
                             tuple(sh_notes),
                         )
                         granted.append(ev)
@@ -714,7 +734,7 @@ class _DefenseSimulator:
                             _ActiveShield(
                                 ev.source,
                                 sh_amt,
-                                "normal",
+                                shield_kind,
                                 None if (not self.timeline or dur is None) else clock + dur,
                             )
                         )

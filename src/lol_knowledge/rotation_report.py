@@ -64,7 +64,13 @@ def _part_line(part: Part, heals: bool) -> list[str]:
     if part.taken:
         modifiers.append(f"taken ({_percent_list(part.taken)}) x{format_number(part.taken_factor)}")
     tail = f"; {'; '.join(modifiers)}" if modifiers else ""
-    if part.targets_hit > 1:
+    if not part.hits_primary:
+        unit = part.mitigation.damage * part.dealt_factor * part.taken_factor
+        lines.append(
+            f"      {mitigation}{tail} = {format_number(unit)} x{part.targets_hit} secondary "
+            f"= {format_number(part.damage)}"
+        )
+    elif part.targets_hit > 1:
         if part.secondary_damage_ratio == 1:
             lines.append(
                 f"      {mitigation}{tail} = {format_number(part.primary_damage)} "
@@ -302,6 +308,7 @@ def _part_dict(part: Part) -> dict[str, Any]:
         "dealt_modifiers": [{"effect": name, "percent": float(p)} for name, p in part.dealt],
         "taken_modifiers": [{"effect": name, "percent": float(p)} for name, p in part.taken],
         "aoe": part.aoe,
+        "hits_primary": part.hits_primary,
         "targets_hit": part.targets_hit,
         "secondary_damage_ratio": float(part.secondary_damage_ratio),
         "primary_damage": float(part.primary_damage),
