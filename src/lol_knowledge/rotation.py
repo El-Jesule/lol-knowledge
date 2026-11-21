@@ -113,7 +113,7 @@ ATTACK_SPEED_STATS = frozenset({"attack_speed", "attack_speed_bonus"})
 REDUCED_OMNIVAMP_KINDS = frozenset({"minion", "monster"})
 
 WAIT_SECONDS = re.compile(r"\d+(?:\.\d+)?")
-_ABILITY_STEP = re.compile(r"(?P<slot>[QWER])(?:\.(?P<case>[a-z0-9_]+))?")
+_ABILITY_STEP = re.compile(r"(?P<slot>[QWER])(?:\.(?P<case>[a-z0-9_]+))?(?:@(?P<targets>\d+))?")
 
 
 @dataclass(frozen=True)
@@ -128,10 +128,12 @@ class Step:
     spellblade: bool = True
     # Seconds to wait, for ``wait:<seconds>`` (timeline only, timeline.md).
     wait: Fraction | None = None
+    # Explicit target count override for an ability step (e.g. ``R.dash@3``).
+    targets: int | None = None
 
 
 def parse_steps(text: str) -> tuple[Step, ...]:
-    """Read ``attack``, ``attack:crit``, ``attack:nospellblade``, ``Q``, ``E.edge``…
+    """Read ``attack``, ``attack:crit``, ``attack:nospellblade``, ``Q``, ``E.edge``, ``R.dash@3``…
 
     Steps are separated by commas or spaces; an attack takes any of the
     modifiers ``crit`` and ``nospellblade``, once each and in any order.
@@ -160,7 +162,13 @@ def parse_steps(text: str) -> tuple[Step, ...]:
                 f"unknown step {token!r}: use attack, attack:crit, attack:nospellblade, "
                 "Q, W, E, R or SLOT.case"
             )
-        steps.append(Step(token, match.group("slot"), match.group("case")))
+        raw_targets = match.group("targets")
+        step_targets: int | None = None
+        if raw_targets is not None:
+            step_targets = int(raw_targets)
+            if step_targets < 1:
+                raise RotationError(f"step {token!r}: target count must be at least 1")
+        steps.append(Step(token, match.group("slot"), match.group("case"), targets=step_targets))
     return tuple(steps)
 
 
@@ -198,7 +206,7 @@ NO_HEALING = Healing(Fraction(0), Fraction(0), Fraction(0), Label.OFFICIAL)
 
 @dataclass(frozen=True)
 class Part:
-    kind: str  # "attack", "on_hit", "ability", "burn" or "execute"
+    kind: str  # "attack", "on_hit", "ability", "burn", "rune" or "execute"
     source: str
     damage_type: DamageType
     raw: Fraction
@@ -208,6 +216,9 @@ class Part:
     label: Label
     notes: tuple[str, ...] = ()
     healing: Healing = NO_HEALING
+    targets_hit: int = 1
+    secondary_damage_ratio: Fraction = Fraction(1)
+    aoe: bool | None = None
 
     @property
     def dealt_factor(self) -> Fraction:
@@ -223,8 +234,19 @@ class Part:
         return factor
 
     @property
-    def damage(self) -> Fraction:
+    def primary_damage(self) -> Fraction:
+        """Post-mitigation and post-modifier damage dealt to the primary target."""
         return self.mitigation.damage * self.dealt_factor * self.taken_factor
+
+    @property
+    def secondary_damage(self) -> Fraction:
+        """Total post-mitigation and post-modifier damage dealt to secondary targets."""
+        return self.primary_damage * (self.targets_hit - 1) * self.secondary_damage_ratio
+
+    @property
+    def damage(self) -> Fraction:
+        """Total damage dealt by this part across all targets hit."""
+        return self.primary_damage + self.secondary_damage
 
 
 @dataclass(frozen=True)
@@ -247,6 +269,18 @@ class StepOutcome:
     resource_events: tuple[ResourceEvent, ...] = ()
 
     @property
+    def primary_total(self) -> Fraction:
+        return sum((part.primary_damage for part in self.parts), start=Fraction(0))
+
+    @property
+    def secondary_total(self) -> Fraction:
+        return sum((part.secondary_damage for part in self.parts), start=Fraction(0))
+
+    @property
+    def targets_hit(self) -> int:
+        return max((part.targets_hit for part in self.parts), default=1)
+
+    @property
     def total(self) -> Fraction:
         return sum((part.damage for part in self.parts), start=Fraction(0))
 
@@ -256,7 +290,7 @@ class StepOutcome:
 
     @property
     def health_damage(self) -> Fraction:
-        return self.total - self.shield_absorbed
+        return self.primary_total - self.shield_absorbed
 
     @property
     def health_after(self) -> Fraction:
@@ -322,6 +356,15 @@ class RotationOutcome:
     effective_healing: Fraction | None = None
     grievous_wounds_applied: bool = False
     resource: ResourceSummary | None = None
+    target_count: int = 1
+
+    @property
+    def primary_total(self) -> Fraction:
+        return sum((step.primary_total for step in self.steps), start=Fraction(0))
+
+    @property
+    def secondary_total(self) -> Fraction:
+        return sum((step.secondary_total for step in self.steps), start=Fraction(0))
 
     @property
     def total(self) -> Fraction:
@@ -651,8 +694,12 @@ class _Rotation:
         start_resource: Fraction | None = None,
         allow_insufficient_resource: bool = False,
         apply_passives: bool = True,
+        target_count: int = 1,
     ) -> None:
+        if isinstance(target_count, bool) or not isinstance(target_count, int) or target_count < 1:
+            raise RotationError("target count must be an integer >= 1")
         self.kit, self.sheet, self.ranks, self.target = kit, sheet, ranks, target
+        self.target_count = target_count
         self.base_sheet = sheet
         self.timeline = self._timeline() if timeline else None
         self.crit_base, self.holder_range, self.inputs = crit_base, holder_range, inputs
@@ -1047,7 +1094,7 @@ class _Rotation:
         absorbed_total = Fraction(0)
         for part in parts:
             absorbed, hp_dmg = absorb_shield(
-                part.damage,
+                part.primary_damage,
                 part.damage_type,
                 shield,
                 self.target.shield_type,
@@ -1284,6 +1331,9 @@ class _Rotation:
         life_steal_tag: Mapping[str, Any] | None = None,
         slot: str | None = None,
         apply_modifiers: bool = True,
+        targets_hit: int = 1,
+        secondary_damage_ratio: Fraction = Fraction(1),
+        aoe: bool | None = None,
     ) -> Part:
         modifiers = penetration_modifiers(self.sheet, damage_type)
         shred = self.shred.get(damage_type, [])
@@ -1321,6 +1371,9 @@ class _Rotation:
             tuple(taken),
             weakest([*labels, *modifier_labels]),
             (*notes, *modifier_notes),
+            targets_hit=targets_hit,
+            secondary_damage_ratio=secondary_damage_ratio,
+            aoe=aoe,
         )
         return replace(part, healing=self._healing(part, life_steal_tag))
 
@@ -1367,11 +1420,15 @@ class _Rotation:
             elif part.kind == "ability":
                 kind = _target_kind(self.target, "omnivamp healing from an ability")
                 if kind in REDUCED_OMNIVAMP_KINDS:
-                    labels.append(Label.PENDING)
-                    notes.append(
-                        f"omnivamp against a {kind} is 33% for pets, damage over time and "
-                        "area spells; the kit does not say which, healed at 100%"
-                    )
+                    if part.aoe is True:
+                        omnivamp /= 3
+                        notes.append(f"omnivamp from an area ability against a {kind}: 33%")
+                    elif part.aoe is None:
+                        labels.append(Label.PENDING)
+                        notes.append(
+                            f"omnivamp against a {kind} is 33% for pets, damage over time and "
+                            "area spells; the kit does not say which, healed at 100%"
+                        )
         if rune_heal is not None and self.target.kind == "champion":
             omnivamp += rune_heal[0]
             labels.append(rune_heal[1])
@@ -1825,7 +1882,9 @@ class _Rotation:
         shield_absorbed: Fraction = Fraction(0),
     ) -> list[Part]:
         """An execute: the target's remaining health as true damage (execute.md)."""
-        left = health - (sum((part.damage for part in parts), start=Fraction(0)) - shield_absorbed)
+        left = health - (
+            sum((part.primary_damage for part in parts), start=Fraction(0)) - shield_absorbed
+        )
         for effect in self.executes:
             if left <= 0 or not parts:
                 return []
@@ -1960,18 +2019,40 @@ class _Rotation:
             )
         except KitError as exc:
             raise RotationError(f"step {step.text}: {exc}") from exc
-        notes = tuple(f"{ability.slot}: {note}" for note in ability.not_modelled)
+        case_spec = ability.case(step.case) if step.case is not None else ability.cases[0]
+        step_targets = step.targets if step.targets is not None else self.target_count
+        targets_hit, sec_ratio, unverified = case_spec.resolve_targets(step_targets)
+        notes = list(f"{ability.slot}: {note}" for note in ability.not_modelled)
+        extra_labels: list[Label] = []
+        if unverified:
+            extra_labels.append(Label.PENDING)
+            self.weakened = True
+            self.notes.append(
+                f"step {step.text} ({ability.slot}.{case_spec.id}): kit does not declare aoe or "
+                f"max_targets; evaluated against 1 of {step_targets} targets"
+            )
+        if targets_hit > 1:
+            if sec_ratio == 1:
+                notes.append(f"hits {targets_hit} targets (primary + {targets_hit - 1} secondary)")
+            else:
+                notes.append(
+                    f"hits {targets_hit} targets (primary at 100% + {targets_hit - 1} secondary "
+                    f"at {format_number(sec_ratio * 100)}%)"
+                )
         parts = [
             self._part(
                 "ability",
                 f"{ability.slot}.{part.case}[{part.index}] {part.source}",
                 part.damage_type,
                 part.raw,
-                [part.label],
+                [part.label, *extra_labels],
                 False,
                 target_stats,
-                notes,
+                tuple(notes),
                 slot=ability.slot,
+                targets_hit=targets_hit,
+                secondary_damage_ratio=sec_ratio,
+                aoe=case_spec.aoe,
             )
             for part in raw_parts
         ]
@@ -2214,7 +2295,7 @@ class _Rotation:
                         slot="P",
                     )
                 )
-            step_damage = sum((p.damage for p in parts[accrued_count:]), start=Fraction(0))
+            step_damage = sum((p.primary_damage for p in parts[accrued_count:]), start=Fraction(0))
             step_after, shield_after, step_absorbed = self._absorb_parts(
                 parts[accrued_count:], health, shield
             )
@@ -2249,7 +2330,8 @@ class _Rotation:
                 total_absorbed += extra_absorbed
             parts += self._execute(parts, before, target_stats, total_absorbed)
             final_hp = max(
-                Fraction(0), before - (sum((p.damage for p in parts), Fraction(0)) - total_absorbed)
+                Fraction(0),
+                before - (sum((p.primary_damage for p in parts), Fraction(0)) - total_absorbed),
             )
             killed_now = before > 0 and final_hp == 0
             for raw_heal in self.rune_combat.on_step_heals(
@@ -2423,6 +2505,7 @@ class _Rotation:
             effective_healing=self.effective_healing_total,
             grievous_wounds_applied=self.grievous_used,
             resource=resource_summary,
+            target_count=self.target_count,
         )
 
 
@@ -2443,6 +2526,7 @@ def evaluate_rotation(
     start_resource: Fraction | None = None,
     allow_insufficient_resource: bool = False,
     apply_passives: bool = True,
+    target_count: int = 1,
 ) -> RotationOutcome:
     """Damage of every step against ``target``, carrying its current health forward.
 
@@ -2471,5 +2555,6 @@ def evaluate_rotation(
         start_resource=start_resource,
         allow_insufficient_resource=allow_insufficient_resource,
         apply_passives=apply_passives,
+        target_count=target_count,
     )
     return rotation.run(steps)

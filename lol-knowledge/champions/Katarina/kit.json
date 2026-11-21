@@ -101,7 +101,8 @@
               "source": "Characters/Katarina/Spells/KatarinaPassiveAbility/KatarinaPassive.mSpellCalculations.TotalDamage (16.23.8406595+branch.releases-16-23.content.release)",
               "damage_type_source": "spell_katarinapassive_tooltip <magicDamage>"
             }
-          ]
+          ],
+          "aoe": true
         }
       ],
       "passive_stats": [],
@@ -152,7 +153,9 @@
               "source": "Characters/Katarina/Spells/KatarinaQAbility/KatarinaQ.mSpellCalculations.TotalDamage (16.23.8406595+branch.releases-16-23.content.release)",
               "damage_type_source": "spell_katarinaq_tooltip <magicDamage>"
             }
-          ]
+          ],
+          "aoe": true,
+          "max_targets": 3
         }
       ],
       "passive_stats": [],
@@ -226,7 +229,9 @@
               "source": "Characters/Katarina/Spells/KatarinaEWrapperAbility/KatarinaEWrapper.mSpellCalculations.TotalDamage (16.23.8406595+branch.releases-16-23.content.release)",
               "damage_type_source": "spell_katarinaewrapper_tooltip <magicDamage>"
             }
-          ]
+          ],
+          "aoe": false,
+          "max_targets": 1
         }
       ],
       "passive_stats": [],
@@ -275,7 +280,9 @@
               "source": "Characters/Katarina/Spells/KatarinaRAbility/KatarinaR.mSpellCalculations.DamageCalc (16.23.8406595+branch.releases-16-23.content.release)",
               "damage_type_source": "spell_katarinar_tooltip <magicDamage>"
             }
-          ]
+          ],
+          "aoe": true,
+          "max_targets": 3
         },
         {
           "id": "per_dagger_physical",
@@ -329,7 +336,9 @@
               "source": "Characters/Katarina/Spells/KatarinaRAbility/KatarinaR.mSpellCalculations.ADDamageCalc (16.23.8406595+branch.releases-16-23.content.release)",
               "damage_type_source": "spell_katarinar_tooltip <physicalDamage>"
             }
-          ]
+          ],
+          "aoe": true,
+          "max_targets": 3
         },
         {
           "id": "per_dagger_total",
@@ -416,7 +425,9 @@
               "source": "Characters/Katarina/Spells/KatarinaRAbility/KatarinaR.mSpellCalculations.ADDamageCalc (16.23.8406595+branch.releases-16-23.content.release)",
               "damage_type_source": "spell_katarinar_tooltip <physicalDamage>"
             }
-          ]
+          ],
+          "aoe": true,
+          "max_targets": 3
         },
         {
           "id": "total_magic",
@@ -473,7 +484,9 @@
               "source": "Characters/Katarina/Spells/KatarinaRAbility/KatarinaR.mSpellCalculations.TotalDamageCalc (16.23.8406595+branch.releases-16-23.content.release)",
               "damage_type_source": "spell_katarinar_tooltip <magicDamage>"
             }
-          ]
+          ],
+          "aoe": true,
+          "max_targets": 3
         },
         {
           "id": "total_physical",
@@ -545,7 +558,9 @@
               "source": "Characters/Katarina/Spells/KatarinaRAbility/KatarinaR.mSpellCalculations.TotalADDamageCalc (16.23.8406595+branch.releases-16-23.content.release)",
               "damage_type_source": "spell_katarinar_tooltip <physicalDamage>"
             }
-          ]
+          ],
+          "aoe": true,
+          "max_targets": 3
         },
         {
           "id": "total_15_daggers",
@@ -668,7 +683,9 @@
               "source": "Characters/Katarina/Spells/KatarinaRAbility/KatarinaR.mSpellCalculations.TotalADDamageCalc (16.23.8406595+branch.releases-16-23.content.release)",
               "damage_type_source": "spell_katarinar_tooltip <physicalDamage>"
             }
-          ]
+          ],
+          "aoe": true,
+          "max_targets": 3
         }
       ],
       "passive_stats": [],

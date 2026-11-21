@@ -64,7 +64,9 @@
               "source": "Characters/MonkeyKing/Spells/MonkeyKingDoubleAttackAbility/MonkeyKingDoubleAttack.mSpellCalculations.BonusDamageTT (16.23.8406595+branch.releases-16-23.content.release)",
               "damage_type_source": "spell_monkeykingdoubleattack_tooltip <physicalDamage>"
             }
-          ]
+          ],
+          "aoe": false,
+          "max_targets": 1
         }
       ],
       "passive_stats": [],
@@ -124,7 +126,9 @@
               "source": "Characters/MonkeyKing/Spells/MonkeyKingNimbusAbility/MonkeyKingNimbus.mSpellCalculations.TotalDamage (16.23.8406595+branch.releases-16-23.content.release)",
               "damage_type_source": "spell_monkeykingnimbus_tooltip <magicDamage>"
             }
-          ]
+          ],
+          "aoe": true,
+          "max_targets": 3
         }
       ],
       "passive_stats": [],
@@ -203,7 +207,8 @@
               "source": "Characters/MonkeyKing/Spells/MonkeyKingSpinToWinAbility/MonkeyKingSpinToWin · PercentHPDamageTT × vida máxima del objetivo (16.23.8406595+branch.releases-16-23.content.release)",
               "damage_type_source": "spell_monkeykingspintowin_tooltip <physicalDamage>"
             }
-          ]
+          ],
+          "aoe": true
         },
         {
           "id": "recast_spin",
@@ -273,7 +278,8 @@
               "damage_type_source": "spell_monkeykingspintowin_tooltip <physicalDamage>"
             }
           ],
-          "recast": true
+          "recast": true,
+          "aoe": true
         }
       ],
       "passive_stats": [],

@@ -18,6 +18,7 @@
     "Q": {
       "name": "¡Cambiazo!",
       "tooltip": "spell_jinxq_tooltip",
+      "aoe": true,
       "cases": [
         {
           "id": "rocket",
@@ -37,6 +38,8 @@
     "W": {
       "name": "¡Zap!",
       "tooltip": "spell_jinxw_tooltip",
+      "aoe": false,
+      "max_targets": 1,
       "cases": [
         {
           "id": "zap",
@@ -55,6 +58,7 @@
     "E": {
       "name": "¡Mascafuegos!",
       "tooltip": "spell_jinxe_tooltip",
+      "aoe": true,
       "cases": [
         {
           "id": "chompers",
@@ -73,6 +77,10 @@
     "R": {
       "name": "¡Supermegacohete mortal!",
       "tooltip": "spell_jinxr_tooltip",
+      "aoe": true,
+      "secondary_damage_ratio": {
+        "data_value": "AoEDamageMult"
+      },
       "cases": [
         {
           "id": "min",
@@ -154,7 +162,7 @@
         }
       ],
       "not_modelled": [
-        "Daño AoE del 80 % a enemigos secundarios y tope contra monstruos (MonsterExecuteMax)"
+        "Tope contra monstruos (MonsterExecuteMax = 1200)"
       ]
     }
   }

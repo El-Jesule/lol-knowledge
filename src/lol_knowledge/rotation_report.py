@@ -64,7 +64,20 @@ def _part_line(part: Part, heals: bool) -> list[str]:
     if part.taken:
         modifiers.append(f"taken ({_percent_list(part.taken)}) x{format_number(part.taken_factor)}")
     tail = f"; {'; '.join(modifiers)}" if modifiers else ""
-    lines.append(f"      {mitigation}{tail} = {format_number(part.damage)}")
+    if part.targets_hit > 1:
+        if part.secondary_damage_ratio == 1:
+            lines.append(
+                f"      {mitigation}{tail} = {format_number(part.primary_damage)} "
+                f"x{part.targets_hit} targets = {format_number(part.damage)}"
+            )
+        else:
+            lines.append(
+                f"      {mitigation}{tail} = {format_number(part.primary_damage)} primary + "
+                f"{part.targets_hit - 1}x {format_number(part.secondary_damage_ratio * 100)}% "
+                f"secondary ({format_number(part.secondary_damage)}) = {format_number(part.damage)}"
+            )
+    else:
+        lines.append(f"      {mitigation}{tail} = {format_number(part.damage)}")
     lines += [f"      note: {note}" for note in part.notes]
     if heals:
         lines += _heal_lines(part.healing)
@@ -121,9 +134,13 @@ def format_text(
         f"items: {items}",
         f"target: {target.description}"
         + (f", effects from items {target_items}" if target_items else ""),
-        f"target health: {format_number(outcome.start_health)} / "
-        f"{format_number(outcome.max_health)}",
     ]
+    if outcome.target_count > 1:
+        lines.append(f"targets: {outcome.target_count}")
+    lines.append(
+        f"target health: {format_number(outcome.start_health)} / "
+        f"{format_number(outcome.max_health)}"
+    )
     if outcome.start_shield > 0:
         lines.append(
             f"target shield: {format_number(outcome.start_shield)} ({outcome.shield_type})"
@@ -201,14 +218,26 @@ def format_text(
             and (step.resource_before != step.resource_after or step.resource_events)
             else ""
         )
+        split_str = (
+            f" (primary {format_number(step.primary_total)}, "
+            f"secondary {format_number(step.secondary_total)})"
+            if step.secondary_total > 0
+            else ""
+        )
         lines.append(
-            f"  step total {format_number(step.total)}{absorbed_str} -> "
+            f"  step total {format_number(step.total)}{split_str}{absorbed_str} -> "
             f"health {format_number(step.health_after)}{res_str}"
         )
         if heals:
             lines.append(f"  step heal {format_number(step.healing)} [{step.healing_label.value}]")
             lines += [f"  heal note: {note}" for note in step.healing_notes]
-    lines.append(f"total: {format_number(outcome.total)}")
+    total_split = (
+        f" (primary {format_number(outcome.primary_total)}, "
+        f"secondary {format_number(outcome.secondary_total)})"
+        if outcome.secondary_total > 0
+        else ""
+    )
+    lines.append(f"total: {format_number(outcome.total)}{total_split}")
     if outcome.start_shield > 0:
         lines.append(
             f"shield absorbed: {format_number(outcome.total_shield_absorbed)}, "
@@ -272,6 +301,13 @@ def _part_dict(part: Part) -> dict[str, Any]:
         "mitigated": float(result.damage),
         "dealt_modifiers": [{"effect": name, "percent": float(p)} for name, p in part.dealt],
         "taken_modifiers": [{"effect": name, "percent": float(p)} for name, p in part.taken],
+        "aoe": part.aoe,
+        "targets_hit": part.targets_hit,
+        "secondary_damage_ratio": float(part.secondary_damage_ratio),
+        "primary_damage": float(part.primary_damage),
+        "exact_primary_damage": str(part.primary_damage),
+        "secondary_damage": float(part.secondary_damage),
+        "exact_secondary_damage": str(part.secondary_damage),
         "damage": float(part.damage),
         "exact_damage": str(part.damage),
         "notes": list(part.notes),
@@ -321,18 +357,25 @@ def to_dict(
             "shield": float(target.shield),
             "shield_type": target.shield_type,
             "items": [item.id for item in target.items],
+            "count": outcome.target_count,
             "label": target.label.value,
         },
+        "target_count": outcome.target_count,
         "steps": [
             {
                 "index": step.index,
                 "step": step.step.text,
                 "name": step.name,
                 "time": None if step.time is None else float(step.time),
+                "targets_hit": step.targets_hit,
                 "health_before": float(step.health_before),
                 "shield_before": float(step.shield_before),
                 "shield_absorbed": float(step.shield_absorbed),
                 "shield_after": float(step.shield_after),
+                "primary_total": float(step.primary_total),
+                "exact_primary_total": str(step.primary_total),
+                "secondary_total": float(step.secondary_total),
+                "exact_secondary_total": str(step.secondary_total),
                 "total": float(step.total),
                 "exact_total": str(step.total),
                 "health_after": float(step.health_after),
@@ -363,6 +406,10 @@ def to_dict(
             }
             for step in outcome.steps
         ],
+        "primary_total": float(outcome.primary_total),
+        "exact_primary_total": str(outcome.primary_total),
+        "secondary_total": float(outcome.secondary_total),
+        "exact_secondary_total": str(outcome.secondary_total),
         "total": float(outcome.total),
         "exact_total": str(outcome.total),
         "remaining_health": float(outcome.remaining_health),

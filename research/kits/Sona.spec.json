@@ -47,6 +47,10 @@
         {
           "id": "bolt",
           "name": "Rayo de Himno",
+          "aoe": true,
+          "max_targets": {
+            "data_value": "EnemiesToHit"
+          },
           "parts": [
             {
               "calculation": "TotalDamage"
@@ -56,6 +60,8 @@
         {
           "id": "aura_on_hit",
           "name": "Daño mágico al impactar del aura",
+          "aoe": false,
+          "max_targets": 1,
           "parts": [
             {
               "calculation": "TotalOnHitDamage"
@@ -65,6 +71,8 @@
         {
           "id": "staccato",
           "name": "Energía acorde — Staccato (+40 %)",
+          "aoe": false,
+          "max_targets": 1,
           "parts": [
             {
               "calculation": "TotalStaccatoDamage"
@@ -93,6 +101,7 @@
     "R": {
       "name": "Crescendo",
       "tooltip": "spell_sonar_tooltip",
+      "aoe": true,
       "cases": [
         {
           "id": "wave",

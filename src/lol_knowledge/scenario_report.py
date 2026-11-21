@@ -30,8 +30,10 @@ def format_text(outcome: AbilityOutcome, sheet: StatSheet, target: Target) -> st
         f"attacker: {sheet.champion.name} level {sheet.level}, patch {sheet.champion.patch}",
         f"items: {items}",
         f"target: {target.description}",
-        f"ability: {outcome.slot} {outcome.name}, rank {outcome.rank}",
     ]
+    if outcome.target_count > 1:
+        lines.append(f"targets: {outcome.target_count}")
+    lines.append(f"ability: {outcome.slot} {outcome.name}, rank {outcome.rank}")
     for case in outcome.cases:
         lines.append(f"case {case.id} ({case.name}):")
         for index, item in enumerate(case.parts, start=1):
@@ -52,7 +54,22 @@ def format_text(outcome: AbilityOutcome, sheet: StatSheet, target: Target) -> st
                 f"flat pen {_flat(modifiers.flat_penetration)}); "
                 f"multiplier {format_number(result.multiplier)} -> {format_number(result.damage)}"
             )
+        if case.targets_hit > 1:
+            if case.secondary_damage_ratio == 1:
+                lines.append(
+                    f"  primary target: {format_number(case.primary_total)}, "
+                    f"targets hit: {case.targets_hit}"
+                )
+            else:
+                lines.append(
+                    f"  primary target: {format_number(case.primary_total)}, "
+                    f"secondary ({case.targets_hit - 1}x "
+                    f"{format_number(case.secondary_damage_ratio * 100)}%): "
+                    f"{format_number(case.secondary_total)}, targets hit: {case.targets_hit}"
+                )
         lines.append(f"  total: {format_number(case.total)}")
+    for note in outcome.notes:
+        lines.append(f"note: {note}")
     for note in outcome.not_modelled:
         lines.append(f"not modelled: {note}")
     lines.append(f"label: {RESULT_LABEL} (weakest input: {outcome.label.value})")
@@ -75,13 +92,23 @@ def to_dict(outcome: AbilityOutcome, sheet: StatSheet, target: Target) -> dict[s
             "armor": float(target.armor),
             "magic_resist": float(target.magic_resist),
             "stats": {key: float(value) for key, value in target.stats.items()},
+            "count": outcome.target_count,
             "label": target.label.value,
         },
+        "target_count": outcome.target_count,
         "ability": {"slot": outcome.slot, "name": outcome.name, "rank": outcome.rank},
         "cases": [
             {
                 "id": case.id,
                 "name": case.name,
+                "aoe": case.aoe,
+                "max_targets": case.max_targets,
+                "targets_hit": case.targets_hit,
+                "secondary_damage_ratio": float(case.secondary_damage_ratio),
+                "primary_total": float(case.primary_total),
+                "exact_primary_total": str(case.primary_total),
+                "secondary_total": float(case.secondary_total),
+                "exact_secondary_total": str(case.secondary_total),
                 "total": float(case.total),
                 "exact_total": str(case.total),
                 "parts": [
@@ -111,5 +138,6 @@ def to_dict(outcome: AbilityOutcome, sheet: StatSheet, target: Target) -> dict[s
             }
             for case in outcome.cases
         ],
+        "notes": list(outcome.notes),
         "not_modelled": list(outcome.not_modelled),
     }

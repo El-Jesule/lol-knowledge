@@ -49,7 +49,8 @@
               "source": "Characters/Bard/Spells/BardPTooltip_D_nSAbility/BardPTooltip_D_nS.mSpellCalculations.MeepDamageNoChime (16.23.8406595+branch.releases-16-23.content.release)",
               "damage_type_source": "spell_bardptooltip_d_ns_tooltip <magicDamage>"
             }
-          ]
+          ],
+          "aoe": true
         }
       ],
       "passive_stats": [],
@@ -100,7 +101,9 @@
               "source": "Characters/Bard/Spells/BardQAbility/BardQ.mSpellCalculations.TotalDamage (16.23.8406595+branch.releases-16-23.content.release)",
               "damage_type_source": "spell_bardq_tooltip <magicDamage>"
             }
-          ]
+          ],
+          "aoe": true,
+          "max_targets": 2
         }
       ],
       "passive_stats": [],

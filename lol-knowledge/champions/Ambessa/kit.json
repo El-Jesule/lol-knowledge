@@ -147,7 +147,9 @@
               "source": "Characters/Ambessa/Spells/AmbessaQAbility/AmbessaQ · mSpellCalculations.Calc_Damage_1_Percent_Max × vida máxima del objetivo (16.23.8406595+branch.releases-16-23.content.release)",
               "damage_type_source": "spell_ambessaq_tooltip <physicalDamage>"
             }
-          ]
+          ],
+          "aoe": true,
+          "secondary_damage_ratio": 0.5
         },
         {
           "id": "slam_first",
@@ -235,12 +237,14 @@
               "damage_type_source": "spell_ambessaq_tooltip <physicalDamage>"
             }
           ],
-          "recast": true
+          "recast": true,
+          "aoe": true,
+          "secondary_damage_ratio": 0.5
         }
       ],
       "passive_stats": [],
       "not_modelled": [
-        "Daño reducido al 50 % fuera del borde/primer objetivo y bonificación/tope contra monstruos"
+        "Bonificación y tope de daño contra monstruos"
       ],
       "recast_window_seconds": 4
     },
@@ -287,7 +291,8 @@
               "source": "Characters/Ambessa/Spells/AmbessaWAbility/AmbessaW.mSpellCalculations.Calc_Damage_Low (16.23.8406595+branch.releases-16-23.content.release)",
               "damage_type_source": "spell_ambessaw_tooltip <physicalDamage>"
             }
-          ]
+          ],
+          "aoe": true
         },
         {
           "id": "blocked",
@@ -337,7 +342,8 @@
               "source": "Characters/Ambessa/Spells/AmbessaWAbility/AmbessaW.mSpellCalculations.Calc_Damage_High (16.23.8406595+branch.releases-16-23.content.release)",
               "damage_type_source": "spell_ambessaw_tooltip <physicalDamage>"
             }
-          ]
+          ],
+          "aoe": true
         }
       ],
       "passive_stats": [],

@@ -18,6 +18,8 @@
     "Q": {
       "name": "Golpe aplastante",
       "tooltip": "spell_monkeykingdoubleattack_tooltip",
+      "aoe": false,
+      "max_targets": 1,
       "cases": [
         {
           "id": "strike",
@@ -43,6 +45,8 @@
     "E": {
       "name": "Golpe de nimbo",
       "tooltip": "spell_monkeykingnimbus_tooltip",
+      "aoe": true,
+      "max_targets": 3,
       "cases": [
         {
           "id": "nimbus",
@@ -61,6 +65,7 @@
     "R": {
       "name": "Ciclón",
       "tooltip": "spell_monkeykingspintowin_tooltip",
+      "aoe": true,
       "cases": [
         {
           "id": "full_spin",

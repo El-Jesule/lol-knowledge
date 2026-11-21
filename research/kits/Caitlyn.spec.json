@@ -30,10 +30,14 @@
     "Q": {
       "name": "Pacificadora de Piltover",
       "tooltip": "spell_caitlynpiltoverpeacemaker_tooltip",
+      "aoe": true,
       "cases": [
         {
           "id": "first",
           "name": "Primer objetivo o objetivo atrapado",
+          "secondary_damage_ratio": {
+            "data_value": "SecondaryMult"
+          },
           "parts": [
             {
               "calculation": "InitialDamage"
@@ -43,6 +47,7 @@
         {
           "id": "passthrough",
           "name": "Objetivos sucesivos (60 %)",
+          "max_targets": 1,
           "parts": [
             {
               "calculation": "SecondaryDamage"
@@ -54,6 +59,8 @@
     "W": {
       "name": "Trampa para yordles",
       "tooltip": "spell_caitlynyordletrap_tooltip",
+      "aoe": false,
+      "max_targets": 1,
       "cases": [
         {
           "id": "headshot_bonus",
@@ -72,6 +79,8 @@
     "E": {
       "name": "Red de calibre 90",
       "tooltip": "spell_caitlynentrapment_tooltip",
+      "aoe": false,
+      "max_targets": 1,
       "cases": [
         {
           "id": "net",
@@ -90,6 +99,8 @@
     "R": {
       "name": "As en la manga",
       "tooltip": "spell_caitlynaceinthehole_tooltip",
+      "aoe": false,
+      "max_targets": 1,
       "cases": [
         {
           "id": "ace",

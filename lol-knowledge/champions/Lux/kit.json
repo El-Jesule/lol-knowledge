@@ -68,7 +68,9 @@
               "source": "Characters/Lux/Spells/LuxIlluminationPassiveAbility/LuxIlluminationPassive.mSpellCalculations.TotalDamage (16.23.8406595+branch.releases-16-23.content.release)",
               "damage_type_source": "buff_luxp_tooltip <magicDamage>"
             }
-          ]
+          ],
+          "aoe": false,
+          "max_targets": 1
         }
       ],
       "passive_stats": [],
@@ -117,7 +119,9 @@
               "source": "Characters/Lux/Spells/LuxLightBindingAbility/LuxLightBinding.mSpellCalculations.TotalDamageTT (16.23.8406595+branch.releases-16-23.content.release)",
               "damage_type_source": "spell_luxq_tooltip <magicDamage>"
             }
-          ]
+          ],
+          "aoe": true,
+          "max_targets": 2
         }
       ],
       "passive_stats": [],
@@ -177,7 +181,8 @@
               "source": "Characters/Lux/Spells/LuxLightStrikeKugelAbility/LuxLightStrikeKugel.mSpellCalculations.TotalDamageTT (16.23.8406595+branch.releases-16-23.content.release)",
               "damage_type_source": "spell_luxe_tooltip <magicDamage>"
             }
-          ]
+          ],
+          "aoe": true
         }
       ],
       "passive_stats": [],
@@ -226,7 +231,8 @@
               "source": "Characters/Lux/Spells/LuxRAbility/LuxR.mSpellCalculations.TotalDamage (16.23.8406595+branch.releases-16-23.content.release)",
               "damage_type_source": "spell_luxr_tooltip <magicDamage>"
             }
-          ]
+          ],
+          "aoe": true
         }
       ],
       "passive_stats": [],

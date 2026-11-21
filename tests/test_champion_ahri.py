@@ -135,3 +135,79 @@ def test_recast_settings_need_a_recast_case():
 def test_the_interval_counts_from_the_last_dash():
     with pytest.raises(RotationError, match=r"the next R is available at 2 s \(now 1.5 s\)"):
         run("R.dash wait:1 R.recast wait:0.5 R.recast", timeline=True)
+
+
+def test_spirit_rush_and_orb_multi_target_rotation():
+    from lol_knowledge.rotation_report import format_text, to_dict
+    from lol_knowledge.stats import Contribution
+
+    target = target_from_values(F(0), F(0), max_health=F(2000), kind="champion")
+    ahri = sheet("3089")
+    # Single-target vs 3-target rotation: R.dash (max_targets=3), Q.both (aoe=True),
+    # W.all (max_targets=1), E.hit (max_targets=1), attack (1 target).
+    single = evaluate_rotation(
+        KIT, ahri, RANKS, target, parse_steps("R.dash Q.both W.all E.hit attack"), CRIT
+    )
+    multi = evaluate_rotation(
+        KIT,
+        ahri,
+        RANKS,
+        target,
+        parse_steps("R.dash Q.both W.all E.hit attack"),
+        CRIT,
+        target_count=5,
+    )
+    # R.dash caps at 3 targets (RMaxTargetsPerCast=3); Q.both hits all 5 targets;
+    # W.all, E.hit and attack hit only the primary target (1).
+    assert [step.targets_hit for step in multi.steps] == [3, 5, 1, 1, 1]
+    assert multi.steps[0].total == single.steps[0].total * 3
+    assert multi.steps[1].total == single.steps[1].total * 5
+    assert multi.steps[2].total == single.steps[2].total
+    assert multi.steps[3].total == single.steps[3].total
+    assert multi.steps[4].total == single.steps[4].total
+    # Primary target health only subtracts primary_total, matching the 1-target rotation!
+    assert multi.primary_total == single.total
+    assert multi.remaining_health == single.remaining_health
+
+    # Per-step @<N> override in parse_steps: R.dash@2 hits 2 targets, Q.both@3 hits 3.
+    per_step = evaluate_rotation(
+        KIT, ahri, RANKS, target, parse_steps("R.dash@2 Q.both@3 E.hit@4"), CRIT
+    )
+    assert [step.targets_hit for step in per_step.steps] == [2, 3, 1]
+    assert per_step.steps[0].total == single.steps[0].total * 2
+    assert per_step.steps[1].total == single.steps[1].total * 3
+    assert per_step.steps[2].total == single.steps[3].total
+
+    # Area omnivamp against minions is 33% for Q and R (aoe=True), 100% for E and W (aoe=False).
+    vamp_sheet = build_stat_sheet(
+        load_champion(ROOT, "Ahri"),
+        11,
+        (),
+        load_issues(ROOT),
+        {},
+        load_records(ROOT),
+        (("omnivamp", Contribution(F("0.15"), "bonus", "test omnivamp", Label.OFFICIAL)),),
+    )
+    minion_target = target_from_values(F(0), F(0), max_health=F(5000), kind="minion")
+    vamp_out = evaluate_rotation(
+        KIT, vamp_sheet, RANKS, minion_target, parse_steps("R.dash E.hit"), CRIT, target_count=3
+    )
+    r_part = vamp_out.steps[0].parts[0]
+    e_part = vamp_out.steps[1].parts[0]
+    assert r_part.targets_hit == 3
+    assert r_part.healing.omnivamp == F("0.05")  # 15% / 3 = 5% against minions
+    assert r_part.healing.amount == r_part.damage * F("0.05")
+    assert r_part.healing.label is Label.DERIVED
+    assert e_part.targets_hit == 1
+    assert e_part.healing.omnivamp == F("0.15")  # 100% for single-target E
+    assert e_part.healing.amount == e_part.damage * F("0.15")
+    assert e_part.healing.label is Label.DERIVED
+
+    text = format_text(multi, ahri, target, CRIT)
+    assert "targets: 5" in text
+    assert "x3 targets =" in text
+    assert "x5 targets =" in text
+    report = to_dict(multi, ahri, target, CRIT)
+    assert report["target_count"] == 5
+    assert report["steps"][0]["targets_hit"] == 3
+    assert report["steps"][1]["targets_hit"] == 5

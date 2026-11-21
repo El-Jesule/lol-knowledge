@@ -64,7 +64,8 @@
               "source": "Characters/Pantheon/Spells/PantheonQAbility/PantheonQ.mSpellCalculations.TapDamageCalc (16.23.8406595+branch.releases-16-23.content.release)",
               "damage_type_source": "spell_pantheonq_tooltip <physicalDamage>"
             }
-          ]
+          ],
+          "aoe": true
         },
         {
           "id": "hold",
@@ -119,7 +120,9 @@
               "source": "Characters/Pantheon/Spells/PantheonQAbility/PantheonQ.mSpellCalculations.HoldDamageCalc (16.23.8406595+branch.releases-16-23.content.release)",
               "damage_type_source": "spell_pantheonq_tooltip <physicalDamage>"
             }
-          ]
+          ],
+          "aoe": true,
+          "secondary_damage_ratio": 0.5
         },
         {
           "id": "execute",
@@ -175,7 +178,9 @@
               "source": "Characters/Pantheon/Spells/PantheonQAbility/PantheonQ.mSpellCalculations.ExecuteDamageCalcModified (16.23.8406595+branch.releases-16-23.content.release)",
               "damage_type_source": "spell_pantheonq_tooltip <physicalDamage>"
             }
-          ]
+          ],
+          "aoe": true,
+          "secondary_damage_ratio": 0.5
         },
         {
           "id": "empowered_bonus",
@@ -211,13 +216,13 @@
               "source": "Characters/Pantheon/Spells/PantheonQAbility/PantheonQ.mSpellCalculations.EmpoweredDamageCalc (16.23.8406595+branch.releases-16-23.content.release)",
               "damage_type_source": "spell_pantheonq_tooltip <physicalDamage>"
             }
-          ]
+          ],
+          "aoe": true
         }
       ],
       "passive_stats": [],
       "not_modelled": [
-        "Devolución del 60 % de enfriamiento al pulsar",
-        "Reducción tras el primer objetivo (DamageFalloff) y contra súbditos/monstruos"
+        "Devolución del 60 % de enfriamiento al pulsar y reducción contra súbditos/monstruos"
       ]
     },
     "W": {
@@ -288,7 +293,9 @@
               "source": "Characters/Pantheon/Spells/PantheonWAbility/PantheonW · MaxHealthDamageCalc × vida máxima del objetivo (16.23.8406595+branch.releases-16-23.content.release)",
               "damage_type_source": "spell_pantheonw_tooltip <physicalDamage>"
             }
-          ]
+          ],
+          "aoe": false,
+          "max_targets": 1
         },
         {
           "id": "empowered_strikes",
@@ -324,7 +331,9 @@
               "source": "Characters/Pantheon/Spells/PantheonWAbility/PantheonW.mSpellCalculations.EmpoweredDamageMultCalcModified (16.23.8406595+branch.releases-16-23.content.release)",
               "damage_type_source": "spell_pantheonw_tooltip <physicalDamage>"
             }
-          ]
+          ],
+          "aoe": false,
+          "max_targets": 1
         }
       ],
       "passive_stats": [],

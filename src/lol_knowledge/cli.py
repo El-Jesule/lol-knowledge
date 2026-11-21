@@ -232,6 +232,15 @@ def _add_target_options(command: argparse.ArgumentParser) -> None:
         default="normal",
         help="Target shield type: normal (all damage), physical or magic.",
     )
+    command.add_argument(
+        "--target-count",
+        type=int,
+        default=1,
+        help=(
+            "Number of enemy targets in range (default: 1). Area abilities hit all targets up to "
+            "their max_targets cap; single-target abilities and basic attacks hit 1 target."
+        ),
+    )
 
 
 def _add_build_option(command: argparse.ArgumentParser) -> None:
@@ -698,7 +707,14 @@ def _run_ability(args: argparse.Namespace) -> int:
         _check_build(root, args.item, champion, allow=args.allow_illegal_build, who="attacker")
         target = _ability_target(args, root, issues, derived)
         outcome = evaluate_ability(
-            kit, sheet, slot, args.rank, target, case=args.case, inputs=inputs
+            kit,
+            sheet,
+            slot,
+            args.rank,
+            target,
+            case=args.case,
+            inputs=inputs,
+            target_count=args.target_count,
         )
     except (StatsError, KitError, DamageInputError) as exc:
         print(f"error: {exc}", file=sys.stderr)
@@ -780,6 +796,7 @@ def _run_rotation(args: argparse.Namespace) -> int:
             ap_weight=ap_weight,
             start_resource=start_resource,
             allow_insufficient_resource=args.allow_insufficient_resource,
+            target_count=args.target_count,
         )
     except (StatsError, KitError, DamageInputError, RotationError) as exc:
         print(f"error: {exc}", file=sys.stderr)

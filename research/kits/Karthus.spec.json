@@ -18,6 +18,7 @@
     "Q": {
       "name": "Sembrar la destrucción",
       "tooltip": "spell_karthuslaywastea1_tooltip",
+      "aoe": true,
       "cases": [
         {
           "id": "multi",
@@ -31,6 +32,7 @@
         {
           "id": "isolated",
           "name": "Objetivo aislado (daño doble)",
+          "max_targets": 1,
           "parts": [
             {
               "calculation": "QSingleTargetDamage"
@@ -49,6 +51,7 @@
     "E": {
       "name": "Profanación",
       "tooltip": "spell_karthusdefile_tooltip",
+      "aoe": true,
       "cases": [
         {
           "id": "per_second",
@@ -67,6 +70,8 @@
     "R": {
       "name": "Réquiem",
       "tooltip": "spell_karthusfallenone_tooltip",
+      "aoe": true,
+      "max_targets": 5,
       "cases": [
         {
           "id": "requiem",
@@ -79,7 +84,7 @@
         }
       ],
       "not_modelled": [
-        "Canalización de 3 s y efecto sobre los 5 campeones enemigos"
+        "Canalización de 3 s antes del impacto"
       ]
     }
   }

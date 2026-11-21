@@ -156,10 +156,22 @@ class CaseOutcome:
     id: str
     name: str
     parts: tuple[PartOutcome, ...]
+    targets_hit: int = 1
+    secondary_damage_ratio: Fraction = Fraction(1)
+    aoe: bool | None = None
+    max_targets: int | None = None
+
+    @property
+    def primary_total(self) -> Fraction:
+        return sum((item.mitigation.damage for item in self.parts), start=Fraction(0))
+
+    @property
+    def secondary_total(self) -> Fraction:
+        return self.primary_total * (self.targets_hit - 1) * self.secondary_damage_ratio
 
     @property
     def total(self) -> Fraction:
-        return sum((item.mitigation.damage for item in self.parts), start=Fraction(0))
+        return self.primary_total + self.secondary_total
 
 
 @dataclass(frozen=True)
@@ -170,6 +182,8 @@ class AbilityOutcome:
     cases: tuple[CaseOutcome, ...]
     label: Label
     not_modelled: tuple[str, ...]
+    target_count: int = 1
+    notes: tuple[str, ...] = ()
 
 
 def penetration_modifiers(sheet: StatSheet, damage_type: DamageType) -> Modifiers:
@@ -191,12 +205,21 @@ def evaluate_ability(
     *,
     case: str | None = None,
     inputs: Mapping[str, Any] | None = None,
+    target_count: int = 1,
 ) -> AbilityOutcome:
     """Raw damage of each part from the kit, mitigated by the target's matching resistance."""
+    if isinstance(target_count, bool) or not isinstance(target_count, int) or target_count < 1:
+        raise StatsError("target count must be an integer >= 1")
     ability = kit.ability(slot)
-    parts = ability_damage(kit, slot, rank, sheet, case=case, target=target.stats, inputs=inputs)
+    target_stats = dict(target.stats)
+    if "max_health" in target_stats and "current_health" in target_stats:
+        target_stats["missing_fraction_health"] = (
+            1 - target_stats["current_health"] / target_stats["max_health"]
+        )
+    parts = ability_damage(kit, slot, rank, sheet, case=case, target=target_stats, inputs=inputs)
     # Unmodelled sources on the sheet (tree runes) could change the damage.
     labels = [target.label, *([Label.PENDING] if sheet.pending_effects else [])]
+    notes: list[str] = []
     by_case: dict[str, list[PartOutcome]] = {}
     for part in parts:
         resistance = target.resistance(part.damage_type)
@@ -208,10 +231,34 @@ def evaluate_ability(
             percent, flat = PENETRATION[part.damage_type]
             labels += [sheet[percent].label, sheet[flat].label]
         by_case.setdefault(part.case, []).append(PartOutcome(part, mitigation))
-    names = {item.id: item.name for item in ability.cases}
-    cases = tuple(
-        CaseOutcome(case_id, names[case_id], tuple(items)) for case_id, items in by_case.items()
-    )
+    cases: list[CaseOutcome] = []
+    for case_id, items in by_case.items():
+        case_spec = ability.case(case_id)
+        targets_hit, sec_ratio, unverified = case_spec.resolve_targets(target_count)
+        if unverified:
+            labels.append(Label.PENDING)
+            notes.append(
+                f"{ability.slot}.{case_id}: kit does not declare aoe or max_targets; "
+                f"evaluated against 1 of {target_count} targets"
+            )
+        cases.append(
+            CaseOutcome(
+                case_id,
+                case_spec.name,
+                tuple(items),
+                targets_hit=targets_hit,
+                secondary_damage_ratio=sec_ratio,
+                aoe=case_spec.aoe,
+                max_targets=case_spec.max_targets,
+            )
+        )
     return AbilityOutcome(
-        ability.slot, ability.name, rank, cases, weakest(labels), ability.not_modelled
+        ability.slot,
+        ability.name,
+        rank,
+        tuple(cases),
+        weakest(labels),
+        ability.not_modelled,
+        target_count=target_count,
+        notes=tuple(notes),
     )

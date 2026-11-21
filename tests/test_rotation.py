@@ -552,3 +552,75 @@ def test_complete_reviews_do_not_weaken_the_result():
 def test_the_model_carries_the_effect_review_to_the_items():
     (blade,) = load_items(ROOT, ["3153"])
     assert blade.effect_review == "complete"
+
+
+def test_multi_target_rotation_secondary_damage_ratio_and_cli(capsys):
+    ashe_kit = load_kit(ROOT, "Ashe")
+    ashe_sheet = sheet("Ashe", 11, [], ranks={"W": 5, "R": 2})
+    target = manual(armor=0, mr=0, health=1000, kind="champion")
+    # Ashe R has secondary_damage_ratio=0.5 (100% primary + 2x 50% secondary = 200% total).
+    outcome = evaluate_rotation(
+        ashe_kit,
+        ashe_sheet,
+        {"W": 5, "R": 2},
+        target,
+        parse_steps("R.impact W.arrow"),
+        CRIT,
+        target_count=3,
+    )
+    r_step, w_step = outcome.steps
+    assert r_step.targets_hit == 3
+    assert r_step.primary_total == 400
+    assert r_step.secondary_total == 400
+    assert r_step.total == 800
+    assert r_step.health_after == 600  # 1000 - 400 primary damage
+    assert w_step.targets_hit == 3
+    assert w_step.total == w_step.primary_total * 3
+    assert outcome.remaining_health == 600 - w_step.primary_total
+
+    with pytest.raises(RotationError, match="target count must be at least 1"):
+        parse_steps("R.impact@0")
+    with pytest.raises(RotationError, match="target count must be an integer >= 1"):
+        evaluate_rotation(
+            ashe_kit, ashe_sheet, {"R": 2}, target, parse_steps("R.impact"), CRIT, target_count=0
+        )
+
+    code = main(
+        [
+            "rotation",
+            "--root",
+            str(ROOT),
+            "--champion",
+            "Ahri",
+            "--level",
+            "11",
+            "--learned",
+            "R=2",
+            "--learned",
+            "E=1",
+            "--steps",
+            "R.dash, E.hit",
+            "--target-armor",
+            "0",
+            "--target-mr",
+            "0",
+            "--target-max-health",
+            "1000",
+            "--target-count",
+            "3",
+            "--json",
+        ]
+    )
+    assert code == 0
+    payload = json.loads(capsys.readouterr().out)
+    assert payload["target_count"] == 3
+    assert payload["steps"][0]["targets_hit"] == 3
+    assert payload["steps"][0]["primary_total"] == 125.0
+    assert payload["steps"][0]["secondary_total"] == 250.0
+    assert payload["steps"][0]["total"] == 375.0
+    assert payload["steps"][1]["targets_hit"] == 1
+    assert payload["steps"][1]["total"] == 80.0
+    assert payload["primary_total"] == 205.0
+    assert payload["secondary_total"] == 250.0
+    assert payload["total"] == 455.0
+    assert payload["remaining_health"] == 795.0

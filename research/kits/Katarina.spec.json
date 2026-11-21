@@ -12,6 +12,7 @@
       "name": "Ansia",
       "tooltip": "spell_katarinapassive_tooltip",
       "max_rank": 1,
+      "aoe": true,
       "cases": [
         {
           "id": "dagger",
@@ -30,6 +31,8 @@
     "Q": {
       "name": "Hoja rebotante",
       "tooltip": "spell_katarinaq_tooltip",
+      "aoe": true,
+      "max_targets": 3,
       "cases": [
         {
           "id": "blade",
@@ -55,6 +58,8 @@
     "E": {
       "name": "Velocidad del rayo",
       "tooltip": "spell_katarinaewrapper_tooltip",
+      "aoe": false,
+      "max_targets": 1,
       "cases": [
         {
           "id": "shunpo",
@@ -73,6 +78,8 @@
     "R": {
       "name": "Loto mortal",
       "tooltip": "spell_katarinar_tooltip",
+      "aoe": true,
+      "max_targets": 3,
       "cases": [
         {
           "id": "per_dagger_magic",
