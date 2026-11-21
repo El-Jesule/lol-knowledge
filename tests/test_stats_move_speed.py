@@ -104,13 +104,22 @@ def test_extras_count_as_flat_amounts_for_percentages():
     assert converted.label is Label.PENDING
 
 
-def test_cassiopeia_is_pending():
-    sheet = build_stat_sheet(champion("Cassiopeia"), 1)
-    reason = "Cassiopeia's passive changes the effectiveness of movement speed bonuses"
-    assert sheet["move_speed"].label is Label.PENDING
-    assert sheet["move_speed"].contributions[-1].note == reason
-    assert reason in sheet.notes
-    assert sheet["move_speed"].total() == 345
+def test_cassiopeia_passive_amplifies_flat_and_percent_move_speed_bonuses():
+    # Without bonuses, base move speed stays Official.
+    base_sheet = build_stat_sheet(champion("Cassiopeia", stats={"movespeed": 335}), 1)
+    assert base_sheet["move_speed"].total() == 335
+    assert base_sheet["move_speed"].label is Label.OFFICIAL
+
+    # At level 11, Serpentine Grace amplification is 5% + 1.8% * 10 = 23%.
+    # With +20 flat bonus and +10% bonus:
+    # flat bonus becomes 20 + 20 * 0.23 = 24.6 -> total flat = 335 + 24.6 = 359.6
+    # % bonus becomes 10% + 10% * 0.23 = 12.3% of 359.6 = 44.2308 -> raw = 403.8308
+    items = [item("1", ("move_speed", "flat", 20)), item("2", ("move_speed", "percent", 10))]
+    sheet = build_stat_sheet(champion("Cassiopeia", stats={"movespeed": 335}), 11, items)
+    speed = sheet["move_speed"]
+    assert speed.raw() == F("359.6") * F("1.123")
+    assert speed.total() == F("403.8308")
+    assert speed.label is Label.DERIVED
 
 
 def test_other_soft_capped_stats_do_not_exist():

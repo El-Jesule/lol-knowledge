@@ -4,8 +4,8 @@
   "verified_against": {
     "content_version": "16.23.8406595+branch.releases-16-23.content.release",
     "bin_sha256": "91d98b836e0fe117a1511153b7edab244fae68803928630c984f11ac6fa62a9e",
-    "evidence": "odd/tasks/champion-kits-wave-3.md",
-    "result": "Bin del cliente 16.23 convertido con python -m binmodel.batch_kits y compilado con esta especificación curada (CH-01 oleada 3)"
+    "evidence": "odd/tasks/ch04-champion-mechanics.md",
+    "result": "Bin del cliente 16.23 convertido con python -m binmodel.batch_kits y compilado con esta especificación curada (CH-04 cierre de mecánicas de campeón)"
   },
   "abilities": {
     "P": {
@@ -15,7 +15,7 @@
       "cases": [
         {
           "id": "one_pellet",
-          "name": "Un perdigón",
+          "name": "Un perdigón (normal)",
           "parts": [
             {
               "calculation": "SingleBulletDamage"
@@ -24,16 +24,91 @@
         },
         {
           "id": "four_pellets",
-          "name": "Cuatro perdigones (cercano)",
+          "name": "Cuatro perdigones (disparo cercano completo)",
           "parts": [
             {
-              "calculation": "MultiBulletDamage"
+              "tooltip_reference": "MultiBulletDamage",
+              "damage_type": "physical",
+              "source_note": "mSpellCalculations.SingleBulletDamage + 3 × mSpellCalculations.MultiBulletDamage",
+              "formula": {
+                "op": "add",
+                "operands": [
+                  {
+                    "op": "calculation",
+                    "name": "SingleBulletDamage"
+                  },
+                  {
+                    "op": "mul",
+                    "operands": [
+                      {
+                        "op": "constant",
+                        "value": 3
+                      },
+                      {
+                        "op": "calculation",
+                        "name": "MultiBulletDamage"
+                      }
+                    ]
+                  }
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "id": "six_pellets_crit",
+          "name": "Seis perdigones críticos (disparo cercano crítico completo)",
+          "parts": [
+            {
+              "tooltip_reference": "MultiBulletDamage",
+              "damage_type": "physical",
+              "source_note": "(SingleBulletDamage + 5 × MultiBulletDamage) × (1 + CritDamageMult)",
+              "formula": {
+                "op": "mul",
+                "operands": [
+                  {
+                    "op": "add",
+                    "operands": [
+                      {
+                        "op": "calculation",
+                        "name": "SingleBulletDamage"
+                      },
+                      {
+                        "op": "mul",
+                        "operands": [
+                          {
+                            "op": "constant",
+                            "value": 5
+                          },
+                          {
+                            "op": "calculation",
+                            "name": "MultiBulletDamage"
+                          }
+                        ]
+                      }
+                    ]
+                  },
+                  {
+                    "op": "add",
+                    "operands": [
+                      {
+                        "op": "constant",
+                        "value": 1
+                      },
+                      {
+                        "op": "calculation",
+                        "name": "CritDamageMult"
+                      }
+                    ]
+                  }
+                ]
+              }
             }
           ]
         }
       ],
       "not_modelled": [
-        "Sistema de 2 cartuchos/recarga y 6 perdigones en golpe crítico (CritDamageMult)"
+        "Sistema de recarga cada 2 cartuchos y retroceso a no campeones"
       ]
     },
     "Q": {

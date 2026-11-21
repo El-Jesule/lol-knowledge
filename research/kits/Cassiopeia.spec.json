@@ -4,15 +4,15 @@
   "verified_against": {
     "content_version": "16.23.8406595+branch.releases-16-23.content.release",
     "bin_sha256": "a2eff3dd2f31832c08f886e8492fe1432b4fe422e6bdfa11207b7db7b2ee0d96",
-    "evidence": "odd/tasks/champion-kits-wave-2.md",
-    "result": "Bin del cliente 16.23 convertido con python -m binmodel.batch_kits y compilado con esta especificación curada (CH-01 oleada 2)"
+    "evidence": "odd/tasks/ch04-champion-mechanics.md",
+    "result": "Bin del cliente 16.23 convertido con python -m binmodel.batch_kits y compilado con esta especificación curada (CH-04 cierre de mecánicas de campeón)"
   },
   "abilities": {
     "P": {
       "name": "Elegancia serpentina",
       "max_rank": 1,
       "not_modelled": [
-        "Aumento porcentual de bonificaciones de velocidad de movimiento (PercentHasteMod, CH-04)"
+        "El aumento del 5 %..35,6 % a todas las bonificaciones de velocidad de movimiento (PercentHasteMod) está modelado directamente en la hoja de estadísticas"
       ]
     },
     "Q": {

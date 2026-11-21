@@ -484,6 +484,41 @@ def test_the_reduction_is_derived_even_when_every_input_is_official():
     assert part.label is Label.DERIVED
 
 
+def test_jhin_passive_reduces_total_crit_damage_by_twenty_five_percent():
+    attacker = sheet("Jhin", 18, ["3031"], ranks={})
+    (part,) = run(attacker, manual(), "attack:crit", ranks={}).steps[0].parts
+    multiplier = (2 + F("0.3")) * F("0.75")  # 1.725
+    assert part.raw == attacker["attack_damage"].total() * multiplier
+    assert "x critical multiplier 1.725" in part.source
+    assert "Jhin's passive reduces total critical strike damage by 25%" in part.notes
+    assert part.label is Label.DERIVED
+
+
+def test_ashe_frost_shot_scales_basic_attacks_with_crit_chance_and_bonus_crit_damage():
+    # Without crit items, Ashe's basic attack deals 100% AD (Official at level 1).
+    ashe_base = sheet("Ashe", 1, [], ranks={})
+    (base_part,) = run(ashe_base, manual(armor=0), "attack", ranks={}).steps[0].parts
+    assert base_part.raw == ashe_base["attack_damage"].total()
+    assert base_part.label is Label.OFFICIAL
+
+    # With Infinity Edge (25% crit chance, +30% crit damage bonus):
+    # Frost Shot multiplier = 1 + 0.25 * (1 + 0.30) = 1.325 on both attack and attack:crit.
+    ashe_ie = sheet("Ashe", 18, ["3031"], ranks={})
+    ashe_crit = CritBase(F(1), Label.DERIVED, "Ashe.critdamagemultiplier")
+    (normal_part,) = (
+        run(ashe_ie, manual(armor=0), "attack", crit=ashe_crit, ranks={}).steps[0].parts
+    )
+    (crit_part,) = (
+        run(ashe_ie, manual(armor=0), "attack:crit", crit=ashe_crit, ranks={}).steps[0].parts
+    )
+    expected = ashe_ie["attack_damage"].total() * F("1.325")
+    assert normal_part.raw == crit_part.raw == expected
+    assert "x Frost Shot multiplier 1.325" in normal_part.source
+    assert normal_part.label is Label.DERIVED
+    assert crit_part.label is Label.DERIVED
+    assert any("double the slow" in note for note in crit_part.notes)
+
+
 # Items whose effects are not fully reviewed
 
 

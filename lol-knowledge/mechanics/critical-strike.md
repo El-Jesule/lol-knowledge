@@ -30,7 +30,8 @@ daño bruto del crítico = daño del ataque × (multiplicador_base + Σ daño_cr
 ```
 
 - `multiplicador_base` es el `critdamagemultiplier` del campeón (C2). Para 172 campeones es 2,0, el mismo valor que anuncian las notas oficiales (C1). Si el registro del campeón no tiene el campo, el paso crítico se rechaza.
-- **Ashe** tiene 1,0 en el registro: su pasiva cambia cómo funcionan sus críticos. El motor no la modela; cualquier campeón cuyo multiplicador difiera de 2,0 obtiene `Pendiente de verificación` y una nota.
+- **Ashe (`Derivado`, `AshePassive.mSpellCalculations.DamageBonus` en el cliente `16.23`):** tiene `1,0` en el registro porque sus impactos críticos no multiplican el daño por `2,0`, sino que duplican la ralentización de *Tiro congelador*. En su lugar, todos sus ataques básicos (`attack` y `attack:crit`) multiplican su daño de ataque total por `1 + crit_chance × (1 + crit_damage_bonus)`. Cualquier otro campeón cuyo multiplicador de registro difiriera de `2,0` sigue recibiendo `Pendiente de verificación`.
+- **Jhin (`Derivado`, `JhinPassive.DataValues.CritReductionPercent = 0.25`):** su pasiva reduce el daño crítico total un `25 %`, por lo que su multiplicador crítico es `(multiplicador_base + Σ daño_crítico_adicional) × 0,75` (`1,5` base; `1,725` con Filo infinito).
 - `daño_crítico_adicional` es la estadística `crit_damage_bonus` (C5). Filo infinito suma 0,3: 2,0 + 0,3 = 2,3, el 230 % de C4.
 - Con **varias fuentes** de daño crítico adicional, la suma no está verificada (solo hay un objeto en el catálogo). El motor las suma y marca el resultado `Pendiente de verificación`.
 - El crítico se aplica **antes de la mitigación** (C3). Como la mitigación multiplica, el orden no cambia el resultado.

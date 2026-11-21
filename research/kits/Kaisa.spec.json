@@ -4,8 +4,8 @@
   "verified_against": {
     "content_version": "16.23.8406595+branch.releases-16-23.content.release",
     "bin_sha256": "1a56629726be50325cf7a37c419c13866cbb77dbb70a7469bb4515d62ca39b18",
-    "evidence": "odd/tasks/champion-wave-mechanics.md",
-    "result": "Bin del cliente 16.23 convertido con python -m binmodel.batch_kits y compilado con esta especificación curada (CH-04 mecánicas de oleadas)"
+    "evidence": "odd/tasks/ch04-champion-mechanics.md",
+    "result": "Bin del cliente 16.23 convertido con python -m binmodel.batch_kits y compilado con esta especificación curada (CH-04 cierre de mecánicas de campeón)"
   },
   "abilities": {
     "P": {
@@ -78,6 +78,54 @@
           "parts": [
             {
               "calculation": "TotalIndividualMissileDamage"
+            }
+          ]
+        },
+        {
+          "id": "six_missiles",
+          "name": "Objetivo aislado (6 misiles, sin evolucionar)",
+          "parts": [
+            {
+              "tooltip_reference": "TotalIndividualMissileDamage",
+              "damage_type": "physical",
+              "source_note": "2,25 × mSpellCalculations.TotalIndividualMissileDamage (1 + 5 × 25 %)",
+              "formula": {
+                "op": "mul",
+                "operands": [
+                  {
+                    "op": "constant",
+                    "value": 2.25
+                  },
+                  {
+                    "op": "calculation",
+                    "name": "TotalIndividualMissileDamage"
+                  }
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "id": "twelve_missiles_evolved",
+          "name": "Objetivo aislado evolucionado (12 misiles)",
+          "parts": [
+            {
+              "tooltip_reference": "TotalIndividualMissileDamage",
+              "damage_type": "physical",
+              "source_note": "3,75 × mSpellCalculations.TotalIndividualMissileDamage (1 + 11 × 25 %)",
+              "formula": {
+                "op": "mul",
+                "operands": [
+                  {
+                    "op": "constant",
+                    "value": 3.75
+                  },
+                  {
+                    "op": "calculation",
+                    "name": "TotalIndividualMissileDamage"
+                  }
+                ]
+              }
             }
           ]
         }

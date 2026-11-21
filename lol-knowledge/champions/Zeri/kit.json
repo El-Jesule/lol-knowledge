@@ -7,8 +7,8 @@
   "verified_against": {
     "content_version": "16.23.8406595+branch.releases-16-23.content.release",
     "bin_sha256": "12a5bed25996ce9d38b4cca217202d3df619168b0f012c8ad22e9a3bb2fd8ecb",
-    "evidence": "odd/tasks/champion-wave-mechanics.md",
-    "result": "Bin del cliente 16.23 convertido con python -m binmodel.batch_kits y compilado con esta especificación curada (CH-04 mecánicas de oleadas)"
+    "evidence": "odd/tasks/ch04-champion-mechanics.md",
+    "result": "Bin del cliente 16.23 convertido con python -m binmodel.batch_kits y compilado con esta especificación curada (CH-04 cierre de mecánicas de campeón)"
   },
   "source": "Árboles de cálculo del bin del cliente (python -m binmodel) y marcado de los tooltips del cliente; estructura de casos curada en research/kits/",
   "abilities": {
@@ -16,6 +16,60 @@
       "name": "Batería cargada",
       "max_rank": 1,
       "cases": [
+        {
+          "id": "uncharged_zap",
+          "name": "Ataque básico sin carga (10..25 + 3 % PH)",
+          "parts": [
+            {
+              "damage_type": "magic",
+              "formula": {
+                "op": "add",
+                "operands": [
+                  {
+                    "op": "by_level",
+                    "values": [
+                      10.0,
+                      10.6353,
+                      11.3015,
+                      11.9985,
+                      12.7265,
+                      13.4853,
+                      14.275,
+                      15.0956,
+                      15.9471,
+                      16.8294,
+                      17.7426,
+                      18.6868,
+                      19.6618,
+                      20.6676,
+                      21.7044,
+                      22.7721,
+                      23.8706,
+                      25.0
+                    ]
+                  },
+                  {
+                    "op": "mul",
+                    "operands": [
+                      {
+                        "op": "constant",
+                        "value": 0.03
+                      },
+                      {
+                        "op": "stat",
+                        "stat": "ability_power",
+                        "scope": "total"
+                      }
+                    ]
+                  }
+                ]
+              },
+              "label": "Derivado",
+              "source": "Characters/Zeri/Spells/ZeriPassiveAbility/ZeriPassive · ZeriQ.mSpellCalculations.MinDamage (curva de crecimiento 10..25 + 3 % PH) (16.23.8406595+branch.releases-16-23.content.release)",
+              "damage_type_source": "spell_zeripassive_tooltip <magicDamage>"
+            }
+          ]
+        },
         {
           "id": "full_charge_zap",
           "name": "Ataque básico cargado al máximo",
@@ -77,7 +131,7 @@
       ],
       "passive_stats": [],
       "not_modelled": [
-        "Descarga de ataque básico sin carga (ZeriQ.MinDamage) y cargada al máximo (ZeriQ.PassiveMaxDamage + ZeriQ.PassiveMaxChargePercentHealth % vida máxima), ejecución bajo umbral y robo de escudos"
+        "Ejecución bajo umbral (PassiveExecuteThreshold) y robo de escudos"
       ]
     },
     "Q": {
@@ -134,7 +188,7 @@
       ],
       "passive_stats": [],
       "not_modelled": [
-        "Cuenta como ataque básico (efectos al impactar y críticos), tope de 1,5 VA con conversión del 60 % del exceso en DA y cálculos de la descarga pasiva almacenados en ZeriQ"
+        "Cuenta como ataque básico (efectos al impactar y críticos); el tope de 1,5 VA y la conversión del 60 % del exceso en DA adicional están modelados en la hoja"
       ]
     },
     "W": {

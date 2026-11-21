@@ -7,8 +7,8 @@
   "verified_against": {
     "content_version": "16.23.8406595+branch.releases-16-23.content.release",
     "bin_sha256": "98b93c599e8f8a9e12687f7e64a7ad8e02dae4700e69fcbfcdf8a2ed3aafd363",
-    "evidence": "odd/tasks/champion-kits-wave-4.md",
-    "result": "Bin del cliente 16.23 convertido con python -m binmodel.batch_kits y compilado con esta especificación curada (CH-01 oleada 4 — cierre 173/173)"
+    "evidence": "odd/tasks/ch04-champion-mechanics.md",
+    "result": "Bin del cliente 16.23 convertido con python -m binmodel.batch_kits y compilado con esta especificación curada (CH-04 cierre de mecánicas de campeón)"
   },
   "source": "Árboles de cálculo del bin del cliente (python -m binmodel) y marcado de los tooltips del cliente; estructura de casos curada en research/kits/",
   "abilities": {
@@ -18,7 +18,43 @@
       "cases": [],
       "passive_stats": [],
       "not_modelled": [
-        "Velocidad de ataque temporal tras habilidad (SheenSpeedPerStack), acumulaciones infinitas de Lavanda (AttackSpeedPerStack) sin tope de VA y ataques básicos al 75 % de daño"
+        "Velocidad de ataque temporal tras habilidad (SheenSpeedPerStack, 2 cargas); la ausencia de tope de VA y las acumulaciones de lavanda (--input lavender_stacks) están modeladas en la hoja"
+      ],
+      "passive_effects": [
+        {
+          "id": "death_in_lavender",
+          "name": "Muerte en lavanda (VA adicional permanente por carga)",
+          "kind": "stat_bonus",
+          "formula": {
+            "op": "by_level",
+            "values": [
+              0.1,
+              0.15,
+              0.2,
+              0.25,
+              0.3,
+              0.35,
+              0.45,
+              0.55,
+              0.65,
+              0.75,
+              0.85,
+              1,
+              1.15,
+              1.3,
+              1.45,
+              1.6,
+              1.75,
+              1.9
+            ]
+          },
+          "label": "Derivado",
+          "source": "Characters/Belveth/Spells/BelvethPassiveAbility/BelvethPassive.mSpellCalculations.AttackSpeedPerStack (16.23.8406595+branch.releases-16-23.content.release)",
+          "stat": "attack_speed_bonus",
+          "mode": "flat",
+          "input_name": "lavender_stacks",
+          "condition": "Velocidad de ataque permanente por acumulación de lavanda (--input lavender_stacks)"
+        }
       ]
     },
     "Q": {
