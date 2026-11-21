@@ -185,3 +185,68 @@ def test_champion_without_kit(capsys, monkeypatch):
     )  # fmt: skip
     assert code == 2
     assert "Lux has no kit yet" in capsys.readouterr().err
+
+
+def test_ability_command_multi_target_text_and_json(capsys):
+    import json
+
+    code = main(
+        [
+            "ability",
+            "--root",
+            str(ROOT),
+            "--champion",
+            "Ahri",
+            "--level",
+            "11",
+            "--ability",
+            "R",
+            "--rank",
+            "2",
+            "--case",
+            "dash",
+            "--target-armor",
+            "0",
+            "--target-mr",
+            "0",
+            "--target-count",
+            "3",
+        ]
+    )
+    assert code == 0
+    out = capsys.readouterr().out
+    assert "targets: 3" in out
+    assert "primary target: 125, targets hit: 3" in out
+    assert "total: 375" in out
+
+    code = main(
+        [
+            "ability",
+            "--root",
+            str(ROOT),
+            "--champion",
+            "Ashe",
+            "--level",
+            "11",
+            "--ability",
+            "R",
+            "--rank",
+            "2",
+            "--target-armor",
+            "0",
+            "--target-mr",
+            "0",
+            "--target-count",
+            "3",
+            "--json",
+        ]
+    )
+    assert code == 0
+    payload = json.loads(capsys.readouterr().out)
+    assert payload["target_count"] == 3
+    case = payload["cases"][0]
+    assert case["targets_hit"] == 3
+    assert case["secondary_damage_ratio"] == 0.5
+    assert case["primary_total"] == 400.0
+    assert case["secondary_total"] == 400.0
+    assert case["total"] == 800.0

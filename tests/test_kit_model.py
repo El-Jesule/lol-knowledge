@@ -130,3 +130,57 @@ def test_passive_stats_must_be_resolvable(monkeypatch):
     monkeypatch.setitem(STATS, "test_pending", pending)
     with pytest.raises(KitError, match="'test_pending' is not a resolvable stat"):
         parse_kit(kit_with(["abilities", "R", "passive_stats", 0, "stat"], "test_pending"))
+
+
+def test_case_multi_target_and_area_attributes():
+    from fractions import Fraction as F
+
+    doc = copy.deepcopy(KIT)
+    doc["abilities"]["R"]["cases"] = [
+        {"id": "aoe_uncapped", "name": "AoE", "aoe": True, "parts": [PART]},
+        {"id": "bolt_3", "name": "3 bolts", "aoe": True, "max_targets": 3, "parts": [PART]},
+        {
+            "id": "splash",
+            "name": "Splash",
+            "aoe": True,
+            "secondary_damage_ratio": 0.5,
+            "parts": [PART],
+        },
+        {"id": "single", "name": "Single", "aoe": False, "max_targets": 1, "parts": [PART]},
+        {"id": "undeclared", "name": "Undeclared", "parts": [PART]},
+    ]
+    r = parse_kit(doc).ability("R")
+    assert r.case("aoe_uncapped").resolve_targets(4) == (4, F(1), False)
+    assert r.case("bolt_3").resolve_targets(5) == (3, F(1), False)
+    assert r.case("bolt_3").resolve_targets(2) == (2, F(1), False)
+    assert r.case("splash").resolve_targets(3) == (3, F("0.5"), False)
+    assert r.case("single").resolve_targets(5) == (1, F(1), False)
+    assert r.case("undeclared").resolve_targets(1) == (1, F(1), False)
+    assert r.case("undeclared").resolve_targets(3) == (1, F(1), True)
+
+
+@pytest.mark.parametrize(
+    ("field", "value", "message"),
+    [
+        ("aoe", "yes", "aoe must be true or false"),
+        ("aoe", 1, "aoe must be true or false"),
+        ("max_targets", 0, "max_targets must be an integer >= 1"),
+        ("max_targets", True, "max_targets must be an integer >= 1"),
+        ("max_targets", 1.5, "max_targets must be an integer >= 1"),
+        ("secondary_damage_ratio", 0, "secondary_damage_ratio must be a positive number"),
+        ("secondary_damage_ratio", -0.5, "secondary_damage_ratio must be a positive number"),
+        ("secondary_damage_ratio", 1.5, "secondary_damage_ratio must be <= 1"),
+        ("secondary_damage_ratio", True, "secondary_damage_ratio must be a positive number"),
+    ],
+)
+def test_rejects_invalid_case_multi_target_fields(field, value, message):
+    with pytest.raises(KitError, match=message):
+        parse_kit(kit_with(["abilities", "R", "cases", 0, field], value))
+
+
+def test_secondary_damage_ratio_cannot_be_combined_with_max_targets_one():
+    doc = copy.deepcopy(KIT)
+    doc["abilities"]["R"]["cases"][0]["max_targets"] = 1
+    doc["abilities"]["R"]["cases"][0]["secondary_damage_ratio"] = 0.5
+    with pytest.raises(KitError, match="secondary_damage_ratio cannot be used with max_targets 1"):
+        parse_kit(doc)

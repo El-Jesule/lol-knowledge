@@ -18,6 +18,7 @@
     "Q": {
       "name": "Lanza cometa",
       "tooltip": "spell_pantheonq_tooltip",
+      "aoe": true,
       "cases": [
         {
           "id": "tap",
@@ -31,6 +32,9 @@
         {
           "id": "hold",
           "name": "Mantener pulsado (lanzamiento)",
+          "secondary_damage_ratio": {
+            "data_value": "DamageFalloff"
+          },
           "parts": [
             {
               "calculation": "HoldDamageCalc"
@@ -40,6 +44,9 @@
         {
           "id": "execute",
           "name": "Ejecución (< 20 % vida)",
+          "secondary_damage_ratio": {
+            "data_value": "DamageFalloff"
+          },
           "parts": [
             {
               "calculation": "ExecuteDamageCalcModified"
@@ -57,13 +64,14 @@
         }
       ],
       "not_modelled": [
-        "Devolución del 60 % de enfriamiento al pulsar",
-        "Reducción tras el primer objetivo (DamageFalloff) y contra súbditos/monstruos"
+        "Devolución del 60 % de enfriamiento al pulsar y reducción contra súbditos/monstruos"
       ]
     },
     "W": {
       "name": "Salto con escudo",
       "tooltip": "spell_pantheonw_tooltip",
+      "aoe": false,
+      "max_targets": 1,
       "cases": [
         {
           "id": "leap",

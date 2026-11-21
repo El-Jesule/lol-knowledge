@@ -137,7 +137,9 @@
               "source": "Characters/Sona/Spells/SonaQAbility/SonaQ.mSpellCalculations.TotalDamage (16.23.8406595+branch.releases-16-23.content.release)",
               "damage_type_source": "spell_sonaq_tooltip <magicDamage>"
             }
-          ]
+          ],
+          "aoe": true,
+          "max_targets": 2
         },
         {
           "id": "aura_on_hit",
@@ -178,7 +180,9 @@
               "source": "Characters/Sona/Spells/SonaQAbility/SonaQ.mSpellCalculations.TotalOnHitDamage (16.23.8406595+branch.releases-16-23.content.release)",
               "damage_type_source": "spell_sonaq_tooltip <magicDamage>"
             }
-          ]
+          ],
+          "aoe": false,
+          "max_targets": 1
         },
         {
           "id": "staccato",
@@ -232,7 +236,9 @@
               "source": "Characters/Sona/Spells/SonaQAbility/SonaQ.mSpellCalculations.TotalStaccatoDamage (16.23.8406595+branch.releases-16-23.content.release)",
               "damage_type_source": "spell_sonaq_tooltip <magicDamage>"
             }
-          ]
+          ],
+          "aoe": false,
+          "max_targets": 1
         }
       ],
       "passive_stats": [],
@@ -299,7 +305,8 @@
               "source": "Characters/Sona/Spells/SonaRAbility/SonaR.mSpellCalculations.TotalDamage (16.23.8406595+branch.releases-16-23.content.release)",
               "damage_type_source": "spell_sonar_tooltip <magicDamage>"
             }
-          ]
+          ],
+          "aoe": true
         }
       ],
       "passive_stats": [],

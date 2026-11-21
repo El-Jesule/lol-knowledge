@@ -20,6 +20,8 @@
     "Q": {
       "name": "Danza de flechas",
       "tooltip": "spell_kindredq_tooltip",
+      "aoe": true,
+      "max_targets": 3,
       "cases": [
         {
           "id": "arrow",
@@ -38,6 +40,8 @@
     "W": {
       "name": "Frenesí de lobo",
       "tooltip": "spell_kindredw_tooltip",
+      "aoe": false,
+      "max_targets": 1,
       "cases": [
         {
           "id": "wolf_bite_0_marks",

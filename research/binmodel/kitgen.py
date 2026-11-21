@@ -588,13 +588,40 @@ def compile_kit(
                         "damage_type_source": f"{part_tooltip_key} <{_tag(damage_type)}>",
                     }
                 )
-            generated = {"id": case["id"], "name": case["name"], "parts": parts}
+            generated: dict[str, Any] = {"id": case["id"], "name": case["name"], "parts": parts}
             if case.get("recast"):
                 generated["recast"] = True
+            case_ctx = f"{context}.{case['id']}"
+            aoe = case.get("aoe", entry.get("aoe"))
+            if aoe is not None:
+                if not isinstance(aoe, bool):
+                    raise KitGenError(f"{case_ctx}.aoe: must be true or false")
+                generated["aoe"] = aoe
+            raw_max = case.get("max_targets", entry.get("max_targets"))
+            if raw_max is not None:
+                resolved_max = _setting(ability, raw_max, f"{case_ctx}.max_targets")
+                if (
+                    isinstance(resolved_max, bool)
+                    or not isinstance(resolved_max, (int, float))
+                    or int(resolved_max) != resolved_max
+                    or int(resolved_max) < 1
+                ):
+                    raise KitGenError(f"{case_ctx}.max_targets: must be an integer >= 1")
+                generated["max_targets"] = int(resolved_max)
+            raw_sec = case.get("secondary_damage_ratio", entry.get("secondary_damage_ratio"))
+            if raw_sec is not None:
+                resolved_sec = _setting(ability, raw_sec, f"{case_ctx}.secondary_damage_ratio")
+                if (
+                    isinstance(resolved_sec, bool)
+                    or not isinstance(resolved_sec, (int, float))
+                    or not (0 < float(resolved_sec) <= 1)
+                ):
+                    raise KitGenError(
+                        f"{case_ctx}.secondary_damage_ratio: must be a number in (0, 1]"
+                    )
+                generated["secondary_damage_ratio"] = round(float(resolved_sec), 6)
             if "cost" in case:
-                generated["cost"] = _compile_cost(
-                    ability, case["cost"], content_version, f"{context}.{case['id']}"
-                )
+                generated["cost"] = _compile_cost(ability, case["cost"], content_version, case_ctx)
             cases.append(generated)
         passive_stats = []
         for item in entry.get("passive_stats", []):

@@ -172,7 +172,9 @@
               "source": "Characters/Caitlyn/Spells/CaitlynQAbility/CaitlynQ.mSpellCalculations.InitialDamage (16.23.8406595+branch.releases-16-23.content.release)",
               "damage_type_source": "spell_caitlynpiltoverpeacemaker_tooltip <physicalDamage>"
             }
-          ]
+          ],
+          "aoe": true,
+          "secondary_damage_ratio": 0.6
         },
         {
           "id": "passthrough",
@@ -228,7 +230,9 @@
               "source": "Characters/Caitlyn/Spells/CaitlynQAbility/CaitlynQ.mSpellCalculations.SecondaryDamage (16.23.8406595+branch.releases-16-23.content.release)",
               "damage_type_source": "spell_caitlynpiltoverpeacemaker_tooltip <physicalDamage>"
             }
-          ]
+          ],
+          "aoe": true,
+          "max_targets": 1
         }
       ],
       "passive_stats": [],
@@ -277,7 +281,9 @@
               "source": "Characters/Caitlyn/Spells/CaitlynWAbility/CaitlynW.mSpellCalculations.HeadshotBonusDamage (16.23.8406595+branch.releases-16-23.content.release)",
               "damage_type_source": "spell_caitlynyordletrap_tooltip <physicalDamage>"
             }
-          ]
+          ],
+          "aoe": false,
+          "max_targets": 1
         }
       ],
       "passive_stats": [],
@@ -328,7 +334,9 @@
               "source": "Characters/Caitlyn/Spells/CaitlynEAbility/CaitlynE.mSpellCalculations.NetDamage (16.23.8406595+branch.releases-16-23.content.release)",
               "damage_type_source": "spell_caitlynentrapment_tooltip <magicDamage>"
             }
-          ]
+          ],
+          "aoe": false,
+          "max_targets": 1
         }
       ],
       "passive_stats": [],
@@ -377,7 +385,9 @@
               "source": "Characters/Caitlyn/Spells/CaitlynRAbility/CaitlynR.mSpellCalculations.RTotalDamage (16.23.8406595+branch.releases-16-23.content.release)",
               "damage_type_source": "spell_caitlynaceinthehole_tooltip <physicalDamage>"
             }
-          ]
+          ],
+          "aoe": false,
+          "max_targets": 1
         }
       ],
       "passive_stats": [],

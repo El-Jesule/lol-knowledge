@@ -30,6 +30,10 @@
     "Q": {
       "name": "Ira elemental / Filo de Ixtal",
       "tooltip": "spell_qiyanaqv2_tooltip",
+      "aoe": true,
+      "secondary_damage_ratio": {
+        "data_value": "FalloffMod"
+      },
       "cases": [
         {
           "id": "base",
@@ -51,12 +55,14 @@
         }
       ],
       "not_modelled": [
-        "Reducción del 25 % tras el primer objetivo (FalloffDamage), inmovilización de río y sigilo de maleza"
+        "Inmovilización de río y sigilo de maleza"
       ]
     },
     "W": {
       "name": "Terraformar",
       "tooltip": "spell_qiyanaenchant_tooltip",
+      "aoe": false,
+      "max_targets": 1,
       "cases": [
         {
           "id": "on_hit",
@@ -75,6 +81,8 @@
     "E": {
       "name": "Audacia",
       "tooltip": "spell_qiyanaev3_tooltip",
+      "aoe": false,
+      "max_targets": 1,
       "cases": [
         {
           "id": "dash",
@@ -90,6 +98,7 @@
     "R": {
       "name": "Muestra absoluta de talento",
       "tooltip": "spell_qiyanarv2_tooltip",
+      "aoe": true,
       "cases": [
         {
           "id": "wall_blast",

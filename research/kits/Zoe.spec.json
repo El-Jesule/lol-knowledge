@@ -12,6 +12,8 @@
       "name": "¡Más chispas!",
       "tooltip": "spell_zoepassive_tooltip",
       "max_rank": 1,
+      "aoe": false,
+      "max_targets": 1,
       "cases": [
         {
           "id": "spark",
@@ -28,6 +30,8 @@
     "Q": {
       "name": "Pádel estelar",
       "tooltip": "spell_zoeq_tooltip",
+      "aoe": true,
+      "secondary_damage_ratio": 0.8,
       "cases": [
         {
           "id": "min",
@@ -49,12 +53,14 @@
         }
       ],
       "not_modelled": [
-        "Redirección de segundo lanzamiento y 20 % menos de daño a objetivos secundarios"
+        "Redirección de segundo lanzamiento"
       ]
     },
     "W": {
       "name": "Ladrona de hechizos",
       "tooltip": "spell_zoew_tooltip",
+      "aoe": false,
+      "max_targets": 1,
       "cases": [
         {
           "id": "missiles_total",
@@ -73,6 +79,8 @@
     "E": {
       "name": "Burbuja somnífera",
       "tooltip": "spell_zoee_tooltip",
+      "aoe": false,
+      "max_targets": 1,
       "cases": [
         {
           "id": "impact",

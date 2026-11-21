@@ -68,7 +68,9 @@
               "source": "Characters/Zoe/Spells/ZoePassiveAbility/ZoePassive.mSpellCalculations.PassiveDamage (16.23.8406595+branch.releases-16-23.content.release)",
               "damage_type_source": "spell_zoepassive_tooltip <magicDamage>"
             }
-          ]
+          ],
+          "aoe": false,
+          "max_targets": 1
         }
       ],
       "passive_stats": [],
@@ -140,7 +142,9 @@
               "source": "Characters/Zoe/Spells/ZoeQAbility/ZoeQ.mSpellCalculations.TotalDamageTooltip (16.23.8406595+branch.releases-16-23.content.release)",
               "damage_type_source": "spell_zoeq_tooltip <magicDamage>"
             }
-          ]
+          ],
+          "aoe": true,
+          "secondary_damage_ratio": 0.8
         },
         {
           "id": "max",
@@ -213,12 +217,14 @@
               "source": "Characters/Zoe/Spells/ZoeQAbility/ZoeQ.mSpellCalculations.MaxDamageTooltip (16.23.8406595+branch.releases-16-23.content.release)",
               "damage_type_source": "spell_zoeq_tooltip <magicDamage>"
             }
-          ]
+          ],
+          "aoe": true,
+          "secondary_damage_ratio": 0.8
         }
       ],
       "passive_stats": [],
       "not_modelled": [
-        "Redirección de segundo lanzamiento y 20 % menos de daño a objetivos secundarios"
+        "Redirección de segundo lanzamiento"
       ]
     },
     "W": {
@@ -264,7 +270,9 @@
               "source": "Characters/Zoe/Spells/ZoeWAbility/ZoeW.mSpellCalculations.MissileDamageTooltip (16.23.8406595+branch.releases-16-23.content.release)",
               "damage_type_source": "spell_zoew_tooltip <magicDamage>"
             }
-          ]
+          ],
+          "aoe": false,
+          "max_targets": 1
         }
       ],
       "passive_stats": [],
@@ -315,7 +323,9 @@
               "source": "Characters/Zoe/Spells/ZoeEAbility/ZoeE.mSpellCalculations.TotalDamageTooltip (16.23.8406595+branch.releases-16-23.content.release)",
               "damage_type_source": "spell_zoee_tooltip <magicDamage>"
             }
-          ]
+          ],
+          "aoe": false,
+          "max_targets": 1
         },
         {
           "id": "wake_cap",
@@ -356,7 +366,9 @@
               "source": "Characters/Zoe/Spells/ZoeEAbility/ZoeE.mSpellCalculations.BreakDamageTooltip (16.23.8406595+branch.releases-16-23.content.release)",
               "damage_type_source": "spell_zoee_tooltip <trueDamage>"
             }
-          ]
+          ],
+          "aoe": false,
+          "max_targets": 1
         }
       ],
       "passive_stats": [],

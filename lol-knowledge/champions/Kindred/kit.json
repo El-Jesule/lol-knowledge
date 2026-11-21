@@ -64,7 +64,9 @@
               "source": "Characters/Kindred/Spells/KindredQAbility/KindredQ.mSpellCalculations.TotalDamage (16.23.8406595+branch.releases-16-23.content.release)",
               "damage_type_source": "spell_kindredq_tooltip <physicalDamage>"
             }
-          ]
+          ],
+          "aoe": true,
+          "max_targets": 3
         }
       ],
       "passive_stats": [],
@@ -169,7 +171,9 @@
               "source": "Characters/Kindred/Spells/KindredWAbility/KindredW · mSpellCalculations.PercentWolfDamage × vida actual del objetivo (--input kindred_marks) (16.23.8406595+branch.releases-16-23.content.release)",
               "damage_type_source": "spell_kindredw_tooltip <magicDamage>"
             }
-          ]
+          ],
+          "aoe": false,
+          "max_targets": 1
         }
       ],
       "passive_stats": [],

@@ -133,7 +133,9 @@
               "source": "Characters/Qiyana/Spells/QiyanaQAbility/QiyanaQ.mSpellCalculations.VanillaDamage (16.23.8406595+branch.releases-16-23.content.release)",
               "damage_type_source": "spell_qiyanaqv2_tooltip <physicalDamage>"
             }
-          ]
+          ],
+          "aoe": true,
+          "secondary_damage_ratio": 0.75
         },
         {
           "id": "rock_execute",
@@ -202,12 +204,14 @@
               "source": "Characters/Qiyana/Spells/QiyanaQAbility/QiyanaQ.mSpellCalculations.TremorDamage (16.23.8406595+branch.releases-16-23.content.release)",
               "damage_type_source": "spell_qiyanaqv2_tooltip <physicalDamage>"
             }
-          ]
+          ],
+          "aoe": true,
+          "secondary_damage_ratio": 0.75
         }
       ],
       "passive_stats": [],
       "not_modelled": [
-        "Reducción del 25 % tras el primer objetivo (FalloffDamage), inmovilización de río y sigilo de maleza"
+        "Inmovilización de río y sigilo de maleza"
       ]
     },
     "W": {
@@ -267,7 +271,9 @@
               "source": "Characters/Qiyana/Spells/QiyanaWAbility/QiyanaW.mSpellCalculations.OnHitDamage (16.23.8406595+branch.releases-16-23.content.release)",
               "damage_type_source": "spell_qiyanaenchant_tooltip <magicDamage>"
             }
-          ]
+          ],
+          "aoe": false,
+          "max_targets": 1
         }
       ],
       "passive_stats": [],
@@ -318,7 +324,9 @@
               "source": "Characters/Qiyana/Spells/QiyanaEAbility/QiyanaE.mSpellCalculations.Damage (16.23.8406595+branch.releases-16-23.content.release)",
               "damage_type_source": "spell_qiyanaev3_tooltip <physicalDamage>"
             }
-          ]
+          ],
+          "aoe": false,
+          "max_targets": 1
         }
       ],
       "passive_stats": [],
@@ -386,7 +394,8 @@
               "source": "Characters/Qiyana/Spells/QiyanaRAbility/QiyanaR · MissingHealthDamageRock × vida máxima del objetivo (16.23.8406595+branch.releases-16-23.content.release)",
               "damage_type_source": "spell_qiyanarv2_tooltip <physicalDamage>"
             }
-          ]
+          ],
+          "aoe": true
         }
       ],
       "passive_stats": [],

@@ -91,6 +91,24 @@ class CaseSpec:
     # A recast of an ability already cast: it starts no cooldown (timeline.md).
     recast: bool = False
     cost: CostSpec | None = None
+    # Area-of-effect classification (True = area spell, False = single-target, None = undeclared).
+    aoe: bool | None = None
+    # Maximum distinct targets hit in one cast (None = uncapped when aoe is True, else 1).
+    max_targets: int | None = None
+    # Damage multiplier (0 < ratio <= 1) applied to each secondary target beyond the primary one.
+    secondary_damage_ratio: Fraction = Fraction(1)
+
+    def resolve_targets(self, target_count: int) -> tuple[int, Fraction, bool]:
+        """Return ``(targets_hit, secondary_damage_ratio, unverified)`` for ``target_count``."""
+        if target_count <= 1:
+            return 1, self.secondary_damage_ratio, False
+        if self.max_targets is not None:
+            return min(target_count, self.max_targets), self.secondary_damage_ratio, False
+        if self.aoe is True:
+            return target_count, self.secondary_damage_ratio, False
+        if self.aoe is False:
+            return 1, self.secondary_damage_ratio, False
+        return 1, self.secondary_damage_ratio, True
 
 
 @dataclass(frozen=True)
@@ -380,9 +398,31 @@ def _ability(slot: str, record: Any) -> AbilitySpec:
         recast = case.get("recast", False)
         if not isinstance(recast, bool):
             raise KitError(f"{case_context}: recast must be true or false")
+        aoe = case.get("aoe")
+        if aoe is not None and not isinstance(aoe, bool):
+            raise KitError(f"{case_context}: aoe must be true or false")
+        max_targets = _optional_positive_int(case, "max_targets", case_context, minimum=1)
+        sec_ratio = _optional_positive_fraction(case, "secondary_damage_ratio", case_context)
+        if sec_ratio is None:
+            sec_ratio = Fraction(1)
+        elif sec_ratio > 1:
+            raise KitError(f"{case_context}: secondary_damage_ratio must be <= 1")
+        if "secondary_damage_ratio" in case and max_targets == 1:
+            raise KitError(
+                f"{case_context}: secondary_damage_ratio cannot be used with max_targets 1"
+            )
         case_cost = _cost(case, max_rank, case_context)
         cases.append(
-            CaseSpec(case_id, _text(case, "name", case_context), tuple(parts), recast, case_cost)
+            CaseSpec(
+                case_id,
+                _text(case, "name", case_context),
+                tuple(parts),
+                recast,
+                case_cost,
+                aoe=aoe,
+                max_targets=max_targets,
+                secondary_damage_ratio=sec_ratio,
+            )
         )
     passive_stats = []
     for index, entry in enumerate(_list(record, "passive_stats", context)):

@@ -19,6 +19,8 @@
     "Q": {
       "name": "Concentración máxima",
       "tooltip": "spell_asheq_tooltip",
+      "aoe": false,
+      "max_targets": 1,
       "cases": [
         {
           "id": "flurry",
@@ -37,6 +39,7 @@
     "W": {
       "name": "Descarga",
       "tooltip": "spell_volley_tooltip",
+      "aoe": true,
       "cases": [
         {
           "id": "arrow",
@@ -62,6 +65,8 @@
     "R": {
       "name": "Flecha de cristal encantada",
       "tooltip": "spell_enchantedcrystalarrow_tooltip",
+      "aoe": true,
+      "secondary_damage_ratio": 0.5,
       "cases": [
         {
           "id": "impact",
@@ -74,7 +79,7 @@
         }
       ],
       "not_modelled": [
-        "Aturdimiento escalado por distancia (hasta 3,5 s) y 50 % de daño en área secundaria"
+        "Aturdimiento escalado por distancia (hasta 3,5 s)"
       ]
     }
   }

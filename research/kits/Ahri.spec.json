@@ -38,6 +38,7 @@
     "Q": {
       "name": "Orbe del engaño",
       "tooltip": "spell_ahriorbofdeception_tooltip",
+      "aoe": true,
       "cases": [
         {"id": "out", "name": "Ida: daño mágico", "parts": [{"calculation": "TotalDamage", "damage_type": "magic"}]},
         {"id": "back", "name": "Vuelta: daño verdadero", "parts": [{"calculation": "TotalDamage", "damage_type": "true"}]},
@@ -50,9 +51,10 @@
     "W": {
       "name": "Fuego zorruno",
       "tooltip": "spell_ahrifoxfire_tooltip",
+      "aoe": false,
       "cases": [
-        {"id": "one", "name": "Un fuego", "parts": [{"calculation": "SingleFireDamage"}]},
-        {"id": "all", "name": "Los tres fuegos en el mismo objetivo", "parts": [{"calculation": "SingleFireDamage"}, {"calculation": "MultiFireDamage"}, {"calculation": "MultiFireDamage"}]}
+        {"id": "one", "name": "Un fuego", "max_targets": 3, "parts": [{"calculation": "SingleFireDamage"}]},
+        {"id": "all", "name": "Los tres fuegos en el mismo objetivo", "max_targets": 1, "parts": [{"calculation": "SingleFireDamage"}, {"calculation": "MultiFireDamage"}, {"calculation": "MultiFireDamage"}]}
       ],
       "not_modelled": [
         "Velocidad de movimiento (MovementSpeed, 40 % que decae en 2 s)",
@@ -62,6 +64,8 @@
     "E": {
       "name": "Hechizar",
       "tooltip": "spell_ahriseduce_tooltip",
+      "aoe": false,
+      "max_targets": 1,
       "cases": [
         {"id": "hit", "name": "Beso", "parts": [{"calculation": "TotalDamage"}]}
       ],
@@ -72,6 +76,8 @@
     "R": {
       "name": "Impulso espiritual",
       "tooltip": "spell_ahritumble_tooltip",
+      "aoe": true,
+      "max_targets": {"data_value": "RMaxTargetsPerCast"},
       "cases": [
         {"id": "dash", "name": "Impulso: un rayo al objetivo", "parts": [{"calculation": "RCalculatedDamage"}]},
         {"id": "recast", "name": "Reactivación: un rayo al objetivo", "recast": true, "parts": [{"calculation": "RCalculatedDamage"}]}
@@ -80,8 +86,7 @@
       "max_recasts": 2,
       "recast_interval_seconds": {"data_value": "RDashCooldown"},
       "not_modelled": [
-        "Cada impulso dispara 3 rayos a enemigos distintos (RMaxTargetsPerCast): un único objetivo recibe uno por impulso",
-        "Reactivaciones extra al derribar campeones (Robo de esencias, RMaxCasts)"
+        "Reactivaciones extra y ampliación de 10 s de la ventana al derribar campeones (Robo de esencias, RResetCasts, PDurationExtension)"
       ]
     }
   }

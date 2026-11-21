@@ -19,10 +19,14 @@
     "Q": {
       "name": "Bumerán / Peñascazo",
       "tooltip": "spell_gnarq_tooltip",
+      "aoe": true,
       "cases": [
         {
           "id": "mini",
           "name": "Mini Gnar: Bumerán (primer impacto)",
+          "secondary_damage_ratio": {
+            "data_value": "MiniSubsequentMult"
+          },
           "parts": [
             {
               "calculation": "MiniTotalDamage"
@@ -41,7 +45,7 @@
         }
       ],
       "not_modelled": [
-        "Mini-Gnar: 50 % a objetivos posteriores y devolución de CD al recogerlo; Mega-Gnar: Peñascazo (MegaTotalDamage)"
+        "Mini-Gnar y Mega-Gnar: devolución de CD al recoger el proyectil"
       ]
     },
     "W": {
@@ -51,6 +55,8 @@
         {
           "id": "mini_proc",
           "name": "Mini-Gnar: 3.ª carga de Híper (plano + % vida máxima)",
+          "aoe": false,
+          "max_targets": 1,
           "parts": [
             {
               "calculation": "MiniTotalDamage"
@@ -81,6 +87,7 @@
           "id": "mega",
           "name": "Mega Gnar: Golpazo",
           "tooltip": "spell_gnarbigw_tooltip",
+          "aoe": true,
           "parts": [
             {
               "calculation": "MegaTotalDamage"
@@ -89,12 +96,13 @@
         }
       ],
       "not_modelled": [
-        "Velocidad de movimiento de Híper, tope contra monstruos (300) y Mega-Gnar: Golpazo (MegaTotalDamage + aturdimiento)"
+        "Velocidad de movimiento de Híper, tope contra monstruos (300) y aturdimiento de Golpazo"
       ]
     },
     "E": {
       "name": "Brinco / Sacudida",
       "tooltip": "spell_gnare_tooltip",
+      "aoe": true,
       "cases": [
         {
           "id": "mini",
@@ -117,12 +125,13 @@
         }
       ],
       "not_modelled": [
-        "Velocidad de ataque de Brinco (MinibAS), rebote y Mega-Gnar: Sacudida (MegaTotalDamage)"
+        "Velocidad de ataque de Brinco (MinibAS) y rebote"
       ]
     },
     "R": {
       "name": "¡GNAR!",
       "tooltip": "spell_gnarr_tooltip",
+      "aoe": true,
       "cases": [
         {
           "id": "throw",

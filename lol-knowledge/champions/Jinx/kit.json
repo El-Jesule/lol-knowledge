@@ -49,7 +49,8 @@
               "source": "Characters/Jinx/Spells/JinxQAbility/JinxQ.mSpellCalculations.RocketDamage (16.23.8406595+branch.releases-16-23.content.release)",
               "damage_type_source": "spell_jinxq_tooltip <physicalDamage>"
             }
-          ]
+          ],
+          "aoe": true
         }
       ],
       "passive_stats": [],
@@ -101,7 +102,9 @@
               "source": "Characters/Jinx/Spells/JinxWAbility/JinxW.mSpellCalculations.TotalDamage (16.23.8406595+branch.releases-16-23.content.release)",
               "damage_type_source": "spell_jinxw_tooltip <physicalDamage>"
             }
-          ]
+          ],
+          "aoe": false,
+          "max_targets": 1
         }
       ],
       "passive_stats": [],
@@ -152,7 +155,8 @@
               "source": "Characters/Jinx/Spells/JinxEAbility/JinxE.mSpellCalculations.TotalDamage (16.23.8406595+branch.releases-16-23.content.release)",
               "damage_type_source": "spell_jinxe_tooltip <magicDamage>"
             }
-          ]
+          ],
+          "aoe": true
         }
       ],
       "passive_stats": [],
@@ -236,7 +240,9 @@
               "source": "Characters/Jinx/Spells/JinxRAbility/JinxR · DataValues.PercentDamage % × vida que falta del objetivo (16.23.8406595+branch.releases-16-23.content.release)",
               "damage_type_source": "spell_jinxr_tooltip <physicalDamage>"
             }
-          ]
+          ],
+          "aoe": true,
+          "secondary_damage_ratio": 0.8
         },
         {
           "id": "max",
@@ -310,12 +316,14 @@
               "source": "Characters/Jinx/Spells/JinxRAbility/JinxR · DataValues.PercentDamage % × vida que falta del objetivo (16.23.8406595+branch.releases-16-23.content.release)",
               "damage_type_source": "spell_jinxr_tooltip <physicalDamage>"
             }
-          ]
+          ],
+          "aoe": true,
+          "secondary_damage_ratio": 0.8
         }
       ],
       "passive_stats": [],
       "not_modelled": [
-        "Daño AoE del 80 % a enemigos secundarios y tope contra monstruos (MonsterExecuteMax)"
+        "Tope contra monstruos (MonsterExecuteMax = 1200)"
       ]
     }
   }

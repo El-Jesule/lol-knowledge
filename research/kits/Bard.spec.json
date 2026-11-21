@@ -12,6 +12,7 @@
       "name": "Llamada del viajero",
       "tooltip": "spell_bardptooltip_d_ns_tooltip",
       "max_rank": 1,
+      "aoe": true,
       "cases": [
         {
           "id": "meep_base",
@@ -30,6 +31,8 @@
     "Q": {
       "name": "Cadenas cósmicas",
       "tooltip": "spell_bardq_tooltip",
+      "aoe": true,
+      "max_targets": 2,
       "cases": [
         {
           "id": "bolt",

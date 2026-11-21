@@ -12,6 +12,8 @@
       "name": "Iluminación",
       "tooltip": "buff_luxp_tooltip",
       "max_rank": 1,
+      "aoe": false,
+      "max_targets": 1,
       "cases": [
         {
           "id": "proc",
@@ -27,6 +29,8 @@
     "Q": {
       "name": "Enlace de luz",
       "tooltip": "spell_luxq_tooltip",
+      "aoe": true,
+      "max_targets": 2,
       "cases": [
         {
           "id": "hit",
@@ -52,6 +56,7 @@
     "E": {
       "name": "Singularidad brillante",
       "tooltip": "spell_luxe_tooltip",
+      "aoe": true,
       "cases": [
         {
           "id": "detonate",
@@ -70,6 +75,7 @@
     "R": {
       "name": "Chispa final",
       "tooltip": "spell_luxr_tooltip",
+      "aoe": true,
       "cases": [
         {
           "id": "beam",

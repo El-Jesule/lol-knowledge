@@ -132,7 +132,8 @@
               "source": "Characters/Ahri/Spells/AhriQAbility/AhriQ.mSpellCalculations.TotalDamage (16.22.8348910+branch.releases-16-22.content.release)",
               "damage_type_source": "spell_ahriorbofdeception_tooltip <magicDamage>"
             }
-          ]
+          ],
+          "aoe": true
         },
         {
           "id": "back",
@@ -173,7 +174,8 @@
               "source": "Characters/Ahri/Spells/AhriQAbility/AhriQ.mSpellCalculations.TotalDamage (16.22.8348910+branch.releases-16-22.content.release)",
               "damage_type_source": "spell_ahriorbofdeception_tooltip <trueDamage>"
             }
-          ]
+          ],
+          "aoe": true
         },
         {
           "id": "both",
@@ -249,7 +251,8 @@
               "source": "Characters/Ahri/Spells/AhriQAbility/AhriQ.mSpellCalculations.TotalDamage (16.22.8348910+branch.releases-16-22.content.release)",
               "damage_type_source": "spell_ahriorbofdeception_tooltip <trueDamage>"
             }
-          ]
+          ],
+          "aoe": true
         }
       ],
       "passive_stats": [],
@@ -300,7 +303,9 @@
               "source": "Characters/Ahri/Spells/AhriWAbility/AhriW.mSpellCalculations.SingleFireDamage (16.22.8348910+branch.releases-16-22.content.release)",
               "damage_type_source": "spell_ahrifoxfire_tooltip <magicDamage>"
             }
-          ]
+          ],
+          "aoe": false,
+          "max_targets": 3
         },
         {
           "id": "all",
@@ -429,7 +434,9 @@
               "source": "Characters/Ahri/Spells/AhriWAbility/AhriW.mSpellCalculations.MultiFireDamage (16.22.8348910+branch.releases-16-22.content.release)",
               "damage_type_source": "spell_ahrifoxfire_tooltip <magicDamage>"
             }
-          ]
+          ],
+          "aoe": false,
+          "max_targets": 1
         }
       ],
       "passive_stats": [],
@@ -481,7 +488,9 @@
               "source": "Characters/Ahri/Spells/AhriEAbility/AhriE.mSpellCalculations.TotalDamage (16.22.8348910+branch.releases-16-22.content.release)",
               "damage_type_source": "spell_ahriseduce_tooltip <magicDamage>"
             }
-          ]
+          ],
+          "aoe": false,
+          "max_targets": 1
         }
       ],
       "passive_stats": [],
@@ -530,7 +539,9 @@
               "source": "Characters/Ahri/Spells/AhriRAbility/AhriR.mSpellCalculations.RCalculatedDamage (16.22.8348910+branch.releases-16-22.content.release)",
               "damage_type_source": "spell_ahritumble_tooltip <magicDamage>"
             }
-          ]
+          ],
+          "aoe": true,
+          "max_targets": 3
         },
         {
           "id": "recast",
@@ -570,13 +581,14 @@
               "damage_type_source": "spell_ahritumble_tooltip <magicDamage>"
             }
           ],
-          "recast": true
+          "recast": true,
+          "aoe": true,
+          "max_targets": 3
         }
       ],
       "passive_stats": [],
       "not_modelled": [
-        "Cada impulso dispara 3 rayos a enemigos distintos (RMaxTargetsPerCast): un único objetivo recibe uno por impulso",
-        "Reactivaciones extra al derribar campeones (Robo de esencias, RMaxCasts)"
+        "Reactivaciones extra y ampliación de 10 s de la ventana al derribar campeones (Robo de esencias, RResetCasts, PDurationExtension)"
       ],
       "recast_window_seconds": 15,
       "max_recasts": 2,

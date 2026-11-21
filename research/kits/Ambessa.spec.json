@@ -30,6 +30,10 @@
     "Q": {
       "name": "Barrido artero / Impacto desgarrador",
       "tooltip": "spell_ambessaq_tooltip",
+      "aoe": true,
+      "secondary_damage_ratio": {
+        "data_value": "Damage_1_Min_Ratio"
+      },
       "recast_window_seconds": {
         "data_value": "Swap_Duration"
       },
@@ -95,12 +99,13 @@
         }
       ],
       "not_modelled": [
-        "Daño reducido al 50 % fuera del borde/primer objetivo y bonificación/tope contra monstruos"
+        "Bonificación y tope de daño contra monstruos"
       ]
     },
     "W": {
       "name": "Vituperio",
       "tooltip": "spell_ambessaw_tooltip",
+      "aoe": true,
       "cases": [
         {
           "id": "normal",

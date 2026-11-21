@@ -402,3 +402,24 @@ def test_wave_mechanics_translation_in_kitgen():
         ],
     }
     assert kit["abilities"]["Q"]["cases"][1]["parts"][0]["formula"] == p_formula
+
+
+def test_kitgen_compiles_multi_target_and_area_attributes(ahri_extract):
+    spec = json.loads(AHRI_SPEC.read_text(encoding="utf-8"))
+    compiled = compile_kit(ahri_extract, ahri_tooltips(), spec)
+    assert all(c["aoe"] is True for c in compiled["abilities"]["Q"]["cases"])
+    w_one, w_all = compiled["abilities"]["W"]["cases"]
+    assert (w_one["aoe"], w_one["max_targets"]) == (False, 3)
+    assert (w_all["aoe"], w_all["max_targets"]) == (False, 1)
+    assert all(
+        (c["aoe"], c["max_targets"]) == (True, 3) for c in compiled["abilities"]["R"]["cases"]
+    )
+    bad_aoe = _ahri_spec(aoe="yes")
+    with pytest.raises(KitGenError, match=r"aoe: must be true or false"):
+        compile_kit(ahri_extract, ahri_tooltips(), bad_aoe)
+    bad_max = _ahri_spec(max_targets=0)
+    with pytest.raises(KitGenError, match=r"max_targets: must be an integer >= 1"):
+        compile_kit(ahri_extract, ahri_tooltips(), bad_max)
+    bad_sec = _ahri_spec(secondary_damage_ratio=1.5)
+    with pytest.raises(KitGenError, match=r"secondary_damage_ratio: must be a number in \(0, 1\]"):
+        compile_kit(ahri_extract, ahri_tooltips(), bad_sec)

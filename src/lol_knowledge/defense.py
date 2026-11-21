@@ -148,7 +148,7 @@ def hits_from_rotation(outcome: RotationOutcome) -> list[IncomingHit]:
                 IncomingHit(
                     kind,
                     part.damage_type,
-                    part.damage,
+                    part.primary_damage,
                     f"step {step.index} {step.step.text}: {part.source}",
                     already_mitigated=True,
                     time=step.time,

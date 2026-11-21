@@ -128,3 +128,51 @@ def test_a_pending_target_weakens_the_result_label():
     attacker = sheet(ranks={"R": 3})
     target = Target(F(100), F(50), {}, Label.PENDING, "pending target")
     assert evaluate_ability(KIT, attacker, "R", 3, target).label is Label.PENDING
+
+
+def test_multi_target_and_area_ability_evaluation():
+    ahri_kit = load_kit(ROOT, "Ahri")
+    ahri_sheet = sheet("Ahri", 11, ("3089",), ranks={"Q": 5, "W": 3, "E": 2, "R": 2}, kit=ahri_kit)
+    target = target_from_values(F(50), F(50), max_health=F(2000), kind="champion")
+
+    # Ahri Q is uncapped AoE: hits all 4 targets when target_count=4.
+    q_out = evaluate_ability(ahri_kit, ahri_sheet, "Q", 5, target, case="both", target_count=4)
+    (q_case,) = q_out.cases
+    assert q_case.aoe is True and q_case.max_targets is None
+    assert q_case.targets_hit == 4
+    assert q_case.secondary_total == q_case.primary_total * 3
+    assert q_case.total == q_case.primary_total * 4
+    assert q_out.label is Label.DERIVED
+
+    # Ahri R is AoE capped at RMaxTargetsPerCast=3: hits 3 of 5 targets.
+    r_out = evaluate_ability(ahri_kit, ahri_sheet, "R", 2, target, case="dash", target_count=5)
+    (r_case,) = r_out.cases
+    assert r_case.aoe is True and r_case.max_targets == 3
+    assert r_case.targets_hit == 3
+    assert r_case.total == r_case.primary_total * 3
+
+    # Ahri W: W.one hits up to 3 distinct targets; W.all focuses 1 target.
+    w_out = evaluate_ability(ahri_kit, ahri_sheet, "W", 3, target, target_count=3)
+    w_one, w_all = w_out.cases
+    assert w_one.targets_hit == 3 and w_one.total == w_one.primary_total * 3
+    assert w_all.targets_hit == 1 and w_all.total == w_all.primary_total
+
+    # Caitlyn Q.first has secondary_damage_ratio=0.6 (SecondaryMult): 1 primary + 2x 60% secondary.
+    cait_kit = load_kit(ROOT, "Caitlyn")
+    cait_sheet = sheet("Caitlyn", 11, (), ranks={"Q": 5}, kit=cait_kit)
+    cait_q = evaluate_ability(
+        cait_kit, cait_sheet, "Q", 5, target, case="first", target_count=3
+    ).cases[0]
+    assert cait_q.targets_hit == 3
+    assert cait_q.secondary_damage_ratio == F("0.6")
+    assert cait_q.secondary_total == cait_q.primary_total * 2 * F("0.6")
+    assert cait_q.total == cait_q.primary_total * F("2.2")
+
+    # Undeclared kit case with target_count > 1 evaluates against 1 target and marks PENDING.
+    zaahen_r = evaluate_ability(KIT, sheet(ranks={"R": 3}), "R", 3, target, target_count=3)
+    assert zaahen_r.cases[0].targets_hit == 1
+    assert zaahen_r.label is Label.PENDING
+    assert any("does not declare aoe or max_targets" in note for note in zaahen_r.notes)
+
+    with pytest.raises(StatsError, match="target count must be an integer >= 1"):
+        evaluate_ability(ahri_kit, ahri_sheet, "Q", 5, target, target_count=0)
