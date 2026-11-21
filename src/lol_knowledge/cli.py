@@ -347,6 +347,7 @@ def _build_sheet(
             base_extras,
             extra_amplifiers=passive.amplifiers,
             extra_notes=passive.notes,
+            inputs=inputs,
         )
     data = load_runes(root)
     if data is None:
@@ -367,7 +368,9 @@ def _build_sheet(
         print(f"warning: rune page is not legal [{report.label}]: {problems}", file=sys.stderr)
     adaptive, label, note = None, Label.DERIVED, ""
     if needs_adaptive_stat(runes, shards, data):
-        before = build_stat_sheet(champion, args.level, items, issues, assumptions, derived, extras)
+        before = build_stat_sheet(
+            champion, args.level, items, issues, assumptions, derived, extras, inputs=inputs
+        )
         bonus_ad = sum(
             (
                 part.value
@@ -429,6 +432,7 @@ def _build_sheet(
         extra_amplifiers=(*passive.amplifiers, *rune_effects.amplifiers),
         extra_notes=extra_notes,
         move_speed_bonus_amp=rune_effects.move_speed_bonus_amp,
+        inputs=inputs,
     )
 
 
@@ -1057,6 +1061,13 @@ def _run_survive(args: argparse.Namespace) -> int:
                 ap_weight=derived.value(enemy_champ.id, "adaptiveforceapweight"),
             )
             hits = hits_from_rotation(rot)
+            if any(it.id == "6695" for it in enemy_sheet.items) and "shield_reaver" not in inputs:
+                inputs = {
+                    **inputs,
+                    "shield_reaver": Fraction(35, 100)
+                    if args.enemy_range == "ranged"
+                    else Fraction(50, 100),
+                }
             enemy_desc = (
                 f"{enemy_champ.name} level {args.enemy_level} "
                 f"({', '.join(args.enemy_item) or 'no items'}): {args.steps}"

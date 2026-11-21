@@ -57,7 +57,7 @@
 - **Reflejo reactivo:** `3075` Malla de espinas informa el daño mágico en bruto reflejado (`20 + 10 %` armadura adicional) por cada ataque básico recibido.
 - **Métricas de salida:** daño total recibido, reducción plana total, escudos otorgados/absorbidos, curación defensiva, vida restante, supervivencia (`survived`), paso letal, **tiempo hasta morir** (`time_to_die`) y **daño recibido por segundo** (`damage_taken_per_second`) con `--timeline`.
 
-## Pasivas defensivas de objetos en `defense.py` / `survive` (`Derivado`, cliente `16.23`, `catalog_version: 27`)
+## Pasivas defensivas de objetos en `defense.py` / `survive` (`Derivado`, cliente `16.23`, `catalog_version: 28`)
 - **Malla del guardián (`data:item:3082`, *Como una roca*):** reducción plana posmitigación de `15` contra ataques básicos (`attack`/`crit`), limitada al `20 %` del daño posmitigación del ataque.
 - **Jak'Sho el Proteico (`data:item:6665`, *Resiliencia del Vacío*, `Oficial`):** en `--timeline`, tras `5 s` de combate desde el primer golpe recibido, aumenta la armadura y la resistencia mágica adicionales en un `30 %` para el resto del combate (incluyendo la RM adicional activa de Fuerza de la naturaleza si coexisten).
 - **Fuerza de la naturaleza (`data:item:4401`, *Entereza*):** tras recibir `8` instancias de daño mágico (ventana/duración de `7 s` en `--timeline`), otorga `+70` de resistencia mágica adicional renovable al recibir daño mágico.
@@ -65,8 +65,14 @@
 - **Baile de la muerte (`data:item:6333`, *Ignora el dolor*):** en `--timeline`, difiere el `30 %` (cuerpo a cuerpo) o `10 %` (a distancia) del daño físico y mágico posmitigación en una hemorragia continua de daño verdadero durante `3 s`, con cálculo exacto del instante letal (`time_to_die`) combinado con regeneración activa.
 - **Detracción celestial (`data:item:3869`, *Bendición de la montaña*):** reduce un `35 %` (cuerpo a cuerpo) o `25 %` (a distancia) el daño físico y mágico recibido en el primer golpe y durante los `2 s` siguientes (`18 s` CD en `--timeline`).
 - **Escudos de hechizos (`data:item:3102` Velo del hada, `data:item:3814` Filo de la noche, `data:item:4632` Barrera frondosa, *Anular*):** bloquean por completo el siguiente golpe de tipo `ability` (`40 s` CD en `3102`/`3814`, `60 s` CD en `4632`).
+- **Escudo de Doran (`data:item:1054`, *Concentración inquebrantable*):** tras recibir daño de campeón, regenera de forma continua durante `8 s` hasta `40` (cuerpo a cuerpo) o `30` (a distancia) de vida escalada linealmente por la fracción de vida faltante (`× 0,66` con `--input aoe_dot=1`).
+- **Corazón de Warmog (`data:item:3083`):** con `≥ 2000` de vida adicional y `≥ 8 s` fuera de combate en `--timeline`, regenera un `3 %` de la vida máxima por segundo.
+- **Ángel de la guarda (`data:item:3026`, *Renacimiento*):** ante daño letal (`300 s` CD), entra en estasis invulnerable durante `4 s` (limpia hemorragias pendientes) y revive con el `50 %` de la vida básica.
+- **Abrazo del serafín (`3040`, transformación de `data:item:3003` a `360` cargas de Flujo de maná):** *Salvavidas* otorga un escudo del `18 %` del maná máximo durante `3 s` (`90 s` CD) al bajar del `30 %` de vida.
+- **Colmillo de serpiente (`data:item:6695`, *Siegaescudos*):** reduce escudos existentes y nuevos en un `50 %` (cuerpo a cuerpo) o `35 %` (a distancia) durante `3 s` tanto en `rotation` como en `survive` (automático cuando `--enemy-champion` lleva `6695`, o vía `--input shield_reaver`).
+- **Pociones (`data:item:2003`/`data:item:2031`), Tejesueños (`data:item:3870`, burbuja azul) y Promesa de caballero (`data:item:3109`, *Sacrificio*):** regeneración continua de pociones (`--input potion_active=1`), reducción plana contra ataques de `50..194` por nivel (`--input dream_maker_active=1`) y redirección del `14 %` del daño del aliado digno por encima del `30 %` de vida (`--input worthy_ally_damage_taken`).
 
 ## Limitaciones
 - La curva de decaimiento del escudo de `3053` Salvavidas (`4,5 s` tras `0,75 s`) se anota como pendiente dentro de `--timeline`; el escudo caduca completo al final de los `4,5 s`.
-- En objetivos estáticos de EHP (`effective_health_*`), las pasivas defensivas activadas en combate (`6665`, `4401`, `3082`, `2525`, `6333`, `3869`) siguen marcándose como no modeladas en EHP estático; su efecto verificado se evalúa en `survive` y en el objetivo `time_to_die` del optimizador.
-- Siguen excluidos `3026` Ángel de la guarda (*Renacer* tras estasis de `4 s`), `1054` Escudo de Doran (curva no lineal por vida faltante) y la reducción de escudos de Colmillo de serpiente (`6695`).
+- En objetivos estáticos de EHP (`effective_health_*`), las pasivas defensivas activadas en combate (`6665`, `4401`, `3082`, `2525`, `6333`, `3869`, `3026`, `1054`) siguen marcándose como no modeladas en EHP estático; su efecto verificado se evalúa en `survive` y en el objetivo `time_to_die` del optimizador.
+- Sigue excluida la limpieza de hemorragia por derribo de `6333` (*Desafío*) en simulaciones sin derribo.

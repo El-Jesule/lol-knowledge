@@ -28,6 +28,13 @@ from typing import Any
 from .damage import DamageResult, DamageType, format_number, mitigate
 from .errors import KitError, RotationError, StatsError
 from .formula import FormulaError, evaluate_formula
+from .item_combat import (
+    ALLY_HEAL_SHIELD_ACTIVES,
+    SPECIALIZED_ITEM_EFFECTS,
+    ItemCombat,
+    ItemHeal,
+    ItemProc,
+)
 from .kit import Kit, ability_damage, sheet_stats
 from .passives import PassiveCombat
 from .resources import (
@@ -285,6 +292,7 @@ class StepOutcome:
     time: Fraction | None = None
     shield_before: Fraction = Fraction(0)
     shield_absorbed: Fraction = Fraction(0)
+    shield_shredded: Fraction = Fraction(0)
     heal_events: tuple[HealEvent, ...] = ()
     shield_events: tuple[ShieldEvent, ...] = ()
     resource_cost: StepResourceCost | None = None
@@ -310,7 +318,7 @@ class StepOutcome:
 
     @property
     def shield_after(self) -> Fraction:
-        return self.shield_before - self.shield_absorbed
+        return max(Fraction(0), self.shield_before - self.shield_shredded - self.shield_absorbed)
 
     @property
     def health_damage(self) -> Fraction:
@@ -556,6 +564,10 @@ def _effects(
                 )
                 continue
             status = effect.get("model_status")
+            if (item.id, str(effect.get("id"))) in SPECIALIZED_ITEM_EFFECTS and (
+                status == "evaluable"
+            ):
+                continue
             components = effect.get("components") or ()
             if status != "evaluable":
                 notes.append(f"{owner} {item.id} {effect.get('id')}: {status}, not applied")
@@ -918,6 +930,17 @@ class _Rotation:
         self.active_ready: dict[str, Fraction] = {}
         self.empowered_attacks: dict[str, list[_Effect]] = {}
         self.cast_actives: set[str] = set()
+        self.item_combat = ItemCombat(
+            sheet,
+            sheet.items,
+            target.kind,
+            holder_range,
+            self.inputs,
+            timeline=timeline,
+            target_count=self.target_count,
+        )
+        self._pending_accrued_heals: list[HealEvent] = []
+        self._knights_vow_applied = False
         owners = sorted(
             {
                 item.id
@@ -1542,6 +1565,13 @@ class _Rotation:
             if _conditions_hold(window.effect, self.target, part_kind, crit, target_stats):
                 dealt.append((window.effect.title, window.value))
                 labels += window.labels
+        ic_dealt, ic_labels, ic_notes = self.item_combat.dealt_modifier(
+            part_kind, self.now, slot=slot
+        )
+        if ic_dealt:
+            dealt.append(("item_combat", ic_dealt * 100))
+            labels.extend(ic_labels)
+            notes.extend(ic_notes)
         for effect in self.taken:
             if not (self._mode(effect) and _conditions_hold(effect, self.target, part_kind, crit)):
                 continue
@@ -1652,7 +1682,8 @@ class _Rotation:
 
     def _healing(self, part: Part, tag: Mapping[str, Any] | None) -> Healing:
         """Life steal and omnivamp healing of ``part`` (life-steal-and-omnivamp.md)."""
-        life_steal, omnivamp = self.life_steal.total(), self.omnivamp.total()
+        life_steal = self.life_steal.total()
+        omnivamp = self.omnivamp.total() + self.item_combat.dynamic_bonus_omnivamp(self.now)
         rune_heal = self.rune_combat.healing_rate()
         if not life_steal and not omnivamp and rune_heal is None:
             return NO_HEALING
@@ -1809,18 +1840,84 @@ class _Rotation:
             )
         return multiplier, labels, notes, f" x critical multiplier {format_number(multiplier)}"
 
+    def _normal_crit_value(self) -> Fraction | None:
+        """Normal crit multiplier (e.g. 2.0, or 2.3 with IE) for forced-crit items (6610, 2512)."""
+        if self.crit_base is None:
+            return None
+        bonus = self.sheet["crit_damage_bonus"]
+        multiplier = self.crit_base.value + bonus.total()
+        reduction = CRIT_DAMAGE_REDUCTIONS.get(self.sheet.champion.id)
+        if reduction is not None:
+            multiplier *= 1 - reduction
+        return multiplier
+
+    def _emit_item_proc(
+        self,
+        proc: ItemProc,
+        target_stats: Mapping[str, Fraction],
+        clock: Fraction,
+    ) -> tuple[Part, list[HealEvent]]:
+        ls_tag = {"value": True} if proc.life_steal else None
+        part = self._part(
+            proc.kind,
+            proc.source,
+            proc.damage_type,
+            proc.raw,
+            [proc.label],
+            False,
+            target_stats,
+            proc.notes,
+            life_steal_tag=ls_tag,
+            apply_modifiers=proc.apply_modifiers,
+            targets_hit=proc.targets_hit,
+            aoe=proc.aoe,
+        )
+        heals: list[HealEvent] = []
+        if proc.item_id == "2502" and part.damage > 0:
+            raw_heal = part.damage * Fraction(5, 2)
+            heals.append(
+                self._make_heal_event(
+                    "2502 anguish (drain heal)",
+                    raw_heal,
+                    Label.DERIVED,
+                    clock,
+                    uses_hsp=True,
+                    notes=(f"250% of {format_number(part.damage)} post-mitigation damage",),
+                )
+            )
+        return part, heals
+
+    def _convert_item_heals(
+        self, items_heals: Sequence[ItemHeal], clock: Fraction
+    ) -> list[HealEvent]:
+        return [
+            self._make_heal_event(
+                h.source, h.raw, h.label, clock, uses_hsp=h.uses_hsp, notes=h.notes
+            )
+            for h in items_heals
+        ]
+
     def _attack(
         self,
         step: Step,
         target_stats: Mapping[str, Fraction],
         empowered: bool = False,
         active_empowers: Sequence[_Effect] = (),
-    ) -> list[Part]:
+        clock: Fraction = Fraction(0),
+    ) -> tuple[list[Part], list[HealEvent]]:
         attack_damage = self.sheet["attack_damage"]
         raw = attack_damage.total()
         labels = [attack_damage.label]
         notes: list[str] = []
         source = "basic attack: total attack damage"
+        ov = self.item_combat.on_attack(
+            step_crit=step.crit,
+            normal_crit_multiplier=self._normal_crit_value(),
+            clock=clock,
+            attacker_hp=self.attacker_hp,
+            attacker_max_hp=self.attacker_max_hp,
+        )
+        eff_crit = step.crit or ov.crit_multiplier_override is not None
         crit_info = self._crit_multiplier(step)
         if crit_info is not None:
             multiplier, crit_labels, crit_notes, crit_suffix = crit_info
@@ -1828,11 +1925,38 @@ class _Rotation:
             labels += crit_labels
             notes += crit_notes
             source += crit_suffix
+        elif ov.crit_multiplier_override is not None:
+            raw *= ov.crit_multiplier_override
+            labels.extend(ov.labels)
+            notes.extend(ov.notes)
+            source += f" x forced crit multiplier {format_number(ov.crit_multiplier_override)}"
+        else:
+            labels.extend(ov.labels)
+            notes.extend(ov.notes)
         parts = [
             self._part(
-                "attack", source, DamageType.PHYSICAL, raw, labels, step.crit, target_stats, notes
+                "attack", source, DamageType.PHYSICAL, raw, labels, eff_crit, target_stats, notes
             )
         ]
+        if ov.bonus_true_damage_ratio > 0:
+            parts.append(
+                self._part(
+                    "item",
+                    "2512 opening-barrage (Andanada inicial: bonus true damage)",
+                    DamageType.TRUE,
+                    raw * ov.bonus_true_damage_ratio,
+                    [Label.OFFICIAL],
+                    False,
+                    target_stats,
+                    ("15% of critical attack damage as bonus true damage",),
+                    apply_modifiers=False,
+                )
+            )
+        attack_heals = self._convert_item_heals(ov.heals, clock)
+        for proc in ov.extra_procs:
+            p_part, p_heals = self._emit_item_proc(proc, target_stats, clock)
+            parts.append(p_part)
+            attack_heals.extend(p_heals)
         replaced = {eff.item for eff in active_empowers}
         active_on_hit = [e for e in self.on_hit if e.item not in replaced] + [
             e for e in active_empowers if not e.component.get("secondary_only")
@@ -1848,7 +1972,7 @@ class _Rotation:
             e for e in active_empowers if e.component.get("secondary_only") is True
         ]
         parts += self._secondary_attacks(step, target_stats, active_secondary)
-        return parts
+        return parts, attack_heals
 
     def _secondary_attacks(
         self,
@@ -2209,6 +2333,24 @@ class _Rotation:
             )
         for p_amp in p_amps:
             sheet = with_amplifier(sheet, p_amp.stat_id, p_amp.percent, p_amp.source, p_amp.label)
+        ic_as = self.item_combat.dynamic_bonus_as(at)
+        if ic_as:
+            sheet = with_bonus(
+                sheet, "attack_speed", ic_as, "item_combat dynamic attack speed", Label.DERIVED
+            )
+        ic_ap = self.item_combat.dynamic_bonus_ap(at)
+        if ic_ap:
+            sheet = with_bonus(
+                sheet, "ability_power", ic_ap, "6616 rapids (+40 AP)", Label.OFFICIAL
+            )
+        ic_ah = self.item_combat.dynamic_bonus_ah(at)
+        if ic_ah:
+            sheet = with_bonus(
+                sheet, "ability_haste", ic_ah, "6616 rapids (+15 AH)", Label.OFFICIAL
+            )
+        ic_ms = self.item_combat.dynamic_bonus_flat_ms(at)
+        if ic_ms:
+            sheet = with_bonus(sheet, "move_speed", ic_ms, "2524 fanfare (+20 MS)", Label.DERIVED)
         if sheet is not self.sheet:
             self.sheet = sheet
             self.stats, self.origin = sheet_stats(sheet)
@@ -2424,6 +2566,7 @@ class _Rotation:
             and not self.rune_combat.has_active_burn()
             and not self.rune_combat.has_due_procs(until)
             and not any(t <= until for t, _, _, _ in self.delayed_item_procs)
+            and not self.item_combat.has_periodic_due(until)
         ):
             self.accrued = max(start, until)
             return [], health, shield, Fraction(0)
@@ -2443,6 +2586,7 @@ class _Rotation:
                 *self.rune_combat.due_times(until),
                 *(t for t, _, _, _ in self.delayed_item_procs if t <= until),
                 *self.passive_combat.stack_expiry_times(start, until),
+                *self.item_combat.periodic_split_times(start, until),
             ]
             if start < end < until
         }
@@ -2530,6 +2674,17 @@ class _Rotation:
                     parts.append(part)
                     health, shield, absorbed = self._absorb_parts([part], health, shield)
                     total_absorbed += absorbed
+            ic_procs, ic_heals = self.item_combat.pop_periodic(finish)
+            if ic_procs or ic_heals:
+                self._set_moment(finish)
+                for proc in ic_procs:
+                    p_part, p_heals = self._emit_item_proc(proc, self._target_stats(health), finish)
+                    parts.append(p_part)
+                    health, shield, absorbed = self._absorb_parts([p_part], health, shield)
+                    total_absorbed += absorbed
+                    self._pending_accrued_heals.extend(p_heals)
+                if ic_heals:
+                    self._pending_accrued_heals.extend(self._convert_item_heals(ic_heals, finish))
         self.accrued = until
         self.burning = {key: burn for key, burn in self.burning.items() if burn.end > until}
         self.rune_combat.clear_expired_burns(until)
@@ -2762,6 +2917,9 @@ class _Rotation:
         equipped = {item.id for item in self.sheet.items}
         if item_id not in equipped:
             raise RotationError(f"step {step.text!r}: item {item_id} is not equipped")
+        if self.item_combat.is_potion_active(item_id):
+            p_name, p_heals = self.item_combat.cast_potion(item_id, clock)
+            return p_name, [], self._convert_item_heals(p_heals, clock), [], False
         effects = self.item_actives.get(item_id)
         if not effects:
             raise RotationError(
@@ -2923,6 +3081,8 @@ class _Rotation:
         """A step with no damage of its own: the burn damage up to ``clock``."""
         res_before = self.resources.current if self.resources.uses_casting_pool else None
         parts, left, _, absorbed = self._accrue(clock, health, shield)
+        accrued_heals = list(self._pending_accrued_heals)
+        self._pending_accrued_heals.clear()
         if parts:
             parts += self._execute(parts, health, self._target_stats(left), absorbed)
         regen_events = self.resources.accrue_regen(clock if regen_until is None else regen_until)
@@ -2933,10 +3093,11 @@ class _Rotation:
             name,
             tuple(parts),
             health,
-            weakest(part.label for part in parts),
+            weakest([*(part.label for part in parts), *(h.label for h in accrued_heals)]),
             clock,
             shield_before=shield,
             shield_absorbed=absorbed,
+            heal_events=tuple(accrued_heals),
             resource_before=res_before,
             resource_after=res_after,
             resource_events=tuple(regen_events),
@@ -2999,10 +3160,19 @@ class _Rotation:
             res_before = self.resources.current if self.resources.uses_casting_pool else None
             before = health
             shield_before = shield
+            step_shield_shredded = Fraction(0)
             accrued_absorbed = Fraction(0)
             if self.timeline is not None:
                 parts, health, shield, accrued_absorbed = self._accrue(clock, health, shield)
+                if self._pending_accrued_heals:
+                    heal_events.extend(self._pending_accrued_heals)
+                    self._pending_accrued_heals.clear()
                 resource_events.extend(self.resources.accrue_regen(clock))
+            if not self._knights_vow_applied:
+                self._knights_vow_applied = True
+                kv_heals = self.item_combat.knights_vow_heal()
+                if kv_heals:
+                    heal_events.extend(self._convert_item_heals(kv_heals, clock))
             accrued_count = len(parts)
             self._set_moment(clock)
             target_stats = self._target_stats(health)
@@ -3014,6 +3184,9 @@ class _Rotation:
                 parts += active_parts
                 heal_events += act_heals
                 shield_events += act_shields
+                if step.item_id in ALLY_HEAL_SHIELD_ACTIVES:
+                    ally_heals = self.item_combat.on_ally_heal_or_shield(clock)
+                    heal_events.extend(self._convert_item_heals(ally_heals, clock))
                 if reset_attack and self.timeline is not None:
                     next_attack = clock
             elif step.slot is None:
@@ -3037,8 +3210,11 @@ class _Rotation:
                 if active_empowers:
                     seen_names = list(dict.fromkeys(e.name or e.id for e in active_empowers))
                     name += f" ({', '.join(seen_names)})"
-                attack_parts = self._attack(step, target_stats, empowered, active_empowers)
+                attack_parts, attack_heals = self._attack(
+                    step, target_stats, empowered, active_empowers, clock
+                )
                 parts += attack_parts
+                heal_events += attack_heals
                 parts += self._burns(step, attack_parts, target_stats, burned, clock)
                 oh_heals, oh_shields = self._item_survival_events("on_hit", target_stats, clock)
                 heal_events += oh_heals
@@ -3102,6 +3278,9 @@ class _Rotation:
                 c_heals, c_shields = self._item_survival_events("cast", target_stats, clock)
                 heal_events += c_heals
                 shield_events += c_shields
+                mana_spent = step_cost.amount if step_cost.resource == "mana" else Fraction(0)
+                cast_ic_heals = self.item_combat.on_cast(step.slot, mana_spent, clock)
+                heal_events.extend(self._convert_item_heals(cast_ic_heals, clock))
                 resource_events.extend(self._item_resource_restores("cast", target_stats))
                 if ability_parts:
                     da_heals, da_shields = self._item_survival_events(
@@ -3147,6 +3326,41 @@ class _Rotation:
                 od_parts, od_shields = self._on_damage_procs(step, target_stats, clock, step.slot)
                 parts += od_parts
                 shield_events += od_shields
+                pre_mit = sum((p.raw for p in parts[accrued_count:]), start=Fraction(0))
+                post_phys = sum(
+                    (
+                        p.damage
+                        for p in parts[accrued_count:]
+                        if p.damage_type is DamageType.PHYSICAL
+                    ),
+                    start=Fraction(0),
+                )
+                cur_mana = self.resources.current if self.resources.pool.kind == "mana" else None
+                ic_procs, ic_heals, ic_shields, shred_ratio = self.item_combat.on_damage_dealt(
+                    pre_mitigation_total=pre_mit,
+                    post_mitigation_physical=post_phys,
+                    clock=clock,
+                    current_mana=cur_mana,
+                )
+                if shred_ratio > 0 and shield > 0:
+                    shredded_amt = shield * shred_ratio
+                    step_shield_shredded += shredded_amt
+                    shield -= shredded_amt
+                for proc in ic_procs:
+                    p_part, p_heals = self._emit_item_proc(proc, target_stats, clock)
+                    parts.append(p_part)
+                    heal_events.extend(p_heals)
+                heal_events.extend(self._convert_item_heals(ic_heals, clock))
+                for sh in ic_shields:
+                    shield_events.append(
+                        self._make_shield_event(
+                            sh.source,
+                            sh.raw,
+                            sh.label,
+                            duration=sh.duration,
+                            notes=sh.notes,
+                        )
+                    )
                 if self.timeline is not None:
                     dealt_types = frozenset(p.damage_type.value for p in parts[accrued_count:])
                     self._open(
@@ -3223,6 +3437,38 @@ class _Rotation:
                 before - (sum((p.primary_damage for p in parts), Fraction(0)) - total_absorbed),
             )
             killed_now = before > 0 and final_hp == 0
+            if killed_now:
+                td_heals = self.item_combat.on_takedown(clock)
+                heal_events.extend(self._convert_item_heals(td_heals, clock))
+            # 3072 Bloodthirster: convert excess life steal above max HP into Ichor Shield
+            if (
+                "3072" in self.item_combat.item_ids
+                and self.attacker_hp is not None
+                and self.attacker_max_hp is not None
+            ):
+                ls_total = sum(
+                    (
+                        p.healing.amount
+                        * p.healing.life_steal
+                        / (p.healing.life_steal + p.healing.omnivamp)
+                        for p in parts
+                        if p.healing.life_steal > 0 and p.healing.amount > 0
+                    ),
+                    start=Fraction(0),
+                )
+                missing_hp = max(Fraction(0), self.attacker_max_hp - self.attacker_hp)
+                if ls_total > missing_hp:
+                    bt_sh = self.item_combat.on_bloodthirster_overheal(ls_total - missing_hp)
+                    if bt_sh is not None:
+                        shield_events.append(
+                            self._make_shield_event(
+                                bt_sh.source,
+                                bt_sh.raw,
+                                bt_sh.label,
+                                duration=bt_sh.duration,
+                                notes=bt_sh.notes,
+                            )
+                        )
             for raw_heal in self.rune_combat.on_step_heals(
                 step.slot,
                 step_dealt,
@@ -3276,6 +3522,11 @@ class _Rotation:
             self.notes.extend(new_notes)
             self.weakened |= kw_weak
             self.speed_changed |= self.rune_combat.speed_changed
+            if self.item_combat.notes:
+                self.notes.extend(self.item_combat.notes)
+                self.item_combat.notes.clear()
+            self.weakened |= self.item_combat.weakened
+            self.speed_changed |= self.item_combat.speed_changed
             res_after = self.resources.current if self.resources.uses_casting_pool else None
             outcome = StepOutcome(
                 index,
@@ -3293,6 +3544,7 @@ class _Rotation:
                 None if self.timeline is None else clock,
                 shield_before=shield_before,
                 shield_absorbed=total_absorbed,
+                shield_shredded=step_shield_shredded,
                 heal_events=tuple(heal_events),
                 shield_events=tuple(shield_events),
                 resource_cost=step_cost,
@@ -3320,12 +3572,24 @@ class _Rotation:
             if self.delayed_item_procs
             else None
         )
-        if self.burning or pending_end is not None or delayed_item_end is not None:
+        periodic_end = (
+            clock
+            if self.timeline is not None and self.item_combat.has_periodic_due(clock)
+            else None
+        )
+        if (
+            self.burning
+            or pending_end is not None
+            or delayed_item_end is not None
+            or periodic_end is not None
+        ):
             ends = [*(burn.end for burn in self.burning.values())]
             if pending_end is not None:
                 ends.append(pending_end)
             if delayed_item_end is not None:
                 ends.append(delayed_item_end)
+            if periodic_end is not None:
+                ends.append(periodic_end)
             end = max(ends)
             tail_name = (
                 f"burns until {format_number(end)} s"

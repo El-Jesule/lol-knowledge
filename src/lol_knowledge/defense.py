@@ -317,6 +317,8 @@ class _DefenseSimulator:
             raise StatsError("defender shield must not be negative")
         try:
             self.max_health = sheet["health"].total()
+            self.base_health = sheet["health"].scoped("base")
+            self.bonus_health = sheet["health"].scoped("bonus")
             self.armor = sheet["armor"].total()
             self.magic_resist = sheet["magic_resist"].total()
             self.bonus_armor = sheet["armor"].scoped("bonus")
@@ -343,9 +345,41 @@ class _DefenseSimulator:
 
         try:
             gw_flag = int_input(inputs, "grievous_wounds", minimum=0, maximum=1)
+            self.aoe_dot_flag = int_input(inputs, "aoe_dot", minimum=0, maximum=1) == 1
+            self.potion_active_flag = int_input(inputs, "potion_active", minimum=0, maximum=1) == 1
+            self.dream_maker_active = (
+                int_input(inputs, "dream_maker_active", minimum=0, maximum=1) == 1
+            )
         except StatsError as exc:
             raise RotationError(str(exc)) from exc
         self.grievous = GRIEVOUS_WOUNDS_REDUCTION if gw_flag == 1 else Fraction(0)
+
+        self.shield_reaver_rate = Fraction(0)
+        if "shield_reaver" in inputs:
+            sr_val = inputs["shield_reaver"]
+            if sr_val == 1:
+                self.shield_reaver_rate = Fraction(1, 2)
+            elif Fraction(0) <= sr_val <= Fraction(1):
+                self.shield_reaver_rate = sr_val
+            else:
+                raise RotationError(
+                    "input shield_reaver: must be 0..1 (e.g. 0.5 or 0.35), "
+                    f"got {format_number(sr_val)}"
+                )
+
+        self.worthy_ally_taken = Fraction(0)
+        if "worthy_ally_damage_taken" in inputs:
+            wa_val = inputs["worthy_ally_damage_taken"]
+            if wa_val < 0:
+                raise RotationError("input worthy_ally_damage_taken must not be negative")
+            self.worthy_ally_taken = wa_val
+
+        self.item_ids: frozenset[str] = frozenset(item.id for item in sheet.items)
+        self.has_dorans_shield = "1054" in self.item_ids
+        self.has_warmogs = "3083" in self.item_ids and self.bonus_health >= 2000
+        self.has_guardian_angel = "3026" in self.item_ids
+        self.has_eternity = bool({"6657", "3803"} & self.item_ids)
+        self.has_knights_vow = "3109" in self.item_ids
 
         self.flat_input = Fraction(0)
         if "flat_damage_reduction" in inputs:
@@ -624,6 +658,37 @@ class _DefenseSimulator:
         jaksho_start: Fraction | None = None
         jaksho_noted_no_timeline = False
 
+        # Additional Block 1 defensive item states (1054, 3083, 3026, 6695, 2003/2031, 3870, 3109)
+        dshield_end: Fraction | None = None
+        dshield_rate = Fraction(0)
+        dshield_used_once = False
+
+        last_champ_hit: Fraction | None = None
+
+        ga_ready = Fraction(0)
+        ga_used_once = False
+        ga_stasis_until: Fraction | None = None
+
+        shield_reaver_until: Fraction | None = None
+        shield_reaver_applied = False
+
+        potion_end: Fraction | None = None
+        potion_rate = Fraction(0)
+        potion_source = ""
+        if self.potion_active_flag and ("2003" in self.item_ids or "2031" in self.item_ids):
+            if "2003" in self.item_ids:
+                potion_rate = Fraction(120, 15)
+                potion_end = Fraction(15) if self.timeline else None
+                potion_source = "2003 consume (Poción de vida)"
+            else:
+                potion_rate = Fraction(100, 12)
+                potion_end = Fraction(12) if self.timeline else None
+                potion_source = "2031 consume (Poción reutilizable)"
+        potion_used_once = False
+
+        dream_dr_armed = self.dream_maker_active
+        knights_vow_applied = False
+
         fon_stacks: dict[str, int] = {}
         fon_last_hit: dict[str, Fraction] = {}
         fon_active_until: dict[str, Fraction] = {}
@@ -693,9 +758,10 @@ class _DefenseSimulator:
         def accrue_continuous(
             until: Fraction,
         ) -> tuple[list[HealEvent], Fraction, list[Label], list[str], Fraction | None]:
-            """Accrue Second Wind, Protoplasm HoT/HP, and Death's Dance bleeds to ``until``."""
+            """Accrue Second Wind, Protoplasm, Doran's, Warmog's, potions and bleeds."""
             nonlocal health, current_max_health, sw_end, last_accrued
             nonlocal proto_heal_end, proto_heal_rate, proto_hp_end, proto_hp_gain
+            nonlocal dshield_end, dshield_rate, potion_end, potion_rate
             nonlocal stagger_bleeds
             if not self.timeline or until <= last_accrued:
                 last_accrued = max(last_accrued, until)
@@ -715,10 +781,29 @@ class _DefenseSimulator:
             proto_start_t: Fraction | None = None
             proto_end_t: Fraction | None = None
 
+            ds_raw_total = Fraction(0)
+            ds_gained_total = Fraction(0)
+            ds_start_t: Fraction | None = None
+            ds_end_t: Fraction | None = None
+
+            wm_raw_total = Fraction(0)
+            wm_gained_total = Fraction(0)
+            wm_start_t: Fraction | None = None
+            wm_end_t: Fraction | None = None
+
+            pot_raw_total = Fraction(0)
+            pot_gained_total = Fraction(0)
+            pot_start_t: Fraction | None = None
+            pot_end_t: Fraction | None = None
+
             bleed_total = Fraction(0)
             bleed_labels: list[Label] = []
             bleed_notes: list[str] = []
             died_at: Fraction | None = None
+
+            warmog_start = (
+                (last_champ_hit + 8) if (self.has_warmogs and last_champ_hit is not None) else None
+            )
 
             t = last_accrued
             while t < until and health > 0:
@@ -729,6 +814,12 @@ class _DefenseSimulator:
                     boundaries.append(proto_heal_end)
                 if proto_hp_end is not None and t < proto_hp_end < until:
                     boundaries.append(proto_hp_end)
+                if dshield_end is not None and t < dshield_end < until:
+                    boundaries.append(dshield_end)
+                if warmog_start is not None and t < warmog_start < until:
+                    boundaries.append(warmog_start)
+                if potion_end is not None and t < potion_end < until:
+                    boundaries.append(potion_end)
                 for b in stagger_bleeds:
                     if t < b.end < until:
                         boundaries.append(b.end)
@@ -738,12 +829,10 @@ class _DefenseSimulator:
                 active_bleeds = [b for b in stagger_bleeds if b.end > t]
                 bleed_rate = sum((b.rate for b in active_bleeds), start=Fraction(0))
 
-                sw_active = self.second_wind_rune is not None and sw_end is not None and sw_end > t
-                sw_eff_rate = Fraction(0)
-                if sw_active and sw_rate > 0:
-                    sw_eff_rate = (
+                def _regen_eff(raw_rate: Fraction) -> Fraction:
+                    return (
                         scale_healing(
-                            sw_rate,
+                            raw_rate,
                             hsp=Fraction(0),
                             revitalize_amp=Fraction(0),
                             grievous=self.grievous,
@@ -751,24 +840,36 @@ class _DefenseSimulator:
                         )
                         * self.self_heal_amp
                     )
+
+                sw_active = self.second_wind_rune is not None and sw_end is not None and sw_end > t
+                sw_eff_rate = _regen_eff(sw_rate) if (sw_active and sw_rate > 0) else Fraction(0)
 
                 proto_active = (
                     proto_heal_end is not None and proto_heal_end > t and proto_heal_rate > 0
                 )
-                proto_eff_rate = Fraction(0)
-                if proto_active:
-                    proto_eff_rate = (
-                        scale_healing(
-                            proto_heal_rate,
-                            hsp=Fraction(0),
-                            revitalize_amp=Fraction(0),
-                            grievous=self.grievous,
-                            uses_hsp=False,
-                        )
-                        * self.self_heal_amp
-                    )
+                proto_eff_rate = _regen_eff(proto_heal_rate) if proto_active else Fraction(0)
 
-                net_rate = sw_eff_rate + proto_eff_rate - bleed_rate
+                ds_active = (
+                    self.has_dorans_shield
+                    and dshield_end is not None
+                    and dshield_end > t
+                    and dshield_rate > 0
+                )
+                ds_eff_rate = _regen_eff(dshield_rate) if ds_active else Fraction(0)
+
+                wm_active = (
+                    warmog_start is not None and t >= warmog_start and health < current_max_health
+                )
+                wm_raw_rate = current_max_health * Fraction(3, 100) if wm_active else Fraction(0)
+                wm_eff_rate = _regen_eff(wm_raw_rate) if wm_active else Fraction(0)
+
+                pot_active = potion_end is not None and potion_end > t and potion_rate > 0
+                pot_eff_rate = _regen_eff(potion_rate) if pot_active else Fraction(0)
+
+                total_eff_heal_rate = (
+                    sw_eff_rate + proto_eff_rate + ds_eff_rate + wm_eff_rate + pot_eff_rate
+                )
+                net_rate = total_eff_heal_rate - bleed_rate
                 if net_rate < 0 and health + net_rate * span <= 0:
                     lethal_span = health / (-net_rate)
                     t_die = t + lethal_span
@@ -782,6 +883,16 @@ class _DefenseSimulator:
                         proto_end_t = t_die
                         proto_raw_total += proto_heal_rate * lethal_span
                         proto_gained_total += proto_eff_rate * lethal_span
+                    if ds_active:
+                        ds_start_t = t if ds_start_t is None else ds_start_t
+                        ds_end_t = t_die
+                        ds_raw_total += dshield_rate * lethal_span
+                        ds_gained_total += ds_eff_rate * lethal_span
+                    if pot_active:
+                        pot_start_t = t if pot_start_t is None else pot_start_t
+                        pot_end_t = t_die
+                        pot_raw_total += potion_rate * lethal_span
+                        pot_gained_total += pot_eff_rate * lethal_span
                     if bleed_rate > 0:
                         bleed_total += bleed_rate * lethal_span
                         bleed_labels.extend(b.label for b in active_bleeds)
@@ -790,39 +901,44 @@ class _DefenseSimulator:
                     t = t_die
                     break
 
-                # Apply continuous bleed and healing over ``span``
                 if bleed_rate > 0:
                     bleed_total += bleed_rate * span
                     bleed_labels.extend(b.label for b in active_bleeds)
                 new_hp = health + net_rate * span
+                ratio = Fraction(1)
                 if new_hp > current_max_health:
-                    # Cap heals cleanly at current_max_health
                     avail = max(Fraction(0), current_max_health - (health - bleed_rate * span))
-                    total_heal_eff = (sw_eff_rate + proto_eff_rate) * span
+                    total_heal_eff = total_eff_heal_rate * span
                     ratio = avail / total_heal_eff if total_heal_eff > 0 else Fraction(0)
-                    if sw_active and sw_rate > 0:
-                        sw_start_t = t if sw_start_t is None else sw_start_t
-                        sw_end_t = t_next
-                        sw_raw_total += sw_rate * span
-                        sw_gained_total += sw_eff_rate * span * ratio
-                    if proto_active:
-                        proto_start_t = t if proto_start_t is None else proto_start_t
-                        proto_end_t = t_next
-                        proto_raw_total += proto_heal_rate * span
-                        proto_gained_total += proto_eff_rate * span * ratio
                     health = current_max_health
                 else:
-                    if sw_active and sw_rate > 0:
-                        sw_start_t = t if sw_start_t is None else sw_start_t
-                        sw_end_t = t_next
-                        sw_raw_total += sw_rate * span
-                        sw_gained_total += sw_eff_rate * span
-                    if proto_active:
-                        proto_start_t = t if proto_start_t is None else proto_start_t
-                        proto_end_t = t_next
-                        proto_raw_total += proto_heal_rate * span
-                        proto_gained_total += proto_eff_rate * span
                     health = max(Fraction(0), new_hp)
+
+                if sw_active and sw_rate > 0:
+                    sw_start_t = t if sw_start_t is None else sw_start_t
+                    sw_end_t = t_next
+                    sw_raw_total += sw_rate * span
+                    sw_gained_total += sw_eff_rate * span * ratio
+                if proto_active:
+                    proto_start_t = t if proto_start_t is None else proto_start_t
+                    proto_end_t = t_next
+                    proto_raw_total += proto_heal_rate * span
+                    proto_gained_total += proto_eff_rate * span * ratio
+                if ds_active:
+                    ds_start_t = t if ds_start_t is None else ds_start_t
+                    ds_end_t = t_next
+                    ds_raw_total += dshield_rate * span
+                    ds_gained_total += ds_eff_rate * span * ratio
+                if wm_active:
+                    wm_start_t = t if wm_start_t is None else wm_start_t
+                    wm_end_t = t_next
+                    wm_raw_total += wm_raw_rate * span
+                    wm_gained_total += wm_eff_rate * span * ratio
+                if pot_active:
+                    pot_start_t = t if pot_start_t is None else pot_start_t
+                    pot_end_t = t_next
+                    pot_raw_total += potion_rate * span
+                    pot_gained_total += pot_eff_rate * span * ratio
 
                 t = t_next
                 stagger_bleeds = [b for b in stagger_bleeds if b.end > t]
@@ -830,6 +946,10 @@ class _DefenseSimulator:
                     sw_end = None
                 if proto_heal_end is not None and proto_heal_end <= t:
                     proto_heal_end = None
+                if dshield_end is not None and dshield_end <= t:
+                    dshield_end = None
+                if potion_end is not None and potion_end <= t:
+                    potion_end = None
                 if proto_hp_end is not None and proto_hp_end <= t:
                     current_max_health -= proto_hp_gain
                     health = min(health, current_max_health)
@@ -868,6 +988,56 @@ class _DefenseSimulator:
                         self.grievous > 0,
                         proto_heal_label,
                         tuple(p_notes),
+                    )
+                )
+            if ds_raw_total > 0:
+                assert ds_start_t is not None and ds_end_t is not None
+                ds_notes = [f"regen {format_number(ds_start_t)}–{format_number(ds_end_t)} s"]
+                if self.grievous:
+                    ds_notes.append("Grievous Wounds (-40%)")
+                heals_out.append(
+                    HealEvent(
+                        "1054 enduring-focus (Escudo de Doran)",
+                        ds_raw_total,
+                        ds_gained_total,
+                        False,
+                        self.grievous > 0,
+                        Label.DERIVED,
+                        tuple(ds_notes),
+                    )
+                )
+            if wm_raw_total > 0:
+                assert wm_start_t is not None and wm_end_t is not None
+                wm_notes = [
+                    f"OOC >=8 s regen {format_number(wm_start_t)}–{format_number(wm_end_t)} s"
+                ]
+                if self.grievous:
+                    wm_notes.append("Grievous Wounds (-40%)")
+                heals_out.append(
+                    HealEvent(
+                        "3083 warmogs-heart (Corazón de Warmog)",
+                        wm_raw_total,
+                        wm_gained_total,
+                        False,
+                        self.grievous > 0,
+                        Label.DERIVED,
+                        tuple(wm_notes),
+                    )
+                )
+            if pot_raw_total > 0:
+                assert pot_start_t is not None and pot_end_t is not None
+                pt_notes = [f"regen {format_number(pot_start_t)}–{format_number(pot_end_t)} s"]
+                if self.grievous:
+                    pt_notes.append("Grievous Wounds (-40%)")
+                heals_out.append(
+                    HealEvent(
+                        potion_source,
+                        pot_raw_total,
+                        pot_gained_total,
+                        False,
+                        self.grievous > 0,
+                        Label.OFFICIAL,
+                        tuple(pt_notes),
                     )
                 )
             if bleed_total > 0:
@@ -964,6 +1134,49 @@ class _DefenseSimulator:
                         win = Fraction(str((eff.get("stacks") or {}).get("window_seconds", 7)))
                         if clock - fon_last_hit[title] >= win:
                             fon_stacks[title] = 0
+
+            # Stasis immunity from 3026 Guardian Angel Rebirth (4 s)
+            if self.timeline and ga_stasis_until is not None and clock < ga_stasis_until:
+                steps.append(
+                    DefenseStep(
+                        len(steps) + 1,
+                        hit.source,
+                        hit.kind,
+                        hit.damage_type,
+                        clock,
+                        Fraction(0),
+                        Fraction(0),
+                        Fraction(0),
+                        Fraction(0),
+                        Fraction(0),
+                        h_before,
+                        health,
+                        s_before,
+                        self._shield_total(shields),
+                        (),
+                        tuple(heals),
+                        Fraction(0),
+                        Label.OFFICIAL,
+                        ("3026 rebirth: invulnerable during 4 s stasis",),
+                    )
+                )
+                continue
+
+            # 3109 Knight's Vow: redirect 14% of worthy ally's damage taken when >30% HP
+            if (
+                self.has_knights_vow
+                and not knights_vow_applied
+                and self.worthy_ally_taken > 0
+                and health > current_max_health * Fraction(3, 10)
+            ):
+                knights_vow_applied = True
+                redir = self.worthy_ally_taken * Fraction(14, 100)
+                health = max(Fraction(0), health - redir)
+                step_notes.append(
+                    f"3109 sacrifice: redirected {format_number(redir)} true damage (14% of "
+                    f"worthy ally {format_number(self.worthy_ally_taken)})"
+                )
+                step_labels.append(Label.OFFICIAL)
 
             # 0. Spell Shield (3102 Banshee's, 3814 Edge of Night, 4632 Verdant Barrier)
             spell_blocked = False
@@ -1093,6 +1306,16 @@ class _DefenseSimulator:
                         step_labels.append(eff_label)
                         step_notes.append(f"{title} -{format_number(applied)}")
 
+            # 3870 Dream Maker blue bubble: flat attack damage reduction (50 L1-6, +12/lvl L7+)
+            if dream_dr_armed and hit.kind in {"attack", "crit"} and incoming - flat_red > 0:
+                dream_dr_armed = False
+                lvl = self.sheet.level
+                dm_block = Fraction(50) if lvl < 7 else Fraction(50 + 12 * (lvl - 6))
+                applied = min(incoming - flat_red, dm_block)
+                flat_red += applied
+                step_labels.append(Label.DERIVED)
+                step_notes.append(f"3870 dream-maker (blue bubble) -{format_number(applied)}")
+
             bone_active = (
                 self.bone_rune is not None
                 and bone_charges > 0
@@ -1153,6 +1376,26 @@ class _DefenseSimulator:
                         f"over {format_number(dur)} s"
                     )
 
+            # 6695 Serpent's Fang (Shield Reaver): shred existing & new shields for 3 s
+            sr_active_now = False
+            if self.shield_reaver_rate > 0 and dmg_after_flat > 0 and health > 0:
+                sr_active_now = (
+                    (shield_reaver_until is not None and clock < shield_reaver_until)
+                    if self.timeline
+                    else shield_reaver_applied
+                )
+                if not sr_active_now:
+                    for active_s in shields:
+                        active_s.remaining *= 1 - self.shield_reaver_rate
+                    shield_reaver_applied = True
+                    sr_active_now = True
+                    if self.timeline:
+                        shield_reaver_until = clock + 3
+                    step_notes.append(
+                        f"6695 shield-reaver: -{format_number(self.shield_reaver_rate * 100)}% "
+                        "defender shields (3 s)"
+                    )
+
             # Pre-damage shield & vitality Lifeline triggers
             if health > 0 and dmg_after_flat > 0 and not bypass:
                 preview_shields = [
@@ -1197,6 +1440,8 @@ class _DefenseSimulator:
                             scale_shield(raw_sh, hsp=self.hsp, revitalize_amp=rev_amp)
                             * self.self_shield_amp
                         )
+                        if sr_active_now and self.shield_reaver_rate > 0:
+                            sh_amt *= 1 - self.shield_reaver_rate
                         dur = (
                             Fraction(str(eff["duration_seconds"]))
                             if eff.get("duration_seconds")
@@ -1395,6 +1640,8 @@ class _DefenseSimulator:
                             )
                             rev_amp = self._revitalize_amp(health)
                             g_amt = scale_shield(raw_g, hsp=self.hsp, revitalize_amp=rev_amp)
+                            if sr_active_now and self.shield_reaver_rate > 0:
+                                g_amt *= 1 - self.shield_reaver_rate
                             g_dur = rune_value(rune, "ShieldDuration")
                             g_notes = ["scenario: guardian_ally=1"]
                             if self.hsp:
@@ -1431,6 +1678,109 @@ class _DefenseSimulator:
             )
             health = max(Fraction(0), health - hp_dmg)
             shields = self._expire_shields(shields, clock)
+
+            # 3026 Guardian Angel (Rebirth): on lethal hit, 4 s stasis + revive with 50% base HP
+            if self.has_guardian_angel and health == 0 and h_before > 0:
+                can_ga = (clock >= ga_ready) if self.timeline else (not ga_used_once)
+                if can_ga:
+                    ga_used_once = True
+                    stagger_bleeds.clear()
+                    revive_hp = self.base_health * Fraction(1, 2)
+                    health = min(current_max_health, revive_hp)
+                    if self.timeline:
+                        ga_stasis_until = clock + 4
+                        ga_ready = clock + 4 + 300
+                    step_labels.append(Label.OFFICIAL)
+                    step_notes.append(
+                        f"3026 rebirth: 4 s stasis, revived with {format_number(health)} HP "
+                        "(50% base HP, 300 s CD)"
+                    )
+
+            # Track last champion hit for 3083 Warmog's Heart (8 s OOC) & 6657/3803 Eternity
+            if incoming > 0 or dmg_after_flat > 0:
+                last_champ_hit = clock
+                if self.has_eternity and hit.amount > 0:
+                    mana_gain = hit.amount * Fraction(10, 100)
+                    step_notes.append(
+                        f"eternity: restored {format_number(mana_gain)} mana "
+                        "(10% pre-mitigation damage)"
+                    )
+
+            # 1054 Doran's Shield (Enduring Focus): 0..40 melee / 0..30 ranged over 8 s
+            if self.has_dorans_shield and dmg_after_flat > 0 and health > 0:
+                max_reg = Fraction(30) if self.defender_range == "ranged" else Fraction(40)
+                if self.aoe_dot_flag:
+                    max_reg *= Fraction(66, 100)
+                missing_frac = (
+                    max(Fraction(0), current_max_health - health) / current_max_health
+                    if current_max_health > 0
+                    else Fraction(0)
+                )
+                total_reg = max_reg * missing_frac
+                if self.timeline:
+                    dshield_rate = total_reg / Fraction(8)
+                    dshield_end = clock + 8
+                elif not dshield_used_once and total_reg > 0:
+                    dshield_used_once = True
+                    amt = (
+                        scale_healing(
+                            total_reg,
+                            hsp=Fraction(0),
+                            revitalize_amp=Fraction(0),
+                            grievous=self.grievous,
+                            uses_hsp=False,
+                        )
+                        * self.self_heal_amp
+                    )
+                    missing = max(Fraction(0), current_max_health - health)
+                    gained = min(amt, missing)
+                    health += gained
+                    heals.append(
+                        HealEvent(
+                            "1054 enduring-focus (Escudo de Doran)",
+                            total_reg,
+                            gained,
+                            False,
+                            self.grievous > 0,
+                            Label.DERIVED,
+                            ("full 8 s regen without --timeline",),
+                        )
+                    )
+
+            # 2003 / 2031 Potion without timeline (single full HoT heal on first damage)
+            if (
+                not self.timeline
+                and self.potion_active_flag
+                and not potion_used_once
+                and potion_rate > 0
+                and health > 0
+            ):
+                potion_used_once = True
+                raw_pot = Fraction(120) if "2003" in self.item_ids else Fraction(100)
+                amt = (
+                    scale_healing(
+                        raw_pot,
+                        hsp=Fraction(0),
+                        revitalize_amp=Fraction(0),
+                        grievous=self.grievous,
+                        uses_hsp=False,
+                    )
+                    * self.self_heal_amp
+                )
+                missing = max(Fraction(0), current_max_health - health)
+                gained = min(amt, missing)
+                health += gained
+                heals.append(
+                    HealEvent(
+                        potion_source,
+                        raw_pot,
+                        gained,
+                        False,
+                        self.grievous > 0,
+                        Label.OFFICIAL,
+                        ("full potion heal without --timeline",),
+                    )
+                )
 
             # Start Jak'Sho combat ramp timer on first hit
             if self.combat_resist_ramps and (incoming > 0 or dmg_after_flat > 0):
@@ -1544,7 +1894,7 @@ class _DefenseSimulator:
                 )
             )
 
-        # Final continuous tail (Death's Dance bleeds, Second Wind, Protoplasm HoT) in timeline
+        # Final continuous tail (bleeds, Second Wind, Protoplasm, Doran's, Potions) in timeline
         if self.timeline and health > 0:
             tail_ends = [b.end for b in stagger_bleeds]
             if sw_end is not None:
@@ -1553,6 +1903,10 @@ class _DefenseSimulator:
                 tail_ends.append(proto_heal_end)
             if proto_hp_end is not None:
                 tail_ends.append(proto_hp_end)
+            if dshield_end is not None:
+                tail_ends.append(dshield_end)
+            if potion_end is not None:
+                tail_ends.append(potion_end)
             tail_end = max(tail_ends, default=clock)
             if tail_end > clock:
                 h_before = health

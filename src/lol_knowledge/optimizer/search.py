@@ -380,6 +380,7 @@ class _BuildEvaluator:
                 base_extras,
                 extra_amplifiers=self.passive.amplifiers,
                 extra_notes=self.passive.notes,
+                inputs=self.inputs,
             )
         assert self.rune_data is not None
         adaptive, a_label, a_note = None, Label.DERIVED, ""
@@ -392,6 +393,7 @@ class _BuildEvaluator:
                 self.assumptions,
                 self.derived,
                 base_extras,
+                inputs=self.inputs,
             )
             bonus_ad = sum(
                 (
@@ -446,6 +448,7 @@ class _BuildEvaluator:
             extra_amplifiers=(*self.passive.amplifiers, *rune_effects.amplifiers),
             extra_notes=tuple(extra_notes),
             move_speed_bonus_amp=rune_effects.move_speed_bonus_amp,
+            inputs=self.inputs,
         )
 
     def evaluate(self, item_ids: tuple[str, ...]) -> BuildResult | None:

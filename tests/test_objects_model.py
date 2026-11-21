@@ -37,7 +37,7 @@ def _reverse_keys(value: Any) -> Any:
 def test_model_header_links_to_the_snapshot(object_model, object_snapshot) -> None:
     assert object_model["schema_version"] == 1
     assert object_model["kind"] == "lol-object-model"
-    assert object_model["catalog_version"] == 27
+    assert object_model["catalog_version"] == 28
     assert object_model["game_version"] == object_snapshot.patch
     assert object_model["source"]["items_sha256"] == object_snapshot.items_sha256
     assert object_model["source"]["catalog"] == "lol-knowledge/objects/catalog.json"
@@ -307,6 +307,7 @@ def test_formula_requirements_use_the_target_scope(object_model) -> None:
         "bonus_health",
         "bonus_magic_resist",
         "bonus_mana",
+        "bonus_mana_regen_percent",
         "crit_chance",
         "health",
         "lethality",
