@@ -69,6 +69,25 @@ from .stats import (
     with_bonus,
     with_percent_bonus,
 )
+from .summoners import (
+    SummonerSpellData,
+    SummonerSpellSpec,
+    barrier_duration,
+    barrier_shield,
+    cleanse_tenacity,
+    effective_cooldown,
+    exhaust_values,
+    ghost_ms,
+    heal_amount,
+    heal_ms,
+    ignite_damage,
+    ignite_duration,
+    ignite_grievous,
+    resolve_loadout,
+    smite_damage,
+    summoner_spell_haste,
+    teleport_ms,
+)
 from .survival import (
     GRIEVOUS_WOUNDS_REDUCTION,
     HealEvent,
@@ -133,13 +152,14 @@ REDUCED_OMNIVAMP_KINDS = frozenset({"minion", "monster"})
 WAIT_SECONDS = re.compile(r"\d+(?:\.\d+)?")
 _ABILITY_STEP = re.compile(r"(?P<slot>[QWER])(?:\.(?P<case>[a-z0-9_]+))?(?:@(?P<targets>\d+))?")
 _ITEM_STEP = re.compile(r"item:(?P<id>\d+)(?:@(?P<targets>\d+))?", re.IGNORECASE)
+_SUMMONER_STEP = re.compile(r"summoner:(?P<name>[a-z0-9_\u00c0-\u017f]+)", re.IGNORECASE)
 # Active component kinds executable via ``item:<id>`` steps.
 ACTIVE_COMBAT_KINDS = frozenset({"damage", "healing", "shield", "stat_modifier", "damage_modifier"})
 
 
 @dataclass(frozen=True)
 class Step:
-    """One rotation step: basic attack, ability case, ``wait:<seconds>`` or ``item:<id>``."""
+    """One rotation step: attack, ability, ``wait:<s >``, ``item:<id>`` or ``summoner:<name>``."""
 
     text: str
     slot: str | None = None
@@ -153,10 +173,12 @@ class Step:
     targets: int | None = None
     # Item id for an active item step (e.g. ``item:3074``, ``item:3748``).
     item_id: str | None = None
+    # Summoner spell token for a summoner cast step (e.g. ``summoner:ignite``).
+    summoner_id: str | None = None
 
 
 def parse_steps(text: str) -> tuple[Step, ...]:
-    """Read ``attack``, ``attack:crit``, ``Q``, ``E.edge``, ``item:3074``, ``wait:0.5``…
+    """Read ``attack``, ``attack:crit``, ``Q``, ``E.edge``, ``item:3074``, ``summoner:ignite``…
 
     Steps are separated by commas or spaces; an attack takes any of the
     modifiers ``crit`` and ``nospellblade``, once each and in any order.
@@ -176,6 +198,10 @@ def parse_steps(text: str) -> tuple[Step, ...]:
                     raise RotationError(f"step {token!r}: target count must be at least 1")
             steps.append(Step(token, item_id=item_match.group("id"), targets=step_targets))
             continue
+        summ_match = _SUMMONER_STEP.fullmatch(token)
+        if summ_match is not None:
+            steps.append(Step(token, summoner_id=summ_match.group("name")))
+            continue
         head, *modifiers = token.lower().split(":")
         if head == "wait":
             steps.append(Step(token, wait=_seconds(token, modifiers)))
@@ -193,7 +219,7 @@ def parse_steps(text: str) -> tuple[Step, ...]:
         if match is None:
             raise RotationError(
                 f"unknown step {token!r}: use attack, attack:crit, attack:nospellblade, "
-                "Q, W, E, R, SLOT.case or item:<id>"
+                "Q, W, E, R, SLOT.case, item:<id> or summoner:<name>"
             )
         raw_targets = match.group("targets")
         step_targets = None
@@ -799,12 +825,36 @@ class _Rotation:
         allow_insufficient_resource: bool = False,
         apply_passives: bool = True,
         target_count: int = 1,
+        summoners: Sequence[str] = (),
+        summoner_data: SummonerSpellData | None = None,
     ) -> None:
         if isinstance(target_count, bool) or not isinstance(target_count, int) or target_count < 1:
             raise RotationError("target count must be an integer >= 1")
         self.kit, self.sheet, self.ranks, self.target = kit, sheet, ranks, target
         self.target_count = target_count
         self.base_sheet = sheet
+        self.summoner_data = summoner_data
+        self.summoner_loadout: tuple[SummonerSpellSpec, ...] = ()
+        self.summoner_label = (
+            summoner_data.label_for(sheet.champion.patch)
+            if summoner_data is not None
+            else Label.DERIVED
+        )
+        if summoners:
+            if summoner_data is None:
+                raise RotationError(
+                    "summoner spells require lol-knowledge/derived/summoner-spells.json"
+                )
+            try:
+                self.summoner_loadout, _ = resolve_loadout(summoners, summoner_data)
+            except StatsError as exc:
+                raise RotationError(str(exc)) from exc
+        self._summoner_haste = summoner_spell_haste(sheet.items, runes, rune_data)
+        self._summoner_used: set[str] = set()
+        self._summoner_ready: dict[str, Fraction] = {}
+        self._summoner_ms_buffs: list[tuple[Fraction | None, Fraction, str, Label]] = []
+        self._summoner_burns: list[tuple[Fraction, Fraction, str, Label, tuple[str, ...]]] = []
+        self.attacker_exhausted = Fraction(str(inputs.get("exhausted", 0))) > 0
         self.timeline = self._timeline() if timeline else None
         self.crit_base, self.holder_range, self.inputs = crit_base, holder_range, inputs
         self.stats, self.origin = sheet_stats(sheet)
@@ -1620,6 +1670,14 @@ class _Rotation:
                 raise RotationError(f"{effect.title}: source {source!r} is not modelled")
             taken.append((effect.title, self._percent(effect, target_stats)))
             labels.append(effect.label)
+        if self.attacker_exhausted and damage_type is not DamageType.TRUE:
+            ex_pct = Fraction(35)
+            if self.summoner_data is not None and "SummonerExhaust" in self.summoner_data.spells:
+                ex_dr, _, _ = exhaust_values(self.summoner_data.spells["SummonerExhaust"])
+                ex_pct = ex_dr * 100
+            taken.append(("summoner:SummonerExhaust", -ex_pct))
+            labels.append(self.summoner_label)
+            notes.append(f"summoner:SummonerExhaust (-{format_number(ex_pct)}% non-true damage)")
         return dealt, taken, labels, notes
 
     @staticmethod
@@ -1720,6 +1778,8 @@ class _Rotation:
 
     def _healing(self, part: Part, tag: Mapping[str, Any] | None) -> Healing:
         """Life steal and omnivamp healing of ``part`` (life-steal-and-omnivamp.md)."""
+        if part.kind == "summoner":
+            return NO_HEALING
         life_steal = self.life_steal.total()
         omnivamp = self.omnivamp.total() + self.item_combat.dynamic_bonus_omnivamp(self.now)
         rune_heal = self.rune_combat.healing_rate()
@@ -2412,6 +2472,9 @@ class _Rotation:
         ic_ms = self.item_combat.dynamic_bonus_flat_ms(at)
         if ic_ms:
             sheet = with_bonus(sheet, "move_speed", ic_ms, "2524 fanfare (+20 MS)", Label.DERIVED)
+        for end_t, ms_pct, ms_src, ms_lbl in self._summoner_ms_buffs:
+            if end_t is None or at < end_t:
+                sheet = with_percent_bonus(sheet, "move_speed", ms_pct, ms_src, ms_lbl)
         if sheet is not self.sheet:
             self.sheet = sheet
             self.stats, self.origin = sheet_stats(sheet)
@@ -2624,6 +2687,7 @@ class _Rotation:
         start = self.accrued
         if until <= start or (
             not self.burning
+            and not self._summoner_burns
             and not self.rune_combat.has_active_burn()
             and not self.rune_combat.has_due_procs(until)
             and not any(t <= until for t, _, _, _ in self.delayed_item_procs)
@@ -2635,6 +2699,7 @@ class _Rotation:
             end
             for end in [
                 *(burn.end for burn in self.burning.values()),
+                *(b_end for b_end, _, _, _, _ in self._summoner_burns),
                 *(window.end for window in self.windows.values()),
                 *(
                     self.stacked_at[_key(effect)] + effect.window
@@ -2698,6 +2763,23 @@ class _Rotation:
                 parts.append(part)
                 health, shield, absorbed = self._absorb_parts([part], health, shield)
                 total_absorbed += absorbed
+            for b_end, b_rate, b_src, b_lbl, b_notes in self._summoner_burns:
+                if b_end <= begin:
+                    continue
+                part = self._part(
+                    "summoner",
+                    f"{b_src} from {format_number(begin)} s to {format_number(finish)} s",
+                    DamageType.TRUE,
+                    b_rate * (finish - begin),
+                    [b_lbl],
+                    False,
+                    target_stats,
+                    b_notes,
+                    apply_modifiers=False,
+                )
+                parts.append(part)
+                health, shield, absorbed = self._absorb_parts([part], health, shield)
+                total_absorbed += absorbed
             due_procs = self.rune_combat.pop_due(finish)
             if due_procs:
                 self._set_moment(finish)
@@ -2748,6 +2830,7 @@ class _Rotation:
                     self._pending_accrued_heals.extend(self._convert_item_heals(ic_heals, finish))
         self.accrued = until
         self.burning = {key: burn for key, burn in self.burning.items() if burn.end > until}
+        self._summoner_burns = [item for item in self._summoner_burns if item[0] > until]
         self.rune_combat.clear_expired_burns(until)
         return parts, health, shield, total_absorbed
 
@@ -3170,6 +3253,178 @@ class _Rotation:
         self._record_attacker_healing(outcome.healing)
         return outcome
 
+    def _summoner_cast(
+        self, step: Step, target_stats: Mapping[str, Fraction], clock: Fraction
+    ) -> tuple[str, list[Part], list[HealEvent], list[ShieldEvent]]:
+        """Execute a ``summoner:<name>`` step (Ignite, Smite, Barrier, Heal, Ghost, Exhaust…)."""
+        assert step.summoner_id is not None
+        if self.summoner_data is None:
+            raise RotationError(
+                f"step {step.text}: summoner spells require "
+                "lol-knowledge/derived/summoner-spells.json"
+            )
+        try:
+            sp = self.summoner_data.resolve(step.summoner_id)
+        except StatsError as exc:
+            raise RotationError(f"step {step.text}: {exc}") from exc
+        if self.summoner_loadout and all(eq.id != sp.id for eq in self.summoner_loadout):
+            equipped = ", ".join(f"{eq.alias} ({eq.id})" for eq in self.summoner_loadout)
+            raise RotationError(
+                f"step {step.text}: {sp.name} ({sp.id}) is not in equipped summoners ({equipped})"
+            )
+        if self.timeline is not None:
+            ready_at = self._summoner_ready.get(sp.id, Fraction(0))
+            if clock < ready_at:
+                raise RotationError(
+                    f"step {step.text}: {sp.name} is on cooldown until {format_number(ready_at)} s"
+                )
+            eff_cd = effective_cooldown(
+                sp,
+                level=self.sheet.level,
+                summoner_haste=self._summoner_haste,
+                unleashed=Fraction(str(self.inputs.get("unleashed_teleport", 0))) > 0,
+            )
+            self._summoner_ready[sp.id] = clock + eff_cd
+        else:
+            if sp.id in self._summoner_used:
+                raise RotationError(
+                    f"step {step.text}: {sp.name} can only be cast once without --timeline"
+                )
+            self._summoner_used.add(sp.id)
+
+        s_lbl = self.summoner_label
+        parts: list[Part] = []
+        heals: list[HealEvent] = []
+        shields: list[ShieldEvent] = []
+        title = f"summoner:{sp.id} ({sp.name})"
+
+        if sp.id == "SummonerDot":
+            if self.target.kind is not None and self.target.kind != "champion":
+                raise RotationError(f"step {step.text}: {sp.name} can only target champions")
+            dmg = ignite_damage(sp, self.sheet.level)
+            dur = ignite_duration(sp)
+            gw = ignite_grievous(sp)
+            gw_note = f"{format_number(gw * 100)}% Grievous Wounds for {format_number(dur)} s"
+            if self.timeline is not None:
+                self._summoner_burns.append((clock + dur, dmg / dur, title, s_lbl, (gw_note,)))
+                self.notes.append(
+                    f"{title}: {format_number(dmg)} true damage over {dur} s + {gw_note}"
+                )
+            else:
+                parts.append(
+                    self._part(
+                        "summoner",
+                        title,
+                        DamageType.TRUE,
+                        dmg,
+                        [s_lbl],
+                        False,
+                        target_stats,
+                        (f"full {format_number(dur)} s burn without --timeline", gw_note),
+                        apply_modifiers=False,
+                    )
+                )
+            return f"summoner {sp.name}", parts, heals, shields
+
+        if sp.id == "SummonerSmite":
+            tier = int(Fraction(str(self.inputs.get("smite_tier", 0))))
+            try:
+                dmg, s_notes = smite_damage(sp, target_kind=self.target.kind, tier=tier)
+            except StatsError as exc:
+                raise RotationError(f"step {step.text}: {exc}") from exc
+            parts.append(
+                self._part(
+                    "summoner",
+                    title,
+                    DamageType.TRUE,
+                    dmg,
+                    [s_lbl],
+                    False,
+                    target_stats,
+                    tuple(s_notes),
+                    apply_modifiers=False,
+                )
+            )
+            return f"summoner {sp.name}", parts, heals, shields
+
+        if sp.id == "SummonerBarrier":
+            raw_sh = barrier_shield(sp, self.sheet.level)
+            dur = barrier_duration(sp)
+            shields.append(
+                self._make_shield_event(
+                    title,
+                    raw_sh,
+                    s_lbl,
+                    shield_type="normal",
+                    duration=dur,
+                    notes=(f"{sp.name} ({format_number(dur)} s)",),
+                )
+            )
+            return f"summoner {sp.name}", parts, heals, shields
+
+        if sp.id == "SummonerHeal":
+            debuffed = Fraction(str(self.inputs.get("heal_debuffed", 0))) > 0
+            raw_h = heal_amount(sp, self.sheet.level, debuffed=debuffed)
+            ms_pct, ms_dur = heal_ms(sp)
+            h_notes = (
+                (f"+{format_number(ms_pct * 100)}% MS for {format_number(ms_dur)} s",)
+                if not debuffed
+                else (
+                    "recent Heal debuff (-50%)",
+                    f"+{format_number(ms_pct * 100)}% MS for {format_number(ms_dur)} s",
+                )
+            )
+            heals.append(self._make_heal_event(title, raw_h, s_lbl, clock, notes=h_notes))
+            self._summoner_ms_buffs.append(
+                (clock + ms_dur if self.timeline is not None else None, ms_pct, title, s_lbl)
+            )
+            return f"summoner {sp.name}", parts, heals, shields
+
+        if sp.id == "SummonerHaste":
+            ms_pct, dur = ghost_ms(sp, self.sheet.level)
+            self._summoner_ms_buffs.append(
+                (clock + dur if self.timeline is not None else None, ms_pct, title, s_lbl)
+            )
+            self.notes.append(
+                f"{title}: +{format_number(ms_pct * 100)}% move speed and Ghosted for "
+                f"{format_number(dur)} s"
+            )
+            return f"summoner {sp.name}", parts, heals, shields
+
+        if sp.id == "SummonerExhaust":
+            ex_dr, ex_slow, ex_dur = exhaust_values(sp)
+            self.notes.append(
+                f"{title}: -{format_number(ex_dr * 100)}% target damage dealt and "
+                f"-{format_number(ex_slow * 100)}% slow for {format_number(ex_dur)} s"
+            )
+            return f"summoner {sp.name}", parts, heals, shields
+
+        if sp.id == "SummonerBoost":
+            ten, dur = cleanse_tenacity(sp)
+            self.notes.append(
+                f"{title}: removes CC (except suppression/airborne) and summoner debuffs + "
+                f"{format_number(ten * 100)}% tenacity for {format_number(dur)} s"
+            )
+            return f"summoner {sp.name}", parts, heals, shields
+
+        if sp.id == "SummonerTeleport":
+            if Fraction(str(self.inputs.get("unleashed_teleport", 0))) > 0:
+                ms_pct, dur = teleport_ms(sp)
+                self._summoner_ms_buffs.append(
+                    (clock + dur if self.timeline is not None else None, ms_pct, title, s_lbl)
+                )
+                self.notes.append(
+                    f"{title} (Teleportar desatado): +{format_number(ms_pct * 100)}% MS for "
+                    f"{format_number(dur)} s"
+                )
+            else:
+                self.notes.append(f"{title}: map mobility utility (3 s channel)")
+            return f"summoner {sp.name}", parts, heals, shields
+
+        dist = format_number(sp.dv("FlashDistance", Fraction(400)))
+        self.notes.append(f"{title}: positional blink ({dist} units)")
+        return f"summoner {sp.name}", parts, heals, shields
+
     def run(self, steps: Sequence[Step]) -> RotationOutcome:
         if "max_health" not in self.target.stats:
             raise RotationError(
@@ -3213,7 +3468,12 @@ class _Rotation:
                 shield = outcome.shield_after
                 clock += step.wait
                 continue
-            if self.timeline is not None and step.slot is None and step.item_id is None:
+            if (
+                self.timeline is not None
+                and step.slot is None
+                and step.item_id is None
+                and step.summoner_id is None
+            ):
                 clock = max(clock, next_attack)
             elif self.timeline is not None and step.slot is not None:
                 self._cast(step, clock, ready, open_casts)
@@ -3254,6 +3514,11 @@ class _Rotation:
                     heal_events.extend(self._convert_item_heals(ally_heals, clock))
                 if reset_attack and self.timeline is not None:
                     next_attack = clock
+            elif step.summoner_id is not None:
+                name, s_parts, s_heals, s_shields = self._summoner_cast(step, target_stats, clock)
+                parts += s_parts
+                heal_events += s_heals
+                shield_events += s_shields
             elif step.slot is None:
                 # Thornmail's Grievous Wounds applies before the triggering attack's own heal.
                 self._trigger_defender_grievous(clock)
@@ -3381,7 +3646,7 @@ class _Rotation:
                     )
                     if self.timeline is not None and self._open("energized", clock, target_stats):
                         extra.append(Label.PENDING)
-            if step.item_id is not None:
+            if step.item_id is not None or step.summoner_id is not None:
                 step_dealt = False
             else:
                 step_dealt = (
@@ -3433,41 +3698,42 @@ class _Rotation:
                     )
             for ev in shield_events:
                 self.rune_combat.on_attacker_shield(ev.amount, clock)
-            for proc in self.rune_combat.on_step(step.slot, step_dealt, clock, self.sheet):
-                parts.append(
-                    self._part(
-                        "rune",
-                        proc.source,
-                        proc.damage_type,
-                        proc.raw,
-                        [proc.label],
-                        False,
-                        target_stats,
-                        proc.notes,
-                        apply_modifiers=proc.apply_modifiers,
+            if step.summoner_id is None:
+                for proc in self.rune_combat.on_step(step.slot, step_dealt, clock, self.sheet):
+                    parts.append(
+                        self._part(
+                            "rune",
+                            proc.source,
+                            proc.damage_type,
+                            proc.raw,
+                            [proc.label],
+                            False,
+                            target_stats,
+                            proc.notes,
+                            apply_modifiers=proc.apply_modifiers,
+                        )
                     )
-                )
-            for p_proc in self.passive_combat.on_step(
-                step.slot,
-                step_dealt,
-                clock,
-                self.sheet,
-                target_health_before=before,
-                target_max_health=self.target.stats["max_health"],
-            ):
-                parts.append(
-                    self._part(
-                        "ability",
-                        p_proc.source,
-                        p_proc.damage_type,
-                        p_proc.raw,
-                        [p_proc.label],
-                        False,
-                        target_stats,
-                        p_proc.notes,
-                        slot="P",
+                for p_proc in self.passive_combat.on_step(
+                    step.slot,
+                    step_dealt,
+                    clock,
+                    self.sheet,
+                    target_health_before=before,
+                    target_max_health=self.target.stats["max_health"],
+                ):
+                    parts.append(
+                        self._part(
+                            "ability",
+                            p_proc.source,
+                            p_proc.damage_type,
+                            p_proc.raw,
+                            [p_proc.label],
+                            False,
+                            target_stats,
+                            p_proc.notes,
+                            slot="P",
+                        )
                     )
-                )
             for p_sh in self.passive_combat.on_step_shields(
                 step.slot, step_dealt, clock, self.sheet
             ):
@@ -3710,7 +3976,12 @@ class _Rotation:
             self._record_attacker_healing(outcome.healing)
             health = outcome.health_after
             shield = outcome.shield_after
-            if self.timeline is not None and step.slot is None and step.item_id is None:
+            if (
+                self.timeline is not None
+                and step.slot is None
+                and step.item_id is None
+                and step.summoner_id is None
+            ):
                 # The next attack: 1 / the attack speed just after this one (timeline.md).
                 self._set_moment(clock)
                 next_attack = clock + 1 / self.sheet["attack_speed"].total()
@@ -3731,11 +4002,17 @@ class _Rotation:
             if self.timeline is not None and self.item_combat.has_periodic_due(clock)
             else None
         )
+        summoner_burn_end = (
+            max((b_end for b_end, _, _, _, _ in self._summoner_burns), default=None)
+            if self._summoner_burns
+            else None
+        )
         if (
             self.burning
             or pending_end is not None
             or delayed_item_end is not None
             or periodic_end is not None
+            or summoner_burn_end is not None
         ):
             ends = [*(burn.end for burn in self.burning.values())]
             if pending_end is not None:
@@ -3744,10 +4021,12 @@ class _Rotation:
                 ends.append(delayed_item_end)
             if periodic_end is not None:
                 ends.append(periodic_end)
+            if summoner_burn_end is not None:
+                ends.append(summoner_burn_end)
             end = max(ends)
             tail_name = (
                 f"burns until {format_number(end)} s"
-                if (self.burning or self.rune_combat.has_active_burn())
+                if (self.burning or self._summoner_burns or self.rune_combat.has_active_burn())
                 else f"delayed effects until {format_number(end)} s"
             )
             outcomes.append(
@@ -3847,6 +4126,8 @@ def evaluate_rotation(
     allow_insufficient_resource: bool = False,
     apply_passives: bool = True,
     target_count: int = 1,
+    summoners: Sequence[str] = (),
+    summoner_data: SummonerSpellData | None = None,
 ) -> RotationOutcome:
     """Damage of every step against ``target``, carrying its current health forward.
 
@@ -3876,5 +4157,7 @@ def evaluate_rotation(
         allow_insufficient_resource=allow_insufficient_resource,
         apply_passives=apply_passives,
         target_count=target_count,
+        summoners=summoners,
+        summoner_data=summoner_data,
     )
     return rotation.run(steps)

@@ -66,7 +66,7 @@ _ENEMY_SCHEMA: dict[str, Any] = {
     "type": "object",
     "description": (
         "Enemy attacker rotation: {champion, level, steps, items?, runes?, shards?, "
-        "learned?, range?, inputs?}."
+        "summoners?, learned?, range?, inputs?}."
     ),
     "properties": {
         "champion": {"type": "string"},
@@ -74,6 +74,7 @@ _ENEMY_SCHEMA: dict[str, Any] = {
         "items": {"type": "array", "items": {"type": "string"}},
         "runes": {"type": "array", "items": {"type": "integer"}},
         "shards": {"type": "array", "items": {"type": "integer"}},
+        "summoners": {"type": "array", "items": {"type": "string"}},
         "learned": {"type": "object", "additionalProperties": {"type": "integer"}},
         "steps": {"type": "string"},
         "range": {"type": "string", "enum": ["melee", "ranged"]},
@@ -86,18 +87,21 @@ TOOLS: tuple[dict[str, Any], ...] = (
         "name": "lol_lookup",
         "description": (
             "Search or inspect champions (including exact kit ability cases and inputs), "
-            "purchasable items (IDs, gold, effect_review status) or runes/shards."
+            "purchasable items (IDs, gold, effect_review status), runes/shards or summoner spells."
         ),
         "inputSchema": {
             "type": "object",
             "required": ["entity"],
             "properties": {
-                "entity": {"type": "string", "enum": ["champion", "items", "runes"]},
+                "entity": {"type": "string", "enum": ["champion", "items", "runes", "summoners"]},
                 "champion": {
                     "type": "string",
                     "description": "Champion name/id when entity='champion'.",
                 },
-                "query": {"type": "string", "description": "Substring filter for items or runes."},
+                "query": {
+                    "type": "string",
+                    "description": "Substring filter for items, runes or summoners.",
+                },
                 "only_complete": {
                     "type": "boolean",
                     "description": "Only items with effect_review='complete'.",
@@ -109,8 +113,8 @@ TOOLS: tuple[dict[str, Any], ...] = (
     {
         "name": "lol_stats",
         "description": (
-            "Compute a champion's exact stat sheet, effective health, ability cooldowns "
-            "and resource pool for a given level, items and runes."
+            "Compute a champion's exact stat sheet, effective health, ability and summoner "
+            "cooldowns, and resource pool for a given level, items, runes and summoners."
         ),
         "inputSchema": {
             "type": "object",
@@ -121,6 +125,7 @@ TOOLS: tuple[dict[str, Any], ...] = (
                 "items": {"type": "array", "items": {"type": "string"}},
                 "runes": {"type": "array", "items": {"type": "integer"}},
                 "shards": {"type": "array", "items": {"type": "integer"}},
+                "summoners": {"type": "array", "items": {"type": "string"}},
                 "learned": {"type": "object", "additionalProperties": {"type": "integer"}},
                 "inputs": {"type": "object", "additionalProperties": {"type": "number"}},
                 "assume": {"type": "object", "additionalProperties": {"type": "string"}},
@@ -146,6 +151,7 @@ TOOLS: tuple[dict[str, Any], ...] = (
                 "items": {"type": "array", "items": {"type": "string"}},
                 "runes": {"type": "array", "items": {"type": "integer"}},
                 "shards": {"type": "array", "items": {"type": "integer"}},
+                "summoners": {"type": "array", "items": {"type": "string"}},
                 "learned": {"type": "object", "additionalProperties": {"type": "integer"}},
                 "inputs": {"type": "object", "additionalProperties": {"type": "number"}},
                 "assume": {"type": "object", "additionalProperties": {"type": "string"}},
@@ -158,8 +164,9 @@ TOOLS: tuple[dict[str, Any], ...] = (
     {
         "name": "lol_rotation",
         "description": (
-            "Simulate an ordered combat rotation (basic attacks, ability casts, waits) with "
-            "item passives, runes, burns, shields, healing, resources and multi-target splash."
+            "Simulate an ordered combat rotation (basic attacks, ability casts, item actives, "
+            "summoner:<name> casts, waits) with passives, runes, burns, shields, healing, "
+            "resources and multi-target splash."
         ),
         "inputSchema": {
             "type": "object",
@@ -169,12 +176,13 @@ TOOLS: tuple[dict[str, Any], ...] = (
                 "level": {"type": "integer", "minimum": 1, "maximum": 18},
                 "steps": {
                     "type": "string",
-                    "description": 'E.g. "E Q.both W.all attack" or "R.dash@3".',
+                    "description": 'E.g. "E Q.both W.all summoner:ignite" or "R.dash@3".',
                 },
                 "learned": {"type": "object", "additionalProperties": {"type": "integer"}},
                 "items": {"type": "array", "items": {"type": "string"}},
                 "runes": {"type": "array", "items": {"type": "integer"}},
                 "shards": {"type": "array", "items": {"type": "integer"}},
+                "summoners": {"type": "array", "items": {"type": "string"}},
                 "attacker_range": {"type": "string", "enum": ["melee", "ranged"]},
                 "timeline": {"type": "boolean"},
                 "target": _TARGET_SCHEMA,
@@ -191,8 +199,9 @@ TOOLS: tuple[dict[str, Any], ...] = (
         "name": "lol_survive",
         "description": (
             "Reverse defense simulation: check whether a champion survives incoming hits or an "
-            "enemy rotation, including champion defensive passives, Lifeline shields, Guardian, "
-            "Bone Plating, Second Wind and Thorns."
+            "enemy rotation, including champion defensive passives, summoner spells (Barrier, "
+            "Heal, Exhaust, Cleanse), Lifeline shields, Guardian, Bone Plating, Second Wind "
+            "and Thorns."
         ),
         "inputSchema": {
             "type": "object",
@@ -203,6 +212,7 @@ TOOLS: tuple[dict[str, Any], ...] = (
                 "items": {"type": "array", "items": {"type": "string"}},
                 "runes": {"type": "array", "items": {"type": "integer"}},
                 "shards": {"type": "array", "items": {"type": "integer"}},
+                "summoners": {"type": "array", "items": {"type": "string"}},
                 "incoming": {
                     "type": "string",
                     "description": 'Manual hits, e.g. "attack:500, magic:350".',
@@ -265,6 +275,7 @@ TOOLS: tuple[dict[str, Any], ...] = (
                 "timeline": {"type": "boolean"},
                 "runes": {"type": "array", "items": {"type": "integer"}},
                 "shards": {"type": "array", "items": {"type": "integer"}},
+                "summoners": {"type": "array", "items": {"type": "string"}},
                 "inputs": {"type": "object", "additionalProperties": {"type": "number"}},
                 "assume": {"type": "object", "additionalProperties": {"type": "string"}},
                 "allow_illegal_build": {"type": "boolean"},

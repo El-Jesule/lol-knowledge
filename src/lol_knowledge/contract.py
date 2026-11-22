@@ -47,6 +47,7 @@ from .stats import (
 )
 from .stats import to_dict as stats_to_dict
 from .stats.sheet import MANA_RESOURCE
+from .summoners import load_summoner_spells, resolve_loadout, summoner_sheet_effects
 
 CONTRACT_SCHEMA = "lol-knowledge-contract/1"
 OPERATIONS = frozenset({"lookup", "stats", "ability", "rotation", "survive", "optimize"})
@@ -192,8 +193,9 @@ def _build_sheet_for_contract(
     combat_context: str = "stats",
     kit=None,
     allow_illegal: bool = False,
+    summoners: Sequence[str] = (),
 ) -> tuple[Any, list[str]]:
-    """Build a StatSheet with legality, passive and rune checks; returns (sheet, warnings)."""
+    """Build a StatSheet with legality, passive, rune and summoner checks."""
     warnings: list[str] = []
     items = load_items(root, item_ids)
     if item_ids:
@@ -210,7 +212,35 @@ def _build_sheet_for_contract(
     passive = sheet_passive_effects(
         kit, level, inputs, include_stacking=combat_context != "rotation"
     )
-    base_extras = (*extra_contributions, *passive.flats)
+    s_flats: tuple = ()
+    s_percents: tuple = ()
+    s_notes: tuple = ()
+    if summoners:
+        s_data = load_summoner_spells(root)
+        if s_data is None:
+            raise ContractInputError(
+                "not_found", "lol-knowledge/derived/summoner-spells.json is missing"
+            )
+        try:
+            resolved_s, s_violations = resolve_loadout(
+                summoners, s_data, allow_illegal=allow_illegal
+            )
+        except StatsError as exc:
+            raise ContractInputError("illegal_build", str(exc)) from exc
+        warnings.extend(f"illegal summoner loadout allowed: {v}" for v in s_violations)
+        s_rune_data = load_runes(root) if runes else None
+        s_fx = summoner_sheet_effects(
+            resolved_s,
+            s_data,
+            level=level,
+            patch=champion.patch,
+            inputs=inputs,
+            items=items,
+            runes=runes,
+            rune_data=s_rune_data,
+        )
+        s_flats, s_percents, s_notes = s_fx.flats, s_fx.percents, s_fx.notes
+    base_extras = (*extra_contributions, *passive.flats, *s_flats)
     if not runes and not shards:
         return (
             build_stat_sheet(
@@ -221,9 +251,9 @@ def _build_sheet_for_contract(
                 assumptions,
                 derived,
                 base_extras,
-                passive.percents,
+                (*passive.percents, *s_percents),
                 extra_amplifiers=passive.amplifiers,
-                extra_notes=passive.notes,
+                extra_notes=(*passive.notes, *s_notes),
                 inputs=inputs,
             ),
             warnings,
@@ -288,7 +318,7 @@ def _build_sheet_for_contract(
         adaptive_label=a_label,
         adaptive_note=a_note,
     )
-    extra_notes = [*passive.notes, *rune_fx.notes]
+    extra_notes = [*passive.notes, *s_notes, *rune_fx.notes]
     pending = list(rune_fx.pending)
     if combat_context != "rotation":
         extra_notes.extend(combat_rune_notes(runes, rune_data))
@@ -300,7 +330,7 @@ def _build_sheet_for_contract(
         assumptions,
         derived,
         (*base_extras, *flats, *rune_fx.flats),
-        (*percents, *passive.percents, *rune_fx.percents),
+        (*percents, *passive.percents, *s_percents, *rune_fx.percents),
         tuple(pending),
         extra_amplifiers=(*passive.amplifiers, *rune_fx.amplifiers),
         extra_notes=tuple(extra_notes),
@@ -550,8 +580,46 @@ def _handle_lookup(params: Mapping[str, Any], root: Path) -> dict[str, Any]:
             },
         }
 
+    if entity == "summoners":
+        summ_data = load_summoner_spells(root)
+        if summ_data is None:
+            raise ContractInputError(
+                "not_found", "lol-knowledge/derived/summoner-spells.json is missing"
+            )
+        matches = []
+        for sp in summ_data.spells.values():
+            if (
+                query
+                and query not in sp.id.lower()
+                and query not in sp.alias.lower()
+                and query not in sp.name.lower()
+            ):
+                continue
+            matches.append(
+                {
+                    "id": sp.id,
+                    "alias": sp.alias,
+                    "name": sp.name,
+                    "cooldown_seconds": float(sp.cooldown_seconds),
+                    "cast_range": None if sp.cast_range is None else float(sp.cast_range),
+                    "model_status": sp.model_status,
+                    "data_values": {k: float(v) for k, v in sp.data_values.items()},
+                    "calculations": dict(sp.calculations),
+                    "source": sp.source,
+                }
+            )
+        return {
+            "patch": patch,
+            "result_label": "Derivado",
+            "weakest_input_label": summ_data.label_for(patch).value,
+            "assumptions": [],
+            "not_modelled": [],
+            "result": {"total_summoners": len(matches), "summoners": matches[:limit]},
+        }
+
     raise ContractInputError(
-        "invalid_input", f"entity must be 'champion', 'items', or 'runes', got {entity!r}"
+        "invalid_input",
+        f"entity must be 'champion', 'items', 'runes', or 'summoners', got {entity!r}",
     )
 
 
@@ -561,6 +629,7 @@ def _handle_stats(params: Mapping[str, Any], root: Path) -> dict[str, Any]:
     item_ids = _str_list(params, "items")
     runes = _int_list(params, "runes")
     shards = _int_list(params, "shards")
+    summoners = _str_list(params, "summoners")
     ranks = _parse_ranks_dict(params)
     inputs = _parse_inputs_dict(params)
     assumptions_map = _parse_assumptions_dict(params)
@@ -583,6 +652,7 @@ def _handle_stats(params: Mapping[str, Any], root: Path) -> dict[str, Any]:
         combat_context="stats",
         kit=kit,
         allow_illegal=bool(params.get("allow_illegal_build", False)),
+        summoners=summoners,
     )
     payload = stats_to_dict(sheet)
     weakest_lbl = weakest(
@@ -607,6 +677,7 @@ def _handle_ability(params: Mapping[str, Any], root: Path) -> dict[str, Any]:
     item_ids = _str_list(params, "items")
     runes = _int_list(params, "runes")
     shards = _int_list(params, "shards")
+    summoners = _str_list(params, "summoners")
     ranks = _parse_ranks_dict(params)
     ranks[slot] = rank
     inputs = _parse_inputs_dict(params)
@@ -632,6 +703,7 @@ def _handle_ability(params: Mapping[str, Any], root: Path) -> dict[str, Any]:
         combat_context="ability",
         kit=kit,
         allow_illegal=bool(params.get("allow_illegal_build", False)),
+        summoners=summoners,
     )
     target = _resolve_target(
         params,
@@ -670,6 +742,7 @@ def _handle_rotation(params: Mapping[str, Any], root: Path) -> dict[str, Any]:
     item_ids = _str_list(params, "items")
     runes = _int_list(params, "runes")
     shards = _int_list(params, "shards")
+    summoners = _str_list(params, "summoners")
     ranks = _parse_ranks_dict(params)
     inputs = _parse_inputs_dict(params)
     assumptions_map = _parse_assumptions_dict(params)
@@ -696,6 +769,7 @@ def _handle_rotation(params: Mapping[str, Any], root: Path) -> dict[str, Any]:
         combat_context="rotation",
         kit=kit,
         allow_illegal=bool(params.get("allow_illegal_build", False)),
+        summoners=summoners,
     )
     target = _resolve_target(
         params,
@@ -707,6 +781,11 @@ def _handle_rotation(params: Mapping[str, Any], root: Path) -> dict[str, Any]:
     )
     crit_base = _crit_base(champ.id, champ.patch, derived)
     rune_data = load_runes(root) if (runes or target.runes) else None
+    summoner_data = (
+        load_summoner_spells(root)
+        if (summoners or any(s.summoner_id is not None for s in steps))
+        else None
+    )
     ap_weight = derived.value(champ.id, "adaptiveforceapweight") if derived else None
     outcome = evaluate_rotation(
         kit,
@@ -724,6 +803,8 @@ def _handle_rotation(params: Mapping[str, Any], root: Path) -> dict[str, Any]:
         start_resource=_optional_fraction(params, "attacker_resource"),
         allow_insufficient_resource=bool(params.get("allow_insufficient_resource", False)),
         target_count=target_count,
+        summoners=summoners,
+        summoner_data=summoner_data,
     )
     payload = rotation_to_dict(outcome, sheet, target, crit_base)
     return {
@@ -756,6 +837,7 @@ def _build_enemy_hits_context(
     e_items = _str_list(enemy, "items")
     e_runes = _int_list(enemy, "runes")
     e_shards = _int_list(enemy, "shards")
+    e_summoners = _str_list(enemy, "summoners")
     e_ranks = _parse_ranks_dict(enemy)
     e_inputs = {**inputs, **_parse_inputs_dict(enemy, "inputs")}
     e_kit = load_kit(root, e_champ.id)
@@ -776,10 +858,16 @@ def _build_enemy_hits_context(
         combat_context="rotation",
         kit=e_kit,
         allow_illegal=allow_illegal,
+        summoners=e_summoners,
     )
     e_range, _ = _infer_holder_range(e_champ, enemy.get("range"))
     e_crit = _crit_base(e_champ.id, e_champ.patch, derived)
     e_rune_data = load_runes(root) if e_runes else None
+    e_summoner_data = (
+        load_summoner_spells(root)
+        if (e_summoners or any(s.summoner_id is not None for s in e_steps))
+        else None
+    )
     e_ap_weight = derived.value(e_champ.id, "adaptiveforceapweight") if derived else None
 
     def _hits_for_sheet(def_sheet, current_health: Fraction | None = None):
@@ -796,6 +884,8 @@ def _build_enemy_hits_context(
             runes=e_runes,
             rune_data=e_rune_data,
             ap_weight=e_ap_weight,
+            summoners=e_summoners,
+            summoner_data=e_summoner_data,
         )
         return hits_from_rotation(rot)
 
@@ -809,6 +899,7 @@ def _handle_survive(params: Mapping[str, Any], root: Path) -> dict[str, Any]:
     item_ids = _str_list(params, "items")
     runes = _int_list(params, "runes")
     shards = _int_list(params, "shards")
+    summoners = _str_list(params, "summoners")
     inputs = _parse_inputs_dict(params)
     assumptions_map = _parse_assumptions_dict(params)
     timeline = bool(params.get("timeline", False))
@@ -830,6 +921,7 @@ def _handle_survive(params: Mapping[str, Any], root: Path) -> dict[str, Any]:
         combat_context="survive",
         kit=kit,
         allow_illegal=allow_illegal,
+        summoners=summoners,
     )
     incoming = params.get("incoming")
     enemy = params.get("enemy")
@@ -865,6 +957,7 @@ def _handle_survive(params: Mapping[str, Any], root: Path) -> dict[str, Any]:
                 "shield_reaver": Fraction(35, 100) if e_range == "ranged" else Fraction(50, 100),
             }
     rune_data = load_runes(root) if runes else None
+    summoner_data = load_summoner_spells(root) if summoners else None
     outcome = evaluate_defense(
         sheet,
         hits,
@@ -877,6 +970,8 @@ def _handle_survive(params: Mapping[str, Any], root: Path) -> dict[str, Any]:
         inputs=inputs,
         timeline=timeline,
         kit=kit,
+        summoners=summoners,
+        summoner_data=summoner_data,
     )
     payload = defense_to_dict(outcome, sheet)
     return {
@@ -917,6 +1012,7 @@ def _handle_optimize(params: Mapping[str, Any], root: Path) -> dict[str, Any]:
     )
     runes = _int_list(params, "runes")
     shards = _int_list(params, "shards")
+    summoners = _str_list(params, "summoners")
     rune_data = load_runes(root) if (runes or shards) else None
     kit = load_kit(root, champ.id)
     ranks = _parse_ranks_dict(params)
@@ -997,6 +1093,7 @@ def _handle_optimize(params: Mapping[str, Any], root: Path) -> dict[str, Any]:
         runes=runes,
         shards=shards,
         rune_data=rune_data,
+        summoners=summoners,
     )
     payload = optimize_to_dict(outcome)
     return {

@@ -31,6 +31,7 @@ from .snapshot import (
 from .stats.derived import RECORDS_PATH, parse_records
 from .stats.issues import ISSUES_PATH, parse_issues
 from .stats.sheet import CHAMPION_FIELDS
+from .summoners import SUMMONERS_PATH, summoner_problems
 
 SUPPORTED_SCHEMA_VERSIONS = frozenset({1})
 KB_DIRNAME = "lol-knowledge"
@@ -108,6 +109,7 @@ class _Validator:
         self._check_item_effects()
         self._check_item_groups()
         self._check_rune_data()
+        self._check_summoner_data()
         self._check_kits()
         return ValidationReport(
             checked_files=self.checked_files,
@@ -492,6 +494,20 @@ class _Validator:
             patch=self.snapshot_patch,
             official=official if isinstance(official, list) else None,
         ):
+            self.fail(path, problem)
+
+    def _check_summoner_data(self) -> None:
+        path = self.root / SUMMONERS_PATH
+        if not path.is_file():
+            self.skipped.append(
+                f"{SUMMONERS_PATH.as_posix()} is not present; summoner spell checks were skipped"
+            )
+            return
+        self.checked_files += 1
+        document = self._read_json(path)
+        if document is None:
+            return
+        for problem in summoner_problems(document, patch=self.snapshot_patch):
             self.fail(path, problem)
 
     def _check_kits(self) -> None:
