@@ -1,0 +1,296 @@
+{
+  "schema": "lol-derived-summoner-spells/1",
+  "label": "Derivado",
+  "game_version": "16.23",
+  "content_version": "16.23.8406595+branch.releases-16-23.content.release",
+  "retrieved_at": "2026-11-22",
+  "locale": "es_ES",
+  "source": "DATA/FINAL/Global.wad.client:shared + Localized/Global.es_ES.wad.client",
+  "bin_sha256": "d25473c8218476ab44c227a33caa44c599b629c729eab5460085fd63d8fd1485",
+  "strings_sha256": "5adbf08b8ad771c30b815a5ef457a2e6032e783d8940db317ee2ec331c679bed",
+  "spells": {
+    "SummonerDot": {
+      "id": "SummonerDot",
+      "alias": "ignite",
+      "name": "Prender",
+      "cooldown_seconds": 180,
+      "cast_range": 600,
+      "model_status": "evaluable",
+      "source": "Shared/Spells/SummonerDot (16.23.8406595+branch.releases-16-23.content.release)",
+      "data_values": {
+        "GrievousAmount": 0.4,
+        "SightRadius": 100,
+        "DotDuration": 5,
+        "InverseDuration": 0.2
+      },
+      "calculations": {
+        "TooltipTrueDamageCalculation": {
+          "op": "by_level",
+          "values": [
+            70,
+            90,
+            110,
+            130,
+            150,
+            175,
+            200,
+            225,
+            250,
+            275,
+            300,
+            325,
+            350,
+            375,
+            400,
+            425,
+            450,
+            475
+          ]
+        }
+      },
+      "tooltip": "Inflige <trueDamage>@TooltipTrueDamageCalculation@ de daño verdadero</trueDamage> a un campeón enemigo objetivo durante 5 s y aplica un <keyword>@GrievousAmount*100@% de heridas graves</keyword> mientras dure.<br><br>{{ Item_KeywordDefinition_Wounds }}<br><br>{{Spell_Summoner_Dot_Jade_Mastery_Expansion_@f1@}}"
+    },
+    "SummonerBarrier": {
+      "id": "SummonerBarrier",
+      "alias": "barrier",
+      "name": "Barrera",
+      "cooldown_seconds": 180,
+      "cast_range": 1200,
+      "model_status": "evaluable",
+      "source": "Shared/Spells/SummonerBarrier (16.23.8406595+branch.releases-16-23.content.release)",
+      "data_values": {
+        "ShieldDuration": 2.5
+      },
+      "calculations": {
+        "ShieldStrength": {
+          "op": "linear_by_level",
+          "min": 100,
+          "max": 460
+        }
+      },
+      "tooltip": "Obtiene un <shield>escudo de @ShieldStrength@</shield> durante @ShieldDuration@ s."
+    },
+    "SummonerHeal": {
+      "id": "SummonerHeal",
+      "alias": "heal",
+      "name": "Curar",
+      "cooldown_seconds": 240,
+      "cast_range": 25000,
+      "model_status": "evaluable",
+      "source": "Shared/Spells/SummonerHeal (16.23.8406595+branch.releases-16-23.content.release)",
+      "data_values": {
+        "AllyRange": 900,
+        "MoveSpeed": 0.3,
+        "MoveSpeedDuration": 1,
+        "StackingHealDebuff": 0.5,
+        "DebuffDuration": 30,
+        "CursorForgiveness": 200
+      },
+      "calculations": {
+        "TotalHeal": {
+          "op": "linear_by_level",
+          "min": 80,
+          "max": 318
+        }
+      },
+      "tooltip": "Restaura <healing>@TotalHeal@ de vida</healing> y otorga un <speed>@MoveSpeed*100@% de velocidad de movimiento</speed> durante @MoveSpeedDuration@ s a ti y al campeón aliado seleccionado.<br><br><rules>Si no se fija un objetivo, se lanzará sobre el campeón aliado cercano más herido.<br>La curación se reduce a la mitad en las unidades afectadas hace poco por Curar.</rules>"
+    },
+    "SummonerExhaust": {
+      "id": "SummonerExhaust",
+      "alias": "exhaust",
+      "name": "Extenuación",
+      "cooldown_seconds": 240,
+      "cast_range": 650,
+      "model_status": "evaluable",
+      "source": "Shared/Spells/SummonerExhaust (16.23.8406595+branch.releases-16-23.content.release)",
+      "data_values": {
+        "DebuffDuration": 3,
+        "DamageReduction": 35,
+        "Slow": 40
+      },
+      "calculations": {},
+      "tooltip": "<keyword>Ralentiza</keyword> al campeón enemigo objetivo un @Slow@% y reduce un @DamageReduction@% el daño que inflige durante @DebuffDuration@ s."
+    },
+    "SummonerSmite": {
+      "id": "SummonerSmite",
+      "alias": "smite",
+      "name": "Aplastar",
+      "cooldown_seconds": 15,
+      "cast_range": 500,
+      "model_status": "evaluable",
+      "source": "Shared/Spells/SummonerSmite (16.23.8406595+branch.releases-16-23.content.release)",
+      "data_values": {
+        "SmiteBaseDamage": 600,
+        "SmiteUpgradedDamage": 1000,
+        "Smite2ndUpgradedDamage": 1400,
+        "AoESmiteRatio": 1,
+        "SmiteSlowAmount": 0.2,
+        "SmiteSlowDuration": 2,
+        "FirstPVPDamage": 40,
+        "SecondPVPDamage": 40,
+        "SmiteComebackXP": 50
+      },
+      "calculations": {
+        "{7dea467f}": {
+          "op": "by_level",
+          "values": [
+            6,
+            6,
+            6,
+            8,
+            10,
+            12,
+            14,
+            16,
+            18,
+            20,
+            22,
+            24,
+            26,
+            28,
+            30,
+            32,
+            34,
+            36
+          ]
+        }
+      },
+      "tooltip": "Inflige <trueDamage>@SmiteBaseDamage@ de daño verdadero</trueDamage> al monstruo gigante objetivo o súbdito en una calle.<br><br>Inflige <trueDamage>@FirstPVPDamage@ de daño verdadero</trueDamage> a las mascotas de campeones."
+    },
+    "SummonerHaste": {
+      "id": "SummonerHaste",
+      "alias": "ghost",
+      "name": "Fantasmal",
+      "cooldown_seconds": 240,
+      "cast_range": 200,
+      "model_status": "evaluable",
+      "source": "Shared/Spells/SummonerHaste (16.23.8406595+branch.releases-16-23.content.release)",
+      "data_values": {
+        "Duration": 10
+      },
+      "calculations": {
+        "MovespeedMod": {
+          "op": "linear_by_level",
+          "min": 0.24,
+          "max": 0.48
+        },
+        "{7bcbbf47}": {
+          "op": "linear_by_level",
+          "min": 4,
+          "max": 7
+        }
+      },
+      "tooltip": "Obtiene un <speed>@MovespeedMod@ de velocidad de movimiento</speed> y se vuelve <keyword>Fantasmal</keyword> durante @Duration@ s.<br><br>{{ Item_KeywordDefinition_Ghost }}"
+    },
+    "SummonerBoost": {
+      "id": "SummonerBoost",
+      "alias": "cleanse",
+      "name": "Limpiar",
+      "cooldown_seconds": 240,
+      "cast_range": 200,
+      "model_status": "evaluable",
+      "source": "Shared/Spells/SummonerBoost (16.23.8406595+branch.releases-16-23.content.release)",
+      "data_values": {
+        "TenacityValue": 0.75,
+        "TenacityDuration": 3
+      },
+      "calculations": {},
+      "tooltip": "Elimina todos los efectos de control de adversario (menos la <keyword>supresión</keyword> y los <keyword>levantamientos en el aire</keyword>) y los efectos negativos de hechizos de invocador que te afecten y otorga un @TenacityValue*100@% de tenacidad durante @TenacityDuration@ s."
+    },
+    "SummonerFlash": {
+      "id": "SummonerFlash",
+      "alias": "flash",
+      "name": "Destello",
+      "cooldown_seconds": 300,
+      "cast_range": 25000,
+      "model_status": "excluded",
+      "source": "Shared/Spells/SummonerFlash (16.23.8406595+branch.releases-16-23.content.release)",
+      "data_values": {
+        "FlashDistance": 400
+      },
+      "calculations": {},
+      "tooltip": "Te teleporta a una corta distancia hacia el cursor."
+    },
+    "SummonerTeleport": {
+      "id": "SummonerTeleport",
+      "alias": "teleport",
+      "name": "Teleportar",
+      "cooldown_seconds": 300,
+      "cast_range": 25000,
+      "model_status": "evaluable",
+      "source": "Shared/Spells/SummonerTeleport (16.23.8406595+branch.releases-16-23.content.release)",
+      "data_values": {
+        "MSDuration": 3,
+        "ChannelDuration": 3,
+        "MSAmount": 0.5,
+        "TravelSpeed": 1000,
+        "MaxTravelTime": 8,
+        "UpgradeMinute": 10
+      },
+      "calculations": {
+        "{92430e24}": {
+          "op": "by_level",
+          "values": [
+            240,
+            240,
+            240,
+            240,
+            240,
+            240,
+            240,
+            240,
+            240,
+            240,
+            240,
+            240,
+            240,
+            240,
+            240,
+            240,
+            240,
+            240
+          ]
+        }
+      },
+      "tooltip": "Tras @ChannelDuration@ s de canalización, se vuelve <keyword>inalcanzable</keyword> y se desplaza hasta el súbdito, estructura o guardián aliado objetivo. <br><br>A los @UpgradeMinute@ min evoluciona a Teleportar desatado, que aumenta notablemente la velocidad del desplazamiento.",
+      "upgrade": {
+        "id": "S12_SummonerTeleportUpgrade",
+        "name": "Teleportar desatado",
+        "source": "Shared/Spells/S12_SummonerTeleportUpgrade (16.23.8406595+branch.releases-16-23.content.release)",
+        "data_values": {
+          "ChannelDuration": 3,
+          "MSDuration": 4,
+          "MSAmount": 0.5,
+          "TravelSpeed": 4500,
+          "MaxTravelTime": 7
+        },
+        "calculations": {
+          "{92430e24}": {
+            "op": "by_level",
+            "values": [
+              330,
+              320,
+              310,
+              300,
+              290,
+              280,
+              270,
+              260,
+              250,
+              230,
+              220,
+              210,
+              200,
+              190,
+              180,
+              170,
+              160,
+              150
+            ]
+          }
+        },
+        "tooltip": "Tras @ChannelDuration@ s de canalización, se vuelve <keyword>inalcanzable</keyword> y se desplaza rápidamente hasta el súbdito, estructura o guardián aliado objetivo y obtiene un <speed>@MSAmount*100@% de velocidad de movimiento</speed> durante @MSDuration@ s."
+      }
+    }
+  }
+}

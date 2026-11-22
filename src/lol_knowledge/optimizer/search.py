@@ -40,6 +40,13 @@ from ..stats import (
 )
 from ..stats.issues import DataIssue
 from ..stats.sheet import MANA_RESOURCE
+from ..summoners import (
+    SummonerSpellData,
+    SummonerSpellSpec,
+    load_summoner_spells,
+    resolve_loadout,
+    summoner_sheet_effects,
+)
 from .models import (
     DEFENSE_OBJECTIVES,
     EHP_OBJECTIVES,
@@ -145,7 +152,7 @@ def _steps_with_item_actives(
         attack_indices = [
             idx
             for idx, s in enumerate(result)
-            if s.slot is None and s.item_id is None and s.wait is None
+            if s.slot is None and s.item_id is None and s.summoner_id is None and s.wait is None
         ]
         if attack_indices:
             insert_at = attack_indices[-1]
@@ -318,6 +325,8 @@ class _BuildEvaluator:
         shards: Sequence[int],
         rune_data: RuneData | None,
         constraints: OptimizeConstraints,
+        summoners: Sequence[str] = (),
+        summoner_data: SummonerSpellData | None = None,
     ) -> None:
         self.objective = objective
         self.champion = champion
@@ -341,6 +350,15 @@ class _BuildEvaluator:
         self.runes = tuple(runes)
         self.shards = tuple(shards)
         self.rune_data = rune_data
+        self.summoners = tuple(summoners)
+        self.summoner_data = summoner_data
+        self.summoner_specs: tuple[SummonerSpellSpec, ...] = ()
+        if self.summoners:
+            if summoner_data is None:
+                raise StatsError(
+                    "summoner spells require lol-knowledge/derived/summoner-spells.json"
+                )
+            self.summoner_specs, _ = resolve_loadout(self.summoners, summoner_data)
         self.constraints = constraints
         self.has_ultimate = any(step.slot == "R" for step in steps)
         self.legality_label = (
@@ -369,7 +387,24 @@ class _BuildEvaluator:
         self.evaluations = 0
 
     def _make_sheet(self, items: tuple[ItemData, ...]) -> StatSheet:
-        base_extras = tuple(self.passive.flats)
+        summ_fx = (
+            summoner_sheet_effects(
+                self.summoner_specs,
+                self.summoner_data,
+                level=self.level,
+                patch=self.champion.patch,
+                inputs=self.inputs,
+                items=items,
+                runes=self.runes,
+                rune_data=self.rune_data,
+            )
+            if self.summoner_specs and self.summoner_data is not None
+            else None
+        )
+        s_flats = summ_fx.flats if summ_fx is not None else ()
+        s_percents = summ_fx.percents if summ_fx is not None else ()
+        s_notes = summ_fx.notes if summ_fx is not None else ()
+        base_extras = (*self.passive.flats, *s_flats)
         if not self.runes and not self.shards:
             return build_stat_sheet(
                 self.champion,
@@ -379,9 +414,9 @@ class _BuildEvaluator:
                 self.assumptions,
                 self.derived,
                 base_extras,
-                self.passive.percents,
+                (*self.passive.percents, *s_percents),
                 extra_amplifiers=self.passive.amplifiers,
-                extra_notes=self.passive.notes,
+                extra_notes=(*self.passive.notes, *s_notes),
                 inputs=self.inputs,
             )
         assert self.rune_data is not None
@@ -433,7 +468,7 @@ class _BuildEvaluator:
             adaptive_label=a_label,
             adaptive_note=a_note,
         )
-        extra_notes = [*self.passive.notes, *rune_effects.notes]
+        extra_notes = [*self.passive.notes, *s_notes, *rune_effects.notes]
         pending = list(rune_effects.pending)
         if self.combat_ctx != "rotation":
             extra_notes.extend(combat_rune_notes(self.runes, self.rune_data))
@@ -445,7 +480,7 @@ class _BuildEvaluator:
             self.assumptions,
             self.derived,
             (*base_extras, *flats, *rune_effects.flats),
-            (*percents, *self.passive.percents, *rune_effects.percents),
+            (*percents, *self.passive.percents, *s_percents, *rune_effects.percents),
             tuple(pending),
             extra_amplifiers=(*self.passive.amplifiers, *rune_effects.amplifiers),
             extra_notes=tuple(extra_notes),
@@ -554,6 +589,8 @@ class _BuildEvaluator:
                     rune_data=self.rune_data,
                     ap_weight=self.ap_weight,
                     target_count=self.target_count,
+                    summoners=self.summoners,
+                    summoner_data=self.summoner_data,
                 )
             except RotationError, KitError, StatsError:
                 return None
@@ -615,6 +652,8 @@ class _BuildEvaluator:
                     inputs=self.inputs,
                     timeline=self.timeline,
                     kit=self.kit,
+                    summoners=self.summoners,
+                    summoner_data=self.summoner_data,
                 )
             except StatsError, RotationError, KitError:
                 return None
@@ -861,6 +900,8 @@ def optimize_build(
     runes: Sequence[int] = (),
     shards: Sequence[int] = (),
     rune_data: RuneData | None = None,
+    summoners: Sequence[str] = (),
+    summoner_data: SummonerSpellData | None = None,
 ) -> OptimizeOutcome:
     """Search legal builds for ``champion`` optimizing ``objective`` under ``constraints``."""
     t0 = time.perf_counter()
@@ -900,6 +941,8 @@ def optimize_build(
 
     if rune_data is None and target is not None and target.runes:
         rune_data = load_runes(root)
+    if summoner_data is None and (summoners or any(s.summoner_id is not None for s in steps)):
+        summoner_data = load_summoner_spells(root)
 
     evaluator = _BuildEvaluator(
         objective=objective,
@@ -925,6 +968,8 @@ def optimize_build(
         shards=shards,
         rune_data=rune_data,
         constraints=cfg,
+        summoners=summoners,
+        summoner_data=summoner_data,
     )
 
     total_pruned_illegal = 0

@@ -27,6 +27,16 @@ from .passives import _effect_cooldown, passive_defense_specs
 from .rotation import RotationOutcome
 from .runes import Rune, RuneData, int_input, linear_by_level, rune_value, scale_item_cooldown
 from .stats import EVIDENCE_LABEL, Label, StatBlocked, StatSheet, weakest
+from .summoners import (
+    SummonerSpellData,
+    SummonerSpellSpec,
+    barrier_duration,
+    barrier_shield,
+    cleanse_tenacity,
+    exhaust_values,
+    heal_amount,
+    resolve_loadout,
+)
 from .survival import (
     GRIEVOUS_WOUNDS_REDUCTION,
     HealEvent,
@@ -311,11 +321,42 @@ class _DefenseSimulator:
         inputs: Mapping[str, Fraction],
         timeline: bool,
         kit: Kit | None = None,
+        summoners: Sequence[str] = (),
+        summoner_data: SummonerSpellData | None = None,
     ) -> None:
         self.sheet = sheet
         self.timeline = timeline
         self.kit = kit
         self.passive_dr_specs, self.passive_shield_specs = passive_defense_specs(kit)
+        self.summoner_exhaust: SummonerSpellSpec | None = None
+        self.summoner_barrier: SummonerSpellSpec | None = None
+        self.summoner_heal: SummonerSpellSpec | None = None
+        self.summoner_cleanse: SummonerSpellSpec | None = None
+        self.summoner_label = Label.DERIVED
+        self.summoner_heal_debuffed = inputs.get("heal_debuffed", Fraction(0)) > 0
+        self.summoner_init_notes: list[str] = []
+        if summoners:
+            if summoner_data is None:
+                raise StatsError(
+                    "summoner spells require lol-knowledge/derived/summoner-spells.json"
+                )
+            resolved_summs, _ = resolve_loadout(summoners, summoner_data)
+            self.summoner_label = summoner_data.label_for(sheet.champion.patch)
+            for sp in resolved_summs:
+                if sp.id == "SummonerExhaust":
+                    self.summoner_exhaust = sp
+                elif sp.id == "SummonerBarrier":
+                    self.summoner_barrier = sp
+                elif sp.id == "SummonerHeal":
+                    self.summoner_heal = sp
+                elif sp.id == "SummonerBoost":
+                    self.summoner_cleanse = sp
+                    ten, dur = cleanse_tenacity(sp)
+                    self.summoner_init_notes.append(
+                        f"summoner:{sp.id} ({sp.name}): removes CC (except suppression/airborne) "
+                        f"and enemy summoner debuffs + {format_number(ten * 100)}% tenacity "
+                        f"for {format_number(dur)} s"
+                    )
         self.shield_type = validate_shield_type(shield_type)
         if start_shield < 0:
             raise StatsError("defender shield must not be negative")
@@ -344,7 +385,7 @@ class _DefenseSimulator:
             self.start_health = start_health
         self.start_shield = start_shield
         self.stats_env, self.stat_origin = sheet_stats(sheet)
-        self.notes: list[str] = list(sheet.pending_effects)
+        self.notes: list[str] = [*sheet.pending_effects, *self.summoner_init_notes]
         self.weakened = bool(sheet.pending_effects)
 
         try:
@@ -654,11 +695,16 @@ class _DefenseSimulator:
         clock = Fraction(0)
         steps: list[DefenseStep] = []
 
-        # Defensive rune / item state
+        # Defensive rune / item / summoner state
         bone_charges = 0
         bone_expires: Fraction | None = None
         bone_ready = Fraction(0)
         bone_used_once = False
+
+        exhaust_used = False
+        exhaust_end: Fraction | None = None
+        barrier_used = False
+        heal_used = False
 
         sw_end: Fraction | None = None
         sw_rate = Fraction(0)
@@ -1362,6 +1408,27 @@ class _DefenseSimulator:
                 step_labels.append(self.rune_base)
                 step_notes.append("rune:8351 GlacialAugment (-15% enemy damage vs allies)")
 
+            # SummonerExhaust (-35% incoming physical & magic damage for 3 s; never reduces true)
+            if (
+                self.summoner_exhaust is not None
+                and incoming > 0
+                and health > 0
+                and hit.damage_type in {DamageType.PHYSICAL, DamageType.MAGIC}
+            ):
+                ex_dr, ex_slow, ex_dur = exhaust_values(self.summoner_exhaust)
+                if not exhaust_used:
+                    exhaust_used = True
+                    if self.timeline:
+                        exhaust_end = clock + ex_dur
+                if not self.timeline or (exhaust_end is not None and clock < exhaust_end):
+                    incoming *= 1 - ex_dr
+                    step_labels.append(self.summoner_label)
+                    step_notes.append(
+                        f"summoner:{self.summoner_exhaust.id} ({self.summoner_exhaust.name} "
+                        f"-{format_number(ex_dr * 100)}% {hit.damage_type.value}, "
+                        f"-{format_number(ex_slow * 100)}% slow for {format_number(ex_dur)} s)"
+                    )
+
             # Champion passive percent damage-taken modifiers (e.g. Kassadin -10%, Malzahar -90%)
             if incoming > 0 and health > 0 and hit.damage_type is not None:
                 for p_dr in self.passive_dr_specs:
@@ -1845,6 +1912,99 @@ class _DefenseSimulator:
                     )
                     projected_hp = max(Fraction(0), health - preview_hp_dmg)
 
+                # 1c. SummonerBarrier (100..460 normal shield for 2.5 s)
+                if self.summoner_barrier is not None and not barrier_used:
+                    barrier_used = True
+                    sp_bar = self.summoner_barrier
+                    raw_b = barrier_shield(sp_bar, self.sheet.level)
+                    rev_amp = self._revitalize_amp(health)
+                    b_amt = (
+                        scale_shield(raw_b, hsp=self.hsp, revitalize_amp=rev_amp)
+                        * self.self_shield_amp
+                    )
+                    b_notes: list[str] = [
+                        f"{sp_bar.name} ({format_number(barrier_duration(sp_bar))} s)"
+                    ]
+                    if self.hsp:
+                        b_notes.append(f"heal & shield power +{format_number(self.hsp * 100)}%")
+                    if rev_amp:
+                        b_notes.append(f"Revitalize <40% HP +{format_number(rev_amp * 100)}%")
+                    if sr_active_now and self.shield_reaver_rate > 0:
+                        b_amt *= 1 - self.shield_reaver_rate
+                        b_notes.append(
+                            f"Shield Reaver (-{format_number(self.shield_reaver_rate * 100)}%)"
+                        )
+                    b_dur = barrier_duration(sp_bar)
+                    shields.append(
+                        _ActiveShield(
+                            f"summoner:{sp_bar.id} ({sp_bar.name})",
+                            b_amt,
+                            "normal",
+                            clock + b_dur if self.timeline else None,
+                        )
+                    )
+                    b_label = weakest([self.summoner_label, *self.self_amp_labels])
+                    granted.append(
+                        ShieldEvent(
+                            f"summoner:{sp_bar.id} ({sp_bar.name})",
+                            raw_b,
+                            b_amt,
+                            "normal",
+                            b_dur,
+                            b_label,
+                            tuple(b_notes),
+                        )
+                    )
+                    step_labels.append(b_label)
+                    preview_shields = [
+                        _ActiveShield(s.source, s.remaining, s.shield_type, s.expires_at)
+                        for s in shields
+                    ]
+                    _, preview_hp_dmg = self._absorb_active(
+                        dmg_after_flat, hit.damage_type, preview_shields
+                    )
+                    projected_hp = max(Fraction(0), health - preview_hp_dmg)
+
+                # 1d. SummonerHeal proactive before hit when already missing HP
+                if self.summoner_heal is not None and not heal_used and health < current_max_health:
+                    heal_used = True
+                    sp_heal = self.summoner_heal
+                    raw_h = heal_amount(
+                        sp_heal, self.sheet.level, debuffed=self.summoner_heal_debuffed
+                    )
+                    rev_amp = self._revitalize_amp(health)
+                    h_amt = (
+                        scale_healing(
+                            raw_h,
+                            hsp=self.hsp,
+                            revitalize_amp=rev_amp,
+                            grievous=self.grievous,
+                            uses_hsp=True,
+                        )
+                        * self.self_heal_amp
+                    )
+                    gained = min(h_amt, max(Fraction(0), current_max_health - health))
+                    health += gained
+                    h_notes = [f"{sp_heal.name} (proactive)"]
+                    if self.summoner_heal_debuffed:
+                        h_notes.append("recent Heal debuff (-50%)")
+                    if self.grievous > 0:
+                        h_notes.append("Grievous Wounds (-40%)")
+                    h_label = weakest([self.summoner_label, *self.self_amp_labels])
+                    heals.append(
+                        HealEvent(
+                            f"summoner:{sp_heal.id} ({sp_heal.name})",
+                            raw_h,
+                            gained,
+                            True,
+                            self.grievous > 0,
+                            h_label,
+                            tuple(h_notes),
+                        )
+                    )
+                    step_labels.append(h_label)
+                    projected_hp = max(Fraction(0), health - preview_hp_dmg)
+
                 # 2. Guardian (8465): ally nearby + threshold (50..165 in 2.5 s) or lethal damage
                 if self.guardian_rune is not None and self.guardian_ally:
                     rune = self.guardian_rune
@@ -1993,6 +2153,48 @@ class _DefenseSimulator:
                             ("full 8 s regen without --timeline",),
                         )
                     )
+
+            # SummonerHeal reactive after taking non-lethal damage from full HP
+            if (
+                self.summoner_heal is not None
+                and not heal_used
+                and health > 0
+                and health < current_max_health
+            ):
+                heal_used = True
+                sp_heal = self.summoner_heal
+                raw_h = heal_amount(sp_heal, self.sheet.level, debuffed=self.summoner_heal_debuffed)
+                rev_amp = self._revitalize_amp(health)
+                h_amt = (
+                    scale_healing(
+                        raw_h,
+                        hsp=self.hsp,
+                        revitalize_amp=rev_amp,
+                        grievous=self.grievous,
+                        uses_hsp=True,
+                    )
+                    * self.self_heal_amp
+                )
+                gained = min(h_amt, max(Fraction(0), current_max_health - health))
+                health += gained
+                h_notes = [f"{sp_heal.name} (reactive)"]
+                if self.summoner_heal_debuffed:
+                    h_notes.append("recent Heal debuff (-50%)")
+                if self.grievous > 0:
+                    h_notes.append("Grievous Wounds (-40%)")
+                h_label = weakest([self.summoner_label, *self.self_amp_labels])
+                heals.append(
+                    HealEvent(
+                        f"summoner:{sp_heal.id} ({sp_heal.name})",
+                        raw_h,
+                        gained,
+                        True,
+                        self.grievous > 0,
+                        h_label,
+                        tuple(h_notes),
+                    )
+                )
+                step_labels.append(h_label)
 
             # 8352 Time Warp Tonic immediate 40% potion restoration on first damage
             if (
@@ -2264,6 +2466,8 @@ def evaluate_defense(
     inputs: Mapping[str, Fraction] | None = None,
     timeline: bool = False,
     kit: Kit | None = None,
+    summoners: Sequence[str] = (),
+    summoner_data: SummonerSpellData | None = None,
 ) -> DefenseOutcome:
     """Evaluate how ``defender_sheet`` survives ``hits`` (MEC-08 and MEC-09)."""
     sim = _DefenseSimulator(
@@ -2276,5 +2480,7 @@ def evaluate_defense(
         inputs=inputs or {},
         timeline=timeline,
         kit=kit,
+        summoners=summoners,
+        summoner_data=summoner_data,
     )
     return sim.run(hits, enemy_description)

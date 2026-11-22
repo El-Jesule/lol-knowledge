@@ -62,6 +62,7 @@ from .stats import (
 from .stats import format_text as format_stats_text
 from .stats import to_dict as stats_to_dict
 from .stats.sheet import MANA_RESOURCE
+from .summoners import load_summoner_spells, resolve_loadout, summoner_sheet_effects
 from .validate import validate_project
 
 DEFAULT_DATA_DIR = "data"
@@ -289,6 +290,16 @@ def _add_build_option(command: argparse.ArgumentParser) -> None:
         help="Stat shard (repeat 3 times, in order: offense, flex, defense).",
     )
     command.add_argument(
+        "--summoner",
+        action="append",
+        default=[],
+        metavar="SPELL",
+        help=(
+            "Equipped summoner spell (repeat up to 2 times, e.g. ignite, barrier, heal, "
+            "exhaust, smite, ghost, cleanse, flash, teleport)."
+        ),
+    )
+    command.add_argument(
         "--allow-illegal-build",
         action="store_true",
         help=(
@@ -346,12 +357,37 @@ def _build_sheet_with_runes(
     combat_context: str = "stats",
     kit=None,
     allow_illegal: bool = False,
+    summoners=(),
 ):
-    """Build a StatSheet for either attacker or target, with passive and rune page if any."""
+    """Build a StatSheet for either attacker or target, with passive, runes and summoners."""
     passive = sheet_passive_effects(
         kit, level, inputs, include_stacking=combat_context != "rotation"
     )
-    base_extras = (*extras, *passive.flats)
+    s_flats: tuple = ()
+    s_percents: tuple = ()
+    s_notes: tuple = ()
+    if summoners:
+        s_data = load_summoner_spells(root)
+        if s_data is None:
+            raise StatsError(
+                "lol-knowledge/derived/summoner-spells.json is missing; summoner spells unavailable"
+            )
+        resolved_s, s_violations = resolve_loadout(summoners, s_data, allow_illegal=allow_illegal)
+        for v in s_violations:
+            print(f"warning: {v}", file=sys.stderr)
+        s_rune_data = load_runes(root) if runes else None
+        s_fx = summoner_sheet_effects(
+            resolved_s,
+            s_data,
+            level=level,
+            patch=champion.patch,
+            inputs=inputs,
+            items=items,
+            runes=runes,
+            rune_data=s_rune_data,
+        )
+        s_flats, s_percents, s_notes = s_fx.flats, s_fx.percents, s_fx.notes
+    base_extras = (*extras, *passive.flats, *s_flats)
     if not runes and not shards:
         return build_stat_sheet(
             champion,
@@ -361,9 +397,9 @@ def _build_sheet_with_runes(
             assumptions,
             derived,
             base_extras,
-            passive.percents,
+            (*passive.percents, *s_percents),
             extra_amplifiers=passive.amplifiers,
-            extra_notes=passive.notes,
+            extra_notes=(*passive.notes, *s_notes),
             inputs=inputs,
         )
     data = load_runes(root)
@@ -430,7 +466,7 @@ def _build_sheet_with_runes(
         adaptive_label=label,
         adaptive_note=note,
     )
-    extra_notes = [*passive.notes, *rune_effects.notes]
+    extra_notes = [*passive.notes, *s_notes, *rune_effects.notes]
     pending = list(rune_effects.pending)
     if combat_context == "stats":
         extra_notes += combat_rune_notes(rune_effects.combat_runes, data, in_ability=False)
@@ -444,7 +480,7 @@ def _build_sheet_with_runes(
         assumptions,
         derived,
         (*base_extras, *flats, *rune_effects.flats),
-        (*percents, *passive.percents, *rune_effects.percents),
+        (*percents, *passive.percents, *s_percents, *rune_effects.percents),
         pending,
         extra_amplifiers=(*passive.amplifiers, *rune_effects.amplifiers),
         extra_notes=extra_notes,
@@ -467,7 +503,7 @@ def _build_sheet(
     combat_context: str = "stats",
     kit=None,
 ):
-    """The attacker's stat sheet, with champion passive and rune page if any."""
+    """The attacker's stat sheet, with champion passive, rune page and summoners if any."""
     runes, shards = _rune_ids(args.rune, "--rune"), _rune_ids(args.shard, "--shard")
     return _build_sheet_with_runes(
         root,
@@ -484,6 +520,7 @@ def _build_sheet(
         combat_context=combat_context,
         kit=kit,
         allow_illegal=args.allow_illegal_build,
+        summoners=getattr(args, "summoner", []),
     )
 
 
@@ -1032,6 +1069,12 @@ def _run_rotation(args: argparse.Namespace) -> int:
         crit_base = _crit_base(champion.id, champion.patch, derived)
         rune_ids = _rune_ids(args.rune, "--rune")
         rune_data = load_runes(root) if (rune_ids or target.runes) else None
+        summoners = list(args.summoner)
+        summoner_data = (
+            load_summoner_spells(root)
+            if (summoners or any(s.summoner_id is not None for s in steps))
+            else None
+        )
         ap_weight = derived.value(champion.id, "adaptiveforceapweight") if derived else None
         start_resource = _number(args.attacker_resource, "--attacker-resource")
         outcome = evaluate_rotation(
@@ -1050,6 +1093,8 @@ def _run_rotation(args: argparse.Namespace) -> int:
             start_resource=start_resource,
             allow_insufficient_resource=args.allow_insufficient_resource,
             target_count=args.target_count,
+            summoners=summoners,
+            summoner_data=summoner_data,
         )
     except (StatsError, KitError, DamageInputError, RotationError) as exc:
         print(f"error: {exc}", file=sys.stderr)
@@ -1167,12 +1212,18 @@ def _run_survive(args: argparse.Namespace) -> int:
             )
             crit_base = _crit_base(enemy_champ.id, enemy_champ.patch, derived)
             enemy_rune_data = load_runes(root) if enemy_runes else None
+            enemy_steps = parse_steps(args.steps)
+            enemy_summoner_data = (
+                load_summoner_spells(root)
+                if any(s.summoner_id is not None for s in enemy_steps)
+                else None
+            )
             rot = evaluate_rotation(
                 enemy_kit,
                 enemy_sheet,
                 enemy_ranks,
                 target_from_sheet(defender_sheet, current_health=start_hp),
-                parse_steps(args.steps),
+                enemy_steps,
                 crit_base,
                 holder_range=args.enemy_range,
                 inputs=inputs,
@@ -1182,6 +1233,7 @@ def _run_survive(args: argparse.Namespace) -> int:
                 ap_weight=derived.value(enemy_champ.id, "adaptiveforceapweight")
                 if derived
                 else None,
+                summoner_data=enemy_summoner_data,
             )
             hits = hits_from_rotation(rot)
             if any(it.id == "6695" for it in enemy_sheet.items) and "shield_reaver" not in inputs:
@@ -1195,6 +1247,8 @@ def _run_survive(args: argparse.Namespace) -> int:
                 f"{enemy_champ.name} level {args.enemy_level} "
                 f"({', '.join(args.enemy_item) or 'no items'}): {args.steps}"
             )
+        summoners = list(args.summoner)
+        summoner_data = load_summoner_spells(root) if summoners else None
         outcome = evaluate_defense(
             defender_sheet,
             hits,
@@ -1207,6 +1261,8 @@ def _run_survive(args: argparse.Namespace) -> int:
             inputs=inputs,
             timeline=args.timeline,
             kit=defender_kit,
+            summoners=summoners,
+            summoner_data=summoner_data,
         )
     except (StatsError, KitError, RotationError) as exc:
         print(f"error: {exc}", file=sys.stderr)
@@ -1364,6 +1420,7 @@ def _run_optimize(args: argparse.Namespace) -> int:
             runes=runes,
             shards=shards,
             rune_data=rune_data,
+            summoners=list(args.summoner),
         )
     except (StatsError, KitError, DamageInputError, RotationError) as exc:
         print(f"error: {exc}", file=sys.stderr)
