@@ -19,6 +19,53 @@
       "passive_stats": [],
       "not_modelled": [
         "Escudo del 10 % de vida máxima fuera de combate (TotalShield, PassiveCooldown)"
+      ],
+      "passive_effects": [
+        {
+          "id": "granite_shield",
+          "name": "Escudo de granito",
+          "kind": "shield",
+          "formula": {
+            "op": "mul",
+            "operands": [
+              {
+                "op": "constant",
+                "value": 0.1
+              },
+              {
+                "op": "stat",
+                "stat": "health",
+                "scope": "total"
+              }
+            ]
+          },
+          "label": "Derivado",
+          "source": "Characters/Malphite/Spells/MalphiteShieldAbility/MalphiteShield.mSpellCalculations.TotalShield (16.23.8406595+branch.releases-16-23.content.release)",
+          "trigger": "on_taking_damage",
+          "cooldown_formula": {
+            "op": "by_level",
+            "values": [
+              8,
+              8,
+              8,
+              8,
+              8,
+              8,
+              7,
+              7,
+              7,
+              7,
+              7,
+              7,
+              6,
+              6,
+              6,
+              6,
+              6,
+              6
+            ]
+          }
+        }
       ]
     },
     "Q": {

@@ -14,6 +14,28 @@
       "max_rank": 1,
       "not_modelled": [
         "Velocidad de ataque (hasta MaxAttackSpeed) y robo de vida (hasta MaxLifeSteal) crecientes según vida faltante"
+      ],
+      "passive_effects": [
+        {
+          "id": "berserker_rage_as",
+          "name": "Furia berserker (VA por % de potencia)",
+          "kind": "stat_bonus",
+          "stat": "attack_speed_bonus",
+          "mode": "flat",
+          "calculation": "MaxAttackSpeed",
+          "max_stacks": 100,
+          "input_name": "olaf_fury_percent"
+        },
+        {
+          "id": "berserker_rage_lifesteal",
+          "name": "Furia berserker (robo de vida por % de potencia)",
+          "kind": "stat_bonus",
+          "stat": "life_steal",
+          "mode": "flat",
+          "calculation": "MaxLifeSteal",
+          "max_stacks": 100,
+          "input_name": "olaf_fury_percent"
+        }
       ]
     },
     "Q": {

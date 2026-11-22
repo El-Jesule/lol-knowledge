@@ -13,6 +13,18 @@
       "max_rank": 1,
       "not_modelled": [
         "Reducción plana de daño recibido (DamageReductionCalc) y movimiento fantasmal"
+      ],
+      "passive_effects": [
+        {
+          "id": "nimble_fighter_dr",
+          "name": "Luchador ágil (reducción plana de daño)",
+          "kind": "damage_taken_modifier",
+          "mode": "flat",
+          "calculation": "DamageReductionCalc",
+          "damage_reduction_cap": {
+            "data_value": "DamageReductionMax"
+          }
+        }
       ]
     },
     "Q": {

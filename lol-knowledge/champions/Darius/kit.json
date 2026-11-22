@@ -213,6 +213,45 @@
       "not_modelled": [
         "Poderío noxiano: DA adicional al alcanzar 5 acumulaciones o asesinar con R (NoxianMightBonusAD)",
         "Multiplicador de daño contra monstruos (MonsterMod)"
+      ],
+      "passive_effects": [
+        {
+          "id": "noxian_might_ad",
+          "name": "Poderío noxiano (DA adicional con 5 acumulaciones)",
+          "kind": "stacking_stat",
+          "formula": {
+            "op": "by_level",
+            "values": [
+              30,
+              35,
+              40,
+              45,
+              50,
+              55,
+              60,
+              65,
+              70,
+              75,
+              80,
+              90,
+              100,
+              110,
+              135,
+              160,
+              185,
+              210
+            ]
+          },
+          "label": "Derivado",
+          "source": "Characters/Darius/Spells/DariusHemoMarkerAbility/DariusHemoMarker.mSpellCalculations.NoxianMightBonusAD (16.23.8406595+branch.releases-16-23.content.release)",
+          "stat": "attack_damage",
+          "mode": "flat",
+          "trigger": "champion_hit",
+          "input_name": "hemorrhage_stacks",
+          "only_at_max": true,
+          "max_stacks": 5,
+          "duration_seconds": 5
+        }
       ]
     },
     "Q": {

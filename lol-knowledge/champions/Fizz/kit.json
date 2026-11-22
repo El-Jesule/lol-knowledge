@@ -19,6 +19,40 @@
       "passive_stats": [],
       "not_modelled": [
         "Reducción plana de daño recibido (DamageReductionCalc) y movimiento fantasmal"
+      ],
+      "passive_effects": [
+        {
+          "id": "nimble_fighter_dr",
+          "name": "Luchador ágil (reducción plana de daño)",
+          "kind": "damage_taken_modifier",
+          "formula": {
+            "op": "add",
+            "operands": [
+              {
+                "op": "constant",
+                "value": 4
+              },
+              {
+                "op": "mul",
+                "operands": [
+                  {
+                    "op": "constant",
+                    "value": 0.01
+                  },
+                  {
+                    "op": "stat",
+                    "stat": "ability_power",
+                    "scope": "total"
+                  }
+                ]
+              }
+            ]
+          },
+          "label": "Derivado",
+          "source": "Characters/Fizz/Spells/FizzPassiveAbility/FizzPassive.mSpellCalculations.DamageReductionCalc (16.23.8406595+branch.releases-16-23.content.release)",
+          "mode": "flat",
+          "damage_reduction_cap": 0.5
+        }
       ]
     },
     "Q": {

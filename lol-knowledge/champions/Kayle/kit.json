@@ -88,6 +88,25 @@
       "passive_stats": [],
       "not_modelled": [
         "Velocidad de ataque acumulable hasta 5 cargas (EnrageTotalASPerStack) y mejoras de alcance por nivel"
+      ],
+      "passive_effects": [
+        {
+          "id": "zeal_as",
+          "name": "Ascenso divino — Fervor (VA por carga)",
+          "kind": "stacking_stat",
+          "formula": {
+            "op": "constant",
+            "value": 6
+          },
+          "label": "Derivado",
+          "source": "Characters/Kayle/Spells/KaylePassiveAbility/KaylePassive.mSpellCalculations.EnrageTotalASPerStack (16.23.8406595+branch.releases-16-23.content.release)",
+          "stat": "attack_speed_bonus",
+          "mode": "flat",
+          "trigger": "attack",
+          "input_name": "zeal_stacks",
+          "max_stacks": 5,
+          "duration_seconds": 5
+        }
       ]
     },
     "Q": {

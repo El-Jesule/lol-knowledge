@@ -13,6 +13,19 @@
       "max_rank": 1,
       "not_modelled": [
         "Invisibilidad y velocidad de ataque al salir de sigilo (BonusAttackSpeed)"
+      ],
+      "passive_effects": [
+        {
+          "id": "guerrilla_as",
+          "name": "Elemento sorpresa (VA al salir de camuflaje)",
+          "kind": "stat_bonus",
+          "stat": "attack_speed_bonus",
+          "mode": "flat",
+          "calculation": "BonusAttackSpeed",
+          "scale": 100,
+          "max_stacks": 1,
+          "input_name": "teemo_guerrilla"
+        }
       ]
     },
     "Q": {

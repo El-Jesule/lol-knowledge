@@ -19,6 +19,53 @@
       "passive_stats": [],
       "not_modelled": [
         "Curación al lanzar habilidad (HealAmount, HealCooldown)"
+      ],
+      "passive_effects": [
+        {
+          "id": "happy_hour_heal",
+          "name": "Hora feliz (curación al lanzar habilidad)",
+          "kind": "heal",
+          "formula": {
+            "op": "mul",
+            "operands": [
+              {
+                "op": "constant",
+                "value": 0.055
+              },
+              {
+                "op": "stat",
+                "stat": "health",
+                "scope": "total"
+              }
+            ]
+          },
+          "label": "Derivado",
+          "source": "Characters/Gragas/Spells/GragasPassiveAbility/GragasPassive.mSpellCalculations.HealAmount (16.23.8406595+branch.releases-16-23.content.release)",
+          "trigger": "on_ability_cast",
+          "cooldown_formula": {
+            "op": "by_level",
+            "values": [
+              12,
+              12,
+              12,
+              12,
+              12,
+              10,
+              10,
+              10,
+              10,
+              10,
+              8,
+              8,
+              8,
+              8,
+              8,
+              6,
+              6,
+              6
+            ]
+          }
+        }
       ]
     },
     "Q": {

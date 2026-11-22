@@ -48,6 +48,38 @@
       "not_modelled": [
         "Armadura de escarcha (TotalArmorTooltip, TotalMRTooltip, FrostArmorOOC)",
         "Tope de 250 contra monstruos épicos"
+      ],
+      "passive_effects": [
+        {
+          "id": "frost_armor_base_armor",
+          "name": "Armadura de escarcha (armadura base)",
+          "kind": "stat_bonus",
+          "formula": {
+            "op": "constant",
+            "value": 10
+          },
+          "label": "Derivado",
+          "source": "Characters/Sejuani/Spells/SejuaniPassiveAbility/SejuaniPassive.DataValues.BonusArmorBase (16.23.8406595+branch.releases-16-23.content.release)",
+          "stat": "armor",
+          "mode": "flat",
+          "input_name": "frost_armor",
+          "max_stacks": 1
+        },
+        {
+          "id": "frost_armor_base_mr",
+          "name": "Armadura de escarcha (RM base)",
+          "kind": "stat_bonus",
+          "formula": {
+            "op": "constant",
+            "value": 10
+          },
+          "label": "Derivado",
+          "source": "Characters/Sejuani/Spells/SejuaniPassiveAbility/SejuaniPassive.DataValues.BonusMRBase (16.23.8406595+branch.releases-16-23.content.release)",
+          "stat": "magic_resist",
+          "mode": "flat",
+          "input_name": "frost_armor",
+          "max_stacks": 1
+        }
       ]
     },
     "Q": {

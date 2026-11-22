@@ -88,6 +88,119 @@
       "passive_stats": [],
       "not_modelled": [
         "Velocidad de ataque acumulable hasta 5 cargas (AttackSpeedCalc)"
+      ],
+      "passive_effects": [
+        {
+          "id": "relentless_storm_as",
+          "name": "La tormenta incesante (VA por carga)",
+          "kind": "stacking_stat",
+          "formula": {
+            "op": "mul",
+            "operands": [
+              {
+                "op": "add",
+                "operands": [
+                  {
+                    "op": "constant",
+                    "value": 0.05
+                  },
+                  {
+                    "op": "mul",
+                    "operands": [
+                      {
+                        "op": "constant",
+                        "value": 0.0004
+                      },
+                      {
+                        "op": "stat",
+                        "stat": "ability_power",
+                        "scope": "total"
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "op": "constant",
+                "value": 100
+              }
+            ]
+          },
+          "label": "Derivado",
+          "source": "Characters/Volibear/Spells/VolibearPAbility/VolibearP.mSpellCalculations.AttackSpeedCalc (16.23.8406595+branch.releases-16-23.content.release)",
+          "stat": "attack_speed_bonus",
+          "mode": "flat",
+          "trigger": "any_hit",
+          "input_name": "relentless_storm_stacks",
+          "max_stacks": 5,
+          "duration_seconds": 6
+        },
+        {
+          "id": "relentless_storm_lightning",
+          "name": "La tormenta incesante (rayos con 5 cargas)",
+          "kind": "damage_proc",
+          "formula": {
+            "op": "add",
+            "operands": [
+              {
+                "op": "by_level",
+                "values": [
+                  11,
+                  12,
+                  13,
+                  14,
+                  16,
+                  18,
+                  20,
+                  23,
+                  26,
+                  29,
+                  32,
+                  35,
+                  38,
+                  41,
+                  45,
+                  49,
+                  53,
+                  57
+                ]
+              },
+              {
+                "op": "mul",
+                "operands": [
+                  {
+                    "op": "constant",
+                    "value": 0.45
+                  },
+                  {
+                    "op": "stat",
+                    "stat": "ability_power",
+                    "scope": "total"
+                  }
+                ]
+              },
+              {
+                "op": "mul",
+                "operands": [
+                  {
+                    "op": "constant",
+                    "value": 0.2
+                  },
+                  {
+                    "op": "stat",
+                    "stat": "attack_damage",
+                    "scope": "bonus"
+                  }
+                ]
+              }
+            ]
+          },
+          "label": "Derivado",
+          "source": "Characters/Volibear/Spells/VolibearPAbility/VolibearP.mSpellCalculations.ChainLightningDamage (16.23.8406595+branch.releases-16-23.content.release)",
+          "trigger": "at_max_stacks",
+          "damage_type": "magic",
+          "stack_source_id": "relentless_storm_as"
+        }
       ]
     },
     "Q": {

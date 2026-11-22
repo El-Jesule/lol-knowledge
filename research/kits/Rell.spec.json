@@ -25,6 +25,16 @@
       ],
       "not_modelled": [
         "Robo acumulable de armadura y RM (StealPercent, hasta 5 cargas)"
+      ],
+      "passive_effects": [
+        {
+          "id": "break_the_mold_on_hit",
+          "name": "Romper el molde (daño mágico al impactar)",
+          "kind": "damage_proc",
+          "trigger": "on_hit",
+          "damage_type": "magic",
+          "calculation": "OnHitDamage"
+        }
       ]
     },
     "Q": {

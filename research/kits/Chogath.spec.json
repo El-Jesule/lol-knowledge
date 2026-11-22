@@ -14,6 +14,23 @@
       "max_rank": 1,
       "not_modelled": [
         "Curación y restauración de maná al matar unidades (ChogathCarnivoreHeal, ChogathCarnivoreMana)"
+      ],
+      "passive_effects": [
+        {
+          "id": "carnivore_heal",
+          "name": "Carnívoro (curación al matar)",
+          "kind": "heal",
+          "trigger": "on_any_kill",
+          "calculation": "ChogathCarnivoreHeal"
+        },
+        {
+          "id": "carnivore_mana",
+          "name": "Carnívoro (maná al matar)",
+          "kind": "resource_restore",
+          "resource": "mana",
+          "trigger": "on_any_kill",
+          "calculation": "ChogathCarnivoreMana"
+        }
       ]
     },
     "Q": {

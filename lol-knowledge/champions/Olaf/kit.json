@@ -19,6 +19,76 @@
       "passive_stats": [],
       "not_modelled": [
         "Velocidad de ataque (hasta MaxAttackSpeed) y robo de vida (hasta MaxLifeSteal) crecientes según vida faltante"
+      ],
+      "passive_effects": [
+        {
+          "id": "berserker_rage_as",
+          "name": "Furia berserker (VA por % de potencia)",
+          "kind": "stat_bonus",
+          "formula": {
+            "op": "by_level",
+            "values": [
+              0.5,
+              0.521176,
+              0.543382,
+              0.566618,
+              0.590882,
+              0.616176,
+              0.6425,
+              0.669853,
+              0.698235,
+              0.727647,
+              0.758088,
+              0.789559,
+              0.822059,
+              0.855588,
+              0.890147,
+              0.925735,
+              0.962353,
+              1
+            ]
+          },
+          "label": "Derivado",
+          "source": "Characters/Olaf/Spells/OlafBerzerkerRageAbility/OlafBerzerkerRage.mSpellCalculations.MaxAttackSpeed (16.23.8406595+branch.releases-16-23.content.release)",
+          "stat": "attack_speed_bonus",
+          "mode": "flat",
+          "input_name": "olaf_fury_percent",
+          "max_stacks": 100
+        },
+        {
+          "id": "berserker_rage_lifesteal",
+          "name": "Furia berserker (robo de vida por % de potencia)",
+          "kind": "stat_bonus",
+          "formula": {
+            "op": "by_level",
+            "values": [
+              0.08,
+              0.0872,
+              0.09475,
+              0.10265,
+              0.1109,
+              0.1195,
+              0.12845,
+              0.13775,
+              0.1474,
+              0.1574,
+              0.16775,
+              0.17845,
+              0.1895,
+              0.2009,
+              0.21265,
+              0.22475,
+              0.2372,
+              0.25
+            ]
+          },
+          "label": "Derivado",
+          "source": "Characters/Olaf/Spells/OlafBerzerkerRageAbility/OlafBerzerkerRage.mSpellCalculations.MaxLifeSteal (16.23.8406595+branch.releases-16-23.content.release)",
+          "stat": "life_steal",
+          "mode": "flat",
+          "input_name": "olaf_fury_percent",
+          "max_stacks": 100
+        }
       ]
     },
     "Q": {

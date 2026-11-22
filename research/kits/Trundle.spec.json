@@ -14,6 +14,30 @@
       "max_rank": 1,
       "not_modelled": [
         "Curación porcentual por la vida máxima de enemigos cercanos que mueren (RegenPercent)"
+      ],
+      "passive_effects": [
+        {
+          "id": "kings_tribute_heal",
+          "name": "Tributo del rey (curación al matar)",
+          "kind": "heal",
+          "trigger": "on_any_kill",
+          "formula": {
+            "op": "mul",
+            "operands": [
+              {
+                "op": "calculation",
+                "name": "RegenPercent"
+              },
+              {
+                "op": "stat",
+                "stat": "health",
+                "scope": "max",
+                "subject": "target"
+              }
+            ]
+          },
+          "source_note": "RegenPercent × vida máxima del objetivo eliminado"
+        }
       ]
     },
     "Q": {

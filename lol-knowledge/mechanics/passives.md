@@ -1,9 +1,9 @@
 # Pasivas de campeón en hoja y rotación
 
-- **Ámbito:** evaluación declarativa de las pasivas de campeón (`abilities.P.passive_effects` en `kit.json`) sobre la hoja de estadísticas (`stats`, `ability`) y en combate (`rotation`, `rotation --timeline`), más la automatización de borradores de kit (`CH-02`).
-- **Parche de referencia:** Data Dragon `16.23.1` y cliente `16.23` (`16.23.8399929+branch.releases-16-23.content.release`).
-- **Fecha de consulta:** 2026-11-20
-- **Código:** [`src/lol_knowledge/passives.py`](../../src/lol_knowledge/passives.py), [`src/lol_knowledge/kit/model.py`](../../src/lol_knowledge/kit/model.py), [`src/lol_knowledge/rotation.py`](../../src/lol_knowledge/rotation.py), [`research/binmodel/specdraft.py`](../../research/binmodel/specdraft.py) y [`research/binmodel/kitgen.py`](../../research/binmodel/kitgen.py).
+- **Ámbito:** evaluación declarativa de las pasivas de campeón (`abilities.P.passive_effects` en `kit.json`) sobre la hoja de estadísticas (`stats`, `ability`), en combate (`rotation`, `rotation --timeline`) y en supervivencia inversa (`survive`), además de conversiones globales de hoja (`sheet.py`) y la automatización de borradores de kit (`CH-02`).
+- **Parche de referencia:** Data Dragon `16.23.1` y cliente `16.23` (`16.23.8406595+branch.releases-16-23.content.release`).
+- **Fecha de consulta:** 2026-11-22
+- **Código:** [`src/lol_knowledge/passives.py`](../../src/lol_knowledge/passives.py), [`src/lol_knowledge/stats/sheet.py`](../../src/lol_knowledge/stats/sheet.py), [`src/lol_knowledge/defense.py`](../../src/lol_knowledge/defense.py), [`src/lol_knowledge/kit/model.py`](../../src/lol_knowledge/kit/model.py), [`src/lol_knowledge/rotation.py`](../../src/lol_knowledge/rotation.py), [`research/binmodel/specdraft.py`](../../research/binmodel/specdraft.py) y [`research/binmodel/kitgen.py`](../../research/binmodel/kitgen.py).
 
 ## Fuentes
 
@@ -18,14 +18,37 @@ El motor no codifica nombres de campeón en Python: cualquier campeón declara s
 
 | `kind` | Dónde aplica | Semántica |
 |---|---|---|
-| `stat_bonus` | Hoja (`stats`, `ability`, `rotation`) | Aporte fijo (`mode: "flat"`) o amplificador del total (`mode: "percent"`), permanente o condicionado a `--input <input_name>` |
-| `stacking_stat` | Hoja con `--input <input_name>=0..N`; combate automático en `rotation` | Acumulaciones temporales de combate que empiezan en `0` ([`combat-stacks.md`](combat-stacks.md)) —o en `--input <input_name>` si se declara—, suben `+1` tras cada golpe que cumple `trigger` (`champion_hit`, `attack`, `ability_hit`, `any_hit`), se duplican/multiplican por `max_stacks_multiplier` al alcanzar `max_stacks` y caducan tras `duration_seconds` en `--timeline` |
-| `heal` | `rotation` (`HealEvent`) | Curación directa al cumplirse `trigger` (`on_champion_takedown`, `on_minion_monster_kill`, `on_hit`, `on_ability_hit`), con `stacks_required` / `input_name` opcionales; escala con `heal_and_shield_power`, Revitalizar y Heridas graves ([`survival.md`](survival.md)) |
-| `damage_proc` | `rotation` (`kind: "ability"`, slot `P`) | Daño adicional pasivo por disparo (`on_attack`, `on_hit`, `every_n_attacks`) con enfriamiento opcional `cooldown_seconds` en `--timeline` |
+| `stat_bonus` | Hoja (`stats`, `ability`, `rotation`) | Aporte fijo (`mode: "flat"`), amplificador del total (`mode: "percent"`) o bonificación porcentual de VM (`mode: "percent_ms"`), permanente o condicionado a `--input <input_name>` |
+| `stacking_stat` | Hoja con `--input <input_name>=0..N`; combate automático en `rotation` | Acumulaciones temporales de combate que empiezan en `0` ([`combat-stacks.md`](combat-stacks.md)) —o en `--input <input_name>` si se declara—, suben `+1` tras cada golpe que cumple `trigger` (`champion_hit`, `attack`, `ability_hit`, `any_hit`), se multiplican por `max_stacks_multiplier` o se activan solo al máximo (`only_at_max: true`, p. ej. Darius) y caducan tras `duration_seconds` en `--timeline` |
+| `heal` | `rotation` (`HealEvent`) | Curación directa al cumplirse `trigger` (`on_champion_takedown`, `on_minion_monster_kill`, `on_any_kill`, `on_hit`, `on_ability_hit`, `on_ability_cast`, `on_champion_hit`, `every_n_attacks`, `every_n_hits`), con enfriamiento fijo o escalado por nivel (`cooldown_formula`); escala con HSP, Revitalizar y Heridas graves ([`survival.md`](survival.md)) |
+| `damage_proc` | `rotation` (`kind: "ability"`, slot `P`) | Daño adicional pasivo por disparo (`on_attack`, `on_hit`, `every_n_attacks`, `every_n_hits`, `after_ability`, `on_ability_hit`, `below_hp_percent`, `at_max_stacks`) con enfriamiento fijo o `cooldown_formula` |
+| `shield` | `rotation` (`ShieldEvent`) y `survive` | Escudo pasivo por disparo (`on_taking_damage`, `on_ability_cast`, `on_champion_attack`, `every_n_hits`, `below_hp_percent`), escalado con HSP y Revitalizar; los escudos propios en `rotation` disparan además Golpe de escudo (`8401`) |
+| `damage_taken_modifier` | `survive` | Reducción de daño entrante porcentual (`mode: "percent"`, p. ej. Kassadin `-10 %` mágico) o plana (`mode: "flat"` con tope `damage_reduction_cap`, p. ej. Fizz `4 + 1 % PH` hasta `50 %`) |
+| `resource_restore` | `rotation` (`ResourceEvent`) | Restauración de maná o energía (`on_any_kill`, `on_hit`, `on_ability_hit`, `on_champion_hit`) con enfriamiento opcional |
 
-Para interpolaciones lineales `1..18` del cliente (`ByCharLevelInterpolationCalculationPart` y `{ee18a47b}` sin multiplicador de crecimiento), las fórmulas de kit disponen del operador exacto `linear_by_level` (`min + (max - min) × (nivel - 1) / 17` en `Fraction`). Los contadores de cargas del bin (`BuffCounterByCoefficientCalculationPart` y `BuffCounterByNamedDataValueCalculationPart`) se compilan a `{"op": "input", "name": "<cargas>", "default": 0}`, evaluando a `0` cargas por defecto y escalando al pasar `--input <cargas>=N` (p. ej. `siphoning_strike_stacks`, `feast_stacks`, `stardust_stacks`, `kindred_marks`, `dragon_practice_stacks`, `souls`, `soul_fragments`, `accelerando_stacks`, `courage_stacks`).
+Para interpolaciones lineales `1..18` del cliente (`ByCharLevelInterpolationCalculationPart` y `{ee18a47b}` sin multiplicador de crecimiento), las fórmulas de kit disponen del operador exacto `linear_by_level` (`min + (max - min) × (nivel - 1) / 17` en `Fraction`), y para curvas con `mScaleByStatProgressionMultiplier = true` `kitgen.py` expande la progresión exacta de crecimiento de estadísticas ([`stat-growth.md`](stat-growth.md)) en tablas `by_level` de 18 niveles. Los contadores de cargas del bin (`BuffCounterByCoefficientCalculationPart` y `BuffCounterByNamedDataValueCalculationPart`) se compilan a `{"op": "input", "name": "<cargas>", "default": 0}`, evaluando a `0` cargas por defecto y escalando al pasar `--input <cargas>=N`.
 
-## 2. Pasivas modeladas hoy (`Derivado`, P1 + P2)
+## 2. Conversiones globales de hoja (`Derivado`, cliente `16.23`)
+
+Además de las reglas `CH-04` (Bel'Veth, Zeri, Jhin, Sion, Graves, Ashe, Cassiopeia, Hecarim, Yasuo y Yone), [`sheet.py`](../../src/lol_knowledge/stats/sheet.py) aplica 5 conversiones globales extraídas de los valores base (`mode == "base"`) del cliente `16.23`:
+
+- **Vladimir (*Pacto carmesí*):** `+1` PH por cada `30` de vida adicional (`HPforAP = 30`, antes de Rabadon) y `+1,6` de vida adicional por cada `1` PH (`APRatioBonusHP = 1,6`, sin recursión propia).
+- **Pyke (*Don de los ahogados*):** convierte toda la vida adicional en DA adicional a razón de `1 / 14` (`HPPerBAD = 14`), fijando su vida adicional en `0`.
+- **Ryze (*Maestría arcana*):** aumenta su maná máximo un `+10 %` por cada `100` PH (`PercentManaIncrease = 10`, `APAmount = 100`).
+- **Ornn (*Forja viviente*):** amplifica su vida, armadura y RM adicionales en `+10 %` base (`BaseStatAmp = 0,10`) más `+4 %` por cada objeto Maestro (`AdditionalMythicStatAmp = 0,04`, mediante `--input ornn_masterworks=0..5`, hasta `+30 %`).
+- **Rammus (*Caparazón de pinchos*):** convierte el `15 %` de su armadura total y el `15 %` de su RM total en DA adicional (`ArmorRatio = 0,15`, `MagicResistRatio = 0,15`).
+
+## 3. Pasivas declarativas compiladas (`Derivado`, cliente `16.23`)
+
+**62 campeones** cuentan con `abilities.P.passive_effects` compilados directamente desde los `.bin` del cliente `16.23` (`research/kits/<Id>.spec.json`):
+
+- **Base inicial (14):** Ahri, Bel'Veth, Garen, Irelia *(ampliada en Oleada 1 con daño automático al impactar a 4 cargas)*, Janna, Nasus, Senna, Shyvana, Sion, Sona, Swain, Thresh, Veigar y Zaahen.
+- **Oleada 1 (48 adicionales):**
+  - *Defensa y escudos (9):* Kassadin, Fizz, Malphite, Blitzcrank, Camille, Vi, Shen, Rakan y Yasuo.
+  - *Acumulación en combate (7):* Jax, Ezreal, Volibear (+ rayos a 5 cargas), Kayle, Wukong (`MonkeyKing`), Darius (*Poderío noxiano* al máximo de 5 cargas) y Diana (VA permanente + 3.º ataque).
+  - *Estadísticas condicionales en hoja (9):* Aphelios, Tryndamere, Olaf, Gnar (Mega-Gnar), Sejuani, Syndra (+15 % PH y maná), Teemo, Jinx y Lee Sin (+ energía).
+  - *Curaciones y recursos (8):* Cho'Gath, Gragas, Maokai, Trundle, Yuumi, Alistar, Xerath y Xin Zhao (daño + curación en 3.º ataque).
+  - *Procs automáticos de daño (15):* Zed (`< 50 %` vida), Corki (`20 %` DA verdadero), Gwen, Orianna, Tahm Kench, Warwick, Rell, Ekko (3 golpes), Aurora (3 golpes + curación), Vel'Koz (3 golpes), Akshan (3 golpes + escudo), Braum (4 golpes), Riven, Sylas y Zoe (ataques tras habilidad).
 
 ### Zaahen — *Florescencia de la guerra* (`data:champion:Zaahen`, `CH-Z-01`)
 

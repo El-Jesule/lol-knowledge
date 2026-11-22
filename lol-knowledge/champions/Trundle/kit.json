@@ -19,6 +19,32 @@
       "passive_stats": [],
       "not_modelled": [
         "Curación porcentual por la vida máxima de enemigos cercanos que mueren (RegenPercent)"
+      ],
+      "passive_effects": [
+        {
+          "id": "kings_tribute_heal",
+          "name": "Tributo del rey (curación al matar)",
+          "kind": "heal",
+          "formula": {
+            "op": "mul",
+            "operands": [
+              {
+                "op": "linear_by_level",
+                "min": 0.018,
+                "max": 0.055
+              },
+              {
+                "op": "stat",
+                "stat": "health",
+                "scope": "max",
+                "subject": "target"
+              }
+            ]
+          },
+          "label": "Derivado",
+          "source": "Characters/Trundle/Spells/TrundleDiseaseOverseerAbility/TrundleDiseaseOverseer · RegenPercent × vida máxima del objetivo eliminado (16.23.8406595+branch.releases-16-23.content.release)",
+          "trigger": "on_any_kill"
+        }
       ]
     },
     "Q": {

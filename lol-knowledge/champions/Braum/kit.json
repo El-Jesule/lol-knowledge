@@ -99,6 +99,64 @@
       "passive_stats": [],
       "not_modelled": [
         "Aturdimiento (StunDuration), enfriamiento por objetivo (StunCD) y acumulación con aliados"
+      ],
+      "passive_effects": [
+        {
+          "id": "concussive_blows",
+          "name": "Golpes conmocionantes (4.º impacto)",
+          "kind": "damage_proc",
+          "formula": {
+            "op": "by_level",
+            "values": [
+              26,
+              36,
+              46,
+              56,
+              66,
+              76,
+              86,
+              96,
+              106,
+              116,
+              126,
+              136,
+              146,
+              156,
+              166,
+              176,
+              186,
+              196
+            ]
+          },
+          "label": "Derivado",
+          "source": "Characters/Braum/Spells/BraumPassiveAbility/BraumPassive.mSpellCalculations.TotalDamage (16.23.8406595+branch.releases-16-23.content.release)",
+          "trigger": "every_n_hits",
+          "damage_type": "magic",
+          "every": 4,
+          "cooldown_formula": {
+            "op": "by_level",
+            "values": [
+              8,
+              8,
+              8,
+              8,
+              8,
+              6,
+              6,
+              6,
+              6,
+              6,
+              4,
+              4,
+              4,
+              4,
+              4,
+              4,
+              4,
+              4
+            ]
+          }
+        }
       ]
     },
     "Q": {

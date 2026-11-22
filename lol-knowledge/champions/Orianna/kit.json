@@ -153,7 +153,42 @@
         }
       ],
       "passive_stats": [],
-      "not_modelled": []
+      "not_modelled": [],
+      "passive_effects": [
+        {
+          "id": "clockwork_winding",
+          "name": "Dando cuerda (daño mágico al impactar)",
+          "kind": "damage_proc",
+          "formula": {
+            "op": "add",
+            "operands": [
+              {
+                "op": "linear_by_level",
+                "min": 10,
+                "max": 50
+              },
+              {
+                "op": "mul",
+                "operands": [
+                  {
+                    "op": "constant",
+                    "value": 0.15
+                  },
+                  {
+                    "op": "stat",
+                    "stat": "ability_power",
+                    "scope": "total"
+                  }
+                ]
+              }
+            ]
+          },
+          "label": "Derivado",
+          "source": "Characters/Orianna/Spells/OriannaPAbility/OriannaP.mSpellCalculations.TotalDamage (16.23.8406595+branch.releases-16-23.content.release)",
+          "trigger": "on_hit",
+          "damage_type": "magic"
+        }
+      ]
     },
     "Q": {
       "name": "Orden: atacar",

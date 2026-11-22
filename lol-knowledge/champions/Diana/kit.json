@@ -74,6 +74,75 @@
       "passive_stats": [],
       "not_modelled": [
         "Velocidad de ataque pasiva y potenciada tras lanzar habilidades (BonusAS, EmpoweredAS)"
+      ],
+      "passive_effects": [
+        {
+          "id": "moonsilver_as",
+          "name": "Hoja lunargenta (VA permanente)",
+          "kind": "stat_bonus",
+          "formula": {
+            "op": "linear_by_level",
+            "min": 15,
+            "max": 35
+          },
+          "label": "Derivado",
+          "source": "Characters/Diana/Spells/DianaPassiveAbility/DianaPassive.mSpellCalculations.BonusAS (16.23.8406595+branch.releases-16-23.content.release)",
+          "stat": "attack_speed_bonus",
+          "mode": "flat",
+          "condition": "pasiva permanente de Hoja lunargenta"
+        },
+        {
+          "id": "moonsilver_cleave",
+          "name": "Hoja lunargenta (3.º ataque)",
+          "kind": "damage_proc",
+          "formula": {
+            "op": "add",
+            "operands": [
+              {
+                "op": "by_level",
+                "values": [
+                  20,
+                  25,
+                  30,
+                  35,
+                  40,
+                  45,
+                  50,
+                  60,
+                  70,
+                  80,
+                  90,
+                  100,
+                  115,
+                  130,
+                  145,
+                  160,
+                  175,
+                  200
+                ]
+              },
+              {
+                "op": "mul",
+                "operands": [
+                  {
+                    "op": "constant",
+                    "value": 0.5
+                  },
+                  {
+                    "op": "stat",
+                    "stat": "ability_power",
+                    "scope": "total"
+                  }
+                ]
+              }
+            ]
+          },
+          "label": "Derivado",
+          "source": "Characters/Diana/Spells/DianaPassiveAbility/DianaPassive.mSpellCalculations.CleaveDamage (16.23.8406595+branch.releases-16-23.content.release)",
+          "trigger": "every_n_attacks",
+          "damage_type": "magic",
+          "every": 3
+        }
       ]
     },
     "Q": {

@@ -19,6 +19,73 @@
       "passive_stats": [],
       "not_modelled": [
         "Escudo físico o mágico adaptable (ShieldAmount, PassiveCooldown)"
+      ],
+      "passive_effects": [
+        {
+          "id": "adaptive_defenses",
+          "name": "Defensas adaptables",
+          "kind": "shield",
+          "formula": {
+            "op": "mul",
+            "operands": [
+              {
+                "op": "by_level",
+                "values": [
+                  0.1,
+                  0.1,
+                  0.1,
+                  0.1,
+                  0.1,
+                  0.1,
+                  0.15,
+                  0.15,
+                  0.15,
+                  0.15,
+                  0.15,
+                  0.15,
+                  0.2,
+                  0.2,
+                  0.2,
+                  0.2,
+                  0.2,
+                  0.2
+                ]
+              },
+              {
+                "op": "stat",
+                "stat": "health",
+                "scope": "total"
+              }
+            ]
+          },
+          "label": "Derivado",
+          "source": "Characters/Camille/Spells/CamillePassiveAbility/CamillePassive.mSpellCalculations.ShieldAmount (16.23.8406595+branch.releases-16-23.content.release)",
+          "trigger": "on_champion_attack",
+          "duration_seconds": 2,
+          "cooldown_formula": {
+            "op": "by_level",
+            "values": [
+              14,
+              14,
+              14,
+              14,
+              14,
+              14,
+              11,
+              11,
+              11,
+              11,
+              11,
+              11,
+              8,
+              8,
+              8,
+              8,
+              8,
+              8
+            ]
+          }
+        }
       ]
     },
     "Q": {

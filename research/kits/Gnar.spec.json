@@ -14,6 +14,48 @@
       "max_rank": 1,
       "not_modelled": [
         "Estadísticas de Mini-Gnar (alcance, VM, VA: TotalAS) y transformación en Mega-Gnar (vida, armadura, RM, DA base adicionales)"
+      ],
+      "passive_effects": [
+        {
+          "id": "mega_gnar_health",
+          "name": "Mega-Gnar (vida adicional)",
+          "kind": "stat_bonus",
+          "stat": "health",
+          "mode": "flat",
+          "calculation": "TotalMegaGnarHealth",
+          "max_stacks": 1,
+          "input_name": "mega_gnar"
+        },
+        {
+          "id": "mega_gnar_armor",
+          "name": "Mega-Gnar (armadura adicional)",
+          "kind": "stat_bonus",
+          "stat": "armor",
+          "mode": "flat",
+          "calculation": "TotalMegaGnarArmor",
+          "max_stacks": 1,
+          "input_name": "mega_gnar"
+        },
+        {
+          "id": "mega_gnar_mr",
+          "name": "Mega-Gnar (RM adicional)",
+          "kind": "stat_bonus",
+          "stat": "magic_resist",
+          "mode": "flat",
+          "calculation": "TotalMegaGnarMR",
+          "max_stacks": 1,
+          "input_name": "mega_gnar"
+        },
+        {
+          "id": "mega_gnar_ad",
+          "name": "Mega-Gnar (DA adicional)",
+          "kind": "stat_bonus",
+          "stat": "attack_damage",
+          "mode": "flat",
+          "calculation": "TotalMegaGnarAD",
+          "max_stacks": 1,
+          "input_name": "mega_gnar"
+        }
       ]
     },
     "Q": {

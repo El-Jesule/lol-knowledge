@@ -25,6 +25,32 @@
       ],
       "not_modelled": [
         "Velocidad de ataque acumulable hasta 5 cargas (AttackSpeedCalc)"
+      ],
+      "passive_effects": [
+        {
+          "id": "relentless_storm_as",
+          "name": "La tormenta incesante (VA por carga)",
+          "kind": "stacking_stat",
+          "stat": "attack_speed_bonus",
+          "mode": "flat",
+          "trigger": "any_hit",
+          "max_stacks": 5,
+          "duration_seconds": {
+            "data_value": "BuffDuration"
+          },
+          "input_name": "relentless_storm_stacks",
+          "calculation": "AttackSpeedCalc",
+          "scale": 100
+        },
+        {
+          "id": "relentless_storm_lightning",
+          "name": "La tormenta incesante (rayos con 5 cargas)",
+          "kind": "damage_proc",
+          "trigger": "at_max_stacks",
+          "stack_source_id": "relentless_storm_as",
+          "damage_type": "magic",
+          "calculation": "ChainLightningDamage"
+        }
       ]
     },
     "Q": {

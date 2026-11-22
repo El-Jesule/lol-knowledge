@@ -19,6 +19,56 @@
       "passive_stats": [],
       "not_modelled": [
         "Astillas de ira, restauración de maná (ManaPerProc) y mejoras de habilidades"
+      ],
+      "passive_effects": [
+        {
+          "id": "transcendent_ap",
+          "name": "Trascendencia (+15 % PH con 120 Astillas)",
+          "kind": "stat_bonus",
+          "formula": {
+            "op": "constant",
+            "value": 15
+          },
+          "label": "Derivado",
+          "source": "Characters/Syndra/Spells/SyndraPassiveAbility/SyndraPassive.DataValues.CapstoneAPPerc (16.23.8406595+branch.releases-16-23.content.release)",
+          "stat": "ability_power",
+          "mode": "percent",
+          "input_name": "syndra_transcendent",
+          "max_stacks": 1
+        },
+        {
+          "id": "transcendent_mana",
+          "name": "Trascendencia (maná al ganar Astillas)",
+          "kind": "resource_restore",
+          "formula": {
+            "op": "by_level",
+            "values": [
+              20,
+              24,
+              28,
+              32,
+              36,
+              40,
+              44,
+              50,
+              56,
+              62,
+              68,
+              83,
+              98,
+              113,
+              128,
+              143,
+              163,
+              183
+            ]
+          },
+          "label": "Derivado",
+          "source": "Characters/Syndra/Spells/SyndraPassiveAbility/SyndraPassive.mSpellCalculations.ManaPerProc (16.23.8406595+branch.releases-16-23.content.release)",
+          "trigger": "on_champion_hit",
+          "resource": "mana",
+          "cooldown_seconds": 8
+        }
       ]
     },
     "Q": {

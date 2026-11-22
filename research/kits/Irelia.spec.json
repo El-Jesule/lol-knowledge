@@ -42,6 +42,15 @@
           },
           "input_name": "ionian_fervor_stacks",
           "calculation": "SingleStackAS"
+        },
+        {
+          "id": "ionian_fervor_on_hit",
+          "name": "Fervor jonio (daño mágico al impactar con 4 cargas)",
+          "kind": "damage_proc",
+          "trigger": "at_max_stacks",
+          "stack_source_id": "ionian_fervor_as",
+          "damage_type": "magic",
+          "calculation": "OnHitBonus"
         }
       ]
     },

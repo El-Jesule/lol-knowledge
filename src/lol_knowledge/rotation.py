@@ -2369,7 +2369,10 @@ class _Rotation:
                 sheet = with_bonus(
                     sheet, bonus.stat_id, bonus.amount, bonus.source, bonus.label, bonus.note
                 )
-        p_flats, p_amps = self.passive_combat.active_stat_modifiers(at, self.base_sheet.level)
+        base_stats, _ = sheet_stats(self.base_sheet)
+        p_flats, p_amps = self.passive_combat.active_stat_modifiers(
+            at, self.base_sheet.level, stats=base_stats
+        )
         for p_bonus in p_flats:
             sheet = with_bonus(
                 sheet, p_bonus.stat_id, p_bonus.amount, p_bonus.source, p_bonus.label, p_bonus.note
@@ -3429,7 +3432,14 @@ class _Rotation:
                         apply_modifiers=proc.apply_modifiers,
                     )
                 )
-            for p_proc in self.passive_combat.on_step(step.slot, step_dealt, clock, self.sheet):
+            for p_proc in self.passive_combat.on_step(
+                step.slot,
+                step_dealt,
+                clock,
+                self.sheet,
+                target_health_before=before,
+                target_max_health=self.target.stats["max_health"],
+            ):
                 parts.append(
                     self._part(
                         "ability",
@@ -3443,6 +3453,19 @@ class _Rotation:
                         slot="P",
                     )
                 )
+            for p_sh in self.passive_combat.on_step_shields(
+                step.slot, step_dealt, clock, self.sheet
+            ):
+                ev_sh = self._make_shield_event(
+                    p_sh.source,
+                    p_sh.raw,
+                    p_sh.label,
+                    shield_type=p_sh.shield_type,
+                    duration=p_sh.duration,
+                    notes=p_sh.notes,
+                )
+                shield_events.append(ev_sh)
+                self.rune_combat.on_attacker_shield(ev_sh.amount, clock)
             # Defender Bone Plating (8473): reduce damage on up to 3 subsequent hits within 1.5 s
             if (
                 self.def_bone_rune is not None
@@ -3605,6 +3628,18 @@ class _Rotation:
                         notes=p_heal.notes,
                     )
                 )
+            for p_res in self.passive_combat.on_step_resources(
+                step.slot, step_dealt, killed_now, clock, self.sheet
+            ):
+                applied = self.resources.restore(
+                    p_res.source,
+                    p_res.resource,
+                    p_res.amount,
+                    p_res.label,
+                    p_res.notes,
+                )
+                if applied is not None:
+                    resource_events.append(applied)
             for raw_restore in self.rune_combat.on_step_resource_restores(
                 step_dealt,
                 killed_now,

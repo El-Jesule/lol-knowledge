@@ -14,6 +14,45 @@
       "max_rank": 1,
       "not_modelled": [
         "Sistema de 5 armas con munición (Calibrum, Severum, Gravitum, Infernum, Crescendum) y distribución manual de hasta 6 rangos de DA, VA y letalidad"
+      ],
+      "passive_effects": [
+        {
+          "id": "aphelios_ad",
+          "name": "Mejora pasiva de DA",
+          "kind": "stat_bonus",
+          "stat": "attack_damage",
+          "mode": "flat",
+          "data_value": "ADPerRank",
+          "max_stacks": {
+            "data_value": "MaxRanksPerStat"
+          },
+          "input_name": "aphelios_ad_ranks"
+        },
+        {
+          "id": "aphelios_as",
+          "name": "Mejora pasiva de VA",
+          "kind": "stat_bonus",
+          "stat": "attack_speed_bonus",
+          "mode": "flat",
+          "data_value": "ASPerRank",
+          "scale": 100,
+          "max_stacks": {
+            "data_value": "MaxRanksPerStat"
+          },
+          "input_name": "aphelios_as_ranks"
+        },
+        {
+          "id": "aphelios_lethality",
+          "name": "Mejora pasiva de Letalidad",
+          "kind": "stat_bonus",
+          "stat": "lethality",
+          "mode": "flat",
+          "data_value": "APPerRank",
+          "max_stacks": {
+            "data_value": "MaxRanksPerStat"
+          },
+          "input_name": "aphelios_lethality_ranks"
+        }
       ]
     },
     "Q": {

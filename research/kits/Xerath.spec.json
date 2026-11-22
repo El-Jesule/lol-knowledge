@@ -13,6 +13,18 @@
       "max_rank": 1,
       "not_modelled": [
         "Restauración de maná en ataque cada 16 s (ChampionManaRestoreTT, MinionManaRestoreTT)"
+      ],
+      "passive_effects": [
+        {
+          "id": "mana_surge",
+          "name": "Sobrecarga de maná (ataque básico a campeón)",
+          "kind": "resource_restore",
+          "resource": "mana",
+          "trigger": "on_hit",
+          "target_kind": "champion",
+          "calculation": "ChampionManaRestoreTT",
+          "cooldown_seconds": 16
+        }
       ]
     },
     "Q": {

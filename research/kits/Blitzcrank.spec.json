@@ -13,6 +13,24 @@
       "max_rank": 1,
       "not_modelled": [
         "Escudo por maná máximo al caer por debajo del 30 % de vida (ShieldAmount)"
+      ],
+      "passive_effects": [
+        {
+          "id": "mana_barrier",
+          "name": "Barrera de maná",
+          "kind": "shield",
+          "trigger": "below_hp_percent",
+          "threshold_hp_percent": {
+            "data_value": "HealthThreshold"
+          },
+          "calculation": "ShieldAmount",
+          "duration_seconds": {
+            "data_value": "ShieldDuration"
+          },
+          "cooldown_seconds": {
+            "data_value": "Cooldown"
+          }
+        }
       ]
     },
     "Q": {

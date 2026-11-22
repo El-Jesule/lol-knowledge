@@ -25,6 +25,19 @@
       ],
       "not_modelled": [
         "Gestión de hasta 3 cargas, reducción del 50 % a torretas y bonificación a monstruos"
+      ],
+      "passive_effects": [
+        {
+          "id": "runic_blade",
+          "name": "Hoja rúnica (ataque tras habilidad)",
+          "kind": "damage_proc",
+          "trigger": "after_ability",
+          "max_stacks": {
+            "data_value": "Charges"
+          },
+          "damage_type": "physical",
+          "calculation": "TotalDamage"
+        }
       ]
     },
     "Q": {

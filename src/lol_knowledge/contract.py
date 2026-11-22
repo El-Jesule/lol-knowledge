@@ -221,6 +221,7 @@ def _build_sheet_for_contract(
                 assumptions,
                 derived,
                 base_extras,
+                passive.percents,
                 extra_amplifiers=passive.amplifiers,
                 extra_notes=passive.notes,
                 inputs=inputs,
@@ -299,7 +300,7 @@ def _build_sheet_for_contract(
         assumptions,
         derived,
         (*base_extras, *flats, *rune_fx.flats),
-        (*percents, *rune_fx.percents),
+        (*percents, *passive.percents, *rune_fx.percents),
         tuple(pending),
         extra_amplifiers=(*passive.amplifiers, *rune_fx.amplifiers),
         extra_notes=tuple(extra_notes),
@@ -823,6 +824,7 @@ def _handle_survive(params: Mapping[str, Any], root: Path) -> dict[str, Any]:
             }
         enemy_desc = f"{e_champ.name} level {e_level}: {enemy['steps']}"
     rune_data = load_runes(root) if runes else None
+    defender_kit = load_kit(root, champ.id)
     outcome = evaluate_defense(
         sheet,
         hits,
@@ -834,6 +836,7 @@ def _handle_survive(params: Mapping[str, Any], root: Path) -> dict[str, Any]:
         rune_data=rune_data,
         inputs=inputs,
         timeline=timeline,
+        kit=defender_kit,
     )
     payload = defense_to_dict(outcome, sheet)
     return {

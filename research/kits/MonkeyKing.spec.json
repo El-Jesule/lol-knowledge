@@ -13,6 +13,24 @@
       "max_rank": 1,
       "not_modelled": [
         "Armadura (BonusArmor) y regeneración acumulables en combate hasta 5 cargas"
+      ],
+      "passive_effects": [
+        {
+          "id": "stone_skin_armor",
+          "name": "Piel de piedra (armadura por carga)",
+          "kind": "stacking_stat",
+          "stat": "armor",
+          "mode": "flat",
+          "trigger": "champion_hit",
+          "max_stacks": {
+            "data_value": "MaxStacks"
+          },
+          "duration_seconds": {
+            "data_value": "StackDuration"
+          },
+          "input_name": "stone_skin_stacks",
+          "calculation": "BonusArmor"
+        }
       ]
     },
     "Q": {

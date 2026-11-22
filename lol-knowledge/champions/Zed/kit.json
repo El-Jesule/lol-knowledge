@@ -19,6 +19,53 @@
       "passive_stats": [],
       "not_modelled": [
         "Daño mágico del 5/7,5/10 % de vida máxima contra objetivos bajo el 50 % de vida (MaxHPDamage usa condicional de misión HasBuffCastRequirement en el bin)"
+      ],
+      "passive_effects": [
+        {
+          "id": "contempt_for_the_weak",
+          "name": "Desprecio por los débiles (< 50 % vida)",
+          "kind": "damage_proc",
+          "formula": {
+            "op": "mul",
+            "operands": [
+              {
+                "op": "by_level",
+                "values": [
+                  0.05,
+                  0.05,
+                  0.05,
+                  0.05,
+                  0.05,
+                  0.05,
+                  0.075,
+                  0.075,
+                  0.075,
+                  0.075,
+                  0.075,
+                  0.075,
+                  0.075,
+                  0.075,
+                  0.075,
+                  0.075,
+                  0.1,
+                  0.1
+                ]
+              },
+              {
+                "op": "stat",
+                "stat": "health",
+                "scope": "max",
+                "subject": "target"
+              }
+            ]
+          },
+          "label": "Derivado",
+          "source": "Characters/Zed/Spells/ZedPassiveAbility/ZedPassive · MaxHPDamage default_calculation ({6a1a62e9}) × vida máxima del objetivo (16.23.8406595+branch.releases-16-23.content.release)",
+          "trigger": "below_hp_percent",
+          "damage_type": "magic",
+          "cooldown_seconds": 10,
+          "threshold_hp_percent": 0.5
+        }
       ]
     },
     "Q": {

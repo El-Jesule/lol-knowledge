@@ -19,6 +19,63 @@
       "passive_stats": [],
       "not_modelled": [
         "Escudo periódico (TotalShield, ShieldCooldown)"
+      ],
+      "passive_effects": [
+        {
+          "id": "fey_feathers",
+          "name": "Plumas feéricas",
+          "kind": "shield",
+          "formula": {
+            "op": "add",
+            "operands": [
+              {
+                "op": "linear_by_level",
+                "min": 30,
+                "max": 225
+              },
+              {
+                "op": "mul",
+                "operands": [
+                  {
+                    "op": "constant",
+                    "value": 0.95
+                  },
+                  {
+                    "op": "stat",
+                    "stat": "ability_power",
+                    "scope": "total"
+                  }
+                ]
+              }
+            ]
+          },
+          "label": "Derivado",
+          "source": "Characters/Rakan/Spells/RakanPassiveAbility/RakanPassive.mSpellCalculations.TotalShield (16.23.8406595+branch.releases-16-23.content.release)",
+          "trigger": "on_taking_damage",
+          "cooldown_formula": {
+            "op": "by_level",
+            "values": [
+              40,
+              38.5,
+              37,
+              35.5,
+              34,
+              32.5,
+              31,
+              29.5,
+              28,
+              26.5,
+              25,
+              23.5,
+              22,
+              20.5,
+              19,
+              17.5,
+              16,
+              14.5
+            ]
+          }
+        }
       ]
     },
     "Q": {

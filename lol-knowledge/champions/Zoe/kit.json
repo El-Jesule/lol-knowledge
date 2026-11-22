@@ -74,7 +74,60 @@
         }
       ],
       "passive_stats": [],
-      "not_modelled": []
+      "not_modelled": [],
+      "passive_effects": [
+        {
+          "id": "more_sparkles",
+          "name": "¡Más chispas! (ataque tras habilidad)",
+          "kind": "damage_proc",
+          "formula": {
+            "op": "add",
+            "operands": [
+              {
+                "op": "by_level",
+                "values": [
+                  16,
+                  20,
+                  24,
+                  28,
+                  32,
+                  36,
+                  40,
+                  46,
+                  52,
+                  58,
+                  64,
+                  70,
+                  78,
+                  86,
+                  94,
+                  104,
+                  114,
+                  124
+                ]
+              },
+              {
+                "op": "mul",
+                "operands": [
+                  {
+                    "op": "constant",
+                    "value": 0.2
+                  },
+                  {
+                    "op": "stat",
+                    "stat": "ability_power",
+                    "scope": "total"
+                  }
+                ]
+              }
+            ]
+          },
+          "label": "Derivado",
+          "source": "Characters/Zoe/Spells/ZoePassiveAbility/ZoePassive.mSpellCalculations.PassiveDamage (16.23.8406595+branch.releases-16-23.content.release)",
+          "trigger": "after_ability",
+          "damage_type": "magic"
+        }
+      ]
     },
     "Q": {
       "name": "Pádel estelar",

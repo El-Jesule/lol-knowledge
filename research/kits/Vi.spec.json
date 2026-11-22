@@ -13,6 +13,19 @@
       "max_rank": 1,
       "not_modelled": [
         "Escudo al golpear con habilidad (TotalShield, ShieldCooldown)"
+      ],
+      "passive_effects": [
+        {
+          "id": "blast_shield",
+          "name": "Escudo de explosión",
+          "kind": "shield",
+          "trigger": "on_ability_cast",
+          "calculation": "TotalShield",
+          "duration_seconds": {
+            "data_value": "ShieldDuration"
+          },
+          "cooldown_calculation": "ShieldCooldown"
+        }
       ]
     },
     "Q": {

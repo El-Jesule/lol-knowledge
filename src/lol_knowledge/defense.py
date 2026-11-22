@@ -21,8 +21,9 @@ from typing import Any
 
 from .damage import DamageType, format_number, mitigate
 from .errors import RotationError, StatsError
-from .formula import FormulaError, evaluate_formula
-from .kit import sheet_stats
+from .formula import ABILITY_OPS, FormulaError, evaluate_formula
+from .kit import Kit, sheet_stats
+from .passives import _effect_cooldown, passive_defense_specs
 from .rotation import RotationOutcome
 from .runes import Rune, RuneData, int_input, linear_by_level, rune_value, scale_item_cooldown
 from .stats import EVIDENCE_LABEL, Label, StatBlocked, StatSheet, weakest
@@ -309,9 +310,12 @@ class _DefenseSimulator:
         rune_data: RuneData | None,
         inputs: Mapping[str, Fraction],
         timeline: bool,
+        kit: Kit | None = None,
     ) -> None:
         self.sheet = sheet
         self.timeline = timeline
+        self.kit = kit
+        self.passive_dr_specs, self.passive_shield_specs = passive_defense_specs(kit)
         self.shield_type = validate_shield_type(shield_type)
         if start_shield < 0:
             raise StatsError("defender shield must not be negative")
@@ -676,6 +680,8 @@ class _DefenseSimulator:
 
         lifeline_ready: dict[str, Fraction] = {}
         lifeline_used: set[str] = set()
+        passive_shield_ready: dict[str, Fraction] = {}
+        passive_shield_used: set[str] = set()
 
         spell_shield_ready: dict[str, Fraction] = {}
         spell_shield_used: set[str] = set()
@@ -1354,6 +1360,27 @@ class _DefenseSimulator:
                 step_labels.append(self.rune_base)
                 step_notes.append("rune:8351 GlacialAugment (-15% enemy damage vs allies)")
 
+            # Champion passive percent damage-taken modifiers (e.g. Kassadin Void Stone -10% magic)
+            if incoming > 0 and health > 0 and hit.damage_type is not None:
+                for p_dr in self.passive_dr_specs:
+                    if p_dr.mode != "percent":
+                        continue
+                    if p_dr.damage_type is not None and hit.damage_type is not p_dr.damage_type:
+                        continue
+                    if hit.damage_type is DamageType.TRUE and p_dr.damage_type is None:
+                        continue
+                    pct_res = evaluate_formula(
+                        p_dr.formula, self.stats_env, level=self.sheet.level, ops=ABILITY_OPS
+                    )
+                    assert pct_res.exact is not None
+                    frac = pct_res.exact / 100 if pct_res.exact > 1 else pct_res.exact
+                    incoming *= 1 - frac
+                    step_labels.append(p_dr.label)
+                    step_notes.append(
+                        f"passive P {p_dr.name} (-{format_number(frac * 100)}% "
+                        f"{hit.damage_type.value})"
+                    )
+
             # Timed percent damage reduction (e.g. 3869 Celestial Opposition -35%/-25% for 2 s)
             if incoming > 0 and health > 0 and hit.damage_type is not None:
                 for title, eff, comp, eff_label in self.timed_taken_modifiers:
@@ -1393,12 +1420,31 @@ class _DefenseSimulator:
                         step_labels.append(eff_label)
                         step_notes.append(f"{title} {format_number(pct)}%")
 
-            # Flat damage reduction (MEC-08): scenario flat, Bone Plating, Warden's Mail Rock Solid
+            # Flat damage reduction (MEC-08): scenario flat, champion passives (Fizz), Bone Plating
             flat_red = Fraction(0)
             if self.flat_input > 0 and incoming > 0:
                 applied = min(incoming, self.flat_input)
                 flat_red += applied
                 step_notes.append(f"flat reduction -{format_number(applied)} (scenario)")
+
+            if incoming - flat_red > 0 and hit.damage_type is not DamageType.TRUE:
+                for p_dr in self.passive_dr_specs:
+                    if p_dr.mode != "flat":
+                        continue
+                    if p_dr.damage_type is not None and hit.damage_type is not p_dr.damage_type:
+                        continue
+                    raw_res = evaluate_formula(
+                        p_dr.formula, self.stats_env, level=self.sheet.level, ops=ABILITY_OPS
+                    )
+                    assert raw_res.exact is not None
+                    raw_val = abs(raw_res.exact)
+                    if p_dr.damage_reduction_cap is not None:
+                        raw_val = min(raw_val, (incoming - flat_red) * p_dr.damage_reduction_cap)
+                    applied = min(incoming - flat_red, raw_val)
+                    if applied > 0:
+                        flat_red += applied
+                        step_labels.append(p_dr.label)
+                        step_notes.append(f"passive P {p_dr.name} (-{format_number(applied)})")
 
             if incoming - flat_red > 0:
                 for title, eff, comp, eff_label in self.flat_taken_modifiers:
@@ -1715,6 +1761,75 @@ class _DefenseSimulator:
                                         )
                                     )
                         projected_hp = max(Fraction(0), health - preview_hp_dmg)
+
+                # 1b. Champion passive defensive shields (Malphite, Blitzcrank, Yasuo, Rakan, etc.)
+                for p_sh in self.passive_shield_specs:
+                    if p_sh.trigger not in {"on_taking_damage", "below_hp_percent"}:
+                        continue
+                    can_sh = (
+                        (p_sh.id not in passive_shield_used)
+                        if not self.timeline
+                        else (clock >= passive_shield_ready.get(p_sh.id, Fraction(0)))
+                    )
+                    if not can_sh:
+                        continue
+                    fires = p_sh.trigger == "on_taking_damage"
+                    if p_sh.trigger == "below_hp_percent" and p_sh.threshold_hp_percent is not None:
+                        fires = projected_hp < current_max_health * p_sh.threshold_hp_percent
+                    if not fires:
+                        continue
+                    passive_shield_used.add(p_sh.id)
+                    cd = _effect_cooldown(p_sh, self.sheet.level)
+                    if self.timeline and cd is not None:
+                        passive_shield_ready[p_sh.id] = clock + cd
+                    sh_res = evaluate_formula(
+                        p_sh.formula, self.stats_env, level=self.sheet.level, ops=ABILITY_OPS
+                    )
+                    assert sh_res.exact is not None
+                    dep_lbls = [
+                        self.stat_origin[k][1] for k in sh_res.dependencies if k in self.stat_origin
+                    ]
+                    sh_label = weakest([p_sh.label, *dep_lbls, *self.self_amp_labels])
+                    rev_amp = self._revitalize_amp(health)
+                    amt = (
+                        scale_shield(sh_res.exact, hsp=self.hsp, revitalize_amp=rev_amp)
+                        * self.self_shield_amp
+                    )
+                    sh_notes: list[str] = [f"passive P {p_sh.name}"]
+                    if self.shield_reaver_rate > 0:
+                        amt *= 1 - self.shield_reaver_rate
+                        sh_notes.append(
+                            f"Shield Reaver (-{format_number(self.shield_reaver_rate * 100)}%)"
+                        )
+                    dur = p_sh.duration_seconds
+                    shields.append(
+                        _ActiveShield(
+                            f"passive P {p_sh.name}",
+                            amt,
+                            p_sh.shield_type,
+                            clock + dur if (self.timeline and dur is not None) else None,
+                        )
+                    )
+                    granted.append(
+                        ShieldEvent(
+                            f"kit:{self.sheet.champion.id} P {p_sh.id} ({p_sh.name})",
+                            sh_res.exact,
+                            amt,
+                            p_sh.shield_type,
+                            dur,
+                            sh_label,
+                            tuple(sh_notes),
+                        )
+                    )
+                    step_labels.append(sh_label)
+                    preview_shields = [
+                        _ActiveShield(s.source, s.remaining, s.shield_type, s.expires_at)
+                        for s in shields
+                    ]
+                    _, preview_hp_dmg = self._absorb_active(
+                        dmg_after_flat, hit.damage_type, preview_shields
+                    )
+                    projected_hp = max(Fraction(0), health - preview_hp_dmg)
 
                 # 2. Guardian (8465): ally nearby + threshold (50..165 in 2.5 s) or lethal damage
                 if self.guardian_rune is not None and self.guardian_ally:
@@ -2134,6 +2249,7 @@ def evaluate_defense(
     rune_data: RuneData | None = None,
     inputs: Mapping[str, Fraction] | None = None,
     timeline: bool = False,
+    kit: Kit | None = None,
 ) -> DefenseOutcome:
     """Evaluate how ``defender_sheet`` survives ``hits`` (MEC-08 and MEC-09)."""
     sim = _DefenseSimulator(
@@ -2145,5 +2261,6 @@ def evaluate_defense(
         rune_data=rune_data,
         inputs=inputs or {},
         timeline=timeline,
+        kit=kit,
     )
     return sim.run(hits, enemy_description)

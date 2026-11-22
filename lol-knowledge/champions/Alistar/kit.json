@@ -19,6 +19,30 @@
       "passive_stats": [],
       "not_modelled": [
         "Curación propia y aliada cada 7 cargas (BaseHeal, AllyHeal)"
+      ],
+      "passive_effects": [
+        {
+          "id": "triumphant_roar_heal",
+          "name": "Rugido triunfal (curación propia al derribar)",
+          "kind": "heal",
+          "formula": {
+            "op": "mul",
+            "operands": [
+              {
+                "op": "constant",
+                "value": 0.05
+              },
+              {
+                "op": "stat",
+                "stat": "health",
+                "scope": "total"
+              }
+            ]
+          },
+          "label": "Derivado",
+          "source": "Characters/Alistar/Spells/AlistarPassiveAbility/AlistarPassive.mSpellCalculations.BaseHeal (16.23.8406595+branch.releases-16-23.content.release)",
+          "trigger": "on_champion_takedown"
+        }
       ]
     },
     "Q": {

@@ -107,6 +107,92 @@
       "passive_stats": [],
       "not_modelled": [
         "Acumulación de 3 marcas sobre campeones para potenciar Q y habilitar R"
+      ],
+      "passive_effects": [
+        {
+          "id": "acquired_taste",
+          "name": "Paladar peculiar (daño mágico al impactar)",
+          "kind": "damage_proc",
+          "formula": {
+            "op": "add",
+            "operands": [
+              {
+                "op": "by_level",
+                "values": [
+                  5,
+                  10,
+                  15,
+                  20,
+                  25,
+                  30,
+                  35,
+                  40,
+                  45,
+                  50,
+                  55,
+                  65,
+                  70,
+                  75,
+                  80,
+                  85,
+                  90,
+                  95
+                ]
+              },
+              {
+                "op": "mul",
+                "operands": [
+                  {
+                    "op": "constant",
+                    "value": 0.04
+                  },
+                  {
+                    "op": "stat",
+                    "stat": "health",
+                    "scope": "bonus"
+                  }
+                ]
+              },
+              {
+                "op": "mul",
+                "operands": [
+                  {
+                    "op": "mul",
+                    "operands": [
+                      {
+                        "op": "mul",
+                        "operands": [
+                          {
+                            "op": "constant",
+                            "value": 0.0125
+                          },
+                          {
+                            "op": "stat",
+                            "stat": "health",
+                            "scope": "bonus"
+                          }
+                        ]
+                      },
+                      {
+                        "op": "constant",
+                        "value": 0.01
+                      }
+                    ]
+                  },
+                  {
+                    "op": "stat",
+                    "stat": "ability_power",
+                    "scope": "total"
+                  }
+                ]
+              }
+            ]
+          },
+          "label": "Derivado",
+          "source": "Characters/TahmKench/Spells/TahmKenchPassiveAbility/TahmKenchPassive.mSpellCalculations.TotalDamage (16.23.8406595+branch.releases-16-23.content.release)",
+          "trigger": "on_hit",
+          "damage_type": "magic"
+        }
       ]
     },
     "Q": {

@@ -241,21 +241,17 @@ class _Ability:
             operands = [self.node(part, stack) for part in raw_ops]
             return operands[0] if len(operands) == 1 else {"op": "mul", "operands": operands}
         if kind == "by_char_level_interpolation":
-            if node.get("scale_by_stat_progression_multiplier"):
-                raise KitGenError(
-                    f"{self.slot}: stat-progression level interpolation is not translated"
-                )
             start, end = node.get("start_value"), node.get("end_value")
             if not _is_num(start) or not _is_num(end):
                 raise KitGenError(f"{self.slot}: level interpolation missing start/end values")
+            if node.get("scale_by_stat_progression_multiplier"):
+                return _stat_progression_formula(float(start), float(end))
             return {"op": "linear_by_level", "min": _clean(start), "max": _clean(end)}
         if kind == "by_char_level_named_data_values_interpolation":
-            if node.get("scale_by_stat_progression_multiplier"):
-                raise KitGenError(
-                    f"{self.slot}: stat-progression named level interpolation is not translated"
-                )
             start = self.constant_data_value(str(node.get("start_data_value")))
             end = self.constant_data_value(str(node.get("end_data_value")))
+            if node.get("scale_by_stat_progression_multiplier"):
+                return _stat_progression_formula(float(start), float(end))
             return {"op": "linear_by_level", "min": start, "max": end}
         if kind == "by_char_level_formula":
             raw_vals = node.get("values")
@@ -332,9 +328,11 @@ class _Ability:
             raise KitGenError(f"{self.slot}: named breakpoints node missing level1_data_value")
         level1 = float(self.constant_data_value(level1_dv))
         per_dv = node.get("bonus_per_level_data_value")
-        rate = (
-            float(self.constant_data_value(per_dv)) if isinstance(per_dv, str) and per_dv else 0.0
-        )
+        rate = 0.0
+        if isinstance(per_dv, str) and per_dv:
+            entry = self.data_values.get(per_dv)
+            if not (entry and not entry.get("ranks") and not entry.get("raw_values")):
+                rate = float(self.constant_data_value(per_dv))
         raw_bps = node.get("breakpoints")
         if raw_bps is not None and not isinstance(raw_bps, Sequence):
             raise KitGenError(f"{self.slot}: named breakpoints must be a list")
@@ -358,7 +356,9 @@ class _Ability:
                         current += float(self.constant_data_value(add_dv))
                 rate_dv = bp.get("bonus_per_level_at_and_after_data_value")
                 if isinstance(rate_dv, str) and rate_dv:
-                    rate = float(self.constant_data_value(rate_dv))
+                    entry = self.data_values.get(rate_dv)
+                    if not (entry and not entry.get("ranks") and not entry.get("raw_values")):
+                        rate = float(self.constant_data_value(rate_dv))
             values.append(_clean(current))
         return {"op": "by_level", "values": values}
 
@@ -389,6 +389,15 @@ def _clean(value: float) -> float | int:
         if abs(rounded - value) <= 1e-6 * max(1.0, abs(value)):
             return int(rounded) if rounded == int(rounded) else rounded
     return float(value)
+
+
+def _stat_progression_formula(start: float, end: float) -> dict[str, Any]:
+    """Expand Riot's stat-progression multiplier curve to an 18-level ``by_level`` table."""
+    values = [
+        _clean(start + (end - start) * (lvl - 1) / 17.0 * (0.7025 + 0.0175 * (lvl - 1)))
+        for lvl in range(1, 19)
+    ]
+    return {"op": "by_level", "values": values}
 
 
 def _breakpoints_formula(node: Mapping[str, Any], slot: str) -> dict[str, Any]:
@@ -516,7 +525,19 @@ def _compile_passive_effect(
         "label": str(effect_spec.get("label", "Derivado")),
         "source": source,
     }
-    for key in ("stat", "mode", "trigger", "damage_type", "input_name", "condition"):
+    for key in (
+        "stat",
+        "mode",
+        "trigger",
+        "damage_type",
+        "input_name",
+        "condition",
+        "shield_type",
+        "resource",
+        "target_kind",
+        "only_at_max",
+        "stack_source_id",
+    ):
         if key in effect_spec:
             compiled[key] = effect_spec[key]
     for key in (
@@ -526,9 +547,18 @@ def _compile_passive_effect(
         "cooldown_seconds",
         "every",
         "stacks_required",
+        "threshold_hp_percent",
+        "damage_reduction_cap",
     ):
         if key in effect_spec:
             compiled[key] = _setting(ability, effect_spec[key], f"{effect_ctx}.{key}")
+    if "cooldown_calculation" in effect_spec:
+        if ability is None:
+            raise KitGenError(f"{effect_ctx}: no bin data for cooldown_calculation")
+        compiled["cooldown_formula"] = ability.calculation(str(effect_spec["cooldown_calculation"]))
+    elif "cooldown_formula" in effect_spec:
+        cd_raw = effect_spec["cooldown_formula"]
+        compiled["cooldown_formula"] = ability.custom(cd_raw) if ability is not None else cd_raw
     return compiled
 
 

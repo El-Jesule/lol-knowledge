@@ -27,13 +27,60 @@ KIT_FILENAME = "kit.json"
 SLOTS = ("P", "Q", "W", "E", "R")
 CASE_ID = re.compile(r"[a-z][a-z0-9_]*")
 COST_RESOURCES = frozenset({"mana", "energy", "health", "none"})
-PASSIVE_EFFECT_KINDS = frozenset({"stat_bonus", "stacking_stat", "heal", "damage_proc"})
-PASSIVE_STAT_MODES = frozenset({"flat", "percent"})
+PASSIVE_EFFECT_KINDS = frozenset(
+    {
+        "stat_bonus",
+        "stacking_stat",
+        "heal",
+        "damage_proc",
+        "shield",
+        "damage_taken_modifier",
+        "resource_restore",
+    }
+)
+PASSIVE_STAT_MODES = frozenset({"flat", "percent", "percent_ms"})
 PASSIVE_STACK_TRIGGERS = frozenset({"champion_hit", "attack", "ability_hit", "any_hit"})
 PASSIVE_HEAL_TRIGGERS = frozenset(
-    {"on_champion_takedown", "on_minion_monster_kill", "on_hit", "on_ability_hit"}
+    {
+        "on_champion_takedown",
+        "on_minion_monster_kill",
+        "on_any_kill",
+        "on_hit",
+        "on_ability_hit",
+        "on_ability_cast",
+        "on_champion_hit",
+        "every_n_attacks",
+        "every_n_hits",
+    }
 )
-PASSIVE_PROC_TRIGGERS = frozenset({"on_attack", "on_hit", "every_n_attacks"})
+PASSIVE_PROC_TRIGGERS = frozenset(
+    {
+        "on_attack",
+        "on_hit",
+        "every_n_attacks",
+        "every_n_hits",
+        "after_ability",
+        "on_ability_hit",
+        "below_hp_percent",
+        "at_max_stacks",
+    }
+)
+PASSIVE_SHIELD_TRIGGERS = frozenset(
+    {
+        "on_taking_damage",
+        "on_ability_cast",
+        "on_champion_attack",
+        "every_n_hits",
+        "below_hp_percent",
+    }
+)
+PASSIVE_RESOURCE_TRIGGERS = frozenset(
+    {"on_any_kill", "on_hit", "on_ability_hit", "on_champion_hit"}
+)
+PASSIVE_SHIELD_TYPES = frozenset({"normal", "physical", "magic"})
+PASSIVE_DR_MODES = frozenset({"flat", "percent"})
+PASSIVE_RESOURCES = frozenset({"mana", "energy"})
+PASSIVE_TARGET_KINDS = frozenset({"champion", "non_structure"})
 
 
 @dataclass(frozen=True)
@@ -42,23 +89,32 @@ class PassiveEffectSpec:
 
     id: str
     name: str
-    kind: str  # "stat_bonus", "stacking_stat", "heal" or "damage_proc"
+    kind: str
     formula: Mapping[str, Any]
     label: Label
     source: str
-    # Stat target and mode for "stat_bonus" and "stacking_stat".
+    # Stat target and mode for "stat_bonus" and "stacking_stat" (or "flat"/"percent" for DR).
     stat: str | None = None
-    mode: str = "flat"  # "flat" or "percent" (amplifier of total)
+    mode: str = "flat"
     # Trigger and stacking controls for combat passives.
     trigger: str | None = None
     max_stacks: int | None = None
     max_stacks_multiplier: Fraction = Fraction(1)
+    only_at_max: bool = False
     duration_seconds: Fraction | None = None
     cooldown_seconds: Fraction | None = None
+    cooldown_formula: Mapping[str, Any] | None = None
     every: int | None = None
     stacks_required: int | None = None
-    # Damage type for "damage_proc".
+    stack_source_id: str | None = None
+    # Damage type for "damage_proc" or optional filter for "damage_taken_modifier".
     damage_type: DamageType | None = None
+    # Shield / threshold / DR cap / resource controls.
+    shield_type: str = "normal"
+    threshold_hp_percent: Fraction | None = None
+    damage_reduction_cap: Fraction | None = None
+    resource: str | None = None
+    target_kind: str | None = None
     # Optional scenario --input name (e.g. determination_stacks, essence_fragments).
     input_name: str | None = None
     condition: str = ""
@@ -277,11 +333,32 @@ def _passive_effects(
         trigger: str | None = None
         max_stacks: int | None = None
         max_mult = Fraction(1)
+        only_at_max = bool(entry.get("only_at_max", False))
         duration: Fraction | None = None
         cooldown: Fraction | None = None
+        cooldown_formula: Mapping[str, Any] | None = None
         every: int | None = None
         stacks_req: int | None = None
+        stack_source_id: str | None = None
         damage_type: DamageType | None = None
+        shield_type = "normal"
+        threshold_hp: Fraction | None = None
+        dr_cap: Fraction | None = None
+        resource: str | None = None
+        target_kind: str | None = None
+
+        raw_cd_formula = entry.get("cooldown_formula")
+        if raw_cd_formula is not None:
+            cooldown_formula = _formula(
+                {"formula": raw_cd_formula}, max_rank, f"{entry_ctx}.cooldown_formula"
+            )
+        raw_tk = entry.get("target_kind")
+        if raw_tk is not None:
+            if raw_tk not in PASSIVE_TARGET_KINDS:
+                raise KitError(
+                    f"{entry_ctx}: target_kind must be one of {sorted(PASSIVE_TARGET_KINDS)}"
+                )
+            target_kind = str(raw_tk)
 
         if kind in {"stat_bonus", "stacking_stat"}:
             stat_id = _text(entry, "stat", entry_ctx)
@@ -316,6 +393,10 @@ def _passive_effects(
                 )
             cooldown = _optional_positive_fraction(entry, "cooldown_seconds", entry_ctx)
             stacks_req = _optional_positive_int(entry, "stacks_required", entry_ctx)
+            if trigger in {"every_n_attacks", "every_n_hits"}:
+                every = _optional_positive_int(entry, "every", entry_ctx, minimum=2)
+                if every is None:
+                    raise KitError(f"{entry_ctx}: {trigger} requires every >= 2")
         elif kind == "damage_proc":
             trigger = _text(entry, "trigger", entry_ctx)
             if trigger not in PASSIVE_PROC_TRIGGERS:
@@ -327,10 +408,63 @@ def _passive_effects(
             except ValueError as exc:
                 raise KitError(f"{entry_ctx}: unknown damage_type") from exc
             cooldown = _optional_positive_fraction(entry, "cooldown_seconds", entry_ctx)
-            if trigger == "every_n_attacks":
+            duration = _optional_positive_fraction(entry, "duration_seconds", entry_ctx)
+            if trigger in {"every_n_attacks", "every_n_hits"}:
                 every = _optional_positive_int(entry, "every", entry_ctx, minimum=2)
                 if every is None:
-                    raise KitError(f"{entry_ctx}: every_n_attacks requires every >= 2")
+                    raise KitError(f"{entry_ctx}: {trigger} requires every >= 2")
+            elif trigger == "below_hp_percent":
+                threshold_hp = _optional_positive_fraction(entry, "threshold_hp_percent", entry_ctx)
+                if threshold_hp is None or threshold_hp > 1:
+                    raise KitError(
+                        f"{entry_ctx}: below_hp_percent requires threshold_hp_percent in (0, 1]"
+                    )
+            elif trigger == "at_max_stacks":
+                stack_source_id = _text(entry, "stack_source_id", entry_ctx)
+        elif kind == "shield":
+            trigger = _text(entry, "trigger", entry_ctx)
+            if trigger not in PASSIVE_SHIELD_TRIGGERS:
+                raise KitError(
+                    f"{entry_ctx}: trigger must be one of {sorted(PASSIVE_SHIELD_TRIGGERS)}"
+                )
+            shield_type = str(entry.get("shield_type", "normal"))
+            if shield_type not in PASSIVE_SHIELD_TYPES:
+                raise KitError(
+                    f"{entry_ctx}: shield_type must be one of {sorted(PASSIVE_SHIELD_TYPES)}"
+                )
+            duration = _optional_positive_fraction(entry, "duration_seconds", entry_ctx)
+            cooldown = _optional_positive_fraction(entry, "cooldown_seconds", entry_ctx)
+            if trigger == "every_n_hits":
+                every = _optional_positive_int(entry, "every", entry_ctx, minimum=2)
+                if every is None:
+                    raise KitError(f"{entry_ctx}: every_n_hits requires every >= 2")
+            elif trigger == "below_hp_percent":
+                threshold_hp = _optional_positive_fraction(entry, "threshold_hp_percent", entry_ctx)
+                if threshold_hp is None or threshold_hp > 1:
+                    raise KitError(
+                        f"{entry_ctx}: below_hp_percent requires threshold_hp_percent in (0, 1]"
+                    )
+        elif kind == "damage_taken_modifier":
+            mode = str(entry.get("mode", "percent"))
+            if mode not in PASSIVE_DR_MODES:
+                raise KitError(f"{entry_ctx}: mode must be one of {sorted(PASSIVE_DR_MODES)}")
+            raw_dt = entry.get("damage_type")
+            if raw_dt is not None:
+                try:
+                    damage_type = DamageType(raw_dt)
+                except ValueError as exc:
+                    raise KitError(f"{entry_ctx}: unknown damage_type") from exc
+            dr_cap = _optional_positive_fraction(entry, "damage_reduction_cap", entry_ctx)
+        elif kind == "resource_restore":
+            trigger = _text(entry, "trigger", entry_ctx)
+            if trigger not in PASSIVE_RESOURCE_TRIGGERS:
+                raise KitError(
+                    f"{entry_ctx}: trigger must be one of {sorted(PASSIVE_RESOURCE_TRIGGERS)}"
+                )
+            resource = _text(entry, "resource", entry_ctx)
+            if resource not in PASSIVE_RESOURCES:
+                raise KitError(f"{entry_ctx}: resource must be one of {sorted(PASSIVE_RESOURCES)}")
+            cooldown = _optional_positive_fraction(entry, "cooldown_seconds", entry_ctx)
 
         effects.append(
             PassiveEffectSpec(
@@ -345,11 +479,19 @@ def _passive_effects(
                 trigger=trigger,
                 max_stacks=max_stacks,
                 max_stacks_multiplier=max_mult,
+                only_at_max=only_at_max,
                 duration_seconds=duration,
                 cooldown_seconds=cooldown,
+                cooldown_formula=cooldown_formula,
                 every=every,
                 stacks_required=stacks_req,
+                stack_source_id=stack_source_id,
                 damage_type=damage_type,
+                shield_type=shield_type,
+                threshold_hp_percent=threshold_hp,
+                damage_reduction_cap=dr_cap,
+                resource=resource,
+                target_kind=target_kind,
                 input_name=raw_input,
                 condition=condition,
             )

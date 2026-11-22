@@ -13,6 +13,15 @@
       "max_rank": 1,
       "not_modelled": [
         "Curación propia y aliada cada 7 cargas (BaseHeal, AllyHeal)"
+      ],
+      "passive_effects": [
+        {
+          "id": "triumphant_roar_heal",
+          "name": "Rugido triunfal (curación propia al derribar)",
+          "kind": "heal",
+          "trigger": "on_champion_takedown",
+          "calculation": "BaseHeal"
+        }
       ]
     },
     "Q": {

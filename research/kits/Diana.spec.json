@@ -25,6 +25,29 @@
       ],
       "not_modelled": [
         "Velocidad de ataque pasiva y potenciada tras lanzar habilidades (BonusAS, EmpoweredAS)"
+      ],
+      "passive_effects": [
+        {
+          "id": "moonsilver_as",
+          "name": "Hoja lunargenta (VA permanente)",
+          "kind": "stat_bonus",
+          "stat": "attack_speed_bonus",
+          "mode": "flat",
+          "calculation": "BonusAS",
+          "scale": 100,
+          "condition": "pasiva permanente de Hoja lunargenta"
+        },
+        {
+          "id": "moonsilver_cleave",
+          "name": "Hoja lunargenta (3.º ataque)",
+          "kind": "damage_proc",
+          "trigger": "every_n_attacks",
+          "every": {
+            "data_value": "AttackCount"
+          },
+          "damage_type": "magic",
+          "calculation": "CleaveDamage"
+        }
       ]
     },
     "Q": {

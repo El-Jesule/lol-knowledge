@@ -19,6 +19,21 @@
       "passive_stats": [],
       "not_modelled": [
         "Reducción del 10 % del daño mágico recibido (DamageReductionPercent) y movimiento fantasmal"
+      ],
+      "passive_effects": [
+        {
+          "id": "void_stone_magic_dr",
+          "name": "Piedra del Vacío (reducción de daño mágico)",
+          "kind": "damage_taken_modifier",
+          "formula": {
+            "op": "constant",
+            "value": 0.1
+          },
+          "label": "Derivado",
+          "source": "Characters/Kassadin/Spells/VoidStoneAbility/VoidStone.DataValues.DamageReductionPercent (16.23.8406595+branch.releases-16-23.content.release)",
+          "mode": "percent",
+          "damage_type": "magic"
+        }
       ]
     },
     "Q": {

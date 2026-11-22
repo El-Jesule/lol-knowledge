@@ -19,6 +19,23 @@
       "passive_stats": [],
       "not_modelled": [
         "Generación de Furia (hasta 100), probabilidad de crítico proporcional (hasta 50 %) y conversión de exceso en DA"
+      ],
+      "passive_effects": [
+        {
+          "id": "battle_fury_crit",
+          "name": "Furia de batalla (crítico por Furia)",
+          "kind": "stat_bonus",
+          "formula": {
+            "op": "constant",
+            "value": 0.5
+          },
+          "label": "Derivado",
+          "source": "Characters/Tryndamere/Spells/TryndamerePassiveAbility/TryndamerePassive.mSpellCalculations.PassiveCritConversionTooltip (16.23.8406595+branch.releases-16-23.content.release)",
+          "stat": "crit_chance",
+          "mode": "flat",
+          "input_name": "tryndamere_fury",
+          "max_stacks": 100
+        }
       ]
     },
     "Q": {

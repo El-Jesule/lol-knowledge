@@ -19,6 +19,126 @@
       "passive_stats": [],
       "not_modelled": [
         "Estadísticas de Mini-Gnar (alcance, VM, VA: TotalAS) y transformación en Mega-Gnar (vida, armadura, RM, DA base adicionales)"
+      ],
+      "passive_effects": [
+        {
+          "id": "mega_gnar_health",
+          "name": "Mega-Gnar (vida adicional)",
+          "kind": "stat_bonus",
+          "formula": {
+            "op": "linear_by_level",
+            "min": 100,
+            "max": 831
+          },
+          "label": "Derivado",
+          "source": "Characters/Gnar/Spells/GnarPassiveAbility/GnarPassive.mSpellCalculations.TotalMegaGnarHealth (16.23.8406595+branch.releases-16-23.content.release)",
+          "stat": "health",
+          "mode": "flat",
+          "input_name": "mega_gnar",
+          "max_stacks": 1
+        },
+        {
+          "id": "mega_gnar_armor",
+          "name": "Mega-Gnar (armadura adicional)",
+          "kind": "stat_bonus",
+          "formula": {
+            "op": "by_level",
+            "values": [
+              3.5,
+              5.66,
+              7.925,
+              10.295,
+              12.77,
+              15.35,
+              18.035,
+              20.825,
+              23.72,
+              26.72,
+              29.825,
+              33.035,
+              36.35,
+              39.77,
+              43.295,
+              46.925,
+              50.66,
+              54.5
+            ]
+          },
+          "label": "Derivado",
+          "source": "Characters/Gnar/Spells/GnarPassiveAbility/GnarPassive.mSpellCalculations.TotalMegaGnarArmor (16.23.8406595+branch.releases-16-23.content.release)",
+          "stat": "armor",
+          "mode": "flat",
+          "input_name": "mega_gnar",
+          "max_stacks": 1
+        },
+        {
+          "id": "mega_gnar_mr",
+          "name": "Mega-Gnar (RM adicional)",
+          "kind": "stat_bonus",
+          "formula": {
+            "op": "by_level",
+            "values": [
+              3.5,
+              6.02,
+              8.6625,
+              11.4275,
+              14.315,
+              17.325,
+              20.4575,
+              23.7125,
+              27.09,
+              30.59,
+              34.2125,
+              37.9575,
+              41.825,
+              45.815,
+              49.9275,
+              54.1625,
+              58.52,
+              63
+            ]
+          },
+          "label": "Derivado",
+          "source": "Characters/Gnar/Spells/GnarPassiveAbility/GnarPassive.mSpellCalculations.TotalMegaGnarMR (16.23.8406595+branch.releases-16-23.content.release)",
+          "stat": "magic_resist",
+          "mode": "flat",
+          "input_name": "mega_gnar",
+          "max_stacks": 1
+        },
+        {
+          "id": "mega_gnar_ad",
+          "name": "Mega-Gnar (DA adicional)",
+          "kind": "stat_bonus",
+          "formula": {
+            "op": "by_level",
+            "values": [
+              6,
+              7.8,
+              9.6875,
+              11.6625,
+              13.725,
+              15.875,
+              18.1125,
+              20.4375,
+              22.85,
+              25.35,
+              27.9375,
+              30.6125,
+              33.375,
+              36.225,
+              39.1625,
+              42.1875,
+              45.3,
+              48.5
+            ]
+          },
+          "label": "Derivado",
+          "source": "Characters/Gnar/Spells/GnarPassiveAbility/GnarPassive.mSpellCalculations.TotalMegaGnarAD (16.23.8406595+branch.releases-16-23.content.release)",
+          "stat": "attack_damage",
+          "mode": "flat",
+          "input_name": "mega_gnar",
+          "max_stacks": 1
+        }
       ]
     },
     "Q": {

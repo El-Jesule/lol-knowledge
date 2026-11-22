@@ -19,6 +19,40 @@
       "passive_stats": [],
       "not_modelled": [
         "Escudo de Flujo (ShieldValue usa interpolación por progresión), duplicación de probabilidad de crítico, conversión del exceso en DA y modificador de daño crítico"
+      ],
+      "passive_effects": [
+        {
+          "id": "way_of_the_wanderer_shield",
+          "name": "Camino del alma errante (escudo)",
+          "kind": "shield",
+          "formula": {
+            "op": "by_level",
+            "values": [
+              125,
+              145.1176,
+              166.2132,
+              188.2868,
+              211.3382,
+              235.3676,
+              260.375,
+              286.3603,
+              313.3235,
+              341.265,
+              370.184,
+              400.081,
+              430.956,
+              462.809,
+              495.64,
+              529.449,
+              564.235,
+              600
+            ]
+          },
+          "label": "Derivado",
+          "source": "Characters/Yasuo/Spells/YasuoPassiveAbility/YasuoPassive.mSpellCalculations.ShieldValue (16.23.8406595+branch.releases-16-23.content.release)",
+          "trigger": "on_taking_damage",
+          "duration_seconds": 1
+        }
       ]
     },
     "Q": {

@@ -42,6 +42,31 @@
       ],
       "not_modelled": [
         "Curación del daño infligido a campeones (HealingPercent), ejecución a súbditos y tope a monstruos"
+      ],
+      "passive_effects": [
+        {
+          "id": "thousand_cuts_on_hit",
+          "name": "Mil cortes (daño mágico al impactar)",
+          "kind": "damage_proc",
+          "trigger": "on_hit",
+          "damage_type": "magic",
+          "formula": {
+            "op": "mul",
+            "operands": [
+              {
+                "op": "calculation",
+                "name": "PercentHealth1000Cuts"
+              },
+              {
+                "op": "stat",
+                "stat": "health",
+                "scope": "max",
+                "subject": "target"
+              }
+            ]
+          },
+          "source_note": "PercentHealth1000Cuts × vida máxima del objetivo"
+        }
       ]
     },
     "Q": {

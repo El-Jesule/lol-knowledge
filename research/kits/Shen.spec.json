@@ -14,6 +14,22 @@
       "max_rank": 1,
       "not_modelled": [
         "Escudo al lanzar habilidades (ShieldValue) y reducción de enfriamiento al afectar campeones"
+      ],
+      "passive_effects": [
+        {
+          "id": "ki_barrier",
+          "name": "Barrera de ki",
+          "kind": "shield",
+          "trigger": "on_ability_cast",
+          "calculation": "{58a09e24}",
+          "duration_seconds": {
+            "data_value": "ShieldDuration"
+          },
+          "cooldown_seconds": {
+            "data_value": "ShieldCooldown"
+          },
+          "source_note": "ShieldValue default_calculation ({58a09e24}) sin recompensa de misión Nemesis"
+        }
       ]
     },
     "Q": {

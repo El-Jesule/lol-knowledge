@@ -54,7 +54,43 @@
         }
       ],
       "passive_stats": [],
-      "not_modelled": []
+      "not_modelled": [],
+      "passive_effects": [
+        {
+          "id": "organic_deconstruction",
+          "name": "Deconstrucción orgánica (3.º impacto)",
+          "kind": "damage_proc",
+          "formula": {
+            "op": "add",
+            "operands": [
+              {
+                "op": "mul",
+                "operands": [
+                  {
+                    "op": "constant",
+                    "value": 0.65
+                  },
+                  {
+                    "op": "stat",
+                    "stat": "ability_power",
+                    "scope": "total"
+                  }
+                ]
+              },
+              {
+                "op": "linear_by_level",
+                "min": 35,
+                "max": 205
+              }
+            ]
+          },
+          "label": "Derivado",
+          "source": "Characters/Velkoz/Spells/VelkozPassiveAbility/VelkozPassive.mSpellCalculations.TotalDamage (16.23.8406595+branch.releases-16-23.content.release)",
+          "trigger": "every_n_hits",
+          "damage_type": "true",
+          "every": 3
+        }
+      ]
     },
     "Q": {
       "name": "Fisión de plasma",
