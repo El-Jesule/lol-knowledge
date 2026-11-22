@@ -14,6 +14,18 @@
       "max_rank": 1,
       "not_modelled": [
         "Velocidad de movimiento plana (+40) y efecto fantasmal al cambiar de postura"
+      ],
+      "passive_effects": [
+        {
+          "id": "hextech_capacitor_ms",
+          "name": "Condensador hextech (VM al cambiar de arma)",
+          "kind": "stat_bonus",
+          "stat": "move_speed",
+          "mode": "flat",
+          "data_value": "FlatMovementSpeed",
+          "max_stacks": 1,
+          "input_name": "jayce_transform"
+        }
       ]
     },
     "Q": {

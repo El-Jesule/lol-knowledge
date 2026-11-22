@@ -48,6 +48,67 @@
       "passive_stats": [],
       "not_modelled": [
         "Curación sobre el daño adicional, alcance extra (+50), tope contra monstruos (MonsterDamageCap) y reducción de enfriamiento"
+      ],
+      "passive_effects": [
+        {
+          "id": "deathbringer_strike",
+          "name": "Aspecto de la muerte (daño mágico % vida máxima)",
+          "kind": "damage_proc",
+          "formula": {
+            "op": "mul",
+            "operands": [
+              {
+                "op": "linear_by_level",
+                "min": 0.04,
+                "max": 0.1
+              },
+              {
+                "op": "stat",
+                "stat": "health",
+                "scope": "max",
+                "subject": "target"
+              }
+            ]
+          },
+          "label": "Derivado",
+          "source": "Characters/Aatrox/Spells/AatroxPassiveAbility/AatroxPassive · PDamage × vida máxima del objetivo (16.23.8406595+branch.releases-16-23.content.release)",
+          "trigger": "on_attack",
+          "damage_type": "magic",
+          "cooldown_formula": {
+            "op": "linear_by_level",
+            "min": 22,
+            "max": 10
+          }
+        },
+        {
+          "id": "deathbringer_heal",
+          "name": "Aspecto de la muerte (curación)",
+          "kind": "heal",
+          "formula": {
+            "op": "mul",
+            "operands": [
+              {
+                "op": "linear_by_level",
+                "min": 0.04,
+                "max": 0.1
+              },
+              {
+                "op": "stat",
+                "stat": "health",
+                "scope": "max",
+                "subject": "target"
+              }
+            ]
+          },
+          "label": "Derivado",
+          "source": "Characters/Aatrox/Spells/AatroxPassiveAbility/AatroxPassive · Curación igual al daño premitigación contra campeones (PHealingRatio=1) (16.23.8406595+branch.releases-16-23.content.release)",
+          "trigger": "on_hit",
+          "cooldown_formula": {
+            "op": "linear_by_level",
+            "min": 22,
+            "max": 10
+          }
+        }
       ]
     },
     "Q": {

@@ -19,6 +19,22 @@
       "passive_stats": [],
       "not_modelled": [
         "Aturdimiento a 3 marcas (StunDuration) y restauración de energía (EnergyRestore)"
+      ],
+      "passive_effects": [
+        {
+          "id": "mark_of_the_storm_energy",
+          "name": "Marca de la tormenta (energía al aturdir cada 3 habilidades)",
+          "kind": "resource_restore",
+          "formula": {
+            "op": "constant",
+            "value": 25
+          },
+          "label": "Derivado",
+          "source": "Characters/Kennen/Spells/KennenPassiveAbility/KennenPassive.DataValues.EnergyRestore (16.23.8406595+branch.releases-16-23.content.release)",
+          "trigger": "every_n_ability_hits",
+          "resource": "energy",
+          "every": 3
+        }
       ]
     },
     "Q": {

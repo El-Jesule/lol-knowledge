@@ -19,6 +19,42 @@
       "passive_stats": [],
       "not_modelled": [
         "Saltos desde maleza, sistema de 4 de Ferocidad, Collar dientehueso y velocidad potenciada (EmpoweredMS)"
+      ],
+      "passive_effects": [
+        {
+          "id": "unseen_predator_ms",
+          "name": "Depredador invisible (VM tras habilidad potenciada)",
+          "kind": "stat_bonus",
+          "formula": {
+            "op": "by_level",
+            "values": [
+              0.3,
+              0.3,
+              0.3,
+              0.3,
+              0.3,
+              0.3,
+              0.4,
+              0.4,
+              0.4,
+              0.4,
+              0.4,
+              0.4,
+              0.5,
+              0.5,
+              0.5,
+              0.5,
+              0.5,
+              0.5
+            ]
+          },
+          "label": "Derivado",
+          "source": "Characters/Rengar/Spells/RengarPassiveAbility/RengarPassive.mSpellCalculations.EmpoweredMS (16.23.8406595+branch.releases-16-23.content.release)",
+          "stat": "move_speed",
+          "mode": "percent_ms",
+          "input_name": "rengar_empowered",
+          "max_stacks": 1
+        }
       ]
     },
     "Q": {

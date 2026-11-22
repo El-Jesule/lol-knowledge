@@ -45,6 +45,41 @@
       ],
       "not_modelled": [
         "Enfriamiento independiente por pierna (PerLegCD) y tope contra monstruos (MonsterCap)"
+      ],
+      "passive_effects": [
+        {
+          "id": "echoing_flames",
+          "name": "Articulaciones llameantes (disparo de pierna)",
+          "kind": "damage_proc",
+          "trigger": "on_attack",
+          "cooldown_calculation": "PerLegCD",
+          "damage_type": "physical",
+          "formula": {
+            "op": "add",
+            "operands": [
+              {
+                "op": "calculation",
+                "name": "ADDamage"
+              },
+              {
+                "op": "mul",
+                "operands": [
+                  {
+                    "op": "calculation",
+                    "name": "PercentHPRatio"
+                  },
+                  {
+                    "op": "stat",
+                    "stat": "health",
+                    "scope": "max",
+                    "subject": "target"
+                  }
+                ]
+              }
+            ]
+          },
+          "source_note": "ADDamage + PercentHPRatio × vida máxima del objetivo"
+        }
       ]
     },
     "Q": {

@@ -14,6 +14,18 @@
       "max_rank": 1,
       "not_modelled": [
         "Velocidad de movimiento plana al dañar campeones (FlatMS)"
+      ],
+      "passive_effects": [
+        {
+          "id": "fleet_of_foot_ms",
+          "name": "Mil pies (VM al dañar campeón)",
+          "kind": "stat_bonus",
+          "stat": "move_speed",
+          "mode": "flat",
+          "calculation": "FlatMS",
+          "max_stacks": 1,
+          "input_name": "sivir_fleet_of_foot"
+        }
       ]
     },
     "Q": {

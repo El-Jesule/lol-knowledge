@@ -21,10 +21,10 @@ El motor no codifica nombres de campeón en Python: cualquier campeón declara s
 | `stat_bonus` | Hoja (`stats`, `ability`, `rotation`) | Aporte fijo (`mode: "flat"`), amplificador del total (`mode: "percent"`) o bonificación porcentual de VM (`mode: "percent_ms"`), permanente o condicionado a `--input <input_name>` |
 | `stacking_stat` | Hoja con `--input <input_name>=0..N`; combate automático en `rotation` | Acumulaciones temporales de combate que empiezan en `0` ([`combat-stacks.md`](combat-stacks.md)) —o en `--input <input_name>` si se declara—, suben `+1` tras cada golpe que cumple `trigger` (`champion_hit`, `attack`, `ability_hit`, `any_hit`), se multiplican por `max_stacks_multiplier` o se activan solo al máximo (`only_at_max: true`, p. ej. Darius) y caducan tras `duration_seconds` en `--timeline` |
 | `heal` | `rotation` (`HealEvent`) | Curación directa al cumplirse `trigger` (`on_champion_takedown`, `on_minion_monster_kill`, `on_any_kill`, `on_hit`, `on_ability_hit`, `on_ability_cast`, `on_champion_hit`, `every_n_attacks`, `every_n_hits`), con enfriamiento fijo o escalado por nivel (`cooldown_formula`); escala con HSP, Revitalizar y Heridas graves ([`survival.md`](survival.md)) |
-| `damage_proc` | `rotation` (`kind: "ability"`, slot `P`) | Daño adicional pasivo por disparo (`on_attack`, `on_hit`, `every_n_attacks`, `every_n_hits`, `after_ability`, `on_ability_hit`, `below_hp_percent`, `at_max_stacks`) con enfriamiento fijo o `cooldown_formula` |
+| `damage_proc` | `rotation` (`kind: "ability"`, slot `P`) | Daño adicional pasivo por disparo (`on_attack`, `on_hit`, `on_any_hit`, `every_n_attacks`, `every_n_hits`, `every_n_ability_hits`, `after_ability`, `on_ability_hit`, `below_hp_percent`, `at_max_stacks`) con enfriamiento fijo o `cooldown_formula` |
 | `shield` | `rotation` (`ShieldEvent`) y `survive` | Escudo pasivo por disparo (`on_taking_damage`, `on_ability_cast`, `on_champion_attack`, `every_n_hits`, `below_hp_percent`), escalado con HSP y Revitalizar; los escudos propios en `rotation` disparan además Golpe de escudo (`8401`) |
-| `damage_taken_modifier` | `survive` | Reducción de daño entrante porcentual (`mode: "percent"`, p. ej. Kassadin `-10 %` mágico) o plana (`mode: "flat"` con tope `damage_reduction_cap`, p. ej. Fizz `4 + 1 % PH` hasta `50 %`) |
-| `resource_restore` | `rotation` (`ResourceEvent`) | Restauración de maná o energía (`on_any_kill`, `on_hit`, `on_ability_hit`, `on_champion_hit`) con enfriamiento opcional |
+| `damage_taken_modifier` | `survive` | Reducción de daño entrante porcentual (`mode: "percent"`, p. ej. Kassadin `-10 %` mágico, Malzahar `-90 %` con `cooldown_formula`) o plana (`mode: "flat"` con tope `damage_reduction_cap`, p. ej. Fizz `4 + 1 % PH` hasta `50 %`) |
+| `resource_restore` | `rotation` (`ResourceEvent`) | Restauración de maná o energía (`on_any_kill`, `on_hit`, `on_ability_hit`, `on_champion_hit`, `every_n_ability_hits`) con enfriamiento opcional |
 
 Para interpolaciones lineales `1..18` del cliente (`ByCharLevelInterpolationCalculationPart` y `{ee18a47b}` sin multiplicador de crecimiento), las fórmulas de kit disponen del operador exacto `linear_by_level` (`min + (max - min) × (nivel - 1) / 17` en `Fraction`), y para curvas con `mScaleByStatProgressionMultiplier = true` `kitgen.py` expande la progresión exacta de crecimiento de estadísticas ([`stat-growth.md`](stat-growth.md)) en tablas `by_level` de 18 niveles. Los contadores de cargas del bin (`BuffCounterByCoefficientCalculationPart` y `BuffCounterByNamedDataValueCalculationPart`) se compilan a `{"op": "input", "name": "<cargas>", "default": 0}`, evaluando a `0` cargas por defecto y escalando al pasar `--input <cargas>=N`.
 
@@ -40,7 +40,7 @@ Además de las reglas `CH-04` (Bel'Veth, Zeri, Jhin, Sion, Graves, Ashe, Cassiop
 
 ## 3. Pasivas declarativas compiladas (`Derivado`, cliente `16.23`)
 
-**62 campeones** cuentan con `abilities.P.passive_effects` compilados directamente desde los `.bin` del cliente `16.23` (`research/kits/<Id>.spec.json`):
+**123 campeones** cuentan con `abilities.P.passive_effects` compilados directamente desde los `.bin` del cliente `16.23` (`research/kits/<Id>.spec.json`), más **11 campeones** con reglas globales de hoja/rotación (**134 / 173 campeones** con pasivas automatizadas):
 
 - **Base inicial (14):** Ahri, Bel'Veth, Garen, Irelia *(ampliada en Oleada 1 con daño automático al impactar a 4 cargas)*, Janna, Nasus, Senna, Shyvana, Sion, Sona, Swain, Thresh, Veigar y Zaahen.
 - **Oleada 1 (48 adicionales):**
@@ -49,6 +49,12 @@ Además de las reglas `CH-04` (Bel'Veth, Zeri, Jhin, Sion, Graves, Ashe, Cassiop
   - *Estadísticas condicionales en hoja (9):* Aphelios, Tryndamere, Olaf, Gnar (Mega-Gnar), Sejuani, Syndra (+15 % PH y maná), Teemo, Jinx y Lee Sin (+ energía).
   - *Curaciones y recursos (8):* Cho'Gath, Gragas, Maokai, Trundle, Yuumi, Alistar, Xerath y Xin Zhao (daño + curación en 3.º ataque).
   - *Procs automáticos de daño (15):* Zed (`< 50 %` vida), Corki (`20 %` DA verdadero), Gwen, Orianna, Tahm Kench, Warwick, Rell, Ekko (3 golpes), Aurora (3 golpes + curación), Vel'Koz (3 golpes), Akshan (3 golpes + escudo), Braum (4 golpes), Riven, Sylas y Zoe (ataques tras habilidad).
+- **Oleada 2 (61 adicionales):**
+  - *Procs periódicos, por golpe y tras habilidad (29):* Aatrox (+ curación), Ambessa (+ energía), Bard, Caitlyn (6.º ataque), Galio, Gangplank, Hwei (2 habilidades), Jarvan IV, Kai'Sa (+ detonación Plasma 5 golpes), K'Sante, Locke, Lucian, Lulu, Lux, Maestro Yi (4.º ataque), Mel, Miss Fortune, Mordekaiser (+ VM a 3 cargas), Nautilus, Nocturne (+ curación), Poppy (+ escudo), Qiyana, Renata, Seraphine, Sett (cada 2 ataques), Skarner (3 cargas), Taric (2 ataques), Urgot y Ziggs.
+  - *Quemaduras, sangrados y recursos (5):* Brand (quemadura + explosión 3 habilidades + maná), Lillia (quemadura + curación), Talon (sangrado), Twitch (veneno verdadero) y Briar (sangrado).
+  - *Defensa, curaciones, recursos y estadísticas condicionales (16):* Malzahar (`-90 %` daño con enfriamiento), Anivia (resistencias en huevo), Kled (vida de Skaarl y VM desmontado), Nunu (VA y VM), Rumble (VA sobrecalentado), Udyr (VA tras cambio), Varus (VA al eliminar), Kennen (energía cada 3 habilidades), Rek'Sai (curación), Zac (curación por trozo), Viego (curación al poseer), Dr. Mundo (vial 4 % vida máx.), Morgana (+18 % omnivampirismo en hechizos), Neeko (+20 % pen. mágica), Nilah (+7,5 % curaciones permanente) y Fiora (curación vital).
+  - *Velocidad de movimiento condicional (11):* Akali, Heimerdinger, Jayce, Nami, Rengar, Samira (0..6 grados de estilo), Singed, Sivir, Soraka, Taliyah y Vayne.
+- **Resto del roster (39 campeones):** pasivas estrictamente de utilidad/oro/visión/experiencia/posmuerte/mascotas/geometría (o escalados por cargas ya compilados directamente en Q/W/E/R como Aurelion Sol, Kindred y Smolder), documentadas en `not_modelled` sin inventar supuestos posicionales.
 
 ### Zaahen — *Florescencia de la guerra* (`data:champion:Zaahen`, `CH-Z-01`)
 

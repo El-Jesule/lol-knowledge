@@ -13,6 +13,28 @@
       "max_rank": 1,
       "not_modelled": [
         "Transformación en huevo al sufrir daño letal y resistencias (BonusResists)"
+      ],
+      "passive_effects": [
+        {
+          "id": "rebirth_egg_armor",
+          "name": "Renacimiento (armadura en forma de huevo)",
+          "kind": "stat_bonus",
+          "stat": "armor",
+          "mode": "flat",
+          "calculation": "BonusResists",
+          "max_stacks": 1,
+          "input_name": "anivia_egg"
+        },
+        {
+          "id": "rebirth_egg_mr",
+          "name": "Renacimiento (RM en forma de huevo)",
+          "kind": "stat_bonus",
+          "stat": "magic_resist",
+          "mode": "flat",
+          "calculation": "BonusResists",
+          "max_stacks": 1,
+          "input_name": "anivia_egg"
+        }
       ]
     },
     "Q": {

@@ -121,6 +121,22 @@
       "passive_stats": [],
       "not_modelled": [
         "Curación al golpear punto vital (PassiveHealAmount) y velocidad de movimiento"
+      ],
+      "passive_effects": [
+        {
+          "id": "duelists_dance_heal",
+          "name": "Baile de duelista (curación al golpear punto vital)",
+          "kind": "heal",
+          "formula": {
+            "op": "linear_by_level",
+            "min": 35,
+            "max": 100
+          },
+          "label": "Derivado",
+          "source": "Characters/Fiora/Spells/FioraPassiveAbility/FioraPassive.mSpellCalculations.PassiveHealAmount (16.23.8406595+branch.releases-16-23.content.release)",
+          "trigger": "on_champion_hit",
+          "cooldown_seconds": 2
+        }
       ]
     },
     "Q": {

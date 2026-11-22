@@ -56,6 +56,43 @@
       "passive_stats": [],
       "not_modelled": [
         "Requiere golpear con dos habilidades de daño en 4 s"
+      ],
+      "passive_effects": [
+        {
+          "id": "signature_of_the_visionary",
+          "name": "Firma del Visionario (detonación cada 2 habilidades)",
+          "kind": "damage_proc",
+          "formula": {
+            "op": "add",
+            "operands": [
+              {
+                "op": "linear_by_level",
+                "min": 40,
+                "max": 285
+              },
+              {
+                "op": "mul",
+                "operands": [
+                  {
+                    "op": "constant",
+                    "value": 0.35
+                  },
+                  {
+                    "op": "stat",
+                    "stat": "ability_power",
+                    "scope": "total"
+                  }
+                ]
+              }
+            ]
+          },
+          "label": "Derivado",
+          "source": "Characters/Hwei/Spells/HweiPassiveAbility/HweiPassive.mSpellCalculations.TotalDamage (16.23.8406595+branch.releases-16-23.content.release)",
+          "trigger": "every_n_ability_hits",
+          "damage_type": "magic",
+          "target_kind": "champion",
+          "every": 2
+        }
       ]
     },
     "Q": {

@@ -121,6 +121,107 @@
       "passive_stats": [],
       "not_modelled": [
         "Daño adicional de Disparo a la cabeza cada 6 ataques (HeadshotBonusDamage depende de crítico)"
+      ],
+      "passive_effects": [
+        {
+          "id": "headshot_proc",
+          "name": "Disparo a la cabeza (cada 6 ataques)",
+          "kind": "damage_proc",
+          "formula": {
+            "op": "mul",
+            "operands": [
+              {
+                "op": "add",
+                "operands": [
+                  {
+                    "op": "by_level",
+                    "values": [
+                      0.6,
+                      0.6,
+                      0.6,
+                      0.6,
+                      0.6,
+                      0.6,
+                      0.7,
+                      0.7,
+                      0.7,
+                      0.7,
+                      0.7,
+                      0.7,
+                      0.8,
+                      0.8,
+                      0.8,
+                      0.8,
+                      0.8,
+                      0.8
+                    ]
+                  },
+                  {
+                    "op": "mul",
+                    "operands": [
+                      {
+                        "op": "mul",
+                        "operands": [
+                          {
+                            "op": "constant",
+                            "value": 0.8
+                          },
+                          {
+                            "op": "stat",
+                            "stat": "crit_chance",
+                            "scope": "total"
+                          }
+                        ]
+                      },
+                      {
+                        "op": "add",
+                        "operands": [
+                          {
+                            "op": "mul",
+                            "operands": [
+                              {
+                                "op": "constant",
+                                "value": 1
+                              },
+                              {
+                                "op": "add",
+                                "operands": [
+                                  {
+                                    "op": "constant",
+                                    "value": 2
+                                  },
+                                  {
+                                    "op": "stat",
+                                    "stat": "crit_damage_bonus",
+                                    "scope": "total"
+                                  }
+                                ]
+                              }
+                            ]
+                          },
+                          {
+                            "op": "constant",
+                            "value": -1
+                          }
+                        ]
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "op": "stat",
+                "stat": "attack_damage",
+                "scope": "total"
+              }
+            ]
+          },
+          "label": "Derivado",
+          "source": "Characters/Caitlyn/Spells/CaitlynPassiveAbility/CaitlynPassive.mSpellCalculations.HeadshotBonusDamage (16.23.8406595+branch.releases-16-23.content.release)",
+          "trigger": "every_n_attacks",
+          "damage_type": "physical",
+          "every": 6
+        }
       ]
     },
     "Q": {

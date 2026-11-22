@@ -19,6 +19,23 @@
       "passive_stats": [],
       "not_modelled": [
         "Velocidad de movimiento hacia campeones enemigos"
+      ],
+      "passive_effects": [
+        {
+          "id": "night_hunter_ms",
+          "name": "Cazadora noctívaga (VM hacia campeón enemigo)",
+          "kind": "stat_bonus",
+          "formula": {
+            "op": "constant",
+            "value": 30
+          },
+          "label": "Derivado",
+          "source": "Characters/Vayne/Spells/VaynePassiveAbility/VaynePassive.DataValues.MovementSpeed (16.23.8406595+branch.releases-16-23.content.release)",
+          "stat": "move_speed",
+          "mode": "flat",
+          "input_name": "vayne_night_hunter",
+          "max_stacks": 1
+        }
       ]
     },
     "Q": {

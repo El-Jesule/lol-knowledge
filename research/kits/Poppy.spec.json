@@ -25,6 +25,28 @@
       ],
       "not_modelled": [
         "Escudo al recoger el broquel (ShieldValue) y alcance adicional"
+      ],
+      "passive_effects": [
+        {
+          "id": "iron_ambassador_damage",
+          "name": "Embajadora de hierro (daño mágico del broquel)",
+          "kind": "damage_proc",
+          "trigger": "on_attack",
+          "cooldown_calculation": "ActualCooldown",
+          "damage_type": "magic",
+          "calculation": "TotalDamage"
+        },
+        {
+          "id": "iron_ambassador_shield",
+          "name": "Embajadora de hierro (escudo del broquel)",
+          "kind": "shield",
+          "trigger": "on_champion_attack",
+          "cooldown_calculation": "ActualCooldown",
+          "duration_seconds": {
+            "data_value": "ShieldDuration"
+          },
+          "calculation": "ShieldValue"
+        }
       ]
     },
     "Q": {

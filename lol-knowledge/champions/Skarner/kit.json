@@ -52,6 +52,38 @@
       "passive_stats": [],
       "not_modelled": [
         "Tope de daño contra monstruos (DamageMonsterCap)"
+      ],
+      "passive_effects": [
+        {
+          "id": "threads_of_vibration",
+          "name": "Hebras vibrantes (seísmo a las 3 cargas)",
+          "kind": "damage_proc",
+          "formula": {
+            "op": "mul",
+            "operands": [
+              {
+                "op": "linear_by_level",
+                "min": 5,
+                "max": 9
+              },
+              {
+                "op": "constant",
+                "value": 0.01
+              },
+              {
+                "op": "stat",
+                "stat": "health",
+                "scope": "max",
+                "subject": "target"
+              }
+            ]
+          },
+          "label": "Derivado",
+          "source": "Characters/Skarner/Spells/SkarnerPassiveAbility/SkarnerPassive · PercentHealthDamage % × vida máxima del objetivo (16.23.8406595+branch.releases-16-23.content.release)",
+          "trigger": "every_n_hits",
+          "damage_type": "magic",
+          "every": 3
+        }
       ]
     },
     "Q": {

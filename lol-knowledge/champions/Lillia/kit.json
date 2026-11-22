@@ -75,6 +75,119 @@
       "passive_stats": [],
       "not_modelled": [
         "Curación contra campeones y monstruos (ChampionHealTT, MonsterHealTT) y tope a monstruos"
+      ],
+      "passive_effects": [
+        {
+          "id": "dream_laden_bough_burn",
+          "name": "Rama de los sueños (quemadura % vida máxima)",
+          "kind": "damage_proc",
+          "formula": {
+            "op": "mul",
+            "operands": [
+              {
+                "op": "mul",
+                "operands": [
+                  {
+                    "op": "add",
+                    "operands": [
+                      {
+                        "op": "constant",
+                        "value": 5
+                      },
+                      {
+                        "op": "mul",
+                        "operands": [
+                          {
+                            "op": "constant",
+                            "value": 0.0125
+                          },
+                          {
+                            "op": "stat",
+                            "stat": "ability_power",
+                            "scope": "total"
+                          }
+                        ]
+                      }
+                    ]
+                  },
+                  {
+                    "op": "constant",
+                    "value": 0.01
+                  }
+                ]
+              },
+              {
+                "op": "stat",
+                "stat": "health",
+                "scope": "max",
+                "subject": "target"
+              }
+            ]
+          },
+          "label": "Derivado",
+          "source": "Characters/Lillia/Spells/LilliaPAbility/LilliaP · DotPercentTooltip × vida máxima del objetivo (16.23.8406595+branch.releases-16-23.content.release)",
+          "trigger": "on_ability_hit",
+          "damage_type": "magic"
+        },
+        {
+          "id": "dream_laden_bough_heal",
+          "name": "Rama de los sueños (curación contra campeones)",
+          "kind": "heal",
+          "formula": {
+            "op": "mul",
+            "operands": [
+              {
+                "op": "add",
+                "operands": [
+                  {
+                    "op": "by_level",
+                    "values": [
+                      1,
+                      1.59294,
+                      2.214706,
+                      2.865294,
+                      3.544706,
+                      4.25294,
+                      4.99,
+                      5.75588,
+                      6.55059,
+                      7.37412,
+                      8.22647,
+                      9.10765,
+                      10.01765,
+                      10.95647,
+                      11.92412,
+                      12.9206,
+                      13.94588,
+                      15
+                    ]
+                  },
+                  {
+                    "op": "mul",
+                    "operands": [
+                      {
+                        "op": "constant",
+                        "value": 0.05
+                      },
+                      {
+                        "op": "stat",
+                        "stat": "ability_power",
+                        "scope": "total"
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "op": "constant",
+                "value": 6
+              }
+            ]
+          },
+          "label": "Derivado",
+          "source": "Characters/Lillia/Spells/LilliaPAbility/LilliaP.mSpellCalculations.ChampionHealTT (16.23.8406595+branch.releases-16-23.content.release)",
+          "trigger": "on_champion_hit"
+        }
       ]
     },
     "Q": {

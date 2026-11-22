@@ -19,6 +19,76 @@
       "passive_stats": [],
       "not_modelled": [
         "Vida de Skaarl (SkaarlHealth), estado desmontado, Coraje, remontar (SkaarlRemountHealth) y penalización de daño de ataques desmontado"
+      ],
+      "passive_effects": [
+        {
+          "id": "skaarl_health",
+          "name": "Skaarl (vida montado)",
+          "kind": "stat_bonus",
+          "formula": {
+            "op": "by_level",
+            "values": [
+              400,
+              442.353,
+              486.765,
+              533.235,
+              581.765,
+              632.353,
+              685,
+              739.706,
+              796.47,
+              855.294,
+              916.176,
+              979.118,
+              1044.118,
+              1111.176,
+              1180.294,
+              1251.47,
+              1324.706,
+              1400
+            ]
+          },
+          "label": "Derivado",
+          "source": "Characters/Kled/Spells/KledPassiveAbility/KledPassive.mSpellCalculations.SkaarlHealth (16.23.8406595+branch.releases-16-23.content.release)",
+          "stat": "health",
+          "mode": "flat",
+          "input_name": "skaarl_mounted",
+          "max_stacks": 1
+        },
+        {
+          "id": "dismounted_ms",
+          "name": "Desmontado (VM hacia campeones)",
+          "kind": "stat_bonus",
+          "formula": {
+            "op": "by_level",
+            "values": [
+              70,
+              75,
+              80,
+              85,
+              90,
+              95,
+              100,
+              105,
+              110,
+              115,
+              120,
+              125,
+              130,
+              135,
+              140,
+              145,
+              150,
+              155
+            ]
+          },
+          "label": "Derivado",
+          "source": "Characters/Kled/Spells/KledPassiveAbility/KledPassive.mSpellCalculations.DismountedMS (16.23.8406595+branch.releases-16-23.content.release)",
+          "stat": "move_speed",
+          "mode": "flat",
+          "input_name": "kled_dismounted",
+          "max_stacks": 1
+        }
       ]
     },
     "Q": {

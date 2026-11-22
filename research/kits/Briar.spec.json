@@ -34,6 +34,16 @@
       ],
       "not_modelled": [
         "Ausencia de regeneración base de vida, curación por sangrado y aumento de curación según vida faltante"
+      ],
+      "passive_effects": [
+        {
+          "id": "crimson_curse_bleed",
+          "name": "Maldición carmesí (sangrado 5 s por impacto)",
+          "kind": "damage_proc",
+          "trigger": "on_hit",
+          "damage_type": "physical",
+          "calculation": "BleedDamageOverDurationTooltip"
+        }
       ]
     },
     "Q": {

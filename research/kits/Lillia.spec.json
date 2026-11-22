@@ -42,6 +42,38 @@
       ],
       "not_modelled": [
         "Curación contra campeones y monstruos (ChampionHealTT, MonsterHealTT) y tope a monstruos"
+      ],
+      "passive_effects": [
+        {
+          "id": "dream_laden_bough_burn",
+          "name": "Rama de los sueños (quemadura % vida máxima)",
+          "kind": "damage_proc",
+          "trigger": "on_ability_hit",
+          "damage_type": "magic",
+          "formula": {
+            "op": "mul",
+            "operands": [
+              {
+                "op": "calculation",
+                "name": "DotPercentTooltip"
+              },
+              {
+                "op": "stat",
+                "stat": "health",
+                "scope": "max",
+                "subject": "target"
+              }
+            ]
+          },
+          "source_note": "DotPercentTooltip × vida máxima del objetivo"
+        },
+        {
+          "id": "dream_laden_bough_heal",
+          "name": "Rama de los sueños (curación contra campeones)",
+          "kind": "heal",
+          "trigger": "on_champion_hit",
+          "calculation": "ChampionHealTT"
+        }
       ]
     },
     "Q": {

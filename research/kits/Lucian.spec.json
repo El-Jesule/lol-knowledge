@@ -34,6 +34,19 @@
       ],
       "not_modelled": [
         "Daño al 100 % a súbditos (MinionDamage), golpes críticos del segundo disparo y activación de Vigilancia con aliados"
+      ],
+      "passive_effects": [
+        {
+          "id": "lightslinger_second_shot",
+          "name": "Balas de luz (segundo disparo tras habilidad)",
+          "kind": "damage_proc",
+          "trigger": "after_ability",
+          "duration_seconds": {
+            "data_value": "PassiveDuration"
+          },
+          "damage_type": "physical",
+          "calculation": "TotalDamage"
+        }
       ]
     },
     "Q": {

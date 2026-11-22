@@ -14,6 +14,18 @@
       "max_rank": 1,
       "not_modelled": [
         "Experiencia adicional compartida en súbditos y amplificación/compartición de curaciones y escudos aliados"
+      ],
+      "passive_effects": [
+        {
+          "id": "joy_unending_hsp",
+          "name": "Júbilo sin fin (+7,5 % eficacia de curaciones)",
+          "kind": "stat_bonus",
+          "stat": "heal_and_shield_power",
+          "mode": "flat",
+          "data_value": "HealingIncrease",
+          "scale": 100,
+          "condition": "pasiva permanente de curaciones (+7,5 %)"
+        }
       ]
     },
     "Q": {

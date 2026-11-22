@@ -119,6 +119,50 @@
       "passive_stats": [],
       "not_modelled": [
         "Ausencia de regeneración base de vida, curación por sangrado y aumento de curación según vida faltante"
+      ],
+      "passive_effects": [
+        {
+          "id": "crimson_curse_bleed",
+          "name": "Maldición carmesí (sangrado 5 s por impacto)",
+          "kind": "damage_proc",
+          "formula": {
+            "op": "mul",
+            "operands": [
+              {
+                "op": "add",
+                "operands": [
+                  {
+                    "op": "linear_by_level",
+                    "min": 2,
+                    "max": 10
+                  },
+                  {
+                    "op": "mul",
+                    "operands": [
+                      {
+                        "op": "constant",
+                        "value": 0.1
+                      },
+                      {
+                        "op": "stat",
+                        "stat": "attack_damage",
+                        "scope": "bonus"
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "op": "constant",
+                "value": 5
+              }
+            ]
+          },
+          "label": "Derivado",
+          "source": "Characters/Briar/Spells/BriarPAbility/BriarP.mSpellCalculations.BleedDamageOverDurationTooltip (16.23.8406595+branch.releases-16-23.content.release)",
+          "trigger": "on_hit",
+          "damage_type": "physical"
+        }
       ]
     },
     "Q": {

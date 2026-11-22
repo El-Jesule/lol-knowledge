@@ -25,6 +25,29 @@
       ],
       "not_modelled": [
         "Velocidad de ataque y movimiento propia y a un aliado cercano"
+      ],
+      "passive_effects": [
+        {
+          "id": "call_of_the_freljord_as",
+          "name": "Llamada de Freljord (VA)",
+          "kind": "stat_bonus",
+          "stat": "attack_speed_bonus",
+          "mode": "flat",
+          "data_value": "ASIncrease",
+          "scale": 100,
+          "max_stacks": 1,
+          "input_name": "call_of_the_freljord"
+        },
+        {
+          "id": "call_of_the_freljord_ms",
+          "name": "Llamada de Freljord (VM)",
+          "kind": "stat_bonus",
+          "stat": "move_speed",
+          "mode": "percent_ms",
+          "data_value": "MSIncrease",
+          "max_stacks": 1,
+          "input_name": "call_of_the_freljord"
+        }
       ]
     },
     "Q": {

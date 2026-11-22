@@ -42,6 +42,55 @@
       ],
       "not_modelled": [
         "Curación sobre el daño adicional, alcance extra (+50), tope contra monstruos (MonsterDamageCap) y reducción de enfriamiento"
+      ],
+      "passive_effects": [
+        {
+          "id": "deathbringer_strike",
+          "name": "Aspecto de la muerte (daño mágico % vida máxima)",
+          "kind": "damage_proc",
+          "trigger": "on_attack",
+          "cooldown_calculation": "PCooldown",
+          "damage_type": "magic",
+          "formula": {
+            "op": "mul",
+            "operands": [
+              {
+                "op": "calculation",
+                "name": "PDamage"
+              },
+              {
+                "op": "stat",
+                "stat": "health",
+                "scope": "max",
+                "subject": "target"
+              }
+            ]
+          },
+          "source_note": "PDamage × vida máxima del objetivo"
+        },
+        {
+          "id": "deathbringer_heal",
+          "name": "Aspecto de la muerte (curación)",
+          "kind": "heal",
+          "trigger": "on_hit",
+          "cooldown_calculation": "PCooldown",
+          "formula": {
+            "op": "mul",
+            "operands": [
+              {
+                "op": "calculation",
+                "name": "PDamage"
+              },
+              {
+                "op": "stat",
+                "stat": "health",
+                "scope": "max",
+                "subject": "target"
+              }
+            ]
+          },
+          "source_note": "Curación igual al daño premitigación contra campeones (PHealingRatio=1)"
+        }
       ]
     },
     "Q": {

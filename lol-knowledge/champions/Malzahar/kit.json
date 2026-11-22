@@ -19,6 +19,43 @@
       "passive_stats": [],
       "not_modelled": [
         "Reducción de daño del 90 % e inmunidad a control de masas (ShieldCooldown)"
+      ],
+      "passive_effects": [
+        {
+          "id": "void_shift_dr",
+          "name": "Alteración del Vacío (-90 % daño al primer golpe)",
+          "kind": "damage_taken_modifier",
+          "formula": {
+            "op": "constant",
+            "value": 90
+          },
+          "label": "Derivado",
+          "source": "Characters/Malzahar/Spells/MalzaharPassiveAbility/MalzaharPassive.DataValues.DRPercent (16.23.8406595+branch.releases-16-23.content.release)",
+          "mode": "percent",
+          "cooldown_formula": {
+            "op": "by_level",
+            "values": [
+              30,
+              30,
+              30,
+              30,
+              30,
+              24,
+              24,
+              24,
+              24,
+              24,
+              18,
+              18,
+              18,
+              18,
+              18,
+              12,
+              12,
+              12
+            ]
+          }
+        }
       ]
     },
     "Q": {

@@ -107,6 +107,68 @@
       "passive_stats": [],
       "not_modelled": [
         "Velocidad de movimiento del aura (PassiveMovementSpeed) y tope contra monstruos (MaxAuraMonsterDamage)"
+      ],
+      "passive_effects": [
+        {
+          "id": "darkness_rise_on_hit",
+          "name": "El auge de la oscuridad (40 % PH al impactar)",
+          "kind": "damage_proc",
+          "formula": {
+            "op": "mul",
+            "operands": [
+              {
+                "op": "constant",
+                "value": 0.4
+              },
+              {
+                "op": "stat",
+                "stat": "ability_power",
+                "scope": "total"
+              }
+            ]
+          },
+          "label": "Derivado",
+          "source": "Characters/Mordekaiser/Spells/MordekaiserPassiveAbility/MordekaiserPassive.mSpellCalculations.BonusAPAuto (16.23.8406595+branch.releases-16-23.content.release)",
+          "trigger": "on_hit",
+          "damage_type": "magic"
+        },
+        {
+          "id": "darkness_rise_ms",
+          "name": "El auge de la oscuridad (VM con 3 acumulaciones)",
+          "kind": "stacking_stat",
+          "formula": {
+            "op": "by_level",
+            "values": [
+              0.03,
+              0.03,
+              0.03,
+              0.03,
+              0.03,
+              0.06,
+              0.06,
+              0.06,
+              0.06,
+              0.06,
+              0.09,
+              0.09,
+              0.09,
+              0.09,
+              0.09,
+              0.09,
+              0.09,
+              0.09
+            ]
+          },
+          "label": "Derivado",
+          "source": "Characters/Mordekaiser/Spells/MordekaiserPassiveAbility/MordekaiserPassive.mSpellCalculations.PassiveMovementSpeed (16.23.8406595+branch.releases-16-23.content.release)",
+          "stat": "move_speed",
+          "mode": "percent_ms",
+          "trigger": "champion_hit",
+          "input_name": "darkness_rise_stacks",
+          "only_at_max": true,
+          "max_stacks": 3,
+          "duration_seconds": 4
+        }
       ]
     },
     "Q": {

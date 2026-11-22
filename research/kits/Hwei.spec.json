@@ -25,6 +25,18 @@
       ],
       "not_modelled": [
         "Requiere golpear con dos habilidades de daño en 4 s"
+      ],
+      "passive_effects": [
+        {
+          "id": "signature_of_the_visionary",
+          "name": "Firma del Visionario (detonación cada 2 habilidades)",
+          "kind": "damage_proc",
+          "trigger": "every_n_ability_hits",
+          "every": 2,
+          "target_kind": "champion",
+          "damage_type": "magic",
+          "calculation": "TotalDamage"
+        }
       ]
     },
     "Q": {

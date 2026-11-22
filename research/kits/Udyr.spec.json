@@ -14,6 +14,19 @@
       "max_rank": 1,
       "not_modelled": [
         "Velocidad de ataque tras cambiar de posición (AttackSpeed) y enfriamiento/recarga de Despertar (UltCD)"
+      ],
+      "passive_effects": [
+        {
+          "id": "bridge_between_as",
+          "name": "Puente entre mundos (VA tras cambio de postura)",
+          "kind": "stat_bonus",
+          "stat": "attack_speed_bonus",
+          "mode": "flat",
+          "calculation": "AttackSpeed",
+          "scale": 100,
+          "max_stacks": 1,
+          "input_name": "udyr_stance_swap"
+        }
       ]
     },
     "Q": {

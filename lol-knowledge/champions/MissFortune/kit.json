@@ -65,6 +65,51 @@
       "passive_stats": [],
       "not_modelled": [
         "Daño reducido al 50 % contra súbditos (MinionDamage)"
+      ],
+      "passive_effects": [
+        {
+          "id": "love_tap",
+          "name": "Cachete (primer ataque contra nuevo objetivo)",
+          "kind": "damage_proc",
+          "formula": {
+            "op": "mul",
+            "operands": [
+              {
+                "op": "by_level",
+                "values": [
+                  0.5,
+                  0.5,
+                  0.5,
+                  0.6,
+                  0.6,
+                  0.6,
+                  0.7,
+                  0.7,
+                  0.8,
+                  0.8,
+                  0.9,
+                  0.9,
+                  1,
+                  1,
+                  1,
+                  1,
+                  1,
+                  1
+                ]
+              },
+              {
+                "op": "stat",
+                "stat": "attack_damage",
+                "scope": "total"
+              }
+            ]
+          },
+          "label": "Derivado",
+          "source": "Characters/MissFortune/Spells/MissFortunePassiveAbility/MissFortunePassive.mSpellCalculations.TotalDamage (16.23.8406595+branch.releases-16-23.content.release)",
+          "trigger": "on_attack",
+          "damage_type": "physical",
+          "cooldown_seconds": 999
+        }
       ]
     },
     "Q": {

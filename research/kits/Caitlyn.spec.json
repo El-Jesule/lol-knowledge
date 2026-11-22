@@ -25,7 +25,18 @@
           ]
         }
       ],
-      "tooltip": "spell_caitlynp_tooltip"
+      "tooltip": "spell_caitlynp_tooltip",
+      "passive_effects": [
+        {
+          "id": "headshot_proc",
+          "name": "Disparo a la cabeza (cada 6 ataques)",
+          "kind": "damage_proc",
+          "trigger": "every_n_attacks",
+          "every": 6,
+          "damage_type": "physical",
+          "calculation": "HeadshotBonusDamage"
+        }
+      ]
     },
     "Q": {
       "name": "Pacificadora de Piltover",

@@ -66,6 +66,46 @@
       ],
       "not_modelled": [
         "Evoluciones de Q (100 DA adicional), W (100 PH) y E (100 % VA adicional) y tope de 400 contra monstruos"
+      ],
+      "passive_effects": [
+        {
+          "id": "second_skin_on_hit",
+          "name": "Segunda piel (daño mágico base al impactar)",
+          "kind": "damage_proc",
+          "trigger": "on_hit",
+          "damage_type": "magic",
+          "calculation": "PBaseDamage"
+        },
+        {
+          "id": "second_skin_plasma_pop",
+          "name": "Segunda piel (detonación de 5 cargas de Plasma)",
+          "kind": "damage_proc",
+          "trigger": "every_n_hits",
+          "every": 5,
+          "damage_type": "magic",
+          "formula": {
+            "op": "mul",
+            "operands": [
+              {
+                "op": "calculation",
+                "name": "PExecutePercentage"
+              },
+              {
+                "op": "stat",
+                "stat": "health",
+                "scope": "max",
+                "subject": "target"
+              },
+              {
+                "op": "stat",
+                "stat": "health",
+                "scope": "missing_fraction",
+                "subject": "target"
+              }
+            ]
+          },
+          "source_note": "PExecutePercentage × vida faltante del objetivo"
+        }
       ]
     },
     "Q": {

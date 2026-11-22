@@ -84,6 +84,56 @@
       "passive_stats": [],
       "not_modelled": [
         "Reducción de enfriamiento al acertar habilidades"
+      ],
+      "passive_effects": [
+        {
+          "id": "colossal_smash",
+          "name": "Aplastamiento colosal (daño mágico adicional periódico)",
+          "kind": "damage_proc",
+          "formula": {
+            "op": "add",
+            "operands": [
+              {
+                "op": "linear_by_level",
+                "min": 15,
+                "max": 115
+              },
+              {
+                "op": "mul",
+                "operands": [
+                  {
+                    "op": "constant",
+                    "value": 0.4
+                  },
+                  {
+                    "op": "stat",
+                    "stat": "ability_power",
+                    "scope": "total"
+                  }
+                ]
+              },
+              {
+                "op": "mul",
+                "operands": [
+                  {
+                    "op": "constant",
+                    "value": 0.6
+                  },
+                  {
+                    "op": "stat",
+                    "stat": "magic_resist",
+                    "scope": "bonus"
+                  }
+                ]
+              }
+            ]
+          },
+          "label": "Derivado",
+          "source": "Characters/Galio/Spells/GalioPassiveAbility/GalioPassive · Porción adicional sobre el básico de TotalDamage (15..115 + 40% PH + 60% RM adicional) (16.23.8406595+branch.releases-16-23.content.release)",
+          "trigger": "on_attack",
+          "damage_type": "magic",
+          "cooldown_seconds": 5
+        }
       ]
     },
     "Q": {

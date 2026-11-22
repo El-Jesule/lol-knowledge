@@ -37,6 +37,92 @@
       "passive_stats": [],
       "not_modelled": [
         "Escudo al recoger el broquel (ShieldValue) y alcance adicional"
+      ],
+      "passive_effects": [
+        {
+          "id": "iron_ambassador_damage",
+          "name": "Embajadora de hierro (daño mágico del broquel)",
+          "kind": "damage_proc",
+          "formula": {
+            "op": "linear_by_level",
+            "min": 20,
+            "max": 180
+          },
+          "label": "Derivado",
+          "source": "Characters/Poppy/Spells/PoppyPassiveAbility/PoppyPassive.mSpellCalculations.TotalDamage (16.23.8406595+branch.releases-16-23.content.release)",
+          "trigger": "on_attack",
+          "damage_type": "magic",
+          "cooldown_formula": {
+            "op": "by_level",
+            "values": [
+              16,
+              16,
+              16,
+              16,
+              16,
+              16,
+              12,
+              12,
+              12,
+              12,
+              12,
+              12,
+              8,
+              8,
+              8,
+              8,
+              8,
+              8
+            ]
+          }
+        },
+        {
+          "id": "iron_ambassador_shield",
+          "name": "Embajadora de hierro (escudo del broquel)",
+          "kind": "shield",
+          "formula": {
+            "op": "mul",
+            "operands": [
+              {
+                "op": "linear_by_level",
+                "min": 0.11,
+                "max": 0.2
+              },
+              {
+                "op": "stat",
+                "stat": "health",
+                "scope": "total"
+              }
+            ]
+          },
+          "label": "Derivado",
+          "source": "Characters/Poppy/Spells/PoppyPassiveAbility/PoppyPassive.mSpellCalculations.ShieldValue (16.23.8406595+branch.releases-16-23.content.release)",
+          "trigger": "on_champion_attack",
+          "duration_seconds": 3,
+          "cooldown_formula": {
+            "op": "by_level",
+            "values": [
+              16,
+              16,
+              16,
+              16,
+              16,
+              16,
+              12,
+              12,
+              12,
+              12,
+              12,
+              12,
+              8,
+              8,
+              8,
+              8,
+              8,
+              8
+            ]
+          }
+        }
       ]
     },
     "Q": {

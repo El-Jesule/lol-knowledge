@@ -68,6 +68,31 @@
       ],
       "not_modelled": [
         "Tope de 150 de daño contra monstruos (MonsterDamageCap)"
+      ],
+      "passive_effects": [
+        {
+          "id": "leverage_on_hit",
+          "name": "Ventaja (daño mágico % vida máxima al impactar)",
+          "kind": "damage_proc",
+          "trigger": "on_hit",
+          "damage_type": "magic",
+          "formula": {
+            "op": "mul",
+            "operands": [
+              {
+                "op": "calculation",
+                "name": "PercentAmpCalcSelf"
+              },
+              {
+                "op": "stat",
+                "stat": "health",
+                "scope": "max",
+                "subject": "target"
+              }
+            ]
+          },
+          "source_note": "PercentAmpCalcSelf × vida máxima del objetivo"
+        }
       ]
     },
     "Q": {

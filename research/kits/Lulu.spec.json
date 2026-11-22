@@ -25,6 +25,16 @@
       ],
       "not_modelled": [
         "Transferencia de Pix a aliados y bloqueo de rayos por unidades interpuestas"
+      ],
+      "passive_effects": [
+        {
+          "id": "pix_bolts",
+          "name": "Pix, el hada compañera (3 rayos al atacar)",
+          "kind": "damage_proc",
+          "trigger": "on_attack",
+          "damage_type": "magic",
+          "calculation": "CombinedDamage"
+        }
       ]
     },
     "Q": {

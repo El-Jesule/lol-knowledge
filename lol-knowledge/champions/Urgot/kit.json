@@ -105,6 +105,112 @@
       "passive_stats": [],
       "not_modelled": [
         "Enfriamiento independiente por pierna (PerLegCD) y tope contra monstruos (MonsterCap)"
+      ],
+      "passive_effects": [
+        {
+          "id": "echoing_flames",
+          "name": "Articulaciones llameantes (disparo de pierna)",
+          "kind": "damage_proc",
+          "formula": {
+            "op": "add",
+            "operands": [
+              {
+                "op": "mul",
+                "operands": [
+                  {
+                    "op": "by_level",
+                    "values": [
+                      0.4,
+                      0.4,
+                      0.4,
+                      0.4,
+                      0.4,
+                      0.52,
+                      0.52,
+                      0.52,
+                      0.64,
+                      0.64,
+                      0.76,
+                      0.76,
+                      0.88,
+                      0.88,
+                      1,
+                      1,
+                      1,
+                      1
+                    ]
+                  },
+                  {
+                    "op": "stat",
+                    "stat": "attack_damage",
+                    "scope": "total"
+                  }
+                ]
+              },
+              {
+                "op": "mul",
+                "operands": [
+                  {
+                    "op": "by_level",
+                    "values": [
+                      0.02,
+                      0.02,
+                      0.02,
+                      0.02,
+                      0.02,
+                      0.03,
+                      0.03,
+                      0.03,
+                      0.04,
+                      0.04,
+                      0.05,
+                      0.05,
+                      0.06,
+                      0.06,
+                      0.06,
+                      0.06,
+                      0.06,
+                      0.06
+                    ]
+                  },
+                  {
+                    "op": "stat",
+                    "stat": "health",
+                    "scope": "max",
+                    "subject": "target"
+                  }
+                ]
+              }
+            ]
+          },
+          "label": "Derivado",
+          "source": "Characters/Urgot/Spells/UrgotPassiveAbility/UrgotPassive · ADDamage + PercentHPRatio × vida máxima del objetivo (16.23.8406595+branch.releases-16-23.content.release)",
+          "trigger": "on_attack",
+          "damage_type": "physical",
+          "cooldown_formula": {
+            "op": "by_level",
+            "values": [
+              30,
+              30,
+              30,
+              30,
+              30,
+              20,
+              20,
+              20,
+              10,
+              10,
+              5,
+              5,
+              2.5,
+              2.5,
+              2.5,
+              2.5,
+              2.5,
+              2.5
+            ]
+          }
+        }
       ]
     },
     "Q": {

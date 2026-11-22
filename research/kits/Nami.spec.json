@@ -13,6 +13,18 @@
       "max_rank": 1,
       "not_modelled": [
         "Velocidad de movimiento a aliados (TotalMSBonus)"
+      ],
+      "passive_effects": [
+        {
+          "id": "surging_tides_ms",
+          "name": "Oleaje (VM plana base al lanzar habilidad)",
+          "kind": "stat_bonus",
+          "stat": "move_speed",
+          "mode": "flat",
+          "data_value": "FlatMS",
+          "max_stacks": 1,
+          "input_name": "nami_surging_tides"
+        }
       ]
     },
     "Q": {

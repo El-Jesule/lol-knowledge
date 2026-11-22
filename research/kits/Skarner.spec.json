@@ -46,6 +46,38 @@
       ],
       "not_modelled": [
         "Tope de daño contra monstruos (DamageMonsterCap)"
+      ],
+      "passive_effects": [
+        {
+          "id": "threads_of_vibration",
+          "name": "Hebras vibrantes (seísmo a las 3 cargas)",
+          "kind": "damage_proc",
+          "trigger": "every_n_hits",
+          "every": {
+            "data_value": "StacksToTriggerPassive"
+          },
+          "damage_type": "magic",
+          "formula": {
+            "op": "mul",
+            "operands": [
+              {
+                "op": "calculation",
+                "name": "PercentHealthDamage"
+              },
+              {
+                "op": "constant",
+                "value": 0.01
+              },
+              {
+                "op": "stat",
+                "stat": "health",
+                "scope": "max",
+                "subject": "target"
+              }
+            ]
+          },
+          "source_note": "PercentHealthDamage % × vida máxima del objetivo"
+        }
       ]
     },
     "Q": {

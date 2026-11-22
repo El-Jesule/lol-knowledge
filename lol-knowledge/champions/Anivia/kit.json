@@ -19,6 +19,76 @@
       "passive_stats": [],
       "not_modelled": [
         "Transformación en huevo al sufrir daño letal y resistencias (BonusResists)"
+      ],
+      "passive_effects": [
+        {
+          "id": "rebirth_egg_armor",
+          "name": "Renacimiento (armadura en forma de huevo)",
+          "kind": "stat_bonus",
+          "formula": {
+            "op": "by_level",
+            "values": [
+              -40,
+              -40,
+              -40,
+              -40,
+              -25,
+              -25,
+              -25,
+              -10,
+              -10,
+              -10,
+              -10,
+              5,
+              5,
+              5,
+              20,
+              20,
+              20,
+              20
+            ]
+          },
+          "label": "Derivado",
+          "source": "Characters/Anivia/Spells/RebirthMarkerAbility/RebirthMarker.mSpellCalculations.BonusResists (16.23.8406595+branch.releases-16-23.content.release)",
+          "stat": "armor",
+          "mode": "flat",
+          "input_name": "anivia_egg",
+          "max_stacks": 1
+        },
+        {
+          "id": "rebirth_egg_mr",
+          "name": "Renacimiento (RM en forma de huevo)",
+          "kind": "stat_bonus",
+          "formula": {
+            "op": "by_level",
+            "values": [
+              -40,
+              -40,
+              -40,
+              -40,
+              -25,
+              -25,
+              -25,
+              -10,
+              -10,
+              -10,
+              -10,
+              5,
+              5,
+              5,
+              20,
+              20,
+              20,
+              20
+            ]
+          },
+          "label": "Derivado",
+          "source": "Characters/Anivia/Spells/RebirthMarkerAbility/RebirthMarker.mSpellCalculations.BonusResists (16.23.8406595+branch.releases-16-23.content.release)",
+          "stat": "magic_resist",
+          "mode": "flat",
+          "input_name": "anivia_egg",
+          "max_stacks": 1
+        }
       ]
     },
     "Q": {

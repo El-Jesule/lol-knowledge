@@ -25,6 +25,19 @@
       ],
       "not_modelled": [
         "Velocidad de movimiento (MoveSpeed), daño a estructuras y reinicio al detonar barriles"
+      ],
+      "passive_effects": [
+        {
+          "id": "trial_by_fire",
+          "name": "Prueba de fuego (daño verdadero periódico)",
+          "kind": "damage_proc",
+          "trigger": "on_attack",
+          "cooldown_seconds": {
+            "data_value": "Cooldown"
+          },
+          "damage_type": "true",
+          "calculation": "TotalDamage"
+        }
       ]
     },
     "Q": {

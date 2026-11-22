@@ -88,6 +88,74 @@
       "passive_stats": [],
       "not_modelled": [
         "Enfriamiento de 25 s por objetivo y reinicio al cambiar de elemento"
+      ],
+      "passive_effects": [
+        {
+          "id": "royal_privilege",
+          "name": "Privilegio real (primer impacto)",
+          "kind": "damage_proc",
+          "formula": {
+            "op": "add",
+            "operands": [
+              {
+                "op": "by_level",
+                "values": [
+                  15,
+                  19,
+                  23,
+                  27,
+                  31,
+                  35,
+                  39,
+                  43,
+                  47,
+                  51,
+                  55,
+                  59,
+                  63,
+                  67,
+                  71,
+                  75,
+                  79,
+                  83
+                ]
+              },
+              {
+                "op": "mul",
+                "operands": [
+                  {
+                    "op": "constant",
+                    "value": 0.25
+                  },
+                  {
+                    "op": "stat",
+                    "stat": "attack_damage",
+                    "scope": "bonus"
+                  }
+                ]
+              },
+              {
+                "op": "mul",
+                "operands": [
+                  {
+                    "op": "constant",
+                    "value": 0.3
+                  },
+                  {
+                    "op": "stat",
+                    "stat": "ability_power",
+                    "scope": "total"
+                  }
+                ]
+              }
+            ]
+          },
+          "label": "Derivado",
+          "source": "Characters/Qiyana/Spells/QiyanaPassiveAbility/QiyanaPassive.mSpellCalculations.FinalDamage (16.23.8406595+branch.releases-16-23.content.release)",
+          "trigger": "on_any_hit",
+          "damage_type": "physical",
+          "cooldown_seconds": 25
+        }
       ]
     },
     "Q": {

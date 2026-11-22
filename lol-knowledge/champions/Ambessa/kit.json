@@ -56,6 +56,75 @@
       "passive_stats": [],
       "not_modelled": [
         "Deslizamiento tras cada habilidad, velocidad de ataque (Calc_Attack_Speed), alcance adicional y devolución de energía (Calc_OnHit_Energy_Refund)"
+      ],
+      "passive_effects": [
+        {
+          "id": "drakehounds_step_damage",
+          "name": "Caza del perrodraco (ataque potenciado tras habilidad)",
+          "kind": "damage_proc",
+          "formula": {
+            "op": "add",
+            "operands": [
+              {
+                "op": "linear_by_level",
+                "min": 5,
+                "max": 25
+              },
+              {
+                "op": "mul",
+                "operands": [
+                  {
+                    "op": "constant",
+                    "value": 0.2
+                  },
+                  {
+                    "op": "stat",
+                    "stat": "attack_damage",
+                    "scope": "bonus"
+                  }
+                ]
+              }
+            ]
+          },
+          "label": "Derivado",
+          "source": "Characters/Ambessa/Spells/AmbessaPassiveAbility/AmbessaPassive.mSpellCalculations.Calc_OnHit_Damage_Flat (16.23.8406595+branch.releases-16-23.content.release)",
+          "trigger": "after_ability",
+          "damage_type": "physical",
+          "max_stacks": 3,
+          "duration_seconds": 4
+        },
+        {
+          "id": "drakehounds_step_energy",
+          "name": "Caza del perrodraco (energía al impactar)",
+          "kind": "resource_restore",
+          "formula": {
+            "op": "by_level",
+            "values": [
+              40,
+              40,
+              40,
+              40,
+              40,
+              40,
+              55,
+              55,
+              55,
+              55,
+              55,
+              55,
+              70,
+              70,
+              70,
+              70,
+              70,
+              70
+            ]
+          },
+          "label": "Derivado",
+          "source": "Characters/Ambessa/Spells/AmbessaPassiveAbility/AmbessaPassive.mSpellCalculations.Calc_OnHit_Energy_Refund (16.23.8406595+branch.releases-16-23.content.release)",
+          "trigger": "on_hit",
+          "resource": "energy"
+        }
       ]
     },
     "Q": {

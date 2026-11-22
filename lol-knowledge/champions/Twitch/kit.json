@@ -74,6 +74,68 @@
       "passive_stats": [],
       "not_modelled": [
         "Acumulación hasta 6 cargas (DamagePerSecondMax) y duración de 6 s"
+      ],
+      "passive_effects": [
+        {
+          "id": "deadly_venom_burn",
+          "name": "Veneno mortal (daño verdadero 6 s por carga)",
+          "kind": "damage_proc",
+          "formula": {
+            "op": "mul",
+            "operands": [
+              {
+                "op": "add",
+                "operands": [
+                  {
+                    "op": "by_level",
+                    "values": [
+                      1,
+                      1,
+                      1,
+                      1,
+                      2,
+                      2,
+                      2,
+                      2,
+                      3,
+                      3,
+                      3,
+                      3,
+                      4,
+                      4,
+                      4,
+                      4,
+                      5,
+                      5
+                    ]
+                  },
+                  {
+                    "op": "mul",
+                    "operands": [
+                      {
+                        "op": "constant",
+                        "value": 0.03
+                      },
+                      {
+                        "op": "stat",
+                        "stat": "ability_power",
+                        "scope": "total"
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "op": "constant",
+                "value": 6
+              }
+            ]
+          },
+          "label": "Derivado",
+          "source": "Characters/Twitch/Spells/TwitchDeadlyVenomMarkerAbility/TwitchDeadlyVenomMarker.mSpellCalculations.DamagePerSecond (16.23.8406595+branch.releases-16-23.content.release)",
+          "trigger": "on_hit",
+          "damage_type": "true"
+        }
       ]
     },
     "Q": {

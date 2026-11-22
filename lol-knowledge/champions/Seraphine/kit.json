@@ -56,6 +56,43 @@
       "passive_stats": [],
       "not_modelled": [
         "Eco de cada tercera habilidad básica y acumulación de notas con aliados"
+      ],
+      "passive_effects": [
+        {
+          "id": "stage_presence_note",
+          "name": "Presencia escénica (nota tras habilidad)",
+          "kind": "damage_proc",
+          "formula": {
+            "op": "add",
+            "operands": [
+              {
+                "op": "linear_by_level",
+                "min": 4,
+                "max": 25
+              },
+              {
+                "op": "mul",
+                "operands": [
+                  {
+                    "op": "constant",
+                    "value": 0.04
+                  },
+                  {
+                    "op": "stat",
+                    "stat": "ability_power",
+                    "scope": "total"
+                  }
+                ]
+              }
+            ]
+          },
+          "label": "Derivado",
+          "source": "Characters/Seraphine/Spells/SeraphinePassiveAbility/SeraphinePassive.mSpellCalculations.AutoDamage (16.23.8406595+branch.releases-16-23.content.release)",
+          "trigger": "after_ability",
+          "damage_type": "magic",
+          "max_stacks": 4,
+          "duration_seconds": 6
+        }
       ]
     },
     "Q": {

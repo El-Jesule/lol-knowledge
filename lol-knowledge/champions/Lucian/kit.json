@@ -100,6 +100,51 @@
       "passive_stats": [],
       "not_modelled": [
         "Daño al 100 % a súbditos (MinionDamage), golpes críticos del segundo disparo y activación de Vigilancia con aliados"
+      ],
+      "passive_effects": [
+        {
+          "id": "lightslinger_second_shot",
+          "name": "Balas de luz (segundo disparo tras habilidad)",
+          "kind": "damage_proc",
+          "formula": {
+            "op": "mul",
+            "operands": [
+              {
+                "op": "by_level",
+                "values": [
+                  0.5,
+                  0.5,
+                  0.5,
+                  0.5,
+                  0.5,
+                  0.5,
+                  0.55,
+                  0.55,
+                  0.55,
+                  0.55,
+                  0.55,
+                  0.55,
+                  0.6,
+                  0.6,
+                  0.6,
+                  0.6,
+                  0.6,
+                  0.6
+                ]
+              },
+              {
+                "op": "stat",
+                "stat": "attack_damage",
+                "scope": "total"
+              }
+            ]
+          },
+          "label": "Derivado",
+          "source": "Characters/Lucian/Spells/LucianPassiveAbility/LucianPassive.mSpellCalculations.TotalDamage (16.23.8406595+branch.releases-16-23.content.release)",
+          "trigger": "after_ability",
+          "damage_type": "physical",
+          "duration_seconds": 3.5
+        }
       ]
     },
     "Q": {

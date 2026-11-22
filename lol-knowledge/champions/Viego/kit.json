@@ -19,6 +19,96 @@
       "passive_stats": [],
       "not_modelled": [
         "Posesión de campeones enemigos caídos y curación al poseer (PercentHealthHeal)"
+      ],
+      "passive_effects": [
+        {
+          "id": "sovereigns_domination_heal",
+          "name": "Dominación soberana (curación al poseer espectro)",
+          "kind": "heal",
+          "formula": {
+            "op": "mul",
+            "operands": [
+              {
+                "op": "add",
+                "operands": [
+                  {
+                    "op": "constant",
+                    "value": 2
+                  },
+                  {
+                    "op": "mul",
+                    "operands": [
+                      {
+                        "op": "constant",
+                        "value": 0.025
+                      },
+                      {
+                        "op": "stat",
+                        "stat": "attack_damage",
+                        "scope": "bonus"
+                      }
+                    ]
+                  },
+                  {
+                    "op": "mul",
+                    "operands": [
+                      {
+                        "op": "constant",
+                        "value": 0.02
+                      },
+                      {
+                        "op": "stat",
+                        "stat": "ability_power",
+                        "scope": "total"
+                      }
+                    ]
+                  },
+                  {
+                    "op": "mul",
+                    "operands": [
+                      {
+                        "op": "constant",
+                        "value": 5
+                      },
+                      {
+                        "op": "stat",
+                        "stat": "attack_speed_bonus",
+                        "scope": "total"
+                      }
+                    ]
+                  },
+                  {
+                    "op": "mul",
+                    "operands": [
+                      {
+                        "op": "constant",
+                        "value": 0.004
+                      },
+                      {
+                        "op": "stat",
+                        "stat": "health",
+                        "scope": "bonus"
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "op": "constant",
+                "value": 0.01
+              },
+              {
+                "op": "stat",
+                "stat": "health",
+                "scope": "max",
+                "subject": "target"
+              }
+            ]
+          },
+          "label": "Derivado",
+          "source": "Characters/Viego/Spells/ViegoPassiveAbility/ViegoPassive · PercentHealthHeal % × vida máxima del campeón poseído (16.23.8406595+branch.releases-16-23.content.release)",
+          "trigger": "on_champion_takedown"
+        }
       ]
     },
     "Q": {

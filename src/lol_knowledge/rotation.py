@@ -2374,9 +2374,24 @@ class _Rotation:
             at, self.base_sheet.level, stats=base_stats
         )
         for p_bonus in p_flats:
-            sheet = with_bonus(
-                sheet, p_bonus.stat_id, p_bonus.amount, p_bonus.source, p_bonus.label, p_bonus.note
-            )
+            if p_bonus.percent:
+                sheet = with_percent_bonus(
+                    sheet,
+                    p_bonus.stat_id,
+                    p_bonus.amount,
+                    p_bonus.source,
+                    p_bonus.label,
+                    p_bonus.note,
+                )
+            else:
+                sheet = with_bonus(
+                    sheet,
+                    p_bonus.stat_id,
+                    p_bonus.amount,
+                    p_bonus.source,
+                    p_bonus.label,
+                    p_bonus.note,
+                )
         for p_amp in p_amps:
             sheet = with_amplifier(sheet, p_amp.stat_id, p_amp.percent, p_amp.source, p_amp.label)
         ic_as = self.item_combat.dynamic_bonus_as(at)

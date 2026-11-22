@@ -26,6 +26,19 @@
       ],
       "not_modelled": [
         "Daño adicional y mejoras de área/ralentización de Meeps por campanillas recogidas y velocidad de movimiento/maná de campanillas"
+      ],
+      "passive_effects": [
+        {
+          "id": "meep_attack",
+          "name": "Llamada del viajero (ataque con Meep base)",
+          "kind": "damage_proc",
+          "trigger": "on_attack",
+          "cooldown_seconds": {
+            "data_value": "BaseMeepSpawnCD"
+          },
+          "damage_type": "magic",
+          "calculation": "MeepDamageNoChime"
+        }
       ]
     },
     "Q": {

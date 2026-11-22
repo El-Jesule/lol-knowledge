@@ -14,6 +14,28 @@
       "max_rank": 1,
       "not_modelled": [
         "Vida de Skaarl (SkaarlHealth), estado desmontado, Coraje, remontar (SkaarlRemountHealth) y penalización de daño de ataques desmontado"
+      ],
+      "passive_effects": [
+        {
+          "id": "skaarl_health",
+          "name": "Skaarl (vida montado)",
+          "kind": "stat_bonus",
+          "stat": "health",
+          "mode": "flat",
+          "calculation": "SkaarlHealth",
+          "max_stacks": 1,
+          "input_name": "skaarl_mounted"
+        },
+        {
+          "id": "dismounted_ms",
+          "name": "Desmontado (VM hacia campeones)",
+          "kind": "stat_bonus",
+          "stat": "move_speed",
+          "mode": "flat",
+          "calculation": "DismountedMS",
+          "max_stacks": 1,
+          "input_name": "kled_dismounted"
+        }
       ]
     },
     "Q": {

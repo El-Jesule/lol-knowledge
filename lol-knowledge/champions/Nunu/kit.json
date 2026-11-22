@@ -46,6 +46,38 @@
       "passive_stats": [],
       "not_modelled": [
         "Velocidad de ataque y movimiento propia y a un aliado cercano"
+      ],
+      "passive_effects": [
+        {
+          "id": "call_of_the_freljord_as",
+          "name": "Llamada de Freljord (VA)",
+          "kind": "stat_bonus",
+          "formula": {
+            "op": "constant",
+            "value": 20
+          },
+          "label": "Derivado",
+          "source": "Characters/Nunu/Spells/NunuPassiveAbility/NunuPassive.DataValues.ASIncrease (16.23.8406595+branch.releases-16-23.content.release)",
+          "stat": "attack_speed_bonus",
+          "mode": "flat",
+          "input_name": "call_of_the_freljord",
+          "max_stacks": 1
+        },
+        {
+          "id": "call_of_the_freljord_ms",
+          "name": "Llamada de Freljord (VM)",
+          "kind": "stat_bonus",
+          "formula": {
+            "op": "constant",
+            "value": 0.1
+          },
+          "label": "Derivado",
+          "source": "Characters/Nunu/Spells/NunuPassiveAbility/NunuPassive.DataValues.MSIncrease (16.23.8406595+branch.releases-16-23.content.release)",
+          "stat": "move_speed",
+          "mode": "percent_ms",
+          "input_name": "call_of_the_freljord",
+          "max_stacks": 1
+        }
       ]
     },
     "Q": {

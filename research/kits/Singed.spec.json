@@ -14,6 +14,18 @@
       "max_rank": 1,
       "not_modelled": [
         "Velocidad de movimiento al pasar cerca de campeones"
+      ],
+      "passive_effects": [
+        {
+          "id": "noxious_slipstream_ms",
+          "name": "Estela nociva (VM al adelantar campeón)",
+          "kind": "stat_bonus",
+          "stat": "move_speed",
+          "mode": "percent_ms",
+          "data_value": "MSPercent",
+          "max_stacks": 1,
+          "input_name": "singed_slipstream"
+        }
       ]
     },
     "Q": {
