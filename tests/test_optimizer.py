@@ -363,3 +363,146 @@ def test_optimizer_cli_json_and_text_reports(capsys) -> None:
         ]
     )
     assert rc_bad == 2
+
+
+def test_optimizer_target_runes_defender_passive_and_enemy_runes_cli(capsys) -> None:
+    # 1. optimize_build auto-loads rune_data for target.runes (Bone Plating 8473) even when
+    # attacker has no runes and caller omits rune_data.
+    ahri = load_champion(ROOT, "Ahri")
+    ahri_kit = load_kit(ROOT, "Ahri")
+    cfg = OptimizeConstraints(
+        slots=1, budget=3200, only_verified=True, top=1, beam_width=4, pool_limit=6
+    )
+    steps = parse_steps("E, Q.both, W.all")
+    plain_target = _target(hp=1600, armor=60, mr=45)
+    bp_target = Target(
+        armor=Fraction(60),
+        magic_resist=Fraction(45),
+        stats={"max_health": Fraction(1600), "current_health": Fraction(1600)},
+        label=Label.OFFICIAL,
+        description="champion 1600hp 60ar 45mr (Bone Plating)",
+        kind="champion",
+        runes=(8437, 8446, 8473, 8451, 9111, 9104),
+    )
+    out_plain = optimize_build(
+        ROOT,
+        ahri,
+        9,
+        "rotation_damage",
+        constraints=cfg,
+        derived=RECORDS,
+        kit=ahri_kit,
+        ranks={"Q": 5, "W": 2, "E": 1},
+        target=plain_target,
+        steps=steps,
+        crit_base=CRIT_BASE,
+        holder_range="ranged",
+        timeline=True,
+    )
+    out_bp = optimize_build(
+        ROOT,
+        ahri,
+        9,
+        "rotation_damage",
+        constraints=cfg,
+        derived=RECORDS,
+        kit=ahri_kit,
+        ranks={"Q": 5, "W": 2, "E": 1},
+        target=bp_target,
+        steps=steps,
+        crit_base=CRIT_BASE,
+        holder_range="ranged",
+        timeline=True,
+    )
+    assert out_bp.verified_builds[0].score < out_plain.verified_builds[0].score
+
+    # 2. time_to_die passes kit to evaluate_defense so Malzahar Void Shift (-90% DR) applies.
+    malz = load_champion(ROOT, "Malzahar")
+    malz_kit = load_kit(ROOT, "Malzahar")
+    hits = parse_incoming("magic:800, magic:400")
+    out_no_kit = optimize_build(
+        ROOT,
+        malz,
+        11,
+        "time_to_die",
+        constraints=cfg,
+        derived=RECORDS,
+        kit=None,
+        incoming_hits=hits,
+        timeline=True,
+    )
+    out_with_kit = optimize_build(
+        ROOT,
+        malz,
+        11,
+        "time_to_die",
+        constraints=cfg,
+        derived=RECORDS,
+        kit=malz_kit,
+        incoming_hits=hits,
+        timeline=True,
+    )
+    assert out_with_kit.verified_builds[0].score > out_no_kit.verified_builds[0].score
+
+    # 3. CLI optimize supports --enemy-rune and --enemy-shard on time_to_die.
+    rc = cli_main(
+        [
+            "optimize",
+            "--champion",
+            "Garen",
+            "--level",
+            "9",
+            "--objective",
+            "time_to_die",
+            "--slots",
+            "1",
+            "--budget",
+            "3200",
+            "--only-verified",
+            "--top",
+            "1",
+            "--beam-width",
+            "4",
+            "--pool-limit",
+            "6",
+            "--timeline",
+            "--enemy-champion",
+            "Ahri",
+            "--enemy-level",
+            "9",
+            "--enemy-item",
+            "6655",
+            "--enemy-learned",
+            "Q=5",
+            "--enemy-learned",
+            "W=2",
+            "--enemy-learned",
+            "E=1",
+            "--steps",
+            "E, Q.both, W.all",
+            "--enemy-rune",
+            "8112",
+            "--enemy-rune",
+            "8139",
+            "--enemy-rune",
+            "8140",
+            "--enemy-rune",
+            "8135",
+            "--enemy-rune",
+            "8226",
+            "--enemy-rune",
+            "8237",
+            "--enemy-shard",
+            "5008",
+            "--enemy-shard",
+            "5008",
+            "--enemy-shard",
+            "5011",
+            "--root",
+            str(ROOT),
+            "--json",
+        ]
+    )
+    assert rc == 0
+    payload = json.loads(capsys.readouterr().out)
+    assert payload["verified_builds"]

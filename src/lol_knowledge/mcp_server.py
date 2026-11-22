@@ -62,6 +62,25 @@ _TARGET_SCHEMA: dict[str, Any] = {
     },
 }
 
+_ENEMY_SCHEMA: dict[str, Any] = {
+    "type": "object",
+    "description": (
+        "Enemy attacker rotation: {champion, level, steps, items?, runes?, shards?, "
+        "learned?, range?, inputs?}."
+    ),
+    "properties": {
+        "champion": {"type": "string"},
+        "level": {"type": "integer", "minimum": 1, "maximum": 18},
+        "items": {"type": "array", "items": {"type": "string"}},
+        "runes": {"type": "array", "items": {"type": "integer"}},
+        "shards": {"type": "array", "items": {"type": "integer"}},
+        "learned": {"type": "object", "additionalProperties": {"type": "integer"}},
+        "steps": {"type": "string"},
+        "range": {"type": "string", "enum": ["melee", "ranged"]},
+        "inputs": {"type": "object", "additionalProperties": {"type": "number"}},
+    },
+}
+
 TOOLS: tuple[dict[str, Any], ...] = (
     {
         "name": "lol_lookup",
@@ -129,6 +148,8 @@ TOOLS: tuple[dict[str, Any], ...] = (
                 "shards": {"type": "array", "items": {"type": "integer"}},
                 "learned": {"type": "object", "additionalProperties": {"type": "integer"}},
                 "inputs": {"type": "object", "additionalProperties": {"type": "number"}},
+                "assume": {"type": "object", "additionalProperties": {"type": "string"}},
+                "allow_illegal_build": {"type": "boolean"},
                 "target": _TARGET_SCHEMA,
                 "target_count": {"type": "integer", "minimum": 1},
             },
@@ -159,6 +180,8 @@ TOOLS: tuple[dict[str, Any], ...] = (
                 "target": _TARGET_SCHEMA,
                 "target_count": {"type": "integer", "minimum": 1},
                 "inputs": {"type": "object", "additionalProperties": {"type": "number"}},
+                "assume": {"type": "object", "additionalProperties": {"type": "string"}},
+                "allow_illegal_build": {"type": "boolean"},
                 "attacker_resource": {"type": "number"},
                 "allow_insufficient_resource": {"type": "boolean"},
             },
@@ -168,8 +191,8 @@ TOOLS: tuple[dict[str, Any], ...] = (
         "name": "lol_survive",
         "description": (
             "Reverse defense simulation: check whether a champion survives incoming hits or an "
-            "enemy rotation, including Lifeline shields, Guardian, Bone Plating, Second Wind "
-            "and Thorns."
+            "enemy rotation, including champion defensive passives, Lifeline shields, Guardian, "
+            "Bone Plating, Second Wind and Thorns."
         ),
         "inputSchema": {
             "type": "object",
@@ -184,22 +207,14 @@ TOOLS: tuple[dict[str, Any], ...] = (
                     "type": "string",
                     "description": 'Manual hits, e.g. "attack:500, magic:350".',
                 },
-                "enemy": {
-                    "type": "object",
-                    "properties": {
-                        "champion": {"type": "string"},
-                        "level": {"type": "integer"},
-                        "items": {"type": "array", "items": {"type": "string"}},
-                        "learned": {"type": "object", "additionalProperties": {"type": "integer"}},
-                        "steps": {"type": "string"},
-                        "range": {"type": "string", "enum": ["melee", "ranged"]},
-                    },
-                },
+                "enemy": _ENEMY_SCHEMA,
                 "defender_health": {"type": "number"},
                 "defender_shield": {"type": "number"},
                 "defender_shield_type": {"type": "string", "enum": ["normal", "physical", "magic"]},
                 "timeline": {"type": "boolean"},
                 "inputs": {"type": "object", "additionalProperties": {"type": "number"}},
+                "assume": {"type": "object", "additionalProperties": {"type": "string"}},
+                "allow_illegal_build": {"type": "boolean"},
             },
         },
     },
@@ -242,13 +257,17 @@ TOOLS: tuple[dict[str, Any], ...] = (
                 "damage_mix_physical": {"type": "number"},
                 "steps": {"type": "string"},
                 "learned": {"type": "object", "additionalProperties": {"type": "integer"}},
+                "attacker_range": {"type": "string", "enum": ["melee", "ranged"]},
                 "target": _TARGET_SCHEMA,
                 "target_count": {"type": "integer", "minimum": 1},
                 "incoming": {"type": "string"},
+                "enemy": _ENEMY_SCHEMA,
                 "timeline": {"type": "boolean"},
                 "runes": {"type": "array", "items": {"type": "integer"}},
                 "shards": {"type": "array", "items": {"type": "integer"}},
                 "inputs": {"type": "object", "additionalProperties": {"type": "number"}},
+                "assume": {"type": "object", "additionalProperties": {"type": "string"}},
+                "allow_illegal_build": {"type": "boolean"},
             },
         },
     },
