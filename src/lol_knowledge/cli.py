@@ -583,6 +583,20 @@ def _add_survive_parser(subparsers: argparse._SubParsersAction) -> None:
     survive.add_argument("--enemy-level", type=int, help="Enemy attacker level.")
     survive.add_argument("--enemy-item", action="append", default=[], metavar="ID")
     survive.add_argument(
+        "--enemy-rune",
+        action="append",
+        default=[],
+        metavar="ID",
+        help="Enemy attacker tree rune id (repeat; requires --enemy-champion).",
+    )
+    survive.add_argument(
+        "--enemy-shard",
+        action="append",
+        default=[],
+        metavar="ID",
+        help="Enemy attacker stat shard id (repeat 3 times; requires --enemy-champion).",
+    )
+    survive.add_argument(
         "--enemy-learned",
         action="append",
         default=[],
@@ -699,6 +713,20 @@ def _add_optimize_parser(subparsers: argparse._SubParsersAction) -> None:
     opt.add_argument("--enemy-champion", help="Enemy champion for time_to_die.")
     opt.add_argument("--enemy-level", type=int, help="Enemy champion level.")
     opt.add_argument("--enemy-item", action="append", default=[], metavar="ID")
+    opt.add_argument(
+        "--enemy-rune",
+        action="append",
+        default=[],
+        metavar="ID",
+        help="Enemy attacker tree rune id (repeat; requires --enemy-champion).",
+    )
+    opt.add_argument(
+        "--enemy-shard",
+        action="append",
+        default=[],
+        metavar="ID",
+        help="Enemy attacker stat shard id (repeat 3 times; requires --enemy-champion).",
+    )
     opt.add_argument("--enemy-learned", action="append", default=[], metavar="SLOT=RANK")
     opt.add_argument("--enemy-range", choices=("melee", "ranged"))
     opt.add_argument("--assume", action="append", default=[], metavar="FIELD=VALUE")
@@ -851,23 +879,22 @@ def _ability_target(args: argparse.Namespace, root: Path, issues, derived, input
             raise StatsError("--target-champion needs --target-level")
         champion = load_champion(root, args.target_champion)
         target_items = load_items(root, args.target_item)
-        if target_runes or target_shards:
-            sheet = _build_sheet_with_runes(
-                root,
-                champion,
-                args.target_level,
-                target_items,
-                target_runes,
-                target_shards,
-                issues,
-                {},
-                derived,
-                inputs=inputs,
-                combat_context="stats",
-                allow_illegal=args.allow_illegal_build,
-            )
-        else:
-            sheet = build_stat_sheet(champion, args.target_level, target_items, issues, {}, derived)
+        target_kit = load_kit(root, champion.id)
+        sheet = _build_sheet_with_runes(
+            root,
+            champion,
+            args.target_level,
+            target_items,
+            target_runes,
+            target_shards,
+            issues,
+            {},
+            derived,
+            inputs=inputs,
+            combat_context="stats",
+            kit=target_kit,
+            allow_illegal=args.allow_illegal_build,
+        )
         _check_build(root, args.target_item, champion, allow=args.allow_illegal_build, who="target")
         current = _number(args.target_current_health, "--target-current-health")
         shield = _number(args.target_shield, "--target-shield")
@@ -1112,25 +1139,34 @@ def _run_survive(args: argparse.Namespace) -> int:
                 raise StatsError("--enemy-champion requires --enemy-level and --steps")
             enemy_champ = load_champion(root, args.enemy_champion)
             enemy_kit = load_kit(root, enemy_champ.id)
+            if enemy_kit is None:
+                raise KitError(f"{enemy_champ.id} has no kit yet")
             enemy_items = load_items(root, args.enemy_item)
             _check_build(
                 root, args.enemy_item, enemy_champ, allow=args.allow_illegal_build, who="enemy"
             )
             enemy_ranks = _parse_ranks(args.enemy_learned)
+            enemy_runes = _rune_ids(args.enemy_rune, "--enemy-rune")
+            enemy_shards = _rune_ids(args.enemy_shard, "--enemy-shard")
             enemy_extras = passive_contributions(enemy_kit, enemy_ranks)
-            enemy_sheet = build_stat_sheet(
-                enemy_champ, args.enemy_level, enemy_items, issues, {}, derived, enemy_extras
+            enemy_sheet = _build_sheet_with_runes(
+                root,
+                enemy_champ,
+                args.enemy_level,
+                enemy_items,
+                enemy_runes,
+                enemy_shards,
+                issues,
+                {},
+                derived,
+                extras=enemy_extras,
+                inputs=inputs,
+                combat_context="rotation",
+                kit=enemy_kit,
+                allow_illegal=args.allow_illegal_build,
             )
-            crit_val = derived.value(enemy_champ.id, "critdamagemultiplier")
-            crit_base = (
-                None
-                if crit_val is None
-                else CritBase(
-                    crit_val,
-                    Label.DERIVED if derived.matches_patch(enemy_champ.patch) else Label.PENDING,
-                    f"derived:{enemy_champ.id}.critdamagemultiplier ({derived.content_version})",
-                )
-            )
+            crit_base = _crit_base(enemy_champ.id, enemy_champ.patch, derived)
+            enemy_rune_data = load_runes(root) if enemy_runes else None
             rot = evaluate_rotation(
                 enemy_kit,
                 enemy_sheet,
@@ -1141,7 +1177,11 @@ def _run_survive(args: argparse.Namespace) -> int:
                 holder_range=args.enemy_range,
                 inputs=inputs,
                 timeline=args.timeline,
-                ap_weight=derived.value(enemy_champ.id, "adaptiveforceapweight"),
+                runes=enemy_runes,
+                rune_data=enemy_rune_data,
+                ap_weight=derived.value(enemy_champ.id, "adaptiveforceapweight")
+                if derived
+                else None,
             )
             hits = hits_from_rotation(rot)
             if any(it.id == "6695" for it in enemy_sheet.items) and "shield_reaver" not in inputs:
@@ -1248,23 +1288,31 @@ def _run_optimize(args: argparse.Namespace) -> int:
                 if enemy_kit is None:
                     raise KitError(f"{enemy_champ.id} has no kit yet")
                 enemy_items = load_items(root, args.enemy_item)
-                enemy_ranks = _parse_ranks(args.enemy_learned)
-                enemy_steps = parse_steps(args.steps)
-                enemy_passive = sheet_passive_effects(
-                    enemy_kit, args.enemy_level, inputs, include_stacking=False
+                _check_build(
+                    root, args.enemy_item, enemy_champ, allow=args.allow_illegal_build, who="enemy"
                 )
-                enemy_sheet = build_stat_sheet(
+                enemy_ranks = _parse_ranks(args.enemy_learned)
+                enemy_runes = _rune_ids(args.enemy_rune, "--enemy-rune")
+                enemy_shards = _rune_ids(args.enemy_shard, "--enemy-shard")
+                enemy_steps = parse_steps(args.steps)
+                enemy_sheet = _build_sheet_with_runes(
+                    root,
                     enemy_champ,
                     args.enemy_level,
                     enemy_items,
+                    enemy_runes,
+                    enemy_shards,
                     issues,
                     assumptions,
                     derived,
-                    (*passive_contributions(enemy_kit, enemy_ranks), *enemy_passive.flats),
-                    extra_amplifiers=enemy_passive.amplifiers,
-                    extra_notes=enemy_passive.notes,
+                    extras=passive_contributions(enemy_kit, enemy_ranks),
+                    inputs=inputs,
+                    combat_context="rotation",
+                    kit=enemy_kit,
+                    allow_illegal=args.allow_illegal_build,
                 )
                 enemy_crit = _crit_base(enemy_champ.id, enemy_champ.patch, derived)
+                enemy_rune_data = load_runes(root) if enemy_runes else None
                 enemy_ap_w = (
                     derived.value(enemy_champ.id, "adaptiveforceapweight") if derived else None
                 )
@@ -1285,6 +1333,8 @@ def _run_optimize(args: argparse.Namespace) -> int:
                         holder_range=enemy_range,
                         inputs=inputs,
                         timeline=args.timeline,
+                        runes=enemy_runes,
+                        rune_data=enemy_rune_data,
                         ap_weight=enemy_ap_w,
                     )
                     return hits_from_rotation(rot)

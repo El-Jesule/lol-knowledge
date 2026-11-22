@@ -1,7 +1,7 @@
 # Índice de la base de conocimiento
 
 - **Parche:** 16.23.1
-- **Última actualización:** 2026-11-21
+- **Última actualización:** 2026-11-22
 
 ## Por intención
 
@@ -32,7 +32,7 @@
 | Calcular la tenacidad y cómo se combinan sus fuentes | [Tenacidad](mechanics/tenacity.md) |
 | Calcular la regeneración de vida y maná | [Regeneración](mechanics/regeneration.md) |
 | Calcular costes de habilidades, reservas (maná, energía, vida), Segador de esencia y Claridad mental | [Recursos y costes](mechanics/resources.md) |
-| Aplicar pasivas de campeón en hoja y rotación (Zaahen, Ahri) y generar borradores de kit | [Pasivas de campeón](mechanics/passives.md) |
+| Aplicar pasivas de campeón en hoja, rotación y supervivencia (`134/173` automatizadas) y generar borradores de kit | [Pasivas de campeón](mechanics/passives.md) |
 | Calcular la velocidad de movimiento y sus límites suaves | [Velocidad de movimiento](mechanics/move-speed.md) |
 | Aplicar aumentos y reducciones de daño | [Modificadores de daño](mechanics/damage-modifiers.md) |
 | Encadenar ataques, daño al impactar y vida del objetivo | [Ataques básicos y daño al impactar](mechanics/basic-attacks-and-on-hit.md) |
@@ -57,6 +57,10 @@
 ## Cobertura actual
 
 **173 de 173 campeones con kit calculable** (`lol-knowledge/champions/<Id>/kit.json`, **100 % del plantel**): Zaahen (con análisis completo), Ahri (con fichas) y los 171 campeones restantes completados en cuatro oleadas sobre el cliente `16.23` (ver [`champion-kits-wave-1.md`](../odd/tasks/champion-kits-wave-1.md), [`champion-kits-wave-2.md`](../odd/tasks/champion-kits-wave-2.md), [`champion-kits-wave-3.md`](../odd/tasks/champion-kits-wave-3.md) y [`champion-kits-wave-4.md`](../odd/tasks/champion-kits-wave-4.md)). Datos oficiales de los 173 campeones en `data/current/` y sus estadísticas base y por nivel del cliente en [champion-records.json](derived/champion-records.json).
+
+**134 de 173 pasivas de campeón automatizadas** ([Pasivas de campeón](mechanics/passives.md)): `123` campeones con `passive_effects` declarativos compilados desde el cliente `16.23` (`Derivado`) más `11` reglas globales de hoja/rotación; los `39` campeones restantes corresponden a pasivas puramente de utilidad, oro, visión, experiencia, geometría, estado post-muerte o contadores ya integrados en `Q/W/E/R`.
+
+**62 de 62 runas y 9 de 9 fragmentos modelados** ([Runas y fragmentos](mechanics/runes.md)): cobertura completa de runas clave, runas menores de estadística y combate, y runas/fragmentos del defensor (`--target-rune`, `--target-shard`, `target.runes`, `target.shards` y `enemy.runes`/`enemy.shards`) en CLI, contrato JSON, servidor MCP y optimizador.
 
 El modelo de objetos cubre los **218 objetos comprables de la Grieta** con revisión completa (**218/218 en `effect_review: complete`**, `0` pendientes): **174 entradas curadas** en `catalog.json` (`catalog_version: 28`; `166` objetos con `234` efectos documentados: `185` `evaluable`, `1` `partially_evaluable` y `48` `excluded` de utilidad pura no combativa, más las `4` transformaciones de Lágrima `3040`, `3042`, `3121` y `2530` y `52` objetos solo de estadísticas). Las cifras que Data Dragon no publica se registran con fuente citada: la wiki (`secondary`) o los datos del cliente 16.23 (`derived`, `corroborated` si coinciden). Los límites están en [Modelo de objetos](objects/README.md).
 

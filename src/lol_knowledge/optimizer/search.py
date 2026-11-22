@@ -21,6 +21,7 @@ from ..runes import (
     adaptive_stat,
     check_page,
     combat_rune_notes,
+    load_runes,
     minor_rune_effects,
     needs_adaptive_stat,
     shard_contributions,
@@ -378,6 +379,7 @@ class _BuildEvaluator:
                 self.assumptions,
                 self.derived,
                 base_extras,
+                self.passive.percents,
                 extra_amplifiers=self.passive.amplifiers,
                 extra_notes=self.passive.notes,
                 inputs=self.inputs,
@@ -443,7 +445,7 @@ class _BuildEvaluator:
             self.assumptions,
             self.derived,
             (*base_extras, *flats, *rune_effects.flats),
-            (*percents, *rune_effects.percents),
+            (*percents, *self.passive.percents, *rune_effects.percents),
             tuple(pending),
             extra_amplifiers=(*self.passive.amplifiers, *rune_effects.amplifiers),
             extra_notes=tuple(extra_notes),
@@ -612,6 +614,7 @@ class _BuildEvaluator:
                     rune_data=self.rune_data,
                     inputs=self.inputs,
                     timeline=self.timeline,
+                    kit=self.kit,
                 )
             except StatsError, RotationError, KitError:
                 return None
@@ -894,6 +897,9 @@ def optimize_build(
         and (objective not in EHP_OBJECTIVES or not _has_unmodelled_ehp_effect(c.item))
         and (objective not in DEFENSE_OBJECTIVES or not _has_excluded_defensive_effect(c.item))
     ]
+
+    if rune_data is None and target is not None and target.runes:
+        rune_data = load_runes(root)
 
     evaluator = _BuildEvaluator(
         objective=objective,

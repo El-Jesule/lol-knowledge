@@ -291,3 +291,177 @@ def test_mcp_server_stdio_roundtrip() -> None:
     assert by_id[10]["error"]["code"] == -32601
     parse_err = [r for r in responses if r.get("id") is None][0]
     assert parse_err["error"]["code"] == -32700
+
+
+def test_mcp_and_contract_target_and_enemy_runes_parity() -> None:
+    server = MCPServer(ROOT)
+    tools_reply = server.handle_message(
+        {"jsonrpc": "2.0", "id": 1, "method": "tools/list", "params": {}}
+    )
+    assert tools_reply is not None
+    by_name = {
+        tool["name"]: tool["inputSchema"]["properties"] for tool in tools_reply["result"]["tools"]
+    }
+
+    for tool_name in ("lol_ability", "lol_rotation", "lol_optimize"):
+        target_props = by_name[tool_name]["target"]["properties"]
+        assert "runes" in target_props and "shards" in target_props
+    for tool_name in ("lol_survive", "lol_optimize"):
+        enemy_props = by_name[tool_name]["enemy"]["properties"]
+        assert {"runes", "shards", "inputs"} <= set(enemy_props)
+
+    bone_plating_page = [8437, 8446, 8473, 8451, 9111, 9104]
+    electrocute_page = [8112, 8139, 8140, 8135, 8226, 8237]
+    shards = [5008, 5008, 5011]
+
+    def _call(name: str, arguments: dict) -> dict:
+        reply = server.handle_message(
+            {
+                "jsonrpc": "2.0",
+                "id": 2,
+                "method": "tools/call",
+                "params": {"name": name, "arguments": arguments},
+            }
+        )
+        assert reply is not None
+        res = reply["result"]
+        assert res["isError"] is False, res
+        return res["structuredContent"]
+
+    # 1. lol_rotation with target.runes (Bone Plating) + target.shards (+65 flat HP)
+    rot_plain = _call(
+        "lol_rotation",
+        {
+            "champion": "Ahri",
+            "level": 9,
+            "learned": {"Q": 5, "W": 2, "E": 1},
+            "steps": "E, Q.both, W.all",
+            "timeline": True,
+            "target": {"champion": "Lux", "level": 9},
+        },
+    )
+    rot_bp = _call(
+        "lol_rotation",
+        {
+            "champion": "Ahri",
+            "level": 9,
+            "learned": {"Q": 5, "W": 2, "E": 1},
+            "steps": "E, Q.both, W.all",
+            "timeline": True,
+            "target": {
+                "champion": "Lux",
+                "level": 9,
+                "runes": bone_plating_page,
+                "shards": shards,
+            },
+        },
+    )
+    assert rot_bp["result"]["total"] < rot_plain["result"]["total"]
+
+    # 2. lol_survive with enemy.runes (Electrocute) + enemy.shards
+    surv_plain = _call(
+        "lol_survive",
+        {
+            "champion": "Garen",
+            "level": 9,
+            "timeline": True,
+            "enemy": {
+                "champion": "Ahri",
+                "level": 9,
+                "learned": {"Q": 5, "W": 2, "E": 1},
+                "steps": "E, Q.both, W.all",
+            },
+        },
+    )
+    surv_runes = _call(
+        "lol_survive",
+        {
+            "champion": "Garen",
+            "level": 9,
+            "timeline": True,
+            "enemy": {
+                "champion": "Ahri",
+                "level": 9,
+                "learned": {"Q": 5, "W": 2, "E": 1},
+                "steps": "E, Q.both, W.all",
+                "runes": electrocute_page,
+                "shards": shards,
+            },
+        },
+    )
+    assert surv_runes["result"]["total_damage_taken"] > surv_plain["result"]["total_damage_taken"]
+
+    # 3. lol_optimize rotation_damage with target.runes + target.shards
+    opt_plain = _call(
+        "lol_optimize",
+        {
+            "champion": "Ahri",
+            "level": 9,
+            "objective": "rotation_damage",
+            "slots": 1,
+            "budget": 3200,
+            "only_verified": True,
+            "top": 1,
+            "beam_width": 4,
+            "pool_limit": 6,
+            "learned": {"Q": 5, "W": 2, "E": 1},
+            "steps": "E, Q.both, W.all",
+            "timeline": True,
+            "target": {"champion": "Lux", "level": 9},
+        },
+    )
+    opt_bp = _call(
+        "lol_optimize",
+        {
+            "champion": "Ahri",
+            "level": 9,
+            "objective": "rotation_damage",
+            "slots": 1,
+            "budget": 3200,
+            "only_verified": True,
+            "top": 1,
+            "beam_width": 4,
+            "pool_limit": 6,
+            "learned": {"Q": 5, "W": 2, "E": 1},
+            "steps": "E, Q.both, W.all",
+            "timeline": True,
+            "target": {
+                "champion": "Lux",
+                "level": 9,
+                "runes": bone_plating_page,
+                "shards": shards,
+            },
+        },
+    )
+    assert (
+        opt_bp["result"]["verified_builds"][0]["score"]
+        < (opt_plain["result"]["verified_builds"][0]["score"])
+    )
+
+    # 4. lol_optimize time_to_die with enemy (including enemy.runes & enemy.shards)
+    opt_ttd = _call(
+        "lol_optimize",
+        {
+            "champion": "Garen",
+            "level": 9,
+            "objective": "time_to_die",
+            "slots": 1,
+            "budget": 3200,
+            "only_verified": True,
+            "top": 1,
+            "beam_width": 4,
+            "pool_limit": 6,
+            "timeline": True,
+            "enemy": {
+                "champion": "Ahri",
+                "level": 9,
+                "items": ["6655"],
+                "learned": {"Q": 5, "W": 2, "E": 1},
+                "steps": "E, Q.both, W.all",
+                "runes": electrocute_page,
+                "shards": shards,
+            },
+        },
+    )
+    assert opt_ttd["ok"] is True
+    assert opt_ttd["result"]["verified_builds"]

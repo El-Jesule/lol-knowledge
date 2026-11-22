@@ -333,25 +333,22 @@ def _resolve_target(
         t_level = _require_int(target_cfg, "level", minimum=1)
         t_items = _str_list(target_cfg, "items")
         t_inputs = {**(inputs or {}), **_parse_inputs_dict(target_cfg, "inputs")}
-        if t_runes or t_shards:
-            t_sheet, _ = _build_sheet_for_contract(
-                root,
-                t_champ,
-                t_level,
-                t_items,
-                t_runes,
-                t_shards,
-                issues,
-                {},
-                derived,
-                t_inputs,
-                combat_context="stats",
-                allow_illegal=allow_illegal,
-            )
-        else:
-            t_sheet = build_stat_sheet(
-                t_champ, t_level, load_items(root, t_items), issues, {}, derived
-            )
+        t_kit = load_kit(root, t_champ.id)
+        t_sheet, _ = _build_sheet_for_contract(
+            root,
+            t_champ,
+            t_level,
+            t_items,
+            t_runes,
+            t_shards,
+            issues,
+            {},
+            derived,
+            t_inputs,
+            combat_context="stats",
+            kit=t_kit,
+            allow_illegal=allow_illegal,
+        )
         return target_from_sheet(
             t_sheet,
             current_health=_optional_fraction(target_cfg, "current_health"),
@@ -739,6 +736,73 @@ def _handle_rotation(params: Mapping[str, Any], root: Path) -> dict[str, Any]:
     }
 
 
+def _build_enemy_hits_context(
+    enemy: Any,
+    root: Path,
+    issues,
+    derived,
+    assumptions_map: Mapping[str, str],
+    inputs: Mapping[str, Fraction],
+    *,
+    timeline: bool,
+    allow_illegal: bool,
+):
+    if not isinstance(enemy, Mapping):
+        raise ContractInputError("invalid_input", "'enemy' must be an object")
+    e_champ = load_champion(root, _require_str(enemy, "champion"))
+    e_level = _require_int(enemy, "level", minimum=1)
+    steps_text = _require_str(enemy, "steps")
+    e_steps = parse_steps(steps_text)
+    e_items = _str_list(enemy, "items")
+    e_runes = _int_list(enemy, "runes")
+    e_shards = _int_list(enemy, "shards")
+    e_ranks = _parse_ranks_dict(enemy)
+    e_inputs = {**inputs, **_parse_inputs_dict(enemy, "inputs")}
+    e_kit = load_kit(root, e_champ.id)
+    if e_kit is None:
+        raise ContractInputError("not_found", f"enemy {e_champ.id} has no kit.json")
+    e_sheet, e_warnings = _build_sheet_for_contract(
+        root,
+        e_champ,
+        e_level,
+        e_items,
+        e_runes,
+        e_shards,
+        issues,
+        assumptions_map,
+        derived,
+        e_inputs,
+        extra_contributions=passive_contributions(e_kit, e_ranks),
+        combat_context="rotation",
+        kit=e_kit,
+        allow_illegal=allow_illegal,
+    )
+    e_range, _ = _infer_holder_range(e_champ, enemy.get("range"))
+    e_crit = _crit_base(e_champ.id, e_champ.patch, derived)
+    e_rune_data = load_runes(root) if e_runes else None
+    e_ap_weight = derived.value(e_champ.id, "adaptiveforceapweight") if derived else None
+
+    def _hits_for_sheet(def_sheet, current_health: Fraction | None = None):
+        rot = evaluate_rotation(
+            e_kit,
+            e_sheet,
+            e_ranks,
+            target_from_sheet(def_sheet, current_health=current_health),
+            e_steps,
+            e_crit,
+            holder_range=e_range,
+            inputs=e_inputs,
+            timeline=timeline,
+            runes=e_runes,
+            rune_data=e_rune_data,
+            ap_weight=e_ap_weight,
+        )
+        return hits_from_rotation(rot)
+
+    enemy_desc = f"{e_champ.name} level {e_level}: {steps_text}"
+    return _hits_for_sheet, e_sheet, e_range, enemy_desc, e_warnings
+
+
 def _handle_survive(params: Mapping[str, Any], root: Path) -> dict[str, Any]:
     champ = load_champion(root, _require_str(params, "champion"))
     level = _require_int(params, "level", minimum=1)
@@ -748,6 +812,7 @@ def _handle_survive(params: Mapping[str, Any], root: Path) -> dict[str, Any]:
     inputs = _parse_inputs_dict(params)
     assumptions_map = _parse_assumptions_dict(params)
     timeline = bool(params.get("timeline", False))
+    allow_illegal = bool(params.get("allow_illegal_build", False))
     issues = load_issues(root)
     derived = load_records(root)
     kit = load_kit(root, champ.id)
@@ -764,7 +829,7 @@ def _handle_survive(params: Mapping[str, Any], root: Path) -> dict[str, Any]:
         inputs,
         combat_context="survive",
         kit=kit,
-        allow_illegal=bool(params.get("allow_illegal_build", False)),
+        allow_illegal=allow_illegal,
     )
     incoming = params.get("incoming")
     enemy = params.get("enemy")
@@ -782,49 +847,24 @@ def _handle_survive(params: Mapping[str, Any], root: Path) -> dict[str, Any]:
         hits = parse_incoming(str(incoming))
         enemy_desc = str(incoming)
     else:
-        assert isinstance(enemy, Mapping)
-        e_champ = load_champion(root, _require_str(enemy, "champion"))
-        e_level = _require_int(enemy, "level", minimum=1)
-        e_steps = parse_steps(_require_str(enemy, "steps"))
-        e_items = _str_list(enemy, "items")
-        e_ranks = _parse_ranks_dict(enemy)
-        e_kit = load_kit(root, e_champ.id)
-        if e_kit is None:
-            raise ContractInputError("not_found", f"enemy {e_champ.id} has no kit.json")
-        e_passive = sheet_passive_effects(e_kit, e_level, inputs, include_stacking=False)
-        e_sheet = build_stat_sheet(
-            e_champ,
-            e_level,
-            load_items(root, e_items),
+        hits_for_sheet, e_sheet, e_range, enemy_desc, e_warnings = _build_enemy_hits_context(
+            enemy,
+            root,
             issues,
-            assumptions_map,
             derived,
-            (*passive_contributions(e_kit, e_ranks), *e_passive.flats),
-            extra_amplifiers=e_passive.amplifiers,
-            extra_notes=e_passive.notes,
-        )
-        e_range, _ = _infer_holder_range(e_champ, enemy.get("range"))
-        rot = evaluate_rotation(
-            e_kit,
-            e_sheet,
-            e_ranks,
-            target_from_sheet(sheet, current_health=start_hp),
-            e_steps,
-            _crit_base(e_champ.id, e_champ.patch, derived),
-            holder_range=e_range,
-            inputs=inputs,
+            assumptions_map,
+            inputs,
             timeline=timeline,
-            ap_weight=derived.value(e_champ.id, "adaptiveforceapweight") if derived else None,
+            allow_illegal=allow_illegal,
         )
-        hits = hits_from_rotation(rot)
+        warnings.extend(e_warnings)
+        hits = hits_for_sheet(sheet, start_hp)
         if any(it.id == "6695" for it in e_sheet.items) and "shield_reaver" not in inputs:
             inputs = {
                 **inputs,
                 "shield_reaver": Fraction(35, 100) if e_range == "ranged" else Fraction(50, 100),
             }
-        enemy_desc = f"{e_champ.name} level {e_level}: {enemy['steps']}"
     rune_data = load_runes(root) if runes else None
-    defender_kit = load_kit(root, champ.id)
     outcome = evaluate_defense(
         sheet,
         hits,
@@ -836,7 +876,7 @@ def _handle_survive(params: Mapping[str, Any], root: Path) -> dict[str, Any]:
         rune_data=rune_data,
         inputs=inputs,
         timeline=timeline,
-        kit=defender_kit,
+        kit=kit,
     )
     payload = defense_to_dict(outcome, sheet)
     return {
@@ -857,6 +897,7 @@ def _handle_optimize(params: Mapping[str, Any], root: Path) -> dict[str, Any]:
     derived = load_records(root)
     assumptions_map = _parse_assumptions_dict(params)
     inputs = _parse_inputs_dict(params)
+    allow_illegal = bool(params.get("allow_illegal_build", False))
     damage_mix = _optional_fraction(params, "damage_mix_physical")
     if damage_mix is None:
         damage_mix = Fraction(1, 2)
@@ -893,21 +934,45 @@ def _handle_optimize(params: Mapping[str, Any], root: Path) -> dict[str, Any]:
             issues,
             derived,
             inputs=inputs,
-            allow_illegal=bool(params.get("allow_illegal_build", False)),
+            allow_illegal=allow_illegal,
         )
         if rune_data is None and target.runes:
             rune_data = load_runes(root)
 
     incoming_hits = ()
+    incoming_hits_for_sheet = None
+    extra_warnings: list[str] = []
     if objective == "time_to_die":
         incoming = params.get("incoming")
-        if not incoming:
+        enemy = params.get("enemy")
+        if bool(incoming) == bool(enemy):
             raise ContractInputError(
                 "missing_input",
-                "objective 'time_to_die' requires 'incoming' hits string",
+                "objective 'time_to_die' requires either 'incoming' string or 'enemy' object",
                 missing_fields=("incoming",),
             )
-        incoming_hits = parse_incoming(str(incoming))
+        if incoming:
+            incoming_hits = parse_incoming(str(incoming))
+        else:
+            hits_for_sheet, e_sheet, e_range, _, e_warnings = _build_enemy_hits_context(
+                enemy,
+                root,
+                issues,
+                derived,
+                assumptions_map,
+                inputs,
+                timeline=timeline,
+                allow_illegal=allow_illegal,
+            )
+            extra_warnings.extend(e_warnings)
+            if any(it.id == "6695" for it in e_sheet.items) and "shield_reaver" not in inputs:
+                inputs = {
+                    **inputs,
+                    "shield_reaver": Fraction(35, 100)
+                    if e_range == "ranged"
+                    else Fraction(50, 100),
+                }
+            incoming_hits_for_sheet = hits_for_sheet
 
     outcome = optimize_build(
         root,
@@ -928,6 +993,7 @@ def _handle_optimize(params: Mapping[str, Any], root: Path) -> dict[str, Any]:
         timeline=timeline,
         target_count=target_count,
         incoming_hits=incoming_hits,
+        incoming_hits_for_sheet=incoming_hits_for_sheet,
         runes=runes,
         shards=shards,
         rune_data=rune_data,
@@ -938,7 +1004,7 @@ def _handle_optimize(params: Mapping[str, Any], root: Path) -> dict[str, Any]:
         "result_label": "Calculado",
         "weakest_input_label": outcome.label.value,
         "assumptions": [*inferred_assumptions, *(f"{k}={v}" for k, v in assumptions_map.items())],
-        "not_modelled": list(outcome.notes),
+        "not_modelled": [*outcome.notes, *extra_warnings],
         "result": payload,
     }
 
