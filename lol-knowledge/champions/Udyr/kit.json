@@ -19,6 +19,23 @@
       "passive_stats": [],
       "not_modelled": [
         "Velocidad de ataque tras cambiar de posición (AttackSpeed) y enfriamiento/recarga de Despertar (UltCD)"
+      ],
+      "passive_effects": [
+        {
+          "id": "bridge_between_as",
+          "name": "Puente entre mundos (VA tras cambio de postura)",
+          "kind": "stat_bonus",
+          "formula": {
+            "op": "constant",
+            "value": 30
+          },
+          "label": "Derivado",
+          "source": "Characters/Udyr/Spells/UdyrPassive.mSpellCalculations.AttackSpeed (16.23.8406595+branch.releases-16-23.content.release)",
+          "stat": "attack_speed_bonus",
+          "mode": "flat",
+          "input_name": "udyr_stance_swap",
+          "max_stacks": 1
+        }
       ]
     },
     "Q": {

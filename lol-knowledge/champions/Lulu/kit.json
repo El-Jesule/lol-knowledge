@@ -65,6 +65,50 @@
       "passive_stats": [],
       "not_modelled": [
         "Transferencia de Pix a aliados y bloqueo de rayos por unidades interpuestas"
+      ],
+      "passive_effects": [
+        {
+          "id": "pix_bolts",
+          "name": "Pix, el hada compañera (3 rayos al atacar)",
+          "kind": "damage_proc",
+          "formula": {
+            "op": "mul",
+            "operands": [
+              {
+                "op": "add",
+                "operands": [
+                  {
+                    "op": "linear_by_level",
+                    "min": 5,
+                    "max": 39
+                  },
+                  {
+                    "op": "mul",
+                    "operands": [
+                      {
+                        "op": "constant",
+                        "value": 0.05
+                      },
+                      {
+                        "op": "stat",
+                        "stat": "ability_power",
+                        "scope": "total"
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "op": "constant",
+                "value": 3
+              }
+            ]
+          },
+          "label": "Derivado",
+          "source": "Characters/Lulu/Spells/LuluPassiveAbility/LuluPassive.mSpellCalculations.CombinedDamage (16.23.8406595+branch.releases-16-23.content.release)",
+          "trigger": "on_attack",
+          "damage_type": "magic"
+        }
       ]
     },
     "Q": {

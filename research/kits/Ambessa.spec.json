@@ -25,6 +25,30 @@
       ],
       "not_modelled": [
         "Deslizamiento tras cada habilidad, velocidad de ataque (Calc_Attack_Speed), alcance adicional y devolución de energía (Calc_OnHit_Energy_Refund)"
+      ],
+      "passive_effects": [
+        {
+          "id": "drakehounds_step_damage",
+          "name": "Caza del perrodraco (ataque potenciado tras habilidad)",
+          "kind": "damage_proc",
+          "trigger": "after_ability",
+          "max_stacks": {
+            "data_value": "Attack_Buff_Max_Stacks"
+          },
+          "duration_seconds": {
+            "data_value": "Attack_Buff_Duration"
+          },
+          "damage_type": "physical",
+          "calculation": "Calc_OnHit_Damage_Flat"
+        },
+        {
+          "id": "drakehounds_step_energy",
+          "name": "Caza del perrodraco (energía al impactar)",
+          "kind": "resource_restore",
+          "resource": "energy",
+          "trigger": "on_hit",
+          "calculation": "Calc_OnHit_Energy_Refund"
+        }
       ]
     },
     "Q": {

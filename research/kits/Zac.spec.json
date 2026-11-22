@@ -14,6 +14,15 @@
       "max_rank": 1,
       "not_modelled": [
         "Curación por trozos de materia (HealPercent) y resurrección en 4 partículas"
+      ],
+      "passive_effects": [
+        {
+          "id": "cell_division_blob_heal",
+          "name": "División celular (curación al recoger trozo)",
+          "kind": "heal",
+          "trigger": "on_ability_hit",
+          "calculation": "{3d3d6f53}"
+        }
       ]
     },
     "Q": {

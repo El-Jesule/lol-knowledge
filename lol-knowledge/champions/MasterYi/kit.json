@@ -46,6 +46,32 @@
       "passive_stats": [],
       "not_modelled": [
         "Disparo cada 4 ataques y aplicación de efectos de impacto en el segundo golpe"
+      ],
+      "passive_effects": [
+        {
+          "id": "double_strike",
+          "name": "Golpe doble (cada 4 ataques)",
+          "kind": "damage_proc",
+          "formula": {
+            "op": "mul",
+            "operands": [
+              {
+                "op": "constant",
+                "value": 0.5
+              },
+              {
+                "op": "stat",
+                "stat": "attack_damage",
+                "scope": "total"
+              }
+            ]
+          },
+          "label": "Derivado",
+          "source": "Characters/MasterYi/Spells/MasterYiPassiveAbility/MasterYiPassive.mSpellCalculations.TotalDamage (16.23.8406595+branch.releases-16-23.content.release)",
+          "trigger": "every_n_attacks",
+          "damage_type": "physical",
+          "every": 4
+        }
       ]
     },
     "Q": {

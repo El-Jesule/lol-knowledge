@@ -14,6 +14,34 @@
       "max_rank": 1,
       "not_modelled": [
         "Posesión de campeones enemigos caídos y curación al poseer (PercentHealthHeal)"
+      ],
+      "passive_effects": [
+        {
+          "id": "sovereigns_domination_heal",
+          "name": "Dominación soberana (curación al poseer espectro)",
+          "kind": "heal",
+          "trigger": "on_champion_takedown",
+          "formula": {
+            "op": "mul",
+            "operands": [
+              {
+                "op": "calculation",
+                "name": "PercentHealthHeal"
+              },
+              {
+                "op": "constant",
+                "value": 0.01
+              },
+              {
+                "op": "stat",
+                "stat": "health",
+                "scope": "max",
+                "subject": "target"
+              }
+            ]
+          },
+          "source_note": "PercentHealthHeal % × vida máxima del campeón poseído"
+        }
       ]
     },
     "Q": {

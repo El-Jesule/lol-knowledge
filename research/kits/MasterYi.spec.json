@@ -25,6 +25,19 @@
       ],
       "not_modelled": [
         "Disparo cada 4 ataques y aplicación de efectos de impacto en el segundo golpe"
+      ],
+      "passive_effects": [
+        {
+          "id": "double_strike",
+          "name": "Golpe doble (cada 4 ataques)",
+          "kind": "damage_proc",
+          "trigger": "every_n_attacks",
+          "every": {
+            "data_value": "AttackCount"
+          },
+          "damage_type": "physical",
+          "calculation": "TotalDamage"
+        }
       ]
     },
     "Q": {

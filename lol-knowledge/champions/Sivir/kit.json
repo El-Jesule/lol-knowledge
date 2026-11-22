@@ -19,6 +19,42 @@
       "passive_stats": [],
       "not_modelled": [
         "Velocidad de movimiento plana al dañar campeones (FlatMS)"
+      ],
+      "passive_effects": [
+        {
+          "id": "fleet_of_foot_ms",
+          "name": "Mil pies (VM al dañar campeón)",
+          "kind": "stat_bonus",
+          "formula": {
+            "op": "by_level",
+            "values": [
+              55,
+              55,
+              55,
+              55,
+              55,
+              60,
+              60,
+              60,
+              60,
+              60,
+              65,
+              65,
+              65,
+              65,
+              65,
+              70,
+              70,
+              75
+            ]
+          },
+          "label": "Derivado",
+          "source": "Characters/Sivir/Spells/SivirPassiveAbility/SivirPassive.mSpellCalculations.FlatMS (16.23.8406595+branch.releases-16-23.content.release)",
+          "stat": "move_speed",
+          "mode": "flat",
+          "input_name": "sivir_fleet_of_foot",
+          "max_stacks": 1
+        }
       ]
     },
     "Q": {

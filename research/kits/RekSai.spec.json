@@ -14,6 +14,16 @@
       "max_rank": 1,
       "not_modelled": [
         "Generación de Furia y curación al excavar consumiendo Furia (HealAmount)"
+      ],
+      "passive_effects": [
+        {
+          "id": "fury_of_the_xersai_heal",
+          "name": "Furia del Xer'Sai (curación bajo tierra con 100 furia)",
+          "kind": "heal",
+          "trigger": "on_ability_cast",
+          "cooldown_seconds": 8,
+          "calculation": "HealAmount"
+        }
       ]
     },
     "Q": {

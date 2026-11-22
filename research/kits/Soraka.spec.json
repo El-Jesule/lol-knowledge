@@ -14,6 +14,18 @@
       "max_rank": 1,
       "not_modelled": [
         "Velocidad de movimiento adicional hacia aliados con menos del 40 % de vida"
+      ],
+      "passive_effects": [
+        {
+          "id": "salvation_ms",
+          "name": "Salvación (VM hacia aliado con < 40 % vida)",
+          "kind": "stat_bonus",
+          "stat": "move_speed",
+          "mode": "percent_ms",
+          "data_value": "MovementSpeed",
+          "max_stacks": 1,
+          "input_name": "soraka_salvation"
+        }
       ]
     },
     "Q": {

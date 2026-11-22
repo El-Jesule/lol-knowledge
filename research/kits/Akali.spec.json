@@ -25,6 +25,18 @@
       ],
       "not_modelled": [
         "Velocidad de movimiento (PassiveSpeedBonus), alcance doble y ataque básico aparte"
+      ],
+      "passive_effects": [
+        {
+          "id": "assassins_mark_ms",
+          "name": "Marca del asesino (VM al cruzar anillo)",
+          "kind": "stat_bonus",
+          "stat": "move_speed",
+          "mode": "percent_ms",
+          "calculation": "PassiveSpeedBonus",
+          "max_stacks": 1,
+          "input_name": "akali_ring_ms"
+        }
       ]
     },
     "Q": {

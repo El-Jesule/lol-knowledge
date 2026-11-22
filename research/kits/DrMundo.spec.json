@@ -14,6 +14,30 @@
       "max_rank": 1,
       "not_modelled": [
         "Bloqueo del primer inmovilizador, bidón con curación y regeneración pasiva (MaxHealthRegen)"
+      ],
+      "passive_effects": [
+        {
+          "id": "goes_where_he_pleases_heal",
+          "name": "Va donde quiere (recoger vial químico 4 % vida máx.)",
+          "kind": "heal",
+          "trigger": "on_champion_hit",
+          "cooldown_calculation": "PassiveCooldown",
+          "formula": {
+            "op": "mul",
+            "operands": [
+              {
+                "op": "data_value",
+                "name": "MaxHealthGain"
+              },
+              {
+                "op": "stat",
+                "stat": "health",
+                "scope": "total"
+              }
+            ]
+          },
+          "source_note": "MaxHealthGain × vida máxima de Dr. Mundo"
+        }
       ]
     },
     "Q": {

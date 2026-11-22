@@ -76,6 +76,71 @@
       ],
       "not_modelled": [
         "Restauración de maná al matar objetivos en llamas (ManaRestore) y topes contra monstruos"
+      ],
+      "passive_effects": [
+        {
+          "id": "blaze_burn",
+          "name": "Nube de fuego (quemadura 2 % vida máxima)",
+          "kind": "damage_proc",
+          "trigger": "on_ability_hit",
+          "damage_type": "magic",
+          "formula": {
+            "op": "mul",
+            "operands": [
+              {
+                "op": "data_value",
+                "name": "PercentHealthDamage"
+              },
+              {
+                "op": "constant",
+                "value": 0.01
+              },
+              {
+                "op": "stat",
+                "stat": "health",
+                "scope": "max",
+                "subject": "target"
+              }
+            ]
+          },
+          "source_note": "PercentHealthDamage % × vida máxima del objetivo"
+        },
+        {
+          "id": "blaze_explosion",
+          "name": "Nube de fuego (explosión a 3 habilidades)",
+          "kind": "damage_proc",
+          "trigger": "every_n_ability_hits",
+          "every": 3,
+          "damage_type": "magic",
+          "formula": {
+            "op": "mul",
+            "operands": [
+              {
+                "op": "calculation",
+                "name": "ExplosionDamage"
+              },
+              {
+                "op": "constant",
+                "value": 0.01
+              },
+              {
+                "op": "stat",
+                "stat": "health",
+                "scope": "max",
+                "subject": "target"
+              }
+            ]
+          },
+          "source_note": "ExplosionDamage % × vida máxima del objetivo"
+        },
+        {
+          "id": "blaze_mana_restore",
+          "name": "Nube de fuego (maná al matar objetivo en llamas)",
+          "kind": "resource_restore",
+          "resource": "mana",
+          "trigger": "on_any_kill",
+          "calculation": "ManaRestore"
+        }
       ]
     },
     "Q": {

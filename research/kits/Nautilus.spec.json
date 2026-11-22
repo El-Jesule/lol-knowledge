@@ -25,6 +25,19 @@
       ],
       "not_modelled": [
         "Inmovilización (RootDuration) y enfriamiento por objetivo"
+      ],
+      "passive_effects": [
+        {
+          "id": "staggering_blow",
+          "name": "Golpe maestro (daño físico periódico)",
+          "kind": "damage_proc",
+          "trigger": "on_attack",
+          "cooldown_seconds": {
+            "data_value": "PerTargetCD"
+          },
+          "damage_type": "physical",
+          "calculation": "BonusDamage"
+        }
       ]
     },
     "Q": {

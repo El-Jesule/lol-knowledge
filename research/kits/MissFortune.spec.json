@@ -25,6 +25,17 @@
       ],
       "not_modelled": [
         "Daño reducido al 50 % contra súbditos (MinionDamage)"
+      ],
+      "passive_effects": [
+        {
+          "id": "love_tap",
+          "name": "Cachete (primer ataque contra nuevo objetivo)",
+          "kind": "damage_proc",
+          "trigger": "on_attack",
+          "cooldown_seconds": 999,
+          "damage_type": "physical",
+          "calculation": "TotalDamage"
+        }
       ]
     },
     "Q": {

@@ -58,6 +58,33 @@
       ],
       "not_modelled": [
         "Velocidad de movimiento del aura (PassiveMovementSpeed) y tope contra monstruos (MaxAuraMonsterDamage)"
+      ],
+      "passive_effects": [
+        {
+          "id": "darkness_rise_on_hit",
+          "name": "El auge de la oscuridad (40 % PH al impactar)",
+          "kind": "damage_proc",
+          "trigger": "on_hit",
+          "damage_type": "magic",
+          "calculation": "BonusAPAuto"
+        },
+        {
+          "id": "darkness_rise_ms",
+          "name": "El auge de la oscuridad (VM con 3 acumulaciones)",
+          "kind": "stacking_stat",
+          "stat": "move_speed",
+          "mode": "percent_ms",
+          "trigger": "champion_hit",
+          "max_stacks": {
+            "data_value": "MaximumStacks"
+          },
+          "only_at_max": true,
+          "duration_seconds": {
+            "data_value": "CombatTrackingDuration"
+          },
+          "input_name": "darkness_rise_stacks",
+          "calculation": "PassiveMovementSpeed"
+        }
       ]
     },
     "Q": {

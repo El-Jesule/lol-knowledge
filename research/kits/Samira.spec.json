@@ -34,6 +34,18 @@
       ],
       "not_modelled": [
         "Grados de estilo E–S, velocidad de movimiento (MSBonusNew) y extensión de derribos"
+      ],
+      "passive_effects": [
+        {
+          "id": "daredevil_impulse_ms",
+          "name": "Impulso temerario (VM por grado de estilo 0..6)",
+          "kind": "stat_bonus",
+          "stat": "move_speed",
+          "mode": "percent_ms",
+          "calculation": "MSBonusNew",
+          "max_stacks": 6,
+          "input_name": "samira_style_grade"
+        }
       ]
     },
     "Q": {

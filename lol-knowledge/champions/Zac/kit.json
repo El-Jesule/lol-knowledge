@@ -19,6 +19,40 @@
       "passive_stats": [],
       "not_modelled": [
         "Curación por trozos de materia (HealPercent) y resurrección en 4 partículas"
+      ],
+      "passive_effects": [
+        {
+          "id": "cell_division_blob_heal",
+          "name": "División celular (curación al recoger trozo)",
+          "kind": "heal",
+          "formula": {
+            "op": "mul",
+            "operands": [
+              {
+                "op": "linear_by_level",
+                "min": 0.04,
+                "max": 0.08
+              },
+              {
+                "op": "mul",
+                "operands": [
+                  {
+                    "op": "constant",
+                    "value": 1
+                  },
+                  {
+                    "op": "stat",
+                    "stat": "health",
+                    "scope": "total"
+                  }
+                ]
+              }
+            ]
+          },
+          "label": "Derivado",
+          "source": "Characters/Zac/Spells/ZacPassiveChunkDropAbility/ZacPassiveChunkDrop.mSpellCalculations.{3d3d6f53} (16.23.8406595+branch.releases-16-23.content.release)",
+          "trigger": "on_ability_hit"
+        }
       ]
     },
     "Q": {

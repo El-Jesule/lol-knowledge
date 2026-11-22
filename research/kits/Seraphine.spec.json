@@ -25,6 +25,22 @@
       ],
       "not_modelled": [
         "Eco de cada tercera habilidad básica y acumulación de notas con aliados"
+      ],
+      "passive_effects": [
+        {
+          "id": "stage_presence_note",
+          "name": "Presencia escénica (nota tras habilidad)",
+          "kind": "damage_proc",
+          "trigger": "after_ability",
+          "max_stacks": {
+            "data_value": "MaxNotes"
+          },
+          "duration_seconds": {
+            "data_value": "NoteDuration"
+          },
+          "damage_type": "magic",
+          "calculation": "AutoDamage"
+        }
       ]
     },
     "Q": {

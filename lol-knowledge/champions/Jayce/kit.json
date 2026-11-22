@@ -19,6 +19,23 @@
       "passive_stats": [],
       "not_modelled": [
         "Velocidad de movimiento plana (+40) y efecto fantasmal al cambiar de postura"
+      ],
+      "passive_effects": [
+        {
+          "id": "hextech_capacitor_ms",
+          "name": "Condensador hextech (VM al cambiar de arma)",
+          "kind": "stat_bonus",
+          "formula": {
+            "op": "constant",
+            "value": 30
+          },
+          "label": "Derivado",
+          "source": "Characters/Jayce/Spells/JaycePassiveAbility/JaycePassive.DataValues.FlatMovementSpeed (16.23.8406595+branch.releases-16-23.content.release)",
+          "stat": "move_speed",
+          "mode": "flat",
+          "input_name": "jayce_transform",
+          "max_stacks": 1
+        }
       ]
     },
     "Q": {

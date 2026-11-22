@@ -19,6 +19,23 @@
       "passive_stats": [],
       "not_modelled": [
         "Velocidad de movimiento adicional hacia aliados con menos del 40 % de vida"
+      ],
+      "passive_effects": [
+        {
+          "id": "salvation_ms",
+          "name": "Salvación (VM hacia aliado con < 40 % vida)",
+          "kind": "stat_bonus",
+          "formula": {
+            "op": "constant",
+            "value": 0.9
+          },
+          "label": "Derivado",
+          "source": "Characters/Soraka/Spells/Consecration_SelfAbility/Consecration_Self.DataValues.MovementSpeed (16.23.8406595+branch.releases-16-23.content.release)",
+          "stat": "move_speed",
+          "mode": "percent_ms",
+          "input_name": "soraka_salvation",
+          "max_stacks": 1
+        }
       ]
     },
     "Q": {

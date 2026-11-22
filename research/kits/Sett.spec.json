@@ -26,6 +26,17 @@
       "not_modelled": [
         "Alternancia izquierda/derecha y mayor velocidad de ataque del golpe derecho",
         "Regeneración adicional por vida perdida (TooltipRegenPerMissingHealthCalc)"
+      ],
+      "passive_effects": [
+        {
+          "id": "pit_grit_right_punch",
+          "name": "Coraje del foso (puñetazo derecho cada 2 ataques)",
+          "kind": "damage_proc",
+          "trigger": "every_n_attacks",
+          "every": 2,
+          "damage_type": "physical",
+          "calculation": "RightPunchBonus"
+        }
       ]
     },
     "Q": {

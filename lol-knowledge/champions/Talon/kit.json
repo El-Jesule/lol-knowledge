@@ -54,7 +54,44 @@
         }
       ],
       "passive_stats": [],
-      "not_modelled": []
+      "not_modelled": [],
+      "passive_effects": [
+        {
+          "id": "blades_end_bleed",
+          "name": "Final de la hoja (sangrado al detonar 3 heridas)",
+          "kind": "damage_proc",
+          "formula": {
+            "op": "add",
+            "operands": [
+              {
+                "op": "linear_by_level",
+                "min": 80,
+                "max": 280
+              },
+              {
+                "op": "mul",
+                "operands": [
+                  {
+                    "op": "constant",
+                    "value": 2.1
+                  },
+                  {
+                    "op": "stat",
+                    "stat": "attack_damage",
+                    "scope": "bonus"
+                  }
+                ]
+              }
+            ]
+          },
+          "label": "Derivado",
+          "source": "Characters/Talon/Spells/TalonPassiveAbility/TalonPassive.mSpellCalculations.BleedDamage (16.23.8406595+branch.releases-16-23.content.release)",
+          "trigger": "every_n_hits",
+          "damage_type": "physical",
+          "target_kind": "champion",
+          "every": 4
+        }
+      ]
     },
     "Q": {
       "name": "Diplomacia noxiana",

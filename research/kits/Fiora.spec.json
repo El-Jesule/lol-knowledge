@@ -68,6 +68,16 @@
       ],
       "not_modelled": [
         "Curación al golpear punto vital (PassiveHealAmount) y velocidad de movimiento"
+      ],
+      "passive_effects": [
+        {
+          "id": "duelists_dance_heal",
+          "name": "Baile de duelista (curación al golpear punto vital)",
+          "kind": "heal",
+          "trigger": "on_champion_hit",
+          "cooldown_seconds": 2,
+          "calculation": "PassiveHealAmount"
+        }
       ]
     },
     "Q": {

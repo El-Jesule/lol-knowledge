@@ -77,6 +77,51 @@
       "passive_stats": [],
       "not_modelled": [
         "Gestión de Calor (Zona de peligro / Sobrecalentamiento), velocidad de ataque sobrecalentado (OverheatAS) y tope contra monstruos"
+      ],
+      "passive_effects": [
+        {
+          "id": "overheat_as",
+          "name": "Sobrecalentamiento (VA)",
+          "kind": "stat_bonus",
+          "formula": {
+            "op": "mul",
+            "operands": [
+              {
+                "op": "by_level",
+                "values": [
+                  0.3,
+                  0.329647,
+                  0.360735,
+                  0.393265,
+                  0.427235,
+                  0.462647,
+                  0.4995,
+                  0.537794,
+                  0.57753,
+                  0.618706,
+                  0.661324,
+                  0.705382,
+                  0.750882,
+                  0.797824,
+                  0.846206,
+                  0.89603,
+                  0.947294,
+                  1
+                ]
+              },
+              {
+                "op": "constant",
+                "value": 100
+              }
+            ]
+          },
+          "label": "Derivado",
+          "source": "Characters/Rumble/Spells/RumbleHeatSystemAbility/RumbleHeatSystem.mSpellCalculations.OverheatAS (16.23.8406595+branch.releases-16-23.content.release)",
+          "stat": "attack_speed_bonus",
+          "mode": "flat",
+          "input_name": "rumble_overheat",
+          "max_stacks": 1
+        }
       ]
     },
     "Q": {

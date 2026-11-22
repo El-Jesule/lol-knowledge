@@ -25,6 +25,17 @@
       ],
       "not_modelled": [
         "Acumulación hasta 6 cargas (DamagePerSecondMax) y duración de 6 s"
+      ],
+      "passive_effects": [
+        {
+          "id": "deadly_venom_burn",
+          "name": "Veneno mortal (daño verdadero 6 s por carga)",
+          "kind": "damage_proc",
+          "trigger": "on_hit",
+          "damage_type": "true",
+          "calculation": "DamagePerSecond",
+          "scale": 6
+        }
       ]
     },
     "Q": {

@@ -42,6 +42,32 @@
       ],
       "not_modelled": [
         "Enfriamiento por objetivo (TooltipCooldown), mínimo 20 y tope de 400"
+      ],
+      "passive_effects": [
+        {
+          "id": "martial_cadence",
+          "name": "Cadencia marcial (% vida actual)",
+          "kind": "damage_proc",
+          "trigger": "on_attack",
+          "cooldown_calculation": "TooltipCooldown",
+          "damage_type": "physical",
+          "formula": {
+            "op": "mul",
+            "operands": [
+              {
+                "op": "data_value",
+                "name": "TooltipCurrentHealthDamage"
+              },
+              {
+                "op": "stat",
+                "stat": "health",
+                "scope": "current",
+                "subject": "target"
+              }
+            ]
+          },
+          "source_note": "TooltipCurrentHealthDamage × vida actual del objetivo"
+        }
       ]
     },
     "Q": {

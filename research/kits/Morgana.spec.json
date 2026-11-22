@@ -13,6 +13,18 @@
       "max_rank": 1,
       "not_modelled": [
         "Curación porcentual del daño de habilidades (HealPercent)"
+      ],
+      "passive_effects": [
+        {
+          "id": "soul_siphon_omnivamp",
+          "name": "Absorbealmas (18 % curación en hechizos contra campeones)",
+          "kind": "stat_bonus",
+          "stat": "omnivamp",
+          "mode": "flat",
+          "data_value": "HealPercent",
+          "max_stacks": 1,
+          "input_name": "morgana_soul_siphon"
+        }
       ]
     },
     "Q": {

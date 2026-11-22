@@ -46,6 +46,65 @@
       "passive_stats": [],
       "not_modelled": [
         "Curación por enemigo golpeado (TotalHealing) y reducción de enfriamiento por ataque"
+      ],
+      "passive_effects": [
+        {
+          "id": "umbra_blades_bonus",
+          "name": "Espadas oscuras (+20 % DA periódico)",
+          "kind": "damage_proc",
+          "formula": {
+            "op": "mul",
+            "operands": [
+              {
+                "op": "constant",
+                "value": 0.2
+              },
+              {
+                "op": "stat",
+                "stat": "attack_damage",
+                "scope": "total"
+              }
+            ]
+          },
+          "label": "Derivado",
+          "source": "Characters/Nocturne/Spells/NocturnePAbility/NocturneP · Porción adicional +20 % DA de TotalDamageNoCrit (120 % DA total) (16.23.8406595+branch.releases-16-23.content.release)",
+          "trigger": "on_attack",
+          "damage_type": "physical",
+          "cooldown_seconds": 12
+        },
+        {
+          "id": "umbra_blades_heal",
+          "name": "Espadas oscuras (curación)",
+          "kind": "heal",
+          "formula": {
+            "op": "add",
+            "operands": [
+              {
+                "op": "linear_by_level",
+                "min": 13,
+                "max": 32
+              },
+              {
+                "op": "mul",
+                "operands": [
+                  {
+                    "op": "constant",
+                    "value": 0.3
+                  },
+                  {
+                    "op": "stat",
+                    "stat": "ability_power",
+                    "scope": "total"
+                  }
+                ]
+              }
+            ]
+          },
+          "label": "Derivado",
+          "source": "Characters/Nocturne/Spells/NocturnePAbility/NocturneP.mSpellCalculations.TotalHealing (16.23.8406595+branch.releases-16-23.content.release)",
+          "trigger": "on_hit",
+          "cooldown_seconds": 12
+        }
       ]
     },
     "Q": {

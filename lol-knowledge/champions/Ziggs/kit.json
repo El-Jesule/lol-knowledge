@@ -137,6 +137,60 @@
       "passive_stats": [],
       "not_modelled": [
         "Enfriamiento y reducción por habilidad lanzada (SpellCDR)"
+      ],
+      "passive_effects": [
+        {
+          "id": "short_fuse",
+          "name": "Mecha corta (ataque mágico periódico)",
+          "kind": "damage_proc",
+          "formula": {
+            "op": "add",
+            "operands": [
+              {
+                "op": "by_level",
+                "values": [
+                  20,
+                  24,
+                  28,
+                  32,
+                  36,
+                  40,
+                  44,
+                  52,
+                  60,
+                  68,
+                  76,
+                  84,
+                  92,
+                  104,
+                  116,
+                  128,
+                  140,
+                  152
+                ]
+              },
+              {
+                "op": "mul",
+                "operands": [
+                  {
+                    "op": "constant",
+                    "value": 0.5
+                  },
+                  {
+                    "op": "stat",
+                    "stat": "ability_power",
+                    "scope": "total"
+                  }
+                ]
+              }
+            ]
+          },
+          "label": "Derivado",
+          "source": "Characters/Ziggs/Spells/ZiggsPassiveBuffAbility/ZiggsPassiveBuff.mSpellCalculations.TotalDamage (16.23.8406595+branch.releases-16-23.content.release)",
+          "trigger": "on_attack",
+          "damage_type": "magic",
+          "cooldown_seconds": 12
+        }
       ]
     },
     "Q": {

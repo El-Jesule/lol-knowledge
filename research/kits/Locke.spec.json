@@ -34,6 +34,16 @@
       ],
       "not_modelled": [
         "Escalado intermedio por estado de la pasiva"
+      ],
+      "passive_effects": [
+        {
+          "id": "silver_stake_on_hit",
+          "name": "Estaca de plata (daño mágico mínimo al impactar)",
+          "kind": "damage_proc",
+          "trigger": "on_hit",
+          "damage_type": "magic",
+          "calculation": "MinOnHitDamage"
+        }
       ]
     },
     "Q": {

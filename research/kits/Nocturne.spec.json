@@ -25,6 +25,43 @@
       ],
       "not_modelled": [
         "Curación por enemigo golpeado (TotalHealing) y reducción de enfriamiento por ataque"
+      ],
+      "passive_effects": [
+        {
+          "id": "umbra_blades_bonus",
+          "name": "Espadas oscuras (+20 % DA periódico)",
+          "kind": "damage_proc",
+          "trigger": "on_attack",
+          "cooldown_seconds": {
+            "data_value": "Cooldown"
+          },
+          "damage_type": "physical",
+          "formula": {
+            "op": "mul",
+            "operands": [
+              {
+                "op": "constant",
+                "value": 0.2
+              },
+              {
+                "op": "stat",
+                "stat": "attack_damage",
+                "scope": "total"
+              }
+            ]
+          },
+          "source_note": "Porción adicional +20 % DA de TotalDamageNoCrit (120 % DA total)"
+        },
+        {
+          "id": "umbra_blades_heal",
+          "name": "Espadas oscuras (curación)",
+          "kind": "heal",
+          "trigger": "on_hit",
+          "cooldown_seconds": {
+            "data_value": "Cooldown"
+          },
+          "calculation": "TotalHealing"
+        }
       ]
     },
     "Q": {

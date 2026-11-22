@@ -19,6 +19,66 @@
       "passive_stats": [],
       "not_modelled": [
         "Velocidad de ataque y DA/PH temporales al matar súbditos o derribar campeones (MinionAS, ChampionAS)"
+      ],
+      "passive_effects": [
+        {
+          "id": "living_vengeance_minion_as",
+          "name": "Venganza viviente (VA al matar súbdito)",
+          "kind": "stat_bonus",
+          "formula": {
+            "op": "mul",
+            "operands": [
+              {
+                "op": "by_level",
+                "values": [
+                  0.1,
+                  0.1,
+                  0.1,
+                  0.1,
+                  0.1,
+                  0.1,
+                  0.15,
+                  0.15,
+                  0.15,
+                  0.15,
+                  0.15,
+                  0.15,
+                  0.2,
+                  0.2,
+                  0.2,
+                  0.2,
+                  0.2,
+                  0.2
+                ]
+              },
+              {
+                "op": "constant",
+                "value": 100
+              }
+            ]
+          },
+          "label": "Derivado",
+          "source": "Characters/Varus/Spells/VarusPassiveAbility/VarusPassive.mSpellCalculations.MinionAS (16.23.8406595+branch.releases-16-23.content.release)",
+          "stat": "attack_speed_bonus",
+          "mode": "flat",
+          "input_name": "varus_minion_kill",
+          "max_stacks": 1
+        },
+        {
+          "id": "living_vengeance_champion_as",
+          "name": "Venganza viviente (VA al derribar campeón)",
+          "kind": "stat_bonus",
+          "formula": {
+            "op": "constant",
+            "value": 30
+          },
+          "label": "Derivado",
+          "source": "Characters/Varus/Spells/VarusPassiveAbility/VarusPassive.mSpellCalculations.ChampionAS (16.23.8406595+branch.releases-16-23.content.release)",
+          "stat": "attack_speed_bonus",
+          "mode": "flat",
+          "input_name": "varus_champion_takedown",
+          "max_stacks": 1
+        }
       ]
     },
     "Q": {

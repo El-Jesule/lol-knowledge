@@ -13,6 +13,19 @@
       "max_rank": 1,
       "not_modelled": [
         "Disfraz de campeón, súbdito o unidad neutral"
+      ],
+      "passive_effects": [
+        {
+          "id": "inherent_glamour_mpen",
+          "name": "Encanto innato (+20 % penetración mágica al salir de disfraz)",
+          "kind": "stat_bonus",
+          "stat": "magic_penetration_percent",
+          "mode": "flat",
+          "data_value": "MagicPen",
+          "scale": 100,
+          "max_stacks": 1,
+          "input_name": "neeko_disguised"
+        }
       ]
     },
     "Q": {

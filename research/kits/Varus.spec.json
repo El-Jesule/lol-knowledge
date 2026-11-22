@@ -14,6 +14,30 @@
       "max_rank": 1,
       "not_modelled": [
         "Velocidad de ataque y DA/PH temporales al matar súbditos o derribar campeones (MinionAS, ChampionAS)"
+      ],
+      "passive_effects": [
+        {
+          "id": "living_vengeance_minion_as",
+          "name": "Venganza viviente (VA al matar súbdito)",
+          "kind": "stat_bonus",
+          "stat": "attack_speed_bonus",
+          "mode": "flat",
+          "calculation": "MinionAS",
+          "scale": 100,
+          "max_stacks": 1,
+          "input_name": "varus_minion_kill"
+        },
+        {
+          "id": "living_vengeance_champion_as",
+          "name": "Venganza viviente (VA al derribar campeón)",
+          "kind": "stat_bonus",
+          "stat": "attack_speed_bonus",
+          "mode": "flat",
+          "calculation": "ChampionAS",
+          "scale": 100,
+          "max_stacks": 1,
+          "input_name": "varus_champion_takedown"
+        }
       ]
     },
     "Q": {

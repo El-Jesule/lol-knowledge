@@ -25,6 +25,17 @@
       ],
       "not_modelled": [
         "Enfriamiento de 25 s por objetivo y reinicio al cambiar de elemento"
+      ],
+      "passive_effects": [
+        {
+          "id": "royal_privilege",
+          "name": "Privilegio real (primer impacto)",
+          "kind": "damage_proc",
+          "trigger": "on_any_hit",
+          "cooldown_seconds": 25,
+          "damage_type": "physical",
+          "calculation": "FinalDamage"
+        }
       ]
     },
     "Q": {

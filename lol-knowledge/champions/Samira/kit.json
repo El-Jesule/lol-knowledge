@@ -139,6 +139,42 @@
       "passive_stats": [],
       "not_modelled": [
         "Grados de estilo E–S, velocidad de movimiento (MSBonusNew) y extensión de derribos"
+      ],
+      "passive_effects": [
+        {
+          "id": "daredevil_impulse_ms",
+          "name": "Impulso temerario (VM por grado de estilo 0..6)",
+          "kind": "stat_bonus",
+          "formula": {
+            "op": "by_level",
+            "values": [
+              0.0275,
+              0.0275,
+              0.0275,
+              0.0275,
+              0.0275,
+              0.03,
+              0.03,
+              0.03,
+              0.03,
+              0.03,
+              0.0325,
+              0.0325,
+              0.0325,
+              0.0325,
+              0.0325,
+              0.035,
+              0.035,
+              0.035
+            ]
+          },
+          "label": "Derivado",
+          "source": "Characters/Samira/Spells/SamiraPassiveAbility/SamiraPassive.mSpellCalculations.MSBonusNew (16.23.8406595+branch.releases-16-23.content.release)",
+          "stat": "move_speed",
+          "mode": "percent_ms",
+          "input_name": "samira_style_grade",
+          "max_stacks": 6
+        }
       ]
     },
     "Q": {

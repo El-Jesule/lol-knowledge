@@ -22,6 +22,18 @@
             }
           ]
         }
+      ],
+      "passive_effects": [
+        {
+          "id": "blades_end_bleed",
+          "name": "Final de la hoja (sangrado al detonar 3 heridas)",
+          "kind": "damage_proc",
+          "trigger": "every_n_hits",
+          "every": 4,
+          "target_kind": "champion",
+          "damage_type": "physical",
+          "calculation": "BleedDamage"
+        }
       ]
     },
     "Q": {

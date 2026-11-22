@@ -34,6 +34,17 @@
       ],
       "not_modelled": [
         "Enfriamiento y reducción por habilidad lanzada (SpellCDR)"
+      ],
+      "passive_effects": [
+        {
+          "id": "short_fuse",
+          "name": "Mecha corta (ataque mágico periódico)",
+          "kind": "damage_proc",
+          "trigger": "on_attack",
+          "cooldown_seconds": 12,
+          "damage_type": "magic",
+          "calculation": "TotalDamage"
+        }
       ]
     },
     "Q": {

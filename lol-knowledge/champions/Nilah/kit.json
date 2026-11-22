@@ -19,6 +19,22 @@
       "passive_stats": [],
       "not_modelled": [
         "Experiencia adicional compartida en súbditos y amplificación/compartición de curaciones y escudos aliados"
+      ],
+      "passive_effects": [
+        {
+          "id": "joy_unending_hsp",
+          "name": "Júbilo sin fin (+7,5 % eficacia de curaciones)",
+          "kind": "stat_bonus",
+          "formula": {
+            "op": "constant",
+            "value": 7.5
+          },
+          "label": "Derivado",
+          "source": "Characters/Nilah/Spells/NilahPassiveAbility/NilahPassive.DataValues.HealingIncrease (16.23.8406595+branch.releases-16-23.content.release)",
+          "stat": "heal_and_shield_power",
+          "mode": "flat",
+          "condition": "pasiva permanente de curaciones (+7,5 %)"
+        }
       ]
     },
     "Q": {

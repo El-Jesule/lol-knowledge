@@ -13,6 +13,18 @@
       "max_rank": 1,
       "not_modelled": [
         "Velocidad de movimiento hacia campeones enemigos"
+      ],
+      "passive_effects": [
+        {
+          "id": "night_hunter_ms",
+          "name": "Cazadora noctívaga (VM hacia campeón enemigo)",
+          "kind": "stat_bonus",
+          "stat": "move_speed",
+          "mode": "flat",
+          "data_value": "MovementSpeed",
+          "max_stacks": 1,
+          "input_name": "vayne_night_hunter"
+        }
       ]
     },
     "Q": {

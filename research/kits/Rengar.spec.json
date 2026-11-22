@@ -13,6 +13,18 @@
       "max_rank": 1,
       "not_modelled": [
         "Saltos desde maleza, sistema de 4 de Ferocidad, Collar dientehueso y velocidad potenciada (EmpoweredMS)"
+      ],
+      "passive_effects": [
+        {
+          "id": "unseen_predator_ms",
+          "name": "Depredador invisible (VM tras habilidad potenciada)",
+          "kind": "stat_bonus",
+          "stat": "move_speed",
+          "mode": "percent_ms",
+          "calculation": "EmpoweredMS",
+          "max_stacks": 1,
+          "input_name": "rengar_empowered"
+        }
       ]
     },
     "Q": {
