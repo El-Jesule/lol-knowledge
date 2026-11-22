@@ -48,6 +48,7 @@ class PassiveStatBonus:
     source: str
     label: Label
     note: str = ""
+    percent: bool = False
 
 
 @dataclass(frozen=True)
@@ -285,6 +286,7 @@ class PassiveCombat:
         self._stacked_at: dict[str, Fraction] = {}
         self._attack_counts: dict[str, int] = {}
         self._hit_counts: dict[str, int] = {}
+        self._ability_hit_counts: dict[str, int] = {}
         self._ability_charges: dict[str, int] = {}
         self._ability_armed_at: dict[str, Fraction] = {}
         self._heal_stacks: dict[str, int] = {}
@@ -334,6 +336,7 @@ class PassiveCombat:
                 self._procs.append(effect)
                 self._attack_counts[effect.id] = 0
                 self._hit_counts[effect.id] = 0
+                self._ability_hit_counts[effect.id] = 0
                 self._ability_charges[effect.id] = 0
             elif effect.kind == "shield":
                 if effect.trigger in {"on_ability_cast", "on_champion_attack", "every_n_hits"}:
@@ -341,6 +344,7 @@ class PassiveCombat:
                     self._hit_counts[effect.id] = 0
             elif effect.kind == "resource_restore":
                 self._resources.append(effect)
+                self._ability_hit_counts[effect.id] = 0
 
     def _expired(self, effect: PassiveEffectSpec, at: Fraction) -> bool:
         if not self.timeline or effect.duration_seconds is None:
@@ -405,6 +409,17 @@ class PassiveCombat:
             source = f"kit:{self.kit.champion} P {effect.id} ({count}/{effect.max_stacks} stacks)"
             if effect.mode == "percent":
                 amplifiers.append(PassiveStatAmplifier(effect.stat, total, source, effect.label))
+            elif effect.mode == "percent_ms":
+                flats.append(
+                    PassiveStatBonus(
+                        effect.stat,
+                        total,
+                        source,
+                        effect.label,
+                        f"{count} stack{'' if count == 1 else 's'}",
+                        percent=True,
+                    )
+                )
             else:
                 note = f"{count} stack{'' if count == 1 else 's'}"
                 if mult != 1:
@@ -459,8 +474,10 @@ class PassiveCombat:
 
         for effect in self._procs:
             triggered = False
-            if (effect.trigger in {"on_attack", "on_hit"} and slot is None) or (
-                effect.trigger == "on_ability_hit" and slot is not None and dealt_damage
+            if (
+                (effect.trigger in {"on_attack", "on_hit"} and slot is None)
+                or (effect.trigger == "on_ability_hit" and slot is not None and dealt_damage)
+                or (effect.trigger == "on_any_hit" and dealt_damage)
             ):
                 triggered = self._matches_target_kind(effect)
             elif effect.trigger == "every_n_attacks" and slot is None:
@@ -476,6 +493,13 @@ class PassiveCombat:
                     self._hit_counts[effect.id] += 1
                     if self._hit_counts[effect.id] >= effect.every:
                         self._hit_counts[effect.id] = 0
+                        triggered = True
+            elif effect.trigger == "every_n_ability_hits" and slot is not None and dealt_damage:
+                assert effect.every is not None
+                if self._matches_target_kind(effect):
+                    self._ability_hit_counts[effect.id] += 1
+                    if self._ability_hit_counts[effect.id] >= effect.every:
+                        self._ability_hit_counts[effect.id] = 0
                         triggered = True
             elif effect.trigger == "after_ability":
                 if slot is not None:
@@ -783,6 +807,14 @@ class PassiveCombat:
             ):
                 triggered = True
                 notes.append("on champion hit")
+            elif effect.trigger == "every_n_ability_hits" and slot is not None and dealt_damage:
+                assert effect.every is not None
+                if self._matches_target_kind(effect):
+                    self._ability_hit_counts[effect.id] += 1
+                    if self._ability_hit_counts[effect.id] >= effect.every:
+                        self._ability_hit_counts[effect.id] = 0
+                        triggered = True
+                        notes.append(f"every {effect.every} ability hits")
             if not triggered or not self._can_fire(effect, clock, sheet.level):
                 continue
             self._mark_fired(effect, clock, sheet.level)

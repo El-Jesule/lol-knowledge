@@ -57,8 +57,10 @@ PASSIVE_PROC_TRIGGERS = frozenset(
     {
         "on_attack",
         "on_hit",
+        "on_any_hit",
         "every_n_attacks",
         "every_n_hits",
+        "every_n_ability_hits",
         "after_ability",
         "on_ability_hit",
         "below_hp_percent",
@@ -75,7 +77,7 @@ PASSIVE_SHIELD_TRIGGERS = frozenset(
     }
 )
 PASSIVE_RESOURCE_TRIGGERS = frozenset(
-    {"on_any_kill", "on_hit", "on_ability_hit", "on_champion_hit"}
+    {"on_any_kill", "on_hit", "on_ability_hit", "on_champion_hit", "every_n_ability_hits"}
 )
 PASSIVE_SHIELD_TYPES = frozenset({"normal", "physical", "magic"})
 PASSIVE_DR_MODES = frozenset({"flat", "percent"})
@@ -393,10 +395,12 @@ def _passive_effects(
                 )
             cooldown = _optional_positive_fraction(entry, "cooldown_seconds", entry_ctx)
             stacks_req = _optional_positive_int(entry, "stacks_required", entry_ctx)
-            if trigger in {"every_n_attacks", "every_n_hits"}:
+            if trigger in {"every_n_attacks", "every_n_hits", "every_n_ability_hits"}:
                 every = _optional_positive_int(entry, "every", entry_ctx, minimum=2)
                 if every is None:
                     raise KitError(f"{entry_ctx}: {trigger} requires every >= 2")
+            elif trigger == "after_ability":
+                max_stacks = _optional_positive_int(entry, "max_stacks", entry_ctx)
         elif kind == "damage_proc":
             trigger = _text(entry, "trigger", entry_ctx)
             if trigger not in PASSIVE_PROC_TRIGGERS:
@@ -409,10 +413,12 @@ def _passive_effects(
                 raise KitError(f"{entry_ctx}: unknown damage_type") from exc
             cooldown = _optional_positive_fraction(entry, "cooldown_seconds", entry_ctx)
             duration = _optional_positive_fraction(entry, "duration_seconds", entry_ctx)
-            if trigger in {"every_n_attacks", "every_n_hits"}:
+            if trigger in {"every_n_attacks", "every_n_hits", "every_n_ability_hits"}:
                 every = _optional_positive_int(entry, "every", entry_ctx, minimum=2)
                 if every is None:
                     raise KitError(f"{entry_ctx}: {trigger} requires every >= 2")
+            elif trigger == "after_ability":
+                max_stacks = _optional_positive_int(entry, "max_stacks", entry_ctx)
             elif trigger == "below_hp_percent":
                 threshold_hp = _optional_positive_fraction(entry, "threshold_hp_percent", entry_ctx)
                 if threshold_hp is None or threshold_hp > 1:
@@ -455,6 +461,7 @@ def _passive_effects(
                 except ValueError as exc:
                     raise KitError(f"{entry_ctx}: unknown damage_type") from exc
             dr_cap = _optional_positive_fraction(entry, "damage_reduction_cap", entry_ctx)
+            cooldown = _optional_positive_fraction(entry, "cooldown_seconds", entry_ctx)
         elif kind == "resource_restore":
             trigger = _text(entry, "trigger", entry_ctx)
             if trigger not in PASSIVE_RESOURCE_TRIGGERS:
@@ -465,6 +472,10 @@ def _passive_effects(
             if resource not in PASSIVE_RESOURCES:
                 raise KitError(f"{entry_ctx}: resource must be one of {sorted(PASSIVE_RESOURCES)}")
             cooldown = _optional_positive_fraction(entry, "cooldown_seconds", entry_ctx)
+            if trigger == "every_n_ability_hits":
+                every = _optional_positive_int(entry, "every", entry_ctx, minimum=2)
+                if every is None:
+                    raise KitError(f"{entry_ctx}: {trigger} requires every >= 2")
 
         effects.append(
             PassiveEffectSpec(

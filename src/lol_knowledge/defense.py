@@ -682,6 +682,8 @@ class _DefenseSimulator:
         lifeline_used: set[str] = set()
         passive_shield_ready: dict[str, Fraction] = {}
         passive_shield_used: set[str] = set()
+        passive_dr_ready: dict[str, Fraction] = {}
+        passive_dr_used: set[str] = set()
 
         spell_shield_ready: dict[str, Fraction] = {}
         spell_shield_used: set[str] = set()
@@ -1360,7 +1362,7 @@ class _DefenseSimulator:
                 step_labels.append(self.rune_base)
                 step_notes.append("rune:8351 GlacialAugment (-15% enemy damage vs allies)")
 
-            # Champion passive percent damage-taken modifiers (e.g. Kassadin Void Stone -10% magic)
+            # Champion passive percent damage-taken modifiers (e.g. Kassadin -10%, Malzahar -90%)
             if incoming > 0 and health > 0 and hit.damage_type is not None:
                 for p_dr in self.passive_dr_specs:
                     if p_dr.mode != "percent":
@@ -1369,6 +1371,18 @@ class _DefenseSimulator:
                         continue
                     if hit.damage_type is DamageType.TRUE and p_dr.damage_type is None:
                         continue
+                    p_cd = _effect_cooldown(p_dr, self.sheet.level)
+                    if p_cd is not None:
+                        can_dr = (
+                            (p_dr.id not in passive_dr_used)
+                            if not self.timeline
+                            else (clock >= passive_dr_ready.get(p_dr.id, Fraction(0)))
+                        )
+                        if not can_dr:
+                            continue
+                        passive_dr_used.add(p_dr.id)
+                        if self.timeline:
+                            passive_dr_ready[p_dr.id] = clock + p_cd
                     pct_res = evaluate_formula(
                         p_dr.formula, self.stats_env, level=self.sheet.level, ops=ABILITY_OPS
                     )
