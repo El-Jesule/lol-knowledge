@@ -24,21 +24,26 @@
         }
       ],
       "not_modelled": [
-        "Acumulación de hasta 9 proyectiles adicionales (3 por habilidad) y ejecución de Abrumar (detonación documentada en R)"
+        "Ejecución de Abrumar (detonación documentada en R)"
       ],
       "passive_effects": [
         {
           "id": "searing_brilliance",
-          "name": "Resplandor abrasador (3 proyectiles tras habilidad)",
+          "name": "Resplandor abrasador (proyectiles tras habilidad)",
           "kind": "damage_proc",
           "trigger": "after_ability",
-          "max_stacks": 3,
+          "max_stacks": {
+            "data_value": "MaxPassiveBonusMissiles"
+          },
+          "charges_per_cast": {
+            "data_value": "PassiveBonusMissiles"
+          },
+          "consume_all_stacks": true,
           "duration_seconds": {
             "data_value": "BonusAttackDuration"
           },
           "damage_type": "magic",
-          "calculation": "PassiveBonusMissileDamage",
-          "scale": 3
+          "calculation": "PassiveBonusMissileDamage"
         }
       ]
     },
