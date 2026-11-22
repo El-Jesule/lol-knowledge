@@ -225,8 +225,12 @@ def test_kitgen_extended_nodes_linear_breakpoints_sum_product_and_passives(
     combo = synth.calculation("Combo")
     assert combo["op"] == "mul" and combo["operands"][1] == {"op": "constant", "value": 1.5}
     assert combo["operands"][0]["operands"][1] == {"op": "by_level", "values": list(range(1, 19))}
-    with pytest.raises(KitGenError, match="stat-progression"):
-        synth.calculation("BadInterp")
+    stat_prog = synth.calculation("BadInterp")
+    assert stat_prog["op"] == "by_level"
+    assert len(stat_prog["values"]) == 18
+    assert stat_prog["values"][0] == 10
+    assert stat_prog["values"][-1] == 100
+    assert abs(stat_prog["values"][1] - (10 + 90 / 17 * 0.72)) < 1e-4
 
 
 def test_specdraft_cli_writes_spec_and_review_and_rejects_missing_file(

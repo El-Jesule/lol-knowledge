@@ -110,6 +110,17 @@ RUNES_RULES = "lol-knowledge/mechanics/runes.md"
 CRIT_CHANCE_KITS = frozenset({"Yasuo", "Yone"})
 CRIT_CHANCE_KIT_MULTIPLIER = 2
 EXCESS_CRIT_AD = 50  # bonus AD per 1.0 (100 %) of excess crit chance: 0.5 per 1 %
+# Global passive stat conversions (passives.md, client 16.23 base DataValues):
+PASSIVES_RULES = "lol-knowledge/mechanics/passives.md"
+VLADIMIR_HP_PER_AP = Fraction(30)  # VladimirBloodGorged.HPforAP = 30
+VLADIMIR_HP_PER_AP_GAIN = Fraction(8, 5)  # VladimirBloodGorged.APRatioBonusHP = 1.6
+PYKE_HP_PER_AD = Fraction(14)  # PykePassive.HPPerBAD = 14
+RYZE_MANA_PCT_PER_100_AP = Fraction(10, 100)  # RyzePassive.PercentManaIncrease = 10 / 100 AP
+ORNN_BASE_STAT_AMP = Fraction(10, 100)  # OrnnP.BaseStatAmp = 0.10
+ORNN_MASTERWORK_STAT_AMP = Fraction(4, 100)  # OrnnP.AdditionalMythicStatAmp = 0.04
+ORNN_MAX_MASTERWORKS = 5
+RAMMUS_ARMOR_TO_AD = Fraction(15, 100)  # RammusP.ArmorRatio = 0.15
+RAMMUS_MR_TO_AD = Fraction(15, 100)  # RammusP.MagicResistRatio = 0.15
 MANA_STATS = frozenset({"mana", "mana_regen"})
 MANA_RESOURCE = {"es_ES": "Maná", "en_US": "Mana"}
 ENERGY_RESOURCE = {"es_ES": "Energía", "en_US": "Energy"}
@@ -1584,10 +1595,170 @@ def build_stat_sheet(
     if champion.id == "Graves":
         notes.append("Graves fires 2 shells before reloading; attack_speed is his inter-shot rate")
 
+    # Pre-amplifier passive conversions (Vladimir HP->AP, Pyke bonus HP->AD, Ornn bonus amp)
+    vladimir_ap_from_hp = Fraction(0)
+    if champion.id == "Vladimir" and "health" not in blocked:
+        non_passive_bonus_hp = sum(
+            (c.value for c in contributions["health"] if c.scope == "bonus"),
+            start=Fraction(0),
+        )
+        if non_passive_bonus_hp > 0:
+            vladimir_ap_from_hp = non_passive_bonus_hp / VLADIMIR_HP_PER_AP
+            hp_labels = [c.label for c in contributions["health"] if c.scope == "bonus" and c.value]
+            contributions["ability_power"].append(
+                Contribution(
+                    vladimir_ap_from_hp,
+                    "bonus",
+                    f"{PASSIVES_RULES} (Vladimir Crimson Pact)",
+                    weakest([Label.DERIVED, *hp_labels]),
+                    f"1 AP per 30 bonus HP ({format_number(non_passive_bonus_hp)} bonus HP)",
+                )
+            )
+
+    if champion.id == "Pyke" and "health" not in blocked:
+        pyke_bonus_hp = sum(
+            (c.value for c in contributions["health"] if c.scope == "bonus"),
+            start=Fraction(0),
+        )
+        if pyke_bonus_hp > 0:
+            hp_labels = [c.label for c in contributions["health"] if c.scope == "bonus" and c.value]
+            p_label = weakest([Label.DERIVED, *hp_labels])
+            contributions["health"].append(
+                Contribution(
+                    -pyke_bonus_hp,
+                    "bonus",
+                    f"{PASSIVES_RULES} (Pyke Gift of the Drowned Ones)",
+                    p_label,
+                    "cannot gain bonus HP; converted to bonus AD",
+                )
+            )
+            contributions["attack_damage"].append(
+                Contribution(
+                    pyke_bonus_hp / PYKE_HP_PER_AD,
+                    "bonus",
+                    f"{PASSIVES_RULES} (Pyke Gift of the Drowned Ones)",
+                    p_label,
+                    f"1 bonus AD per 14 bonus HP ({format_number(pyke_bonus_hp)} bonus HP)",
+                )
+            )
+
+    if champion.id == "Ornn":
+        mw_raw = _parse_stack_input(
+            inputs, "ornn_masterworks", minimum=0, maximum=ORNN_MAX_MASTERWORKS
+        )
+        mw_count = int(mw_raw) if mw_raw is not None else 0
+        ornn_amp = ORNN_BASE_STAT_AMP + ORNN_MASTERWORK_STAT_AMP * mw_count
+        ornn_note = (
+            f"Living Forge: +{format_number(ornn_amp * 100)}% bonus HP/Armor/MR "
+            f"(ornn_masterworks={mw_count})"
+        )
+        for stat_id in ("health", "armor", "magic_resist"):
+            if stat_id in blocked:
+                continue
+            bonus_parts = [c for c in contributions[stat_id] if c.scope == "bonus"]
+            bonus_val = sum((c.value for c in bonus_parts), start=Fraction(0))
+            if bonus_val > 0:
+                contributions[stat_id].append(
+                    Contribution(
+                        bonus_val * ornn_amp,
+                        "bonus",
+                        f"{PASSIVES_RULES} (Ornn Living Forge)",
+                        weakest([Label.DERIVED, *(c.label for c in bonus_parts if c.value)]),
+                        ornn_note,
+                    )
+                )
+
     # Amplifiers of a total last, all on the same total (Rabadon, Conditioning, Overgrowth, Jhin).
     reference = {amplifier.stat: list(contributions[amplifier.stat]) for amplifier in amplifiers}
     for amplifier in amplifiers:
         contributions[amplifier.stat].append(_amplified(amplifier, reference[amplifier.stat]))
+
+    # Post-amplifier champion passive conversions (Vladimir AP->HP, Pyke overflow, Ryze AP->Mana,
+    # Rammus Armor+MR->AD) so Rabadon/Conditioning feed into them without recursion.
+    if champion.id == "Vladimir" and "health" not in blocked:
+        non_self_ap = (
+            sum((c.value for c in contributions["ability_power"]), start=Fraction(0))
+            - vladimir_ap_from_hp
+        )
+        if non_self_ap > 0:
+            ap_labels = [c.label for c in contributions["ability_power"] if c.value]
+            contributions["health"].append(
+                Contribution(
+                    non_self_ap * VLADIMIR_HP_PER_AP_GAIN,
+                    "bonus",
+                    f"{PASSIVES_RULES} (Vladimir Crimson Pact)",
+                    weakest([Label.DERIVED, *ap_labels]),
+                    f"1.6 bonus HP per 1 AP ({format_number(non_self_ap)} AP, no recursion)",
+                )
+            )
+
+    if champion.id == "Pyke" and "health" not in blocked:
+        extra_bonus_hp = sum(
+            (c.value for c in contributions["health"] if c.scope == "bonus"),
+            start=Fraction(0),
+        )
+        if extra_bonus_hp > 0:
+            hp_labels = [c.label for c in contributions["health"] if c.scope == "bonus" and c.value]
+            p_label = weakest([Label.DERIVED, *hp_labels])
+            contributions["health"].append(
+                Contribution(
+                    -extra_bonus_hp,
+                    "bonus",
+                    f"{PASSIVES_RULES} (Pyke Gift of the Drowned Ones)",
+                    p_label,
+                    "post-amplifier bonus HP converted to bonus AD",
+                )
+            )
+            contributions["attack_damage"].append(
+                Contribution(
+                    extra_bonus_hp / PYKE_HP_PER_AD,
+                    "bonus",
+                    f"{PASSIVES_RULES} (Pyke Gift of the Drowned Ones)",
+                    p_label,
+                    f"1 bonus AD per 14 bonus HP ({format_number(extra_bonus_hp)} bonus HP)",
+                )
+            )
+
+    if champion.id == "Ryze" and "mana" not in blocked:
+        ryze_ap = sum((c.value for c in contributions["ability_power"]), start=Fraction(0))
+        if ryze_ap > 0:
+            mana_parts = list(contributions["mana"])
+            base_plus_bonus_mana = sum((c.value for c in mana_parts), start=Fraction(0))
+            mana_amp = (ryze_ap / 100) * RYZE_MANA_PCT_PER_100_AP
+            ryze_labels = [
+                Label.DERIVED,
+                *(c.label for c in contributions["ability_power"] if c.value),
+                *(c.label for c in mana_parts if c.value),
+            ]
+            contributions["mana"].append(
+                Contribution(
+                    base_plus_bonus_mana * mana_amp,
+                    "bonus",
+                    f"{PASSIVES_RULES} (Ryze Arcane Mastery)",
+                    weakest(ryze_labels),
+                    f"+{format_number(mana_amp * 100)}% max mana from {format_number(ryze_ap)} AP",
+                )
+            )
+
+    if champion.id == "Rammus" and "armor" not in blocked and "magic_resist" not in blocked:
+        r_armor = sum((c.value for c in contributions["armor"]), start=Fraction(0))
+        r_mr = sum((c.value for c in contributions["magic_resist"]), start=Fraction(0))
+        spiked_ad = r_armor * RAMMUS_ARMOR_TO_AD + r_mr * RAMMUS_MR_TO_AD
+        if spiked_ad > 0:
+            r_labels = [
+                Label.DERIVED,
+                *(c.label for c in contributions["armor"] if c.value),
+                *(c.label for c in contributions["magic_resist"] if c.value),
+            ]
+            contributions["attack_damage"].append(
+                Contribution(
+                    spiked_ad,
+                    "bonus",
+                    f"{PASSIVES_RULES} (Rammus Spiked Shell)",
+                    weakest(r_labels),
+                    f"15% Armor ({format_number(r_armor)}) + 15% MR ({format_number(r_mr)}) as AD",
+                )
+            )
 
     for issue in applicable:
         if level == 1:

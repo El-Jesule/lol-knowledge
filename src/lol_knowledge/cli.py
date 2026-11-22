@@ -361,6 +361,7 @@ def _build_sheet_with_runes(
             assumptions,
             derived,
             base_extras,
+            passive.percents,
             extra_amplifiers=passive.amplifiers,
             extra_notes=passive.notes,
             inputs=inputs,
@@ -443,7 +444,7 @@ def _build_sheet_with_runes(
         assumptions,
         derived,
         (*base_extras, *flats, *rune_effects.flats),
-        (*percents, *rune_effects.percents),
+        (*percents, *passive.percents, *rune_effects.percents),
         pending,
         extra_amplifiers=(*passive.amplifiers, *rune_effects.amplifiers),
         extra_notes=extra_notes,
@@ -1084,8 +1085,17 @@ def _run_survive(args: argparse.Namespace) -> int:
         _check_build(root, args.item, champion, allow=args.allow_illegal_build, who="defender")
         issues = load_issues(root)
         derived = load_records(root)
+        defender_kit = load_kit(root, champion.id)
         defender_sheet = _build_sheet(
-            args, root, champion, items, issues, assumptions, derived, inputs=inputs
+            args,
+            root,
+            champion,
+            items,
+            issues,
+            assumptions,
+            derived,
+            inputs=inputs,
+            kit=defender_kit,
         )
         runes = _rune_ids(args.rune, "--rune")
         rune_data = load_runes(root) if runes else None
@@ -1156,6 +1166,7 @@ def _run_survive(args: argparse.Namespace) -> int:
             rune_data=rune_data,
             inputs=inputs,
             timeline=args.timeline,
+            kit=defender_kit,
         )
     except (StatsError, KitError, RotationError) as exc:
         print(f"error: {exc}", file=sys.stderr)
