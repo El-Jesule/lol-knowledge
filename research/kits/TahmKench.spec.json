@@ -25,6 +25,16 @@
       ],
       "not_modelled": [
         "Acumulación de 3 marcas sobre campeones para potenciar Q y habilitar R"
+      ],
+      "passive_effects": [
+        {
+          "id": "acquired_taste",
+          "name": "Paladar peculiar (daño mágico al impactar)",
+          "kind": "damage_proc",
+          "trigger": "on_hit",
+          "damage_type": "magic",
+          "calculation": "TotalDamage"
+        }
       ]
     },
     "Q": {

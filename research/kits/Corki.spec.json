@@ -34,6 +34,16 @@
       ],
       "not_modelled": [
         "Escalado en golpes críticos del ataque básico"
+      ],
+      "passive_effects": [
+        {
+          "id": "hextech_munitions_true",
+          "name": "Munición hextech (20 % DA como daño verdadero)",
+          "kind": "damage_proc",
+          "trigger": "on_attack",
+          "damage_type": "true",
+          "calculation": "BasicAttackTOOLTIP"
+        }
       ]
     },
     "Q": {

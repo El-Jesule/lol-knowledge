@@ -13,6 +13,16 @@
       "max_rank": 1,
       "not_modelled": [
         "Curación en el siguiente ataque (PassiveHealingTotal, PassiveCooldown)"
+      ],
+      "passive_effects": [
+        {
+          "id": "sap_magic_heal",
+          "name": "Extracción de magia (curación al impactar)",
+          "kind": "heal",
+          "trigger": "on_hit",
+          "calculation": "PassiveHealingTotal",
+          "cooldown_calculation": "PassiveCooldown"
+        }
       ]
     },
     "Q": {

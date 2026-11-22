@@ -93,6 +93,58 @@
           "input_name": "ionian_fervor_stacks",
           "max_stacks": 4,
           "duration_seconds": 6
+        },
+        {
+          "id": "ionian_fervor_on_hit",
+          "name": "Fervor jonio (daño mágico al impactar con 4 cargas)",
+          "kind": "damage_proc",
+          "formula": {
+            "op": "add",
+            "operands": [
+              {
+                "op": "by_level",
+                "values": [
+                  10,
+                  13,
+                  16,
+                  19,
+                  22,
+                  25,
+                  28,
+                  31,
+                  34,
+                  37,
+                  40,
+                  43,
+                  46,
+                  49,
+                  52,
+                  55,
+                  58,
+                  61
+                ]
+              },
+              {
+                "op": "mul",
+                "operands": [
+                  {
+                    "op": "constant",
+                    "value": 0.2
+                  },
+                  {
+                    "op": "stat",
+                    "stat": "attack_damage",
+                    "scope": "bonus"
+                  }
+                ]
+              }
+            ]
+          },
+          "label": "Derivado",
+          "source": "Characters/Irelia/Spells/IreliaPassiveAbility/IreliaPassive.mSpellCalculations.OnHitBonus (16.23.8406595+branch.releases-16-23.content.release)",
+          "trigger": "at_max_stacks",
+          "damage_type": "magic",
+          "stack_source_id": "ionian_fervor_as"
         }
       ]
     },

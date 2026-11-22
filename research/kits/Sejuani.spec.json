@@ -43,6 +43,28 @@
       "not_modelled": [
         "Armadura de escarcha (TotalArmorTooltip, TotalMRTooltip, FrostArmorOOC)",
         "Tope de 250 contra monstruos épicos"
+      ],
+      "passive_effects": [
+        {
+          "id": "frost_armor_base_armor",
+          "name": "Armadura de escarcha (armadura base)",
+          "kind": "stat_bonus",
+          "stat": "armor",
+          "mode": "flat",
+          "data_value": "BonusArmorBase",
+          "max_stacks": 1,
+          "input_name": "frost_armor"
+        },
+        {
+          "id": "frost_armor_base_mr",
+          "name": "Armadura de escarcha (RM base)",
+          "kind": "stat_bonus",
+          "stat": "magic_resist",
+          "mode": "flat",
+          "data_value": "BonusMRBase",
+          "max_stacks": 1,
+          "input_name": "frost_armor"
+        }
       ]
     },
     "Q": {

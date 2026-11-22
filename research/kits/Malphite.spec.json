@@ -13,6 +13,16 @@
       "max_rank": 1,
       "not_modelled": [
         "Escudo del 10 % de vida máxima fuera de combate (TotalShield, PassiveCooldown)"
+      ],
+      "passive_effects": [
+        {
+          "id": "granite_shield",
+          "name": "Escudo de granito",
+          "kind": "shield",
+          "trigger": "on_taking_damage",
+          "calculation": "TotalShield",
+          "cooldown_calculation": "PassiveCooldown"
+        }
       ]
     },
     "Q": {

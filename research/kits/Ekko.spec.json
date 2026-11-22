@@ -25,6 +25,20 @@
       ],
       "not_modelled": [
         "Velocidad de movimiento contra campeones (BonusMS) y enfriamiento por objetivo"
+      ],
+      "passive_effects": [
+        {
+          "id": "z_drive_resonance",
+          "name": "Resonancia Z (3.º impacto)",
+          "kind": "damage_proc",
+          "trigger": "every_n_hits",
+          "every": 3,
+          "cooldown_seconds": {
+            "data_value": "LockoutTime"
+          },
+          "damage_type": "magic",
+          "calculation": "ThreeHitDamage"
+        }
       ]
     },
     "Q": {

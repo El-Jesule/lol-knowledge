@@ -14,6 +14,37 @@
       "max_rank": 1,
       "not_modelled": [
         "Daño mágico del 5/7,5/10 % de vida máxima contra objetivos bajo el 50 % de vida (MaxHPDamage usa condicional de misión HasBuffCastRequirement en el bin)"
+      ],
+      "passive_effects": [
+        {
+          "id": "contempt_for_the_weak",
+          "name": "Desprecio por los débiles (< 50 % vida)",
+          "kind": "damage_proc",
+          "trigger": "below_hp_percent",
+          "threshold_hp_percent": {
+            "data_value": "CurrentHealthThreshold"
+          },
+          "cooldown_seconds": {
+            "data_value": "PerUnitCD"
+          },
+          "damage_type": "magic",
+          "formula": {
+            "op": "mul",
+            "operands": [
+              {
+                "op": "calculation",
+                "name": "{6a1a62e9}"
+              },
+              {
+                "op": "stat",
+                "stat": "health",
+                "scope": "max",
+                "subject": "target"
+              }
+            ]
+          },
+          "source_note": "MaxHPDamage default_calculation ({6a1a62e9}) × vida máxima del objetivo"
+        }
       ]
     },
     "Q": {

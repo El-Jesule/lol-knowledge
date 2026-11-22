@@ -19,6 +19,25 @@
       "passive_stats": [],
       "not_modelled": [
         "Velocidad de ataque acumulable hasta 5 cargas al acertar habilidades (AttackSpeedPerStack)"
+      ],
+      "passive_effects": [
+        {
+          "id": "rising_spell_force",
+          "name": "Fuerza de hechizo creciente (VA por carga)",
+          "kind": "stacking_stat",
+          "formula": {
+            "op": "constant",
+            "value": 10
+          },
+          "label": "Derivado",
+          "source": "Characters/Ezreal/Spells/EzrealPassiveAbility/EzrealPassive.DataValues.AttackSpeedPerStack (16.23.8406595+branch.releases-16-23.content.release)",
+          "stat": "attack_speed_bonus",
+          "mode": "flat",
+          "trigger": "ability_hit",
+          "input_name": "rising_spell_force_stacks",
+          "max_stacks": 5,
+          "duration_seconds": 6
+        }
       ]
     },
     "Q": {

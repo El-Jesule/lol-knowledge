@@ -19,6 +19,53 @@
       "passive_stats": [],
       "not_modelled": [
         "Velocidad de ataque acumulable por ataque básico (AttackSpeedPerStack, MaxBonusAttackSpeed)"
+      ],
+      "passive_effects": [
+        {
+          "id": "relentless_assault",
+          "name": "Asalto implacable (VA por carga)",
+          "kind": "stacking_stat",
+          "formula": {
+            "op": "mul",
+            "operands": [
+              {
+                "op": "by_level",
+                "values": [
+                  0.05,
+                  0.05,
+                  0.05,
+                  0.065,
+                  0.065,
+                  0.065,
+                  0.08,
+                  0.08,
+                  0.08,
+                  0.095,
+                  0.095,
+                  0.095,
+                  0.11,
+                  0.11,
+                  0.11,
+                  0.125,
+                  0.125,
+                  0.125
+                ]
+              },
+              {
+                "op": "constant",
+                "value": 100
+              }
+            ]
+          },
+          "label": "Derivado",
+          "source": "Characters/Jax/Spells/JaxPassiveAbility/JaxPassive.mSpellCalculations.AttackSpeedPerStack (16.23.8406595+branch.releases-16-23.content.release)",
+          "stat": "attack_speed_bonus",
+          "mode": "flat",
+          "trigger": "attack",
+          "input_name": "relentless_assault_stacks",
+          "max_stacks": 8,
+          "duration_seconds": 2.5
+        }
       ]
     },
     "Q": {

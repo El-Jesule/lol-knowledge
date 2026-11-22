@@ -100,6 +100,136 @@
       "passive_stats": [],
       "not_modelled": [
         "Escudo al detonar contra campeones (TotalShieldAmount) y velocidad de movimiento al cancelar segundo disparo (ASModdedMS)"
+      ],
+      "passive_effects": [
+        {
+          "id": "dirty_fighting_proc",
+          "name": "Artimañas (3.º impacto)",
+          "kind": "damage_proc",
+          "formula": {
+            "op": "add",
+            "operands": [
+              {
+                "op": "by_level",
+                "values": [
+                  15,
+                  15,
+                  15,
+                  15,
+                  15,
+                  40,
+                  40,
+                  40,
+                  40,
+                  40,
+                  80,
+                  80,
+                  80,
+                  80,
+                  80,
+                  150,
+                  150,
+                  150
+                ]
+              },
+              {
+                "op": "mul",
+                "operands": [
+                  {
+                    "op": "constant",
+                    "value": 0.6
+                  },
+                  {
+                    "op": "stat",
+                    "stat": "ability_power",
+                    "scope": "total"
+                  }
+                ]
+              }
+            ]
+          },
+          "label": "Derivado",
+          "source": "Characters/Akshan/Spells/AkshanPassiveAbility/AkshanPassive.mSpellCalculations.PassiveProcDamage (16.23.8406595+branch.releases-16-23.content.release)",
+          "trigger": "every_n_hits",
+          "damage_type": "magic",
+          "every": 3
+        },
+        {
+          "id": "dirty_fighting_shield",
+          "name": "Artimañas (escudo en 3.º impacto a campeón)",
+          "kind": "shield",
+          "formula": {
+            "op": "add",
+            "operands": [
+              {
+                "op": "by_level",
+                "values": [
+                  40,
+                  50.1647,
+                  60.8235,
+                  71.9765,
+                  83.6235,
+                  95.7647,
+                  108.4,
+                  121.5294,
+                  135.153,
+                  149.2706,
+                  163.8824,
+                  178.9882,
+                  194.5882,
+                  210.6824,
+                  227.2706,
+                  244.353,
+                  261.9294,
+                  280
+                ]
+              },
+              {
+                "op": "mul",
+                "operands": [
+                  {
+                    "op": "constant",
+                    "value": 0.35
+                  },
+                  {
+                    "op": "stat",
+                    "stat": "attack_damage",
+                    "scope": "bonus"
+                  }
+                ]
+              }
+            ]
+          },
+          "label": "Derivado",
+          "source": "Characters/Akshan/Spells/AkshanPassiveAbility/AkshanPassive.mSpellCalculations.TotalShieldAmount (16.23.8406595+branch.releases-16-23.content.release)",
+          "trigger": "every_n_hits",
+          "target_kind": "champion",
+          "duration_seconds": 2,
+          "every": 3,
+          "cooldown_formula": {
+            "op": "by_level",
+            "values": [
+              16,
+              16,
+              16,
+              16,
+              16,
+              12,
+              12,
+              12,
+              12,
+              12,
+              8,
+              8,
+              8,
+              8,
+              8,
+              4,
+              4,
+              4
+            ]
+          }
+        }
       ]
     },
     "Q": {

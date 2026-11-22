@@ -19,6 +19,55 @@
       "passive_stats": [],
       "not_modelled": [
         "Velocidad de ataque durante 2 ataques y restauración de energía (TTFirstHitEnergy, EnergyReturn)"
+      ],
+      "passive_effects": [
+        {
+          "id": "flurry_as",
+          "name": "Ráfaga (VA tras habilidad)",
+          "kind": "stat_bonus",
+          "formula": {
+            "op": "constant",
+            "value": 40
+          },
+          "label": "Derivado",
+          "source": "Characters/LeeSin/Spells/LeeSinPassiveAbility/LeeSinPassive.DataValues.PassiveAS (16.23.8406595+branch.releases-16-23.content.release)",
+          "stat": "attack_speed_bonus",
+          "mode": "flat",
+          "input_name": "flurry",
+          "max_stacks": 1
+        },
+        {
+          "id": "flurry_energy",
+          "name": "Ráfaga (energía al impactar)",
+          "kind": "resource_restore",
+          "formula": {
+            "op": "by_level",
+            "values": [
+              10,
+              10,
+              10,
+              10,
+              10,
+              10,
+              15,
+              15,
+              15,
+              15,
+              15,
+              15,
+              20,
+              20,
+              20,
+              20,
+              20,
+              20
+            ]
+          },
+          "label": "Derivado",
+          "source": "Characters/LeeSin/Spells/LeeSinPassiveAbility/LeeSinPassive.mSpellCalculations.EnergyReturn (16.23.8406595+branch.releases-16-23.content.release)",
+          "trigger": "on_hit",
+          "resource": "energy"
+        }
       ]
     },
     "Q": {

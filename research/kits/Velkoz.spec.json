@@ -22,6 +22,19 @@
             }
           ]
         }
+      ],
+      "passive_effects": [
+        {
+          "id": "organic_deconstruction",
+          "name": "Deconstrucción orgánica (3.º impacto)",
+          "kind": "damage_proc",
+          "trigger": "every_n_hits",
+          "every": {
+            "data_value": "MaxStacks"
+          },
+          "damage_type": "true",
+          "calculation": "TotalDamage"
+        }
       ]
     },
     "Q": {

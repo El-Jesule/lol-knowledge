@@ -74,6 +74,61 @@
       "passive_stats": [],
       "not_modelled": [
         "Velocidad de movimiento contra campeones (BonusMS) y enfriamiento por objetivo"
+      ],
+      "passive_effects": [
+        {
+          "id": "z_drive_resonance",
+          "name": "Resonancia Z (3.º impacto)",
+          "kind": "damage_proc",
+          "formula": {
+            "op": "add",
+            "operands": [
+              {
+                "op": "by_level",
+                "values": [
+                  30,
+                  40,
+                  50,
+                  60,
+                  70,
+                  80,
+                  90,
+                  95,
+                  100,
+                  105,
+                  110,
+                  115,
+                  120,
+                  125,
+                  130,
+                  135,
+                  140,
+                  145
+                ]
+              },
+              {
+                "op": "mul",
+                "operands": [
+                  {
+                    "op": "constant",
+                    "value": 0.8
+                  },
+                  {
+                    "op": "stat",
+                    "stat": "ability_power",
+                    "scope": "total"
+                  }
+                ]
+              }
+            ]
+          },
+          "label": "Derivado",
+          "source": "Characters/Ekko/Spells/EkkoPassiveAbility/EkkoPassive.mSpellCalculations.ThreeHitDamage (16.23.8406595+branch.releases-16-23.content.release)",
+          "trigger": "every_n_hits",
+          "damage_type": "magic",
+          "cooldown_seconds": 4,
+          "every": 3
+        }
       ]
     },
     "Q": {

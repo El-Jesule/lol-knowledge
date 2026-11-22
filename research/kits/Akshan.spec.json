@@ -34,6 +34,34 @@
       ],
       "not_modelled": [
         "Escudo al detonar contra campeones (TotalShieldAmount) y velocidad de movimiento al cancelar segundo disparo (ASModdedMS)"
+      ],
+      "passive_effects": [
+        {
+          "id": "dirty_fighting_proc",
+          "name": "Artimañas (3.º impacto)",
+          "kind": "damage_proc",
+          "trigger": "every_n_hits",
+          "every": {
+            "data_value": "MaxStacks"
+          },
+          "damage_type": "magic",
+          "calculation": "PassiveProcDamage"
+        },
+        {
+          "id": "dirty_fighting_shield",
+          "name": "Artimañas (escudo en 3.º impacto a campeón)",
+          "kind": "shield",
+          "trigger": "every_n_hits",
+          "every": {
+            "data_value": "MaxStacks"
+          },
+          "target_kind": "champion",
+          "calculation": "TotalShieldAmount",
+          "duration_seconds": {
+            "data_value": "ShieldDuration"
+          },
+          "cooldown_calculation": "PassiveCooldown"
+        }
       ]
     },
     "Q": {

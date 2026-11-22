@@ -13,6 +13,16 @@
       "max_rank": 1,
       "not_modelled": [
         "Curación al lanzar habilidad (HealAmount, HealCooldown)"
+      ],
+      "passive_effects": [
+        {
+          "id": "happy_hour_heal",
+          "name": "Hora feliz (curación al lanzar habilidad)",
+          "kind": "heal",
+          "trigger": "on_ability_cast",
+          "calculation": "HealAmount",
+          "cooldown_calculation": "HealCooldown"
+        }
       ]
     },
     "Q": {

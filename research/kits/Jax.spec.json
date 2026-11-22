@@ -13,6 +13,25 @@
       "max_rank": 1,
       "not_modelled": [
         "Velocidad de ataque acumulable por ataque básico (AttackSpeedPerStack, MaxBonusAttackSpeed)"
+      ],
+      "passive_effects": [
+        {
+          "id": "relentless_assault",
+          "name": "Asalto implacable (VA por carga)",
+          "kind": "stacking_stat",
+          "stat": "attack_speed_bonus",
+          "mode": "flat",
+          "trigger": "attack",
+          "max_stacks": {
+            "data_value": "MaxStacks"
+          },
+          "duration_seconds": {
+            "data_value": "BuffDuration"
+          },
+          "input_name": "relentless_assault_stacks",
+          "calculation": "AttackSpeedPerStack",
+          "scale": 100
+        }
       ]
     },
     "Q": {

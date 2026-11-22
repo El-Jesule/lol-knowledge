@@ -34,6 +34,22 @@
       ],
       "not_modelled": [
         "Gestión de hasta 3 cargas y velocidad de ataque al consumirlas"
+      ],
+      "passive_effects": [
+        {
+          "id": "petricite_burst",
+          "name": "Arranque de petricita (ataque tras habilidad)",
+          "kind": "damage_proc",
+          "trigger": "after_ability",
+          "max_stacks": {
+            "data_value": "PassiveCharges"
+          },
+          "duration_seconds": {
+            "data_value": "PassiveDuration"
+          },
+          "damage_type": "magic",
+          "calculation": "PassiveDamage"
+        }
       ]
     },
     "Q": {

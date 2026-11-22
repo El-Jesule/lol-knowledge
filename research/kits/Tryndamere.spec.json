@@ -14,6 +14,18 @@
       "max_rank": 1,
       "not_modelled": [
         "Generación de Furia (hasta 100), probabilidad de crítico proporcional (hasta 50 %) y conversión de exceso en DA"
+      ],
+      "passive_effects": [
+        {
+          "id": "battle_fury_crit",
+          "name": "Furia de batalla (crítico por Furia)",
+          "kind": "stat_bonus",
+          "stat": "crit_chance",
+          "mode": "flat",
+          "calculation": "PassiveCritConversionTooltip",
+          "max_stacks": 100,
+          "input_name": "tryndamere_fury"
+        }
       ]
     },
     "Q": {

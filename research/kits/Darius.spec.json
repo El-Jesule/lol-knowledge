@@ -47,6 +47,25 @@
       "not_modelled": [
         "Poderío noxiano: DA adicional al alcanzar 5 acumulaciones o asesinar con R (NoxianMightBonusAD)",
         "Multiplicador de daño contra monstruos (MonsterMod)"
+      ],
+      "passive_effects": [
+        {
+          "id": "noxian_might_ad",
+          "name": "Poderío noxiano (DA adicional con 5 acumulaciones)",
+          "kind": "stacking_stat",
+          "stat": "attack_damage",
+          "mode": "flat",
+          "trigger": "champion_hit",
+          "max_stacks": {
+            "data_value": "MaxStacks"
+          },
+          "only_at_max": true,
+          "duration_seconds": {
+            "data_value": "BleedDuration"
+          },
+          "input_name": "hemorrhage_stacks",
+          "calculation": "NoxianMightBonusAD"
+        }
       ]
     },
     "Q": {

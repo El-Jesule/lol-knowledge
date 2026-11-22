@@ -25,7 +25,17 @@
           ]
         }
       ],
-      "not_modelled": []
+      "not_modelled": [],
+      "passive_effects": [
+        {
+          "id": "more_sparkles",
+          "name": "¡Más chispas! (ataque tras habilidad)",
+          "kind": "damage_proc",
+          "trigger": "after_ability",
+          "damage_type": "magic",
+          "calculation": "PassiveDamage"
+        }
+      ]
     },
     "Q": {
       "name": "Pádel estelar",

@@ -13,6 +13,29 @@
       "max_rank": 1,
       "not_modelled": [
         "Velocidad de ataque y movimiento tras derribar campeones, monstruos épicos o estructuras"
+      ],
+      "passive_effects": [
+        {
+          "id": "get_excited_as",
+          "name": "¡A tope! (VA al derribar)",
+          "kind": "stat_bonus",
+          "stat": "attack_speed_bonus",
+          "mode": "flat",
+          "data_value": "ASBuff",
+          "max_stacks": 1,
+          "input_name": "get_excited"
+        },
+        {
+          "id": "get_excited_ms",
+          "name": "¡A tope! (VM al derribar)",
+          "kind": "stat_bonus",
+          "stat": "move_speed",
+          "mode": "percent_ms",
+          "data_value": "MSBuff",
+          "scale": 0.01,
+          "max_stacks": 1,
+          "input_name": "get_excited"
+        }
       ]
     },
     "Q": {

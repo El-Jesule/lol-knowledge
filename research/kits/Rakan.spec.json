@@ -13,6 +13,16 @@
       "max_rank": 1,
       "not_modelled": [
         "Escudo periódico (TotalShield, ShieldCooldown)"
+      ],
+      "passive_effects": [
+        {
+          "id": "fey_feathers",
+          "name": "Plumas feéricas",
+          "kind": "shield",
+          "trigger": "on_taking_damage",
+          "calculation": "TotalShield",
+          "cooldown_calculation": "ShieldCooldown"
+        }
       ]
     },
     "Q": {

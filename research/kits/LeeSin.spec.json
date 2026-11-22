@@ -13,6 +13,26 @@
       "max_rank": 1,
       "not_modelled": [
         "Velocidad de ataque durante 2 ataques y restauración de energía (TTFirstHitEnergy, EnergyReturn)"
+      ],
+      "passive_effects": [
+        {
+          "id": "flurry_as",
+          "name": "Ráfaga (VA tras habilidad)",
+          "kind": "stat_bonus",
+          "stat": "attack_speed_bonus",
+          "mode": "flat",
+          "data_value": "PassiveAS",
+          "max_stacks": 1,
+          "input_name": "flurry"
+        },
+        {
+          "id": "flurry_energy",
+          "name": "Ráfaga (energía al impactar)",
+          "kind": "resource_restore",
+          "resource": "energy",
+          "trigger": "on_hit",
+          "calculation": "EnergyReturn"
+        }
       ]
     },
     "Q": {

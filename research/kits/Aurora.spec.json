@@ -42,6 +42,40 @@
       ],
       "not_modelled": [
         "Curación de espíritus (HealCalc) y velocidad de movimiento de Brincarreinos"
+      ],
+      "passive_effects": [
+        {
+          "id": "spirit_abjuration_proc",
+          "name": "Abjuración espiritual (3.º impacto)",
+          "kind": "damage_proc",
+          "trigger": "every_n_hits",
+          "every": 3,
+          "damage_type": "magic",
+          "formula": {
+            "op": "mul",
+            "operands": [
+              {
+                "op": "calculation",
+                "name": "{5486c90e}"
+              },
+              {
+                "op": "stat",
+                "stat": "health",
+                "scope": "max",
+                "subject": "target"
+              }
+            ]
+          },
+          "source_note": "ProcDamage % vida máxima ({5486c90e}) × vida máxima del objetivo"
+        },
+        {
+          "id": "spirit_abjuration_heal",
+          "name": "Abjuración espiritual (curación en 3.º impacto)",
+          "kind": "heal",
+          "trigger": "every_n_hits",
+          "every": 3,
+          "calculation": "HealCalc"
+        }
       ]
     },
     "Q": {

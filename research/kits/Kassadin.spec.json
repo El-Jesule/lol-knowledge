@@ -13,6 +13,16 @@
       "max_rank": 1,
       "not_modelled": [
         "Reducción del 10 % del daño mágico recibido (DamageReductionPercent) y movimiento fantasmal"
+      ],
+      "passive_effects": [
+        {
+          "id": "void_stone_magic_dr",
+          "name": "Piedra del Vacío (reducción de daño mágico)",
+          "kind": "damage_taken_modifier",
+          "mode": "percent",
+          "damage_type": "magic",
+          "data_value": "DamageReductionPercent"
+        }
       ]
     },
     "Q": {

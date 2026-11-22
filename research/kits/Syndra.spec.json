@@ -13,6 +13,30 @@
       "max_rank": 1,
       "not_modelled": [
         "Astillas de ira, restauración de maná (ManaPerProc) y mejoras de habilidades"
+      ],
+      "passive_effects": [
+        {
+          "id": "transcendent_ap",
+          "name": "Trascendencia (+15 % PH con 120 Astillas)",
+          "kind": "stat_bonus",
+          "stat": "ability_power",
+          "mode": "percent",
+          "data_value": "CapstoneAPPerc",
+          "scale": 100,
+          "max_stacks": 1,
+          "input_name": "syndra_transcendent"
+        },
+        {
+          "id": "transcendent_mana",
+          "name": "Trascendencia (maná al ganar Astillas)",
+          "kind": "resource_restore",
+          "resource": "mana",
+          "trigger": "on_champion_hit",
+          "calculation": "ManaPerProc",
+          "cooldown_seconds": {
+            "data_value": "PassiveMarkCooldown"
+          }
+        }
       ]
     },
     "Q": {

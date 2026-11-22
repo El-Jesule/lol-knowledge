@@ -19,6 +19,51 @@
       "passive_stats": [],
       "not_modelled": [
         "Invisibilidad y velocidad de ataque al salir de sigilo (BonusAttackSpeed)"
+      ],
+      "passive_effects": [
+        {
+          "id": "guerrilla_as",
+          "name": "Elemento sorpresa (VA al salir de camuflaje)",
+          "kind": "stat_bonus",
+          "formula": {
+            "op": "mul",
+            "operands": [
+              {
+                "op": "by_level",
+                "values": [
+                  0.2,
+                  0.2,
+                  0.2,
+                  0.2,
+                  0.4,
+                  0.4,
+                  0.4,
+                  0.4,
+                  0.4,
+                  0.6,
+                  0.6,
+                  0.6,
+                  0.6,
+                  0.6,
+                  0.8,
+                  0.8,
+                  0.8,
+                  0.8
+                ]
+              },
+              {
+                "op": "constant",
+                "value": 100
+              }
+            ]
+          },
+          "label": "Derivado",
+          "source": "Characters/Teemo/Spells/TeemoPassiveAbility/TeemoPassive.mSpellCalculations.BonusAttackSpeed (16.23.8406595+branch.releases-16-23.content.release)",
+          "stat": "attack_speed_bonus",
+          "mode": "flat",
+          "input_name": "teemo_guerrilla",
+          "max_stacks": 1
+        }
       ]
     },
     "Q": {

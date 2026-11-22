@@ -14,6 +14,16 @@
       "max_rank": 1,
       "not_modelled": [
         "Curación periódica al golpear campeones (HealAmount, PassiveCooldown)"
+      ],
+      "passive_effects": [
+        {
+          "id": "feline_friendship_heal",
+          "name": "Amistad felina (curación al golpear campeón)",
+          "kind": "heal",
+          "trigger": "on_champion_hit",
+          "calculation": "HealAmount",
+          "cooldown_calculation": "PassiveCooldown"
+        }
       ]
     },
     "Q": {

@@ -13,6 +13,25 @@
       "max_rank": 1,
       "not_modelled": [
         "Velocidad de ataque acumulable hasta 5 cargas al acertar habilidades (AttackSpeedPerStack)"
+      ],
+      "passive_effects": [
+        {
+          "id": "rising_spell_force",
+          "name": "Fuerza de hechizo creciente (VA por carga)",
+          "kind": "stacking_stat",
+          "stat": "attack_speed_bonus",
+          "mode": "flat",
+          "trigger": "ability_hit",
+          "max_stacks": {
+            "data_value": "MaxStacks"
+          },
+          "duration_seconds": {
+            "data_value": "StackDuration"
+          },
+          "input_name": "rising_spell_force_stacks",
+          "data_value": "AttackSpeedPerStack",
+          "scale": 100
+        }
       ]
     },
     "Q": {

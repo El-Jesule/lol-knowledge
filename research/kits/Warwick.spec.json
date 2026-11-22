@@ -25,6 +25,16 @@
       ],
       "not_modelled": [
         "Curación del 100 % del daño bajo 50 % de vida (250 % bajo 25 % de vida)"
+      ],
+      "passive_effects": [
+        {
+          "id": "eternal_hunger",
+          "name": "Hambre insaciable (daño mágico al impactar)",
+          "kind": "damage_proc",
+          "trigger": "on_hit",
+          "damage_type": "magic",
+          "calculation": "OnHitDamage"
+        }
       ]
     },
     "Q": {

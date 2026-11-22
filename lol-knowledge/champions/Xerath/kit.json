@@ -19,6 +19,51 @@
       "passive_stats": [],
       "not_modelled": [
         "Restauración de maná en ataque cada 16 s (ChampionManaRestoreTT, MinionManaRestoreTT)"
+      ],
+      "passive_effects": [
+        {
+          "id": "mana_surge",
+          "name": "Sobrecarga de maná (ataque básico a campeón)",
+          "kind": "resource_restore",
+          "formula": {
+            "op": "mul",
+            "operands": [
+              {
+                "op": "by_level",
+                "values": [
+                  30,
+                  33,
+                  36,
+                  39,
+                  45,
+                  51,
+                  57,
+                  66,
+                  75,
+                  84,
+                  93,
+                  105,
+                  117,
+                  129,
+                  141,
+                  153,
+                  168,
+                  183
+                ]
+              },
+              {
+                "op": "constant",
+                "value": 2
+              }
+            ]
+          },
+          "label": "Derivado",
+          "source": "Characters/Xerath/Spells/XerathAscended2Ability/XerathAscended2.mSpellCalculations.ChampionManaRestoreTT (16.23.8406595+branch.releases-16-23.content.release)",
+          "trigger": "on_hit",
+          "resource": "mana",
+          "target_kind": "champion",
+          "cooldown_seconds": 16
+        }
       ]
     },
     "Q": {

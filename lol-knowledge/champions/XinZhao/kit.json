@@ -103,6 +103,169 @@
       "passive_stats": [],
       "not_modelled": [
         "Curación cada tercer golpe (TotalHealing)"
+      ],
+      "passive_effects": [
+        {
+          "id": "determination_damage",
+          "name": "Determinación (3.º ataque)",
+          "kind": "damage_proc",
+          "formula": {
+            "op": "add",
+            "operands": [
+              {
+                "op": "mul",
+                "operands": [
+                  {
+                    "op": "by_level",
+                    "values": [
+                      0.15,
+                      0.15,
+                      0.15,
+                      0.15,
+                      0.15,
+                      0.3,
+                      0.3,
+                      0.3,
+                      0.3,
+                      0.3,
+                      0.45,
+                      0.45,
+                      0.45,
+                      0.45,
+                      0.45,
+                      0.6,
+                      0.6,
+                      0.6
+                    ]
+                  },
+                  {
+                    "op": "stat",
+                    "stat": "attack_damage",
+                    "scope": "total"
+                  }
+                ]
+              },
+              {
+                "op": "mul",
+                "operands": [
+                  {
+                    "op": "by_level",
+                    "values": [
+                      0.05,
+                      0.05,
+                      0.05,
+                      0.05,
+                      0.05,
+                      0.1,
+                      0.1,
+                      0.1,
+                      0.1,
+                      0.1,
+                      0.15,
+                      0.15,
+                      0.15,
+                      0.15,
+                      0.15,
+                      0.2,
+                      0.2,
+                      0.2
+                    ]
+                  },
+                  {
+                    "op": "stat",
+                    "stat": "ability_power",
+                    "scope": "total"
+                  }
+                ]
+              }
+            ]
+          },
+          "label": "Derivado",
+          "source": "Characters/XinZhao/Spells/XinZhaoPAbility/XinZhaoP.mSpellCalculations.TotalDamage (16.23.8406595+branch.releases-16-23.content.release)",
+          "trigger": "every_n_attacks",
+          "damage_type": "physical",
+          "every": 3
+        },
+        {
+          "id": "determination_heal",
+          "name": "Determinación (curación en 3.º ataque)",
+          "kind": "heal",
+          "formula": {
+            "op": "add",
+            "operands": [
+              {
+                "op": "mul",
+                "operands": [
+                  {
+                    "op": "by_level",
+                    "values": [
+                      0.02,
+                      0.02,
+                      0.02,
+                      0.02,
+                      0.02,
+                      0.035,
+                      0.035,
+                      0.035,
+                      0.035,
+                      0.035,
+                      0.05,
+                      0.05,
+                      0.05,
+                      0.05,
+                      0.05,
+                      0.05,
+                      0.05,
+                      0.05
+                    ]
+                  },
+                  {
+                    "op": "stat",
+                    "stat": "health",
+                    "scope": "total"
+                  }
+                ]
+              },
+              {
+                "op": "mul",
+                "operands": [
+                  {
+                    "op": "by_level",
+                    "values": [
+                      0.4,
+                      0.4,
+                      0.4,
+                      0.4,
+                      0.4,
+                      0.5,
+                      0.5,
+                      0.5,
+                      0.5,
+                      0.5,
+                      0.7,
+                      0.7,
+                      0.7,
+                      0.7,
+                      0.7,
+                      0.7,
+                      0.7,
+                      0.7
+                    ]
+                  },
+                  {
+                    "op": "stat",
+                    "stat": "ability_power",
+                    "scope": "total"
+                  }
+                ]
+              }
+            ]
+          },
+          "label": "Derivado",
+          "source": "Characters/XinZhao/Spells/XinZhaoPAbility/XinZhaoP.mSpellCalculations.TotalHealing (16.23.8406595+branch.releases-16-23.content.release)",
+          "trigger": "every_n_attacks",
+          "every": 3
+        }
       ]
     },
     "Q": {

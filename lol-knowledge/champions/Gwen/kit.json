@@ -75,6 +75,60 @@
       "passive_stats": [],
       "not_modelled": [
         "Curación del daño infligido a campeones (HealingPercent), ejecución a súbditos y tope a monstruos"
+      ],
+      "passive_effects": [
+        {
+          "id": "thousand_cuts_on_hit",
+          "name": "Mil cortes (daño mágico al impactar)",
+          "kind": "damage_proc",
+          "formula": {
+            "op": "mul",
+            "operands": [
+              {
+                "op": "mul",
+                "operands": [
+                  {
+                    "op": "add",
+                    "operands": [
+                      {
+                        "op": "constant",
+                        "value": 1
+                      },
+                      {
+                        "op": "mul",
+                        "operands": [
+                          {
+                            "op": "constant",
+                            "value": 0.006
+                          },
+                          {
+                            "op": "stat",
+                            "stat": "ability_power",
+                            "scope": "total"
+                          }
+                        ]
+                      }
+                    ]
+                  },
+                  {
+                    "op": "constant",
+                    "value": 0.01
+                  }
+                ]
+              },
+              {
+                "op": "stat",
+                "stat": "health",
+                "scope": "max",
+                "subject": "target"
+              }
+            ]
+          },
+          "label": "Derivado",
+          "source": "Characters/Gwen/Spells/GwenPAbility/GwenP · PercentHealth1000Cuts × vida máxima del objetivo (16.23.8406595+branch.releases-16-23.content.release)",
+          "trigger": "on_hit",
+          "damage_type": "magic"
+        }
       ]
     },
     "Q": {

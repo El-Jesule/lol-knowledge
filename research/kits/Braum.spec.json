@@ -34,6 +34,20 @@
       ],
       "not_modelled": [
         "Aturdimiento (StunDuration), enfriamiento por objetivo (StunCD) y acumulación con aliados"
+      ],
+      "passive_effects": [
+        {
+          "id": "concussive_blows",
+          "name": "Golpes conmocionantes (4.º impacto)",
+          "kind": "damage_proc",
+          "trigger": "every_n_hits",
+          "every": {
+            "data_value": "StackCap"
+          },
+          "damage_type": "magic",
+          "calculation": "TotalDamage",
+          "cooldown_calculation": "StunCD"
+        }
       ]
     },
     "Q": {

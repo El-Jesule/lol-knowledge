@@ -25,6 +25,25 @@
       ],
       "not_modelled": [
         "Curación cada tercer golpe (TotalHealing)"
+      ],
+      "passive_effects": [
+        {
+          "id": "determination_damage",
+          "name": "Determinación (3.º ataque)",
+          "kind": "damage_proc",
+          "trigger": "every_n_attacks",
+          "every": 3,
+          "damage_type": "physical",
+          "calculation": "TotalDamage"
+        },
+        {
+          "id": "determination_heal",
+          "name": "Determinación (curación en 3.º ataque)",
+          "kind": "heal",
+          "trigger": "every_n_attacks",
+          "every": 3,
+          "calculation": "TotalHealing"
+        }
       ]
     },
     "Q": {

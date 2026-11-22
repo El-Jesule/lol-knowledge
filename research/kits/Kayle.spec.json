@@ -25,6 +25,24 @@
       ],
       "not_modelled": [
         "Velocidad de ataque acumulable hasta 5 cargas (EnrageTotalASPerStack) y mejoras de alcance por nivel"
+      ],
+      "passive_effects": [
+        {
+          "id": "zeal_as",
+          "name": "Ascenso divino — Fervor (VA por carga)",
+          "kind": "stacking_stat",
+          "stat": "attack_speed_bonus",
+          "mode": "flat",
+          "trigger": "attack",
+          "max_stacks": {
+            "data_value": "EnrageMaxStacks"
+          },
+          "duration_seconds": {
+            "data_value": "EnrageDuration"
+          },
+          "input_name": "zeal_stacks",
+          "calculation": "EnrageTotalASPerStack"
+        }
       ]
     },
     "Q": {
