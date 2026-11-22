@@ -537,11 +537,13 @@ def _compile_passive_effect(
         "target_kind",
         "only_at_max",
         "stack_source_id",
+        "consume_all_stacks",
     ):
         if key in effect_spec:
             compiled[key] = effect_spec[key]
     for key in (
         "max_stacks",
+        "charges_per_cast",
         "max_stacks_multiplier",
         "duration_seconds",
         "cooldown_seconds",

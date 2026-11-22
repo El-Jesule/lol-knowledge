@@ -474,6 +474,7 @@ class PassiveCombat:
 
         for effect in self._procs:
             triggered = False
+            charge_mult = 1
             if (
                 (effect.trigger in {"on_attack", "on_hit"} and slot is None)
                 or (effect.trigger == "on_ability_hit" and slot is not None and dealt_damage)
@@ -503,9 +504,9 @@ class PassiveCombat:
                         triggered = True
             elif effect.trigger == "after_ability":
                 if slot is not None:
-                    cap = effect.max_stacks or 1
+                    cap = effect.max_stacks or effect.charges_per_cast
                     self._ability_charges[effect.id] = min(
-                        cap, self._ability_charges[effect.id] + 1
+                        cap, self._ability_charges[effect.id] + effect.charges_per_cast
                     )
                     self._ability_armed_at[effect.id] = clock
                 elif slot is None and self._ability_charges.get(effect.id, 0) > 0:
@@ -517,8 +518,14 @@ class PassiveCombat:
                     )
                     if expired:
                         self._ability_charges[effect.id] = 0
-                    elif self._matches_target_kind(effect):
-                        self._ability_charges[effect.id] -= 1
+                    elif self._matches_target_kind(effect) and self._can_fire(
+                        effect, clock, sheet.level
+                    ):
+                        if effect.consume_all_stacks:
+                            charge_mult = self._ability_charges[effect.id]
+                            self._ability_charges[effect.id] = 0
+                        else:
+                            self._ability_charges[effect.id] -= 1
                         triggered = True
             elif effect.trigger == "below_hp_percent" and slot is None:
                 assert effect.threshold_hp_percent is not None
@@ -560,11 +567,17 @@ class PassiveCombat:
             labels = [effect.label, *(origin[k][1] for k in res.dependencies if k in origin)]
             if any(k.startswith("target:") for k in res.dependencies):
                 labels.append(self.target.label)
+            raw_amount = res.exact * charge_mult
+            proc_name = (
+                f"{effect.name} x{charge_mult}"
+                if effect.consume_all_stacks and charge_mult > 1
+                else effect.name
+            )
             procs.append(
                 PassiveProc(
-                    f"kit:{self.kit.champion} P {effect.id} ({effect.name})",
+                    f"kit:{self.kit.champion} P {effect.id} ({proc_name})",
                     effect.damage_type,
-                    res.exact,
+                    raw_amount,
                     weakest(labels),
                 )
             )

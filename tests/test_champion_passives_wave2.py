@@ -6,8 +6,12 @@ import json
 from fractions import Fraction as F
 from pathlib import Path
 
+import pytest
+
 from lol_knowledge.defense import evaluate_defense, parse_incoming
+from lol_knowledge.errors import KitError
 from lol_knowledge.kit import load_kit, passive_contributions
+from lol_knowledge.kit.model import parse_kit
 from lol_knowledge.passives import sheet_passive_effects
 from lol_knowledge.rotation import evaluate_rotation, parse_steps
 from lol_knowledge.scenario import target_from_values
@@ -191,7 +195,48 @@ def test_kaisa_brand_hwei_mordekaiser_qiyana_and_after_ability_passives():
 
     taric = _rotate("Taric", 11, "E, attack, attack, attack", ranks={"E": 5})
     assert any("bravado" in p.source for p in taric.steps[1].parts)
-    assert not any("bravado" in p.source for p in taric.steps[2].parts)
+    assert any("bravado" in p.source for p in taric.steps[2].parts)
+    assert not any("bravado" in p.source for p in taric.steps[3].parts)
+
+
+def test_after_ability_charges_per_cast_and_consume_all_stacks():
+    # Mel: each ability adds 3 projectiles (cap 9), all fired on the next basic attack.
+    mel_1 = _rotate("Mel", 18, "Q.initial, attack", ranks={"Q": 5})
+    p1 = [p for p in mel_1.steps[1].parts if "searing_brilliance" in p.source]
+    assert len(p1) == 1 and "x3" in p1[0].source
+
+    mel_2 = _rotate("Mel", 18, "Q.initial, E.center, attack, attack", ranks={"Q": 5, "E": 5})
+    p2 = [p for p in mel_2.steps[2].parts if "searing_brilliance" in p.source]
+    assert len(p2) == 1 and "x6" in p2[0].source
+    assert p2[0].raw == p1[0].raw * 2
+    assert not any("searing_brilliance" in p.source for p in mel_2.steps[3].parts)
+
+    mel_4 = _rotate(
+        "Mel",
+        18,
+        "Q.initial, W.initial, E.center, R.ult_base, attack",
+        ranks={"Q": 5, "W": 5, "E": 5, "R": 3},
+    )
+    p4 = [p for p in mel_4.steps[4].parts if "searing_brilliance" in p.source]
+    assert len(p4) == 1 and "x9" in p4[0].source
+    assert p4[0].raw == p1[0].raw * 3
+
+    # Seraphine: 2 ability casts stack 2 Notes, both consumed on the next attack.
+    sera_1 = _rotate("Seraphine", 18, "Q.min, attack", ranks={"Q": 5})
+    s1 = [p for p in sera_1.steps[1].parts if "stage_presence_note" in p.source]
+    assert len(s1) == 1
+
+    sera_2 = _rotate("Seraphine", 18, "Q.min, E, attack, attack", ranks={"Q": 5, "E": 5})
+    s2 = [p for p in sera_2.steps[2].parts if "stage_presence_note" in p.source]
+    assert len(s2) == 1 and "x2" in s2[0].source
+    assert s2[0].raw == s1[0].raw * 2
+    assert not any("stage_presence_note" in p.source for p in sera_2.steps[3].parts)
+
+    # Validation: charges_per_cast > max_stacks raises KitError.
+    raw = json.loads((ROOT / "lol-knowledge/champions/Taric/kit.json").read_text(encoding="utf-8"))
+    raw["abilities"]["P"]["passive_effects"][0]["charges_per_cast"] = 5
+    with pytest.raises(KitError, match="charges_per_cast"):
+        parse_kit(raw)
 
 
 def test_malzahar_dr_kennen_energy_heals_stats_and_ms_passives():

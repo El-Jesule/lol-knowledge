@@ -101,6 +101,8 @@ class PassiveEffectSpec:
     # Trigger and stacking controls for combat passives.
     trigger: str | None = None
     max_stacks: int | None = None
+    charges_per_cast: int = 1
+    consume_all_stacks: bool = False
     max_stacks_multiplier: Fraction = Fraction(1)
     only_at_max: bool = False
     duration_seconds: Fraction | None = None
@@ -334,6 +336,8 @@ def _passive_effects(
         mode = "flat"
         trigger: str | None = None
         max_stacks: int | None = None
+        charges_per_cast = 1
+        consume_all_stacks = False
         max_mult = Fraction(1)
         only_at_max = bool(entry.get("only_at_max", False))
         duration: Fraction | None = None
@@ -401,6 +405,16 @@ def _passive_effects(
                     raise KitError(f"{entry_ctx}: {trigger} requires every >= 2")
             elif trigger == "after_ability":
                 max_stacks = _optional_positive_int(entry, "max_stacks", entry_ctx)
+                charges_per_cast = _optional_positive_int(entry, "charges_per_cast", entry_ctx) or 1
+                raw_consume_all = entry.get("consume_all_stacks", False)
+                if not isinstance(raw_consume_all, bool):
+                    raise KitError(f"{entry_ctx}: consume_all_stacks must be a boolean")
+                consume_all_stacks = raw_consume_all
+                if max_stacks is not None and charges_per_cast > max_stacks:
+                    raise KitError(
+                        f"{entry_ctx}: charges_per_cast ({charges_per_cast}) exceeds "
+                        f"max_stacks ({max_stacks})"
+                    )
         elif kind == "damage_proc":
             trigger = _text(entry, "trigger", entry_ctx)
             if trigger not in PASSIVE_PROC_TRIGGERS:
@@ -419,6 +433,16 @@ def _passive_effects(
                     raise KitError(f"{entry_ctx}: {trigger} requires every >= 2")
             elif trigger == "after_ability":
                 max_stacks = _optional_positive_int(entry, "max_stacks", entry_ctx)
+                charges_per_cast = _optional_positive_int(entry, "charges_per_cast", entry_ctx) or 1
+                raw_consume_all = entry.get("consume_all_stacks", False)
+                if not isinstance(raw_consume_all, bool):
+                    raise KitError(f"{entry_ctx}: consume_all_stacks must be a boolean")
+                consume_all_stacks = raw_consume_all
+                if max_stacks is not None and charges_per_cast > max_stacks:
+                    raise KitError(
+                        f"{entry_ctx}: charges_per_cast ({charges_per_cast}) exceeds "
+                        f"max_stacks ({max_stacks})"
+                    )
             elif trigger == "below_hp_percent":
                 threshold_hp = _optional_positive_fraction(entry, "threshold_hp_percent", entry_ctx)
                 if threshold_hp is None or threshold_hp > 1:
@@ -489,6 +513,8 @@ def _passive_effects(
                 mode=mode,
                 trigger=trigger,
                 max_stacks=max_stacks,
+                charges_per_cast=charges_per_cast,
+                consume_all_stacks=consume_all_stacks,
                 max_stacks_multiplier=max_mult,
                 only_at_max=only_at_max,
                 duration_seconds=duration,
