@@ -3,7 +3,7 @@
   "champion": "Renata",
   "label": "Derivado",
   "game_version": "16.23",
-  "content_version": "16.23.8406595+branch.releases-16-23.content.release",
+  "content_version": "16.23.8418428+branch.releases-16-23.content.release",
   "verified_against": {
     "content_version": "16.23.8406595+branch.releases-16-23.content.release",
     "bin_sha256": "34fdc83fef94d8a71a23bec0724f1633c61469ac9ad23149b09b03f102dde369",
@@ -76,7 +76,7 @@
                 ]
               },
               "label": "Derivado",
-              "source": "Characters/Renata/Spells/RenataPassiveAbility/RenataPassive · mSpellCalculations.PercentAmpCalcSelf × vida máxima del objetivo (16.23.8406595+branch.releases-16-23.content.release)",
+              "source": "Characters/Renata/Spells/RenataPassiveAbility/RenataPassive · mSpellCalculations.PercentAmpCalcSelf × vida máxima del objetivo (16.23.8418428+branch.releases-16-23.content.release)",
               "damage_type_source": "spell_renatapassive_tooltip <magicDamage>"
             }
           ]
@@ -141,7 +141,7 @@
                 ]
               },
               "label": "Derivado",
-              "source": "Characters/Renata/Spells/RenataPassiveAbility/RenataPassive · mSpellCalculations.PercentAmpCalc × vida máxima del objetivo (16.23.8406595+branch.releases-16-23.content.release)",
+              "source": "Characters/Renata/Spells/RenataPassiveAbility/RenataPassive · mSpellCalculations.PercentAmpCalc × vida máxima del objetivo (16.23.8418428+branch.releases-16-23.content.release)",
               "damage_type_source": "spell_renatapassive_tooltip <magicDamage>"
             }
           ]
@@ -210,7 +210,7 @@
             ]
           },
           "label": "Derivado",
-          "source": "Characters/Renata/Spells/RenataPassiveAbility/RenataPassive · PercentAmpCalcSelf × vida máxima del objetivo (16.23.8406595+branch.releases-16-23.content.release)",
+          "source": "Characters/Renata/Spells/RenataPassiveAbility/RenataPassive · PercentAmpCalcSelf × vida máxima del objetivo (16.23.8418428+branch.releases-16-23.content.release)",
           "trigger": "on_hit",
           "damage_type": "magic"
         }
@@ -256,7 +256,7 @@
                 ]
               },
               "label": "Derivado",
-              "source": "Characters/Renata/Spells/RenataQAbility/RenataQ.mSpellCalculations.TotalDamage (16.23.8406595+branch.releases-16-23.content.release)",
+              "source": "Characters/Renata/Spells/RenataQAbility/RenataQ.mSpellCalculations.TotalDamage (16.23.8418428+branch.releases-16-23.content.release)",
               "damage_type_source": "spell_renataq_tooltip <magicDamage>"
             }
           ]
@@ -274,6 +274,95 @@
       "passive_stats": [],
       "not_modelled": [
         "Velocidad de ataque y movimiento crecientes (ASCalc, MSCalc, FinalASCalc, FinalMSCalc) y resurrección condicionada tras baja"
+      ],
+      "active_effects": [
+        {
+          "id": "w_ascalc",
+          "name": "W (VA)",
+          "kind": "stat_bonus",
+          "formula": {
+            "op": "add",
+            "operands": [
+              {
+                "op": "by_rank",
+                "values": [
+                  10,
+                  15,
+                  20,
+                  25,
+                  30
+                ]
+              },
+              {
+                "op": "mul",
+                "operands": [
+                  {
+                    "op": "constant",
+                    "value": 0.01
+                  },
+                  {
+                    "op": "stat",
+                    "stat": "ability_power",
+                    "scope": "total"
+                  }
+                ]
+              }
+            ]
+          },
+          "label": "Derivado",
+          "source": "Characters/Renata/Spells/RenataWAbility/RenataW.mSpellCalculations.ASCalc (16.23.8418428+branch.releases-16-23.content.release)",
+          "stat": "attack_speed_bonus",
+          "mode": "flat",
+          "duration_seconds": 5
+        },
+        {
+          "id": "w_mscalc",
+          "name": "W (VM)",
+          "kind": "stat_bonus",
+          "formula": {
+            "op": "mul",
+            "operands": [
+              {
+                "op": "add",
+                "operands": [
+                  {
+                    "op": "by_rank",
+                    "values": [
+                      10,
+                      12.5,
+                      15,
+                      17.5,
+                      20
+                    ]
+                  },
+                  {
+                    "op": "mul",
+                    "operands": [
+                      {
+                        "op": "constant",
+                        "value": 0.01
+                      },
+                      {
+                        "op": "stat",
+                        "stat": "ability_power",
+                        "scope": "total"
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "op": "constant",
+                "value": 0.01
+              }
+            ]
+          },
+          "label": "Derivado",
+          "source": "Characters/Renata/Spells/RenataWAbility/RenataW.mSpellCalculations.MSCalc (16.23.8418428+branch.releases-16-23.content.release)",
+          "stat": "move_speed",
+          "mode": "percent_ms",
+          "duration_seconds": 5
+        }
       ]
     },
     "E": {
@@ -316,7 +405,7 @@
                 ]
               },
               "label": "Derivado",
-              "source": "Characters/Renata/Spells/RenataEAbility/RenataE.mSpellCalculations.TotalDamage (16.23.8406595+branch.releases-16-23.content.release)",
+              "source": "Characters/Renata/Spells/RenataEAbility/RenataE.mSpellCalculations.TotalDamage (16.23.8418428+branch.releases-16-23.content.release)",
               "damage_type_source": "spell_renatae_tooltip <magicDamage>"
             }
           ]
@@ -325,6 +414,45 @@
       "passive_stats": [],
       "not_modelled": [
         "Escudo a aliados (ShieldCalc) y ralentización del 30 %"
+      ],
+      "active_effects": [
+        {
+          "id": "e_shieldcalc",
+          "name": "E (escudo)",
+          "kind": "shield",
+          "formula": {
+            "op": "add",
+            "operands": [
+              {
+                "op": "by_rank",
+                "values": [
+                  50,
+                  65,
+                  80,
+                  95,
+                  110
+                ]
+              },
+              {
+                "op": "mul",
+                "operands": [
+                  {
+                    "op": "constant",
+                    "value": 0.5
+                  },
+                  {
+                    "op": "stat",
+                    "stat": "ability_power",
+                    "scope": "total"
+                  }
+                ]
+              }
+            ]
+          },
+          "label": "Derivado",
+          "source": "Characters/Renata/Spells/RenataEAbility/RenataE.mSpellCalculations.ShieldCalc (16.23.8418428+branch.releases-16-23.content.release)",
+          "duration_seconds": 3
+        }
       ]
     },
     "R": {

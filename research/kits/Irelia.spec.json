@@ -70,6 +70,14 @@
       ],
       "not_modelled": [
         "Curación (HealAmount), daño extra a súbditos (MinionDamage), efectos al impactar y reinicio de CD"
+      ],
+      "active_effects": [
+        {
+          "id": "q_healamount",
+          "name": "Q (curación)",
+          "kind": "heal",
+          "calculation": "HealAmount"
+        }
       ]
     },
     "W": {
@@ -97,6 +105,30 @@
       ],
       "not_modelled": [
         "Reducción de daño físico y mágico durante la canalización (FinalPhysicalDR, FinalMagicDR)"
+      ],
+      "active_effects": [
+        {
+          "id": "defiant_dance_physical_dr",
+          "name": "Danza desafiante (DR físico)",
+          "kind": "damage_taken_modifier",
+          "mode": "percent",
+          "damage_type": "physical",
+          "calculation": "FinalPhysicalDR",
+          "duration_seconds": {
+            "data_value": "MaxDuration"
+          }
+        },
+        {
+          "id": "defiant_dance_magic_dr",
+          "name": "Danza desafiante (DR mágico)",
+          "kind": "damage_taken_modifier",
+          "mode": "percent",
+          "damage_type": "magic",
+          "calculation": "FinalMagicDR",
+          "duration_seconds": {
+            "data_value": "MaxDuration"
+          }
+        }
       ]
     },
     "E": {

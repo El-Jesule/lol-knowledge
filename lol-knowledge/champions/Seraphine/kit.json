@@ -3,7 +3,7 @@
   "champion": "Seraphine",
   "label": "Derivado",
   "game_version": "16.23",
-  "content_version": "16.23.8406595+branch.releases-16-23.content.release",
+  "content_version": "16.23.8418428+branch.releases-16-23.content.release",
   "verified_against": {
     "content_version": "16.23.8406595+branch.releases-16-23.content.release",
     "bin_sha256": "331b119059aa01d88238033c25558d82e51b6939a39e3fbf075a81113a473cce",
@@ -47,7 +47,7 @@
                 ]
               },
               "label": "Derivado",
-              "source": "Characters/Seraphine/Spells/SeraphinePassiveAbility/SeraphinePassive.mSpellCalculations.AutoDamage (16.23.8406595+branch.releases-16-23.content.release)",
+              "source": "Characters/Seraphine/Spells/SeraphinePassiveAbility/SeraphinePassive.mSpellCalculations.AutoDamage (16.23.8418428+branch.releases-16-23.content.release)",
               "damage_type_source": "spell_seraphinepassive_tooltip <magicDamage>"
             }
           ]
@@ -87,7 +87,7 @@
             ]
           },
           "label": "Derivado",
-          "source": "Characters/Seraphine/Spells/SeraphinePassiveAbility/SeraphinePassive.mSpellCalculations.AutoDamage (16.23.8406595+branch.releases-16-23.content.release)",
+          "source": "Characters/Seraphine/Spells/SeraphinePassiveAbility/SeraphinePassive.mSpellCalculations.AutoDamage (16.23.8418428+branch.releases-16-23.content.release)",
           "trigger": "after_ability",
           "damage_type": "magic",
           "consume_all_stacks": true,
@@ -136,7 +136,7 @@
                 ]
               },
               "label": "Derivado",
-              "source": "Characters/Seraphine/Spells/SeraphineQAbility/SeraphineQ.mSpellCalculations.ExplosionDamage (16.23.8406595+branch.releases-16-23.content.release)",
+              "source": "Characters/Seraphine/Spells/SeraphineQAbility/SeraphineQ.mSpellCalculations.ExplosionDamage (16.23.8418428+branch.releases-16-23.content.release)",
               "damage_type_source": "spell_seraphineq_tooltip <magicDamage>"
             }
           ]
@@ -186,7 +186,7 @@
                 ]
               },
               "label": "Derivado",
-              "source": "Characters/Seraphine/Spells/SeraphineQAbility/SeraphineQ.mSpellCalculations.TotalEmpoweredDamage (16.23.8406595+branch.releases-16-23.content.release)",
+              "source": "Characters/Seraphine/Spells/SeraphineQAbility/SeraphineQ.mSpellCalculations.TotalEmpoweredDamage (16.23.8418428+branch.releases-16-23.content.release)",
               "damage_type_source": "spell_seraphineq_tooltip <magicDamage>"
             }
           ]
@@ -204,6 +204,87 @@
       "passive_stats": [],
       "not_modelled": [
         "Escudo a aliados (ShieldValueSeraphine), velocidad de movimiento y curación con escudo activo"
+      ],
+      "active_effects": [
+        {
+          "id": "surround_sound_shield",
+          "name": "Sonido envolvente (escudo)",
+          "kind": "shield",
+          "formula": {
+            "op": "mul",
+            "operands": [
+              {
+                "op": "add",
+                "operands": [
+                  {
+                    "op": "by_rank",
+                    "values": [
+                      60,
+                      80,
+                      100,
+                      120,
+                      140
+                    ]
+                  },
+                  {
+                    "op": "mul",
+                    "operands": [
+                      {
+                        "op": "constant",
+                        "value": 0.2
+                      },
+                      {
+                        "op": "stat",
+                        "stat": "ability_power",
+                        "scope": "total"
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "op": "constant",
+                "value": 1
+              }
+            ]
+          },
+          "label": "Derivado",
+          "source": "Characters/Seraphine/Spells/SeraphineWAbility/SeraphineW.mSpellCalculations.ShieldValueSeraphine (16.23.8418428+branch.releases-16-23.content.release)",
+          "duration_seconds": 2.5
+        },
+        {
+          "id": "surround_sound_ms",
+          "name": "Sonido envolvente (VM %)",
+          "kind": "stat_bonus",
+          "formula": {
+            "op": "add",
+            "operands": [
+              {
+                "op": "constant",
+                "value": 0.2
+              },
+              {
+                "op": "mul",
+                "operands": [
+                  {
+                    "op": "constant",
+                    "value": 0.0002
+                  },
+                  {
+                    "op": "stat",
+                    "stat": "ability_power",
+                    "scope": "total"
+                  }
+                ]
+              }
+            ]
+          },
+          "label": "Derivado",
+          "source": "Characters/Seraphine/Spells/SeraphineWAbility/SeraphineW.mSpellCalculations.WMSBonusTotal (16.23.8418428+branch.releases-16-23.content.release)",
+          "stat": "move_speed",
+          "mode": "percent_ms",
+          "duration_seconds": 2.5
+        }
       ]
     },
     "E": {
@@ -246,7 +327,7 @@
                 ]
               },
               "label": "Derivado",
-              "source": "Characters/Seraphine/Spells/SeraphineEAbility/SeraphineE.mSpellCalculations.FinalDamage (16.23.8406595+branch.releases-16-23.content.release)",
+              "source": "Characters/Seraphine/Spells/SeraphineEAbility/SeraphineE.mSpellCalculations.FinalDamage (16.23.8418428+branch.releases-16-23.content.release)",
               "damage_type_source": "spell_seraphinee_tooltip <magicDamage>"
             }
           ]
@@ -295,7 +376,7 @@
                 ]
               },
               "label": "Derivado",
-              "source": "Characters/Seraphine/Spells/SeraphineRAbility/SeraphineR.mSpellCalculations.R1TotalDamage (16.23.8406595+branch.releases-16-23.content.release)",
+              "source": "Characters/Seraphine/Spells/SeraphineRAbility/SeraphineR.mSpellCalculations.R1TotalDamage (16.23.8418428+branch.releases-16-23.content.release)",
               "damage_type_source": "spell_seraphiner_tooltip <magicDamage>"
             }
           ]

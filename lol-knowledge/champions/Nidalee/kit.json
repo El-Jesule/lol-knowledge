@@ -3,7 +3,7 @@
   "champion": "Nidalee",
   "label": "Derivado",
   "game_version": "16.23",
-  "content_version": "16.23.8406595+branch.releases-16-23.content.release",
+  "content_version": "16.23.8418428+branch.releases-16-23.content.release",
   "verified_against": {
     "content_version": "16.23.8406595+branch.releases-16-23.content.release",
     "bin_sha256": "e6cba8765110c0dabccac4b3edf978ac5568cf1b0af54150b2c8a3cce389e1fe",
@@ -61,7 +61,7 @@
                 ]
               },
               "label": "Derivado",
-              "source": "Characters/Nidalee/Spells/JavelinTossAbility/JavelinToss.mSpellCalculations.HumanMinimumDamage (16.23.8406595+branch.releases-16-23.content.release)",
+              "source": "Characters/Nidalee/Spells/JavelinTossAbility/JavelinToss.mSpellCalculations.HumanMinimumDamage (16.23.8418428+branch.releases-16-23.content.release)",
               "damage_type_source": "spell_javelintoss_tooltip <magicDamage>"
             }
           ]
@@ -111,7 +111,7 @@
                 ]
               },
               "label": "Derivado",
-              "source": "Characters/Nidalee/Spells/JavelinTossAbility/JavelinToss.mSpellCalculations.HumanMaximumDamage (16.23.8406595+branch.releases-16-23.content.release)",
+              "source": "Characters/Nidalee/Spells/JavelinTossAbility/JavelinToss.mSpellCalculations.HumanMaximumDamage (16.23.8418428+branch.releases-16-23.content.release)",
               "damage_type_source": "spell_javelintoss_tooltip <magicDamage>"
             }
           ]
@@ -162,7 +162,7 @@
                 ]
               },
               "label": "Derivado",
-              "source": "Characters/Nidalee/Spells/BushwhackAbility/Bushwhack.mSpellCalculations.DamagePerSecond (16.23.8406595+branch.releases-16-23.content.release)",
+              "source": "Characters/Nidalee/Spells/BushwhackAbility/Bushwhack.mSpellCalculations.DamagePerSecond (16.23.8418428+branch.releases-16-23.content.release)",
               "damage_type_source": "spell_bushwhack_tooltip <magicDamage>"
             }
           ]
@@ -180,6 +180,64 @@
       "passive_stats": [],
       "not_modelled": [
         "Forma humana: curación (TotalHealing/MaxHealing) y VA; forma felina: Zarpazo (TotalSwipeDamage)"
+      ],
+      "active_effects": [
+        {
+          "id": "primal_surge_heal",
+          "name": "Tensión primaria (curación base)",
+          "kind": "heal",
+          "formula": {
+            "op": "add",
+            "operands": [
+              {
+                "op": "by_rank",
+                "values": [
+                  50,
+                  75,
+                  100,
+                  125,
+                  150
+                ]
+              },
+              {
+                "op": "mul",
+                "operands": [
+                  {
+                    "op": "constant",
+                    "value": 0.35
+                  },
+                  {
+                    "op": "stat",
+                    "stat": "ability_power",
+                    "scope": "total"
+                  }
+                ]
+              }
+            ]
+          },
+          "label": "Derivado",
+          "source": "Characters/Nidalee/Spells/PrimalSurgeAbility/PrimalSurge.mSpellCalculations.TotalHealing (16.23.8418428+branch.releases-16-23.content.release)"
+        },
+        {
+          "id": "primal_surge_as",
+          "name": "Tensión primaria (VA)",
+          "kind": "stat_bonus",
+          "formula": {
+            "op": "by_rank",
+            "values": [
+              20,
+              30,
+              40,
+              50,
+              60
+            ]
+          },
+          "label": "Derivado",
+          "source": "Characters/Nidalee/Spells/PrimalSurgeAbility/PrimalSurge.DataValues.BonusAS (16.23.8418428+branch.releases-16-23.content.release)",
+          "stat": "attack_speed_bonus",
+          "mode": "flat",
+          "duration_seconds": 7
+        }
       ]
     },
     "R": {
@@ -235,7 +293,7 @@
                 ]
               },
               "label": "Derivado",
-              "source": "Characters/Nidalee/Spells/AspectOfTheCougarAbility/AspectOfTheCougar.mSpellCalculations.TotalTakedownDamage (16.23.8406595+branch.releases-16-23.content.release)",
+              "source": "Characters/Nidalee/Spells/AspectOfTheCougarAbility/AspectOfTheCougar.mSpellCalculations.TotalTakedownDamage (16.23.8418428+branch.releases-16-23.content.release)",
               "damage_type_source": "spell_takedown_tooltip <magicDamage>"
             }
           ]
@@ -289,7 +347,7 @@
                 ]
               },
               "label": "Derivado",
-              "source": "Characters/Nidalee/Spells/AspectOfTheCougarAbility/AspectOfTheCougar.mSpellCalculations.TotalPounceDamage (16.23.8406595+branch.releases-16-23.content.release)",
+              "source": "Characters/Nidalee/Spells/AspectOfTheCougarAbility/AspectOfTheCougar.mSpellCalculations.TotalPounceDamage (16.23.8418428+branch.releases-16-23.content.release)",
               "damage_type_source": "spell_pounce_tooltip <magicDamage>"
             }
           ]
@@ -343,7 +401,7 @@
                 ]
               },
               "label": "Derivado",
-              "source": "Characters/Nidalee/Spells/AspectOfTheCougarAbility/AspectOfTheCougar.mSpellCalculations.TotalSwipeDamage (16.23.8406595+branch.releases-16-23.content.release)",
+              "source": "Characters/Nidalee/Spells/AspectOfTheCougarAbility/AspectOfTheCougar.mSpellCalculations.TotalSwipeDamage (16.23.8418428+branch.releases-16-23.content.release)",
               "damage_type_source": "spell_swipe_tooltip <magicDamage>"
             }
           ]

@@ -3,7 +3,7 @@
   "champion": "Yone",
   "label": "Derivado",
   "game_version": "16.23",
-  "content_version": "16.23.8406595+branch.releases-16-23.content.release",
+  "content_version": "16.23.8418428+branch.releases-16-23.content.release",
   "verified_against": {
     "content_version": "16.23.8406595+branch.releases-16-23.content.release",
     "bin_sha256": "e29efc73d40268ea89612351d66b3bafccc18b14f0b45363f5147d1ec375ab50",
@@ -61,7 +61,7 @@
                 ]
               },
               "label": "Derivado",
-              "source": "Characters/Yone/Spells/YoneQAbility/YoneQ.mSpellCalculations.QDamage (16.23.8406595+branch.releases-16-23.content.release)",
+              "source": "Characters/Yone/Spells/YoneQAbility/YoneQ.mSpellCalculations.QDamage (16.23.8418428+branch.releases-16-23.content.release)",
               "damage_type_source": "spell_yoneq_tooltip <physicalDamage>"
             }
           ]
@@ -121,7 +121,7 @@
                 ]
               },
               "label": "Derivado",
-              "source": "Characters/Yone/Spells/YoneQAbility/YoneQ.mSpellCalculations.TotalDamageCrit (16.23.8406595+branch.releases-16-23.content.release)",
+              "source": "Characters/Yone/Spells/YoneQAbility/YoneQ.mSpellCalculations.TotalDamageCrit (16.23.8418428+branch.releases-16-23.content.release)",
               "damage_type_source": "spell_yoneq_tooltipextendedbelowline <physicalDamage>"
             }
           ]
@@ -188,7 +188,7 @@
                 ]
               },
               "label": "Derivado",
-              "source": "Characters/Yone/Spells/YoneWAbility/YoneW · 0,5 × (DataValues.BaseDamage + DataValues.MaxHealthDamage × vida máxima del objetivo) (16.23.8406595+branch.releases-16-23.content.release)",
+              "source": "Characters/Yone/Spells/YoneWAbility/YoneW · 0,5 × (DataValues.BaseDamage + DataValues.MaxHealthDamage × vida máxima del objetivo) (16.23.8418428+branch.releases-16-23.content.release)",
               "damage_type_source": "spell_yonew_tooltip <physicalDamage>"
             },
             {
@@ -239,7 +239,7 @@
                 ]
               },
               "label": "Derivado",
-              "source": "Characters/Yone/Spells/YoneWAbility/YoneW · 0,5 × (DataValues.BaseDamage + DataValues.MaxHealthDamage × vida máxima del objetivo) (16.23.8406595+branch.releases-16-23.content.release)",
+              "source": "Characters/Yone/Spells/YoneWAbility/YoneW · 0,5 × (DataValues.BaseDamage + DataValues.MaxHealthDamage × vida máxima del objetivo) (16.23.8418428+branch.releases-16-23.content.release)",
               "damage_type_source": "spell_yonew_tooltip <magicDamage>"
             }
           ]
@@ -248,6 +248,40 @@
       "passive_stats": [],
       "not_modelled": [
         "Escudo al golpear enemigos (WShield), reducción de CD/cast por VA y mínimo contra súbditos"
+      ],
+      "active_effects": [
+        {
+          "id": "w_wshield",
+          "name": "W (escudo)",
+          "kind": "shield",
+          "formula": {
+            "op": "add",
+            "operands": [
+              {
+                "op": "linear_by_level",
+                "min": 40,
+                "max": 90
+              },
+              {
+                "op": "mul",
+                "operands": [
+                  {
+                    "op": "constant",
+                    "value": 0.65
+                  },
+                  {
+                    "op": "stat",
+                    "stat": "attack_damage",
+                    "scope": "bonus"
+                  }
+                ]
+              }
+            ]
+          },
+          "label": "Derivado",
+          "source": "Characters/Yone/Spells/YoneWAbility/YoneW.mSpellCalculations.WShield (16.23.8418428+branch.releases-16-23.content.release)",
+          "duration_seconds": 1.5
+        }
       ]
     },
     "E": {
@@ -257,6 +291,22 @@
       "passive_stats": [],
       "not_modelled": [
         "Forma espiritual durante 5 s, velocidad de movimiento creciente y repetición del 25..35 % del daño posmitigación como daño verdadero al regresar"
+      ],
+      "active_effects": [
+        {
+          "id": "e_startingms",
+          "name": "E (VM)",
+          "kind": "stat_bonus",
+          "formula": {
+            "op": "constant",
+            "value": 0.1
+          },
+          "label": "Derivado",
+          "source": "Characters/Yone/Spells/YoneEAbility/YoneE.DataValues.StartingMS (16.23.8418428+branch.releases-16-23.content.release)",
+          "stat": "move_speed",
+          "mode": "percent_ms",
+          "duration_seconds": 5.0
+        }
       ]
     },
     "R": {
@@ -306,7 +356,7 @@
                 ]
               },
               "label": "Derivado",
-              "source": "Characters/Yone/Spells/YoneRAbility/YoneR.mSpellCalculations.TooltipDamage (16.23.8406595+branch.releases-16-23.content.release)",
+              "source": "Characters/Yone/Spells/YoneRAbility/YoneR.mSpellCalculations.TooltipDamage (16.23.8418428+branch.releases-16-23.content.release)",
               "damage_type_source": "spell_yoner_tooltip <physicalDamage>"
             },
             {
@@ -348,7 +398,7 @@
                 ]
               },
               "label": "Derivado",
-              "source": "Characters/Yone/Spells/YoneRAbility/YoneR.mSpellCalculations.TooltipDamage (16.23.8406595+branch.releases-16-23.content.release)",
+              "source": "Characters/Yone/Spells/YoneRAbility/YoneR.mSpellCalculations.TooltipDamage (16.23.8418428+branch.releases-16-23.content.release)",
               "damage_type_source": "spell_yoner_tooltip <magicDamage>"
             }
           ]

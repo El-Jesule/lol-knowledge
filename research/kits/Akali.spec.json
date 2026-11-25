@@ -62,6 +62,20 @@
       "tooltip": "spell_akaliw_tooltip",
       "not_modelled": [
         "Invisibilidad, velocidad de movimiento y aumento temporal de +80 energía máxima"
+      ],
+      "active_effects": [
+        {
+          "id": "w_movementspeed",
+          "name": "W (VM)",
+          "kind": "stat_bonus",
+          "stat": "move_speed",
+          "mode": "percent_ms",
+          "scale": 0.01,
+          "data_value": "MovementSpeed",
+          "duration_seconds": {
+            "data_value": "MovementSpeedDuration"
+          }
+        }
       ]
     },
     "E": {

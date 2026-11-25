@@ -135,6 +135,17 @@
       ],
       "not_modelled": [
         "Escudo activo (TotalShield); la vida máxima permanente por asesinatos se modela con --input soul_furnace_small_kills y --input soul_furnace_large_kills"
+      ],
+      "active_effects": [
+        {
+          "id": "w_totalshield",
+          "name": "W (escudo)",
+          "kind": "shield",
+          "calculation": "TotalShield",
+          "duration_seconds": {
+            "data_value": "ShieldDuration"
+          }
+        }
       ]
     },
     "E": {

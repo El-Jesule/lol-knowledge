@@ -102,6 +102,28 @@
       "tooltip": "spell_eyeofthestorm_tooltip",
       "not_modelled": [
         "Escudo a aliado o torreta (TotalShield), DA adicional otorgado (TotalAD) y reducción de enfriamiento al aplicar CC"
+      ],
+      "active_effects": [
+        {
+          "id": "eye_of_the_storm_shield",
+          "name": "Ojo de la tormenta (escudo)",
+          "kind": "shield",
+          "calculation": "TotalShield",
+          "duration_seconds": {
+            "data_value": "ShieldDuration"
+          }
+        },
+        {
+          "id": "eye_of_the_storm_ad",
+          "name": "Ojo de la tormenta (AD)",
+          "kind": "stat_bonus",
+          "stat": "attack_damage",
+          "mode": "flat",
+          "calculation": "TotalAD",
+          "duration_seconds": {
+            "data_value": "ShieldDuration"
+          }
+        }
       ]
     },
     "R": {
@@ -109,6 +131,18 @@
       "tooltip": "spell_reapthewhirlwind_tooltip",
       "not_modelled": [
         "Empuje hacia atrás y curación canalizada en área (TotalHeal)"
+      ],
+      "active_effects": [
+        {
+          "id": "monsoon_heal",
+          "name": "Monzón (curación canalizada)",
+          "kind": "heal",
+          "calculation": "TotalHeal",
+          "duration_seconds": {
+            "data_value": "Duration"
+          },
+          "over_duration": true
+        }
       ]
     }
   }

@@ -3,7 +3,7 @@
   "champion": "Nunu",
   "label": "Derivado",
   "game_version": "16.23",
-  "content_version": "16.23.8406595+branch.releases-16-23.content.release",
+  "content_version": "16.23.8418428+branch.releases-16-23.content.release",
   "verified_against": {
     "content_version": "16.23.8406595+branch.releases-16-23.content.release",
     "bin_sha256": "3680741f716b7b0201d4dfcbd876cc15423ece39cd061ac79efe12b6d1bc7070",
@@ -37,7 +37,7 @@
                 ]
               },
               "label": "Derivado",
-              "source": "Characters/Nunu/Spells/NunuPassiveAbility/NunuPassive.mSpellCalculations.CleaveDamage (16.23.8406595+branch.releases-16-23.content.release)",
+              "source": "Characters/Nunu/Spells/NunuPassiveAbility/NunuPassive.mSpellCalculations.CleaveDamage (16.23.8418428+branch.releases-16-23.content.release)",
               "damage_type_source": "spell_nunupassive_tooltip <physicalDamage>"
             }
           ]
@@ -57,7 +57,7 @@
             "value": 20
           },
           "label": "Derivado",
-          "source": "Characters/Nunu/Spells/NunuPassiveAbility/NunuPassive.DataValues.ASIncrease (16.23.8406595+branch.releases-16-23.content.release)",
+          "source": "Characters/Nunu/Spells/NunuPassiveAbility/NunuPassive.DataValues.ASIncrease (16.23.8418428+branch.releases-16-23.content.release)",
           "stat": "attack_speed_bonus",
           "mode": "flat",
           "input_name": "call_of_the_freljord",
@@ -72,7 +72,7 @@
             "value": 0.1
           },
           "label": "Derivado",
-          "source": "Characters/Nunu/Spells/NunuPassiveAbility/NunuPassive.DataValues.MSIncrease (16.23.8406595+branch.releases-16-23.content.release)",
+          "source": "Characters/Nunu/Spells/NunuPassiveAbility/NunuPassive.DataValues.MSIncrease (16.23.8418428+branch.releases-16-23.content.release)",
           "stat": "move_speed",
           "mode": "percent_ms",
           "input_name": "call_of_the_freljord",
@@ -134,7 +134,7 @@
                 ]
               },
               "label": "Derivado",
-              "source": "Characters/Nunu/Spells/NunuQAbility/NunuQ.mSpellCalculations.TotalChampionDamage (16.23.8406595+branch.releases-16-23.content.release)",
+              "source": "Characters/Nunu/Spells/NunuQAbility/NunuQ.mSpellCalculations.TotalChampionDamage (16.23.8418428+branch.releases-16-23.content.release)",
               "damage_type_source": "spell_nunuq_tooltip <magicDamage>"
             }
           ]
@@ -156,7 +156,7 @@
                 ]
               },
               "label": "Derivado",
-              "source": "Characters/Nunu/Spells/NunuQAbility/NunuQ · DataValues.MonsterMinionDamage (16.23.8406595+branch.releases-16-23.content.release)",
+              "source": "Characters/Nunu/Spells/NunuQAbility/NunuQ · DataValues.MonsterMinionDamage (16.23.8418428+branch.releases-16-23.content.release)",
               "damage_type_source": "spell_nunuq_tooltip <trueDamage>"
             }
           ]
@@ -165,6 +165,67 @@
       "passive_stats": [],
       "not_modelled": [
         "Curación contra campeones y monstruos (ChampionHealing, MonsterHealing)"
+      ],
+      "active_effects": [
+        {
+          "id": "q_championhealing",
+          "name": "Q (curación)",
+          "kind": "heal",
+          "formula": {
+            "op": "mul",
+            "operands": [
+              {
+                "op": "add",
+                "operands": [
+                  {
+                    "op": "by_rank",
+                    "values": [
+                      65,
+                      95,
+                      125,
+                      155,
+                      185
+                    ]
+                  },
+                  {
+                    "op": "mul",
+                    "operands": [
+                      {
+                        "op": "constant",
+                        "value": 0.1
+                      },
+                      {
+                        "op": "stat",
+                        "stat": "health",
+                        "scope": "bonus"
+                      }
+                    ]
+                  },
+                  {
+                    "op": "mul",
+                    "operands": [
+                      {
+                        "op": "constant",
+                        "value": 0.9
+                      },
+                      {
+                        "op": "stat",
+                        "stat": "ability_power",
+                        "scope": "total"
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "op": "constant",
+                "value": 0.6
+              }
+            ]
+          },
+          "label": "Derivado",
+          "source": "Characters/Nunu/Spells/NunuQAbility/NunuQ.mSpellCalculations.ChampionHealing (16.23.8418428+branch.releases-16-23.content.release)"
+        }
       ]
     },
     "W": {
@@ -216,7 +277,7 @@
                 ]
               },
               "label": "Derivado",
-              "source": "Characters/Nunu/Spells/NunuWAbility/NunuW.mSpellCalculations.NoImpactSnowballDamage (16.23.8406595+branch.releases-16-23.content.release)",
+              "source": "Characters/Nunu/Spells/NunuWAbility/NunuW.mSpellCalculations.NoImpactSnowballDamage (16.23.8418428+branch.releases-16-23.content.release)",
               "damage_type_source": "spell_nunuw_tooltip <magicDamage>"
             }
           ]
@@ -257,7 +318,7 @@
                 ]
               },
               "label": "Derivado",
-              "source": "Characters/Nunu/Spells/NunuWAbility/NunuW.mSpellCalculations.MaximumSnowballDamage (16.23.8406595+branch.releases-16-23.content.release)",
+              "source": "Characters/Nunu/Spells/NunuWAbility/NunuW.mSpellCalculations.MaximumSnowballDamage (16.23.8418428+branch.releases-16-23.content.release)",
               "damage_type_source": "spell_nunuw_tooltip <magicDamage>"
             }
           ]
@@ -308,7 +369,7 @@
                 ]
               },
               "label": "Derivado",
-              "source": "Characters/Nunu/Spells/NunuEAbility/NunuE.mSpellCalculations.TotalSnowballDamage (16.23.8406595+branch.releases-16-23.content.release)",
+              "source": "Characters/Nunu/Spells/NunuEAbility/NunuE.mSpellCalculations.TotalSnowballDamage (16.23.8418428+branch.releases-16-23.content.release)",
               "damage_type_source": "spell_nunue_tooltip <magicDamage>"
             }
           ]
@@ -349,7 +410,7 @@
                 ]
               },
               "label": "Derivado",
-              "source": "Characters/Nunu/Spells/NunuEAbility/NunuE.mSpellCalculations.TotalRootDamage (16.23.8406595+branch.releases-16-23.content.release)",
+              "source": "Characters/Nunu/Spells/NunuEAbility/NunuE.mSpellCalculations.TotalRootDamage (16.23.8418428+branch.releases-16-23.content.release)",
               "damage_type_source": "spell_nunue_tooltip <magicDamage>"
             }
           ]
@@ -398,7 +459,7 @@
                 ]
               },
               "label": "Derivado",
-              "source": "Characters/Nunu/Spells/NunuRAbility/NunuR.mSpellCalculations.MaximumDamage (16.23.8406595+branch.releases-16-23.content.release)",
+              "source": "Characters/Nunu/Spells/NunuRAbility/NunuR.mSpellCalculations.MaximumDamage (16.23.8418428+branch.releases-16-23.content.release)",
               "damage_type_source": "spell_nunur_tooltip <magicDamage>"
             }
           ]
@@ -407,6 +468,61 @@
       "passive_stats": [],
       "not_modelled": [
         "Escudo (TotalShieldAmount), ralentización creciente y daño parcial por interrupción"
+      ],
+      "active_effects": [
+        {
+          "id": "r_totalshieldamount",
+          "name": "R (escudo)",
+          "kind": "shield",
+          "formula": {
+            "op": "add",
+            "operands": [
+              {
+                "op": "by_rank",
+                "values": [
+                  65,
+                  75,
+                  85
+                ]
+              },
+              {
+                "op": "mul",
+                "operands": [
+                  {
+                    "op": "by_rank",
+                    "values": [
+                      0.3,
+                      0.4,
+                      0.5
+                    ]
+                  },
+                  {
+                    "op": "stat",
+                    "stat": "health",
+                    "scope": "bonus"
+                  }
+                ]
+              },
+              {
+                "op": "mul",
+                "operands": [
+                  {
+                    "op": "constant",
+                    "value": 1.5
+                  },
+                  {
+                    "op": "stat",
+                    "stat": "ability_power",
+                    "scope": "total"
+                  }
+                ]
+              }
+            ]
+          },
+          "label": "Derivado",
+          "source": "Characters/Nunu/Spells/NunuRAbility/NunuR.mSpellCalculations.TotalShieldAmount (16.23.8418428+branch.releases-16-23.content.release)",
+          "duration_seconds": 6
+        }
       ]
     }
   }

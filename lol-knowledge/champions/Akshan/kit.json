@@ -3,7 +3,7 @@
   "champion": "Akshan",
   "label": "Derivado",
   "game_version": "16.23",
-  "content_version": "16.23.8406595+branch.releases-16-23.content.release",
+  "content_version": "16.23.8418428+branch.releases-16-23.content.release",
   "verified_against": {
     "content_version": "16.23.8406595+branch.releases-16-23.content.release",
     "bin_sha256": "bc895bb584587c31b5d3b330ffe90ff5e63d663d539e673d038c5a2c4bfe1b93",
@@ -37,7 +37,7 @@
                 ]
               },
               "label": "Derivado",
-              "source": "Characters/Akshan/Spells/AkshanPassiveAbility/AkshanPassive.mSpellCalculations.SecondAutoDamage (16.23.8406595+branch.releases-16-23.content.release)",
+              "source": "Characters/Akshan/Spells/AkshanPassiveAbility/AkshanPassive.mSpellCalculations.SecondAutoDamage (16.23.8418428+branch.releases-16-23.content.release)",
               "damage_type_source": "spell_akshanpassive_tooltip <physicalDamage>"
             }
           ]
@@ -91,7 +91,7 @@
                 ]
               },
               "label": "Derivado",
-              "source": "Characters/Akshan/Spells/AkshanPassiveAbility/AkshanPassive.mSpellCalculations.PassiveProcDamage (16.23.8406595+branch.releases-16-23.content.release)",
+              "source": "Characters/Akshan/Spells/AkshanPassiveAbility/AkshanPassive.mSpellCalculations.PassiveProcDamage (16.23.8418428+branch.releases-16-23.content.release)",
               "damage_type_source": "spell_akshanpassive_tooltip <magicDamage>"
             }
           ]
@@ -149,7 +149,7 @@
             ]
           },
           "label": "Derivado",
-          "source": "Characters/Akshan/Spells/AkshanPassiveAbility/AkshanPassive.mSpellCalculations.PassiveProcDamage (16.23.8406595+branch.releases-16-23.content.release)",
+          "source": "Characters/Akshan/Spells/AkshanPassiveAbility/AkshanPassive.mSpellCalculations.PassiveProcDamage (16.23.8418428+branch.releases-16-23.content.release)",
           "trigger": "every_n_hits",
           "damage_type": "magic",
           "every": 3
@@ -201,7 +201,7 @@
             ]
           },
           "label": "Derivado",
-          "source": "Characters/Akshan/Spells/AkshanPassiveAbility/AkshanPassive.mSpellCalculations.TotalShieldAmount (16.23.8406595+branch.releases-16-23.content.release)",
+          "source": "Characters/Akshan/Spells/AkshanPassiveAbility/AkshanPassive.mSpellCalculations.TotalShieldAmount (16.23.8418428+branch.releases-16-23.content.release)",
           "trigger": "every_n_hits",
           "target_kind": "champion",
           "duration_seconds": 2,
@@ -272,7 +272,7 @@
                 ]
               },
               "label": "Derivado",
-              "source": "Characters/Akshan/Spells/AkshanQAbility/AkshanQ.mSpellCalculations.FinalDamage (16.23.8406595+branch.releases-16-23.content.release)",
+              "source": "Characters/Akshan/Spells/AkshanQAbility/AkshanQ.mSpellCalculations.FinalDamage (16.23.8418428+branch.releases-16-23.content.release)",
               "damage_type_source": "spell_akshanq_tooltip <physicalDamage>"
             }
           ]
@@ -281,6 +281,41 @@
       "passive_stats": [],
       "not_modelled": [
         "Extensión de alcance al golpear enemigos, velocidad de movimiento (TotalHaste) y daño reducido a súbditos"
+      ],
+      "active_effects": [
+        {
+          "id": "q_totalhaste",
+          "name": "Q (VM)",
+          "kind": "stat_bonus",
+          "formula": {
+            "op": "add",
+            "operands": [
+              {
+                "op": "constant",
+                "value": 0.2
+              },
+              {
+                "op": "mul",
+                "operands": [
+                  {
+                    "op": "constant",
+                    "value": 0.0005
+                  },
+                  {
+                    "op": "stat",
+                    "stat": "ability_power",
+                    "scope": "total"
+                  }
+                ]
+              }
+            ]
+          },
+          "label": "Derivado",
+          "source": "Characters/Akshan/Spells/AkshanQAbility/AkshanQ.mSpellCalculations.TotalHaste (16.23.8418428+branch.releases-16-23.content.release)",
+          "stat": "move_speed",
+          "mode": "percent_ms",
+          "duration_seconds": 1
+        }
       ]
     },
     "W": {
@@ -332,7 +367,7 @@
                 ]
               },
               "label": "Derivado",
-              "source": "Characters/Akshan/Spells/AkshanEAbility/AkshanE.mSpellCalculations.DamageToDeal (16.23.8406595+branch.releases-16-23.content.release)",
+              "source": "Characters/Akshan/Spells/AkshanEAbility/AkshanE.mSpellCalculations.DamageToDeal (16.23.8418428+branch.releases-16-23.content.release)",
               "damage_type_source": "spell_akshane_tooltip <physicalDamage>"
             }
           ]
@@ -381,7 +416,7 @@
                 ]
               },
               "label": "Derivado",
-              "source": "Characters/Akshan/Spells/AkshanRAbility/AkshanR.mSpellCalculations.DamagePerBulletWithCrit (16.23.8406595+branch.releases-16-23.content.release)",
+              "source": "Characters/Akshan/Spells/AkshanRAbility/AkshanR.mSpellCalculations.DamagePerBulletWithCrit (16.23.8418428+branch.releases-16-23.content.release)",
               "damage_type_source": "spell_akshanr_tooltip <physicalDamage>"
             }
           ]
@@ -429,7 +464,7 @@
                 ]
               },
               "label": "Derivado",
-              "source": "Characters/Akshan/Spells/AkshanRAbility/AkshanR.mSpellCalculations.MaxDamagePerBullet (16.23.8406595+branch.releases-16-23.content.release)",
+              "source": "Characters/Akshan/Spells/AkshanRAbility/AkshanR.mSpellCalculations.MaxDamagePerBullet (16.23.8418428+branch.releases-16-23.content.release)",
               "damage_type_source": "spell_akshanr_tooltip <physicalDamage>"
             }
           ]

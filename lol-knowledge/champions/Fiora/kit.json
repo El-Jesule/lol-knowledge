@@ -3,7 +3,7 @@
   "champion": "Fiora",
   "label": "Derivado",
   "game_version": "16.23",
-  "content_version": "16.23.8406595+branch.releases-16-23.content.release",
+  "content_version": "16.23.8418428+branch.releases-16-23.content.release",
   "verified_against": {
     "content_version": "16.23.8406595+branch.releases-16-23.content.release",
     "bin_sha256": "e9828a99c4277dacd88dd6b079115986754a8a6863b2c4acc1e54b85cb0c5621",
@@ -57,7 +57,7 @@
                 ]
               },
               "label": "Derivado",
-              "source": "Characters/Fiora/Spells/FioraPassiveAbility/FioraPassive · mSpellCalculations.PassiveDamageTotal × vida máxima del objetivo (16.23.8406595+branch.releases-16-23.content.release)",
+              "source": "Characters/Fiora/Spells/FioraPassiveAbility/FioraPassive · mSpellCalculations.PassiveDamageTotal × vida máxima del objetivo (16.23.8418428+branch.releases-16-23.content.release)",
               "damage_type_source": "spell_fiorapassive_tooltip <trueDamage>"
             }
           ]
@@ -112,7 +112,7 @@
                 ]
               },
               "label": "Derivado",
-              "source": "Characters/Fiora/Spells/FioraPassiveAbility/FioraPassive · mSpellCalculations.RDamageTotal (4 × PassiveDamageTotal) × vida máxima del objetivo (16.23.8406595+branch.releases-16-23.content.release)",
+              "source": "Characters/Fiora/Spells/FioraPassiveAbility/FioraPassive · mSpellCalculations.RDamageTotal (4 × PassiveDamageTotal) × vida máxima del objetivo (16.23.8418428+branch.releases-16-23.content.release)",
               "damage_type_source": "spell_fiorapassive_tooltip <trueDamage>"
             }
           ]
@@ -133,7 +133,7 @@
             "max": 100
           },
           "label": "Derivado",
-          "source": "Characters/Fiora/Spells/FioraPassiveAbility/FioraPassive.mSpellCalculations.PassiveHealAmount (16.23.8406595+branch.releases-16-23.content.release)",
+          "source": "Characters/Fiora/Spells/FioraPassiveAbility/FioraPassive.mSpellCalculations.PassiveHealAmount (16.23.8418428+branch.releases-16-23.content.release)",
           "trigger": "on_champion_hit",
           "cooldown_seconds": 2
         }
@@ -185,7 +185,7 @@
                 ]
               },
               "label": "Derivado",
-              "source": "Characters/Fiora/Spells/FioraQAbility/FioraQ.mSpellCalculations.TotalDamage (16.23.8406595+branch.releases-16-23.content.release)",
+              "source": "Characters/Fiora/Spells/FioraQAbility/FioraQ.mSpellCalculations.TotalDamage (16.23.8418428+branch.releases-16-23.content.release)",
               "damage_type_source": "spell_fioraq_tooltip <physicalDamage>"
             }
           ]
@@ -236,7 +236,7 @@
                 ]
               },
               "label": "Derivado",
-              "source": "Characters/Fiora/Spells/FioraWAbility/FioraW.mSpellCalculations.StabDamage (16.23.8406595+branch.releases-16-23.content.release)",
+              "source": "Characters/Fiora/Spells/FioraWAbility/FioraW.mSpellCalculations.StabDamage (16.23.8418428+branch.releases-16-23.content.release)",
               "damage_type_source": "spell_fioraw_tooltip <magicDamage>"
             }
           ]
@@ -254,6 +254,28 @@
       "passive_stats": [],
       "not_modelled": [
         "Velocidad de ataque en 2 golpes, ralentización en el primero y crítico garantizado en el segundo"
+      ],
+      "active_effects": [
+        {
+          "id": "e_aspercent",
+          "name": "E (VA)",
+          "kind": "stat_bonus",
+          "formula": {
+            "op": "by_rank",
+            "values": [
+              50,
+              60,
+              70,
+              80,
+              90
+            ]
+          },
+          "label": "Derivado",
+          "source": "Characters/Fiora/Spells/FioraEAbility/FioraE.DataValues.ASPercent (16.23.8418428+branch.releases-16-23.content.release)",
+          "stat": "attack_speed_bonus",
+          "mode": "flat",
+          "duration_seconds": 3
+        }
       ]
     },
     "R": {
@@ -263,6 +285,54 @@
       "passive_stats": [],
       "not_modelled": [
         "Los 4 puntos vitales se evalúan en P (r_four_vitals); zona curativa en área (HealPerSecondCalc)"
+      ],
+      "active_effects": [
+        {
+          "id": "grand_challenge_heal",
+          "name": "Duelo excelso (zona de curación)",
+          "kind": "heal",
+          "formula": {
+            "op": "mul",
+            "operands": [
+              {
+                "op": "add",
+                "operands": [
+                  {
+                    "op": "by_rank",
+                    "values": [
+                      80,
+                      105,
+                      130
+                    ]
+                  },
+                  {
+                    "op": "mul",
+                    "operands": [
+                      {
+                        "op": "constant",
+                        "value": 0.7
+                      },
+                      {
+                        "op": "stat",
+                        "stat": "attack_damage",
+                        "scope": "bonus"
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "op": "constant",
+                "value": 5
+              }
+            ]
+          },
+          "label": "Derivado",
+          "source": "Characters/Fiora/Spells/FioraRAbility/FioraR · mSpellCalculations.HealPerSecondCalc * DataValues.HealDuration (16.23.8418428+branch.releases-16-23.content.release)",
+          "over_duration": true,
+          "condition": "vitals_completed_or_takedown",
+          "duration_seconds": 5
+        }
       ]
     }
   }

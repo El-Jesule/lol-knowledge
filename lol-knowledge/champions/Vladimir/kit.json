@@ -3,7 +3,7 @@
   "champion": "Vladimir",
   "label": "Derivado",
   "game_version": "16.23",
-  "content_version": "16.23.8406595+branch.releases-16-23.content.release",
+  "content_version": "16.23.8418428+branch.releases-16-23.content.release",
   "verified_against": {
     "content_version": "16.23.8406595+branch.releases-16-23.content.release",
     "bin_sha256": "b3daaf1ad44f0af0f729d38765b45549a073e27656bab932358c0326a5ea08b4",
@@ -61,7 +61,7 @@
                 ]
               },
               "label": "Derivado",
-              "source": "Characters/Vladimir/Spells/VladimirQAbility/VladimirQ.mSpellCalculations.BaseDamageTooltip (16.23.8406595+branch.releases-16-23.content.release)",
+              "source": "Characters/Vladimir/Spells/VladimirQAbility/VladimirQ.mSpellCalculations.BaseDamageTooltip (16.23.8418428+branch.releases-16-23.content.release)",
               "damage_type_source": "spell_vladimirq_tooltip <magicDamage>"
             }
           ]
@@ -111,7 +111,7 @@
                 ]
               },
               "label": "Derivado",
-              "source": "Characters/Vladimir/Spells/VladimirQAbility/VladimirQ.mSpellCalculations.EmpoweredDamageTooltip (16.23.8406595+branch.releases-16-23.content.release)",
+              "source": "Characters/Vladimir/Spells/VladimirQAbility/VladimirQ.mSpellCalculations.EmpoweredDamageTooltip (16.23.8418428+branch.releases-16-23.content.release)",
               "damage_type_source": "spell_vladimirq_tooltip <magicDamage>"
             }
           ]
@@ -120,6 +120,44 @@
       "passive_stats": [],
       "not_modelled": [
         "Curación normal y potenciada (BaseHealTooltip, EmpoweredHealTooltip) y velocidad de movimiento"
+      ],
+      "active_effects": [
+        {
+          "id": "transfusion_heal",
+          "name": "Transfusión (curación base)",
+          "kind": "heal",
+          "formula": {
+            "op": "add",
+            "operands": [
+              {
+                "op": "by_rank",
+                "values": [
+                  20,
+                  25,
+                  30,
+                  35,
+                  40
+                ]
+              },
+              {
+                "op": "mul",
+                "operands": [
+                  {
+                    "op": "constant",
+                    "value": 0.35
+                  },
+                  {
+                    "op": "stat",
+                    "stat": "ability_power",
+                    "scope": "total"
+                  }
+                ]
+              }
+            ]
+          },
+          "label": "Derivado",
+          "source": "Characters/Vladimir/Spells/VladimirQAbility/VladimirQ.mSpellCalculations.BaseHealTooltip (16.23.8418428+branch.releases-16-23.content.release)"
+        }
       ]
     },
     "W": {
@@ -162,7 +200,7 @@
                 ]
               },
               "label": "Derivado",
-              "source": "Characters/Vladimir/Spells/VladimirSanguinePoolAbility/VladimirSanguinePool.mSpellCalculations.TotalDamage (16.23.8406595+branch.releases-16-23.content.release)",
+              "source": "Characters/Vladimir/Spells/VladimirSanguinePoolAbility/VladimirSanguinePool.mSpellCalculations.TotalDamage (16.23.8418428+branch.releases-16-23.content.release)",
               "damage_type_source": "spell_vladimirsanguinepool_tooltip <magicDamage>"
             }
           ]
@@ -171,6 +209,67 @@
       "passive_stats": [],
       "not_modelled": [
         "Coste del 15 % de la vida actual, inalcanzabilidad, ralentización y curación (TotalHeal)"
+      ],
+      "active_effects": [
+        {
+          "id": "w_totalheal",
+          "name": "W (curación)",
+          "kind": "heal",
+          "formula": {
+            "op": "mul",
+            "operands": [
+              {
+                "op": "add",
+                "operands": [
+                  {
+                    "op": "by_rank",
+                    "values": [
+                      80,
+                      135,
+                      190,
+                      245,
+                      300
+                    ]
+                  },
+                  {
+                    "op": "mul",
+                    "operands": [
+                      {
+                        "op": "constant",
+                        "value": 0.15
+                      },
+                      {
+                        "op": "stat",
+                        "stat": "health",
+                        "scope": "bonus"
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "op": "constant",
+                "value": 0.3
+              }
+            ]
+          },
+          "label": "Derivado",
+          "source": "Characters/Vladimir/Spells/VladimirSanguinePoolAbility/VladimirSanguinePool.mSpellCalculations.TotalHeal (16.23.8418428+branch.releases-16-23.content.release)"
+        },
+        {
+          "id": "w_hasteboost",
+          "name": "W (VM)",
+          "kind": "stat_bonus",
+          "formula": {
+            "op": "constant",
+            "value": 0.375
+          },
+          "label": "Derivado",
+          "source": "Characters/Vladimir/Spells/VladimirSanguinePoolAbility/VladimirSanguinePool.DataValues.HasteBoost (16.23.8418428+branch.releases-16-23.content.release)",
+          "stat": "move_speed",
+          "mode": "percent_ms",
+          "duration_seconds": 1
+        }
       ]
     },
     "E": {
@@ -227,7 +326,7 @@
                 ]
               },
               "label": "Derivado",
-              "source": "Characters/Vladimir/Spells/VladimirEAbility/VladimirE.mSpellCalculations.MinDamageTooltip (16.23.8406595+branch.releases-16-23.content.release)",
+              "source": "Characters/Vladimir/Spells/VladimirEAbility/VladimirE.mSpellCalculations.MinDamageTooltip (16.23.8418428+branch.releases-16-23.content.release)",
               "damage_type_source": "spell_vladimire_tooltip <magicDamage>"
             }
           ]
@@ -282,7 +381,7 @@
                 ]
               },
               "label": "Derivado",
-              "source": "Characters/Vladimir/Spells/VladimirEAbility/VladimirE.mSpellCalculations.MaxDamageTooltip (16.23.8406595+branch.releases-16-23.content.release)",
+              "source": "Characters/Vladimir/Spells/VladimirEAbility/VladimirE.mSpellCalculations.MaxDamageTooltip (16.23.8418428+branch.releases-16-23.content.release)",
               "damage_type_source": "spell_vladimire_tooltip <magicDamage>"
             }
           ]
@@ -309,7 +408,7 @@
           ]
         },
         "label": "Derivado",
-        "source": "Characters/Vladimir/Spells/VladimirEAbility/VladimirE.mSpellCalculations.ChargeHealthTooltip (16.23.8406595+branch.releases-16-23.content.release); coste máximo de carga (8 % de la vida máxima)"
+        "source": "Characters/Vladimir/Spells/VladimirEAbility/VladimirE.mSpellCalculations.ChargeHealthTooltip (16.23.8418428+branch.releases-16-23.content.release); coste máximo de carga (8 % de la vida máxima)"
       }
     },
     "R": {
@@ -350,7 +449,7 @@
                 ]
               },
               "label": "Derivado",
-              "source": "Characters/Vladimir/Spells/VladimirHemoplagueAbility/VladimirHemoplague.mSpellCalculations.Damage (16.23.8406595+branch.releases-16-23.content.release)",
+              "source": "Characters/Vladimir/Spells/VladimirHemoplagueAbility/VladimirHemoplague.mSpellCalculations.Damage (16.23.8418428+branch.releases-16-23.content.release)",
               "damage_type_source": "spell_vladimirhemoplague_tooltip <magicDamage>"
             }
           ]
@@ -359,6 +458,42 @@
       "passive_stats": [],
       "not_modelled": [
         "Aumento del 10 % de todo el daño recibido durante 4 s (DamageAmp) y curación por campeón"
+      ],
+      "active_effects": [
+        {
+          "id": "r_damage",
+          "name": "R (curación)",
+          "kind": "heal",
+          "formula": {
+            "op": "add",
+            "operands": [
+              {
+                "op": "by_rank",
+                "values": [
+                  150,
+                  250,
+                  350
+                ]
+              },
+              {
+                "op": "mul",
+                "operands": [
+                  {
+                    "op": "constant",
+                    "value": 0.7
+                  },
+                  {
+                    "op": "stat",
+                    "stat": "ability_power",
+                    "scope": "total"
+                  }
+                ]
+              }
+            ]
+          },
+          "label": "Derivado",
+          "source": "Characters/Vladimir/Spells/VladimirHemoplagueAbility/VladimirHemoplague.mSpellCalculations.Damage (16.23.8418428+branch.releases-16-23.content.release)"
+        }
       ]
     }
   }

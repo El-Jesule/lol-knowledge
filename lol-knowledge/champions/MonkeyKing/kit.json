@@ -3,7 +3,7 @@
   "champion": "MonkeyKing",
   "label": "Derivado",
   "game_version": "16.23",
-  "content_version": "16.23.8406595+branch.releases-16-23.content.release",
+  "content_version": "16.23.8418428+branch.releases-16-23.content.release",
   "verified_against": {
     "content_version": "16.23.8406595+branch.releases-16-23.content.release",
     "bin_sha256": "7e00afa193107de102bb89e3904fe76e0427f8502afdc366c9b6f8019c233fff",
@@ -31,7 +31,7 @@
             "max": 10
           },
           "label": "Derivado",
-          "source": "Characters/MonkeyKing/Spells/MonkeyKingPassiveAbility/MonkeyKingPassive.mSpellCalculations.BonusArmor (16.23.8406595+branch.releases-16-23.content.release)",
+          "source": "Characters/MonkeyKing/Spells/MonkeyKingPassiveAbility/MonkeyKingPassive.mSpellCalculations.BonusArmor (16.23.8418428+branch.releases-16-23.content.release)",
           "stat": "armor",
           "mode": "flat",
           "trigger": "champion_hit",
@@ -81,7 +81,7 @@
                 ]
               },
               "label": "Derivado",
-              "source": "Characters/MonkeyKing/Spells/MonkeyKingDoubleAttackAbility/MonkeyKingDoubleAttack.mSpellCalculations.BonusDamageTT (16.23.8406595+branch.releases-16-23.content.release)",
+              "source": "Characters/MonkeyKing/Spells/MonkeyKingDoubleAttackAbility/MonkeyKingDoubleAttack.mSpellCalculations.BonusDamageTT (16.23.8418428+branch.releases-16-23.content.release)",
               "damage_type_source": "spell_monkeykingdoubleattack_tooltip <physicalDamage>"
             }
           ],
@@ -143,7 +143,7 @@
                 ]
               },
               "label": "Derivado",
-              "source": "Characters/MonkeyKing/Spells/MonkeyKingNimbusAbility/MonkeyKingNimbus.mSpellCalculations.TotalDamage (16.23.8406595+branch.releases-16-23.content.release)",
+              "source": "Characters/MonkeyKing/Spells/MonkeyKingNimbusAbility/MonkeyKingNimbus.mSpellCalculations.TotalDamage (16.23.8418428+branch.releases-16-23.content.release)",
               "damage_type_source": "spell_monkeykingnimbus_tooltip <magicDamage>"
             }
           ],
@@ -154,6 +154,28 @@
       "passive_stats": [],
       "not_modelled": [
         "Velocidad de ataque temporal tras el salto"
+      ],
+      "active_effects": [
+        {
+          "id": "e_attackspeed",
+          "name": "E (VA)",
+          "kind": "stat_bonus",
+          "formula": {
+            "op": "by_rank",
+            "values": [
+              40,
+              45,
+              50,
+              55,
+              60
+            ]
+          },
+          "label": "Derivado",
+          "source": "Characters/MonkeyKing/Spells/MonkeyKingNimbusAbility/MonkeyKingNimbus.DataValues.AttackSpeed (16.23.8418428+branch.releases-16-23.content.release)",
+          "stat": "attack_speed_bonus",
+          "mode": "flat",
+          "duration_seconds": 5
+        }
       ]
     },
     "R": {
@@ -190,7 +212,7 @@
                 ]
               },
               "label": "Derivado",
-              "source": "Characters/MonkeyKing/Spells/MonkeyKingSpinToWinAbility/MonkeyKingSpinToWin.mSpellCalculations.TotalDamageTT (16.23.8406595+branch.releases-16-23.content.release)",
+              "source": "Characters/MonkeyKing/Spells/MonkeyKingSpinToWinAbility/MonkeyKingSpinToWin.mSpellCalculations.TotalDamageTT (16.23.8418428+branch.releases-16-23.content.release)",
               "damage_type_source": "spell_monkeykingspintowin_tooltip <physicalDamage>"
             },
             {
@@ -224,7 +246,7 @@
                 ]
               },
               "label": "Derivado",
-              "source": "Characters/MonkeyKing/Spells/MonkeyKingSpinToWinAbility/MonkeyKingSpinToWin · PercentHPDamageTT × vida máxima del objetivo (16.23.8406595+branch.releases-16-23.content.release)",
+              "source": "Characters/MonkeyKing/Spells/MonkeyKingSpinToWinAbility/MonkeyKingSpinToWin · PercentHPDamageTT × vida máxima del objetivo (16.23.8418428+branch.releases-16-23.content.release)",
               "damage_type_source": "spell_monkeykingspintowin_tooltip <physicalDamage>"
             }
           ],
@@ -260,7 +282,7 @@
                 ]
               },
               "label": "Derivado",
-              "source": "Characters/MonkeyKing/Spells/MonkeyKingSpinToWinAbility/MonkeyKingSpinToWin.mSpellCalculations.TotalDamageTT (16.23.8406595+branch.releases-16-23.content.release)",
+              "source": "Characters/MonkeyKing/Spells/MonkeyKingSpinToWinAbility/MonkeyKingSpinToWin.mSpellCalculations.TotalDamageTT (16.23.8418428+branch.releases-16-23.content.release)",
               "damage_type_source": "spell_monkeykingspintowin_tooltip <physicalDamage>"
             },
             {
@@ -294,7 +316,7 @@
                 ]
               },
               "label": "Derivado",
-              "source": "Characters/MonkeyKing/Spells/MonkeyKingSpinToWinAbility/MonkeyKingSpinToWin · PercentHPDamageTT × vida máxima del objetivo (16.23.8406595+branch.releases-16-23.content.release)",
+              "source": "Characters/MonkeyKing/Spells/MonkeyKingSpinToWinAbility/MonkeyKingSpinToWin · PercentHPDamageTT × vida máxima del objetivo (16.23.8418428+branch.releases-16-23.content.release)",
               "damage_type_source": "spell_monkeykingspintowin_tooltip <physicalDamage>"
             }
           ],
@@ -305,6 +327,22 @@
       "passive_stats": [],
       "not_modelled": [
         "Lanzamiento por los aires, velocidad de movimiento y tope contra monstruos (MonsterCapTT)"
+      ],
+      "active_effects": [
+        {
+          "id": "r_movespeed",
+          "name": "R (VM)",
+          "kind": "stat_bonus",
+          "formula": {
+            "op": "constant",
+            "value": 0.2
+          },
+          "label": "Derivado",
+          "source": "Characters/MonkeyKing/Spells/MonkeyKingSpinToWinAbility/MonkeyKingSpinToWin.DataValues.MoveSpeed (16.23.8418428+branch.releases-16-23.content.release)",
+          "stat": "move_speed",
+          "mode": "percent_ms",
+          "duration_seconds": 0.6
+        }
       ],
       "recast_window_seconds": 8
     }

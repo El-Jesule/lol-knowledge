@@ -3,7 +3,7 @@
   "champion": "Zeri",
   "label": "Derivado",
   "game_version": "16.23",
-  "content_version": "16.23.8406595+branch.releases-16-23.content.release",
+  "content_version": "16.23.8418428+branch.releases-16-23.content.release",
   "verified_against": {
     "content_version": "16.23.8406595+branch.releases-16-23.content.release",
     "bin_sha256": "12a5bed25996ce9d38b4cca217202d3df619168b0f012c8ad22e9a3bb2fd8ecb",
@@ -65,7 +65,7 @@
                 ]
               },
               "label": "Derivado",
-              "source": "Characters/Zeri/Spells/ZeriPassiveAbility/ZeriPassive · ZeriQ.mSpellCalculations.MinDamage (curva de crecimiento 10..25 + 3 % PH) (16.23.8406595+branch.releases-16-23.content.release)",
+              "source": "Characters/Zeri/Spells/ZeriPassiveAbility/ZeriPassive · ZeriQ.mSpellCalculations.MinDamage (curva de crecimiento 10..25 + 3 % PH) (16.23.8418428+branch.releases-16-23.content.release)",
               "damage_type_source": "spell_zeripassive_tooltip <magicDamage>"
             }
           ]
@@ -101,7 +101,7 @@
                 ]
               },
               "label": "Derivado",
-              "source": "Characters/Zeri/Spells/ZeriQAbility/ZeriQ.mSpellCalculations.PassiveMaxDamage (16.23.8406595+branch.releases-16-23.content.release)",
+              "source": "Characters/Zeri/Spells/ZeriQAbility/ZeriQ.mSpellCalculations.PassiveMaxDamage (16.23.8418428+branch.releases-16-23.content.release)",
               "damage_type_source": "spell_zeripassive_tooltip <magicDamage>"
             },
             {
@@ -123,7 +123,7 @@
                 ]
               },
               "label": "Derivado",
-              "source": "Characters/Zeri/Spells/ZeriQAbility/ZeriQ · ZeriQ.mSpellCalculations.PassiveMaxChargePercentHealth × vida máxima del objetivo (16.23.8406595+branch.releases-16-23.content.release)",
+              "source": "Characters/Zeri/Spells/ZeriQAbility/ZeriQ · ZeriQ.mSpellCalculations.PassiveMaxChargePercentHealth × vida máxima del objetivo (16.23.8418428+branch.releases-16-23.content.release)",
               "damage_type_source": "spell_zeripassive_tooltip <magicDamage>"
             }
           ]
@@ -180,7 +180,7 @@
                 ]
               },
               "label": "Derivado",
-              "source": "Characters/Zeri/Spells/ZeriQAbility/ZeriQ.mSpellCalculations.ActiveDamageThatCanCrit (16.23.8406595+branch.releases-16-23.content.release)",
+              "source": "Characters/Zeri/Spells/ZeriQAbility/ZeriQ.mSpellCalculations.ActiveDamageThatCanCrit (16.23.8418428+branch.releases-16-23.content.release)",
               "damage_type_source": "spell_zeriq_tooltip <physicalDamage>"
             }
           ]
@@ -245,7 +245,7 @@
                 ]
               },
               "label": "Derivado",
-              "source": "Characters/Zeri/Spells/ZeriWAbility/ZeriW.mSpellCalculations.TotalDamage (16.23.8406595+branch.releases-16-23.content.release)",
+              "source": "Characters/Zeri/Spells/ZeriWAbility/ZeriW.mSpellCalculations.TotalDamage (16.23.8418428+branch.releases-16-23.content.release)",
               "damage_type_source": "spell_zeriw_tooltip <physicalDamage>"
             }
           ]
@@ -355,7 +355,7 @@
                 ]
               },
               "label": "Derivado",
-              "source": "Characters/Zeri/Spells/ZeriWAbility/ZeriW.mSpellCalculations.WallDamage (16.23.8406595+branch.releases-16-23.content.release)",
+              "source": "Characters/Zeri/Spells/ZeriWAbility/ZeriW.mSpellCalculations.WallDamage (16.23.8418428+branch.releases-16-23.content.release)",
               "damage_type_source": "spell_zeriw_tooltip <physicalDamage>"
             }
           ]
@@ -406,7 +406,7 @@
                 ]
               },
               "label": "Derivado",
-              "source": "Characters/Zeri/Spells/ZeriEAbility/ZeriE.mSpellCalculations.BonusDamageTotal (16.23.8406595+branch.releases-16-23.content.release)",
+              "source": "Characters/Zeri/Spells/ZeriEAbility/ZeriE.mSpellCalculations.BonusDamageTotal (16.23.8418428+branch.releases-16-23.content.release)",
               "damage_type_source": "spell_zerie_tooltip <magicDamage>"
             }
           ]
@@ -469,7 +469,7 @@
                 ]
               },
               "label": "Derivado",
-              "source": "Characters/Zeri/Spells/ZeriRAbility/ZeriR.mSpellCalculations.TotalActiveDamage (16.23.8406595+branch.releases-16-23.content.release)",
+              "source": "Characters/Zeri/Spells/ZeriRAbility/ZeriR.mSpellCalculations.TotalActiveDamage (16.23.8418428+branch.releases-16-23.content.release)",
               "damage_type_source": "spell_zerir_tooltip <magicDamage>"
             }
           ]
@@ -495,7 +495,7 @@
                 ]
               },
               "label": "Derivado",
-              "source": "Characters/Zeri/Spells/ZeriRAbility/ZeriR.mSpellCalculations.ChainPhysicalDamage (16.23.8406595+branch.releases-16-23.content.release)",
+              "source": "Characters/Zeri/Spells/ZeriRAbility/ZeriR.mSpellCalculations.ChainPhysicalDamage (16.23.8418428+branch.releases-16-23.content.release)",
               "damage_type_source": "spell_zerir_tooltip <physicalDamage>"
             }
           ]
@@ -504,6 +504,36 @@
       "passive_stats": [],
       "not_modelled": [
         "Sobrecarga acumulable de velocidad de movimiento, +30 % velocidad de ataque y daño mágico adicional por ataque"
+      ],
+      "active_effects": [
+        {
+          "id": "r_baseaspercent",
+          "name": "R (VA)",
+          "kind": "stat_bonus",
+          "formula": {
+            "op": "constant",
+            "value": 30
+          },
+          "label": "Derivado",
+          "source": "Characters/Zeri/Spells/ZeriRAbility/ZeriR.DataValues.BaseASPercent (16.23.8418428+branch.releases-16-23.content.release)",
+          "stat": "attack_speed_bonus",
+          "mode": "flat",
+          "duration_seconds": 5
+        },
+        {
+          "id": "r_basebonusms",
+          "name": "R (VM)",
+          "kind": "stat_bonus",
+          "formula": {
+            "op": "constant",
+            "value": 0.15
+          },
+          "label": "Derivado",
+          "source": "Characters/Zeri/Spells/ZeriRAbility/ZeriR.DataValues.BaseBonusMS (16.23.8418428+branch.releases-16-23.content.release)",
+          "stat": "move_speed",
+          "mode": "percent_ms",
+          "duration_seconds": 5
+        }
       ]
     }
   }

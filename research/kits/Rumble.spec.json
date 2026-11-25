@@ -132,6 +132,28 @@
       "tooltip": "spell_rumbleshield_tooltip",
       "not_modelled": [
         "Escudo (TotalShield / EmpoweredShield) y velocidad de movimiento (EmpoweredMS)"
+      ],
+      "active_effects": [
+        {
+          "id": "w_totalshield",
+          "name": "W (escudo)",
+          "kind": "shield",
+          "calculation": "TotalShield",
+          "duration_seconds": {
+            "data_value": "ShieldDuration"
+          }
+        },
+        {
+          "id": "w_movespeed",
+          "name": "W (VM)",
+          "kind": "stat_bonus",
+          "stat": "move_speed",
+          "mode": "percent_ms",
+          "data_value": "MoveSpeed",
+          "duration_seconds": {
+            "data_value": "MoveSpeedDuration"
+          }
+        }
       ]
     },
     "E": {

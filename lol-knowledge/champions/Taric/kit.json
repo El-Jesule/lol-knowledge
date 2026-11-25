@@ -3,7 +3,7 @@
   "champion": "Taric",
   "label": "Derivado",
   "game_version": "16.23",
-  "content_version": "16.23.8406595+branch.releases-16-23.content.release",
+  "content_version": "16.23.8418428+branch.releases-16-23.content.release",
   "verified_against": {
     "content_version": "16.23.8406595+branch.releases-16-23.content.release",
     "bin_sha256": "c117e80114d7a98815e29c4134ed43b29b870a65399a2bfb26a57c6c851f1206",
@@ -56,7 +56,7 @@
                 ]
               },
               "label": "Derivado",
-              "source": "Characters/Taric/Spells/TaricPassiveAbility/TaricPassive.mSpellCalculations.TotalDamage (16.23.8406595+branch.releases-16-23.content.release)",
+              "source": "Characters/Taric/Spells/TaricPassiveAbility/TaricPassive.mSpellCalculations.TotalDamage (16.23.8418428+branch.releases-16-23.content.release)",
               "damage_type_source": "spell_taricpassive_tooltip <magicDamage>"
             }
           ]
@@ -105,7 +105,7 @@
             ]
           },
           "label": "Derivado",
-          "source": "Characters/Taric/Spells/TaricPassiveAbility/TaricPassive.mSpellCalculations.TotalDamage (16.23.8406595+branch.releases-16-23.content.release)",
+          "source": "Characters/Taric/Spells/TaricPassiveAbility/TaricPassive.mSpellCalculations.TotalDamage (16.23.8418428+branch.releases-16-23.content.release)",
           "trigger": "after_ability",
           "damage_type": "magic",
           "max_stacks": 2,
@@ -121,6 +121,52 @@
       "passive_stats": [],
       "not_modelled": [
         "Curación en área por cargas (HealingPerStack, MaxStackHealing)"
+      ],
+      "active_effects": [
+        {
+          "id": "starlights_touch_heal",
+          "name": "Toque de luz estelar (1 carga)",
+          "kind": "heal",
+          "formula": {
+            "op": "add",
+            "operands": [
+              {
+                "op": "constant",
+                "value": 25
+              },
+              {
+                "op": "mul",
+                "operands": [
+                  {
+                    "op": "constant",
+                    "value": 0.15
+                  },
+                  {
+                    "op": "stat",
+                    "stat": "ability_power",
+                    "scope": "total"
+                  }
+                ]
+              },
+              {
+                "op": "mul",
+                "operands": [
+                  {
+                    "op": "constant",
+                    "value": 0.01
+                  },
+                  {
+                    "op": "stat",
+                    "stat": "health",
+                    "scope": "total"
+                  }
+                ]
+              }
+            ]
+          },
+          "label": "Derivado",
+          "source": "Characters/Taric/Spells/TaricQAbility/TaricQ.mSpellCalculations.HealingPerStack (16.23.8418428+branch.releases-16-23.content.release)"
+        }
       ]
     },
     "W": {
@@ -130,6 +176,40 @@
       "passive_stats": [],
       "not_modelled": [
         "Armadura pasiva por porcentaje de armadura total (BonusArmor: 6..10 % de armadura de Taric), vínculo aliado y escudo"
+      ],
+      "active_effects": [
+        {
+          "id": "bastion_shield",
+          "name": "Bastión (escudo)",
+          "kind": "shield",
+          "formula": {
+            "op": "mul",
+            "operands": [
+              {
+                "op": "by_rank",
+                "values": [
+                  7,
+                  8,
+                  9,
+                  10,
+                  11
+                ]
+              },
+              {
+                "op": "constant",
+                "value": 0.01
+              },
+              {
+                "op": "stat",
+                "stat": "health",
+                "scope": "max"
+              }
+            ]
+          },
+          "label": "Derivado",
+          "source": "Characters/Taric/Spells/TaricWAbility/TaricW · DataValues.ShieldHPRatio% of max health (16.23.8418428+branch.releases-16-23.content.release)",
+          "duration_seconds": 2.5
+        }
       ]
     },
     "E": {
@@ -186,7 +266,7 @@
                 ]
               },
               "label": "Derivado",
-              "source": "Characters/Taric/Spells/TaricEAbility/TaricE.mSpellCalculations.TotalDamage (16.23.8406595+branch.releases-16-23.content.release)",
+              "source": "Characters/Taric/Spells/TaricEAbility/TaricE.mSpellCalculations.TotalDamage (16.23.8418428+branch.releases-16-23.content.release)",
               "damage_type_source": "spell_tarice_tooltip <magicDamage>"
             }
           ]

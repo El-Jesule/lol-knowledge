@@ -134,6 +134,20 @@
       ],
       "not_modelled": [
         "Ralentización y velocidad de ataque temporal"
+      ],
+      "active_effects": [
+        {
+          "id": "audacious_charge_as",
+          "name": "Carga audaz (VA base)",
+          "kind": "stat_bonus",
+          "stat": "attack_speed_bonus",
+          "mode": "flat",
+          "data_value": "ASMod",
+          "scale": 100,
+          "duration_seconds": {
+            "data_value": "ASDuration"
+          }
+        }
       ]
     },
     "R": {

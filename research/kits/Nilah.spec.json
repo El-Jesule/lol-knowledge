@@ -44,6 +44,19 @@
       ],
       "not_modelled": [
         "Escalado pasivo con probabilidad de crítico para penetración de armadura (CritArmorPen) y curación (CritLifesteal), escalado crítico activo, VA/alcance y daño en cono"
+      ],
+      "active_effects": [
+        {
+          "id": "q_bonusattackspeedcalc",
+          "name": "Q (VA)",
+          "kind": "stat_bonus",
+          "stat": "attack_speed_bonus",
+          "mode": "flat",
+          "calculation": "BonusAttackSpeedCalc",
+          "duration_seconds": {
+            "data_value": "BuffDuration"
+          }
+        }
       ]
     },
     "W": {
@@ -51,6 +64,31 @@
       "tooltip": "spell_nilahw_tooltip",
       "not_modelled": [
         "Esquiva de ataques básicos, reducción de daño mágico, velocidad de movimiento y contagio a aliados"
+      ],
+      "active_effects": [
+        {
+          "id": "jubilant_veil_magic_dr",
+          "name": "Velo jubiloso (DR mágico)",
+          "kind": "damage_taken_modifier",
+          "mode": "percent",
+          "damage_type": "magic",
+          "data_value": "MagicDamageReduction",
+          "scale": 100,
+          "duration_seconds": {
+            "data_value": "BaseDuration"
+          }
+        },
+        {
+          "id": "jubilant_veil_ms",
+          "name": "Velo jubiloso (VM %)",
+          "kind": "stat_bonus",
+          "stat": "move_speed",
+          "mode": "percent_ms",
+          "data_value": "MoveSpeedPercent",
+          "duration_seconds": {
+            "data_value": "BaseDuration"
+          }
+        }
       ]
     },
     "E": {

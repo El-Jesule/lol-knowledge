@@ -76,6 +76,28 @@
       "tooltip": "spell_seraphinew_tooltip",
       "not_modelled": [
         "Escudo a aliados (ShieldValueSeraphine), velocidad de movimiento y curación con escudo activo"
+      ],
+      "active_effects": [
+        {
+          "id": "surround_sound_shield",
+          "name": "Sonido envolvente (escudo)",
+          "kind": "shield",
+          "calculation": "ShieldValueSeraphine",
+          "duration_seconds": {
+            "data_value": "ShieldDuration"
+          }
+        },
+        {
+          "id": "surround_sound_ms",
+          "name": "Sonido envolvente (VM %)",
+          "kind": "stat_bonus",
+          "stat": "move_speed",
+          "mode": "percent_ms",
+          "calculation": "WMSBonusTotal",
+          "duration_seconds": {
+            "data_value": "ShieldDuration"
+          }
+        }
       ]
     },
     "E": {

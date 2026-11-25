@@ -3,7 +3,7 @@
   "champion": "Warwick",
   "label": "Derivado",
   "game_version": "16.23",
-  "content_version": "16.23.8406595+branch.releases-16-23.content.release",
+  "content_version": "16.23.8418428+branch.releases-16-23.content.release",
   "verified_against": {
     "content_version": "16.23.8406595+branch.releases-16-23.content.release",
     "bin_sha256": "bd7e2058d44c2f002b23d5842a5eebfe9e116a21cb32f066f33c2e62237dfefa",
@@ -61,7 +61,7 @@
                 ]
               },
               "label": "Derivado",
-              "source": "Characters/Warwick/Spells/WarwickPAbility/WarwickP.mSpellCalculations.OnHitDamage (16.23.8406595+branch.releases-16-23.content.release)",
+              "source": "Characters/Warwick/Spells/WarwickPAbility/WarwickP.mSpellCalculations.OnHitDamage (16.23.8418428+branch.releases-16-23.content.release)",
               "damage_type_source": "spell_warwickp_tooltip <magicDamage>"
             }
           ]
@@ -115,7 +115,7 @@
             ]
           },
           "label": "Derivado",
-          "source": "Characters/Warwick/Spells/WarwickPAbility/WarwickP.mSpellCalculations.OnHitDamage (16.23.8406595+branch.releases-16-23.content.release)",
+          "source": "Characters/Warwick/Spells/WarwickPAbility/WarwickP.mSpellCalculations.OnHitDamage (16.23.8418428+branch.releases-16-23.content.release)",
           "trigger": "on_hit",
           "damage_type": "magic"
         }
@@ -165,7 +165,7 @@
                 ]
               },
               "label": "Derivado",
-              "source": "Characters/Warwick/Spells/WarwickQAbility/WarwickQ.mSpellCalculations.BaseBiteDamage (16.23.8406595+branch.releases-16-23.content.release)",
+              "source": "Characters/Warwick/Spells/WarwickQAbility/WarwickQ.mSpellCalculations.BaseBiteDamage (16.23.8418428+branch.releases-16-23.content.release)",
               "damage_type_source": "spell_warwickq_tooltip <magicDamage>"
             },
             {
@@ -196,7 +196,7 @@
                 ]
               },
               "label": "Derivado",
-              "source": "Characters/Warwick/Spells/WarwickQAbility/WarwickQ · DataValues.TargetPercentHPDamage % × vida máxima del objetivo (16.23.8406595+branch.releases-16-23.content.release)",
+              "source": "Characters/Warwick/Spells/WarwickQAbility/WarwickQ · DataValues.TargetPercentHPDamage % × vida máxima del objetivo (16.23.8418428+branch.releases-16-23.content.release)",
               "damage_type_source": "spell_warwickq_tooltip <magicDamage>"
             }
           ]
@@ -214,6 +214,50 @@
       "passive_stats": [],
       "not_modelled": [
         "Velocidad de ataque y movimiento contra enemigos con <50 % (triple con <20 %) de vida y rastro activo"
+      ],
+      "active_effects": [
+        {
+          "id": "blood_hunt_as",
+          "name": "Caza sangrienta (VA <50% vida)",
+          "kind": "stat_bonus",
+          "formula": {
+            "op": "by_rank",
+            "values": [
+              70,
+              80,
+              90,
+              100,
+              110
+            ]
+          },
+          "label": "Derivado",
+          "source": "Characters/Warwick/Spells/WarwickWAbility/WarwickW.DataValues.PassiveASBonus (16.23.8418428+branch.releases-16-23.content.release)",
+          "stat": "attack_speed_bonus",
+          "mode": "flat",
+          "condition": "target_below_50_hp_or_active",
+          "duration_seconds": 8
+        },
+        {
+          "id": "blood_hunt_ms",
+          "name": "Caza sangrienta (VM %)",
+          "kind": "stat_bonus",
+          "formula": {
+            "op": "by_rank",
+            "values": [
+              0.35,
+              0.425,
+              0.5,
+              0.575,
+              0.65
+            ]
+          },
+          "label": "Derivado",
+          "source": "Characters/Warwick/Spells/WarwickWAbility/WarwickW.DataValues.PassiveMSBonus (16.23.8418428+branch.releases-16-23.content.release)",
+          "stat": "move_speed",
+          "mode": "percent_ms",
+          "condition": "target_below_50_hp_or_active",
+          "duration_seconds": 8
+        }
       ]
     },
     "E": {
@@ -223,6 +267,27 @@
       "passive_stats": [],
       "not_modelled": [
         "Reducción de daño (35..55 %) durante 2,5 s y miedo en área de 1 s"
+      ],
+      "active_effects": [
+        {
+          "id": "primal_howl_dr",
+          "name": "Aullido primigenio (DR)",
+          "kind": "damage_taken_modifier",
+          "formula": {
+            "op": "by_rank",
+            "values": [
+              35,
+              40,
+              45,
+              50,
+              55
+            ]
+          },
+          "label": "Derivado",
+          "source": "Characters/Warwick/Spells/WarwickEAbility/WarwickE.DataValues.DRAmount (16.23.8418428+branch.releases-16-23.content.release)",
+          "mode": "percent",
+          "duration_seconds": 2.75
+        }
       ]
     },
     "R": {
@@ -263,7 +328,7 @@
                 ]
               },
               "label": "Derivado",
-              "source": "Characters/Warwick/Spells/WarwickRAbility/WarwickR.mSpellCalculations.DamageCumulative (16.23.8406595+branch.releases-16-23.content.release)",
+              "source": "Characters/Warwick/Spells/WarwickRAbility/WarwickR.mSpellCalculations.DamageCumulative (16.23.8418428+branch.releases-16-23.content.release)",
               "damage_type_source": "spell_warwickr_tooltip <magicDamage>"
             }
           ]

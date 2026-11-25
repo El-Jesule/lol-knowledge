@@ -3,7 +3,7 @@
   "champion": "Nocturne",
   "label": "Derivado",
   "game_version": "16.23",
-  "content_version": "16.23.8406595+branch.releases-16-23.content.release",
+  "content_version": "16.23.8418428+branch.releases-16-23.content.release",
   "verified_against": {
     "content_version": "16.23.8406595+branch.releases-16-23.content.release",
     "bin_sha256": "b5e7edec6db2edf17c3e4114d9bc9678f1eeee008c032b5aaa5af8790f46d075",
@@ -37,7 +37,7 @@
                 ]
               },
               "label": "Derivado",
-              "source": "Characters/Nocturne/Spells/NocturnePAbility/NocturneP.mSpellCalculations.TotalDamageNoCrit (16.23.8406595+branch.releases-16-23.content.release)",
+              "source": "Characters/Nocturne/Spells/NocturnePAbility/NocturneP.mSpellCalculations.TotalDamageNoCrit (16.23.8418428+branch.releases-16-23.content.release)",
               "damage_type_source": "spell_nocturnep_tooltip <physicalDamage>"
             }
           ]
@@ -67,7 +67,7 @@
             ]
           },
           "label": "Derivado",
-          "source": "Characters/Nocturne/Spells/NocturnePAbility/NocturneP · Porción adicional +20 % DA de TotalDamageNoCrit (120 % DA total) (16.23.8406595+branch.releases-16-23.content.release)",
+          "source": "Characters/Nocturne/Spells/NocturnePAbility/NocturneP · Porción adicional +20 % DA de TotalDamageNoCrit (120 % DA total) (16.23.8418428+branch.releases-16-23.content.release)",
           "trigger": "on_attack",
           "damage_type": "physical",
           "cooldown_seconds": 12
@@ -101,7 +101,7 @@
             ]
           },
           "label": "Derivado",
-          "source": "Characters/Nocturne/Spells/NocturnePAbility/NocturneP.mSpellCalculations.TotalHealing (16.23.8406595+branch.releases-16-23.content.release)",
+          "source": "Characters/Nocturne/Spells/NocturnePAbility/NocturneP.mSpellCalculations.TotalHealing (16.23.8418428+branch.releases-16-23.content.release)",
           "trigger": "on_hit",
           "cooldown_seconds": 12
         }
@@ -147,7 +147,7 @@
                 ]
               },
               "label": "Derivado",
-              "source": "Characters/Nocturne/Spells/NocturneDuskbringerAbility/NocturneDuskbringer.mSpellCalculations.TotalDamage (16.23.8406595+branch.releases-16-23.content.release)",
+              "source": "Characters/Nocturne/Spells/NocturneDuskbringerAbility/NocturneDuskbringer.mSpellCalculations.TotalDamage (16.23.8418428+branch.releases-16-23.content.release)",
               "damage_type_source": "spell_nocturneq_tooltip <physicalDamage>"
             }
           ]
@@ -156,6 +156,28 @@
       "passive_stats": [],
       "not_modelled": [
         "DA adicional (BonusTrailAD) y velocidad de movimiento sobre el rastro"
+      ],
+      "active_effects": [
+        {
+          "id": "q_movespeed",
+          "name": "Q (VM)",
+          "kind": "stat_bonus",
+          "formula": {
+            "op": "by_rank",
+            "values": [
+              0.2,
+              0.25,
+              0.3,
+              0.35,
+              0.4
+            ]
+          },
+          "label": "Derivado",
+          "source": "Characters/Nocturne/Spells/NocturneDuskbringerAbility/NocturneDuskbringer.DataValues.MoveSpeed (16.23.8418428+branch.releases-16-23.content.release)",
+          "stat": "move_speed",
+          "mode": "percent_ms",
+          "duration_seconds": 5
+        }
       ]
     },
     "W": {
@@ -176,12 +198,35 @@
             ]
           },
           "label": "Derivado",
-          "source": "Characters/Nocturne/Spells/NocturneShroudofDarknessAbility/NocturneShroudofDarkness.DataValues.ActiveAS (16.23.8406595+branch.releases-16-23.content.release)",
+          "source": "Characters/Nocturne/Spells/NocturneShroudofDarknessAbility/NocturneShroudofDarkness.DataValues.ActiveAS (16.23.8418428+branch.releases-16-23.content.release)",
           "condition": "pasiva de la W: activa con la W aprendida, también en enfriamiento"
         }
       ],
       "not_modelled": [
         "Escudo de hechizos y duplicación de velocidad de ataque al bloquear una habilidad"
+      ],
+      "active_effects": [
+        {
+          "id": "shroud_of_darkness_as",
+          "name": "Velo de oscuridad (VA al bloquear)",
+          "kind": "stat_bonus",
+          "formula": {
+            "op": "by_rank",
+            "values": [
+              30,
+              35,
+              40,
+              45,
+              50
+            ]
+          },
+          "label": "Derivado",
+          "source": "Characters/Nocturne/Spells/NocturneShroudofDarknessAbility/NocturneShroudofDarkness.DataValues.ActiveAS (16.23.8418428+branch.releases-16-23.content.release)",
+          "stat": "attack_speed_bonus",
+          "mode": "flat",
+          "condition": "spell_blocked",
+          "duration_seconds": 5
+        }
       ]
     },
     "E": {
@@ -224,7 +269,7 @@
                 ]
               },
               "label": "Derivado",
-              "source": "Characters/Nocturne/Spells/NocturneUnspeakableHorrorAbility/NocturneUnspeakableHorror.mSpellCalculations.TotalDamage (16.23.8406595+branch.releases-16-23.content.release)",
+              "source": "Characters/Nocturne/Spells/NocturneUnspeakableHorrorAbility/NocturneUnspeakableHorror.mSpellCalculations.TotalDamage (16.23.8418428+branch.releases-16-23.content.release)",
               "damage_type_source": "spell_nocturnee_tooltip <magicDamage>"
             }
           ]
@@ -273,7 +318,7 @@
                 ]
               },
               "label": "Derivado",
-              "source": "Characters/Nocturne/Spells/NocturneParanoiaAbility/NocturneParanoia.mSpellCalculations.Damage (16.23.8406595+branch.releases-16-23.content.release)",
+              "source": "Characters/Nocturne/Spells/NocturneParanoiaAbility/NocturneParanoia.mSpellCalculations.Damage (16.23.8418428+branch.releases-16-23.content.release)",
               "damage_type_source": "spell_nocturner_tooltip <physicalDamage>"
             }
           ]

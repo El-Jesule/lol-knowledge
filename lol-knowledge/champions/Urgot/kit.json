@@ -3,7 +3,7 @@
   "champion": "Urgot",
   "label": "Derivado",
   "game_version": "16.23",
-  "content_version": "16.23.8406595+branch.releases-16-23.content.release",
+  "content_version": "16.23.8418428+branch.releases-16-23.content.release",
   "verified_against": {
     "content_version": "16.23.8406595+branch.releases-16-23.content.release",
     "bin_sha256": "e79e3bceeb0f1150b74d3528497f55653dae675d6d48a66130c41d0071f4018a",
@@ -56,7 +56,7 @@
                 ]
               },
               "label": "Derivado",
-              "source": "Characters/Urgot/Spells/UrgotPassiveAbility/UrgotPassive.mSpellCalculations.ADDamage (16.23.8406595+branch.releases-16-23.content.release)",
+              "source": "Characters/Urgot/Spells/UrgotPassiveAbility/UrgotPassive.mSpellCalculations.ADDamage (16.23.8418428+branch.releases-16-23.content.release)",
               "damage_type_source": "spell_urgotpassive_tooltip <physicalDamage>"
             },
             {
@@ -96,7 +96,7 @@
                 ]
               },
               "label": "Derivado",
-              "source": "Characters/Urgot/Spells/UrgotPassiveAbility/UrgotPassive · mSpellCalculations.PercentHPRatio × vida máxima del objetivo (16.23.8406595+branch.releases-16-23.content.release)",
+              "source": "Characters/Urgot/Spells/UrgotPassiveAbility/UrgotPassive · mSpellCalculations.PercentHPRatio × vida máxima del objetivo (16.23.8418428+branch.releases-16-23.content.release)",
               "damage_type_source": "spell_urgotpassive_tooltip <physicalDamage>"
             }
           ]
@@ -184,7 +184,7 @@
             ]
           },
           "label": "Derivado",
-          "source": "Characters/Urgot/Spells/UrgotPassiveAbility/UrgotPassive · ADDamage + PercentHPRatio × vida máxima del objetivo (16.23.8406595+branch.releases-16-23.content.release)",
+          "source": "Characters/Urgot/Spells/UrgotPassiveAbility/UrgotPassive · ADDamage + PercentHPRatio × vida máxima del objetivo (16.23.8418428+branch.releases-16-23.content.release)",
           "trigger": "on_attack",
           "damage_type": "physical",
           "cooldown_formula": {
@@ -253,7 +253,7 @@
                 ]
               },
               "label": "Derivado",
-              "source": "Characters/Urgot/Spells/UrgotQAbility/UrgotQ.mSpellCalculations.TotalDamage (16.23.8406595+branch.releases-16-23.content.release)",
+              "source": "Characters/Urgot/Spells/UrgotQAbility/UrgotQ.mSpellCalculations.TotalDamage (16.23.8418428+branch.releases-16-23.content.release)",
               "damage_type_source": "spell_urgotq_tooltip <physicalDamage>"
             }
           ]
@@ -304,7 +304,7 @@
                 ]
               },
               "label": "Derivado",
-              "source": "Characters/Urgot/Spells/UrgotWAbility/UrgotW.mSpellCalculations.DamagePerShot (16.23.8406595+branch.releases-16-23.content.release)",
+              "source": "Characters/Urgot/Spells/UrgotWAbility/UrgotW.mSpellCalculations.DamagePerShot (16.23.8418428+branch.releases-16-23.content.release)",
               "damage_type_source": "spell_urgotw_tooltip <physicalDamage>"
             }
           ]
@@ -355,7 +355,7 @@
                 ]
               },
               "label": "Derivado",
-              "source": "Characters/Urgot/Spells/UrgotEAbility/UrgotE.mSpellCalculations.EDamage (16.23.8406595+branch.releases-16-23.content.release)",
+              "source": "Characters/Urgot/Spells/UrgotEAbility/UrgotE.mSpellCalculations.EDamage (16.23.8418428+branch.releases-16-23.content.release)",
               "damage_type_source": "spell_urgote_tooltip <physicalDamage>"
             }
           ]
@@ -364,6 +364,59 @@
       "passive_stats": [],
       "not_modelled": [
         "Escudo (ETotalShieldHealth) y aturdimiento de 1,5 s"
+      ],
+      "active_effects": [
+        {
+          "id": "e_etotalshieldhealth",
+          "name": "E (escudo)",
+          "kind": "shield",
+          "formula": {
+            "op": "add",
+            "operands": [
+              {
+                "op": "by_rank",
+                "values": [
+                  55,
+                  75,
+                  95,
+                  115,
+                  135
+                ]
+              },
+              {
+                "op": "mul",
+                "operands": [
+                  {
+                    "op": "constant",
+                    "value": 1.35
+                  },
+                  {
+                    "op": "stat",
+                    "stat": "attack_damage",
+                    "scope": "bonus"
+                  }
+                ]
+              },
+              {
+                "op": "mul",
+                "operands": [
+                  {
+                    "op": "constant",
+                    "value": 0.135
+                  },
+                  {
+                    "op": "stat",
+                    "stat": "health",
+                    "scope": "bonus"
+                  }
+                ]
+              }
+            ]
+          },
+          "label": "Derivado",
+          "source": "Characters/Urgot/Spells/UrgotEAbility/UrgotE.mSpellCalculations.ETotalShieldHealth (16.23.8418428+branch.releases-16-23.content.release)",
+          "duration_seconds": 4
+        }
       ]
     },
     "R": {
@@ -404,7 +457,7 @@
                 ]
               },
               "label": "Derivado",
-              "source": "Characters/Urgot/Spells/UrgotRAbility/UrgotR.mSpellCalculations.RCalculatedDamage (16.23.8406595+branch.releases-16-23.content.release)",
+              "source": "Characters/Urgot/Spells/UrgotRAbility/UrgotR.mSpellCalculations.RCalculatedDamage (16.23.8418428+branch.releases-16-23.content.release)",
               "damage_type_source": "spell_urgotr_tooltip <physicalDamage>"
             }
           ]

@@ -3,7 +3,7 @@
   "champion": "Skarner",
   "label": "Derivado",
   "game_version": "16.23",
-  "content_version": "16.23.8406595+branch.releases-16-23.content.release",
+  "content_version": "16.23.8418428+branch.releases-16-23.content.release",
   "verified_against": {
     "content_version": "16.23.8406595+branch.releases-16-23.content.release",
     "bin_sha256": "49fbffabbe15189af07a82729f012928f5120340059b8665dc05ca71d6558023",
@@ -43,7 +43,7 @@
                 ]
               },
               "label": "Derivado",
-              "source": "Characters/Skarner/Spells/SkarnerPassiveAbility/SkarnerPassive · (PercentHealthDamage %) × vida máxima del objetivo (16.23.8406595+branch.releases-16-23.content.release)",
+              "source": "Characters/Skarner/Spells/SkarnerPassiveAbility/SkarnerPassive · (PercentHealthDamage %) × vida máxima del objetivo (16.23.8418428+branch.releases-16-23.content.release)",
               "damage_type_source": "spell_skarner_passive_tooltip <magicDamage>"
             }
           ]
@@ -79,7 +79,7 @@
             ]
           },
           "label": "Derivado",
-          "source": "Characters/Skarner/Spells/SkarnerPassiveAbility/SkarnerPassive · PercentHealthDamage % × vida máxima del objetivo (16.23.8406595+branch.releases-16-23.content.release)",
+          "source": "Characters/Skarner/Spells/SkarnerPassiveAbility/SkarnerPassive · PercentHealthDamage % × vida máxima del objetivo (16.23.8418428+branch.releases-16-23.content.release)",
           "trigger": "every_n_hits",
           "damage_type": "magic",
           "every": 3
@@ -140,7 +140,7 @@
                 ]
               },
               "label": "Derivado",
-              "source": "Characters/Skarner/Spells/SkarnerQAbility/SkarnerQ.mSpellCalculations.AbilityDamage (16.23.8406595+branch.releases-16-23.content.release)",
+              "source": "Characters/Skarner/Spells/SkarnerQAbility/SkarnerQ.mSpellCalculations.AbilityDamage (16.23.8418428+branch.releases-16-23.content.release)",
               "damage_type_source": "spell_skarner_q_tooltip <physicalDamage>"
             }
           ]
@@ -195,7 +195,7 @@
                 ]
               },
               "label": "Derivado",
-              "source": "Characters/Skarner/Spells/SkarnerQAbility/SkarnerQ.mSpellCalculations.AbilityDamage (16.23.8406595+branch.releases-16-23.content.release)",
+              "source": "Characters/Skarner/Spells/SkarnerQAbility/SkarnerQ.mSpellCalculations.AbilityDamage (16.23.8418428+branch.releases-16-23.content.release)",
               "damage_type_source": "spell_skarner_q_tooltip <physicalDamage>"
             },
             {
@@ -216,7 +216,7 @@
                 ]
               },
               "label": "Derivado",
-              "source": "Characters/Skarner/Spells/SkarnerQAbility/SkarnerQ · DataValues.MaxHPPercent × vida máxima del objetivo (16.23.8406595+branch.releases-16-23.content.release)",
+              "source": "Characters/Skarner/Spells/SkarnerQAbility/SkarnerQ · DataValues.MaxHPPercent × vida máxima del objetivo (16.23.8418428+branch.releases-16-23.content.release)",
               "damage_type_source": "spell_skarner_q_tooltip <physicalDamage>"
             }
           ]
@@ -225,6 +225,28 @@
       "passive_stats": [],
       "not_modelled": [
         "Velocidad de ataque de los 3 ataques, ralentización y ataque básico aparte"
+      ],
+      "active_effects": [
+        {
+          "id": "q_attackspeed",
+          "name": "Q (VA)",
+          "kind": "stat_bonus",
+          "formula": {
+            "op": "by_rank",
+            "values": [
+              20,
+              25,
+              30,
+              35,
+              40
+            ]
+          },
+          "label": "Derivado",
+          "source": "Characters/Skarner/Spells/SkarnerQAbility/SkarnerQ.DataValues.AttackSpeed (16.23.8418428+branch.releases-16-23.content.release)",
+          "stat": "attack_speed_bonus",
+          "mode": "flat",
+          "duration_seconds": 5
+        }
       ]
     },
     "W": {
@@ -267,7 +289,7 @@
                 ]
               },
               "label": "Derivado",
-              "source": "Characters/Skarner/Spells/SkarnerWAbility/SkarnerW.mSpellCalculations.Damage (16.23.8406595+branch.releases-16-23.content.release)",
+              "source": "Characters/Skarner/Spells/SkarnerWAbility/SkarnerW.mSpellCalculations.Damage (16.23.8418428+branch.releases-16-23.content.release)",
               "damage_type_source": "spell_skarner_w_tooltip <magicDamage>"
             }
           ]
@@ -276,6 +298,30 @@
       "passive_stats": [],
       "not_modelled": [
         "Escudo (InitialShield) y ralentización"
+      ],
+      "active_effects": [
+        {
+          "id": "w_initialshield",
+          "name": "W (escudo)",
+          "kind": "shield",
+          "formula": {
+            "op": "mul",
+            "operands": [
+              {
+                "op": "constant",
+                "value": 0.08
+              },
+              {
+                "op": "stat",
+                "stat": "health",
+                "scope": "total"
+              }
+            ]
+          },
+          "label": "Derivado",
+          "source": "Characters/Skarner/Spells/SkarnerWAbility/SkarnerW.mSpellCalculations.InitialShield (16.23.8418428+branch.releases-16-23.content.release)",
+          "duration_seconds": 2.5
+        }
       ]
     },
     "E": {
@@ -332,7 +378,7 @@
                 ]
               },
               "label": "Derivado",
-              "source": "Characters/Skarner/Spells/SkarnerEAbility/SkarnerE.mSpellCalculations.PinDamage (16.23.8406595+branch.releases-16-23.content.release)",
+              "source": "Characters/Skarner/Spells/SkarnerEAbility/SkarnerE.mSpellCalculations.PinDamage (16.23.8418428+branch.releases-16-23.content.release)",
               "damage_type_source": "spell_skarner_e_tooltip <physicalDamage>"
             }
           ]
@@ -381,7 +427,7 @@
                 ]
               },
               "label": "Derivado",
-              "source": "Characters/Skarner/Spells/SkarnerRAbility/SkarnerR.mSpellCalculations.Damage (16.23.8406595+branch.releases-16-23.content.release)",
+              "source": "Characters/Skarner/Spells/SkarnerRAbility/SkarnerR.mSpellCalculations.Damage (16.23.8418428+branch.releases-16-23.content.release)",
               "damage_type_source": "spell_skarner_r_tooltip <magicDamage>"
             }
           ]
@@ -390,6 +436,22 @@
       "passive_stats": [],
       "not_modelled": [
         "Supresión hasta 3 campeones y velocidad de movimiento"
+      ],
+      "active_effects": [
+        {
+          "id": "r_speedboostamount",
+          "name": "R (VM)",
+          "kind": "stat_bonus",
+          "formula": {
+            "op": "constant",
+            "value": 0.4
+          },
+          "label": "Derivado",
+          "source": "Characters/Skarner/Spells/SkarnerRAbility/SkarnerR.DataValues.SpeedBoostAmount (16.23.8418428+branch.releases-16-23.content.release)",
+          "stat": "move_speed",
+          "mode": "percent_ms",
+          "duration_seconds": 1.5
+        }
       ]
     }
   }

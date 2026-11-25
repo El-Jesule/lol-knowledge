@@ -3,7 +3,7 @@
   "champion": "Vayne",
   "label": "Derivado",
   "game_version": "16.23",
-  "content_version": "16.23.8406595+branch.releases-16-23.content.release",
+  "content_version": "16.23.8418428+branch.releases-16-23.content.release",
   "verified_against": {
     "content_version": "16.23.8406595+branch.releases-16-23.content.release",
     "bin_sha256": "8be1a1339bb3af2f0872e3eb5c75e084ad1910123316a12be41307dccc99085f",
@@ -30,7 +30,7 @@
             "value": 30
           },
           "label": "Derivado",
-          "source": "Characters/Vayne/Spells/VaynePassiveAbility/VaynePassive.DataValues.MovementSpeed (16.23.8406595+branch.releases-16-23.content.release)",
+          "source": "Characters/Vayne/Spells/VaynePassiveAbility/VaynePassive.DataValues.MovementSpeed (16.23.8418428+branch.releases-16-23.content.release)",
           "stat": "move_speed",
           "mode": "flat",
           "input_name": "vayne_night_hunter",
@@ -88,7 +88,7 @@
                 ]
               },
               "label": "Derivado",
-              "source": "Characters/Vayne/Spells/VayneTumbleAbility/VayneTumble.mSpellCalculations.ADRatioBonus (16.23.8406595+branch.releases-16-23.content.release)",
+              "source": "Characters/Vayne/Spells/VayneTumbleAbility/VayneTumble.mSpellCalculations.ADRatioBonus (16.23.8418428+branch.releases-16-23.content.release)",
               "damage_type_source": "spell_vayneq_tooltip <physicalDamage>"
             }
           ]
@@ -131,7 +131,7 @@
                 ]
               },
               "label": "Derivado",
-              "source": "Characters/Vayne/Spells/VayneSilveredBoltsAbility/VayneSilveredBolts · TotalDamage × vida máxima del objetivo (16.23.8406595+branch.releases-16-23.content.release)",
+              "source": "Characters/Vayne/Spells/VayneSilveredBoltsAbility/VayneSilveredBolts · TotalDamage × vida máxima del objetivo (16.23.8418428+branch.releases-16-23.content.release)",
               "damage_type_source": "spell_vayne_w_tooltip <trueDamage>"
             }
           ]
@@ -182,7 +182,7 @@
                 ]
               },
               "label": "Derivado",
-              "source": "Characters/Vayne/Spells/VayneCondemnAbility/VayneCondemn.mSpellCalculations.TotalDamage (16.23.8406595+branch.releases-16-23.content.release)",
+              "source": "Characters/Vayne/Spells/VayneCondemnAbility/VayneCondemn.mSpellCalculations.TotalDamage (16.23.8418428+branch.releases-16-23.content.release)",
               "damage_type_source": "spell_vaynee_tooltip <physicalDamage>"
             }
           ]
@@ -223,7 +223,7 @@
                 ]
               },
               "label": "Derivado",
-              "source": "Characters/Vayne/Spells/VayneCondemnAbility/VayneCondemn.mSpellCalculations.TotalDamage (16.23.8406595+branch.releases-16-23.content.release)",
+              "source": "Characters/Vayne/Spells/VayneCondemnAbility/VayneCondemn.mSpellCalculations.TotalDamage (16.23.8418428+branch.releases-16-23.content.release)",
               "damage_type_source": "spell_vaynee_tooltip <physicalDamage>"
             },
             {
@@ -267,7 +267,7 @@
                 ]
               },
               "label": "Derivado",
-              "source": "Characters/Vayne/Spells/VayneCondemnAbility/VayneCondemn.mSpellCalculations.EmpoweredDamageTT (16.23.8406595+branch.releases-16-23.content.release)",
+              "source": "Characters/Vayne/Spells/VayneCondemnAbility/VayneCondemn.mSpellCalculations.EmpoweredDamageTT (16.23.8418428+branch.releases-16-23.content.release)",
               "damage_type_source": "spell_vaynee_tooltip <physicalDamage>"
             }
           ]
@@ -285,6 +285,33 @@
       "passive_stats": [],
       "not_modelled": [
         "DA adicional temporal (BonusAttackDamage), velocidad de movimiento e invisibilidad en Q"
+      ],
+      "active_effects": [
+        {
+          "id": "final_hour_ad",
+          "name": "Hora final (AD)",
+          "kind": "stat_bonus",
+          "formula": {
+            "op": "by_rank",
+            "values": [
+              35,
+              50,
+              65
+            ]
+          },
+          "label": "Derivado",
+          "source": "Characters/Vayne/Spells/VayneInquisitionAbility/VayneInquisition.DataValues.BonusAttackDamage (16.23.8418428+branch.releases-16-23.content.release)",
+          "stat": "attack_damage",
+          "mode": "flat",
+          "duration_formula": {
+            "op": "by_rank",
+            "values": [
+              8,
+              10,
+              12
+            ]
+          }
+        }
       ]
     }
   }

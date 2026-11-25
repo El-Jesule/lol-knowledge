@@ -92,6 +92,18 @@
       "tooltip": "spell_ferocioushowl_tooltip",
       "not_modelled": [
         "Limpieza de control de adversario y reducción porcentual de daño recibido (RDamageReduction)"
+      ],
+      "active_effects": [
+        {
+          "id": "unbreakable_will_dr",
+          "name": "Voluntad inquebrantable (DR)",
+          "kind": "damage_taken_modifier",
+          "mode": "percent",
+          "data_value": "RDamageReduction",
+          "duration_seconds": {
+            "data_value": "RDuration"
+          }
+        }
       ]
     }
   }

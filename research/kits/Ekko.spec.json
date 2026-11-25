@@ -123,6 +123,16 @@
       ],
       "not_modelled": [
         "Umbral automático del 30 % de vida, escudo (TotalShield) y aturdimiento"
+      ],
+      "active_effects": [
+        {
+          "id": "parallel_convergence_shield",
+          "name": "Convergencia paralela (escudo)",
+          "kind": "shield",
+          "calculation": "TotalShield",
+          "duration_seconds": 2.0,
+          "condition": "entered_chronosphere"
+        }
       ]
     },
     "E": {
@@ -159,6 +169,14 @@
       ],
       "not_modelled": [
         "Estasis, regreso 4 s atrás y curación (TotalBaseHeal)"
+      ],
+      "active_effects": [
+        {
+          "id": "r_totalbaseheal",
+          "name": "R (curación)",
+          "kind": "heal",
+          "calculation": "TotalBaseHeal"
+        }
       ]
     }
   }

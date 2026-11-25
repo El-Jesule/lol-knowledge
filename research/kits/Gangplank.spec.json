@@ -73,6 +73,51 @@
       "tooltip": "spell_gangplankw_tooltip",
       "not_modelled": [
         "Limpieza de control de masas y curación (BaseHealth + % vida faltante)"
+      ],
+      "active_effects": [
+        {
+          "id": "remove_scurvy_heal",
+          "name": "Eliminar escorbuto (curación)",
+          "kind": "heal",
+          "formula": {
+            "op": "add",
+            "operands": [
+              {
+                "op": "calculation",
+                "name": "BaseHealth"
+              },
+              {
+                "op": "mul",
+                "operands": [
+                  {
+                    "op": "data_value",
+                    "name": "PercentHeal"
+                  },
+                  {
+                    "op": "constant",
+                    "value": 0.01
+                  },
+                  {
+                    "op": "mul",
+                    "operands": [
+                      {
+                        "op": "stat",
+                        "stat": "health",
+                        "scope": "max"
+                      },
+                      {
+                        "op": "stat",
+                        "stat": "health",
+                        "scope": "missing_fraction"
+                      }
+                    ]
+                  }
+                ]
+              }
+            ]
+          },
+          "source_note": "mSpellCalculations.BaseHealth + DataValues.PercentHeal% missing HP"
+        }
       ]
     },
     "E": {
@@ -107,6 +152,20 @@
       ],
       "not_modelled": [
         "Mejoras con Serpientes de plata (Fuego a discreción, Subir la moral), ralentización y total combinado"
+      ],
+      "active_effects": [
+        {
+          "id": "r_raisemoralehaste",
+          "name": "R (VM)",
+          "kind": "stat_bonus",
+          "stat": "move_speed",
+          "mode": "percent_ms",
+          "scale": 0.01,
+          "data_value": "RaiseMoraleHaste",
+          "duration_seconds": {
+            "data_value": "ZoneDuration"
+          }
+        }
       ]
     }
   }

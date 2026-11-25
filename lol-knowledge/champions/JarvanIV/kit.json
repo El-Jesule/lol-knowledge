@@ -3,7 +3,7 @@
   "champion": "JarvanIV",
   "label": "Derivado",
   "game_version": "16.23",
-  "content_version": "16.23.8406595+branch.releases-16-23.content.release",
+  "content_version": "16.23.8418428+branch.releases-16-23.content.release",
   "verified_against": {
     "content_version": "16.23.8406595+branch.releases-16-23.content.release",
     "bin_sha256": "c4858e0355a07a66c96d222aeabd238c20ca7bb94e34639d4d7c197a4a905c58",
@@ -38,7 +38,7 @@
                 ]
               },
               "label": "Derivado",
-              "source": "Characters/JarvanIV/Spells/JarvanIVMartialCadenceAbility/JarvanIVMartialCadence · DataValues.TooltipCurrentHealthDamage × vida actual del objetivo (16.23.8406595+branch.releases-16-23.content.release)",
+              "source": "Characters/JarvanIV/Spells/JarvanIVMartialCadenceAbility/JarvanIVMartialCadence · DataValues.TooltipCurrentHealthDamage × vida actual del objetivo (16.23.8418428+branch.releases-16-23.content.release)",
               "damage_type_source": "spell_jarvanivmartialcadence_tooltip <physicalDamage>"
             }
           ]
@@ -69,7 +69,7 @@
             ]
           },
           "label": "Derivado",
-          "source": "Characters/JarvanIV/Spells/JarvanIVMartialCadenceAbility/JarvanIVMartialCadence · TooltipCurrentHealthDamage × vida actual del objetivo (16.23.8406595+branch.releases-16-23.content.release)",
+          "source": "Characters/JarvanIV/Spells/JarvanIVMartialCadenceAbility/JarvanIVMartialCadence · TooltipCurrentHealthDamage × vida actual del objetivo (16.23.8418428+branch.releases-16-23.content.release)",
           "trigger": "on_attack",
           "damage_type": "physical",
           "cooldown_formula": {
@@ -138,7 +138,7 @@
                 ]
               },
               "label": "Derivado",
-              "source": "Characters/JarvanIV/Spells/JarvanIVDragonStrikeAbility/JarvanIVDragonStrike.mSpellCalculations.TotalDamage (16.23.8406595+branch.releases-16-23.content.release)",
+              "source": "Characters/JarvanIV/Spells/JarvanIVDragonStrikeAbility/JarvanIVDragonStrike.mSpellCalculations.TotalDamage (16.23.8418428+branch.releases-16-23.content.release)",
               "damage_type_source": "spell_jarvanivdragonstrike_tooltip <physicalDamage>"
             }
           ]
@@ -156,6 +156,45 @@
       "passive_stats": [],
       "not_modelled": [
         "Ralentización en área y escudo escalado por campeones golpeados (TotalShield, BonusShield)"
+      ],
+      "active_effects": [
+        {
+          "id": "golden_aegis_shield",
+          "name": "Égida dorada (escudo base)",
+          "kind": "shield",
+          "formula": {
+            "op": "add",
+            "operands": [
+              {
+                "op": "by_rank",
+                "values": [
+                  60,
+                  80,
+                  100,
+                  120,
+                  140
+                ]
+              },
+              {
+                "op": "mul",
+                "operands": [
+                  {
+                    "op": "constant",
+                    "value": 0.7
+                  },
+                  {
+                    "op": "stat",
+                    "stat": "attack_damage",
+                    "scope": "bonus"
+                  }
+                ]
+              }
+            ]
+          },
+          "label": "Derivado",
+          "source": "Characters/JarvanIV/Spells/JarvanIVGoldenAegisAbility/JarvanIVGoldenAegis.mSpellCalculations.TotalShield (16.23.8418428+branch.releases-16-23.content.release)",
+          "duration_seconds": 4.0
+        }
       ]
     },
     "E": {
@@ -198,7 +237,7 @@
                 ]
               },
               "label": "Derivado",
-              "source": "Characters/JarvanIV/Spells/JarvanIVDemacianStandardAbility/JarvanIVDemacianStandard.mSpellCalculations.TotalDamage (16.23.8406595+branch.releases-16-23.content.release)",
+              "source": "Characters/JarvanIV/Spells/JarvanIVDemacianStandardAbility/JarvanIVDemacianStandard.mSpellCalculations.TotalDamage (16.23.8418428+branch.releases-16-23.content.release)",
               "damage_type_source": "spell_jarvanivdemacianstandard_tooltip <magicDamage>"
             }
           ]
@@ -218,12 +257,34 @@
             ]
           },
           "label": "Derivado",
-          "source": "Characters/JarvanIV/Spells/JarvanIVDemacianStandardAbility/JarvanIVDemacianStandard.DataValues.PermanentAttackSpeed (16.23.8406595+branch.releases-16-23.content.release)",
+          "source": "Characters/JarvanIV/Spells/JarvanIVDemacianStandardAbility/JarvanIVDemacianStandard.DataValues.PermanentAttackSpeed (16.23.8418428+branch.releases-16-23.content.release)",
           "condition": "Velocidad de ataque pasiva permanente al subir E"
         }
       ],
       "not_modelled": [
         "Aura activa de velocidad de ataque para aliados cercanos y anclaje para el desplazamiento con Q"
+      ],
+      "active_effects": [
+        {
+          "id": "demacian_standard_as",
+          "name": "Estandarte demaciano (aura VA)",
+          "kind": "stat_bonus",
+          "formula": {
+            "op": "by_rank",
+            "values": [
+              20,
+              22.5,
+              25,
+              27.5,
+              30
+            ]
+          },
+          "label": "Derivado",
+          "source": "Characters/JarvanIV/Spells/JarvanIVDemacianStandardAbility/JarvanIVDemacianStandard.DataValues.BaseAuraAS (16.23.8418428+branch.releases-16-23.content.release)",
+          "stat": "attack_speed_bonus",
+          "mode": "flat",
+          "duration_seconds": 8.0
+        }
       ]
     },
     "R": {
@@ -264,7 +325,7 @@
                 ]
               },
               "label": "Derivado",
-              "source": "Characters/JarvanIV/Spells/JarvanIVCataclysmAbility/JarvanIVCataclysm.mSpellCalculations.DamageCalc (16.23.8406595+branch.releases-16-23.content.release)",
+              "source": "Characters/JarvanIV/Spells/JarvanIVCataclysmAbility/JarvanIVCataclysm.mSpellCalculations.DamageCalc (16.23.8418428+branch.releases-16-23.content.release)",
               "damage_type_source": "spell_jarvanivcataclysm_tooltip <physicalDamage>"
             }
           ]

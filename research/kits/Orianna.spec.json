@@ -110,6 +110,33 @@
       ],
       "not_modelled": [
         "Escudo (TotalShieldTooltip) y armadura/RM pasivas al portador de la bola (DefenseBonus)"
+      ],
+      "active_effects": [
+        {
+          "id": "e_totalshieldtooltip",
+          "name": "E (escudo)",
+          "kind": "shield",
+          "calculation": "TotalShieldTooltip",
+          "duration_seconds": {
+            "data_value": "ShieldDuration"
+          }
+        },
+        {
+          "id": "e_defensebonus",
+          "name": "E (armadura)",
+          "kind": "stat_bonus",
+          "stat": "armor",
+          "mode": "flat",
+          "data_value": "DefenseBonus"
+        },
+        {
+          "id": "e_defensebonus_mr",
+          "name": "E (RM)",
+          "kind": "stat_bonus",
+          "stat": "magic_resist",
+          "mode": "flat",
+          "data_value": "DefenseBonus"
+        }
       ]
     },
     "R": {

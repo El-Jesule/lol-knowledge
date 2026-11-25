@@ -51,6 +51,30 @@
       ],
       "not_modelled": [
         "Armadura/RM activas (ResistAmount) y curación por daño recibido por enemigos (LeechAmount)"
+      ],
+      "active_effects": [
+        {
+          "id": "spirit_of_dread_armor",
+          "name": "Espíritu de pavor (armadura)",
+          "kind": "stat_bonus",
+          "stat": "armor",
+          "mode": "flat",
+          "data_value": "ResistAmount",
+          "duration_seconds": {
+            "data_value": "BuffDuration"
+          }
+        },
+        {
+          "id": "spirit_of_dread_mr",
+          "name": "Espíritu de pavor (RM)",
+          "kind": "stat_bonus",
+          "stat": "magic_resist",
+          "mode": "flat",
+          "data_value": "ResistAmount",
+          "duration_seconds": {
+            "data_value": "BuffDuration"
+          }
+        }
       ]
     },
     "E": {
@@ -78,6 +102,19 @@
       ],
       "not_modelled": [
         "Velocidad de movimiento progresiva, efecto fantasmal y empuje según distancia"
+      ],
+      "active_effects": [
+        {
+          "id": "e_minmovespeed",
+          "name": "E (VM)",
+          "kind": "stat_bonus",
+          "stat": "move_speed",
+          "mode": "percent_ms",
+          "data_value": "MinMoveSpeed",
+          "duration_seconds": {
+            "data_value": "Duration"
+          }
+        }
       ]
     },
     "R": {

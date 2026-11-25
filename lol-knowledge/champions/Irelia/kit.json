@@ -3,7 +3,7 @@
   "champion": "Irelia",
   "label": "Derivado",
   "game_version": "16.23",
-  "content_version": "16.23.8406595+branch.releases-16-23.content.release",
+  "content_version": "16.23.8418428+branch.releases-16-23.content.release",
   "verified_against": {
     "content_version": "16.23.8406595+branch.releases-16-23.content.release",
     "bin_sha256": "17b9772995e8e1bce6c5eaf98eca5f293ce0f7d368d2c3f31211c865e26e15c3",
@@ -65,7 +65,7 @@
                 ]
               },
               "label": "Derivado",
-              "source": "Characters/Irelia/Spells/IreliaPassiveAbility/IreliaPassive.mSpellCalculations.OnHitBonus (16.23.8406595+branch.releases-16-23.content.release)",
+              "source": "Characters/Irelia/Spells/IreliaPassiveAbility/IreliaPassive.mSpellCalculations.OnHitBonus (16.23.8418428+branch.releases-16-23.content.release)",
               "damage_type_source": "spell_ireliapassive_tooltip <magicDamage>"
             }
           ]
@@ -86,7 +86,7 @@
             "max": 25
           },
           "label": "Derivado",
-          "source": "Characters/Irelia/Spells/IreliaPassiveAbility/IreliaPassive.mSpellCalculations.SingleStackAS (16.23.8406595+branch.releases-16-23.content.release)",
+          "source": "Characters/Irelia/Spells/IreliaPassiveAbility/IreliaPassive.mSpellCalculations.SingleStackAS (16.23.8418428+branch.releases-16-23.content.release)",
           "stat": "attack_speed_bonus",
           "mode": "flat",
           "trigger": "ability_hit",
@@ -141,7 +141,7 @@
             ]
           },
           "label": "Derivado",
-          "source": "Characters/Irelia/Spells/IreliaPassiveAbility/IreliaPassive.mSpellCalculations.OnHitBonus (16.23.8406595+branch.releases-16-23.content.release)",
+          "source": "Characters/Irelia/Spells/IreliaPassiveAbility/IreliaPassive.mSpellCalculations.OnHitBonus (16.23.8418428+branch.releases-16-23.content.release)",
           "trigger": "at_max_stacks",
           "damage_type": "magic",
           "stack_source_id": "ionian_fervor_as"
@@ -188,7 +188,7 @@
                 ]
               },
               "label": "Derivado",
-              "source": "Characters/Irelia/Spells/IreliaQAbility/IreliaQ.mSpellCalculations.ChampionDamage (16.23.8406595+branch.releases-16-23.content.release)",
+              "source": "Characters/Irelia/Spells/IreliaQAbility/IreliaQ.mSpellCalculations.ChampionDamage (16.23.8418428+branch.releases-16-23.content.release)",
               "damage_type_source": "spell_ireliaq_tooltip <physicalDamage>"
             }
           ]
@@ -197,6 +197,35 @@
       "passive_stats": [],
       "not_modelled": [
         "Curación (HealAmount), daño extra a súbditos (MinionDamage), efectos al impactar y reinicio de CD"
+      ],
+      "active_effects": [
+        {
+          "id": "q_healamount",
+          "name": "Q (curación)",
+          "kind": "heal",
+          "formula": {
+            "op": "mul",
+            "operands": [
+              {
+                "op": "by_rank",
+                "values": [
+                  0.09,
+                  0.1,
+                  0.11,
+                  0.12,
+                  0.13
+                ]
+              },
+              {
+                "op": "stat",
+                "stat": "attack_damage",
+                "scope": "total"
+              }
+            ]
+          },
+          "label": "Derivado",
+          "source": "Characters/Irelia/Spells/IreliaQAbility/IreliaQ.mSpellCalculations.HealAmount (16.23.8418428+branch.releases-16-23.content.release)"
+        }
       ]
     },
     "W": {
@@ -253,7 +282,7 @@
                 ]
               },
               "label": "Derivado",
-              "source": "Characters/Irelia/Spells/IreliaWAbility/IreliaW.mSpellCalculations.MinDamageCalc (16.23.8406595+branch.releases-16-23.content.release)",
+              "source": "Characters/Irelia/Spells/IreliaWAbility/IreliaW.mSpellCalculations.MinDamageCalc (16.23.8418428+branch.releases-16-23.content.release)",
               "damage_type_source": "spell_ireliaw_tooltip <physicalDamage>"
             }
           ]
@@ -308,7 +337,7 @@
                 ]
               },
               "label": "Derivado",
-              "source": "Characters/Irelia/Spells/IreliaWAbility/IreliaW.mSpellCalculations.MaxDamageCalc (16.23.8406595+branch.releases-16-23.content.release)",
+              "source": "Characters/Irelia/Spells/IreliaWAbility/IreliaW.mSpellCalculations.MaxDamageCalc (16.23.8418428+branch.releases-16-23.content.release)",
               "damage_type_source": "spell_ireliaw_tooltip <physicalDamage>"
             }
           ]
@@ -317,6 +346,85 @@
       "passive_stats": [],
       "not_modelled": [
         "Reducción de daño físico y mágico durante la canalización (FinalPhysicalDR, FinalMagicDR)"
+      ],
+      "active_effects": [
+        {
+          "id": "defiant_dance_physical_dr",
+          "name": "Danza desafiante (DR físico)",
+          "kind": "damage_taken_modifier",
+          "formula": {
+            "op": "add",
+            "operands": [
+              {
+                "op": "linear_by_level",
+                "min": 40,
+                "max": 70
+              },
+              {
+                "op": "mul",
+                "operands": [
+                  {
+                    "op": "constant",
+                    "value": 0.08
+                  },
+                  {
+                    "op": "stat",
+                    "stat": "ability_power",
+                    "scope": "total"
+                  }
+                ]
+              }
+            ]
+          },
+          "label": "Derivado",
+          "source": "Characters/Irelia/Spells/IreliaWAbility/IreliaW.mSpellCalculations.FinalPhysicalDR (16.23.8418428+branch.releases-16-23.content.release)",
+          "mode": "percent",
+          "damage_type": "physical",
+          "duration_seconds": 1.5
+        },
+        {
+          "id": "defiant_dance_magic_dr",
+          "name": "Danza desafiante (DR mágico)",
+          "kind": "damage_taken_modifier",
+          "formula": {
+            "op": "mul",
+            "operands": [
+              {
+                "op": "add",
+                "operands": [
+                  {
+                    "op": "linear_by_level",
+                    "min": 40,
+                    "max": 70
+                  },
+                  {
+                    "op": "mul",
+                    "operands": [
+                      {
+                        "op": "constant",
+                        "value": 0.08
+                      },
+                      {
+                        "op": "stat",
+                        "stat": "ability_power",
+                        "scope": "total"
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "op": "constant",
+                "value": 0.5
+              }
+            ]
+          },
+          "label": "Derivado",
+          "source": "Characters/Irelia/Spells/IreliaWAbility/IreliaW.mSpellCalculations.FinalMagicDR (16.23.8418428+branch.releases-16-23.content.release)",
+          "mode": "percent",
+          "damage_type": "magic",
+          "duration_seconds": 1.5
+        }
       ]
     },
     "E": {
@@ -359,7 +467,7 @@
                 ]
               },
               "label": "Derivado",
-              "source": "Characters/Irelia/Spells/IreliaEAbility/IreliaE.mSpellCalculations.TotalDamage (16.23.8406595+branch.releases-16-23.content.release)",
+              "source": "Characters/Irelia/Spells/IreliaEAbility/IreliaE.mSpellCalculations.TotalDamage (16.23.8418428+branch.releases-16-23.content.release)",
               "damage_type_source": "spell_ireliae_tooltip <magicDamage>"
             }
           ]
@@ -408,7 +516,7 @@
                 ]
               },
               "label": "Derivado",
-              "source": "Characters/Irelia/Spells/IreliaRAbility/IreliaR.mSpellCalculations.MissileDamage (16.23.8406595+branch.releases-16-23.content.release)",
+              "source": "Characters/Irelia/Spells/IreliaRAbility/IreliaR.mSpellCalculations.MissileDamage (16.23.8418428+branch.releases-16-23.content.release)",
               "damage_type_source": "spell_ireliar_tooltip <magicDamage>"
             }
           ]
@@ -447,7 +555,7 @@
                 ]
               },
               "label": "Derivado",
-              "source": "Characters/Irelia/Spells/IreliaRAbility/IreliaR.mSpellCalculations.ZoneDamage (16.23.8406595+branch.releases-16-23.content.release)",
+              "source": "Characters/Irelia/Spells/IreliaRAbility/IreliaR.mSpellCalculations.ZoneDamage (16.23.8418428+branch.releases-16-23.content.release)",
               "damage_type_source": "spell_ireliar_tooltip <magicDamage>"
             }
           ]

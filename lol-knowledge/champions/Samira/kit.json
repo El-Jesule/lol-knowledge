@@ -3,7 +3,7 @@
   "champion": "Samira",
   "label": "Derivado",
   "game_version": "16.23",
-  "content_version": "16.23.8406595+branch.releases-16-23.content.release",
+  "content_version": "16.23.8418428+branch.releases-16-23.content.release",
   "verified_against": {
     "content_version": "16.23.8406595+branch.releases-16-23.content.release",
     "bin_sha256": "ba2a11d8fb2889dc76211dab7c43dfc696a8ffa70fa3d0c4e6cc4ef201c415cb",
@@ -66,7 +66,7 @@
                 ]
               },
               "label": "Derivado",
-              "source": "Characters/Samira/Spells/SamiraPassiveAbility/SamiraPassive.mSpellCalculations.BonusMeleeDamage (16.23.8406595+branch.releases-16-23.content.release)",
+              "source": "Characters/Samira/Spells/SamiraPassiveAbility/SamiraPassive.mSpellCalculations.BonusMeleeDamage (16.23.8418428+branch.releases-16-23.content.release)",
               "damage_type_source": "spell_samirapassive_tooltip <magicDamage>"
             }
           ]
@@ -130,7 +130,7 @@
                 ]
               },
               "label": "Derivado",
-              "source": "Characters/Samira/Spells/SamiraPassiveAbility/SamiraPassive.mSpellCalculations.EmpoweredMeleeDamageTooltip (16.23.8406595+branch.releases-16-23.content.release)",
+              "source": "Characters/Samira/Spells/SamiraPassiveAbility/SamiraPassive.mSpellCalculations.EmpoweredMeleeDamageTooltip (16.23.8418428+branch.releases-16-23.content.release)",
               "damage_type_source": "spell_samirapassive_tooltip <magicDamage>"
             }
           ]
@@ -169,7 +169,7 @@
             ]
           },
           "label": "Derivado",
-          "source": "Characters/Samira/Spells/SamiraPassiveAbility/SamiraPassive.mSpellCalculations.MSBonusNew (16.23.8406595+branch.releases-16-23.content.release)",
+          "source": "Characters/Samira/Spells/SamiraPassiveAbility/SamiraPassive.mSpellCalculations.MSBonusNew (16.23.8418428+branch.releases-16-23.content.release)",
           "stat": "move_speed",
           "mode": "percent_ms",
           "input_name": "samira_style_grade",
@@ -217,7 +217,7 @@
                 ]
               },
               "label": "Derivado",
-              "source": "Characters/Samira/Spells/SamiraQAbility/SamiraQ.mSpellCalculations.DamageCalc (16.23.8406595+branch.releases-16-23.content.release)",
+              "source": "Characters/Samira/Spells/SamiraQAbility/SamiraQ.mSpellCalculations.DamageCalc (16.23.8418428+branch.releases-16-23.content.release)",
               "damage_type_source": "spell_samiraq_tooltip <physicalDamage>"
             }
           ]
@@ -313,7 +313,7 @@
                 ]
               },
               "label": "Derivado",
-              "source": "Characters/Samira/Spells/SamiraQAbility/SamiraQ.mSpellCalculations.CriticalDamageCalc (16.23.8406595+branch.releases-16-23.content.release)",
+              "source": "Characters/Samira/Spells/SamiraQAbility/SamiraQ.mSpellCalculations.CriticalDamageCalc (16.23.8418428+branch.releases-16-23.content.release)",
               "damage_type_source": "spell_samiraq_tooltipextendedbelowline <physicalDamage>"
             }
           ]
@@ -364,7 +364,7 @@
                 ]
               },
               "label": "Derivado",
-              "source": "Characters/Samira/Spells/SamiraWAbility/SamiraW.mSpellCalculations.DamageCalc (16.23.8406595+branch.releases-16-23.content.release)",
+              "source": "Characters/Samira/Spells/SamiraWAbility/SamiraW.mSpellCalculations.DamageCalc (16.23.8418428+branch.releases-16-23.content.release)",
               "damage_type_source": "spell_samiraw_tooltip <physicalDamage>"
             }
           ]
@@ -405,7 +405,7 @@
                 ]
               },
               "label": "Derivado",
-              "source": "Characters/Samira/Spells/SamiraWAbility/SamiraW.mSpellCalculations.DamageCalc (16.23.8406595+branch.releases-16-23.content.release)",
+              "source": "Characters/Samira/Spells/SamiraWAbility/SamiraW.mSpellCalculations.DamageCalc (16.23.8418428+branch.releases-16-23.content.release)",
               "damage_type_source": "spell_samiraw_tooltip <physicalDamage>"
             },
             {
@@ -440,7 +440,7 @@
                 ]
               },
               "label": "Derivado",
-              "source": "Characters/Samira/Spells/SamiraWAbility/SamiraW.mSpellCalculations.DamageCalc (16.23.8406595+branch.releases-16-23.content.release)",
+              "source": "Characters/Samira/Spells/SamiraWAbility/SamiraW.mSpellCalculations.DamageCalc (16.23.8418428+branch.releases-16-23.content.release)",
               "damage_type_source": "spell_samiraw_tooltip <physicalDamage>"
             }
           ]
@@ -491,7 +491,7 @@
                 ]
               },
               "label": "Derivado",
-              "source": "Characters/Samira/Spells/SamiraEAbility/SamiraE.mSpellCalculations.DashDamage (16.23.8406595+branch.releases-16-23.content.release)",
+              "source": "Characters/Samira/Spells/SamiraEAbility/SamiraE.mSpellCalculations.DashDamage (16.23.8418428+branch.releases-16-23.content.release)",
               "damage_type_source": "spell_samirae_tooltip <magicDamage>"
             }
           ]
@@ -500,6 +500,28 @@
       "passive_stats": [],
       "not_modelled": [
         "Velocidad de ataque temporal y reinicio de enfriamiento por derribo"
+      ],
+      "active_effects": [
+        {
+          "id": "e_bonusattackspeed",
+          "name": "E (VA)",
+          "kind": "stat_bonus",
+          "formula": {
+            "op": "by_rank",
+            "values": [
+              20,
+              25,
+              30,
+              35,
+              40
+            ]
+          },
+          "label": "Derivado",
+          "source": "Characters/Samira/Spells/SamiraEAbility/SamiraE.DataValues.BonusAttackSpeed (16.23.8418428+branch.releases-16-23.content.release)",
+          "stat": "attack_speed_bonus",
+          "mode": "flat",
+          "duration_seconds": 5
+        }
       ]
     },
     "R": {
@@ -540,7 +562,7 @@
                 ]
               },
               "label": "Derivado",
-              "source": "Characters/Samira/Spells/SamiraRAbility/SamiraR.mSpellCalculations.DamageCalc (16.23.8406595+branch.releases-16-23.content.release)",
+              "source": "Characters/Samira/Spells/SamiraRAbility/SamiraR.mSpellCalculations.DamageCalc (16.23.8418428+branch.releases-16-23.content.release)",
               "damage_type_source": "spell_samirar_tooltip <physicalDamage>"
             }
           ]
@@ -579,7 +601,7 @@
                 ]
               },
               "label": "Derivado",
-              "source": "Characters/Samira/Spells/SamiraRAbility/SamiraR.mSpellCalculations.DamageCalc (16.23.8406595+branch.releases-16-23.content.release)",
+              "source": "Characters/Samira/Spells/SamiraRAbility/SamiraR.mSpellCalculations.DamageCalc (16.23.8418428+branch.releases-16-23.content.release)",
               "damage_type_source": "spell_samirar_tooltip <physicalDamage>"
             },
             {
@@ -612,7 +634,7 @@
                 ]
               },
               "label": "Derivado",
-              "source": "Characters/Samira/Spells/SamiraRAbility/SamiraR.mSpellCalculations.DamageCalc (16.23.8406595+branch.releases-16-23.content.release)",
+              "source": "Characters/Samira/Spells/SamiraRAbility/SamiraR.mSpellCalculations.DamageCalc (16.23.8418428+branch.releases-16-23.content.release)",
               "damage_type_source": "spell_samirar_tooltip <physicalDamage>"
             },
             {
@@ -645,7 +667,7 @@
                 ]
               },
               "label": "Derivado",
-              "source": "Characters/Samira/Spells/SamiraRAbility/SamiraR.mSpellCalculations.DamageCalc (16.23.8406595+branch.releases-16-23.content.release)",
+              "source": "Characters/Samira/Spells/SamiraRAbility/SamiraR.mSpellCalculations.DamageCalc (16.23.8418428+branch.releases-16-23.content.release)",
               "damage_type_source": "spell_samirar_tooltip <physicalDamage>"
             },
             {
@@ -678,7 +700,7 @@
                 ]
               },
               "label": "Derivado",
-              "source": "Characters/Samira/Spells/SamiraRAbility/SamiraR.mSpellCalculations.DamageCalc (16.23.8406595+branch.releases-16-23.content.release)",
+              "source": "Characters/Samira/Spells/SamiraRAbility/SamiraR.mSpellCalculations.DamageCalc (16.23.8418428+branch.releases-16-23.content.release)",
               "damage_type_source": "spell_samirar_tooltip <physicalDamage>"
             },
             {
@@ -711,7 +733,7 @@
                 ]
               },
               "label": "Derivado",
-              "source": "Characters/Samira/Spells/SamiraRAbility/SamiraR.mSpellCalculations.DamageCalc (16.23.8406595+branch.releases-16-23.content.release)",
+              "source": "Characters/Samira/Spells/SamiraRAbility/SamiraR.mSpellCalculations.DamageCalc (16.23.8418428+branch.releases-16-23.content.release)",
               "damage_type_source": "spell_samirar_tooltip <physicalDamage>"
             },
             {
@@ -744,7 +766,7 @@
                 ]
               },
               "label": "Derivado",
-              "source": "Characters/Samira/Spells/SamiraRAbility/SamiraR.mSpellCalculations.DamageCalc (16.23.8406595+branch.releases-16-23.content.release)",
+              "source": "Characters/Samira/Spells/SamiraRAbility/SamiraR.mSpellCalculations.DamageCalc (16.23.8418428+branch.releases-16-23.content.release)",
               "damage_type_source": "spell_samirar_tooltip <physicalDamage>"
             },
             {
@@ -777,7 +799,7 @@
                 ]
               },
               "label": "Derivado",
-              "source": "Characters/Samira/Spells/SamiraRAbility/SamiraR.mSpellCalculations.DamageCalc (16.23.8406595+branch.releases-16-23.content.release)",
+              "source": "Characters/Samira/Spells/SamiraRAbility/SamiraR.mSpellCalculations.DamageCalc (16.23.8418428+branch.releases-16-23.content.release)",
               "damage_type_source": "spell_samirar_tooltip <physicalDamage>"
             },
             {
@@ -810,7 +832,7 @@
                 ]
               },
               "label": "Derivado",
-              "source": "Characters/Samira/Spells/SamiraRAbility/SamiraR.mSpellCalculations.DamageCalc (16.23.8406595+branch.releases-16-23.content.release)",
+              "source": "Characters/Samira/Spells/SamiraRAbility/SamiraR.mSpellCalculations.DamageCalc (16.23.8418428+branch.releases-16-23.content.release)",
               "damage_type_source": "spell_samirar_tooltip <physicalDamage>"
             },
             {
@@ -843,7 +865,7 @@
                 ]
               },
               "label": "Derivado",
-              "source": "Characters/Samira/Spells/SamiraRAbility/SamiraR.mSpellCalculations.DamageCalc (16.23.8406595+branch.releases-16-23.content.release)",
+              "source": "Characters/Samira/Spells/SamiraRAbility/SamiraR.mSpellCalculations.DamageCalc (16.23.8418428+branch.releases-16-23.content.release)",
               "damage_type_source": "spell_samirar_tooltip <physicalDamage>"
             },
             {
@@ -876,7 +898,7 @@
                 ]
               },
               "label": "Derivado",
-              "source": "Characters/Samira/Spells/SamiraRAbility/SamiraR.mSpellCalculations.DamageCalc (16.23.8406595+branch.releases-16-23.content.release)",
+              "source": "Characters/Samira/Spells/SamiraRAbility/SamiraR.mSpellCalculations.DamageCalc (16.23.8418428+branch.releases-16-23.content.release)",
               "damage_type_source": "spell_samirar_tooltip <physicalDamage>"
             }
           ]

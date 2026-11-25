@@ -3,7 +3,7 @@
   "champion": "Thresh",
   "label": "Derivado",
   "game_version": "16.23",
-  "content_version": "16.23.8406595+branch.releases-16-23.content.release",
+  "content_version": "16.23.8418428+branch.releases-16-23.content.release",
   "verified_against": {
     "content_version": "16.23.8406595+branch.releases-16-23.content.release",
     "bin_sha256": "1a40c12025e241bfa91409fefcb4c79af5f4b89018bde0c98cee33871847e583",
@@ -28,7 +28,7 @@
             "value": 1
           },
           "label": "Derivado",
-          "source": "Characters/Thresh/Spells/ThreshPassiveSoulsAbility/ThreshPassiveSouls.DataValues.StatValuePerSoul (16.23.8406595+branch.releases-16-23.content.release)",
+          "source": "Characters/Thresh/Spells/ThreshPassiveSoulsAbility/ThreshPassiveSouls.DataValues.StatValuePerSoul (16.23.8418428+branch.releases-16-23.content.release)",
           "stat": "armor",
           "mode": "flat",
           "input_name": "souls",
@@ -43,7 +43,7 @@
             "value": 1
           },
           "label": "Derivado",
-          "source": "Characters/Thresh/Spells/ThreshPassiveSoulsAbility/ThreshPassiveSouls.DataValues.StatValuePerSoul (16.23.8406595+branch.releases-16-23.content.release)",
+          "source": "Characters/Thresh/Spells/ThreshPassiveSoulsAbility/ThreshPassiveSouls.DataValues.StatValuePerSoul (16.23.8418428+branch.releases-16-23.content.release)",
           "stat": "ability_power",
           "mode": "flat",
           "input_name": "souls",
@@ -91,7 +91,7 @@
                 ]
               },
               "label": "Derivado",
-              "source": "Characters/Thresh/Spells/ThreshQAbility/ThreshQ.mSpellCalculations.TotalDamage (16.23.8406595+branch.releases-16-23.content.release)",
+              "source": "Characters/Thresh/Spells/ThreshQAbility/ThreshQ.mSpellCalculations.TotalDamage (16.23.8418428+branch.releases-16-23.content.release)",
               "damage_type_source": "spell_threshq_tooltip <magicDamage>"
             }
           ]
@@ -109,6 +109,45 @@
       "passive_stats": [],
       "not_modelled": [
         "Farol de desplazamiento aliado y escudo (TotalShield)"
+      ],
+      "active_effects": [
+        {
+          "id": "w_totalshield",
+          "name": "W (escudo)",
+          "kind": "shield",
+          "formula": {
+            "op": "add",
+            "operands": [
+              {
+                "op": "by_rank",
+                "values": [
+                  50,
+                  70,
+                  90,
+                  110,
+                  130
+                ]
+              },
+              {
+                "op": "mul",
+                "operands": [
+                  {
+                    "op": "input",
+                    "name": "souls",
+                    "default": 0
+                  },
+                  {
+                    "op": "constant",
+                    "value": 2
+                  }
+                ]
+              }
+            ]
+          },
+          "label": "Derivado",
+          "source": "Characters/Thresh/Spells/ThreshWAbility/ThreshW.mSpellCalculations.TotalShield (16.23.8418428+branch.releases-16-23.content.release)",
+          "duration_seconds": 4
+        }
       ]
     },
     "E": {
@@ -151,7 +190,7 @@
                 ]
               },
               "label": "Derivado",
-              "source": "Characters/Thresh/Spells/ThreshEAbility/ThreshE.mSpellCalculations.TotalDamage (16.23.8406595+branch.releases-16-23.content.release)",
+              "source": "Characters/Thresh/Spells/ThreshEAbility/ThreshE.mSpellCalculations.TotalDamage (16.23.8418428+branch.releases-16-23.content.release)",
               "damage_type_source": "spell_threshe_tooltip <magicDamage>"
             }
           ]
@@ -202,7 +241,7 @@
                 ]
               },
               "label": "Derivado",
-              "source": "Characters/Thresh/Spells/ThreshEAbility/ThreshE.mSpellCalculations.PAttackDamageMax (16.23.8406595+branch.releases-16-23.content.release)",
+              "source": "Characters/Thresh/Spells/ThreshEAbility/ThreshE.mSpellCalculations.PAttackDamageMax (16.23.8418428+branch.releases-16-23.content.release)",
               "damage_type_source": "spell_threshe_tooltip <magicDamage>"
             }
           ]
@@ -251,7 +290,7 @@
                 ]
               },
               "label": "Derivado",
-              "source": "Characters/Thresh/Spells/ThreshRPentaAbility/ThreshRPenta.mSpellCalculations.TotalDamage (16.23.8406595+branch.releases-16-23.content.release)",
+              "source": "Characters/Thresh/Spells/ThreshRPentaAbility/ThreshRPenta.mSpellCalculations.TotalDamage (16.23.8418428+branch.releases-16-23.content.release)",
               "damage_type_source": "spell_threshrpenta_tooltip <magicDamage>"
             }
           ]

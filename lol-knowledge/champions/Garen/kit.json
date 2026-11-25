@@ -3,7 +3,7 @@
   "champion": "Garen",
   "label": "Derivado",
   "game_version": "16.23",
-  "content_version": "16.23.8406595+branch.releases-16-23.content.release",
+  "content_version": "16.23.8418428+branch.releases-16-23.content.release",
   "verified_against": {
     "content_version": "16.23.8406595+branch.releases-16-23.content.release",
     "bin_sha256": "6b90c0d9f5c40564363adc6047b4e5ca35eaecc1932d393e4fd2d16ce049c0c2",
@@ -30,7 +30,7 @@
             "value": 0.2
           },
           "label": "Derivado",
-          "source": "Characters/Garen/Spells/GarenWAbility/GarenW.DataValues.ResistGainOnKill (16.23.8406595+branch.releases-16-23.content.release)",
+          "source": "Characters/Garen/Spells/GarenWAbility/GarenW.DataValues.ResistGainOnKill (16.23.8418428+branch.releases-16-23.content.release)",
           "stat": "armor",
           "mode": "flat",
           "input_name": "courage_stacks",
@@ -46,7 +46,7 @@
             "value": 0.2
           },
           "label": "Derivado",
-          "source": "Characters/Garen/Spells/GarenWAbility/GarenW.DataValues.ResistGainOnKill (16.23.8406595+branch.releases-16-23.content.release)",
+          "source": "Characters/Garen/Spells/GarenWAbility/GarenW.DataValues.ResistGainOnKill (16.23.8418428+branch.releases-16-23.content.release)",
           "stat": "magic_resist",
           "mode": "flat",
           "input_name": "courage_stacks",
@@ -95,7 +95,7 @@
                 ]
               },
               "label": "Derivado",
-              "source": "Characters/Garen/Spells/GarenQAbility/GarenQ.mSpellCalculations.TotalDamage (16.23.8406595+branch.releases-16-23.content.release)",
+              "source": "Characters/Garen/Spells/GarenQAbility/GarenQ.mSpellCalculations.TotalDamage (16.23.8418428+branch.releases-16-23.content.release)",
               "damage_type_source": "spell_garenq_tooltip <physicalDamage>"
             }
           ]
@@ -104,6 +104,31 @@
       "passive_stats": [],
       "not_modelled": [
         "Limpieza de ralentizaciones, velocidad de movimiento, silencio y ataque básico aparte"
+      ],
+      "active_effects": [
+        {
+          "id": "q_movementspeedamount",
+          "name": "Q (VM)",
+          "kind": "stat_bonus",
+          "formula": {
+            "op": "constant",
+            "value": 0.35
+          },
+          "label": "Derivado",
+          "source": "Characters/Garen/Spells/GarenQAbility/GarenQ.DataValues.MovementSpeedAmount (16.23.8418428+branch.releases-16-23.content.release)",
+          "stat": "move_speed",
+          "mode": "percent_ms",
+          "duration_formula": {
+            "op": "by_rank",
+            "values": [
+              1.4,
+              1.95,
+              2.5,
+              3.05,
+              3.6
+            ]
+          }
+        }
       ]
     },
     "W": {
@@ -114,6 +139,64 @@
       "not_modelled": [
         "Armadura y RM acumulables por asesinatos (ResistsForTooltip)",
         "Reducción de daño, tenacidad y escudo (TotalShield)"
+      ],
+      "active_effects": [
+        {
+          "id": "courage_dr",
+          "name": "Coraje (DR)",
+          "kind": "damage_taken_modifier",
+          "formula": {
+            "op": "by_rank",
+            "values": [
+              25,
+              29,
+              33,
+              37,
+              41
+            ]
+          },
+          "label": "Derivado",
+          "source": "Characters/Garen/Spells/GarenWAbility/GarenW.DataValues.DRPercent (16.23.8418428+branch.releases-16-23.content.release)",
+          "mode": "percent",
+          "duration_seconds": 4
+        },
+        {
+          "id": "courage_shield",
+          "name": "Coraje (escudo)",
+          "kind": "shield",
+          "formula": {
+            "op": "add",
+            "operands": [
+              {
+                "op": "by_rank",
+                "values": [
+                  65,
+                  85,
+                  105,
+                  125,
+                  145
+                ]
+              },
+              {
+                "op": "mul",
+                "operands": [
+                  {
+                    "op": "constant",
+                    "value": 0.18
+                  },
+                  {
+                    "op": "stat",
+                    "stat": "health",
+                    "scope": "bonus"
+                  }
+                ]
+              }
+            ]
+          },
+          "label": "Derivado",
+          "source": "Characters/Garen/Spells/GarenWAbility/GarenW.mSpellCalculations.TotalShield (16.23.8418428+branch.releases-16-23.content.release)",
+          "duration_seconds": 4
+        }
       ]
     },
     "E": {
@@ -162,7 +245,7 @@
                 ]
               },
               "label": "Derivado",
-              "source": "Characters/Garen/Spells/GarenEAbility/GarenE.mSpellCalculations.TotalDamage (16.23.8406595+branch.releases-16-23.content.release)",
+              "source": "Characters/Garen/Spells/GarenEAbility/GarenE.mSpellCalculations.TotalDamage (16.23.8418428+branch.releases-16-23.content.release)",
               "damage_type_source": "spell_garene_tooltip <physicalDamage>"
             }
           ]
@@ -227,7 +310,7 @@
                 ]
               },
               "label": "Derivado",
-              "source": "Characters/Garen/Spells/GarenEAbility/GarenE · TotalDamage × (1 + DataValues.NearestEnemyBonus) (16.23.8406595+branch.releases-16-23.content.release)",
+              "source": "Characters/Garen/Spells/GarenEAbility/GarenE · TotalDamage × (1 + DataValues.NearestEnemyBonus) (16.23.8418428+branch.releases-16-23.content.release)",
               "damage_type_source": "spell_garene_tooltip <physicalDamage>"
             }
           ]
@@ -288,7 +371,7 @@
                 ]
               },
               "label": "Derivado",
-              "source": "Characters/Garen/Spells/GarenRAbility/GarenR · BaseDamage + ExecuteDamage × vida que falta del objetivo (16.23.8406595+branch.releases-16-23.content.release)",
+              "source": "Characters/Garen/Spells/GarenRAbility/GarenR · BaseDamage + ExecuteDamage × vida que falta del objetivo (16.23.8418428+branch.releases-16-23.content.release)",
               "damage_type_source": "spell_garenr_tooltip <trueDamage>"
             }
           ]

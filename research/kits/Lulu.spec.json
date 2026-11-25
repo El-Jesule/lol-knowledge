@@ -69,6 +69,31 @@
       "tooltip": "spell_luluw_tooltip",
       "not_modelled": [
         "Polimorfia sobre enemigos o velocidad de movimiento (TotalMS) y ataque sobre aliados"
+      ],
+      "active_effects": [
+        {
+          "id": "whimsy_ms",
+          "name": "Banal (VM %)",
+          "kind": "stat_bonus",
+          "stat": "move_speed",
+          "mode": "percent_ms",
+          "calculation": "TotalMS",
+          "duration_seconds": {
+            "data_value": "MSDuration"
+          }
+        },
+        {
+          "id": "whimsy_as",
+          "name": "Banal (VA)",
+          "kind": "stat_bonus",
+          "stat": "attack_speed_bonus",
+          "mode": "flat",
+          "data_value": "ASBonus",
+          "scale": 100,
+          "duration_seconds": {
+            "data_value": "MSDuration"
+          }
+        }
       ]
     },
     "E": {
@@ -87,6 +112,17 @@
       ],
       "not_modelled": [
         "Visión verdadera sobre enemigo y escudo sobre aliado (TotalShield)"
+      ],
+      "active_effects": [
+        {
+          "id": "help_pix_shield",
+          "name": "¡Ayuda, Pix! (escudo)",
+          "kind": "shield",
+          "calculation": "TotalShield",
+          "duration_seconds": {
+            "data_value": "ShieldDuration"
+          }
+        }
       ]
     },
     "R": {
@@ -94,6 +130,19 @@
       "tooltip": "spell_lulur_tooltip",
       "not_modelled": [
         "Vida adicional temporal (TotalBonusHealth), lanzamiento por los aires y aura de ralentización"
+      ],
+      "active_effects": [
+        {
+          "id": "wild_growth_hp",
+          "name": "Crecimiento salvaje (vida máxima)",
+          "kind": "stat_bonus",
+          "stat": "health",
+          "mode": "flat",
+          "calculation": "TotalBonusHealth",
+          "duration_seconds": {
+            "data_value": "BuffDuration"
+          }
+        }
       ]
     }
   }

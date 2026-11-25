@@ -39,6 +39,20 @@
       "tooltip": "spell_pykew_tooltip",
       "not_modelled": [
         "Camuflaje y velocidad de movimiento escalada con letalidad (MoveSpeed)"
+      ],
+      "active_effects": [
+        {
+          "id": "w_movespeed",
+          "name": "W (VM)",
+          "kind": "stat_bonus",
+          "stat": "move_speed",
+          "mode": "percent_ms",
+          "scale": 0.01,
+          "calculation": "MoveSpeed",
+          "duration_seconds": {
+            "data_value": "CamoDuration"
+          }
+        }
       ]
     },
     "E": {

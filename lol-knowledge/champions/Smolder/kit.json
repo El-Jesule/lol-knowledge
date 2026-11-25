@@ -3,7 +3,7 @@
   "champion": "Smolder",
   "label": "Derivado",
   "game_version": "16.23",
-  "content_version": "16.23.8406595+branch.releases-16-23.content.release",
+  "content_version": "16.23.8418428+branch.releases-16-23.content.release",
   "verified_against": {
     "content_version": "16.23.8406595+branch.releases-16-23.content.release",
     "bin_sha256": "37a8886a56a4c8a2f7912151a30cfdd801186fc78a511c7e72fe6932cc82140a",
@@ -61,7 +61,7 @@
                 ]
               },
               "label": "Derivado",
-              "source": "Characters/Smolder/Spells/SmolderQAbility/SmolderQ.mSpellCalculations.TotalDamage (16.23.8406595+branch.releases-16-23.content.release)",
+              "source": "Characters/Smolder/Spells/SmolderQAbility/SmolderQ.mSpellCalculations.TotalDamage (16.23.8418428+branch.releases-16-23.content.release)",
               "damage_type_source": "spell_smolderq_tooltip2 <physicalDamage>"
             }
           ]
@@ -117,7 +117,7 @@
                 ]
               },
               "label": "Derivado",
-              "source": "Characters/Smolder/Spells/SmolderQAbility/SmolderQ · mSpellCalculations.Tier3_Burn × vida máxima del objetivo (--input dragon_practice_stacks) (16.23.8406595+branch.releases-16-23.content.release)",
+              "source": "Characters/Smolder/Spells/SmolderQAbility/SmolderQ · mSpellCalculations.Tier3_Burn × vida máxima del objetivo (--input dragon_practice_stacks) (16.23.8418428+branch.releases-16-23.content.release)",
               "damage_type_source": "spell_smolderq_tooltip2 <trueDamage>"
             }
           ]
@@ -168,7 +168,7 @@
                 ]
               },
               "label": "Derivado",
-              "source": "Characters/Smolder/Spells/SmolderWAbility/SmolderW.mSpellCalculations.InitialDamage (16.23.8406595+branch.releases-16-23.content.release)",
+              "source": "Characters/Smolder/Spells/SmolderWAbility/SmolderW.mSpellCalculations.InitialDamage (16.23.8418428+branch.releases-16-23.content.release)",
               "damage_type_source": "spell_smolderw_tooltip <physicalDamage>"
             }
           ]
@@ -223,7 +223,7 @@
                 ]
               },
               "label": "Derivado",
-              "source": "Characters/Smolder/Spells/SmolderWAbility/SmolderW.mSpellCalculations.ExplosionDamage (16.23.8406595+branch.releases-16-23.content.release)",
+              "source": "Characters/Smolder/Spells/SmolderWAbility/SmolderW.mSpellCalculations.ExplosionDamage (16.23.8418428+branch.releases-16-23.content.release)",
               "damage_type_source": "spell_smolderw_tooltip <physicalDamage>"
             }
           ]
@@ -274,7 +274,7 @@
                 ]
               },
               "label": "Derivado",
-              "source": "Characters/Smolder/Spells/SmolderEAbility/SmolderE.mSpellCalculations.DamagePerHit (16.23.8406595+branch.releases-16-23.content.release)",
+              "source": "Characters/Smolder/Spells/SmolderEAbility/SmolderE.mSpellCalculations.DamagePerHit (16.23.8418428+branch.releases-16-23.content.release)",
               "damage_type_source": "spell_smoldere_tooltip <physicalDamage>"
             }
           ]
@@ -283,6 +283,22 @@
       "passive_stats": [],
       "not_modelled": [
         "Número total de disparos (TotalNumberOfAttacks), vuelo sobre terreno y velocidad de movimiento"
+      ],
+      "active_effects": [
+        {
+          "id": "e_movespeed",
+          "name": "E (VM)",
+          "kind": "stat_bonus",
+          "formula": {
+            "op": "constant",
+            "value": 0.75
+          },
+          "label": "Derivado",
+          "source": "Characters/Smolder/Spells/SmolderEAbility/SmolderE.DataValues.MoveSpeed (16.23.8418428+branch.releases-16-23.content.release)",
+          "stat": "move_speed",
+          "mode": "percent_ms",
+          "duration_seconds": 1.25
+        }
       ]
     },
     "R": {
@@ -337,7 +353,7 @@
                 ]
               },
               "label": "Derivado",
-              "source": "Characters/Smolder/Spells/SmolderRAbility/SmolderR.mSpellCalculations.TotalDamage (16.23.8406595+branch.releases-16-23.content.release)",
+              "source": "Characters/Smolder/Spells/SmolderRAbility/SmolderR.mSpellCalculations.TotalDamage (16.23.8418428+branch.releases-16-23.content.release)",
               "damage_type_source": "spell_smolderr_tooltip <physicalDamage>"
             }
           ]
@@ -399,7 +415,7 @@
                 ]
               },
               "label": "Derivado",
-              "source": "Characters/Smolder/Spells/SmolderRAbility/SmolderR.mSpellCalculations.TooltipOnly_TotalSweetspotDamage (16.23.8406595+branch.releases-16-23.content.release)",
+              "source": "Characters/Smolder/Spells/SmolderRAbility/SmolderR.mSpellCalculations.TooltipOnly_TotalSweetspotDamage (16.23.8418428+branch.releases-16-23.content.release)",
               "damage_type_source": "spell_smolderr_tooltip <physicalDamage>"
             }
           ]
@@ -408,6 +424,56 @@
       "passive_stats": [],
       "not_modelled": [
         "Curación propia al pasar por la llama (MomHealCalc) y ralentización central"
+      ],
+      "active_effects": [
+        {
+          "id": "r_momhealcalc",
+          "name": "R (curación)",
+          "kind": "heal",
+          "formula": {
+            "op": "add",
+            "operands": [
+              {
+                "op": "by_rank",
+                "values": [
+                  100,
+                  175,
+                  250
+                ]
+              },
+              {
+                "op": "mul",
+                "operands": [
+                  {
+                    "op": "constant",
+                    "value": 0.75
+                  },
+                  {
+                    "op": "stat",
+                    "stat": "attack_damage",
+                    "scope": "bonus"
+                  }
+                ]
+              },
+              {
+                "op": "mul",
+                "operands": [
+                  {
+                    "op": "constant",
+                    "value": 0.75
+                  },
+                  {
+                    "op": "stat",
+                    "stat": "ability_power",
+                    "scope": "total"
+                  }
+                ]
+              }
+            ]
+          },
+          "label": "Derivado",
+          "source": "Characters/Smolder/Spells/SmolderRAbility/SmolderR.mSpellCalculations.MomHealCalc (16.23.8418428+branch.releases-16-23.content.release)"
+        }
       ]
     }
   }

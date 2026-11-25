@@ -92,6 +92,17 @@
       "tooltip": "spell_rivenfeint_tooltip",
       "not_modelled": [
         "Escudo (TotalShield) y desplazamiento"
+      ],
+      "active_effects": [
+        {
+          "id": "valor_shield",
+          "name": "Valor (escudo)",
+          "kind": "shield",
+          "calculation": "TotalShield",
+          "duration_seconds": {
+            "data_value": "ShieldDuration"
+          }
+        }
       ]
     },
     "R": {
@@ -120,6 +131,20 @@
       "not_modelled": [
         "Mejora activa de +20 % DA (BonusAD) y alcance adicional durante 15 s",
         "Interpolación continua de Cuchillada de viento según vida perdida"
+      ],
+      "active_effects": [
+        {
+          "id": "blade_of_the_exile_ad",
+          "name": "Hoja del exilio (AD %)",
+          "kind": "stat_bonus",
+          "stat": "attack_damage",
+          "mode": "percent",
+          "data_value": "PercentBonusAD",
+          "scale": 100,
+          "duration_seconds": {
+            "data_value": "Duration"
+          }
+        }
       ]
     }
   }

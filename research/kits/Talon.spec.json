@@ -61,6 +61,15 @@
       ],
       "not_modelled": [
         "Golpe crítico cuerpo a cuerpo (CriticalDamage) y curación/devolución de CD al matar"
+      ],
+      "active_effects": [
+        {
+          "id": "q_totalhealing",
+          "name": "Q (curación)",
+          "kind": "heal",
+          "condition": "target_killed",
+          "calculation": "TotalHealing"
+        }
       ]
     },
     "W": {
@@ -137,6 +146,19 @@
       ],
       "not_modelled": [
         "Invisibilidad y velocidad de movimiento"
+      ],
+      "active_effects": [
+        {
+          "id": "r_movespeed",
+          "name": "R (VM)",
+          "kind": "stat_bonus",
+          "stat": "move_speed",
+          "mode": "percent_ms",
+          "data_value": "MoveSpeed",
+          "duration_seconds": {
+            "data_value": "Duration"
+          }
+        }
       ]
     }
   }

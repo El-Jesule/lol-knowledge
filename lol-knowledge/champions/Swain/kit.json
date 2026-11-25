@@ -3,7 +3,7 @@
   "champion": "Swain",
   "label": "Derivado",
   "game_version": "16.23",
-  "content_version": "16.23.8406595+branch.releases-16-23.content.release",
+  "content_version": "16.23.8418428+branch.releases-16-23.content.release",
   "verified_against": {
     "content_version": "16.23.8406595+branch.releases-16-23.content.release",
     "bin_sha256": "34fc3f0672a1fb945c67796185cdcd20e1cb5c8e15e18c7fc807ecf7e1e6b6cf",
@@ -30,7 +30,7 @@
             "value": 15
           },
           "label": "Derivado",
-          "source": "Characters/Swain/Spells/SwainPassiveAbility/SwainPassive.DataValues.HealthIncrement (16.23.8406595+branch.releases-16-23.content.release)",
+          "source": "Characters/Swain/Spells/SwainPassiveAbility/SwainPassive.DataValues.HealthIncrement (16.23.8418428+branch.releases-16-23.content.release)",
           "stat": "health",
           "mode": "flat",
           "input_name": "soul_fragments",
@@ -78,7 +78,7 @@
                 ]
               },
               "label": "Derivado",
-              "source": "Characters/Swain/Spells/SwainQAbility/SwainQ.mSpellCalculations.InitialDamage (16.23.8406595+branch.releases-16-23.content.release)",
+              "source": "Characters/Swain/Spells/SwainQAbility/SwainQ.mSpellCalculations.InitialDamage (16.23.8418428+branch.releases-16-23.content.release)",
               "damage_type_source": "spell_swainq_tooltip <magicDamage>"
             }
           ]
@@ -128,7 +128,7 @@
                 ]
               },
               "label": "Derivado",
-              "source": "Characters/Swain/Spells/SwainQAbility/SwainQ.mSpellCalculations.ExtraBoltDamage (16.23.8406595+branch.releases-16-23.content.release)",
+              "source": "Characters/Swain/Spells/SwainQAbility/SwainQ.mSpellCalculations.ExtraBoltDamage (16.23.8418428+branch.releases-16-23.content.release)",
               "damage_type_source": "spell_swainq_tooltip <magicDamage>"
             }
           ]
@@ -178,7 +178,7 @@
                 ]
               },
               "label": "Derivado",
-              "source": "Characters/Swain/Spells/SwainQAbility/SwainQ.mSpellCalculations.MaxDamage (16.23.8406595+branch.releases-16-23.content.release)",
+              "source": "Characters/Swain/Spells/SwainQAbility/SwainQ.mSpellCalculations.MaxDamage (16.23.8418428+branch.releases-16-23.content.release)",
               "damage_type_source": "spell_swainq_tooltip <magicDamage>"
             }
           ]
@@ -227,7 +227,7 @@
                 ]
               },
               "label": "Derivado",
-              "source": "Characters/Swain/Spells/SwainWAbility/SwainW.mSpellCalculations.TotalDamage (16.23.8406595+branch.releases-16-23.content.release)",
+              "source": "Characters/Swain/Spells/SwainWAbility/SwainW.mSpellCalculations.TotalDamage (16.23.8418428+branch.releases-16-23.content.release)",
               "damage_type_source": "spell_swainw_tooltip <magicDamage>"
             }
           ]
@@ -278,7 +278,7 @@
                 ]
               },
               "label": "Derivado",
-              "source": "Characters/Swain/Spells/SwainEAbility/SwainE.mSpellCalculations.SecondaryDamage (16.23.8406595+branch.releases-16-23.content.release)",
+              "source": "Characters/Swain/Spells/SwainEAbility/SwainE.mSpellCalculations.SecondaryDamage (16.23.8418428+branch.releases-16-23.content.release)",
               "damage_type_source": "spell_swaine_tooltip <magicDamage>"
             }
           ]
@@ -327,7 +327,7 @@
                 ]
               },
               "label": "Derivado",
-              "source": "Characters/Swain/Spells/SwainRAbility/SwainR.mSpellCalculations.DamageCalc (16.23.8406595+branch.releases-16-23.content.release)",
+              "source": "Characters/Swain/Spells/SwainRAbility/SwainR.mSpellCalculations.DamageCalc (16.23.8418428+branch.releases-16-23.content.release)",
               "damage_type_source": "spell_swainr_tooltip <magicDamage>"
             }
           ]
@@ -366,7 +366,7 @@
                 ]
               },
               "label": "Derivado",
-              "source": "Characters/Swain/Spells/SwainRAbility/SwainR.mSpellCalculations.DemonflareDamageTotal (16.23.8406595+branch.releases-16-23.content.release)",
+              "source": "Characters/Swain/Spells/SwainRAbility/SwainR.mSpellCalculations.DemonflareDamageTotal (16.23.8418428+branch.releases-16-23.content.release)",
               "damage_type_source": "spell_swainr_tooltip <magicDamage>"
             }
           ],
@@ -376,6 +376,67 @@
       "passive_stats": [],
       "not_modelled": [
         "Curación por segundo (HealingCalc) y ralentización de Alma ígnea"
+      ],
+      "active_effects": [
+        {
+          "id": "demonic_ascension_hot",
+          "name": "Ascensión demoníaca (drenaje 5 s base)",
+          "kind": "heal",
+          "formula": {
+            "op": "mul",
+            "operands": [
+              {
+                "op": "add",
+                "operands": [
+                  {
+                    "op": "by_rank",
+                    "values": [
+                      15,
+                      30,
+                      45
+                    ]
+                  },
+                  {
+                    "op": "mul",
+                    "operands": [
+                      {
+                        "op": "constant",
+                        "value": 0.05
+                      },
+                      {
+                        "op": "stat",
+                        "stat": "ability_power",
+                        "scope": "total"
+                      }
+                    ]
+                  },
+                  {
+                    "op": "mul",
+                    "operands": [
+                      {
+                        "op": "constant",
+                        "value": 0.015
+                      },
+                      {
+                        "op": "stat",
+                        "stat": "health",
+                        "scope": "bonus"
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "op": "constant",
+                "value": 5
+              }
+            ]
+          },
+          "label": "Derivado",
+          "source": "Characters/Swain/Spells/SwainRAbility/SwainR · mSpellCalculations.HealingCalc * 5 s base Demon Power duration (1 champion) (16.23.8418428+branch.releases-16-23.content.release)",
+          "over_duration": true,
+          "duration_seconds": 5.0
+        }
       ],
       "recast_interval_seconds": 2
     }

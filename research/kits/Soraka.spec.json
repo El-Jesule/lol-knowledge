@@ -44,6 +44,29 @@
       ],
       "not_modelled": [
         "Ralentización, curación sobre el tiempo Rejuvenecimiento (TotalHoT) y velocidad de movimiento"
+      ],
+      "active_effects": [
+        {
+          "id": "starcall_hot",
+          "name": "Invocación estelar (Rejuvenecimiento HoT)",
+          "kind": "heal",
+          "calculation": "TotalHoT",
+          "duration_seconds": {
+            "data_value": "HotDuration"
+          },
+          "over_duration": true
+        },
+        {
+          "id": "starcall_ms",
+          "name": "Invocación estelar (VM %)",
+          "kind": "stat_bonus",
+          "stat": "move_speed",
+          "mode": "percent_ms",
+          "data_value": "MoveSpeedHaste",
+          "duration_seconds": {
+            "data_value": "MoveSpeedDuration"
+          }
+        }
       ]
     },
     "W": {
@@ -51,6 +74,14 @@
       "tooltip": "spell_sorakaw_tooltip",
       "not_modelled": [
         "Curación a aliado (TotalHeal), coste del 10 % de vida máxima (reducido con Rejuvenecimiento) y límite mínimo de vida"
+      ],
+      "active_effects": [
+        {
+          "id": "astral_infusion_heal",
+          "name": "Inyección astral (curación)",
+          "kind": "heal",
+          "calculation": "TotalHeal"
+        }
       ]
     },
     "E": {
@@ -76,6 +107,14 @@
       "tooltip": "spell_sorakar_tooltip",
       "not_modelled": [
         "Curación global a todos los aliados (HealingCalc / AmpedHealing bajo 40 % vida)"
+      ],
+      "active_effects": [
+        {
+          "id": "wish_heal",
+          "name": "Plegaria (curación base)",
+          "kind": "heal",
+          "calculation": "HealingCalc"
+        }
       ]
     }
   }

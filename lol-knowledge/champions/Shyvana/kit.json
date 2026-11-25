@@ -3,7 +3,7 @@
   "champion": "Shyvana",
   "label": "Derivado",
   "game_version": "16.23",
-  "content_version": "16.23.8406595+branch.releases-16-23.content.release",
+  "content_version": "16.23.8418428+branch.releases-16-23.content.release",
   "verified_against": {
     "content_version": "16.23.8406595+branch.releases-16-23.content.release",
     "bin_sha256": "2788bd5fa38ffc69c36567a3c53d42be7db9954429f67679c65157382ccf48db",
@@ -28,7 +28,7 @@
             "value": 0.3
           },
           "label": "Derivado",
-          "source": "Characters/Shyvana/Spells/ShyvanaPassiveAbility/ShyvanaPassive.DataValues.BonusArmor (16.23.8406595+branch.releases-16-23.content.release)",
+          "source": "Characters/Shyvana/Spells/ShyvanaPassiveAbility/ShyvanaPassive.DataValues.BonusArmor (16.23.8418428+branch.releases-16-23.content.release)",
           "stat": "armor",
           "mode": "flat",
           "input_name": "passive_stacks",
@@ -43,7 +43,7 @@
             "value": 0.3
           },
           "label": "Derivado",
-          "source": "Characters/Shyvana/Spells/ShyvanaPassiveAbility/ShyvanaPassive.DataValues.BonusMagicResist (16.23.8406595+branch.releases-16-23.content.release)",
+          "source": "Characters/Shyvana/Spells/ShyvanaPassiveAbility/ShyvanaPassive.DataValues.BonusMagicResist (16.23.8418428+branch.releases-16-23.content.release)",
           "stat": "magic_resist",
           "mode": "flat",
           "input_name": "passive_stacks",
@@ -105,7 +105,7 @@
                 ]
               },
               "label": "Derivado",
-              "source": "Characters/Shyvana/Spells/ShyvanaQAbility/ShyvanaQ.mSpellCalculations.Calc_Damage (16.23.8406595+branch.releases-16-23.content.release)",
+              "source": "Characters/Shyvana/Spells/ShyvanaQAbility/ShyvanaQ.mSpellCalculations.Calc_Damage (16.23.8418428+branch.releases-16-23.content.release)",
               "damage_type_source": "spell_shyvanaq_tooltip <physicalDamage>"
             },
             {
@@ -145,7 +145,7 @@
                 ]
               },
               "label": "Derivado",
-              "source": "Characters/Shyvana/Spells/ShyvanaQAbility/ShyvanaQ · mSpellCalculations.Calc_Max_Health_Damage × vida máxima del objetivo (16.23.8406595+branch.releases-16-23.content.release)",
+              "source": "Characters/Shyvana/Spells/ShyvanaQAbility/ShyvanaQ · mSpellCalculations.Calc_Max_Health_Damage × vida máxima del objetivo (16.23.8418428+branch.releases-16-23.content.release)",
               "damage_type_source": "spell_shyvanaq_tooltip <magicDamage>"
             }
           ]
@@ -200,7 +200,7 @@
                 ]
               },
               "label": "Derivado",
-              "source": "Characters/Shyvana/Spells/ShyvanaQAbility/ShyvanaQ.mSpellCalculations.Calc_Damage (16.23.8406595+branch.releases-16-23.content.release)",
+              "source": "Characters/Shyvana/Spells/ShyvanaQAbility/ShyvanaQ.mSpellCalculations.Calc_Damage (16.23.8418428+branch.releases-16-23.content.release)",
               "damage_type_source": "spell_shyvanaq_tooltip <physicalDamage>"
             }
           ],
@@ -265,7 +265,7 @@
                 ]
               },
               "label": "Derivado",
-              "source": "Characters/Shyvana/Spells/ShyvanaQAbility/ShyvanaQ.mSpellCalculations.Calc_Dragon_Form_Damage (16.23.8406595+branch.releases-16-23.content.release)",
+              "source": "Characters/Shyvana/Spells/ShyvanaQAbility/ShyvanaQ.mSpellCalculations.Calc_Dragon_Form_Damage (16.23.8418428+branch.releases-16-23.content.release)",
               "damage_type_source": "spell_shyvanaq_tooltip <trueDamage>"
             },
             {
@@ -305,7 +305,7 @@
                 ]
               },
               "label": "Derivado",
-              "source": "Characters/Shyvana/Spells/ShyvanaQAbility/ShyvanaQ · mSpellCalculations.Calc_Max_Health_Damage × vida máxima del objetivo (16.23.8406595+branch.releases-16-23.content.release)",
+              "source": "Characters/Shyvana/Spells/ShyvanaQAbility/ShyvanaQ · mSpellCalculations.Calc_Max_Health_Damage × vida máxima del objetivo (16.23.8418428+branch.releases-16-23.content.release)",
               "damage_type_source": "spell_shyvanaq_tooltip <magicDamage>"
             }
           ]
@@ -357,7 +357,7 @@
                 ]
               },
               "label": "Derivado",
-              "source": "Characters/Shyvana/Spells/ShyvanaWAbility/ShyvanaW.mSpellCalculations.Damage (16.23.8406595+branch.releases-16-23.content.release)",
+              "source": "Characters/Shyvana/Spells/ShyvanaWAbility/ShyvanaW.mSpellCalculations.Damage (16.23.8418428+branch.releases-16-23.content.release)",
               "damage_type_source": "spell_shyvanaw_tooltip <magicDamage>"
             }
           ]
@@ -366,6 +366,59 @@
       "passive_stats": [],
       "not_modelled": [
         "Velocidad de movimiento (MoveSpeed), escudo (Calc_Shield) y curación (Calc_Missing_Health_Heal)"
+      ],
+      "active_effects": [
+        {
+          "id": "burnout_shield",
+          "name": "Quemado (escudo base)",
+          "kind": "shield",
+          "formula": {
+            "op": "add",
+            "operands": [
+              {
+                "op": "by_rank",
+                "values": [
+                  60,
+                  80,
+                  100,
+                  120,
+                  140
+                ]
+              },
+              {
+                "op": "mul",
+                "operands": [
+                  {
+                    "op": "constant",
+                    "value": 0.12
+                  },
+                  {
+                    "op": "stat",
+                    "stat": "health",
+                    "scope": "bonus"
+                  }
+                ]
+              }
+            ]
+          },
+          "label": "Derivado",
+          "source": "Characters/Shyvana/Spells/ShyvanaWAbility/ShyvanaW.mSpellCalculations.Calc_Shield (16.23.8418428+branch.releases-16-23.content.release)",
+          "duration_seconds": 2.5
+        },
+        {
+          "id": "burnout_ms",
+          "name": "Quemado (VM %)",
+          "kind": "stat_bonus",
+          "formula": {
+            "op": "constant",
+            "value": 0.25
+          },
+          "label": "Derivado",
+          "source": "Characters/Shyvana/Spells/ShyvanaWAbility/ShyvanaW.mSpellCalculations.MoveSpeed (16.23.8418428+branch.releases-16-23.content.release)",
+          "stat": "move_speed",
+          "mode": "percent_ms",
+          "duration_seconds": 2.5
+        }
       ]
     },
     "E": {
@@ -414,7 +467,7 @@
                 ]
               },
               "label": "Derivado",
-              "source": "Characters/Shyvana/Spells/ShyvanaEAbility/ShyvanaE.mSpellCalculations.Damage (16.23.8406595+branch.releases-16-23.content.release)",
+              "source": "Characters/Shyvana/Spells/ShyvanaEAbility/ShyvanaE.mSpellCalculations.Damage (16.23.8418428+branch.releases-16-23.content.release)",
               "damage_type_source": "spell_shyvanae_tooltip <magicDamage>"
             },
             {
@@ -435,7 +488,7 @@
                 ]
               },
               "label": "Derivado",
-              "source": "Characters/Shyvana/Spells/ShyvanaEAbility/ShyvanaE · mSpellCalculations.Calc_Max_Health_Damage × vida máxima del objetivo (16.23.8406595+branch.releases-16-23.content.release)",
+              "source": "Characters/Shyvana/Spells/ShyvanaEAbility/ShyvanaE · mSpellCalculations.Calc_Max_Health_Damage × vida máxima del objetivo (16.23.8418428+branch.releases-16-23.content.release)",
               "damage_type_source": "spell_shyvanae_tooltip <magicDamage>"
             }
           ]
@@ -491,7 +544,7 @@
                 ]
               },
               "label": "Derivado",
-              "source": "Characters/Shyvana/Spells/ShyvanaEAbility/ShyvanaE.mSpellCalculations.Calc_Dragon_Damage (16.23.8406595+branch.releases-16-23.content.release)",
+              "source": "Characters/Shyvana/Spells/ShyvanaEAbility/ShyvanaE.mSpellCalculations.Calc_Dragon_Damage (16.23.8418428+branch.releases-16-23.content.release)",
               "damage_type_source": "spell_shyvanae_tooltip <magicDamage>"
             },
             {
@@ -521,7 +574,7 @@
                 ]
               },
               "label": "Derivado",
-              "source": "Characters/Shyvana/Spells/ShyvanaEAbility/ShyvanaE · mSpellCalculations.Calc_Max_Health_Dragon_Damage × vida máxima del objetivo (16.23.8406595+branch.releases-16-23.content.release)",
+              "source": "Characters/Shyvana/Spells/ShyvanaEAbility/ShyvanaE · mSpellCalculations.Calc_Max_Health_Dragon_Damage × vida máxima del objetivo (16.23.8418428+branch.releases-16-23.content.release)",
               "damage_type_source": "spell_shyvanae_tooltip <magicDamage>"
             }
           ]
@@ -575,7 +628,7 @@
                 ]
               },
               "label": "Derivado",
-              "source": "Characters/Shyvana/Spells/ShyvanaEAbility/ShyvanaE.mSpellCalculations.DamagePerSecond (16.23.8406595+branch.releases-16-23.content.release)",
+              "source": "Characters/Shyvana/Spells/ShyvanaEAbility/ShyvanaE.mSpellCalculations.DamagePerSecond (16.23.8418428+branch.releases-16-23.content.release)",
               "damage_type_source": "spell_shyvanae_tooltip <magicDamage>"
             }
           ]
@@ -624,7 +677,7 @@
                 ]
               },
               "label": "Derivado",
-              "source": "Characters/Shyvana/Spells/ShyvanaRAbility/ShyvanaR.mSpellCalculations.Damage (16.23.8406595+branch.releases-16-23.content.release)",
+              "source": "Characters/Shyvana/Spells/ShyvanaRAbility/ShyvanaR.mSpellCalculations.Damage (16.23.8418428+branch.releases-16-23.content.release)",
               "damage_type_source": "spell_shyvana_r_tooltip <magicDamage>"
             }
           ]

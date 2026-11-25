@@ -147,6 +147,38 @@
         "El daño del propio ataque básico: se suma aparte",
         "Daño contra monstruos (MonsterDamagePercent) y curación"
       ],
+      "active_effects": [
+        {
+          "id": "q_heal",
+          "name": "Q (curación % vida máxima)",
+          "kind": "heal",
+          "formula": {
+            "op": "mul",
+            "operands": [
+              {
+                "op": "by_rank",
+                "values": [
+                  0.05,
+                  0.06,
+                  0.07,
+                  0.08,
+                  0.09
+                ]
+              },
+              {
+                "op": "stat",
+                "stat": "health",
+                "scope": "max"
+              }
+            ]
+          },
+          "label": "Derivado",
+          "source": "Characters/Zaahen/Spells/ZaahenQAbility/ZaahenQ · DataValues.HealPercent * max health (16.20.8248524+branch.releases-16-20.content.release)",
+          "case_ids": [
+            "first_hit"
+          ]
+        }
+      ],
       "recast_window_seconds": 4
     },
     "W": {
@@ -423,6 +455,21 @@
       ],
       "not_modelled": [
         "Reducción de daño durante el lanzamiento y curación"
+      ],
+      "active_effects": [
+        {
+          "id": "r_cast_dr",
+          "name": "R (DR durante lanzamiento)",
+          "kind": "damage_taken_modifier",
+          "formula": {
+            "op": "constant",
+            "value": 50
+          },
+          "label": "Derivado",
+          "source": "Characters/Zaahen/Spells/ZaahenRAbility/ZaahenR.DataValues.DamageReduction (16.20.8248524+branch.releases-16-20.content.release)",
+          "mode": "percent",
+          "duration_seconds": 0.75
+        }
       ]
     }
   }

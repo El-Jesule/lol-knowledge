@@ -3,7 +3,7 @@
   "champion": "Kayle",
   "label": "Derivado",
   "game_version": "16.23",
-  "content_version": "16.23.8406595+branch.releases-16-23.content.release",
+  "content_version": "16.23.8418428+branch.releases-16-23.content.release",
   "verified_against": {
     "content_version": "16.23.8406595+branch.releases-16-23.content.release",
     "bin_sha256": "62cb57423f914655a8236ea0a909e0cfb0dd5a4cee4540804e9fce42b1aec9aa",
@@ -79,7 +79,7 @@
                 ]
               },
               "label": "Derivado",
-              "source": "Characters/Kayle/Spells/KaylePassiveAbility/KaylePassive.mSpellCalculations.PassiveWaveDamage (16.23.8406595+branch.releases-16-23.content.release)",
+              "source": "Characters/Kayle/Spells/KaylePassiveAbility/KaylePassive.mSpellCalculations.PassiveWaveDamage (16.23.8418428+branch.releases-16-23.content.release)",
               "damage_type_source": "spell_kaylepassive_tooltip <magicDamage>"
             }
           ]
@@ -99,7 +99,7 @@
             "value": 6
           },
           "label": "Derivado",
-          "source": "Characters/Kayle/Spells/KaylePassiveAbility/KaylePassive.mSpellCalculations.EnrageTotalASPerStack (16.23.8406595+branch.releases-16-23.content.release)",
+          "source": "Characters/Kayle/Spells/KaylePassiveAbility/KaylePassive.mSpellCalculations.EnrageTotalASPerStack (16.23.8418428+branch.releases-16-23.content.release)",
           "stat": "attack_speed_bonus",
           "mode": "flat",
           "trigger": "attack",
@@ -163,7 +163,7 @@
                 ]
               },
               "label": "Derivado",
-              "source": "Characters/Kayle/Spells/KayleQAbility/KayleQ.mSpellCalculations.TotalDamage (16.23.8406595+branch.releases-16-23.content.release)",
+              "source": "Characters/Kayle/Spells/KayleQAbility/KayleQ.mSpellCalculations.TotalDamage (16.23.8418428+branch.releases-16-23.content.release)",
               "damage_type_source": "spell_kayleq_tooltip <magicDamage>"
             }
           ]
@@ -181,6 +181,83 @@
       "passive_stats": [],
       "not_modelled": [
         "Curación (TotalHeal) y velocidad de movimiento (TotalHaste)"
+      ],
+      "active_effects": [
+        {
+          "id": "w_totalheal",
+          "name": "W (curación)",
+          "kind": "heal",
+          "formula": {
+            "op": "add",
+            "operands": [
+              {
+                "op": "by_rank",
+                "values": [
+                  55,
+                  80,
+                  105,
+                  130,
+                  155
+                ]
+              },
+              {
+                "op": "mul",
+                "operands": [
+                  {
+                    "op": "constant",
+                    "value": 0.25
+                  },
+                  {
+                    "op": "stat",
+                    "stat": "ability_power",
+                    "scope": "total"
+                  }
+                ]
+              }
+            ]
+          },
+          "label": "Derivado",
+          "source": "Characters/Kayle/Spells/KayleWAbility/KayleW.mSpellCalculations.TotalHeal (16.23.8418428+branch.releases-16-23.content.release)"
+        },
+        {
+          "id": "w_totalhaste",
+          "name": "W (VM)",
+          "kind": "stat_bonus",
+          "formula": {
+            "op": "add",
+            "operands": [
+              {
+                "op": "by_rank",
+                "values": [
+                  0.24,
+                  0.28,
+                  0.32,
+                  0.36,
+                  0.4
+                ]
+              },
+              {
+                "op": "mul",
+                "operands": [
+                  {
+                    "op": "constant",
+                    "value": 0.0008
+                  },
+                  {
+                    "op": "stat",
+                    "stat": "ability_power",
+                    "scope": "total"
+                  }
+                ]
+              }
+            ]
+          },
+          "label": "Derivado",
+          "source": "Characters/Kayle/Spells/KayleWAbility/KayleW.mSpellCalculations.TotalHaste (16.23.8418428+branch.releases-16-23.content.release)",
+          "stat": "move_speed",
+          "mode": "percent_ms",
+          "duration_seconds": 2
+        }
       ]
     },
     "E": {
@@ -237,7 +314,7 @@
                 ]
               },
               "label": "Derivado",
-              "source": "Characters/Kayle/Spells/KayleEAbility/KayleE.mSpellCalculations.EPassiveTotalDamage (16.23.8406595+branch.releases-16-23.content.release)",
+              "source": "Characters/Kayle/Spells/KayleEAbility/KayleE.mSpellCalculations.EPassiveTotalDamage (16.23.8418428+branch.releases-16-23.content.release)",
               "damage_type_source": "spell_kaylee_tooltip <magicDamage>"
             }
           ]
@@ -292,7 +369,7 @@
                 ]
               },
               "label": "Derivado",
-              "source": "Characters/Kayle/Spells/KayleEAbility/KayleE.mSpellCalculations.EPassiveTotalDamage (16.23.8406595+branch.releases-16-23.content.release)",
+              "source": "Characters/Kayle/Spells/KayleEAbility/KayleE.mSpellCalculations.EPassiveTotalDamage (16.23.8418428+branch.releases-16-23.content.release)",
               "damage_type_source": "spell_kaylee_tooltip <magicDamage>"
             },
             {
@@ -348,7 +425,7 @@
                 ]
               },
               "label": "Derivado",
-              "source": "Characters/Kayle/Spells/KayleEAbility/KayleE · (ActiveTotalExecuteDamage %) × vida que falta del objetivo (16.23.8406595+branch.releases-16-23.content.release)",
+              "source": "Characters/Kayle/Spells/KayleEAbility/KayleE · (ActiveTotalExecuteDamage %) × vida que falta del objetivo (16.23.8418428+branch.releases-16-23.content.release)",
               "damage_type_source": "spell_kaylee_tooltip <magicDamage>"
             }
           ]
@@ -411,7 +488,7 @@
                 ]
               },
               "label": "Derivado",
-              "source": "Characters/Kayle/Spells/KayleRAbility/KayleR.mSpellCalculations.TotalDamage (16.23.8406595+branch.releases-16-23.content.release)",
+              "source": "Characters/Kayle/Spells/KayleRAbility/KayleR.mSpellCalculations.TotalDamage (16.23.8418428+branch.releases-16-23.content.release)",
               "damage_type_source": "spell_kayler_tooltip <magicDamage>"
             }
           ]

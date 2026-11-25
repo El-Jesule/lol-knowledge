@@ -85,6 +85,14 @@
       ],
       "not_modelled": [
         "Curación a aliados (TotalHeal), ralentización (TotalSlow), efectos al impactar y reducción de 1 s de CD por ataque"
+      ],
+      "active_effects": [
+        {
+          "id": "q_totalheal",
+          "name": "Q (curación)",
+          "kind": "heal",
+          "calculation": "TotalHeal"
+        }
       ]
     },
     "W": {
@@ -110,6 +118,19 @@
       "tooltip": "spell_sennae_tooltip",
       "not_modelled": [
         "Camuflaje/espectros en área y velocidad de movimiento (TotalMS)"
+      ],
+      "active_effects": [
+        {
+          "id": "e_totalms",
+          "name": "E (VM)",
+          "kind": "stat_bonus",
+          "stat": "move_speed",
+          "mode": "percent_ms",
+          "calculation": "TotalMS",
+          "duration_seconds": {
+            "data_value": "BuffDuration"
+          }
+        }
       ]
     },
     "R": {
@@ -128,6 +149,17 @@
       ],
       "not_modelled": [
         "Escudo global a aliados (TotalShield) y aplicación de Niebla"
+      ],
+      "active_effects": [
+        {
+          "id": "r_totalshield",
+          "name": "R (escudo)",
+          "kind": "shield",
+          "calculation": "TotalShield",
+          "duration_seconds": {
+            "data_value": "ShieldDuration"
+          }
+        }
       ]
     }
   }

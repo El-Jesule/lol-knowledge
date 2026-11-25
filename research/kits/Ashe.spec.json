@@ -34,6 +34,19 @@
       ],
       "not_modelled": [
         "Requisito de 4 acumulaciones de Concentración y velocidad de ataque activa durante 6 s"
+      ],
+      "active_effects": [
+        {
+          "id": "rangers_focus_as",
+          "name": "Concentración de la guardabosques (VA)",
+          "kind": "stat_bonus",
+          "stat": "attack_speed_bonus",
+          "mode": "flat",
+          "data_value": "BonusAS",
+          "duration_seconds": {
+            "data_value": "BuffDuration"
+          }
+        }
       ]
     },
     "W": {

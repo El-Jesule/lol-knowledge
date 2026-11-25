@@ -3,7 +3,7 @@
   "champion": "Zac",
   "label": "Derivado",
   "game_version": "16.23",
-  "content_version": "16.23.8406595+branch.releases-16-23.content.release",
+  "content_version": "16.23.8418428+branch.releases-16-23.content.release",
   "verified_against": {
     "content_version": "16.23.8406595+branch.releases-16-23.content.release",
     "bin_sha256": "47e3f47b1da6c9b6c3f4a9632e82419056514a3012908292e66a38f403e836bc",
@@ -50,7 +50,7 @@
             ]
           },
           "label": "Derivado",
-          "source": "Characters/Zac/Spells/ZacPassiveChunkDropAbility/ZacPassiveChunkDrop.mSpellCalculations.{3d3d6f53} (16.23.8406595+branch.releases-16-23.content.release)",
+          "source": "Characters/Zac/Spells/ZacPassiveChunkDropAbility/ZacPassiveChunkDrop.mSpellCalculations.{3d3d6f53} (16.23.8418428+branch.releases-16-23.content.release)",
           "trigger": "on_ability_hit"
         }
       ]
@@ -109,7 +109,7 @@
                 ]
               },
               "label": "Derivado",
-              "source": "Characters/Zac/Spells/ZacQAbility/ZacQ.mSpellCalculations.TotalDamage (16.23.8406595+branch.releases-16-23.content.release)",
+              "source": "Characters/Zac/Spells/ZacQAbility/ZacQ.mSpellCalculations.TotalDamage (16.23.8418428+branch.releases-16-23.content.release)",
               "damage_type_source": "spell_zacq_tooltip <magicDamage>"
             }
           ]
@@ -190,7 +190,7 @@
                 ]
               },
               "label": "Derivado",
-              "source": "Characters/Zac/Spells/ZacWAbility/ZacW · DataValues.BaseDamage + mSpellCalculations.DisplayPercentDamage % × vida máxima del objetivo (16.23.8406595+branch.releases-16-23.content.release)",
+              "source": "Characters/Zac/Spells/ZacWAbility/ZacW · DataValues.BaseDamage + mSpellCalculations.DisplayPercentDamage % × vida máxima del objetivo (16.23.8418428+branch.releases-16-23.content.release)",
               "damage_type_source": "spell_zacw_tooltip <magicDamage>"
             }
           ]
@@ -241,7 +241,7 @@
                 ]
               },
               "label": "Derivado",
-              "source": "Characters/Zac/Spells/ZacEAbility/ZacE.mSpellCalculations.Damage (16.23.8406595+branch.releases-16-23.content.release)",
+              "source": "Characters/Zac/Spells/ZacEAbility/ZacE.mSpellCalculations.Damage (16.23.8418428+branch.releases-16-23.content.release)",
               "damage_type_source": "spell_zace_tooltip <magicDamage>"
             }
           ]
@@ -290,7 +290,7 @@
                 ]
               },
               "label": "Derivado",
-              "source": "Characters/Zac/Spells/ZacRAbility/ZacR.mSpellCalculations.DamagePerBounce (16.23.8406595+branch.releases-16-23.content.release)",
+              "source": "Characters/Zac/Spells/ZacRAbility/ZacR.mSpellCalculations.DamagePerBounce (16.23.8418428+branch.releases-16-23.content.release)",
               "damage_type_source": "spell_zacr_tooltip <magicDamage>"
             }
           ]
@@ -338,7 +338,7 @@
                 ]
               },
               "label": "Derivado",
-              "source": "Characters/Zac/Spells/ZacRAbility/ZacR.mSpellCalculations.DamagePerSubsequentBounce (16.23.8406595+branch.releases-16-23.content.release)",
+              "source": "Characters/Zac/Spells/ZacRAbility/ZacR.mSpellCalculations.DamagePerSubsequentBounce (16.23.8418428+branch.releases-16-23.content.release)",
               "damage_type_source": "spell_zacr_tooltip <magicDamage>"
             }
           ]
@@ -347,6 +347,22 @@
       "passive_stats": [],
       "not_modelled": [
         "4 rebotes totales (MaxDamageTooltip), empuje/ralentización y velocidad de movimiento creciente"
+      ],
+      "active_effects": [
+        {
+          "id": "r_endingms",
+          "name": "R (VM)",
+          "kind": "stat_bonus",
+          "formula": {
+            "op": "constant",
+            "value": 0.5
+          },
+          "label": "Derivado",
+          "source": "Characters/Zac/Spells/ZacRAbility/ZacR.DataValues.EndingMS (16.23.8418428+branch.releases-16-23.content.release)",
+          "stat": "move_speed",
+          "mode": "percent_ms",
+          "duration_seconds": 4.0
+        }
       ]
     }
   }

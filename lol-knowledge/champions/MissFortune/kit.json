@@ -3,7 +3,7 @@
   "champion": "MissFortune",
   "label": "Derivado",
   "game_version": "16.23",
-  "content_version": "16.23.8406595+branch.releases-16-23.content.release",
+  "content_version": "16.23.8418428+branch.releases-16-23.content.release",
   "verified_against": {
     "content_version": "16.23.8406595+branch.releases-16-23.content.release",
     "bin_sha256": "a9f7c7fb2d16ab34e431d2e99df7a588ee75dbfc74e4d462cacd1a271935ab8d",
@@ -56,7 +56,7 @@
                 ]
               },
               "label": "Derivado",
-              "source": "Characters/MissFortune/Spells/MissFortunePassiveAbility/MissFortunePassive.mSpellCalculations.TotalDamage (16.23.8406595+branch.releases-16-23.content.release)",
+              "source": "Characters/MissFortune/Spells/MissFortunePassiveAbility/MissFortunePassive.mSpellCalculations.TotalDamage (16.23.8418428+branch.releases-16-23.content.release)",
               "damage_type_source": "spell_missfortunepassive_tooltip <physicalDamage>"
             }
           ]
@@ -105,7 +105,7 @@
             ]
           },
           "label": "Derivado",
-          "source": "Characters/MissFortune/Spells/MissFortunePassiveAbility/MissFortunePassive.mSpellCalculations.TotalDamage (16.23.8406595+branch.releases-16-23.content.release)",
+          "source": "Characters/MissFortune/Spells/MissFortunePassiveAbility/MissFortunePassive.mSpellCalculations.TotalDamage (16.23.8418428+branch.releases-16-23.content.release)",
           "trigger": "on_attack",
           "damage_type": "physical",
           "cooldown_seconds": 999
@@ -166,7 +166,7 @@
                 ]
               },
               "label": "Derivado",
-              "source": "Characters/MissFortune/Spells/MissFortuneRicochetShotAbility/MissFortuneRicochetShot.mSpellCalculations.TotalDamageTooltip (16.23.8406595+branch.releases-16-23.content.release)",
+              "source": "Characters/MissFortune/Spells/MissFortuneRicochetShotAbility/MissFortuneRicochetShot.mSpellCalculations.TotalDamageTooltip (16.23.8418428+branch.releases-16-23.content.release)",
               "damage_type_source": "spell_missfortuneq_tooltip <physicalDamage>"
             }
           ]
@@ -276,7 +276,7 @@
                 ]
               },
               "label": "Derivado",
-              "source": "Characters/MissFortune/Spells/MissFortuneRicochetShotAbility/MissFortuneRicochetShot.mSpellCalculations.TotalDamageCrit (16.23.8406595+branch.releases-16-23.content.release)",
+              "source": "Characters/MissFortune/Spells/MissFortuneRicochetShotAbility/MissFortuneRicochetShot.mSpellCalculations.TotalDamageCrit (16.23.8418428+branch.releases-16-23.content.release)",
               "damage_type_source": "spell_missfortuneq_tooltip <physicalDamage>"
             }
           ]
@@ -294,6 +294,48 @@
       "passive_stats": [],
       "not_modelled": [
         "Velocidad de movimiento pasiva fuera de combate, velocidad de ataque activa y reducción de enfriamiento con Cachete (LoveTapRefund)"
+      ],
+      "active_effects": [
+        {
+          "id": "strut_as",
+          "name": "Alarde (VA)",
+          "kind": "stat_bonus",
+          "formula": {
+            "op": "by_rank",
+            "values": [
+              40,
+              55,
+              70,
+              85,
+              100
+            ]
+          },
+          "label": "Derivado",
+          "source": "Characters/MissFortune/Spells/MissFortuneViciousStrikesAbility/MissFortuneViciousStrikes.DataValues.ActiveAS (16.23.8418428+branch.releases-16-23.content.release)",
+          "stat": "attack_speed_bonus",
+          "mode": "flat",
+          "duration_seconds": 4
+        },
+        {
+          "id": "strut_ms",
+          "name": "Alarde (VM plana máxima)",
+          "kind": "stat_bonus",
+          "formula": {
+            "op": "by_rank",
+            "values": [
+              60,
+              70,
+              80,
+              90,
+              100
+            ]
+          },
+          "label": "Derivado",
+          "source": "Characters/MissFortune/Spells/MissFortuneViciousStrikesAbility/MissFortuneViciousStrikes.DataValues.PassiveMaxMS (16.23.8418428+branch.releases-16-23.content.release)",
+          "stat": "move_speed",
+          "mode": "flat",
+          "duration_seconds": 4
+        }
       ]
     },
     "E": {
@@ -336,7 +378,7 @@
                 ]
               },
               "label": "Derivado",
-              "source": "Characters/MissFortune/Spells/MissFortuneScattershotAbility/MissFortuneScattershot.mSpellCalculations.TotalDamagePerSecond (16.23.8406595+branch.releases-16-23.content.release)",
+              "source": "Characters/MissFortune/Spells/MissFortuneScattershotAbility/MissFortuneScattershot.mSpellCalculations.TotalDamagePerSecond (16.23.8418428+branch.releases-16-23.content.release)",
               "damage_type_source": "spell_missfortunee_tooltip <magicDamage>"
             }
           ]
@@ -386,7 +428,7 @@
                 ]
               },
               "label": "Derivado",
-              "source": "Characters/MissFortune/Spells/MissFortuneScattershotAbility/MissFortuneScattershot.mSpellCalculations.TotalDamage (16.23.8406595+branch.releases-16-23.content.release)",
+              "source": "Characters/MissFortune/Spells/MissFortuneScattershotAbility/MissFortuneScattershot.mSpellCalculations.TotalDamage (16.23.8418428+branch.releases-16-23.content.release)",
               "damage_type_source": "spell_missfortunee_tooltip <magicDamage>"
             }
           ]
@@ -449,7 +491,7 @@
                 ]
               },
               "label": "Derivado",
-              "source": "Characters/MissFortune/Spells/MissFortuneBulletTimeAbility/MissFortuneBulletTime.mSpellCalculations.PhysicalDamagePerWave (16.23.8406595+branch.releases-16-23.content.release)",
+              "source": "Characters/MissFortune/Spells/MissFortuneBulletTimeAbility/MissFortuneBulletTime.mSpellCalculations.PhysicalDamagePerWave (16.23.8418428+branch.releases-16-23.content.release)",
               "damage_type_source": "spell_missfortuner_tooltip <physicalDamage>"
             }
           ]
@@ -557,7 +599,7 @@
                 ]
               },
               "label": "Derivado",
-              "source": "Characters/MissFortune/Spells/MissFortuneBulletTimeAbility/MissFortuneBulletTime.mSpellCalculations.CritDamagePerWave (16.23.8406595+branch.releases-16-23.content.release)",
+              "source": "Characters/MissFortune/Spells/MissFortuneBulletTimeAbility/MissFortuneBulletTime.mSpellCalculations.CritDamagePerWave (16.23.8418428+branch.releases-16-23.content.release)",
               "damage_type_source": "spell_missfortuner_tooltip <physicalDamage>"
             }
           ]
@@ -623,7 +665,7 @@
                 ]
               },
               "label": "Derivado",
-              "source": "Characters/MissFortune/Spells/MissFortuneBulletTimeAbility/MissFortuneBulletTime.mSpellCalculations.TotalPhysicalDamage (16.23.8406595+branch.releases-16-23.content.release)",
+              "source": "Characters/MissFortune/Spells/MissFortuneBulletTimeAbility/MissFortuneBulletTime.mSpellCalculations.TotalPhysicalDamage (16.23.8418428+branch.releases-16-23.content.release)",
               "damage_type_source": "spell_missfortuner_tooltip <physicalDamage>"
             }
           ]

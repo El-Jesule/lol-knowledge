@@ -3,7 +3,7 @@
   "champion": "Rell",
   "label": "Derivado",
   "game_version": "16.23",
-  "content_version": "16.23.8406595+branch.releases-16-23.content.release",
+  "content_version": "16.23.8418428+branch.releases-16-23.content.release",
   "verified_against": {
     "content_version": "16.23.8406595+branch.releases-16-23.content.release",
     "bin_sha256": "cef65540cca7d9fc1e222d1800ffb17b29c88a11c370c284900f195706683020",
@@ -56,7 +56,7 @@
                 ]
               },
               "label": "Derivado",
-              "source": "Characters/Rell/Spells/RellPAbility/RellP.mSpellCalculations.OnHitDamage (16.23.8406595+branch.releases-16-23.content.release)",
+              "source": "Characters/Rell/Spells/RellPAbility/RellP.mSpellCalculations.OnHitDamage (16.23.8418428+branch.releases-16-23.content.release)",
               "damage_type_source": "spell_rellp_tooltip <magicDamage>"
             }
           ]
@@ -105,7 +105,7 @@
             ]
           },
           "label": "Derivado",
-          "source": "Characters/Rell/Spells/RellPAbility/RellP.mSpellCalculations.OnHitDamage (16.23.8406595+branch.releases-16-23.content.release)",
+          "source": "Characters/Rell/Spells/RellPAbility/RellP.mSpellCalculations.OnHitDamage (16.23.8418428+branch.releases-16-23.content.release)",
           "trigger": "on_hit",
           "damage_type": "magic"
         }
@@ -151,7 +151,7 @@
                 ]
               },
               "label": "Derivado",
-              "source": "Characters/Rell/Spells/RellQAbility/RellQ.mSpellCalculations.Damage (16.23.8406595+branch.releases-16-23.content.release)",
+              "source": "Characters/Rell/Spells/RellQAbility/RellQ.mSpellCalculations.Damage (16.23.8418428+branch.releases-16-23.content.release)",
               "damage_type_source": "spell_rellq_tooltip <magicDamage>"
             }
           ]
@@ -202,7 +202,7 @@
                 ]
               },
               "label": "Derivado",
-              "source": "Characters/Rell/Spells/RellW_DismountAbility/RellW_Dismount.mSpellCalculations.DismountDamage (16.23.8406595+branch.releases-16-23.content.release)",
+              "source": "Characters/Rell/Spells/RellW_DismountAbility/RellW_Dismount.mSpellCalculations.DismountDamage (16.23.8418428+branch.releases-16-23.content.release)",
               "damage_type_source": "spell_rellw_dismount_tooltip <magicDamage>"
             }
           ]
@@ -243,7 +243,7 @@
                 ]
               },
               "label": "Derivado",
-              "source": "Characters/Rell/Spells/RellW_DismountAbility/RellW_Dismount.mSpellCalculations.FlipDamage (16.23.8406595+branch.releases-16-23.content.release)",
+              "source": "Characters/Rell/Spells/RellW_DismountAbility/RellW_Dismount.mSpellCalculations.FlipDamage (16.23.8418428+branch.releases-16-23.content.release)",
               "damage_type_source": "spell_rellw_mountup_tooltip3 <magicDamage>"
             }
           ]
@@ -305,7 +305,7 @@
                 ]
               },
               "label": "Derivado",
-              "source": "Characters/Rell/Spells/RellEAbility/RellE · MaxHealthDamageCalc × vida máxima del objetivo (16.23.8406595+branch.releases-16-23.content.release)",
+              "source": "Characters/Rell/Spells/RellEAbility/RellE · MaxHealthDamageCalc × vida máxima del objetivo (16.23.8418428+branch.releases-16-23.content.release)",
               "damage_type_source": "spell_relle_tooltip <magicDamage>"
             }
           ]
@@ -314,6 +314,22 @@
       "passive_stats": [],
       "not_modelled": [
         "Velocidad de movimiento propia y aliada y tope contra monstruos (PercentHealthDamageCap)"
+      ],
+      "active_effects": [
+        {
+          "id": "e_minms",
+          "name": "E (VM)",
+          "kind": "stat_bonus",
+          "formula": {
+            "op": "constant",
+            "value": 0.15
+          },
+          "label": "Derivado",
+          "source": "Characters/Rell/Spells/RellEAbility/RellE.DataValues.MinMS (16.23.8418428+branch.releases-16-23.content.release)",
+          "stat": "move_speed",
+          "mode": "percent_ms",
+          "duration_seconds": 3
+        }
       ]
     },
     "R": {
@@ -363,7 +379,7 @@
                 ]
               },
               "label": "Derivado",
-              "source": "Characters/Rell/Spells/RellRAbility/RellR.mSpellCalculations.TotalDamage (16.23.8406595+branch.releases-16-23.content.release)",
+              "source": "Characters/Rell/Spells/RellRAbility/RellR.mSpellCalculations.TotalDamage (16.23.8418428+branch.releases-16-23.content.release)",
               "damage_type_source": "spell_rellr_tooltip <magicDamage>"
             }
           ]

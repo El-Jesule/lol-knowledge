@@ -92,6 +92,18 @@
       ],
       "not_modelled": [
         "Reducción de daño recibido (DamageReduction) y ataque básico aparte"
+      ],
+      "active_effects": [
+        {
+          "id": "drunken_rage_dr",
+          "name": "Furia ebria (DR)",
+          "kind": "damage_taken_modifier",
+          "mode": "percent",
+          "calculation": "DamageReduction",
+          "duration_seconds": {
+            "data_value": "DefenseDuration"
+          }
+        }
       ]
     },
     "E": {

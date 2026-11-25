@@ -3,7 +3,7 @@
   "champion": "TahmKench",
   "label": "Derivado",
   "game_version": "16.23",
-  "content_version": "16.23.8406595+branch.releases-16-23.content.release",
+  "content_version": "16.23.8418428+branch.releases-16-23.content.release",
   "verified_against": {
     "content_version": "16.23.8406595+branch.releases-16-23.content.release",
     "bin_sha256": "35b877da3d4707331d65780fa3fd8b86dc1c54112a4e4b550c14277acacc79db",
@@ -98,7 +98,7 @@
                 ]
               },
               "label": "Derivado",
-              "source": "Characters/TahmKench/Spells/TahmKenchPassiveAbility/TahmKenchPassive.mSpellCalculations.TotalDamage (16.23.8406595+branch.releases-16-23.content.release)",
+              "source": "Characters/TahmKench/Spells/TahmKenchPassiveAbility/TahmKenchPassive.mSpellCalculations.TotalDamage (16.23.8418428+branch.releases-16-23.content.release)",
               "damage_type_source": "spell_tahmkenchpassive_tooltip <magicDamage>"
             }
           ]
@@ -189,7 +189,7 @@
             ]
           },
           "label": "Derivado",
-          "source": "Characters/TahmKench/Spells/TahmKenchPassiveAbility/TahmKenchPassive.mSpellCalculations.TotalDamage (16.23.8406595+branch.releases-16-23.content.release)",
+          "source": "Characters/TahmKench/Spells/TahmKenchPassiveAbility/TahmKenchPassive.mSpellCalculations.TotalDamage (16.23.8418428+branch.releases-16-23.content.release)",
           "trigger": "on_hit",
           "damage_type": "magic"
         }
@@ -235,7 +235,7 @@
                 ]
               },
               "label": "Derivado",
-              "source": "Characters/TahmKench/Spells/TahmKenchQAbility/TahmKenchQ.mSpellCalculations.TotalDamage (16.23.8406595+branch.releases-16-23.content.release)",
+              "source": "Characters/TahmKench/Spells/TahmKenchQAbility/TahmKenchQ.mSpellCalculations.TotalDamage (16.23.8418428+branch.releases-16-23.content.release)",
               "damage_type_source": "spell_tahmkenchq_tooltip <magicDamage>"
             }
           ]
@@ -244,6 +244,60 @@
       "passive_stats": [],
       "not_modelled": [
         "Ralentización, curación por vida que falta, aturdimiento a 3 marcas y daño de Paladar peculiar"
+      ],
+      "active_effects": [
+        {
+          "id": "tongue_lash_heal",
+          "name": "Lengüetazo (curación)",
+          "kind": "heal",
+          "formula": {
+            "op": "add",
+            "operands": [
+              {
+                "op": "by_rank",
+                "values": [
+                  10,
+                  20,
+                  30,
+                  40,
+                  50
+                ]
+              },
+              {
+                "op": "mul",
+                "operands": [
+                  {
+                    "op": "by_rank",
+                    "values": [
+                      0.05,
+                      0.055,
+                      0.06,
+                      0.065,
+                      0.07
+                    ]
+                  },
+                  {
+                    "op": "mul",
+                    "operands": [
+                      {
+                        "op": "stat",
+                        "stat": "health",
+                        "scope": "max"
+                      },
+                      {
+                        "op": "stat",
+                        "stat": "health",
+                        "scope": "missing_fraction"
+                      }
+                    ]
+                  }
+                ]
+              }
+            ]
+          },
+          "label": "Derivado",
+          "source": "Characters/TahmKench/Spells/TahmKenchQAbility/TahmKenchQ · DataValues.BaseHeal + DataValues.PercentHealthHealing * missing HP (16.23.8418428+branch.releases-16-23.content.release)"
+        }
       ]
     },
     "W": {
@@ -286,7 +340,7 @@
                 ]
               },
               "label": "Derivado",
-              "source": "Characters/TahmKench/Spells/TahmKenchWAbility/TahmKenchW.mSpellCalculations.TotalDamage (16.23.8406595+branch.releases-16-23.content.release)",
+              "source": "Characters/TahmKench/Spells/TahmKenchWAbility/TahmKenchW.mSpellCalculations.TotalDamage (16.23.8418428+branch.releases-16-23.content.release)",
               "damage_type_source": "spell_tahmkenchw_tooltip <magicDamage>"
             }
           ]
@@ -364,7 +418,7 @@
                 ]
               },
               "label": "Derivado",
-              "source": "Characters/TahmKench/Spells/TahmKenchRWrapperAbility/TahmKenchRWrapper · DataValues.BaseDamage + PercentHPDamage × vida máxima del objetivo (16.23.8406595+branch.releases-16-23.content.release)",
+              "source": "Characters/TahmKench/Spells/TahmKenchRWrapperAbility/TahmKenchRWrapper · DataValues.BaseDamage + PercentHPDamage × vida máxima del objetivo (16.23.8418428+branch.releases-16-23.content.release)",
               "damage_type_source": "spell_tahmkenchr_tooltip <magicDamage>"
             }
           ]
@@ -373,6 +427,43 @@
       "passive_stats": [],
       "not_modelled": [
         "Supresión durante 3 s y escudo al devorar a un aliado (TotalShield)"
+      ],
+      "active_effects": [
+        {
+          "id": "r_totalshield",
+          "name": "R (escudo)",
+          "kind": "shield",
+          "formula": {
+            "op": "add",
+            "operands": [
+              {
+                "op": "by_rank",
+                "values": [
+                  650,
+                  800,
+                  950
+                ]
+              },
+              {
+                "op": "mul",
+                "operands": [
+                  {
+                    "op": "constant",
+                    "value": 1
+                  },
+                  {
+                    "op": "stat",
+                    "stat": "ability_power",
+                    "scope": "total"
+                  }
+                ]
+              }
+            ]
+          },
+          "label": "Derivado",
+          "source": "Characters/TahmKench/Spells/TahmKenchRWrapperAbility/TahmKenchRWrapper.mSpellCalculations.TotalShield (16.23.8418428+branch.releases-16-23.content.release)",
+          "duration_seconds": 2.5
+        }
       ]
     }
   }

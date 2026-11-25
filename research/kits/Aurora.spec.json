@@ -111,6 +111,20 @@
       "tooltip": "spell_auroraw_tooltip",
       "not_modelled": [
         "Invisibilidad, velocidad de movimiento y reinicio por derribo"
+      ],
+      "active_effects": [
+        {
+          "id": "w_movespeedbonus",
+          "name": "W (VM)",
+          "kind": "stat_bonus",
+          "stat": "move_speed",
+          "mode": "percent_ms",
+          "scale": 0.01,
+          "data_value": "MoveSpeedBonus",
+          "duration_seconds": {
+            "data_value": "InvisDuration"
+          }
+        }
       ]
     },
     "E": {

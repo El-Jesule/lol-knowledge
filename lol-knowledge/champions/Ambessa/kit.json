@@ -3,7 +3,7 @@
   "champion": "Ambessa",
   "label": "Derivado",
   "game_version": "16.23",
-  "content_version": "16.23.8406595+branch.releases-16-23.content.release",
+  "content_version": "16.23.8418428+branch.releases-16-23.content.release",
   "verified_against": {
     "content_version": "16.23.8406595+branch.releases-16-23.content.release",
     "bin_sha256": "9dc84113f61d51e7b0a24a1c3ae8daefbb8e5f7644b354bcae34ab8528ad8f61",
@@ -47,7 +47,7 @@
                 ]
               },
               "label": "Derivado",
-              "source": "Characters/Ambessa/Spells/AmbessaPassiveAbility/AmbessaPassive.mSpellCalculations.Calc_OnHit_Damage_Flat (16.23.8406595+branch.releases-16-23.content.release)",
+              "source": "Characters/Ambessa/Spells/AmbessaPassiveAbility/AmbessaPassive.mSpellCalculations.Calc_OnHit_Damage_Flat (16.23.8418428+branch.releases-16-23.content.release)",
               "damage_type_source": "spell_ambessap_tooltip <physicalDamage>"
             }
           ]
@@ -87,7 +87,7 @@
             ]
           },
           "label": "Derivado",
-          "source": "Characters/Ambessa/Spells/AmbessaPassiveAbility/AmbessaPassive.mSpellCalculations.Calc_OnHit_Damage_Flat (16.23.8406595+branch.releases-16-23.content.release)",
+          "source": "Characters/Ambessa/Spells/AmbessaPassiveAbility/AmbessaPassive.mSpellCalculations.Calc_OnHit_Damage_Flat (16.23.8418428+branch.releases-16-23.content.release)",
           "trigger": "after_ability",
           "damage_type": "physical",
           "max_stacks": 3,
@@ -121,7 +121,7 @@
             ]
           },
           "label": "Derivado",
-          "source": "Characters/Ambessa/Spells/AmbessaPassiveAbility/AmbessaPassive.mSpellCalculations.Calc_OnHit_Energy_Refund (16.23.8406595+branch.releases-16-23.content.release)",
+          "source": "Characters/Ambessa/Spells/AmbessaPassiveAbility/AmbessaPassive.mSpellCalculations.Calc_OnHit_Energy_Refund (16.23.8418428+branch.releases-16-23.content.release)",
           "trigger": "on_hit",
           "resource": "energy"
         }
@@ -167,7 +167,7 @@
                 ]
               },
               "label": "Derivado",
-              "source": "Characters/Ambessa/Spells/AmbessaQAbility/AmbessaQ.mSpellCalculations.Calc_Damage_1_Max (16.23.8406595+branch.releases-16-23.content.release)",
+              "source": "Characters/Ambessa/Spells/AmbessaQAbility/AmbessaQ.mSpellCalculations.Calc_Damage_1_Max (16.23.8418428+branch.releases-16-23.content.release)",
               "damage_type_source": "spell_ambessaq_tooltip <physicalDamage>"
             },
             {
@@ -213,7 +213,7 @@
                 ]
               },
               "label": "Derivado",
-              "source": "Characters/Ambessa/Spells/AmbessaQAbility/AmbessaQ · mSpellCalculations.Calc_Damage_1_Percent_Max × vida máxima del objetivo (16.23.8406595+branch.releases-16-23.content.release)",
+              "source": "Characters/Ambessa/Spells/AmbessaQAbility/AmbessaQ · mSpellCalculations.Calc_Damage_1_Percent_Max × vida máxima del objetivo (16.23.8418428+branch.releases-16-23.content.release)",
               "damage_type_source": "spell_ambessaq_tooltip <physicalDamage>"
             }
           ],
@@ -256,7 +256,7 @@
                 ]
               },
               "label": "Derivado",
-              "source": "Characters/Ambessa/Spells/AmbessaQAbility/AmbessaQ.mSpellCalculations.Calc_Damage_2_Max (16.23.8406595+branch.releases-16-23.content.release)",
+              "source": "Characters/Ambessa/Spells/AmbessaQAbility/AmbessaQ.mSpellCalculations.Calc_Damage_2_Max (16.23.8418428+branch.releases-16-23.content.release)",
               "damage_type_source": "spell_ambessaq_tooltip <physicalDamage>"
             },
             {
@@ -302,7 +302,7 @@
                 ]
               },
               "label": "Derivado",
-              "source": "Characters/Ambessa/Spells/AmbessaQAbility/AmbessaQ · mSpellCalculations.Calc_Damage_2_Percent_Max × vida máxima del objetivo (16.23.8406595+branch.releases-16-23.content.release)",
+              "source": "Characters/Ambessa/Spells/AmbessaQAbility/AmbessaQ · mSpellCalculations.Calc_Damage_2_Percent_Max × vida máxima del objetivo (16.23.8418428+branch.releases-16-23.content.release)",
               "damage_type_source": "spell_ambessaq_tooltip <physicalDamage>"
             }
           ],
@@ -357,7 +357,7 @@
                 ]
               },
               "label": "Derivado",
-              "source": "Characters/Ambessa/Spells/AmbessaWAbility/AmbessaW.mSpellCalculations.Calc_Damage_Low (16.23.8406595+branch.releases-16-23.content.release)",
+              "source": "Characters/Ambessa/Spells/AmbessaWAbility/AmbessaW.mSpellCalculations.Calc_Damage_Low (16.23.8418428+branch.releases-16-23.content.release)",
               "damage_type_source": "spell_ambessaw_tooltip <physicalDamage>"
             }
           ],
@@ -408,7 +408,7 @@
                 ]
               },
               "label": "Derivado",
-              "source": "Characters/Ambessa/Spells/AmbessaWAbility/AmbessaW.mSpellCalculations.Calc_Damage_High (16.23.8406595+branch.releases-16-23.content.release)",
+              "source": "Characters/Ambessa/Spells/AmbessaWAbility/AmbessaW.mSpellCalculations.Calc_Damage_High (16.23.8418428+branch.releases-16-23.content.release)",
               "damage_type_source": "spell_ambessaw_tooltip <physicalDamage>"
             }
           ],
@@ -418,6 +418,40 @@
       "passive_stats": [],
       "not_modelled": [
         "Escudo temporal (Calc_Shield)"
+      ],
+      "active_effects": [
+        {
+          "id": "repudiation_shield",
+          "name": "Repudio (escudo)",
+          "kind": "shield",
+          "formula": {
+            "op": "add",
+            "operands": [
+              {
+                "op": "linear_by_level",
+                "min": 50,
+                "max": 320
+              },
+              {
+                "op": "mul",
+                "operands": [
+                  {
+                    "op": "constant",
+                    "value": 1.5
+                  },
+                  {
+                    "op": "stat",
+                    "stat": "attack_damage",
+                    "scope": "bonus"
+                  }
+                ]
+              }
+            ]
+          },
+          "label": "Derivado",
+          "source": "Characters/Ambessa/Spells/AmbessaWAbility/AmbessaW.mSpellCalculations.Calc_Shield (16.23.8418428+branch.releases-16-23.content.release)",
+          "duration_seconds": 1.5
+        }
       ]
     },
     "E": {
@@ -460,7 +494,7 @@
                 ]
               },
               "label": "Derivado",
-              "source": "Characters/Ambessa/Spells/AmbessaEAbility/AmbessaE.mSpellCalculations.Calc_Damage_Flat (16.23.8406595+branch.releases-16-23.content.release)",
+              "source": "Characters/Ambessa/Spells/AmbessaEAbility/AmbessaE.mSpellCalculations.Calc_Damage_Flat (16.23.8418428+branch.releases-16-23.content.release)",
               "damage_type_source": "spell_ambessae_tooltip <physicalDamage>"
             }
           ]
@@ -509,7 +543,7 @@
                 ]
               },
               "label": "Derivado",
-              "source": "Characters/Ambessa/Spells/AmbessaRAbility/AmbessaR.mSpellCalculations.Calc_Damage (16.23.8406595+branch.releases-16-23.content.release)",
+              "source": "Characters/Ambessa/Spells/AmbessaRAbility/AmbessaR.mSpellCalculations.Calc_Damage (16.23.8418428+branch.releases-16-23.content.release)",
               "damage_type_source": "spell_ambessar_tooltip <physicalDamage>"
             }
           ]
@@ -527,7 +561,7 @@
             ]
           },
           "label": "Derivado",
-          "source": "Characters/Ambessa/Spells/AmbessaRAbility/AmbessaR.DataValues.Armor_Penetration (16.23.8406595+branch.releases-16-23.content.release)",
+          "source": "Characters/Ambessa/Spells/AmbessaRAbility/AmbessaR.DataValues.Armor_Penetration (16.23.8418428+branch.releases-16-23.content.release)",
           "condition": "Penetración de armadura pasiva permanente al subir R (10/20/30 %)"
         }
       ],

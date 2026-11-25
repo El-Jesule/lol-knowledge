@@ -31,6 +31,20 @@
       ],
       "not_modelled": [
         "Velocidad de movimiento al golpear campeones (ChampHitMSBonus)"
+      ],
+      "active_effects": [
+        {
+          "id": "q_champhitmsbonus",
+          "name": "Q (VM)",
+          "kind": "stat_bonus",
+          "stat": "move_speed",
+          "mode": "percent_ms",
+          "scale": 0.01,
+          "data_value": "ChampHitMSBonus",
+          "duration_seconds": {
+            "data_value": "ChampHitMSDuration"
+          }
+        }
       ]
     },
     "W": {
@@ -79,6 +93,14 @@
       ],
       "not_modelled": [
         "Curación contra objetivos envenenados (HealCalc) y devolución de maná al matar"
+      ],
+      "active_effects": [
+        {
+          "id": "e_healcalc",
+          "name": "E (curación)",
+          "kind": "heal",
+          "calculation": "HealCalc"
+        }
       ]
     },
     "R": {

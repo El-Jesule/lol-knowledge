@@ -3,7 +3,7 @@
   "champion": "KSante",
   "label": "Derivado",
   "game_version": "16.23",
-  "content_version": "16.23.8406595+branch.releases-16-23.content.release",
+  "content_version": "16.23.8418428+branch.releases-16-23.content.release",
   "verified_against": {
     "content_version": "16.23.8406595+branch.releases-16-23.content.release",
     "bin_sha256": "828c71f9666ec6b6c9e46bb318463d5efe62416f8f42f79565b5bef8a1c44935",
@@ -48,7 +48,7 @@
                 ]
               },
               "label": "Derivado",
-              "source": "Characters/KSante/Spells/KSantePAbility/KSanteP · DataValues.FlatDamage + mSpellCalculations.PercentHealthDamage × vida máxima del objetivo (16.23.8406595+branch.releases-16-23.content.release)",
+              "source": "Characters/KSante/Spells/KSantePAbility/KSanteP · DataValues.FlatDamage + mSpellCalculations.PercentHealthDamage × vida máxima del objetivo (16.23.8418428+branch.releases-16-23.content.release)",
               "damage_type_source": "spell_ksantep_tooltip <physicalDamage>"
             }
           ]
@@ -80,7 +80,7 @@
             ]
           },
           "label": "Derivado",
-          "source": "Characters/KSante/Spells/KSantePAbility/KSanteP · PercentHealthDamage × vida máxima del objetivo (16.23.8406595+branch.releases-16-23.content.release)",
+          "source": "Characters/KSante/Spells/KSantePAbility/KSanteP · PercentHealthDamage × vida máxima del objetivo (16.23.8418428+branch.releases-16-23.content.release)",
           "trigger": "after_ability",
           "damage_type": "physical",
           "duration_seconds": 4
@@ -141,7 +141,7 @@
                 ]
               },
               "label": "Derivado",
-              "source": "Characters/KSante/Spells/KSanteQAbility/KSanteQ.mSpellCalculations.BaseDamage (16.23.8406595+branch.releases-16-23.content.release)",
+              "source": "Characters/KSante/Spells/KSanteQAbility/KSanteQ.mSpellCalculations.BaseDamage (16.23.8418428+branch.releases-16-23.content.release)",
               "damage_type_source": "spell_ksanteq_tooltip <physicalDamage>"
             }
           ]
@@ -196,7 +196,7 @@
                 ]
               },
               "label": "Derivado",
-              "source": "Characters/KSante/Spells/KSanteQAbility/KSanteQ.mSpellCalculations.BaseDamage (16.23.8406595+branch.releases-16-23.content.release)",
+              "source": "Characters/KSante/Spells/KSanteQAbility/KSanteQ.mSpellCalculations.BaseDamage (16.23.8418428+branch.releases-16-23.content.release)",
               "damage_type_source": "spell_ksanteq_tooltip <physicalDamage>"
             }
           ],
@@ -283,7 +283,7 @@
                 ]
               },
               "label": "Derivado",
-              "source": "Characters/KSante/Spells/KSanteWAbility/KSanteW · DataValues.BaseDamage + mSpellCalculations.TotalMaxHealthDamage × vida máxima del objetivo (16.23.8406595+branch.releases-16-23.content.release)",
+              "source": "Characters/KSante/Spells/KSanteWAbility/KSanteW · DataValues.BaseDamage + mSpellCalculations.TotalMaxHealthDamage × vida máxima del objetivo (16.23.8418428+branch.releases-16-23.content.release)",
               "damage_type_source": "spell_ksantew_tooltip <physicalDamage>"
             }
           ]
@@ -292,6 +292,21 @@
       "passive_stats": [],
       "not_modelled": [
         "Reducción de daño durante la carga (DamageReduction), aturdimiento, daño verdadero extra en Órdago y topes contra súbditos/monstruos"
+      ],
+      "active_effects": [
+        {
+          "id": "path_maker_dr",
+          "name": "Abrecaminos (DR)",
+          "kind": "damage_taken_modifier",
+          "formula": {
+            "op": "constant",
+            "value": 25
+          },
+          "label": "Derivado",
+          "source": "Characters/KSante/Spells/KSanteWAbility/KSanteW.DataValues.DamageReduction (16.23.8418428+branch.releases-16-23.content.release)",
+          "mode": "percent",
+          "duration_seconds": 1
+        }
       ]
     },
     "E": {
@@ -301,6 +316,45 @@
       "passive_stats": [],
       "not_modelled": [
         "Deslizamiento y escudo propio o a aliado (TotalShield)"
+      ],
+      "active_effects": [
+        {
+          "id": "e_totalshield",
+          "name": "E (escudo)",
+          "kind": "shield",
+          "formula": {
+            "op": "add",
+            "operands": [
+              {
+                "op": "by_rank",
+                "values": [
+                  70,
+                  112.5,
+                  155,
+                  197.5,
+                  240
+                ]
+              },
+              {
+                "op": "mul",
+                "operands": [
+                  {
+                    "op": "constant",
+                    "value": 0.135
+                  },
+                  {
+                    "op": "stat",
+                    "stat": "health",
+                    "scope": "bonus"
+                  }
+                ]
+              }
+            ]
+          },
+          "label": "Derivado",
+          "source": "Characters/KSante/Spells/KSanteEAbility/KSanteE.mSpellCalculations.TotalShield (16.23.8418428+branch.releases-16-23.content.release)",
+          "duration_seconds": 2
+        }
       ]
     },
     "R": {
@@ -322,7 +376,7 @@
                 ]
               },
               "label": "Derivado",
-              "source": "Characters/KSante/Spells/KSanteRAbility/KSanteR · DataValues.BaseDamage (16.23.8406595+branch.releases-16-23.content.release)",
+              "source": "Characters/KSante/Spells/KSanteRAbility/KSanteR · DataValues.BaseDamage (16.23.8418428+branch.releases-16-23.content.release)",
               "damage_type_source": "spell_ksanter_tooltip <physicalDamage>"
             }
           ]
@@ -361,7 +415,7 @@
                 ]
               },
               "label": "Derivado",
-              "source": "Characters/KSante/Spells/KSanteRAbility/KSanteR.mSpellCalculations.TotalDamageSlamDown (16.23.8406595+branch.releases-16-23.content.release)",
+              "source": "Characters/KSante/Spells/KSanteRAbility/KSanteR.mSpellCalculations.TotalDamageSlamDown (16.23.8418428+branch.releases-16-23.content.release)",
               "damage_type_source": "spell_ksanter_tooltip <physicalDamage>"
             }
           ]
@@ -370,6 +424,26 @@
       "passive_stats": [],
       "not_modelled": [
         "Transformación Órdago (pérdida de vida/resistencias a cambio de velocidad de ataque, penetración de armadura y omnisucción)"
+      ],
+      "active_effects": [
+        {
+          "id": "r_attackspeed",
+          "name": "R (VA)",
+          "kind": "stat_bonus",
+          "formula": {
+            "op": "by_rank",
+            "values": [
+              40,
+              60,
+              80
+            ]
+          },
+          "label": "Derivado",
+          "source": "Characters/KSante/Spells/KSanteRAbility/KSanteR.DataValues.AttackSpeed (16.23.8418428+branch.releases-16-23.content.release)",
+          "stat": "attack_speed_bonus",
+          "mode": "flat",
+          "duration_seconds": 15
+        }
       ]
     }
   }

@@ -67,6 +67,19 @@
       ],
       "not_modelled": [
         "Inmovilización de río y sigilo de maleza"
+      ],
+      "active_effects": [
+        {
+          "id": "q_haste",
+          "name": "Q (VM)",
+          "kind": "stat_bonus",
+          "stat": "move_speed",
+          "mode": "percent_ms",
+          "data_value": "Haste",
+          "duration_seconds": {
+            "data_value": "StealthDuration"
+          }
+        }
       ]
     },
     "W": {

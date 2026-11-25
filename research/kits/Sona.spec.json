@@ -89,6 +89,23 @@
       "tooltip": "spell_sonaw_tooltip",
       "not_modelled": [
         "Curación (TotalHeal), escudo en aura (TotalShield) y reducción de daño de Diminuendo"
+      ],
+      "active_effects": [
+        {
+          "id": "aria_of_perseverance_heal",
+          "name": "Aria de la perseverancia (curación)",
+          "kind": "heal",
+          "calculation": "TotalHeal"
+        },
+        {
+          "id": "aria_of_perseverance_shield",
+          "name": "Aria de la perseverancia (escudo)",
+          "kind": "shield",
+          "calculation": "TotalShield",
+          "duration_seconds": {
+            "data_value": "ShieldDuration"
+          }
+        }
       ]
     },
     "E": {
@@ -96,6 +113,19 @@
       "tooltip": "spell_sonae_tooltip",
       "not_modelled": [
         "Velocidad de movimiento propia/aliada (TotalSelfMovementSpeed, TotalAllyMovementSpeed) y ralentización Tempo"
+      ],
+      "active_effects": [
+        {
+          "id": "e_totalselfmovementspeed",
+          "name": "E (VM)",
+          "kind": "stat_bonus",
+          "stat": "move_speed",
+          "mode": "percent_ms",
+          "calculation": "TotalSelfMovementSpeed",
+          "duration_seconds": {
+            "data_value": "SelfMovementSpeedDurationMin"
+          }
+        }
       ]
     },
     "R": {

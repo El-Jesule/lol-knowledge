@@ -64,6 +64,17 @@
       "tooltip": "spell_luxw_tooltip",
       "not_modelled": [
         "Escudo de ida y vuelta (TotalShieldTT)"
+      ],
+      "active_effects": [
+        {
+          "id": "prismatic_barrier_shield",
+          "name": "Barrera prismática (escudo por pasada)",
+          "kind": "shield",
+          "calculation": "TotalShieldTT",
+          "duration_seconds": {
+            "data_value": "ShieldDuration"
+          }
+        }
       ]
     },
     "E": {

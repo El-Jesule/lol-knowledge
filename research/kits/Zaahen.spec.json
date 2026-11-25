@@ -21,9 +21,15 @@
           "trigger": "champion_hit",
           "calculation": "PercentBonusADCalc",
           "scale": 100,
-          "max_stacks": {"data_value": "MaxStacks"},
-          "max_stacks_multiplier": {"data_value": "MaxStacksMultiplier"},
-          "duration_seconds": {"data_value": "FallOffDuration"},
+          "max_stacks": {
+            "data_value": "MaxStacks"
+          },
+          "max_stacks_multiplier": {
+            "data_value": "MaxStacksMultiplier"
+          },
+          "duration_seconds": {
+            "data_value": "FallOffDuration"
+          },
           "input_name": "determination_stacks",
           "source_note": "wiki Template:Data_Zaahen/Cultivation_of_War rev 4060321"
         }
@@ -36,37 +42,114 @@
       "name": "La guja de los Oscuros",
       "tooltip": "spell_zaahenq_tooltip",
       "cases": [
-        {"id": "first_hit", "name": "Primer golpe: daño adicional al ataque", "parts": [{"calculation": "InitialDamage"}]},
-        {"id": "recast", "name": "Reactivación: daño adicional al ataque", "recast": true, "parts": [{"calculation": "SecondHitDamage"}]}
+        {
+          "id": "first_hit",
+          "name": "Primer golpe: daño adicional al ataque",
+          "parts": [
+            {
+              "calculation": "InitialDamage"
+            }
+          ]
+        },
+        {
+          "id": "recast",
+          "name": "Reactivación: daño adicional al ataque",
+          "recast": true,
+          "parts": [
+            {
+              "calculation": "SecondHitDamage"
+            }
+          ]
+        }
       ],
       "recast_window_seconds": 4,
       "not_modelled": [
         "El daño del propio ataque básico: se suma aparte",
         "Daño contra monstruos (MonsterDamagePercent) y curación"
+      ],
+      "active_effects": [
+        {
+          "id": "q_heal",
+          "name": "Q (curación % vida máxima)",
+          "kind": "heal",
+          "formula": {
+            "op": "mul",
+            "operands": [
+              {
+                "op": "data_value",
+                "name": "HealPercent"
+              },
+              {
+                "op": "stat",
+                "stat": "health",
+                "scope": "max"
+              }
+            ]
+          },
+          "source_note": "DataValues.HealPercent * max health",
+          "case_ids": [
+            "first_hit"
+          ]
+        }
       ]
     },
     "W": {
       "name": "Hendidura del retorno",
       "tooltip": "spell_zaahenw_tooltip",
       "cases": [
-        {"id": "hit_and_pull", "name": "Golpe y atracción (el mismo enemigo recibe ambos)", "parts": [{"calculation": "InitialDamage"}, {"calculation": "SecondaryDamage"}]}
+        {
+          "id": "hit_and_pull",
+          "name": "Golpe y atracción (el mismo enemigo recibe ambos)",
+          "parts": [
+            {
+              "calculation": "InitialDamage"
+            },
+            {
+              "calculation": "SecondaryDamage"
+            }
+          ]
+        }
       ]
     },
     "E": {
       "name": "Impulso áureo",
       "tooltip": "spell_zaahene_tooltip",
       "cases": [
-        {"id": "center", "name": "Tajo", "parts": [{"calculation": "BaseDamageCalc"}]},
+        {
+          "id": "center",
+          "name": "Tajo",
+          "parts": [
+            {
+              "calculation": "BaseDamageCalc"
+            }
+          ]
+        },
         {
           "id": "edge",
           "name": "Borde del tajo (sustituye al tajo)",
           "parts": [
-            {"calculation": "BonusDamageCalc"},
+            {
+              "calculation": "BonusDamageCalc"
+            },
             {
               "tooltip_reference": "PercentHPDamage",
               "damage_type": "magic",
               "source_note": "DataValues.PercentHPDamage × vida máxima del objetivo (texto del tooltip)",
-              "formula": {"op": "mul", "operands": [{"op": "data_value", "name": "PercentHPDamage"}, {"op": "stat", "stat": "health", "scope": "max", "subject": "target"}]}
+              "formula": {
+                "op": "mul",
+                "operands": [
+                  {
+                    "op": "data_value",
+                    "name": "PercentHPDamage"
+                  },
+                  {
+                    "op": "stat",
+                    "stat": "health",
+                    "scope": "max",
+                    "subject": "target"
+                  }
+                ]
+              }
             }
           ]
         }
@@ -79,13 +162,36 @@
       "name": "Redención funesta",
       "tooltip": "spell_zaahenr_tooltip",
       "cases": [
-        {"id": "slam", "name": "Golpe descendente", "parts": [{"calculation": "DamageEndCalc"}]}
+        {
+          "id": "slam",
+          "name": "Golpe descendente",
+          "parts": [
+            {
+              "calculation": "DamageEndCalc"
+            }
+          ]
+        }
       ],
       "passive_stats": [
-        {"stat": "armor_penetration_percent", "data_value": "ArmorPen", "condition": "pasiva de la R: activa con la R aprendida, también en enfriamiento"}
+        {
+          "stat": "armor_penetration_percent",
+          "data_value": "ArmorPen",
+          "condition": "pasiva de la R: activa con la R aprendida, también en enfriamiento"
+        }
       ],
       "not_modelled": [
         "Reducción de daño durante el lanzamiento y curación"
+      ],
+      "active_effects": [
+        {
+          "id": "r_cast_dr",
+          "name": "R (DR durante lanzamiento)",
+          "kind": "damage_taken_modifier",
+          "mode": "percent",
+          "data_value": "DamageReduction",
+          "scale": 100,
+          "duration_seconds": 0.75
+        }
       ]
     }
   }

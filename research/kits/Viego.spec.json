@@ -124,6 +124,31 @@
       "tooltip": "spell_viegoe_tooltip",
       "not_modelled": [
         "Camuflaje en la Niebla, velocidad de movimiento (TotalMoveSpeed) y velocidad de ataque"
+      ],
+      "active_effects": [
+        {
+          "id": "e_attackspeed",
+          "name": "E (VA)",
+          "kind": "stat_bonus",
+          "stat": "attack_speed_bonus",
+          "mode": "flat",
+          "scale": 100,
+          "data_value": "AttackSpeed",
+          "duration_seconds": {
+            "data_value": "MistDuration"
+          }
+        },
+        {
+          "id": "e_totalmovespeed",
+          "name": "E (VM)",
+          "kind": "stat_bonus",
+          "stat": "move_speed",
+          "mode": "percent_ms",
+          "calculation": "TotalMoveSpeed",
+          "duration_seconds": {
+            "data_value": "MistDuration"
+          }
+        }
       ]
     },
     "R": {

@@ -3,7 +3,7 @@
   "champion": "Rakan",
   "label": "Derivado",
   "game_version": "16.23",
-  "content_version": "16.23.8406595+branch.releases-16-23.content.release",
+  "content_version": "16.23.8418428+branch.releases-16-23.content.release",
   "verified_against": {
     "content_version": "16.23.8406595+branch.releases-16-23.content.release",
     "bin_sha256": "718dbc5031d8453b0411adea26117cc0b92a04c4c222ba07817f7363e5d85ed5",
@@ -50,7 +50,7 @@
             ]
           },
           "label": "Derivado",
-          "source": "Characters/Rakan/Spells/RakanPassiveAbility/RakanPassive.mSpellCalculations.TotalShield (16.23.8406595+branch.releases-16-23.content.release)",
+          "source": "Characters/Rakan/Spells/RakanPassiveAbility/RakanPassive.mSpellCalculations.TotalShield (16.23.8418428+branch.releases-16-23.content.release)",
           "trigger": "on_taking_damage",
           "cooldown_formula": {
             "op": "by_level",
@@ -118,7 +118,7 @@
                 ]
               },
               "label": "Derivado",
-              "source": "Characters/Rakan/Spells/RakanQAbility/RakanQ.mSpellCalculations.TotalDamage (16.23.8406595+branch.releases-16-23.content.release)",
+              "source": "Characters/Rakan/Spells/RakanQAbility/RakanQ.mSpellCalculations.TotalDamage (16.23.8418428+branch.releases-16-23.content.release)",
               "damage_type_source": "spell_rakanq_tooltip <magicDamage>"
             }
           ]
@@ -127,6 +127,39 @@
       "passive_stats": [],
       "not_modelled": [
         "Curación propia y aliada al golpear campeones o monstruos épicos (TotalHeal)"
+      ],
+      "active_effects": [
+        {
+          "id": "q_totalheal",
+          "name": "Q (curación)",
+          "kind": "heal",
+          "formula": {
+            "op": "add",
+            "operands": [
+              {
+                "op": "linear_by_level",
+                "min": 40,
+                "max": 210
+              },
+              {
+                "op": "mul",
+                "operands": [
+                  {
+                    "op": "constant",
+                    "value": 0.55
+                  },
+                  {
+                    "op": "stat",
+                    "stat": "ability_power",
+                    "scope": "total"
+                  }
+                ]
+              }
+            ]
+          },
+          "label": "Derivado",
+          "source": "Characters/Rakan/Spells/RakanQAbility/RakanQ.mSpellCalculations.TotalHeal (16.23.8418428+branch.releases-16-23.content.release)"
+        }
       ]
     },
     "W": {
@@ -169,7 +202,7 @@
                 ]
               },
               "label": "Derivado",
-              "source": "Characters/Rakan/Spells/RakanWAbility/RakanW.mSpellCalculations.TotalDamage (16.23.8406595+branch.releases-16-23.content.release)",
+              "source": "Characters/Rakan/Spells/RakanWAbility/RakanW.mSpellCalculations.TotalDamage (16.23.8418428+branch.releases-16-23.content.release)",
               "damage_type_source": "spell_rakanw_tooltip <magicDamage>"
             }
           ]
@@ -187,6 +220,45 @@
       "passive_stats": [],
       "not_modelled": [
         "Desplazamiento a aliado y escudo con reactivación (TotalShield)"
+      ],
+      "active_effects": [
+        {
+          "id": "e_totalshield",
+          "name": "E (escudo)",
+          "kind": "shield",
+          "formula": {
+            "op": "add",
+            "operands": [
+              {
+                "op": "by_rank",
+                "values": [
+                  50,
+                  75,
+                  100,
+                  125,
+                  150
+                ]
+              },
+              {
+                "op": "mul",
+                "operands": [
+                  {
+                    "op": "constant",
+                    "value": 0.7
+                  },
+                  {
+                    "op": "stat",
+                    "stat": "ability_power",
+                    "scope": "total"
+                  }
+                ]
+              }
+            ]
+          },
+          "label": "Derivado",
+          "source": "Characters/Rakan/Spells/RakanEAbility/RakanE.mSpellCalculations.TotalShield (16.23.8418428+branch.releases-16-23.content.release)",
+          "duration_seconds": 3
+        }
       ]
     },
     "R": {
@@ -227,7 +299,7 @@
                 ]
               },
               "label": "Derivado",
-              "source": "Characters/Rakan/Spells/RakanRAbility/RakanR.mSpellCalculations.TotalDamageTooltip (16.23.8406595+branch.releases-16-23.content.release)",
+              "source": "Characters/Rakan/Spells/RakanRAbility/RakanR.mSpellCalculations.TotalDamageTooltip (16.23.8418428+branch.releases-16-23.content.release)",
               "damage_type_source": "spell_rakanr_tooltip <magicDamage>"
             }
           ]
@@ -236,6 +308,22 @@
       "passive_stats": [],
       "not_modelled": [
         "Velocidad de movimiento y hechizo (CharmDuration)"
+      ],
+      "active_effects": [
+        {
+          "id": "r_initialcastspeed",
+          "name": "R (VM)",
+          "kind": "stat_bonus",
+          "formula": {
+            "op": "constant",
+            "value": 0.75
+          },
+          "label": "Derivado",
+          "source": "Characters/Rakan/Spells/RakanRAbility/RakanR.DataValues.InitialCastSpeed (16.23.8418428+branch.releases-16-23.content.release)",
+          "stat": "move_speed",
+          "mode": "percent_ms",
+          "duration_seconds": 4
+        }
       ]
     }
   }

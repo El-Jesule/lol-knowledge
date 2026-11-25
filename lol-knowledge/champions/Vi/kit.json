@@ -3,7 +3,7 @@
   "champion": "Vi",
   "label": "Derivado",
   "game_version": "16.23",
-  "content_version": "16.23.8406595+branch.releases-16-23.content.release",
+  "content_version": "16.23.8418428+branch.releases-16-23.content.release",
   "verified_against": {
     "content_version": "16.23.8406595+branch.releases-16-23.content.release",
     "bin_sha256": "1d26ef844c7f5e33d2b1cb97b4f3a3dd316ef57f17aca32842a24b5a5cfd6d72",
@@ -40,7 +40,7 @@
             ]
           },
           "label": "Derivado",
-          "source": "Characters/Vi/Spells/ViPassiveAbility/ViPassive.mSpellCalculations.TotalShield (16.23.8406595+branch.releases-16-23.content.release)",
+          "source": "Characters/Vi/Spells/ViPassiveAbility/ViPassive.mSpellCalculations.TotalShield (16.23.8418428+branch.releases-16-23.content.release)",
           "trigger": "on_ability_cast",
           "duration_seconds": 3,
           "cooldown_formula": {
@@ -109,7 +109,7 @@
                 ]
               },
               "label": "Derivado",
-              "source": "Characters/Vi/Spells/ViQAbility/ViQ.mSpellCalculations.TotalDamage (16.23.8406595+branch.releases-16-23.content.release)",
+              "source": "Characters/Vi/Spells/ViQAbility/ViQ.mSpellCalculations.TotalDamage (16.23.8418428+branch.releases-16-23.content.release)",
               "damage_type_source": "spell_viq_tooltip <physicalDamage>"
             }
           ]
@@ -159,7 +159,7 @@
                 ]
               },
               "label": "Derivado",
-              "source": "Characters/Vi/Spells/ViQAbility/ViQ.mSpellCalculations.MaxDamageTooltip (16.23.8406595+branch.releases-16-23.content.release)",
+              "source": "Characters/Vi/Spells/ViQAbility/ViQ.mSpellCalculations.MaxDamageTooltip (16.23.8418428+branch.releases-16-23.content.release)",
               "damage_type_source": "spell_viq_tooltip <physicalDamage>"
             }
           ]
@@ -225,7 +225,7 @@
                 ]
               },
               "label": "Derivado",
-              "source": "Characters/Vi/Spells/ViWAbility/ViW · (TotalDamageTooltip %) × vida máxima del objetivo (16.23.8406595+branch.releases-16-23.content.release)",
+              "source": "Characters/Vi/Spells/ViWAbility/ViW · (TotalDamageTooltip %) × vida máxima del objetivo (16.23.8418428+branch.releases-16-23.content.release)",
               "damage_type_source": "spell_viw_tooltip <physicalDamage>"
             }
           ]
@@ -234,6 +234,28 @@
       "passive_stats": [],
       "not_modelled": [
         "Reducción del 20 % de armadura, velocidad de ataque (AttackSpeed) y tope de 300 a monstruos"
+      ],
+      "active_effects": [
+        {
+          "id": "w_attackspeed",
+          "name": "W (VA)",
+          "kind": "stat_bonus",
+          "formula": {
+            "op": "by_rank",
+            "values": [
+              30,
+              35,
+              40,
+              45,
+              50
+            ]
+          },
+          "label": "Derivado",
+          "source": "Characters/Vi/Spells/ViWAbility/ViW.DataValues.AttackSpeed (16.23.8418428+branch.releases-16-23.content.release)",
+          "stat": "attack_speed_bonus",
+          "mode": "flat",
+          "duration_seconds": 4
+        }
       ]
     },
     "E": {
@@ -290,7 +312,7 @@
                 ]
               },
               "label": "Derivado",
-              "source": "Characters/Vi/Spells/ViEAbility/ViE.mSpellCalculations.TotalDamageTooltip (16.23.8406595+branch.releases-16-23.content.release)",
+              "source": "Characters/Vi/Spells/ViEAbility/ViE.mSpellCalculations.TotalDamageTooltip (16.23.8418428+branch.releases-16-23.content.release)",
               "damage_type_source": "spell_vie_tooltip <physicalDamage>"
             }
           ]
@@ -339,7 +361,7 @@
                 ]
               },
               "label": "Derivado",
-              "source": "Characters/Vi/Spells/ViRAbility/ViR.mSpellCalculations.Damage (16.23.8406595+branch.releases-16-23.content.release)",
+              "source": "Characters/Vi/Spells/ViRAbility/ViR.mSpellCalculations.Damage (16.23.8418428+branch.releases-16-23.content.release)",
               "damage_type_source": "spell_vir_tooltip <physicalDamage>"
             }
           ]

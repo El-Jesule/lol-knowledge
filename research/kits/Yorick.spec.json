@@ -32,6 +32,51 @@
       ],
       "not_modelled": [
         "Curación al golpear (QHeal), creación de tumbas y reactivación Despertar"
+      ],
+      "active_effects": [
+        {
+          "id": "last_rites_heal",
+          "name": "Extremaunción (curación)",
+          "kind": "heal",
+          "formula": {
+            "op": "add",
+            "operands": [
+              {
+                "op": "calculation",
+                "name": "QHeal"
+              },
+              {
+                "op": "mul",
+                "operands": [
+                  {
+                    "op": "data_value",
+                    "name": "MissingHealthRatio"
+                  },
+                  {
+                    "op": "constant",
+                    "value": 0.01
+                  },
+                  {
+                    "op": "mul",
+                    "operands": [
+                      {
+                        "op": "stat",
+                        "stat": "health",
+                        "scope": "max"
+                      },
+                      {
+                        "op": "stat",
+                        "stat": "health",
+                        "scope": "missing_fraction"
+                      }
+                    ]
+                  }
+                ]
+              }
+            ]
+          },
+          "source_note": "mSpellCalculations.QHeal + DataValues.MissingHealthRatio% missing HP"
+        }
       ]
     },
     "W": {
@@ -78,6 +123,19 @@
       ],
       "not_modelled": [
         "Daño mínimo contra súbditos (Calc_MinimumDamage), tope contra monstruos, ralentización (Calc_Slow), reducción de armadura (ArmorShred) y salto de caminantes"
+      ],
+      "active_effects": [
+        {
+          "id": "e_hasteamount",
+          "name": "E (VM)",
+          "kind": "stat_bonus",
+          "stat": "move_speed",
+          "mode": "percent_ms",
+          "data_value": "HasteAmount",
+          "duration_seconds": {
+            "data_value": "SlowDuration"
+          }
+        }
       ]
     },
     "R": {

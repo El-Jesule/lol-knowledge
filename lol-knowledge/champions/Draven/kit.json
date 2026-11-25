@@ -3,7 +3,7 @@
   "champion": "Draven",
   "label": "Derivado",
   "game_version": "16.23",
-  "content_version": "16.23.8406595+branch.releases-16-23.content.release",
+  "content_version": "16.23.8418428+branch.releases-16-23.content.release",
   "verified_against": {
     "content_version": "16.23.8406595+branch.releases-16-23.content.release",
     "bin_sha256": "2aed9484380d92535186a52b73a19f6ad96c9768b93c4c6a7d98d02f83646db8",
@@ -67,7 +67,7 @@
                 ]
               },
               "label": "Derivado",
-              "source": "Characters/Draven/Spells/DravenSpinningAbility/DravenSpinning.mSpellCalculations.TotalDamage (16.23.8406595+branch.releases-16-23.content.release)",
+              "source": "Characters/Draven/Spells/DravenSpinningAbility/DravenSpinning.mSpellCalculations.TotalDamage (16.23.8418428+branch.releases-16-23.content.release)",
               "damage_type_source": "spell_dravenspinning_tooltip <physicalDamage>"
             }
           ]
@@ -85,6 +85,48 @@
       "passive_stats": [],
       "not_modelled": [
         "Velocidad de movimiento decreciente, velocidad de ataque y efecto fantasmal"
+      ],
+      "active_effects": [
+        {
+          "id": "blood_rush_as",
+          "name": "Subidón de adrenalina (VA)",
+          "kind": "stat_bonus",
+          "formula": {
+            "op": "by_rank",
+            "values": [
+              20,
+              25,
+              30,
+              35,
+              40
+            ]
+          },
+          "label": "Derivado",
+          "source": "Characters/Draven/Spells/DravenFuryAbility/DravenFury.DataValues.Temp_AS (16.23.8418428+branch.releases-16-23.content.release)",
+          "stat": "attack_speed_bonus",
+          "mode": "flat",
+          "duration_seconds": 3
+        },
+        {
+          "id": "blood_rush_ms",
+          "name": "Subidón de adrenalina (VM %)",
+          "kind": "stat_bonus",
+          "formula": {
+            "op": "by_rank",
+            "values": [
+              0.5,
+              0.55,
+              0.6,
+              0.65,
+              0.7
+            ]
+          },
+          "label": "Derivado",
+          "source": "Characters/Draven/Spells/DravenFuryAbility/DravenFury.DataValues.Temp_MSMod (16.23.8418428+branch.releases-16-23.content.release)",
+          "stat": "move_speed",
+          "mode": "percent_ms",
+          "duration_seconds": 1.5
+        }
       ]
     },
     "E": {
@@ -127,7 +169,7 @@
                 ]
               },
               "label": "Derivado",
-              "source": "Characters/Draven/Spells/DravenDoubleShotAbility/DravenDoubleShot.mSpellCalculations.TotalDamage (16.23.8406595+branch.releases-16-23.content.release)",
+              "source": "Characters/Draven/Spells/DravenDoubleShotAbility/DravenDoubleShot.mSpellCalculations.TotalDamage (16.23.8418428+branch.releases-16-23.content.release)",
               "damage_type_source": "spell_dravendoubleshot_tooltip <physicalDamage>"
             }
           ]
@@ -180,7 +222,7 @@
                 ]
               },
               "label": "Derivado",
-              "source": "Characters/Draven/Spells/DravenRCastAbility/DravenRCast.mSpellCalculations.RCalculatedDamage (16.23.8406595+branch.releases-16-23.content.release)",
+              "source": "Characters/Draven/Spells/DravenRCastAbility/DravenRCast.mSpellCalculations.RCalculatedDamage (16.23.8418428+branch.releases-16-23.content.release)",
               "damage_type_source": "spell_dravenrcast_tooltip <physicalDamage>"
             }
           ]
@@ -223,7 +265,7 @@
                 ]
               },
               "label": "Derivado",
-              "source": "Characters/Draven/Spells/DravenRCastAbility/DravenRCast.mSpellCalculations.RCalculatedDamage (16.23.8406595+branch.releases-16-23.content.release)",
+              "source": "Characters/Draven/Spells/DravenRCastAbility/DravenRCast.mSpellCalculations.RCalculatedDamage (16.23.8418428+branch.releases-16-23.content.release)",
               "damage_type_source": "spell_dravenrcast_tooltip <physicalDamage>"
             },
             {
@@ -260,7 +302,7 @@
                 ]
               },
               "label": "Derivado",
-              "source": "Characters/Draven/Spells/DravenRCastAbility/DravenRCast.mSpellCalculations.RCalculatedDamage (16.23.8406595+branch.releases-16-23.content.release)",
+              "source": "Characters/Draven/Spells/DravenRCastAbility/DravenRCast.mSpellCalculations.RCalculatedDamage (16.23.8418428+branch.releases-16-23.content.release)",
               "damage_type_source": "spell_dravenrcast_tooltip <physicalDamage>"
             }
           ]

@@ -81,6 +81,14 @@
       ],
       "not_modelled": [
         "Curación contra campeones y monstruos (ChampionHealing, MonsterHealing)"
+      ],
+      "active_effects": [
+        {
+          "id": "q_championhealing",
+          "name": "Q (curación)",
+          "kind": "heal",
+          "calculation": "ChampionHealing"
+        }
       ]
     },
     "W": {
@@ -153,6 +161,17 @@
       ],
       "not_modelled": [
         "Escudo (TotalShieldAmount), ralentización creciente y daño parcial por interrupción"
+      ],
+      "active_effects": [
+        {
+          "id": "r_totalshieldamount",
+          "name": "R (escudo)",
+          "kind": "shield",
+          "calculation": "TotalShieldAmount",
+          "duration_seconds": {
+            "data_value": "MaxShieldDuration"
+          }
+        }
       ]
     }
   }

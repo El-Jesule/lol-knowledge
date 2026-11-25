@@ -3,7 +3,7 @@
   "champion": "Braum",
   "label": "Derivado",
   "game_version": "16.23",
-  "content_version": "16.23.8406595+branch.releases-16-23.content.release",
+  "content_version": "16.23.8418428+branch.releases-16-23.content.release",
   "verified_against": {
     "content_version": "16.23.8406595+branch.releases-16-23.content.release",
     "bin_sha256": "ad93d834eac3a79a49df75479ada33f144009c5336909f843ceb87cb51660c34",
@@ -46,7 +46,7 @@
                 ]
               },
               "label": "Derivado",
-              "source": "Characters/Braum/Spells/BraumPassiveAbility/BraumPassive.mSpellCalculations.TotalDamage (16.23.8406595+branch.releases-16-23.content.release)",
+              "source": "Characters/Braum/Spells/BraumPassiveAbility/BraumPassive.mSpellCalculations.TotalDamage (16.23.8418428+branch.releases-16-23.content.release)",
               "damage_type_source": "spell_braumpassive_tooltip <magicDamage>"
             }
           ]
@@ -90,7 +90,7 @@
                 ]
               },
               "label": "Derivado",
-              "source": "Characters/Braum/Spells/BraumPassiveAbility/BraumPassive.mSpellCalculations.OnHitDamage (16.23.8406595+branch.releases-16-23.content.release)",
+              "source": "Characters/Braum/Spells/BraumPassiveAbility/BraumPassive.mSpellCalculations.OnHitDamage (16.23.8418428+branch.releases-16-23.content.release)",
               "damage_type_source": "spell_braumpassive_tooltip <magicDamage>"
             }
           ]
@@ -129,7 +129,7 @@
             ]
           },
           "label": "Derivado",
-          "source": "Characters/Braum/Spells/BraumPassiveAbility/BraumPassive.mSpellCalculations.TotalDamage (16.23.8406595+branch.releases-16-23.content.release)",
+          "source": "Characters/Braum/Spells/BraumPassiveAbility/BraumPassive.mSpellCalculations.TotalDamage (16.23.8418428+branch.releases-16-23.content.release)",
           "trigger": "every_n_hits",
           "damage_type": "magic",
           "every": 4,
@@ -199,7 +199,7 @@
                 ]
               },
               "label": "Derivado",
-              "source": "Characters/Braum/Spells/BraumQAbility/BraumQ.mSpellCalculations.TotalDamage (16.23.8406595+branch.releases-16-23.content.release)",
+              "source": "Characters/Braum/Spells/BraumQAbility/BraumQ.mSpellCalculations.TotalDamage (16.23.8418428+branch.releases-16-23.content.release)",
               "damage_type_source": "spell_braumq_tooltip <magicDamage>"
             }
           ]
@@ -217,6 +217,86 @@
       "passive_stats": [],
       "not_modelled": [
         "Salto hacia aliado y bonificación temporal de armadura/RM (GrantedAllyArmor/MR, GrantedBraumArmor/MR)"
+      ],
+      "active_effects": [
+        {
+          "id": "stand_behind_me_armor",
+          "name": "Detrás de mí (armadura)",
+          "kind": "stat_bonus",
+          "formula": {
+            "op": "add",
+            "operands": [
+              {
+                "op": "by_rank",
+                "values": [
+                  20,
+                  25,
+                  30,
+                  35,
+                  40
+                ]
+              },
+              {
+                "op": "mul",
+                "operands": [
+                  {
+                    "op": "constant",
+                    "value": 0.36
+                  },
+                  {
+                    "op": "stat",
+                    "stat": "armor",
+                    "scope": "bonus"
+                  }
+                ]
+              }
+            ]
+          },
+          "label": "Derivado",
+          "source": "Characters/Braum/Spells/BraumWAbility/BraumW.mSpellCalculations.GrantedBraumArmor (16.23.8418428+branch.releases-16-23.content.release)",
+          "stat": "armor",
+          "mode": "flat",
+          "duration_seconds": 3
+        },
+        {
+          "id": "stand_behind_me_mr",
+          "name": "Detrás de mí (RM)",
+          "kind": "stat_bonus",
+          "formula": {
+            "op": "add",
+            "operands": [
+              {
+                "op": "by_rank",
+                "values": [
+                  20,
+                  25,
+                  30,
+                  35,
+                  40
+                ]
+              },
+              {
+                "op": "mul",
+                "operands": [
+                  {
+                    "op": "constant",
+                    "value": 0.36
+                  },
+                  {
+                    "op": "stat",
+                    "stat": "magic_resist",
+                    "scope": "bonus"
+                  }
+                ]
+              }
+            ]
+          },
+          "label": "Derivado",
+          "source": "Characters/Braum/Spells/BraumWAbility/BraumW.mSpellCalculations.GrantedBraumMR (16.23.8418428+branch.releases-16-23.content.release)",
+          "stat": "magic_resist",
+          "mode": "flat",
+          "duration_seconds": 3
+        }
       ]
     },
     "E": {
@@ -226,6 +306,60 @@
       "passive_stats": [],
       "not_modelled": [
         "Intercepción de proyectiles, anulación del primero, reducción de daño y velocidad de movimiento"
+      ],
+      "active_effects": [
+        {
+          "id": "unbreakable_dr",
+          "name": "Inquebrantable (DR frontal)",
+          "kind": "damage_taken_modifier",
+          "formula": {
+            "op": "by_rank",
+            "values": [
+              35,
+              40,
+              45,
+              50,
+              55
+            ]
+          },
+          "label": "Derivado",
+          "source": "Characters/Braum/Spells/BraumEAbility/BraumE.DataValues.ShieldFacingDRAmount (16.23.8418428+branch.releases-16-23.content.release)",
+          "mode": "percent",
+          "condition": "facing_shield_subsequent_hits",
+          "duration_formula": {
+            "op": "by_rank",
+            "values": [
+              3,
+              3.25,
+              3.5,
+              3.75,
+              4
+            ]
+          }
+        },
+        {
+          "id": "unbreakable_ms",
+          "name": "Inquebrantable (VM %)",
+          "kind": "stat_bonus",
+          "formula": {
+            "op": "constant",
+            "value": 0.1
+          },
+          "label": "Derivado",
+          "source": "Characters/Braum/Spells/BraumEAbility/BraumE.DataValues.MoveSpeedPercent (16.23.8418428+branch.releases-16-23.content.release)",
+          "stat": "move_speed",
+          "mode": "percent_ms",
+          "duration_formula": {
+            "op": "by_rank",
+            "values": [
+              3,
+              3.25,
+              3.5,
+              3.75,
+              4
+            ]
+          }
+        }
       ]
     },
     "R": {
@@ -266,7 +400,7 @@
                 ]
               },
               "label": "Derivado",
-              "source": "Characters/Braum/Spells/BraumRWrapperAbility/BraumRWrapper.mSpellCalculations.TotalDamage (16.23.8406595+branch.releases-16-23.content.release)",
+              "source": "Characters/Braum/Spells/BraumRWrapperAbility/BraumRWrapper.mSpellCalculations.TotalDamage (16.23.8418428+branch.releases-16-23.content.release)",
               "damage_type_source": "spell_braumrwrapper_tooltip <magicDamage>"
             }
           ]

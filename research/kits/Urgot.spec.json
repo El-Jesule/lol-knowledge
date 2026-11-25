@@ -134,6 +134,17 @@
       ],
       "not_modelled": [
         "Escudo (ETotalShieldHealth) y aturdimiento de 1,5 s"
+      ],
+      "active_effects": [
+        {
+          "id": "e_etotalshieldhealth",
+          "name": "E (escudo)",
+          "kind": "shield",
+          "calculation": "ETotalShieldHealth",
+          "duration_seconds": {
+            "data_value": "EShieldDuration"
+          }
+        }
       ]
     },
     "R": {

@@ -74,6 +74,40 @@
       "tooltip": "spell_yuumispellshield_tooltip",
       "not_modelled": [
         "Escudo (TotalShielding), velocidad de ataque (TotalAttackSpeed), velocidad de movimiento y restauración de maná (ManaRestore)"
+      ],
+      "active_effects": [
+        {
+          "id": "zoomies_shield",
+          "name": "Presteza gatuna (escudo)",
+          "kind": "shield",
+          "calculation": "TotalShielding",
+          "duration_seconds": {
+            "data_value": "MSDuration"
+          }
+        },
+        {
+          "id": "zoomies_as",
+          "name": "Presteza gatuna (VA)",
+          "kind": "stat_bonus",
+          "stat": "attack_speed_bonus",
+          "mode": "flat",
+          "calculation": "TotalAttackSpeed",
+          "duration_seconds": {
+            "data_value": "MSDuration"
+          }
+        },
+        {
+          "id": "zoomies_ms",
+          "name": "Presteza gatuna (VM %)",
+          "kind": "stat_bonus",
+          "stat": "move_speed",
+          "mode": "percent_ms",
+          "data_value": "MSAmount",
+          "scale": 0.01,
+          "duration_seconds": {
+            "data_value": "MSDuration"
+          }
+        }
       ]
     },
     "R": {
@@ -92,6 +126,31 @@
       ],
       "not_modelled": [
         "5 oleadas con reducción en impactos múltiples (TotalSingleTargetDamage, MultiMissileTotal), ralentización y curación a aliados"
+      ],
+      "active_effects": [
+        {
+          "id": "final_chapter_heal",
+          "name": "Capítulo final (5 oleadas HoT)",
+          "kind": "heal",
+          "formula": {
+            "op": "mul",
+            "operands": [
+              {
+                "op": "calculation",
+                "name": "TotalHealPerWave"
+              },
+              {
+                "op": "data_value",
+                "name": "NumberOfWaves"
+              }
+            ]
+          },
+          "source_note": "mSpellCalculations.TotalHealPerWave * DataValues.NumberOfWaves",
+          "duration_seconds": {
+            "data_value": "UltDuration"
+          },
+          "over_duration": true
+        }
       ]
     }
   }

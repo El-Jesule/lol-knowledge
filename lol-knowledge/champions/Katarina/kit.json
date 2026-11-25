@@ -3,7 +3,7 @@
   "champion": "Katarina",
   "label": "Derivado",
   "game_version": "16.23",
-  "content_version": "16.23.8406595+branch.releases-16-23.content.release",
+  "content_version": "16.23.8418428+branch.releases-16-23.content.release",
   "verified_against": {
     "content_version": "16.23.8406595+branch.releases-16-23.content.release",
     "bin_sha256": "322ea45b4146ccafe3875b283ed57c51ef1b2111d91ff817dd6ae5a5ea3af5fd",
@@ -98,7 +98,7 @@
                 ]
               },
               "label": "Derivado",
-              "source": "Characters/Katarina/Spells/KatarinaPassiveAbility/KatarinaPassive.mSpellCalculations.TotalDamage (16.23.8406595+branch.releases-16-23.content.release)",
+              "source": "Characters/Katarina/Spells/KatarinaPassiveAbility/KatarinaPassive.mSpellCalculations.TotalDamage (16.23.8418428+branch.releases-16-23.content.release)",
               "damage_type_source": "spell_katarinapassive_tooltip <magicDamage>"
             }
           ],
@@ -150,7 +150,7 @@
                 ]
               },
               "label": "Derivado",
-              "source": "Characters/Katarina/Spells/KatarinaQAbility/KatarinaQ.mSpellCalculations.TotalDamage (16.23.8406595+branch.releases-16-23.content.release)",
+              "source": "Characters/Katarina/Spells/KatarinaQAbility/KatarinaQ.mSpellCalculations.TotalDamage (16.23.8418428+branch.releases-16-23.content.release)",
               "damage_type_source": "spell_katarinaq_tooltip <magicDamage>"
             }
           ],
@@ -170,6 +170,28 @@
       "passive_stats": [],
       "not_modelled": [
         "Velocidad de movimiento decreciente y lanzamiento de daga al aire"
+      ],
+      "active_effects": [
+        {
+          "id": "w_movespeedamount",
+          "name": "W (VM)",
+          "kind": "stat_bonus",
+          "formula": {
+            "op": "by_rank",
+            "values": [
+              0.5,
+              0.6,
+              0.7,
+              0.8,
+              0.9
+            ]
+          },
+          "label": "Derivado",
+          "source": "Characters/Katarina/Spells/KatarinaWAbility/KatarinaW.DataValues.MovespeedAmount (16.23.8418428+branch.releases-16-23.content.release)",
+          "stat": "move_speed",
+          "mode": "percent_ms",
+          "duration_seconds": 1.25
+        }
       ]
     },
     "E": {
@@ -226,7 +248,7 @@
                 ]
               },
               "label": "Derivado",
-              "source": "Characters/Katarina/Spells/KatarinaEWrapperAbility/KatarinaEWrapper.mSpellCalculations.TotalDamage (16.23.8406595+branch.releases-16-23.content.release)",
+              "source": "Characters/Katarina/Spells/KatarinaEWrapperAbility/KatarinaEWrapper.mSpellCalculations.TotalDamage (16.23.8418428+branch.releases-16-23.content.release)",
               "damage_type_source": "spell_katarinaewrapper_tooltip <magicDamage>"
             }
           ],
@@ -277,7 +299,7 @@
                 ]
               },
               "label": "Derivado",
-              "source": "Characters/Katarina/Spells/KatarinaRAbility/KatarinaR.mSpellCalculations.DamageCalc (16.23.8406595+branch.releases-16-23.content.release)",
+              "source": "Characters/Katarina/Spells/KatarinaRAbility/KatarinaR.mSpellCalculations.DamageCalc (16.23.8418428+branch.releases-16-23.content.release)",
               "damage_type_source": "spell_katarinar_tooltip <magicDamage>"
             }
           ],
@@ -333,7 +355,7 @@
                 ]
               },
               "label": "Derivado",
-              "source": "Characters/Katarina/Spells/KatarinaRAbility/KatarinaR.mSpellCalculations.ADDamageCalc (16.23.8406595+branch.releases-16-23.content.release)",
+              "source": "Characters/Katarina/Spells/KatarinaRAbility/KatarinaR.mSpellCalculations.ADDamageCalc (16.23.8418428+branch.releases-16-23.content.release)",
               "damage_type_source": "spell_katarinar_tooltip <physicalDamage>"
             }
           ],
@@ -374,7 +396,7 @@
                 ]
               },
               "label": "Derivado",
-              "source": "Characters/Katarina/Spells/KatarinaRAbility/KatarinaR.mSpellCalculations.DamageCalc (16.23.8406595+branch.releases-16-23.content.release)",
+              "source": "Characters/Katarina/Spells/KatarinaRAbility/KatarinaR.mSpellCalculations.DamageCalc (16.23.8418428+branch.releases-16-23.content.release)",
               "damage_type_source": "spell_katarinar_tooltip <magicDamage>"
             },
             {
@@ -422,7 +444,7 @@
                 ]
               },
               "label": "Derivado",
-              "source": "Characters/Katarina/Spells/KatarinaRAbility/KatarinaR.mSpellCalculations.ADDamageCalc (16.23.8406595+branch.releases-16-23.content.release)",
+              "source": "Characters/Katarina/Spells/KatarinaRAbility/KatarinaR.mSpellCalculations.ADDamageCalc (16.23.8418428+branch.releases-16-23.content.release)",
               "damage_type_source": "spell_katarinar_tooltip <physicalDamage>"
             }
           ],
@@ -481,7 +503,7 @@
                 ]
               },
               "label": "Derivado",
-              "source": "Characters/Katarina/Spells/KatarinaRAbility/KatarinaR.mSpellCalculations.TotalDamageCalc (16.23.8406595+branch.releases-16-23.content.release)",
+              "source": "Characters/Katarina/Spells/KatarinaRAbility/KatarinaR.mSpellCalculations.TotalDamageCalc (16.23.8418428+branch.releases-16-23.content.release)",
               "damage_type_source": "spell_katarinar_tooltip <magicDamage>"
             }
           ],
@@ -555,7 +577,7 @@
                 ]
               },
               "label": "Derivado",
-              "source": "Characters/Katarina/Spells/KatarinaRAbility/KatarinaR.mSpellCalculations.TotalADDamageCalc (16.23.8406595+branch.releases-16-23.content.release)",
+              "source": "Characters/Katarina/Spells/KatarinaRAbility/KatarinaR.mSpellCalculations.TotalADDamageCalc (16.23.8418428+branch.releases-16-23.content.release)",
               "damage_type_source": "spell_katarinar_tooltip <physicalDamage>"
             }
           ],
@@ -614,7 +636,7 @@
                 ]
               },
               "label": "Derivado",
-              "source": "Characters/Katarina/Spells/KatarinaRAbility/KatarinaR.mSpellCalculations.TotalDamageCalc (16.23.8406595+branch.releases-16-23.content.release)",
+              "source": "Characters/Katarina/Spells/KatarinaRAbility/KatarinaR.mSpellCalculations.TotalDamageCalc (16.23.8418428+branch.releases-16-23.content.release)",
               "damage_type_source": "spell_katarinar_tooltip <magicDamage>"
             },
             {
@@ -680,7 +702,7 @@
                 ]
               },
               "label": "Derivado",
-              "source": "Characters/Katarina/Spells/KatarinaRAbility/KatarinaR.mSpellCalculations.TotalADDamageCalc (16.23.8406595+branch.releases-16-23.content.release)",
+              "source": "Characters/Katarina/Spells/KatarinaRAbility/KatarinaR.mSpellCalculations.TotalADDamageCalc (16.23.8418428+branch.releases-16-23.content.release)",
               "damage_type_source": "spell_katarinar_tooltip <physicalDamage>"
             }
           ],

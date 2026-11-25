@@ -140,6 +140,19 @@
       ],
       "not_modelled": [
         "Esquiva de ataques básicos, reducción del 25 % al daño en área y aturdimiento (StunDuration)"
+      ],
+      "active_effects": [
+        {
+          "id": "counter_strike_aoe_dr",
+          "name": "Contraataque (DR área)",
+          "kind": "damage_taken_modifier",
+          "mode": "percent",
+          "data_value": "AoEDamageReduction",
+          "duration_seconds": {
+            "data_value": "DodgeDuration"
+          },
+          "condition": "aoe_abilities_only"
+        }
       ]
     },
     "R": {
@@ -168,6 +181,30 @@
       "not_modelled": [
         "Armadura y resistencia mágica activas (BaseArmor, BonusArmor, BaseMR, BonusMR)",
         "Reducción del 50 % a estructuras (StructureMod)"
+      ],
+      "active_effects": [
+        {
+          "id": "grandmaster_at_arms_armor",
+          "name": "Gran maestro de armas (armadura)",
+          "kind": "stat_bonus",
+          "stat": "armor",
+          "mode": "flat",
+          "calculation": "BaseArmor",
+          "duration_seconds": {
+            "data_value": "Duration"
+          }
+        },
+        {
+          "id": "grandmaster_at_arms_mr",
+          "name": "Gran maestro de armas (RM)",
+          "kind": "stat_bonus",
+          "stat": "magic_resist",
+          "mode": "flat",
+          "calculation": "BaseMR",
+          "duration_seconds": {
+            "data_value": "Duration"
+          }
+        }
       ]
     }
   }

@@ -111,6 +111,20 @@
       ],
       "not_modelled": [
         "Velocidad de ataque del 150 % durante 4 golpes y reducción de enfriamiento al golpear"
+      ],
+      "active_effects": [
+        {
+          "id": "w_attackspeed",
+          "name": "W (VA)",
+          "kind": "stat_bonus",
+          "stat": "attack_speed_bonus",
+          "mode": "flat",
+          "scale": 100,
+          "data_value": "AttackSpeed",
+          "duration_seconds": {
+            "data_value": "ActiveDuration"
+          }
+        }
       ]
     },
     "E": {
@@ -142,6 +156,19 @@
       ],
       "not_modelled": [
         "Velocidad de movimiento al acertar campeón o monstruo grande"
+      ],
+      "active_effects": [
+        {
+          "id": "e_movespeed",
+          "name": "E (VM)",
+          "kind": "stat_bonus",
+          "stat": "move_speed",
+          "mode": "percent_ms",
+          "data_value": "MoveSpeed",
+          "duration_seconds": {
+            "data_value": "MoveSpeedDuration"
+          }
+        }
       ]
     },
     "R": {
@@ -211,6 +238,15 @@
       ],
       "not_modelled": [
         "Escudo progresivo (MaximumShield), rastro de velocidad para aliados e imparabilidad"
+      ],
+      "active_effects": [
+        {
+          "id": "chaaaaaaaarge_shield",
+          "name": "¡A la cargaaa! (escudo máximo)",
+          "kind": "shield",
+          "calculation": "MaximumShield",
+          "duration_seconds": 2.0
+        }
       ]
     }
   }

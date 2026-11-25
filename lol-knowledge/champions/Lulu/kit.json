@@ -3,7 +3,7 @@
   "champion": "Lulu",
   "label": "Derivado",
   "game_version": "16.23",
-  "content_version": "16.23.8406595+branch.releases-16-23.content.release",
+  "content_version": "16.23.8418428+branch.releases-16-23.content.release",
   "verified_against": {
     "content_version": "16.23.8406595+branch.releases-16-23.content.release",
     "bin_sha256": "d0c75264acdf50d0d201d188ba3703f4303759b33b2c1dfbfe254f65e9e5cc89",
@@ -56,7 +56,7 @@
                 ]
               },
               "label": "Derivado",
-              "source": "Characters/Lulu/Spells/LuluPassiveAbility/LuluPassive.mSpellCalculations.CombinedDamage (16.23.8406595+branch.releases-16-23.content.release)",
+              "source": "Characters/Lulu/Spells/LuluPassiveAbility/LuluPassive.mSpellCalculations.CombinedDamage (16.23.8418428+branch.releases-16-23.content.release)",
               "damage_type_source": "spell_lulupassive_tooltip <magicDamage>"
             }
           ]
@@ -105,7 +105,7 @@
             ]
           },
           "label": "Derivado",
-          "source": "Characters/Lulu/Spells/LuluPassiveAbility/LuluPassive.mSpellCalculations.CombinedDamage (16.23.8406595+branch.releases-16-23.content.release)",
+          "source": "Characters/Lulu/Spells/LuluPassiveAbility/LuluPassive.mSpellCalculations.CombinedDamage (16.23.8418428+branch.releases-16-23.content.release)",
           "trigger": "on_attack",
           "damage_type": "magic"
         }
@@ -151,7 +151,7 @@
                 ]
               },
               "label": "Derivado",
-              "source": "Characters/Lulu/Spells/LuluQAbility/LuluQ.mSpellCalculations.TotalDamage (16.23.8406595+branch.releases-16-23.content.release)",
+              "source": "Characters/Lulu/Spells/LuluQAbility/LuluQ.mSpellCalculations.TotalDamage (16.23.8418428+branch.releases-16-23.content.release)",
               "damage_type_source": "spell_luluq_tooltip <magicDamage>"
             }
           ]
@@ -192,7 +192,7 @@
                 ]
               },
               "label": "Derivado",
-              "source": "Characters/Lulu/Spells/LuluQAbility/LuluQ.mSpellCalculations.BonusMissileDamage (16.23.8406595+branch.releases-16-23.content.release)",
+              "source": "Characters/Lulu/Spells/LuluQAbility/LuluQ.mSpellCalculations.BonusMissileDamage (16.23.8418428+branch.releases-16-23.content.release)",
               "damage_type_source": "spell_luluq_tooltip <magicDamage>"
             }
           ]
@@ -210,6 +210,79 @@
       "passive_stats": [],
       "not_modelled": [
         "Polimorfia sobre enemigos o velocidad de movimiento (TotalMS) y ataque sobre aliados"
+      ],
+      "active_effects": [
+        {
+          "id": "whimsy_ms",
+          "name": "Banal (VM %)",
+          "kind": "stat_bonus",
+          "formula": {
+            "op": "add",
+            "operands": [
+              {
+                "op": "constant",
+                "value": 0.25
+              },
+              {
+                "op": "mul",
+                "operands": [
+                  {
+                    "op": "constant",
+                    "value": 0.0005
+                  },
+                  {
+                    "op": "stat",
+                    "stat": "ability_power",
+                    "scope": "total"
+                  }
+                ]
+              }
+            ]
+          },
+          "label": "Derivado",
+          "source": "Characters/Lulu/Spells/LuluWAbility/LuluW.mSpellCalculations.TotalMS (16.23.8418428+branch.releases-16-23.content.release)",
+          "stat": "move_speed",
+          "mode": "percent_ms",
+          "duration_formula": {
+            "op": "by_rank",
+            "values": [
+              3,
+              3.25,
+              3.5,
+              3.75,
+              4
+            ]
+          }
+        },
+        {
+          "id": "whimsy_as",
+          "name": "Banal (VA)",
+          "kind": "stat_bonus",
+          "formula": {
+            "op": "by_rank",
+            "values": [
+              20,
+              22.5,
+              25,
+              27.5,
+              30
+            ]
+          },
+          "label": "Derivado",
+          "source": "Characters/Lulu/Spells/LuluWAbility/LuluW.DataValues.ASBonus (16.23.8418428+branch.releases-16-23.content.release)",
+          "stat": "attack_speed_bonus",
+          "mode": "flat",
+          "duration_formula": {
+            "op": "by_rank",
+            "values": [
+              3,
+              3.25,
+              3.5,
+              3.75,
+              4
+            ]
+          }
+        }
       ]
     },
     "E": {
@@ -252,7 +325,7 @@
                 ]
               },
               "label": "Derivado",
-              "source": "Characters/Lulu/Spells/LuluEAbility/LuluE.mSpellCalculations.TotalDamage (16.23.8406595+branch.releases-16-23.content.release)",
+              "source": "Characters/Lulu/Spells/LuluEAbility/LuluE.mSpellCalculations.TotalDamage (16.23.8418428+branch.releases-16-23.content.release)",
               "damage_type_source": "spell_lulue_tooltip <magicDamage>"
             }
           ]
@@ -261,6 +334,45 @@
       "passive_stats": [],
       "not_modelled": [
         "Visión verdadera sobre enemigo y escudo sobre aliado (TotalShield)"
+      ],
+      "active_effects": [
+        {
+          "id": "help_pix_shield",
+          "name": "¡Ayuda, Pix! (escudo)",
+          "kind": "shield",
+          "formula": {
+            "op": "add",
+            "operands": [
+              {
+                "op": "by_rank",
+                "values": [
+                  70,
+                  110,
+                  150,
+                  190,
+                  230
+                ]
+              },
+              {
+                "op": "mul",
+                "operands": [
+                  {
+                    "op": "constant",
+                    "value": 0.5
+                  },
+                  {
+                    "op": "stat",
+                    "stat": "ability_power",
+                    "scope": "total"
+                  }
+                ]
+              }
+            ]
+          },
+          "label": "Derivado",
+          "source": "Characters/Lulu/Spells/LuluEAbility/LuluE.mSpellCalculations.TotalShield (16.23.8418428+branch.releases-16-23.content.release)",
+          "duration_seconds": 2.5
+        }
       ]
     },
     "R": {
@@ -270,6 +382,45 @@
       "passive_stats": [],
       "not_modelled": [
         "Vida adicional temporal (TotalBonusHealth), lanzamiento por los aires y aura de ralentización"
+      ],
+      "active_effects": [
+        {
+          "id": "wild_growth_hp",
+          "name": "Crecimiento salvaje (vida máxima)",
+          "kind": "stat_bonus",
+          "formula": {
+            "op": "add",
+            "operands": [
+              {
+                "op": "by_rank",
+                "values": [
+                  275,
+                  425,
+                  575
+                ]
+              },
+              {
+                "op": "mul",
+                "operands": [
+                  {
+                    "op": "constant",
+                    "value": 0.55
+                  },
+                  {
+                    "op": "stat",
+                    "stat": "ability_power",
+                    "scope": "total"
+                  }
+                ]
+              }
+            ]
+          },
+          "label": "Derivado",
+          "source": "Characters/Lulu/Spells/LuluRAbility/LuluR.mSpellCalculations.TotalBonusHealth (16.23.8418428+branch.releases-16-23.content.release)",
+          "stat": "health",
+          "mode": "flat",
+          "duration_seconds": 7
+        }
       ]
     }
   }

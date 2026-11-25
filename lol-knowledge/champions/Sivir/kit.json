@@ -3,7 +3,7 @@
   "champion": "Sivir",
   "label": "Derivado",
   "game_version": "16.23",
-  "content_version": "16.23.8406595+branch.releases-16-23.content.release",
+  "content_version": "16.23.8418428+branch.releases-16-23.content.release",
   "verified_against": {
     "content_version": "16.23.8406595+branch.releases-16-23.content.release",
     "bin_sha256": "4faf3cda3b891bf1ddf91bcbb34c5172685162ec4086a2cf13e869bafce0d479",
@@ -49,7 +49,7 @@
             ]
           },
           "label": "Derivado",
-          "source": "Characters/Sivir/Spells/SivirPassiveAbility/SivirPassive.mSpellCalculations.FlatMS (16.23.8406595+branch.releases-16-23.content.release)",
+          "source": "Characters/Sivir/Spells/SivirPassiveAbility/SivirPassive.mSpellCalculations.FlatMS (16.23.8418428+branch.releases-16-23.content.release)",
           "stat": "move_speed",
           "mode": "flat",
           "input_name": "sivir_fleet_of_foot",
@@ -111,7 +111,7 @@
                 ]
               },
               "label": "Derivado",
-              "source": "Characters/Sivir/Spells/SivirQAbility/SivirQ.mSpellCalculations.TotalDamage (16.23.8406595+branch.releases-16-23.content.release)",
+              "source": "Characters/Sivir/Spells/SivirQAbility/SivirQ.mSpellCalculations.TotalDamage (16.23.8418428+branch.releases-16-23.content.release)",
               "damage_type_source": "spell_sivirq_tooltip <physicalDamage>"
             }
           ]
@@ -153,7 +153,7 @@
                 ]
               },
               "label": "Derivado",
-              "source": "Characters/Sivir/Spells/SivirWAbility/SivirW.mSpellCalculations.BounceDamage (16.23.8406595+branch.releases-16-23.content.release)",
+              "source": "Characters/Sivir/Spells/SivirWAbility/SivirW.mSpellCalculations.BounceDamage (16.23.8418428+branch.releases-16-23.content.release)",
               "damage_type_source": "spell_sivirw_tooltip <physicalDamage>"
             }
           ]
@@ -162,6 +162,28 @@
       "passive_stats": [],
       "not_modelled": [
         "Velocidad de ataque activa durante 4 s y golpes críticos en rebotes"
+      ],
+      "active_effects": [
+        {
+          "id": "w_ricochetattackspeed",
+          "name": "W (VA)",
+          "kind": "stat_bonus",
+          "formula": {
+            "op": "by_rank",
+            "values": [
+              20,
+              25,
+              30,
+              35,
+              40
+            ]
+          },
+          "label": "Derivado",
+          "source": "Characters/Sivir/Spells/SivirWAbility/SivirW.DataValues.RicochetAttackSpeed (16.23.8418428+branch.releases-16-23.content.release)",
+          "stat": "attack_speed_bonus",
+          "mode": "flat",
+          "duration_seconds": 4
+        }
       ]
     },
     "E": {
@@ -171,6 +193,55 @@
       "passive_stats": [],
       "not_modelled": [
         "Bloqueo de 1 habilidad enemiga, curación (TotalHeal) y activación de Mil pies"
+      ],
+      "active_effects": [
+        {
+          "id": "e_totalheal",
+          "name": "E (curación)",
+          "kind": "heal",
+          "formula": {
+            "op": "add",
+            "operands": [
+              {
+                "op": "mul",
+                "operands": [
+                  {
+                    "op": "by_rank",
+                    "values": [
+                      0.6,
+                      0.65,
+                      0.7,
+                      0.75,
+                      0.8
+                    ]
+                  },
+                  {
+                    "op": "stat",
+                    "stat": "attack_damage",
+                    "scope": "total"
+                  }
+                ]
+              },
+              {
+                "op": "mul",
+                "operands": [
+                  {
+                    "op": "constant",
+                    "value": 0.5
+                  },
+                  {
+                    "op": "stat",
+                    "stat": "ability_power",
+                    "scope": "total"
+                  }
+                ]
+              }
+            ]
+          },
+          "label": "Derivado",
+          "source": "Characters/Sivir/Spells/SivirEAbility/SivirE.mSpellCalculations.TotalHeal (16.23.8418428+branch.releases-16-23.content.release)",
+          "condition": "spell_blocked"
+        }
       ]
     },
     "R": {
@@ -180,6 +251,33 @@
       "passive_stats": [],
       "not_modelled": [
         "Velocidad de movimiento en área, reducción de enfriamiento al atacar y extensión por bajas"
+      ],
+      "active_effects": [
+        {
+          "id": "on_the_hunt_ms",
+          "name": "A la caza (VM %)",
+          "kind": "stat_bonus",
+          "formula": {
+            "op": "by_rank",
+            "values": [
+              0.2,
+              0.25,
+              0.3
+            ]
+          },
+          "label": "Derivado",
+          "source": "Characters/Sivir/Spells/SivirRAbility/SivirR.DataValues.MaxMS (16.23.8418428+branch.releases-16-23.content.release)",
+          "stat": "move_speed",
+          "mode": "percent_ms",
+          "duration_formula": {
+            "op": "by_rank",
+            "values": [
+              8,
+              10,
+              12
+            ]
+          }
+        }
       ]
     }
   }

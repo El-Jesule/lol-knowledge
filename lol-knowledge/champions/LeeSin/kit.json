@@ -3,7 +3,7 @@
   "champion": "LeeSin",
   "label": "Derivado",
   "game_version": "16.23",
-  "content_version": "16.23.8406595+branch.releases-16-23.content.release",
+  "content_version": "16.23.8418428+branch.releases-16-23.content.release",
   "verified_against": {
     "content_version": "16.23.8406595+branch.releases-16-23.content.release",
     "bin_sha256": "b03c14cf3c08a2690bebb155b272d6b4f612e28ba5c2f60b64747c1bc3cd8362",
@@ -30,7 +30,7 @@
             "value": 40
           },
           "label": "Derivado",
-          "source": "Characters/LeeSin/Spells/LeeSinPassiveAbility/LeeSinPassive.DataValues.PassiveAS (16.23.8406595+branch.releases-16-23.content.release)",
+          "source": "Characters/LeeSin/Spells/LeeSinPassiveAbility/LeeSinPassive.DataValues.PassiveAS (16.23.8418428+branch.releases-16-23.content.release)",
           "stat": "attack_speed_bonus",
           "mode": "flat",
           "input_name": "flurry",
@@ -64,7 +64,7 @@
             ]
           },
           "label": "Derivado",
-          "source": "Characters/LeeSin/Spells/LeeSinPassiveAbility/LeeSinPassive.mSpellCalculations.EnergyReturn (16.23.8406595+branch.releases-16-23.content.release)",
+          "source": "Characters/LeeSin/Spells/LeeSinPassiveAbility/LeeSinPassive.mSpellCalculations.EnergyReturn (16.23.8418428+branch.releases-16-23.content.release)",
           "trigger": "on_hit",
           "resource": "energy"
         }
@@ -110,7 +110,7 @@
                 ]
               },
               "label": "Derivado",
-              "source": "Characters/LeeSin/Spells/LeeSinQOneAbility/LeeSinQOne.mSpellCalculations.InitialDamage (16.23.8406595+branch.releases-16-23.content.release)",
+              "source": "Characters/LeeSin/Spells/LeeSinQOneAbility/LeeSinQOne.mSpellCalculations.InitialDamage (16.23.8418428+branch.releases-16-23.content.release)",
               "damage_type_source": "spell_blindmonkqone_tooltip <physicalDamage>"
             }
           ]
@@ -151,7 +151,7 @@
                 ]
               },
               "label": "Derivado",
-              "source": "Characters/LeeSin/Spells/LeeSinQOneAbility/LeeSinQOne.mSpellCalculations.RecastDamage (16.23.8406595+branch.releases-16-23.content.release)",
+              "source": "Characters/LeeSin/Spells/LeeSinQOneAbility/LeeSinQOne.mSpellCalculations.RecastDamage (16.23.8418428+branch.releases-16-23.content.release)",
               "damage_type_source": "spell_blindmonkqone_tooltip <physicalDamage>"
             }
           ],
@@ -202,7 +202,7 @@
                 ]
               },
               "label": "Derivado",
-              "source": "Characters/LeeSin/Spells/LeeSinQOneAbility/LeeSinQOne.mSpellCalculations.EmpoweredDamage (16.23.8406595+branch.releases-16-23.content.release)",
+              "source": "Characters/LeeSin/Spells/LeeSinQOneAbility/LeeSinQOne.mSpellCalculations.EmpoweredDamage (16.23.8418428+branch.releases-16-23.content.release)",
               "damage_type_source": "spell_blindmonkqone_tooltip <physicalDamage>"
             }
           ],
@@ -222,6 +222,65 @@
       "passive_stats": [],
       "not_modelled": [
         "Escudo (ShieldAmount), robo de vida y omnivampirismo temporales (LifestealAndSpellVamp)"
+      ],
+      "active_effects": [
+        {
+          "id": "safeguard_shield",
+          "name": "Salvaguarda (escudo)",
+          "kind": "shield",
+          "formula": {
+            "op": "add",
+            "operands": [
+              {
+                "op": "by_rank",
+                "values": [
+                  60,
+                  105,
+                  150,
+                  195,
+                  240
+                ]
+              },
+              {
+                "op": "mul",
+                "operands": [
+                  {
+                    "op": "constant",
+                    "value": 0.8
+                  },
+                  {
+                    "op": "stat",
+                    "stat": "ability_power",
+                    "scope": "total"
+                  }
+                ]
+              }
+            ]
+          },
+          "label": "Derivado",
+          "source": "Characters/LeeSin/Spells/LeeSinWOneAbility/LeeSinWOne.mSpellCalculations.ShieldAmount (16.23.8418428+branch.releases-16-23.content.release)",
+          "duration_seconds": 2
+        },
+        {
+          "id": "iron_will_omnivamp",
+          "name": "Voluntad de hierro (omnisucción)",
+          "kind": "stat_bonus",
+          "formula": {
+            "op": "by_rank",
+            "values": [
+              10,
+              14,
+              18,
+              22,
+              26
+            ]
+          },
+          "label": "Derivado",
+          "source": "Characters/LeeSin/Spells/LeeSinWOneAbility/LeeSinWOne.DataValues.LifestealAndSpellVamp (16.23.8418428+branch.releases-16-23.content.release)",
+          "stat": "omnivamp",
+          "mode": "flat",
+          "duration_seconds": 4
+        }
       ]
     },
     "E": {
@@ -264,7 +323,7 @@
                 ]
               },
               "label": "Derivado",
-              "source": "Characters/LeeSin/Spells/LeeSinEOneAbility/LeeSinEOne.mSpellCalculations.InitialDamage (16.23.8406595+branch.releases-16-23.content.release)",
+              "source": "Characters/LeeSin/Spells/LeeSinEOneAbility/LeeSinEOne.mSpellCalculations.InitialDamage (16.23.8418428+branch.releases-16-23.content.release)",
               "damage_type_source": "spell_blindmonkeone_tooltip <magicDamage>"
             }
           ]
@@ -313,7 +372,7 @@
                 ]
               },
               "label": "Derivado",
-              "source": "Characters/LeeSin/Spells/LeeSinRAbility/LeeSinR.mSpellCalculations.Damage (16.23.8406595+branch.releases-16-23.content.release)",
+              "source": "Characters/LeeSin/Spells/LeeSinRAbility/LeeSinR.mSpellCalculations.Damage (16.23.8418428+branch.releases-16-23.content.release)",
               "damage_type_source": "spell_blindmonkrkick_tooltip <physicalDamage>"
             }
           ]

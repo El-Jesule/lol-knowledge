@@ -91,6 +91,29 @@
       "tooltip": "spell_meditate_tooltip",
       "not_modelled": [
         "Canalización de curación (TotalHeal) y reducción de daño (InitialDR)"
+      ],
+      "active_effects": [
+        {
+          "id": "meditate_dr",
+          "name": "Meditar (DR sostenida)",
+          "kind": "damage_taken_modifier",
+          "mode": "percent",
+          "data_value": "DamageReduction",
+          "scale": 100,
+          "duration_seconds": {
+            "data_value": "HealDuration"
+          }
+        },
+        {
+          "id": "meditate_heal",
+          "name": "Meditar (curación canalizada)",
+          "kind": "heal",
+          "calculation": "TotalHeal",
+          "duration_seconds": {
+            "data_value": "HealDuration"
+          },
+          "over_duration": true
+        }
       ]
     },
     "E": {
@@ -116,6 +139,31 @@
       "tooltip": "spell_highlander_tooltip",
       "not_modelled": [
         "Inmunidad a ralentizaciones, velocidad de movimiento/ataque, reducción de enfriamientos por bajas y extensión de duración"
+      ],
+      "active_effects": [
+        {
+          "id": "highlander_as",
+          "name": "Imparable (VA)",
+          "kind": "stat_bonus",
+          "stat": "attack_speed_bonus",
+          "mode": "flat",
+          "data_value": "RASBonus",
+          "duration_seconds": {
+            "data_value": "RDuration"
+          }
+        },
+        {
+          "id": "highlander_ms",
+          "name": "Imparable (VM %)",
+          "kind": "stat_bonus",
+          "stat": "move_speed",
+          "mode": "percent_ms",
+          "data_value": "RMSBonus",
+          "scale": 0.01,
+          "duration_seconds": {
+            "data_value": "RDuration"
+          }
+        }
       ]
     }
   }

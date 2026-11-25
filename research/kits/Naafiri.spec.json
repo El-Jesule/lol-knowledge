@@ -91,6 +91,31 @@
       "tooltip": "spell_naafirir_tooltip",
       "not_modelled": [
         "Inalcanzabilidad breve, velocidad de movimiento, invocación temporal de manada y bonificación activa de DA (BonusAD)"
+      ],
+      "active_effects": [
+        {
+          "id": "call_of_the_pack_ad",
+          "name": "Llamada de la manada (AD %)",
+          "kind": "stat_bonus",
+          "stat": "attack_damage",
+          "mode": "percent",
+          "data_value": "NaafiriADPercentBoost",
+          "scale": 100,
+          "duration_seconds": {
+            "data_value": "Duration"
+          }
+        },
+        {
+          "id": "call_of_the_pack_ms",
+          "name": "Llamada de la manada (VM %)",
+          "kind": "stat_bonus",
+          "stat": "move_speed",
+          "mode": "percent_ms",
+          "data_value": "MoveSpeedAmount",
+          "duration_seconds": {
+            "data_value": "MoveSpeedDuration"
+          }
+        }
       ]
     },
     "E": {
@@ -158,6 +183,17 @@
       ],
       "not_modelled": [
         "Escudo tras baja (ShieldTotal), visión revelada y ralentización breve"
+      ],
+      "active_effects": [
+        {
+          "id": "r_shieldtotal",
+          "name": "R (escudo)",
+          "kind": "shield",
+          "calculation": "ShieldTotal",
+          "duration_seconds": {
+            "data_value": "ShieldDuration"
+          }
+        }
       ]
     }
   }

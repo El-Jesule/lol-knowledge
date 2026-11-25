@@ -3,7 +3,7 @@
   "champion": "Trundle",
   "label": "Derivado",
   "game_version": "16.23",
-  "content_version": "16.23.8406595+branch.releases-16-23.content.release",
+  "content_version": "16.23.8418428+branch.releases-16-23.content.release",
   "verified_against": {
     "content_version": "16.23.8406595+branch.releases-16-23.content.release",
     "bin_sha256": "a52f3f0627ff12fe8d4c77f5405eefdbc5200f9362d973f4d98846896633c4ea",
@@ -42,7 +42,7 @@
             ]
           },
           "label": "Derivado",
-          "source": "Characters/Trundle/Spells/TrundleDiseaseOverseerAbility/TrundleDiseaseOverseer · RegenPercent × vida máxima del objetivo eliminado (16.23.8406595+branch.releases-16-23.content.release)",
+          "source": "Characters/Trundle/Spells/TrundleDiseaseOverseerAbility/TrundleDiseaseOverseer · RegenPercent × vida máxima del objetivo eliminado (16.23.8418428+branch.releases-16-23.content.release)",
           "trigger": "on_any_kill"
         }
       ]
@@ -93,7 +93,7 @@
                 ]
               },
               "label": "Derivado",
-              "source": "Characters/Trundle/Spells/TrundleTrollSmashAbility/TrundleTrollSmash.mSpellCalculations.TotalDamage (16.23.8406595+branch.releases-16-23.content.release)",
+              "source": "Characters/Trundle/Spells/TrundleTrollSmashAbility/TrundleTrollSmash.mSpellCalculations.TotalDamage (16.23.8418428+branch.releases-16-23.content.release)",
               "damage_type_source": "spell_trundletrollsmash_tooltip <physicalDamage>"
             }
           ]
@@ -102,6 +102,28 @@
       "passive_stats": [],
       "not_modelled": [
         "Ralentización breve, DA ganado (BonusAD) y DA robado al objetivo (SappedAD)"
+      ],
+      "active_effects": [
+        {
+          "id": "chomp_ad",
+          "name": "Mordisco (AD)",
+          "kind": "stat_bonus",
+          "formula": {
+            "op": "by_rank",
+            "values": [
+              20,
+              25,
+              30,
+              35,
+              40
+            ]
+          },
+          "label": "Derivado",
+          "source": "Characters/Trundle/Spells/TrundleTrollSmashAbility/TrundleTrollSmash.DataValues.BonusAD (16.23.8418428+branch.releases-16-23.content.release)",
+          "stat": "attack_damage",
+          "mode": "flat",
+          "duration_seconds": 5
+        }
       ]
     },
     "W": {
@@ -111,6 +133,48 @@
       "passive_stats": [],
       "not_modelled": [
         "Zona de velocidad de movimiento, velocidad de ataque y amplificación de curaciones"
+      ],
+      "active_effects": [
+        {
+          "id": "frozen_domain_as",
+          "name": "Reino helado (VA)",
+          "kind": "stat_bonus",
+          "formula": {
+            "op": "by_rank",
+            "values": [
+              30,
+              50,
+              70,
+              90,
+              110
+            ]
+          },
+          "label": "Derivado",
+          "source": "Characters/Trundle/Spells/trundledesecrateAbility/trundledesecrate.DataValues.ASBonus (16.23.8418428+branch.releases-16-23.content.release)",
+          "stat": "attack_speed_bonus",
+          "mode": "flat",
+          "duration_seconds": 8
+        },
+        {
+          "id": "frozen_domain_ms",
+          "name": "Reino helado (VM %)",
+          "kind": "stat_bonus",
+          "formula": {
+            "op": "by_rank",
+            "values": [
+              0.2,
+              0.28,
+              0.36,
+              0.44,
+              0.52
+            ]
+          },
+          "label": "Derivado",
+          "source": "Characters/Trundle/Spells/trundledesecrateAbility/trundledesecrate.DataValues.MSBonus (16.23.8418428+branch.releases-16-23.content.release)",
+          "stat": "move_speed",
+          "mode": "percent_ms",
+          "duration_seconds": 8
+        }
       ]
     },
     "E": {
@@ -171,7 +235,7 @@
                 ]
               },
               "label": "Derivado",
-              "source": "Characters/Trundle/Spells/TrundlePainAbility/TrundlePain · mSpellCalculations.TotalPercentHPDamage × vida máxima del objetivo (16.23.8406595+branch.releases-16-23.content.release)",
+              "source": "Characters/Trundle/Spells/TrundlePainAbility/TrundlePain · mSpellCalculations.TotalPercentHPDamage × vida máxima del objetivo (16.23.8418428+branch.releases-16-23.content.release)",
               "damage_type_source": "spell_trundlepain_tooltip <magicDamage>"
             }
           ]

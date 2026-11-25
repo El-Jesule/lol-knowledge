@@ -443,6 +443,22 @@
       "not_modelled": [
         "Velocidad de movimiento (MovementSpeed, 40 % que decae en 2 s)",
         "Daño doble a súbditos por debajo del 20 % de vida (MinionBonusDamageMultiplier, MinionBonusDamageThreshold)"
+      ],
+      "active_effects": [
+        {
+          "id": "w_movementspeed",
+          "name": "W (VM)",
+          "kind": "stat_bonus",
+          "formula": {
+            "op": "constant",
+            "value": 0.4
+          },
+          "label": "Derivado",
+          "source": "Characters/Ahri/Spells/AhriWAbility/AhriW.DataValues.MovementSpeed (16.22.8348910+branch.releases-16-22.content.release)",
+          "stat": "move_speed",
+          "mode": "percent_ms",
+          "duration_seconds": 2
+        }
       ]
     },
     "E": {

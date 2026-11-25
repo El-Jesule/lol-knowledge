@@ -3,7 +3,7 @@
   "champion": "Milio",
   "label": "Derivado",
   "game_version": "16.23",
-  "content_version": "16.23.8406595+branch.releases-16-23.content.release",
+  "content_version": "16.23.8418428+branch.releases-16-23.content.release",
   "verified_against": {
     "content_version": "16.23.8406595+branch.releases-16-23.content.release",
     "bin_sha256": "e3d13a18da25388f2b6dc50a44a89a07cba212dee64c9e44cfcd30b02b9cf47b",
@@ -47,7 +47,7 @@
                 ]
               },
               "label": "Derivado",
-              "source": "Characters/Milio/Spells/MilioPassiveAbility/MilioPassive.mSpellCalculations.BurnDamage (16.23.8406595+branch.releases-16-23.content.release)",
+              "source": "Characters/Milio/Spells/MilioPassiveAbility/MilioPassive.mSpellCalculations.BurnDamage (16.23.8418428+branch.releases-16-23.content.release)",
               "damage_type_source": "spell_miliopassive_tooltip <magicDamage>"
             }
           ]
@@ -98,7 +98,7 @@
                 ]
               },
               "label": "Derivado",
-              "source": "Characters/Milio/Spells/MilioQAbility/MilioQ.mSpellCalculations.Damage (16.23.8406595+branch.releases-16-23.content.release)",
+              "source": "Characters/Milio/Spells/MilioQAbility/MilioQ.mSpellCalculations.Damage (16.23.8418428+branch.releases-16-23.content.release)",
               "damage_type_source": "spell_miliokickballq_tooltip <magicDamage>"
             }
           ]
@@ -116,6 +116,46 @@
       "passive_stats": [],
       "not_modelled": [
         "Zona de curación continua (HealingOverTime), alcance de ataque adicional (RangePercent) y aplicación periódica de pasiva"
+      ],
+      "active_effects": [
+        {
+          "id": "cozy_campfire_heal",
+          "name": "Fogata acogedora (curación HoT)",
+          "kind": "heal",
+          "formula": {
+            "op": "add",
+            "operands": [
+              {
+                "op": "by_rank",
+                "values": [
+                  70,
+                  90,
+                  110,
+                  130,
+                  150
+                ]
+              },
+              {
+                "op": "mul",
+                "operands": [
+                  {
+                    "op": "constant",
+                    "value": 0.15
+                  },
+                  {
+                    "op": "stat",
+                    "stat": "ability_power",
+                    "scope": "total"
+                  }
+                ]
+              }
+            ]
+          },
+          "label": "Derivado",
+          "source": "Characters/Milio/Spells/MilioWAbility/MilioW.mSpellCalculations.HealingOverTime (16.23.8418428+branch.releases-16-23.content.release)",
+          "over_duration": true,
+          "duration_seconds": 6
+        }
       ]
     },
     "E": {
@@ -125,6 +165,65 @@
       "passive_stats": [],
       "not_modelled": [
         "2 cargas de escudo (ShieldCalc) y velocidad de movimiento"
+      ],
+      "active_effects": [
+        {
+          "id": "warm_hugs_shield",
+          "name": "Abrazos cálidos (escudo)",
+          "kind": "shield",
+          "formula": {
+            "op": "add",
+            "operands": [
+              {
+                "op": "by_rank",
+                "values": [
+                  45,
+                  75,
+                  105,
+                  135,
+                  165
+                ]
+              },
+              {
+                "op": "mul",
+                "operands": [
+                  {
+                    "op": "constant",
+                    "value": 0.45
+                  },
+                  {
+                    "op": "stat",
+                    "stat": "ability_power",
+                    "scope": "total"
+                  }
+                ]
+              }
+            ]
+          },
+          "label": "Derivado",
+          "source": "Characters/Milio/Spells/MilioEAbility/MilioE.mSpellCalculations.ShieldCalc (16.23.8418428+branch.releases-16-23.content.release)",
+          "duration_seconds": 2.5
+        },
+        {
+          "id": "warm_hugs_ms",
+          "name": "Abrazos cálidos (VM %)",
+          "kind": "stat_bonus",
+          "formula": {
+            "op": "by_rank",
+            "values": [
+              0.12,
+              0.14,
+              0.16,
+              0.18,
+              0.2
+            ]
+          },
+          "label": "Derivado",
+          "source": "Characters/Milio/Spells/MilioEAbility/MilioE.DataValues.MoveSpeedAmount (16.23.8418428+branch.releases-16-23.content.release)",
+          "stat": "move_speed",
+          "mode": "percent_ms",
+          "duration_seconds": 2.5
+        }
       ]
     },
     "R": {
@@ -134,6 +233,42 @@
       "passive_stats": [],
       "not_modelled": [
         "Limpieza en área, tenacidad del 65 % durante 3 s y curación (HealCalc)"
+      ],
+      "active_effects": [
+        {
+          "id": "r_healcalc",
+          "name": "R (curación)",
+          "kind": "heal",
+          "formula": {
+            "op": "add",
+            "operands": [
+              {
+                "op": "by_rank",
+                "values": [
+                  150,
+                  250,
+                  350
+                ]
+              },
+              {
+                "op": "mul",
+                "operands": [
+                  {
+                    "op": "constant",
+                    "value": 0.5
+                  },
+                  {
+                    "op": "stat",
+                    "stat": "ability_power",
+                    "scope": "total"
+                  }
+                ]
+              }
+            ]
+          },
+          "label": "Derivado",
+          "source": "Characters/Milio/Spells/MilioRAbility/MilioR.mSpellCalculations.HealCalc (16.23.8418428+branch.releases-16-23.content.release)"
+        }
       ]
     }
   }

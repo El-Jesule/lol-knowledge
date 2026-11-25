@@ -3,7 +3,7 @@
   "champion": "DrMundo",
   "label": "Derivado",
   "game_version": "16.23",
-  "content_version": "16.23.8406595+branch.releases-16-23.content.release",
+  "content_version": "16.23.8418428+branch.releases-16-23.content.release",
   "verified_against": {
     "content_version": "16.23.8406595+branch.releases-16-23.content.release",
     "bin_sha256": "7ea3a49f5b499bb31871feffd61d82f6b48abeb9d390a0f9163c688ac469066e",
@@ -40,7 +40,7 @@
             ]
           },
           "label": "Derivado",
-          "source": "Characters/DrMundo/Spells/DrMundoPassiveAbility/DrMundoP · MaxHealthGain × vida máxima de Dr. Mundo (16.23.8406595+branch.releases-16-23.content.release)",
+          "source": "Characters/DrMundo/Spells/DrMundoPassiveAbility/DrMundoP · MaxHealthGain × vida máxima de Dr. Mundo (16.23.8418428+branch.releases-16-23.content.release)",
           "trigger": "on_champion_hit",
           "cooldown_formula": {
             "op": "by_level",
@@ -100,7 +100,7 @@
                 ]
               },
               "label": "Derivado",
-              "source": "Characters/DrMundo/Spells/DrMundoQAbility/DrMundoQ · DataValues.CurrentHealthDamage × vida actual del objetivo (16.23.8406595+branch.releases-16-23.content.release)",
+              "source": "Characters/DrMundo/Spells/DrMundoQAbility/DrMundoQ · DataValues.CurrentHealthDamage × vida actual del objetivo (16.23.8418428+branch.releases-16-23.content.release)",
               "damage_type_source": "spell_drmundoq_tooltip <magicDamage>"
             }
           ]
@@ -123,8 +123,36 @@
           ]
         },
         "label": "Derivado",
-        "source": "Characters/DrMundo/Spells/DrMundoQAbility/DrMundoQ.DataValues.HealthCost (16.23.8406595+branch.releases-16-23.content.release)"
-      }
+        "source": "Characters/DrMundo/Spells/DrMundoQAbility/DrMundoQ.DataValues.HealthCost (16.23.8418428+branch.releases-16-23.content.release)"
+      },
+      "active_effects": [
+        {
+          "id": "q_healthrestoreonhitchampionmonster",
+          "name": "Q (curación)",
+          "kind": "heal",
+          "formula": {
+            "op": "mul",
+            "operands": [
+              {
+                "op": "constant",
+                "value": 1
+              },
+              {
+                "op": "by_rank",
+                "values": [
+                  50,
+                  60,
+                  70,
+                  80,
+                  90
+                ]
+              }
+            ]
+          },
+          "label": "Derivado",
+          "source": "Characters/DrMundo/Spells/DrMundoQAbility/DrMundoQ.mSpellCalculations.HealthRestoreOnHitChampionMonster (16.23.8418428+branch.releases-16-23.content.release)"
+        }
+      ]
     },
     "W": {
       "name": "Desisfibrulación",
@@ -156,7 +184,7 @@
                 ]
               },
               "label": "Derivado",
-              "source": "Characters/DrMundo/Spells/DrMundoWAbility/DrMundoW · DataValues.DamagePerTick × 4 pulsos/s (16.23.8406595+branch.releases-16-23.content.release)",
+              "source": "Characters/DrMundo/Spells/DrMundoWAbility/DrMundoW · DataValues.DamagePerTick × 4 pulsos/s (16.23.8418428+branch.releases-16-23.content.release)",
               "damage_type_source": "spell_drmundow_tooltip <magicDamage>"
             }
           ]
@@ -197,7 +225,7 @@
                 ]
               },
               "label": "Derivado",
-              "source": "Characters/DrMundo/Spells/DrMundoWAbility/DrMundoW.mSpellCalculations.TotalDamage (16.23.8406595+branch.releases-16-23.content.release)",
+              "source": "Characters/DrMundo/Spells/DrMundoWAbility/DrMundoW.mSpellCalculations.TotalDamage (16.23.8418428+branch.releases-16-23.content.release)",
               "damage_type_source": "spell_drmundow_tooltip <magicDamage>"
             }
           ]
@@ -248,7 +276,7 @@
                 ]
               },
               "label": "Derivado",
-              "source": "Characters/DrMundo/Spells/DrMundoEAbility/DrMundoE.mSpellCalculations.AdditionalDamage (16.23.8406595+branch.releases-16-23.content.release)",
+              "source": "Characters/DrMundo/Spells/DrMundoEAbility/DrMundoE.mSpellCalculations.AdditionalDamage (16.23.8418428+branch.releases-16-23.content.release)",
               "damage_type_source": "spell_drmundoe_tooltip <physicalDamage>"
             }
           ]
@@ -271,7 +299,7 @@
           ]
         },
         "label": "Derivado",
-        "source": "Characters/DrMundo/Spells/DrMundoEAbility/DrMundoE.DataValues.FlatHealthCost (16.23.8406595+branch.releases-16-23.content.release)"
+        "source": "Characters/DrMundo/Spells/DrMundoEAbility/DrMundoE.DataValues.FlatHealthCost (16.23.8418428+branch.releases-16-23.content.release)"
       }
     },
     "R": {
@@ -281,6 +309,91 @@
       "passive_stats": [],
       "not_modelled": [
         "Vida máxima temporal por vida faltante, velocidad de movimiento y regeneración porcentual durante 10 s"
+      ],
+      "active_effects": [
+        {
+          "id": "maximum_dosage_hp",
+          "name": "Dosis máxima (vida máxima temporal)",
+          "kind": "stat_bonus",
+          "formula": {
+            "op": "mul",
+            "operands": [
+              {
+                "op": "by_rank",
+                "values": [
+                  0.15,
+                  0.2,
+                  0.25
+                ]
+              },
+              {
+                "op": "mul",
+                "operands": [
+                  {
+                    "op": "stat",
+                    "stat": "health",
+                    "scope": "max"
+                  },
+                  {
+                    "op": "stat",
+                    "stat": "health",
+                    "scope": "missing_fraction"
+                  }
+                ]
+              }
+            ]
+          },
+          "label": "Derivado",
+          "source": "Characters/DrMundo/Spells/DrMundoRAbility/DrMundoR · DataValues.MissingHealthHeal * missing health as temporary max HP (16.23.8418428+branch.releases-16-23.content.release)",
+          "stat": "health",
+          "mode": "flat",
+          "duration_seconds": 10
+        },
+        {
+          "id": "maximum_dosage_hot",
+          "name": "Dosis máxima (regeneración HoT)",
+          "kind": "heal",
+          "formula": {
+            "op": "mul",
+            "operands": [
+              {
+                "op": "by_rank",
+                "values": [
+                  0.2,
+                  0.4,
+                  0.6
+                ]
+              },
+              {
+                "op": "stat",
+                "stat": "health",
+                "scope": "max"
+              }
+            ]
+          },
+          "label": "Derivado",
+          "source": "Characters/DrMundo/Spells/DrMundoRAbility/DrMundoR · DataValues.MaxHealthHoT * max health over Duration (16.23.8418428+branch.releases-16-23.content.release)",
+          "over_duration": true,
+          "duration_seconds": 10
+        },
+        {
+          "id": "maximum_dosage_ms",
+          "name": "Dosis máxima (VM %)",
+          "kind": "stat_bonus",
+          "formula": {
+            "op": "by_rank",
+            "values": [
+              0.15,
+              0.25,
+              0.35
+            ]
+          },
+          "label": "Derivado",
+          "source": "Characters/DrMundo/Spells/DrMundoRAbility/DrMundoR.DataValues.SpeedBoostAmount (16.23.8418428+branch.releases-16-23.content.release)",
+          "stat": "move_speed",
+          "mode": "percent_ms",
+          "duration_seconds": 10
+        }
       ]
     }
   }

@@ -133,6 +133,29 @@
       ],
       "not_modelled": [
         "WQ velocidad de movimiento (Tooltip_WQMoveSpeed), WW escudo (Tooltip_WWShieldAmount) y restauración de maná de WE (3 cargas)"
+      ],
+      "active_effects": [
+        {
+          "id": "w_tooltip_wwshieldamount",
+          "name": "W (escudo)",
+          "kind": "shield",
+          "calculation": "Tooltip_WWShieldAmount",
+          "duration_seconds": {
+            "data_value": "Tooltip_WQAreaDuration"
+          }
+        },
+        {
+          "id": "w_tooltip_wqmovespeed",
+          "name": "W (VM)",
+          "kind": "stat_bonus",
+          "stat": "move_speed",
+          "mode": "percent_ms",
+          "scale": 0.01,
+          "calculation": "Tooltip_WQMoveSpeed",
+          "duration_seconds": {
+            "data_value": "Tooltip_WQAreaDuration"
+          }
+        }
       ]
     },
     "E": {

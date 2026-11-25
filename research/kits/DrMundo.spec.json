@@ -77,6 +77,14 @@
       ],
       "not_modelled": [
         "Daño mínimo (MinimumDamage), tope contra monstruos (MaximumMonsterDamage), ralentización y reembolso de vida al acertar"
+      ],
+      "active_effects": [
+        {
+          "id": "q_healthrestoreonhitchampionmonster",
+          "name": "Q (curación)",
+          "kind": "heal",
+          "calculation": "HealthRestoreOnHitChampionMonster"
+        }
       ]
     },
     "W": {
@@ -148,6 +156,78 @@
       "tooltip": "spell_drmundor_tooltip",
       "not_modelled": [
         "Vida máxima temporal por vida faltante, velocidad de movimiento y regeneración porcentual durante 10 s"
+      ],
+      "active_effects": [
+        {
+          "id": "maximum_dosage_hp",
+          "name": "Dosis máxima (vida máxima temporal)",
+          "kind": "stat_bonus",
+          "stat": "health",
+          "mode": "flat",
+          "formula": {
+            "op": "mul",
+            "operands": [
+              {
+                "op": "data_value",
+                "name": "MissingHealthHeal"
+              },
+              {
+                "op": "mul",
+                "operands": [
+                  {
+                    "op": "stat",
+                    "stat": "health",
+                    "scope": "max"
+                  },
+                  {
+                    "op": "stat",
+                    "stat": "health",
+                    "scope": "missing_fraction"
+                  }
+                ]
+              }
+            ]
+          },
+          "source_note": "DataValues.MissingHealthHeal * missing health as temporary max HP",
+          "duration_seconds": {
+            "data_value": "Duration"
+          }
+        },
+        {
+          "id": "maximum_dosage_hot",
+          "name": "Dosis máxima (regeneración HoT)",
+          "kind": "heal",
+          "formula": {
+            "op": "mul",
+            "operands": [
+              {
+                "op": "data_value",
+                "name": "MaxHealthHoT"
+              },
+              {
+                "op": "stat",
+                "stat": "health",
+                "scope": "max"
+              }
+            ]
+          },
+          "source_note": "DataValues.MaxHealthHoT * max health over Duration",
+          "duration_seconds": {
+            "data_value": "Duration"
+          },
+          "over_duration": true
+        },
+        {
+          "id": "maximum_dosage_ms",
+          "name": "Dosis máxima (VM %)",
+          "kind": "stat_bonus",
+          "stat": "move_speed",
+          "mode": "percent_ms",
+          "data_value": "SpeedBoostAmount",
+          "duration_seconds": {
+            "data_value": "Duration"
+          }
+        }
       ]
     }
   }

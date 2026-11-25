@@ -56,6 +56,20 @@
       "not_modelled": [
         "Velocidad de ataque acumulable de la ametralladora (MinigunAttackSpeedMax)",
         "Alcance adicional, penalización de VA y coste de maná por cohete"
+      ],
+      "active_effects": [
+        {
+          "id": "pow_pow_max_as",
+          "name": "Pium Pium (VA máxima 3 acumulaciones)",
+          "kind": "stat_bonus",
+          "stat": "attack_speed_bonus",
+          "mode": "flat",
+          "data_value": "MinigunAttackSpeedMax",
+          "duration_seconds": {
+            "data_value": "MinigunAttackSpeedDuration"
+          },
+          "condition": "minigun_3_stacks"
+        }
       ]
     },
     "W": {

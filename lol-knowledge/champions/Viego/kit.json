@@ -3,7 +3,7 @@
   "champion": "Viego",
   "label": "Derivado",
   "game_version": "16.23",
-  "content_version": "16.23.8406595+branch.releases-16-23.content.release",
+  "content_version": "16.23.8418428+branch.releases-16-23.content.release",
   "verified_against": {
     "content_version": "16.23.8406595+branch.releases-16-23.content.release",
     "bin_sha256": "4a454661a326aa864eb02e734a52e4c8fa12a2eab591e6e63bf99e196bdf3a5b",
@@ -106,7 +106,7 @@
             ]
           },
           "label": "Derivado",
-          "source": "Characters/Viego/Spells/ViegoPassiveAbility/ViegoPassive · PercentHealthHeal % × vida máxima del campeón poseído (16.23.8406595+branch.releases-16-23.content.release)",
+          "source": "Characters/Viego/Spells/ViegoPassiveAbility/ViegoPassive · PercentHealthHeal % × vida máxima del campeón poseído (16.23.8418428+branch.releases-16-23.content.release)",
           "trigger": "on_champion_takedown"
         }
       ]
@@ -151,7 +151,7 @@
                 ]
               },
               "label": "Derivado",
-              "source": "Characters/Viego/Spells/ViegoQAbility/ViegoQ.mSpellCalculations.TotalDamage (16.23.8406595+branch.releases-16-23.content.release)",
+              "source": "Characters/Viego/Spells/ViegoQAbility/ViegoQ.mSpellCalculations.TotalDamage (16.23.8418428+branch.releases-16-23.content.release)",
               "damage_type_source": "spell_viegoq_tooltip <physicalDamage>"
             }
           ]
@@ -196,7 +196,7 @@
                 ]
               },
               "label": "Derivado",
-              "source": "Characters/Viego/Spells/ViegoQAbility/ViegoQ.mSpellCalculations.SecondAttackDamage (16.23.8406595+branch.releases-16-23.content.release)",
+              "source": "Characters/Viego/Spells/ViegoQAbility/ViegoQ.mSpellCalculations.SecondAttackDamage (16.23.8418428+branch.releases-16-23.content.release)",
               "damage_type_source": "spell_viegoq_tooltip <physicalDamage>"
             }
           ]
@@ -233,7 +233,7 @@
                 ]
               },
               "label": "Derivado",
-              "source": "Characters/Viego/Spells/ViegoQAbility/ViegoQ · mSpellCalculations.TotalPercentHealthOnHit % × vida actual del objetivo (16.23.8406595+branch.releases-16-23.content.release)",
+              "source": "Characters/Viego/Spells/ViegoQAbility/ViegoQ · mSpellCalculations.TotalPercentHealthOnHit % × vida actual del objetivo (16.23.8418428+branch.releases-16-23.content.release)",
               "damage_type_source": "spell_viegoq_tooltip <physicalDamage>"
             }
           ]
@@ -284,7 +284,7 @@
                 ]
               },
               "label": "Derivado",
-              "source": "Characters/Viego/Spells/ViegoWAbility/ViegoW.mSpellCalculations.TotalDamage (16.23.8406595+branch.releases-16-23.content.release)",
+              "source": "Characters/Viego/Spells/ViegoWAbility/ViegoW.mSpellCalculations.TotalDamage (16.23.8418428+branch.releases-16-23.content.release)",
               "damage_type_source": "spell_viegow_tooltip <magicDamage>"
             }
           ]
@@ -302,6 +302,67 @@
       "passive_stats": [],
       "not_modelled": [
         "Camuflaje en la Niebla, velocidad de movimiento (TotalMoveSpeed) y velocidad de ataque"
+      ],
+      "active_effects": [
+        {
+          "id": "e_attackspeed",
+          "name": "E (VA)",
+          "kind": "stat_bonus",
+          "formula": {
+            "op": "by_rank",
+            "values": [
+              30,
+              35,
+              40,
+              45,
+              50
+            ]
+          },
+          "label": "Derivado",
+          "source": "Characters/Viego/Spells/ViegoEAbility/ViegoE.DataValues.AttackSpeed (16.23.8418428+branch.releases-16-23.content.release)",
+          "stat": "attack_speed_bonus",
+          "mode": "flat",
+          "duration_seconds": 8
+        },
+        {
+          "id": "e_totalmovespeed",
+          "name": "E (VM)",
+          "kind": "stat_bonus",
+          "formula": {
+            "op": "add",
+            "operands": [
+              {
+                "op": "by_rank",
+                "values": [
+                  0.25,
+                  0.275,
+                  0.3,
+                  0.325,
+                  0.35
+                ]
+              },
+              {
+                "op": "mul",
+                "operands": [
+                  {
+                    "op": "constant",
+                    "value": 0.0004
+                  },
+                  {
+                    "op": "stat",
+                    "stat": "ability_power",
+                    "scope": "total"
+                  }
+                ]
+              }
+            ]
+          },
+          "label": "Derivado",
+          "source": "Characters/Viego/Spells/ViegoEAbility/ViegoE.mSpellCalculations.TotalMoveSpeed (16.23.8418428+branch.releases-16-23.content.release)",
+          "stat": "move_speed",
+          "mode": "percent_ms",
+          "duration_seconds": 8
+        }
       ]
     },
     "R": {
@@ -329,7 +390,7 @@
                 ]
               },
               "label": "Derivado",
-              "source": "Characters/Viego/Spells/ViegoRAbility/ViegoR.mSpellCalculations.TotalDamage (16.23.8406595+branch.releases-16-23.content.release)",
+              "source": "Characters/Viego/Spells/ViegoRAbility/ViegoR.mSpellCalculations.TotalDamage (16.23.8418428+branch.releases-16-23.content.release)",
               "damage_type_source": "spell_viegor_tooltip <physicalDamage>"
             },
             {
@@ -383,7 +444,7 @@
                 ]
               },
               "label": "Derivado",
-              "source": "Characters/Viego/Spells/ViegoRAbility/ViegoR · mSpellCalculations.TotalPercentHealth % × vida faltante del objetivo (16.23.8406595+branch.releases-16-23.content.release)",
+              "source": "Characters/Viego/Spells/ViegoRAbility/ViegoR · mSpellCalculations.TotalPercentHealth % × vida faltante del objetivo (16.23.8418428+branch.releases-16-23.content.release)",
               "damage_type_source": "spell_viegor_tooltip <physicalDamage>"
             }
           ]

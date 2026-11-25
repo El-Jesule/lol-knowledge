@@ -86,6 +86,16 @@
       ],
       "not_modelled": [
         "Canalización de 2 s y velocidad de movimiento fuera de combate"
+      ],
+      "active_effects": [
+        {
+          "id": "r_movementspeedmod",
+          "name": "R (VM)",
+          "kind": "stat_bonus",
+          "stat": "move_speed",
+          "mode": "percent_ms",
+          "data_value": "MovementSpeedMod"
+        }
       ]
     }
   }

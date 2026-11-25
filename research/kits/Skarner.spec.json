@@ -125,6 +125,20 @@
       ],
       "not_modelled": [
         "Velocidad de ataque de los 3 ataques, ralentización y ataque básico aparte"
+      ],
+      "active_effects": [
+        {
+          "id": "q_attackspeed",
+          "name": "Q (VA)",
+          "kind": "stat_bonus",
+          "stat": "attack_speed_bonus",
+          "mode": "flat",
+          "scale": 100,
+          "data_value": "AttackSpeed",
+          "duration_seconds": {
+            "data_value": "RockHoldDuration"
+          }
+        }
       ]
     },
     "W": {
@@ -143,6 +157,17 @@
       ],
       "not_modelled": [
         "Escudo (InitialShield) y ralentización"
+      ],
+      "active_effects": [
+        {
+          "id": "w_initialshield",
+          "name": "W (escudo)",
+          "kind": "shield",
+          "calculation": "InitialShield",
+          "duration_seconds": {
+            "data_value": "ShieldDuration"
+          }
+        }
       ]
     },
     "E": {
@@ -179,6 +204,19 @@
       ],
       "not_modelled": [
         "Supresión hasta 3 campeones y velocidad de movimiento"
+      ],
+      "active_effects": [
+        {
+          "id": "r_speedboostamount",
+          "name": "R (VM)",
+          "kind": "stat_bonus",
+          "stat": "move_speed",
+          "mode": "percent_ms",
+          "data_value": "SpeedBoostAmount",
+          "duration_seconds": {
+            "data_value": "Duration"
+          }
+        }
       ]
     }
   }

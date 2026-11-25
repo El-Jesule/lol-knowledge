@@ -62,6 +62,20 @@
       ],
       "not_modelled": [
         "Velocidad de ataque activa durante 4 s y golpes críticos en rebotes"
+      ],
+      "active_effects": [
+        {
+          "id": "w_ricochetattackspeed",
+          "name": "W (VA)",
+          "kind": "stat_bonus",
+          "stat": "attack_speed_bonus",
+          "mode": "flat",
+          "scale": 100,
+          "data_value": "RicochetAttackSpeed",
+          "duration_seconds": {
+            "data_value": "BuffDuration"
+          }
+        }
       ]
     },
     "E": {
@@ -69,6 +83,15 @@
       "tooltip": "spell_sivire_tooltip",
       "not_modelled": [
         "Bloqueo de 1 habilidad enemiga, curación (TotalHeal) y activación de Mil pies"
+      ],
+      "active_effects": [
+        {
+          "id": "e_totalheal",
+          "name": "E (curación)",
+          "kind": "heal",
+          "condition": "spell_blocked",
+          "calculation": "TotalHeal"
+        }
       ]
     },
     "R": {
@@ -76,6 +99,19 @@
       "tooltip": "spell_sivirr_tooltip",
       "not_modelled": [
         "Velocidad de movimiento en área, reducción de enfriamiento al atacar y extensión por bajas"
+      ],
+      "active_effects": [
+        {
+          "id": "on_the_hunt_ms",
+          "name": "A la caza (VM %)",
+          "kind": "stat_bonus",
+          "stat": "move_speed",
+          "mode": "percent_ms",
+          "data_value": "MaxMS",
+          "duration_seconds": {
+            "data_value": "UltDuration"
+          }
+        }
       ]
     }
   }

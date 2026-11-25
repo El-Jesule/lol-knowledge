@@ -116,6 +116,19 @@
       ],
       "not_modelled": [
         "Velocidad de movimiento propia y aliada y tope contra monstruos (PercentHealthDamageCap)"
+      ],
+      "active_effects": [
+        {
+          "id": "e_minms",
+          "name": "E (VM)",
+          "kind": "stat_bonus",
+          "stat": "move_speed",
+          "mode": "percent_ms",
+          "data_value": "MinMS",
+          "duration_seconds": {
+            "data_value": "Duration"
+          }
+        }
       ]
     },
     "R": {

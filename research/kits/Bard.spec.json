@@ -66,6 +66,25 @@
       "tooltip": "spell_bardw_tooltip",
       "not_modelled": [
         "Curación inmediata o cargada (InitialHeal, MaxHeal) y velocidad de movimiento (Calc_MoveSpeed)"
+      ],
+      "active_effects": [
+        {
+          "id": "w_initialheal",
+          "name": "W (curación)",
+          "kind": "heal",
+          "calculation": "InitialHeal"
+        },
+        {
+          "id": "w_calc_movespeed",
+          "name": "W (VM)",
+          "kind": "stat_bonus",
+          "stat": "move_speed",
+          "mode": "percent_ms",
+          "calculation": "Calc_MoveSpeed",
+          "duration_seconds": {
+            "data_value": "MoveSpeed_Duration"
+          }
+        }
       ]
     },
     "E": {

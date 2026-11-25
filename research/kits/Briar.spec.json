@@ -119,6 +119,31 @@
       ],
       "not_modelled": [
         "Coste porcentual de vida actual, Frenesí sanguinario (velocidad de ataque/movimiento), curación de Otro mordisquito (AttackMaxHPHeal) y tope contra monstruos"
+      ],
+      "active_effects": [
+        {
+          "id": "blood_frenzy_as",
+          "name": "Frenesí sanguinario (VA)",
+          "kind": "stat_bonus",
+          "stat": "attack_speed_bonus",
+          "mode": "flat",
+          "data_value": "BerserkAS",
+          "scale": 100,
+          "duration_seconds": {
+            "data_value": "BerserkDuration"
+          }
+        },
+        {
+          "id": "blood_frenzy_ms",
+          "name": "Frenesí sanguinario (VM %)",
+          "kind": "stat_bonus",
+          "stat": "move_speed",
+          "mode": "percent_ms",
+          "data_value": "BerserkMS",
+          "duration_seconds": {
+            "data_value": "BerserkDuration"
+          }
+        }
       ]
     },
     "E": {
@@ -146,6 +171,24 @@
       ],
       "not_modelled": [
         "Reducción de daño del 35 % durante la canalización, curación (PercentMaxHPHeal), ralentización y aturdimiento contra muro"
+      ],
+      "active_effects": [
+        {
+          "id": "chilling_scream_dr",
+          "name": "Alarido escalofriante (DR)",
+          "kind": "damage_taken_modifier",
+          "mode": "percent",
+          "data_value": "DRPercent",
+          "duration_seconds": 1.0
+        },
+        {
+          "id": "chilling_scream_heal",
+          "name": "Alarido escalofriante (curación)",
+          "kind": "heal",
+          "calculation": "PercentMaxHPHeal",
+          "duration_seconds": 1.0,
+          "over_duration": true
+        }
       ]
     },
     "R": {
@@ -164,6 +207,41 @@
       ],
       "not_modelled": [
         "Coste porcentual de vida actual, miedo en área, Frenesí potenciado con resistencias (TotalResists), robo de vida y velocidad de movimiento"
+      ],
+      "active_effects": [
+        {
+          "id": "certain_death_armor",
+          "name": "Muerte segura (armadura)",
+          "kind": "stat_bonus",
+          "stat": "armor",
+          "mode": "flat",
+          "calculation": "TotalResists"
+        },
+        {
+          "id": "certain_death_mr",
+          "name": "Muerte segura (RM)",
+          "kind": "stat_bonus",
+          "stat": "magic_resist",
+          "mode": "flat",
+          "calculation": "TotalResists"
+        },
+        {
+          "id": "certain_death_lifesteal",
+          "name": "Muerte segura (robo de vida)",
+          "kind": "stat_bonus",
+          "stat": "life_steal",
+          "mode": "flat",
+          "data_value": "LifestealPercent",
+          "scale": 100
+        },
+        {
+          "id": "certain_death_ms",
+          "name": "Muerte segura (VM %)",
+          "kind": "stat_bonus",
+          "stat": "move_speed",
+          "mode": "percent_ms",
+          "data_value": "ExtraMoveSpeedPercent"
+        }
       ]
     }
   }

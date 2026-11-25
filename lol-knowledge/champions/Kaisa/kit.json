@@ -3,7 +3,7 @@
   "champion": "Kaisa",
   "label": "Derivado",
   "game_version": "16.23",
-  "content_version": "16.23.8406595+branch.releases-16-23.content.release",
+  "content_version": "16.23.8418428+branch.releases-16-23.content.release",
   "verified_against": {
     "content_version": "16.23.8406595+branch.releases-16-23.content.release",
     "bin_sha256": "1a56629726be50325cf7a37c419c13866cbb77dbb70a7469bb4515d62ca39b18",
@@ -47,7 +47,7 @@
                 ]
               },
               "label": "Derivado",
-              "source": "Characters/Kaisa/Spells/KaisaPassiveAbility/KaisaPassive.mSpellCalculations.PBaseDamage (16.23.8406595+branch.releases-16-23.content.release)",
+              "source": "Characters/Kaisa/Spells/KaisaPassiveAbility/KaisaPassive.mSpellCalculations.PBaseDamage (16.23.8418428+branch.releases-16-23.content.release)",
               "damage_type_source": "spell_kaisapassive_tooltip <magicDamage>"
             }
           ]
@@ -83,7 +83,7 @@
                 ]
               },
               "label": "Derivado",
-              "source": "Characters/Kaisa/Spells/KaisaPassiveAbility/KaisaPassive.mSpellCalculations.PCurrentPerStackDamage (16.23.8406595+branch.releases-16-23.content.release)",
+              "source": "Characters/Kaisa/Spells/KaisaPassiveAbility/KaisaPassive.mSpellCalculations.PCurrentPerStackDamage (16.23.8418428+branch.releases-16-23.content.release)",
               "damage_type_source": "spell_kaisapassive_tooltip <magicDamage>"
             }
           ]
@@ -135,7 +135,7 @@
                 ]
               },
               "label": "Derivado",
-              "source": "Characters/Kaisa/Spells/KaisaPassiveAbility/KaisaPassive · mSpellCalculations.PExecutePercentage × vida faltante del objetivo (16.23.8406595+branch.releases-16-23.content.release)",
+              "source": "Characters/Kaisa/Spells/KaisaPassiveAbility/KaisaPassive · mSpellCalculations.PExecutePercentage × vida faltante del objetivo (16.23.8418428+branch.releases-16-23.content.release)",
               "damage_type_source": "spell_kaisapassive_tooltip <magicDamage>"
             }
           ]
@@ -175,7 +175,7 @@
             ]
           },
           "label": "Derivado",
-          "source": "Characters/Kaisa/Spells/KaisaPassiveAbility/KaisaPassive.mSpellCalculations.PBaseDamage (16.23.8406595+branch.releases-16-23.content.release)",
+          "source": "Characters/Kaisa/Spells/KaisaPassiveAbility/KaisaPassive.mSpellCalculations.PBaseDamage (16.23.8418428+branch.releases-16-23.content.release)",
           "trigger": "on_hit",
           "damage_type": "magic"
         },
@@ -224,7 +224,7 @@
             ]
           },
           "label": "Derivado",
-          "source": "Characters/Kaisa/Spells/KaisaPassiveAbility/KaisaPassive · PExecutePercentage × vida faltante del objetivo (16.23.8406595+branch.releases-16-23.content.release)",
+          "source": "Characters/Kaisa/Spells/KaisaPassiveAbility/KaisaPassive · PExecutePercentage × vida faltante del objetivo (16.23.8418428+branch.releases-16-23.content.release)",
           "trigger": "every_n_hits",
           "damage_type": "magic",
           "every": 5
@@ -285,7 +285,7 @@
                 ]
               },
               "label": "Derivado",
-              "source": "Characters/Kaisa/Spells/KaisaQAbility/KaisaQ.mSpellCalculations.TotalIndividualMissileDamage (16.23.8406595+branch.releases-16-23.content.release)",
+              "source": "Characters/Kaisa/Spells/KaisaQAbility/KaisaQ.mSpellCalculations.TotalIndividualMissileDamage (16.23.8418428+branch.releases-16-23.content.release)",
               "damage_type_source": "spell_kaisaq_tooltip <physicalDamage>"
             }
           ]
@@ -349,7 +349,7 @@
                 ]
               },
               "label": "Derivado",
-              "source": "Characters/Kaisa/Spells/KaisaQAbility/KaisaQ · 2,25 × mSpellCalculations.TotalIndividualMissileDamage (1 + 5 × 25 %) (16.23.8406595+branch.releases-16-23.content.release)",
+              "source": "Characters/Kaisa/Spells/KaisaQAbility/KaisaQ · 2,25 × mSpellCalculations.TotalIndividualMissileDamage (1 + 5 × 25 %) (16.23.8418428+branch.releases-16-23.content.release)",
               "damage_type_source": "spell_kaisaq_tooltip <physicalDamage>"
             }
           ]
@@ -413,7 +413,7 @@
                 ]
               },
               "label": "Derivado",
-              "source": "Characters/Kaisa/Spells/KaisaQAbility/KaisaQ · 3,75 × mSpellCalculations.TotalIndividualMissileDamage (1 + 11 × 25 %) (16.23.8406595+branch.releases-16-23.content.release)",
+              "source": "Characters/Kaisa/Spells/KaisaQAbility/KaisaQ · 3,75 × mSpellCalculations.TotalIndividualMissileDamage (1 + 11 × 25 %) (16.23.8418428+branch.releases-16-23.content.release)",
               "damage_type_source": "spell_kaisaq_tooltip <physicalDamage>"
             }
           ]
@@ -478,7 +478,7 @@
                 ]
               },
               "label": "Derivado",
-              "source": "Characters/Kaisa/Spells/KaisaWAbility/KaisaW.mSpellCalculations.TotalDamage (16.23.8406595+branch.releases-16-23.content.release)",
+              "source": "Characters/Kaisa/Spells/KaisaWAbility/KaisaW.mSpellCalculations.TotalDamage (16.23.8418428+branch.releases-16-23.content.release)",
               "damage_type_source": "spell_kaisaw_tooltip <magicDamage>"
             }
           ]
@@ -505,6 +505,61 @@
       "passive_stats": [],
       "not_modelled": [
         "Desplazamiento hacia objetivo con Plasma y escudo (RCalculatedShieldValue)"
+      ],
+      "active_effects": [
+        {
+          "id": "r_rcalculatedshieldvalue",
+          "name": "R (escudo)",
+          "kind": "shield",
+          "formula": {
+            "op": "add",
+            "operands": [
+              {
+                "op": "by_rank",
+                "values": [
+                  100,
+                  150,
+                  200
+                ]
+              },
+              {
+                "op": "mul",
+                "operands": [
+                  {
+                    "op": "by_rank",
+                    "values": [
+                      0.9,
+                      1.35,
+                      1.8
+                    ]
+                  },
+                  {
+                    "op": "stat",
+                    "stat": "attack_damage",
+                    "scope": "total"
+                  }
+                ]
+              },
+              {
+                "op": "mul",
+                "operands": [
+                  {
+                    "op": "constant",
+                    "value": 1.2
+                  },
+                  {
+                    "op": "stat",
+                    "stat": "ability_power",
+                    "scope": "total"
+                  }
+                ]
+              }
+            ]
+          },
+          "label": "Derivado",
+          "source": "Characters/Kaisa/Spells/KaisaRAbility/KaisaR.mSpellCalculations.RCalculatedShieldValue (16.23.8418428+branch.releases-16-23.content.release)",
+          "duration_seconds": 2
+        }
       ]
     }
   }

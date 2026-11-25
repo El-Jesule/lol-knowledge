@@ -84,6 +84,33 @@
       "tooltip": "spell_warwickw_tooltip",
       "not_modelled": [
         "Velocidad de ataque y movimiento contra enemigos con <50 % (triple con <20 %) de vida y rastro activo"
+      ],
+      "active_effects": [
+        {
+          "id": "blood_hunt_as",
+          "name": "Caza sangrienta (VA <50% vida)",
+          "kind": "stat_bonus",
+          "stat": "attack_speed_bonus",
+          "mode": "flat",
+          "data_value": "PassiveASBonus",
+          "duration_seconds": {
+            "data_value": "Duration"
+          },
+          "condition": "target_below_50_hp_or_active"
+        },
+        {
+          "id": "blood_hunt_ms",
+          "name": "Caza sangrienta (VM %)",
+          "kind": "stat_bonus",
+          "stat": "move_speed",
+          "mode": "percent_ms",
+          "data_value": "PassiveMSBonus",
+          "scale": 0.01,
+          "duration_seconds": {
+            "data_value": "Duration"
+          },
+          "condition": "target_below_50_hp_or_active"
+        }
       ]
     },
     "E": {
@@ -91,6 +118,18 @@
       "tooltip": "spell_warwicke_tooltip",
       "not_modelled": [
         "Reducción de daño (35..55 %) durante 2,5 s y miedo en área de 1 s"
+      ],
+      "active_effects": [
+        {
+          "id": "primal_howl_dr",
+          "name": "Aullido primigenio (DR)",
+          "kind": "damage_taken_modifier",
+          "mode": "percent",
+          "data_value": "DRAmount",
+          "duration_seconds": {
+            "data_value": "DRDuration"
+          }
+        }
       ]
     },
     "R": {

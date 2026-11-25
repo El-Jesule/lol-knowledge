@@ -56,6 +56,31 @@
       "tooltip": "spell_overdrive_tooltip",
       "not_modelled": [
         "Velocidad de movimiento, velocidad de ataque y autorralentización posterior"
+      ],
+      "active_effects": [
+        {
+          "id": "w_attackspeedmod",
+          "name": "W (VA)",
+          "kind": "stat_bonus",
+          "stat": "attack_speed_bonus",
+          "mode": "flat",
+          "scale": 100,
+          "data_value": "AttackSpeedMod",
+          "duration_seconds": {
+            "data_value": "Duration"
+          }
+        },
+        {
+          "id": "w_movespeedmod",
+          "name": "W (VM)",
+          "kind": "stat_bonus",
+          "stat": "move_speed",
+          "mode": "percent_ms",
+          "data_value": "MoveSpeedMod",
+          "duration_seconds": {
+            "data_value": "Duration"
+          }
+        }
       ]
     },
     "E": {

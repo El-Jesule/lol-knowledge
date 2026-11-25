@@ -3,7 +3,7 @@
   "champion": "Aatrox",
   "label": "Derivado",
   "game_version": "16.23",
-  "content_version": "16.23.8406595+branch.releases-16-23.content.release",
+  "content_version": "16.23.8418428+branch.releases-16-23.content.release",
   "verified_against": {
     "content_version": "16.23.8406595+branch.releases-16-23.content.release",
     "bin_sha256": "b2deb766a83f8f862e2deaba715b915892be3cd2f4c22a65a7865eacf33420b0",
@@ -39,7 +39,7 @@
                 ]
               },
               "label": "Derivado",
-              "source": "Characters/Aatrox/Spells/AatroxPassiveAbility/AatroxPassive · mSpellCalculations.PDamage × vida máxima del objetivo (16.23.8406595+branch.releases-16-23.content.release)",
+              "source": "Characters/Aatrox/Spells/AatroxPassiveAbility/AatroxPassive · mSpellCalculations.PDamage × vida máxima del objetivo (16.23.8418428+branch.releases-16-23.content.release)",
               "damage_type_source": "passive_aatroxpassive_tooltip <magicDamage>"
             }
           ]
@@ -71,7 +71,7 @@
             ]
           },
           "label": "Derivado",
-          "source": "Characters/Aatrox/Spells/AatroxPassiveAbility/AatroxPassive · PDamage × vida máxima del objetivo (16.23.8406595+branch.releases-16-23.content.release)",
+          "source": "Characters/Aatrox/Spells/AatroxPassiveAbility/AatroxPassive · PDamage × vida máxima del objetivo (16.23.8418428+branch.releases-16-23.content.release)",
           "trigger": "on_attack",
           "damage_type": "magic",
           "cooldown_formula": {
@@ -101,7 +101,7 @@
             ]
           },
           "label": "Derivado",
-          "source": "Characters/Aatrox/Spells/AatroxPassiveAbility/AatroxPassive · Curación igual al daño premitigación contra campeones (PHealingRatio=1) (16.23.8406595+branch.releases-16-23.content.release)",
+          "source": "Characters/Aatrox/Spells/AatroxPassiveAbility/AatroxPassive · Curación igual al daño premitigación contra campeones (PHealingRatio=1) (16.23.8418428+branch.releases-16-23.content.release)",
           "trigger": "on_hit",
           "cooldown_formula": {
             "op": "linear_by_level",
@@ -157,7 +157,7 @@
                 ]
               },
               "label": "Derivado",
-              "source": "Characters/Aatrox/Spells/AatroxQAbility/AatroxQ.mSpellCalculations.QDamage (16.23.8406595+branch.releases-16-23.content.release)",
+              "source": "Characters/Aatrox/Spells/AatroxQAbility/AatroxQ.mSpellCalculations.QDamage (16.23.8418428+branch.releases-16-23.content.release)",
               "damage_type_source": "spell_aatroxq_tooltip <physicalDamage>"
             }
           ]
@@ -222,7 +222,7 @@
                 ]
               },
               "label": "Derivado",
-              "source": "Characters/Aatrox/Spells/AatroxQAbility/AatroxQ.mSpellCalculations.QEdgeDamage (16.23.8406595+branch.releases-16-23.content.release)",
+              "source": "Characters/Aatrox/Spells/AatroxQAbility/AatroxQ.mSpellCalculations.QEdgeDamage (16.23.8418428+branch.releases-16-23.content.release)",
               "damage_type_source": "spell_aatroxq_tooltip <physicalDamage>"
             }
           ]
@@ -273,7 +273,7 @@
                 ]
               },
               "label": "Derivado",
-              "source": "Characters/Aatrox/Spells/AatroxWAbility/AatroxW.mSpellCalculations.WDamage (16.23.8406595+branch.releases-16-23.content.release)",
+              "source": "Characters/Aatrox/Spells/AatroxWAbility/AatroxW.mSpellCalculations.WDamage (16.23.8418428+branch.releases-16-23.content.release)",
               "damage_type_source": "spell_aatroxw_tooltip <physicalDamage>"
             }
           ]
@@ -300,6 +300,44 @@
       "passive_stats": [],
       "not_modelled": [
         "Bonificación porcentual de DA total, amplificación de curación, velocidad de movimiento y extensión por bajas"
+      ],
+      "active_effects": [
+        {
+          "id": "world_ender_ad",
+          "name": "El Aniquilador de Mundos (AD %)",
+          "kind": "stat_bonus",
+          "formula": {
+            "op": "by_rank",
+            "values": [
+              20,
+              30,
+              40
+            ]
+          },
+          "label": "Derivado",
+          "source": "Characters/Aatrox/Spells/AatroxRAbility/AatroxR.DataValues.RTotalADAmp (16.23.8418428+branch.releases-16-23.content.release)",
+          "stat": "attack_damage",
+          "mode": "percent",
+          "duration_seconds": 10
+        },
+        {
+          "id": "world_ender_ms",
+          "name": "El Aniquilador de Mundos (VM %)",
+          "kind": "stat_bonus",
+          "formula": {
+            "op": "by_rank",
+            "values": [
+              0.6,
+              0.8,
+              1
+            ]
+          },
+          "label": "Derivado",
+          "source": "Characters/Aatrox/Spells/AatroxRAbility/AatroxR.DataValues.RMovementSpeedBonus (16.23.8418428+branch.releases-16-23.content.release)",
+          "stat": "move_speed",
+          "mode": "percent_ms",
+          "duration_seconds": 10
+        }
       ]
     }
   }

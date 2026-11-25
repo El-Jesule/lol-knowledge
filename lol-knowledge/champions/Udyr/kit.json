@@ -3,7 +3,7 @@
   "champion": "Udyr",
   "label": "Derivado",
   "game_version": "16.23",
-  "content_version": "16.23.8406595+branch.releases-16-23.content.release",
+  "content_version": "16.23.8418428+branch.releases-16-23.content.release",
   "verified_against": {
     "content_version": "16.23.8406595+branch.releases-16-23.content.release",
     "bin_sha256": "70c4b319654d3f0ddeb5f555144c9d2dce00445f7b5d0a18c7974e11922310c2",
@@ -30,7 +30,7 @@
             "value": 30
           },
           "label": "Derivado",
-          "source": "Characters/Udyr/Spells/UdyrPassive.mSpellCalculations.AttackSpeed (16.23.8406595+branch.releases-16-23.content.release)",
+          "source": "Characters/Udyr/Spells/UdyrPassive.mSpellCalculations.AttackSpeed (16.23.8418428+branch.releases-16-23.content.release)",
           "stat": "attack_speed_bonus",
           "mode": "flat",
           "input_name": "udyr_stance_swap",
@@ -100,7 +100,7 @@
                 ]
               },
               "label": "Derivado",
-              "source": "Characters/Udyr/Spells/UdyrQAbility/UdyrQ.mSpellCalculations.OnHitDamage (16.23.8406595+branch.releases-16-23.content.release)",
+              "source": "Characters/Udyr/Spells/UdyrQAbility/UdyrQ.mSpellCalculations.OnHitDamage (16.23.8418428+branch.releases-16-23.content.release)",
               "damage_type_source": "spell_udyrtigerstance_tooltip <physicalDamage>"
             }
           ]
@@ -153,7 +153,7 @@
                 ]
               },
               "label": "Derivado",
-              "source": "Characters/Udyr/Spells/UdyrQAbility/UdyrQ · mSpellCalculations.MaxHPOnHit1 × vida máxima del objetivo (16.23.8406595+branch.releases-16-23.content.release)",
+              "source": "Characters/Udyr/Spells/UdyrQAbility/UdyrQ · mSpellCalculations.MaxHPOnHit1 × vida máxima del objetivo (16.23.8418428+branch.releases-16-23.content.release)",
               "damage_type_source": "spell_udyrtigerstance_tooltip <physicalDamage>"
             }
           ]
@@ -225,7 +225,7 @@
                 ]
               },
               "label": "Derivado",
-              "source": "Characters/Udyr/Spells/UdyrQAbility/UdyrQ · mSpellCalculations.Q2TotalOnHitHPDamage × vida máxima del objetivo (16.23.8406595+branch.releases-16-23.content.release)",
+              "source": "Characters/Udyr/Spells/UdyrQAbility/UdyrQ · mSpellCalculations.Q2TotalOnHitHPDamage × vida máxima del objetivo (16.23.8418428+branch.releases-16-23.content.release)",
               "damage_type_source": "spell_udyrtigerstance_tooltip <physicalDamage>"
             }
           ]
@@ -308,7 +308,7 @@
                 ]
               },
               "label": "Derivado",
-              "source": "Characters/Udyr/Spells/UdyrQAbility/UdyrQ · mSpellCalculations.EmpoweredLightningBonusMax × vida máxima del objetivo (16.23.8406595+branch.releases-16-23.content.release)",
+              "source": "Characters/Udyr/Spells/UdyrQAbility/UdyrQ · mSpellCalculations.EmpoweredLightningBonusMax × vida máxima del objetivo (16.23.8418428+branch.releases-16-23.content.release)",
               "damage_type_source": "spell_udyrtigerstance_tooltip <magicDamage>"
             }
           ]
@@ -317,6 +317,29 @@
       "passive_stats": [],
       "not_modelled": [
         "Velocidad de ataque activa/Despertar (EmpoweredTotalAS), alcance extra (+50) y topes contra monstruos/súbditos"
+      ],
+      "active_effects": [
+        {
+          "id": "q_attackspeedbase",
+          "name": "Q (VA)",
+          "kind": "stat_bonus",
+          "formula": {
+            "op": "by_rank",
+            "values": [
+              20,
+              32,
+              44,
+              56,
+              68,
+              80
+            ]
+          },
+          "label": "Derivado",
+          "source": "Characters/Udyr/Spells/UdyrQAbility/UdyrQ.DataValues.AttackSpeedBase (16.23.8418428+branch.releases-16-23.content.release)",
+          "stat": "attack_speed_bonus",
+          "mode": "flat",
+          "duration_seconds": 4
+        }
       ]
     },
     "W": {
@@ -326,6 +349,81 @@
       "passive_stats": [],
       "not_modelled": [
         "Escudo normal y Despertar (TotalShield), robo de vida y curación al golpear (LifeOnHit)"
+      ],
+      "active_effects": [
+        {
+          "id": "iron_mantle_shield",
+          "name": "Manto férreo (escudo base)",
+          "kind": "shield",
+          "formula": {
+            "op": "add",
+            "operands": [
+              {
+                "op": "by_rank",
+                "values": [
+                  45,
+                  65,
+                  85,
+                  105,
+                  125,
+                  145
+                ]
+              },
+              {
+                "op": "mul",
+                "operands": [
+                  {
+                    "op": "by_rank",
+                    "values": [
+                      0.02,
+                      0.023,
+                      0.026,
+                      0.029,
+                      0.032,
+                      0.035
+                    ]
+                  },
+                  {
+                    "op": "stat",
+                    "stat": "health",
+                    "scope": "total"
+                  }
+                ]
+              },
+              {
+                "op": "mul",
+                "operands": [
+                  {
+                    "op": "constant",
+                    "value": 0.4
+                  },
+                  {
+                    "op": "stat",
+                    "stat": "ability_power",
+                    "scope": "total"
+                  }
+                ]
+              },
+              {
+                "op": "mul",
+                "operands": [
+                  {
+                    "op": "constant",
+                    "value": 0.5
+                  },
+                  {
+                    "op": "stat",
+                    "stat": "attack_damage",
+                    "scope": "bonus"
+                  }
+                ]
+              }
+            ]
+          },
+          "label": "Derivado",
+          "source": "Characters/Udyr/Spells/UdyrWAbility/UdyrW.mSpellCalculations.TotalShield (16.23.8418428+branch.releases-16-23.content.release)",
+          "duration_seconds": 4
+        }
       ]
     },
     "E": {
@@ -335,6 +433,48 @@
       "passive_stats": [],
       "not_modelled": [
         "Velocidad de movimiento (MoveSpeed / MoveSpeedBonus), aturdimiento por objetivo e inmunidad a CC en Despertar"
+      ],
+      "active_effects": [
+        {
+          "id": "e_movespeed",
+          "name": "E (VM)",
+          "kind": "stat_bonus",
+          "formula": {
+            "op": "add",
+            "operands": [
+              {
+                "op": "by_rank",
+                "values": [
+                  0.25,
+                  0.31,
+                  0.37,
+                  0.43,
+                  0.49,
+                  0.55
+                ]
+              },
+              {
+                "op": "mul",
+                "operands": [
+                  {
+                    "op": "constant",
+                    "value": 0.0005
+                  },
+                  {
+                    "op": "stat",
+                    "stat": "attack_damage",
+                    "scope": "bonus"
+                  }
+                ]
+              }
+            ]
+          },
+          "label": "Derivado",
+          "source": "Characters/Udyr/Spells/UdyrEAbility/UdyrE.mSpellCalculations.MoveSpeed (16.23.8418428+branch.releases-16-23.content.release)",
+          "stat": "move_speed",
+          "mode": "percent_ms",
+          "duration_seconds": 4
+        }
       ]
     },
     "R": {
@@ -378,7 +518,7 @@
                 ]
               },
               "label": "Derivado",
-              "source": "Characters/Udyr/Spells/UdyrRAbility/UdyrR.mSpellCalculations.StormDamage (16.23.8406595+branch.releases-16-23.content.release)",
+              "source": "Characters/Udyr/Spells/UdyrRAbility/UdyrR.mSpellCalculations.StormDamage (16.23.8418428+branch.releases-16-23.content.release)",
               "damage_type_source": "spell_udyrphoenixstance_tooltip <magicDamage>"
             }
           ]
@@ -414,7 +554,7 @@
                 ]
               },
               "label": "Derivado",
-              "source": "Characters/Udyr/Spells/UdyrRAbility/UdyrR.mSpellCalculations.PulseDamage (16.23.8406595+branch.releases-16-23.content.release)",
+              "source": "Characters/Udyr/Spells/UdyrRAbility/UdyrR.mSpellCalculations.PulseDamage (16.23.8418428+branch.releases-16-23.content.release)",
               "damage_type_source": "spell_udyrphoenixstance_tooltip <magicDamage>"
             }
           ]
@@ -461,7 +601,7 @@
                 ]
               },
               "label": "Derivado",
-              "source": "Characters/Udyr/Spells/UdyrRAbility/UdyrR · mSpellCalculations.PercentHPBlast × vida máxima del objetivo (16.23.8406595+branch.releases-16-23.content.release)",
+              "source": "Characters/Udyr/Spells/UdyrRAbility/UdyrR · mSpellCalculations.PercentHPBlast × vida máxima del objetivo (16.23.8418428+branch.releases-16-23.content.release)",
               "damage_type_source": "spell_udyrphoenixstance_tooltip <magicDamage>"
             }
           ]

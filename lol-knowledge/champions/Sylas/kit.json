@@ -3,7 +3,7 @@
   "champion": "Sylas",
   "label": "Derivado",
   "game_version": "16.23",
-  "content_version": "16.23.8406595+branch.releases-16-23.content.release",
+  "content_version": "16.23.8418428+branch.releases-16-23.content.release",
   "verified_against": {
     "content_version": "16.23.8406595+branch.releases-16-23.content.release",
     "bin_sha256": "8d1fca72d2dbbab77c42699e0094fad1d9c926ffbe2557ee699131fb5215bc83",
@@ -56,7 +56,7 @@
                 ]
               },
               "label": "Derivado",
-              "source": "Characters/Sylas/Spells/SylasPassiveAbility/SylasPassive.mSpellCalculations.PassiveDamage (16.23.8406595+branch.releases-16-23.content.release)",
+              "source": "Characters/Sylas/Spells/SylasPassiveAbility/SylasPassive.mSpellCalculations.PassiveDamage (16.23.8418428+branch.releases-16-23.content.release)",
               "damage_type_source": "spell_sylaspassive_tooltip <magicDamage>"
             }
           ]
@@ -101,7 +101,7 @@
                 ]
               },
               "label": "Derivado",
-              "source": "Characters/Sylas/Spells/SylasPassiveAbility/SylasPassive.mSpellCalculations.PassiveAoEDamage (16.23.8406595+branch.releases-16-23.content.release)",
+              "source": "Characters/Sylas/Spells/SylasPassiveAbility/SylasPassive.mSpellCalculations.PassiveAoEDamage (16.23.8418428+branch.releases-16-23.content.release)",
               "damage_type_source": "spell_sylaspassive_tooltip <magicDamage>"
             }
           ]
@@ -150,7 +150,7 @@
             ]
           },
           "label": "Derivado",
-          "source": "Characters/Sylas/Spells/SylasPassiveAbility/SylasPassive.mSpellCalculations.PassiveDamage (16.23.8406595+branch.releases-16-23.content.release)",
+          "source": "Characters/Sylas/Spells/SylasPassiveAbility/SylasPassive.mSpellCalculations.PassiveDamage (16.23.8418428+branch.releases-16-23.content.release)",
           "trigger": "after_ability",
           "damage_type": "magic",
           "max_stacks": 3,
@@ -198,7 +198,7 @@
                 ]
               },
               "label": "Derivado",
-              "source": "Characters/Sylas/Spells/SylasQAbility/SylasQ.mSpellCalculations.Damage (16.23.8406595+branch.releases-16-23.content.release)",
+              "source": "Characters/Sylas/Spells/SylasQAbility/SylasQ.mSpellCalculations.Damage (16.23.8418428+branch.releases-16-23.content.release)",
               "damage_type_source": "spell_sylasq_tooltip <magicDamage>"
             }
           ]
@@ -239,7 +239,7 @@
                 ]
               },
               "label": "Derivado",
-              "source": "Characters/Sylas/Spells/SylasQAbility/SylasQ.mSpellCalculations.ExplosionDamage (16.23.8406595+branch.releases-16-23.content.release)",
+              "source": "Characters/Sylas/Spells/SylasQAbility/SylasQ.mSpellCalculations.ExplosionDamage (16.23.8418428+branch.releases-16-23.content.release)",
               "damage_type_source": "spell_sylasq_tooltip <magicDamage>"
             }
           ]
@@ -280,7 +280,7 @@
                 ]
               },
               "label": "Derivado",
-              "source": "Characters/Sylas/Spells/SylasQAbility/SylasQ.mSpellCalculations.Damage (16.23.8406595+branch.releases-16-23.content.release)",
+              "source": "Characters/Sylas/Spells/SylasQAbility/SylasQ.mSpellCalculations.Damage (16.23.8418428+branch.releases-16-23.content.release)",
               "damage_type_source": "spell_sylasq_tooltip <magicDamage>"
             },
             {
@@ -315,7 +315,7 @@
                 ]
               },
               "label": "Derivado",
-              "source": "Characters/Sylas/Spells/SylasQAbility/SylasQ.mSpellCalculations.ExplosionDamage (16.23.8406595+branch.releases-16-23.content.release)",
+              "source": "Characters/Sylas/Spells/SylasQAbility/SylasQ.mSpellCalculations.ExplosionDamage (16.23.8418428+branch.releases-16-23.content.release)",
               "damage_type_source": "spell_sylasq_tooltip <magicDamage>"
             }
           ]
@@ -366,7 +366,7 @@
                 ]
               },
               "label": "Derivado",
-              "source": "Characters/Sylas/Spells/SylasWAbility/SylasW.mSpellCalculations.MinDamage (16.23.8406595+branch.releases-16-23.content.release)",
+              "source": "Characters/Sylas/Spells/SylasWAbility/SylasW.mSpellCalculations.MinDamage (16.23.8418428+branch.releases-16-23.content.release)",
               "damage_type_source": "spell_sylasw_tooltip <magicDamage>"
             }
           ]
@@ -375,6 +375,58 @@
       "passive_stats": [],
       "not_modelled": [
         "Curación escalada por vida que falta de Sylas (MinHealing, MaxHealing)"
+      ],
+      "active_effects": [
+        {
+          "id": "w_minhealing",
+          "name": "W (curación)",
+          "kind": "heal",
+          "formula": {
+            "op": "add",
+            "operands": [
+              {
+                "op": "by_rank",
+                "values": [
+                  20,
+                  40,
+                  60,
+                  80,
+                  100
+                ]
+              },
+              {
+                "op": "mul",
+                "operands": [
+                  {
+                    "op": "constant",
+                    "value": 0.3
+                  },
+                  {
+                    "op": "stat",
+                    "stat": "ability_power",
+                    "scope": "total"
+                  }
+                ]
+              },
+              {
+                "op": "mul",
+                "operands": [
+                  {
+                    "op": "constant",
+                    "value": 0.05
+                  },
+                  {
+                    "op": "stat",
+                    "stat": "health",
+                    "scope": "bonus"
+                  }
+                ]
+              }
+            ]
+          },
+          "label": "Derivado",
+          "source": "Characters/Sylas/Spells/SylasWAbility/SylasW.mSpellCalculations.MinHealing (16.23.8418428+branch.releases-16-23.content.release)"
+        }
       ]
     },
     "E": {
@@ -417,7 +469,7 @@
                 ]
               },
               "label": "Derivado",
-              "source": "Characters/Sylas/Spells/SylasEAbility/SylasE.mSpellCalculations.Damage (16.23.8406595+branch.releases-16-23.content.release)",
+              "source": "Characters/Sylas/Spells/SylasEAbility/SylasE.mSpellCalculations.Damage (16.23.8418428+branch.releases-16-23.content.release)",
               "damage_type_source": "spell_sylase_tooltip <magicDamage>"
             }
           ]

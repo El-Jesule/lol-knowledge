@@ -53,6 +53,47 @@
       ],
       "not_modelled": [
         "Ralentización, curación por vida que falta, aturdimiento a 3 marcas y daño de Paladar peculiar"
+      ],
+      "active_effects": [
+        {
+          "id": "tongue_lash_heal",
+          "name": "Lengüetazo (curación)",
+          "kind": "heal",
+          "formula": {
+            "op": "add",
+            "operands": [
+              {
+                "op": "data_value",
+                "name": "BaseHeal"
+              },
+              {
+                "op": "mul",
+                "operands": [
+                  {
+                    "op": "data_value",
+                    "name": "PercentHealthHealing"
+                  },
+                  {
+                    "op": "mul",
+                    "operands": [
+                      {
+                        "op": "stat",
+                        "stat": "health",
+                        "scope": "max"
+                      },
+                      {
+                        "op": "stat",
+                        "stat": "health",
+                        "scope": "missing_fraction"
+                      }
+                    ]
+                  }
+                ]
+              }
+            ]
+          },
+          "source_note": "DataValues.BaseHeal + DataValues.PercentHealthHealing * missing HP"
+        }
       ]
     },
     "W": {
@@ -122,6 +163,15 @@
       ],
       "not_modelled": [
         "Supresión durante 3 s y escudo al devorar a un aliado (TotalShield)"
+      ],
+      "active_effects": [
+        {
+          "id": "r_totalshield",
+          "name": "R (escudo)",
+          "kind": "shield",
+          "duration_seconds": 2.5,
+          "calculation": "TotalShield"
+        }
       ]
     }
   }

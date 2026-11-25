@@ -3,7 +3,7 @@
   "champion": "Hwei",
   "label": "Derivado",
   "game_version": "16.23",
-  "content_version": "16.23.8406595+branch.releases-16-23.content.release",
+  "content_version": "16.23.8418428+branch.releases-16-23.content.release",
   "verified_against": {
     "content_version": "16.23.8406595+branch.releases-16-23.content.release",
     "bin_sha256": "bd8a88b24514a83b3828753f82c691433369800fb8a1d1fcfe03d88ad0bee099",
@@ -47,7 +47,7 @@
                 ]
               },
               "label": "Derivado",
-              "source": "Characters/Hwei/Spells/HweiPassiveAbility/HweiPassive.mSpellCalculations.TotalDamage (16.23.8406595+branch.releases-16-23.content.release)",
+              "source": "Characters/Hwei/Spells/HweiPassiveAbility/HweiPassive.mSpellCalculations.TotalDamage (16.23.8418428+branch.releases-16-23.content.release)",
               "damage_type_source": "spell_hweipassive_tooltip <magicDamage>"
             }
           ]
@@ -87,7 +87,7 @@
             ]
           },
           "label": "Derivado",
-          "source": "Characters/Hwei/Spells/HweiPassiveAbility/HweiPassive.mSpellCalculations.TotalDamage (16.23.8406595+branch.releases-16-23.content.release)",
+          "source": "Characters/Hwei/Spells/HweiPassiveAbility/HweiPassive.mSpellCalculations.TotalDamage (16.23.8418428+branch.releases-16-23.content.release)",
           "trigger": "every_n_ability_hits",
           "damage_type": "magic",
           "target_kind": "champion",
@@ -135,7 +135,7 @@
                 ]
               },
               "label": "Derivado",
-              "source": "Characters/Hwei/Spells/HweiQAbility/HweiQ.mSpellCalculations.Tooltip_QQDamage (16.23.8406595+branch.releases-16-23.content.release)",
+              "source": "Characters/Hwei/Spells/HweiQAbility/HweiQ.mSpellCalculations.Tooltip_QQDamage (16.23.8418428+branch.releases-16-23.content.release)",
               "damage_type_source": "spell_hweiq_tooltip <magicDamage>"
             },
             {
@@ -166,7 +166,7 @@
                 ]
               },
               "label": "Derivado",
-              "source": "Characters/Hwei/Spells/HweiQAbility/HweiQ · DataValues.Tooltip_QQBonusDamage % × vida máxima del objetivo (16.23.8406595+branch.releases-16-23.content.release)",
+              "source": "Characters/Hwei/Spells/HweiQAbility/HweiQ · DataValues.Tooltip_QQBonusDamage % × vida máxima del objetivo (16.23.8418428+branch.releases-16-23.content.release)",
               "damage_type_source": "spell_hweiq_tooltip <magicDamage>"
             }
           ]
@@ -207,7 +207,7 @@
                 ]
               },
               "label": "Derivado",
-              "source": "Characters/Hwei/Spells/HweiQAbility/HweiQ.mSpellCalculations.Tooltip_QWDamage (16.23.8406595+branch.releases-16-23.content.release)",
+              "source": "Characters/Hwei/Spells/HweiQAbility/HweiQ.mSpellCalculations.Tooltip_QWDamage (16.23.8418428+branch.releases-16-23.content.release)",
               "damage_type_source": "spell_hweiq_tooltip <magicDamage>"
             }
           ]
@@ -263,7 +263,7 @@
                 ]
               },
               "label": "Derivado",
-              "source": "Characters/Hwei/Spells/HweiQAbility/HweiQ.mSpellCalculations.Tooltip_QWBonusDamage (16.23.8406595+branch.releases-16-23.content.release)",
+              "source": "Characters/Hwei/Spells/HweiQAbility/HweiQ.mSpellCalculations.Tooltip_QWBonusDamage (16.23.8418428+branch.releases-16-23.content.release)",
               "damage_type_source": "spell_hweiq_tooltip <magicDamage>"
             }
           ]
@@ -304,7 +304,7 @@
                 ]
               },
               "label": "Derivado",
-              "source": "Characters/Hwei/Spells/HweiQAbility/HweiQ.mSpellCalculations.Tooltip_QEDamage (16.23.8406595+branch.releases-16-23.content.release)",
+              "source": "Characters/Hwei/Spells/HweiQAbility/HweiQ.mSpellCalculations.Tooltip_QEDamage (16.23.8418428+branch.releases-16-23.content.release)",
               "damage_type_source": "spell_hweiq_tooltip <magicDamage>"
             }
           ]
@@ -345,7 +345,7 @@
                 ]
               },
               "label": "Derivado",
-              "source": "Characters/Hwei/Spells/HweiQAbility/HweiQ.mSpellCalculations.Tooltip_QEDamagePerSecond (16.23.8406595+branch.releases-16-23.content.release)",
+              "source": "Characters/Hwei/Spells/HweiQAbility/HweiQ.mSpellCalculations.Tooltip_QEDamagePerSecond (16.23.8418428+branch.releases-16-23.content.release)",
               "damage_type_source": "spell_hweiq_tooltip <magicDamage>"
             }
           ]
@@ -396,7 +396,7 @@
                 ]
               },
               "label": "Derivado",
-              "source": "Characters/Hwei/Spells/HweiWAbility/HweiW.mSpellCalculations.Tooltip_WEOnHitDamage (16.23.8406595+branch.releases-16-23.content.release)",
+              "source": "Characters/Hwei/Spells/HweiWAbility/HweiW.mSpellCalculations.Tooltip_WEOnHitDamage (16.23.8418428+branch.releases-16-23.content.release)",
               "damage_type_source": "spell_hweiw_tooltip <magicDamage>"
             }
           ]
@@ -405,6 +405,111 @@
       "passive_stats": [],
       "not_modelled": [
         "WQ velocidad de movimiento (Tooltip_WQMoveSpeed), WW escudo (Tooltip_WWShieldAmount) y restauración de maná de WE (3 cargas)"
+      ],
+      "active_effects": [
+        {
+          "id": "w_tooltip_wwshieldamount",
+          "name": "W (escudo)",
+          "kind": "shield",
+          "formula": {
+            "op": "add",
+            "operands": [
+              {
+                "op": "by_rank",
+                "values": [
+                  100,
+                  140,
+                  180,
+                  220,
+                  260
+                ]
+              },
+              {
+                "op": "mul",
+                "operands": [
+                  {
+                    "op": "constant",
+                    "value": 0.6
+                  },
+                  {
+                    "op": "stat",
+                    "stat": "ability_power",
+                    "scope": "total"
+                  }
+                ]
+              }
+            ]
+          },
+          "label": "Derivado",
+          "source": "Characters/Hwei/Spells/HweiWAbility/HweiW.mSpellCalculations.Tooltip_WWShieldAmount (16.23.8418428+branch.releases-16-23.content.release)",
+          "duration_formula": {
+            "op": "by_rank",
+            "values": [
+              4,
+              4.5,
+              5,
+              5.5,
+              6
+            ]
+          }
+        },
+        {
+          "id": "w_tooltip_wqmovespeed",
+          "name": "W (VM)",
+          "kind": "stat_bonus",
+          "formula": {
+            "op": "mul",
+            "operands": [
+              {
+                "op": "add",
+                "operands": [
+                  {
+                    "op": "by_rank",
+                    "values": [
+                      30,
+                      32.5,
+                      35,
+                      37.5,
+                      40
+                    ]
+                  },
+                  {
+                    "op": "mul",
+                    "operands": [
+                      {
+                        "op": "constant",
+                        "value": 0.03
+                      },
+                      {
+                        "op": "stat",
+                        "stat": "ability_power",
+                        "scope": "total"
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "op": "constant",
+                "value": 0.01
+              }
+            ]
+          },
+          "label": "Derivado",
+          "source": "Characters/Hwei/Spells/HweiWAbility/HweiW.mSpellCalculations.Tooltip_WQMoveSpeed (16.23.8418428+branch.releases-16-23.content.release)",
+          "stat": "move_speed",
+          "mode": "percent_ms",
+          "duration_formula": {
+            "op": "by_rank",
+            "values": [
+              4,
+              4.5,
+              5,
+              5.5,
+              6
+            ]
+          }
+        }
       ]
     },
     "E": {
@@ -447,7 +552,7 @@
                 ]
               },
               "label": "Derivado",
-              "source": "Characters/Hwei/Spells/HweiEAbility/HweiE.mSpellCalculations.Tooltip_EQDamage (16.23.8406595+branch.releases-16-23.content.release)",
+              "source": "Characters/Hwei/Spells/HweiEAbility/HweiE.mSpellCalculations.Tooltip_EQDamage (16.23.8418428+branch.releases-16-23.content.release)",
               "damage_type_source": "spell_hweie_tooltip <magicDamage>"
             }
           ]
@@ -488,7 +593,7 @@
                 ]
               },
               "label": "Derivado",
-              "source": "Characters/Hwei/Spells/HweiEAbility/HweiE.mSpellCalculations.Tooltip_EWDamage (16.23.8406595+branch.releases-16-23.content.release)",
+              "source": "Characters/Hwei/Spells/HweiEAbility/HweiE.mSpellCalculations.Tooltip_EWDamage (16.23.8418428+branch.releases-16-23.content.release)",
               "damage_type_source": "spell_hweie_tooltip <magicDamage>"
             }
           ]
@@ -529,7 +634,7 @@
                 ]
               },
               "label": "Derivado",
-              "source": "Characters/Hwei/Spells/HweiEAbility/HweiE.mSpellCalculations.Tooltip_EEDamage (16.23.8406595+branch.releases-16-23.content.release)",
+              "source": "Characters/Hwei/Spells/HweiEAbility/HweiE.mSpellCalculations.Tooltip_EEDamage (16.23.8418428+branch.releases-16-23.content.release)",
               "damage_type_source": "spell_hweie_tooltip <magicDamage>"
             }
           ]
@@ -578,7 +683,7 @@
                 ]
               },
               "label": "Derivado",
-              "source": "Characters/Hwei/Spells/HweiRAbility/HweiR.mSpellCalculations.DamageOverTime (16.23.8406595+branch.releases-16-23.content.release)",
+              "source": "Characters/Hwei/Spells/HweiRAbility/HweiR.mSpellCalculations.DamageOverTime (16.23.8418428+branch.releases-16-23.content.release)",
               "damage_type_source": "spell_hweir_tooltip <magicDamage>"
             }
           ]
@@ -617,7 +722,7 @@
                 ]
               },
               "label": "Derivado",
-              "source": "Characters/Hwei/Spells/HweiRAbility/HweiR.mSpellCalculations.Damage (16.23.8406595+branch.releases-16-23.content.release)",
+              "source": "Characters/Hwei/Spells/HweiRAbility/HweiR.mSpellCalculations.Damage (16.23.8418428+branch.releases-16-23.content.release)",
               "damage_type_source": "spell_hweir_tooltip <magicDamage>"
             }
           ]

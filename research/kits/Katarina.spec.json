@@ -53,6 +53,20 @@
       "tooltip": "spell_katarinaw_tooltip",
       "not_modelled": [
         "Velocidad de movimiento decreciente y lanzamiento de daga al aire"
+      ],
+      "active_effects": [
+        {
+          "id": "w_movespeedamount",
+          "name": "W (VM)",
+          "kind": "stat_bonus",
+          "stat": "move_speed",
+          "mode": "percent_ms",
+          "scale": 0.01,
+          "data_value": "MovespeedAmount",
+          "duration_seconds": {
+            "data_value": "MovespeedDuration"
+          }
+        }
       ]
     },
     "E": {

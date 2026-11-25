@@ -3,7 +3,7 @@
   "champion": "Zilean",
   "label": "Derivado",
   "game_version": "16.23",
-  "content_version": "16.23.8406595+branch.releases-16-23.content.release",
+  "content_version": "16.23.8418428+branch.releases-16-23.content.release",
   "verified_against": {
     "content_version": "16.23.8406595+branch.releases-16-23.content.release",
     "bin_sha256": "c5ad16fd929d7751e1a2dda126cd1fef9b8237ac62a99fd693405efe01dfa9cd",
@@ -61,7 +61,7 @@
                 ]
               },
               "label": "Derivado",
-              "source": "Characters/Zilean/Spells/ZileanQAbility/ZileanQ.mSpellCalculations.TotalDamage (16.23.8406595+branch.releases-16-23.content.release)",
+              "source": "Characters/Zilean/Spells/ZileanQAbility/ZileanQ.mSpellCalculations.TotalDamage (16.23.8418428+branch.releases-16-23.content.release)",
               "damage_type_source": "spell_zileanq_tooltip <magicDamage>"
             }
           ]
@@ -88,6 +88,28 @@
       "passive_stats": [],
       "not_modelled": [
         "Aumento de velocidad de movimiento a aliado o ralentización a enemigo (40..99 %)"
+      ],
+      "active_effects": [
+        {
+          "id": "e_speedamount",
+          "name": "E (VM)",
+          "kind": "stat_bonus",
+          "formula": {
+            "op": "by_rank",
+            "values": [
+              0.4,
+              0.55,
+              0.7,
+              0.85,
+              0.99
+            ]
+          },
+          "label": "Derivado",
+          "source": "Characters/Zilean/Spells/TimeWarpAbility/TimeWarp.DataValues.SpeedAmount (16.23.8418428+branch.releases-16-23.content.release)",
+          "stat": "move_speed",
+          "mode": "percent_ms",
+          "duration_seconds": 2.5
+        }
       ]
     },
     "R": {
@@ -97,6 +119,43 @@
       "passive_stats": [],
       "not_modelled": [
         "Resurrección de aliado durante 5 s con curación (RTotalHeal)"
+      ],
+      "active_effects": [
+        {
+          "id": "r_rtotalheal",
+          "name": "R (curación)",
+          "kind": "heal",
+          "formula": {
+            "op": "add",
+            "operands": [
+              {
+                "op": "by_rank",
+                "values": [
+                  600,
+                  850,
+                  1100
+                ]
+              },
+              {
+                "op": "mul",
+                "operands": [
+                  {
+                    "op": "constant",
+                    "value": 2
+                  },
+                  {
+                    "op": "stat",
+                    "stat": "ability_power",
+                    "scope": "total"
+                  }
+                ]
+              }
+            ]
+          },
+          "label": "Derivado",
+          "source": "Characters/Zilean/Spells/ChronoShiftAbility/ChronoShift.mSpellCalculations.RTotalHeal (16.23.8418428+branch.releases-16-23.content.release)",
+          "condition": "revive_triggered"
+        }
       ]
     }
   }

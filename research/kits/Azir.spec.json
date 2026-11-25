@@ -79,6 +79,17 @@
       ],
       "not_modelled": [
         "Escudo (TotalShield) y recarga de soldado al golpear campeón"
+      ],
+      "active_effects": [
+        {
+          "id": "e_totalshield",
+          "name": "E (escudo)",
+          "kind": "shield",
+          "calculation": "TotalShield",
+          "duration_seconds": {
+            "data_value": "ShieldDuration"
+          }
+        }
       ]
     },
     "R": {

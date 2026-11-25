@@ -3,7 +3,7 @@
   "champion": "Kindred",
   "label": "Derivado",
   "game_version": "16.23",
-  "content_version": "16.23.8406595+branch.releases-16-23.content.release",
+  "content_version": "16.23.8418428+branch.releases-16-23.content.release",
   "verified_against": {
     "content_version": "16.23.8406595+branch.releases-16-23.content.release",
     "bin_sha256": "c3813711923cfde1260d748ee7d8a4088bbde213a6851c83e928adbb62603b3f",
@@ -61,7 +61,7 @@
                 ]
               },
               "label": "Derivado",
-              "source": "Characters/Kindred/Spells/KindredQAbility/KindredQ.mSpellCalculations.TotalDamage (16.23.8406595+branch.releases-16-23.content.release)",
+              "source": "Characters/Kindred/Spells/KindredQAbility/KindredQ.mSpellCalculations.TotalDamage (16.23.8418428+branch.releases-16-23.content.release)",
               "damage_type_source": "spell_kindredq_tooltip <physicalDamage>"
             }
           ],
@@ -72,6 +72,50 @@
       "passive_stats": [],
       "not_modelled": [
         "Velocidad de ataque temporal (TotalQAttackSpeed) y reducción de CD dentro de W"
+      ],
+      "active_effects": [
+        {
+          "id": "q_totalqattackspeed",
+          "name": "Q (VA)",
+          "kind": "stat_bonus",
+          "formula": {
+            "op": "mul",
+            "operands": [
+              {
+                "op": "add",
+                "operands": [
+                  {
+                    "op": "constant",
+                    "value": 0.35
+                  },
+                  {
+                    "op": "mul",
+                    "operands": [
+                      {
+                        "op": "input",
+                        "name": "kindred_marks",
+                        "default": 0
+                      },
+                      {
+                        "op": "constant",
+                        "value": 0.05
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "op": "constant",
+                "value": 100
+              }
+            ]
+          },
+          "label": "Derivado",
+          "source": "Characters/Kindred/Spells/KindredQAbility/KindredQ.mSpellCalculations.TotalQAttackSpeed (16.23.8418428+branch.releases-16-23.content.release)",
+          "stat": "attack_speed_bonus",
+          "mode": "flat",
+          "duration_seconds": 4
+        }
       ]
     },
     "W": {
@@ -128,7 +172,7 @@
                 ]
               },
               "label": "Derivado",
-              "source": "Characters/Kindred/Spells/KindredWAbility/KindredW.mSpellCalculations.BaseWolfDamage (16.23.8406595+branch.releases-16-23.content.release)",
+              "source": "Characters/Kindred/Spells/KindredWAbility/KindredW.mSpellCalculations.BaseWolfDamage (16.23.8418428+branch.releases-16-23.content.release)",
               "damage_type_source": "spell_kindredw_tooltip <magicDamage>"
             },
             {
@@ -168,7 +212,7 @@
                 ]
               },
               "label": "Derivado",
-              "source": "Characters/Kindred/Spells/KindredWAbility/KindredW · mSpellCalculations.PercentWolfDamage × vida actual del objetivo (--input kindred_marks) (16.23.8406595+branch.releases-16-23.content.release)",
+              "source": "Characters/Kindred/Spells/KindredWAbility/KindredW · mSpellCalculations.PercentWolfDamage × vida actual del objetivo (--input kindred_marks) (16.23.8418428+branch.releases-16-23.content.release)",
               "damage_type_source": "spell_kindredw_tooltip <magicDamage>"
             }
           ],
@@ -221,7 +265,7 @@
                 ]
               },
               "label": "Derivado",
-              "source": "Characters/Kindred/Spells/KindredEWrapperAbility/KindredEWrapper.mSpellCalculations.BaseBiteDamage (16.23.8406595+branch.releases-16-23.content.release)",
+              "source": "Characters/Kindred/Spells/KindredEWrapperAbility/KindredEWrapper.mSpellCalculations.BaseBiteDamage (16.23.8418428+branch.releases-16-23.content.release)",
               "damage_type_source": "spell_kindredewrapper_tooltip <physicalDamage>"
             },
             {
@@ -267,7 +311,7 @@
                 ]
               },
               "label": "Derivado",
-              "source": "Characters/Kindred/Spells/KindredEWrapperAbility/KindredEWrapper · mSpellCalculations.PercentBiteDamage × vida faltante del objetivo (--input kindred_marks) (16.23.8406595+branch.releases-16-23.content.release)",
+              "source": "Characters/Kindred/Spells/KindredEWrapperAbility/KindredEWrapper · mSpellCalculations.PercentBiteDamage × vida faltante del objetivo (--input kindred_marks) (16.23.8418428+branch.releases-16-23.content.release)",
               "damage_type_source": "spell_kindredewrapper_tooltip <physicalDamage>"
             }
           ]
@@ -285,6 +329,23 @@
       "passive_stats": [],
       "not_modelled": [
         "Zona de invulnerabilidad al 10 % de vida durante 4 s y curación final"
+      ],
+      "active_effects": [
+        {
+          "id": "r_healflat",
+          "name": "R (curación)",
+          "kind": "heal",
+          "formula": {
+            "op": "by_rank",
+            "values": [
+              225,
+              300,
+              375
+            ]
+          },
+          "label": "Derivado",
+          "source": "Characters/Kindred/Spells/KindredRAbility/KindredR.DataValues.HealFlat (16.23.8418428+branch.releases-16-23.content.release)"
+        }
       ]
     }
   }
