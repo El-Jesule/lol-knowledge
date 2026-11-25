@@ -29,6 +29,7 @@
 | Calcular la curación por robo de vida y omnivampirismo | [Robo de vida y omnivampirismo](mechanics/life-steal-and-omnivamp.md) |
 | Calcular escudos, curación de efectos, Heridas graves y poder de curaciones y escudos | [Supervivencia](mechanics/survival.md) |
 | Simular cuánto aguanta un campeón (daño recibido, tiempo hasta morir, Sterak, Revestimiento de huesos) | `python -m lol_knowledge survive` y [Supervivencia](mechanics/survival.md) |
+| Simular un duelo 1v1 determinista acoplado (ataques, habilidades, defensivos, hechizos, quemaduras, estasis) | `python -m lol_knowledge duel` y [Simulador de duelo 1v1](mechanics/duel.md) |
 | Calcular la tenacidad y cómo se combinan sus fuentes | [Tenacidad](mechanics/tenacity.md) |
 | Calcular la regeneración de vida y maná | [Regeneración](mechanics/regeneration.md) |
 | Calcular costes de habilidades, reservas (maná, energía, vida), Segador de esencia y Claridad mental | [Recursos y costes](mechanics/resources.md) |
@@ -51,7 +52,7 @@
 | Ver las runas, sus valores y si una página es legal; aplicar los fragmentos | [Runas y fragmentos](mechanics/runes.md) y [runes.json](derived/runes.json) |
 | Calcular hechizos de invocador (Prender, Barrera, Curar, Extenuación, Aplastar, Fantasmal, Limpiar, Destello, Teleportar) | [Hechizos de invocador](mechanics/summoner-spells.md) y [summoner-spells.json](derived/summoner-spells.json) |
 | Saber si unos objetos pueden ir juntos (únicos, botas, grupos exclusivos, huecos) | [Legalidad de la build](mechanics/build-legality.md) y [item-groups.json](derived/item-groups.json) |
-| Optimizar una build legal por daño, DPS, vida efectiva, supervivencia o curación | `python -m lol_knowledge optimize` y [Optimizador de builds](../odd/tasks/build-optimizer.md) |
+| Optimizar una build legal por daño, DPS, vida efectiva, supervivencia, curación o duelo 1v1 | `python -m lol_knowledge optimize` y [Optimizador de builds](../odd/tasks/build-optimizer.md) |
 | Conectar una IA mediante contrato JSON o servidor MCP local | [Capa de IA y servidor MCP](ai-layer.md) y `python -m lol_knowledge mcp` |
 | Ver la evidencia de las mecánicas de objetos | [Informe de mecánicas](../research/reports/object-mechanics-2026-10-20.md) |
 | Continuar la investigación de datos de Zaahen | [Documento de continuidad](../research/zaahen-research-handoff.md) |
@@ -66,7 +67,9 @@
 
 **62 de 62 runas y 9 de 9 fragmentos modelados** ([Runas y fragmentos](mechanics/runes.md)): cobertura completa de runas clave, runas menores de estadística y combate, y runas/fragmentos del defensor (`--target-rune`, `--target-shard`, `target.runes`, `target.shards` y `enemy.runes`/`enemy.shards`) en CLI, contrato JSON, servidor MCP y optimizador.
 
-**9 de 9 hechizos de invocador de la Grieta modelados** ([Hechizos de invocador](mechanics/summoner-spells.md)): Prender, Barrera, Curar, Extenuación, Aplastar (`tier 0/1/2` y PvP), Fantasmal, Limpiar, Destello y Teleportar / Teleportar desatado extraídos de `Global.wad.client:shared` (`16.23`), integrados en `stats`, `rotation` (`summoner:<hechizo>`), `survive`, `optimize`, `contract` y `mcp`.
+**9 de 9 hechizos de invocador de la Grieta modelados** ([Hechizos de invocador](mechanics/summoner-spells.md)): Prender, Barrera, Curar, Extenuación, Aplastar (`tier 0/1/2` y PvP), Fantasmal, Limpiar, Destello y Teleportar / Teleportar desatado extraídos de `Global.wad.client:shared` (`16.23`), integrados en `stats`, `rotation` (`summoner:<hechizo>`), `survive`, `duel`, `optimize`, `contract` y `mcp`.
+
+**Simulador de duelo 1v1 determinista** ([Simulador de duelo 1v1](mechanics/duel.md), [`duel-simulator.md`](../odd/tasks/duel-simulator.md)): motor acoplado sobre reloj exacto `Fraction` reutilizando `rotation.py` y `defense.py` sin doble conteo, con modos `scripted_then_attack`, `strict_scripted` y `priority_loop`, desempates `simultaneous` (invariante de simetría), `a_first` y `b_first`, expuesto en CLI (`duel`), contrato JSON (`operation: "duel"`), servidor MCP (`lol_duel`) y optimizador (`--objective duel`).
 
 El modelo de objetos cubre los **218 objetos comprables de la Grieta** con revisión completa (**218/218 en `effect_review: complete`**, `0` pendientes): **174 entradas curadas** en `catalog.json` (`catalog_version: 28`; `166` objetos con `234` efectos documentados: `185` `evaluable`, `1` `partially_evaluable` y `48` `excluded` de utilidad pura no combativa, más las `4` transformaciones de Lágrima `3040`, `3042`, `3121` y `2530` y `52` objetos solo de estadísticas). Las cifras que Data Dragon no publica se registran con fuente citada: la wiki (`secondary`) o los datos del cliente 16.23 (`derived`, `corroborated` si coinciden). Los límites están en [Modelo de objetos](objects/README.md).
 

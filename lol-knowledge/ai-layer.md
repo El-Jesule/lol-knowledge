@@ -3,7 +3,7 @@
 - **Parche:** `16.23.1` (`data/current/manifest.json`)
 - **Esquema de contrato:** `lol-knowledge-contract/1` (`Oficial` / `Derivado` según entradas; resultados `Calculado`)
 - **Código:** [`src/lol_knowledge/contract.py`](../src/lol_knowledge/contract.py) y [`src/lol_knowledge/mcp_server.py`](../src/lol_knowledge/mcp_server.py)
-- **Fecha de actualización:** 2026-11-21
+- **Fecha de actualización:** 2026-11-25
 - **Limitación:** el servidor MCP es estrictamente local sobre `stdio` (sin exposición en red, sin estado compartido y sin dependencias externas en runtime; aprobado en `DEC-02`).
 
 ## 1. Contrato versionado `lol-knowledge-contract/1` (`IA-01`)
@@ -13,7 +13,7 @@ Toda petición estructurada al motor sigue una única forma JSON:
 ```json
 {
   "schema": "lol-knowledge-contract/1",
-  "operation": "lookup | stats | ability | rotation | survive | optimize",
+  "operation": "lookup | stats | ability | rotation | survive | duel | optimize",
   "params": {}
 }
 ```
@@ -59,7 +59,7 @@ Cuando faltan parámetros obligatorios o una build/página de runas es ilegal, `
 
 El servidor implementa **Model Context Protocol (JSON-RPC 2.0 sobre `stdio`)** usando solo la biblioteca estándar de Python (`python -m lol_knowledge mcp --root <RUTA>`):
 
-- **Herramientas (`tools/list`):** `lol_lookup`, `lol_stats`, `lol_ability`, `lol_rotation`, `lol_survive`, `lol_optimize`.
+- **Herramientas (`tools/list`):** `lol_lookup`, `lol_stats`, `lol_ability`, `lol_rotation`, `lol_survive`, `lol_duel`, `lol_optimize`.
 - **Prompts (`prompts/list`):** `translate_scenario` (`IA-02`) y `explain_result` (`IA-03`).
 - **Recursos (`resources/list`):** `lol-knowledge://index` y `lol-knowledge://ai-layer`.
 
