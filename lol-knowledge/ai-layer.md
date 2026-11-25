@@ -60,6 +60,7 @@ Cuando faltan parámetros obligatorios o una build/página de runas es ilegal, `
 El servidor implementa **Model Context Protocol (JSON-RPC 2.0 sobre `stdio`)** usando solo la biblioteca estándar de Python (`python -m lol_knowledge mcp --root <RUTA>`):
 
 - **Herramientas (`tools/list`):** `lol_lookup`, `lol_stats`, `lol_ability`, `lol_rotation`, `lol_survive`, `lol_duel`, `lol_optimize`.
+  - Desde `1.0.0`, las operaciones de hoja/combate admiten `elixir` (`2138`/`2139`/`2140`) y `ornn_item`; `lol_rotation` admite `windows` (ventanas de tiempo exactas en segundos); y `lol_optimize` admite `elixir`, `ornn_upgrade`, `purchase_curve`, `gold_checkpoints` y rotación automática (`auto_steps`) cuando se omite `steps`.
 - **Prompts (`prompts/list`):** `translate_scenario` (`IA-02`) y `explain_result` (`IA-03`).
 - **Recursos (`resources/list`):** `lol-knowledge://index` y `lol-knowledge://ai-layer`.
 
