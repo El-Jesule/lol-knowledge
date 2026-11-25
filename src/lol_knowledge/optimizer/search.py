@@ -4,6 +4,7 @@ from __future__ import annotations
 
 import time
 from collections.abc import Callable, Mapping, Sequence
+from dataclasses import replace
 from fractions import Fraction
 from pathlib import Path
 from typing import Any
@@ -55,6 +56,12 @@ from ..summoners import (
     resolve_loadout,
     summoner_sheet_effects,
 )
+from ..upgrades import (
+    UpgradeEffect,
+    eligible_ornn_items,
+    elixir_contributions,
+    ornn_upgrade_contributions,
+)
 from .models import (
     DEFENSE_OBJECTIVES,
     DUEL_OBJECTIVES,
@@ -64,8 +71,10 @@ from .models import (
     TIERS,
     BuildResult,
     CandidateItem,
+    GoldCheckpointResult,
     OptimizeConstraints,
     OptimizeOutcome,
+    PurchaseStep,
     SearchStats,
 )
 
@@ -73,6 +82,34 @@ from .models import (
 COMPLETED_MIN_GOLD = 800
 # Synergy items kept in the pruned pool even when their standalone 1-item delta is modest.
 SYNERGY_ITEMS = frozenset({"3089", "3031", "3135", "3036", "3033", "3137", "3124", "3085"})
+
+
+def default_champion_rotation(kit: Kit, ranks: Mapping[str, int]) -> tuple[Step, ...]:
+    """Synthesize a deterministic standard rotation when ``--steps`` is omitted (OPT-05).
+
+    Uses each learned Q/W/E/R ability (priority R, Q, W, E) that has at least one
+    non-recast damage case, interleaved with basic attacks so Spellblade, on-hit
+    effects, and ``dps`` (duration > 0 s) evaluate cleanly without hand-written steps.
+    """
+    learned_slots: list[tuple[str, str | None]] = []
+    for slot in ("R", "Q", "W", "E"):
+        rank = ranks.get(slot, 0)
+        ab = kit.abilities.get(slot)
+        if rank < 1 or ab is None or not ab.cases:
+            continue
+        non_recast = [c for c in ab.cases if not c.recast]
+        if not non_recast:
+            continue
+        case_id = non_recast[0].id if len(ab.cases) > 1 else None
+        learned_slots.append((slot, case_id))
+    if not learned_slots:
+        return (Step("attack"), Step("attack"), Step("attack"))
+    out: list[Step] = [Step("attack")]
+    for slot, case_id in learned_slots:
+        text = f"{slot}.{case_id}" if case_id is not None else slot
+        out.append(Step(text, slot=slot, case=case_id))
+        out.append(Step("attack"))
+    return tuple(out)
 
 
 def _has_excluded_defensive_effect(item: ItemData) -> bool:
@@ -406,10 +443,15 @@ class _BuildEvaluator:
                 problems = "; ".join(report.violations)
                 raise StatsError(f"rune page is not legal: {problems}")
             self.needs_adaptive = needs_adaptive_stat(self.runes, self.shards, rune_data)
+        self.elixir_fx = elixir_contributions(
+            constraints.elixir, level=level, uses_mana=self.uses_mana
+        )
         self.cache: dict[tuple[str, ...], BuildResult | None] = {}
         self.evaluations = 0
 
-    def _make_sheet(self, items: tuple[ItemData, ...]) -> StatSheet:
+    def _make_sheet(
+        self, items: tuple[ItemData, ...], ornn_fx: UpgradeEffect | None = None
+    ) -> StatSheet:
         summ_fx = (
             summoner_sheet_effects(
                 self.summoner_specs,
@@ -427,7 +469,11 @@ class _BuildEvaluator:
         s_flats = summ_fx.flats if summ_fx is not None else ()
         s_percents = summ_fx.percents if summ_fx is not None else ()
         s_notes = summ_fx.notes if summ_fx is not None else ()
-        base_extras = (*self.passive.flats, *s_flats)
+        o_flats = ornn_fx.flats if ornn_fx is not None else ()
+        o_notes = ornn_fx.notes if ornn_fx is not None else ()
+        base_extras = (*self.passive.flats, *s_flats, *self.elixir_fx.flats, *o_flats)
+        base_percents = (*self.passive.percents, *s_percents, *self.elixir_fx.percents)
+        base_notes = (*self.passive.notes, *s_notes, *self.elixir_fx.notes, *o_notes)
         if not self.runes and not self.shards:
             return build_stat_sheet(
                 self.champion,
@@ -437,9 +483,9 @@ class _BuildEvaluator:
                 self.assumptions,
                 self.derived,
                 base_extras,
-                (*self.passive.percents, *s_percents),
+                base_percents,
                 extra_amplifiers=self.passive.amplifiers,
-                extra_notes=(*self.passive.notes, *s_notes),
+                extra_notes=base_notes,
                 inputs=self.inputs,
             )
         assert self.rune_data is not None
@@ -491,7 +537,7 @@ class _BuildEvaluator:
             adaptive_label=a_label,
             adaptive_note=a_note,
         )
-        extra_notes = [*self.passive.notes, *s_notes, *rune_effects.notes]
+        extra_notes = [*base_notes, *rune_effects.notes]
         pending = list(rune_effects.pending)
         if self.combat_ctx != "rotation":
             extra_notes.extend(combat_rune_notes(self.runes, self.rune_data))
@@ -503,7 +549,7 @@ class _BuildEvaluator:
             self.assumptions,
             self.derived,
             (*base_extras, *flats, *rune_effects.flats),
-            (*percents, *self.passive.percents, *s_percents, *rune_effects.percents),
+            (*percents, *base_percents, *rune_effects.percents),
             tuple(pending),
             extra_amplifiers=(*self.passive.amplifiers, *rune_effects.amplifiers),
             extra_notes=tuple(extra_notes),
@@ -519,9 +565,47 @@ class _BuildEvaluator:
         candidates = [self.pool[i] for i in key]
         items = tuple(c.item for c in candidates)
         names = tuple(c.item.name for c in candidates)
-        total_gold = sum(c.gold for c in candidates)
-        sheet = self._make_sheet(items)
-        result = self._score(key, names, total_gold, candidates, sheet)
+        total_gold = sum(c.gold for c in candidates) + self.elixir_fx.extra_gold
+        gold_by_id = {c.item.id: c.gold for c in candidates}
+        result: BuildResult | None = None
+        if self.constraints.ornn_upgrade and items:
+            eligible_u = eligible_ornn_items(
+                items, item_groups=self.item_groups, gold_by_id=gold_by_id
+            )
+            if eligible_u:
+                best_up: BuildResult | None = None
+                for u_item in eligible_u:
+                    o_fx = ornn_upgrade_contributions(
+                        u_item.id,
+                        items,
+                        level=self.level,
+                        item_groups=self.item_groups,
+                        gold=gold_by_id.get(u_item.id),
+                    )
+                    sheet = self._make_sheet(items, ornn_fx=o_fx)
+                    cand_res = self._score(key, names, total_gold, candidates, sheet)
+                    if cand_res is None:
+                        continue
+                    cand_res = replace(
+                        cand_res,
+                        ornn_upgraded_item=u_item.id,
+                        elixir=self.elixir_fx.elixir_id,
+                        notes=(*cand_res.notes, *o_fx.notes),
+                    )
+                    if best_up is None or _rank_key(cand_res, self.objective) > _rank_key(
+                        best_up, self.objective
+                    ):
+                        best_up = cand_res
+                result = best_up
+        if result is None:
+            sheet = self._make_sheet(items)
+            result = self._score(key, names, total_gold, candidates, sheet)
+            if result is not None and self.elixir_fx.elixir_id is not None:
+                result = replace(
+                    result,
+                    elixir=self.elixir_fx.elixir_id,
+                    notes=(*result.notes, *self.elixir_fx.notes),
+                )
         self.cache[key] = result
         return result
 
@@ -981,6 +1065,59 @@ def _beam_search(
     return list(all_valid_results.values()), pruned_illegal, pruned_budget, pruned_beam
 
 
+def _compute_purchase_curve(
+    build: BuildResult,
+    evaluator: _BuildEvaluator,
+    pool: Mapping[str, CandidateItem],
+    objective: str,
+) -> tuple[PurchaseStep, ...]:
+    """Order ``build.items`` into the strongest incremental 1..k purchase curve (OPT-04)."""
+    if not build.items:
+        return ()
+    base_res = evaluator.evaluate(())
+    prev_score = base_res.score if base_res is not None else Fraction(0)
+    remaining = list(build.items)
+    bought: list[str] = []
+    cum_gold = evaluator.elixir_fx.extra_gold
+    steps_out: list[PurchaseStep] = []
+
+    for order in range(1, len(build.items) + 1):
+        best_id: str | None = None
+        best_res: BuildResult | None = None
+        for cand_id in remaining:
+            cand_res = evaluator.evaluate((*bought, cand_id))
+            if cand_res is None:
+                continue
+            if best_res is None or _rank_key(cand_res, objective) > _rank_key(best_res, objective):
+                best_id = cand_id
+                best_res = cand_res
+        if best_id is None or best_res is None:
+            break
+        remaining.remove(best_id)
+        bought.append(best_id)
+        item_gold = pool[best_id].gold
+        cum_gold += item_gold
+        delta = best_res.score - prev_score
+        eff = (delta * 1000 / item_gold) if item_gold > 0 else Fraction(0)
+        steps_out.append(
+            PurchaseStep(
+                order=order,
+                item_id=best_id,
+                item_name=pool[best_id].item.name,
+                item_gold=item_gold,
+                cumulative_gold=cum_gold,
+                items_so_far=tuple(bought),
+                score=best_res.score,
+                delta_score=delta,
+                score_per_1000g=eff,
+                label=best_res.label,
+                metrics=dict(best_res.metrics),
+            )
+        )
+        prev_score = best_res.score
+    return tuple(steps_out)
+
+
 def optimize_build(
     root: Path,
     champion: ChampionData,
@@ -1018,10 +1155,13 @@ def optimize_build(
     t0 = time.perf_counter()
     if objective not in OBJECTIVES:
         raise StatsError(f"objective must be one of {sorted(OBJECTIVES)}, got {objective!r}")
-    if objective in ROTATION_OBJECTIVES and (kit is None or target is None or not steps):
-        raise StatsError(
-            f"objective {objective!r} requires a champion kit, target and rotation steps"
-        )
+    if objective in ROTATION_OBJECTIVES and (kit is None or target is None):
+        raise StatsError(f"objective {objective!r} requires a champion kit and target")
+    auto_steps: tuple[str, ...] = ()
+    if objective in ROTATION_OBJECTIVES and not steps:
+        assert kit is not None
+        steps = default_champion_rotation(kit, ranks or {})
+        auto_steps = tuple(s.text for s in steps)
     if objective in DEFENSE_OBJECTIVES and not incoming_hits and incoming_hits_for_sheet is None:
         raise StatsError("objective 'time_to_die' requires incoming hits or an enemy rotation")
     if objective in DUEL_OBJECTIVES and (kit is None or duel_enemy is None):
@@ -1032,8 +1172,16 @@ def optimize_build(
         raise StatsError("build optimization requires lol-knowledge/derived/item-groups.json")
 
     cfg = constraints or OptimizeConstraints()
+    elixir_gold = elixir_contributions(cfg.elixir, level=level).extra_gold
+    if cfg.budget is not None and elixir_gold > cfg.budget:
+        raise StatsError(f"elixir costs {elixir_gold} gold, exceeding budget {cfg.budget}")
+    search_cfg = (
+        replace(cfg, budget=cfg.budget - elixir_gold)
+        if (cfg.budget is not None and elixir_gold > 0)
+        else cfg
+    )
     pool = load_candidate_pool(root, item_groups, champion_id=champion.id)
-    base_state = _validate_constraints(cfg, pool, item_groups, champion)
+    base_state = _validate_constraints(search_cfg, pool, item_groups, champion)
 
     forbid = {str(i) for i in cfg.forbidden_items}
     eligible = [
@@ -1100,14 +1248,15 @@ def optimize_build(
     collected: dict[tuple[str, ...], BuildResult] = {}
 
     # Pass A: Search verified-clean pool first so OPT-03 always finds optimal verified builds.
+    v_subpool: list[CandidateItem] = []
     if verified_eligible:
         v_subpool, pi, pb = _select_subpool(
-            base_state, verified_eligible, evaluator, pool, item_groups, cfg, objective
+            base_state, verified_eligible, evaluator, pool, item_groups, search_cfg, objective
         )
         total_pruned_illegal += pi
         total_pruned_budget += pb
         v_results, pi2, pb2, pbeam = _beam_search(
-            base_state, v_subpool, evaluator, pool, item_groups, cfg, objective
+            base_state, v_subpool, evaluator, pool, item_groups, search_cfg, objective
         )
         total_pruned_illegal += pi2
         total_pruned_budget += pb2
@@ -1116,14 +1265,15 @@ def optimize_build(
             collected[b.items] = b
 
     # Pass B: Search full pool (unless --only-verified) to expose pending builds separately.
+    f_subpool: list[CandidateItem] = []
     if not cfg.only_verified and eligible:
         f_subpool, pi, pb = _select_subpool(
-            base_state, eligible, evaluator, pool, item_groups, cfg, objective
+            base_state, eligible, evaluator, pool, item_groups, search_cfg, objective
         )
         total_pruned_illegal += pi
         total_pruned_budget += pb
         f_results, pi2, pb2, pbeam = _beam_search(
-            base_state, f_subpool, evaluator, pool, item_groups, cfg, objective
+            base_state, f_subpool, evaluator, pool, item_groups, search_cfg, objective
         )
         total_pruned_illegal += pi2
         total_pruned_budget += pb2
@@ -1149,12 +1299,58 @@ def optimize_build(
                 + "; ".join(v.message for v in rep.violations)
             )
 
+    # OPT-04: step-by-step purchase curve for the top build
+    purchase_curve: tuple[PurchaseStep, ...] = ()
+    if cfg.purchase_curve:
+        top_for_curve = (
+            verified_builds[0] if verified_builds else (all_builds[0] if all_builds else None)
+        )
+        if top_for_curve is not None:
+            purchase_curve = _compute_purchase_curve(top_for_curve, evaluator, pool, objective)
+
+    # OPT-04: best legal build per requested gold checkpoint
+    checkpoint_results: list[GoldCheckpointResult] = []
+    if cfg.gold_checkpoints:
+        active_subpool = v_subpool if (cfg.only_verified or not f_subpool) else f_subpool
+        for cp_gold in sorted({int(g) for g in cfg.gold_checkpoints if int(g) > 0}):
+            if elixir_gold > cp_gold:
+                checkpoint_results.append(GoldCheckpointResult(cp_gold, None))
+                continue
+            cp_item_budget = cp_gold - elixir_gold
+            req_gold = sum(pool[i].gold for i in base_state)
+            if req_gold > cp_item_budget:
+                checkpoint_results.append(GoldCheckpointResult(cp_gold, None))
+                continue
+            cp_cfg = replace(search_cfg, budget=cp_item_budget)
+            cp_found, _, _, _ = _beam_search(
+                base_state, active_subpool, evaluator, pool, item_groups, cp_cfg, objective
+            )
+            cands_cp = [
+                b
+                for b in (*cp_found, *collected.values())
+                if b.total_gold <= cp_gold and (not cfg.only_verified or b.verified)
+            ]
+            best_cp = max(cands_cp, key=lambda b: _rank_key(b, objective)) if cands_cp else None
+            checkpoint_results.append(GoldCheckpointResult(cp_gold, best_cp))
+
     elapsed_ms = round((time.perf_counter() - t0) * 1000.0, 2)
     notes: list[str] = [
         f"search strategy: marginal relevance pre-filter (pool_limit={cfg.pool_limit}) + "
         f"beam search (width={cfg.beam_width}) + 1-swap polish; heuristic pruning does not "
         "guarantee a global optimum across all C(N,k) combinations",
     ]
+    if auto_steps:
+        notes.append(
+            f"auto_steps (OPT-05): synthesized standard rotation [{', '.join(auto_steps)}] "
+            "because --steps was omitted"
+        )
+    if cfg.ornn_upgrade:
+        notes.append(
+            "ornn_upgrade=True (OBJ-12, DEC-03): max 1 completed non-boots item upgraded per "
+            "build using OrnnP.DataValues (1000 g split across item's eligible stats)"
+        )
+    if cfg.elixir:
+        notes.extend(evaluator.elixir_fx.notes)
     if cfg.only_verified:
         notes.append(
             "only_verified=True: items with pending effect review or excluded damage effects "
@@ -1188,4 +1384,7 @@ def optimize_build(
         ),
         label=outcome_label,
         notes=tuple(notes),
+        purchase_curve=purchase_curve,
+        gold_checkpoints=tuple(checkpoint_results),
+        auto_steps=auto_steps,
     )

@@ -75,6 +75,7 @@ from .stats import format_text as format_stats_text
 from .stats import to_dict as stats_to_dict
 from .stats.sheet import MANA_RESOURCE
 from .summoners import load_summoner_spells, resolve_loadout, summoner_sheet_effects
+from .upgrades import elixir_contributions, ornn_upgrade_contributions
 from .validate import validate_project
 
 DEFAULT_DATA_DIR = "data"
@@ -313,6 +314,16 @@ def _add_build_option(command: argparse.ArgumentParser) -> None:
         ),
     )
     command.add_argument(
+        "--elixir",
+        metavar="ELIXIR",
+        help="Active elixir (max 1, 0 slots, 500 g): 2138/iron, 2139/sorcery, 2140/wrath.",
+    )
+    command.add_argument(
+        "--ornn-item",
+        metavar="ID",
+        help="Single equipped completed non-boots item upgraded to Ornn Masterwork (DEC-03).",
+    )
+    command.add_argument(
         "--allow-illegal-build",
         action="store_true",
         help=(
@@ -371,11 +382,17 @@ def _build_sheet_with_runes(
     kit=None,
     allow_illegal: bool = False,
     summoners=(),
+    elixir: str | None = None,
+    ornn_item: str | None = None,
 ):
     """Build a StatSheet for either attacker or target, with passive, runes and summoners."""
     passive = sheet_passive_effects(
         kit, level, inputs, include_stacking=combat_context != "rotation"
     )
+    uses_mana = champion.resource == MANA_RESOURCE.get(champion.locale)
+    elx_fx = elixir_contributions(elixir, level=level, uses_mana=uses_mana)
+    groups_for_ornn = load_item_groups(root) if (ornn_item and items) else None
+    ornn_fx = ornn_upgrade_contributions(ornn_item, items, level=level, item_groups=groups_for_ornn)
     s_flats: tuple = ()
     s_percents: tuple = ()
     s_notes: tuple = ()
@@ -400,7 +417,9 @@ def _build_sheet_with_runes(
             rune_data=s_rune_data,
         )
         s_flats, s_percents, s_notes = s_fx.flats, s_fx.percents, s_fx.notes
-    base_extras = (*extras, *passive.flats, *s_flats)
+    base_extras = (*extras, *passive.flats, *s_flats, *elx_fx.flats, *ornn_fx.flats)
+    base_percents = (*passive.percents, *s_percents, *elx_fx.percents)
+    base_notes = (*passive.notes, *s_notes, *elx_fx.notes, *ornn_fx.notes)
     if not runes and not shards:
         return build_stat_sheet(
             champion,
@@ -410,9 +429,9 @@ def _build_sheet_with_runes(
             assumptions,
             derived,
             base_extras,
-            (*passive.percents, *s_percents),
+            base_percents,
             extra_amplifiers=passive.amplifiers,
-            extra_notes=(*passive.notes, *s_notes),
+            extra_notes=base_notes,
             inputs=inputs,
         )
     data = load_runes(root)
@@ -479,7 +498,7 @@ def _build_sheet_with_runes(
         adaptive_label=label,
         adaptive_note=note,
     )
-    extra_notes = [*passive.notes, *s_notes, *rune_effects.notes]
+    extra_notes = [*base_notes, *rune_effects.notes]
     pending = list(rune_effects.pending)
     if combat_context == "stats":
         extra_notes += combat_rune_notes(rune_effects.combat_runes, data, in_ability=False)
@@ -493,7 +512,7 @@ def _build_sheet_with_runes(
         assumptions,
         derived,
         (*base_extras, *flats, *rune_effects.flats),
-        (*percents, *passive.percents, *s_percents, *rune_effects.percents),
+        (*percents, *base_percents, *rune_effects.percents),
         pending,
         extra_amplifiers=(*passive.amplifiers, *rune_effects.amplifiers),
         extra_notes=extra_notes,
@@ -534,6 +553,8 @@ def _build_sheet(
         kit=kit,
         allow_illegal=args.allow_illegal_build,
         summoners=getattr(args, "summoner", []),
+        elixir=getattr(args, "elixir", None),
+        ornn_item=getattr(args, "ornn_item", None),
     )
 
 
@@ -592,6 +613,13 @@ def _add_rotation_parser(subparsers: argparse._SubParsersAction) -> None:
             "Give every step a time: attacks spaced by 1 / attack speed, cooldowns and recast "
             "windows enforced, wait:<seconds> steps allowed (lol-knowledge/mechanics/timeline.md)."
         ),
+    )
+    rotation.add_argument(
+        "--window",
+        action="append",
+        default=[],
+        metavar="SECONDS",
+        help="Report cumulative damage and DPS in [0, SECONDS] (repeat; requires --timeline).",
     )
     rotation.add_argument("--assume", action="append", default=[], metavar="FIELD=VALUE")
     rotation.add_argument(
@@ -690,6 +718,8 @@ def _add_duel_fighter_options(parser: argparse.ArgumentParser, prefix: str, labe
     parser.add_argument(f"--{prefix}-rune", action="append", default=[], metavar="ID")
     parser.add_argument(f"--{prefix}-shard", action="append", default=[], metavar="ID")
     parser.add_argument(f"--{prefix}-summoner", action="append", default=[], metavar="SPELL")
+    parser.add_argument(f"--{prefix}-elixir", metavar="ELIXIR")
+    parser.add_argument(f"--{prefix}-ornn-item", metavar="ID")
     parser.add_argument(f"--{prefix}-learned", action="append", default=[], metavar="SLOT=RANK")
     parser.add_argument(f"--{prefix}-steps", help=f"Fighter {label} scripted steps.")
     parser.add_argument(
@@ -823,6 +853,20 @@ def _add_optimize_parser(subparsers: argparse._SubParsersAction) -> None:
         "--use-item-actives",
         action="store_true",
         help="Automatically cast equipped items' evaluable combat actives during rotation scoring.",
+    )
+    opt.add_argument(
+        "--ornn-upgrade",
+        action="store_true",
+        help="Upgrade the single best completed non-boots item via Ornn Masterwork (DEC-03).",
+    )
+    opt.add_argument(
+        "--purchase-curve",
+        action="store_true",
+        help="Compute the optimal 1..k incremental purchase order for the top build (OPT-04).",
+    )
+    opt.add_argument(
+        "--gold-checkpoints",
+        help="Comma-separated gold milestones for partial-build power curve, e.g. 3500,7000,10500.",
     )
     opt.add_argument("--top", type=int, default=5, help="Builds to return per bucket (default: 5).")
     opt.add_argument(
@@ -1243,6 +1287,16 @@ def _run_rotation(args: argparse.Namespace) -> int:
             summoners=summoners,
             summoner_data=summoner_data,
         )
+        win_secs = [
+            sec
+            for raw in getattr(args, "window", [])
+            if (sec := _number(raw, "--window")) is not None
+        ]
+        if win_secs and not args.timeline:
+            raise RotationError("--window requires --timeline")
+        for sec in win_secs:
+            if sec <= 0:
+                raise RotationError("--window must be positive")
     except (StatsError, KitError, DamageInputError, RotationError) as exc:
         print(f"error: {exc}", file=sys.stderr)
         return 2
@@ -1252,10 +1306,10 @@ def _run_rotation(args: argparse.Namespace) -> int:
         return 2
 
     if args.json:
-        report = rotation_to_dict(outcome, sheet, target, crit_base)
+        report = rotation_to_dict(outcome, sheet, target, crit_base, windows=win_secs)
         print(json.dumps(report, indent=2, ensure_ascii=False))
     else:
-        print(format_rotation_text(outcome, sheet, target, crit_base))
+        print(format_rotation_text(outcome, sheet, target, crit_base, windows=win_secs))
     return 0
 
 
@@ -1483,6 +1537,8 @@ def _build_duel_fighter_cli(
         kit=kit,
         allow_illegal=args.allow_illegal_build,
         summoners=summoners,
+        elixir=getattr(args, f"{prefix}_elixir", None),
+        ornn_item=getattr(args, f"{prefix}_ornn_item", None),
     )
     holder_range = getattr(args, f"{prefix}_range")
     if holder_range is None:
@@ -1562,6 +1618,21 @@ def _run_optimize(args: argparse.Namespace) -> int:
         }
         damage_mix = _number(args.damage_mix, "--damage-mix")
         assert damage_mix is not None
+        gold_checkpoints: tuple[int, ...] = ()
+        if args.gold_checkpoints:
+            parsed_cps: list[int] = []
+            for tok in args.gold_checkpoints.split(","):
+                tok = tok.strip()
+                if not tok:
+                    continue
+                try:
+                    val_g = int(tok)
+                except ValueError as exc:
+                    raise StatsError(f"--gold-checkpoints expects integers, got {tok!r}") from exc
+                if val_g <= 0:
+                    raise StatsError("--gold-checkpoints values must be positive integers")
+                parsed_cps.append(val_g)
+            gold_checkpoints = tuple(parsed_cps)
         constraints = OptimizeConstraints(
             budget=args.budget,
             slots=args.slots,
@@ -1575,6 +1646,10 @@ def _run_optimize(args: argparse.Namespace) -> int:
             pool_limit=args.pool_limit,
             damage_mix_physical=damage_mix,
             use_item_actives=args.use_item_actives,
+            elixir=args.elixir,
+            ornn_upgrade=args.ornn_upgrade,
+            purchase_curve=args.purchase_curve,
+            gold_checkpoints=gold_checkpoints,
         )
         runes = _rune_ids(args.rune, "--rune")
         shards = _rune_ids(args.shard, "--shard")
@@ -1591,9 +1666,8 @@ def _run_optimize(args: argparse.Namespace) -> int:
         steps = ()
         crit_base = _crit_base(champion.id, champion.patch, derived)
         if args.objective in {"rotation_damage", "dps", "healing"}:
-            if not args.steps:
-                raise StatsError(f"--objective {args.objective} requires --steps")
-            steps = parse_steps(args.steps)
+            if args.steps:
+                steps = parse_steps(args.steps)
             target = _ability_target(args, root, issues, derived, inputs=inputs)
             if rune_data is None and target.runes:
                 rune_data = load_runes(root)

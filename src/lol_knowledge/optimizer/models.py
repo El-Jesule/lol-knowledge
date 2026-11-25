@@ -47,6 +47,10 @@ class OptimizeConstraints:
     pool_limit: int = 16
     damage_mix_physical: Fraction = Fraction(1, 2)
     use_item_actives: bool = False
+    elixir: str | None = None
+    ornn_upgrade: bool = False
+    purchase_curve: bool = False
+    gold_checkpoints: tuple[int, ...] = ()
 
 
 @dataclass(frozen=True)
@@ -90,10 +94,37 @@ class BuildResult:
     label: Label
     metrics: Mapping[str, Any] = field(default_factory=dict)
     notes: tuple[str, ...] = ()
+    ornn_upgraded_item: str | None = None
+    elixir: str | None = None
 
     @property
     def verified(self) -> bool:
         return self.label is not Label.PENDING
+
+
+@dataclass(frozen=True)
+class PurchaseStep:
+    """One incremental step in a build's step-by-step purchase curve (OPT-04)."""
+
+    order: int
+    item_id: str
+    item_name: str
+    item_gold: int
+    cumulative_gold: int
+    items_so_far: tuple[str, ...]
+    score: Fraction
+    delta_score: Fraction
+    score_per_1000g: Fraction
+    label: Label
+    metrics: Mapping[str, Any] = field(default_factory=dict)
+
+
+@dataclass(frozen=True)
+class GoldCheckpointResult:
+    """Best legal build affordable within one gold budget checkpoint (OPT-04)."""
+
+    gold_budget: int
+    build: BuildResult | None
 
 
 @dataclass(frozen=True)
@@ -111,3 +142,6 @@ class OptimizeOutcome:
     stats: SearchStats
     label: Label
     notes: tuple[str, ...] = ()
+    purchase_curve: tuple[PurchaseStep, ...] = ()
+    gold_checkpoints: tuple[GoldCheckpointResult, ...] = ()
+    auto_steps: tuple[str, ...] = ()

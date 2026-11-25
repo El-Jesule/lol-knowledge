@@ -57,6 +57,7 @@ from .stats import (
 from .stats import to_dict as stats_to_dict
 from .stats.sheet import MANA_RESOURCE
 from .summoners import load_summoner_spells, resolve_loadout, summoner_sheet_effects
+from .upgrades import elixir_contributions, ornn_upgrade_contributions
 
 CONTRACT_SCHEMA = "lol-knowledge-contract/1"
 OPERATIONS = frozenset({"lookup", "stats", "ability", "rotation", "survive", "duel", "optimize"})
@@ -203,24 +204,28 @@ def _build_sheet_for_contract(
     kit=None,
     allow_illegal: bool = False,
     summoners: Sequence[str] = (),
+    elixir: str | None = None,
+    ornn_item: str | None = None,
 ) -> tuple[Any, list[str]]:
     """Build a StatSheet with legality, passive, rune and summoner checks."""
     warnings: list[str] = []
     items = load_items(root, item_ids)
-    if item_ids:
-        groups = load_item_groups(root)
-        if groups is not None:
-            rep = check_build(item_ids, groups, patch=champion.patch, champion=champion.id)
-            warnings.extend(rep.notes)
-            if not rep.legal and not allow_illegal:
-                problems = "; ".join(v.message for v in rep.violations)
-                raise ContractInputError("illegal_build", f"build is not legal: {problems}")
-            if not rep.legal:
-                warnings.extend(f"illegal build allowed: {v.message}" for v in rep.violations)
+    groups = load_item_groups(root) if (item_ids or ornn_item) else None
+    if item_ids and groups is not None:
+        rep = check_build(item_ids, groups, patch=champion.patch, champion=champion.id)
+        warnings.extend(rep.notes)
+        if not rep.legal and not allow_illegal:
+            problems = "; ".join(v.message for v in rep.violations)
+            raise ContractInputError("illegal_build", f"build is not legal: {problems}")
+        if not rep.legal:
+            warnings.extend(f"illegal build allowed: {v.message}" for v in rep.violations)
 
     passive = sheet_passive_effects(
         kit, level, inputs, include_stacking=combat_context != "rotation"
     )
+    uses_mana_top = champion.resource == MANA_RESOURCE.get(champion.locale)
+    elx_fx = elixir_contributions(elixir, level=level, uses_mana=uses_mana_top)
+    ornn_fx = ornn_upgrade_contributions(ornn_item, items, level=level, item_groups=groups)
     s_flats: tuple = ()
     s_percents: tuple = ()
     s_notes: tuple = ()
@@ -249,7 +254,9 @@ def _build_sheet_for_contract(
             rune_data=s_rune_data,
         )
         s_flats, s_percents, s_notes = s_fx.flats, s_fx.percents, s_fx.notes
-    base_extras = (*extra_contributions, *passive.flats, *s_flats)
+    base_extras = (*extra_contributions, *passive.flats, *s_flats, *elx_fx.flats, *ornn_fx.flats)
+    base_percents = (*passive.percents, *s_percents, *elx_fx.percents)
+    base_notes = (*passive.notes, *s_notes, *elx_fx.notes, *ornn_fx.notes)
     if not runes and not shards:
         return (
             build_stat_sheet(
@@ -260,9 +267,9 @@ def _build_sheet_for_contract(
                 assumptions,
                 derived,
                 base_extras,
-                (*passive.percents, *s_percents),
+                base_percents,
                 extra_amplifiers=passive.amplifiers,
-                extra_notes=(*passive.notes, *s_notes),
+                extra_notes=base_notes,
                 inputs=inputs,
             ),
             warnings,
@@ -327,7 +334,7 @@ def _build_sheet_for_contract(
         adaptive_label=a_label,
         adaptive_note=a_note,
     )
-    extra_notes = [*passive.notes, *s_notes, *rune_fx.notes]
+    extra_notes = [*base_notes, *rune_fx.notes]
     pending = list(rune_fx.pending)
     if combat_context != "rotation":
         extra_notes.extend(combat_rune_notes(runes, rune_data))
@@ -339,7 +346,7 @@ def _build_sheet_for_contract(
         assumptions,
         derived,
         (*base_extras, *flats, *rune_fx.flats),
-        (*percents, *passive.percents, *s_percents, *rune_fx.percents),
+        (*percents, *base_percents, *rune_fx.percents),
         tuple(pending),
         extra_amplifiers=(*passive.amplifiers, *rune_fx.amplifiers),
         extra_notes=tuple(extra_notes),
@@ -665,6 +672,8 @@ def _handle_stats(params: Mapping[str, Any], root: Path) -> dict[str, Any]:
         kit=kit,
         allow_illegal=bool(params.get("allow_illegal_build", False)),
         summoners=summoners,
+        elixir=params.get("elixir") if isinstance(params.get("elixir"), str) else None,
+        ornn_item=params.get("ornn_item") if isinstance(params.get("ornn_item"), str) else None,
     )
     payload = stats_to_dict(sheet)
     weakest_lbl = weakest(
@@ -716,6 +725,8 @@ def _handle_ability(params: Mapping[str, Any], root: Path) -> dict[str, Any]:
         kit=kit,
         allow_illegal=bool(params.get("allow_illegal_build", False)),
         summoners=summoners,
+        elixir=params.get("elixir") if isinstance(params.get("elixir"), str) else None,
+        ornn_item=params.get("ornn_item") if isinstance(params.get("ornn_item"), str) else None,
     )
     target = _resolve_target(
         params,
@@ -782,6 +793,8 @@ def _handle_rotation(params: Mapping[str, Any], root: Path) -> dict[str, Any]:
         kit=kit,
         allow_illegal=bool(params.get("allow_illegal_build", False)),
         summoners=summoners,
+        elixir=params.get("elixir") if isinstance(params.get("elixir"), str) else None,
+        ornn_item=params.get("ornn_item") if isinstance(params.get("ornn_item"), str) else None,
     )
     target = _resolve_target(
         params,
@@ -818,7 +831,23 @@ def _handle_rotation(params: Mapping[str, Any], root: Path) -> dict[str, Any]:
         summoners=summoners,
         summoner_data=summoner_data,
     )
-    payload = rotation_to_dict(outcome, sheet, target, crit_base)
+    raw_windows = params.get("windows")
+    win_secs: list[Fraction] = []
+    if raw_windows is not None:
+        if not isinstance(raw_windows, list):
+            raise ContractInputError(
+                "invalid_input", "parameter 'windows' must be a list of numbers"
+            )
+        for w in raw_windows:
+            if isinstance(w, bool) or not isinstance(w, (int, float, str)):
+                raise ContractInputError("invalid_input", "window values must be positive numbers")
+            val = to_fraction(str(w), "windows")
+            if val <= 0:
+                raise ContractInputError("invalid_input", "window values must be positive")
+            win_secs.append(val)
+    if win_secs and not timeline:
+        raise ContractInputError("invalid_input", "parameter 'windows' requires timeline=true")
+    payload = rotation_to_dict(outcome, sheet, target, crit_base, windows=win_secs)
     return {
         "patch": champ.patch,
         "result_label": "Calculado",
@@ -934,6 +963,8 @@ def _handle_survive(params: Mapping[str, Any], root: Path) -> dict[str, Any]:
         kit=kit,
         allow_illegal=allow_illegal,
         summoners=summoners,
+        elixir=params.get("elixir") if isinstance(params.get("elixir"), str) else None,
+        ornn_item=params.get("ornn_item") if isinstance(params.get("ornn_item"), str) else None,
     )
     incoming = params.get("incoming")
     enemy = params.get("enemy")
@@ -1049,6 +1080,12 @@ def _build_duel_fighter(
         kit=kit,
         allow_illegal=allow_illegal,
         summoners=summoners,
+        elixir=fighter_params.get("elixir")
+        if isinstance(fighter_params.get("elixir"), str)
+        else None,
+        ornn_item=fighter_params.get("ornn_item")
+        if isinstance(fighter_params.get("ornn_item"), str)
+        else None,
     )
     holder_range, inferred = _infer_holder_range(champ, fighter_params.get("range"))
     rune_data = load_runes(root) if (runes or shards) else None
@@ -1161,6 +1198,10 @@ def _handle_optimize(params: Mapping[str, Any], root: Path) -> dict[str, Any]:
         pool_limit=_optional_int(params, "pool_limit", 16) or 16,
         damage_mix_physical=damage_mix,
         use_item_actives=bool(params.get("use_item_actives", False)),
+        elixir=params.get("elixir") if isinstance(params.get("elixir"), str) else None,
+        ornn_upgrade=bool(params.get("ornn_upgrade", False)),
+        purchase_curve=bool(params.get("purchase_curve", False)),
+        gold_checkpoints=tuple(_int_list(params, "gold_checkpoints")),
     )
     runes = _int_list(params, "runes")
     shards = _int_list(params, "shards")
@@ -1175,7 +1216,9 @@ def _handle_optimize(params: Mapping[str, Any], root: Path) -> dict[str, Any]:
     target = None
     steps = ()
     if objective in {"rotation_damage", "dps", "healing"}:
-        steps = parse_steps(_require_str(params, "steps"))
+        steps_raw = params.get("steps")
+        if isinstance(steps_raw, str) and steps_raw.strip():
+            steps = parse_steps(steps_raw)
         target = _resolve_target(
             params,
             root,
