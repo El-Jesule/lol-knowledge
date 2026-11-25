@@ -33,7 +33,7 @@
 | Calcular la regeneración de vida y maná | [Regeneración](mechanics/regeneration.md) |
 | Calcular costes de habilidades, reservas (maná, energía, vida), Segador de esencia y Claridad mental | [Recursos y costes](mechanics/resources.md) |
 | Aplicar pasivas de campeón en hoja, rotación y supervivencia (`134/173` automatizadas) y generar borradores de kit | [Pasivas de campeón](mechanics/passives.md) |
-| Aplicar escudos, curaciones, reducciones de daño y esteroides activos en `Q/W/E/R` (`134/173` campeones, `277` efectos) | [Habilidades defensivas y esteroides activos](mechanics/active-abilities.md) |
+| Aplicar escudos, curaciones, reducciones de daño, esquivas, invulnerabilidades y esteroides activos en `Q/W/E/R` (`135/173` campeones, `301` efectos) | [Habilidades defensivas y esteroides activos](mechanics/active-abilities.md) |
 | Calcular la velocidad de movimiento y sus límites suaves | [Velocidad de movimiento](mechanics/move-speed.md) |
 | Aplicar aumentos y reducciones de daño | [Modificadores de daño](mechanics/damage-modifiers.md) |
 | Encadenar ataques, daño al impactar y vida del objetivo | [Ataques básicos y daño al impactar](mechanics/basic-attacks-and-on-hit.md) |
@@ -62,7 +62,7 @@
 
 **134 de 173 pasivas de campeón automatizadas** ([Pasivas de campeón](mechanics/passives.md)): `123` campeones con `passive_effects` declarativos compilados desde el cliente `16.23` (`Derivado`) más `11` reglas globales de hoja/rotación; los `39` campeones restantes corresponden a pasivas puramente de utilidad, oro, visión, experiencia, geometría, estado post-muerte o contadores ya integrados en `Q/W/E/R`.
 
-**134 de 173 campeones con efectos activos defensivos, de curación y esteroides en `Q/W/E/R`** ([Habilidades defensivas y esteroides activos](mechanics/active-abilities.md)): `277` efectos declarativos en `206` habilidades (`50` escudos normales y mágicos, `45` curaciones instantáneas y *HoT*, `17` reducciones de daño porcentuales y planas con tope, y `165` esteroides temporales de vida máxima, armadura, RM, AD, AP, velocidad de ataque, robo de vida/omnisucción y velocidad de movimiento) integrados en `rotation`, `survive` (`--defender-cast`), `optimize`, `contract` y `mcp`.
+**135 de 173 campeones con efectos activos defensivos, de curación y esteroides en `Q/W/E/R`** ([Habilidades defensivas y esteroides activos](mechanics/active-abilities.md)): `301` efectos declarativos en `220` habilidades (`49` escudos normales y mágicos, `46` curaciones instantáneas y *HoT*, `8` curaciones por daño post-mitigación infligido, `5` escudos/curaciones por daño recibido reciente con suelo mínimo cuando existe, `17` reducciones de daño porcentuales y planas con tope, `3` esquivas de ataques básicos, `2` escudos de hechizos, `1` bloqueo de primer impacto, `5` invulnerabilidades/inmortalidades y `165` esteroides temporales de estadísticas) integrados en `rotation`, `survive` (`--defender-cast`), `optimize`, `contract` y `mcp`.
 
 **62 de 62 runas y 9 de 9 fragmentos modelados** ([Runas y fragmentos](mechanics/runes.md)): cobertura completa de runas clave, runas menores de estadística y combate, y runas/fragmentos del defensor (`--target-rune`, `--target-shard`, `target.runes`, `target.shards` y `enemy.runes`/`enemy.shards`) en CLI, contrato JSON, servidor MCP y optimizador.
 
