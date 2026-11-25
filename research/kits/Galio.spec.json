@@ -196,6 +196,14 @@
           "shield_type": "magic",
           "calculation": "TotalPassiveShield"
         }
+      ],
+      "cc_effects": [
+        {
+          "id": "w_taunt",
+          "name": "Escudo de Durand (provocación)",
+          "kind": "taunt",
+          "data_value": "CCDurationMin"
+        }
       ]
     },
     "E": {
@@ -223,6 +231,14 @@
       ],
       "not_modelled": [
         "Lanzamiento por los aires (KnockupDuration)"
+      ],
+      "cc_effects": [
+        {
+          "id": "e_airborne",
+          "name": "Puñetazo justiciero (lanzamiento por los aires)",
+          "kind": "airborne",
+          "data_value": "KnockupDuration"
+        }
       ]
     },
     "R": {
@@ -241,6 +257,14 @@
       ],
       "not_modelled": [
         "Escudo mágico a aliados en la zona y lanzamiento por los aires"
+      ],
+      "cc_effects": [
+        {
+          "id": "r_airborne",
+          "name": "Entrada heroica (lanzamiento por los aires)",
+          "kind": "airborne",
+          "data_value": "StunDurationOuter"
+        }
       ]
     }
   }

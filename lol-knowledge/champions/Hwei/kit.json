@@ -643,6 +643,48 @@
       "passive_stats": [],
       "not_modelled": [
         "Efectos de control de masas de EQ (miedo), EW (raíz) y EE (atracción + ralentización)"
+      ],
+      "cc_effects": [
+        {
+          "id": "e_eq_fear",
+          "name": "Temática: Tormentos (miedo)",
+          "kind": "fear",
+          "duration_formula": {
+            "op": "by_rank",
+            "values": [
+              1,
+              1.125,
+              1.25,
+              1.375,
+              1.5
+            ]
+          },
+          "label": "Derivado",
+          "source": "Characters/Hwei/Spells/HweiEAbility/HweiE.DataValues.Tooltip_EQFleeDuration (16.23.8418428+branch.releases-16-23.content.release)",
+          "case_ids": [
+            "eq"
+          ]
+        },
+        {
+          "id": "e_ew_root",
+          "name": "Temática: Tormentos (enraizamiento)",
+          "kind": "root",
+          "duration_formula": {
+            "op": "by_rank",
+            "values": [
+              1.2,
+              1.4,
+              1.6,
+              1.8,
+              2
+            ]
+          },
+          "label": "Derivado",
+          "source": "Characters/Hwei/Spells/HweiEAbility/HweiE.DataValues.Tooltip_EWRootDuration (16.23.8418428+branch.releases-16-23.content.release)",
+          "case_ids": [
+            "ew"
+          ]
+        }
       ]
     },
     "R": {

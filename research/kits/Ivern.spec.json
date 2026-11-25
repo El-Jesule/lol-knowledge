@@ -32,6 +32,14 @@
       ],
       "not_modelled": [
         "Inmovilización y desplazamiento aliado hacia el objetivo"
+      ],
+      "cc_effects": [
+        {
+          "id": "q_root",
+          "name": "Lanzarraíces (enraizamiento)",
+          "kind": "root",
+          "data_value": "RootDuration"
+        }
       ]
     },
     "W": {
@@ -106,6 +114,14 @@
       ],
       "not_modelled": [
         "Ataques básicos y estadísticas de Margarita (TotalDaisyHP, TotalDaisyAD, TotalBonusResists) y derribo"
+      ],
+      "cc_effects": [
+        {
+          "id": "r_airborne",
+          "name": "¡Margarita! (lanzamiento por los aires)",
+          "kind": "airborne",
+          "data_value": "ShockwaveCCDuration"
+        }
       ]
     }
   }

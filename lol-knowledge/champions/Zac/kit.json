@@ -250,6 +250,19 @@
       "passive_stats": [],
       "not_modelled": [
         "Coste del 4 % de vida actual (HPCost) y lanzamiento por los aires de 0,5 a 1 s (MaxStun)"
+      ],
+      "cc_effects": [
+        {
+          "id": "e_airborne",
+          "name": "Honda elástica (lanzamiento por los aires)",
+          "kind": "airborne",
+          "duration_formula": {
+            "op": "constant",
+            "value": 0.5
+          },
+          "label": "Derivado",
+          "source": "Characters/Zac/Spells/ZacEAbility/ZacE.DataValues.MinimumStun (16.23.8418428+branch.releases-16-23.content.release)"
+        }
       ]
     },
     "R": {

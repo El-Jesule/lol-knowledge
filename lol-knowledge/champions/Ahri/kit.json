@@ -512,6 +512,25 @@
       "passive_stats": [],
       "not_modelled": [
         "Hechizo (CharmDuration) y ralentización (SlowPercent)"
+      ],
+      "cc_effects": [
+        {
+          "id": "e_charm",
+          "name": "Hechizar (encanto)",
+          "kind": "charm",
+          "duration_formula": {
+            "op": "by_rank",
+            "values": [
+              1.2,
+              1.35,
+              1.5,
+              1.65,
+              1.8
+            ]
+          },
+          "label": "Derivado",
+          "source": "Characters/Ahri/Spells/AhriEAbility/AhriE.DataValues.CharmDuration (16.22.8348910+branch.releases-16-22.content.release)"
+        }
       ]
     },
     "R": {

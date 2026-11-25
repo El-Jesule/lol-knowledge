@@ -176,6 +176,25 @@
       "passive_stats": [],
       "not_modelled": [
         "Inmovilización (SnareDuration)"
+      ],
+      "cc_effects": [
+        {
+          "id": "w_root",
+          "name": "Anillo de escarcha (enraizamiento)",
+          "kind": "root",
+          "duration_formula": {
+            "op": "by_rank",
+            "values": [
+              1.25,
+              1.35,
+              1.45,
+              1.55,
+              1.65
+            ]
+          },
+          "label": "Derivado",
+          "source": "Characters/Lissandra/Spells/LissandraWAbility/LissandraW.DataValues.SnareDuration (16.23.8418428+branch.releases-16-23.content.release)"
+        }
       ]
     },
     "E": {
@@ -311,6 +330,19 @@
           },
           "label": "Derivado",
           "source": "Characters/Lissandra/Spells/LissandraRAbility/LissandraR.mSpellCalculations.HealAmount (16.23.8418428+branch.releases-16-23.content.release)"
+        }
+      ],
+      "cc_effects": [
+        {
+          "id": "r_stun",
+          "name": "Tumba helada (aturdimiento)",
+          "kind": "stun",
+          "duration_formula": {
+            "op": "constant",
+            "value": 1.5
+          },
+          "label": "Derivado",
+          "source": "Characters/Lissandra/Spells/LissandraRAbility/LissandraR.DataValues.EnemyCastDuration (16.23.8418428+branch.releases-16-23.content.release)"
         }
       ]
     }

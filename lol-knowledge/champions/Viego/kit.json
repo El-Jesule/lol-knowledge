@@ -309,6 +309,19 @@
       "passive_stats": [],
       "not_modelled": [
         "Aturdimiento escalado con carga y deslizamiento"
+      ],
+      "cc_effects": [
+        {
+          "id": "w_stun",
+          "name": "Fauces espectrales (aturdimiento)",
+          "kind": "stun",
+          "duration_formula": {
+            "op": "constant",
+            "value": 0.25
+          },
+          "label": "Derivado",
+          "source": "Characters/Viego/Spells/ViegoWAbility/ViegoW.DataValues.StunDuration (16.23.8418428+branch.releases-16-23.content.release)"
+        }
       ]
     },
     "E": {

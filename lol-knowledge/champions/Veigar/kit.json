@@ -3,7 +3,7 @@
   "champion": "Veigar",
   "label": "Derivado",
   "game_version": "16.23",
-  "content_version": "16.23.8406595+branch.releases-16-23.content.release",
+  "content_version": "16.23.8418428+branch.releases-16-23.content.release",
   "verified_against": {
     "content_version": "16.23.8406595+branch.releases-16-23.content.release",
     "bin_sha256": "b05997d66a2cb2f446244026f4a2aa829c4c6f4f7c10de440ea1bc6461cc904d",
@@ -30,7 +30,7 @@
             "value": 1
           },
           "label": "Derivado",
-          "source": "Characters/Veigar/Spells/VeigarPassiveAbility/VeigarPassive.mSpellCalculations.APPerStack (16.23.8406595+branch.releases-16-23.content.release)",
+          "source": "Characters/Veigar/Spells/VeigarPassiveAbility/VeigarPassive.mSpellCalculations.APPerStack (16.23.8418428+branch.releases-16-23.content.release)",
           "stat": "ability_power",
           "mode": "flat",
           "input_name": "phenomenal_evil_stacks",
@@ -84,7 +84,7 @@
                 ]
               },
               "label": "Derivado",
-              "source": "Characters/Veigar/Spells/VeigarBalefulStrikeAbility/VeigarBalefulStrike.mSpellCalculations.TotalDamage (16.23.8406595+branch.releases-16-23.content.release)",
+              "source": "Characters/Veigar/Spells/VeigarBalefulStrikeAbility/VeigarBalefulStrike.mSpellCalculations.TotalDamage (16.23.8418428+branch.releases-16-23.content.release)",
               "damage_type_source": "spell_veigarbalefulstrike_tooltip <magicDamage>"
             }
           ]
@@ -141,7 +141,7 @@
                 ]
               },
               "label": "Derivado",
-              "source": "Characters/Veigar/Spells/VeigarDarkMatterAbility/VeigarDarkMatter.mSpellCalculations.TotalDamage (16.23.8406595+branch.releases-16-23.content.release)",
+              "source": "Characters/Veigar/Spells/VeigarDarkMatterAbility/VeigarDarkMatter.mSpellCalculations.TotalDamage (16.23.8418428+branch.releases-16-23.content.release)",
               "damage_type_source": "spell_veigardarkmatter_tooltip <magicDamage>"
             }
           ]
@@ -159,6 +159,25 @@
       "passive_stats": [],
       "not_modelled": [
         "Cárcel con aturdimiento (StunDuration)"
+      ],
+      "cc_effects": [
+        {
+          "id": "e_stun",
+          "name": "Horizonte de sucesos (aturdimiento)",
+          "kind": "stun",
+          "duration_formula": {
+            "op": "by_rank",
+            "values": [
+              1.5,
+              1.75,
+              2,
+              2.25,
+              2.5
+            ]
+          },
+          "label": "Derivado",
+          "source": "Characters/Veigar/Spells/VeigarEventHorizonAbility/VeigarEventHorizon.DataValues.StunDuration (16.23.8418428+branch.releases-16-23.content.release)"
+        }
       ]
     },
     "R": {
@@ -203,7 +222,7 @@
                 ]
               },
               "label": "Derivado",
-              "source": "Characters/Veigar/Spells/VeigarRAbility/VeigarR.mSpellCalculations.MinDamage (16.23.8406595+branch.releases-16-23.content.release)",
+              "source": "Characters/Veigar/Spells/VeigarRAbility/VeigarR.mSpellCalculations.MinDamage (16.23.8418428+branch.releases-16-23.content.release)",
               "damage_type_source": "spell_veigarr_tooltip <magicDamage>"
             }
           ]
@@ -255,7 +274,7 @@
                 ]
               },
               "label": "Derivado",
-              "source": "Characters/Veigar/Spells/VeigarRAbility/VeigarR.mSpellCalculations.MaxDamage (16.23.8406595+branch.releases-16-23.content.release)",
+              "source": "Characters/Veigar/Spells/VeigarRAbility/VeigarR.mSpellCalculations.MaxDamage (16.23.8418428+branch.releases-16-23.content.release)",
               "damage_type_source": "spell_veigarr_tooltip <magicDamage>"
             }
           ]

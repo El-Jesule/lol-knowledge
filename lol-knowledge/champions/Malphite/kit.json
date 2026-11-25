@@ -3,7 +3,7 @@
   "champion": "Malphite",
   "label": "Derivado",
   "game_version": "16.23",
-  "content_version": "16.23.8406595+branch.releases-16-23.content.release",
+  "content_version": "16.23.8418428+branch.releases-16-23.content.release",
   "verified_against": {
     "content_version": "16.23.8406595+branch.releases-16-23.content.release",
     "bin_sha256": "a450af2bfb8413ee9141b19e5f36a54689798110df1ade0bc669560b0a368ba0",
@@ -40,7 +40,7 @@
             ]
           },
           "label": "Derivado",
-          "source": "Characters/Malphite/Spells/MalphiteShieldAbility/MalphiteShield.mSpellCalculations.TotalShield (16.23.8406595+branch.releases-16-23.content.release)",
+          "source": "Characters/Malphite/Spells/MalphiteShieldAbility/MalphiteShield.mSpellCalculations.TotalShield (16.23.8418428+branch.releases-16-23.content.release)",
           "trigger": "on_taking_damage",
           "cooldown_formula": {
             "op": "by_level",
@@ -108,7 +108,7 @@
                 ]
               },
               "label": "Derivado",
-              "source": "Characters/Malphite/Spells/SeismicShardAbility/SeismicShard.mSpellCalculations.QDamageCalc (16.23.8406595+branch.releases-16-23.content.release)",
+              "source": "Characters/Malphite/Spells/SeismicShardAbility/SeismicShard.mSpellCalculations.QDamageCalc (16.23.8418428+branch.releases-16-23.content.release)",
               "damage_type_source": "spell_seismicshard_tooltip <magicDamage>"
             }
           ]
@@ -173,7 +173,7 @@
                 ]
               },
               "label": "Derivado",
-              "source": "Characters/Malphite/Spells/ObduracyAbility/Obduracy.mSpellCalculations.TotalBonusDamage (16.23.8406595+branch.releases-16-23.content.release)",
+              "source": "Characters/Malphite/Spells/ObduracyAbility/Obduracy.mSpellCalculations.TotalBonusDamage (16.23.8418428+branch.releases-16-23.content.release)",
               "damage_type_source": "spell_obduracy_tooltip <physicalDamage>"
             }
           ]
@@ -228,7 +228,7 @@
                 ]
               },
               "label": "Derivado",
-              "source": "Characters/Malphite/Spells/ObduracyAbility/Obduracy.mSpellCalculations.ThunderclapSplash (16.23.8406595+branch.releases-16-23.content.release)",
+              "source": "Characters/Malphite/Spells/ObduracyAbility/Obduracy.mSpellCalculations.ThunderclapSplash (16.23.8418428+branch.releases-16-23.content.release)",
               "damage_type_source": "spell_obduracy_tooltip <physicalDamage>"
             }
           ]
@@ -294,7 +294,7 @@
                 ]
               },
               "label": "Derivado",
-              "source": "Characters/Malphite/Spells/LandslideAbility/Landslide.mSpellCalculations.EDamageCalc (16.23.8406595+branch.releases-16-23.content.release)",
+              "source": "Characters/Malphite/Spells/LandslideAbility/Landslide.mSpellCalculations.EDamageCalc (16.23.8418428+branch.releases-16-23.content.release)",
               "damage_type_source": "spell_landslide_tooltip <magicDamage>"
             }
           ]
@@ -343,7 +343,7 @@
                 ]
               },
               "label": "Derivado",
-              "source": "Characters/Malphite/Spells/UFSlashAbility/UFSlash.mSpellCalculations.TotalDamage (16.23.8406595+branch.releases-16-23.content.release)",
+              "source": "Characters/Malphite/Spells/UFSlashAbility/UFSlash.mSpellCalculations.TotalDamage (16.23.8418428+branch.releases-16-23.content.release)",
               "damage_type_source": "spell_ufslash_tooltip <magicDamage>"
             }
           ]
@@ -352,6 +352,19 @@
       "passive_stats": [],
       "not_modelled": [
         "Lanzamiento por los aires (KnockupDuration)"
+      ],
+      "cc_effects": [
+        {
+          "id": "r_airborne",
+          "name": "Fuerza imparable (lanzamiento por los aires)",
+          "kind": "airborne",
+          "duration_formula": {
+            "op": "constant",
+            "value": 1.5
+          },
+          "label": "Derivado",
+          "source": "Characters/Malphite/Spells/UFSlashAbility/UFSlash.DataValues.KnockupDuration (16.23.8418428+branch.releases-16-23.content.release)"
+        }
       ]
     }
   }

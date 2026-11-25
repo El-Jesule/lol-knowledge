@@ -196,6 +196,17 @@
       ],
       "not_modelled": [
         "Desplazamiento, ralentización y aturdimiento contra muro"
+      ],
+      "cc_effects": [
+        {
+          "id": "r_wall_slam_stun",
+          "name": "¡GNAR! (aturdimiento)",
+          "kind": "stun",
+          "data_value": "RCCDuration",
+          "case_ids": [
+            "wall_slam"
+          ]
+        }
       ]
     }
   }

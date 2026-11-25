@@ -3,7 +3,7 @@
   "champion": "Ornn",
   "label": "Derivado",
   "game_version": "16.23",
-  "content_version": "16.23.8406595+branch.releases-16-23.content.release",
+  "content_version": "16.23.8418428+branch.releases-16-23.content.release",
   "verified_against": {
     "content_version": "16.23.8406595+branch.releases-16-23.content.release",
     "bin_sha256": "082202886d8585bf66de2b4c85cadfa073d75640c86eee7faf7b622cc78e544b",
@@ -61,7 +61,7 @@
                 ]
               },
               "label": "Derivado",
-              "source": "Characters/Ornn/Spells/OrnnQAbility/OrnnQ.mSpellCalculations.TotalDamage (16.23.8406595+branch.releases-16-23.content.release)",
+              "source": "Characters/Ornn/Spells/OrnnQAbility/OrnnQ.mSpellCalculations.TotalDamage (16.23.8418428+branch.releases-16-23.content.release)",
               "damage_type_source": "spell_ornnq_tooltip <physicalDamage>"
             }
           ]
@@ -108,7 +108,7 @@
                 ]
               },
               "label": "Derivado",
-              "source": "Characters/Ornn/Spells/OrnnWAbility/OrnnW · DataValues.MaxPercentHPPerTickTooltip % × vida máxima del objetivo (16.23.8406595+branch.releases-16-23.content.release)",
+              "source": "Characters/Ornn/Spells/OrnnWAbility/OrnnW · DataValues.MaxPercentHPPerTickTooltip % × vida máxima del objetivo (16.23.8418428+branch.releases-16-23.content.release)",
               "damage_type_source": "spell_ornnw_tooltip <magicDamage>"
             }
           ]
@@ -136,7 +136,7 @@
                 ]
               },
               "label": "Derivado",
-              "source": "Characters/Ornn/Spells/OrnnWAbility/OrnnW · BrittlePercentMaxHPCalc × vida máxima del objetivo (16.23.8406595+branch.releases-16-23.content.release)",
+              "source": "Characters/Ornn/Spells/OrnnWAbility/OrnnW · BrittlePercentMaxHPCalc × vida máxima del objetivo (16.23.8418428+branch.releases-16-23.content.release)",
               "damage_type_source": "spell_ornnw_tooltip <magicDamage>"
             }
           ]
@@ -201,7 +201,7 @@
                 ]
               },
               "label": "Derivado",
-              "source": "Characters/Ornn/Spells/OrnnEAbility/OrnnE.mSpellCalculations.TotalDamage (16.23.8406595+branch.releases-16-23.content.release)",
+              "source": "Characters/Ornn/Spells/OrnnEAbility/OrnnE.mSpellCalculations.TotalDamage (16.23.8418428+branch.releases-16-23.content.release)",
               "damage_type_source": "spell_ornne_tooltip <physicalDamage>"
             }
           ]
@@ -210,6 +210,19 @@
       "passive_stats": [],
       "not_modelled": [
         "Lanzamiento por los aires al chocar con terreno (KnockupDuration)"
+      ],
+      "cc_effects": [
+        {
+          "id": "e_airborne",
+          "name": "Carga candente (lanzamiento por los aires)",
+          "kind": "airborne",
+          "duration_formula": {
+            "op": "constant",
+            "value": 1.25
+          },
+          "label": "Derivado",
+          "source": "Characters/Ornn/Spells/OrnnEAbility/OrnnE.DataValues.KnockupDuration (16.23.8418428+branch.releases-16-23.content.release)"
+        }
       ]
     },
     "R": {
@@ -250,7 +263,7 @@
                 ]
               },
               "label": "Derivado",
-              "source": "Characters/Ornn/Spells/OrnnRAbility/OrnnR.mSpellCalculations.RDamageCalc (16.23.8406595+branch.releases-16-23.content.release)",
+              "source": "Characters/Ornn/Spells/OrnnRAbility/OrnnR.mSpellCalculations.RDamageCalc (16.23.8418428+branch.releases-16-23.content.release)",
               "damage_type_source": "spell_ornnr_tooltip <magicDamage>"
             }
           ]
@@ -289,7 +302,7 @@
                 ]
               },
               "label": "Derivado",
-              "source": "Characters/Ornn/Spells/OrnnRAbility/OrnnR.mSpellCalculations.RDamageCalc (16.23.8406595+branch.releases-16-23.content.release)",
+              "source": "Characters/Ornn/Spells/OrnnRAbility/OrnnR.mSpellCalculations.RDamageCalc (16.23.8418428+branch.releases-16-23.content.release)",
               "damage_type_source": "spell_ornnr_tooltip <magicDamage>"
             },
             {
@@ -322,7 +335,7 @@
                 ]
               },
               "label": "Derivado",
-              "source": "Characters/Ornn/Spells/OrnnRAbility/OrnnR.mSpellCalculations.RDamageCalc (16.23.8406595+branch.releases-16-23.content.release)",
+              "source": "Characters/Ornn/Spells/OrnnRAbility/OrnnR.mSpellCalculations.RDamageCalc (16.23.8418428+branch.releases-16-23.content.release)",
               "damage_type_source": "spell_ornnr_tooltip <magicDamage>"
             }
           ]
@@ -331,6 +344,19 @@
       "passive_stats": [],
       "not_modelled": [
         "Aplicación de Quebradizo, ralentización y lanzamiento por los aires en el segundo impacto"
+      ],
+      "cc_effects": [
+        {
+          "id": "r_airborne",
+          "name": "Llamada del dios de la forja (lanzamiento por los aires)",
+          "kind": "airborne",
+          "duration_formula": {
+            "op": "constant",
+            "value": 1
+          },
+          "label": "Derivado",
+          "source": "Characters/Ornn/Spells/OrnnRAbility/OrnnR.DataValues.RStunDuration (16.23.8418428+branch.releases-16-23.content.release)"
+        }
       ]
     }
   }

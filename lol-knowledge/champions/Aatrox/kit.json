@@ -231,6 +231,19 @@
       "passive_stats": [],
       "not_modelled": [
         "Escalado de Q2 (+25 %) y Q3 (+50 %), levantamiento en el filo y modificador contra súbditos (QMinionDamage)"
+      ],
+      "cc_effects": [
+        {
+          "id": "q_airborne",
+          "name": "La Espada de los Oscuros (lanzamiento por los aires)",
+          "kind": "airborne",
+          "duration_formula": {
+            "op": "constant",
+            "value": 0.25
+          },
+          "label": "Derivado",
+          "source": "Characters/Aatrox/Spells/AatroxQAbility/AatroxQ.DataValues.QKnockupDuration (16.23.8418428+branch.releases-16-23.content.release)"
+        }
       ]
     },
     "W": {

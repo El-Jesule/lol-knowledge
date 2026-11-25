@@ -61,6 +61,14 @@
       ],
       "not_modelled": [
         "Inmovilización (SnareDuration)"
+      ],
+      "cc_effects": [
+        {
+          "id": "w_root",
+          "name": "Anillo de escarcha (enraizamiento)",
+          "kind": "root",
+          "data_value": "SnareDuration"
+        }
       ]
     },
     "E": {
@@ -104,6 +112,14 @@
           "name": "R (curación)",
           "kind": "heal",
           "calculation": "HealAmount"
+        }
+      ],
+      "cc_effects": [
+        {
+          "id": "r_stun",
+          "name": "Tumba helada (aturdimiento)",
+          "kind": "stun",
+          "data_value": "EnemyCastDuration"
         }
       ]
     }

@@ -17,7 +17,8 @@ from typing import Any
 from .damage import DamageType, format_number
 from .defense import DefenseSession, DefenseState, IncomingHit, open_defense_session
 from .errors import RotationError
-from .kit import Kit
+from .formula import ABILITY_OPS, FormulaError, evaluate_formula
+from .kit import Kit, sheet_stats
 from .resources import ResourceSummary
 from .rotation import (
     CritBase,
@@ -38,6 +39,7 @@ DEFAULT_DUEL_MODE = "scripted_then_attack"
 DEFAULT_DUEL_TIE_BREAK = "simultaneous"
 DEFAULT_DUEL_MAX_DURATION = Fraction(30)
 DEFAULT_PRIORITY_SLOTS: tuple[str, ...] = ("R", "Q", "W", "E")
+_QSS_ITEM_IDS = frozenset({"3139", "3140", "6035"})
 _MAX_DUEL_TICKS = 2000
 
 
@@ -213,6 +215,50 @@ def _is_exhausted(fighter: _FighterRuntime, at: Fraction) -> bool:
     return fighter.exhausted_until is not None and at < fighter.exhausted_until
 
 
+def _is_cleanse_ability(fighter: _FighterRuntime, slot: str, case_id: str | None) -> bool:
+    ab = fighter.spec.kit.abilities.get(slot)
+    if ab is None:
+        return False
+    return any(eff.kind == "cleanse" and eff.applies_to_case(case_id) for eff in ab.active_effects)
+
+
+def _step_min_clock(
+    fighter: _FighterRuntime, step: Step, st: DefenseState, clock: Fraction
+) -> Fraction:
+    """Earliest clock >= ``clock`` at which ``fighter`` is allowed to execute ``step``."""
+    base = max(clock, st.stasis_until) if (st.stasis_until and st.stasis_until > clock) else clock
+    if step.wait is not None:
+        return base
+    if step.item_id is not None:
+        if step.item_id in _QSS_ITEM_IDS:
+            return base
+        if st.abilities_locked_until and st.abilities_locked_until > base:
+            return st.abilities_locked_until
+        return base
+    if step.summoner_id is not None:
+        # Summoners (including Cleanse, Barrier, Heal, Ignite, Exhaust) are blocked by suppression
+        if st.suppressed_until and st.suppressed_until > base:
+            return st.suppressed_until
+        return base
+    if step.slot is not None:
+        if _is_cleanse_ability(fighter, step.slot, step.case):
+            # Milio R cannot cleanse suppression; QSS-tier cleanses (Alistar R, GP W, Olaf R) can
+            if (
+                fighter.spec.sheet.champion.id == "Milio"
+                and st.suppressed_until
+                and st.suppressed_until > base
+            ):
+                return st.suppressed_until
+            return base
+        if st.abilities_locked_until and st.abilities_locked_until > base:
+            return st.abilities_locked_until
+        return base
+    # Basic attack
+    if st.attacks_locked_until and st.attacks_locked_until > base:
+        return st.attacks_locked_until
+    return base
+
+
 def _next_action(
     fighter: _FighterRuntime,
     clock: Fraction,
@@ -232,22 +278,28 @@ def _next_action(
             if fighter.pending_wait_target is None:
                 fighter.pending_wait_target = min_clock + step.wait
             return max(min_clock, fighter.pending_wait_target), step, True
-        t_step = fighter.offense.peek_step_time(step, min_clock, allow_wait_for_cd=True)
-        return max(min_clock, t_step), step, True
+        allowed_at = _step_min_clock(fighter, step, st, clock)
+        t_step = fighter.offense.peek_step_time(step, allowed_at, allow_wait_for_cd=True)
+        return max(allowed_at, t_step), step, True
 
     if mode == "strict_scripted":
         return None
 
-    t_atk = max(min_clock, fighter.offense.next_attack_time())
+    atk_step = Step("attack")
+    atk_min = _step_min_clock(fighter, atk_step, st, clock)
+    t_atk = max(atk_min, fighter.offense.next_attack_time())
     if mode == "scripted_then_attack":
-        return t_atk, Step("attack"), False
+        return t_atk, atk_step, False
 
     # priority_loop: prefer ready & affordable priority abilities over attacks
     best_time = t_atk
-    best_step = Step("attack")
+    best_step = atk_step
     best_prio = len(fighter.priority_parsed) + 1
     for prio_idx, (slot, case_id) in enumerate(fighter.priority_parsed):
-        t_ready = max(min_clock, fighter.offense.ability_ready_time(slot))
+        text = f"{slot}.{case_id}" if case_id is not None else slot
+        cand_step = Step(text, slot=slot, case=case_id)
+        ab_min = _step_min_clock(fighter, cand_step, st, clock)
+        t_ready = max(ab_min, fighter.offense.ability_ready_time(slot))
         if t_ready > best_time:
             continue
         if not fighter.offense.can_cast_slot(slot, case_id, t_ready):
@@ -255,8 +307,7 @@ def _next_action(
         if t_ready < best_time or (t_ready == best_time and prio_idx < best_prio):
             best_time = t_ready
             best_prio = prio_idx
-            text = f"{slot}.{case_id}" if case_id is not None else slot
-            best_step = Step(text, slot=slot, case=case_id)
+            best_step = cand_step
     return best_time, best_step, False
 
 
@@ -276,6 +327,8 @@ def _deliver_parts(
     step_label: str,
     step_crit: bool,
     at: Fraction,
+    *,
+    actor_blinded: bool = False,
 ) -> tuple[Fraction, Fraction, Fraction, list[HealEvent], Fraction, list[Label], list[str]]:
     """Deliver post-resistance ``parts`` into ``defender.defense`` and build scaled vamp heals."""
     total_dealt = Fraction(0)
@@ -288,6 +341,10 @@ def _deliver_parts(
 
     for part in parts:
         if part.primary_damage <= 0:
+            continue
+        if actor_blinded and part.kind in {"attack", "on_hit"}:
+            notes.append(f"{actor.side} {step_label}: missed (blinded)")
+            labels.append(part.label)
             continue
         hit_kind = "crit" if (part.kind == "attack" and step_crit) else part.kind
         hit = IncomingHit(
@@ -413,6 +470,15 @@ def _phase1_activate_defensives(payload: _ActionPayload, at: Fraction) -> None:
     defender = payload.defender
     step = payload.step
 
+    if step.item_id in _QSS_ITEM_IDS:
+        cleared = actor.defense.cleanse_cc(qss=True, at=at)
+        cleared_txt = f" ({', '.join(cleared)})" if cleared else ""
+        payload.pre_notes.append(
+            f"item:{step.item_id} Quicksilver: cleansed active CC{cleared_txt}"
+        )
+        payload.pre_labels.append(Label.OFFICIAL)
+        return
+
     if step.slot is not None and step.slot in actor.spec.ranks:
         shs, hls, lbls, nts = actor.defense.activate_ability_cast(
             step.slot, actor.spec.ranks[step.slot], step.case, at
@@ -505,6 +571,8 @@ def _phase3_deliver_and_survive(
     for p in payloads:
         res = p.step_result
         assert res is not None
+        a_st = p.actor.defense.snapshot_state()
+        is_blinded = a_st.blinded_until is not None and at < a_st.blinded_until
         dealt, sh_abs, hp_dmg, vamp_heals, reactive, d_lbls, d_nts = _deliver_parts(
             p.actor,
             p.defender,
@@ -512,7 +580,40 @@ def _phase3_deliver_and_survive(
             p.step.text,
             p.step.crit,
             at,
+            actor_blinded=is_blinded,
         )
+        # Apply crowd-control effects declared on the cast ability
+        if p.step.slot is not None and p.step.slot in p.actor.spec.ranks:
+            ab = p.actor.spec.kit.abilities.get(p.step.slot)
+            if ab is not None and ab.cc_effects:
+                spell_blocked = any("spell shield" in n.lower() for n in d_nts)
+                actor_stats, _ = sheet_stats(p.actor.spec.sheet)
+                rank = p.actor.spec.ranks[p.step.slot]
+                for cc in ab.cc_effects:
+                    if not cc.applies_to_case(p.step.case):
+                        continue
+                    try:
+                        eval_dur = evaluate_formula(
+                            cc.duration_formula,
+                            actor_stats,
+                            rank=rank,
+                            level=p.actor.spec.sheet.level,
+                            ops=ABILITY_OPS,
+                        )
+                    except FormulaError:
+                        continue
+                    if eval_dur.exact is None or eval_dur.exact <= 0:
+                        continue
+                    _eff_dur, ss_heals, cc_lbls, cc_nts = p.defender.defense.apply_cc(
+                        cc,
+                        eval_dur.exact,
+                        at,
+                        blocked_by_spell_shield=spell_blocked,
+                    )
+                    for h_ev in ss_heals:
+                        p.defender.healing_done += h_ev.amount
+                    d_lbls.extend(cc_lbls)
+                    d_nts.extend(cc_nts)
         delivery_results.append((p, dealt, sh_abs, hp_dmg, vamp_heals, reactive, d_lbls, d_nts))
 
     # 3c. Apply post-hit debuffs (Ignite / Grievous Wounds / Exhaust) & Thornmail reflect
@@ -998,7 +1099,7 @@ def evaluate_duel(
 
     notes: list[str] = [
         f"duel: mode={mode}, tie_break={tie_break}, max_duration={format_number(max_duration)} s; "
-        "positioning, crowd-control locks, skillshot misses, and cast animation times "
+        "positioning, skillshot misses, channel interruptions, and cast animation times "
         "are not modelled",
         *(f"A: {n}" for n in rt_a.offense.get_notes()),
         *(f"A defense: {n}" for n in def_out_a.notes),

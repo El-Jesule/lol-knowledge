@@ -3,7 +3,7 @@
   "champion": "Malzahar",
   "label": "Derivado",
   "game_version": "16.23",
-  "content_version": "16.23.8406595+branch.releases-16-23.content.release",
+  "content_version": "16.23.8418428+branch.releases-16-23.content.release",
   "verified_against": {
     "content_version": "16.23.8406595+branch.releases-16-23.content.release",
     "bin_sha256": "f6f4e14ea1969017639f9ed59a1884d12f2161c3efde073c7476510a5fdf8c3a",
@@ -30,7 +30,7 @@
             "value": 90
           },
           "label": "Derivado",
-          "source": "Characters/Malzahar/Spells/MalzaharPassiveAbility/MalzaharPassive.DataValues.DRPercent (16.23.8406595+branch.releases-16-23.content.release)",
+          "source": "Characters/Malzahar/Spells/MalzaharPassiveAbility/MalzaharPassive.DataValues.DRPercent (16.23.8418428+branch.releases-16-23.content.release)",
           "mode": "percent",
           "cooldown_formula": {
             "op": "by_level",
@@ -98,7 +98,7 @@
                 ]
               },
               "label": "Derivado",
-              "source": "Characters/Malzahar/Spells/MalzaharQAbility/MalzaharQ.mSpellCalculations.TotalDamageTooltip (16.23.8406595+branch.releases-16-23.content.release)",
+              "source": "Characters/Malzahar/Spells/MalzaharQAbility/MalzaharQ.mSpellCalculations.TotalDamageTooltip (16.23.8418428+branch.releases-16-23.content.release)",
               "damage_type_source": "spell_malzaharq_tooltip <magicDamage>"
             }
           ]
@@ -107,6 +107,25 @@
       "passive_stats": [],
       "not_modelled": [
         "Silencio y reinicio de duración de Visiones maléficas"
+      ],
+      "cc_effects": [
+        {
+          "id": "q_silence",
+          "name": "Llamada del Vacío (silencio)",
+          "kind": "silence",
+          "duration_formula": {
+            "op": "by_rank",
+            "values": [
+              1,
+              1.25,
+              1.5,
+              1.75,
+              2
+            ]
+          },
+          "label": "Derivado",
+          "source": "Characters/Malzahar/Spells/MalzaharQAbility/MalzaharQ.DataValues.SilenceDuration (16.23.8418428+branch.releases-16-23.content.release)"
+        }
       ]
     },
     "W": {
@@ -158,7 +177,7 @@
                 ]
               },
               "label": "Derivado",
-              "source": "Characters/Malzahar/Spells/MalzaharEAbility/MalzaharE.mSpellCalculations.TotalDamage (16.23.8406595+branch.releases-16-23.content.release)",
+              "source": "Characters/Malzahar/Spells/MalzaharEAbility/MalzaharE.mSpellCalculations.TotalDamage (16.23.8418428+branch.releases-16-23.content.release)",
               "damage_type_source": "spell_malzahare_tooltip <magicDamage>"
             }
           ]
@@ -207,7 +226,7 @@
                 ]
               },
               "label": "Derivado",
-              "source": "Characters/Malzahar/Spells/MalzaharRAbility/MalzaharR.mSpellCalculations.TotalDamageTooltip (16.23.8406595+branch.releases-16-23.content.release)",
+              "source": "Characters/Malzahar/Spells/MalzaharRAbility/MalzaharR.mSpellCalculations.TotalDamageTooltip (16.23.8418428+branch.releases-16-23.content.release)",
               "damage_type_source": "spell_malzaharr_tooltip <magicDamage>"
             }
           ]
@@ -261,7 +280,7 @@
                 ]
               },
               "label": "Derivado",
-              "source": "Characters/Malzahar/Spells/MalzaharRAbility/MalzaharR · mSpellCalculations.ZoneDamageTooltip % × vida máxima del objetivo (16.23.8406595+branch.releases-16-23.content.release)",
+              "source": "Characters/Malzahar/Spells/MalzaharRAbility/MalzaharR · mSpellCalculations.ZoneDamageTooltip % × vida máxima del objetivo (16.23.8418428+branch.releases-16-23.content.release)",
               "damage_type_source": "spell_malzaharr_tooltip <magicDamage>"
             }
           ]
@@ -270,6 +289,19 @@
       "passive_stats": [],
       "not_modelled": [
         "Supresión de 2,5 s, duración total de 5 s de la zona y tope contra monstruos (120)"
+      ],
+      "cc_effects": [
+        {
+          "id": "r_suppression",
+          "name": "Tenaza infernal (supresión)",
+          "kind": "suppression",
+          "duration_formula": {
+            "op": "constant",
+            "value": 2.5
+          },
+          "label": "Derivado",
+          "source": "Characters/Malzahar/Spells/MalzaharRAbility/MalzaharR.DataValues.CCDuration (16.23.8418428+branch.releases-16-23.content.release)"
+        }
       ]
     }
   }

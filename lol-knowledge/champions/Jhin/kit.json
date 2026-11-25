@@ -3,7 +3,7 @@
   "champion": "Jhin",
   "label": "Derivado",
   "game_version": "16.23",
-  "content_version": "16.23.8406595+branch.releases-16-23.content.release",
+  "content_version": "16.23.8418428+branch.releases-16-23.content.release",
   "verified_against": {
     "content_version": "16.23.8406595+branch.releases-16-23.content.release",
     "bin_sha256": "f6eaa5243460f5a21217aaa9ebeea5c5913552ba0bc0720cca0ae7014d954595",
@@ -63,7 +63,7 @@
                 ]
               },
               "label": "Derivado",
-              "source": "Characters/Jhin/Spells/JhinPassiveAbility/JhinPassive · mSpellCalculations.FourthShotExecutePercent × vida faltante del objetivo (16.23.8406595+branch.releases-16-23.content.release)",
+              "source": "Characters/Jhin/Spells/JhinPassiveAbility/JhinPassive · mSpellCalculations.FourthShotExecutePercent × vida faltante del objetivo (16.23.8418428+branch.releases-16-23.content.release)",
               "damage_type_source": "spell_jhinpassive_tooltip <physicalDamage>"
             }
           ]
@@ -148,7 +148,7 @@
                 ]
               },
               "label": "Derivado",
-              "source": "Characters/Jhin/Spells/JhinPassiveAbility/JhinPassive · 0,75 × (2 + crit_damage_bonus) × DA total + mSpellCalculations.FourthShotExecutePercent × vida faltante (16.23.8406595+branch.releases-16-23.content.release)",
+              "source": "Characters/Jhin/Spells/JhinPassiveAbility/JhinPassive · 0,75 × (2 + crit_damage_bonus) × DA total + mSpellCalculations.FourthShotExecutePercent × vida faltante (16.23.8418428+branch.releases-16-23.content.release)",
               "damage_type_source": "spell_jhinpassive_tooltip <physicalDamage>"
             }
           ]
@@ -219,7 +219,7 @@
                 ]
               },
               "label": "Derivado",
-              "source": "Characters/Jhin/Spells/JhinQAbility/JhinQ.mSpellCalculations.TotalDamage (16.23.8406595+branch.releases-16-23.content.release)",
+              "source": "Characters/Jhin/Spells/JhinQAbility/JhinQ.mSpellCalculations.TotalDamage (16.23.8418428+branch.releases-16-23.content.release)",
               "damage_type_source": "spell_jhinq_tooltip <physicalDamage>"
             }
           ]
@@ -270,7 +270,7 @@
                 ]
               },
               "label": "Derivado",
-              "source": "Characters/Jhin/Spells/JhinWAbility/JhinW.mSpellCalculations.TotalDamage (16.23.8406595+branch.releases-16-23.content.release)",
+              "source": "Characters/Jhin/Spells/JhinWAbility/JhinW.mSpellCalculations.TotalDamage (16.23.8418428+branch.releases-16-23.content.release)",
               "damage_type_source": "spell_jhinw_tooltip <physicalDamage>"
             }
           ]
@@ -279,6 +279,25 @@
       "passive_stats": [],
       "not_modelled": [
         "Inmovilización sobre objetivos marcados, 75 % de daño a no campeones y velocidad de movimiento de Susurro"
+      ],
+      "cc_effects": [
+        {
+          "id": "w_root",
+          "name": "Florecer mortal (enraizamiento)",
+          "kind": "root",
+          "duration_formula": {
+            "op": "by_rank",
+            "values": [
+              1.25,
+              1.5,
+              1.75,
+              2,
+              2.25
+            ]
+          },
+          "label": "Derivado",
+          "source": "Characters/Jhin/Spells/JhinWAbility/JhinW.DataValues.RootDuration (16.23.8418428+branch.releases-16-23.content.release)"
+        }
       ]
     },
     "E": {
@@ -335,7 +354,7 @@
                 ]
               },
               "label": "Derivado",
-              "source": "Characters/Jhin/Spells/JhinEAbility/JhinE.mSpellCalculations.TotalDamage (16.23.8406595+branch.releases-16-23.content.release)",
+              "source": "Characters/Jhin/Spells/JhinEAbility/JhinE.mSpellCalculations.TotalDamage (16.23.8418428+branch.releases-16-23.content.release)",
               "damage_type_source": "spell_jhine_tooltip <magicDamage>"
             }
           ]
@@ -384,7 +403,7 @@
                 ]
               },
               "label": "Derivado",
-              "source": "Characters/Jhin/Spells/JhinRAbility/JhinR.mSpellCalculations.DamageCalc (16.23.8406595+branch.releases-16-23.content.release)",
+              "source": "Characters/Jhin/Spells/JhinRAbility/JhinR.mSpellCalculations.DamageCalc (16.23.8418428+branch.releases-16-23.content.release)",
               "damage_type_source": "spell_jhinr_tooltip <physicalDamage>"
             }
           ]
@@ -441,7 +460,7 @@
                 ]
               },
               "label": "Derivado",
-              "source": "Characters/Jhin/Spells/JhinRAbility/JhinR.mSpellCalculations.MaxIncreaseCalc (16.23.8406595+branch.releases-16-23.content.release)",
+              "source": "Characters/Jhin/Spells/JhinRAbility/JhinR.mSpellCalculations.MaxIncreaseCalc (16.23.8418428+branch.releases-16-23.content.release)",
               "damage_type_source": "spell_jhinr_tooltip <physicalDamage>"
             }
           ]

@@ -160,6 +160,19 @@
       "passive_stats": [],
       "not_modelled": [
         "Destrucción de escudos y aturdimiento (StunDuration)"
+      ],
+      "cc_effects": [
+        {
+          "id": "q_stun",
+          "name": "Golpe demoledor (aturdimiento)",
+          "kind": "stun",
+          "duration_formula": {
+            "op": "constant",
+            "value": 0.65
+          },
+          "label": "Derivado",
+          "source": "Characters/Rell/Spells/RellQAbility/RellQ.DataValues.StunDuration (16.23.8418428+branch.releases-16-23.content.release)"
+        }
       ]
     },
     "W": {
@@ -252,6 +265,19 @@
       "passive_stats": [],
       "not_modelled": [
         "Escudo al desmontar (Shield) y lanzamiento por los aires"
+      ],
+      "cc_effects": [
+        {
+          "id": "w_airborne",
+          "name": "Ferromancia - Caída / Montura (lanzamiento por los aires)",
+          "kind": "airborne",
+          "duration_formula": {
+            "op": "constant",
+            "value": 0.4
+          },
+          "label": "Derivado",
+          "source": "Characters/Rell/Spells/RellW_DismountAbility/RellW_Dismount.DataValues.CrashDownKnockupDuration (16.23.8418428+branch.releases-16-23.content.release)"
+        }
       ]
     },
     "E": {

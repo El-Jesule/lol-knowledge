@@ -75,6 +75,26 @@
       ],
       "not_modelled": [
         "Aturdimiento y destrucción de escudos en la versión potenciada"
+      ],
+      "cc_effects": [
+        {
+          "id": "w_basic_stun",
+          "name": "Depredador implacable (aturdimiento)",
+          "kind": "stun",
+          "data_value": "StunDuration",
+          "case_ids": [
+            "basic"
+          ]
+        },
+        {
+          "id": "w_empowered_stun",
+          "name": "Depredador implacable (aturdimiento)",
+          "kind": "stun",
+          "data_value": "EnragedStunDuration",
+          "case_ids": [
+            "empowered"
+          ]
+        }
       ]
     },
     "E": {

@@ -43,6 +43,14 @@
       ],
       "not_modelled": [
         "Inmovilización (RootDuration)"
+      ],
+      "cc_effects": [
+        {
+          "id": "q_root",
+          "name": "Hechizo oscuro (enraizamiento)",
+          "kind": "root",
+          "data_value": "RootDuration"
+        }
       ]
     },
     "W": {
@@ -88,6 +96,15 @@
           "duration_seconds": {
             "data_value": "ShieldDuration"
           }
+        },
+        {
+          "id": "black_shield_cc_immune",
+          "name": "Escudo negro (inmunidad a CC)",
+          "kind": "cc_immune",
+          "duration_seconds": {
+            "data_value": "ShieldDuration"
+          },
+          "source_note": "Previene efectos de inhabilitación e inmovilización mientras dura el escudo"
         }
       ]
     },
@@ -132,6 +149,14 @@
           "duration_seconds": {
             "data_value": "ChainDuration"
           }
+        }
+      ],
+      "cc_effects": [
+        {
+          "id": "r_stun",
+          "name": "Grilletes del alma (aturdimiento)",
+          "kind": "stun",
+          "data_value": "StunDuration"
         }
       ]
     }

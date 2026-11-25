@@ -3,7 +3,7 @@
   "champion": "TwistedFate",
   "label": "Derivado",
   "game_version": "16.23",
-  "content_version": "16.23.8406595+branch.releases-16-23.content.release",
+  "content_version": "16.23.8418428+branch.releases-16-23.content.release",
   "verified_against": {
     "content_version": "16.23.8406595+branch.releases-16-23.content.release",
     "bin_sha256": "a9377f5bd3808f1a0af321a9b3efdb5a55678c300b3cf29b07a504d3180cad61",
@@ -75,7 +75,7 @@
                 ]
               },
               "label": "Derivado",
-              "source": "Characters/TwistedFate/Spells/WildCardsAbility/WildCards.mSpellCalculations.TotalDamage (16.23.8406595+branch.releases-16-23.content.release)",
+              "source": "Characters/TwistedFate/Spells/WildCardsAbility/WildCards.mSpellCalculations.TotalDamage (16.23.8418428+branch.releases-16-23.content.release)",
               "damage_type_source": "spell_wildcards_tooltip <magicDamage>"
             }
           ]
@@ -200,7 +200,7 @@
                 ]
               },
               "label": "Derivado",
-              "source": "Characters/TwistedFate/Spells/PickACardAbility/PickACard.mSpellCalculations.BlueDamage (16.23.8406595+branch.releases-16-23.content.release)",
+              "source": "Characters/TwistedFate/Spells/PickACardAbility/PickACard.mSpellCalculations.BlueDamage (16.23.8418428+branch.releases-16-23.content.release)",
               "damage_type_source": "spell_pickacard_tooltip <magicDamage>"
             }
           ]
@@ -317,7 +317,7 @@
                 ]
               },
               "label": "Derivado",
-              "source": "Characters/TwistedFate/Spells/PickACardAbility/PickACard.mSpellCalculations.RedDamage (16.23.8406595+branch.releases-16-23.content.release)",
+              "source": "Characters/TwistedFate/Spells/PickACardAbility/PickACard.mSpellCalculations.RedDamage (16.23.8418428+branch.releases-16-23.content.release)",
               "damage_type_source": "spell_pickacard_tooltip <magicDamage>"
             }
           ]
@@ -434,7 +434,7 @@
                 ]
               },
               "label": "Derivado",
-              "source": "Characters/TwistedFate/Spells/PickACardAbility/PickACard.mSpellCalculations.GoldDamage (16.23.8406595+branch.releases-16-23.content.release)",
+              "source": "Characters/TwistedFate/Spells/PickACardAbility/PickACard.mSpellCalculations.GoldDamage (16.23.8418428+branch.releases-16-23.content.release)",
               "damage_type_source": "spell_pickacard_tooltip <magicDamage>"
             }
           ]
@@ -443,6 +443,28 @@
       "passive_stats": [],
       "not_modelled": [
         "Restauración de maná de carta azul, ralentización de carta roja y aturdimiento de carta dorada"
+      ],
+      "cc_effects": [
+        {
+          "id": "w_gold_card_stun",
+          "name": "Escoge una carta (aturdimiento)",
+          "kind": "stun",
+          "duration_formula": {
+            "op": "by_rank",
+            "values": [
+              1,
+              1.25,
+              1.5,
+              1.75,
+              2
+            ]
+          },
+          "label": "Derivado",
+          "source": "Characters/TwistedFate/Spells/PickACardAbility/PickACard.mEffectAmount.Effect3Amount (16.23.8418428+branch.releases-16-23.content.release)",
+          "case_ids": [
+            "gold_card"
+          ]
+        }
       ]
     },
     "E": {
@@ -499,7 +521,7 @@
                 ]
               },
               "label": "Derivado",
-              "source": "Characters/TwistedFate/Spells/CardmasterStackAbility/CardmasterStack.mSpellCalculations.BonusDamage (16.23.8406595+branch.releases-16-23.content.release)",
+              "source": "Characters/TwistedFate/Spells/CardmasterStackAbility/CardmasterStack.mSpellCalculations.BonusDamage (16.23.8418428+branch.releases-16-23.content.release)",
               "damage_type_source": "spell_cardmasterstack_tooltip <magicDamage>"
             }
           ]
@@ -519,7 +541,7 @@
             ]
           },
           "label": "Derivado",
-          "source": "Characters/TwistedFate/Spells/CardmasterStackAbility/CardmasterStack.DataValues.AttackSpeedBonus (16.23.8406595+branch.releases-16-23.content.release)",
+          "source": "Characters/TwistedFate/Spells/CardmasterStackAbility/CardmasterStack.DataValues.AttackSpeedBonus (16.23.8418428+branch.releases-16-23.content.release)",
           "condition": "Velocidad de ataque pasiva permanente al subir E (15..55 %)"
         }
       ],

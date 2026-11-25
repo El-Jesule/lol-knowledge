@@ -3,7 +3,7 @@
   "champion": "Heimerdinger",
   "label": "Derivado",
   "game_version": "16.23",
-  "content_version": "16.23.8406595+branch.releases-16-23.content.release",
+  "content_version": "16.23.8418428+branch.releases-16-23.content.release",
   "verified_against": {
     "content_version": "16.23.8406595+branch.releases-16-23.content.release",
     "bin_sha256": "eec638a80642c4defc34a12205db270088f177c5867b42ec8c2514ba43e95d94",
@@ -30,7 +30,7 @@
             "value": 0.2
           },
           "label": "Derivado",
-          "source": "Characters/Heimerdinger/Spells/HeimerdingerPassiveAbility/HeimerdingerPassive.DataValues.MovementSpeed (16.23.8406595+branch.releases-16-23.content.release)",
+          "source": "Characters/Heimerdinger/Spells/HeimerdingerPassiveAbility/HeimerdingerPassive.DataValues.MovementSpeed (16.23.8418428+branch.releases-16-23.content.release)",
           "stat": "move_speed",
           "mode": "percent_ms",
           "input_name": "heimerdinger_near_turret",
@@ -78,7 +78,7 @@
                 ]
               },
               "label": "Derivado",
-              "source": "Characters/Heimerdinger/Spells/HeimerdingerQAbility/HeimerdingerQ.mSpellCalculations.Damage (16.23.8406595+branch.releases-16-23.content.release)",
+              "source": "Characters/Heimerdinger/Spells/HeimerdingerQAbility/HeimerdingerQ.mSpellCalculations.Damage (16.23.8418428+branch.releases-16-23.content.release)",
               "damage_type_source": "spell_heimerdingerq_tooltipextendedbelowline <magicDamage>"
             }
           ]
@@ -119,7 +119,7 @@
                 ]
               },
               "label": "Derivado",
-              "source": "Characters/Heimerdinger/Spells/HeimerdingerQAbility/HeimerdingerQ.mSpellCalculations.DamageBeam (16.23.8406595+branch.releases-16-23.content.release)",
+              "source": "Characters/Heimerdinger/Spells/HeimerdingerQAbility/HeimerdingerQ.mSpellCalculations.DamageBeam (16.23.8418428+branch.releases-16-23.content.release)",
               "damage_type_source": "spell_heimerdingerq_tooltipextendedbelowline <magicDamage>"
             }
           ]
@@ -170,7 +170,7 @@
                 ]
               },
               "label": "Derivado",
-              "source": "Characters/Heimerdinger/Spells/HeimerdingerWAbility/HeimerdingerW.mSpellCalculations.Damage (16.23.8406595+branch.releases-16-23.content.release)",
+              "source": "Characters/Heimerdinger/Spells/HeimerdingerWAbility/HeimerdingerW.mSpellCalculations.Damage (16.23.8418428+branch.releases-16-23.content.release)",
               "damage_type_source": "spell_heimerdingerw_tooltip <magicDamage>"
             }
           ]
@@ -211,7 +211,7 @@
                 ]
               },
               "label": "Derivado",
-              "source": "Characters/Heimerdinger/Spells/HeimerdingerWAbility/HeimerdingerW.mSpellCalculations.TotalDamage (16.23.8406595+branch.releases-16-23.content.release)",
+              "source": "Characters/Heimerdinger/Spells/HeimerdingerWAbility/HeimerdingerW.mSpellCalculations.TotalDamage (16.23.8418428+branch.releases-16-23.content.release)",
               "damage_type_source": "spell_heimerdingerw_tooltip <magicDamage>"
             }
           ]
@@ -262,7 +262,7 @@
                 ]
               },
               "label": "Derivado",
-              "source": "Characters/Heimerdinger/Spells/HeimerdingerEAbility/HeimerdingerE.mSpellCalculations.Damage (16.23.8406595+branch.releases-16-23.content.release)",
+              "source": "Characters/Heimerdinger/Spells/HeimerdingerEAbility/HeimerdingerE.mSpellCalculations.Damage (16.23.8418428+branch.releases-16-23.content.release)",
               "damage_type_source": "spell_heimerdingere_tooltip <magicDamage>"
             }
           ]
@@ -271,6 +271,19 @@
       "passive_stats": [],
       "not_modelled": [
         "Ralentización en borde y aturdimiento en el centro"
+      ],
+      "cc_effects": [
+        {
+          "id": "e_stun",
+          "name": "Granada de tormenta de electrones CH-2 (aturdimiento)",
+          "kind": "stun",
+          "duration_formula": {
+            "op": "constant",
+            "value": 1.5
+          },
+          "label": "Derivado",
+          "source": "Characters/Heimerdinger/Spells/HeimerdingerEAbility/HeimerdingerE.DataValues.StunDuration (16.23.8418428+branch.releases-16-23.content.release)"
+        }
       ]
     },
     "R": {
@@ -311,7 +324,7 @@
                 ]
               },
               "label": "Derivado",
-              "source": "Characters/Heimerdinger/Spells/HeimerdingerRAbility/HeimerdingerR.mSpellCalculations.QUltDamage (16.23.8406595+branch.releases-16-23.content.release)",
+              "source": "Characters/Heimerdinger/Spells/HeimerdingerRAbility/HeimerdingerR.mSpellCalculations.QUltDamage (16.23.8418428+branch.releases-16-23.content.release)",
               "damage_type_source": "spell_heimerdingerr_tooltip <magicDamage>"
             }
           ]
@@ -350,7 +363,7 @@
                 ]
               },
               "label": "Derivado",
-              "source": "Characters/Heimerdinger/Spells/HeimerdingerRAbility/HeimerdingerR.mSpellCalculations.QUltDamageBeam (16.23.8406595+branch.releases-16-23.content.release)",
+              "source": "Characters/Heimerdinger/Spells/HeimerdingerRAbility/HeimerdingerR.mSpellCalculations.QUltDamageBeam (16.23.8418428+branch.releases-16-23.content.release)",
               "damage_type_source": "spell_heimerdingerr_tooltip <magicDamage>"
             }
           ]
@@ -389,7 +402,7 @@
                 ]
               },
               "label": "Derivado",
-              "source": "Characters/Heimerdinger/Spells/HeimerdingerRAbility/HeimerdingerR.mSpellCalculations.WUltDamage (16.23.8406595+branch.releases-16-23.content.release)",
+              "source": "Characters/Heimerdinger/Spells/HeimerdingerRAbility/HeimerdingerR.mSpellCalculations.WUltDamage (16.23.8418428+branch.releases-16-23.content.release)",
               "damage_type_source": "spell_heimerdingerr_tooltip <magicDamage>"
             }
           ]
@@ -428,7 +441,7 @@
                 ]
               },
               "label": "Derivado",
-              "source": "Characters/Heimerdinger/Spells/HeimerdingerRAbility/HeimerdingerR.mSpellCalculations.WUltTotalDamage (16.23.8406595+branch.releases-16-23.content.release)",
+              "source": "Characters/Heimerdinger/Spells/HeimerdingerRAbility/HeimerdingerR.mSpellCalculations.WUltTotalDamage (16.23.8418428+branch.releases-16-23.content.release)",
               "damage_type_source": "spell_heimerdingerr_tooltip <magicDamage>"
             }
           ]
@@ -467,7 +480,7 @@
                 ]
               },
               "label": "Derivado",
-              "source": "Characters/Heimerdinger/Spells/HeimerdingerRAbility/HeimerdingerR.mSpellCalculations.EUltDamage (16.23.8406595+branch.releases-16-23.content.release)",
+              "source": "Characters/Heimerdinger/Spells/HeimerdingerRAbility/HeimerdingerR.mSpellCalculations.EUltDamage (16.23.8418428+branch.releases-16-23.content.release)",
               "damage_type_source": "spell_heimerdingerr_tooltip <magicDamage>"
             }
           ]

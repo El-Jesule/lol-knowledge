@@ -374,6 +374,19 @@
       "passive_stats": [],
       "not_modelled": [
         "Aturdimiento de frente o ralentización de espaldas"
+      ],
+      "cc_effects": [
+        {
+          "id": "r_stun",
+          "name": "Mirada petrificante (aturdimiento)",
+          "kind": "stun",
+          "duration_formula": {
+            "op": "constant",
+            "value": 2
+          },
+          "label": "Derivado",
+          "source": "Characters/Cassiopeia/Spells/CassiopeiaRAbility/CassiopeiaR.DataValues.RCCDuration (16.23.8418428+branch.releases-16-23.content.release)"
+        }
       ]
     }
   }

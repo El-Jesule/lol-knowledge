@@ -144,6 +144,25 @@
       "passive_stats": [],
       "not_modelled": [
         "Ralentización del 60 % y aturdimiento al encadenar dos enemigos o un muro"
+      ],
+      "cc_effects": [
+        {
+          "id": "q_stun",
+          "name": "Cadenas cósmicas (aturdimiento)",
+          "kind": "stun",
+          "duration_formula": {
+            "op": "by_rank",
+            "values": [
+              1,
+              1.2,
+              1.4,
+              1.6,
+              1.8
+            ]
+          },
+          "label": "Derivado",
+          "source": "Characters/Bard/Spells/BardQAbility/BardQ.DataValues.StunDuration (16.23.8418428+branch.releases-16-23.content.release)"
+        }
       ]
     },
     "W": {

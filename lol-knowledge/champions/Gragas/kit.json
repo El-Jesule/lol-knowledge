@@ -334,6 +334,19 @@
       "passive_stats": [],
       "not_modelled": [
         "Lanzamiento por los aires y reducción de enfriamiento al golpear"
+      ],
+      "cc_effects": [
+        {
+          "id": "e_airborne",
+          "name": "Barrigazo (lanzamiento por los aires)",
+          "kind": "airborne",
+          "duration_formula": {
+            "op": "constant",
+            "value": 1
+          },
+          "label": "Derivado",
+          "source": "Characters/Gragas/Spells/GragasEAbility/GragasE.DataValues.StunDuration (16.23.8418428+branch.releases-16-23.content.release)"
+        }
       ]
     },
     "R": {

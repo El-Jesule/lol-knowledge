@@ -438,6 +438,29 @@
           "stat": "move_speed",
           "mode": "percent_ms",
           "duration_seconds": 3
+        },
+        {
+          "id": "ragnarok_cleanse",
+          "name": "Ragnarok (purga de CC)",
+          "kind": "cleanse",
+          "formula": {
+            "op": "constant",
+            "value": 1
+          },
+          "label": "Derivado",
+          "source": "Characters/Olaf/Spells/OlafRagnarokAbility/OlafRagnarok · Elimina todos los efectos de inmovilización e inhabilitación al lanzar R (16.23.8418428+branch.releases-16-23.content.release)"
+        },
+        {
+          "id": "ragnarok_cc_immune",
+          "name": "Ragnarok (inmunidad a CC)",
+          "kind": "cc_immune",
+          "formula": {
+            "op": "constant",
+            "value": 1
+          },
+          "label": "Derivado",
+          "source": "Characters/Olaf/Spells/OlafRagnarokAbility/OlafRagnarok · Inmune a control de masas durante Ragnarok (16.23.8418428+branch.releases-16-23.content.release)",
+          "duration_seconds": 3
         }
       ]
     }

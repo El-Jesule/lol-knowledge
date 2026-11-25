@@ -94,6 +94,19 @@
       "passive_stats": [],
       "not_modelled": [
         "Lanzamiento por los aires (KnockupDuration)"
+      ],
+      "cc_effects": [
+        {
+          "id": "q_airborne",
+          "name": "Pulverización (lanzamiento por los aires)",
+          "kind": "airborne",
+          "duration_formula": {
+            "op": "constant",
+            "value": 1
+          },
+          "label": "Derivado",
+          "source": "Characters/Alistar/Spells/PulverizeAbility/Pulverize.DataValues.KnockupDuration (16.23.8418428+branch.releases-16-23.content.release)"
+        }
       ]
     },
     "W": {
@@ -231,6 +244,19 @@
       "passive_stats": [],
       "not_modelled": [
         "Aturdimiento del ataque potenciado"
+      ],
+      "cc_effects": [
+        {
+          "id": "e_stun",
+          "name": "Pisotear (aturdimiento)",
+          "kind": "stun",
+          "duration_formula": {
+            "op": "constant",
+            "value": 1
+          },
+          "label": "Derivado",
+          "source": "Characters/Alistar/Spells/AlistarEAbility/AlistarE.DataValues.StunDuration (16.23.8418428+branch.releases-16-23.content.release)"
+        }
       ]
     },
     "R": {
@@ -258,6 +284,17 @@
           "source": "Characters/Alistar/Spells/FerociousHowlAbility/FerociousHowl.DataValues.RDamageReduction (16.23.8418428+branch.releases-16-23.content.release)",
           "mode": "percent",
           "duration_seconds": 7
+        },
+        {
+          "id": "unbreakable_will_cleanse",
+          "name": "Voluntad inquebrantable (purga de CC)",
+          "kind": "cleanse",
+          "formula": {
+            "op": "constant",
+            "value": 1
+          },
+          "label": "Derivado",
+          "source": "Characters/Alistar/Spells/FerociousHowlAbility/FerociousHowl · Purga inmediata de efectos de control de masas al lanzar R (16.23.8418428+branch.releases-16-23.content.release)"
         }
       ]
     }

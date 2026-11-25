@@ -478,6 +478,19 @@
       "passive_stats": [],
       "not_modelled": [
         "Desplazamiento inicial (E1) y lanzamiento por los aires"
+      ],
+      "cc_effects": [
+        {
+          "id": "e_airborne",
+          "name": "Fuga / Rapto (lanzamiento por los aires)",
+          "kind": "airborne",
+          "duration_formula": {
+            "op": "constant",
+            "value": 0.5
+          },
+          "label": "Derivado",
+          "source": "Characters/Sylas/Spells/SylasEAbility/SylasE.DataValues.KnockUpDuration (16.23.8418428+branch.releases-16-23.content.release)"
+        }
       ]
     },
     "R": {

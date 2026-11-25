@@ -267,6 +267,25 @@
       "passive_stats": [],
       "not_modelled": [
         "Inmovilización en área tras 1 s"
+      ],
+      "cc_effects": [
+        {
+          "id": "w_root",
+          "name": "Último abrazo (enraizamiento)",
+          "kind": "root",
+          "duration_formula": {
+            "op": "by_rank",
+            "values": [
+              1.25,
+              1.5,
+              1.75,
+              2,
+              2.25
+            ]
+          },
+          "label": "Derivado",
+          "source": "Characters/Senna/Spells/SennaWAbility/SennaW.DataValues.RootDuration (16.23.8418428+branch.releases-16-23.content.release)"
+        }
       ]
     },
     "E": {

@@ -3,7 +3,7 @@
   "champion": "Zyra",
   "label": "Derivado",
   "game_version": "16.23",
-  "content_version": "16.23.8406595+branch.releases-16-23.content.release",
+  "content_version": "16.23.8418428+branch.releases-16-23.content.release",
   "verified_against": {
     "content_version": "16.23.8406595+branch.releases-16-23.content.release",
     "bin_sha256": "21e50b9544b2d979b0c856cf094d25132c7cb2a6148473177081e28fc366dc91",
@@ -47,7 +47,7 @@
                 ]
               },
               "label": "Derivado",
-              "source": "Characters/Zyra/Spells/ZyraPAbility/ZyraP.mSpellCalculations.PlantDamage (16.23.8406595+branch.releases-16-23.content.release)",
+              "source": "Characters/Zyra/Spells/ZyraPAbility/ZyraP.mSpellCalculations.PlantDamage (16.23.8418428+branch.releases-16-23.content.release)",
               "damage_type_source": "game_buff_tooltip_zyrap <magicDamage>"
             }
           ]
@@ -98,7 +98,7 @@
                 ]
               },
               "label": "Derivado",
-              "source": "Characters/Zyra/Spells/ZyraQAbility/ZyraQ.mSpellCalculations.InitialDamage (16.23.8406595+branch.releases-16-23.content.release)",
+              "source": "Characters/Zyra/Spells/ZyraQAbility/ZyraQ.mSpellCalculations.InitialDamage (16.23.8418428+branch.releases-16-23.content.release)",
               "damage_type_source": "spell_zyraq_tooltip <magicDamage>"
             }
           ]
@@ -158,7 +158,7 @@
                 ]
               },
               "label": "Derivado",
-              "source": "Characters/Zyra/Spells/ZyraEAbility/ZyraE.mSpellCalculations.TotalDamage (16.23.8406595+branch.releases-16-23.content.release)",
+              "source": "Characters/Zyra/Spells/ZyraEAbility/ZyraE.mSpellCalculations.TotalDamage (16.23.8418428+branch.releases-16-23.content.release)",
               "damage_type_source": "spell_zyrae_tooltip <magicDamage>"
             }
           ]
@@ -167,6 +167,25 @@
       "passive_stats": [],
       "not_modelled": [
         "Inmovilización (RootDuration) e invocación de Azotavides"
+      ],
+      "cc_effects": [
+        {
+          "id": "e_root",
+          "name": "Raíces atenazadoras (enraizamiento)",
+          "kind": "root",
+          "duration_formula": {
+            "op": "by_rank",
+            "values": [
+              1,
+              1.25,
+              1.5,
+              1.75,
+              2
+            ]
+          },
+          "label": "Derivado",
+          "source": "Characters/Zyra/Spells/ZyraEAbility/ZyraE.DataValues.RootDuration (16.23.8418428+branch.releases-16-23.content.release)"
+        }
       ]
     },
     "R": {
@@ -207,7 +226,7 @@
                 ]
               },
               "label": "Derivado",
-              "source": "Characters/Zyra/Spells/ZyraRAbility/ZyraR.mSpellCalculations.TotalDamage (16.23.8406595+branch.releases-16-23.content.release)",
+              "source": "Characters/Zyra/Spells/ZyraRAbility/ZyraR.mSpellCalculations.TotalDamage (16.23.8418428+branch.releases-16-23.content.release)",
               "damage_type_source": "spell_zyrar_tooltip <magicDamage>"
             }
           ]
@@ -216,6 +235,19 @@
       "passive_stats": [],
       "not_modelled": [
         "Lanzamiento por los aires tras 2 s y enfurecimiento de plantas"
+      ],
+      "cc_effects": [
+        {
+          "id": "r_airborne",
+          "name": "Tuercespinas (lanzamiento por los aires)",
+          "kind": "airborne",
+          "duration_formula": {
+            "op": "constant",
+            "value": 1
+          },
+          "label": "Derivado",
+          "source": "Characters/Zyra/Spells/ZyraRAbility/ZyraR.DataValues.KnockupDuration (16.23.8418428+branch.releases-16-23.content.release)"
+        }
       ]
     }
   }

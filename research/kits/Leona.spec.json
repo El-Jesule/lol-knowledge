@@ -40,6 +40,14 @@
       ],
       "not_modelled": [
         "Aturdimiento (StunDuration) y daño del ataque básico aparte"
+      ],
+      "cc_effects": [
+        {
+          "id": "q_stun",
+          "name": "Escudo del amanecer (aturdimiento)",
+          "kind": "stun",
+          "data_value": "StunDuration"
+        }
       ]
     },
     "W": {
@@ -113,6 +121,14 @@
       ],
       "not_modelled": [
         "Inmovilización y desplazamiento hacia el último campeón alcanzado"
+      ],
+      "cc_effects": [
+        {
+          "id": "e_root",
+          "name": "Hoja del cénit (enraizamiento)",
+          "kind": "root",
+          "data_value": "RootDuration"
+        }
       ]
     },
     "R": {
@@ -131,6 +147,14 @@
       ],
       "not_modelled": [
         "Aturdimiento en el centro y ralentización en el borde"
+      ],
+      "cc_effects": [
+        {
+          "id": "r_stun",
+          "name": "Llamarada solar (aturdimiento)",
+          "kind": "stun",
+          "data_value": "CCDuration"
+        }
       ]
     }
   }

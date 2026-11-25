@@ -49,6 +49,14 @@
       ],
       "not_modelled": [
         "Lanzamiento por los aires de 1 s y ralentización posterior"
+      ],
+      "cc_effects": [
+        {
+          "id": "q_airborne",
+          "name": "Ruptura (lanzamiento por los aires)",
+          "kind": "airborne",
+          "effect_index": 5
+        }
       ]
     },
     "W": {
@@ -66,6 +74,14 @@
               "calculation": "TotalDamageTooltip"
             }
           ]
+        }
+      ],
+      "cc_effects": [
+        {
+          "id": "w_silence",
+          "name": "Grito salvaje (silencio)",
+          "kind": "silence",
+          "effect_index": 2
         }
       ]
     },

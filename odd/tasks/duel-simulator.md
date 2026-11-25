@@ -22,5 +22,9 @@ Añadir un simulador determinista de duelo 1v1 acoplado sobre reloj discreto exa
    - `src/lol_knowledge/mcp_server.py`: herramienta `lol_duel` y soporte `duel` en `lol_optimize`.
    - `src/lol_knowledge/optimizer/`: objetivo `duel` en `models.py`, `search.py` y `report.py`.
 4. **Pruebas y documentación:**
-   - `tests/test_duel.py` (19 pruebas cubriendo simetría exacta, empates, modos, mecánicas acopladas y paridad CLI/contrato/MCP/optimizador).
-   - `lol-knowledge/mechanics/duel.md`, actualización de `lol-knowledge/ai-layer.md` y `lol-knowledge/INDEX.md`.
+   - `tests/test_duel.py` (29 pruebas cubriendo simetría exacta, empates, modos, mecánicas acopladas, bloqueos por CC con tenacidad/purgas/inmunidad/escudo de hechizos y paridad CLI/contrato/MCP/optimizador).
+   - `lol-knowledge/mechanics/duel.md`, actualización de `lol-knowledge/mechanics/tenacity.md`, `lol-knowledge/ai-layer.md` y `lol-knowledge/INDEX.md`.
+5. **Control de masas en duelos (`cc_effects`):**
+   - Esquema `CCEffectSpec` / `cc_effects` en `src/lol_knowledge/kit/model.py` y compilador `research/binmodel/kitgen.py` (incluyendo soporte de `effect_index` y `cleanse`/`cc_immune` en `active_effects`).
+   - `112/173` campeones (`148` habilidades, `154` efectos de CC auditados) + `8` purgas/inmunidades a CC compilados desde el cliente `16.23`.
+   - Bloqueos en reloj discreto por tipo de CC, reducción por tenacidad (suelo `0,3 s`, inmunidad de `airborne`/`suppression`), *Limpiar* (`+75 %` tenacidad 3 s), purgas QSS/campeón, inmunidades a CC, *Inquebrantable* (`8242`) vivo e interceptación por escudo de hechizos incluso en CC sin daño (`Lulu W`).

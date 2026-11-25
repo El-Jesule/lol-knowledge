@@ -205,6 +205,25 @@
       "passive_stats": [],
       "not_modelled": [
         "Hechizo, ralentización y reducción porcentual de RM contra campeones (MRShred)"
+      ],
+      "cc_effects": [
+        {
+          "id": "w_charm",
+          "name": "Sed de lujuria (encanto)",
+          "kind": "charm",
+          "duration_formula": {
+            "op": "by_rank",
+            "values": [
+              1.25,
+              1.5,
+              1.75,
+              2,
+              2.25
+            ]
+          },
+          "label": "Derivado",
+          "source": "Characters/Evelynn/Spells/EvelynnWAbility/EvelynnW.DataValues.CharmDuration (16.23.8418428+branch.releases-16-23.content.release)"
+        }
       ]
     },
     "E": {

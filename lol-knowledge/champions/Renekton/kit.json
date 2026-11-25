@@ -259,6 +259,36 @@
       "passive_stats": [],
       "not_modelled": [
         "Aturdimiento y destrucción de escudos en la versión potenciada"
+      ],
+      "cc_effects": [
+        {
+          "id": "w_basic_stun",
+          "name": "Depredador implacable (aturdimiento)",
+          "kind": "stun",
+          "duration_formula": {
+            "op": "constant",
+            "value": 0.75
+          },
+          "label": "Derivado",
+          "source": "Characters/Renekton/Spells/RenektonPreExecuteAbility/RenektonPreExecute.DataValues.StunDuration (16.23.8418428+branch.releases-16-23.content.release)",
+          "case_ids": [
+            "basic"
+          ]
+        },
+        {
+          "id": "w_empowered_stun",
+          "name": "Depredador implacable (aturdimiento)",
+          "kind": "stun",
+          "duration_formula": {
+            "op": "constant",
+            "value": 1.5
+          },
+          "label": "Derivado",
+          "source": "Characters/Renekton/Spells/RenektonPreExecuteAbility/RenektonPreExecute.DataValues.EnragedStunDuration (16.23.8418428+branch.releases-16-23.content.release)",
+          "case_ids": [
+            "empowered"
+          ]
+        }
       ]
     },
     "E": {

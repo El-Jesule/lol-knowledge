@@ -612,6 +612,19 @@
           "source": "Characters/Galio/Spells/GalioWAbility/GalioW.mSpellCalculations.TotalPassiveShield (16.23.8418428+branch.releases-16-23.content.release)",
           "shield_type": "magic"
         }
+      ],
+      "cc_effects": [
+        {
+          "id": "w_taunt",
+          "name": "Escudo de Durand (provocación)",
+          "kind": "taunt",
+          "duration_formula": {
+            "op": "constant",
+            "value": 0.5
+          },
+          "label": "Derivado",
+          "source": "Characters/Galio/Spells/GalioWAbility/GalioW.DataValues.CCDurationMin (16.23.8418428+branch.releases-16-23.content.release)"
+        }
       ]
     },
     "E": {
@@ -713,6 +726,19 @@
       "passive_stats": [],
       "not_modelled": [
         "Lanzamiento por los aires (KnockupDuration)"
+      ],
+      "cc_effects": [
+        {
+          "id": "e_airborne",
+          "name": "Puñetazo justiciero (lanzamiento por los aires)",
+          "kind": "airborne",
+          "duration_formula": {
+            "op": "constant",
+            "value": 0.75
+          },
+          "label": "Derivado",
+          "source": "Characters/Galio/Spells/GalioEAbility/GalioE.DataValues.KnockupDuration (16.23.8418428+branch.releases-16-23.content.release)"
+        }
       ]
     },
     "R": {
@@ -776,6 +802,19 @@
       "passive_stats": [],
       "not_modelled": [
         "Escudo mágico a aliados en la zona y lanzamiento por los aires"
+      ],
+      "cc_effects": [
+        {
+          "id": "r_airborne",
+          "name": "Entrada heroica (lanzamiento por los aires)",
+          "kind": "airborne",
+          "duration_formula": {
+            "op": "constant",
+            "value": 0.75
+          },
+          "label": "Derivado",
+          "source": "Characters/Galio/Spells/GalioRAbility/GalioR.DataValues.StunDurationOuter (16.23.8418428+branch.releases-16-23.content.release)"
+        }
       ]
     }
   }

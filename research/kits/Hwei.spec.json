@@ -192,6 +192,26 @@
       ],
       "not_modelled": [
         "Efectos de control de masas de EQ (miedo), EW (raíz) y EE (atracción + ralentización)"
+      ],
+      "cc_effects": [
+        {
+          "id": "e_eq_fear",
+          "name": "Temática: Tormentos (miedo)",
+          "kind": "fear",
+          "data_value": "Tooltip_EQFleeDuration",
+          "case_ids": [
+            "eq"
+          ]
+        },
+        {
+          "id": "e_ew_root",
+          "name": "Temática: Tormentos (enraizamiento)",
+          "kind": "root",
+          "data_value": "Tooltip_EWRootDuration",
+          "case_ids": [
+            "ew"
+          ]
+        }
       ]
     },
     "R": {

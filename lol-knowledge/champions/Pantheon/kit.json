@@ -339,6 +339,19 @@
       "passive_stats": [],
       "not_modelled": [
         "Aturdimiento (StunDuration) y límites de daño contra monstruos"
+      ],
+      "cc_effects": [
+        {
+          "id": "w_stun",
+          "name": "Salto con escudo (aturdimiento)",
+          "kind": "stun",
+          "duration_formula": {
+            "op": "constant",
+            "value": 1
+          },
+          "label": "Derivado",
+          "source": "Characters/Pantheon/Spells/PantheonWAbility/PantheonW.DataValues.StunDuration (16.23.8418428+branch.releases-16-23.content.release)"
+        }
       ]
     },
     "E": {

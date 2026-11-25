@@ -3,7 +3,7 @@
   "champion": "Velkoz",
   "label": "Derivado",
   "game_version": "16.23",
-  "content_version": "16.23.8406595+branch.releases-16-23.content.release",
+  "content_version": "16.23.8418428+branch.releases-16-23.content.release",
   "verified_against": {
     "content_version": "16.23.8406595+branch.releases-16-23.content.release",
     "bin_sha256": "cb46b8bc9614ab554a254a81cf3be55cddd8fe9c87af45c5a4f7b8e67c43697a",
@@ -47,7 +47,7 @@
                 ]
               },
               "label": "Derivado",
-              "source": "Characters/Velkoz/Spells/VelkozPassiveAbility/VelkozPassive.mSpellCalculations.TotalDamage (16.23.8406595+branch.releases-16-23.content.release)",
+              "source": "Characters/Velkoz/Spells/VelkozPassiveAbility/VelkozPassive.mSpellCalculations.TotalDamage (16.23.8418428+branch.releases-16-23.content.release)",
               "damage_type_source": "spell_velkozpassive_tooltip <trueDamage>"
             }
           ]
@@ -85,7 +85,7 @@
             ]
           },
           "label": "Derivado",
-          "source": "Characters/Velkoz/Spells/VelkozPassiveAbility/VelkozPassive.mSpellCalculations.TotalDamage (16.23.8406595+branch.releases-16-23.content.release)",
+          "source": "Characters/Velkoz/Spells/VelkozPassiveAbility/VelkozPassive.mSpellCalculations.TotalDamage (16.23.8418428+branch.releases-16-23.content.release)",
           "trigger": "every_n_hits",
           "damage_type": "true",
           "every": 3
@@ -132,7 +132,7 @@
                 ]
               },
               "label": "Derivado",
-              "source": "Characters/Velkoz/Spells/VelkozQAbility/VelkozQ.mSpellCalculations.TotalDamage (16.23.8406595+branch.releases-16-23.content.release)",
+              "source": "Characters/Velkoz/Spells/VelkozQAbility/VelkozQ.mSpellCalculations.TotalDamage (16.23.8418428+branch.releases-16-23.content.release)",
               "damage_type_source": "spell_velkozq_tooltip <magicDamage>"
             }
           ]
@@ -183,7 +183,7 @@
                 ]
               },
               "label": "Derivado",
-              "source": "Characters/Velkoz/Spells/VelkozWAbility/VelkozW.mSpellCalculations.InitialDamage (16.23.8406595+branch.releases-16-23.content.release)",
+              "source": "Characters/Velkoz/Spells/VelkozWAbility/VelkozW.mSpellCalculations.InitialDamage (16.23.8418428+branch.releases-16-23.content.release)",
               "damage_type_source": "spell_velkozw_tooltip <magicDamage>"
             }
           ]
@@ -224,7 +224,7 @@
                 ]
               },
               "label": "Derivado",
-              "source": "Characters/Velkoz/Spells/VelkozWAbility/VelkozW.mSpellCalculations.SecondaryDamage (16.23.8406595+branch.releases-16-23.content.release)",
+              "source": "Characters/Velkoz/Spells/VelkozWAbility/VelkozW.mSpellCalculations.SecondaryDamage (16.23.8418428+branch.releases-16-23.content.release)",
               "damage_type_source": "spell_velkozw_tooltip <magicDamage>"
             }
           ]
@@ -265,7 +265,7 @@
                 ]
               },
               "label": "Derivado",
-              "source": "Characters/Velkoz/Spells/VelkozWAbility/VelkozW.mSpellCalculations.InitialDamage (16.23.8406595+branch.releases-16-23.content.release)",
+              "source": "Characters/Velkoz/Spells/VelkozWAbility/VelkozW.mSpellCalculations.InitialDamage (16.23.8418428+branch.releases-16-23.content.release)",
               "damage_type_source": "spell_velkozw_tooltip <magicDamage>"
             },
             {
@@ -300,7 +300,7 @@
                 ]
               },
               "label": "Derivado",
-              "source": "Characters/Velkoz/Spells/VelkozWAbility/VelkozW.mSpellCalculations.SecondaryDamage (16.23.8406595+branch.releases-16-23.content.release)",
+              "source": "Characters/Velkoz/Spells/VelkozWAbility/VelkozW.mSpellCalculations.SecondaryDamage (16.23.8418428+branch.releases-16-23.content.release)",
               "damage_type_source": "spell_velkozw_tooltip <magicDamage>"
             }
           ]
@@ -351,7 +351,7 @@
                 ]
               },
               "label": "Derivado",
-              "source": "Characters/Velkoz/Spells/VelkozEAbility/VelkozE.mSpellCalculations.TotalDamage (16.23.8406595+branch.releases-16-23.content.release)",
+              "source": "Characters/Velkoz/Spells/VelkozEAbility/VelkozE.mSpellCalculations.TotalDamage (16.23.8418428+branch.releases-16-23.content.release)",
               "damage_type_source": "spell_velkoze_tooltip <magicDamage>"
             }
           ]
@@ -360,6 +360,19 @@
       "passive_stats": [],
       "not_modelled": [
         "Lanzamiento por los aires y empuje cercano"
+      ],
+      "cc_effects": [
+        {
+          "id": "e_airborne",
+          "name": "Perturbación tectónica (lanzamiento por los aires)",
+          "kind": "airborne",
+          "duration_formula": {
+            "op": "constant",
+            "value": 0.75
+          },
+          "label": "Derivado",
+          "source": "Characters/Velkoz/Spells/VelkozEAbility/VelkozE.DataValues.StunDuration (16.23.8418428+branch.releases-16-23.content.release)"
+        }
       ]
     },
     "R": {
@@ -400,7 +413,7 @@
                 ]
               },
               "label": "Derivado",
-              "source": "Characters/Velkoz/Spells/VelkozRAbility/VelkozR.mSpellCalculations.TotalDamage (16.23.8406595+branch.releases-16-23.content.release)",
+              "source": "Characters/Velkoz/Spells/VelkozRAbility/VelkozR.mSpellCalculations.TotalDamage (16.23.8418428+branch.releases-16-23.content.release)",
               "damage_type_source": "spell_velkozr_tooltip <magicDamage>"
             }
           ]

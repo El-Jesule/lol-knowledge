@@ -537,6 +537,28 @@
       "passive_stats": [],
       "not_modelled": [
         "Empuje y aturdimiento contra terreno (StunDuration)"
+      ],
+      "cc_effects": [
+        {
+          "id": "e_wall_stun_stun",
+          "name": "Carga heroica (aturdimiento)",
+          "kind": "stun",
+          "duration_formula": {
+            "op": "by_rank",
+            "values": [
+              1.6,
+              1.7,
+              1.8,
+              1.9,
+              2
+            ]
+          },
+          "label": "Derivado",
+          "source": "Characters/Poppy/Spells/PoppyEAbility/PoppyE.DataValues.StunDuration (16.23.8418428+branch.releases-16-23.content.release)",
+          "case_ids": [
+            "wall_stun"
+          ]
+        }
       ]
     },
     "R": {
@@ -634,6 +656,19 @@
       "passive_stats": [],
       "not_modelled": [
         "Lanzamiento por los aires y empuje hacia la base enemiga"
+      ],
+      "cc_effects": [
+        {
+          "id": "r_airborne",
+          "name": "Veredicto de la guardiana (lanzamiento por los aires)",
+          "kind": "airborne",
+          "duration_formula": {
+            "op": "constant",
+            "value": 1
+          },
+          "label": "Derivado",
+          "source": "Characters/Poppy/Spells/PoppyRAbility/PoppyR.DataValues.KnockupDurationSnap (16.23.8418428+branch.releases-16-23.content.release)"
+        }
       ]
     }
   }

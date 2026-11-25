@@ -276,6 +276,22 @@
       "passive_stats": [],
       "not_modelled": [
         "Empuje y aturdimiento contra terreno (StunDuration)"
+      ],
+      "cc_effects": [
+        {
+          "id": "e_wall_stun_stun",
+          "name": "Condena (aturdimiento)",
+          "kind": "stun",
+          "duration_formula": {
+            "op": "constant",
+            "value": 1.5
+          },
+          "label": "Derivado",
+          "source": "Characters/Vayne/Spells/VayneCondemnAbility/VayneCondemn.DataValues.StunDuration (16.23.8418428+branch.releases-16-23.content.release)",
+          "case_ids": [
+            "wall_stun"
+          ]
+        }
       ]
     },
     "R": {

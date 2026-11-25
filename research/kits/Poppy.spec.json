@@ -211,6 +211,17 @@
       ],
       "not_modelled": [
         "Empuje y aturdimiento contra terreno (StunDuration)"
+      ],
+      "cc_effects": [
+        {
+          "id": "e_wall_stun_stun",
+          "name": "Carga heroica (aturdimiento)",
+          "kind": "stun",
+          "data_value": "StunDuration",
+          "case_ids": [
+            "wall_stun"
+          ]
+        }
       ]
     },
     "R": {
@@ -238,6 +249,14 @@
       ],
       "not_modelled": [
         "Lanzamiento por los aires y empuje hacia la base enemiga"
+      ],
+      "cc_effects": [
+        {
+          "id": "r_airborne",
+          "name": "Veredicto de la guardiana (lanzamiento por los aires)",
+          "kind": "airborne",
+          "data_value": "KnockupDurationSnap"
+        }
       ]
     }
   }

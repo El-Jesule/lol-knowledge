@@ -3,7 +3,7 @@
   "champion": "Chogath",
   "label": "Derivado",
   "game_version": "16.23",
-  "content_version": "16.23.8406595+branch.releases-16-23.content.release",
+  "content_version": "16.23.8418428+branch.releases-16-23.content.release",
   "verified_against": {
     "content_version": "16.23.8406595+branch.releases-16-23.content.release",
     "bin_sha256": "4f238a4cd522e77e18654f9d107e4fcfa1adc1c84472659fc218c6b7632b9de3",
@@ -49,7 +49,7 @@
             ]
           },
           "label": "Derivado",
-          "source": "Characters/Chogath/Spells/CarnivoreAbility/Carnivore.mSpellCalculations.ChogathCarnivoreHeal (16.23.8406595+branch.releases-16-23.content.release)",
+          "source": "Characters/Chogath/Spells/CarnivoreAbility/Carnivore.mSpellCalculations.ChogathCarnivoreHeal (16.23.8418428+branch.releases-16-23.content.release)",
           "trigger": "on_any_kill"
         },
         {
@@ -80,7 +80,7 @@
             ]
           },
           "label": "Derivado",
-          "source": "Characters/Chogath/Spells/CarnivoreAbility/Carnivore.mSpellCalculations.ChogathCarnivoreMana (16.23.8406595+branch.releases-16-23.content.release)",
+          "source": "Characters/Chogath/Spells/CarnivoreAbility/Carnivore.mSpellCalculations.ChogathCarnivoreMana (16.23.8418428+branch.releases-16-23.content.release)",
           "trigger": "on_any_kill",
           "resource": "mana"
         }
@@ -126,7 +126,7 @@
                 ]
               },
               "label": "Derivado",
-              "source": "Characters/Chogath/Spells/RuptureAbility/Rupture.mSpellCalculations.TotalDamageTooltip (16.23.8406595+branch.releases-16-23.content.release)",
+              "source": "Characters/Chogath/Spells/RuptureAbility/Rupture.mSpellCalculations.TotalDamageTooltip (16.23.8418428+branch.releases-16-23.content.release)",
               "damage_type_source": "spell_rupture_tooltip <magicDamage>"
             }
           ]
@@ -135,6 +135,19 @@
       "passive_stats": [],
       "not_modelled": [
         "Lanzamiento por los aires de 1 s y ralentización posterior"
+      ],
+      "cc_effects": [
+        {
+          "id": "q_airborne",
+          "name": "Ruptura (lanzamiento por los aires)",
+          "kind": "airborne",
+          "duration_formula": {
+            "op": "constant",
+            "value": 1
+          },
+          "label": "Derivado",
+          "source": "Characters/Chogath/Spells/RuptureAbility/Rupture.mEffectAmount.Effect5Amount (16.23.8418428+branch.releases-16-23.content.release)"
+        }
       ]
     },
     "W": {
@@ -177,7 +190,7 @@
                 ]
               },
               "label": "Derivado",
-              "source": "Characters/Chogath/Spells/FeralScreamAbility/FeralScream.mSpellCalculations.TotalDamageTooltip (16.23.8406595+branch.releases-16-23.content.release)",
+              "source": "Characters/Chogath/Spells/FeralScreamAbility/FeralScream.mSpellCalculations.TotalDamageTooltip (16.23.8418428+branch.releases-16-23.content.release)",
               "damage_type_source": "spell_feralscream_tooltip <magicDamage>"
             }
           ]
@@ -186,6 +199,25 @@
       "passive_stats": [],
       "not_modelled": [
         "Silencio en cono durante 1,6..2 s"
+      ],
+      "cc_effects": [
+        {
+          "id": "w_silence",
+          "name": "Grito salvaje (silencio)",
+          "kind": "silence",
+          "duration_formula": {
+            "op": "by_rank",
+            "values": [
+              1.6,
+              1.7,
+              1.8,
+              1.9,
+              2
+            ]
+          },
+          "label": "Derivado",
+          "source": "Characters/Chogath/Spells/FeralScreamAbility/FeralScream.mEffectAmount.Effect2Amount (16.23.8418428+branch.releases-16-23.content.release)"
+        }
       ]
     },
     "E": {
@@ -228,7 +260,7 @@
                 ]
               },
               "label": "Derivado",
-              "source": "Characters/Chogath/Spells/VorpalSpikesAbility/VorpalSpikes.mSpellCalculations.FlatDamageCalc (16.23.8406595+branch.releases-16-23.content.release)",
+              "source": "Characters/Chogath/Spells/VorpalSpikesAbility/VorpalSpikes.mSpellCalculations.FlatDamageCalc (16.23.8418428+branch.releases-16-23.content.release)",
               "damage_type_source": "spell_vorpalspikes_tooltip <magicDamage>"
             },
             {
@@ -278,7 +310,7 @@
                 ]
               },
               "label": "Derivado",
-              "source": "Characters/Chogath/Spells/VorpalSpikesAbility/VorpalSpikes · mSpellCalculations.MaxHealthPercentCalc × 0,01 × vida máxima del objetivo (--input feast_stacks) (16.23.8406595+branch.releases-16-23.content.release)",
+              "source": "Characters/Chogath/Spells/VorpalSpikesAbility/VorpalSpikes · mSpellCalculations.MaxHealthPercentCalc × 0,01 × vida máxima del objetivo (--input feast_stacks) (16.23.8418428+branch.releases-16-23.content.release)",
               "damage_type_source": "spell_vorpalspikes_tooltip <magicDamage>"
             }
           ]
@@ -341,7 +373,7 @@
                 ]
               },
               "label": "Derivado",
-              "source": "Characters/Chogath/Spells/FeastAbility/Feast.mSpellCalculations.RDamage (16.23.8406595+branch.releases-16-23.content.release)",
+              "source": "Characters/Chogath/Spells/FeastAbility/Feast.mSpellCalculations.RDamage (16.23.8418428+branch.releases-16-23.content.release)",
               "damage_type_source": "spell_feast_tooltip <trueDamage>"
             }
           ]
@@ -390,7 +422,7 @@
                 ]
               },
               "label": "Derivado",
-              "source": "Characters/Chogath/Spells/FeastAbility/Feast.mSpellCalculations.RMonsterDamage (16.23.8406595+branch.releases-16-23.content.release)",
+              "source": "Characters/Chogath/Spells/FeastAbility/Feast.mSpellCalculations.RMonsterDamage (16.23.8418428+branch.releases-16-23.content.release)",
               "damage_type_source": "spell_feast_tooltip <trueDamage>"
             }
           ]

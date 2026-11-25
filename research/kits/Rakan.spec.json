@@ -67,6 +67,14 @@
       ],
       "not_modelled": [
         "Lanzamiento por los aires (KnockupDuration)"
+      ],
+      "cc_effects": [
+        {
+          "id": "w_airborne",
+          "name": "Entrada grandiosa (lanzamiento por los aires)",
+          "kind": "airborne",
+          "data_value": "KnockupDuration"
+        }
       ]
     },
     "E": {
@@ -116,6 +124,14 @@
           "duration_seconds": {
             "data_value": "Duration"
           }
+        }
+      ],
+      "cc_effects": [
+        {
+          "id": "r_charm",
+          "name": "La premura (encanto)",
+          "kind": "charm",
+          "data_value": "CharmDuration"
         }
       ]
     }

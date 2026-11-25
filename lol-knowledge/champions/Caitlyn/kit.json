@@ -3,7 +3,7 @@
   "champion": "Caitlyn",
   "label": "Derivado",
   "game_version": "16.23",
-  "content_version": "16.23.8406595+branch.releases-16-23.content.release",
+  "content_version": "16.23.8418428+branch.releases-16-23.content.release",
   "verified_against": {
     "content_version": "16.23.8406595+branch.releases-16-23.content.release",
     "bin_sha256": "a9ee373a5d7fc8533ca9fbd6d3af986731695e071beae0fd238c1ee611990ccf",
@@ -112,7 +112,7 @@
                 ]
               },
               "label": "Derivado",
-              "source": "Characters/Caitlyn/Spells/CaitlynPassiveAbility/CaitlynPassive.mSpellCalculations.HeadshotBonusDamage (16.23.8406595+branch.releases-16-23.content.release)",
+              "source": "Characters/Caitlyn/Spells/CaitlynPassiveAbility/CaitlynPassive.mSpellCalculations.HeadshotBonusDamage (16.23.8418428+branch.releases-16-23.content.release)",
               "damage_type_source": "spell_caitlynp_tooltip <physicalDamage>"
             }
           ]
@@ -217,7 +217,7 @@
             ]
           },
           "label": "Derivado",
-          "source": "Characters/Caitlyn/Spells/CaitlynPassiveAbility/CaitlynPassive.mSpellCalculations.HeadshotBonusDamage (16.23.8406595+branch.releases-16-23.content.release)",
+          "source": "Characters/Caitlyn/Spells/CaitlynPassiveAbility/CaitlynPassive.mSpellCalculations.HeadshotBonusDamage (16.23.8418428+branch.releases-16-23.content.release)",
           "trigger": "every_n_attacks",
           "damage_type": "physical",
           "every": 6
@@ -270,7 +270,7 @@
                 ]
               },
               "label": "Derivado",
-              "source": "Characters/Caitlyn/Spells/CaitlynQAbility/CaitlynQ.mSpellCalculations.InitialDamage (16.23.8406595+branch.releases-16-23.content.release)",
+              "source": "Characters/Caitlyn/Spells/CaitlynQAbility/CaitlynQ.mSpellCalculations.InitialDamage (16.23.8418428+branch.releases-16-23.content.release)",
               "damage_type_source": "spell_caitlynpiltoverpeacemaker_tooltip <physicalDamage>"
             }
           ],
@@ -328,7 +328,7 @@
                 ]
               },
               "label": "Derivado",
-              "source": "Characters/Caitlyn/Spells/CaitlynQAbility/CaitlynQ.mSpellCalculations.SecondaryDamage (16.23.8406595+branch.releases-16-23.content.release)",
+              "source": "Characters/Caitlyn/Spells/CaitlynQAbility/CaitlynQ.mSpellCalculations.SecondaryDamage (16.23.8418428+branch.releases-16-23.content.release)",
               "damage_type_source": "spell_caitlynpiltoverpeacemaker_tooltip <physicalDamage>"
             }
           ],
@@ -379,7 +379,7 @@
                 ]
               },
               "label": "Derivado",
-              "source": "Characters/Caitlyn/Spells/CaitlynWAbility/CaitlynW.mSpellCalculations.HeadshotBonusDamage (16.23.8406595+branch.releases-16-23.content.release)",
+              "source": "Characters/Caitlyn/Spells/CaitlynWAbility/CaitlynW.mSpellCalculations.HeadshotBonusDamage (16.23.8418428+branch.releases-16-23.content.release)",
               "damage_type_source": "spell_caitlynyordletrap_tooltip <physicalDamage>"
             }
           ],
@@ -390,6 +390,19 @@
       "passive_stats": [],
       "not_modelled": [
         "Inmovilización, visión verdadera y daño base del Disparo a la cabeza aparte"
+      ],
+      "cc_effects": [
+        {
+          "id": "w_root",
+          "name": "Trampa para yordles (enraizamiento)",
+          "kind": "root",
+          "duration_formula": {
+            "op": "constant",
+            "value": 1.5
+          },
+          "label": "Derivado",
+          "source": "Characters/Caitlyn/Spells/CaitlynWAbility/CaitlynW.DataValues.RootDuration (16.23.8418428+branch.releases-16-23.content.release)"
+        }
       ]
     },
     "E": {
@@ -432,7 +445,7 @@
                 ]
               },
               "label": "Derivado",
-              "source": "Characters/Caitlyn/Spells/CaitlynEAbility/CaitlynE.mSpellCalculations.NetDamage (16.23.8406595+branch.releases-16-23.content.release)",
+              "source": "Characters/Caitlyn/Spells/CaitlynEAbility/CaitlynE.mSpellCalculations.NetDamage (16.23.8418428+branch.releases-16-23.content.release)",
               "damage_type_source": "spell_caitlynentrapment_tooltip <magicDamage>"
             }
           ],
@@ -483,7 +496,7 @@
                 ]
               },
               "label": "Derivado",
-              "source": "Characters/Caitlyn/Spells/CaitlynRAbility/CaitlynR.mSpellCalculations.RTotalDamage (16.23.8406595+branch.releases-16-23.content.release)",
+              "source": "Characters/Caitlyn/Spells/CaitlynRAbility/CaitlynR.mSpellCalculations.RTotalDamage (16.23.8418428+branch.releases-16-23.content.release)",
               "damage_type_source": "spell_caitlynaceinthehole_tooltip <physicalDamage>"
             }
           ],

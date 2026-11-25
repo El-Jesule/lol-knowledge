@@ -245,6 +245,36 @@
       "passive_stats": [],
       "not_modelled": [
         "Zona de silencio durante 1,5 s e inmovilización al expirar"
+      ],
+      "cc_effects": [
+        {
+          "id": "e_root",
+          "name": "Equinoccio (enraizamiento)",
+          "kind": "root",
+          "duration_formula": {
+            "op": "by_rank",
+            "values": [
+              1,
+              1.25,
+              1.5,
+              1.75,
+              2
+            ]
+          },
+          "label": "Derivado",
+          "source": "Characters/Soraka/Spells/SorakaEAbility/SorakaE.DataValues.RootDuration (16.23.8418428+branch.releases-16-23.content.release)"
+        },
+        {
+          "id": "e_silence",
+          "name": "Equinoccio (silencio)",
+          "kind": "silence",
+          "duration_formula": {
+            "op": "constant",
+            "value": 1.5
+          },
+          "label": "Derivado",
+          "source": "Characters/Soraka/Spells/SorakaEAbility/SorakaE.DataValues.RootDelay (16.23.8418428+branch.releases-16-23.content.release)"
+        }
       ]
     },
     "R": {

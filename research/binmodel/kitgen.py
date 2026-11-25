@@ -477,6 +477,12 @@ def _compile_formula_ref(
         ref = str(entry["data_value"])
         formula = ability.data_value(ref)
         source = f"{ability.record['path']}.DataValues.{ref} ({content_version})"
+    elif "effect_index" in entry:
+        if ability is None:
+            raise KitGenError(f"{context}: no bin data for this ability")
+        idx = entry["effect_index"]
+        formula = ability.effect_amount(idx)
+        source = f"{ability.record['path']}.mEffectAmount.Effect{idx}Amount ({content_version})"
     elif "formula" in entry:
         formula = ability.custom(entry["formula"]) if ability is not None else entry["formula"]
         note = entry.get("source_note") or entry.get("source") or "curated formula"
@@ -576,7 +582,15 @@ def _compile_active_effect(
         "calculation" not in effect_spec
         and "data_value" not in effect_spec
         and "formula" not in effect_spec
-        and kind in {"dodge_attacks", "spell_shield", "block_first_hit", "invulnerable"}
+        and kind
+        in {
+            "dodge_attacks",
+            "spell_shield",
+            "block_first_hit",
+            "invulnerable",
+            "cleanse",
+            "cc_immune",
+        }
     ):
         formula: Any = {"op": "constant", "value": 1}
         note = effect_spec.get("source_note") or effect_spec.get("source") or kind
@@ -641,6 +655,34 @@ def _compile_active_effect(
     elif "duration_formula" in effect_spec:
         dur_raw = effect_spec["duration_formula"]
         compiled["duration_formula"] = ability.custom(dur_raw) if ability is not None else dur_raw
+    return compiled
+
+
+def _compile_cc_effect(
+    ability: _Ability | None,
+    effect_spec: Mapping[str, Any],
+    content_version: Any,
+    context: str,
+) -> dict[str, Any]:
+    effect_ctx = f"{context}.cc_effects[{effect_spec.get('id')}]"
+    formula, source = _compile_formula_ref(ability, effect_spec, content_version, effect_ctx)
+    compiled: dict[str, Any] = {
+        "id": str(effect_spec["id"]),
+        "name": str(effect_spec["name"]),
+        "kind": str(effect_spec["kind"]),
+        "duration_formula": formula,
+        "label": str(effect_spec.get("label", "Derivado")),
+        "source": source,
+    }
+    for key in (
+        "case_ids",
+        "tenacity_applies",
+        "cleansable_by_cleanse",
+        "cleansable_by_qss",
+        "condition",
+    ):
+        if key in effect_spec:
+            compiled[key] = effect_spec[key]
     return compiled
 
 
@@ -790,6 +832,16 @@ def compile_kit(
                     context,
                 )
                 for effect_spec in entry["active_effects"]
+            ]
+        if entry.get("cc_effects"):
+            abilities[slot]["cc_effects"] = [
+                _compile_cc_effect(
+                    by_slot.get(effect_spec["ability"]) if "ability" in effect_spec else ability,
+                    effect_spec,
+                    content_version,
+                    context,
+                )
+                for effect_spec in entry["cc_effects"]
             ]
         for key in ("recast_window_seconds", "max_recasts", "recast_interval_seconds"):
             if key in entry:

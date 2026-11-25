@@ -3,7 +3,7 @@
   "champion": "Leblanc",
   "label": "Derivado",
   "game_version": "16.23",
-  "content_version": "16.23.8406595+branch.releases-16-23.content.release",
+  "content_version": "16.23.8418428+branch.releases-16-23.content.release",
   "verified_against": {
     "content_version": "16.23.8406595+branch.releases-16-23.content.release",
     "bin_sha256": "a53de8d351c7c4523dad00bbd4dd207a2d8c423e2241554638dfcb0ffdf42c6f",
@@ -61,7 +61,7 @@
                 ]
               },
               "label": "Derivado",
-              "source": "Characters/Leblanc/Spells/LeblancQAbility/LeblancQ.mSpellCalculations.Damage (16.23.8406595+branch.releases-16-23.content.release)",
+              "source": "Characters/Leblanc/Spells/LeblancQAbility/LeblancQ.mSpellCalculations.Damage (16.23.8418428+branch.releases-16-23.content.release)",
               "damage_type_source": "spell_leblancq_tooltip <magicDamage>"
             }
           ]
@@ -102,7 +102,7 @@
                 ]
               },
               "label": "Derivado",
-              "source": "Characters/Leblanc/Spells/LeblancQAbility/LeblancQ.mSpellCalculations.MarkDamage (16.23.8406595+branch.releases-16-23.content.release)",
+              "source": "Characters/Leblanc/Spells/LeblancQAbility/LeblancQ.mSpellCalculations.MarkDamage (16.23.8418428+branch.releases-16-23.content.release)",
               "damage_type_source": "spell_leblancq_tooltip <magicDamage>"
             }
           ]
@@ -143,7 +143,7 @@
                 ]
               },
               "label": "Derivado",
-              "source": "Characters/Leblanc/Spells/LeblancQAbility/LeblancQ.mSpellCalculations.Damage (16.23.8406595+branch.releases-16-23.content.release)",
+              "source": "Characters/Leblanc/Spells/LeblancQAbility/LeblancQ.mSpellCalculations.Damage (16.23.8418428+branch.releases-16-23.content.release)",
               "damage_type_source": "spell_leblancq_tooltip <magicDamage>"
             },
             {
@@ -178,7 +178,7 @@
                 ]
               },
               "label": "Derivado",
-              "source": "Characters/Leblanc/Spells/LeblancQAbility/LeblancQ.mSpellCalculations.MarkDamage (16.23.8406595+branch.releases-16-23.content.release)",
+              "source": "Characters/Leblanc/Spells/LeblancQAbility/LeblancQ.mSpellCalculations.MarkDamage (16.23.8418428+branch.releases-16-23.content.release)",
               "damage_type_source": "spell_leblancq_tooltip <magicDamage>"
             }
           ]
@@ -229,7 +229,7 @@
                 ]
               },
               "label": "Derivado",
-              "source": "Characters/Leblanc/Spells/LeblancWAbility/LeblancW.mSpellCalculations.TotalDamage (16.23.8406595+branch.releases-16-23.content.release)",
+              "source": "Characters/Leblanc/Spells/LeblancWAbility/LeblancW.mSpellCalculations.TotalDamage (16.23.8418428+branch.releases-16-23.content.release)",
               "damage_type_source": "spell_leblancw_tooltip <magicDamage>"
             }
           ]
@@ -280,7 +280,7 @@
                 ]
               },
               "label": "Derivado",
-              "source": "Characters/Leblanc/Spells/LeblancEAbility/LeblancE.mSpellCalculations.InitialDamage (16.23.8406595+branch.releases-16-23.content.release)",
+              "source": "Characters/Leblanc/Spells/LeblancEAbility/LeblancE.mSpellCalculations.InitialDamage (16.23.8418428+branch.releases-16-23.content.release)",
               "damage_type_source": "spell_leblance_tooltip <magicDamage>"
             }
           ]
@@ -321,7 +321,7 @@
                 ]
               },
               "label": "Derivado",
-              "source": "Characters/Leblanc/Spells/LeblancEAbility/LeblancE.mSpellCalculations.DelayedDamage (16.23.8406595+branch.releases-16-23.content.release)",
+              "source": "Characters/Leblanc/Spells/LeblancEAbility/LeblancE.mSpellCalculations.DelayedDamage (16.23.8418428+branch.releases-16-23.content.release)",
               "damage_type_source": "spell_leblance_tooltip <magicDamage>"
             }
           ]
@@ -362,7 +362,7 @@
                 ]
               },
               "label": "Derivado",
-              "source": "Characters/Leblanc/Spells/LeblancEAbility/LeblancE.mSpellCalculations.InitialDamage (16.23.8406595+branch.releases-16-23.content.release)",
+              "source": "Characters/Leblanc/Spells/LeblancEAbility/LeblancE.mSpellCalculations.InitialDamage (16.23.8418428+branch.releases-16-23.content.release)",
               "damage_type_source": "spell_leblance_tooltip <magicDamage>"
             },
             {
@@ -397,7 +397,7 @@
                 ]
               },
               "label": "Derivado",
-              "source": "Characters/Leblanc/Spells/LeblancEAbility/LeblancE.mSpellCalculations.DelayedDamage (16.23.8406595+branch.releases-16-23.content.release)",
+              "source": "Characters/Leblanc/Spells/LeblancEAbility/LeblancE.mSpellCalculations.DelayedDamage (16.23.8418428+branch.releases-16-23.content.release)",
               "damage_type_source": "spell_leblance_tooltip <magicDamage>"
             }
           ]
@@ -406,6 +406,19 @@
       "passive_stats": [],
       "not_modelled": [
         "Inmovilización y visión verdadera"
+      ],
+      "cc_effects": [
+        {
+          "id": "e_root",
+          "name": "Cadenas etéreas (enraizamiento)",
+          "kind": "root",
+          "duration_formula": {
+            "op": "constant",
+            "value": 1.5
+          },
+          "label": "Derivado",
+          "source": "Characters/Leblanc/Spells/LeblancEAbility/LeblancE.DataValues.RootDuration (16.23.8418428+branch.releases-16-23.content.release)"
+        }
       ]
     },
     "R": {
@@ -446,7 +459,7 @@
                 ]
               },
               "label": "Derivado",
-              "source": "Characters/Leblanc/Spells/LeblancRAbility/LeblancR.mSpellCalculations.RQ1Damage (16.23.8406595+branch.releases-16-23.content.release)",
+              "source": "Characters/Leblanc/Spells/LeblancRAbility/LeblancR.mSpellCalculations.RQ1Damage (16.23.8418428+branch.releases-16-23.content.release)",
               "damage_type_source": "spell_leblancr_tooltip <magicDamage>"
             }
           ]
@@ -485,7 +498,7 @@
                 ]
               },
               "label": "Derivado",
-              "source": "Characters/Leblanc/Spells/LeblancRAbility/LeblancR.mSpellCalculations.RQ1Damage (16.23.8406595+branch.releases-16-23.content.release)",
+              "source": "Characters/Leblanc/Spells/LeblancRAbility/LeblancR.mSpellCalculations.RQ1Damage (16.23.8418428+branch.releases-16-23.content.release)",
               "damage_type_source": "spell_leblancr_tooltip <magicDamage>"
             },
             {
@@ -518,7 +531,7 @@
                 ]
               },
               "label": "Derivado",
-              "source": "Characters/Leblanc/Spells/LeblancRAbility/LeblancR.mSpellCalculations.RQ2Damage (16.23.8406595+branch.releases-16-23.content.release)",
+              "source": "Characters/Leblanc/Spells/LeblancRAbility/LeblancR.mSpellCalculations.RQ2Damage (16.23.8418428+branch.releases-16-23.content.release)",
               "damage_type_source": "spell_leblancr_tooltip <magicDamage>"
             }
           ]
@@ -557,7 +570,7 @@
                 ]
               },
               "label": "Derivado",
-              "source": "Characters/Leblanc/Spells/LeblancRAbility/LeblancR.mSpellCalculations.RWDamage (16.23.8406595+branch.releases-16-23.content.release)",
+              "source": "Characters/Leblanc/Spells/LeblancRAbility/LeblancR.mSpellCalculations.RWDamage (16.23.8418428+branch.releases-16-23.content.release)",
               "damage_type_source": "spell_leblancr_tooltip <magicDamage>"
             }
           ]
@@ -596,7 +609,7 @@
                 ]
               },
               "label": "Derivado",
-              "source": "Characters/Leblanc/Spells/LeblancRAbility/LeblancR.mSpellCalculations.RE1Damage (16.23.8406595+branch.releases-16-23.content.release)",
+              "source": "Characters/Leblanc/Spells/LeblancRAbility/LeblancR.mSpellCalculations.RE1Damage (16.23.8418428+branch.releases-16-23.content.release)",
               "damage_type_source": "spell_leblancr_tooltip <magicDamage>"
             },
             {
@@ -629,7 +642,7 @@
                 ]
               },
               "label": "Derivado",
-              "source": "Characters/Leblanc/Spells/LeblancRAbility/LeblancR.mSpellCalculations.RE2Damage (16.23.8406595+branch.releases-16-23.content.release)",
+              "source": "Characters/Leblanc/Spells/LeblancRAbility/LeblancR.mSpellCalculations.RE2Damage (16.23.8418428+branch.releases-16-23.content.release)",
               "damage_type_source": "spell_leblancr_tooltip <magicDamage>"
             }
           ]

@@ -128,6 +128,26 @@
       ],
       "not_modelled": [
         "Aturdimiento, lanzamiento por los aires y ralentización"
+      ],
+      "cc_effects": [
+        {
+          "id": "r_falling_star_stun",
+          "name": "Estrella fugaz / Ocaso celeste (aturdimiento)",
+          "kind": "stun",
+          "data_value": "StunDuration",
+          "case_ids": [
+            "falling_star"
+          ]
+        },
+        {
+          "id": "r_skies_descend_airborne",
+          "name": "Estrella fugaz / Ocaso celeste (lanzamiento por los aires)",
+          "kind": "airborne",
+          "data_value": "StunDuration",
+          "case_ids": [
+            "skies_descend"
+          ]
+        }
       ]
     }
   }

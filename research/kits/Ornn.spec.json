@@ -114,6 +114,14 @@
       ],
       "not_modelled": [
         "Lanzamiento por los aires al chocar con terreno (KnockupDuration)"
+      ],
+      "cc_effects": [
+        {
+          "id": "e_airborne",
+          "name": "Carga candente (lanzamiento por los aires)",
+          "kind": "airborne",
+          "data_value": "KnockupDuration"
+        }
       ]
     },
     "R": {
@@ -144,6 +152,14 @@
       ],
       "not_modelled": [
         "Aplicación de Quebradizo, ralentización y lanzamiento por los aires en el segundo impacto"
+      ],
+      "cc_effects": [
+        {
+          "id": "r_airborne",
+          "name": "Llamada del dios de la forja (lanzamiento por los aires)",
+          "kind": "airborne",
+          "data_value": "RStunDuration"
+        }
       ]
     }
   }

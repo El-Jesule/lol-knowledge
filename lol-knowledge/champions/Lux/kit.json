@@ -181,6 +181,19 @@
       "passive_stats": [],
       "not_modelled": [
         "Inmovilización a los dos primeros objetivos (RootDuration)"
+      ],
+      "cc_effects": [
+        {
+          "id": "q_root",
+          "name": "Enlace de luz (enraizamiento)",
+          "kind": "root",
+          "duration_formula": {
+            "op": "constant",
+            "value": 2
+          },
+          "label": "Derivado",
+          "source": "Characters/Lux/Spells/LuxLightBindingAbility/LuxLightBinding.DataValues.RootDuration (16.23.8418428+branch.releases-16-23.content.release)"
+        }
       ]
     },
     "W": {

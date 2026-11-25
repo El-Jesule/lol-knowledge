@@ -178,6 +178,25 @@
       "passive_stats": [],
       "not_modelled": [
         "Inmovilización si aterriza sobre Megaadhesivo y tope de 300 contra no campeones"
+      ],
+      "cc_effects": [
+        {
+          "id": "e_root",
+          "name": "Lanzar (enraizamiento)",
+          "kind": "root",
+          "duration_formula": {
+            "op": "by_rank",
+            "values": [
+              1,
+              1.25,
+              1.5,
+              1.75,
+              2
+            ]
+          },
+          "label": "Derivado",
+          "source": "Characters/Singed/Spells/FlingAbility/Fling.DataValues.RootDuration (16.23.8418428+branch.releases-16-23.content.release)"
+        }
       ]
     },
     "R": {

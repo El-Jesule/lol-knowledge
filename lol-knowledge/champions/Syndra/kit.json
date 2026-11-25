@@ -3,7 +3,7 @@
   "champion": "Syndra",
   "label": "Derivado",
   "game_version": "16.23",
-  "content_version": "16.23.8406595+branch.releases-16-23.content.release",
+  "content_version": "16.23.8418428+branch.releases-16-23.content.release",
   "verified_against": {
     "content_version": "16.23.8406595+branch.releases-16-23.content.release",
     "bin_sha256": "f1acb5ae49c91cf5589957696d6d9948d8345864758e572c2aacd09cfd2061ff",
@@ -30,7 +30,7 @@
             "value": 15
           },
           "label": "Derivado",
-          "source": "Characters/Syndra/Spells/SyndraPassiveAbility/SyndraPassive.DataValues.CapstoneAPPerc (16.23.8406595+branch.releases-16-23.content.release)",
+          "source": "Characters/Syndra/Spells/SyndraPassiveAbility/SyndraPassive.DataValues.CapstoneAPPerc (16.23.8418428+branch.releases-16-23.content.release)",
           "stat": "ability_power",
           "mode": "percent",
           "input_name": "syndra_transcendent",
@@ -64,7 +64,7 @@
             ]
           },
           "label": "Derivado",
-          "source": "Characters/Syndra/Spells/SyndraPassiveAbility/SyndraPassive.mSpellCalculations.ManaPerProc (16.23.8406595+branch.releases-16-23.content.release)",
+          "source": "Characters/Syndra/Spells/SyndraPassiveAbility/SyndraPassive.mSpellCalculations.ManaPerProc (16.23.8418428+branch.releases-16-23.content.release)",
           "trigger": "on_champion_hit",
           "resource": "mana",
           "cooldown_seconds": 8
@@ -111,7 +111,7 @@
                 ]
               },
               "label": "Derivado",
-              "source": "Characters/Syndra/Spells/SyndraQAbility/SyndraQ.mSpellCalculations.TotalDamage (16.23.8406595+branch.releases-16-23.content.release)",
+              "source": "Characters/Syndra/Spells/SyndraQAbility/SyndraQ.mSpellCalculations.TotalDamage (16.23.8418428+branch.releases-16-23.content.release)",
               "damage_type_source": "spell_syndraq_damage_0 <magicDamage>"
             }
           ]
@@ -162,7 +162,7 @@
                 ]
               },
               "label": "Derivado",
-              "source": "Characters/Syndra/Spells/SyndraWAbility/SyndraW.mSpellCalculations.ThrowDamage (16.23.8406595+branch.releases-16-23.content.release)",
+              "source": "Characters/Syndra/Spells/SyndraWAbility/SyndraW.mSpellCalculations.ThrowDamage (16.23.8418428+branch.releases-16-23.content.release)",
               "damage_type_source": "spell_syndraw_damage1 <magicDamage>"
             }
           ]
@@ -203,7 +203,7 @@
                 ]
               },
               "label": "Derivado",
-              "source": "Characters/Syndra/Spells/SyndraWAbility/SyndraW.mSpellCalculations.ThrowDamage (16.23.8406595+branch.releases-16-23.content.release)",
+              "source": "Characters/Syndra/Spells/SyndraWAbility/SyndraW.mSpellCalculations.ThrowDamage (16.23.8418428+branch.releases-16-23.content.release)",
               "damage_type_source": "spell_syndraw_damage1 <magicDamage>"
             },
             {
@@ -275,7 +275,7 @@
                 ]
               },
               "label": "Derivado",
-              "source": "Characters/Syndra/Spells/SyndraWAbility/SyndraW.mSpellCalculations.PassiveBonusDamage (16.23.8406595+branch.releases-16-23.content.release)",
+              "source": "Characters/Syndra/Spells/SyndraWAbility/SyndraW.mSpellCalculations.PassiveBonusDamage (16.23.8418428+branch.releases-16-23.content.release)",
               "damage_type_source": "spell_syndraw_damage1 <trueDamage>"
             }
           ]
@@ -326,7 +326,7 @@
                 ]
               },
               "label": "Derivado",
-              "source": "Characters/Syndra/Spells/SyndraEAbility/SyndraE.mSpellCalculations.TotalDamage (16.23.8406595+branch.releases-16-23.content.release)",
+              "source": "Characters/Syndra/Spells/SyndraEAbility/SyndraE.mSpellCalculations.TotalDamage (16.23.8418428+branch.releases-16-23.content.release)",
               "damage_type_source": "spell_syndrae_tooltip <magicDamage>"
             }
           ]
@@ -335,6 +335,19 @@
       "passive_stats": [],
       "not_modelled": [
         "Empuje y aturdimiento al proyectar esferas oscuras"
+      ],
+      "cc_effects": [
+        {
+          "id": "e_stun",
+          "name": "Dispersar a los débiles (aturdimiento)",
+          "kind": "stun",
+          "duration_formula": {
+            "op": "constant",
+            "value": 1.25
+          },
+          "label": "Derivado",
+          "source": "Characters/Syndra/Spells/SyndraEAbility/SyndraE.DataValues.StunDuration (16.23.8418428+branch.releases-16-23.content.release)"
+        }
       ]
     },
     "R": {
@@ -375,7 +388,7 @@
                 ]
               },
               "label": "Derivado",
-              "source": "Characters/Syndra/Spells/SyndraRAbility/SyndraR.mSpellCalculations.DamageCalc (16.23.8406595+branch.releases-16-23.content.release)",
+              "source": "Characters/Syndra/Spells/SyndraRAbility/SyndraR.mSpellCalculations.DamageCalc (16.23.8418428+branch.releases-16-23.content.release)",
               "damage_type_source": "spell_syndrar_tooltip <magicDamage>"
             }
           ]
@@ -414,7 +427,7 @@
                 ]
               },
               "label": "Derivado",
-              "source": "Characters/Syndra/Spells/SyndraRAbility/SyndraR.mSpellCalculations.DamageCalc (16.23.8406595+branch.releases-16-23.content.release)",
+              "source": "Characters/Syndra/Spells/SyndraRAbility/SyndraR.mSpellCalculations.DamageCalc (16.23.8418428+branch.releases-16-23.content.release)",
               "damage_type_source": "spell_syndrar_tooltip <magicDamage>"
             },
             {
@@ -447,7 +460,7 @@
                 ]
               },
               "label": "Derivado",
-              "source": "Characters/Syndra/Spells/SyndraRAbility/SyndraR.mSpellCalculations.DamageCalc (16.23.8406595+branch.releases-16-23.content.release)",
+              "source": "Characters/Syndra/Spells/SyndraRAbility/SyndraR.mSpellCalculations.DamageCalc (16.23.8418428+branch.releases-16-23.content.release)",
               "damage_type_source": "spell_syndrar_tooltip <magicDamage>"
             },
             {
@@ -480,7 +493,7 @@
                 ]
               },
               "label": "Derivado",
-              "source": "Characters/Syndra/Spells/SyndraRAbility/SyndraR.mSpellCalculations.DamageCalc (16.23.8406595+branch.releases-16-23.content.release)",
+              "source": "Characters/Syndra/Spells/SyndraRAbility/SyndraR.mSpellCalculations.DamageCalc (16.23.8418428+branch.releases-16-23.content.release)",
               "damage_type_source": "spell_syndrar_tooltip <magicDamage>"
             }
           ]
@@ -528,7 +541,7 @@
                 ]
               },
               "label": "Derivado",
-              "source": "Characters/Syndra/Spells/SyndraRAbility/SyndraR.mSpellCalculations.MaxDamageCalc (16.23.8406595+branch.releases-16-23.content.release)",
+              "source": "Characters/Syndra/Spells/SyndraRAbility/SyndraR.mSpellCalculations.MaxDamageCalc (16.23.8418428+branch.releases-16-23.content.release)",
               "damage_type_source": "spell_syndrar_tooltip <magicDamage>"
             }
           ]

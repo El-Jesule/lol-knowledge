@@ -431,6 +431,19 @@
       "passive_stats": [],
       "not_modelled": [
         "Lanzamiento por los aires y campo de ralentización de 4 s"
+      ],
+      "cc_effects": [
+        {
+          "id": "r_airborne",
+          "name": "Fisura glacial (lanzamiento por los aires)",
+          "kind": "airborne",
+          "duration_formula": {
+            "op": "constant",
+            "value": 0.6
+          },
+          "label": "Derivado",
+          "source": "Characters/Braum/Spells/BraumRWrapperAbility/BraumRWrapper.DataValues.KnockupDuration (16.23.8418428+branch.releases-16-23.content.release)"
+        }
       ]
     }
   }

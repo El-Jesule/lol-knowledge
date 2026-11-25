@@ -3,7 +3,7 @@
   "champion": "Sejuani",
   "label": "Derivado",
   "game_version": "16.23",
-  "content_version": "16.23.8406595+branch.releases-16-23.content.release",
+  "content_version": "16.23.8418428+branch.releases-16-23.content.release",
   "verified_against": {
     "content_version": "16.23.8406595+branch.releases-16-23.content.release",
     "bin_sha256": "ffb79c365dca7187d4d00c9e550fa28cfc0f2ae3dda46a2331af3fe9bdd26675",
@@ -38,7 +38,7 @@
                 ]
               },
               "label": "Derivado",
-              "source": "Characters/Sejuani/Spells/SejuaniPassiveAbility/SejuaniPassive · PercentHPDamage × vida máxima del objetivo (16.23.8406595+branch.releases-16-23.content.release)",
+              "source": "Characters/Sejuani/Spells/SejuaniPassiveAbility/SejuaniPassive · PercentHPDamage × vida máxima del objetivo (16.23.8418428+branch.releases-16-23.content.release)",
               "damage_type_source": "spell_sejuanipassive_tooltip <magicDamage>"
             }
           ]
@@ -59,7 +59,7 @@
             "value": 10
           },
           "label": "Derivado",
-          "source": "Characters/Sejuani/Spells/SejuaniPassiveAbility/SejuaniPassive.DataValues.BonusArmorBase (16.23.8406595+branch.releases-16-23.content.release)",
+          "source": "Characters/Sejuani/Spells/SejuaniPassiveAbility/SejuaniPassive.DataValues.BonusArmorBase (16.23.8418428+branch.releases-16-23.content.release)",
           "stat": "armor",
           "mode": "flat",
           "input_name": "frost_armor",
@@ -74,7 +74,7 @@
             "value": 10
           },
           "label": "Derivado",
-          "source": "Characters/Sejuani/Spells/SejuaniPassiveAbility/SejuaniPassive.DataValues.BonusMRBase (16.23.8406595+branch.releases-16-23.content.release)",
+          "source": "Characters/Sejuani/Spells/SejuaniPassiveAbility/SejuaniPassive.DataValues.BonusMRBase (16.23.8418428+branch.releases-16-23.content.release)",
           "stat": "magic_resist",
           "mode": "flat",
           "input_name": "frost_armor",
@@ -122,7 +122,7 @@
                 ]
               },
               "label": "Derivado",
-              "source": "Characters/Sejuani/Spells/SejuaniQAbility/SejuaniQ.mSpellCalculations.TotalDamageTooltip (16.23.8406595+branch.releases-16-23.content.release)",
+              "source": "Characters/Sejuani/Spells/SejuaniQAbility/SejuaniQ.mSpellCalculations.TotalDamageTooltip (16.23.8418428+branch.releases-16-23.content.release)",
               "damage_type_source": "spell_sejuaniq_tooltip <magicDamage>"
             }
           ]
@@ -131,6 +131,19 @@
       "passive_stats": [],
       "not_modelled": [
         "Lanzamiento por los aires"
+      ],
+      "cc_effects": [
+        {
+          "id": "q_airborne",
+          "name": "Asalto ártico (lanzamiento por los aires)",
+          "kind": "airborne",
+          "duration_formula": {
+            "op": "constant",
+            "value": 0.5
+          },
+          "label": "Derivado",
+          "source": "Characters/Sejuani/Spells/SejuaniQAbility/SejuaniQ.DataValues.KnockupDurationTOOLTIPONLY (16.23.8418428+branch.releases-16-23.content.release)"
+        }
       ]
     },
     "W": {
@@ -187,7 +200,7 @@
                 ]
               },
               "label": "Derivado",
-              "source": "Characters/Sejuani/Spells/SejuaniWAbility/SejuaniW.mSpellCalculations.FirstHitDamageTooltip (16.23.8406595+branch.releases-16-23.content.release)",
+              "source": "Characters/Sejuani/Spells/SejuaniWAbility/SejuaniW.mSpellCalculations.FirstHitDamageTooltip (16.23.8418428+branch.releases-16-23.content.release)",
               "damage_type_source": "spell_sejuaniw_tooltip <physicalDamage>"
             }
           ]
@@ -242,7 +255,7 @@
                 ]
               },
               "label": "Derivado",
-              "source": "Characters/Sejuani/Spells/SejuaniWAbility/SejuaniW.mSpellCalculations.SecondHitDamageTooltip (16.23.8406595+branch.releases-16-23.content.release)",
+              "source": "Characters/Sejuani/Spells/SejuaniWAbility/SejuaniW.mSpellCalculations.SecondHitDamageTooltip (16.23.8418428+branch.releases-16-23.content.release)",
               "damage_type_source": "spell_sejuaniw_tooltip <physicalDamage>"
             }
           ]
@@ -297,7 +310,7 @@
                 ]
               },
               "label": "Derivado",
-              "source": "Characters/Sejuani/Spells/SejuaniWAbility/SejuaniW.mSpellCalculations.FirstHitDamageTooltip (16.23.8406595+branch.releases-16-23.content.release)",
+              "source": "Characters/Sejuani/Spells/SejuaniWAbility/SejuaniW.mSpellCalculations.FirstHitDamageTooltip (16.23.8418428+branch.releases-16-23.content.release)",
               "damage_type_source": "spell_sejuaniw_tooltip <physicalDamage>"
             },
             {
@@ -346,7 +359,7 @@
                 ]
               },
               "label": "Derivado",
-              "source": "Characters/Sejuani/Spells/SejuaniWAbility/SejuaniW.mSpellCalculations.SecondHitDamageTooltip (16.23.8406595+branch.releases-16-23.content.release)",
+              "source": "Characters/Sejuani/Spells/SejuaniWAbility/SejuaniW.mSpellCalculations.SecondHitDamageTooltip (16.23.8418428+branch.releases-16-23.content.release)",
               "damage_type_source": "spell_sejuaniw_tooltip <physicalDamage>"
             }
           ]
@@ -397,7 +410,7 @@
                 ]
               },
               "label": "Derivado",
-              "source": "Characters/Sejuani/Spells/SejuaniEAbility/SejuaniE.mSpellCalculations.TotalDamage (16.23.8406595+branch.releases-16-23.content.release)",
+              "source": "Characters/Sejuani/Spells/SejuaniEAbility/SejuaniE.mSpellCalculations.TotalDamage (16.23.8418428+branch.releases-16-23.content.release)",
               "damage_type_source": "spell_sejuanie_tooltip <magicDamage>"
             }
           ]
@@ -406,6 +419,19 @@
       "passive_stats": [],
       "not_modelled": [
         "Acumulación de 4 cargas con ataques cuerpo a cuerpo aliados y aturdimiento"
+      ],
+      "cc_effects": [
+        {
+          "id": "e_stun",
+          "name": "Congelación permanente (aturdimiento)",
+          "kind": "stun",
+          "duration_formula": {
+            "op": "constant",
+            "value": 1
+          },
+          "label": "Derivado",
+          "source": "Characters/Sejuani/Spells/SejuaniEAbility/SejuaniE.DataValues.CCDuration (16.23.8418428+branch.releases-16-23.content.release)"
+        }
       ]
     },
     "R": {
@@ -446,7 +472,7 @@
                 ]
               },
               "label": "Derivado",
-              "source": "Characters/Sejuani/Spells/SejuaniRAbility/SejuaniR.mSpellCalculations.MinorDamageTooltip (16.23.8406595+branch.releases-16-23.content.release)",
+              "source": "Characters/Sejuani/Spells/SejuaniRAbility/SejuaniR.mSpellCalculations.MinorDamageTooltip (16.23.8418428+branch.releases-16-23.content.release)",
               "damage_type_source": "spell_sejuanir_tooltip <magicDamage>"
             }
           ]
@@ -485,7 +511,7 @@
                 ]
               },
               "label": "Derivado",
-              "source": "Characters/Sejuani/Spells/SejuaniRAbility/SejuaniR.mSpellCalculations.TotalDamageTooltip (16.23.8406595+branch.releases-16-23.content.release)",
+              "source": "Characters/Sejuani/Spells/SejuaniRAbility/SejuaniR.mSpellCalculations.TotalDamageTooltip (16.23.8418428+branch.releases-16-23.content.release)",
               "damage_type_source": "spell_sejuanir_tooltip <magicDamage>"
             }
           ]
@@ -494,6 +520,36 @@
       "passive_stats": [],
       "not_modelled": [
         "Aturdimiento, revelación y tormenta de hielo posterior"
+      ],
+      "cc_effects": [
+        {
+          "id": "r_close_stun",
+          "name": "Prisión glacial (aturdimiento)",
+          "kind": "stun",
+          "duration_formula": {
+            "op": "constant",
+            "value": 1
+          },
+          "label": "Derivado",
+          "source": "Characters/Sejuani/Spells/SejuaniRAbility/SejuaniR.DataValues.BaseStunDuration (16.23.8418428+branch.releases-16-23.content.release)",
+          "case_ids": [
+            "close"
+          ]
+        },
+        {
+          "id": "r_far_stun",
+          "name": "Prisión glacial (aturdimiento)",
+          "kind": "stun",
+          "duration_formula": {
+            "op": "constant",
+            "value": 1.5
+          },
+          "label": "Derivado",
+          "source": "Characters/Sejuani/Spells/SejuaniRAbility/SejuaniR.DataValues.EmpoweredStunDuration (16.23.8418428+branch.releases-16-23.content.release)",
+          "case_ids": [
+            "far"
+          ]
+        }
       ]
     }
   }

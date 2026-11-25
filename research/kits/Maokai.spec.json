@@ -79,6 +79,14 @@
       ],
       "not_modelled": [
         "Inalcanzabilidad e inmovilización (RootDuration)"
+      ],
+      "cc_effects": [
+        {
+          "id": "w_root",
+          "name": "Avance retorcido (enraizamiento)",
+          "kind": "root",
+          "data_value": "RootDuration"
+        }
       ]
     },
     "E": {
@@ -136,6 +144,14 @@
           "duration_seconds": {
             "data_value": "MinRootDuration"
           }
+        }
+      ],
+      "cc_effects": [
+        {
+          "id": "r_root",
+          "name": "Garras de la naturaleza (enraizamiento)",
+          "kind": "root",
+          "data_value": "MinRootDuration"
         }
       ]
     }

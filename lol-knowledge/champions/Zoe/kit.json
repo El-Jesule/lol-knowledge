@@ -458,6 +458,19 @@
       "passive_stats": [],
       "not_modelled": [
         "Somnolencia, sueño de 2,25 s y reducción porcentual de resistencia mágica"
+      ],
+      "cc_effects": [
+        {
+          "id": "e_sleep",
+          "name": "Burbuja somnífera (sueño)",
+          "kind": "sleep",
+          "duration_formula": {
+            "op": "constant",
+            "value": 2.25
+          },
+          "label": "Derivado",
+          "source": "Characters/Zoe/Spells/ZoeEAbility/ZoeE.DataValues.SleepDuration (16.23.8418428+branch.releases-16-23.content.release)"
+        }
       ]
     },
     "R": {

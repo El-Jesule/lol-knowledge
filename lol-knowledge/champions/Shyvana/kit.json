@@ -686,6 +686,19 @@
       "passive_stats": [],
       "not_modelled": [
         "Vida máxima adicional (Calc_Bonus_Health), generación de Furia e imparabilidad"
+      ],
+      "cc_effects": [
+        {
+          "id": "r_fear",
+          "name": "Ascendencia de dragón (miedo)",
+          "kind": "fear",
+          "duration_formula": {
+            "op": "constant",
+            "value": 0.75
+          },
+          "label": "Derivado",
+          "source": "Characters/Shyvana/Spells/ShyvanaRAbility/ShyvanaR.DataValues.FearDuration (16.23.8418428+branch.releases-16-23.content.release)"
+        }
       ]
     }
   }

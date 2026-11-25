@@ -115,6 +115,14 @@
       ],
       "not_modelled": [
         "Inmovilización simple y potenciada (MinRootDuration, MaxRootDuration)"
+      ],
+      "cc_effects": [
+        {
+          "id": "e_root",
+          "name": "Maraña de púas (enraizamiento)",
+          "kind": "root",
+          "data_value": "MinRootDuration"
+        }
       ]
     },
     "R": {
@@ -133,6 +141,14 @@
       ],
       "not_modelled": [
         "Lanzamiento por los aires y aturdimiento"
+      ],
+      "cc_effects": [
+        {
+          "id": "r_stun",
+          "name": "Brote sorpresa (aturdimiento)",
+          "kind": "stun",
+          "data_value": "StunDuration"
+        }
       ]
     }
   }

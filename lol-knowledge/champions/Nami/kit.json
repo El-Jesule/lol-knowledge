@@ -87,6 +87,19 @@
       "passive_stats": [],
       "not_modelled": [
         "Aturdimiento (StunDuration)"
+      ],
+      "cc_effects": [
+        {
+          "id": "q_stun",
+          "name": "Prisión de agua (aturdimiento)",
+          "kind": "stun",
+          "duration_formula": {
+            "op": "constant",
+            "value": 1.5
+          },
+          "label": "Derivado",
+          "source": "Characters/Nami/Spells/NamiQAbility/NamiQ.DataValues.StunDuration (16.23.8418428+branch.releases-16-23.content.release)"
+        }
       ]
     },
     "W": {
@@ -387,6 +400,19 @@
       "passive_stats": [],
       "not_modelled": [
         "Lanzamiento por los aires, ralentización y velocidad a aliados"
+      ],
+      "cc_effects": [
+        {
+          "id": "r_airborne",
+          "name": "Maremoto (lanzamiento por los aires)",
+          "kind": "airborne",
+          "duration_formula": {
+            "op": "constant",
+            "value": 0.5
+          },
+          "label": "Derivado",
+          "source": "Characters/Nami/Spells/NamiRAbility/NamiR.DataValues.KnockupDuration (16.23.8418428+branch.releases-16-23.content.release)"
+        }
       ]
     }
   }
