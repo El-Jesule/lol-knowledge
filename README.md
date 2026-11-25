@@ -37,7 +37,7 @@ El flujo de GitHub Actions ([`.github/workflows/ci.yml`](.github/workflows/ci.ym
 |---|---|
 | `lol-knowledge/` | Base de conocimiento: índices, campeones, objetos, reglas (`mechanics/`) y datos derivados del cliente (`derived/`) |
 | `data/current/` | Snapshot oficial generado desde Data Dragon (no editar a mano) |
-| `src/lol_knowledge/` | CLI, hoja de estadísticas y métricas (`stats/`), kits de campeón (`kit/`), fórmulas compartidas (`formula/`), motor de daño (`damage/`) y modelo de objetos (`objects/`) |
+| `src/lol_knowledge/` | CLI, hoja de estadísticas (`stats/`), kits (`kit/`), fórmulas (`formula/`), daño (`damage/`), objetos (`objects/`), rotaciones (`rotation.py`), supervivencia (`defense.py`), duelo 1v1 (`duel.py`), elixires/Ornn (`upgrades.py`), optimizador (`optimizer/`), contrato JSON (`contract.py`) y servidor MCP (`mcp_server.py`) |
 | `research/` | Extractor de cálculos, auditoría y prototipos aislados |
 | `tests/` | Pruebas sin acceso a red |
 | `odd/tasks/` | Documentos de tarea por fase |
@@ -126,14 +126,14 @@ Códigos de salida: `0` hoja calculada (aunque alguna estadística esté bloquea
 
 ## Legalidad de la build
 
-`stats`, `ability` y `rotation` comprueban que los objetos del atacante y, si lo hay, del campeón objetivo quepan en un inventario: 6 huecos más el del abalorio, un objeto legendario de cada, un par de botas y los grupos exclusivos del cliente (Últimas palabras, Salvavidas, Lágrima, Hidras, Hoja encantada…). Los límites salen del cliente ([`lol-knowledge/derived/item-groups.json`](lol-knowledge/derived/item-groups.json), `Derivado`) y la regla está en [`lol-knowledge/mechanics/build-legality.md`](lol-knowledge/mechanics/build-legality.md).
+`stats`, `ability`, `rotation`, `survive`, `duel` y `optimize` comprueban que los objetos del atacante y, si lo hay, del campeón objetivo quepan en un inventario: 6 huecos más el del abalorio, un objeto legendario de cada, un par de botas, los grupos exclusivos del cliente (Últimas palabras, Salvavidas, Lágrima, Hidras, Hoja encantada…), máximo 1 elixir activo (`--elixir`, 0 huecos) y máximo 1 objeto completado no-botas mejorado por Ornn (`--ornn-item` / `--ornn-upgrade`, `DEC-03`). Los límites salen del cliente ([`lol-knowledge/derived/item-groups.json`](lol-knowledge/derived/item-groups.json), `Derivado`) y la regla está en [`lol-knowledge/mechanics/build-legality.md`](lol-knowledge/mechanics/build-legality.md).
 
 - Una build ilegal sale con código `2` y la lista de violaciones. `--allow-illegal-build` calcula igualmente y las escribe como aviso en la salida de errores.
 - Las notas (un objeto sin `maxStack` en el bin, datos de otro parche, un objeto de campeón sin saber quién lo lleva) también van a la salida de errores.
 
 ## Runas y fragmentos
 
-`stats`, `ability` y `rotation` aceptan una página: `--rune` seis veces (piedra angular, tres runas del árbol principal y dos del secundario) y `--shard` tres veces (ataque, flexible, defensa). Los datos salen del cliente ([`lol-knowledge/derived/runes.json`](lol-knowledge/derived/runes.json), `Derivado`, comprobado contra Data Dragon) y la regla está en [`lol-knowledge/mechanics/runes.md`](lol-knowledge/mechanics/runes.md).
+`stats`, `ability`, `rotation`, `survive`, `duel` y `optimize` aceptan una página completa: `--rune` seis veces (piedra angular, tres runas del árbol principal y dos del secundario) y `--shard` tres veces (ataque, flexible, defensa), además de `--target-rune` / `--target-shard` para el campeón objetivo o defensor. Los datos salen del cliente ([`lol-knowledge/derived/runes.json`](lol-knowledge/derived/runes.json), `Derivado`, comprobado contra Data Dragon) y la regla está en [`lol-knowledge/mechanics/runes.md`](lol-knowledge/mechanics/runes.md).
 
 ```powershell
 # Ahri con Electrocutar / Brujería y dos fragmentos adaptables
@@ -143,8 +143,7 @@ Códigos de salida: `0` hoja calculada (aunque alguna estadística esté bloquea
 ```
 
 - La página debe ser legal (código 2 si no; `--allow-illegal-build` la calcula con aviso).
-- Los fragmentos y las 16 runas menores de estadísticas (Trascendencia, Celeridad, Manitas, Calzado mágico, Banda de maná, Entrega de galletas, las tres de Leyenda, Cazador definitivo, Revitalizar y, con `--input`, Se avecina tormenta, Condicionamiento, Sobrecrecimiento, Concentración absoluta y Caminar sobre agua) se aplican en la hoja. La fuerza adaptable elige DA o PH según los objetos; en un empate decide el campeón, `Pendiente de verificación`.
-- Las 14 runas menores de combate, supervivencia y recursos (Golpe de gracia, Derribado, Último esfuerzo, Arcanólogo axiomático, Piroláser, Golpe bajo, Impacto repentino, Demoler, Revitalizar < 40 % de vida, Golpe de escudo, Sabor a sangre, Absorber vida, Triunfo, Fuente de vida y Claridad mental) y las 11 piedras angulares ofensivas (Electrocutar, Cosecha oscura, Ataque intensificado, Conquistador, Compás letal, Lluvia de cuchillas, Invocar a Aery, Cometa arcano, Toque de muerte ígnea, Primer golpe y Garras del inmortal, incluida su curación) se evalúan en `rotation`; las 3 runas defensivas (`8473` Revestimiento de huesos, `8444` Fuerzas renovadas y `8465` Protector) se evalúan en `survive` (**51/62** runas de árbol cubiertas). Las 7 runas menores estrictamente de visión, oro, abalorios, Destello o velocidad fuera de combate se anotan sin debilitar el daño. Las 5 piedras angulares y 6 runas menores dependientes de mecánicas aún no construidas (CC, Vigor, hechizos de invocador, consumibles) siguen en `pending_effects` y dejan el daño en `Pendiente de verificación`.
+- **62 de 62 runas y 9 de 9 fragmentos modelados:** los fragmentos y runas menores de estadísticas se aplican en la hoja (la fuerza adaptable elige DA o PH según los objetos; en un empate decide el campeón, `Pendiente de verificación`); las piedras angulares y runas menores de combate, supervivencia y recursos se evalúan en `rotation`, `survive` y `duel` (incluida *Inquebrantable* `8242` bajo CC en duelos); y las runas estrictamente de visión, oro, abalorios o utilidad fuera de combate se anotan sin debilitar el cálculo.
 
 ## Kits de campeón
 
@@ -205,7 +204,7 @@ Códigos de salida: `0` cálculo hecho, `2` petición inválida, dato ausente o 
 - **Acumulaciones de combate:** las temporales (Guinsoo, El final, Liandry, Disfraz encantado) empiezan en 0 y se calculan paso a paso; con `--timeline` caducan y crecen por segundos. Solo las permanentes (crítico de Yun Tal) se toman al máximo ([regla](lol-knowledge/mechanics/combat-stacks.md)).
 - **Crítico:** multiplicador base del registro del cliente (`critdamagemultiplier`, 2,0 desde el parche 26.1) más el daño crítico adicional de los objetos. No hay valor esperado: cada paso dice si critica.
 - **Datos que no se adivinan:** cuerpo a cuerpo o a distancia (`--attacker-range`, lo pide Filo de la niebla), el tipo de un objetivo manual (`--target-kind`) y su vida adicional (`--target-bonus-health`, lo pide Verdugo de gigantes). La rotación exige la vida del objetivo.
-- **Lo no aplicado se lista:** efectos no evaluables, de otro tipo o de estadística porcentual (Rabadon). Si pueden cambiar el daño, el resultado queda `Pendiente de verificación`. También queda pendiente si un objeto usado no tiene todos sus efectos revisados (`effect_review` distinto de `complete`).
+- **Lo no aplicado se lista:** cualquier efecto `excluded` o `partially_evaluable` de un objeto o mecánica no modelada del kit se reporta explícitamente; si puede afectar al daño, el resultado queda marcado como `Pendiente de verificación`.
 - **Curación:** con robo de vida u omnivampirismo, cada parte informa la curación que da su daño final (`heal:`), y cada paso y el total la suman (`step heal`, `total heal`; en JSON, `healing` con su etiqueta). El robo de vida cura con los ataques y con el daño al impactar que el catálogo declara (`applies_life_steal`); el omnivampirismo, con todo. Es la curación que genera el daño: no se limita a la vida que le falta al atacante. Una habilidad con omnivampirismo pide `--target-kind`.
 - **Recursos y costes:** cada habilidad descuenta su coste oficial de Data Dragon (maná o energía) o el declarado en `kit.json` (incluido coste de vida con suelo en 1 de vida); las reactivaciones no vuelven a pagar coste. Lanzar sin recurso suficiente es un error (`--allow-insufficient-resource` calcula con tope en 0 y etiqueta `Pendiente de verificación`). La reserva inicial se ajusta con `--attacker-resource` o `--input attacker_resource_percent`; en `--timeline` se acumula la regeneración pasiva y los tics de 5 s de Banda de maná, y en cualquier rotación se aplican Segador de esencia (`3508`) y Claridad mental (`8009`) ([regla](lol-knowledge/mechanics/resources.md)).
 - **Elixires y mejoras de Ornn (`OBJ-12`):** `stats`, `ability`, `rotation`, `survive` y `duel` aceptan `--elixir <2138|2139|2140>` (0 huecos, máximo 1) y `--ornn-item <id>` (mejora exacta de obra maestra de `1000 g` sobre un único objeto completado no-botas, `OrnnP.DataValues` `16.23`). En `optimize`, `--ornn-upgrade` selecciona automáticamente el único objeto de cada build cuya mejora maximiza el objetivo.
@@ -214,6 +213,59 @@ Códigos de salida: `0` cálculo hecho, `2` petición inválida, dato ausente o 
 - Reglas: [ataques y daño al impactar](lol-knowledge/mechanics/basic-attacks-and-on-hit.md), [impacto crítico](lol-knowledge/mechanics/critical-strike.md), [modificadores de daño](lol-knowledge/mechanics/damage-modifiers.md), [robo de vida y omnivampirismo](lol-knowledge/mechanics/life-steal-and-omnivamp.md), [supervivencia](lol-knowledge/mechanics/survival.md), [recursos y costes](lol-knowledge/mechanics/resources.md), [duelo 1v1](lol-knowledge/mechanics/duel.md).
 
 Códigos de salida: `0` cálculo hecho, `2` petición inválida, dato ausente o campeón sin kit.
+
+## Supervivencia (`survive`)
+
+`survive` realiza simulaciones defensivas inversas contra golpes manuales (`--incoming`) o contra una rotación enemiga (`--enemy-champion` + `--steps`), calculando supervivencia, paso letal, `time_to_die`, `damage_taken_per_second`, habilidades defensivas activas (`--defender-cast`), escudos reactivos (Sterak, Fauces, Rookern), reducción plana posmitigación (`8473` Revestimiento de huesos) y reflejo de *Malla de espinas* (`3075`) ([regla](lol-knowledge/mechanics/survival.md)).
+
+```powershell
+# Darius nivel 11 con Calibrador de Sterak frente a una rotación de Ahri
+.\.venv\Scripts\python.exe -m lol_knowledge survive --champion Darius --level 11 `
+  --item 3053 --enemy-champion Ahri --enemy-level 11 --enemy-item 3089 `
+  --enemy-learned Q=5 --enemy-learned W=3 --enemy-learned E=1 --enemy-learned R=2 `
+  --steps "E, Q.both, W, R.dash" --timeline
+```
+
+## Simulador de duelo 1v1 (`duel`)
+
+`duel` ejecuta un combate 1v1 acoplado y determinista sobre reloj exacto `Fraction`, reutilizando `rotation.py` y `defense.py` sin doble conteo ([regla](lol-knowledge/mechanics/duel.md)). Modela ataques, habilidades ofensivas y defensivas (`135/173` campeones), bloqueos por control de masas (`112/173` campeones, `154` `cc_effects`), tenacidad con suelo de `0,3 s` (`airborne`/`suppression` inmunes), purgas (*Limpiar*, QSS, campeones), inmunidades a CC, escudo de hechizos, hechizos de invocador, quemaduras, reflejo de *Malla de espinas* y estasis de *Ángel de la guarda*.
+
+```powershell
+# Duelo 1v1 Darius vs Garen a nivel 11
+.\.venv\Scripts\python.exe -m lol_knowledge duel `
+  --a-champion Darius --a-level 11 --a-item 3078 --a-range melee `
+  --a-learned Q=5 --a-learned W=1 --a-learned E=3 --a-learned R=2 --a-steps "E, attack, W, Q.blade, R" `
+  --b-champion Garen --b-level 11 --b-item 3078 --b-range melee `
+  --b-learned Q=5 --b-learned W=1 --b-learned E=3 --b-learned R=2 --b-steps "Q, E, R"
+```
+
+## Optimizador de builds (`optimize`)
+
+`optimize` busca builds legales deterministas (relevancia marginal + *beam search* + refinamiento *1-swap*) separando estrictamente `verified_builds` (`Oficial`/`Derivado`) de `pending_builds` (`Pendiente de verificación`). Admite 8 objetivos (`rotation_damage`, `dps`, `effective_health_physical`, `effective_health_magic`, `effective_health_mixed`, `time_to_die`, `healing` y `duel`), rotación automática si se omite `--steps` (`OPT-05`), curva de compra paso a paso (`--purchase-curve`), puntos de control de oro (`--gold-checkpoints`), elixires (`--elixir`) y selección automática del mejor objeto para la mejora de obra maestra de Ornn (`--ornn-upgrade`, `DEC-03`) ([`engine-v1.md`](odd/tasks/engine-v1.md)).
+
+```powershell
+# Mejor build de 3 objetos para Ahri con curva de compra, checkpoints de oro y mejora de Ornn
+.\.venv\Scripts\python.exe -m lol_knowledge optimize --champion Ahri --level 11 `
+  --objective rotation_damage --slots 3 --attacker-range ranged `
+  --learned Q=5 --learned W=3 --learned E=1 --learned R=2 `
+  --target-armor 60 --target-mr 45 --target-max-health 1800 --target-kind champion `
+  --ornn-upgrade --purchase-curve --gold-checkpoints 3500,7000
+```
+
+## Contrato JSON y servidor MCP local (`contract` / `mcp`)
+
+Para conectar asistentes de IA sin cálculo mental, el proyecto expone un contrato JSON único versionado (`lol-knowledge-contract/1` vía `python -m lol_knowledge contract`) y un servidor **MCP local JSON-RPC 2.0 sobre `stdio`** sin dependencias externas (`python -m lol_knowledge mcp`) con 7 herramientas (`lol_lookup`, `lol_stats`, `lol_ability`, `lol_rotation`, `lol_survive`, `lol_duel`, `lol_optimize`), 2 prompts y 2 recursos ([`lol-knowledge/ai-layer.md`](lol-knowledge/ai-layer.md)).
+
+```json
+{
+  "mcpServers": {
+    "lol-knowledge": {
+      "command": "C:\\Users\\Yisus\\Documents\\LoL-Knowledge\\.venv\\Scripts\\python.exe",
+      "args": ["-m", "lol_knowledge", "mcp", "--root", "C:\\Users\\Yisus\\Documents\\LoL-Knowledge"]
+    }
+  }
+}
+```
 
 ## Validación de integridad
 
@@ -253,7 +305,7 @@ Condiciones de uso y cuestiones pendientes: [`research/evidence/usage-conditions
 - No hay integración con la Riot API ni claves de API.
 - No hay estadísticas comunitarias (tasa de victorias, builds populares); están excluidas bajo cualquier condición (DEC-05). Los valores derivados del cliente se marcan `Derivado` y llevan atribución.
 - Data Dragon (16.20.1, 16.22.1 y 16.23.1) publica `attackdamageperlevel = 0` para todos los campeones. Se sustituye por el crecimiento del cliente 16.23, `Derivado` porque cliente y snapshot coinciden. Senna no tiene el campo en el bin y su DA queda bloqueado por encima del nivel 1.
-- La hoja de estadísticas aplica los fragmentos y las runas menores de estadísticas, pero no las piedras angulares, las runas menores de combate ni las pasivas de campeón; de los efectos de objeto solo aplica los de estadística permanentes (`always`) y las acumulaciones permanentes al máximo. Antes de calcular comprueba que los objetos puedan llevarse a la vez (ver «Legalidad de la build»).
+- La hoja de estadísticas (`stats`) aplica los fragmentos, las runas menores de estadísticas, las pasivas de campeón de tipo estadística/acumulación (`--input`), los elixires (`--elixir`), la mejora de Ornn (`--ornn-item`) y los efectos de objeto permanentes (`always`) o con acumulaciones permanentes al máximo; las piedras angulares y efectos de combate se evalúan en `rotation`, `survive` y `duel`. Antes de calcular comprueba la legalidad de la build (ver «Legalidad de la build»).
 - `ability` calcula un lanzamiento sin efectos de objeto ni tiempo; para críticos, efectos de objeto, costes, recursos, escudos, curación, ventanas `--window` y tiempo está `rotation`, y para combates acoplados con CC, tenacidad, purgas y defensivos está `duel`. No hay tiempos de lanzamiento, animaciones, geometría espacial ni viaje de proyectiles. Los 173 campeones tienen kit calculable (`CH-01` completo); sus huecos declarados figuran en cada `not_modelled`.
 - El núcleo `damage` trata una instancia aislada; `rotation`, `survive` y `duel` añaden críticos, escudos, reducciones planas y modificadores porcentuales de daño. No se modelan la penetración de armadura adicional ni el redondeo visual del juego.
 - Data Dragon no publica valores numéricos de las habilidades de Zaahen; los valores derivados están documentados y las discrepancias abiertas siguen como pendientes.
