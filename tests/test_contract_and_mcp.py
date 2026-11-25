@@ -268,6 +268,7 @@ def test_mcp_server_stdio_roundtrip() -> None:
         "lol_ability",
         "lol_rotation",
         "lol_survive",
+        "lol_duel",
         "lol_optimize",
     ]
 

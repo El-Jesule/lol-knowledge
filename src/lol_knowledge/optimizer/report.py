@@ -38,6 +38,17 @@ def _format_build(rank: int, build: BuildResult, objective: str) -> list[str]:
             score_str = f"died at {format_number(build.score)} s"
         else:
             score_str = f"died at step {format_number(build.score)}"
+    elif objective == "duel":
+        w = build.metrics.get("winner", "draw_timeout")
+        dur = build.metrics.get("duration", 0.0)
+        rem_a = build.metrics.get("remaining_health", 0.0)
+        rem_b = build.metrics.get("enemy_remaining_health", 0.0)
+        if w == "A":
+            score_str = f"WIN ({rem_a:.1f} HP left at {dur:.2f} s)"
+        elif w == "B":
+            score_str = f"LOSS (survived {dur:.2f} s, enemy {rem_b:.1f} HP left)"
+        else:
+            score_str = f"{str(w).upper()} (A {rem_a:.1f} vs B {rem_b:.1f} HP at {dur:.2f} s)"
     else:
         score_str = format_number(build.score)
     lines = [
