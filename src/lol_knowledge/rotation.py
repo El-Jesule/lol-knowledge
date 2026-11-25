@@ -3272,6 +3272,7 @@ class _Rotation:
         case_id: str | None,
         target_stats: Mapping[str, Fraction],
         clock: Fraction,
+        ability_parts: Sequence[Part] = (),
     ) -> tuple[list[HealEvent], list[ShieldEvent]]:
         """Apply Q/W/E/R ``active_effects`` (shields, heals, stat steroids, DR notes) on cast."""
         ability = self.kit.ability(slot)
@@ -3359,9 +3360,108 @@ class _Rotation:
                     self.speed_changed = True
                 dur_txt = f" for {format_number(dur)} s" if dur is not None else ""
                 self.notes.append(f"{src}: {eff.stat} buff active{dur_txt}")
+            elif eff.kind == "damage_dealt_heal":
+                if eff.part_index is not None:
+                    dealt = (
+                        ability_parts[eff.part_index].damage
+                        if 0 <= eff.part_index < len(ability_parts)
+                        else Fraction(0)
+                    )
+                    part_labels = (
+                        [ability_parts[eff.part_index].label]
+                        if 0 <= eff.part_index < len(ability_parts)
+                        else []
+                    )
+                else:
+                    dealt = sum((p.damage for p in ability_parts), start=Fraction(0))
+                    part_labels = [p.label for p in ability_parts]
+                raw_heal = dealt * res.exact / 100
+                if raw_heal > 0:
+                    heals.append(
+                        self._make_heal_event(
+                            src,
+                            raw_heal,
+                            weakest([eff_label, *part_labels]),
+                            clock,
+                            uses_hsp=eff.uses_hsp,
+                            notes=(
+                                f"{eff.name} ({format_number(res.exact)}% of "
+                                f"{format_number(dealt)} post-mitigation damage)",
+                            ),
+                        )
+                    )
+            elif eff.kind in {"recent_damage_shield", "recent_damage_heal"}:
+                min_v: Fraction | None = None
+                max_v: Fraction | None = None
+                if eff.min_formula is not None:
+                    min_res = evaluate_formula(
+                        eff.min_formula,
+                        eval_stats,
+                        rank=rank,
+                        level=self.sheet.level,
+                        target_stats=target_stats,
+                        inputs=self.inputs,
+                        ops=ABILITY_OPS,
+                    )
+                    min_v = min_res.exact
+                if eff.max_formula is not None:
+                    max_res = evaluate_formula(
+                        eff.max_formula,
+                        eval_stats,
+                        rank=rank,
+                        level=self.sheet.level,
+                        target_stats=target_stats,
+                        inputs=self.inputs,
+                        ops=ABILITY_OPS,
+                    )
+                    max_v = max_res.exact
+                raw_val = Fraction(0)
+                used_note = ""
+                if eff.input_name is not None and eff.input_name in self.inputs:
+                    stored = max(Fraction(0), Fraction(str(self.inputs[eff.input_name])))
+                    raw_val = stored * res.exact / 100
+                    used_note = (
+                        f"{eff.name} (from --input {eff.input_name}={format_number(stored)})"
+                    )
+                elif min_v is not None and min_v > 0:
+                    raw_val = min_v
+                    used_note = f"{eff.name} (minimum baseline, 0 stored damage)"
+                if min_v is not None and raw_val > 0:
+                    raw_val = max(raw_val, min_v)
+                if max_v is not None and raw_val > 0:
+                    raw_val = min(raw_val, max_v)
+                if raw_val > 0:
+                    if eff.kind == "recent_damage_shield":
+                        shields.append(
+                            self._make_shield_event(
+                                src,
+                                raw_val,
+                                eff_label,
+                                shield_type=eff.shield_type,
+                                duration=dur,
+                                notes=(used_note,),
+                            )
+                        )
+                    else:
+                        heals.append(
+                            self._make_heal_event(
+                                src,
+                                raw_val,
+                                eff_label,
+                                clock,
+                                uses_hsp=eff.uses_hsp,
+                                notes=(used_note,),
+                            )
+                        )
+                else:
+                    hint = f" or --input {eff.input_name}=<damage>" if eff.input_name else ""
+                    self.notes.append(f"{src}: depends on recent damage taken (use survive{hint})")
             elif eff.kind == "damage_taken_modifier":
                 dur_txt = f" for {format_number(dur)} s" if dur is not None else ""
                 self.notes.append(f"{src}: defensive damage reduction{dur_txt} (use survive)")
+            elif eff.kind in {"dodge_attacks", "spell_shield", "block_first_hit", "invulnerable"}:
+                dur_txt = f" for {format_number(dur)} s" if dur is not None else ""
+                self.notes.append(f"{src}: defensive {eff.kind}{dur_txt} (use survive)")
         return heals, shields
 
     def _burn_outcome(
@@ -3755,7 +3855,7 @@ class _Rotation:
                     extra.append(Label.PENDING)
                 parts += ability_parts
                 ab_heals, ab_shields = self._apply_ability_active_effects(
-                    step.slot, step.case, target_stats, clock
+                    step.slot, step.case, target_stats, clock, ability_parts=ability_parts
                 )
                 heal_events += ab_heals
                 shield_events += ab_shields

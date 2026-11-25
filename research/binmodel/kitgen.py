@@ -571,11 +571,23 @@ def _compile_active_effect(
     context: str,
 ) -> dict[str, Any]:
     effect_ctx = f"{context}.active_effects[{effect_spec.get('id')}]"
-    formula, source = _compile_formula_ref(ability, effect_spec, content_version, effect_ctx)
+    kind = str(effect_spec["kind"])
+    if (
+        "calculation" not in effect_spec
+        and "data_value" not in effect_spec
+        and "formula" not in effect_spec
+        and kind in {"dodge_attacks", "spell_shield", "block_first_hit", "invulnerable"}
+    ):
+        formula: Any = {"op": "constant", "value": 1}
+        note = effect_spec.get("source_note") or effect_spec.get("source") or kind
+        prefix = f"{ability.record['path']} · " if ability is not None else ""
+        source = f"{prefix}{note} ({content_version})"
+    else:
+        formula, source = _compile_formula_ref(ability, effect_spec, content_version, effect_ctx)
     compiled: dict[str, Any] = {
         "id": str(effect_spec["id"]),
         "name": str(effect_spec["name"]),
-        "kind": str(effect_spec["kind"]),
+        "kind": kind,
         "formula": formula,
         "label": str(effect_spec.get("label", "Derivado")),
         "source": source,
@@ -588,6 +600,8 @@ def _compile_active_effect(
         "case_ids",
         "over_duration",
         "uses_hsp",
+        "part_index",
+        "input_name",
         "condition",
     ):
         if key in effect_spec:
@@ -596,6 +610,20 @@ def _compile_active_effect(
         compiled["damage_reduction_cap"] = _setting(
             ability, effect_spec["damage_reduction_cap"], f"{effect_ctx}.damage_reduction_cap"
         )
+    if "window_seconds" in effect_spec:
+        compiled["window_seconds"] = _setting(
+            ability, effect_spec["window_seconds"], f"{effect_ctx}.window_seconds"
+        )
+    for bound_key in ("min_formula", "max_formula"):
+        if bound_key in effect_spec:
+            raw_b = effect_spec[bound_key]
+            if isinstance(raw_b, Mapping) and ("calculation" in raw_b or "data_value" in raw_b):
+                b_formula, _ = _compile_formula_ref(
+                    ability, raw_b, content_version, f"{effect_ctx}.{bound_key}"
+                )
+                compiled[bound_key] = b_formula
+            else:
+                compiled[bound_key] = ability.custom(raw_b) if ability is not None else raw_b
     if "duration_seconds" in effect_spec:
         raw_dur = effect_spec["duration_seconds"]
         if isinstance(raw_dur, Mapping) and "data_value" in raw_dur:
