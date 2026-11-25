@@ -179,7 +179,8 @@ def test_abilities_do_not_apply_life_steal_and_say_why():
 
 def test_omnivamp_heals_every_part_against_a_champion():
     sheet = attacker([on_hit_item("9002")], [vamp("omnivamp", "0.05")])
-    outcome = run(sheet, "attack, R")
+    # Use E.center (single pure-damage part, no active self-heal) to isolate omnivamp healing.
+    outcome = run(sheet, "attack, E.center")
     healed = [part for step in outcome.steps for part in step.parts]
     assert [part.kind for part in healed] == ["attack", "on_hit", "ability"]
     for part in healed:
