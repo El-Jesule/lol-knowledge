@@ -87,7 +87,8 @@ def parts(outcome, step=0):
 
 
 def test_without_life_steal_or_omnivamp_nothing_heals():
-    outcome = run(attacker(), "attack, Q.first_hit")
+    # Use W (pure damage, no active self-heal) to verify zero vamp healing without stats.
+    outcome = run(attacker(), "attack, W")
     assert all(part.healing is NO_HEALING for step in outcome.steps for part in step.parts)
     assert outcome.healing == 0
     assert outcome.healing_label is Label.OFFICIAL
