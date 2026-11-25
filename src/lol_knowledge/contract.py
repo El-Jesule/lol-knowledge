@@ -16,6 +16,15 @@ from typing import Any
 from .damage import to_fraction
 from .defense import evaluate_defense, hits_from_rotation, parse_incoming
 from .defense_report import to_dict as defense_to_dict
+from .duel import (
+    DEFAULT_DUEL_MAX_DURATION,
+    DEFAULT_DUEL_MODE,
+    DEFAULT_DUEL_TIE_BREAK,
+    DEFAULT_PRIORITY_SLOTS,
+    DuelFighterSpec,
+    evaluate_duel,
+)
+from .duel_report import to_dict as duel_to_dict
 from .errors import DamageInputError, KitError, RotationError, StatsError
 from .kit import load_kit, passive_contributions
 from .objects import load_model
@@ -50,7 +59,7 @@ from .stats.sheet import MANA_RESOURCE
 from .summoners import load_summoner_spells, resolve_loadout, summoner_sheet_effects
 
 CONTRACT_SCHEMA = "lol-knowledge-contract/1"
-OPERATIONS = frozenset({"lookup", "stats", "ability", "rotation", "survive", "optimize"})
+OPERATIONS = frozenset({"lookup", "stats", "ability", "rotation", "survive", "duel", "optimize"})
 
 EXPLANATION_CONTRACT: dict[str, bool] = {
     "must_cite_labels": True,
@@ -991,6 +1000,142 @@ def _handle_survive(params: Mapping[str, Any], root: Path) -> dict[str, Any]:
     }
 
 
+def _build_duel_fighter(
+    fighter_params: Mapping[str, Any],
+    root: Path,
+    issues,
+    derived,
+    *,
+    side_label: str,
+    allow_illegal: bool,
+) -> tuple[DuelFighterSpec, list[str], list[str]]:
+    if not isinstance(fighter_params, Mapping):
+        raise ContractInputError(
+            "invalid_input",
+            f"parameter {side_label!r} must be a fighter JSON object",
+        )
+    champ = load_champion(root, _require_str(fighter_params, "champion"))
+    level = _require_int(fighter_params, "level", minimum=1)
+    kit = load_kit(root, champ.id)
+    if kit is None:
+        raise KitError(f"{champ.id} has no kit yet (lol-knowledge/champions/{champ.id}/kit.json)")
+    item_ids = _str_list(fighter_params, "items")
+    runes = _int_list(fighter_params, "runes")
+    shards = _int_list(fighter_params, "shards")
+    summoners = _str_list(fighter_params, "summoners")
+    ranks = _parse_ranks_dict(fighter_params)
+    inputs = _parse_inputs_dict(fighter_params)
+    assumptions_map = _parse_assumptions_dict(fighter_params)
+    steps_raw = fighter_params.get("steps")
+    steps = (
+        parse_steps(str(steps_raw)) if (isinstance(steps_raw, str) and steps_raw.strip()) else ()
+    )
+    prio_raw = _str_list(fighter_params, "priority_slots")
+    priority_slots = tuple(prio_raw) if prio_raw else DEFAULT_PRIORITY_SLOTS
+
+    sheet, warnings = _build_sheet_for_contract(
+        root,
+        champ,
+        level,
+        item_ids,
+        runes,
+        shards,
+        issues,
+        assumptions_map,
+        derived,
+        inputs,
+        extra_contributions=passive_contributions(kit, ranks),
+        combat_context="rotation",
+        kit=kit,
+        allow_illegal=allow_illegal,
+        summoners=summoners,
+    )
+    holder_range, inferred = _infer_holder_range(champ, fighter_params.get("range"))
+    rune_data = load_runes(root) if (runes or shards) else None
+    summoner_data = (
+        load_summoner_spells(root)
+        if (summoners or any(s.summoner_id is not None for s in steps))
+        else None
+    )
+    ap_weight = derived.value(champ.id, "adaptiveforceapweight") if derived else None
+    spec = DuelFighterSpec(
+        sheet=sheet,
+        kit=kit,
+        ranks=ranks,
+        crit_base=_crit_base(champ.id, champ.patch, derived),
+        steps=steps,
+        priority_slots=priority_slots,
+        holder_range=holder_range,
+        start_health=_optional_fraction(fighter_params, "health"),
+        start_shield=_optional_fraction(fighter_params, "shield") or Fraction(0),
+        shield_type=str(fighter_params.get("shield_type", "normal")),
+        runes=runes,
+        rune_data=rune_data,
+        summoners=summoners,
+        summoner_data=summoner_data,
+        inputs=inputs,
+        start_resource=_optional_fraction(fighter_params, "resource"),
+        allow_insufficient_resource=bool(fighter_params.get("allow_insufficient_resource", False)),
+        apply_passives=bool(fighter_params.get("apply_passives", True)),
+        ap_weight=ap_weight,
+    )
+    assumptions = [
+        *(f"{side_label}: {a}" for a in inferred),
+        *(f"{side_label}.{k}={v}" for k, v in assumptions_map.items()),
+    ]
+    return spec, assumptions, [f"{side_label}: {w}" for w in warnings]
+
+
+def _handle_duel(params: Mapping[str, Any], root: Path) -> dict[str, Any]:
+    raw_a = params.get("fighter_a")
+    raw_b = params.get("fighter_b")
+    missing = [k for k, v in (("fighter_a", raw_a), ("fighter_b", raw_b)) if v is None]
+    if missing:
+        raise ContractInputError(
+            "missing_input",
+            "duel requires both 'fighter_a' and 'fighter_b' objects "
+            f"(missing: {', '.join(missing)})",
+            missing_fields=missing,
+        )
+    allow_illegal = bool(params.get("allow_illegal_build", False))
+    mode = str(params.get("mode", DEFAULT_DUEL_MODE))
+    tie_break = str(params.get("tie_break", DEFAULT_DUEL_TIE_BREAK))
+    max_duration = _optional_fraction(params, "max_duration") or DEFAULT_DUEL_MAX_DURATION
+    issues = load_issues(root)
+    derived = load_records(root)
+    spec_a, assump_a, warn_a = _build_duel_fighter(
+        raw_a,
+        root,
+        issues,
+        derived,
+        side_label="fighter_a",
+        allow_illegal=allow_illegal,
+    )
+    spec_b, assump_b, warn_b = _build_duel_fighter(
+        raw_b,
+        root,
+        issues,
+        derived,
+        side_label="fighter_b",
+        allow_illegal=allow_illegal,
+    )
+    outcome = evaluate_duel(
+        spec_a,
+        spec_b,
+        mode=mode,
+        tie_break=tie_break,
+        max_duration=max_duration,
+    )
+    return {
+        "patch": outcome.patch,
+        "result_label": "Calculado",
+        "weakest_input_label": outcome.label.value,
+        "assumptions": [*assump_a, *assump_b],
+        "not_modelled": [*outcome.notes, *warn_a, *warn_b],
+        "result": duel_to_dict(outcome),
+    }
+
+
 def _handle_optimize(params: Mapping[str, Any], root: Path) -> dict[str, Any]:
     champ = load_champion(root, _require_str(params, "champion"))
     level = _require_int(params, "level", minimum=1)
@@ -1045,6 +1190,33 @@ def _handle_optimize(params: Mapping[str, Any], root: Path) -> dict[str, Any]:
     incoming_hits = ()
     incoming_hits_for_sheet = None
     extra_warnings: list[str] = []
+    duel_enemy: DuelFighterSpec | None = None
+    duel_mode = str(params.get("duel_mode", DEFAULT_DUEL_MODE))
+    duel_tie_break = str(params.get("duel_tie_break", DEFAULT_DUEL_TIE_BREAK))
+    duel_max_duration = _optional_fraction(params, "duel_max_duration") or DEFAULT_DUEL_MAX_DURATION
+    prio_raw = _str_list(params, "priority_slots")
+    duel_priority_slots = tuple(prio_raw) if prio_raw else DEFAULT_PRIORITY_SLOTS
+    if objective == "duel":
+        steps_raw = params.get("steps")
+        if isinstance(steps_raw, str) and steps_raw.strip():
+            steps = parse_steps(steps_raw)
+        enemy = params.get("enemy")
+        if enemy is None:
+            raise ContractInputError(
+                "missing_input",
+                "objective 'duel' requires an 'enemy' fighter object",
+                missing_fields=("enemy",),
+            )
+        duel_enemy, e_assump, e_warnings = _build_duel_fighter(
+            enemy,
+            root,
+            issues,
+            derived,
+            side_label="enemy",
+            allow_illegal=allow_illegal,
+        )
+        inferred_assumptions = [*inferred_assumptions, *e_assump]
+        extra_warnings.extend(e_warnings)
     if objective == "time_to_die":
         incoming = params.get("incoming")
         enemy = params.get("enemy")
@@ -1102,6 +1274,11 @@ def _handle_optimize(params: Mapping[str, Any], root: Path) -> dict[str, Any]:
         rune_data=rune_data,
         summoners=summoners,
         defender_casts=_str_list(params, "defender_casts"),
+        duel_enemy=duel_enemy,
+        duel_mode=duel_mode,
+        duel_tie_break=duel_tie_break,
+        duel_max_duration=duel_max_duration,
+        duel_priority_slots=duel_priority_slots,
     )
     payload = optimize_to_dict(outcome)
     return {
@@ -1164,6 +1341,7 @@ def execute_request(request: Mapping[str, Any], root: Path) -> dict[str, Any]:
         "ability": _handle_ability,
         "rotation": _handle_rotation,
         "survive": _handle_survive,
+        "duel": _handle_duel,
         "optimize": _handle_optimize,
     }
     try:

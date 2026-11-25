@@ -15,6 +15,18 @@ from .damage import DamageType, Modifiers, format_text, mitigate, to_dict, to_fr
 from .defense import evaluate_defense, hits_from_rotation, parse_incoming
 from .defense_report import format_text as format_defense_text
 from .defense_report import to_dict as defense_to_dict
+from .duel import (
+    DEFAULT_DUEL_MAX_DURATION,
+    DEFAULT_DUEL_MODE,
+    DEFAULT_DUEL_TIE_BREAK,
+    DEFAULT_PRIORITY_SLOTS,
+    DUEL_MODES,
+    DUEL_TIE_BREAKS,
+    DuelFighterSpec,
+    evaluate_duel,
+)
+from .duel_report import format_text as format_duel_text
+from .duel_report import to_dict as duel_to_dict
 from .errors import (
     DamageInputError,
     KitError,
@@ -113,6 +125,7 @@ def build_parser() -> argparse.ArgumentParser:
     _add_ability_parser(subparsers)
     _add_rotation_parser(subparsers)
     _add_survive_parser(subparsers)
+    _add_duel_parser(subparsers)
     _add_optimize_parser(subparsers)
     _add_contract_parser(subparsers)
     _add_mcp_parser(subparsers)
@@ -668,6 +681,94 @@ def _add_survive_parser(subparsers: argparse._SubParsersAction) -> None:
     survive.add_argument("--json", action="store_true", help="Print a JSON report.")
 
 
+def _add_duel_fighter_options(parser: argparse.ArgumentParser, prefix: str, label: str) -> None:
+    parser.add_argument(f"--{prefix}-champion", required=True, help=f"Fighter {label} champion id.")
+    parser.add_argument(
+        f"--{prefix}-level", required=True, type=int, help=f"Fighter {label} level."
+    )
+    parser.add_argument(f"--{prefix}-item", action="append", default=[], metavar="ID")
+    parser.add_argument(f"--{prefix}-rune", action="append", default=[], metavar="ID")
+    parser.add_argument(f"--{prefix}-shard", action="append", default=[], metavar="ID")
+    parser.add_argument(f"--{prefix}-summoner", action="append", default=[], metavar="SPELL")
+    parser.add_argument(f"--{prefix}-learned", action="append", default=[], metavar="SLOT=RANK")
+    parser.add_argument(f"--{prefix}-steps", help=f"Fighter {label} scripted steps.")
+    parser.add_argument(
+        f"--{prefix}-priority",
+        help="Comma-separated priority slots for priority_loop (default: R,Q,W,E).",
+    )
+    parser.add_argument(
+        f"--{prefix}-range",
+        choices=("melee", "ranged"),
+        help=f"Fighter {label} melee/ranged classification.",
+    )
+    parser.add_argument(f"--{prefix}-health", help=f"Fighter {label} starting health.")
+    parser.add_argument(f"--{prefix}-shield", help=f"Fighter {label} starting shield.")
+    parser.add_argument(
+        f"--{prefix}-shield-type",
+        choices=("normal", "physical", "magic"),
+        default="normal",
+        help=f"Fighter {label} starting shield type.",
+    )
+    parser.add_argument(f"--{prefix}-resource", help=f"Fighter {label} starting mana/energy.")
+    parser.add_argument(
+        f"--{prefix}-input",
+        action="append",
+        default=[],
+        metavar="NAME=VALUE",
+        help=f"Fighter {label} scenario input.",
+    )
+    parser.add_argument(
+        f"--{prefix}-assume",
+        action="append",
+        default=[],
+        metavar="FIELD=VALUE",
+        help=f"Fighter {label} stat assumption.",
+    )
+
+
+def _add_duel_parser(subparsers: argparse._SubParsersAction) -> None:
+    duel = subparsers.add_parser(
+        "duel",
+        help="Deterministic coupled 1v1 duel simulation between two champions.",
+        description=(
+            "Simulate a coupled 1v1 duel over an exact Fraction timeline where both fighters "
+            "exchange attacks, abilities, item actives, summoners, runes, passives, burns, "
+            "heals, shields, damage reductions and defensive reactions."
+        ),
+    )
+    _add_duel_fighter_options(duel, "a", "A")
+    _add_duel_fighter_options(duel, "b", "B")
+    duel.add_argument(
+        "--mode",
+        choices=sorted(DUEL_MODES),
+        default=DEFAULT_DUEL_MODE,
+        help="Action policy after scripted steps (default: scripted_then_attack).",
+    )
+    duel.add_argument(
+        "--tie-break",
+        choices=sorted(DUEL_TIE_BREAKS),
+        default=DEFAULT_DUEL_TIE_BREAK,
+        help="Resolution when A and B act at the exact same timestamp (default: simultaneous).",
+    )
+    duel.add_argument(
+        "--max-duration",
+        default=str(DEFAULT_DUEL_MAX_DURATION),
+        help="Maximum simulated duel duration in seconds (default: 30).",
+    )
+    duel.add_argument(
+        "--allow-insufficient-resource",
+        action="store_true",
+        help="Allow casts even when mana/energy is insufficient.",
+    )
+    duel.add_argument(
+        "--allow-illegal-build",
+        action="store_true",
+        help="Calculate even if a build breaks item legality or rune-page rules.",
+    )
+    duel.add_argument("--root", type=Path, default=Path("."))
+    duel.add_argument("--json", action="store_true", help="Print a JSON report.")
+
+
 def _add_optimize_parser(subparsers: argparse._SubParsersAction) -> None:
     opt = subparsers.add_parser(
         "optimize",
@@ -779,7 +880,31 @@ def _add_optimize_parser(subparsers: argparse._SubParsersAction) -> None:
         help="Enemy attacker stat shard id (repeat 3 times; requires --enemy-champion).",
     )
     opt.add_argument("--enemy-learned", action="append", default=[], metavar="SLOT=RANK")
+    opt.add_argument("--enemy-summoner", action="append", default=[], metavar="SPELL")
+    opt.add_argument("--enemy-steps", help="Enemy fighter steps for --objective duel.")
+    opt.add_argument("--enemy-priority", help="Enemy priority slots for --objective duel.")
     opt.add_argument("--enemy-range", choices=("melee", "ranged"))
+    opt.add_argument(
+        "--priority",
+        help="Candidate priority slots for --objective duel with priority_loop (default: R,Q,W,E).",
+    )
+    opt.add_argument(
+        "--duel-mode",
+        choices=sorted(DUEL_MODES),
+        default=DEFAULT_DUEL_MODE,
+        help="Action policy for --objective duel (default: scripted_then_attack).",
+    )
+    opt.add_argument(
+        "--duel-tie-break",
+        choices=sorted(DUEL_TIE_BREAKS),
+        default=DEFAULT_DUEL_TIE_BREAK,
+        help="Tie-break rule for --objective duel (default: simultaneous).",
+    )
+    opt.add_argument(
+        "--duel-max-duration",
+        default=str(DEFAULT_DUEL_MAX_DURATION),
+        help="Max duration in seconds for --objective duel (default: 30).",
+    )
     opt.add_argument(
         "--defender-cast",
         action="append",
@@ -892,6 +1017,7 @@ def main(argv: list[str] | None = None) -> int:
         "ability": _run_ability,
         "rotation": _run_rotation,
         "survive": _run_survive,
+        "duel": _run_duel,
         "optimize": _run_optimize,
         "contract": _run_contract,
         "mcp": _run_mcp,
@@ -1302,6 +1428,127 @@ def _run_survive(args: argparse.Namespace) -> int:
     return 0
 
 
+def _parse_priority_str(raw: str | None) -> tuple[str, ...]:
+    if not raw or not raw.strip():
+        return DEFAULT_PRIORITY_SLOTS
+    return tuple(tok.strip() for tok in raw.split(",") if tok.strip())
+
+
+def _build_duel_fighter_cli(
+    args: argparse.Namespace,
+    prefix: str,
+    root: Path,
+    issues,
+    derived,
+) -> DuelFighterSpec:
+    champ_name = getattr(args, f"{prefix}_champion")
+    level = getattr(args, f"{prefix}_level")
+    item_ids = list(getattr(args, f"{prefix}_item"))
+    runes = _rune_ids(getattr(args, f"{prefix}_rune"), f"--{prefix}-rune")
+    shards = _rune_ids(getattr(args, f"{prefix}_shard"), f"--{prefix}-shard")
+    summoners = list(getattr(args, f"{prefix}_summoner"))
+    ranks = _parse_ranks(getattr(args, f"{prefix}_learned"))
+    steps_raw = getattr(args, f"{prefix}_steps")
+    steps = parse_steps(steps_raw) if (steps_raw and steps_raw.strip()) else ()
+    priority_slots = _parse_priority_str(getattr(args, f"{prefix}_priority"))
+    inputs = {
+        key: _number(value, f"--{prefix}-input {key}")
+        for key, value in _pairs(getattr(args, f"{prefix}_input"), f"--{prefix}-input").items()
+    }
+    assumptions = _parse_assume(getattr(args, f"{prefix}_assume"))
+
+    champion = load_champion(root, champ_name)
+    kit = load_kit(root, champion.id)
+    if kit is None:
+        raise KitError(
+            f"{champion.id} has no kit yet (lol-knowledge/champions/{champion.id}/kit.json)"
+        )
+    items = load_items(root, item_ids)
+    _check_build(
+        root, item_ids, champion, allow=args.allow_illegal_build, who=f"fighter {prefix.upper()}"
+    )
+    sheet = _build_sheet_with_runes(
+        root,
+        champion,
+        level,
+        items,
+        runes,
+        shards,
+        issues,
+        assumptions,
+        derived,
+        extras=passive_contributions(kit, ranks),
+        inputs=inputs,
+        combat_context="rotation",
+        kit=kit,
+        allow_illegal=args.allow_illegal_build,
+        summoners=summoners,
+    )
+    holder_range = getattr(args, f"{prefix}_range")
+    if holder_range is None:
+        atk_range = champion.stats.get("attackrange")
+        if atk_range is not None:
+            holder_range = "melee" if atk_range < 300 else "ranged"
+    rune_data = load_runes(root) if (runes or shards) else None
+    summoner_data = (
+        load_summoner_spells(root)
+        if (summoners or any(s.summoner_id is not None for s in steps))
+        else None
+    )
+    ap_weight = derived.value(champion.id, "adaptiveforceapweight") if derived else None
+    return DuelFighterSpec(
+        sheet=sheet,
+        kit=kit,
+        ranks=ranks,
+        crit_base=_crit_base(champion.id, champion.patch, derived),
+        steps=steps,
+        priority_slots=priority_slots,
+        holder_range=holder_range,
+        start_health=_number(getattr(args, f"{prefix}_health"), f"--{prefix}-health"),
+        start_shield=_number(getattr(args, f"{prefix}_shield"), f"--{prefix}-shield")
+        or Fraction(0),
+        shield_type=getattr(args, f"{prefix}_shield_type"),
+        runes=runes,
+        rune_data=rune_data,
+        summoners=summoners,
+        summoner_data=summoner_data,
+        inputs=inputs,
+        start_resource=_number(getattr(args, f"{prefix}_resource"), f"--{prefix}-resource"),
+        allow_insufficient_resource=args.allow_insufficient_resource,
+        ap_weight=ap_weight,
+    )
+
+
+def _run_duel(args: argparse.Namespace) -> int:
+    root: Path = args.root
+    try:
+        issues = load_issues(root)
+        derived = load_records(root)
+        max_duration = _number(args.max_duration, "--max-duration")
+        assert max_duration is not None
+        fighter_a = _build_duel_fighter_cli(args, "a", root, issues, derived)
+        fighter_b = _build_duel_fighter_cli(args, "b", root, issues, derived)
+        outcome = evaluate_duel(
+            fighter_a,
+            fighter_b,
+            mode=args.mode,
+            tie_break=args.tie_break,
+            max_duration=max_duration,
+        )
+    except (StatsError, KitError, DamageInputError, RotationError) as exc:
+        print(f"error: {exc}", file=sys.stderr)
+        return 2
+    except OSError as exc:
+        print(f"error: {exc}", file=sys.stderr)
+        return 2
+
+    if args.json:
+        print(json.dumps(duel_to_dict(outcome), indent=2, ensure_ascii=False))
+    else:
+        print(format_duel_text(outcome))
+    return 0
+
+
 def _run_optimize(args: argparse.Namespace) -> int:
     root: Path = args.root
     try:
@@ -1353,6 +1600,72 @@ def _run_optimize(args: argparse.Namespace) -> int:
 
         incoming_hits = ()
         incoming_hits_for_sheet = None
+        duel_enemy = None
+        duel_max_duration = _number(args.duel_max_duration, "--duel-max-duration")
+        assert duel_max_duration is not None
+        duel_priority_slots = _parse_priority_str(args.priority)
+        if args.objective == "duel":
+            if not args.enemy_champion or args.enemy_level is None:
+                raise StatsError("--objective duel requires --enemy-champion and --enemy-level")
+            if args.steps:
+                steps = parse_steps(args.steps)
+            enemy_champ = load_champion(root, args.enemy_champion)
+            enemy_kit = load_kit(root, enemy_champ.id)
+            if enemy_kit is None:
+                raise KitError(f"{enemy_champ.id} has no kit yet")
+            enemy_items = load_items(root, args.enemy_item)
+            _check_build(
+                root, args.enemy_item, enemy_champ, allow=args.allow_illegal_build, who="enemy"
+            )
+            enemy_ranks = _parse_ranks(args.enemy_learned)
+            enemy_runes = _rune_ids(args.enemy_rune, "--enemy-rune")
+            enemy_shards = _rune_ids(args.enemy_shard, "--enemy-shard")
+            enemy_summoners = list(args.enemy_summoner)
+            enemy_steps = parse_steps(args.enemy_steps) if args.enemy_steps else ()
+            enemy_sheet = _build_sheet_with_runes(
+                root,
+                enemy_champ,
+                args.enemy_level,
+                enemy_items,
+                enemy_runes,
+                enemy_shards,
+                issues,
+                assumptions,
+                derived,
+                extras=passive_contributions(enemy_kit, enemy_ranks),
+                inputs=inputs,
+                combat_context="rotation",
+                kit=enemy_kit,
+                allow_illegal=args.allow_illegal_build,
+                summoners=enemy_summoners,
+            )
+            enemy_range = args.enemy_range
+            if enemy_range is None:
+                er = enemy_champ.stats.get("attackrange")
+                if er is not None:
+                    enemy_range = "melee" if er < 300 else "ranged"
+            enemy_rune_data = load_runes(root) if (enemy_runes or enemy_shards) else None
+            enemy_sdata = (
+                load_summoner_spells(root)
+                if (enemy_summoners or any(s.summoner_id is not None for s in enemy_steps))
+                else None
+            )
+            enemy_ap_w = derived.value(enemy_champ.id, "adaptiveforceapweight") if derived else None
+            duel_enemy = DuelFighterSpec(
+                sheet=enemy_sheet,
+                kit=enemy_kit,
+                ranks=enemy_ranks,
+                crit_base=_crit_base(enemy_champ.id, enemy_champ.patch, derived),
+                steps=enemy_steps,
+                priority_slots=_parse_priority_str(args.enemy_priority),
+                holder_range=enemy_range,
+                runes=enemy_runes,
+                rune_data=enemy_rune_data,
+                summoners=enemy_summoners,
+                summoner_data=enemy_sdata,
+                inputs=inputs,
+                ap_weight=enemy_ap_w,
+            )
         if args.objective == "time_to_die":
             if bool(args.incoming) == bool(args.enemy_champion):
                 raise StatsError(
@@ -1446,6 +1759,11 @@ def _run_optimize(args: argparse.Namespace) -> int:
             rune_data=rune_data,
             summoners=list(args.summoner),
             defender_casts=args.defender_cast,
+            duel_enemy=duel_enemy,
+            duel_mode=args.duel_mode,
+            duel_tie_break=args.duel_tie_break,
+            duel_max_duration=duel_max_duration,
+            duel_priority_slots=duel_priority_slots,
         )
     except (StatsError, KitError, DamageInputError, RotationError) as exc:
         print(f"error: {exc}", file=sys.stderr)

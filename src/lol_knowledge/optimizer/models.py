@@ -18,6 +18,7 @@ OBJECTIVES = frozenset(
         "effective_health_mixed",
         "time_to_die",
         "healing",
+        "duel",
     }
 )
 
@@ -26,6 +27,7 @@ EHP_OBJECTIVES = frozenset(
     {"effective_health_physical", "effective_health_magic", "effective_health_mixed"}
 )
 DEFENSE_OBJECTIVES = frozenset({"time_to_die"})
+DUEL_OBJECTIVES = frozenset({"duel"})
 TIERS = frozenset({"completed", "all"})
 
 

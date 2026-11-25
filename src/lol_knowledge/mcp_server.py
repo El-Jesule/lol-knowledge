@@ -65,8 +65,8 @@ _TARGET_SCHEMA: dict[str, Any] = {
 _ENEMY_SCHEMA: dict[str, Any] = {
     "type": "object",
     "description": (
-        "Enemy attacker rotation: {champion, level, steps, items?, runes?, shards?, "
-        "summoners?, learned?, range?, inputs?}."
+        "Enemy attacker / duel opponent: {champion, level, steps?, items?, runes?, shards?, "
+        "summoners?, learned?, priority_slots?, range?, health?, shield?, inputs?}."
     ),
     "properties": {
         "champion": {"type": "string"},
@@ -77,8 +77,42 @@ _ENEMY_SCHEMA: dict[str, Any] = {
         "summoners": {"type": "array", "items": {"type": "string"}},
         "learned": {"type": "object", "additionalProperties": {"type": "integer"}},
         "steps": {"type": "string"},
+        "priority_slots": {"type": "array", "items": {"type": "string"}},
         "range": {"type": "string", "enum": ["melee", "ranged"]},
+        "health": {"type": "number"},
+        "shield": {"type": "number"},
+        "shield_type": {"type": "string", "enum": ["normal", "physical", "magic"]},
         "inputs": {"type": "object", "additionalProperties": {"type": "number"}},
+    },
+}
+
+_DUEL_FIGHTER_SCHEMA: dict[str, Any] = {
+    "type": "object",
+    "required": ["champion", "level"],
+    "description": (
+        "One combatant in a 1v1 duel: {champion, level, items?, runes?, shards?, summoners?, "
+        "learned?, steps?, priority_slots?, range?, health?, shield?, shield_type?, resource?, "
+        "allow_insufficient_resource?, apply_passives?, inputs?, assume?}."
+    ),
+    "properties": {
+        "champion": {"type": "string"},
+        "level": {"type": "integer", "minimum": 1, "maximum": 18},
+        "items": {"type": "array", "items": {"type": "string"}},
+        "runes": {"type": "array", "items": {"type": "integer"}},
+        "shards": {"type": "array", "items": {"type": "integer"}},
+        "summoners": {"type": "array", "items": {"type": "string"}},
+        "learned": {"type": "object", "additionalProperties": {"type": "integer"}},
+        "steps": {"type": "string"},
+        "priority_slots": {"type": "array", "items": {"type": "string"}},
+        "range": {"type": "string", "enum": ["melee", "ranged"]},
+        "health": {"type": "number"},
+        "shield": {"type": "number"},
+        "shield_type": {"type": "string", "enum": ["normal", "physical", "magic"]},
+        "resource": {"type": "number"},
+        "allow_insufficient_resource": {"type": "boolean"},
+        "apply_passives": {"type": "boolean"},
+        "inputs": {"type": "object", "additionalProperties": {"type": "number"}},
+        "assume": {"type": "object", "additionalProperties": {"type": "string"}},
     },
 }
 
@@ -235,10 +269,37 @@ TOOLS: tuple[dict[str, Any], ...] = (
         },
     },
     {
+        "name": "lol_duel",
+        "description": (
+            "Simulate a deterministic coupled 1v1 duel between fighter_a and fighter_b over an "
+            "exact discrete-event timeline: both sides exchange attacks, abilities, item actives, "
+            "summoners, runes, passives, burns, heals, shields, DR, invulnerability, dodge, "
+            "spell shields, Thornmail reflect and Guardian Angel stasis."
+        ),
+        "inputSchema": {
+            "type": "object",
+            "required": ["fighter_a", "fighter_b"],
+            "properties": {
+                "fighter_a": _DUEL_FIGHTER_SCHEMA,
+                "fighter_b": _DUEL_FIGHTER_SCHEMA,
+                "mode": {
+                    "type": "string",
+                    "enum": ["scripted_then_attack", "strict_scripted", "priority_loop"],
+                },
+                "tie_break": {
+                    "type": "string",
+                    "enum": ["simultaneous", "a_first", "b_first"],
+                },
+                "max_duration": {"type": "number"},
+                "allow_illegal_build": {"type": "boolean"},
+            },
+        },
+    },
+    {
         "name": "lol_optimize",
         "description": (
             "Search legal Summoner's Rift builds optimizing a measurable objective "
-            "(rotation_damage, dps, effective_health_*, time_to_die, healing). "
+            "(rotation_damage, dps, effective_health_*, time_to_die, healing, duel). "
             "Separates verified (Oficial/Derivado) builds from Pendiente de verificación builds."
         ),
         "inputSchema": {
@@ -257,6 +318,7 @@ TOOLS: tuple[dict[str, Any], ...] = (
                         "effective_health_mixed",
                         "time_to_die",
                         "healing",
+                        "duel",
                     ],
                 },
                 "budget": {"type": "integer", "minimum": 0},
@@ -272,12 +334,22 @@ TOOLS: tuple[dict[str, Any], ...] = (
                 "pool_limit": {"type": "integer", "minimum": 4, "maximum": 64},
                 "damage_mix_physical": {"type": "number"},
                 "steps": {"type": "string"},
+                "priority_slots": {"type": "array", "items": {"type": "string"}},
                 "learned": {"type": "object", "additionalProperties": {"type": "integer"}},
                 "attacker_range": {"type": "string", "enum": ["melee", "ranged"]},
                 "target": _TARGET_SCHEMA,
                 "target_count": {"type": "integer", "minimum": 1},
                 "incoming": {"type": "string"},
                 "enemy": _ENEMY_SCHEMA,
+                "duel_mode": {
+                    "type": "string",
+                    "enum": ["scripted_then_attack", "strict_scripted", "priority_loop"],
+                },
+                "duel_tie_break": {
+                    "type": "string",
+                    "enum": ["simultaneous", "a_first", "b_first"],
+                },
+                "duel_max_duration": {"type": "number"},
                 "defender_casts": {
                     "type": "array",
                     "items": {"type": "string"},
@@ -301,6 +373,7 @@ TOOL_TO_OPERATION: dict[str, str] = {
     "lol_ability": "ability",
     "lol_rotation": "rotation",
     "lol_survive": "survive",
+    "lol_duel": "duel",
     "lol_optimize": "optimize",
 }
 

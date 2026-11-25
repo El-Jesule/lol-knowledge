@@ -10,6 +10,14 @@ from typing import Any
 
 from ..damage import DamageType
 from ..defense import IncomingHit, evaluate_defense
+from ..duel import (
+    DEFAULT_DUEL_MAX_DURATION,
+    DEFAULT_DUEL_MODE,
+    DEFAULT_DUEL_TIE_BREAK,
+    DEFAULT_PRIORITY_SLOTS,
+    DuelFighterSpec,
+    evaluate_duel,
+)
 from ..errors import KitError, RotationError, StatsError
 from ..kit import Kit
 from ..objects import load_model
@@ -49,6 +57,7 @@ from ..summoners import (
 )
 from .models import (
     DEFENSE_OBJECTIVES,
+    DUEL_OBJECTIVES,
     EHP_OBJECTIVES,
     OBJECTIVES,
     ROTATION_OBJECTIVES,
@@ -328,6 +337,11 @@ class _BuildEvaluator:
         summoners: Sequence[str] = (),
         summoner_data: SummonerSpellData | None = None,
         defender_casts: Sequence[str] = (),
+        duel_enemy: DuelFighterSpec | None = None,
+        duel_mode: str = DEFAULT_DUEL_MODE,
+        duel_tie_break: str = DEFAULT_DUEL_TIE_BREAK,
+        duel_max_duration: Fraction = DEFAULT_DUEL_MAX_DURATION,
+        duel_priority_slots: Sequence[str] = DEFAULT_PRIORITY_SLOTS,
     ) -> None:
         self.objective = objective
         self.champion = champion
@@ -344,7 +358,7 @@ class _BuildEvaluator:
         self.steps = steps
         self.crit_base = crit_base
         self.holder_range = holder_range
-        self.timeline = timeline or objective == "dps"
+        self.timeline = timeline or objective in {"dps", "duel"}
         self.target_count = target_count
         self.incoming_hits = incoming_hits
         self.incoming_hits_for_sheet = incoming_hits_for_sheet
@@ -354,6 +368,11 @@ class _BuildEvaluator:
         self.summoners = tuple(summoners)
         self.summoner_data = summoner_data
         self.defender_casts = tuple(defender_casts)
+        self.duel_enemy = duel_enemy
+        self.duel_mode = duel_mode
+        self.duel_tie_break = duel_tie_break
+        self.duel_max_duration = duel_max_duration
+        self.duel_priority_slots = tuple(duel_priority_slots)
         self.summoner_specs: tuple[SummonerSpellSpec, ...] = ()
         if self.summoners:
             if summoner_data is None:
@@ -368,7 +387,9 @@ class _BuildEvaluator:
         )
 
         # Precompute passive and validate rune page once (constant across item sets).
-        self.combat_ctx = "rotation" if objective in ROTATION_OBJECTIVES else "stats"
+        self.combat_ctx = (
+            "rotation" if objective in (ROTATION_OBJECTIVES | DUEL_OBJECTIVES) else "stats"
+        )
         self.passive = sheet_passive_effects(
             kit, level, inputs, include_stacking=self.combat_ctx != "rotation"
         )
@@ -705,6 +726,86 @@ class _BuildEvaluator:
                 notes=tuple(notes_def),
             )
 
+        if obj in DUEL_OBJECTIVES:
+            assert self.kit is not None and self.duel_enemy is not None
+            eval_steps = (
+                _steps_with_item_actives(self.steps, sheet.items, timeline=True)
+                if self.constraints.use_item_actives
+                else self.steps
+            )
+            fighter_a = DuelFighterSpec(
+                sheet=sheet,
+                kit=self.kit,
+                ranks=self.ranks,
+                crit_base=self.crit_base,
+                steps=eval_steps,
+                priority_slots=self.duel_priority_slots,
+                holder_range=self.holder_range,
+                runes=self.runes,
+                rune_data=self.rune_data,
+                summoners=self.summoners,
+                summoner_data=self.summoner_data,
+                inputs=self.inputs,
+                ap_weight=self.ap_weight,
+            )
+            try:
+                duel_out = evaluate_duel(
+                    fighter_a,
+                    self.duel_enemy,
+                    mode=self.duel_mode,
+                    tie_break=self.duel_tie_break,
+                    max_duration=self.duel_max_duration,
+                )
+            except StatsError, RotationError, KitError:
+                return None
+            fa = duel_out.fighter_a
+            fb = duel_out.fighter_b
+            hp_pct_a = fa.remaining_health / fa.max_health if fa.max_health > 0 else Fraction(0)
+            hp_pct_b = fb.remaining_health / fb.max_health if fb.max_health > 0 else Fraction(0)
+            if duel_out.winner == "A":
+                score = Fraction(1_000_000) + hp_pct_a * 10_000 - duel_out.duration * 100
+                secondary = fa.remaining_health + fa.remaining_shield
+            elif duel_out.winner in {"draw_mutual_kill", "draw_timeout"}:
+                score = Fraction(500_000) + (hp_pct_a - hp_pct_b) * 10_000
+                secondary = fa.remaining_health - fb.remaining_health
+            else:
+                score = duel_out.duration * 1_000 + (1 - hp_pct_b) * 1_000
+                secondary = -fb.remaining_health
+            notes_duel = list(duel_out.notes)
+            labels_duel = [duel_out.label, self.legality_label]
+            unmodelled_duel = [
+                c.item.id
+                for c in candidates
+                if c.item.effect_review != "complete" or _has_excluded_defensive_effect(c.item)
+            ]
+            if unmodelled_duel:
+                labels_duel.append(Label.PENDING)
+                notes_duel.append(
+                    f"items with unmodelled defensive effects ({', '.join(unmodelled_duel)}): "
+                    "defensive passives not modelled"
+                )
+            return BuildResult(
+                items=item_ids,
+                item_names=names,
+                total_gold=total_gold,
+                score=score,
+                secondary_score=secondary,
+                label=weakest(labels_duel),
+                metrics={
+                    "winner": duel_out.winner,
+                    "duration": float(duel_out.duration),
+                    "remaining_health": float(fa.remaining_health),
+                    "remaining_health_pct": float(hp_pct_a * 100),
+                    "enemy_remaining_health": float(fb.remaining_health),
+                    "enemy_remaining_health_pct": float(hp_pct_b * 100),
+                    "damage_dealt": float(fa.damage_dealt),
+                    "damage_taken": float(fa.damage_taken),
+                    "healing_done": float(fa.healing_done),
+                    "shield_granted": float(fa.shield_granted),
+                },
+                notes=tuple(notes_duel),
+            )
+
         raise StatsError(f"unknown objective {obj!r}")
 
 
@@ -907,6 +1008,11 @@ def optimize_build(
     summoners: Sequence[str] = (),
     summoner_data: SummonerSpellData | None = None,
     defender_casts: Sequence[str] = (),
+    duel_enemy: DuelFighterSpec | None = None,
+    duel_mode: str = DEFAULT_DUEL_MODE,
+    duel_tie_break: str = DEFAULT_DUEL_TIE_BREAK,
+    duel_max_duration: Fraction = DEFAULT_DUEL_MAX_DURATION,
+    duel_priority_slots: Sequence[str] = DEFAULT_PRIORITY_SLOTS,
 ) -> OptimizeOutcome:
     """Search legal builds for ``champion`` optimizing ``objective`` under ``constraints``."""
     t0 = time.perf_counter()
@@ -918,6 +1024,8 @@ def optimize_build(
         )
     if objective in DEFENSE_OBJECTIVES and not incoming_hits and incoming_hits_for_sheet is None:
         raise StatsError("objective 'time_to_die' requires incoming hits or an enemy rotation")
+    if objective in DUEL_OBJECTIVES and (kit is None or duel_enemy is None):
+        raise StatsError("objective 'duel' requires a champion kit and an enemy fighter spec")
 
     item_groups = load_item_groups(root)
     if item_groups is None:
@@ -941,7 +1049,10 @@ def optimize_build(
         for c in eligible
         if c.verified_clean
         and (objective not in EHP_OBJECTIVES or not _has_unmodelled_ehp_effect(c.item))
-        and (objective not in DEFENSE_OBJECTIVES or not _has_excluded_defensive_effect(c.item))
+        and (
+            objective not in (DEFENSE_OBJECTIVES | DUEL_OBJECTIVES)
+            or not _has_excluded_defensive_effect(c.item)
+        )
     ]
 
     if rune_data is None and target is not None and target.runes:
@@ -976,6 +1087,11 @@ def optimize_build(
         summoners=summoners,
         summoner_data=summoner_data,
         defender_casts=defender_casts,
+        duel_enemy=duel_enemy,
+        duel_mode=duel_mode,
+        duel_tie_break=duel_tie_break,
+        duel_max_duration=duel_max_duration,
+        duel_priority_slots=duel_priority_slots,
     )
 
     total_pruned_illegal = 0
