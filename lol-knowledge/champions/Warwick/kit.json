@@ -205,6 +205,25 @@
       "passive_stats": [],
       "not_modelled": [
         "Curación porcentual del daño (25..75 %), aplicación de efectos al impactar, seguimiento al mantener pulsado y tope a monstruos"
+      ],
+      "active_effects": [
+        {
+          "id": "jaws_of_the_beast_heal",
+          "name": "Fauces de la bestia (curación % daño infligido)",
+          "kind": "damage_dealt_heal",
+          "formula": {
+            "op": "by_rank",
+            "values": [
+              25,
+              37.5,
+              50,
+              62.5,
+              75
+            ]
+          },
+          "label": "Derivado",
+          "source": "Characters/Warwick/Spells/WarwickQAbility/WarwickQ.DataValues.LifestealPercent (16.23.8418428+branch.releases-16-23.content.release)"
+        }
       ]
     },
     "W": {

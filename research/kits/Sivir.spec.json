@@ -91,6 +91,15 @@
           "kind": "heal",
           "condition": "spell_blocked",
           "calculation": "TotalHeal"
+        },
+        {
+          "id": "spell_shield_block",
+          "name": "Escudo de hechizos (bloqueo de habilidad)",
+          "kind": "spell_shield",
+          "duration_seconds": {
+            "data_value": "SpellShieldDuration"
+          },
+          "source_note": "DataValues.SpellShieldDuration spell shield"
         }
       ]
     },

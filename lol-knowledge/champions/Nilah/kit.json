@@ -147,6 +147,18 @@
           "stat": "move_speed",
           "mode": "percent_ms",
           "duration_seconds": 2.25
+        },
+        {
+          "id": "jubilant_veil_dodge",
+          "name": "Velo jubiloso (esquiva de ataques básicos)",
+          "kind": "dodge_attacks",
+          "formula": {
+            "op": "constant",
+            "value": 1
+          },
+          "label": "Derivado",
+          "source": "Characters/Nilah/Spells/NilahWAbility/NilahW · DataValues.BaseDuration attack dodge (16.23.8418428+branch.releases-16-23.content.release)",
+          "duration_seconds": 2.25
         }
       ]
     },
@@ -296,6 +308,47 @@
       "passive_stats": [],
       "not_modelled": [
         "Curación propia y aliada por daño infligido (ChampHealingPercent) y escudo por exceso de curación"
+      ],
+      "active_effects": [
+        {
+          "id": "apotheosis_heal",
+          "name": "Apoteosis (curación % daño infligido)",
+          "kind": "damage_dealt_heal",
+          "formula": {
+            "op": "mul",
+            "operands": [
+              {
+                "op": "add",
+                "operands": [
+                  {
+                    "op": "constant",
+                    "value": 0.2
+                  },
+                  {
+                    "op": "mul",
+                    "operands": [
+                      {
+                        "op": "constant",
+                        "value": 0.1
+                      },
+                      {
+                        "op": "stat",
+                        "stat": "crit_chance",
+                        "scope": "total"
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "op": "constant",
+                "value": 100
+              }
+            ]
+          },
+          "label": "Derivado",
+          "source": "Characters/Nilah/Spells/NilahRAbility/NilahR.mSpellCalculations.ChampHealingPercent (16.23.8418428+branch.releases-16-23.content.release)"
+        }
       ]
     }
   }

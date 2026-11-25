@@ -92,6 +92,18 @@
       ],
       "not_modelled": [
         "Curación del 50 % del daño reciente, limpieza de CC en Ferocidad y daño extra a monstruos"
+      ],
+      "active_effects": [
+        {
+          "id": "battle_roar_heal",
+          "name": "Rugido de batalla (curación 50% daño reciente)",
+          "kind": "recent_damage_heal",
+          "data_value": "DamagePercentageHealed",
+          "window_seconds": {
+            "data_value": "HealingWindow"
+          },
+          "input_name": "recent_damage_taken"
+        }
       ]
     },
     "E": {

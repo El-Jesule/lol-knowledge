@@ -119,6 +119,19 @@
       "tooltip": "spell_tahmkenche_tooltip",
       "not_modelled": [
         "Vida gris, regeneración fuera de combate y escudo activo"
+      ],
+      "active_effects": [
+        {
+          "id": "thick_skin_shield",
+          "name": "Piel gruesa (escudo de vida gris)",
+          "kind": "recent_damage_shield",
+          "data_value": "GreyHealthRatio",
+          "scale": 100,
+          "duration_seconds": {
+            "data_value": "ShieldDuration"
+          },
+          "input_name": "recent_damage_taken"
+        }
       ]
     },
     "R": {

@@ -128,6 +128,14 @@
       ],
       "not_modelled": [
         "Curación porcentual del daño infligido y devolución del 60 % de enfriamiento al terminar"
+      ],
+      "active_effects": [
+        {
+          "id": "bountiful_harvest_heal",
+          "name": "Cosecha abundante (curación % daño infligido)",
+          "kind": "damage_dealt_heal",
+          "data_value": "VampPercentage"
+        }
       ]
     },
     "E": {

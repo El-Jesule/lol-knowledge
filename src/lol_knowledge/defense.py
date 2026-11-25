@@ -740,10 +740,11 @@ class _DefenseSimulator:
             return res.exact
         return None
 
-    def _eval_active(
+    def _eval_active_formula(
         self,
-        eff: ActiveEffectSpec,
+        formula: Mapping[str, Any],
         rank: int,
+        base_label: Label,
         *,
         current_health: Fraction | None = None,
         current_max_health: Fraction | None = None,
@@ -757,7 +758,7 @@ class _DefenseSimulator:
             max(Fraction(0), max_hp - cur_hp) / max_hp if max_hp > 0 else Fraction(0)
         )
         res = evaluate_formula(
-            eff.formula,
+            formula,
             env,
             rank=rank,
             level=self.sheet.level,
@@ -766,7 +767,23 @@ class _DefenseSimulator:
         )
         assert res.exact is not None
         dep_lbls = [self.stat_origin[k][1] for k in res.dependencies if k in self.stat_origin]
-        return res.exact, weakest([eff.label, *dep_lbls])
+        return res.exact, weakest([base_label, *dep_lbls])
+
+    def _eval_active(
+        self,
+        eff: ActiveEffectSpec,
+        rank: int,
+        *,
+        current_health: Fraction | None = None,
+        current_max_health: Fraction | None = None,
+    ) -> tuple[Fraction, Label]:
+        return self._eval_active_formula(
+            eff.formula,
+            rank,
+            eff.label,
+            current_health=current_health,
+            current_max_health=current_max_health,
+        )
 
     def run(self, hits: Sequence[IncomingHit], enemy_description: str) -> DefenseOutcome:
         if not hits:
@@ -801,8 +818,18 @@ class _DefenseSimulator:
         active_flat_dr: list[
             tuple[Fraction | None, DamageType | None, Fraction, Fraction | None, str, Label]
         ] = []
-        active_instant_heals: list[tuple[str, ActiveEffectSpec, int]] = []
+        active_instant_heals: list[tuple[str, str, ActiveEffectSpec, int]] = []
         active_hots: list[tuple[Fraction, Fraction, str, Label, bool]] = []
+        active_dodge_ends: list[tuple[Fraction | None, str, Label]] = []
+        active_spell_shields: list[list[Any]] = []
+        active_first_hit_blocks: list[list[Any]] = []
+        active_invuln_ends: list[tuple[Fraction | None, str, Label]] = []
+        active_undying: list[tuple[Fraction | None, Fraction, str, Label]] = []
+        pending_recent_heals: list[tuple[str, ActiveEffectSpec, int]] = []
+        pending_recent_shields: list[tuple[str, ActiveEffectSpec, int, Fraction | None]] = []
+        recent_damage_history: list[tuple[Fraction, Fraction]] = []
+        spell_shield_slots: set[str] = set()
+        spell_shield_blocked_slots: set[str] = set()
 
         sw_end: Fraction | None = None
         sw_rate = Fraction(0)
@@ -1353,7 +1380,7 @@ class _DefenseSimulator:
                 )
             return heals_out, bleed_total, bleed_labels, bleed_notes, died_at
 
-        for hit in hits:
+        for hit_index, hit in enumerate(hits, start=1):
             if hit.wait is not None:
                 if not self.timeline:
                     raise RotationError(f"wait step {hit.source!r} requires --timeline")
@@ -1546,14 +1573,95 @@ class _DefenseSimulator:
                     dur = self._active_duration(eff, rank)
                     end_t = clock + dur if (self.timeline and dur is not None) else None
                     src = f"kit:{self.sheet.champion.id} {slot}.{eff.id} ({eff.name})"
+                    if eff.kind == "damage_dealt_heal":
+                        continue
                     if eff.kind == "heal" and not (
                         eff.over_duration and self.timeline and dur is not None and dur > 0
                     ):
-                        active_instant_heals.append((src, eff, rank))
+                        active_instant_heals.append((slot, src, eff, rank))
+                        continue
+                    if eff.kind == "recent_damage_heal":
+                        pending_recent_heals.append((src, eff, rank))
+                        continue
+                    if eff.kind == "recent_damage_shield":
+                        if eff.input_name is not None and eff.input_name in self.inputs:
+                            ratio, eff_lbl = self._eval_active(
+                                eff,
+                                rank,
+                                current_health=health,
+                                current_max_health=current_max_health,
+                            )
+                            stored = max(Fraction(0), Fraction(str(self.inputs[eff.input_name])))
+                            raw_sh = stored * ratio / 100
+                            if eff.min_formula is not None:
+                                mn, _ = self._eval_active_formula(
+                                    eff.min_formula,
+                                    rank,
+                                    eff.label,
+                                    current_health=health,
+                                    current_max_health=current_max_health,
+                                )
+                                raw_sh = max(raw_sh, mn)
+                            if eff.max_formula is not None:
+                                mx, _ = self._eval_active_formula(
+                                    eff.max_formula,
+                                    rank,
+                                    eff.label,
+                                    current_health=health,
+                                    current_max_health=current_max_health,
+                                )
+                                raw_sh = min(raw_sh, mx)
+                            if raw_sh > 0:
+                                rev_amp = self._revitalize_amp(health)
+                                sh_amt = (
+                                    scale_shield(
+                                        raw_sh,
+                                        hsp=self.hsp if eff.uses_hsp else Fraction(0),
+                                        revitalize_amp=rev_amp if eff.uses_hsp else Fraction(0),
+                                    )
+                                    * self.self_shield_amp
+                                )
+                                sh_notes = [
+                                    f"{eff.name} (--input {eff.input_name}={format_number(stored)})"
+                                ]
+                                if self.shield_reaver_rate > 0 and self.shield_reaver_permanent:
+                                    sh_amt *= 1 - self.shield_reaver_rate
+                                shields.append(_ActiveShield(src, sh_amt, eff.shield_type, end_t))
+                                sh_lbl = weakest([eff_lbl, *self.self_amp_labels])
+                                granted.append(
+                                    ShieldEvent(
+                                        src,
+                                        raw_sh,
+                                        sh_amt,
+                                        eff.shield_type,
+                                        dur,
+                                        sh_lbl,
+                                        tuple(sh_notes),
+                                    )
+                                )
+                                step_labels.append(sh_lbl)
+                        else:
+                            pending_recent_shields.append((src, eff, rank, dur))
+                        continue
+                    if eff.kind == "dodge_attacks":
+                        active_dodge_ends.append((end_t, src, eff.label))
+                        continue
+                    if eff.kind == "spell_shield":
+                        spell_shield_slots.add(slot)
+                        active_spell_shields.append([end_t, False, src, eff.label, slot])
+                        continue
+                    if eff.kind == "block_first_hit":
+                        active_first_hit_blocks.append([end_t, False, src, eff.label])
                         continue
                     val, eff_lbl = self._eval_active(
                         eff, rank, current_health=health, current_max_health=current_max_health
                     )
+                    if eff.kind == "invulnerable":
+                        if eff.mode == "undying":
+                            active_undying.append((end_t, val, src, eff_lbl))
+                        else:
+                            active_invuln_ends.append((end_t, src, eff_lbl))
+                        continue
                     if eff.kind == "stat_bonus" and eff.stat is not None:
                         if eff.stat == "health":
                             gain = current_max_health * val / 100 if eff.mode == "percent" else val
@@ -1624,6 +1732,46 @@ class _DefenseSimulator:
                         step_notes.append(
                             f"{src} started {format_number(val)} heal over {format_number(dur)} s"
                         )
+
+            # 0c. Active defender hit negations (invulnerable, dodge, spell shield, block first hit)
+            if not spell_blocked and hit.amount > 0 and health > 0:
+                for end_t, src, eff_lbl in active_invuln_ends:
+                    if end_t is None or clock <= end_t:
+                        spell_blocked = True
+                        step_labels.append(eff_lbl)
+                        step_notes.append(f"{src} invulnerable (0 damage)")
+                        break
+            if (
+                not spell_blocked
+                and hit.kind in {"attack", "crit"}
+                and hit.amount > 0
+                and health > 0
+            ):
+                for end_t, src, eff_lbl in active_dodge_ends:
+                    if end_t is None or clock <= end_t:
+                        spell_blocked = True
+                        step_labels.append(eff_lbl)
+                        step_notes.append(f"{src} dodged basic attack")
+                        break
+            if not spell_blocked and hit.kind == "ability" and hit.amount > 0 and health > 0:
+                for entry in active_spell_shields:
+                    end_t, consumed, src, eff_lbl, sh_slot = entry
+                    if not consumed and (end_t is None or clock <= end_t):
+                        entry[1] = True
+                        spell_blocked = True
+                        spell_shield_blocked_slots.add(sh_slot)
+                        step_labels.append(eff_lbl)
+                        step_notes.append(f"{src} blocked incoming ability")
+                        break
+            if not spell_blocked and hit.amount > 0 and health > 0:
+                for entry in active_first_hit_blocks:
+                    end_t, consumed, src, eff_lbl = entry
+                    if not consumed and (end_t is None or clock <= end_t):
+                        entry[1] = True
+                        spell_blocked = True
+                        step_labels.append(eff_lbl)
+                        step_notes.append(f"{src} blocked first hit")
+                        break
 
             cur_armor, cur_mr, res_labels, res_notes = effective_resists(clock)
             if spell_blocked:
@@ -2306,7 +2454,15 @@ class _DefenseSimulator:
 
                 # 1e. Defender active ability instant heals (proactive when already missing HP)
                 if active_instant_heals and health < current_max_health:
-                    for src, eff, rank in active_instant_heals:
+                    remaining_instant: list[tuple[str, str, ActiveEffectSpec, int]] = []
+                    for h_slot, src, eff, rank in active_instant_heals:
+                        if (
+                            eff.condition == "spell_blocked"
+                            and h_slot in spell_shield_slots
+                            and h_slot not in spell_shield_blocked_slots
+                        ):
+                            remaining_instant.append((h_slot, src, eff, rank))
+                            continue
                         raw_h, h_lbl = self._eval_active(
                             eff, rank, current_health=health, current_max_health=current_max_health
                         )
@@ -2342,8 +2498,81 @@ class _DefenseSimulator:
                             )
                         )
                         step_labels.append(ev_lbl)
-                    active_instant_heals.clear()
+                    active_instant_heals = remaining_instant
                     projected_hp = max(Fraction(0), health - preview_hp_dmg)
+
+                # 1f. Defender stored-damage shields with minimum floor before lethal/final hit
+                if pending_recent_shields:
+                    keep_pending_sh: list[tuple[str, ActiveEffectSpec, int, Fraction | None]] = []
+                    for src, eff, rank, dur in pending_recent_shields:
+                        is_last = hit_index == len(hits)
+                        if eff.min_formula is not None and (projected_hp == 0 or is_last):
+                            ratio, eff_lbl = self._eval_active(
+                                eff,
+                                rank,
+                                current_health=health,
+                                current_max_health=current_max_health,
+                            )
+                            win = eff.window_seconds
+                            stored = sum(
+                                (
+                                    d
+                                    for t_h, d in recent_damage_history
+                                    if (not self.timeline or win is None or clock - t_h <= win)
+                                ),
+                                start=Fraction(0),
+                            )
+                            raw_sh = stored * ratio / 100
+                            mn, mn_lbl = self._eval_active_formula(
+                                eff.min_formula,
+                                rank,
+                                eff.label,
+                                current_health=health,
+                                current_max_health=current_max_health,
+                            )
+                            raw_sh = max(raw_sh, mn)
+                            if eff.max_formula is not None:
+                                mx, _ = self._eval_active_formula(
+                                    eff.max_formula,
+                                    rank,
+                                    eff.label,
+                                    current_health=health,
+                                    current_max_health=current_max_health,
+                                )
+                                raw_sh = min(raw_sh, mx)
+                            rev_amp = self._revitalize_amp(health)
+                            sh_amt = (
+                                scale_shield(
+                                    raw_sh,
+                                    hsp=self.hsp if eff.uses_hsp else Fraction(0),
+                                    revitalize_amp=rev_amp if eff.uses_hsp else Fraction(0),
+                                )
+                                * self.self_shield_amp
+                            )
+                            sh_notes = [
+                                f"{eff.name} (stored={format_number(stored)}, "
+                                f"min={format_number(mn)})"
+                            ]
+                            if self.shield_reaver_rate > 0 and self.shield_reaver_permanent:
+                                sh_amt *= 1 - self.shield_reaver_rate
+                            end_t = clock + dur if (self.timeline and dur is not None) else None
+                            shields.append(_ActiveShield(src, sh_amt, eff.shield_type, end_t))
+                            sh_lbl = weakest([eff_lbl, mn_lbl, *self.self_amp_labels])
+                            granted.append(
+                                ShieldEvent(
+                                    src,
+                                    raw_sh,
+                                    sh_amt,
+                                    eff.shield_type,
+                                    dur,
+                                    sh_lbl,
+                                    tuple(sh_notes),
+                                )
+                            )
+                            step_labels.append(sh_lbl)
+                        else:
+                            keep_pending_sh.append((src, eff, rank, dur))
+                    pending_recent_shields = keep_pending_sh
 
                 # 2. Guardian (8465): ally nearby + threshold (50..165 in 2.5 s) or lethal damage
                 if self.guardian_rune is not None and self.guardian_ally:
@@ -2424,6 +2653,20 @@ class _DefenseSimulator:
                 dmg_after_flat, hit.damage_type, shields, bypass=bypass
             )
             health = max(Fraction(0), health - hp_dmg)
+            if active_undying and h_before > 0:
+                floors = [
+                    (flr, u_src, u_lbl)
+                    for end_t, flr, u_src, u_lbl in active_undying
+                    if end_t is None or clock <= end_t
+                ]
+                if floors:
+                    min_floor, u_src, u_lbl = max(floors, key=lambda item: item[0])
+                    if health < min_floor:
+                        health = min(h_before, min_floor)
+                        step_labels.append(u_lbl)
+                        step_notes.append(f"{u_src} undying (HP floor {format_number(min_floor)})")
+            if hp_dmg > 0:
+                recent_damage_history.append((clock, hp_dmg))
             shields = self._expire_shields(shields, clock)
 
             # 3026 Guardian Angel (Rebirth): on lethal hit, 4 s stasis + revive with 50% base HP
@@ -2538,7 +2781,15 @@ class _DefenseSimulator:
 
             # Defender active ability instant heals (reactive after taking non-lethal damage)
             if active_instant_heals and health > 0 and health < current_max_health:
-                for src, eff, rank in active_instant_heals:
+                remaining_reactive: list[tuple[str, str, ActiveEffectSpec, int]] = []
+                for h_slot, src, eff, rank in active_instant_heals:
+                    if (
+                        eff.condition == "spell_blocked"
+                        and h_slot in spell_shield_slots
+                        and h_slot not in spell_shield_blocked_slots
+                    ):
+                        remaining_reactive.append((h_slot, src, eff, rank))
+                        continue
                     raw_h, h_lbl = self._eval_active(
                         eff, rank, current_health=health, current_max_health=current_max_health
                     )
@@ -2574,7 +2825,152 @@ class _DefenseSimulator:
                         )
                     )
                     step_labels.append(ev_lbl)
-                active_instant_heals.clear()
+                active_instant_heals = remaining_reactive
+
+            # Defender stored-damage reactive shields (Sett W, TahmKench E, Mordekaiser W)
+            if pending_recent_shields and health > 0 and recent_damage_history:
+                for src, eff, rank, dur in pending_recent_shields:
+                    ratio, eff_lbl = self._eval_active(
+                        eff, rank, current_health=health, current_max_health=current_max_health
+                    )
+                    win = eff.window_seconds
+                    stored = sum(
+                        (
+                            d
+                            for t_h, d in recent_damage_history
+                            if (not self.timeline or win is None or clock - t_h <= win)
+                        ),
+                        start=Fraction(0),
+                    )
+                    raw_sh = stored * ratio / 100
+                    extra_lbls: list[Label] = [eff_lbl]
+                    if eff.min_formula is not None:
+                        mn, mn_lbl = self._eval_active_formula(
+                            eff.min_formula,
+                            rank,
+                            eff.label,
+                            current_health=health,
+                            current_max_health=current_max_health,
+                        )
+                        raw_sh = max(raw_sh, mn)
+                        extra_lbls.append(mn_lbl)
+                    if eff.max_formula is not None:
+                        mx, mx_lbl = self._eval_active_formula(
+                            eff.max_formula,
+                            rank,
+                            eff.label,
+                            current_health=health,
+                            current_max_health=current_max_health,
+                        )
+                        raw_sh = min(raw_sh, mx)
+                        extra_lbls.append(mx_lbl)
+                    if raw_sh <= 0:
+                        continue
+                    rev_amp = self._revitalize_amp(health)
+                    sh_amt = (
+                        scale_shield(
+                            raw_sh,
+                            hsp=self.hsp if eff.uses_hsp else Fraction(0),
+                            revitalize_amp=rev_amp if eff.uses_hsp else Fraction(0),
+                        )
+                        * self.self_shield_amp
+                    )
+                    sh_notes = [
+                        f"{eff.name} ({format_number(ratio)}% of {format_number(stored)} stored)"
+                    ]
+                    if self.shield_reaver_rate > 0 and self.shield_reaver_permanent:
+                        sh_amt *= 1 - self.shield_reaver_rate
+                    end_t = clock + dur if (self.timeline and dur is not None) else None
+                    shields.append(_ActiveShield(src, sh_amt, eff.shield_type, end_t))
+                    sh_lbl = weakest([*extra_lbls, *self.self_amp_labels])
+                    granted.append(
+                        ShieldEvent(
+                            src,
+                            raw_sh,
+                            sh_amt,
+                            eff.shield_type,
+                            dur,
+                            sh_lbl,
+                            tuple(sh_notes),
+                        )
+                    )
+                    step_labels.append(sh_lbl)
+                pending_recent_shields.clear()
+
+            # Defender stored-damage reactive heals (Rengar W, DrMundo W)
+            if (
+                pending_recent_heals
+                and health > 0
+                and health < current_max_health
+                and recent_damage_history
+            ):
+                for src, eff, rank in pending_recent_heals:
+                    ratio, h_lbl = self._eval_active(
+                        eff, rank, current_health=health, current_max_health=current_max_health
+                    )
+                    win = eff.window_seconds
+                    stored = sum(
+                        (
+                            d
+                            for t_h, d in recent_damage_history
+                            if (not self.timeline or win is None or clock - t_h <= win)
+                        ),
+                        start=Fraction(0),
+                    )
+                    raw_h = stored * ratio / 100
+                    if eff.min_formula is not None:
+                        mn, _ = self._eval_active_formula(
+                            eff.min_formula,
+                            rank,
+                            eff.label,
+                            current_health=health,
+                            current_max_health=current_max_health,
+                        )
+                        raw_h = max(raw_h, mn)
+                    if eff.max_formula is not None:
+                        mx, _ = self._eval_active_formula(
+                            eff.max_formula,
+                            rank,
+                            eff.label,
+                            current_health=health,
+                            current_max_health=current_max_health,
+                        )
+                        raw_h = min(raw_h, mx)
+                    if raw_h <= 0:
+                        continue
+                    uses_hsp = eff.uses_hsp
+                    rev_amp = self._revitalize_amp(health)
+                    h_amt = (
+                        scale_healing(
+                            raw_h,
+                            hsp=self.hsp if uses_hsp else Fraction(0),
+                            revitalize_amp=rev_amp if uses_hsp else Fraction(0),
+                            grievous=self.grievous,
+                            uses_hsp=uses_hsp,
+                        )
+                        * self.self_heal_amp
+                    )
+                    gained = min(h_amt, max(Fraction(0), current_max_health - health))
+                    health += gained
+                    h_notes = [
+                        f"{eff.name} ({format_number(ratio)}% of {format_number(stored)} recent)"
+                    ]
+                    if self.grievous > 0:
+                        h_notes.append("Grievous Wounds (-40%)")
+                    ev_lbl = weakest([h_lbl, *self.self_amp_labels])
+                    heals.append(
+                        HealEvent(
+                            src,
+                            raw_h,
+                            gained,
+                            uses_hsp,
+                            self.grievous > 0,
+                            ev_lbl,
+                            tuple(h_notes),
+                        )
+                    )
+                    step_labels.append(ev_lbl)
+                pending_recent_heals.clear()
 
             # 8352 Time Warp Tonic immediate 40% potion restoration on first damage
             if (

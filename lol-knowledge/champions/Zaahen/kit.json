@@ -469,6 +469,17 @@
           "source": "Characters/Zaahen/Spells/ZaahenRAbility/ZaahenR.DataValues.DamageReduction (16.20.8248524+branch.releases-16-20.content.release)",
           "mode": "percent",
           "duration_seconds": 0.75
+        },
+        {
+          "id": "r_damage_heal",
+          "name": "R (curación % daño infligido)",
+          "kind": "damage_dealt_heal",
+          "formula": {
+            "op": "constant",
+            "value": 33
+          },
+          "label": "Derivado",
+          "source": "Characters/Zaahen/Spells/ZaahenRAbility/ZaahenR.DataValues.HealPercent (16.20.8248524+branch.releases-16-20.content.release)"
         }
       ]
     }

@@ -358,6 +358,27 @@
       "passive_stats": [],
       "not_modelled": [
         "Vida gris, regeneración fuera de combate y escudo activo"
+      ],
+      "active_effects": [
+        {
+          "id": "thick_skin_shield",
+          "name": "Piel gruesa (escudo de vida gris)",
+          "kind": "recent_damage_shield",
+          "formula": {
+            "op": "by_rank",
+            "values": [
+              15,
+              23,
+              31,
+              39,
+              47
+            ]
+          },
+          "label": "Derivado",
+          "source": "Characters/TahmKench/Spells/TahmKenchEAbility/TahmKenchE.DataValues.GreyHealthRatio (16.23.8418428+branch.releases-16-23.content.release)",
+          "input_name": "recent_damage_taken",
+          "duration_seconds": 2.5
+        }
       ]
     },
     "R": {

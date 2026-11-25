@@ -402,6 +402,50 @@
           "stat": "move_speed",
           "mode": "percent_ms",
           "duration_seconds": 5
+        },
+        {
+          "id": "snack_attack_damage_heal",
+          "name": "Mordisco (curación % daño infligido)",
+          "kind": "damage_dealt_heal",
+          "formula": {
+            "op": "by_rank",
+            "values": [
+              24,
+              28,
+              32,
+              36,
+              40
+            ]
+          },
+          "label": "Derivado",
+          "source": "Characters/Briar/Spells/BriarWAbility/BriarW.DataValues.AttackHealPercent (16.23.8418428+branch.releases-16-23.content.release)",
+          "case_ids": [
+            "snack_attack"
+          ]
+        },
+        {
+          "id": "snack_attack_hp_heal",
+          "name": "Mordisco (curación % vida máxima)",
+          "kind": "heal",
+          "formula": {
+            "op": "mul",
+            "operands": [
+              {
+                "op": "constant",
+                "value": 0.05
+              },
+              {
+                "op": "stat",
+                "stat": "health",
+                "scope": "total"
+              }
+            ]
+          },
+          "label": "Derivado",
+          "source": "Characters/Briar/Spells/BriarWAbility/BriarW.mSpellCalculations.AttackMaxHPHeal (16.23.8418428+branch.releases-16-23.content.release)",
+          "case_ids": [
+            "snack_attack"
+          ]
         }
       ]
     },

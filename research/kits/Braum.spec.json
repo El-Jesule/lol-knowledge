@@ -128,6 +128,16 @@
           "duration_seconds": {
             "data_value": "ShieldHoldDuration"
           }
+        },
+        {
+          "id": "unbreakable_first_hit",
+          "name": "Inquebrantable (bloqueo completo del primer impacto)",
+          "kind": "block_first_hit",
+          "duration_seconds": {
+            "data_value": "ShieldHoldDuration"
+          },
+          "condition": "facing_first_projectile",
+          "source_note": "DataValues.ShieldHoldDuration first-hit negation"
         }
       ]
     },

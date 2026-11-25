@@ -166,6 +166,25 @@
       "passive_stats": [],
       "not_modelled": [
         "Inmortalidad durante 5 s y ganancia instantánea de Furia"
+      ],
+      "active_effects": [
+        {
+          "id": "undying_rage",
+          "name": "Furia inmortal (inmortalidad con suelo de vida)",
+          "kind": "invulnerable",
+          "formula": {
+            "op": "by_rank",
+            "values": [
+              30,
+              50,
+              70
+            ]
+          },
+          "label": "Derivado",
+          "source": "Characters/Tryndamere/Spells/UndyingRageAbility/UndyingRage.DataValues.TryndRMinHealth (16.23.8418428+branch.releases-16-23.content.release)",
+          "mode": "undying",
+          "duration_seconds": 5
+        }
       ]
     }
   }

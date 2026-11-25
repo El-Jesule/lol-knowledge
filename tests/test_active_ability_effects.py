@@ -76,7 +76,7 @@ def _hit(
 def test_roster_active_effects_coverage_and_sanity():
     champs_dir = ROOT / "lol-knowledge" / "champions"
     champs_with_active = 0
-    kinds = {"shield": 0, "heal": 0, "damage_taken_modifier": 0, "stat_bonus": 0}
+    kinds: dict[str, int] = {}
     sample_stats = {
         "health": F(2000),
         "base_health": F(1500),
@@ -102,7 +102,7 @@ def test_roster_active_effects_coverage_and_sanity():
         "bonus_move_speed": F(45),
         "attack_speed": F(12, 10),
         "attack_speed_bonus": F(30),
-        "crit_chance": F(25),
+        "crit_chance": F(1, 2),
         "lethality": F(18),
         "heal_and_shield_power": F(10),
         "ability_haste": F(20),
@@ -116,7 +116,7 @@ def test_roster_active_effects_coverage_and_sanity():
         for ab in kit.abilities.values():
             for eff in ab.active_effects:
                 has_any = True
-                kinds[eff.kind] += 1
+                kinds[eff.kind] = kinds.get(eff.kind, 0) + 1
                 assert formula_issues(eff.formula, ops=ABILITY_OPS) == []
                 r1 = evaluate_formula(
                     eff.formula, sample_stats, rank=1, level=1, ops=ABILITY_OPS
@@ -129,11 +129,18 @@ def test_roster_active_effects_coverage_and_sanity():
         if has_any:
             champs_with_active += 1
 
-    assert champs_with_active >= 130
+    assert champs_with_active >= 135
     assert kinds["shield"] >= 45
-    assert kinds["heal"] >= 40
+    assert kinds["heal"] >= 45
+    assert kinds["damage_dealt_heal"] >= 8
+    assert kinds["recent_damage_heal"] >= 2
+    assert kinds["recent_damage_shield"] >= 3
     assert kinds["damage_taken_modifier"] >= 15
-    assert kinds["stat_bonus"] >= 150
+    assert kinds["dodge_attacks"] >= 3
+    assert kinds["spell_shield"] >= 2
+    assert kinds["block_first_hit"] >= 1
+    assert kinds["invulnerable"] >= 5
+    assert kinds["stat_bonus"] >= 160
 
 
 def test_parse_kit_rejects_invalid_active_effects():
@@ -640,3 +647,247 @@ def test_rotation_rejects_ability_without_cases_or_active_effects():
         evaluate_rotation(
             empty_kit, sheet, {"Q": 5, "W": 5, "E": 5, "R": 2}, _target(), parse_steps("W"), CRIT
         )
+
+
+# ---------------------------------------------------------------------------
+# 5. Combat-dependent mechanics: damage-dealt heals, stored damage, dodge/block/invuln
+# ---------------------------------------------------------------------------
+
+
+def test_damage_dealt_heals_scale_from_post_mitigation_step_damage():
+    # Warwick Q R5: heals 75% of post-mitigation Q damage
+    ww_kit = load_kit(ROOT, "Warwick")
+    assert ww_kit is not None
+    ww_out = evaluate_rotation(
+        ww_kit,
+        _sheet("Warwick", level=18),
+        {"Q": 5, "W": 5, "E": 5, "R": 3},
+        _target(),
+        parse_steps("Q"),
+        CRIT,
+    )
+    assert ww_out.healing == ww_out.steps[0].total * F("0.75")
+
+    # Zaahen R R3: heals 33% of post-mitigation R damage
+    z_kit = load_kit(ROOT, "Zaahen")
+    assert z_kit is not None
+    z_out = evaluate_rotation(
+        z_kit,
+        _sheet("Zaahen", level=18),
+        {"Q": 5, "W": 5, "E": 5, "R": 3},
+        _target(),
+        parse_steps("R"),
+        CRIT,
+    )
+    assert z_out.healing == z_out.steps[0].total * F("0.33")
+
+    # Camille W: outer heals 100% of part[1] (bonus max-HP damage) ONLY; inner heals 0
+    c_kit = load_kit(ROOT, "Camille")
+    assert c_kit is not None
+    c_sheet = _sheet("Camille", level=18)
+    c_ranks = {"Q": 5, "W": 5, "E": 5, "R": 3}
+    c_inner = evaluate_rotation(c_kit, c_sheet, c_ranks, _target(), parse_steps("W.inner"), CRIT)
+    assert c_inner.healing == 0
+    c_outer = evaluate_rotation(c_kit, c_sheet, c_ranks, _target(), parse_steps("W.outer"), CRIT)
+    assert c_outer.healing == c_outer.steps[0].parts[1].damage
+    assert c_outer.healing < c_outer.steps[0].total
+
+    # Briar W.snack_attack: heals 40% of damage dealt + AttackMaxHPHeal (5% max HP)
+    b_kit = load_kit(ROOT, "Briar")
+    assert b_kit is not None
+    b_sheet = _sheet("Briar", level=18)
+    b_out = evaluate_rotation(
+        b_kit,
+        b_sheet,
+        {"Q": 5, "W": 5, "E": 5, "R": 3},
+        _target(),
+        parse_steps("W.snack_attack"),
+        CRIT,
+    )
+    expected_briar = b_out.steps[0].total * F("0.40") + b_sheet["health"].total() * F("0.05")
+    assert b_out.healing == expected_briar
+
+
+def test_recent_damage_shields_and_heals_and_minimum_baseline():
+    # Mordekaiser W in rotation (0 stored damage): guaranteed 5% max HP minimum shield
+    m_kit = load_kit(ROOT, "Mordekaiser")
+    assert m_kit is not None
+    m_sheet = _sheet("Mordekaiser", level=18)
+    m_rot = evaluate_rotation(
+        m_kit, m_sheet, {"Q": 5, "W": 5, "E": 5, "R": 3}, _target(), parse_steps("W"), CRIT
+    )
+    min_sh = m_sheet["health"].total() * F("0.05")
+    assert len(m_rot.steps[0].shield_events) == 1
+    assert m_rot.steps[0].shield_events[0].amount == min_sh
+
+    # Mordekaiser W in survive on a single hit: grants guaranteed 5% min shield before hit
+    m_surv_single = evaluate_defense(
+        m_sheet,
+        (_hit(500, DamageType.PHYSICAL, already_mitigated=True),),
+        enemy_description="test",
+        kit=m_kit,
+        defender_casts=("W=5",),
+    )
+    assert m_surv_single.total_shield_granted == min_sh
+    assert m_surv_single.total_shield_absorbed == min_sh
+
+    # Rengar W in survive: heals 50% of damage taken on hit 1
+    r_kit = load_kit(ROOT, "Rengar")
+    assert r_kit is not None
+    r_sheet = _sheet("Rengar", level=18)
+    r_out = evaluate_defense(
+        r_sheet,
+        (
+            _hit(600, DamageType.PHYSICAL, already_mitigated=True, time=F(0)),
+            _hit(200, DamageType.PHYSICAL, already_mitigated=True, time=F(1)),
+        ),
+        enemy_description="test",
+        timeline=True,
+        kit=r_kit,
+        defender_casts=("W=5",),
+    )
+    assert r_out.total_healing == F(300)
+
+    # Sett W in survive: stores 100% of hit 1 damage (up to 50% max HP) as shield for hit 2
+    s_kit = load_kit(ROOT, "Sett")
+    assert s_kit is not None
+    s_sheet = _sheet("Sett", level=18)
+    s_out = evaluate_defense(
+        s_sheet,
+        (
+            _hit(800, DamageType.PHYSICAL, already_mitigated=True, time=F(0)),
+            _hit(500, DamageType.PHYSICAL, already_mitigated=True, time=F(1)),
+        ),
+        enemy_description="test",
+        timeline=True,
+        kit=s_kit,
+        defender_casts=("W=5",),
+    )
+    assert s_out.total_shield_granted == F(800)
+    assert s_out.steps[1].shield_absorbed == F(500)
+    assert s_out.steps[1].health_damage == 0
+
+    # Tahm Kench E R5 (47% grey health) in survive: converts 47% of hit 1 damage to shield
+    tk_kit = load_kit(ROOT, "TahmKench")
+    assert tk_kit is not None
+    tk_sheet = _sheet("TahmKench", level=18)
+    tk_out = evaluate_defense(
+        tk_sheet,
+        (
+            _hit(1000, DamageType.PHYSICAL, already_mitigated=True, time=F(0)),
+            _hit(400, DamageType.PHYSICAL, already_mitigated=True, time=F(1)),
+        ),
+        enemy_description="test",
+        timeline=True,
+        kit=tk_kit,
+        defender_casts=("E=5",),
+    )
+    assert tk_out.total_shield_granted == F(470)
+    assert tk_out.steps[1].shield_absorbed == F(400)
+
+
+def test_dodge_attacks_spell_shield_block_first_hit_and_invulnerability():
+    # Jax E: dodges basic attack & crit for 2 s, reduces ability by 25%, expires at t=3
+    j_kit = load_kit(ROOT, "Jax")
+    assert j_kit is not None
+    j_sheet = _sheet("Jax", level=18)
+    j_hits = (
+        IncomingHit(
+            "attack", DamageType.PHYSICAL, F(400), "aa1", already_mitigated=True, time=F(0)
+        ),
+        IncomingHit(
+            "crit", DamageType.PHYSICAL, F(600), "crit1", already_mitigated=True, time=F(1)
+        ),
+        _hit(400, DamageType.MAGIC, already_mitigated=True, time=F(1), source="aoe"),
+        IncomingHit(
+            "attack", DamageType.PHYSICAL, F(400), "aa2", already_mitigated=True, time=F(3)
+        ),
+    )
+    j_out = evaluate_defense(
+        j_sheet, j_hits, enemy_description="test", timeline=True, kit=j_kit, defender_casts=("E=5",)
+    )
+    assert j_out.steps[0].health_damage == 0
+    assert j_out.steps[1].health_damage == 0
+    assert j_out.steps[2].damage_after_flat == F(300)  # 400 * (1 - 0.25)
+    assert j_out.steps[3].health_damage == F(400)
+
+    # Sivir E: blocks first ability (0 damage) & triggers heal when wounded; attack passes through
+    sv_kit = load_kit(ROOT, "Sivir")
+    assert sv_kit is not None
+    sv_sheet = _sheet("Sivir", level=18)
+    sv_hits = (
+        IncomingHit("attack", DamageType.PHYSICAL, F(300), "aa", already_mitigated=True, time=F(0)),
+        _hit(500, DamageType.MAGIC, already_mitigated=True, time=F("0.5"), source="spell1"),
+        _hit(500, DamageType.MAGIC, already_mitigated=True, time=F("1.0"), source="spell2"),
+    )
+    sv_out = evaluate_defense(
+        sv_sheet,
+        sv_hits,
+        enemy_description="test",
+        timeline=True,
+        kit=sv_kit,
+        defender_casts=("E=5",),
+    )
+    assert sv_out.steps[0].health_damage == F(300)
+    assert sv_out.steps[1].health_damage == 0
+    assert sv_out.steps[1].heals  # Sivir E heal fired on spell block!
+    assert sv_out.steps[2].health_damage == F(500)  # Spell shield already consumed
+
+    # Braum E R5: blocks first hit completely (0), reduces second hit by 55% DR
+    br_kit = load_kit(ROOT, "Braum")
+    assert br_kit is not None
+    br_sheet = _sheet("Braum", level=18)
+    br_out = evaluate_defense(
+        br_sheet,
+        (
+            _hit(1000, DamageType.PHYSICAL, already_mitigated=True, time=F(0)),
+            _hit(1000, DamageType.PHYSICAL, already_mitigated=True, time=F(1)),
+        ),
+        enemy_description="test",
+        timeline=True,
+        kit=br_kit,
+        defender_casts=("E=5",),
+    )
+    assert br_out.steps[0].health_damage == 0
+    assert br_out.steps[1].damage_after_flat == F(450)  # 1000 * (1 - 0.55)
+
+    # Kayle R: invulnerable to physical, magic & true for 2.5 s; normal damage at t=3
+    k_kit = load_kit(ROOT, "Kayle")
+    assert k_kit is not None
+    k_sheet = _sheet("Kayle", level=16)
+    k_out = evaluate_defense(
+        k_sheet,
+        (
+            _hit(5000, DamageType.TRUE, already_mitigated=True, time=F(0)),
+            _hit(500, DamageType.MAGIC, already_mitigated=True, time=F(2)),
+            _hit(500, DamageType.PHYSICAL, already_mitigated=True, time=F(3)),
+        ),
+        enemy_description="test",
+        timeline=True,
+        kit=k_kit,
+        defender_casts=("R=3",),
+    )
+    assert k_out.steps[0].health_damage == 0
+    assert k_out.steps[1].health_damage == 0
+    assert k_out.steps[2].health_damage == F(500)
+
+    # Tryndamere R R3 (70 HP floor for 5 s): survives lethal true damage until t=5, dies at t=6
+    tr_kit = load_kit(ROOT, "Tryndamere")
+    assert tr_kit is not None
+    tr_sheet = _sheet("Tryndamere", level=16)
+    tr_out = evaluate_defense(
+        tr_sheet,
+        (
+            _hit(9999, DamageType.TRUE, already_mitigated=True, time=F(0)),
+            _hit(9999, DamageType.TRUE, already_mitigated=True, time=F(4)),
+            _hit(500, DamageType.TRUE, already_mitigated=True, time=F(6)),
+        ),
+        enemy_description="test",
+        timeline=True,
+        kit=tr_kit,
+        defender_casts=("R=3",),
+    )
+    assert tr_out.steps[0].health_after == F(70)
+    assert tr_out.steps[1].health_after == F(70)
+    assert tr_out.steps[2].health_after == 0
+    assert tr_out.time_to_die == F(6)

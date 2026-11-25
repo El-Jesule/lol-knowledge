@@ -127,6 +127,20 @@
       ],
       "not_modelled": [
         "Coste del 8 % de vida actual (CurrentHealthCost), acumulación de vida gris (GrayHealthStorageInitial) y curación al reactivar"
+      ],
+      "active_effects": [
+        {
+          "id": "heart_zapper_heal",
+          "name": "Desfibrilador (curación vida gris base)",
+          "kind": "recent_damage_heal",
+          "data_value": "GrayHealthStorage",
+          "scale": 100,
+          "window_seconds": {
+            "data_value": "Duration"
+          },
+          "input_name": "recent_damage_taken",
+          "condition": "champion_hit_full_grey_health"
+        }
       ]
     },
     "E": {

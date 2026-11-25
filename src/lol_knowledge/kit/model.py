@@ -83,7 +83,25 @@ PASSIVE_SHIELD_TYPES = frozenset({"normal", "physical", "magic"})
 PASSIVE_DR_MODES = frozenset({"flat", "percent"})
 PASSIVE_RESOURCES = frozenset({"mana", "energy"})
 PASSIVE_TARGET_KINDS = frozenset({"champion", "non_structure"})
-ACTIVE_EFFECT_KINDS = frozenset({"shield", "heal", "damage_taken_modifier", "stat_bonus"})
+ACTIVE_EFFECT_KINDS = frozenset(
+    {
+        "shield",
+        "heal",
+        "damage_taken_modifier",
+        "stat_bonus",
+        "damage_dealt_heal",
+        "recent_damage_heal",
+        "recent_damage_shield",
+        "dodge_attacks",
+        "spell_shield",
+        "block_first_hit",
+        "invulnerable",
+    }
+)
+ACTIVE_INVULN_MODES = frozenset({"invulnerable", "undying"})
+_FORMULA_OPTIONAL_ACTIVE_KINDS = frozenset(
+    {"dodge_attacks", "spell_shield", "block_first_hit", "invulnerable"}
+)
 
 
 @dataclass(frozen=True)
@@ -92,7 +110,7 @@ class ActiveEffectSpec:
 
     id: str
     name: str
-    kind: str  # "shield", "heal", "damage_taken_modifier", "stat_bonus"
+    kind: str
     formula: Mapping[str, Any]
     label: Label
     source: str
@@ -100,12 +118,17 @@ class ActiveEffectSpec:
     duration_seconds: Fraction | None = None
     duration_formula: Mapping[str, Any] | None = None
     stat: str | None = None
-    mode: str = "flat"  # "flat"/"percent"/"percent_ms" for stat_bonus; "percent"/"flat" for DR
+    mode: str = "flat"
     shield_type: str = "normal"
     damage_type: DamageType | None = None
     damage_reduction_cap: Fraction | None = None
     over_duration: bool = False
     uses_hsp: bool = True
+    window_seconds: Fraction | None = None
+    min_formula: Mapping[str, Any] | None = None
+    max_formula: Mapping[str, Any] | None = None
+    part_index: int | None = None
+    input_name: str | None = None
     condition: str = ""
 
     def applies_to_case(self, case_id: str | None) -> bool:
@@ -587,7 +610,10 @@ def _active_effects(
         kind = _text(entry, "kind", entry_ctx)
         if kind not in ACTIVE_EFFECT_KINDS:
             raise KitError(f"{entry_ctx}: kind must be one of {sorted(ACTIVE_EFFECT_KINDS)}")
-        formula = _formula(entry, max_rank, entry_ctx)
+        if entry.get("formula") is None and kind in _FORMULA_OPTIONAL_ACTIVE_KINDS:
+            formula: Mapping[str, Any] = {"op": "constant", "value": 1}
+        else:
+            formula = _formula(entry, max_rank, entry_ctx)
         label = _label(entry, entry_ctx)
         source = _text(entry, "source", entry_ctx)
         raw_cases = _list(entry, "case_ids", entry_ctx)
@@ -602,6 +628,33 @@ def _active_effects(
             duration_formula = _formula(
                 {"formula": entry["duration_formula"]}, max_rank, f"{entry_ctx}.duration_formula"
             )
+        window_seconds = _optional_positive_fraction(entry, "window_seconds", entry_ctx)
+        min_formula: Mapping[str, Any] | None = None
+        if entry.get("min_formula") is not None:
+            min_formula = _formula(
+                {"formula": entry["min_formula"]}, max_rank, f"{entry_ctx}.min_formula"
+            )
+        max_formula: Mapping[str, Any] | None = None
+        if entry.get("max_formula") is not None:
+            max_formula = _formula(
+                {"formula": entry["max_formula"]}, max_rank, f"{entry_ctx}.max_formula"
+            )
+        part_index: int | None = None
+        raw_part_idx = entry.get("part_index")
+        if raw_part_idx is not None:
+            if (
+                isinstance(raw_part_idx, bool)
+                or not isinstance(raw_part_idx, int)
+                or raw_part_idx < 0
+            ):
+                raise KitError(f"{entry_ctx}: part_index must be a non-negative integer")
+            part_index = raw_part_idx
+        input_name: str | None = None
+        raw_input_name = entry.get("input_name")
+        if raw_input_name is not None:
+            if not isinstance(raw_input_name, str) or not raw_input_name.strip():
+                raise KitError(f"{entry_ctx}: input_name must be a non-empty string")
+            input_name = raw_input_name
         condition = entry.get("condition", "")
         if not isinstance(condition, str):
             raise KitError(f"{entry_ctx}: condition must be a string")
@@ -626,7 +679,7 @@ def _active_effects(
             mode = str(entry.get("mode", "flat"))
             if mode not in PASSIVE_STAT_MODES:
                 raise KitError(f"{entry_ctx}: mode must be one of {sorted(PASSIVE_STAT_MODES)}")
-        elif kind == "shield":
+        elif kind in {"shield", "recent_damage_shield"}:
             shield_type = str(entry.get("shield_type", "normal"))
             if shield_type not in PASSIVE_SHIELD_TYPES:
                 raise KitError(
@@ -645,6 +698,10 @@ def _active_effects(
             dr_cap = _optional_positive_fraction(entry, "damage_reduction_cap", entry_ctx)
             if dr_cap is not None and dr_cap > 1:
                 raise KitError(f"{entry_ctx}: damage_reduction_cap must be <= 1")
+        elif kind == "invulnerable":
+            mode = str(entry.get("mode", "invulnerable"))
+            if mode not in ACTIVE_INVULN_MODES:
+                raise KitError(f"{entry_ctx}: mode must be one of {sorted(ACTIVE_INVULN_MODES)}")
 
         effects.append(
             ActiveEffectSpec(
@@ -664,6 +721,11 @@ def _active_effects(
                 damage_reduction_cap=dr_cap,
                 over_duration=over_duration,
                 uses_hsp=uses_hsp,
+                window_seconds=window_seconds,
+                min_formula=min_formula,
+                max_formula=max_formula,
+                part_index=part_index,
+                input_name=input_name,
                 condition=condition,
             )
         )

@@ -77,6 +77,14 @@
       ],
       "not_modelled": [
         "Curación porcentual del daño (25..75 %), aplicación de efectos al impactar, seguimiento al mantener pulsado y tope a monstruos"
+      ],
+      "active_effects": [
+        {
+          "id": "jaws_of_the_beast_heal",
+          "name": "Fauces de la bestia (curación % daño infligido)",
+          "kind": "damage_dealt_heal",
+          "data_value": "LifestealPercent"
+        }
       ]
     },
     "W": {

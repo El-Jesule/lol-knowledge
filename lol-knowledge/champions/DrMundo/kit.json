@@ -234,6 +234,22 @@
       "passive_stats": [],
       "not_modelled": [
         "Coste del 8 % de vida actual (CurrentHealthCost), acumulación de vida gris (GrayHealthStorageInitial) y curación al reactivar"
+      ],
+      "active_effects": [
+        {
+          "id": "heart_zapper_heal",
+          "name": "Desfibrilador (curación vida gris base)",
+          "kind": "recent_damage_heal",
+          "formula": {
+            "op": "constant",
+            "value": 25
+          },
+          "label": "Derivado",
+          "source": "Characters/DrMundo/Spells/DrMundoWAbility/DrMundoW.DataValues.GrayHealthStorage (16.23.8418428+branch.releases-16-23.content.release)",
+          "input_name": "recent_damage_taken",
+          "condition": "champion_hit_full_grey_health",
+          "window_seconds": 3
+        }
       ]
     },
     "E": {
