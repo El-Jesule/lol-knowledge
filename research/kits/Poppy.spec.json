@@ -167,6 +167,20 @@
       ],
       "not_modelled": [
         "Pasiva porcentual de armadura y RM (BonusArmor, BonusMR, duplicada bajo 40 % vida) y velocidad de movimiento"
+      ],
+      "active_effects": [
+        {
+          "id": "w_haste",
+          "name": "W (VM)",
+          "kind": "stat_bonus",
+          "stat": "move_speed",
+          "mode": "percent_ms",
+          "scale": 0.01,
+          "data_value": "Haste",
+          "duration_seconds": {
+            "data_value": "Duration"
+          }
+        }
       ]
     },
     "E": {

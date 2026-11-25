@@ -56,6 +56,31 @@
       "tooltip": "spell_xayahw_tooltip",
       "not_modelled": [
         "Velocidad de ataque, cuchilla secundaria del 20 % y velocidad de movimiento"
+      ],
+      "active_effects": [
+        {
+          "id": "deadly_plumage_as",
+          "name": "Plumaje mortífero (VA)",
+          "kind": "stat_bonus",
+          "stat": "attack_speed_bonus",
+          "mode": "flat",
+          "data_value": "WAttackSpeedAmount",
+          "duration_seconds": {
+            "data_value": "WAttackSpeedDuration"
+          }
+        },
+        {
+          "id": "deadly_plumage_ms",
+          "name": "Plumaje mortífero (VM % al golpear)",
+          "kind": "stat_bonus",
+          "stat": "move_speed",
+          "mode": "percent_ms",
+          "data_value": "WMoveSpeedAmount",
+          "scale": 0.01,
+          "duration_seconds": {
+            "data_value": "WMoveSpeedDuration"
+          }
+        }
       ]
     },
     "E": {

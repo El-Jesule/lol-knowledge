@@ -3,7 +3,7 @@
   "champion": "Ashe",
   "label": "Derivado",
   "game_version": "16.23",
-  "content_version": "16.23.8406595+branch.releases-16-23.content.release",
+  "content_version": "16.23.8418428+branch.releases-16-23.content.release",
   "verified_against": {
     "content_version": "16.23.8406595+branch.releases-16-23.content.release",
     "bin_sha256": "a8149a3a2027cbb61354c2ff4bd3d0280503724ac422d55a52670c2134b56e37",
@@ -52,7 +52,7 @@
                 ]
               },
               "label": "Derivado",
-              "source": "Characters/Ashe/Spells/AsheQAbility/AsheQ.mSpellCalculations.EmpoweredDamage (16.23.8406595+branch.releases-16-23.content.release)",
+              "source": "Characters/Ashe/Spells/AsheQAbility/AsheQ.mSpellCalculations.EmpoweredDamage (16.23.8418428+branch.releases-16-23.content.release)",
               "damage_type_source": "spell_asheq_tooltip <physicalDamage>"
             }
           ],
@@ -63,6 +63,28 @@
       "passive_stats": [],
       "not_modelled": [
         "Requisito de 4 acumulaciones de Concentración y velocidad de ataque activa durante 6 s"
+      ],
+      "active_effects": [
+        {
+          "id": "rangers_focus_as",
+          "name": "Concentración de la guardabosques (VA)",
+          "kind": "stat_bonus",
+          "formula": {
+            "op": "by_rank",
+            "values": [
+              20,
+              30,
+              40,
+              50,
+              60
+            ]
+          },
+          "label": "Derivado",
+          "source": "Characters/Ashe/Spells/AsheQAbility/AsheQ.DataValues.BonusAS (16.23.8418428+branch.releases-16-23.content.release)",
+          "stat": "attack_speed_bonus",
+          "mode": "flat",
+          "duration_seconds": 6
+        }
       ]
     },
     "W": {
@@ -105,7 +127,7 @@
                 ]
               },
               "label": "Derivado",
-              "source": "Characters/Ashe/Spells/VolleyAbility/Volley.mSpellCalculations.TotalDamage (16.23.8406595+branch.releases-16-23.content.release)",
+              "source": "Characters/Ashe/Spells/VolleyAbility/Volley.mSpellCalculations.TotalDamage (16.23.8418428+branch.releases-16-23.content.release)",
               "damage_type_source": "spell_volley_tooltip <physicalDamage>"
             }
           ],
@@ -164,7 +186,7 @@
                 ]
               },
               "label": "Derivado",
-              "source": "Characters/Ashe/Spells/EnchantedCrystalArrowAbility/EnchantedCrystalArrow.mSpellCalculations.RMainDamage (16.23.8406595+branch.releases-16-23.content.release)",
+              "source": "Characters/Ashe/Spells/EnchantedCrystalArrowAbility/EnchantedCrystalArrow.mSpellCalculations.RMainDamage (16.23.8418428+branch.releases-16-23.content.release)",
               "damage_type_source": "spell_enchantedcrystalarrow_tooltip <magicDamage>"
             }
           ],

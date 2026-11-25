@@ -3,7 +3,7 @@
   "champion": "Ivern",
   "label": "Derivado",
   "game_version": "16.23",
-  "content_version": "16.23.8406595+branch.releases-16-23.content.release",
+  "content_version": "16.23.8418428+branch.releases-16-23.content.release",
   "verified_against": {
     "content_version": "16.23.8406595+branch.releases-16-23.content.release",
     "bin_sha256": "e5901444f1c8d0811925c5c2de5f39348b71ef05fba7641e37b213d463c7a726",
@@ -61,7 +61,7 @@
                 ]
               },
               "label": "Derivado",
-              "source": "Characters/Ivern/Spells/IvernQAbility/IvernQ.mSpellCalculations.TotalDamage (16.23.8406595+branch.releases-16-23.content.release)",
+              "source": "Characters/Ivern/Spells/IvernQAbility/IvernQ.mSpellCalculations.TotalDamage (16.23.8418428+branch.releases-16-23.content.release)",
               "damage_type_source": "spell_ivernq_tooltip <magicDamage>"
             }
           ]
@@ -112,7 +112,7 @@
                 ]
               },
               "label": "Derivado",
-              "source": "Characters/Ivern/Spells/IvernWAbility/IvernW.mSpellCalculations.TotalDamage (16.23.8406595+branch.releases-16-23.content.release)",
+              "source": "Characters/Ivern/Spells/IvernWAbility/IvernW.mSpellCalculations.TotalDamage (16.23.8418428+branch.releases-16-23.content.release)",
               "damage_type_source": "spell_ivernw_tooltip <magicDamage>"
             }
           ]
@@ -153,7 +153,7 @@
                 ]
               },
               "label": "Derivado",
-              "source": "Characters/Ivern/Spells/IvernWAbility/IvernW.mSpellCalculations.TotalAllyDamage (16.23.8406595+branch.releases-16-23.content.release)",
+              "source": "Characters/Ivern/Spells/IvernWAbility/IvernW.mSpellCalculations.TotalAllyDamage (16.23.8418428+branch.releases-16-23.content.release)",
               "damage_type_source": "spell_ivernw_tooltip <magicDamage>"
             }
           ]
@@ -204,7 +204,7 @@
                 ]
               },
               "label": "Derivado",
-              "source": "Characters/Ivern/Spells/IvernEAbility/IvernE.mSpellCalculations.TotalDamage (16.23.8406595+branch.releases-16-23.content.release)",
+              "source": "Characters/Ivern/Spells/IvernEAbility/IvernE.mSpellCalculations.TotalDamage (16.23.8418428+branch.releases-16-23.content.release)",
               "damage_type_source": "spell_iverne_tooltip <magicDamage>"
             }
           ]
@@ -213,6 +213,45 @@
       "passive_stats": [],
       "not_modelled": [
         "Escudo (TotalShield), segundo escudo si no golpea campeones y ralentización"
+      ],
+      "active_effects": [
+        {
+          "id": "e_totalshield",
+          "name": "E (escudo)",
+          "kind": "shield",
+          "formula": {
+            "op": "add",
+            "operands": [
+              {
+                "op": "by_rank",
+                "values": [
+                  75,
+                  115,
+                  155,
+                  195,
+                  235
+                ]
+              },
+              {
+                "op": "mul",
+                "operands": [
+                  {
+                    "op": "constant",
+                    "value": 0.5
+                  },
+                  {
+                    "op": "stat",
+                    "stat": "ability_power",
+                    "scope": "total"
+                  }
+                ]
+              }
+            ]
+          },
+          "label": "Derivado",
+          "source": "Characters/Ivern/Spells/IvernEAbility/IvernE.mSpellCalculations.TotalShield (16.23.8418428+branch.releases-16-23.content.release)",
+          "duration_seconds": 2
+        }
       ]
     },
     "R": {
@@ -253,7 +292,7 @@
                 ]
               },
               "label": "Derivado",
-              "source": "Characters/Ivern/Spells/IvernRAbility/IvernR.mSpellCalculations.TotalShockwaveDamage (16.23.8406595+branch.releases-16-23.content.release)",
+              "source": "Characters/Ivern/Spells/IvernRAbility/IvernR.mSpellCalculations.TotalShockwaveDamage (16.23.8418428+branch.releases-16-23.content.release)",
               "damage_type_source": "spell_ivernr_tooltip <magicDamage>"
             }
           ]

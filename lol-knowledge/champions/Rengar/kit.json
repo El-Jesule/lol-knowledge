@@ -3,7 +3,7 @@
   "champion": "Rengar",
   "label": "Derivado",
   "game_version": "16.23",
-  "content_version": "16.23.8406595+branch.releases-16-23.content.release",
+  "content_version": "16.23.8418428+branch.releases-16-23.content.release",
   "verified_against": {
     "content_version": "16.23.8406595+branch.releases-16-23.content.release",
     "bin_sha256": "358379c11464be75e5921fd7e65641be000ab656cb0089bd3a66eda05cb2be4a",
@@ -49,7 +49,7 @@
             ]
           },
           "label": "Derivado",
-          "source": "Characters/Rengar/Spells/RengarPassiveAbility/RengarPassive.mSpellCalculations.EmpoweredMS (16.23.8406595+branch.releases-16-23.content.release)",
+          "source": "Characters/Rengar/Spells/RengarPassiveAbility/RengarPassive.mSpellCalculations.EmpoweredMS (16.23.8418428+branch.releases-16-23.content.release)",
           "stat": "move_speed",
           "mode": "percent_ms",
           "input_name": "rengar_empowered",
@@ -111,7 +111,7 @@
                 ]
               },
               "label": "Derivado",
-              "source": "Characters/Rengar/Spells/RengarQAbility/RengarQ.mSpellCalculations.QTotalDamage (16.23.8406595+branch.releases-16-23.content.release)",
+              "source": "Characters/Rengar/Spells/RengarQAbility/RengarQ.mSpellCalculations.QTotalDamage (16.23.8418428+branch.releases-16-23.content.release)",
               "damage_type_source": "spell_rengarq_tooltip <physicalDamage>"
             }
           ]
@@ -179,7 +179,7 @@
                 ]
               },
               "label": "Derivado",
-              "source": "Characters/Rengar/Spells/RengarQAbility/RengarQ.mSpellCalculations.EmpoweredQTotalDamage (16.23.8406595+branch.releases-16-23.content.release)",
+              "source": "Characters/Rengar/Spells/RengarQAbility/RengarQ.mSpellCalculations.EmpoweredQTotalDamage (16.23.8418428+branch.releases-16-23.content.release)",
               "damage_type_source": "spell_rengarq_tooltip <physicalDamage>"
             }
           ]
@@ -188,6 +188,22 @@
       "passive_stats": [],
       "not_modelled": [
         "Velocidad de ataque de los siguientes golpes (ASBonus, EmpoweredQAS) y escalado de crítico"
+      ],
+      "active_effects": [
+        {
+          "id": "q_asbonus",
+          "name": "Q (VA)",
+          "kind": "stat_bonus",
+          "formula": {
+            "op": "constant",
+            "value": 40
+          },
+          "label": "Derivado",
+          "source": "Characters/Rengar/Spells/RengarQAbility/RengarQ.DataValues.ASBonus (16.23.8418428+branch.releases-16-23.content.release)",
+          "stat": "attack_speed_bonus",
+          "mode": "flat",
+          "duration_seconds": 5
+        }
       ]
     },
     "W": {
@@ -230,7 +246,7 @@
                 ]
               },
               "label": "Derivado",
-              "source": "Characters/Rengar/Spells/RengarWAbility/RengarW.mSpellCalculations.TotalDamage (16.23.8406595+branch.releases-16-23.content.release)",
+              "source": "Characters/Rengar/Spells/RengarWAbility/RengarW.mSpellCalculations.TotalDamage (16.23.8418428+branch.releases-16-23.content.release)",
               "damage_type_source": "spell_rengarw_tooltip <magicDamage>"
             }
           ]
@@ -284,7 +300,7 @@
                 ]
               },
               "label": "Derivado",
-              "source": "Characters/Rengar/Spells/RengarWAbility/RengarW.mSpellCalculations.TotalDamageEmpowered (16.23.8406595+branch.releases-16-23.content.release)",
+              "source": "Characters/Rengar/Spells/RengarWAbility/RengarW.mSpellCalculations.TotalDamageEmpowered (16.23.8418428+branch.releases-16-23.content.release)",
               "damage_type_source": "spell_rengarw_tooltip <magicDamage>"
             }
           ]
@@ -335,7 +351,7 @@
                 ]
               },
               "label": "Derivado",
-              "source": "Characters/Rengar/Spells/RengarEAbility/RengarE.mSpellCalculations.TotalDamage (16.23.8406595+branch.releases-16-23.content.release)",
+              "source": "Characters/Rengar/Spells/RengarEAbility/RengarE.mSpellCalculations.TotalDamage (16.23.8418428+branch.releases-16-23.content.release)",
               "damage_type_source": "spell_rengare_tooltip <physicalDamage>"
             }
           ]
@@ -389,7 +405,7 @@
                 ]
               },
               "label": "Derivado",
-              "source": "Characters/Rengar/Spells/RengarEAbility/RengarE.mSpellCalculations.TotalEmpoweredDamage (16.23.8406595+branch.releases-16-23.content.release)",
+              "source": "Characters/Rengar/Spells/RengarEAbility/RengarE.mSpellCalculations.TotalEmpoweredDamage (16.23.8418428+branch.releases-16-23.content.release)",
               "damage_type_source": "spell_rengare_tooltip <physicalDamage>"
             }
           ]
@@ -425,7 +441,7 @@
                 ]
               },
               "label": "Derivado",
-              "source": "Characters/Rengar/Spells/RengarRAbility/RengarR.mSpellCalculations.BonusDamage (16.23.8406595+branch.releases-16-23.content.release)",
+              "source": "Characters/Rengar/Spells/RengarRAbility/RengarR.mSpellCalculations.BonusDamage (16.23.8418428+branch.releases-16-23.content.release)",
               "damage_type_source": "spell_rengarr_tooltip <physicalDamage>"
             }
           ]
@@ -434,6 +450,33 @@
       "passive_stats": [],
       "not_modelled": [
         "Camuflaje, velocidad de movimiento, visión verdadera y reducción de armadura del objetivo"
+      ],
+      "active_effects": [
+        {
+          "id": "r_stealthms",
+          "name": "R (VM)",
+          "kind": "stat_bonus",
+          "formula": {
+            "op": "by_rank",
+            "values": [
+              0.4,
+              0.5,
+              0.6
+            ]
+          },
+          "label": "Derivado",
+          "source": "Characters/Rengar/Spells/RengarRAbility/RengarR.DataValues.StealthMS (16.23.8418428+branch.releases-16-23.content.release)",
+          "stat": "move_speed",
+          "mode": "percent_ms",
+          "duration_formula": {
+            "op": "by_rank",
+            "values": [
+              12,
+              16,
+              20
+            ]
+          }
+        }
       ]
     }
   }

@@ -3,7 +3,7 @@
   "champion": "Riven",
   "label": "Derivado",
   "game_version": "16.23",
-  "content_version": "16.23.8406595+branch.releases-16-23.content.release",
+  "content_version": "16.23.8418428+branch.releases-16-23.content.release",
   "verified_against": {
     "content_version": "16.23.8406595+branch.releases-16-23.content.release",
     "bin_sha256": "7e248f8669c6081f0b76da9d9cb7c72411b7ed316953a31f64ce658b7ac98868",
@@ -38,7 +38,7 @@
                 ]
               },
               "label": "Derivado",
-              "source": "Characters/Riven/Spells/RivenPassiveAbility/RivenPassive.mSpellCalculations.TotalDamage (16.23.8406595+branch.releases-16-23.content.release)",
+              "source": "Characters/Riven/Spells/RivenPassiveAbility/RivenPassive.mSpellCalculations.TotalDamage (16.23.8418428+branch.releases-16-23.content.release)",
               "damage_type_source": "spell_rivenpassive_tooltip <physicalDamage>"
             }
           ]
@@ -69,7 +69,7 @@
             ]
           },
           "label": "Derivado",
-          "source": "Characters/Riven/Spells/RivenPassiveAbility/RivenPassive.mSpellCalculations.TotalDamage (16.23.8406595+branch.releases-16-23.content.release)",
+          "source": "Characters/Riven/Spells/RivenPassiveAbility/RivenPassive.mSpellCalculations.TotalDamage (16.23.8418428+branch.releases-16-23.content.release)",
           "trigger": "after_ability",
           "damage_type": "physical",
           "max_stacks": 3
@@ -122,7 +122,7 @@
                 ]
               },
               "label": "Derivado",
-              "source": "Characters/Riven/Spells/RivenTriCleaveAbility/RivenTriCleave.mSpellCalculations.FirstSlashDamage (16.23.8406595+branch.releases-16-23.content.release)",
+              "source": "Characters/Riven/Spells/RivenTriCleaveAbility/RivenTriCleave.mSpellCalculations.FirstSlashDamage (16.23.8418428+branch.releases-16-23.content.release)",
               "damage_type_source": "spell_riventricleave_tooltip <physicalDamage>"
             }
           ]
@@ -169,7 +169,7 @@
                 ]
               },
               "label": "Derivado",
-              "source": "Characters/Riven/Spells/RivenTriCleaveAbility/RivenTriCleave.mSpellCalculations.FirstSlashDamage (16.23.8406595+branch.releases-16-23.content.release)",
+              "source": "Characters/Riven/Spells/RivenTriCleaveAbility/RivenTriCleave.mSpellCalculations.FirstSlashDamage (16.23.8418428+branch.releases-16-23.content.release)",
               "damage_type_source": "spell_riventricleave_tooltip <physicalDamage>"
             }
           ],
@@ -222,7 +222,7 @@
                 ]
               },
               "label": "Derivado",
-              "source": "Characters/Riven/Spells/RivenMartyrAbility/RivenMartyr.mSpellCalculations.TotalDamage (16.23.8406595+branch.releases-16-23.content.release)",
+              "source": "Characters/Riven/Spells/RivenMartyrAbility/RivenMartyr.mSpellCalculations.TotalDamage (16.23.8418428+branch.releases-16-23.content.release)",
               "damage_type_source": "spell_rivenmartyr_tooltip <physicalDamage>"
             }
           ]
@@ -240,6 +240,45 @@
       "passive_stats": [],
       "not_modelled": [
         "Escudo (TotalShield) y desplazamiento"
+      ],
+      "active_effects": [
+        {
+          "id": "valor_shield",
+          "name": "Valor (escudo)",
+          "kind": "shield",
+          "formula": {
+            "op": "add",
+            "operands": [
+              {
+                "op": "by_rank",
+                "values": [
+                  70,
+                  95,
+                  120,
+                  145,
+                  170
+                ]
+              },
+              {
+                "op": "mul",
+                "operands": [
+                  {
+                    "op": "constant",
+                    "value": 1.1
+                  },
+                  {
+                    "op": "stat",
+                    "stat": "attack_damage",
+                    "scope": "bonus"
+                  }
+                ]
+              }
+            ]
+          },
+          "label": "Derivado",
+          "source": "Characters/Riven/Spells/RivenFeintAbility/RivenFeint.mSpellCalculations.TotalShield (16.23.8418428+branch.releases-16-23.content.release)",
+          "duration_seconds": 1.5
+        }
       ]
     },
     "R": {
@@ -280,7 +319,7 @@
                 ]
               },
               "label": "Derivado",
-              "source": "Characters/Riven/Spells/RivenFengShuiEngineAbility/RivenFengShuiEngine.mSpellCalculations.MinDamage (16.23.8406595+branch.releases-16-23.content.release)",
+              "source": "Characters/Riven/Spells/RivenFengShuiEngineAbility/RivenFengShuiEngine.mSpellCalculations.MinDamage (16.23.8418428+branch.releases-16-23.content.release)",
               "damage_type_source": "spell_rivenfengshuiengine_tooltip <physicalDamage>"
             }
           ]
@@ -319,7 +358,7 @@
                 ]
               },
               "label": "Derivado",
-              "source": "Characters/Riven/Spells/RivenFengShuiEngineAbility/RivenFengShuiEngine.mSpellCalculations.MaxDamage (16.23.8406595+branch.releases-16-23.content.release)",
+              "source": "Characters/Riven/Spells/RivenFengShuiEngineAbility/RivenFengShuiEngine.mSpellCalculations.MaxDamage (16.23.8418428+branch.releases-16-23.content.release)",
               "damage_type_source": "spell_rivenfengshuiengine_tooltip <physicalDamage>"
             }
           ]
@@ -329,6 +368,22 @@
       "not_modelled": [
         "Mejora activa de +20 % DA (BonusAD) y alcance adicional durante 15 s",
         "Interpolación continua de Cuchillada de viento según vida perdida"
+      ],
+      "active_effects": [
+        {
+          "id": "blade_of_the_exile_ad",
+          "name": "Hoja del exilio (AD %)",
+          "kind": "stat_bonus",
+          "formula": {
+            "op": "constant",
+            "value": 20
+          },
+          "label": "Derivado",
+          "source": "Characters/Riven/Spells/RivenFengShuiEngineAbility/RivenFengShuiEngine.DataValues.PercentBonusAD (16.23.8418428+branch.releases-16-23.content.release)",
+          "stat": "attack_damage",
+          "mode": "percent",
+          "duration_seconds": 15
+        }
       ]
     }
   }

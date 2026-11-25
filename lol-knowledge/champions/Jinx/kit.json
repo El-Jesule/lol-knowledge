@@ -3,7 +3,7 @@
   "champion": "Jinx",
   "label": "Derivado",
   "game_version": "16.23",
-  "content_version": "16.23.8406595+branch.releases-16-23.content.release",
+  "content_version": "16.23.8418428+branch.releases-16-23.content.release",
   "verified_against": {
     "content_version": "16.23.8406595+branch.releases-16-23.content.release",
     "bin_sha256": "e9d25c46a2534e00482ebad6e07c9bd377811af766ea60af9ecde08bd8834c52",
@@ -30,7 +30,7 @@
             "value": 25
           },
           "label": "Derivado",
-          "source": "Characters/Jinx/Spells/JinxPassiveMarkerAbility/JinxPassiveMarker.DataValues.ASBuff (16.23.8406595+branch.releases-16-23.content.release)",
+          "source": "Characters/Jinx/Spells/JinxPassiveMarkerAbility/JinxPassiveMarker.DataValues.ASBuff (16.23.8418428+branch.releases-16-23.content.release)",
           "stat": "attack_speed_bonus",
           "mode": "flat",
           "input_name": "get_excited",
@@ -45,7 +45,7 @@
             "value": 1.75
           },
           "label": "Derivado",
-          "source": "Characters/Jinx/Spells/JinxPassiveMarkerAbility/JinxPassiveMarker.DataValues.MSBuff (16.23.8406595+branch.releases-16-23.content.release)",
+          "source": "Characters/Jinx/Spells/JinxPassiveMarkerAbility/JinxPassiveMarker.DataValues.MSBuff (16.23.8418428+branch.releases-16-23.content.release)",
           "stat": "move_speed",
           "mode": "percent_ms",
           "input_name": "get_excited",
@@ -78,7 +78,7 @@
                 ]
               },
               "label": "Derivado",
-              "source": "Characters/Jinx/Spells/JinxQAbility/JinxQ.mSpellCalculations.RocketDamage (16.23.8406595+branch.releases-16-23.content.release)",
+              "source": "Characters/Jinx/Spells/JinxQAbility/JinxQ.mSpellCalculations.RocketDamage (16.23.8418428+branch.releases-16-23.content.release)",
               "damage_type_source": "spell_jinxq_tooltip <physicalDamage>"
             }
           ],
@@ -89,6 +89,29 @@
       "not_modelled": [
         "Velocidad de ataque acumulable de la ametralladora (MinigunAttackSpeedMax)",
         "Alcance adicional, penalización de VA y coste de maná por cohete"
+      ],
+      "active_effects": [
+        {
+          "id": "pow_pow_max_as",
+          "name": "Pium Pium (VA máxima 3 acumulaciones)",
+          "kind": "stat_bonus",
+          "formula": {
+            "op": "by_rank",
+            "values": [
+              30,
+              55,
+              80,
+              105,
+              130
+            ]
+          },
+          "label": "Derivado",
+          "source": "Characters/Jinx/Spells/JinxQAbility/JinxQ.DataValues.MinigunAttackSpeedMax (16.23.8418428+branch.releases-16-23.content.release)",
+          "stat": "attack_speed_bonus",
+          "mode": "flat",
+          "condition": "minigun_3_stacks",
+          "duration_seconds": 2.5
+        }
       ]
     },
     "W": {
@@ -131,7 +154,7 @@
                 ]
               },
               "label": "Derivado",
-              "source": "Characters/Jinx/Spells/JinxWAbility/JinxW.mSpellCalculations.TotalDamage (16.23.8406595+branch.releases-16-23.content.release)",
+              "source": "Characters/Jinx/Spells/JinxWAbility/JinxW.mSpellCalculations.TotalDamage (16.23.8418428+branch.releases-16-23.content.release)",
               "damage_type_source": "spell_jinxw_tooltip <physicalDamage>"
             }
           ],
@@ -184,7 +207,7 @@
                 ]
               },
               "label": "Derivado",
-              "source": "Characters/Jinx/Spells/JinxEAbility/JinxE.mSpellCalculations.TotalDamage (16.23.8406595+branch.releases-16-23.content.release)",
+              "source": "Characters/Jinx/Spells/JinxEAbility/JinxE.mSpellCalculations.TotalDamage (16.23.8418428+branch.releases-16-23.content.release)",
               "damage_type_source": "spell_jinxe_tooltip <magicDamage>"
             }
           ],
@@ -234,7 +257,7 @@
                 ]
               },
               "label": "Derivado",
-              "source": "Characters/Jinx/Spells/JinxRAbility/JinxR.mSpellCalculations.DamageFloor (16.23.8406595+branch.releases-16-23.content.release)",
+              "source": "Characters/Jinx/Spells/JinxRAbility/JinxR.mSpellCalculations.DamageFloor (16.23.8418428+branch.releases-16-23.content.release)",
               "damage_type_source": "spell_jinxr_tooltip <physicalDamage>"
             },
             {
@@ -269,7 +292,7 @@
                 ]
               },
               "label": "Derivado",
-              "source": "Characters/Jinx/Spells/JinxRAbility/JinxR · DataValues.PercentDamage % × vida que falta del objetivo (16.23.8406595+branch.releases-16-23.content.release)",
+              "source": "Characters/Jinx/Spells/JinxRAbility/JinxR · DataValues.PercentDamage % × vida que falta del objetivo (16.23.8418428+branch.releases-16-23.content.release)",
               "damage_type_source": "spell_jinxr_tooltip <physicalDamage>"
             }
           ],
@@ -310,7 +333,7 @@
                 ]
               },
               "label": "Derivado",
-              "source": "Characters/Jinx/Spells/JinxRAbility/JinxR.mSpellCalculations.DamageMax (16.23.8406595+branch.releases-16-23.content.release)",
+              "source": "Characters/Jinx/Spells/JinxRAbility/JinxR.mSpellCalculations.DamageMax (16.23.8418428+branch.releases-16-23.content.release)",
               "damage_type_source": "spell_jinxr_tooltip <physicalDamage>"
             },
             {
@@ -345,7 +368,7 @@
                 ]
               },
               "label": "Derivado",
-              "source": "Characters/Jinx/Spells/JinxRAbility/JinxR · DataValues.PercentDamage % × vida que falta del objetivo (16.23.8406595+branch.releases-16-23.content.release)",
+              "source": "Characters/Jinx/Spells/JinxRAbility/JinxR · DataValues.PercentDamage % × vida que falta del objetivo (16.23.8418428+branch.releases-16-23.content.release)",
               "damage_type_source": "spell_jinxr_tooltip <physicalDamage>"
             }
           ],

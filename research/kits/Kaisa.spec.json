@@ -204,6 +204,17 @@
       "tooltip": "spell_kaisar_tooltip",
       "not_modelled": [
         "Desplazamiento hacia objetivo con Plasma y escudo (RCalculatedShieldValue)"
+      ],
+      "active_effects": [
+        {
+          "id": "r_rcalculatedshieldvalue",
+          "name": "R (escudo)",
+          "kind": "shield",
+          "calculation": "RCalculatedShieldValue",
+          "duration_seconds": {
+            "data_value": "RShieldDuration"
+          }
+        }
       ]
     }
   }

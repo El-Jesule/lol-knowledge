@@ -80,6 +80,20 @@
       ],
       "not_modelled": [
         "DA adicional (BonusTrailAD) y velocidad de movimiento sobre el rastro"
+      ],
+      "active_effects": [
+        {
+          "id": "q_movespeed",
+          "name": "Q (VM)",
+          "kind": "stat_bonus",
+          "stat": "move_speed",
+          "mode": "percent_ms",
+          "scale": 0.01,
+          "data_value": "MoveSpeed",
+          "duration_seconds": {
+            "data_value": "TrailDuration"
+          }
+        }
       ]
     },
     "W": {
@@ -95,6 +109,20 @@
       ],
       "not_modelled": [
         "Escudo de hechizos y duplicación de velocidad de ataque al bloquear una habilidad"
+      ],
+      "active_effects": [
+        {
+          "id": "shroud_of_darkness_as",
+          "name": "Velo de oscuridad (VA al bloquear)",
+          "kind": "stat_bonus",
+          "stat": "attack_speed_bonus",
+          "mode": "flat",
+          "data_value": "ActiveAS",
+          "duration_seconds": {
+            "data_value": "DoubleASDuration"
+          },
+          "condition": "spell_blocked"
+        }
       ]
     },
     "E": {

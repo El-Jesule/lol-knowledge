@@ -3,7 +3,7 @@
   "champion": "Kassadin",
   "label": "Derivado",
   "game_version": "16.23",
-  "content_version": "16.23.8406595+branch.releases-16-23.content.release",
+  "content_version": "16.23.8418428+branch.releases-16-23.content.release",
   "verified_against": {
     "content_version": "16.23.8406595+branch.releases-16-23.content.release",
     "bin_sha256": "b6edee11ce2c97377d7fbc92fc82917c8425668b009026d721546d412d5d193e",
@@ -30,7 +30,7 @@
             "value": 0.1
           },
           "label": "Derivado",
-          "source": "Characters/Kassadin/Spells/VoidStoneAbility/VoidStone.DataValues.DamageReductionPercent (16.23.8406595+branch.releases-16-23.content.release)",
+          "source": "Characters/Kassadin/Spells/VoidStoneAbility/VoidStone.DataValues.DamageReductionPercent (16.23.8418428+branch.releases-16-23.content.release)",
           "mode": "percent",
           "damage_type": "magic"
         }
@@ -76,7 +76,7 @@
                 ]
               },
               "label": "Derivado",
-              "source": "Characters/Kassadin/Spells/NullLanceAbility/NullLance.mSpellCalculations.TotalDamage (16.23.8406595+branch.releases-16-23.content.release)",
+              "source": "Characters/Kassadin/Spells/NullLanceAbility/NullLance.mSpellCalculations.TotalDamage (16.23.8418428+branch.releases-16-23.content.release)",
               "damage_type_source": "spell_nulllance_tooltip <magicDamage>"
             }
           ]
@@ -85,6 +85,46 @@
       "passive_stats": [],
       "not_modelled": [
         "Escudo mágico (TotalShield) e interrupción de canalizaciones"
+      ],
+      "active_effects": [
+        {
+          "id": "null_sphere_magic_shield",
+          "name": "Esfera vacía (escudo mágico)",
+          "kind": "shield",
+          "formula": {
+            "op": "add",
+            "operands": [
+              {
+                "op": "by_rank",
+                "values": [
+                  80,
+                  110,
+                  140,
+                  170,
+                  200
+                ]
+              },
+              {
+                "op": "mul",
+                "operands": [
+                  {
+                    "op": "constant",
+                    "value": 0.3
+                  },
+                  {
+                    "op": "stat",
+                    "stat": "ability_power",
+                    "scope": "total"
+                  }
+                ]
+              }
+            ]
+          },
+          "label": "Derivado",
+          "source": "Characters/Kassadin/Spells/NullLanceAbility/NullLance.mSpellCalculations.TotalShield (16.23.8418428+branch.releases-16-23.content.release)",
+          "shield_type": "magic",
+          "duration_seconds": 1.5
+        }
       ]
     },
     "W": {
@@ -121,7 +161,7 @@
                 ]
               },
               "label": "Derivado",
-              "source": "Characters/Kassadin/Spells/NetherBladeAbility/NetherBlade.mSpellCalculations.OnHitDamage (16.23.8406595+branch.releases-16-23.content.release)",
+              "source": "Characters/Kassadin/Spells/NetherBladeAbility/NetherBlade.mSpellCalculations.OnHitDamage (16.23.8418428+branch.releases-16-23.content.release)",
               "damage_type_source": "spell_netherblade_tooltip <magicDamage>"
             }
           ]
@@ -162,7 +202,7 @@
                 ]
               },
               "label": "Derivado",
-              "source": "Characters/Kassadin/Spells/NetherBladeAbility/NetherBlade.mSpellCalculations.ActiveDamage (16.23.8406595+branch.releases-16-23.content.release)",
+              "source": "Characters/Kassadin/Spells/NetherBladeAbility/NetherBlade.mSpellCalculations.ActiveDamage (16.23.8418428+branch.releases-16-23.content.release)",
               "damage_type_source": "spell_netherblade_tooltip <magicDamage>"
             }
           ]
@@ -213,7 +253,7 @@
                 ]
               },
               "label": "Derivado",
-              "source": "Characters/Kassadin/Spells/ForcePulseAbility/ForcePulse.mSpellCalculations.TotalDamage (16.23.8406595+branch.releases-16-23.content.release)",
+              "source": "Characters/Kassadin/Spells/ForcePulseAbility/ForcePulse.mSpellCalculations.TotalDamage (16.23.8418428+branch.releases-16-23.content.release)",
               "damage_type_source": "spell_forcepulse_tooltip <magicDamage>"
             }
           ]
@@ -276,7 +316,7 @@
                 ]
               },
               "label": "Derivado",
-              "source": "Characters/Kassadin/Spells/RiftWalkAbility/RiftWalk.mSpellCalculations.BaseDamage (16.23.8406595+branch.releases-16-23.content.release)",
+              "source": "Characters/Kassadin/Spells/RiftWalkAbility/RiftWalk.mSpellCalculations.BaseDamage (16.23.8418428+branch.releases-16-23.content.release)",
               "damage_type_source": "spell_riftwalk_tooltip <magicDamage>"
             }
           ]
@@ -329,7 +369,7 @@
                 ]
               },
               "label": "Derivado",
-              "source": "Characters/Kassadin/Spells/RiftWalkAbility/RiftWalk.mSpellCalculations.BonusDamage (16.23.8406595+branch.releases-16-23.content.release)",
+              "source": "Characters/Kassadin/Spells/RiftWalkAbility/RiftWalk.mSpellCalculations.BonusDamage (16.23.8418428+branch.releases-16-23.content.release)",
               "damage_type_source": "spell_riftwalk_tooltip <magicDamage>"
             }
           ]
@@ -382,7 +422,7 @@
                 ]
               },
               "label": "Derivado",
-              "source": "Characters/Kassadin/Spells/RiftWalkAbility/RiftWalk.mSpellCalculations.BaseDamage (16.23.8406595+branch.releases-16-23.content.release)",
+              "source": "Characters/Kassadin/Spells/RiftWalkAbility/RiftWalk.mSpellCalculations.BaseDamage (16.23.8418428+branch.releases-16-23.content.release)",
               "damage_type_source": "spell_riftwalk_tooltip <magicDamage>"
             },
             {
@@ -438,7 +478,7 @@
                 ]
               },
               "label": "Derivado",
-              "source": "Characters/Kassadin/Spells/RiftWalkAbility/RiftWalk · 4 × mSpellCalculations.BonusDamage (16.23.8406595+branch.releases-16-23.content.release)",
+              "source": "Characters/Kassadin/Spells/RiftWalkAbility/RiftWalk · 4 × mSpellCalculations.BonusDamage (16.23.8418428+branch.releases-16-23.content.release)",
               "damage_type_source": "spell_riftwalk_tooltip <magicDamage>"
             }
           ]

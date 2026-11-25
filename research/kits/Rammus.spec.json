@@ -31,6 +31,19 @@
       ],
       "not_modelled": [
         "Velocidad de movimiento creciente (MinimumMoveSpeed, MaximumMoveSpeed), empuje y ralentización"
+      ],
+      "active_effects": [
+        {
+          "id": "q_minimummovespeed",
+          "name": "Q (VM)",
+          "kind": "stat_bonus",
+          "stat": "move_speed",
+          "mode": "percent_ms",
+          "calculation": "MinimumMoveSpeed",
+          "duration_seconds": {
+            "data_value": "RollDuration"
+          }
+        }
       ]
     },
     "W": {
@@ -49,6 +62,30 @@
       ],
       "not_modelled": [
         "Armadura y RM activas (BonusArmorTooltip, BonusMRTooltip)"
+      ],
+      "active_effects": [
+        {
+          "id": "defensive_ball_curl_armor",
+          "name": "Posición defensiva (armadura)",
+          "kind": "stat_bonus",
+          "stat": "armor",
+          "mode": "flat",
+          "calculation": "BonusArmorTooltip",
+          "duration_seconds": {
+            "data_value": "BuffDuration"
+          }
+        },
+        {
+          "id": "defensive_ball_curl_mr",
+          "name": "Posición defensiva (RM)",
+          "kind": "stat_bonus",
+          "stat": "magic_resist",
+          "mode": "flat",
+          "calculation": "BonusMRTooltip",
+          "duration_seconds": {
+            "data_value": "BuffDuration"
+          }
+        }
       ]
     },
     "E": {

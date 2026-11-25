@@ -52,6 +52,29 @@
       ],
       "not_modelled": [
         "Escudo (ShieldLevelScaling, TotalAugmentedShieldValue) y velocidad de movimiento evolucionada"
+      ],
+      "active_effects": [
+        {
+          "id": "q_shieldlevelscaling",
+          "name": "Q (escudo)",
+          "kind": "shield",
+          "calculation": "ShieldLevelScaling",
+          "duration_seconds": {
+            "data_value": "BuffDuration"
+          }
+        },
+        {
+          "id": "q_augmentmovespeedbonus",
+          "name": "Q (VM)",
+          "kind": "stat_bonus",
+          "stat": "move_speed",
+          "mode": "percent_ms",
+          "scale": 0.01,
+          "data_value": "AugmentMoveSpeedBonus",
+          "duration_seconds": {
+            "data_value": "BuffDuration"
+          }
+        }
       ]
     },
     "W": {

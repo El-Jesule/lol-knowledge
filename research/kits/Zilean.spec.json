@@ -46,6 +46,20 @@
       "tooltip": "spell_timewarp_tooltip",
       "not_modelled": [
         "Aumento de velocidad de movimiento a aliado o ralentización a enemigo (40..99 %)"
+      ],
+      "active_effects": [
+        {
+          "id": "e_speedamount",
+          "name": "E (VM)",
+          "kind": "stat_bonus",
+          "stat": "move_speed",
+          "mode": "percent_ms",
+          "scale": 0.01,
+          "data_value": "SpeedAmount",
+          "duration_seconds": {
+            "data_value": "Duration"
+          }
+        }
       ]
     },
     "R": {
@@ -53,6 +67,15 @@
       "tooltip": "spell_chronoshift_tooltip",
       "not_modelled": [
         "Resurrección de aliado durante 5 s con curación (RTotalHeal)"
+      ],
+      "active_effects": [
+        {
+          "id": "r_rtotalheal",
+          "name": "R (curación)",
+          "kind": "heal",
+          "condition": "revive_triggered",
+          "calculation": "RTotalHeal"
+        }
       ]
     }
   }

@@ -117,6 +117,18 @@
       "tooltip": "spell_mordekaiserw_tooltip",
       "not_modelled": [
         "Acumulación de escudo por daño infligido/recibido y reactivación curativa"
+      ],
+      "active_effects": [
+        {
+          "id": "indestructible_max_shield",
+          "name": "Indestructible (escudo máximo)",
+          "kind": "shield",
+          "calculation": "MaxHealthTooltip",
+          "duration_seconds": {
+            "data_value": "Duration"
+          },
+          "condition": "full_stored_shield"
+        }
       ]
     },
     "E": {

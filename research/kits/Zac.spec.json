@@ -134,6 +134,17 @@
       ],
       "not_modelled": [
         "4 rebotes totales (MaxDamageTooltip), empuje/ralentización y velocidad de movimiento creciente"
+      ],
+      "active_effects": [
+        {
+          "id": "r_endingms",
+          "name": "R (VM)",
+          "kind": "stat_bonus",
+          "stat": "move_speed",
+          "mode": "percent_ms",
+          "duration_seconds": 4.0,
+          "data_value": "EndingMS"
+        }
       ]
     }
   }

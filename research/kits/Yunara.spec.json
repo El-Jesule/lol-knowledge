@@ -61,6 +61,20 @@
       ],
       "not_modelled": [
         "Velocidad de ataque activa (Calc_Attack_Speed), ejecución de súbditos y acumulación de 8 cargas de Desatar"
+      ],
+      "active_effects": [
+        {
+          "id": "q_calc_attack_speed",
+          "name": "Q (VA)",
+          "kind": "stat_bonus",
+          "stat": "attack_speed_bonus",
+          "mode": "flat",
+          "scale": 100,
+          "calculation": "Calc_Attack_Speed",
+          "duration_seconds": {
+            "data_value": "Resource_Duration"
+          }
+        }
       ]
     },
     "W": {
@@ -95,6 +109,19 @@
       "tooltip": "spell_yunarae_tooltip",
       "not_modelled": [
         "Velocidad de movimiento (Calc_Move_Speed / Calc_Move_Speed_Enhanced) y deslizamiento en Trascendencia"
+      ],
+      "active_effects": [
+        {
+          "id": "e_calc_move_speed",
+          "name": "E (VM)",
+          "kind": "stat_bonus",
+          "stat": "move_speed",
+          "mode": "percent_ms",
+          "calculation": "Calc_Move_Speed",
+          "duration_seconds": {
+            "data_value": "Buff_Duration"
+          }
+        }
       ]
     },
     "R": {

@@ -61,6 +61,14 @@
       ],
       "not_modelled": [
         "Curación a aliados (TotalHeal) y variación porcentual por rebote (BounceScaling)"
+      ],
+      "active_effects": [
+        {
+          "id": "w_totalheal",
+          "name": "W (curación)",
+          "kind": "heal",
+          "calculation": "TotalHeal"
+        }
       ]
     },
     "E": {

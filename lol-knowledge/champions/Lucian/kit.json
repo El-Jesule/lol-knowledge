@@ -3,7 +3,7 @@
   "champion": "Lucian",
   "label": "Derivado",
   "game_version": "16.23",
-  "content_version": "16.23.8406595+branch.releases-16-23.content.release",
+  "content_version": "16.23.8418428+branch.releases-16-23.content.release",
   "verified_against": {
     "content_version": "16.23.8406595+branch.releases-16-23.content.release",
     "bin_sha256": "79515b685fb9d876cb7f121fc8297755458b0240e9bd5de8cb7d2f8d9e5d832f",
@@ -56,7 +56,7 @@
                 ]
               },
               "label": "Derivado",
-              "source": "Characters/Lucian/Spells/LucianPassiveAbility/LucianPassive.mSpellCalculations.TotalDamage (16.23.8406595+branch.releases-16-23.content.release)",
+              "source": "Characters/Lucian/Spells/LucianPassiveAbility/LucianPassive.mSpellCalculations.TotalDamage (16.23.8418428+branch.releases-16-23.content.release)",
               "damage_type_source": "spell_lucianpassive_tooltip <physicalDamage>"
             }
           ]
@@ -91,7 +91,7 @@
                 ]
               },
               "label": "Derivado",
-              "source": "Characters/Lucian/Spells/LucianPassiveAbility/LucianPassive.mSpellCalculations.PassiveTotalDamage (16.23.8406595+branch.releases-16-23.content.release)",
+              "source": "Characters/Lucian/Spells/LucianPassiveAbility/LucianPassive.mSpellCalculations.PassiveTotalDamage (16.23.8418428+branch.releases-16-23.content.release)",
               "damage_type_source": "spell_lucianpassive_tooltip <magicDamage>"
             }
           ]
@@ -140,7 +140,7 @@
             ]
           },
           "label": "Derivado",
-          "source": "Characters/Lucian/Spells/LucianPassiveAbility/LucianPassive.mSpellCalculations.TotalDamage (16.23.8406595+branch.releases-16-23.content.release)",
+          "source": "Characters/Lucian/Spells/LucianPassiveAbility/LucianPassive.mSpellCalculations.TotalDamage (16.23.8418428+branch.releases-16-23.content.release)",
           "trigger": "after_ability",
           "damage_type": "physical",
           "duration_seconds": 3.5
@@ -187,7 +187,7 @@
                 ]
               },
               "label": "Derivado",
-              "source": "Characters/Lucian/Spells/LucianQAbility/LucianQ.mSpellCalculations.TotalDamage (16.23.8406595+branch.releases-16-23.content.release)",
+              "source": "Characters/Lucian/Spells/LucianQAbility/LucianQ.mSpellCalculations.TotalDamage (16.23.8418428+branch.releases-16-23.content.release)",
               "damage_type_source": "spell_lucianq_tooltip <physicalDamage>"
             }
           ]
@@ -236,7 +236,7 @@
                 ]
               },
               "label": "Derivado",
-              "source": "Characters/Lucian/Spells/LucianWAbility/LucianW.mSpellCalculations.TotalDamage (16.23.8406595+branch.releases-16-23.content.release)",
+              "source": "Characters/Lucian/Spells/LucianWAbility/LucianW.mSpellCalculations.TotalDamage (16.23.8418428+branch.releases-16-23.content.release)",
               "damage_type_source": "spell_lucianw_tooltip <magicDamage>"
             }
           ]
@@ -245,6 +245,28 @@
       "passive_stats": [],
       "not_modelled": [
         "Velocidad de movimiento al dañar enemigos marcados y activación de Vigilancia"
+      ],
+      "active_effects": [
+        {
+          "id": "ardent_blaze_ms",
+          "name": "Resplandor ardiente (VM plana)",
+          "kind": "stat_bonus",
+          "formula": {
+            "op": "by_rank",
+            "values": [
+              60,
+              65,
+              70,
+              75,
+              80
+            ]
+          },
+          "label": "Derivado",
+          "source": "Characters/Lucian/Spells/LucianWAbility/LucianW.DataValues.MoveSpeedAmount (16.23.8418428+branch.releases-16-23.content.release)",
+          "stat": "move_speed",
+          "mode": "flat",
+          "duration_seconds": 1
+        }
       ]
     },
     "E": {
@@ -308,7 +330,7 @@
                 ]
               },
               "label": "Derivado",
-              "source": "Characters/Lucian/Spells/LucianRAbility/LucianR.mSpellCalculations.DamagePerBullet (16.23.8406595+branch.releases-16-23.content.release)",
+              "source": "Characters/Lucian/Spells/LucianRAbility/LucianR.mSpellCalculations.DamagePerBullet (16.23.8418428+branch.releases-16-23.content.release)",
               "damage_type_source": "spell_lucianr_tooltip <physicalDamage>"
             }
           ]
@@ -426,7 +448,7 @@
                 ]
               },
               "label": "Derivado",
-              "source": "Characters/Lucian/Spells/LucianRAbility/LucianR.mSpellCalculations.TotalDamage (16.23.8406595+branch.releases-16-23.content.release)",
+              "source": "Characters/Lucian/Spells/LucianRAbility/LucianR.mSpellCalculations.TotalDamage (16.23.8418428+branch.releases-16-23.content.release)",
               "damage_type_source": "spell_lucianr_tooltip <physicalDamage>"
             }
           ]

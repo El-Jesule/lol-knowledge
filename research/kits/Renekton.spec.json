@@ -40,6 +40,14 @@
       ],
       "not_modelled": [
         "Curación por unidad golpeada (ChampHealing, NonChampHealing y versiones potenciadas)"
+      ],
+      "active_effects": [
+        {
+          "id": "q_champhealing",
+          "name": "Q (curación)",
+          "kind": "heal",
+          "calculation": "ChampHealing"
+        }
       ]
     },
     "W": {
@@ -112,6 +120,19 @@
       ],
       "not_modelled": [
         "Vida máxima temporal (HealthGain) y generación de furia"
+      ],
+      "active_effects": [
+        {
+          "id": "dominus_hp",
+          "name": "Dominus (vida máxima)",
+          "kind": "stat_bonus",
+          "stat": "health",
+          "mode": "flat",
+          "data_value": "HealthGain",
+          "duration_seconds": {
+            "data_value": "BuffDuration"
+          }
+        }
       ]
     }
   }

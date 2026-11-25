@@ -3,7 +3,7 @@
   "champion": "Khazix",
   "label": "Derivado",
   "game_version": "16.23",
-  "content_version": "16.23.8406595+branch.releases-16-23.content.release",
+  "content_version": "16.23.8418428+branch.releases-16-23.content.release",
   "verified_against": {
     "content_version": "16.23.8406595+branch.releases-16-23.content.release",
     "bin_sha256": "1a8235e2c1dcc9d1560e88d8a465301a4e5bc8ee792ced0b07144a1586a0c00a",
@@ -65,7 +65,7 @@
                 ]
               },
               "label": "Derivado",
-              "source": "Characters/Khazix/Spells/KhazixPassiveAbility/KhazixPassive.mSpellCalculations.TotalDamage (16.23.8406595+branch.releases-16-23.content.release)",
+              "source": "Characters/Khazix/Spells/KhazixPassiveAbility/KhazixPassive.mSpellCalculations.TotalDamage (16.23.8418428+branch.releases-16-23.content.release)",
               "damage_type_source": "spell_khazixpassive_tooltip <magicDamage>"
             }
           ]
@@ -116,7 +116,7 @@
                 ]
               },
               "label": "Derivado",
-              "source": "Characters/Khazix/Spells/KhazixQAbility/KhazixQ.mSpellCalculations.BaseDamage (16.23.8406595+branch.releases-16-23.content.release)",
+              "source": "Characters/Khazix/Spells/KhazixQAbility/KhazixQ.mSpellCalculations.BaseDamage (16.23.8418428+branch.releases-16-23.content.release)",
               "damage_type_source": "spell_khazixq_tooltip_0 <physicalDamage>"
             }
           ]
@@ -166,7 +166,7 @@
                 ]
               },
               "label": "Derivado",
-              "source": "Characters/Khazix/Spells/KhazixQAbility/KhazixQ.mSpellCalculations.IsoDamage (16.23.8406595+branch.releases-16-23.content.release)",
+              "source": "Characters/Khazix/Spells/KhazixQAbility/KhazixQ.mSpellCalculations.IsoDamage (16.23.8418428+branch.releases-16-23.content.release)",
               "damage_type_source": "spell_khazixq_tooltip_0 <physicalDamage>"
             }
           ]
@@ -217,7 +217,7 @@
                 ]
               },
               "label": "Derivado",
-              "source": "Characters/Khazix/Spells/KhazixWAbility/KhazixW.mSpellCalculations.BaseDamage (16.23.8406595+branch.releases-16-23.content.release)",
+              "source": "Characters/Khazix/Spells/KhazixWAbility/KhazixW.mSpellCalculations.BaseDamage (16.23.8418428+branch.releases-16-23.content.release)",
               "damage_type_source": "spell_khazixw_tooltip_0 <physicalDamage>"
             }
           ]
@@ -226,6 +226,44 @@
       "passive_stats": [],
       "not_modelled": [
         "Curación propia al estar cerca de la explosión y cono triple evolucionado"
+      ],
+      "active_effects": [
+        {
+          "id": "w_healamount",
+          "name": "W (curación)",
+          "kind": "heal",
+          "formula": {
+            "op": "add",
+            "operands": [
+              {
+                "op": "by_rank",
+                "values": [
+                  55,
+                  75,
+                  95,
+                  115,
+                  135
+                ]
+              },
+              {
+                "op": "mul",
+                "operands": [
+                  {
+                    "op": "constant",
+                    "value": 0.5
+                  },
+                  {
+                    "op": "stat",
+                    "stat": "ability_power",
+                    "scope": "total"
+                  }
+                ]
+              }
+            ]
+          },
+          "label": "Derivado",
+          "source": "Characters/Khazix/Spells/KhazixWAbility/KhazixW.mSpellCalculations.HealAmount (16.23.8418428+branch.releases-16-23.content.release)"
+        }
       ]
     },
     "E": {
@@ -268,7 +306,7 @@
                 ]
               },
               "label": "Derivado",
-              "source": "Characters/Khazix/Spells/KhazixEAbility/KhazixE.mSpellCalculations.TotalDamage (16.23.8406595+branch.releases-16-23.content.release)",
+              "source": "Characters/Khazix/Spells/KhazixEAbility/KhazixE.mSpellCalculations.TotalDamage (16.23.8418428+branch.releases-16-23.content.release)",
               "damage_type_source": "spell_khazixe_tooltip_0 <physicalDamage>"
             }
           ]

@@ -118,6 +118,31 @@
       "tooltip": "spell_renataw_tooltip",
       "not_modelled": [
         "Velocidad de ataque y movimiento crecientes (ASCalc, MSCalc, FinalASCalc, FinalMSCalc) y resurrección condicionada tras baja"
+      ],
+      "active_effects": [
+        {
+          "id": "w_ascalc",
+          "name": "W (VA)",
+          "kind": "stat_bonus",
+          "stat": "attack_speed_bonus",
+          "mode": "flat",
+          "calculation": "ASCalc",
+          "duration_seconds": {
+            "data_value": "Duration"
+          }
+        },
+        {
+          "id": "w_mscalc",
+          "name": "W (VM)",
+          "kind": "stat_bonus",
+          "stat": "move_speed",
+          "mode": "percent_ms",
+          "scale": 0.01,
+          "calculation": "MSCalc",
+          "duration_seconds": {
+            "data_value": "Duration"
+          }
+        }
       ]
     },
     "E": {
@@ -136,6 +161,17 @@
       ],
       "not_modelled": [
         "Escudo a aliados (ShieldCalc) y ralentización del 30 %"
+      ],
+      "active_effects": [
+        {
+          "id": "e_shieldcalc",
+          "name": "E (escudo)",
+          "kind": "shield",
+          "calculation": "ShieldCalc",
+          "duration_seconds": {
+            "data_value": "ShieldDuration"
+          }
+        }
       ]
     },
     "R": {

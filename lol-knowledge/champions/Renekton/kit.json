@@ -3,7 +3,7 @@
   "champion": "Renekton",
   "label": "Derivado",
   "game_version": "16.23",
-  "content_version": "16.23.8406595+branch.releases-16-23.content.release",
+  "content_version": "16.23.8418428+branch.releases-16-23.content.release",
   "verified_against": {
     "content_version": "16.23.8406595+branch.releases-16-23.content.release",
     "bin_sha256": "00873a941018958ddbab406c6c2988284738240fa3fa7a34ae88e97cb8f81aab",
@@ -61,7 +61,7 @@
                 ]
               },
               "label": "Derivado",
-              "source": "Characters/Renekton/Spells/RenektonCleaveAbility/RenektonCleave.mSpellCalculations.BasicDamage (16.23.8406595+branch.releases-16-23.content.release)",
+              "source": "Characters/Renekton/Spells/RenektonCleaveAbility/RenektonCleave.mSpellCalculations.BasicDamage (16.23.8418428+branch.releases-16-23.content.release)",
               "damage_type_source": "spell_renektoncleave_tooltip <physicalDamage>"
             }
           ]
@@ -102,7 +102,7 @@
                 ]
               },
               "label": "Derivado",
-              "source": "Characters/Renekton/Spells/RenektonCleaveAbility/RenektonCleave.mSpellCalculations.EmpDamage (16.23.8406595+branch.releases-16-23.content.release)",
+              "source": "Characters/Renekton/Spells/RenektonCleaveAbility/RenektonCleave.mSpellCalculations.EmpDamage (16.23.8418428+branch.releases-16-23.content.release)",
               "damage_type_source": "spell_renektoncleave_tooltip <physicalDamage>"
             }
           ]
@@ -111,6 +111,44 @@
       "passive_stats": [],
       "not_modelled": [
         "Curación por unidad golpeada (ChampHealing, NonChampHealing y versiones potenciadas)"
+      ],
+      "active_effects": [
+        {
+          "id": "q_champhealing",
+          "name": "Q (curación)",
+          "kind": "heal",
+          "formula": {
+            "op": "add",
+            "operands": [
+              {
+                "op": "by_rank",
+                "values": [
+                  12,
+                  20,
+                  28,
+                  36,
+                  44
+                ]
+              },
+              {
+                "op": "mul",
+                "operands": [
+                  {
+                    "op": "constant",
+                    "value": 0.17
+                  },
+                  {
+                    "op": "stat",
+                    "stat": "attack_damage",
+                    "scope": "bonus"
+                  }
+                ]
+              }
+            ]
+          },
+          "label": "Derivado",
+          "source": "Characters/Renekton/Spells/RenektonCleaveAbility/RenektonCleave.mSpellCalculations.ChampHealing (16.23.8418428+branch.releases-16-23.content.release)"
+        }
       ]
     },
     "W": {
@@ -162,7 +200,7 @@
                 ]
               },
               "label": "Derivado",
-              "source": "Characters/Renekton/Spells/RenektonPreExecuteAbility/RenektonPreExecute.mSpellCalculations.BasicTotalDamage (16.23.8406595+branch.releases-16-23.content.release)",
+              "source": "Characters/Renekton/Spells/RenektonPreExecuteAbility/RenektonPreExecute.mSpellCalculations.BasicTotalDamage (16.23.8418428+branch.releases-16-23.content.release)",
               "damage_type_source": "spell_renektonpreexecute_tooltip <physicalDamage>"
             }
           ]
@@ -212,7 +250,7 @@
                 ]
               },
               "label": "Derivado",
-              "source": "Characters/Renekton/Spells/RenektonPreExecuteAbility/RenektonPreExecute.mSpellCalculations.EmpTotalDamage (16.23.8406595+branch.releases-16-23.content.release)",
+              "source": "Characters/Renekton/Spells/RenektonPreExecuteAbility/RenektonPreExecute.mSpellCalculations.EmpTotalDamage (16.23.8418428+branch.releases-16-23.content.release)",
               "damage_type_source": "spell_renektonpreexecute_tooltip <physicalDamage>"
             }
           ]
@@ -263,7 +301,7 @@
                 ]
               },
               "label": "Derivado",
-              "source": "Characters/Renekton/Spells/RenektonSliceAndDiceAbility/RenektonSliceAndDice.mSpellCalculations.BasicDamage (16.23.8406595+branch.releases-16-23.content.release)",
+              "source": "Characters/Renekton/Spells/RenektonSliceAndDiceAbility/RenektonSliceAndDice.mSpellCalculations.BasicDamage (16.23.8418428+branch.releases-16-23.content.release)",
               "damage_type_source": "spell_renektonsliceanddice_tooltip <physicalDamage>"
             }
           ]
@@ -304,7 +342,7 @@
                 ]
               },
               "label": "Derivado",
-              "source": "Characters/Renekton/Spells/RenektonSliceAndDiceAbility/RenektonSliceAndDice.mSpellCalculations.EmpDamage (16.23.8406595+branch.releases-16-23.content.release)",
+              "source": "Characters/Renekton/Spells/RenektonSliceAndDiceAbility/RenektonSliceAndDice.mSpellCalculations.EmpDamage (16.23.8418428+branch.releases-16-23.content.release)",
               "damage_type_source": "spell_renektonsliceanddice_tooltip <physicalDamage>"
             }
           ]
@@ -367,7 +405,7 @@
                 ]
               },
               "label": "Derivado",
-              "source": "Characters/Renekton/Spells/RenektonReignOfTheTyrantAbility/RenektonReignOfTheTyrant.mSpellCalculations.TotalDamagePerSecond (16.23.8406595+branch.releases-16-23.content.release)",
+              "source": "Characters/Renekton/Spells/RenektonReignOfTheTyrantAbility/RenektonReignOfTheTyrant.mSpellCalculations.TotalDamagePerSecond (16.23.8418428+branch.releases-16-23.content.release)",
               "damage_type_source": "spell_renektonreignofthetyrant_tooltip <magicDamage>"
             }
           ]
@@ -376,6 +414,26 @@
       "passive_stats": [],
       "not_modelled": [
         "Vida máxima temporal (HealthGain) y generación de furia"
+      ],
+      "active_effects": [
+        {
+          "id": "dominus_hp",
+          "name": "Dominus (vida máxima)",
+          "kind": "stat_bonus",
+          "formula": {
+            "op": "by_rank",
+            "values": [
+              300,
+              500,
+              700
+            ]
+          },
+          "label": "Derivado",
+          "source": "Characters/Renekton/Spells/RenektonReignOfTheTyrantAbility/RenektonReignOfTheTyrant.DataValues.HealthGain (16.23.8418428+branch.releases-16-23.content.release)",
+          "stat": "health",
+          "mode": "flat",
+          "duration_seconds": 15
+        }
       ]
     }
   }

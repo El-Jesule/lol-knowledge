@@ -58,6 +58,43 @@
       ],
       "not_modelled": [
         "Reducción plana de daño recibido y armadura/RM temporales (BonusArmorTooltip, BonusMRTooltip)"
+      ],
+      "active_effects": [
+        {
+          "id": "eclipse_flat_dr",
+          "name": "Eclipse (DR plana)",
+          "kind": "damage_taken_modifier",
+          "mode": "flat",
+          "data_value": "FlatDamageReduction",
+          "damage_reduction_cap": {
+            "data_value": "FlatDamageReductionMax"
+          },
+          "duration_seconds": {
+            "data_value": "ArmorMRDuration"
+          }
+        },
+        {
+          "id": "eclipse_armor",
+          "name": "Eclipse (armadura)",
+          "kind": "stat_bonus",
+          "stat": "armor",
+          "mode": "flat",
+          "calculation": "BonusArmorTooltip",
+          "duration_seconds": {
+            "data_value": "ArmorMRDuration"
+          }
+        },
+        {
+          "id": "eclipse_mr",
+          "name": "Eclipse (RM)",
+          "kind": "stat_bonus",
+          "stat": "magic_resist",
+          "mode": "flat",
+          "calculation": "BonusMRTooltip",
+          "duration_seconds": {
+            "data_value": "ArmorMRDuration"
+          }
+        }
       ]
     },
     "E": {

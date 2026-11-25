@@ -69,6 +69,19 @@
       ],
       "not_modelled": [
         "Velocidad de movimiento (MinSpeedCalc, MaxSpeedCalc), aturdimiento y ataque básico aparte"
+      ],
+      "active_effects": [
+        {
+          "id": "q_minspeedcalc",
+          "name": "Q (VM)",
+          "kind": "stat_bonus",
+          "stat": "move_speed",
+          "mode": "percent_ms",
+          "calculation": "MinSpeedCalc",
+          "duration_seconds": {
+            "data_value": "Duration"
+          }
+        }
       ]
     },
     "W": {
@@ -96,6 +109,48 @@
       ],
       "not_modelled": [
         "Curación del segundo mordisco (BaseHeal, PercentMissingHealthHealingRatio)"
+      ],
+      "active_effects": [
+        {
+          "id": "frenzied_maul_heal",
+          "name": "Zarpazo frenético (curación sobre marca)",
+          "kind": "heal",
+          "formula": {
+            "op": "add",
+            "operands": [
+              {
+                "op": "data_value",
+                "name": "BaseHeal"
+              },
+              {
+                "op": "mul",
+                "operands": [
+                  {
+                    "op": "calculation",
+                    "name": "PercentMissingHealthHealingRatio"
+                  },
+                  {
+                    "op": "mul",
+                    "operands": [
+                      {
+                        "op": "stat",
+                        "stat": "health",
+                        "scope": "max"
+                      },
+                      {
+                        "op": "stat",
+                        "stat": "health",
+                        "scope": "missing_fraction"
+                      }
+                    ]
+                  }
+                ]
+              }
+            ]
+          },
+          "source_note": "DataValues.BaseHeal + PercentMissingHealthHealingRatio * missing HP",
+          "condition": "wounded_target"
+        }
       ]
     },
     "E": {
@@ -134,6 +189,40 @@
       ],
       "not_modelled": [
         "Ralentización, escudo propio y tope contra monstruos (MonsterDamageCap)"
+      ],
+      "active_effects": [
+        {
+          "id": "sky_splitter_shield",
+          "name": "Rompecielos (escudo)",
+          "kind": "shield",
+          "formula": {
+            "op": "add",
+            "operands": [
+              {
+                "op": "calculation",
+                "name": "ShieldAPRatioTooltip"
+              },
+              {
+                "op": "mul",
+                "operands": [
+                  {
+                    "op": "data_value",
+                    "name": "ShieldAmount"
+                  },
+                  {
+                    "op": "stat",
+                    "stat": "health",
+                    "scope": "max"
+                  }
+                ]
+              }
+            ]
+          },
+          "source_note": "mSpellCalculations.ShieldAPRatioTooltip + DataValues.ShieldAmount * max HP",
+          "duration_seconds": {
+            "data_value": "ShieldDuration"
+          }
+        }
       ]
     },
     "R": {
@@ -161,6 +250,19 @@
       ],
       "not_modelled": [
         "Vida adicional temporal (HealthAmount), alcance extra, desactivación de torretas y ralentización"
+      ],
+      "active_effects": [
+        {
+          "id": "stormbringer_hp",
+          "name": "Heraldo de la tormenta (vida máxima)",
+          "kind": "stat_bonus",
+          "stat": "health",
+          "mode": "flat",
+          "data_value": "HealthAmount",
+          "duration_seconds": {
+            "data_value": "TransformDuration"
+          }
+        }
       ]
     }
   }

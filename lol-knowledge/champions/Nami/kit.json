@@ -3,7 +3,7 @@
   "champion": "Nami",
   "label": "Derivado",
   "game_version": "16.23",
-  "content_version": "16.23.8406595+branch.releases-16-23.content.release",
+  "content_version": "16.23.8418428+branch.releases-16-23.content.release",
   "verified_against": {
     "content_version": "16.23.8406595+branch.releases-16-23.content.release",
     "bin_sha256": "546626366470b247f52ae76b37c19ea20692091c71e5e7b899206ddd32859ba6",
@@ -30,7 +30,7 @@
             "value": 100
           },
           "label": "Derivado",
-          "source": "Characters/Nami/Spells/NamiPassiveAbility/NamiPassive.DataValues.FlatMS (16.23.8406595+branch.releases-16-23.content.release)",
+          "source": "Characters/Nami/Spells/NamiPassiveAbility/NamiPassive.DataValues.FlatMS (16.23.8418428+branch.releases-16-23.content.release)",
           "stat": "move_speed",
           "mode": "flat",
           "input_name": "nami_surging_tides",
@@ -78,7 +78,7 @@
                 ]
               },
               "label": "Derivado",
-              "source": "Characters/Nami/Spells/NamiQAbility/NamiQ.mSpellCalculations.TotalDamageTT (16.23.8406595+branch.releases-16-23.content.release)",
+              "source": "Characters/Nami/Spells/NamiQAbility/NamiQ.mSpellCalculations.TotalDamageTT (16.23.8418428+branch.releases-16-23.content.release)",
               "damage_type_source": "spell_namiq_tooltip <magicDamage>"
             }
           ]
@@ -129,7 +129,7 @@
                 ]
               },
               "label": "Derivado",
-              "source": "Characters/Nami/Spells/NamiWAbility/NamiW.mSpellCalculations.TotalDamage (16.23.8406595+branch.releases-16-23.content.release)",
+              "source": "Characters/Nami/Spells/NamiWAbility/NamiW.mSpellCalculations.TotalDamage (16.23.8418428+branch.releases-16-23.content.release)",
               "damage_type_source": "spell_namiw_tooltip <magicDamage>"
             }
           ]
@@ -138,6 +138,44 @@
       "passive_stats": [],
       "not_modelled": [
         "Curación a aliados (TotalHeal) y variación porcentual por rebote (BounceScaling)"
+      ],
+      "active_effects": [
+        {
+          "id": "w_totalheal",
+          "name": "W (curación)",
+          "kind": "heal",
+          "formula": {
+            "op": "add",
+            "operands": [
+              {
+                "op": "by_rank",
+                "values": [
+                  55,
+                  80,
+                  105,
+                  130,
+                  155
+                ]
+              },
+              {
+                "op": "mul",
+                "operands": [
+                  {
+                    "op": "constant",
+                    "value": 0.4
+                  },
+                  {
+                    "op": "stat",
+                    "stat": "ability_power",
+                    "scope": "total"
+                  }
+                ]
+              }
+            ]
+          },
+          "label": "Derivado",
+          "source": "Characters/Nami/Spells/NamiWAbility/NamiW.mSpellCalculations.TotalHeal (16.23.8418428+branch.releases-16-23.content.release)"
+        }
       ]
     },
     "E": {
@@ -180,7 +218,7 @@
                 ]
               },
               "label": "Derivado",
-              "source": "Characters/Nami/Spells/NamiEAbility/NamiE.mSpellCalculations.TotalDamage (16.23.8406595+branch.releases-16-23.content.release)",
+              "source": "Characters/Nami/Spells/NamiEAbility/NamiE.mSpellCalculations.TotalDamage (16.23.8418428+branch.releases-16-23.content.release)",
               "damage_type_source": "spell_namie_tooltip <magicDamage>"
             }
           ]
@@ -221,7 +259,7 @@
                 ]
               },
               "label": "Derivado",
-              "source": "Characters/Nami/Spells/NamiEAbility/NamiE.mSpellCalculations.TotalDamage (16.23.8406595+branch.releases-16-23.content.release)",
+              "source": "Characters/Nami/Spells/NamiEAbility/NamiE.mSpellCalculations.TotalDamage (16.23.8418428+branch.releases-16-23.content.release)",
               "damage_type_source": "spell_namie_tooltip <magicDamage>"
             },
             {
@@ -256,7 +294,7 @@
                 ]
               },
               "label": "Derivado",
-              "source": "Characters/Nami/Spells/NamiEAbility/NamiE.mSpellCalculations.TotalDamage (16.23.8406595+branch.releases-16-23.content.release)",
+              "source": "Characters/Nami/Spells/NamiEAbility/NamiE.mSpellCalculations.TotalDamage (16.23.8418428+branch.releases-16-23.content.release)",
               "damage_type_source": "spell_namie_tooltip <magicDamage>"
             },
             {
@@ -291,7 +329,7 @@
                 ]
               },
               "label": "Derivado",
-              "source": "Characters/Nami/Spells/NamiEAbility/NamiE.mSpellCalculations.TotalDamage (16.23.8406595+branch.releases-16-23.content.release)",
+              "source": "Characters/Nami/Spells/NamiEAbility/NamiE.mSpellCalculations.TotalDamage (16.23.8418428+branch.releases-16-23.content.release)",
               "damage_type_source": "spell_namie_tooltip <magicDamage>"
             }
           ]
@@ -340,7 +378,7 @@
                 ]
               },
               "label": "Derivado",
-              "source": "Characters/Nami/Spells/NamiRAbility/NamiR.mSpellCalculations.TotalDamage (16.23.8406595+branch.releases-16-23.content.release)",
+              "source": "Characters/Nami/Spells/NamiRAbility/NamiR.mSpellCalculations.TotalDamage (16.23.8418428+branch.releases-16-23.content.release)",
               "damage_type_source": "spell_namir_tooltip <magicDamage>"
             }
           ]

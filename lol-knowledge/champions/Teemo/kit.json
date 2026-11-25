@@ -3,7 +3,7 @@
   "champion": "Teemo",
   "label": "Derivado",
   "game_version": "16.23",
-  "content_version": "16.23.8406595+branch.releases-16-23.content.release",
+  "content_version": "16.23.8418428+branch.releases-16-23.content.release",
   "verified_against": {
     "content_version": "16.23.8406595+branch.releases-16-23.content.release",
     "bin_sha256": "cb045f4640fabe83b1373e900f8d6bef0f733c64cc318493403650a4410dacbc",
@@ -58,7 +58,7 @@
             ]
           },
           "label": "Derivado",
-          "source": "Characters/Teemo/Spells/TeemoPassiveAbility/TeemoPassive.mSpellCalculations.BonusAttackSpeed (16.23.8406595+branch.releases-16-23.content.release)",
+          "source": "Characters/Teemo/Spells/TeemoPassiveAbility/TeemoPassive.mSpellCalculations.BonusAttackSpeed (16.23.8418428+branch.releases-16-23.content.release)",
           "stat": "attack_speed_bonus",
           "mode": "flat",
           "input_name": "teemo_guerrilla",
@@ -106,7 +106,7 @@
                 ]
               },
               "label": "Derivado",
-              "source": "Characters/Teemo/Spells/TeemoQAbility/TeemoQ.mSpellCalculations.CalculatedDamage (16.23.8406595+branch.releases-16-23.content.release)",
+              "source": "Characters/Teemo/Spells/TeemoQAbility/TeemoQ.mSpellCalculations.CalculatedDamage (16.23.8418428+branch.releases-16-23.content.release)",
               "damage_type_source": "spell_teemoq_tooltip <magicDamage>"
             }
           ]
@@ -124,6 +124,28 @@
       "passive_stats": [],
       "not_modelled": [
         "Velocidad de movimiento pasiva y activa"
+      ],
+      "active_effects": [
+        {
+          "id": "w_activemovespeedbonus",
+          "name": "W (VM)",
+          "kind": "stat_bonus",
+          "formula": {
+            "op": "by_rank",
+            "values": [
+              0.24,
+              0.32,
+              0.4,
+              0.48,
+              0.56
+            ]
+          },
+          "label": "Derivado",
+          "source": "Characters/Teemo/Spells/TeemoWAbility/TeemoW.DataValues.ActiveMoveSpeedBonus (16.23.8418428+branch.releases-16-23.content.release)",
+          "stat": "move_speed",
+          "mode": "percent_ms",
+          "duration_seconds": 3
+        }
       ]
     },
     "E": {
@@ -180,7 +202,7 @@
                 ]
               },
               "label": "Derivado",
-              "source": "Characters/Teemo/Spells/TeemoEAbility/TeemoE.mSpellCalculations.ImpactCalculatedDamage (16.23.8406595+branch.releases-16-23.content.release)",
+              "source": "Characters/Teemo/Spells/TeemoEAbility/TeemoE.mSpellCalculations.ImpactCalculatedDamage (16.23.8418428+branch.releases-16-23.content.release)",
               "damage_type_source": "spell_teemoe_tooltip <magicDamage>"
             }
           ]
@@ -244,7 +266,7 @@
                 ]
               },
               "label": "Derivado",
-              "source": "Characters/Teemo/Spells/TeemoEAbility/TeemoE.mSpellCalculations.TotalDotDamage (16.23.8406595+branch.releases-16-23.content.release)",
+              "source": "Characters/Teemo/Spells/TeemoEAbility/TeemoE.mSpellCalculations.TotalDotDamage (16.23.8418428+branch.releases-16-23.content.release)",
               "damage_type_source": "spell_teemoe_tooltip <magicDamage>"
             }
           ]
@@ -299,7 +321,7 @@
                 ]
               },
               "label": "Derivado",
-              "source": "Characters/Teemo/Spells/TeemoEAbility/TeemoE.mSpellCalculations.ImpactCalculatedDamage (16.23.8406595+branch.releases-16-23.content.release)",
+              "source": "Characters/Teemo/Spells/TeemoEAbility/TeemoE.mSpellCalculations.ImpactCalculatedDamage (16.23.8418428+branch.releases-16-23.content.release)",
               "damage_type_source": "spell_teemoe_tooltip <magicDamage>"
             },
             {
@@ -357,7 +379,7 @@
                 ]
               },
               "label": "Derivado",
-              "source": "Characters/Teemo/Spells/TeemoEAbility/TeemoE.mSpellCalculations.TotalDotDamage (16.23.8406595+branch.releases-16-23.content.release)",
+              "source": "Characters/Teemo/Spells/TeemoEAbility/TeemoE.mSpellCalculations.TotalDotDamage (16.23.8418428+branch.releases-16-23.content.release)",
               "damage_type_source": "spell_teemoe_tooltip <magicDamage>"
             }
           ]
@@ -406,7 +428,7 @@
                 ]
               },
               "label": "Derivado",
-              "source": "Characters/Teemo/Spells/TeemoRAbility/TeemoR.mSpellCalculations.TotalDamage (16.23.8406595+branch.releases-16-23.content.release)",
+              "source": "Characters/Teemo/Spells/TeemoRAbility/TeemoR.mSpellCalculations.TotalDamage (16.23.8418428+branch.releases-16-23.content.release)",
               "damage_type_source": "spell_teemor_tooltip <magicDamage>"
             }
           ]

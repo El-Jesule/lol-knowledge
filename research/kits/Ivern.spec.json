@@ -77,6 +77,17 @@
       ],
       "not_modelled": [
         "Escudo (TotalShield), segundo escudo si no golpea campeones y ralentización"
+      ],
+      "active_effects": [
+        {
+          "id": "e_totalshield",
+          "name": "E (escudo)",
+          "kind": "shield",
+          "calculation": "TotalShield",
+          "duration_seconds": {
+            "data_value": "ShieldDuration"
+          }
+        }
       ]
     },
     "R": {

@@ -57,6 +57,19 @@
       ],
       "not_modelled": [
         "Limpieza de ralentizaciones, velocidad de movimiento, silencio y ataque básico aparte"
+      ],
+      "active_effects": [
+        {
+          "id": "q_movementspeedamount",
+          "name": "Q (VM)",
+          "kind": "stat_bonus",
+          "stat": "move_speed",
+          "mode": "percent_ms",
+          "data_value": "MovementSpeedAmount",
+          "duration_seconds": {
+            "data_value": "MovementSpeedDuration"
+          }
+        }
       ]
     },
     "W": {
@@ -65,6 +78,28 @@
       "not_modelled": [
         "Armadura y RM acumulables por asesinatos (ResistsForTooltip)",
         "Reducción de daño, tenacidad y escudo (TotalShield)"
+      ],
+      "active_effects": [
+        {
+          "id": "courage_dr",
+          "name": "Coraje (DR)",
+          "kind": "damage_taken_modifier",
+          "mode": "percent",
+          "data_value": "DRPercent",
+          "scale": 100,
+          "duration_seconds": {
+            "data_value": "DRDuration"
+          }
+        },
+        {
+          "id": "courage_shield",
+          "name": "Coraje (escudo)",
+          "kind": "shield",
+          "calculation": "TotalShield",
+          "duration_seconds": {
+            "data_value": "DRDuration"
+          }
+        }
       ]
     },
     "E": {

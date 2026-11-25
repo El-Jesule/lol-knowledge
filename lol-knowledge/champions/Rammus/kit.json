@@ -3,7 +3,7 @@
   "champion": "Rammus",
   "label": "Derivado",
   "game_version": "16.23",
-  "content_version": "16.23.8406595+branch.releases-16-23.content.release",
+  "content_version": "16.23.8418428+branch.releases-16-23.content.release",
   "verified_against": {
     "content_version": "16.23.8406595+branch.releases-16-23.content.release",
     "bin_sha256": "308a8907a7f13e746b089ed12a4b88cd77ddf02a14c904bb293b2c3e050ee411",
@@ -61,7 +61,7 @@
                 ]
               },
               "label": "Derivado",
-              "source": "Characters/Rammus/Spells/PowerBallAbility/PowerBall.mSpellCalculations.PowerBallDamage (16.23.8406595+branch.releases-16-23.content.release)",
+              "source": "Characters/Rammus/Spells/PowerBallAbility/PowerBall.mSpellCalculations.PowerBallDamage (16.23.8418428+branch.releases-16-23.content.release)",
               "damage_type_source": "spell_powerball_tooltip <magicDamage>"
             }
           ]
@@ -70,6 +70,23 @@
       "passive_stats": [],
       "not_modelled": [
         "Velocidad de movimiento creciente (MinimumMoveSpeed, MaximumMoveSpeed), empuje y ralentización"
+      ],
+      "active_effects": [
+        {
+          "id": "q_minimummovespeed",
+          "name": "Q (VM)",
+          "kind": "stat_bonus",
+          "formula": {
+            "op": "linear_by_level",
+            "min": 0.25,
+            "max": 0.391
+          },
+          "label": "Derivado",
+          "source": "Characters/Rammus/Spells/PowerBallAbility/PowerBall.mSpellCalculations.MinimumMoveSpeed (16.23.8418428+branch.releases-16-23.content.release)",
+          "stat": "move_speed",
+          "mode": "percent_ms",
+          "duration_seconds": 6
+        }
       ]
     },
     "W": {
@@ -120,7 +137,7 @@
                 ]
               },
               "label": "Derivado",
-              "source": "Characters/Rammus/Spells/DefensiveBallCurlAbility/DefensiveBallCurl.mSpellCalculations.ReturnDamageCalc (16.23.8406595+branch.releases-16-23.content.release)",
+              "source": "Characters/Rammus/Spells/DefensiveBallCurlAbility/DefensiveBallCurl.mSpellCalculations.ReturnDamageCalc (16.23.8418428+branch.releases-16-23.content.release)",
               "damage_type_source": "spell_defensiveballcurl_tooltip <magicDamage>"
             }
           ]
@@ -129,6 +146,146 @@
       "passive_stats": [],
       "not_modelled": [
         "Armadura y RM activas (BonusArmorTooltip, BonusMRTooltip)"
+      ],
+      "active_effects": [
+        {
+          "id": "defensive_ball_curl_armor",
+          "name": "Posición defensiva (armadura)",
+          "kind": "stat_bonus",
+          "formula": {
+            "op": "add",
+            "operands": [
+              {
+                "op": "mul",
+                "operands": [
+                  {
+                    "op": "by_rank",
+                    "values": [
+                      25,
+                      30,
+                      35,
+                      40,
+                      45
+                    ]
+                  },
+                  {
+                    "op": "add",
+                    "operands": [
+                      {
+                        "op": "constant",
+                        "value": 1
+                      },
+                      {
+                        "op": "by_rank",
+                        "values": [
+                          0.3,
+                          0.35,
+                          0.4,
+                          0.45,
+                          0.5
+                        ]
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "op": "mul",
+                "operands": [
+                  {
+                    "op": "by_rank",
+                    "values": [
+                      0.3,
+                      0.35,
+                      0.4,
+                      0.45,
+                      0.5
+                    ]
+                  },
+                  {
+                    "op": "stat",
+                    "stat": "armor",
+                    "scope": "total"
+                  }
+                ]
+              }
+            ]
+          },
+          "label": "Derivado",
+          "source": "Characters/Rammus/Spells/DefensiveBallCurlAbility/DefensiveBallCurl.mSpellCalculations.BonusArmorTooltip (16.23.8418428+branch.releases-16-23.content.release)",
+          "stat": "armor",
+          "mode": "flat",
+          "duration_seconds": 7
+        },
+        {
+          "id": "defensive_ball_curl_mr",
+          "name": "Posición defensiva (RM)",
+          "kind": "stat_bonus",
+          "formula": {
+            "op": "add",
+            "operands": [
+              {
+                "op": "mul",
+                "operands": [
+                  {
+                    "op": "by_rank",
+                    "values": [
+                      20,
+                      25,
+                      30,
+                      35,
+                      40
+                    ]
+                  },
+                  {
+                    "op": "add",
+                    "operands": [
+                      {
+                        "op": "constant",
+                        "value": 1
+                      },
+                      {
+                        "op": "by_rank",
+                        "values": [
+                          0.3,
+                          0.35,
+                          0.4,
+                          0.45,
+                          0.5
+                        ]
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "op": "mul",
+                "operands": [
+                  {
+                    "op": "by_rank",
+                    "values": [
+                      0.3,
+                      0.35,
+                      0.4,
+                      0.45,
+                      0.5
+                    ]
+                  },
+                  {
+                    "op": "stat",
+                    "stat": "magic_resist",
+                    "scope": "total"
+                  }
+                ]
+              }
+            ]
+          },
+          "label": "Derivado",
+          "source": "Characters/Rammus/Spells/DefensiveBallCurlAbility/DefensiveBallCurl.mSpellCalculations.BonusMRTooltip (16.23.8418428+branch.releases-16-23.content.release)",
+          "stat": "magic_resist",
+          "mode": "flat",
+          "duration_seconds": 7
+        }
       ]
     },
     "E": {
@@ -171,7 +328,7 @@
                 ]
               },
               "label": "Derivado",
-              "source": "Characters/Rammus/Spells/PuncturingTauntAbility/PuncturingTaunt.mSpellCalculations.MonsterDamageCalc (16.23.8406595+branch.releases-16-23.content.release)",
+              "source": "Characters/Rammus/Spells/PuncturingTauntAbility/PuncturingTaunt.mSpellCalculations.MonsterDamageCalc (16.23.8418428+branch.releases-16-23.content.release)",
               "damage_type_source": "spell_puncturingtaunt_tooltip <magicDamage>"
             }
           ]
@@ -220,7 +377,7 @@
                 ]
               },
               "label": "Derivado",
-              "source": "Characters/Rammus/Spells/Tremors2Ability/Tremors2.mSpellCalculations.InitialDamageCalc (16.23.8406595+branch.releases-16-23.content.release)",
+              "source": "Characters/Rammus/Spells/Tremors2Ability/Tremors2.mSpellCalculations.InitialDamageCalc (16.23.8418428+branch.releases-16-23.content.release)",
               "damage_type_source": "spell_tremors2_tooltip <magicDamage>"
             }
           ]

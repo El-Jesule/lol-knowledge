@@ -3,7 +3,7 @@
   "champion": "Orianna",
   "label": "Derivado",
   "game_version": "16.23",
-  "content_version": "16.23.8406595+branch.releases-16-23.content.release",
+  "content_version": "16.23.8418428+branch.releases-16-23.content.release",
   "verified_against": {
     "content_version": "16.23.8406595+branch.releases-16-23.content.release",
     "bin_sha256": "a6988e7b216cc2ed2d4283ff28733369afd31ebdccd49a417886843334d269ed",
@@ -47,7 +47,7 @@
                 ]
               },
               "label": "Derivado",
-              "source": "Characters/Orianna/Spells/OriannaPAbility/OriannaP.mSpellCalculations.TotalDamage (16.23.8406595+branch.releases-16-23.content.release)",
+              "source": "Characters/Orianna/Spells/OriannaPAbility/OriannaP.mSpellCalculations.TotalDamage (16.23.8418428+branch.releases-16-23.content.release)",
               "damage_type_source": "spell_oriannap_tooltip <magicDamage>"
             }
           ]
@@ -92,7 +92,7 @@
                 ]
               },
               "label": "Derivado",
-              "source": "Characters/Orianna/Spells/OriannaPAbility/OriannaP.mSpellCalculations.StackDamage (16.23.8406595+branch.releases-16-23.content.release)",
+              "source": "Characters/Orianna/Spells/OriannaPAbility/OriannaP.mSpellCalculations.StackDamage (16.23.8418428+branch.releases-16-23.content.release)",
               "damage_type_source": "spell_oriannap_tooltip <magicDamage>"
             }
           ]
@@ -146,7 +146,7 @@
                 ]
               },
               "label": "Derivado",
-              "source": "Characters/Orianna/Spells/OriannaPAbility/OriannaP.mSpellCalculations.StackDamageMax (16.23.8406595+branch.releases-16-23.content.release)",
+              "source": "Characters/Orianna/Spells/OriannaPAbility/OriannaP.mSpellCalculations.StackDamageMax (16.23.8418428+branch.releases-16-23.content.release)",
               "damage_type_source": "spell_oriannap_tooltip <magicDamage>"
             }
           ]
@@ -184,7 +184,7 @@
             ]
           },
           "label": "Derivado",
-          "source": "Characters/Orianna/Spells/OriannaPAbility/OriannaP.mSpellCalculations.TotalDamage (16.23.8406595+branch.releases-16-23.content.release)",
+          "source": "Characters/Orianna/Spells/OriannaPAbility/OriannaP.mSpellCalculations.TotalDamage (16.23.8418428+branch.releases-16-23.content.release)",
           "trigger": "on_hit",
           "damage_type": "magic"
         }
@@ -230,7 +230,7 @@
                 ]
               },
               "label": "Derivado",
-              "source": "Characters/Orianna/Spells/OrianaIzunaCommandAbility/OrianaIzunaCommand.mSpellCalculations.TotalDamage (16.23.8406595+branch.releases-16-23.content.release)",
+              "source": "Characters/Orianna/Spells/OrianaIzunaCommandAbility/OrianaIzunaCommand.mSpellCalculations.TotalDamage (16.23.8418428+branch.releases-16-23.content.release)",
               "damage_type_source": "spell_orianaizunacommand_tooltip <magicDamage>"
             }
           ]
@@ -280,7 +280,7 @@
                 ]
               },
               "label": "Derivado",
-              "source": "Characters/Orianna/Spells/OrianaIzunaCommandAbility/OrianaIzunaCommand.mSpellCalculations.ReducedDamage (16.23.8406595+branch.releases-16-23.content.release)",
+              "source": "Characters/Orianna/Spells/OrianaIzunaCommandAbility/OrianaIzunaCommand.mSpellCalculations.ReducedDamage (16.23.8418428+branch.releases-16-23.content.release)",
               "damage_type_source": "spell_orianaizunacommand_tooltip <magicDamage>"
             }
           ]
@@ -329,7 +329,7 @@
                 ]
               },
               "label": "Derivado",
-              "source": "Characters/Orianna/Spells/OrianaDissonanceCommandAbility/OrianaDissonanceCommand.mSpellCalculations.TotalDamage (16.23.8406595+branch.releases-16-23.content.release)",
+              "source": "Characters/Orianna/Spells/OrianaDissonanceCommandAbility/OrianaDissonanceCommand.mSpellCalculations.TotalDamage (16.23.8418428+branch.releases-16-23.content.release)",
               "damage_type_source": "spell_orianadissonancecommand_tooltip <magicDamage>"
             }
           ]
@@ -380,7 +380,7 @@
                 ]
               },
               "label": "Derivado",
-              "source": "Characters/Orianna/Spells/OrianaRedactCommandAbility/OrianaRedactCommand.mSpellCalculations.TotalDamageTooltip (16.23.8406595+branch.releases-16-23.content.release)",
+              "source": "Characters/Orianna/Spells/OrianaRedactCommandAbility/OrianaRedactCommand.mSpellCalculations.TotalDamageTooltip (16.23.8418428+branch.releases-16-23.content.release)",
               "damage_type_source": "spell_orianaredactcommand_tooltip <magicDamage>"
             }
           ]
@@ -389,6 +389,83 @@
       "passive_stats": [],
       "not_modelled": [
         "Escudo (TotalShieldTooltip) y armadura/RM pasivas al portador de la bola (DefenseBonus)"
+      ],
+      "active_effects": [
+        {
+          "id": "e_totalshieldtooltip",
+          "name": "E (escudo)",
+          "kind": "shield",
+          "formula": {
+            "op": "add",
+            "operands": [
+              {
+                "op": "by_rank",
+                "values": [
+                  55,
+                  90,
+                  125,
+                  160,
+                  195
+                ]
+              },
+              {
+                "op": "mul",
+                "operands": [
+                  {
+                    "op": "constant",
+                    "value": 0.45
+                  },
+                  {
+                    "op": "stat",
+                    "stat": "ability_power",
+                    "scope": "total"
+                  }
+                ]
+              }
+            ]
+          },
+          "label": "Derivado",
+          "source": "Characters/Orianna/Spells/OrianaRedactCommandAbility/OrianaRedactCommand.mSpellCalculations.TotalShieldTooltip (16.23.8418428+branch.releases-16-23.content.release)",
+          "duration_seconds": 2.5
+        },
+        {
+          "id": "e_defensebonus",
+          "name": "E (armadura)",
+          "kind": "stat_bonus",
+          "formula": {
+            "op": "by_rank",
+            "values": [
+              6,
+              12,
+              18,
+              24,
+              30
+            ]
+          },
+          "label": "Derivado",
+          "source": "Characters/Orianna/Spells/OrianaRedactCommandAbility/OrianaRedactCommand.DataValues.DefenseBonus (16.23.8418428+branch.releases-16-23.content.release)",
+          "stat": "armor",
+          "mode": "flat"
+        },
+        {
+          "id": "e_defensebonus_mr",
+          "name": "E (RM)",
+          "kind": "stat_bonus",
+          "formula": {
+            "op": "by_rank",
+            "values": [
+              6,
+              12,
+              18,
+              24,
+              30
+            ]
+          },
+          "label": "Derivado",
+          "source": "Characters/Orianna/Spells/OrianaRedactCommandAbility/OrianaRedactCommand.DataValues.DefenseBonus (16.23.8418428+branch.releases-16-23.content.release)",
+          "stat": "magic_resist",
+          "mode": "flat"
+        }
       ]
     },
     "R": {
@@ -429,7 +506,7 @@
                 ]
               },
               "label": "Derivado",
-              "source": "Characters/Orianna/Spells/OrianaDetonateCommandAbility/OrianaDetonateCommand.mSpellCalculations.TotalDamage (16.23.8406595+branch.releases-16-23.content.release)",
+              "source": "Characters/Orianna/Spells/OrianaDetonateCommandAbility/OrianaDetonateCommand.mSpellCalculations.TotalDamage (16.23.8418428+branch.releases-16-23.content.release)",
               "damage_type_source": "spell_orianadetonatecommand_tooltip <magicDamage>"
             }
           ]

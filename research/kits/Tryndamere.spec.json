@@ -33,6 +33,14 @@
       "tooltip": "spell_tryndamereq_tooltip",
       "not_modelled": [
         "DA pasivo adicional por vida faltante (hasta MaximumBonusAD) y curación activa consumiendo Furia (BaseHeal / MaximumHeal)"
+      ],
+      "active_effects": [
+        {
+          "id": "bloodlust_heal",
+          "name": "Sed de sangre (curación base sin furia)",
+          "kind": "heal",
+          "calculation": "BaseHeal"
+        }
       ]
     },
     "W": {

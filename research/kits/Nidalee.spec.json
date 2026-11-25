@@ -66,6 +66,26 @@
       "tooltip": "spell_primalsurge_tooltip",
       "not_modelled": [
         "Forma humana: curación (TotalHealing/MaxHealing) y VA; forma felina: Zarpazo (TotalSwipeDamage)"
+      ],
+      "active_effects": [
+        {
+          "id": "primal_surge_heal",
+          "name": "Tensión primaria (curación base)",
+          "kind": "heal",
+          "calculation": "TotalHealing"
+        },
+        {
+          "id": "primal_surge_as",
+          "name": "Tensión primaria (VA)",
+          "kind": "stat_bonus",
+          "stat": "attack_speed_bonus",
+          "mode": "flat",
+          "data_value": "BonusAS",
+          "scale": 100,
+          "duration_seconds": {
+            "data_value": "ASDuration"
+          }
+        }
       ]
     },
     "R": {

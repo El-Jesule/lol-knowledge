@@ -213,6 +213,12 @@ TOOLS: tuple[dict[str, Any], ...] = (
                 "runes": {"type": "array", "items": {"type": "integer"}},
                 "shards": {"type": "array", "items": {"type": "integer"}},
                 "summoners": {"type": "array", "items": {"type": "string"}},
+                "learned": {"type": "object", "additionalProperties": {"type": "integer"}},
+                "defender_casts": {
+                    "type": "array",
+                    "items": {"type": "string"},
+                    "description": 'Defensive Q/W/E/R casts, e.g. ["W=5", "R=3"] or ["W"].',
+                },
                 "incoming": {
                     "type": "string",
                     "description": 'Manual hits, e.g. "attack:500, magic:350".',
@@ -272,6 +278,11 @@ TOOLS: tuple[dict[str, Any], ...] = (
                 "target_count": {"type": "integer", "minimum": 1},
                 "incoming": {"type": "string"},
                 "enemy": _ENEMY_SCHEMA,
+                "defender_casts": {
+                    "type": "array",
+                    "items": {"type": "string"},
+                    "description": 'Defensive Q/W/E/R casts for time_to_die, e.g. ["W=5"].',
+                },
                 "timeline": {"type": "boolean"},
                 "runes": {"type": "array", "items": {"type": "integer"}},
                 "shards": {"type": "array", "items": {"type": "integer"}},

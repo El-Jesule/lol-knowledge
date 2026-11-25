@@ -89,6 +89,31 @@
       ],
       "not_modelled": [
         "Número de cortes escalado con VA, reducción de daño durante canalización y robo de vida adicional (TotalLifesteal)"
+      ],
+      "active_effects": [
+        {
+          "id": "royal_maelstrom_dr",
+          "name": "Vorágine real (DR)",
+          "kind": "damage_taken_modifier",
+          "mode": "percent",
+          "data_value": "DRPercent",
+          "scale": 100,
+          "duration_seconds": {
+            "data_value": "TotalDuration"
+          }
+        },
+        {
+          "id": "royal_maelstrom_lifesteal",
+          "name": "Vorágine real (robo de vida)",
+          "kind": "stat_bonus",
+          "stat": "life_steal",
+          "mode": "flat",
+          "data_value": "BonusLifeSteal",
+          "scale": 100,
+          "duration_seconds": {
+            "data_value": "TotalDuration"
+          }
+        }
       ]
     },
     "R": {
@@ -142,6 +167,31 @@
       ],
       "not_modelled": [
         "Acumulación infinita de la pasiva de R contra el mismo objetivo, vida máxima/alcance/VA en forma verdadera (MaxHealthOnDevour) e invocación de rémoras"
+      ],
+      "active_effects": [
+        {
+          "id": "endless_banquet_hp",
+          "name": "Banquete sin fin (vida máxima)",
+          "kind": "stat_bonus",
+          "stat": "health",
+          "mode": "flat",
+          "calculation": "MaxHealthOnDevour",
+          "duration_seconds": {
+            "data_value": "SteroidDuration"
+          }
+        },
+        {
+          "id": "endless_banquet_as",
+          "name": "Banquete sin fin (VA)",
+          "kind": "stat_bonus",
+          "stat": "attack_speed_bonus",
+          "mode": "flat",
+          "data_value": "TotalASMod",
+          "scale": 100,
+          "duration_seconds": {
+            "data_value": "SteroidDuration"
+          }
+        }
       ]
     }
   }

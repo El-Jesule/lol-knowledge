@@ -39,6 +39,31 @@
       "tooltip": "spell_dravenfury_tooltip",
       "not_modelled": [
         "Velocidad de movimiento decreciente, velocidad de ataque y efecto fantasmal"
+      ],
+      "active_effects": [
+        {
+          "id": "blood_rush_as",
+          "name": "Subidón de adrenalina (VA)",
+          "kind": "stat_bonus",
+          "stat": "attack_speed_bonus",
+          "mode": "flat",
+          "data_value": "Temp_AS",
+          "duration_seconds": {
+            "data_value": "Temp_ASDuration"
+          }
+        },
+        {
+          "id": "blood_rush_ms",
+          "name": "Subidón de adrenalina (VM %)",
+          "kind": "stat_bonus",
+          "stat": "move_speed",
+          "mode": "percent_ms",
+          "data_value": "Temp_MSMod",
+          "scale": 0.01,
+          "duration_seconds": {
+            "data_value": "Temp_MSDuration"
+          }
+        }
       ]
     },
     "E": {

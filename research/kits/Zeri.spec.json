@@ -190,6 +190,31 @@
       ],
       "not_modelled": [
         "Sobrecarga acumulable de velocidad de movimiento, +30 % velocidad de ataque y daño mágico adicional por ataque"
+      ],
+      "active_effects": [
+        {
+          "id": "r_baseaspercent",
+          "name": "R (VA)",
+          "kind": "stat_bonus",
+          "stat": "attack_speed_bonus",
+          "mode": "flat",
+          "scale": 100,
+          "data_value": "BaseASPercent",
+          "duration_seconds": {
+            "data_value": "StackDuration"
+          }
+        },
+        {
+          "id": "r_basebonusms",
+          "name": "R (VM)",
+          "kind": "stat_bonus",
+          "stat": "move_speed",
+          "mode": "percent_ms",
+          "data_value": "BaseBonusMS",
+          "duration_seconds": {
+            "data_value": "StackDuration"
+          }
+        }
       ]
     }
   }

@@ -3,7 +3,7 @@
   "champion": "Briar",
   "label": "Derivado",
   "game_version": "16.23",
-  "content_version": "16.23.8406595+branch.releases-16-23.content.release",
+  "content_version": "16.23.8418428+branch.releases-16-23.content.release",
   "verified_against": {
     "content_version": "16.23.8406595+branch.releases-16-23.content.release",
     "bin_sha256": "73827ff9936f2a252bf08bf0622ebb68cad245479f287cb905d19760d501f031",
@@ -56,7 +56,7 @@
                 ]
               },
               "label": "Derivado",
-              "source": "Characters/Briar/Spells/BriarPAbility/BriarP.mSpellCalculations.BleedDamageOverDurationTooltip (16.23.8406595+branch.releases-16-23.content.release)",
+              "source": "Characters/Briar/Spells/BriarPAbility/BriarP.mSpellCalculations.BleedDamageOverDurationTooltip (16.23.8418428+branch.releases-16-23.content.release)",
               "damage_type_source": "spell_briarp_tooltip <physicalDamage>"
             }
           ]
@@ -110,7 +110,7 @@
                 ]
               },
               "label": "Derivado",
-              "source": "Characters/Briar/Spells/BriarPAbility/BriarP.mSpellCalculations.BleedMaxDamageOverDurationTooltip (16.23.8406595+branch.releases-16-23.content.release)",
+              "source": "Characters/Briar/Spells/BriarPAbility/BriarP.mSpellCalculations.BleedMaxDamageOverDurationTooltip (16.23.8418428+branch.releases-16-23.content.release)",
               "damage_type_source": "spell_briarp_tooltip <physicalDamage>"
             }
           ]
@@ -159,7 +159,7 @@
             ]
           },
           "label": "Derivado",
-          "source": "Characters/Briar/Spells/BriarPAbility/BriarP.mSpellCalculations.BleedDamageOverDurationTooltip (16.23.8406595+branch.releases-16-23.content.release)",
+          "source": "Characters/Briar/Spells/BriarPAbility/BriarP.mSpellCalculations.BleedDamageOverDurationTooltip (16.23.8418428+branch.releases-16-23.content.release)",
           "trigger": "on_hit",
           "damage_type": "physical"
         }
@@ -219,7 +219,7 @@
                 ]
               },
               "label": "Derivado",
-              "source": "Characters/Briar/Spells/BriarQAbility/BriarQ.mSpellCalculations.TotalDamage (16.23.8406595+branch.releases-16-23.content.release)",
+              "source": "Characters/Briar/Spells/BriarQAbility/BriarQ.mSpellCalculations.TotalDamage (16.23.8418428+branch.releases-16-23.content.release)",
               "damage_type_source": "spell_briarq_tooltip <physicalDamage>"
             }
           ]
@@ -261,7 +261,7 @@
                 ]
               },
               "label": "Derivado",
-              "source": "Characters/Briar/Spells/BriarWAbility/BriarW.mSpellCalculations.TotalAoEDamage (16.23.8406595+branch.releases-16-23.content.release)",
+              "source": "Characters/Briar/Spells/BriarWAbility/BriarW.mSpellCalculations.TotalAoEDamage (16.23.8418428+branch.releases-16-23.content.release)",
               "damage_type_source": "spell_briarw_tooltip <physicalDamage>"
             }
           ]
@@ -302,7 +302,7 @@
                 ]
               },
               "label": "Derivado",
-              "source": "Characters/Briar/Spells/BriarWAbility/BriarW.mSpellCalculations.TotalAttackBonusDamage (16.23.8406595+branch.releases-16-23.content.release)",
+              "source": "Characters/Briar/Spells/BriarWAbility/BriarW.mSpellCalculations.TotalAttackBonusDamage (16.23.8418428+branch.releases-16-23.content.release)",
               "damage_type_source": "spell_briarw_tooltip <physicalDamage>"
             },
             {
@@ -352,7 +352,7 @@
                 ]
               },
               "label": "Derivado",
-              "source": "Characters/Briar/Spells/BriarWAbility/BriarW · mSpellCalculations.TotalAttackPercentMissingHealth % × vida faltante del objetivo (16.23.8406595+branch.releases-16-23.content.release)",
+              "source": "Characters/Briar/Spells/BriarWAbility/BriarW · mSpellCalculations.TotalAttackPercentMissingHealth % × vida faltante del objetivo (16.23.8418428+branch.releases-16-23.content.release)",
               "damage_type_source": "spell_briarw_tooltip <physicalDamage>"
             }
           ]
@@ -361,6 +361,48 @@
       "passive_stats": [],
       "not_modelled": [
         "Coste porcentual de vida actual, Frenesí sanguinario (velocidad de ataque/movimiento), curación de Otro mordisquito (AttackMaxHPHeal) y tope contra monstruos"
+      ],
+      "active_effects": [
+        {
+          "id": "blood_frenzy_as",
+          "name": "Frenesí sanguinario (VA)",
+          "kind": "stat_bonus",
+          "formula": {
+            "op": "by_rank",
+            "values": [
+              55,
+              65,
+              75,
+              85,
+              95
+            ]
+          },
+          "label": "Derivado",
+          "source": "Characters/Briar/Spells/BriarWAbility/BriarW.DataValues.BerserkAS (16.23.8418428+branch.releases-16-23.content.release)",
+          "stat": "attack_speed_bonus",
+          "mode": "flat",
+          "duration_seconds": 5
+        },
+        {
+          "id": "blood_frenzy_ms",
+          "name": "Frenesí sanguinario (VM %)",
+          "kind": "stat_bonus",
+          "formula": {
+            "op": "by_rank",
+            "values": [
+              0.24,
+              0.33,
+              0.42,
+              0.51,
+              0.6
+            ]
+          },
+          "label": "Derivado",
+          "source": "Characters/Briar/Spells/BriarWAbility/BriarW.DataValues.BerserkMS (16.23.8418428+branch.releases-16-23.content.release)",
+          "stat": "move_speed",
+          "mode": "percent_ms",
+          "duration_seconds": 5
+        }
       ]
     },
     "E": {
@@ -417,7 +459,7 @@
                 ]
               },
               "label": "Derivado",
-              "source": "Characters/Briar/Spells/BriarEAbility/BriarE.mSpellCalculations.Damage (16.23.8406595+branch.releases-16-23.content.release)",
+              "source": "Characters/Briar/Spells/BriarEAbility/BriarE.mSpellCalculations.Damage (16.23.8418428+branch.releases-16-23.content.release)",
               "damage_type_source": "spell_briare_tooltip <magicDamage>"
             }
           ]
@@ -472,7 +514,7 @@
                 ]
               },
               "label": "Derivado",
-              "source": "Characters/Briar/Spells/BriarEAbility/BriarE.mSpellCalculations.WallHitDamage (16.23.8406595+branch.releases-16-23.content.release)",
+              "source": "Characters/Briar/Spells/BriarEAbility/BriarE.mSpellCalculations.WallHitDamage (16.23.8418428+branch.releases-16-23.content.release)",
               "damage_type_source": "spell_briare_tooltip <magicDamage>"
             }
           ]
@@ -481,6 +523,50 @@
       "passive_stats": [],
       "not_modelled": [
         "Reducción de daño del 35 % durante la canalización, curación (PercentMaxHPHeal), ralentización y aturdimiento contra muro"
+      ],
+      "active_effects": [
+        {
+          "id": "chilling_scream_dr",
+          "name": "Alarido escalofriante (DR)",
+          "kind": "damage_taken_modifier",
+          "formula": {
+            "op": "constant",
+            "value": 35
+          },
+          "label": "Derivado",
+          "source": "Characters/Briar/Spells/BriarEAbility/BriarE.DataValues.DRPercent (16.23.8418428+branch.releases-16-23.content.release)",
+          "mode": "percent",
+          "duration_seconds": 1.0
+        },
+        {
+          "id": "chilling_scream_heal",
+          "name": "Alarido escalofriante (curación)",
+          "kind": "heal",
+          "formula": {
+            "op": "mul",
+            "operands": [
+              {
+                "op": "by_rank",
+                "values": [
+                  0.1,
+                  0.115,
+                  0.13,
+                  0.145,
+                  0.16
+                ]
+              },
+              {
+                "op": "stat",
+                "stat": "health",
+                "scope": "total"
+              }
+            ]
+          },
+          "label": "Derivado",
+          "source": "Characters/Briar/Spells/BriarEAbility/BriarE.mSpellCalculations.PercentMaxHPHeal (16.23.8418428+branch.releases-16-23.content.release)",
+          "over_duration": true,
+          "duration_seconds": 1.0
+        }
       ]
     },
     "R": {
@@ -521,7 +607,7 @@
                 ]
               },
               "label": "Derivado",
-              "source": "Characters/Briar/Spells/BriarRAbility/BriarR.mSpellCalculations.Damage (16.23.8406595+branch.releases-16-23.content.release)",
+              "source": "Characters/Briar/Spells/BriarRAbility/BriarR.mSpellCalculations.Damage (16.23.8418428+branch.releases-16-23.content.release)",
               "damage_type_source": "spell_briarr_tooltip <magicDamage>"
             }
           ]
@@ -530,6 +616,88 @@
       "passive_stats": [],
       "not_modelled": [
         "Coste porcentual de vida actual, miedo en área, Frenesí potenciado con resistencias (TotalResists), robo de vida y velocidad de movimiento"
+      ],
+      "active_effects": [
+        {
+          "id": "certain_death_armor",
+          "name": "Muerte segura (armadura)",
+          "kind": "stat_bonus",
+          "formula": {
+            "op": "mul",
+            "operands": [
+              {
+                "op": "constant",
+                "value": 0.2
+              },
+              {
+                "op": "stat",
+                "stat": "attack_damage",
+                "scope": "total"
+              }
+            ]
+          },
+          "label": "Derivado",
+          "source": "Characters/Briar/Spells/BriarRAbility/BriarR.mSpellCalculations.TotalResists (16.23.8418428+branch.releases-16-23.content.release)",
+          "stat": "armor",
+          "mode": "flat"
+        },
+        {
+          "id": "certain_death_mr",
+          "name": "Muerte segura (RM)",
+          "kind": "stat_bonus",
+          "formula": {
+            "op": "mul",
+            "operands": [
+              {
+                "op": "constant",
+                "value": 0.2
+              },
+              {
+                "op": "stat",
+                "stat": "attack_damage",
+                "scope": "total"
+              }
+            ]
+          },
+          "label": "Derivado",
+          "source": "Characters/Briar/Spells/BriarRAbility/BriarR.mSpellCalculations.TotalResists (16.23.8418428+branch.releases-16-23.content.release)",
+          "stat": "magic_resist",
+          "mode": "flat"
+        },
+        {
+          "id": "certain_death_lifesteal",
+          "name": "Muerte segura (robo de vida)",
+          "kind": "stat_bonus",
+          "formula": {
+            "op": "by_rank",
+            "values": [
+              10,
+              15,
+              20
+            ]
+          },
+          "label": "Derivado",
+          "source": "Characters/Briar/Spells/BriarRAbility/BriarR.DataValues.LifestealPercent (16.23.8418428+branch.releases-16-23.content.release)",
+          "stat": "life_steal",
+          "mode": "flat"
+        },
+        {
+          "id": "certain_death_ms",
+          "name": "Muerte segura (VM %)",
+          "kind": "stat_bonus",
+          "formula": {
+            "op": "by_rank",
+            "values": [
+              0.1,
+              0.2,
+              0.3
+            ]
+          },
+          "label": "Derivado",
+          "source": "Characters/Briar/Spells/BriarRAbility/BriarR.DataValues.ExtraMoveSpeedPercent (16.23.8418428+branch.releases-16-23.content.release)",
+          "stat": "move_speed",
+          "mode": "percent_ms"
+        }
       ]
     }
   }

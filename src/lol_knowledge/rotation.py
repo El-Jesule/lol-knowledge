@@ -27,7 +27,7 @@ from typing import Any
 
 from .damage import DamageResult, DamageType, format_number, mitigate
 from .errors import KitError, RotationError, StatsError
-from .formula import FormulaError, evaluate_formula
+from .formula import ABILITY_OPS, FormulaError, evaluate_formula
 from .item_combat import (
     ALLY_HEAL_SHIELD_ACTIVES,
     SPECIALIZED_ITEM_EFFECTS,
@@ -35,7 +35,7 @@ from .item_combat import (
     ItemHeal,
     ItemProc,
 )
-from .kit import Kit, ability_damage, sheet_stats
+from .kit import ActiveEffectSpec, Kit, ability_damage, sheet_stats
 from .passives import PassiveCombat
 from .resources import (
     ResourceEvent,
@@ -854,6 +854,9 @@ class _Rotation:
         self._summoner_ready: dict[str, Fraction] = {}
         self._summoner_ms_buffs: list[tuple[Fraction | None, Fraction, str, Label]] = []
         self._summoner_burns: list[tuple[Fraction, Fraction, str, Label, tuple[str, ...]]] = []
+        self._ability_stat_buffs: dict[
+            str, tuple[Fraction | None, str, str, Fraction, str, Label]
+        ] = {}
         self.attacker_exhausted = Fraction(str(inputs.get("exhausted", 0))) > 0
         self.timeline = self._timeline() if timeline else None
         self.crit_base, self.holder_range, self.inputs = crit_base, holder_range, inputs
@@ -2475,6 +2478,15 @@ class _Rotation:
         for end_t, ms_pct, ms_src, ms_lbl in self._summoner_ms_buffs:
             if end_t is None or at < end_t:
                 sheet = with_percent_bonus(sheet, "move_speed", ms_pct, ms_src, ms_lbl)
+        for end_t, stat_id, mode, amount, src, lbl in self._ability_stat_buffs.values():
+            if end_t is not None and at >= end_t:
+                continue
+            if mode == "percent_ms":
+                sheet = with_percent_bonus(sheet, stat_id, amount, src, lbl)
+            elif mode == "percent":
+                sheet = with_amplifier(sheet, stat_id, amount, src, lbl)
+            else:
+                sheet = with_bonus(sheet, stat_id, effect_amount(stat_id, amount), src, lbl)
         if sheet is not self.sheet:
             self.sheet = sheet
             self.stats, self.origin = sheet_stats(sheet)
@@ -2700,6 +2712,11 @@ class _Rotation:
             for end in [
                 *(burn.end for burn in self.burning.values()),
                 *(b_end for b_end, _, _, _, _ in self._summoner_burns),
+                *(
+                    b_end
+                    for b_end, _, _, _, _, _ in self._ability_stat_buffs.values()
+                    if b_end is not None
+                ),
                 *(window.end for window in self.windows.values()),
                 *(
                     self.stacked_at[_key(effect)] + effect.window
@@ -2889,8 +2906,12 @@ class _Rotation:
         """
         assert step.slot is not None
         ability = self.kit.ability(step.slot)
-        case = ability.case(step.case) if step.case is not None else ability.cases[0]
-        if case.recast:
+        case = (
+            ability.case(step.case)
+            if step.case is not None
+            else (ability.cases[0] if ability.cases else None)
+        )
+        if case is not None and case.recast:
             if step.slot not in open_casts:
                 raise RotationError(f"step {step.text}: {step.slot} has not been cast to recast it")
             opened, used, last = open_casts[step.slot]
@@ -3160,10 +3181,22 @@ class _Rotation:
         ability = self.kit.ability(step.slot)
         if step.slot not in self.ranks:
             raise RotationError(f"step {step.text}: learn {step.slot} first with --learned")
+        rank = self.ranks[step.slot]
+        if not ability.cases:
+            if step.case is not None:
+                raise RotationError(f"step {step.text}: {step.slot} has no damage cases")
+            if not ability.active_effects:
+                raise RotationError(
+                    f"step {step.text}: {step.slot} has no modelled damage cases or active effects"
+                )
+            if not 1 <= rank <= ability.max_rank:
+                raise RotationError(
+                    f"step {step.text}: {step.slot} rank must be 1..{ability.max_rank}"
+                )
+            return f"{ability.slot} {ability.name} rank {rank}", []
         if step.case is None and len(ability.cases) > 1:
             names = ", ".join(f"{step.slot}.{case.id}" for case in ability.cases)
             raise RotationError(f"step {step.text}: pick one case ({names})")
-        rank = self.ranks[step.slot]
         try:
             raw_parts = ability_damage(
                 self.kit,
@@ -3214,6 +3247,122 @@ class _Rotation:
             for part in raw_parts
         ]
         return f"{ability.slot} {ability.name} rank {rank}", parts
+
+    def _active_duration(self, effect: ActiveEffectSpec, rank: int) -> Fraction | None:
+        if effect.duration_seconds is not None:
+            return effect.duration_seconds
+        if effect.duration_formula is not None:
+            try:
+                res = evaluate_formula(
+                    effect.duration_formula,
+                    self.stats,
+                    rank=rank,
+                    level=self.sheet.level,
+                    inputs=self.inputs,
+                    ops=ABILITY_OPS,
+                )
+            except FormulaError as exc:
+                raise RotationError(f"{effect.id} duration: {exc}") from exc
+            return res.exact
+        return None
+
+    def _apply_ability_active_effects(
+        self,
+        slot: str,
+        case_id: str | None,
+        target_stats: Mapping[str, Fraction],
+        clock: Fraction,
+    ) -> tuple[list[HealEvent], list[ShieldEvent]]:
+        """Apply Q/W/E/R ``active_effects`` (shields, heals, stat steroids, DR notes) on cast."""
+        ability = self.kit.ability(slot)
+        if not ability.active_effects:
+            return [], []
+        rank = self.ranks[slot]
+        resolved_case = case_id
+        if resolved_case is None and len(ability.cases) == 1:
+            resolved_case = ability.cases[0].id
+        heals: list[HealEvent] = []
+        shields: list[ShieldEvent] = []
+        eval_stats = dict(self.stats)
+        max_hp = eval_stats.get("health", Fraction(0))
+        miss_in = self.inputs.get("champion_missing_health_fraction", 0)
+        miss_frac = max(Fraction(0), min(Fraction(1), Fraction(str(miss_in))))
+        eval_stats["max_health"] = max_hp
+        eval_stats["current_health"] = max_hp * (1 - miss_frac)
+        eval_stats["missing_fraction_health"] = miss_frac
+        for eff in ability.active_effects:
+            if not eff.applies_to_case(resolved_case):
+                continue
+            try:
+                res = evaluate_formula(
+                    eff.formula,
+                    eval_stats,
+                    rank=rank,
+                    level=self.sheet.level,
+                    target_stats=target_stats,
+                    inputs=self.inputs,
+                    ops=ABILITY_OPS,
+                )
+            except FormulaError as exc:
+                raise RotationError(f"{slot}.{eff.id}: {exc}") from exc
+            assert res.exact is not None
+            if res.exact <= 0 and eff.kind in {"shield", "heal"}:
+                continue
+            dep_labels = [self.origin[k][1] for k in res.dependencies if k in self.origin]
+            if any(k.startswith("target:") for k in res.dependencies):
+                dep_labels.append(self.target.label)
+            eff_label = weakest([eff.label, *dep_labels])
+            dur = self._active_duration(eff, rank)
+            src = f"kit:{self.kit.champion} {slot}.{eff.id} ({eff.name})"
+            if eff.kind == "shield":
+                s_notes = (
+                    (f"{eff.name} ({format_number(dur)} s)",) if dur is not None else (eff.name,)
+                )
+                shields.append(
+                    self._make_shield_event(
+                        src,
+                        res.exact,
+                        eff_label,
+                        shield_type=eff.shield_type,
+                        duration=dur,
+                        notes=s_notes,
+                    )
+                )
+            elif eff.kind == "heal":
+                h_notes = (
+                    (f"{eff.name} (over {format_number(dur)} s)",)
+                    if eff.over_duration and dur is not None
+                    else (eff.name,)
+                )
+                heals.append(
+                    self._make_heal_event(
+                        src,
+                        res.exact,
+                        eff_label,
+                        clock,
+                        uses_hsp=eff.uses_hsp,
+                        notes=h_notes,
+                    )
+                )
+            elif eff.kind == "stat_bonus" and eff.stat is not None:
+                end_t = clock + dur if (self.timeline is not None and dur is not None) else None
+                key = f"{slot}.{eff.id}"
+                self._ability_stat_buffs[key] = (
+                    end_t,
+                    eff.stat,
+                    eff.mode,
+                    res.exact,
+                    src,
+                    eff_label,
+                )
+                if self.timeline is not None and eff.stat in ATTACK_SPEED_STATS:
+                    self.speed_changed = True
+                dur_txt = f" for {format_number(dur)} s" if dur is not None else ""
+                self.notes.append(f"{src}: {eff.stat} buff active{dur_txt}")
+            elif eff.kind == "damage_taken_modifier":
+                dur_txt = f" for {format_number(dur)} s" if dur is not None else ""
+                self.notes.append(f"{src}: defensive damage reduction{dur_txt} (use survive)")
+        return heals, shields
 
     def _burn_outcome(
         self,
@@ -3605,6 +3754,11 @@ class _Rotation:
                 if step_cost.label is Label.PENDING:
                     extra.append(Label.PENDING)
                 parts += ability_parts
+                ab_heals, ab_shields = self._apply_ability_active_effects(
+                    step.slot, step.case, target_stats, clock
+                )
+                heal_events += ab_heals
+                shield_events += ab_shields
                 c_heals, c_shields = self._item_survival_events("cast", target_stats, clock)
                 heal_events += c_heals
                 shield_events += c_shields

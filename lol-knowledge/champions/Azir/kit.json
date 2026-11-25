@@ -3,7 +3,7 @@
   "champion": "Azir",
   "label": "Derivado",
   "game_version": "16.23",
-  "content_version": "16.23.8406595+branch.releases-16-23.content.release",
+  "content_version": "16.23.8418428+branch.releases-16-23.content.release",
   "verified_against": {
     "content_version": "16.23.8406595+branch.releases-16-23.content.release",
     "bin_sha256": "2464330a09b0a0625c19fec10c81b9b1c97f6c1fa8b10dbb801616a1e8edcde9",
@@ -65,7 +65,7 @@
                 ]
               },
               "label": "Derivado",
-              "source": "Characters/Azir/Spells/AzirPassiveAbility/AzirPassive.mSpellCalculations.TowerDamage (16.23.8406595+branch.releases-16-23.content.release)",
+              "source": "Characters/Azir/Spells/AzirPassiveAbility/AzirPassive.mSpellCalculations.TowerDamage (16.23.8418428+branch.releases-16-23.content.release)",
               "damage_type_source": "spell_azirpassive_tooltip <magicDamage>"
             }
           ]
@@ -122,7 +122,7 @@
                 ]
               },
               "label": "Derivado",
-              "source": "Characters/Azir/Spells/AzirQWrapperAbility/AzirQWrapper.mSpellCalculations.TotalDamage (16.23.8406595+branch.releases-16-23.content.release)",
+              "source": "Characters/Azir/Spells/AzirQWrapperAbility/AzirQWrapper.mSpellCalculations.TotalDamage (16.23.8418428+branch.releases-16-23.content.release)",
               "damage_type_source": "spell_azirqwrapper_tooltip <magicDamage>"
             }
           ]
@@ -202,7 +202,7 @@
                 ]
               },
               "label": "Derivado",
-              "source": "Characters/Azir/Spells/AzirWAbility/AzirW.mSpellCalculations.TotalDamage (16.23.8406595+branch.releases-16-23.content.release)",
+              "source": "Characters/Azir/Spells/AzirWAbility/AzirW.mSpellCalculations.TotalDamage (16.23.8418428+branch.releases-16-23.content.release)",
               "damage_type_source": "spell_azirw_tooltip <magicDamage>"
             }
           ]
@@ -253,7 +253,7 @@
                 ]
               },
               "label": "Derivado",
-              "source": "Characters/Azir/Spells/AzirEWrapperAbility/AzirEWrapper.mSpellCalculations.TotalDamage (16.23.8406595+branch.releases-16-23.content.release)",
+              "source": "Characters/Azir/Spells/AzirEWrapperAbility/AzirEWrapper.mSpellCalculations.TotalDamage (16.23.8418428+branch.releases-16-23.content.release)",
               "damage_type_source": "spell_azirewrapper_tooltip <magicDamage>"
             }
           ]
@@ -262,6 +262,45 @@
       "passive_stats": [],
       "not_modelled": [
         "Escudo (TotalShield) y recarga de soldado al golpear campeón"
+      ],
+      "active_effects": [
+        {
+          "id": "e_totalshield",
+          "name": "E (escudo)",
+          "kind": "shield",
+          "formula": {
+            "op": "add",
+            "operands": [
+              {
+                "op": "by_rank",
+                "values": [
+                  70,
+                  110,
+                  150,
+                  190,
+                  230
+                ]
+              },
+              {
+                "op": "mul",
+                "operands": [
+                  {
+                    "op": "constant",
+                    "value": 0.6
+                  },
+                  {
+                    "op": "stat",
+                    "stat": "ability_power",
+                    "scope": "total"
+                  }
+                ]
+              }
+            ]
+          },
+          "label": "Derivado",
+          "source": "Characters/Azir/Spells/AzirEWrapperAbility/AzirEWrapper.mSpellCalculations.TotalShield (16.23.8418428+branch.releases-16-23.content.release)",
+          "duration_seconds": 1.5
+        }
       ]
     },
     "R": {
@@ -302,7 +341,7 @@
                 ]
               },
               "label": "Derivado",
-              "source": "Characters/Azir/Spells/AzirRAbility/AzirR.mSpellCalculations.TotalDamage (16.23.8406595+branch.releases-16-23.content.release)",
+              "source": "Characters/Azir/Spells/AzirRAbility/AzirR.mSpellCalculations.TotalDamage (16.23.8418428+branch.releases-16-23.content.release)",
               "damage_type_source": "spell_azirr_tooltip <magicDamage>"
             }
           ]

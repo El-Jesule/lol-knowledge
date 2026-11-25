@@ -22,7 +22,7 @@ from typing import Any
 from .damage import DamageType, format_number, mitigate
 from .errors import RotationError, StatsError
 from .formula import ABILITY_OPS, FormulaError, evaluate_formula
-from .kit import Kit, sheet_stats
+from .kit import ActiveEffectSpec, Kit, sheet_stats
 from .passives import _effect_cooldown, passive_defense_specs
 from .rotation import RotationOutcome
 from .runes import Rune, RuneData, int_input, linear_by_level, rune_value, scale_item_cooldown
@@ -323,11 +323,54 @@ class _DefenseSimulator:
         kit: Kit | None = None,
         summoners: Sequence[str] = (),
         summoner_data: SummonerSpellData | None = None,
+        defender_casts: Sequence[str] = (),
+        defender_ranks: Mapping[str, int] | None = None,
     ) -> None:
         self.sheet = sheet
         self.timeline = timeline
         self.kit = kit
+        self.inputs = dict(inputs)
         self.passive_dr_specs, self.passive_shield_specs = passive_defense_specs(kit)
+        self.defender_active_effects: list[tuple[str, int, ActiveEffectSpec]] = []
+        if defender_casts:
+            if kit is None:
+                raise StatsError(f"defender_casts requires a kit for {sheet.champion.id}")
+            ranks_upper = {k.upper(): int(v) for k, v in (defender_ranks or {}).items()}
+            for raw_tok in defender_casts:
+                tok = raw_tok.strip()
+                if not tok:
+                    continue
+                slot_part, sep, rank_part = tok.partition("=")
+                slot_head, _, case_part = slot_part.partition(".")
+                slot = slot_head.strip().upper()
+                case_id = case_part.strip() or None
+                if slot not in {"Q", "W", "E", "R"}:
+                    raise StatsError(
+                        f"defender cast {tok!r}: expected Q, W, E or R (optionally SLOT=RANK)"
+                    )
+                ab = kit.ability(slot)
+                if sep:
+                    try:
+                        rank = int(rank_part.strip())
+                    except ValueError as exc:
+                        raise StatsError(f"defender cast {tok!r}: rank must be an integer") from exc
+                elif slot in ranks_upper:
+                    rank = ranks_upper[slot]
+                else:
+                    raise StatsError(
+                        f"defender cast {tok!r}: specify rank with --learned {slot}=<rank> "
+                        f"or {slot}=<rank>"
+                    )
+                if not 1 <= rank <= ab.max_rank:
+                    raise StatsError(f"defender cast {tok!r}: {slot} rank must be 1..{ab.max_rank}")
+                matched = [e for e in ab.active_effects if e.applies_to_case(case_id)]
+                if not matched:
+                    raise StatsError(
+                        f"defender cast {tok!r}: {sheet.champion.id} {slot} has no modelled "
+                        "active_effects"
+                    )
+                for eff in matched:
+                    self.defender_active_effects.append((slot, rank, eff))
         self.summoner_exhaust: SummonerSpellSpec | None = None
         self.summoner_barrier: SummonerSpellSpec | None = None
         self.summoner_heal: SummonerSpellSpec | None = None
@@ -682,6 +725,49 @@ class _DefenseSimulator:
                 notes.append(f"reactive {title}: {format_number(val)} raw magic damage")
         return total, notes
 
+    def _active_duration(self, eff: ActiveEffectSpec, rank: int) -> Fraction | None:
+        if eff.duration_seconds is not None:
+            return eff.duration_seconds
+        if eff.duration_formula is not None:
+            res = evaluate_formula(
+                eff.duration_formula,
+                self.stats_env,
+                rank=rank,
+                level=self.sheet.level,
+                inputs=self.inputs,
+                ops=ABILITY_OPS,
+            )
+            return res.exact
+        return None
+
+    def _eval_active(
+        self,
+        eff: ActiveEffectSpec,
+        rank: int,
+        *,
+        current_health: Fraction | None = None,
+        current_max_health: Fraction | None = None,
+    ) -> tuple[Fraction, Label]:
+        env = dict(self.stats_env)
+        max_hp = current_max_health if current_max_health is not None else self.max_health
+        cur_hp = current_health if current_health is not None else self.start_health
+        env["max_health"] = max_hp
+        env["current_health"] = cur_hp
+        env["missing_fraction_health"] = (
+            max(Fraction(0), max_hp - cur_hp) / max_hp if max_hp > 0 else Fraction(0)
+        )
+        res = evaluate_formula(
+            eff.formula,
+            env,
+            rank=rank,
+            level=self.sheet.level,
+            inputs=self.inputs,
+            ops=ABILITY_OPS,
+        )
+        assert res.exact is not None
+        dep_lbls = [self.stat_origin[k][1] for k in res.dependencies if k in self.stat_origin]
+        return res.exact, weakest([eff.label, *dep_lbls])
+
     def run(self, hits: Sequence[IncomingHit], enemy_description: str) -> DefenseOutcome:
         if not hits:
             raise RotationError("defense simulation needs at least one incoming hit")
@@ -705,6 +791,18 @@ class _DefenseSimulator:
         exhaust_end: Fraction | None = None
         barrier_used = False
         heal_used = False
+
+        active_cast_triggered = False
+        active_resist_buffs: list[tuple[Fraction | None, str, str, Fraction, str, Label]] = []
+        active_hp_buffs: list[tuple[Fraction, Fraction]] = []
+        active_percent_dr: list[
+            tuple[Fraction | None, DamageType | None, Fraction, str, Label]
+        ] = []
+        active_flat_dr: list[
+            tuple[Fraction | None, DamageType | None, Fraction, Fraction | None, str, Label]
+        ] = []
+        active_instant_heals: list[tuple[str, ActiveEffectSpec, int]] = []
+        active_hots: list[tuple[Fraction, Fraction, str, Label, bool]] = []
 
         sw_end: Fraction | None = None
         sw_rate = Fraction(0)
@@ -878,6 +976,23 @@ class _DefenseSimulator:
                     if gain > 0:
                         res_labels.append(eff_label)
                         res_notes.append(f"{title} (+{format_number(gain)} {comp.get('stat')})")
+
+            for end_t, st_id, mode, val, src, lbl in active_resist_buffs:
+                if end_t is not None and at >= end_t:
+                    continue
+                if st_id == "armor":
+                    gain = cur_armor * val / 100 if mode == "percent" else val
+                    cur_armor += gain
+                    extra_bonus_armor += gain
+                elif st_id == "magic_resist":
+                    gain = cur_mr * val / 100 if mode == "percent" else val
+                    cur_mr += gain
+                    extra_bonus_mr += gain
+                else:
+                    continue
+                if gain > 0:
+                    res_labels.append(lbl)
+                    res_notes.append(f"{src} (+{format_number(gain)} {st_id})")
             return cur_armor, cur_mr, res_labels, res_notes
 
         def accrue_continuous(
@@ -887,7 +1002,7 @@ class _DefenseSimulator:
             nonlocal health, current_max_health, sw_end, last_accrued
             nonlocal proto_heal_end, proto_heal_rate, proto_hp_end, proto_hp_gain
             nonlocal dshield_end, dshield_rate, potion_end, potion_rate
-            nonlocal stagger_bleeds
+            nonlocal stagger_bleeds, active_hots, active_hp_buffs
             if not self.timeline or until <= last_accrued:
                 last_accrued = max(last_accrued, until)
                 return [], Fraction(0), [], [], None
@@ -921,6 +1036,8 @@ class _DefenseSimulator:
             pot_start_t: Fraction | None = None
             pot_end_t: Fraction | None = None
 
+            ahot_totals: dict[str, list[Any]] = {}
+
             bleed_total = Fraction(0)
             bleed_labels: list[Label] = []
             bleed_notes: list[str] = []
@@ -948,6 +1065,12 @@ class _DefenseSimulator:
                 for b in stagger_bleeds:
                     if t < b.end < until:
                         boundaries.append(b.end)
+                for h_end, _, _, _, _ in active_hots:
+                    if t < h_end < until:
+                        boundaries.append(h_end)
+                for hp_end, _ in active_hp_buffs:
+                    if t < hp_end < until:
+                        boundaries.append(hp_end)
                 t_next = min(boundaries)
                 span = t_next - t
 
@@ -991,8 +1114,34 @@ class _DefenseSimulator:
                 pot_active = potion_end is not None and potion_end > t and potion_rate > 0
                 pot_eff_rate = _regen_eff(potion_rate) if pot_active else Fraction(0)
 
+                rev_now = self._revitalize_amp(health)
+                cur_hots = [
+                    (
+                        h_raw,
+                        scale_healing(
+                            h_raw,
+                            hsp=self.hsp if h_hsp else Fraction(0),
+                            revitalize_amp=rev_now if h_hsp else Fraction(0),
+                            grievous=self.grievous,
+                            uses_hsp=h_hsp,
+                        )
+                        * self.self_heal_amp,
+                        h_src,
+                        h_lbl,
+                        h_hsp,
+                    )
+                    for h_end, h_raw, h_src, h_lbl, h_hsp in active_hots
+                    if h_end > t and h_raw > 0
+                ]
+                ahot_eff_rate = sum((x[1] for x in cur_hots), start=Fraction(0))
+
                 total_eff_heal_rate = (
-                    sw_eff_rate + proto_eff_rate + ds_eff_rate + wm_eff_rate + pot_eff_rate
+                    sw_eff_rate
+                    + proto_eff_rate
+                    + ds_eff_rate
+                    + wm_eff_rate
+                    + pot_eff_rate
+                    + ahot_eff_rate
                 )
                 net_rate = total_eff_heal_rate - bleed_rate
                 if net_rate < 0 and health + net_rate * span <= 0:
@@ -1064,9 +1213,25 @@ class _DefenseSimulator:
                     pot_end_t = t_next
                     pot_raw_total += potion_rate * span
                     pot_gained_total += pot_eff_rate * span * ratio
+                for h_raw, h_eff, h_src, h_lbl, h_hsp in cur_hots:
+                    bucket = ahot_totals.setdefault(
+                        h_src, [Fraction(0), Fraction(0), t, t_next, h_lbl, h_hsp]
+                    )
+                    bucket[0] += h_raw * span
+                    bucket[1] += h_eff * span * ratio
+                    bucket[3] = t_next
 
                 t = t_next
                 stagger_bleeds = [b for b in stagger_bleeds if b.end > t]
+                active_hots = [h for h in active_hots if h[0] > t]
+                kept_hp_buffs: list[tuple[Fraction, Fraction]] = []
+                for hp_end, hp_gain in active_hp_buffs:
+                    if hp_end <= t:
+                        current_max_health -= hp_gain
+                        health = min(health, current_max_health)
+                    else:
+                        kept_hp_buffs.append((hp_end, hp_gain))
+                active_hp_buffs = kept_hp_buffs
                 if sw_end is not None and sw_end <= t:
                     sw_end = None
                 if proto_heal_end is not None and proto_heal_end <= t:
@@ -1163,6 +1328,23 @@ class _DefenseSimulator:
                         self.grievous > 0,
                         Label.OFFICIAL,
                         tuple(pt_notes),
+                    )
+                )
+            for h_src, (h_raw_tot, h_gained_tot, h_st, h_en, h_lbl, h_hsp) in ahot_totals.items():
+                if h_raw_tot <= 0:
+                    continue
+                ah_notes = [f"regen {format_number(h_st)}–{format_number(h_en)} s"]
+                if self.grievous:
+                    ah_notes.append("Grievous Wounds (-40%)")
+                heals_out.append(
+                    HealEvent(
+                        h_src,
+                        h_raw_tot,
+                        h_gained_tot,
+                        h_hsp,
+                        self.grievous > 0,
+                        h_lbl,
+                        tuple(ah_notes),
                     )
                 )
             if bleed_total > 0:
@@ -1357,6 +1539,92 @@ class _DefenseSimulator:
                         step_notes.append(f"{title} blocked incoming ability")
                         break
 
+            # 0b. Defender active ability casts (Q/W/E/R shields, heals, DR, resist/HP steroids)
+            if self.defender_active_effects and not active_cast_triggered and health > 0:
+                active_cast_triggered = True
+                for slot, rank, eff in self.defender_active_effects:
+                    dur = self._active_duration(eff, rank)
+                    end_t = clock + dur if (self.timeline and dur is not None) else None
+                    src = f"kit:{self.sheet.champion.id} {slot}.{eff.id} ({eff.name})"
+                    if eff.kind == "heal" and not (
+                        eff.over_duration and self.timeline and dur is not None and dur > 0
+                    ):
+                        active_instant_heals.append((src, eff, rank))
+                        continue
+                    val, eff_lbl = self._eval_active(
+                        eff, rank, current_health=health, current_max_health=current_max_health
+                    )
+                    if eff.kind == "stat_bonus" and eff.stat is not None:
+                        if eff.stat == "health":
+                            gain = current_max_health * val / 100 if eff.mode == "percent" else val
+                            current_max_health += gain
+                            health += gain
+                            if end_t is not None:
+                                active_hp_buffs.append((end_t, gain))
+                            step_labels.append(eff_lbl)
+                            step_notes.append(
+                                f"{src} (+{format_number(gain)} max HP"
+                                + (f" for {format_number(dur)} s)" if dur is not None else ")")
+                            )
+                        elif eff.stat in {"armor", "magic_resist"}:
+                            active_resist_buffs.append(
+                                (end_t, eff.stat, eff.mode, val, src, eff_lbl)
+                            )
+                    elif eff.kind == "damage_taken_modifier":
+                        if eff.mode == "percent":
+                            frac = val / 100 if val > 1 else val
+                            active_percent_dr.append((end_t, eff.damage_type, frac, src, eff_lbl))
+                        else:
+                            active_flat_dr.append(
+                                (
+                                    end_t,
+                                    eff.damage_type,
+                                    val,
+                                    eff.damage_reduction_cap,
+                                    src,
+                                    eff_lbl,
+                                )
+                            )
+                    elif eff.kind == "shield":
+                        rev_amp = self._revitalize_amp(health)
+                        sh_amt = (
+                            scale_shield(
+                                val,
+                                hsp=self.hsp if eff.uses_hsp else Fraction(0),
+                                revitalize_amp=rev_amp if eff.uses_hsp else Fraction(0),
+                            )
+                            * self.self_shield_amp
+                        )
+                        sh_notes = [
+                            f"{eff.name} ({format_number(dur)} s)" if dur is not None else eff.name
+                        ]
+                        if self.shield_reaver_rate > 0 and self.shield_reaver_permanent:
+                            sh_amt *= 1 - self.shield_reaver_rate
+                            sh_notes.append(
+                                f"Shield Reaver (-{format_number(self.shield_reaver_rate * 100)}%)"
+                            )
+                        shields.append(_ActiveShield(src, sh_amt, eff.shield_type, end_t))
+                        sh_label = weakest([eff_lbl, *self.self_amp_labels])
+                        granted.append(
+                            ShieldEvent(
+                                src,
+                                val,
+                                sh_amt,
+                                eff.shield_type,
+                                dur,
+                                sh_label,
+                                tuple(sh_notes),
+                            )
+                        )
+                        step_labels.append(sh_label)
+                    elif eff.kind == "heal":
+                        assert dur is not None and dur > 0
+                        active_hots.append((clock + dur, val / dur, src, eff_lbl, eff.uses_hsp))
+                        step_labels.append(eff_lbl)
+                        step_notes.append(
+                            f"{src} started {format_number(val)} heal over {format_number(dur)} s"
+                        )
+
             cur_armor, cur_mr, res_labels, res_notes = effective_resists(clock)
             if spell_blocked:
                 incoming = Fraction(0)
@@ -1427,6 +1695,21 @@ class _DefenseSimulator:
                         f"summoner:{self.summoner_exhaust.id} ({self.summoner_exhaust.name} "
                         f"-{format_number(ex_dr * 100)}% {hit.damage_type.value}, "
                         f"-{format_number(ex_slow * 100)}% slow for {format_number(ex_dur)} s)"
+                    )
+
+            # Defender active ability percent damage reduction (e.g. Alistar R, Garen W, Yi W)
+            if active_percent_dr and incoming > 0 and health > 0 and hit.damage_type is not None:
+                for end_t, dt_filter, frac, src, lbl in active_percent_dr:
+                    if end_t is not None and clock >= end_t:
+                        continue
+                    if dt_filter is not None and hit.damage_type is not dt_filter:
+                        continue
+                    if hit.damage_type is DamageType.TRUE and dt_filter is None:
+                        continue
+                    incoming *= 1 - frac
+                    step_labels.append(lbl)
+                    step_notes.append(
+                        f"{src} (-{format_number(frac * 100)}% {hit.damage_type.value})"
                     )
 
             # Champion passive percent damage-taken modifiers (e.g. Kassadin -10%, Malzahar -90%)
@@ -1580,6 +1863,22 @@ class _DefenseSimulator:
                     f"rune:{self.bone_rune.id} {self.bone_rune.name} -{format_number(applied)} "
                     f"({bone_charges} charges left)"
                 )
+
+            # Defender active ability flat damage reduction (e.g. Leona W Eclipse)
+            if active_flat_dr and incoming - flat_red > 0 and hit.damage_type is not None:
+                for end_t, dt_filter, flat_val, dr_cap, src, lbl in active_flat_dr:
+                    if end_t is not None and clock >= end_t:
+                        continue
+                    if dt_filter is not None and hit.damage_type is not dt_filter:
+                        continue
+                    if hit.damage_type is DamageType.TRUE and dt_filter is None:
+                        continue
+                    cap_amt = incoming * dr_cap if dr_cap is not None else incoming
+                    applied = min(incoming - flat_red, flat_val, cap_amt)
+                    if applied > 0:
+                        flat_red += applied
+                        step_labels.append(lbl)
+                        step_notes.append(f"{src} (-{format_number(applied)} flat)")
 
             dmg_after_flat = max(Fraction(0), incoming - flat_red)
             bypass = hit.kind == "execute"
@@ -2005,6 +2304,47 @@ class _DefenseSimulator:
                     step_labels.append(h_label)
                     projected_hp = max(Fraction(0), health - preview_hp_dmg)
 
+                # 1e. Defender active ability instant heals (proactive when already missing HP)
+                if active_instant_heals and health < current_max_health:
+                    for src, eff, rank in active_instant_heals:
+                        raw_h, h_lbl = self._eval_active(
+                            eff, rank, current_health=health, current_max_health=current_max_health
+                        )
+                        if raw_h <= 0:
+                            continue
+                        uses_hsp = eff.uses_hsp
+                        rev_amp = self._revitalize_amp(health)
+                        h_amt = (
+                            scale_healing(
+                                raw_h,
+                                hsp=self.hsp if uses_hsp else Fraction(0),
+                                revitalize_amp=rev_amp if uses_hsp else Fraction(0),
+                                grievous=self.grievous,
+                                uses_hsp=uses_hsp,
+                            )
+                            * self.self_heal_amp
+                        )
+                        gained = min(h_amt, max(Fraction(0), current_max_health - health))
+                        health += gained
+                        h_notes = ["active ability heal (proactive)"]
+                        if self.grievous > 0:
+                            h_notes.append("Grievous Wounds (-40%)")
+                        ev_lbl = weakest([h_lbl, *self.self_amp_labels])
+                        heals.append(
+                            HealEvent(
+                                src,
+                                raw_h,
+                                gained,
+                                uses_hsp,
+                                self.grievous > 0,
+                                ev_lbl,
+                                tuple(h_notes),
+                            )
+                        )
+                        step_labels.append(ev_lbl)
+                    active_instant_heals.clear()
+                    projected_hp = max(Fraction(0), health - preview_hp_dmg)
+
                 # 2. Guardian (8465): ally nearby + threshold (50..165 in 2.5 s) or lethal damage
                 if self.guardian_rune is not None and self.guardian_ally:
                     rune = self.guardian_rune
@@ -2195,6 +2535,46 @@ class _DefenseSimulator:
                     )
                 )
                 step_labels.append(h_label)
+
+            # Defender active ability instant heals (reactive after taking non-lethal damage)
+            if active_instant_heals and health > 0 and health < current_max_health:
+                for src, eff, rank in active_instant_heals:
+                    raw_h, h_lbl = self._eval_active(
+                        eff, rank, current_health=health, current_max_health=current_max_health
+                    )
+                    if raw_h <= 0:
+                        continue
+                    uses_hsp = eff.uses_hsp
+                    rev_amp = self._revitalize_amp(health)
+                    h_amt = (
+                        scale_healing(
+                            raw_h,
+                            hsp=self.hsp if uses_hsp else Fraction(0),
+                            revitalize_amp=rev_amp if uses_hsp else Fraction(0),
+                            grievous=self.grievous,
+                            uses_hsp=uses_hsp,
+                        )
+                        * self.self_heal_amp
+                    )
+                    gained = min(h_amt, max(Fraction(0), current_max_health - health))
+                    health += gained
+                    h_notes = ["active ability heal (reactive)"]
+                    if self.grievous > 0:
+                        h_notes.append("Grievous Wounds (-40%)")
+                    ev_lbl = weakest([h_lbl, *self.self_amp_labels])
+                    heals.append(
+                        HealEvent(
+                            src,
+                            raw_h,
+                            gained,
+                            uses_hsp,
+                            self.grievous > 0,
+                            ev_lbl,
+                            tuple(h_notes),
+                        )
+                    )
+                    step_labels.append(ev_lbl)
+                active_instant_heals.clear()
 
             # 8352 Time Warp Tonic immediate 40% potion restoration on first damage
             if (
@@ -2468,6 +2848,8 @@ def evaluate_defense(
     kit: Kit | None = None,
     summoners: Sequence[str] = (),
     summoner_data: SummonerSpellData | None = None,
+    defender_casts: Sequence[str] = (),
+    defender_ranks: Mapping[str, int] | None = None,
 ) -> DefenseOutcome:
     """Evaluate how ``defender_sheet`` survives ``hits`` (MEC-08 and MEC-09)."""
     sim = _DefenseSimulator(
@@ -2482,5 +2864,7 @@ def evaluate_defense(
         kit=kit,
         summoners=summoners,
         summoner_data=summoner_data,
+        defender_casts=defender_casts,
+        defender_ranks=defender_ranks,
     )
     return sim.run(hits, enemy_description)

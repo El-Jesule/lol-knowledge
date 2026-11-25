@@ -3,7 +3,7 @@
   "champion": "Janna",
   "label": "Derivado",
   "game_version": "16.23",
-  "content_version": "16.23.8406595+branch.releases-16-23.content.release",
+  "content_version": "16.23.8418428+branch.releases-16-23.content.release",
   "verified_against": {
     "content_version": "16.23.8406595+branch.releases-16-23.content.release",
     "bin_sha256": "0f4a601874840d8decd2970a07600b76d99c62b586bb40b61e70fa93e3fa4e37",
@@ -40,7 +40,7 @@
             ]
           },
           "label": "Derivado",
-          "source": "Characters/Janna/Spells/TailwindSelfAbility/TailwindSelf.mSpellCalculations.BonusDamage (16.23.8406595+branch.releases-16-23.content.release)",
+          "source": "Characters/Janna/Spells/TailwindSelfAbility/TailwindSelf.mSpellCalculations.BonusDamage (16.23.8418428+branch.releases-16-23.content.release)",
           "trigger": "on_hit",
           "damage_type": "magic"
         }
@@ -86,7 +86,7 @@
                 ]
               },
               "label": "Derivado",
-              "source": "Characters/Janna/Spells/HowlingGaleAbility/HowlingGale.mSpellCalculations.MinimumDamage (16.23.8406595+branch.releases-16-23.content.release)",
+              "source": "Characters/Janna/Spells/HowlingGaleAbility/HowlingGale.mSpellCalculations.MinimumDamage (16.23.8418428+branch.releases-16-23.content.release)",
               "damage_type_source": "spell_howlinggale_tooltip <magicDamage>"
             }
           ]
@@ -165,7 +165,7 @@
                 ]
               },
               "label": "Derivado",
-              "source": "Characters/Janna/Spells/HowlingGaleAbility/HowlingGale.mSpellCalculations.MaxDamage (16.23.8406595+branch.releases-16-23.content.release)",
+              "source": "Characters/Janna/Spells/HowlingGaleAbility/HowlingGale.mSpellCalculations.MaxDamage (16.23.8418428+branch.releases-16-23.content.release)",
               "damage_type_source": "spell_howlinggale_tooltip <magicDamage>"
             }
           ]
@@ -235,7 +235,7 @@
                 ]
               },
               "label": "Derivado",
-              "source": "Characters/Janna/Spells/SowTheWindAbility/SowTheWind · mSpellCalculations.TotalDamage + 30 % velocidad de movimiento adicional (Empuje) (16.23.8406595+branch.releases-16-23.content.release)",
+              "source": "Characters/Janna/Spells/SowTheWindAbility/SowTheWind · mSpellCalculations.TotalDamage + 30 % velocidad de movimiento adicional (Empuje) (16.23.8418428+branch.releases-16-23.content.release)",
               "damage_type_source": "spell_sowthewind_tooltip <magicDamage>"
             }
           ]
@@ -253,6 +253,84 @@
       "passive_stats": [],
       "not_modelled": [
         "Escudo a aliado o torreta (TotalShield), DA adicional otorgado (TotalAD) y reducción de enfriamiento al aplicar CC"
+      ],
+      "active_effects": [
+        {
+          "id": "eye_of_the_storm_shield",
+          "name": "Ojo de la tormenta (escudo)",
+          "kind": "shield",
+          "formula": {
+            "op": "add",
+            "operands": [
+              {
+                "op": "by_rank",
+                "values": [
+                  80,
+                  120,
+                  160,
+                  200,
+                  240
+                ]
+              },
+              {
+                "op": "mul",
+                "operands": [
+                  {
+                    "op": "constant",
+                    "value": 0.55
+                  },
+                  {
+                    "op": "stat",
+                    "stat": "ability_power",
+                    "scope": "total"
+                  }
+                ]
+              }
+            ]
+          },
+          "label": "Derivado",
+          "source": "Characters/Janna/Spells/EyeOfTheStormAbility/EyeOfTheStorm.mSpellCalculations.TotalShield (16.23.8418428+branch.releases-16-23.content.release)",
+          "duration_seconds": 4
+        },
+        {
+          "id": "eye_of_the_storm_ad",
+          "name": "Ojo de la tormenta (AD)",
+          "kind": "stat_bonus",
+          "formula": {
+            "op": "add",
+            "operands": [
+              {
+                "op": "by_rank",
+                "values": [
+                  10,
+                  15,
+                  20,
+                  25,
+                  30
+                ]
+              },
+              {
+                "op": "mul",
+                "operands": [
+                  {
+                    "op": "constant",
+                    "value": 0.1
+                  },
+                  {
+                    "op": "stat",
+                    "stat": "ability_power",
+                    "scope": "total"
+                  }
+                ]
+              }
+            ]
+          },
+          "label": "Derivado",
+          "source": "Characters/Janna/Spells/EyeOfTheStormAbility/EyeOfTheStorm.mSpellCalculations.TotalAD (16.23.8418428+branch.releases-16-23.content.release)",
+          "stat": "attack_damage",
+          "mode": "flat",
+          "duration_seconds": 4
+        }
       ]
     },
     "R": {
@@ -262,6 +340,53 @@
       "passive_stats": [],
       "not_modelled": [
         "Empuje hacia atrás y curación canalizada en área (TotalHeal)"
+      ],
+      "active_effects": [
+        {
+          "id": "monsoon_heal",
+          "name": "Monzón (curación canalizada)",
+          "kind": "heal",
+          "formula": {
+            "op": "mul",
+            "operands": [
+              {
+                "op": "add",
+                "operands": [
+                  {
+                    "op": "by_rank",
+                    "values": [
+                      100,
+                      150,
+                      200
+                    ]
+                  },
+                  {
+                    "op": "mul",
+                    "operands": [
+                      {
+                        "op": "constant",
+                        "value": 0.5
+                      },
+                      {
+                        "op": "stat",
+                        "stat": "ability_power",
+                        "scope": "total"
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "op": "constant",
+                "value": 3
+              }
+            ]
+          },
+          "label": "Derivado",
+          "source": "Characters/Janna/Spells/ReapTheWhirlwindAbility/ReapTheWhirlwind.mSpellCalculations.TotalHeal (16.23.8418428+branch.releases-16-23.content.release)",
+          "over_duration": true,
+          "duration_seconds": 3
+        }
       ]
     }
   }

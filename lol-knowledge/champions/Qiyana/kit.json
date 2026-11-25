@@ -3,7 +3,7 @@
   "champion": "Qiyana",
   "label": "Derivado",
   "game_version": "16.23",
-  "content_version": "16.23.8406595+branch.releases-16-23.content.release",
+  "content_version": "16.23.8418428+branch.releases-16-23.content.release",
   "verified_against": {
     "content_version": "16.23.8406595+branch.releases-16-23.content.release",
     "bin_sha256": "b7304611f25d3a5ec10c2e678643eeaeb18adf5e6c7af3541ef7a82723969a2a",
@@ -79,7 +79,7 @@
                 ]
               },
               "label": "Derivado",
-              "source": "Characters/Qiyana/Spells/QiyanaPassiveAbility/QiyanaPassive.mSpellCalculations.FinalDamage (16.23.8406595+branch.releases-16-23.content.release)",
+              "source": "Characters/Qiyana/Spells/QiyanaPassiveAbility/QiyanaPassive.mSpellCalculations.FinalDamage (16.23.8418428+branch.releases-16-23.content.release)",
               "damage_type_source": "passive_qiyanapv1_tooltip <physicalDamage>"
             }
           ]
@@ -151,7 +151,7 @@
             ]
           },
           "label": "Derivado",
-          "source": "Characters/Qiyana/Spells/QiyanaPassiveAbility/QiyanaPassive.mSpellCalculations.FinalDamage (16.23.8406595+branch.releases-16-23.content.release)",
+          "source": "Characters/Qiyana/Spells/QiyanaPassiveAbility/QiyanaPassive.mSpellCalculations.FinalDamage (16.23.8418428+branch.releases-16-23.content.release)",
           "trigger": "on_any_hit",
           "damage_type": "physical",
           "cooldown_seconds": 25
@@ -198,7 +198,7 @@
                 ]
               },
               "label": "Derivado",
-              "source": "Characters/Qiyana/Spells/QiyanaQAbility/QiyanaQ.mSpellCalculations.VanillaDamage (16.23.8406595+branch.releases-16-23.content.release)",
+              "source": "Characters/Qiyana/Spells/QiyanaQAbility/QiyanaQ.mSpellCalculations.VanillaDamage (16.23.8418428+branch.releases-16-23.content.release)",
               "damage_type_source": "spell_qiyanaqv2_tooltip <physicalDamage>"
             }
           ],
@@ -269,7 +269,7 @@
                 ]
               },
               "label": "Derivado",
-              "source": "Characters/Qiyana/Spells/QiyanaQAbility/QiyanaQ.mSpellCalculations.TremorDamage (16.23.8406595+branch.releases-16-23.content.release)",
+              "source": "Characters/Qiyana/Spells/QiyanaQAbility/QiyanaQ.mSpellCalculations.TremorDamage (16.23.8418428+branch.releases-16-23.content.release)",
               "damage_type_source": "spell_qiyanaqv2_tooltip <physicalDamage>"
             }
           ],
@@ -280,6 +280,22 @@
       "passive_stats": [],
       "not_modelled": [
         "Inmovilización de río y sigilo de maleza"
+      ],
+      "active_effects": [
+        {
+          "id": "q_haste",
+          "name": "Q (VM)",
+          "kind": "stat_bonus",
+          "formula": {
+            "op": "constant",
+            "value": 0.2
+          },
+          "label": "Derivado",
+          "source": "Characters/Qiyana/Spells/QiyanaQAbility/QiyanaQ.DataValues.Haste (16.23.8418428+branch.releases-16-23.content.release)",
+          "stat": "move_speed",
+          "mode": "percent_ms",
+          "duration_seconds": 3
+        }
       ]
     },
     "W": {
@@ -336,7 +352,7 @@
                 ]
               },
               "label": "Derivado",
-              "source": "Characters/Qiyana/Spells/QiyanaWAbility/QiyanaW.mSpellCalculations.OnHitDamage (16.23.8406595+branch.releases-16-23.content.release)",
+              "source": "Characters/Qiyana/Spells/QiyanaWAbility/QiyanaW.mSpellCalculations.OnHitDamage (16.23.8418428+branch.releases-16-23.content.release)",
               "damage_type_source": "spell_qiyanaenchant_tooltip <magicDamage>"
             }
           ],
@@ -389,7 +405,7 @@
                 ]
               },
               "label": "Derivado",
-              "source": "Characters/Qiyana/Spells/QiyanaEAbility/QiyanaE.mSpellCalculations.Damage (16.23.8406595+branch.releases-16-23.content.release)",
+              "source": "Characters/Qiyana/Spells/QiyanaEAbility/QiyanaE.mSpellCalculations.Damage (16.23.8418428+branch.releases-16-23.content.release)",
               "damage_type_source": "spell_qiyanaev3_tooltip <physicalDamage>"
             }
           ],
@@ -438,7 +454,7 @@
                 ]
               },
               "label": "Derivado",
-              "source": "Characters/Qiyana/Spells/QiyanaRAbility/QiyanaR.mSpellCalculations.Damage (16.23.8406595+branch.releases-16-23.content.release)",
+              "source": "Characters/Qiyana/Spells/QiyanaRAbility/QiyanaR.mSpellCalculations.Damage (16.23.8418428+branch.releases-16-23.content.release)",
               "damage_type_source": "spell_qiyanarv2_tooltip <physicalDamage>"
             },
             {
@@ -459,7 +475,7 @@
                 ]
               },
               "label": "Derivado",
-              "source": "Characters/Qiyana/Spells/QiyanaRAbility/QiyanaR · MissingHealthDamageRock × vida máxima del objetivo (16.23.8406595+branch.releases-16-23.content.release)",
+              "source": "Characters/Qiyana/Spells/QiyanaRAbility/QiyanaR · MissingHealthDamageRock × vida máxima del objetivo (16.23.8418428+branch.releases-16-23.content.release)",
               "damage_type_source": "spell_qiyanarv2_tooltip <physicalDamage>"
             }
           ],

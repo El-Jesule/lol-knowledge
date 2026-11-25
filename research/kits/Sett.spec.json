@@ -82,6 +82,19 @@
       "not_modelled": [
         "Velocidad de movimiento hacia campeones y tope de 400 contra monstruos",
         "El daño de los dos ataques básicos potenciados: se suma aparte"
+      ],
+      "active_effects": [
+        {
+          "id": "q_msamount",
+          "name": "Q (VM)",
+          "kind": "stat_bonus",
+          "stat": "move_speed",
+          "mode": "percent_ms",
+          "data_value": "MSAmount",
+          "duration_seconds": {
+            "data_value": "MSDuration"
+          }
+        }
       ]
     },
     "W": {

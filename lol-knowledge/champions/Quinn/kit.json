@@ -3,7 +3,7 @@
   "champion": "Quinn",
   "label": "Derivado",
   "game_version": "16.23",
-  "content_version": "16.23.8406595+branch.releases-16-23.content.release",
+  "content_version": "16.23.8418428+branch.releases-16-23.content.release",
   "verified_against": {
     "content_version": "16.23.8406595+branch.releases-16-23.content.release",
     "bin_sha256": "b40d5167444e7a9a9c543c0c9ed46a8e994e4b06d8897d54667ebdd8d0d9d95f",
@@ -47,7 +47,7 @@
                 ]
               },
               "label": "Derivado",
-              "source": "Characters/Quinn/Spells/QuinnPassiveAbility/QuinnPassive.mSpellCalculations.BonusDamage (16.23.8406595+branch.releases-16-23.content.release)",
+              "source": "Characters/Quinn/Spells/QuinnPassiveAbility/QuinnPassive.mSpellCalculations.BonusDamage (16.23.8418428+branch.releases-16-23.content.release)",
               "damage_type_source": "spell_quinnpassive_tooltip <physicalDamage>"
             }
           ]
@@ -118,7 +118,7 @@
                 ]
               },
               "label": "Derivado",
-              "source": "Characters/Quinn/Spells/QuinnQAbility/QuinnQ.mSpellCalculations.TotalDamage (16.23.8406595+branch.releases-16-23.content.release)",
+              "source": "Characters/Quinn/Spells/QuinnQAbility/QuinnQ.mSpellCalculations.TotalDamage (16.23.8418428+branch.releases-16-23.content.release)",
               "damage_type_source": "spell_quinnq_tooltip <physicalDamage>"
             }
           ]
@@ -178,7 +178,7 @@
                 ]
               },
               "label": "Derivado",
-              "source": "Characters/Quinn/Spells/QuinnEAbility/QuinnE.mSpellCalculations.TotalDamage (16.23.8406595+branch.releases-16-23.content.release)",
+              "source": "Characters/Quinn/Spells/QuinnEAbility/QuinnE.mSpellCalculations.TotalDamage (16.23.8418428+branch.releases-16-23.content.release)",
               "damage_type_source": "spell_quinne_tooltip <physicalDamage>"
             }
           ]
@@ -227,7 +227,7 @@
                 ]
               },
               "label": "Derivado",
-              "source": "Characters/Quinn/Spells/QuinnRAbility/QuinnR.mSpellCalculations.Damage (16.23.8406595+branch.releases-16-23.content.release)",
+              "source": "Characters/Quinn/Spells/QuinnRAbility/QuinnR.mSpellCalculations.Damage (16.23.8418428+branch.releases-16-23.content.release)",
               "damage_type_source": "spell_quinnr_tooltip <physicalDamage>"
             }
           ]
@@ -236,6 +236,25 @@
       "passive_stats": [],
       "not_modelled": [
         "Canalización de 2 s y velocidad de movimiento fuera de combate"
+      ],
+      "active_effects": [
+        {
+          "id": "r_movementspeedmod",
+          "name": "R (VM)",
+          "kind": "stat_bonus",
+          "formula": {
+            "op": "by_rank",
+            "values": [
+              0.7,
+              1,
+              1.3
+            ]
+          },
+          "label": "Derivado",
+          "source": "Characters/Quinn/Spells/QuinnRAbility/QuinnR.DataValues.MovementSpeedMod (16.23.8418428+branch.releases-16-23.content.release)",
+          "stat": "move_speed",
+          "mode": "percent_ms"
+        }
       ]
     }
   }

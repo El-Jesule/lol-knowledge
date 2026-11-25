@@ -104,6 +104,19 @@
       ],
       "not_modelled": [
         "Número total de disparos (TotalNumberOfAttacks), vuelo sobre terreno y velocidad de movimiento"
+      ],
+      "active_effects": [
+        {
+          "id": "e_movespeed",
+          "name": "E (VM)",
+          "kind": "stat_bonus",
+          "stat": "move_speed",
+          "mode": "percent_ms",
+          "data_value": "MoveSpeed",
+          "duration_seconds": {
+            "data_value": "Duration"
+          }
+        }
       ]
     },
     "R": {
@@ -131,6 +144,14 @@
       ],
       "not_modelled": [
         "Curación propia al pasar por la llama (MomHealCalc) y ralentización central"
+      ],
+      "active_effects": [
+        {
+          "id": "r_momhealcalc",
+          "name": "R (curación)",
+          "kind": "heal",
+          "calculation": "MomHealCalc"
+        }
       ]
     }
   }

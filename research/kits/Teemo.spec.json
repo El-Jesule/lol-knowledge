@@ -51,6 +51,19 @@
       "tooltip": "spell_teemow_tooltip",
       "not_modelled": [
         "Velocidad de movimiento pasiva y activa"
+      ],
+      "active_effects": [
+        {
+          "id": "w_activemovespeedbonus",
+          "name": "W (VM)",
+          "kind": "stat_bonus",
+          "stat": "move_speed",
+          "mode": "percent_ms",
+          "data_value": "ActiveMoveSpeedBonus",
+          "duration_seconds": {
+            "data_value": "ActiveMoveSpeedBuffDuration"
+          }
+        }
       ]
     },
     "E": {

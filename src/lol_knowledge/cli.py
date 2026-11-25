@@ -613,6 +613,20 @@ def _add_survive_parser(subparsers: argparse._SubParsersAction) -> None:
         help="Defender initial shield type: normal, physical or magic.",
     )
     survive.add_argument(
+        "--learned",
+        action="append",
+        default=[],
+        metavar="SLOT=RANK",
+        help="Defender learned ability rank (repeat, e.g. W=5 R=3).",
+    )
+    survive.add_argument(
+        "--defender-cast",
+        action="append",
+        default=[],
+        metavar="SLOT[=RANK]",
+        help="Defensive Q/W/E/R ability cast by the defender (repeat, e.g. W=5 or R=3).",
+    )
+    survive.add_argument(
         "--incoming",
         help='Manual hits, e.g. "attack:400, attack:crit:600, magic:300, true:150, wait:1".',
     )
@@ -766,6 +780,13 @@ def _add_optimize_parser(subparsers: argparse._SubParsersAction) -> None:
     )
     opt.add_argument("--enemy-learned", action="append", default=[], metavar="SLOT=RANK")
     opt.add_argument("--enemy-range", choices=("melee", "ranged"))
+    opt.add_argument(
+        "--defender-cast",
+        action="append",
+        default=[],
+        metavar="SLOT[=RANK]",
+        help="Defensive Q/W/E/R ability cast by the defender during time_to_die.",
+    )
     opt.add_argument("--assume", action="append", default=[], metavar="FIELD=VALUE")
     opt.add_argument("--input", action="append", default=[], metavar="NAME=VALUE")
     _add_build_option(opt)
@@ -1249,6 +1270,7 @@ def _run_survive(args: argparse.Namespace) -> int:
             )
         summoners = list(args.summoner)
         summoner_data = load_summoner_spells(root) if summoners else None
+        defender_ranks = _parse_ranks(args.learned)
         outcome = evaluate_defense(
             defender_sheet,
             hits,
@@ -1263,6 +1285,8 @@ def _run_survive(args: argparse.Namespace) -> int:
             kit=defender_kit,
             summoners=summoners,
             summoner_data=summoner_data,
+            defender_casts=args.defender_cast,
+            defender_ranks=defender_ranks,
         )
     except (StatsError, KitError, RotationError) as exc:
         print(f"error: {exc}", file=sys.stderr)
@@ -1421,6 +1445,7 @@ def _run_optimize(args: argparse.Namespace) -> int:
             shards=shards,
             rune_data=rune_data,
             summoners=list(args.summoner),
+            defender_casts=args.defender_cast,
         )
     except (StatsError, KitError, DamageInputError, RotationError) as exc:
         print(f"error: {exc}", file=sys.stderr)

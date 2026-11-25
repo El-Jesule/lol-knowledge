@@ -3,7 +3,7 @@
   "champion": "Akali",
   "label": "Derivado",
   "game_version": "16.23",
-  "content_version": "16.23.8406595+branch.releases-16-23.content.release",
+  "content_version": "16.23.8418428+branch.releases-16-23.content.release",
   "verified_against": {
     "content_version": "16.23.8406595+branch.releases-16-23.content.release",
     "bin_sha256": "82f2e95bb5e424c09e468a32eee8856578a83d0e1eba483d34e781bcc8344cdf",
@@ -79,7 +79,7 @@
                 ]
               },
               "label": "Derivado",
-              "source": "Characters/Akali/Spells/AkaliPAbility/AkaliP.mSpellCalculations.Damage (16.23.8406595+branch.releases-16-23.content.release)",
+              "source": "Characters/Akali/Spells/AkaliPAbility/AkaliP.mSpellCalculations.Damage (16.23.8418428+branch.releases-16-23.content.release)",
               "damage_type_source": "spell_akalip_tooltip <magicDamage>"
             }
           ]
@@ -118,7 +118,7 @@
             ]
           },
           "label": "Derivado",
-          "source": "Characters/Akali/Spells/AkaliPAbility/AkaliP.mSpellCalculations.PassiveSpeedBonus (16.23.8406595+branch.releases-16-23.content.release)",
+          "source": "Characters/Akali/Spells/AkaliPAbility/AkaliP.mSpellCalculations.PassiveSpeedBonus (16.23.8418428+branch.releases-16-23.content.release)",
           "stat": "move_speed",
           "mode": "percent_ms",
           "input_name": "akali_ring_ms",
@@ -180,7 +180,7 @@
                 ]
               },
               "label": "Derivado",
-              "source": "Characters/Akali/Spells/AkaliQAbility/AkaliQ.mSpellCalculations.Damage (16.23.8406595+branch.releases-16-23.content.release)",
+              "source": "Characters/Akali/Spells/AkaliQAbility/AkaliQ.mSpellCalculations.Damage (16.23.8418428+branch.releases-16-23.content.release)",
               "damage_type_source": "spell_akaliqalt_tooltip <magicDamage>"
             }
           ]
@@ -198,6 +198,28 @@
       "passive_stats": [],
       "not_modelled": [
         "Invisibilidad, velocidad de movimiento y aumento temporal de +80 energía máxima"
+      ],
+      "active_effects": [
+        {
+          "id": "w_movementspeed",
+          "name": "W (VM)",
+          "kind": "stat_bonus",
+          "formula": {
+            "op": "by_rank",
+            "values": [
+              0.3,
+              0.35,
+              0.4,
+              0.45,
+              0.5
+            ]
+          },
+          "label": "Derivado",
+          "source": "Characters/Akali/Spells/AkaliWAbility/AkaliW.DataValues.MovementSpeed (16.23.8418428+branch.releases-16-23.content.release)",
+          "stat": "move_speed",
+          "mode": "percent_ms",
+          "duration_seconds": 2
+        }
       ]
     },
     "E": {
@@ -254,7 +276,7 @@
                 ]
               },
               "label": "Derivado",
-              "source": "Characters/Akali/Spells/AkaliEAbility/AkaliE.mSpellCalculations.E1Damage (16.23.8406595+branch.releases-16-23.content.release)",
+              "source": "Characters/Akali/Spells/AkaliEAbility/AkaliE.mSpellCalculations.E1Damage (16.23.8418428+branch.releases-16-23.content.release)",
               "damage_type_source": "spell_akalie_tooltipsimple <magicDamage>"
             }
           ]
@@ -309,7 +331,7 @@
                 ]
               },
               "label": "Derivado",
-              "source": "Characters/Akali/Spells/AkaliEAbility/AkaliE.mSpellCalculations.E2DamageCalc (16.23.8406595+branch.releases-16-23.content.release)",
+              "source": "Characters/Akali/Spells/AkaliEAbility/AkaliE.mSpellCalculations.E2DamageCalc (16.23.8418428+branch.releases-16-23.content.release)",
               "damage_type_source": "spell_akalie_tooltipsimple <magicDamage>"
             }
           ],
@@ -373,7 +395,7 @@
                 ]
               },
               "label": "Derivado",
-              "source": "Characters/Akali/Spells/AkaliRAbility/AkaliR.mSpellCalculations.Cast1Damage (16.23.8406595+branch.releases-16-23.content.release)",
+              "source": "Characters/Akali/Spells/AkaliRAbility/AkaliR.mSpellCalculations.Cast1Damage (16.23.8418428+branch.releases-16-23.content.release)",
               "damage_type_source": "spell_akalir_tooltip <magicDamage>"
             }
           ]
@@ -412,7 +434,7 @@
                 ]
               },
               "label": "Derivado",
-              "source": "Characters/Akali/Spells/AkaliRAbility/AkaliR.mSpellCalculations.Cast2DamageMin (16.23.8406595+branch.releases-16-23.content.release)",
+              "source": "Characters/Akali/Spells/AkaliRAbility/AkaliR.mSpellCalculations.Cast2DamageMin (16.23.8418428+branch.releases-16-23.content.release)",
               "damage_type_source": "spell_akalir_tooltip <magicDamage>"
             }
           ],
@@ -461,7 +483,7 @@
                 ]
               },
               "label": "Derivado",
-              "source": "Characters/Akali/Spells/AkaliRAbility/AkaliR.mSpellCalculations.Cast2DamageMax (16.23.8406595+branch.releases-16-23.content.release)",
+              "source": "Characters/Akali/Spells/AkaliRAbility/AkaliR.mSpellCalculations.Cast2DamageMax (16.23.8418428+branch.releases-16-23.content.release)",
               "damage_type_source": "spell_akalir_tooltip <magicDamage>"
             }
           ],

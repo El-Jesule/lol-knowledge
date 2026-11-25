@@ -56,6 +56,19 @@
       ],
       "not_modelled": [
         "Ralentización breve, DA ganado (BonusAD) y DA robado al objetivo (SappedAD)"
+      ],
+      "active_effects": [
+        {
+          "id": "chomp_ad",
+          "name": "Mordisco (AD)",
+          "kind": "stat_bonus",
+          "stat": "attack_damage",
+          "mode": "flat",
+          "data_value": "BonusAD",
+          "duration_seconds": {
+            "data_value": "SapDebuffDuration"
+          }
+        }
       ]
     },
     "W": {
@@ -63,6 +76,31 @@
       "tooltip": "spell_trundledesecrate_tooltip",
       "not_modelled": [
         "Zona de velocidad de movimiento, velocidad de ataque y amplificación de curaciones"
+      ],
+      "active_effects": [
+        {
+          "id": "frozen_domain_as",
+          "name": "Reino helado (VA)",
+          "kind": "stat_bonus",
+          "stat": "attack_speed_bonus",
+          "mode": "flat",
+          "data_value": "ASBonus",
+          "scale": 100,
+          "duration_seconds": {
+            "data_value": "Duration"
+          }
+        },
+        {
+          "id": "frozen_domain_ms",
+          "name": "Reino helado (VM %)",
+          "kind": "stat_bonus",
+          "stat": "move_speed",
+          "mode": "percent_ms",
+          "data_value": "MSBonus",
+          "duration_seconds": {
+            "data_value": "Duration"
+          }
+        }
       ]
     },
     "E": {

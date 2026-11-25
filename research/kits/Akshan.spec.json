@@ -80,6 +80,19 @@
       ],
       "not_modelled": [
         "Extensión de alcance al golpear enemigos, velocidad de movimiento (TotalHaste) y daño reducido a súbditos"
+      ],
+      "active_effects": [
+        {
+          "id": "q_totalhaste",
+          "name": "Q (VM)",
+          "kind": "stat_bonus",
+          "stat": "move_speed",
+          "mode": "percent_ms",
+          "calculation": "TotalHaste",
+          "duration_seconds": {
+            "data_value": "HasteDuration"
+          }
+        }
       ]
     },
     "W": {

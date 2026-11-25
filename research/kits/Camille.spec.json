@@ -68,6 +68,19 @@
       "not_modelled": [
         "Conversión progresiva a daño verdadero tras 1,5 s (DamageConversionPercentage, 40 %–100 % según nivel)",
         "Velocidad de movimiento (MSBonus) y daño del propio ataque básico"
+      ],
+      "active_effects": [
+        {
+          "id": "q_msbonus",
+          "name": "Q (VM)",
+          "kind": "stat_bonus",
+          "stat": "move_speed",
+          "mode": "percent_ms",
+          "data_value": "MSBonus",
+          "duration_seconds": {
+            "data_value": "MSDuration"
+          }
+        }
       ]
     },
     "W": {
@@ -133,6 +146,20 @@
       ],
       "not_modelled": [
         "Desplazamiento en muro, aturdimiento y velocidad de ataque (ASBuff)"
+      ],
+      "active_effects": [
+        {
+          "id": "e_asbuff",
+          "name": "E (VA)",
+          "kind": "stat_bonus",
+          "stat": "attack_speed_bonus",
+          "mode": "flat",
+          "scale": 100,
+          "data_value": "ASBuff",
+          "duration_seconds": {
+            "data_value": "ASDuration"
+          }
+        }
       ]
     },
     "R": {

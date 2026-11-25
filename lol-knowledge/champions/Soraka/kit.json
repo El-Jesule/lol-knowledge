@@ -3,7 +3,7 @@
   "champion": "Soraka",
   "label": "Derivado",
   "game_version": "16.23",
-  "content_version": "16.23.8406595+branch.releases-16-23.content.release",
+  "content_version": "16.23.8418428+branch.releases-16-23.content.release",
   "verified_against": {
     "content_version": "16.23.8406595+branch.releases-16-23.content.release",
     "bin_sha256": "05bd2d086669d0354f42f4be6de16db91b0544731e053b794b6cbf4e343f3be0",
@@ -30,7 +30,7 @@
             "value": 0.9
           },
           "label": "Derivado",
-          "source": "Characters/Soraka/Spells/Consecration_SelfAbility/Consecration_Self.DataValues.MovementSpeed (16.23.8406595+branch.releases-16-23.content.release)",
+          "source": "Characters/Soraka/Spells/Consecration_SelfAbility/Consecration_Self.DataValues.MovementSpeed (16.23.8418428+branch.releases-16-23.content.release)",
           "stat": "move_speed",
           "mode": "percent_ms",
           "input_name": "soraka_salvation",
@@ -78,7 +78,7 @@
                 ]
               },
               "label": "Derivado",
-              "source": "Characters/Soraka/Spells/SorakaQAbility/SorakaQ.mSpellCalculations.TotalDamage (16.23.8406595+branch.releases-16-23.content.release)",
+              "source": "Characters/Soraka/Spells/SorakaQAbility/SorakaQ.mSpellCalculations.TotalDamage (16.23.8418428+branch.releases-16-23.content.release)",
               "damage_type_source": "spell_sorakaq_tooltip <magicDamage>"
             }
           ]
@@ -87,6 +87,66 @@
       "passive_stats": [],
       "not_modelled": [
         "Ralentización, curación sobre el tiempo Rejuvenecimiento (TotalHoT) y velocidad de movimiento"
+      ],
+      "active_effects": [
+        {
+          "id": "starcall_hot",
+          "name": "Invocación estelar (Rejuvenecimiento HoT)",
+          "kind": "heal",
+          "formula": {
+            "op": "add",
+            "operands": [
+              {
+                "op": "by_rank",
+                "values": [
+                  60,
+                  75,
+                  90,
+                  105,
+                  120
+                ]
+              },
+              {
+                "op": "mul",
+                "operands": [
+                  {
+                    "op": "constant",
+                    "value": 0.3
+                  },
+                  {
+                    "op": "stat",
+                    "stat": "ability_power",
+                    "scope": "total"
+                  }
+                ]
+              }
+            ]
+          },
+          "label": "Derivado",
+          "source": "Characters/Soraka/Spells/SorakaQAbility/SorakaQ.mSpellCalculations.TotalHoT (16.23.8418428+branch.releases-16-23.content.release)",
+          "over_duration": true,
+          "duration_seconds": 2.5
+        },
+        {
+          "id": "starcall_ms",
+          "name": "Invocación estelar (VM %)",
+          "kind": "stat_bonus",
+          "formula": {
+            "op": "by_rank",
+            "values": [
+              0.2,
+              0.225,
+              0.25,
+              0.275,
+              0.3
+            ]
+          },
+          "label": "Derivado",
+          "source": "Characters/Soraka/Spells/SorakaQAbility/SorakaQ.DataValues.MoveSpeedHaste (16.23.8418428+branch.releases-16-23.content.release)",
+          "stat": "move_speed",
+          "mode": "percent_ms",
+          "duration_seconds": 2.5
+        }
       ]
     },
     "W": {
@@ -96,6 +156,44 @@
       "passive_stats": [],
       "not_modelled": [
         "Curación a aliado (TotalHeal), coste del 10 % de vida máxima (reducido con Rejuvenecimiento) y límite mínimo de vida"
+      ],
+      "active_effects": [
+        {
+          "id": "astral_infusion_heal",
+          "name": "Inyección astral (curación)",
+          "kind": "heal",
+          "formula": {
+            "op": "add",
+            "operands": [
+              {
+                "op": "by_rank",
+                "values": [
+                  90,
+                  110,
+                  130,
+                  150,
+                  170
+                ]
+              },
+              {
+                "op": "mul",
+                "operands": [
+                  {
+                    "op": "constant",
+                    "value": 0.5
+                  },
+                  {
+                    "op": "stat",
+                    "stat": "ability_power",
+                    "scope": "total"
+                  }
+                ]
+              }
+            ]
+          },
+          "label": "Derivado",
+          "source": "Characters/Soraka/Spells/SorakaWAbility/SorakaW.mSpellCalculations.TotalHeal (16.23.8418428+branch.releases-16-23.content.release)"
+        }
       ]
     },
     "E": {
@@ -138,7 +236,7 @@
                 ]
               },
               "label": "Derivado",
-              "source": "Characters/Soraka/Spells/SorakaEAbility/SorakaE.mSpellCalculations.TotalDamage (16.23.8406595+branch.releases-16-23.content.release)",
+              "source": "Characters/Soraka/Spells/SorakaEAbility/SorakaE.mSpellCalculations.TotalDamage (16.23.8418428+branch.releases-16-23.content.release)",
               "damage_type_source": "spell_sorakae_tooltip <magicDamage>"
             }
           ]
@@ -156,6 +254,42 @@
       "passive_stats": [],
       "not_modelled": [
         "Curación global a todos los aliados (HealingCalc / AmpedHealing bajo 40 % vida)"
+      ],
+      "active_effects": [
+        {
+          "id": "wish_heal",
+          "name": "Plegaria (curación base)",
+          "kind": "heal",
+          "formula": {
+            "op": "add",
+            "operands": [
+              {
+                "op": "by_rank",
+                "values": [
+                  150,
+                  250,
+                  350
+                ]
+              },
+              {
+                "op": "mul",
+                "operands": [
+                  {
+                    "op": "constant",
+                    "value": 0.5
+                  },
+                  {
+                    "op": "stat",
+                    "stat": "ability_power",
+                    "scope": "total"
+                  }
+                ]
+              }
+            ]
+          },
+          "label": "Derivado",
+          "source": "Characters/Soraka/Spells/SorakaRAbility/SorakaR.mSpellCalculations.HealingCalc (16.23.8418428+branch.releases-16-23.content.release)"
+        }
       ]
     }
   }

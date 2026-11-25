@@ -3,7 +3,7 @@
   "champion": "Ekko",
   "label": "Derivado",
   "game_version": "16.23",
-  "content_version": "16.23.8406595+branch.releases-16-23.content.release",
+  "content_version": "16.23.8418428+branch.releases-16-23.content.release",
   "verified_against": {
     "content_version": "16.23.8406595+branch.releases-16-23.content.release",
     "bin_sha256": "681c215a58d98aa10c4854ce5c5fc7aeb707bec531399de32efd13a99cccab69",
@@ -65,7 +65,7 @@
                 ]
               },
               "label": "Derivado",
-              "source": "Characters/Ekko/Spells/EkkoPassiveAbility/EkkoPassive.mSpellCalculations.ThreeHitDamage (16.23.8406595+branch.releases-16-23.content.release)",
+              "source": "Characters/Ekko/Spells/EkkoPassiveAbility/EkkoPassive.mSpellCalculations.ThreeHitDamage (16.23.8418428+branch.releases-16-23.content.release)",
               "damage_type_source": "spell_ekkopassive_tooltip <magicDamage>"
             }
           ]
@@ -123,7 +123,7 @@
             ]
           },
           "label": "Derivado",
-          "source": "Characters/Ekko/Spells/EkkoPassiveAbility/EkkoPassive.mSpellCalculations.ThreeHitDamage (16.23.8406595+branch.releases-16-23.content.release)",
+          "source": "Characters/Ekko/Spells/EkkoPassiveAbility/EkkoPassive.mSpellCalculations.ThreeHitDamage (16.23.8418428+branch.releases-16-23.content.release)",
           "trigger": "every_n_hits",
           "damage_type": "magic",
           "cooldown_seconds": 4,
@@ -171,7 +171,7 @@
                 ]
               },
               "label": "Derivado",
-              "source": "Characters/Ekko/Spells/EkkoQAbility/EkkoQ.mSpellCalculations.InitialDamage (16.23.8406595+branch.releases-16-23.content.release)",
+              "source": "Characters/Ekko/Spells/EkkoQAbility/EkkoQ.mSpellCalculations.InitialDamage (16.23.8418428+branch.releases-16-23.content.release)",
               "damage_type_source": "spell_ekkoq_tooltip <magicDamage>"
             }
           ]
@@ -212,7 +212,7 @@
                 ]
               },
               "label": "Derivado",
-              "source": "Characters/Ekko/Spells/EkkoQAbility/EkkoQ.mSpellCalculations.RecallDamage (16.23.8406595+branch.releases-16-23.content.release)",
+              "source": "Characters/Ekko/Spells/EkkoQAbility/EkkoQ.mSpellCalculations.RecallDamage (16.23.8418428+branch.releases-16-23.content.release)",
               "damage_type_source": "spell_ekkoq_tooltip <magicDamage>"
             }
           ]
@@ -253,7 +253,7 @@
                 ]
               },
               "label": "Derivado",
-              "source": "Characters/Ekko/Spells/EkkoQAbility/EkkoQ.mSpellCalculations.InitialDamage (16.23.8406595+branch.releases-16-23.content.release)",
+              "source": "Characters/Ekko/Spells/EkkoQAbility/EkkoQ.mSpellCalculations.InitialDamage (16.23.8418428+branch.releases-16-23.content.release)",
               "damage_type_source": "spell_ekkoq_tooltip <magicDamage>"
             },
             {
@@ -288,7 +288,7 @@
                 ]
               },
               "label": "Derivado",
-              "source": "Characters/Ekko/Spells/EkkoQAbility/EkkoQ.mSpellCalculations.RecallDamage (16.23.8406595+branch.releases-16-23.content.release)",
+              "source": "Characters/Ekko/Spells/EkkoQAbility/EkkoQ.mSpellCalculations.RecallDamage (16.23.8418428+branch.releases-16-23.content.release)",
               "damage_type_source": "spell_ekkoq_tooltip <magicDamage>"
             }
           ]
@@ -354,7 +354,7 @@
                 ]
               },
               "label": "Derivado",
-              "source": "Characters/Ekko/Spells/EkkoWAbility/EkkoW · (MissingHealthPercent %) × vida que falta del objetivo (16.23.8406595+branch.releases-16-23.content.release)",
+              "source": "Characters/Ekko/Spells/EkkoWAbility/EkkoW · (MissingHealthPercent %) × vida que falta del objetivo (16.23.8418428+branch.releases-16-23.content.release)",
               "damage_type_source": "spell_ekkow_tooltip <magicDamage>"
             }
           ]
@@ -363,6 +363,46 @@
       "passive_stats": [],
       "not_modelled": [
         "Umbral automático del 30 % de vida, escudo (TotalShield) y aturdimiento"
+      ],
+      "active_effects": [
+        {
+          "id": "parallel_convergence_shield",
+          "name": "Convergencia paralela (escudo)",
+          "kind": "shield",
+          "formula": {
+            "op": "add",
+            "operands": [
+              {
+                "op": "by_rank",
+                "values": [
+                  100,
+                  120,
+                  140,
+                  160,
+                  180
+                ]
+              },
+              {
+                "op": "mul",
+                "operands": [
+                  {
+                    "op": "constant",
+                    "value": 1.5
+                  },
+                  {
+                    "op": "stat",
+                    "stat": "ability_power",
+                    "scope": "total"
+                  }
+                ]
+              }
+            ]
+          },
+          "label": "Derivado",
+          "source": "Characters/Ekko/Spells/EkkoWAbility/EkkoW.mSpellCalculations.TotalShield (16.23.8418428+branch.releases-16-23.content.release)",
+          "condition": "entered_chronosphere",
+          "duration_seconds": 2.0
+        }
       ]
     },
     "E": {
@@ -405,7 +445,7 @@
                 ]
               },
               "label": "Derivado",
-              "source": "Characters/Ekko/Spells/EkkoEAbility/EkkoE.mSpellCalculations.TotalDamage (16.23.8406595+branch.releases-16-23.content.release)",
+              "source": "Characters/Ekko/Spells/EkkoEAbility/EkkoE.mSpellCalculations.TotalDamage (16.23.8418428+branch.releases-16-23.content.release)",
               "damage_type_source": "spell_ekkoe_tooltip <magicDamage>"
             }
           ]
@@ -454,7 +494,7 @@
                 ]
               },
               "label": "Derivado",
-              "source": "Characters/Ekko/Spells/EkkoRAbility/EkkoR.mSpellCalculations.TotalDamage (16.23.8406595+branch.releases-16-23.content.release)",
+              "source": "Characters/Ekko/Spells/EkkoRAbility/EkkoR.mSpellCalculations.TotalDamage (16.23.8418428+branch.releases-16-23.content.release)",
               "damage_type_source": "spell_ekkor_tooltip <magicDamage>"
             }
           ]
@@ -463,6 +503,42 @@
       "passive_stats": [],
       "not_modelled": [
         "Estasis, regreso 4 s atrás y curación (TotalBaseHeal)"
+      ],
+      "active_effects": [
+        {
+          "id": "r_totalbaseheal",
+          "name": "R (curación)",
+          "kind": "heal",
+          "formula": {
+            "op": "add",
+            "operands": [
+              {
+                "op": "by_rank",
+                "values": [
+                  100,
+                  150,
+                  200
+                ]
+              },
+              {
+                "op": "mul",
+                "operands": [
+                  {
+                    "op": "constant",
+                    "value": 0.6
+                  },
+                  {
+                    "op": "stat",
+                    "stat": "ability_power",
+                    "scope": "total"
+                  }
+                ]
+              }
+            ]
+          },
+          "label": "Derivado",
+          "source": "Characters/Ekko/Spells/EkkoRAbility/EkkoR.mSpellCalculations.TotalBaseHeal (16.23.8418428+branch.releases-16-23.content.release)"
+        }
       ]
     }
   }

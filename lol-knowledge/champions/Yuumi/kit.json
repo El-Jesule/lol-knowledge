@@ -3,7 +3,7 @@
   "champion": "Yuumi",
   "label": "Derivado",
   "game_version": "16.23",
-  "content_version": "16.23.8406595+branch.releases-16-23.content.release",
+  "content_version": "16.23.8418428+branch.releases-16-23.content.release",
   "verified_against": {
     "content_version": "16.23.8406595+branch.releases-16-23.content.release",
     "bin_sha256": "c373a7cb11a699a057649ff7a521178a821657e4d42dce6aadc2b2310bf67cf4",
@@ -50,7 +50,7 @@
             ]
           },
           "label": "Derivado",
-          "source": "Characters/Yuumi/Spells/YuumiPAbility/YuumiP.mSpellCalculations.HealAmount (16.23.8406595+branch.releases-16-23.content.release)",
+          "source": "Characters/Yuumi/Spells/YuumiPAbility/YuumiP.mSpellCalculations.HealAmount (16.23.8418428+branch.releases-16-23.content.release)",
           "trigger": "on_champion_hit",
           "cooldown_formula": {
             "op": "by_level",
@@ -119,7 +119,7 @@
                 ]
               },
               "label": "Derivado",
-              "source": "Characters/Yuumi/Spells/YuumiQAbility/YuumiQ.mSpellCalculations.TotalMissileDamage (16.23.8406595+branch.releases-16-23.content.release)",
+              "source": "Characters/Yuumi/Spells/YuumiQAbility/YuumiQ.mSpellCalculations.TotalMissileDamage (16.23.8418428+branch.releases-16-23.content.release)",
               "damage_type_source": "spell_yuumimagicmissile_tooltip <magicDamage>"
             }
           ]
@@ -161,7 +161,7 @@
                 ]
               },
               "label": "Derivado",
-              "source": "Characters/Yuumi/Spells/YuumiQAbility/YuumiQ.mSpellCalculations.TotalMissileDamageEmpowered (16.23.8406595+branch.releases-16-23.content.release)",
+              "source": "Characters/Yuumi/Spells/YuumiQAbility/YuumiQ.mSpellCalculations.TotalMissileDamageEmpowered (16.23.8418428+branch.releases-16-23.content.release)",
               "damage_type_source": "spell_yuumimagicmissile_tooltip <magicDamage>"
             }
           ]
@@ -203,7 +203,7 @@
                 ]
               },
               "label": "Derivado",
-              "source": "Characters/Yuumi/Spells/YuumiQAbility/YuumiQ.mSpellCalculations.OnHitDamageCalc (16.23.8406595+branch.releases-16-23.content.release)",
+              "source": "Characters/Yuumi/Spells/YuumiQAbility/YuumiQ.mSpellCalculations.OnHitDamageCalc (16.23.8418428+branch.releases-16-23.content.release)",
               "damage_type_source": "spell_yuumimagicmissile_tooltip <magicDamage>"
             }
           ]
@@ -230,6 +230,98 @@
       "passive_stats": [],
       "not_modelled": [
         "Escudo (TotalShielding), velocidad de ataque (TotalAttackSpeed), velocidad de movimiento y restauración de maná (ManaRestore)"
+      ],
+      "active_effects": [
+        {
+          "id": "zoomies_shield",
+          "name": "Presteza gatuna (escudo)",
+          "kind": "shield",
+          "formula": {
+            "op": "add",
+            "operands": [
+              {
+                "op": "by_rank",
+                "values": [
+                  65,
+                  90,
+                  115,
+                  140,
+                  165
+                ]
+              },
+              {
+                "op": "mul",
+                "operands": [
+                  {
+                    "op": "constant",
+                    "value": 0.4
+                  },
+                  {
+                    "op": "stat",
+                    "stat": "ability_power",
+                    "scope": "total"
+                  }
+                ]
+              }
+            ]
+          },
+          "label": "Derivado",
+          "source": "Characters/Yuumi/Spells/YuumiEAbility/YuumiE.mSpellCalculations.TotalShielding (16.23.8418428+branch.releases-16-23.content.release)",
+          "duration_seconds": 3
+        },
+        {
+          "id": "zoomies_as",
+          "name": "Presteza gatuna (VA)",
+          "kind": "stat_bonus",
+          "formula": {
+            "op": "add",
+            "operands": [
+              {
+                "op": "by_rank",
+                "values": [
+                  25,
+                  27.5,
+                  30,
+                  32.5,
+                  35
+                ]
+              },
+              {
+                "op": "mul",
+                "operands": [
+                  {
+                    "op": "constant",
+                    "value": 0.08
+                  },
+                  {
+                    "op": "stat",
+                    "stat": "ability_power",
+                    "scope": "total"
+                  }
+                ]
+              }
+            ]
+          },
+          "label": "Derivado",
+          "source": "Characters/Yuumi/Spells/YuumiEAbility/YuumiE.mSpellCalculations.TotalAttackSpeed (16.23.8418428+branch.releases-16-23.content.release)",
+          "stat": "attack_speed_bonus",
+          "mode": "flat",
+          "duration_seconds": 3
+        },
+        {
+          "id": "zoomies_ms",
+          "name": "Presteza gatuna (VM %)",
+          "kind": "stat_bonus",
+          "formula": {
+            "op": "constant",
+            "value": 0.2
+          },
+          "label": "Derivado",
+          "source": "Characters/Yuumi/Spells/YuumiEAbility/YuumiE.DataValues.MSAmount (16.23.8418428+branch.releases-16-23.content.release)",
+          "stat": "move_speed",
+          "mode": "percent_ms",
+          "duration_seconds": 3
+        }
       ]
     },
     "R": {
@@ -270,7 +362,7 @@
                 ]
               },
               "label": "Derivado",
-              "source": "Characters/Yuumi/Spells/YuumiRAbility/YuumiR.mSpellCalculations.TotalMissileDamage (16.23.8406595+branch.releases-16-23.content.release)",
+              "source": "Characters/Yuumi/Spells/YuumiRAbility/YuumiR.mSpellCalculations.TotalMissileDamage (16.23.8418428+branch.releases-16-23.content.release)",
               "damage_type_source": "spell_yuumir_tooltip <magicDamage>"
             }
           ]
@@ -279,6 +371,53 @@
       "passive_stats": [],
       "not_modelled": [
         "5 oleadas con reducción en impactos múltiples (TotalSingleTargetDamage, MultiMissileTotal), ralentización y curación a aliados"
+      ],
+      "active_effects": [
+        {
+          "id": "final_chapter_heal",
+          "name": "Capítulo final (5 oleadas HoT)",
+          "kind": "heal",
+          "formula": {
+            "op": "mul",
+            "operands": [
+              {
+                "op": "add",
+                "operands": [
+                  {
+                    "op": "by_rank",
+                    "values": [
+                      30,
+                      50,
+                      70
+                    ]
+                  },
+                  {
+                    "op": "mul",
+                    "operands": [
+                      {
+                        "op": "constant",
+                        "value": 0.12
+                      },
+                      {
+                        "op": "stat",
+                        "stat": "ability_power",
+                        "scope": "total"
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "op": "constant",
+                "value": 5
+              }
+            ]
+          },
+          "label": "Derivado",
+          "source": "Characters/Yuumi/Spells/YuumiRAbility/YuumiR · mSpellCalculations.TotalHealPerWave * DataValues.NumberOfWaves (16.23.8418428+branch.releases-16-23.content.release)",
+          "over_duration": true,
+          "duration_seconds": 3.5
+        }
       ]
     }
   }

@@ -156,6 +156,19 @@
       ],
       "not_modelled": [
         "Velocidad de movimiento y tope de 450 contra monstruos"
+      ],
+      "active_effects": [
+        {
+          "id": "e_speedamount",
+          "name": "E (VM)",
+          "kind": "stat_bonus",
+          "stat": "move_speed",
+          "mode": "percent_ms",
+          "data_value": "SpeedAmount",
+          "duration_seconds": {
+            "data_value": "MSDuration"
+          }
+        }
       ]
     },
     "R": {

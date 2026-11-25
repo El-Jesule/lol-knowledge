@@ -47,6 +47,14 @@
       "tooltip": "spell_taricq_tooltip",
       "not_modelled": [
         "Curación en área por cargas (HealingPerStack, MaxStackHealing)"
+      ],
+      "active_effects": [
+        {
+          "id": "starlights_touch_heal",
+          "name": "Toque de luz estelar (1 carga)",
+          "kind": "heal",
+          "calculation": "HealingPerStack"
+        }
       ]
     },
     "W": {
@@ -54,6 +62,35 @@
       "tooltip": "spell_taricw_tooltip",
       "not_modelled": [
         "Armadura pasiva por porcentaje de armadura total (BonusArmor: 6..10 % de armadura de Taric), vínculo aliado y escudo"
+      ],
+      "active_effects": [
+        {
+          "id": "bastion_shield",
+          "name": "Bastión (escudo)",
+          "kind": "shield",
+          "formula": {
+            "op": "mul",
+            "operands": [
+              {
+                "op": "data_value",
+                "name": "ShieldHPRatio"
+              },
+              {
+                "op": "constant",
+                "value": 0.01
+              },
+              {
+                "op": "stat",
+                "stat": "health",
+                "scope": "max"
+              }
+            ]
+          },
+          "source_note": "DataValues.ShieldHPRatio% of max health",
+          "duration_seconds": {
+            "data_value": "ShieldDuration"
+          }
+        }
       ]
     },
     "E": {

@@ -3,7 +3,7 @@
   "champion": "Bard",
   "label": "Derivado",
   "game_version": "16.23",
-  "content_version": "16.23.8406595+branch.releases-16-23.content.release",
+  "content_version": "16.23.8418428+branch.releases-16-23.content.release",
   "verified_against": {
     "content_version": "16.23.8406595+branch.releases-16-23.content.release",
     "bin_sha256": "3645f05d9c3aa8a0984cf65a6d37132caca2d356c430bdc54f757c37ea82a0e9",
@@ -46,7 +46,7 @@
                 ]
               },
               "label": "Derivado",
-              "source": "Characters/Bard/Spells/BardPTooltip_D_nSAbility/BardPTooltip_D_nS.mSpellCalculations.MeepDamageNoChime (16.23.8406595+branch.releases-16-23.content.release)",
+              "source": "Characters/Bard/Spells/BardPTooltip_D_nSAbility/BardPTooltip_D_nS.mSpellCalculations.MeepDamageNoChime (16.23.8418428+branch.releases-16-23.content.release)",
               "damage_type_source": "spell_bardptooltip_d_ns_tooltip <magicDamage>"
             }
           ],
@@ -86,7 +86,7 @@
             ]
           },
           "label": "Derivado",
-          "source": "Characters/Bard/Spells/BardPTooltip_D_nSAbility/BardPTooltip_D_nS.mSpellCalculations.MeepDamageNoChime (16.23.8406595+branch.releases-16-23.content.release)",
+          "source": "Characters/Bard/Spells/BardPTooltip_D_nSAbility/BardPTooltip_D_nS.mSpellCalculations.MeepDamageNoChime (16.23.8418428+branch.releases-16-23.content.release)",
           "trigger": "on_attack",
           "damage_type": "magic",
           "cooldown_seconds": 8
@@ -133,7 +133,7 @@
                 ]
               },
               "label": "Derivado",
-              "source": "Characters/Bard/Spells/BardQAbility/BardQ.mSpellCalculations.TotalDamage (16.23.8406595+branch.releases-16-23.content.release)",
+              "source": "Characters/Bard/Spells/BardQAbility/BardQ.mSpellCalculations.TotalDamage (16.23.8418428+branch.releases-16-23.content.release)",
               "damage_type_source": "spell_bardq_tooltip <magicDamage>"
             }
           ],
@@ -153,6 +153,83 @@
       "passive_stats": [],
       "not_modelled": [
         "Curación inmediata o cargada (InitialHeal, MaxHeal) y velocidad de movimiento (Calc_MoveSpeed)"
+      ],
+      "active_effects": [
+        {
+          "id": "w_initialheal",
+          "name": "W (curación)",
+          "kind": "heal",
+          "formula": {
+            "op": "add",
+            "operands": [
+              {
+                "op": "by_rank",
+                "values": [
+                  25,
+                  50,
+                  75,
+                  100,
+                  125
+                ]
+              },
+              {
+                "op": "mul",
+                "operands": [
+                  {
+                    "op": "constant",
+                    "value": 0.4
+                  },
+                  {
+                    "op": "stat",
+                    "stat": "ability_power",
+                    "scope": "total"
+                  }
+                ]
+              }
+            ]
+          },
+          "label": "Derivado",
+          "source": "Characters/Bard/Spells/BardWAbility/BardW.mSpellCalculations.InitialHeal (16.23.8418428+branch.releases-16-23.content.release)"
+        },
+        {
+          "id": "w_calc_movespeed",
+          "name": "W (VM)",
+          "kind": "stat_bonus",
+          "formula": {
+            "op": "add",
+            "operands": [
+              {
+                "op": "by_rank",
+                "values": [
+                  0.2,
+                  0.225,
+                  0.25,
+                  0.275,
+                  0.3
+                ]
+              },
+              {
+                "op": "mul",
+                "operands": [
+                  {
+                    "op": "constant",
+                    "value": 0.0006
+                  },
+                  {
+                    "op": "stat",
+                    "stat": "ability_power",
+                    "scope": "total"
+                  }
+                ]
+              }
+            ]
+          },
+          "label": "Derivado",
+          "source": "Characters/Bard/Spells/BardWAbility/BardW.mSpellCalculations.Calc_MoveSpeed (16.23.8418428+branch.releases-16-23.content.release)",
+          "stat": "move_speed",
+          "mode": "percent_ms",
+          "duration_seconds": 1.5
+        }
       ]
     },
     "E": {

@@ -3,7 +3,7 @@
   "champion": "Volibear",
   "label": "Derivado",
   "game_version": "16.23",
-  "content_version": "16.23.8406595+branch.releases-16-23.content.release",
+  "content_version": "16.23.8418428+branch.releases-16-23.content.release",
   "verified_against": {
     "content_version": "16.23.8406595+branch.releases-16-23.content.release",
     "bin_sha256": "15c01ae174494944c99cad46e4808482dc717a5c1a2c0862f670db2354ba0b3e",
@@ -79,7 +79,7 @@
                 ]
               },
               "label": "Derivado",
-              "source": "Characters/Volibear/Spells/VolibearPAbility/VolibearP.mSpellCalculations.ChainLightningDamage (16.23.8406595+branch.releases-16-23.content.release)",
+              "source": "Characters/Volibear/Spells/VolibearPAbility/VolibearP.mSpellCalculations.ChainLightningDamage (16.23.8418428+branch.releases-16-23.content.release)",
               "damage_type_source": "spell_volibearp_tooltip <magicDamage>"
             }
           ]
@@ -127,7 +127,7 @@
             ]
           },
           "label": "Derivado",
-          "source": "Characters/Volibear/Spells/VolibearPAbility/VolibearP.mSpellCalculations.AttackSpeedCalc (16.23.8406595+branch.releases-16-23.content.release)",
+          "source": "Characters/Volibear/Spells/VolibearPAbility/VolibearP.mSpellCalculations.AttackSpeedCalc (16.23.8418428+branch.releases-16-23.content.release)",
           "stat": "attack_speed_bonus",
           "mode": "flat",
           "trigger": "any_hit",
@@ -196,7 +196,7 @@
             ]
           },
           "label": "Derivado",
-          "source": "Characters/Volibear/Spells/VolibearPAbility/VolibearP.mSpellCalculations.ChainLightningDamage (16.23.8406595+branch.releases-16-23.content.release)",
+          "source": "Characters/Volibear/Spells/VolibearPAbility/VolibearP.mSpellCalculations.ChainLightningDamage (16.23.8418428+branch.releases-16-23.content.release)",
           "trigger": "at_max_stacks",
           "damage_type": "magic",
           "stack_source_id": "relentless_storm_as"
@@ -257,7 +257,7 @@
                 ]
               },
               "label": "Derivado",
-              "source": "Characters/Volibear/Spells/VolibearQAbility/VolibearQ.mSpellCalculations.CalculatedDamage (16.23.8406595+branch.releases-16-23.content.release)",
+              "source": "Characters/Volibear/Spells/VolibearQAbility/VolibearQ.mSpellCalculations.CalculatedDamage (16.23.8418428+branch.releases-16-23.content.release)",
               "damage_type_source": "spell_volibearq_tooltip <physicalDamage>"
             }
           ]
@@ -266,6 +266,28 @@
       "passive_stats": [],
       "not_modelled": [
         "Velocidad de movimiento (MinSpeedCalc, MaxSpeedCalc), aturdimiento y ataque básico aparte"
+      ],
+      "active_effects": [
+        {
+          "id": "q_minspeedcalc",
+          "name": "Q (VM)",
+          "kind": "stat_bonus",
+          "formula": {
+            "op": "by_rank",
+            "values": [
+              0.12,
+              0.155,
+              0.19,
+              0.225,
+              0.26
+            ]
+          },
+          "label": "Derivado",
+          "source": "Characters/Volibear/Spells/VolibearQAbility/VolibearQ.mSpellCalculations.MinSpeedCalc (16.23.8418428+branch.releases-16-23.content.release)",
+          "stat": "move_speed",
+          "mode": "percent_ms",
+          "duration_seconds": 4
+        }
       ]
     },
     "W": {
@@ -322,7 +344,7 @@
                 ]
               },
               "label": "Derivado",
-              "source": "Characters/Volibear/Spells/VolibearWAbility/VolibearW.mSpellCalculations.TotalDamage (16.23.8406595+branch.releases-16-23.content.release)",
+              "source": "Characters/Volibear/Spells/VolibearWAbility/VolibearW.mSpellCalculations.TotalDamage (16.23.8418428+branch.releases-16-23.content.release)",
               "damage_type_source": "spell_volibearw_tooltip <physicalDamage>"
             }
           ]
@@ -405,7 +427,7 @@
                 ]
               },
               "label": "Derivado",
-              "source": "Characters/Volibear/Spells/VolibearWAbility/VolibearW.mSpellCalculations.EmpoweredDamage (16.23.8406595+branch.releases-16-23.content.release)",
+              "source": "Characters/Volibear/Spells/VolibearWAbility/VolibearW.mSpellCalculations.EmpoweredDamage (16.23.8418428+branch.releases-16-23.content.release)",
               "damage_type_source": "spell_volibearw_tooltip <physicalDamage>"
             }
           ]
@@ -414,6 +436,61 @@
       "passive_stats": [],
       "not_modelled": [
         "Curación del segundo mordisco (BaseHeal, PercentMissingHealthHealingRatio)"
+      ],
+      "active_effects": [
+        {
+          "id": "frenzied_maul_heal",
+          "name": "Zarpazo frenético (curación sobre marca)",
+          "kind": "heal",
+          "formula": {
+            "op": "add",
+            "operands": [
+              {
+                "op": "by_rank",
+                "values": [
+                  20,
+                  35,
+                  50,
+                  65,
+                  80
+                ]
+              },
+              {
+                "op": "mul",
+                "operands": [
+                  {
+                    "op": "by_rank",
+                    "values": [
+                      0.08,
+                      0.11,
+                      0.14,
+                      0.17,
+                      0.2
+                    ]
+                  },
+                  {
+                    "op": "mul",
+                    "operands": [
+                      {
+                        "op": "stat",
+                        "stat": "health",
+                        "scope": "max"
+                      },
+                      {
+                        "op": "stat",
+                        "stat": "health",
+                        "scope": "missing_fraction"
+                      }
+                    ]
+                  }
+                ]
+              }
+            ]
+          },
+          "label": "Derivado",
+          "source": "Characters/Volibear/Spells/VolibearWAbility/VolibearW · DataValues.BaseHeal + PercentMissingHealthHealingRatio * missing HP (16.23.8418428+branch.releases-16-23.content.release)",
+          "condition": "wounded_target"
+        }
       ]
     },
     "E": {
@@ -456,7 +533,7 @@
                 ]
               },
               "label": "Derivado",
-              "source": "Characters/Volibear/Spells/VolibearEAbility/VolibearE.mSpellCalculations.TotalDamageTooltip (16.23.8406595+branch.releases-16-23.content.release)",
+              "source": "Characters/Volibear/Spells/VolibearEAbility/VolibearE.mSpellCalculations.TotalDamageTooltip (16.23.8418428+branch.releases-16-23.content.release)",
               "damage_type_source": "spell_volibeare_tooltip <magicDamage>"
             },
             {
@@ -483,7 +560,7 @@
                 ]
               },
               "label": "Derivado",
-              "source": "Characters/Volibear/Spells/VolibearEAbility/VolibearE · DataValues.PercentDamage × vida máxima del objetivo (16.23.8406595+branch.releases-16-23.content.release)",
+              "source": "Characters/Volibear/Spells/VolibearEAbility/VolibearE · DataValues.PercentDamage × vida máxima del objetivo (16.23.8418428+branch.releases-16-23.content.release)",
               "damage_type_source": "spell_volibeare_tooltip <magicDamage>"
             }
           ]
@@ -492,6 +569,49 @@
       "passive_stats": [],
       "not_modelled": [
         "Ralentización, escudo propio y tope contra monstruos (MonsterDamageCap)"
+      ],
+      "active_effects": [
+        {
+          "id": "sky_splitter_shield",
+          "name": "Rompecielos (escudo)",
+          "kind": "shield",
+          "formula": {
+            "op": "add",
+            "operands": [
+              {
+                "op": "mul",
+                "operands": [
+                  {
+                    "op": "constant",
+                    "value": 0.75
+                  },
+                  {
+                    "op": "stat",
+                    "stat": "ability_power",
+                    "scope": "total"
+                  }
+                ]
+              },
+              {
+                "op": "mul",
+                "operands": [
+                  {
+                    "op": "constant",
+                    "value": 0.14
+                  },
+                  {
+                    "op": "stat",
+                    "stat": "health",
+                    "scope": "max"
+                  }
+                ]
+              }
+            ]
+          },
+          "label": "Derivado",
+          "source": "Characters/Volibear/Spells/VolibearEAbility/VolibearE · mSpellCalculations.ShieldAPRatioTooltip + DataValues.ShieldAmount * max HP (16.23.8418428+branch.releases-16-23.content.release)",
+          "duration_seconds": 3
+        }
       ]
     },
     "R": {
@@ -546,7 +666,7 @@
                 ]
               },
               "label": "Derivado",
-              "source": "Characters/Volibear/Spells/VolibearRAbility/VolibearR.mSpellCalculations.SweetSpotDamageTooltip (16.23.8406595+branch.releases-16-23.content.release)",
+              "source": "Characters/Volibear/Spells/VolibearRAbility/VolibearR.mSpellCalculations.SweetSpotDamageTooltip (16.23.8418428+branch.releases-16-23.content.release)",
               "damage_type_source": "spell_volibearr_tooltip <physicalDamage>"
             }
           ]
@@ -599,7 +719,7 @@
                 ]
               },
               "label": "Derivado",
-              "source": "Characters/Volibear/Spells/VolibearRAbility/VolibearR.mSpellCalculations.TowerDamageTooltip (16.23.8406595+branch.releases-16-23.content.release)",
+              "source": "Characters/Volibear/Spells/VolibearRAbility/VolibearR.mSpellCalculations.TowerDamageTooltip (16.23.8418428+branch.releases-16-23.content.release)",
               "damage_type_source": "spell_volibearr_tooltip <physicalDamage>"
             }
           ]
@@ -608,6 +728,26 @@
       "passive_stats": [],
       "not_modelled": [
         "Vida adicional temporal (HealthAmount), alcance extra, desactivación de torretas y ralentización"
+      ],
+      "active_effects": [
+        {
+          "id": "stormbringer_hp",
+          "name": "Heraldo de la tormenta (vida máxima)",
+          "kind": "stat_bonus",
+          "formula": {
+            "op": "by_rank",
+            "values": [
+              175,
+              350,
+              525
+            ]
+          },
+          "label": "Derivado",
+          "source": "Characters/Volibear/Spells/VolibearRAbility/VolibearR.DataValues.HealthAmount (16.23.8418428+branch.releases-16-23.content.release)",
+          "stat": "health",
+          "mode": "flat",
+          "duration_seconds": 12
+        }
       ]
     }
   }

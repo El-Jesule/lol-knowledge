@@ -3,7 +3,7 @@
   "champion": "Pyke",
   "label": "Derivado",
   "game_version": "16.23",
-  "content_version": "16.23.8406595+branch.releases-16-23.content.release",
+  "content_version": "16.23.8418428+branch.releases-16-23.content.release",
   "verified_against": {
     "content_version": "16.23.8406595+branch.releases-16-23.content.release",
     "bin_sha256": "8a3781337a0fcb08172c376d85d7b3299f2a8bb4d0493dec4c190de952ba6aca",
@@ -61,7 +61,7 @@
                 ]
               },
               "label": "Derivado",
-              "source": "Characters/Pyke/Spells/PykeQAbility/PykeQ.mSpellCalculations.TotalDamage (16.23.8406595+branch.releases-16-23.content.release)",
+              "source": "Characters/Pyke/Spells/PykeQAbility/PykeQ.mSpellCalculations.TotalDamage (16.23.8418428+branch.releases-16-23.content.release)",
               "damage_type_source": "spell_pykeq_tooltip <physicalDamage>"
             }
           ]
@@ -79,6 +79,50 @@
       "passive_stats": [],
       "not_modelled": [
         "Camuflaje y velocidad de movimiento escalada con letalidad (MoveSpeed)"
+      ],
+      "active_effects": [
+        {
+          "id": "w_movespeed",
+          "name": "W (VM)",
+          "kind": "stat_bonus",
+          "formula": {
+            "op": "mul",
+            "operands": [
+              {
+                "op": "add",
+                "operands": [
+                  {
+                    "op": "constant",
+                    "value": 45
+                  },
+                  {
+                    "op": "mul",
+                    "operands": [
+                      {
+                        "op": "constant",
+                        "value": 2
+                      },
+                      {
+                        "op": "stat",
+                        "stat": "lethality",
+                        "scope": "total"
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "op": "constant",
+                "value": 0.01
+              }
+            ]
+          },
+          "label": "Derivado",
+          "source": "Characters/Pyke/Spells/PykeWAbility/PykeW.mSpellCalculations.MoveSpeed (16.23.8418428+branch.releases-16-23.content.release)",
+          "stat": "move_speed",
+          "mode": "percent_ms",
+          "duration_seconds": 5
+        }
       ]
     },
     "E": {
@@ -121,7 +165,7 @@
                 ]
               },
               "label": "Derivado",
-              "source": "Characters/Pyke/Spells/PykeEAbility/PykeE.mSpellCalculations.TotalDamage (16.23.8406595+branch.releases-16-23.content.release)",
+              "source": "Characters/Pyke/Spells/PykeEAbility/PykeE.mSpellCalculations.TotalDamage (16.23.8418428+branch.releases-16-23.content.release)",
               "damage_type_source": "spell_pykee_tooltip <physicalDamage>"
             }
           ]
@@ -208,7 +252,7 @@
                 ]
               },
               "label": "Derivado",
-              "source": "Characters/Pyke/Spells/PykeRAbility/PykeR.mSpellCalculations.ReducedDamageFinal (16.23.8406595+branch.releases-16-23.content.release)",
+              "source": "Characters/Pyke/Spells/PykeRAbility/PykeR.mSpellCalculations.ReducedDamageFinal (16.23.8418428+branch.releases-16-23.content.release)",
               "damage_type_source": "spell_pyker_tooltip <physicalDamage>"
             }
           ]

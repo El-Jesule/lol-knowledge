@@ -3,7 +3,7 @@
   "champion": "Alistar",
   "label": "Derivado",
   "game_version": "16.23",
-  "content_version": "16.23.8406595+branch.releases-16-23.content.release",
+  "content_version": "16.23.8418428+branch.releases-16-23.content.release",
   "verified_against": {
     "content_version": "16.23.8406595+branch.releases-16-23.content.release",
     "bin_sha256": "302541cae7e6d358afbce91cd94d2b2c0b6fe5ff9a947ea0909073e0ea1d7809",
@@ -40,7 +40,7 @@
             ]
           },
           "label": "Derivado",
-          "source": "Characters/Alistar/Spells/AlistarPassiveAbility/AlistarPassive.mSpellCalculations.BaseHeal (16.23.8406595+branch.releases-16-23.content.release)",
+          "source": "Characters/Alistar/Spells/AlistarPassiveAbility/AlistarPassive.mSpellCalculations.BaseHeal (16.23.8418428+branch.releases-16-23.content.release)",
           "trigger": "on_champion_takedown"
         }
       ]
@@ -85,7 +85,7 @@
                 ]
               },
               "label": "Derivado",
-              "source": "Characters/Alistar/Spells/PulverizeAbility/Pulverize.mSpellCalculations.TotalDamage (16.23.8406595+branch.releases-16-23.content.release)",
+              "source": "Characters/Alistar/Spells/PulverizeAbility/Pulverize.mSpellCalculations.TotalDamage (16.23.8418428+branch.releases-16-23.content.release)",
               "damage_type_source": "spell_pulverize_tooltip <magicDamage>"
             }
           ]
@@ -136,7 +136,7 @@
                 ]
               },
               "label": "Derivado",
-              "source": "Characters/Alistar/Spells/HeadbuttAbility/Headbutt.mSpellCalculations.TotalDamage (16.23.8406595+branch.releases-16-23.content.release)",
+              "source": "Characters/Alistar/Spells/HeadbuttAbility/Headbutt.mSpellCalculations.TotalDamage (16.23.8418428+branch.releases-16-23.content.release)",
               "damage_type_source": "spell_headbutt_tooltip <magicDamage>"
             }
           ]
@@ -187,7 +187,7 @@
                 ]
               },
               "label": "Derivado",
-              "source": "Characters/Alistar/Spells/AlistarEAbility/AlistarE.mSpellCalculations.TotalDamage (16.23.8406595+branch.releases-16-23.content.release)",
+              "source": "Characters/Alistar/Spells/AlistarEAbility/AlistarE.mSpellCalculations.TotalDamage (16.23.8418428+branch.releases-16-23.content.release)",
               "damage_type_source": "spell_alistare_tooltip <magicDamage>"
             }
           ]
@@ -222,7 +222,7 @@
                 ]
               },
               "label": "Derivado",
-              "source": "Characters/Alistar/Spells/AlistarEAbility/AlistarE.mSpellCalculations.AttackBonusDamage (16.23.8406595+branch.releases-16-23.content.release)",
+              "source": "Characters/Alistar/Spells/AlistarEAbility/AlistarE.mSpellCalculations.AttackBonusDamage (16.23.8418428+branch.releases-16-23.content.release)",
               "damage_type_source": "spell_alistare_tooltip <magicDamage>"
             }
           ]
@@ -240,6 +240,25 @@
       "passive_stats": [],
       "not_modelled": [
         "Limpieza de control de adversario y reducción porcentual de daño recibido (RDamageReduction)"
+      ],
+      "active_effects": [
+        {
+          "id": "unbreakable_will_dr",
+          "name": "Voluntad inquebrantable (DR)",
+          "kind": "damage_taken_modifier",
+          "formula": {
+            "op": "by_rank",
+            "values": [
+              55,
+              65,
+              75
+            ]
+          },
+          "label": "Derivado",
+          "source": "Characters/Alistar/Spells/FerociousHowlAbility/FerociousHowl.DataValues.RDamageReduction (16.23.8418428+branch.releases-16-23.content.release)",
+          "mode": "percent",
+          "duration_seconds": 7
+        }
       ]
     }
   }

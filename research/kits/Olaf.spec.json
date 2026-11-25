@@ -61,6 +61,71 @@
       "tooltip": "spell_olaffrenziedstrikes_tooltip",
       "not_modelled": [
         "Velocidad de ataque durante 5 s y escudo escalado por vida faltante (MaxShieldCalc)"
+      ],
+      "active_effects": [
+        {
+          "id": "tough_it_out_as",
+          "name": "A darlo todo (VA)",
+          "kind": "stat_bonus",
+          "stat": "attack_speed_bonus",
+          "mode": "flat",
+          "data_value": "Attackspeed",
+          "scale": 100,
+          "duration_seconds": {
+            "data_value": "Duration"
+          }
+        },
+        {
+          "id": "tough_it_out_shield",
+          "name": "A darlo todo (escudo)",
+          "kind": "shield",
+          "formula": {
+            "op": "min",
+            "operands": [
+              {
+                "op": "calculation",
+                "name": "MaxShieldCalc"
+              },
+              {
+                "op": "add",
+                "operands": [
+                  {
+                    "op": "data_value",
+                    "name": "BaseShield"
+                  },
+                  {
+                    "op": "mul",
+                    "operands": [
+                      {
+                        "op": "data_value",
+                        "name": "ShieldPercMissingHP"
+                      },
+                      {
+                        "op": "mul",
+                        "operands": [
+                          {
+                            "op": "stat",
+                            "stat": "health",
+                            "scope": "max"
+                          },
+                          {
+                            "op": "stat",
+                            "stat": "health",
+                            "scope": "missing_fraction"
+                          }
+                        ]
+                      }
+                    ]
+                  }
+                ]
+              }
+            ]
+          },
+          "source_note": "min(MaxShieldCalc, BaseShield + ShieldPercMissingHP * missing HP)",
+          "duration_seconds": {
+            "data_value": "ShieldDuration"
+          }
+        }
       ]
     },
     "E": {
@@ -90,6 +155,30 @@
       "tooltip": "spell_olafragnarok_tooltip",
       "not_modelled": [
         "Resistencias pasivas (armadura/RM), inmunidad a CC, DA adicional activo (AD), velocidad de movimiento y extensión al golpear"
+      ],
+      "active_effects": [
+        {
+          "id": "ragnarok_ad",
+          "name": "Ragnarok (AD)",
+          "kind": "stat_bonus",
+          "stat": "attack_damage",
+          "mode": "flat",
+          "calculation": "AD",
+          "duration_seconds": {
+            "data_value": "Duration"
+          }
+        },
+        {
+          "id": "ragnarok_ms",
+          "name": "Ragnarok (VM %)",
+          "kind": "stat_bonus",
+          "stat": "move_speed",
+          "mode": "percent_ms",
+          "data_value": "Haste",
+          "duration_seconds": {
+            "data_value": "Duration"
+          }
+        }
       ]
     }
   }

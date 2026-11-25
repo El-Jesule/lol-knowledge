@@ -118,7 +118,11 @@ def resolve_ability_cost(
     4. Official Data Dragon ``spells[slot].cost[rank - 1]``.
     """
     ability = kit.ability(slot)
-    case = ability.case(case_id) if case_id is not None else ability.cases[0]
+    case = (
+        ability.case(case_id)
+        if case_id is not None
+        else (ability.cases[0] if ability.cases else None)
+    )
     eval_stats = dict(stats)
     if attacker_max_hp is not None:
         eval_stats["max_health"] = attacker_max_hp
@@ -127,7 +131,7 @@ def resolve_ability_cost(
         eval_stats.setdefault("max_health", eval_stats["health"])
         eval_stats.setdefault("current_health", eval_stats["health"])
 
-    if case.cost is not None:
+    if case is not None and case.cost is not None:
         return _eval_cost_spec(
             case.cost,
             eval_stats,
@@ -137,7 +141,7 @@ def resolve_ability_cost(
             inputs=inputs,
             context=f"{slot}.{case.id}",
         )
-    if case.recast:
+    if case is not None and case.recast:
         return StepResourceCost(
             "none",
             Fraction(0),

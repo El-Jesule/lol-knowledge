@@ -78,6 +78,20 @@
       ],
       "not_modelled": [
         "Velocidad de ataque temporal tras el salto"
+      ],
+      "active_effects": [
+        {
+          "id": "e_attackspeed",
+          "name": "E (VA)",
+          "kind": "stat_bonus",
+          "stat": "attack_speed_bonus",
+          "mode": "flat",
+          "scale": 100,
+          "data_value": "AttackSpeed",
+          "duration_seconds": {
+            "data_value": "AttackSpeedDuration"
+          }
+        }
       ]
     },
     "R": {
@@ -150,6 +164,19 @@
       },
       "not_modelled": [
         "Lanzamiento por los aires, velocidad de movimiento y tope contra monstruos (MonsterCapTT)"
+      ],
+      "active_effects": [
+        {
+          "id": "r_movespeed",
+          "name": "R (VM)",
+          "kind": "stat_bonus",
+          "stat": "move_speed",
+          "mode": "percent_ms",
+          "data_value": "MoveSpeed",
+          "duration_seconds": {
+            "data_value": "KnockupDuration"
+          }
+        }
       ]
     }
   }

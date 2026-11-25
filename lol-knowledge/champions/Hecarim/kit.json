@@ -3,7 +3,7 @@
   "champion": "Hecarim",
   "label": "Derivado",
   "game_version": "16.23",
-  "content_version": "16.23.8406595+branch.releases-16-23.content.release",
+  "content_version": "16.23.8418428+branch.releases-16-23.content.release",
   "verified_against": {
     "content_version": "16.23.8406595+branch.releases-16-23.content.release",
     "bin_sha256": "72f4e6c368bfc12335c9749b3902e4d92d67cac107ba5a4ed2d441d08a096906",
@@ -18,7 +18,7 @@
       "cases": [],
       "passive_stats": [],
       "not_modelled": [
-        "La conversión del 12..24 % de la velocidad de movimiento adicional efectiva (poslímite suave) en DA adicional (HecarimPassive, niveles 1/3/6/9/12/15/18) está modelada directamente en la hoja de estadísticas; ignorar colisión con unidades no está modelado"
+        "Conversión del 12..24 % de la velocidad de movimiento adicional en DA adicional (BonusAD) e ignorar colisión con unidades"
       ]
     },
     "Q": {
@@ -61,7 +61,7 @@
                 ]
               },
               "label": "Derivado",
-              "source": "Characters/Hecarim/Spells/HecarimRapidSlashAbility/HecarimRapidSlash.mSpellCalculations.Damage (16.23.8406595+branch.releases-16-23.content.release)",
+              "source": "Characters/Hecarim/Spells/HecarimRapidSlashAbility/HecarimRapidSlash.mSpellCalculations.Damage (16.23.8418428+branch.releases-16-23.content.release)",
               "damage_type_source": "spell_hecarimrapidslash_tooltip <physicalDamage>"
             }
           ]
@@ -112,7 +112,7 @@
                 ]
               },
               "label": "Derivado",
-              "source": "Characters/Hecarim/Spells/HecarimWAbility/HecarimW.mSpellCalculations.TotalDamage (16.23.8406595+branch.releases-16-23.content.release)",
+              "source": "Characters/Hecarim/Spells/HecarimWAbility/HecarimW.mSpellCalculations.TotalDamage (16.23.8418428+branch.releases-16-23.content.release)",
               "damage_type_source": "spell_hecarimw_tooltip <magicDamage>"
             }
           ]
@@ -121,6 +121,48 @@
       "passive_stats": [],
       "not_modelled": [
         "Armadura/RM activas (ResistAmount) y curación por daño recibido por enemigos (LeechAmount)"
+      ],
+      "active_effects": [
+        {
+          "id": "spirit_of_dread_armor",
+          "name": "Espíritu de pavor (armadura)",
+          "kind": "stat_bonus",
+          "formula": {
+            "op": "by_rank",
+            "values": [
+              5,
+              10,
+              15,
+              20,
+              25
+            ]
+          },
+          "label": "Derivado",
+          "source": "Characters/Hecarim/Spells/HecarimWAbility/HecarimW.DataValues.ResistAmount (16.23.8418428+branch.releases-16-23.content.release)",
+          "stat": "armor",
+          "mode": "flat",
+          "duration_seconds": 4
+        },
+        {
+          "id": "spirit_of_dread_mr",
+          "name": "Espíritu de pavor (RM)",
+          "kind": "stat_bonus",
+          "formula": {
+            "op": "by_rank",
+            "values": [
+              5,
+              10,
+              15,
+              20,
+              25
+            ]
+          },
+          "label": "Derivado",
+          "source": "Characters/Hecarim/Spells/HecarimWAbility/HecarimW.DataValues.ResistAmount (16.23.8418428+branch.releases-16-23.content.release)",
+          "stat": "magic_resist",
+          "mode": "flat",
+          "duration_seconds": 4
+        }
       ]
     },
     "E": {
@@ -163,7 +205,7 @@
                 ]
               },
               "label": "Derivado",
-              "source": "Characters/Hecarim/Spells/HecarimRampAbility/HecarimRamp.mSpellCalculations.MinDamage (16.23.8406595+branch.releases-16-23.content.release)",
+              "source": "Characters/Hecarim/Spells/HecarimRampAbility/HecarimRamp.mSpellCalculations.MinDamage (16.23.8418428+branch.releases-16-23.content.release)",
               "damage_type_source": "spell_hecarimramp_tooltip <physicalDamage>"
             }
           ]
@@ -213,7 +255,7 @@
                 ]
               },
               "label": "Derivado",
-              "source": "Characters/Hecarim/Spells/HecarimRampAbility/HecarimRamp.mSpellCalculations.MaxDamage (16.23.8406595+branch.releases-16-23.content.release)",
+              "source": "Characters/Hecarim/Spells/HecarimRampAbility/HecarimRamp.mSpellCalculations.MaxDamage (16.23.8418428+branch.releases-16-23.content.release)",
               "damage_type_source": "spell_hecarimramp_tooltip <physicalDamage>"
             }
           ]
@@ -222,6 +264,22 @@
       "passive_stats": [],
       "not_modelled": [
         "Velocidad de movimiento progresiva, efecto fantasmal y empuje según distancia"
+      ],
+      "active_effects": [
+        {
+          "id": "e_minmovespeed",
+          "name": "E (VM)",
+          "kind": "stat_bonus",
+          "formula": {
+            "op": "constant",
+            "value": 0.25
+          },
+          "label": "Derivado",
+          "source": "Characters/Hecarim/Spells/HecarimRampAbility/HecarimRamp.DataValues.MinMoveSpeed (16.23.8418428+branch.releases-16-23.content.release)",
+          "stat": "move_speed",
+          "mode": "percent_ms",
+          "duration_seconds": 4
+        }
       ]
     },
     "R": {
@@ -262,7 +320,7 @@
                 ]
               },
               "label": "Derivado",
-              "source": "Characters/Hecarim/Spells/HecarimUltAbility/HecarimUlt.mSpellCalculations.DamageDone (16.23.8406595+branch.releases-16-23.content.release)",
+              "source": "Characters/Hecarim/Spells/HecarimUltAbility/HecarimUlt.mSpellCalculations.DamageDone (16.23.8418428+branch.releases-16-23.content.release)",
               "damage_type_source": "spell_hecarimult_tooltip <magicDamage>"
             }
           ]

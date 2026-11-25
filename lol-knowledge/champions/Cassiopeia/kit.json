@@ -3,7 +3,7 @@
   "champion": "Cassiopeia",
   "label": "Derivado",
   "game_version": "16.23",
-  "content_version": "16.23.8406595+branch.releases-16-23.content.release",
+  "content_version": "16.23.8418428+branch.releases-16-23.content.release",
   "verified_against": {
     "content_version": "16.23.8406595+branch.releases-16-23.content.release",
     "bin_sha256": "a2eff3dd2f31832c08f886e8492fe1432b4fe422e6bdfa11207b7db7b2ee0d96",
@@ -61,7 +61,7 @@
                 ]
               },
               "label": "Derivado",
-              "source": "Characters/Cassiopeia/Spells/CassiopeiaQAbility/CassiopeiaQ.mSpellCalculations.TooltipTotalDamage (16.23.8406595+branch.releases-16-23.content.release)",
+              "source": "Characters/Cassiopeia/Spells/CassiopeiaQAbility/CassiopeiaQ.mSpellCalculations.TooltipTotalDamage (16.23.8418428+branch.releases-16-23.content.release)",
               "damage_type_source": "spell_cassiopeiaq_tooltip <magicDamage>"
             }
           ]
@@ -70,6 +70,28 @@
       "passive_stats": [],
       "not_modelled": [
         "Velocidad de movimiento al golpear campeones (ChampHitMSBonus)"
+      ],
+      "active_effects": [
+        {
+          "id": "q_champhitmsbonus",
+          "name": "Q (VM)",
+          "kind": "stat_bonus",
+          "formula": {
+            "op": "by_rank",
+            "values": [
+              0.3,
+              0.35,
+              0.4,
+              0.45,
+              0.5
+            ]
+          },
+          "label": "Derivado",
+          "source": "Characters/Cassiopeia/Spells/CassiopeiaQAbility/CassiopeiaQ.DataValues.ChampHitMSBonus (16.23.8418428+branch.releases-16-23.content.release)",
+          "stat": "move_speed",
+          "mode": "percent_ms",
+          "duration_seconds": 3
+        }
       ]
     },
     "W": {
@@ -112,7 +134,7 @@
                 ]
               },
               "label": "Derivado",
-              "source": "Characters/Cassiopeia/Spells/CassiopeiaWAbility/CassiopeiaW.mSpellCalculations.DamagePerSecond (16.23.8406595+branch.releases-16-23.content.release)",
+              "source": "Characters/Cassiopeia/Spells/CassiopeiaWAbility/CassiopeiaW.mSpellCalculations.DamagePerSecond (16.23.8418428+branch.releases-16-23.content.release)",
               "damage_type_source": "spell_cassiopeiaw_tooltip <magicDamage>"
             }
           ]
@@ -176,7 +198,7 @@
                 ]
               },
               "label": "Derivado",
-              "source": "Characters/Cassiopeia/Spells/CassiopeiaEAbility/CassiopeiaE.mSpellCalculations.BasicDamage (16.23.8406595+branch.releases-16-23.content.release)",
+              "source": "Characters/Cassiopeia/Spells/CassiopeiaEAbility/CassiopeiaE.mSpellCalculations.BasicDamage (16.23.8418428+branch.releases-16-23.content.release)",
               "damage_type_source": "spell_cassiopeiae_tooltip <magicDamage>"
             }
           ]
@@ -230,7 +252,7 @@
                 ]
               },
               "label": "Derivado",
-              "source": "Characters/Cassiopeia/Spells/CassiopeiaEAbility/CassiopeiaE.mSpellCalculations.BasicDamage (16.23.8406595+branch.releases-16-23.content.release)",
+              "source": "Characters/Cassiopeia/Spells/CassiopeiaEAbility/CassiopeiaE.mSpellCalculations.BasicDamage (16.23.8418428+branch.releases-16-23.content.release)",
               "damage_type_source": "spell_cassiopeiae_tooltip <magicDamage>"
             },
             {
@@ -265,7 +287,7 @@
                 ]
               },
               "label": "Derivado",
-              "source": "Characters/Cassiopeia/Spells/CassiopeiaEAbility/CassiopeiaE.mSpellCalculations.BonusPoisonedDamage (16.23.8406595+branch.releases-16-23.content.release)",
+              "source": "Characters/Cassiopeia/Spells/CassiopeiaEAbility/CassiopeiaE.mSpellCalculations.BonusPoisonedDamage (16.23.8418428+branch.releases-16-23.content.release)",
               "damage_type_source": "spell_cassiopeiae_tooltip <magicDamage>"
             }
           ]
@@ -274,6 +296,35 @@
       "passive_stats": [],
       "not_modelled": [
         "Curación contra objetivos envenenados (HealCalc) y devolución de maná al matar"
+      ],
+      "active_effects": [
+        {
+          "id": "e_healcalc",
+          "name": "E (curación)",
+          "kind": "heal",
+          "formula": {
+            "op": "mul",
+            "operands": [
+              {
+                "op": "by_rank",
+                "values": [
+                  0.1,
+                  0.115,
+                  0.13,
+                  0.145,
+                  0.16
+                ]
+              },
+              {
+                "op": "stat",
+                "stat": "ability_power",
+                "scope": "total"
+              }
+            ]
+          },
+          "label": "Derivado",
+          "source": "Characters/Cassiopeia/Spells/CassiopeiaEAbility/CassiopeiaE.mSpellCalculations.HealCalc (16.23.8418428+branch.releases-16-23.content.release)"
+        }
       ]
     },
     "R": {
@@ -314,7 +365,7 @@
                 ]
               },
               "label": "Derivado",
-              "source": "Characters/Cassiopeia/Spells/CassiopeiaRAbility/CassiopeiaR.mSpellCalculations.RDamage (16.23.8406595+branch.releases-16-23.content.release)",
+              "source": "Characters/Cassiopeia/Spells/CassiopeiaRAbility/CassiopeiaR.mSpellCalculations.RDamage (16.23.8418428+branch.releases-16-23.content.release)",
               "damage_type_source": "spell_cassiopeiar_tooltip <magicDamage>"
             }
           ]

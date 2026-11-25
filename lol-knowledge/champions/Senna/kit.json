@@ -3,7 +3,7 @@
   "champion": "Senna",
   "label": "Derivado",
   "game_version": "16.23",
-  "content_version": "16.23.8406595+branch.releases-16-23.content.release",
+  "content_version": "16.23.8418428+branch.releases-16-23.content.release",
   "verified_against": {
     "content_version": "16.23.8406595+branch.releases-16-23.content.release",
     "bin_sha256": "511102d2a41d5d43ca7cff0d29262ff2018cac29fce6aba999e97c455c85c831",
@@ -37,7 +37,7 @@
                 ]
               },
               "label": "Derivado",
-              "source": "Characters/Senna/Spells/SennaPassiveAbility/SennaPassive.mSpellCalculations.BonusOnHitDamage (16.23.8406595+branch.releases-16-23.content.release)",
+              "source": "Characters/Senna/Spells/SennaPassiveAbility/SennaPassive.mSpellCalculations.BonusOnHitDamage (16.23.8418428+branch.releases-16-23.content.release)",
               "damage_type_source": "spell_sennapassive_tooltip <physicalDamage>"
             }
           ]
@@ -87,7 +87,7 @@
                 ]
               },
               "label": "Derivado",
-              "source": "Characters/Senna/Spells/SennaPassiveAbility/SennaPassive · mSpellCalculations.BonusCurentHealthDamage % × vida actual del objetivo (16.23.8406595+branch.releases-16-23.content.release)",
+              "source": "Characters/Senna/Spells/SennaPassiveAbility/SennaPassive · mSpellCalculations.BonusCurentHealthDamage % × vida actual del objetivo (16.23.8418428+branch.releases-16-23.content.release)",
               "damage_type_source": "spell_sennapassive_tooltip <physicalDamage>"
             }
           ]
@@ -107,7 +107,7 @@
             "value": 0.75
           },
           "label": "Derivado",
-          "source": "Characters/Senna/Spells/SennaPassiveAbility/SennaPassive.DataValues.ADPerStack (16.23.8406595+branch.releases-16-23.content.release)",
+          "source": "Characters/Senna/Spells/SennaPassiveAbility/SennaPassive.DataValues.ADPerStack (16.23.8418428+branch.releases-16-23.content.release)",
           "stat": "attack_damage",
           "mode": "flat",
           "input_name": "mist_stacks",
@@ -155,7 +155,7 @@
                 ]
               },
               "label": "Derivado",
-              "source": "Characters/Senna/Spells/SennaQAbility/SennaQ.mSpellCalculations.TotalDamage (16.23.8406595+branch.releases-16-23.content.release)",
+              "source": "Characters/Senna/Spells/SennaQAbility/SennaQ.mSpellCalculations.TotalDamage (16.23.8418428+branch.releases-16-23.content.release)",
               "damage_type_source": "spell_sennaq_tooltip <physicalDamage>"
             }
           ]
@@ -164,6 +164,58 @@
       "passive_stats": [],
       "not_modelled": [
         "Curación a aliados (TotalHeal), ralentización (TotalSlow), efectos al impactar y reducción de 1 s de CD por ataque"
+      ],
+      "active_effects": [
+        {
+          "id": "q_totalheal",
+          "name": "Q (curación)",
+          "kind": "heal",
+          "formula": {
+            "op": "add",
+            "operands": [
+              {
+                "op": "by_rank",
+                "values": [
+                  40,
+                  60,
+                  80,
+                  100,
+                  120
+                ]
+              },
+              {
+                "op": "mul",
+                "operands": [
+                  {
+                    "op": "constant",
+                    "value": 0.35
+                  },
+                  {
+                    "op": "stat",
+                    "stat": "ability_power",
+                    "scope": "total"
+                  }
+                ]
+              },
+              {
+                "op": "mul",
+                "operands": [
+                  {
+                    "op": "constant",
+                    "value": 0.4
+                  },
+                  {
+                    "op": "stat",
+                    "stat": "attack_damage",
+                    "scope": "bonus"
+                  }
+                ]
+              }
+            ]
+          },
+          "label": "Derivado",
+          "source": "Characters/Senna/Spells/SennaQAbility/SennaQ.mSpellCalculations.TotalHeal (16.23.8418428+branch.releases-16-23.content.release)"
+        }
       ]
     },
     "W": {
@@ -206,7 +258,7 @@
                 ]
               },
               "label": "Derivado",
-              "source": "Characters/Senna/Spells/SennaWAbility/SennaW.mSpellCalculations.Damage (16.23.8406595+branch.releases-16-23.content.release)",
+              "source": "Characters/Senna/Spells/SennaWAbility/SennaW.mSpellCalculations.Damage (16.23.8418428+branch.releases-16-23.content.release)",
               "damage_type_source": "spell_sennaw_tooltip <physicalDamage>"
             }
           ]
@@ -224,6 +276,50 @@
       "passive_stats": [],
       "not_modelled": [
         "Camuflaje/espectros en área y velocidad de movimiento (TotalMS)"
+      ],
+      "active_effects": [
+        {
+          "id": "e_totalms",
+          "name": "E (VM)",
+          "kind": "stat_bonus",
+          "formula": {
+            "op": "add",
+            "operands": [
+              {
+                "op": "constant",
+                "value": 0.2
+              },
+              {
+                "op": "mul",
+                "operands": [
+                  {
+                    "op": "constant",
+                    "value": 0.0005
+                  },
+                  {
+                    "op": "stat",
+                    "stat": "ability_power",
+                    "scope": "total"
+                  }
+                ]
+              }
+            ]
+          },
+          "label": "Derivado",
+          "source": "Characters/Senna/Spells/SennaEAbility/SennaE.mSpellCalculations.TotalMS (16.23.8418428+branch.releases-16-23.content.release)",
+          "stat": "move_speed",
+          "mode": "percent_ms",
+          "duration_formula": {
+            "op": "by_rank",
+            "values": [
+              6,
+              6.5,
+              7,
+              7.5,
+              8
+            ]
+          }
+        }
       ]
     },
     "R": {
@@ -278,7 +374,7 @@
                 ]
               },
               "label": "Derivado",
-              "source": "Characters/Senna/Spells/SennaRAbility/SennaR.mSpellCalculations.TotalDamage (16.23.8406595+branch.releases-16-23.content.release)",
+              "source": "Characters/Senna/Spells/SennaRAbility/SennaR.mSpellCalculations.TotalDamage (16.23.8418428+branch.releases-16-23.content.release)",
               "damage_type_source": "spell_sennar_tooltip <physicalDamage>"
             }
           ]
@@ -287,6 +383,57 @@
       "passive_stats": [],
       "not_modelled": [
         "Escudo global a aliados (TotalShield) y aplicación de Niebla"
+      ],
+      "active_effects": [
+        {
+          "id": "r_totalshield",
+          "name": "R (escudo)",
+          "kind": "shield",
+          "formula": {
+            "op": "add",
+            "operands": [
+              {
+                "op": "by_rank",
+                "values": [
+                  120,
+                  160,
+                  200
+                ]
+              },
+              {
+                "op": "mul",
+                "operands": [
+                  {
+                    "op": "constant",
+                    "value": 0.5
+                  },
+                  {
+                    "op": "stat",
+                    "stat": "ability_power",
+                    "scope": "total"
+                  }
+                ]
+              },
+              {
+                "op": "mul",
+                "operands": [
+                  {
+                    "op": "input",
+                    "name": "mist_stacks",
+                    "default": 0
+                  },
+                  {
+                    "op": "constant",
+                    "value": 1.5
+                  }
+                ]
+              }
+            ]
+          },
+          "label": "Derivado",
+          "source": "Characters/Senna/Spells/SennaRAbility/SennaR.mSpellCalculations.TotalShield (16.23.8418428+branch.releases-16-23.content.release)",
+          "duration_seconds": 3
+        }
       ]
     }
   }

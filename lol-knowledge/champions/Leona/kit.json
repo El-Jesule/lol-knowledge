@@ -3,7 +3,7 @@
   "champion": "Leona",
   "label": "Derivado",
   "game_version": "16.23",
-  "content_version": "16.23.8406595+branch.releases-16-23.content.release",
+  "content_version": "16.23.8418428+branch.releases-16-23.content.release",
   "verified_against": {
     "content_version": "16.23.8406595+branch.releases-16-23.content.release",
     "bin_sha256": "c2dbbf4297d9a94b72027206979f21fe4d84aeb0f87c677bf626989634fbc3d3",
@@ -46,7 +46,7 @@
                 ]
               },
               "label": "Derivado",
-              "source": "Characters/Leona/Spells/LeonaSunlightPassiveAbility/LeonaSunlightPassive.mSpellCalculations.TotalDamage (16.23.8406595+branch.releases-16-23.content.release)",
+              "source": "Characters/Leona/Spells/LeonaSunlightPassiveAbility/LeonaSunlightPassive.mSpellCalculations.TotalDamage (16.23.8418428+branch.releases-16-23.content.release)",
               "damage_type_source": "spell_leonasunlightpassive_tooltip <magicDamage>"
             }
           ]
@@ -95,7 +95,7 @@
                 ]
               },
               "label": "Derivado",
-              "source": "Characters/Leona/Spells/LeonaShieldOfDaybreakAbility/LeonaShieldOfDaybreak.mSpellCalculations.TotalDamageTooltip (16.23.8406595+branch.releases-16-23.content.release)",
+              "source": "Characters/Leona/Spells/LeonaShieldOfDaybreakAbility/LeonaShieldOfDaybreak.mSpellCalculations.TotalDamageTooltip (16.23.8418428+branch.releases-16-23.content.release)",
               "damage_type_source": "spell_leonashieldofdaybreak_tooltip <magicDamage>"
             }
           ]
@@ -146,7 +146,7 @@
                 ]
               },
               "label": "Derivado",
-              "source": "Characters/Leona/Spells/LeonaSolarBarrierAbility/LeonaSolarBarrier.mSpellCalculations.TotalDamageTooltip (16.23.8406595+branch.releases-16-23.content.release)",
+              "source": "Characters/Leona/Spells/LeonaSolarBarrierAbility/LeonaSolarBarrier.mSpellCalculations.TotalDamageTooltip (16.23.8418428+branch.releases-16-23.content.release)",
               "damage_type_source": "spell_leonasolarbarrier_tooltip <magicDamage>"
             }
           ]
@@ -155,6 +155,106 @@
       "passive_stats": [],
       "not_modelled": [
         "Reducción plana de daño recibido y armadura/RM temporales (BonusArmorTooltip, BonusMRTooltip)"
+      ],
+      "active_effects": [
+        {
+          "id": "eclipse_flat_dr",
+          "name": "Eclipse (DR plana)",
+          "kind": "damage_taken_modifier",
+          "formula": {
+            "op": "by_rank",
+            "values": [
+              8,
+              12,
+              16,
+              20,
+              24
+            ]
+          },
+          "label": "Derivado",
+          "source": "Characters/Leona/Spells/LeonaSolarBarrierAbility/LeonaSolarBarrier.DataValues.FlatDamageReduction (16.23.8418428+branch.releases-16-23.content.release)",
+          "mode": "flat",
+          "damage_reduction_cap": 0.5,
+          "duration_seconds": 3
+        },
+        {
+          "id": "eclipse_armor",
+          "name": "Eclipse (armadura)",
+          "kind": "stat_bonus",
+          "formula": {
+            "op": "add",
+            "operands": [
+              {
+                "op": "by_rank",
+                "values": [
+                  20,
+                  27.5,
+                  35,
+                  42.5,
+                  50
+                ]
+              },
+              {
+                "op": "mul",
+                "operands": [
+                  {
+                    "op": "constant",
+                    "value": 0.2
+                  },
+                  {
+                    "op": "stat",
+                    "stat": "armor",
+                    "scope": "bonus"
+                  }
+                ]
+              }
+            ]
+          },
+          "label": "Derivado",
+          "source": "Characters/Leona/Spells/LeonaSolarBarrierAbility/LeonaSolarBarrier.mSpellCalculations.BonusArmorTooltip (16.23.8418428+branch.releases-16-23.content.release)",
+          "stat": "armor",
+          "mode": "flat",
+          "duration_seconds": 3
+        },
+        {
+          "id": "eclipse_mr",
+          "name": "Eclipse (RM)",
+          "kind": "stat_bonus",
+          "formula": {
+            "op": "add",
+            "operands": [
+              {
+                "op": "by_rank",
+                "values": [
+                  20,
+                  27.5,
+                  35,
+                  42.5,
+                  50
+                ]
+              },
+              {
+                "op": "mul",
+                "operands": [
+                  {
+                    "op": "constant",
+                    "value": 0.2
+                  },
+                  {
+                    "op": "stat",
+                    "stat": "magic_resist",
+                    "scope": "bonus"
+                  }
+                ]
+              }
+            ]
+          },
+          "label": "Derivado",
+          "source": "Characters/Leona/Spells/LeonaSolarBarrierAbility/LeonaSolarBarrier.mSpellCalculations.BonusMRTooltip (16.23.8418428+branch.releases-16-23.content.release)",
+          "stat": "magic_resist",
+          "mode": "flat",
+          "duration_seconds": 3
+        }
       ]
     },
     "E": {
@@ -197,7 +297,7 @@
                 ]
               },
               "label": "Derivado",
-              "source": "Characters/Leona/Spells/LeonaZenithBladeAbility/LeonaZenithBlade.mSpellCalculations.TotalDamageTooltip (16.23.8406595+branch.releases-16-23.content.release)",
+              "source": "Characters/Leona/Spells/LeonaZenithBladeAbility/LeonaZenithBlade.mSpellCalculations.TotalDamageTooltip (16.23.8418428+branch.releases-16-23.content.release)",
               "damage_type_source": "spell_leonazenithblade_tooltip <magicDamage>"
             }
           ]
@@ -246,7 +346,7 @@
                 ]
               },
               "label": "Derivado",
-              "source": "Characters/Leona/Spells/LeonaSolarFlareAbility/LeonaSolarFlare.mSpellCalculations.ExplosionCalculatedDamage (16.23.8406595+branch.releases-16-23.content.release)",
+              "source": "Characters/Leona/Spells/LeonaSolarFlareAbility/LeonaSolarFlare.mSpellCalculations.ExplosionCalculatedDamage (16.23.8418428+branch.releases-16-23.content.release)",
               "damage_type_source": "spell_leonasolarflare_tooltip <magicDamage>"
             }
           ]

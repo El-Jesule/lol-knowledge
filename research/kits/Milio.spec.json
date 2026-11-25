@@ -50,6 +50,18 @@
       "tooltip": "spell_miliow_tooltip",
       "not_modelled": [
         "Zona de curación continua (HealingOverTime), alcance de ataque adicional (RangePercent) y aplicación periódica de pasiva"
+      ],
+      "active_effects": [
+        {
+          "id": "cozy_campfire_heal",
+          "name": "Fogata acogedora (curación HoT)",
+          "kind": "heal",
+          "calculation": "HealingOverTime",
+          "duration_seconds": {
+            "data_value": "ZoneDuration"
+          },
+          "over_duration": true
+        }
       ]
     },
     "E": {
@@ -57,6 +69,28 @@
       "tooltip": "spell_milioesinglebuff_tooltip",
       "not_modelled": [
         "2 cargas de escudo (ShieldCalc) y velocidad de movimiento"
+      ],
+      "active_effects": [
+        {
+          "id": "warm_hugs_shield",
+          "name": "Abrazos cálidos (escudo)",
+          "kind": "shield",
+          "calculation": "ShieldCalc",
+          "duration_seconds": {
+            "data_value": "MoveSpeedDuration"
+          }
+        },
+        {
+          "id": "warm_hugs_ms",
+          "name": "Abrazos cálidos (VM %)",
+          "kind": "stat_bonus",
+          "stat": "move_speed",
+          "mode": "percent_ms",
+          "data_value": "MoveSpeedAmount",
+          "duration_seconds": {
+            "data_value": "MoveSpeedDuration"
+          }
+        }
       ]
     },
     "R": {
@@ -64,6 +98,14 @@
       "tooltip": "spell_miliorfireflycannons_tooltip",
       "not_modelled": [
         "Limpieza en área, tenacidad del 65 % durante 3 s y curación (HealCalc)"
+      ],
+      "active_effects": [
+        {
+          "id": "r_healcalc",
+          "name": "R (curación)",
+          "kind": "heal",
+          "calculation": "HealCalc"
+        }
       ]
     }
   }

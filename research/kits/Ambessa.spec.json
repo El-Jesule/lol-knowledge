@@ -152,6 +152,17 @@
       ],
       "not_modelled": [
         "Escudo temporal (Calc_Shield)"
+      ],
+      "active_effects": [
+        {
+          "id": "repudiation_shield",
+          "name": "Repudio (escudo)",
+          "kind": "shield",
+          "calculation": "Calc_Shield",
+          "duration_seconds": {
+            "data_value": "Shield_Duration"
+          }
+        }
       ]
     },
     "E": {

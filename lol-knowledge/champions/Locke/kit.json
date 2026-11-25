@@ -3,7 +3,7 @@
   "champion": "Locke",
   "label": "Derivado",
   "game_version": "16.23",
-  "content_version": "16.23.8406595+branch.releases-16-23.content.release",
+  "content_version": "16.23.8418428+branch.releases-16-23.content.release",
   "verified_against": {
     "content_version": "16.23.8406595+branch.releases-16-23.content.release",
     "bin_sha256": "613253694a3001c4ea943d03cb59281703ac05f4866d07c50d0303ed2fb8d8b0",
@@ -47,7 +47,7 @@
                 ]
               },
               "label": "Derivado",
-              "source": "Characters/Locke/Spells/LockePassiveAbility/LockePassive.mSpellCalculations.MinOnHitDamage (16.23.8406595+branch.releases-16-23.content.release)",
+              "source": "Characters/Locke/Spells/LockePassiveAbility/LockePassive.mSpellCalculations.MinOnHitDamage (16.23.8418428+branch.releases-16-23.content.release)",
               "damage_type_source": "spell_lockepassive_tooltip <magicDamage>"
             }
           ]
@@ -83,7 +83,7 @@
                 ]
               },
               "label": "Derivado",
-              "source": "Characters/Locke/Spells/LockePassiveAbility/LockePassive.mSpellCalculations.MaxOnHitDamage (16.23.8406595+branch.releases-16-23.content.release)",
+              "source": "Characters/Locke/Spells/LockePassiveAbility/LockePassive.mSpellCalculations.MaxOnHitDamage (16.23.8418428+branch.releases-16-23.content.release)",
               "damage_type_source": "spell_lockepassive_tooltip <magicDamage>"
             }
           ]
@@ -123,7 +123,7 @@
             ]
           },
           "label": "Derivado",
-          "source": "Characters/Locke/Spells/LockePassiveAbility/LockePassive.mSpellCalculations.MinOnHitDamage (16.23.8406595+branch.releases-16-23.content.release)",
+          "source": "Characters/Locke/Spells/LockePassiveAbility/LockePassive.mSpellCalculations.MinOnHitDamage (16.23.8418428+branch.releases-16-23.content.release)",
           "trigger": "on_hit",
           "damage_type": "magic"
         }
@@ -169,7 +169,7 @@
                 ]
               },
               "label": "Derivado",
-              "source": "Characters/Locke/Spells/LockeQAbility/LockeQ.mSpellCalculations.MissileDamage (16.23.8406595+branch.releases-16-23.content.release)",
+              "source": "Characters/Locke/Spells/LockeQAbility/LockeQ.mSpellCalculations.MissileDamage (16.23.8418428+branch.releases-16-23.content.release)",
               "damage_type_source": "spell_lockeq_tooltip <magicDamage>"
             }
           ]
@@ -216,7 +216,7 @@
                 ]
               },
               "label": "Derivado",
-              "source": "Characters/Locke/Spells/LockeQAbility/LockeQ.mSpellCalculations.NailDamage (16.23.8406595+branch.releases-16-23.content.release)",
+              "source": "Characters/Locke/Spells/LockeQAbility/LockeQ.mSpellCalculations.NailDamage (16.23.8418428+branch.releases-16-23.content.release)",
               "damage_type_source": "spell_lockeq_tooltip <magicDamage>"
             }
           ]
@@ -234,6 +234,56 @@
       "passive_stats": [],
       "not_modelled": [
         "Velocidad de movimiento (MoveSpeed), velocidad de ataque (AttackSpeed) y restauración de daño recibido (DamageRestoreAmount)"
+      ],
+      "active_effects": [
+        {
+          "id": "w_attackspeed",
+          "name": "W (VA)",
+          "kind": "stat_bonus",
+          "formula": {
+            "op": "linear_by_level",
+            "min": 40,
+            "max": 70
+          },
+          "label": "Derivado",
+          "source": "Characters/Locke/Spells/LockeWAbility/LockeW.mSpellCalculations.AttackSpeed (16.23.8418428+branch.releases-16-23.content.release)",
+          "stat": "attack_speed_bonus",
+          "mode": "flat",
+          "duration_seconds": 5
+        },
+        {
+          "id": "w_movespeed",
+          "name": "W (VM)",
+          "kind": "stat_bonus",
+          "formula": {
+            "op": "add",
+            "operands": [
+              {
+                "op": "constant",
+                "value": 0.4
+              },
+              {
+                "op": "mul",
+                "operands": [
+                  {
+                    "op": "constant",
+                    "value": 0.0002
+                  },
+                  {
+                    "op": "stat",
+                    "stat": "ability_power",
+                    "scope": "total"
+                  }
+                ]
+              }
+            ]
+          },
+          "label": "Derivado",
+          "source": "Characters/Locke/Spells/LockeWAbility/LockeW.mSpellCalculations.MoveSpeed (16.23.8418428+branch.releases-16-23.content.release)",
+          "stat": "move_speed",
+          "mode": "percent_ms",
+          "duration_seconds": 5
+        }
       ]
     },
     "E": {
@@ -276,7 +326,7 @@
                 ]
               },
               "label": "Derivado",
-              "source": "Characters/Locke/Spells/LockeEAbility/LockeE.mSpellCalculations.DashDamage (16.23.8406595+branch.releases-16-23.content.release)",
+              "source": "Characters/Locke/Spells/LockeEAbility/LockeE.mSpellCalculations.DashDamage (16.23.8418428+branch.releases-16-23.content.release)",
               "damage_type_source": "spell_lockee_tooltip <magicDamage>"
             }
           ]
@@ -317,7 +367,7 @@
                 ]
               },
               "label": "Derivado",
-              "source": "Characters/Locke/Spells/LockeEAbility/LockeE.mSpellCalculations.OnHitDamage (16.23.8406595+branch.releases-16-23.content.release)",
+              "source": "Characters/Locke/Spells/LockeEAbility/LockeE.mSpellCalculations.OnHitDamage (16.23.8418428+branch.releases-16-23.content.release)",
               "damage_type_source": "spell_lockee_tooltip <magicDamage>"
             }
           ]
@@ -366,7 +416,7 @@
                 ]
               },
               "label": "Derivado",
-              "source": "Characters/Locke/Spells/LockeRAbility/LockeR.mSpellCalculations.Damage (16.23.8406595+branch.releases-16-23.content.release)",
+              "source": "Characters/Locke/Spells/LockeRAbility/LockeR.mSpellCalculations.Damage (16.23.8418428+branch.releases-16-23.content.release)",
               "damage_type_source": "spell_locker_tooltip <magicDamage>"
             }
           ]

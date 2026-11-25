@@ -3,7 +3,7 @@
   "champion": "Naafiri",
   "label": "Derivado",
   "game_version": "16.23",
-  "content_version": "16.23.8406595+branch.releases-16-23.content.release",
+  "content_version": "16.23.8418428+branch.releases-16-23.content.release",
   "verified_against": {
     "content_version": "16.23.8406595+branch.releases-16-23.content.release",
     "bin_sha256": "b7cf9911e0d4c7cf133d9d937898d37b3c7aa78d12ff7f2fc526805da4d2d6c6",
@@ -47,7 +47,7 @@
                 ]
               },
               "label": "Derivado",
-              "source": "Characters/Naafiri/Spells/NaafiriPAbility/NaafiriP.mSpellCalculations.PackmateTotalDamage (16.23.8406595+branch.releases-16-23.content.release)",
+              "source": "Characters/Naafiri/Spells/NaafiriPAbility/NaafiriP.mSpellCalculations.PackmateTotalDamage (16.23.8418428+branch.releases-16-23.content.release)",
               "damage_type_source": "spell_naafirip_tooltip <physicalDamage>"
             }
           ]
@@ -92,7 +92,7 @@
                 ]
               },
               "label": "Derivado",
-              "source": "Characters/Naafiri/Spells/NaafiriPAbility/NaafiriP.mSpellCalculations.FrenzyDamageTooltipOnly (16.23.8406595+branch.releases-16-23.content.release)",
+              "source": "Characters/Naafiri/Spells/NaafiriPAbility/NaafiriP.mSpellCalculations.FrenzyDamageTooltipOnly (16.23.8418428+branch.releases-16-23.content.release)",
               "damage_type_source": "spell_naafirip_tooltip <physicalDamage>"
             }
           ]
@@ -143,7 +143,7 @@
                 ]
               },
               "label": "Derivado",
-              "source": "Characters/Naafiri/Spells/NaafiriQAbility/NaafiriQ.mSpellCalculations.TotalDamageFirstCast (16.23.8406595+branch.releases-16-23.content.release)",
+              "source": "Characters/Naafiri/Spells/NaafiriQAbility/NaafiriQ.mSpellCalculations.TotalDamageFirstCast (16.23.8418428+branch.releases-16-23.content.release)",
               "damage_type_source": "spell_naafiriq_tooltip <physicalDamage>"
             }
           ]
@@ -184,7 +184,7 @@
                 ]
               },
               "label": "Derivado",
-              "source": "Characters/Naafiri/Spells/NaafiriQAbility/NaafiriQ.mSpellCalculations.TotalBleedDamage (16.23.8406595+branch.releases-16-23.content.release)",
+              "source": "Characters/Naafiri/Spells/NaafiriQAbility/NaafiriQ.mSpellCalculations.TotalBleedDamage (16.23.8418428+branch.releases-16-23.content.release)",
               "damage_type_source": "spell_naafiriq_tooltip <physicalDamage>"
             }
           ]
@@ -225,7 +225,7 @@
                 ]
               },
               "label": "Derivado",
-              "source": "Characters/Naafiri/Spells/NaafiriQAbility/NaafiriQ.mSpellCalculations.TotalMinDamageSecondCast (16.23.8406595+branch.releases-16-23.content.release)",
+              "source": "Characters/Naafiri/Spells/NaafiriQAbility/NaafiriQ.mSpellCalculations.TotalMinDamageSecondCast (16.23.8418428+branch.releases-16-23.content.release)",
               "damage_type_source": "spell_naafiriq_tooltip <physicalDamage>"
             }
           ],
@@ -267,7 +267,7 @@
                 ]
               },
               "label": "Derivado",
-              "source": "Characters/Naafiri/Spells/NaafiriQAbility/NaafiriQ.mSpellCalculations.TotalMaxDamageSecondCast (16.23.8406595+branch.releases-16-23.content.release)",
+              "source": "Characters/Naafiri/Spells/NaafiriQAbility/NaafiriQ.mSpellCalculations.TotalMaxDamageSecondCast (16.23.8418428+branch.releases-16-23.content.release)",
               "damage_type_source": "spell_naafiriq_tooltip <physicalDamage>"
             }
           ],
@@ -287,6 +287,42 @@
       "passive_stats": [],
       "not_modelled": [
         "Inalcanzabilidad breve, velocidad de movimiento, invocación temporal de manada y bonificación activa de DA (BonusAD)"
+      ],
+      "active_effects": [
+        {
+          "id": "call_of_the_pack_ad",
+          "name": "Llamada de la manada (AD %)",
+          "kind": "stat_bonus",
+          "formula": {
+            "op": "constant",
+            "value": 22
+          },
+          "label": "Derivado",
+          "source": "Characters/Naafiri/Spells/NaafiriRAbility/NaafiriR.DataValues.NaafiriADPercentBoost (16.23.8418428+branch.releases-16-23.content.release)",
+          "stat": "attack_damage",
+          "mode": "percent",
+          "duration_seconds": 5
+        },
+        {
+          "id": "call_of_the_pack_ms",
+          "name": "Llamada de la manada (VM %)",
+          "kind": "stat_bonus",
+          "formula": {
+            "op": "by_rank",
+            "values": [
+              0.2,
+              0.225,
+              0.25,
+              0.275,
+              0.3
+            ]
+          },
+          "label": "Derivado",
+          "source": "Characters/Naafiri/Spells/NaafiriRAbility/NaafiriR.DataValues.MoveSpeedAmount (16.23.8418428+branch.releases-16-23.content.release)",
+          "stat": "move_speed",
+          "mode": "percent_ms",
+          "duration_seconds": 5
+        }
       ]
     },
     "E": {
@@ -329,7 +365,7 @@
                 ]
               },
               "label": "Derivado",
-              "source": "Characters/Naafiri/Spells/NaafiriEAbility/NaafiriE.mSpellCalculations.TotalDamageFirstSlash (16.23.8406595+branch.releases-16-23.content.release)",
+              "source": "Characters/Naafiri/Spells/NaafiriEAbility/NaafiriE.mSpellCalculations.TotalDamageFirstSlash (16.23.8418428+branch.releases-16-23.content.release)",
               "damage_type_source": "spell_naafirie_tooltip <physicalDamage>"
             }
           ]
@@ -370,7 +406,7 @@
                 ]
               },
               "label": "Derivado",
-              "source": "Characters/Naafiri/Spells/NaafiriEAbility/NaafiriE.mSpellCalculations.TotalDamageSecondSlash (16.23.8406595+branch.releases-16-23.content.release)",
+              "source": "Characters/Naafiri/Spells/NaafiriEAbility/NaafiriE.mSpellCalculations.TotalDamageSecondSlash (16.23.8418428+branch.releases-16-23.content.release)",
               "damage_type_source": "spell_naafirie_tooltip <physicalDamage>"
             }
           ]
@@ -419,7 +455,7 @@
                 ]
               },
               "label": "Derivado",
-              "source": "Characters/Naafiri/Spells/NaafiriWAbility/NaafiriW.mSpellCalculations.TotalDamage (16.23.8406595+branch.releases-16-23.content.release)",
+              "source": "Characters/Naafiri/Spells/NaafiriWAbility/NaafiriW.mSpellCalculations.TotalDamage (16.23.8418428+branch.releases-16-23.content.release)",
               "damage_type_source": "spell_naafiriw_tooltip <physicalDamage>"
             }
           ]
@@ -467,7 +503,7 @@
                 ]
               },
               "label": "Derivado",
-              "source": "Characters/Naafiri/Spells/NaafiriWAbility/NaafiriW.mSpellCalculations.PackmateDamage (16.23.8406595+branch.releases-16-23.content.release)",
+              "source": "Characters/Naafiri/Spells/NaafiriWAbility/NaafiriW.mSpellCalculations.PackmateDamage (16.23.8418428+branch.releases-16-23.content.release)",
               "damage_type_source": "spell_naafiriw_tooltip <physicalDamage>"
             }
           ]
@@ -506,7 +542,7 @@
                 ]
               },
               "label": "Derivado",
-              "source": "Characters/Naafiri/Spells/NaafiriWAbility/NaafiriW.mSpellCalculations.TotalDamage (16.23.8406595+branch.releases-16-23.content.release)",
+              "source": "Characters/Naafiri/Spells/NaafiriWAbility/NaafiriW.mSpellCalculations.TotalDamage (16.23.8418428+branch.releases-16-23.content.release)",
               "damage_type_source": "spell_naafiriw_tooltip <physicalDamage>"
             }
           ],
@@ -516,6 +552,43 @@
       "passive_stats": [],
       "not_modelled": [
         "Escudo tras baja (ShieldTotal), visión revelada y ralentización breve"
+      ],
+      "active_effects": [
+        {
+          "id": "r_shieldtotal",
+          "name": "R (escudo)",
+          "kind": "shield",
+          "formula": {
+            "op": "add",
+            "operands": [
+              {
+                "op": "by_rank",
+                "values": [
+                  100,
+                  150,
+                  200
+                ]
+              },
+              {
+                "op": "mul",
+                "operands": [
+                  {
+                    "op": "constant",
+                    "value": 1.5
+                  },
+                  {
+                    "op": "stat",
+                    "stat": "attack_damage",
+                    "scope": "bonus"
+                  }
+                ]
+              }
+            ]
+          },
+          "label": "Derivado",
+          "source": "Characters/Naafiri/Spells/NaafiriWAbility/NaafiriW.mSpellCalculations.ShieldTotal (16.23.8418428+branch.releases-16-23.content.release)",
+          "duration_seconds": 3
+        }
       ],
       "recast_window_seconds": 12
     }

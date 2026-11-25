@@ -41,6 +41,14 @@
       ],
       "not_modelled": [
         "Curación propia y aliada al golpear campeones o monstruos épicos (TotalHeal)"
+      ],
+      "active_effects": [
+        {
+          "id": "q_totalheal",
+          "name": "Q (curación)",
+          "kind": "heal",
+          "calculation": "TotalHeal"
+        }
       ]
     },
     "W": {
@@ -66,6 +74,17 @@
       "tooltip": "spell_rakane_tooltip",
       "not_modelled": [
         "Desplazamiento a aliado y escudo con reactivación (TotalShield)"
+      ],
+      "active_effects": [
+        {
+          "id": "e_totalshield",
+          "name": "E (escudo)",
+          "kind": "shield",
+          "calculation": "TotalShield",
+          "duration_seconds": {
+            "data_value": "Duration"
+          }
+        }
       ]
     },
     "R": {
@@ -84,6 +103,20 @@
       ],
       "not_modelled": [
         "Velocidad de movimiento y hechizo (CharmDuration)"
+      ],
+      "active_effects": [
+        {
+          "id": "r_initialcastspeed",
+          "name": "R (VM)",
+          "kind": "stat_bonus",
+          "stat": "move_speed",
+          "mode": "percent_ms",
+          "scale": 0.01,
+          "data_value": "InitialCastSpeed",
+          "duration_seconds": {
+            "data_value": "Duration"
+          }
+        }
       ]
     }
   }

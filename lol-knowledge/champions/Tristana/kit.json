@@ -3,7 +3,7 @@
   "champion": "Tristana",
   "label": "Derivado",
   "game_version": "16.23",
-  "content_version": "16.23.8406595+branch.releases-16-23.content.release",
+  "content_version": "16.23.8418428+branch.releases-16-23.content.release",
   "verified_against": {
     "content_version": "16.23.8406595+branch.releases-16-23.content.release",
     "bin_sha256": "8e5e883c4190458c9c0e4f04ece118c08d408260947309dbf96a7c1e1e1037a3",
@@ -28,6 +28,28 @@
       "passive_stats": [],
       "not_modelled": [
         "Velocidad de ataque activa durante 7 s (AttackSpeedMod)"
+      ],
+      "active_effects": [
+        {
+          "id": "rapid_fire_as",
+          "name": "Tiro rápido (VA)",
+          "kind": "stat_bonus",
+          "formula": {
+            "op": "by_rank",
+            "values": [
+              40,
+              60,
+              80,
+              100,
+              120
+            ]
+          },
+          "label": "Derivado",
+          "source": "Characters/Tristana/Spells/TristanaQAbility/TristanaQ.DataValues.AttackSpeedMod (16.23.8418428+branch.releases-16-23.content.release)",
+          "stat": "attack_speed_bonus",
+          "mode": "flat",
+          "duration_seconds": 7
+        }
       ]
     },
     "W": {
@@ -84,7 +106,7 @@
                 ]
               },
               "label": "Derivado",
-              "source": "Characters/Tristana/Spells/TristanaWAbility/TristanaW.mSpellCalculations.LandingDamage (16.23.8406595+branch.releases-16-23.content.release)",
+              "source": "Characters/Tristana/Spells/TristanaWAbility/TristanaW.mSpellCalculations.LandingDamage (16.23.8418428+branch.releases-16-23.content.release)",
               "damage_type_source": "spell_tristanaw_tooltip <magicDamage>"
             }
           ]
@@ -135,7 +157,7 @@
                 ]
               },
               "label": "Derivado",
-              "source": "Characters/Tristana/Spells/TristanaEAbility/TristanaE.mSpellCalculations.PassiveDamage (16.23.8406595+branch.releases-16-23.content.release)",
+              "source": "Characters/Tristana/Spells/TristanaEAbility/TristanaE.mSpellCalculations.PassiveDamage (16.23.8418428+branch.releases-16-23.content.release)",
               "damage_type_source": "spell_tristanae_tooltip <magicDamage>"
             }
           ]
@@ -190,7 +212,7 @@
                 ]
               },
               "label": "Derivado",
-              "source": "Characters/Tristana/Spells/TristanaEAbility/TristanaE.mSpellCalculations.ActiveDamage (16.23.8406595+branch.releases-16-23.content.release)",
+              "source": "Characters/Tristana/Spells/TristanaEAbility/TristanaE.mSpellCalculations.ActiveDamage (16.23.8418428+branch.releases-16-23.content.release)",
               "damage_type_source": "spell_tristanae_tooltip <physicalDamage>"
             }
           ]
@@ -272,7 +294,7 @@
                 ]
               },
               "label": "Derivado",
-              "source": "Characters/Tristana/Spells/TristanaEAbility/TristanaE.mSpellCalculations.ActiveMaxDamage (16.23.8406595+branch.releases-16-23.content.release)",
+              "source": "Characters/Tristana/Spells/TristanaEAbility/TristanaE.mSpellCalculations.ActiveMaxDamage (16.23.8418428+branch.releases-16-23.content.release)",
               "damage_type_source": "spell_tristanae_tooltip <physicalDamage>"
             }
           ]
@@ -335,7 +357,7 @@
                 ]
               },
               "label": "Derivado",
-              "source": "Characters/Tristana/Spells/TristanaRAbility/TristanaR.mSpellCalculations.DamageCalc (16.23.8406595+branch.releases-16-23.content.release)",
+              "source": "Characters/Tristana/Spells/TristanaRAbility/TristanaR.mSpellCalculations.DamageCalc (16.23.8418428+branch.releases-16-23.content.release)",
               "damage_type_source": "spell_tristanar_tooltip <magicDamage>"
             }
           ]

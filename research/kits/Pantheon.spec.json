@@ -151,6 +151,44 @@
       "not_modelled": [
         "Invulnerabilidad direccional, velocidad de movimiento y resistencias potenciadas (ResistsCalc)",
         "Reducción de daño a súbditos"
+      ],
+      "active_effects": [
+        {
+          "id": "aegis_assault_armor",
+          "name": "Asalto de égida potenciado (armadura)",
+          "kind": "stat_bonus",
+          "stat": "armor",
+          "mode": "flat",
+          "calculation": "ResistsCalc",
+          "duration_seconds": {
+            "data_value": "ResistsDuration"
+          },
+          "condition": "mortal_will_empowered"
+        },
+        {
+          "id": "aegis_assault_mr",
+          "name": "Asalto de égida potenciado (RM)",
+          "kind": "stat_bonus",
+          "stat": "magic_resist",
+          "mode": "flat",
+          "calculation": "ResistsCalc",
+          "duration_seconds": {
+            "data_value": "ResistsDuration"
+          },
+          "condition": "mortal_will_empowered"
+        },
+        {
+          "id": "aegis_assault_ms",
+          "name": "Asalto de égida potenciado (VM %)",
+          "kind": "stat_bonus",
+          "stat": "move_speed",
+          "mode": "percent_ms",
+          "data_value": "SpeedAmount",
+          "duration_seconds": {
+            "data_value": "SpeedDuration"
+          },
+          "condition": "mortal_will_empowered"
+        }
       ]
     },
     "R": {

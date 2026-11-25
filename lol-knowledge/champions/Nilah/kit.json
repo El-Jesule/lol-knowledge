@@ -3,7 +3,7 @@
   "champion": "Nilah",
   "label": "Derivado",
   "game_version": "16.23",
-  "content_version": "16.23.8406595+branch.releases-16-23.content.release",
+  "content_version": "16.23.8418428+branch.releases-16-23.content.release",
   "verified_against": {
     "content_version": "16.23.8406595+branch.releases-16-23.content.release",
     "bin_sha256": "0821ef69bcd4f83dc000cf2b9f641c12864a99e91d62c9f3d9e4d20453ad0a61",
@@ -30,7 +30,7 @@
             "value": 7.5
           },
           "label": "Derivado",
-          "source": "Characters/Nilah/Spells/NilahPassiveAbility/NilahPassive.DataValues.HealingIncrease (16.23.8406595+branch.releases-16-23.content.release)",
+          "source": "Characters/Nilah/Spells/NilahPassiveAbility/NilahPassive.DataValues.HealingIncrease (16.23.8418428+branch.releases-16-23.content.release)",
           "stat": "heal_and_shield_power",
           "mode": "flat",
           "condition": "pasiva permanente de curaciones (+7,5 %)"
@@ -77,7 +77,7 @@
                 ]
               },
               "label": "Derivado",
-              "source": "Characters/Nilah/Spells/NilahQAbility/NilahQ.mSpellCalculations.DamageCalc (16.23.8406595+branch.releases-16-23.content.release)",
+              "source": "Characters/Nilah/Spells/NilahQAbility/NilahQ.mSpellCalculations.DamageCalc (16.23.8418428+branch.releases-16-23.content.release)",
               "damage_type_source": "spell_nilahq_tooltip <physicalDamage>"
             }
           ]
@@ -86,6 +86,23 @@
       "passive_stats": [],
       "not_modelled": [
         "Escalado pasivo con probabilidad de crítico para penetración de armadura (CritArmorPen) y curación (CritLifesteal), escalado crítico activo, VA/alcance y daño en cono"
+      ],
+      "active_effects": [
+        {
+          "id": "q_bonusattackspeedcalc",
+          "name": "Q (VA)",
+          "kind": "stat_bonus",
+          "formula": {
+            "op": "linear_by_level",
+            "min": 10,
+            "max": 60
+          },
+          "label": "Derivado",
+          "source": "Characters/Nilah/Spells/NilahQAbility/NilahQ.mSpellCalculations.BonusAttackSpeedCalc (16.23.8418428+branch.releases-16-23.content.release)",
+          "stat": "attack_speed_bonus",
+          "mode": "flat",
+          "duration_seconds": 4
+        }
       ]
     },
     "W": {
@@ -95,6 +112,42 @@
       "passive_stats": [],
       "not_modelled": [
         "Esquiva de ataques básicos, reducción de daño mágico, velocidad de movimiento y contagio a aliados"
+      ],
+      "active_effects": [
+        {
+          "id": "jubilant_veil_magic_dr",
+          "name": "Velo jubiloso (DR mágico)",
+          "kind": "damage_taken_modifier",
+          "formula": {
+            "op": "constant",
+            "value": 25
+          },
+          "label": "Derivado",
+          "source": "Characters/Nilah/Spells/NilahWAbility/NilahW.DataValues.MagicDamageReduction (16.23.8418428+branch.releases-16-23.content.release)",
+          "mode": "percent",
+          "damage_type": "magic",
+          "duration_seconds": 2.25
+        },
+        {
+          "id": "jubilant_veil_ms",
+          "name": "Velo jubiloso (VM %)",
+          "kind": "stat_bonus",
+          "formula": {
+            "op": "by_rank",
+            "values": [
+              0.15,
+              0.175,
+              0.2,
+              0.225,
+              0.25
+            ]
+          },
+          "label": "Derivado",
+          "source": "Characters/Nilah/Spells/NilahWAbility/NilahW.DataValues.MoveSpeedPercent (16.23.8418428+branch.releases-16-23.content.release)",
+          "stat": "move_speed",
+          "mode": "percent_ms",
+          "duration_seconds": 2.25
+        }
       ]
     },
     "E": {
@@ -137,7 +190,7 @@
                 ]
               },
               "label": "Derivado",
-              "source": "Characters/Nilah/Spells/NilahEAbility/NilahE.mSpellCalculations.DashDamage (16.23.8406595+branch.releases-16-23.content.release)",
+              "source": "Characters/Nilah/Spells/NilahEAbility/NilahE.mSpellCalculations.DashDamage (16.23.8418428+branch.releases-16-23.content.release)",
               "damage_type_source": "spell_nilahe_tooltip <physicalDamage>"
             }
           ]
@@ -195,7 +248,7 @@
                 ]
               },
               "label": "Derivado",
-              "source": "Characters/Nilah/Spells/NilahRAbility/NilahR.mSpellCalculations.DamagePerTickCalcTooltip (16.23.8406595+branch.releases-16-23.content.release)",
+              "source": "Characters/Nilah/Spells/NilahRAbility/NilahR.mSpellCalculations.DamagePerTickCalcTooltip (16.23.8418428+branch.releases-16-23.content.release)",
               "damage_type_source": "spell_nilahr_tooltip <physicalDamage>"
             }
           ]
@@ -234,7 +287,7 @@
                 ]
               },
               "label": "Derivado",
-              "source": "Characters/Nilah/Spells/NilahRAbility/NilahR.mSpellCalculations.DamageCalc (16.23.8406595+branch.releases-16-23.content.release)",
+              "source": "Characters/Nilah/Spells/NilahRAbility/NilahR.mSpellCalculations.DamageCalc (16.23.8418428+branch.releases-16-23.content.release)",
               "damage_type_source": "spell_nilahr_tooltip <physicalDamage>"
             }
           ]

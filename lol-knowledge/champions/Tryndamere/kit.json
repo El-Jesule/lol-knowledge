@@ -3,7 +3,7 @@
   "champion": "Tryndamere",
   "label": "Derivado",
   "game_version": "16.23",
-  "content_version": "16.23.8406595+branch.releases-16-23.content.release",
+  "content_version": "16.23.8418428+branch.releases-16-23.content.release",
   "verified_against": {
     "content_version": "16.23.8406595+branch.releases-16-23.content.release",
     "bin_sha256": "84444dd20fc25f9de59441978b491f11bb7dd457c2bb5377423ced049e7a0892",
@@ -30,7 +30,7 @@
             "value": 0.5
           },
           "label": "Derivado",
-          "source": "Characters/Tryndamere/Spells/TryndamerePassiveAbility/TryndamerePassive.mSpellCalculations.PassiveCritConversionTooltip (16.23.8406595+branch.releases-16-23.content.release)",
+          "source": "Characters/Tryndamere/Spells/TryndamerePassiveAbility/TryndamerePassive.mSpellCalculations.PassiveCritConversionTooltip (16.23.8418428+branch.releases-16-23.content.release)",
           "stat": "crit_chance",
           "mode": "flat",
           "input_name": "tryndamere_fury",
@@ -45,6 +45,44 @@
       "passive_stats": [],
       "not_modelled": [
         "DA pasivo adicional por vida faltante (hasta MaximumBonusAD) y curación activa consumiendo Furia (BaseHeal / MaximumHeal)"
+      ],
+      "active_effects": [
+        {
+          "id": "bloodlust_heal",
+          "name": "Sed de sangre (curación base sin furia)",
+          "kind": "heal",
+          "formula": {
+            "op": "add",
+            "operands": [
+              {
+                "op": "by_rank",
+                "values": [
+                  30,
+                  40,
+                  50,
+                  60,
+                  70
+                ]
+              },
+              {
+                "op": "mul",
+                "operands": [
+                  {
+                    "op": "constant",
+                    "value": 0.3
+                  },
+                  {
+                    "op": "stat",
+                    "stat": "ability_power",
+                    "scope": "total"
+                  }
+                ]
+              }
+            ]
+          },
+          "label": "Derivado",
+          "source": "Characters/Tryndamere/Spells/TryndamereQAbility/TryndamereQ.mSpellCalculations.BaseHeal (16.23.8418428+branch.releases-16-23.content.release)"
+        }
       ]
     },
     "W": {
@@ -110,7 +148,7 @@
                 ]
               },
               "label": "Derivado",
-              "source": "Characters/Tryndamere/Spells/TryndamereEAbility/TryndamereE.mSpellCalculations.TotalDamage (16.23.8406595+branch.releases-16-23.content.release)",
+              "source": "Characters/Tryndamere/Spells/TryndamereEAbility/TryndamereE.mSpellCalculations.TotalDamage (16.23.8418428+branch.releases-16-23.content.release)",
               "damage_type_source": "spell_tryndameree_tooltip <physicalDamage>"
             }
           ]

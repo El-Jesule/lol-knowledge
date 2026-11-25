@@ -3,7 +3,7 @@
   "champion": "Mordekaiser",
   "label": "Derivado",
   "game_version": "16.23",
-  "content_version": "16.23.8406595+branch.releases-16-23.content.release",
+  "content_version": "16.23.8418428+branch.releases-16-23.content.release",
   "verified_against": {
     "content_version": "16.23.8406595+branch.releases-16-23.content.release",
     "bin_sha256": "59df2c462e15d2c6c8e188241bf5d79979e89f09010628fc064fd1826f4a63d9",
@@ -37,7 +37,7 @@
                 ]
               },
               "label": "Derivado",
-              "source": "Characters/Mordekaiser/Spells/MordekaiserPassiveAbility/MordekaiserPassive.mSpellCalculations.BonusAPAuto (16.23.8406595+branch.releases-16-23.content.release)",
+              "source": "Characters/Mordekaiser/Spells/MordekaiserPassiveAbility/MordekaiserPassive.mSpellCalculations.BonusAPAuto (16.23.8418428+branch.releases-16-23.content.release)",
               "damage_type_source": "spell_mordekaiserpassive_tooltip <magicDamage>"
             }
           ]
@@ -72,7 +72,7 @@
                 ]
               },
               "label": "Derivado",
-              "source": "Characters/Mordekaiser/Spells/MordekaiserPassiveAbility/MordekaiserPassive.mSpellCalculations.AuraDamagePerStack (16.23.8406595+branch.releases-16-23.content.release)",
+              "source": "Characters/Mordekaiser/Spells/MordekaiserPassiveAbility/MordekaiserPassive.mSpellCalculations.AuraDamagePerStack (16.23.8418428+branch.releases-16-23.content.release)",
               "damage_type_source": "spell_mordekaiserpassive_tooltip <magicDamage>"
             },
             {
@@ -98,7 +98,7 @@
                 ]
               },
               "label": "Derivado",
-              "source": "Characters/Mordekaiser/Spells/MordekaiserPassiveAbility/MordekaiserPassive · mSpellCalculations.PercentHealthForAura % × vida máxima del objetivo (16.23.8406595+branch.releases-16-23.content.release)",
+              "source": "Characters/Mordekaiser/Spells/MordekaiserPassiveAbility/MordekaiserPassive · mSpellCalculations.PercentHealthForAura % × vida máxima del objetivo (16.23.8418428+branch.releases-16-23.content.release)",
               "damage_type_source": "spell_mordekaiserpassive_tooltip <magicDamage>"
             }
           ]
@@ -128,7 +128,7 @@
             ]
           },
           "label": "Derivado",
-          "source": "Characters/Mordekaiser/Spells/MordekaiserPassiveAbility/MordekaiserPassive.mSpellCalculations.BonusAPAuto (16.23.8406595+branch.releases-16-23.content.release)",
+          "source": "Characters/Mordekaiser/Spells/MordekaiserPassiveAbility/MordekaiserPassive.mSpellCalculations.BonusAPAuto (16.23.8418428+branch.releases-16-23.content.release)",
           "trigger": "on_hit",
           "damage_type": "magic"
         },
@@ -160,7 +160,7 @@
             ]
           },
           "label": "Derivado",
-          "source": "Characters/Mordekaiser/Spells/MordekaiserPassiveAbility/MordekaiserPassive.mSpellCalculations.PassiveMovementSpeed (16.23.8406595+branch.releases-16-23.content.release)",
+          "source": "Characters/Mordekaiser/Spells/MordekaiserPassiveAbility/MordekaiserPassive.mSpellCalculations.PassiveMovementSpeed (16.23.8418428+branch.releases-16-23.content.release)",
           "stat": "move_speed",
           "mode": "percent_ms",
           "trigger": "champion_hit",
@@ -248,7 +248,7 @@
                 ]
               },
               "label": "Derivado",
-              "source": "Characters/Mordekaiser/Spells/MordekaiserQAbility/MordekaiserQ.mSpellCalculations.QDamage (16.23.8406595+branch.releases-16-23.content.release)",
+              "source": "Characters/Mordekaiser/Spells/MordekaiserQAbility/MordekaiserQ.mSpellCalculations.QDamage (16.23.8418428+branch.releases-16-23.content.release)",
               "damage_type_source": "spell_mordekaiserq_tooltip <magicDamage>"
             }
           ]
@@ -341,7 +341,7 @@
                 ]
               },
               "label": "Derivado",
-              "source": "Characters/Mordekaiser/Spells/MordekaiserQAbility/MordekaiserQ.mSpellCalculations.EmpoweredDamageTooltip (16.23.8406595+branch.releases-16-23.content.release)",
+              "source": "Characters/Mordekaiser/Spells/MordekaiserQAbility/MordekaiserQ.mSpellCalculations.EmpoweredDamageTooltip (16.23.8418428+branch.releases-16-23.content.release)",
               "damage_type_source": "spell_mordekaiserq_tooltip <magicDamage>"
             }
           ]
@@ -357,6 +357,31 @@
       "passive_stats": [],
       "not_modelled": [
         "Acumulación de escudo por daño infligido/recibido y reactivación curativa"
+      ],
+      "active_effects": [
+        {
+          "id": "indestructible_max_shield",
+          "name": "Indestructible (escudo máximo)",
+          "kind": "shield",
+          "formula": {
+            "op": "mul",
+            "operands": [
+              {
+                "op": "constant",
+                "value": 0.3
+              },
+              {
+                "op": "stat",
+                "stat": "health",
+                "scope": "total"
+              }
+            ]
+          },
+          "label": "Derivado",
+          "source": "Characters/Mordekaiser/Spells/MordekaiserWAbility/MordekaiserW.mSpellCalculations.MaxHealthTooltip (16.23.8418428+branch.releases-16-23.content.release)",
+          "condition": "full_stored_shield",
+          "duration_seconds": 5
+        }
       ]
     },
     "E": {
@@ -399,7 +424,7 @@
                 ]
               },
               "label": "Derivado",
-              "source": "Characters/Mordekaiser/Spells/MordekaiserEAbility/MordekaiserE.mSpellCalculations.TotalDamage (16.23.8406595+branch.releases-16-23.content.release)",
+              "source": "Characters/Mordekaiser/Spells/MordekaiserEAbility/MordekaiserE.mSpellCalculations.TotalDamage (16.23.8418428+branch.releases-16-23.content.release)",
               "damage_type_source": "spell_mordekaisere_circular_tooltip <magicDamage>"
             }
           ]
@@ -419,7 +444,7 @@
             ]
           },
           "label": "Derivado",
-          "source": "Characters/Mordekaiser/Spells/MordekaiserEAbility/MordekaiserE.DataValues.MagicPen (16.23.8406595+branch.releases-16-23.content.release)",
+          "source": "Characters/Mordekaiser/Spells/MordekaiserEAbility/MordekaiserE.DataValues.MagicPen (16.23.8418428+branch.releases-16-23.content.release)",
           "condition": "Penetración mágica pasiva permanente al subir E (5..15 %)"
         }
       ],

@@ -3,7 +3,7 @@
   "champion": "Nautilus",
   "label": "Derivado",
   "game_version": "16.23",
-  "content_version": "16.23.8406595+branch.releases-16-23.content.release",
+  "content_version": "16.23.8418428+branch.releases-16-23.content.release",
   "verified_against": {
     "content_version": "16.23.8406595+branch.releases-16-23.content.release",
     "bin_sha256": "7d3de93d01f79bc0837813aab2f3aa2dd40f9ea578bc2255a87e9d1257b0a08e",
@@ -65,7 +65,7 @@
                 ]
               },
               "label": "Derivado",
-              "source": "Characters/Nautilus/Spells/NautilusPassiveAbility/NautilusPassive.mSpellCalculations.TotalDamageTooltip (16.23.8406595+branch.releases-16-23.content.release)",
+              "source": "Characters/Nautilus/Spells/NautilusPassiveAbility/NautilusPassive.mSpellCalculations.TotalDamageTooltip (16.23.8418428+branch.releases-16-23.content.release)",
               "damage_type_source": "spell_nautiluspassive_tooltip <physicalDamage>"
             }
           ]
@@ -104,7 +104,7 @@
             ]
           },
           "label": "Derivado",
-          "source": "Characters/Nautilus/Spells/NautilusPassiveAbility/NautilusPassive.mSpellCalculations.BonusDamage (16.23.8406595+branch.releases-16-23.content.release)",
+          "source": "Characters/Nautilus/Spells/NautilusPassiveAbility/NautilusPassive.mSpellCalculations.BonusDamage (16.23.8418428+branch.releases-16-23.content.release)",
           "trigger": "on_attack",
           "damage_type": "physical",
           "cooldown_seconds": 6
@@ -151,7 +151,7 @@
                 ]
               },
               "label": "Derivado",
-              "source": "Characters/Nautilus/Spells/NautilusAnchorDragAbility/NautilusAnchorDrag.mSpellCalculations.QDamageCalc (16.23.8406595+branch.releases-16-23.content.release)",
+              "source": "Characters/Nautilus/Spells/NautilusAnchorDragAbility/NautilusAnchorDrag.mSpellCalculations.QDamageCalc (16.23.8418428+branch.releases-16-23.content.release)",
               "damage_type_source": "spell_nautilusanchordrag_tooltip <magicDamage>"
             }
           ]
@@ -202,7 +202,7 @@
                 ]
               },
               "label": "Derivado",
-              "source": "Characters/Nautilus/Spells/NautilusPiercingGazeAbility/NautilusPiercingGaze.mSpellCalculations.DotDamageCalc (16.23.8406595+branch.releases-16-23.content.release)",
+              "source": "Characters/Nautilus/Spells/NautilusPiercingGazeAbility/NautilusPiercingGaze.mSpellCalculations.DotDamageCalc (16.23.8418428+branch.releases-16-23.content.release)",
               "damage_type_source": "spell_nautiluspiercinggaze_tooltip <magicDamage>"
             }
           ]
@@ -211,6 +211,51 @@
       "passive_stats": [],
       "not_modelled": [
         "Escudo (ShieldCalc) y daño en área alrededor del objetivo"
+      ],
+      "active_effects": [
+        {
+          "id": "w_shieldcalc",
+          "name": "W (escudo)",
+          "kind": "shield",
+          "formula": {
+            "op": "add",
+            "operands": [
+              {
+                "op": "by_rank",
+                "values": [
+                  50,
+                  60,
+                  70,
+                  80,
+                  90
+                ]
+              },
+              {
+                "op": "mul",
+                "operands": [
+                  {
+                    "op": "by_rank",
+                    "values": [
+                      0.08,
+                      0.09,
+                      0.1,
+                      0.11,
+                      0.12
+                    ]
+                  },
+                  {
+                    "op": "stat",
+                    "stat": "health",
+                    "scope": "total"
+                  }
+                ]
+              }
+            ]
+          },
+          "label": "Derivado",
+          "source": "Characters/Nautilus/Spells/NautilusPiercingGazeAbility/NautilusPiercingGaze.mSpellCalculations.ShieldCalc (16.23.8418428+branch.releases-16-23.content.release)",
+          "duration_seconds": 6
+        }
       ]
     },
     "E": {
@@ -253,7 +298,7 @@
                 ]
               },
               "label": "Derivado",
-              "source": "Characters/Nautilus/Spells/NautilusSplashZoneAbility/NautilusSplashZone.mSpellCalculations.DamageCalc (16.23.8406595+branch.releases-16-23.content.release)",
+              "source": "Characters/Nautilus/Spells/NautilusSplashZoneAbility/NautilusSplashZone.mSpellCalculations.DamageCalc (16.23.8418428+branch.releases-16-23.content.release)",
               "damage_type_source": "spell_nautilussplashzone_tooltip <magicDamage>"
             }
           ]
@@ -302,7 +347,7 @@
                 ]
               },
               "label": "Derivado",
-              "source": "Characters/Nautilus/Spells/NautilusGrandLineAbility/NautilusGrandLine.mSpellCalculations.PrimaryTargetDamage (16.23.8406595+branch.releases-16-23.content.release)",
+              "source": "Characters/Nautilus/Spells/NautilusGrandLineAbility/NautilusGrandLine.mSpellCalculations.PrimaryTargetDamage (16.23.8418428+branch.releases-16-23.content.release)",
               "damage_type_source": "spell_nautilusgrandline_tooltip <magicDamage>"
             }
           ]
@@ -341,7 +386,7 @@
                 ]
               },
               "label": "Derivado",
-              "source": "Characters/Nautilus/Spells/NautilusGrandLineAbility/NautilusGrandLine.mSpellCalculations.SecondaryTargetDamage (16.23.8406595+branch.releases-16-23.content.release)",
+              "source": "Characters/Nautilus/Spells/NautilusGrandLineAbility/NautilusGrandLine.mSpellCalculations.SecondaryTargetDamage (16.23.8418428+branch.releases-16-23.content.release)",
               "damage_type_source": "spell_nautilusgrandline_tooltip <magicDamage>"
             }
           ]

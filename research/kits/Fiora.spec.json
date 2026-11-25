@@ -121,6 +121,20 @@
       "tooltip": "spell_fiorae_tooltip",
       "not_modelled": [
         "Velocidad de ataque en 2 golpes, ralentización en el primero y crítico garantizado en el segundo"
+      ],
+      "active_effects": [
+        {
+          "id": "e_aspercent",
+          "name": "E (VA)",
+          "kind": "stat_bonus",
+          "stat": "attack_speed_bonus",
+          "mode": "flat",
+          "scale": 100,
+          "data_value": "ASPercent",
+          "duration_seconds": {
+            "data_value": "BuffDuration"
+          }
+        }
       ]
     },
     "R": {
@@ -128,6 +142,32 @@
       "tooltip": "spell_fiorar_tooltip",
       "not_modelled": [
         "Los 4 puntos vitales se evalúan en P (r_four_vitals); zona curativa en área (HealPerSecondCalc)"
+      ],
+      "active_effects": [
+        {
+          "id": "grand_challenge_heal",
+          "name": "Duelo excelso (zona de curación)",
+          "kind": "heal",
+          "formula": {
+            "op": "mul",
+            "operands": [
+              {
+                "op": "calculation",
+                "name": "HealPerSecondCalc"
+              },
+              {
+                "op": "data_value",
+                "name": "HealDuration"
+              }
+            ]
+          },
+          "source_note": "mSpellCalculations.HealPerSecondCalc * DataValues.HealDuration",
+          "duration_seconds": {
+            "data_value": "HealDuration"
+          },
+          "over_duration": true,
+          "condition": "vitals_completed_or_takedown"
+        }
       ]
     }
   }

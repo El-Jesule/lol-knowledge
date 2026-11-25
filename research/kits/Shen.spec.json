@@ -105,6 +105,19 @@
       ],
       "not_modelled": [
         "Velocidad de ataque del 50 % potenciada, ralentización y daño a torretas/monstruos"
+      ],
+      "active_effects": [
+        {
+          "id": "q_steroidas",
+          "name": "Q (VA)",
+          "kind": "stat_bonus",
+          "stat": "attack_speed_bonus",
+          "mode": "flat",
+          "data_value": "SteroidAS",
+          "duration_seconds": {
+            "data_value": "AttackBuffDuration"
+          }
+        }
       ]
     },
     "W": {
@@ -137,6 +150,17 @@
       "tooltip": "spell_shenr_tooltip",
       "not_modelled": [
         "Escudo global sobre aliado (Shield / MaxShield) y teletransporte"
+      ],
+      "active_effects": [
+        {
+          "id": "r_shield",
+          "name": "R (escudo)",
+          "kind": "shield",
+          "calculation": "Shield",
+          "duration_seconds": {
+            "data_value": "ShieldDuration"
+          }
+        }
       ]
     }
   }

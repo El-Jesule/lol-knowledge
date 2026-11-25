@@ -163,6 +163,39 @@
       ],
       "not_modelled": [
         "Escudo mágico pasivo (TotalPassiveShield), reducción de daño durante carga y provocación"
+      ],
+      "active_effects": [
+        {
+          "id": "shield_of_durand_magic_dr",
+          "name": "Escudo de Durand (DR mágico)",
+          "kind": "damage_taken_modifier",
+          "mode": "percent",
+          "damage_type": "magic",
+          "calculation": "MagicDamageReduction",
+          "scale": 100,
+          "duration_seconds": {
+            "data_value": "DRLingerDuration"
+          }
+        },
+        {
+          "id": "shield_of_durand_physical_dr",
+          "name": "Escudo de Durand (DR físico)",
+          "kind": "damage_taken_modifier",
+          "mode": "percent",
+          "damage_type": "physical",
+          "calculation": "PhysicalDamageReduction",
+          "scale": 100,
+          "duration_seconds": {
+            "data_value": "DRLingerDuration"
+          }
+        },
+        {
+          "id": "shield_of_durand_passive_shield",
+          "name": "Escudo de Durand (escudo mágico pasivo)",
+          "kind": "shield",
+          "shield_type": "magic",
+          "calculation": "TotalPassiveShield"
+        }
       ]
     },
     "E": {

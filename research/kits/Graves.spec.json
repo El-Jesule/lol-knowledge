@@ -161,6 +161,30 @@
       "tooltip": "spell_gravesmove_tooltip",
       "not_modelled": [
         "Recarga de 1 cartucho y cargas acumulables de Valor (armadura y RM: MRGrant)"
+      ],
+      "active_effects": [
+        {
+          "id": "e_armorperstack",
+          "name": "E (armadura)",
+          "kind": "stat_bonus",
+          "stat": "armor",
+          "mode": "flat",
+          "data_value": "ArmorPerStack",
+          "duration_seconds": {
+            "data_value": "BuffDuration"
+          }
+        },
+        {
+          "id": "e_mrgrant",
+          "name": "E (RM)",
+          "kind": "stat_bonus",
+          "stat": "magic_resist",
+          "mode": "flat",
+          "calculation": "MRGrant",
+          "duration_seconds": {
+            "data_value": "BuffDuration"
+          }
+        }
       ]
     },
     "R": {

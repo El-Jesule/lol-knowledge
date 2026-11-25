@@ -3,7 +3,7 @@
   "champion": "Olaf",
   "label": "Derivado",
   "game_version": "16.23",
-  "content_version": "16.23.8406595+branch.releases-16-23.content.release",
+  "content_version": "16.23.8418428+branch.releases-16-23.content.release",
   "verified_against": {
     "content_version": "16.23.8406595+branch.releases-16-23.content.release",
     "bin_sha256": "4bebc1281a14579300b5e57fab4a2fca78c8ead6ec3421f5980cf5fa3818ba7b",
@@ -49,7 +49,7 @@
             ]
           },
           "label": "Derivado",
-          "source": "Characters/Olaf/Spells/OlafBerzerkerRageAbility/OlafBerzerkerRage.mSpellCalculations.MaxAttackSpeed (16.23.8406595+branch.releases-16-23.content.release)",
+          "source": "Characters/Olaf/Spells/OlafBerzerkerRageAbility/OlafBerzerkerRage.mSpellCalculations.MaxAttackSpeed (16.23.8418428+branch.releases-16-23.content.release)",
           "stat": "attack_speed_bonus",
           "mode": "flat",
           "input_name": "olaf_fury_percent",
@@ -83,7 +83,7 @@
             ]
           },
           "label": "Derivado",
-          "source": "Characters/Olaf/Spells/OlafBerzerkerRageAbility/OlafBerzerkerRage.mSpellCalculations.MaxLifeSteal (16.23.8406595+branch.releases-16-23.content.release)",
+          "source": "Characters/Olaf/Spells/OlafBerzerkerRageAbility/OlafBerzerkerRage.mSpellCalculations.MaxLifeSteal (16.23.8418428+branch.releases-16-23.content.release)",
           "stat": "life_steal",
           "mode": "flat",
           "input_name": "olaf_fury_percent",
@@ -131,7 +131,7 @@
                 ]
               },
               "label": "Derivado",
-              "source": "Characters/Olaf/Spells/OlafAxeThrowCastAbility/OlafAxeThrowCast.mSpellCalculations.TotalDamage (16.23.8406595+branch.releases-16-23.content.release)",
+              "source": "Characters/Olaf/Spells/OlafAxeThrowCastAbility/OlafAxeThrowCast.mSpellCalculations.TotalDamage (16.23.8418428+branch.releases-16-23.content.release)",
               "damage_type_source": "spell_olafaxethrowcast_tooltip <physicalDamage>"
             }
           ]
@@ -149,6 +149,136 @@
       "passive_stats": [],
       "not_modelled": [
         "Velocidad de ataque durante 5 s y escudo escalado por vida faltante (MaxShieldCalc)"
+      ],
+      "active_effects": [
+        {
+          "id": "tough_it_out_as",
+          "name": "A darlo todo (VA)",
+          "kind": "stat_bonus",
+          "formula": {
+            "op": "by_rank",
+            "values": [
+              40,
+              50,
+              60,
+              70,
+              80
+            ]
+          },
+          "label": "Derivado",
+          "source": "Characters/Olaf/Spells/OlafFrenziedStrikesAbility/OlafFrenziedStrikes.DataValues.Attackspeed (16.23.8418428+branch.releases-16-23.content.release)",
+          "stat": "attack_speed_bonus",
+          "mode": "flat",
+          "duration_seconds": 5
+        },
+        {
+          "id": "tough_it_out_shield",
+          "name": "A darlo todo (escudo)",
+          "kind": "shield",
+          "formula": {
+            "op": "min",
+            "operands": [
+              {
+                "op": "add",
+                "operands": [
+                  {
+                    "op": "by_rank",
+                    "values": [
+                      10,
+                      40,
+                      70,
+                      100,
+                      130
+                    ]
+                  },
+                  {
+                    "op": "mul",
+                    "operands": [
+                      {
+                        "op": "mul",
+                        "operands": [
+                          {
+                            "op": "constant",
+                            "value": 0.175
+                          },
+                          {
+                            "op": "add",
+                            "operands": [
+                              {
+                                "op": "constant",
+                                "value": 1
+                              },
+                              {
+                                "op": "mul",
+                                "operands": [
+                                  {
+                                    "op": "constant",
+                                    "value": -1
+                                  },
+                                  {
+                                    "op": "constant",
+                                    "value": 0.3
+                                  }
+                                ]
+                              }
+                            ]
+                          }
+                        ]
+                      },
+                      {
+                        "op": "stat",
+                        "stat": "health",
+                        "scope": "total"
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "op": "add",
+                "operands": [
+                  {
+                    "op": "by_rank",
+                    "values": [
+                      10,
+                      40,
+                      70,
+                      100,
+                      130
+                    ]
+                  },
+                  {
+                    "op": "mul",
+                    "operands": [
+                      {
+                        "op": "constant",
+                        "value": 0.175
+                      },
+                      {
+                        "op": "mul",
+                        "operands": [
+                          {
+                            "op": "stat",
+                            "stat": "health",
+                            "scope": "max"
+                          },
+                          {
+                            "op": "stat",
+                            "stat": "health",
+                            "scope": "missing_fraction"
+                          }
+                        ]
+                      }
+                    ]
+                  }
+                ]
+              }
+            ]
+          },
+          "label": "Derivado",
+          "source": "Characters/Olaf/Spells/OlafFrenziedStrikesAbility/OlafFrenziedStrikes · min(MaxShieldCalc, BaseShield + ShieldPercMissingHP * missing HP) (16.23.8418428+branch.releases-16-23.content.release)",
+          "duration_seconds": 2.5
+        }
       ]
     },
     "E": {
@@ -191,7 +321,7 @@
                 ]
               },
               "label": "Derivado",
-              "source": "Characters/Olaf/Spells/OlafRecklessStrikeAbility/OlafRecklessStrike.mSpellCalculations.TotalDamage (16.23.8406595+branch.releases-16-23.content.release)",
+              "source": "Characters/Olaf/Spells/OlafRecklessStrikeAbility/OlafRecklessStrike.mSpellCalculations.TotalDamage (16.23.8418428+branch.releases-16-23.content.release)",
               "damage_type_source": "spell_olafrecklessstrike_tooltip <trueDamage>"
             }
           ]
@@ -242,7 +372,7 @@
           ]
         },
         "label": "Derivado",
-        "source": "Characters/Olaf/Spells/OlafRecklessStrikeAbility/OlafRecklessStrike.mSpellCalculations.HealthCostCalc (16.23.8406595+branch.releases-16-23.content.release)"
+        "source": "Characters/Olaf/Spells/OlafRecklessStrikeAbility/OlafRecklessStrike.mSpellCalculations.HealthCostCalc (16.23.8418428+branch.releases-16-23.content.release)"
       }
     },
     "R": {
@@ -252,6 +382,63 @@
       "passive_stats": [],
       "not_modelled": [
         "Resistencias pasivas (armadura/RM), inmunidad a CC, DA adicional activo (AD), velocidad de movimiento y extensión al golpear"
+      ],
+      "active_effects": [
+        {
+          "id": "ragnarok_ad",
+          "name": "Ragnarok (AD)",
+          "kind": "stat_bonus",
+          "formula": {
+            "op": "add",
+            "operands": [
+              {
+                "op": "by_rank",
+                "values": [
+                  10,
+                  20,
+                  30
+                ]
+              },
+              {
+                "op": "mul",
+                "operands": [
+                  {
+                    "op": "constant",
+                    "value": 0.25
+                  },
+                  {
+                    "op": "stat",
+                    "stat": "attack_damage",
+                    "scope": "total"
+                  }
+                ]
+              }
+            ]
+          },
+          "label": "Derivado",
+          "source": "Characters/Olaf/Spells/OlafRagnarokAbility/OlafRagnarok.mSpellCalculations.AD (16.23.8418428+branch.releases-16-23.content.release)",
+          "stat": "attack_damage",
+          "mode": "flat",
+          "duration_seconds": 3
+        },
+        {
+          "id": "ragnarok_ms",
+          "name": "Ragnarok (VM %)",
+          "kind": "stat_bonus",
+          "formula": {
+            "op": "by_rank",
+            "values": [
+              0.2,
+              0.45,
+              0.7
+            ]
+          },
+          "label": "Derivado",
+          "source": "Characters/Olaf/Spells/OlafRagnarokAbility/OlafRagnarok.DataValues.Haste (16.23.8418428+branch.releases-16-23.content.release)",
+          "stat": "move_speed",
+          "mode": "percent_ms",
+          "duration_seconds": 3
+        }
       ]
     }
   }

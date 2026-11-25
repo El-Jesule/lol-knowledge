@@ -3,7 +3,7 @@
   "champion": "Annie",
   "label": "Derivado",
   "game_version": "16.23",
-  "content_version": "16.23.8406595+branch.releases-16-23.content.release",
+  "content_version": "16.23.8418428+branch.releases-16-23.content.release",
   "verified_against": {
     "content_version": "16.23.8406595+branch.releases-16-23.content.release",
     "bin_sha256": "e36fdb0ecaf87d1b85f0957462e6591bab70bdb88f04eaa9cb4ee61b60beb912",
@@ -61,7 +61,7 @@
                 ]
               },
               "label": "Derivado",
-              "source": "Characters/Annie/Spells/AnnieQAbility/AnnieQ.mSpellCalculations.TotalDamage (16.23.8406595+branch.releases-16-23.content.release)",
+              "source": "Characters/Annie/Spells/AnnieQAbility/AnnieQ.mSpellCalculations.TotalDamage (16.23.8418428+branch.releases-16-23.content.release)",
               "damage_type_source": "spell_annieq_tooltip <magicDamage>"
             }
           ]
@@ -112,7 +112,7 @@
                 ]
               },
               "label": "Derivado",
-              "source": "Characters/Annie/Spells/AnnieWAbility/AnnieW.mSpellCalculations.TotalDamage (16.23.8406595+branch.releases-16-23.content.release)",
+              "source": "Characters/Annie/Spells/AnnieWAbility/AnnieW.mSpellCalculations.TotalDamage (16.23.8418428+branch.releases-16-23.content.release)",
               "damage_type_source": "spell_anniew_tooltip <magicDamage>"
             }
           ]
@@ -161,7 +161,7 @@
                 ]
               },
               "label": "Derivado",
-              "source": "Characters/Annie/Spells/AnnieEAbility/AnnieE.mSpellCalculations.DamageReturn (16.23.8406595+branch.releases-16-23.content.release)",
+              "source": "Characters/Annie/Spells/AnnieEAbility/AnnieE.mSpellCalculations.DamageReturn (16.23.8418428+branch.releases-16-23.content.release)",
               "damage_type_source": "spell_anniee_tooltip <magicDamage>"
             }
           ]
@@ -170,6 +170,60 @@
       "passive_stats": [],
       "not_modelled": [
         "Escudo (ShieldBlockTotal) y velocidad de movimiento (MoveSpeedCalc)"
+      ],
+      "active_effects": [
+        {
+          "id": "molten_shield",
+          "name": "Escudo fundido (escudo)",
+          "kind": "shield",
+          "formula": {
+            "op": "add",
+            "operands": [
+              {
+                "op": "by_rank",
+                "values": [
+                  60,
+                  95,
+                  130,
+                  165,
+                  200
+                ]
+              },
+              {
+                "op": "mul",
+                "operands": [
+                  {
+                    "op": "constant",
+                    "value": 0.4
+                  },
+                  {
+                    "op": "stat",
+                    "stat": "ability_power",
+                    "scope": "total"
+                  }
+                ]
+              }
+            ]
+          },
+          "label": "Derivado",
+          "source": "Characters/Annie/Spells/AnnieEAbility/AnnieE.mSpellCalculations.ShieldBlockTotal (16.23.8418428+branch.releases-16-23.content.release)",
+          "duration_seconds": 3
+        },
+        {
+          "id": "molten_shield_ms",
+          "name": "Escudo fundido (VM %)",
+          "kind": "stat_bonus",
+          "formula": {
+            "op": "linear_by_level",
+            "min": 0.2,
+            "max": 0.5
+          },
+          "label": "Derivado",
+          "source": "Characters/Annie/Spells/AnnieEAbility/AnnieE.mSpellCalculations.MoveSpeedCalc (16.23.8418428+branch.releases-16-23.content.release)",
+          "stat": "move_speed",
+          "mode": "percent_ms",
+          "duration_seconds": 1.5
+        }
       ]
     },
     "R": {
@@ -210,7 +264,7 @@
                 ]
               },
               "label": "Derivado",
-              "source": "Characters/Annie/Spells/AnnieRAbility/AnnieR.mSpellCalculations.InitialBurstDamage (16.23.8406595+branch.releases-16-23.content.release)",
+              "source": "Characters/Annie/Spells/AnnieRAbility/AnnieR.mSpellCalculations.InitialBurstDamage (16.23.8418428+branch.releases-16-23.content.release)",
               "damage_type_source": "spell_annier_tooltip <magicDamage>"
             }
           ]
@@ -249,7 +303,7 @@
                 ]
               },
               "label": "Derivado",
-              "source": "Characters/Annie/Spells/AnnieRAbility/AnnieR.mSpellCalculations.TibbersAuraDamage (16.23.8406595+branch.releases-16-23.content.release)",
+              "source": "Characters/Annie/Spells/AnnieRAbility/AnnieR.mSpellCalculations.TibbersAuraDamage (16.23.8418428+branch.releases-16-23.content.release)",
               "damage_type_source": "spell_annier_tooltip <magicDamage>"
             }
           ]
@@ -267,7 +321,7 @@
             ]
           },
           "label": "Derivado",
-          "source": "Characters/Annie/Spells/AnnieRAbility/AnnieR.DataValues.RPercentPenBuff (16.23.8406595+branch.releases-16-23.content.release)",
+          "source": "Characters/Annie/Spells/AnnieRAbility/AnnieR.DataValues.RPercentPenBuff (16.23.8418428+branch.releases-16-23.content.release)",
           "condition": "pasiva de la R: activa con la R aprendida, también en enfriamiento"
         }
       ],

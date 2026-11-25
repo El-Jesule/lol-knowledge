@@ -40,6 +40,14 @@
       ],
       "not_modelled": [
         "Curación normal y potenciada (BaseHealTooltip, EmpoweredHealTooltip) y velocidad de movimiento"
+      ],
+      "active_effects": [
+        {
+          "id": "transfusion_heal",
+          "name": "Transfusión (curación base)",
+          "kind": "heal",
+          "calculation": "BaseHealTooltip"
+        }
       ]
     },
     "W": {
@@ -58,6 +66,25 @@
       ],
       "not_modelled": [
         "Coste del 15 % de la vida actual, inalcanzabilidad, ralentización y curación (TotalHeal)"
+      ],
+      "active_effects": [
+        {
+          "id": "w_totalheal",
+          "name": "W (curación)",
+          "kind": "heal",
+          "calculation": "TotalHeal"
+        },
+        {
+          "id": "w_hasteboost",
+          "name": "W (VM)",
+          "kind": "stat_bonus",
+          "stat": "move_speed",
+          "mode": "percent_ms",
+          "data_value": "HasteBoost",
+          "duration_seconds": {
+            "data_value": "HasteDuration"
+          }
+        }
       ]
     },
     "E": {
@@ -108,6 +135,14 @@
       ],
       "not_modelled": [
         "Aumento del 10 % de todo el daño recibido durante 4 s (DamageAmp) y curación por campeón"
+      ],
+      "active_effects": [
+        {
+          "id": "r_damage",
+          "name": "R (curación)",
+          "kind": "heal",
+          "calculation": "Damage"
+        }
       ]
     }
   }

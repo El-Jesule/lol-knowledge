@@ -81,6 +81,28 @@
       "tooltip": "spell_blindmonkwone_tooltip",
       "not_modelled": [
         "Escudo (ShieldAmount), robo de vida y omnivampirismo temporales (LifestealAndSpellVamp)"
+      ],
+      "active_effects": [
+        {
+          "id": "safeguard_shield",
+          "name": "Salvaguarda (escudo)",
+          "kind": "shield",
+          "calculation": "ShieldAmount",
+          "duration_seconds": {
+            "data_value": "ShieldDuration"
+          }
+        },
+        {
+          "id": "iron_will_omnivamp",
+          "name": "Voluntad de hierro (omnisucción)",
+          "kind": "stat_bonus",
+          "stat": "omnivamp",
+          "mode": "flat",
+          "data_value": "LifestealAndSpellVamp",
+          "duration_seconds": {
+            "data_value": "LifestealAndSpellVampTime"
+          }
+        }
       ]
     },
     "E": {

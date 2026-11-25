@@ -81,6 +81,31 @@
       ],
       "not_modelled": [
         "Velocidad de movimiento, velocidad de ataque al salir y devolución de energía"
+      ],
+      "active_effects": [
+        {
+          "id": "e_totalas",
+          "name": "E (VA)",
+          "kind": "stat_bonus",
+          "stat": "attack_speed_bonus",
+          "mode": "flat",
+          "scale": 100,
+          "data_value": "TotalAS",
+          "duration_seconds": {
+            "data_value": "DurationAsBall"
+          }
+        },
+        {
+          "id": "e_movementspeed",
+          "name": "E (VM)",
+          "kind": "stat_bonus",
+          "stat": "move_speed",
+          "mode": "percent_ms",
+          "data_value": "MovementSpeed",
+          "duration_seconds": {
+            "data_value": "DurationAsBall"
+          }
+        }
       ]
     },
     "R": {
@@ -99,6 +124,30 @@
       ],
       "not_modelled": [
         "Armadura y RM temporales (KennenRDefenses) y 6 pulsos totales a lo largo de 3 s"
+      ],
+      "active_effects": [
+        {
+          "id": "slicing_maelstrom_armor",
+          "name": "Tempestad cercenante (armadura)",
+          "kind": "stat_bonus",
+          "stat": "armor",
+          "mode": "flat",
+          "data_value": "KennenRDefenses",
+          "duration_seconds": {
+            "data_value": "KennenRDuration"
+          }
+        },
+        {
+          "id": "slicing_maelstrom_mr",
+          "name": "Tempestad cercenante (RM)",
+          "kind": "stat_bonus",
+          "stat": "magic_resist",
+          "mode": "flat",
+          "data_value": "KennenRDefenses",
+          "duration_seconds": {
+            "data_value": "KennenRDuration"
+          }
+        }
       ]
     }
   }

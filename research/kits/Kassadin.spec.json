@@ -41,6 +41,18 @@
       ],
       "not_modelled": [
         "Escudo mágico (TotalShield) e interrupción de canalizaciones"
+      ],
+      "active_effects": [
+        {
+          "id": "null_sphere_magic_shield",
+          "name": "Esfera vacía (escudo mágico)",
+          "kind": "shield",
+          "shield_type": "magic",
+          "calculation": "TotalShield",
+          "duration_seconds": {
+            "data_value": "ShieldDuration"
+          }
+        }
       ]
     },
     "W": {

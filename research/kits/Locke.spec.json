@@ -78,6 +78,31 @@
       "tooltip": "spell_lockew_tooltip",
       "not_modelled": [
         "Velocidad de movimiento (MoveSpeed), velocidad de ataque (AttackSpeed) y restauración de daño recibido (DamageRestoreAmount)"
+      ],
+      "active_effects": [
+        {
+          "id": "w_attackspeed",
+          "name": "W (VA)",
+          "kind": "stat_bonus",
+          "stat": "attack_speed_bonus",
+          "mode": "flat",
+          "scale": 100,
+          "calculation": "AttackSpeed",
+          "duration_seconds": {
+            "data_value": "BaseDuration"
+          }
+        },
+        {
+          "id": "w_movespeed",
+          "name": "W (VM)",
+          "kind": "stat_bonus",
+          "stat": "move_speed",
+          "mode": "percent_ms",
+          "calculation": "MoveSpeed",
+          "duration_seconds": {
+            "data_value": "BaseDuration"
+          }
+        }
       ]
     },
     "E": {

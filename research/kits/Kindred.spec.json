@@ -35,6 +35,20 @@
       ],
       "not_modelled": [
         "Velocidad de ataque temporal (TotalQAttackSpeed) y reducción de CD dentro de W"
+      ],
+      "active_effects": [
+        {
+          "id": "q_totalqattackspeed",
+          "name": "Q (VA)",
+          "kind": "stat_bonus",
+          "stat": "attack_speed_bonus",
+          "mode": "flat",
+          "scale": 100,
+          "calculation": "TotalQAttackSpeed",
+          "duration_seconds": {
+            "data_value": "BaseASDuration"
+          }
+        }
       ]
     },
     "W": {
@@ -126,6 +140,14 @@
       "tooltip": "spell_kindredr_tooltip",
       "not_modelled": [
         "Zona de invulnerabilidad al 10 % de vida durante 4 s y curación final"
+      ],
+      "active_effects": [
+        {
+          "id": "r_healflat",
+          "name": "R (curación)",
+          "kind": "heal",
+          "data_value": "HealFlat"
+        }
       ]
     }
   }

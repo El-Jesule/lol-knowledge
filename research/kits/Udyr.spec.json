@@ -123,6 +123,20 @@
       ],
       "not_modelled": [
         "Velocidad de ataque activa/Despertar (EmpoweredTotalAS), alcance extra (+50) y topes contra monstruos/súbditos"
+      ],
+      "active_effects": [
+        {
+          "id": "q_attackspeedbase",
+          "name": "Q (VA)",
+          "kind": "stat_bonus",
+          "stat": "attack_speed_bonus",
+          "mode": "flat",
+          "scale": 100,
+          "data_value": "AttackSpeedBase",
+          "duration_seconds": {
+            "data_value": "AttackSpeedDurationBase"
+          }
+        }
       ]
     },
     "W": {
@@ -130,6 +144,17 @@
       "tooltip": "spell_udyrturtlestance_tooltip",
       "not_modelled": [
         "Escudo normal y Despertar (TotalShield), robo de vida y curación al golpear (LifeOnHit)"
+      ],
+      "active_effects": [
+        {
+          "id": "iron_mantle_shield",
+          "name": "Manto férreo (escudo base)",
+          "kind": "shield",
+          "calculation": "TotalShield",
+          "duration_seconds": {
+            "data_value": "ShieldDuration"
+          }
+        }
       ]
     },
     "E": {
@@ -137,6 +162,19 @@
       "tooltip": "spell_udyrbearstance_tooltip",
       "not_modelled": [
         "Velocidad de movimiento (MoveSpeed / MoveSpeedBonus), aturdimiento por objetivo e inmunidad a CC en Despertar"
+      ],
+      "active_effects": [
+        {
+          "id": "e_movespeed",
+          "name": "E (VM)",
+          "kind": "stat_bonus",
+          "stat": "move_speed",
+          "mode": "percent_ms",
+          "calculation": "MoveSpeed",
+          "duration_seconds": {
+            "data_value": "MoveSpeedDuration"
+          }
+        }
       ]
     },
     "R": {

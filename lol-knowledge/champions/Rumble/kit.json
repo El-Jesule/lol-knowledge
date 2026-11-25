@@ -3,7 +3,7 @@
   "champion": "Rumble",
   "label": "Derivado",
   "game_version": "16.23",
-  "content_version": "16.23.8406595+branch.releases-16-23.content.release",
+  "content_version": "16.23.8418428+branch.releases-16-23.content.release",
   "verified_against": {
     "content_version": "16.23.8406595+branch.releases-16-23.content.release",
     "bin_sha256": "69c883db5813262e56e5fc9a9138c6d9b52eb1f4382400e5ee3ffa6704149f4b",
@@ -47,7 +47,7 @@
                 ]
               },
               "label": "Derivado",
-              "source": "Characters/Rumble/Spells/RumbleHeatSystemAbility/RumbleHeatSystem.mSpellCalculations.TotalBaseDamage (16.23.8406595+branch.releases-16-23.content.release)",
+              "source": "Characters/Rumble/Spells/RumbleHeatSystemAbility/RumbleHeatSystem.mSpellCalculations.TotalBaseDamage (16.23.8418428+branch.releases-16-23.content.release)",
               "damage_type_source": "spell_rumbleheatsystem_tooltip <magicDamage>"
             },
             {
@@ -68,7 +68,7 @@
                 ]
               },
               "label": "Derivado",
-              "source": "Characters/Rumble/Spells/RumbleHeatSystemAbility/RumbleHeatSystem · DataValues.OverheatPercBonusDamage × vida máxima del objetivo (16.23.8406595+branch.releases-16-23.content.release)",
+              "source": "Characters/Rumble/Spells/RumbleHeatSystemAbility/RumbleHeatSystem · DataValues.OverheatPercBonusDamage × vida máxima del objetivo (16.23.8418428+branch.releases-16-23.content.release)",
               "damage_type_source": "spell_rumbleheatsystem_tooltip <magicDamage>"
             }
           ]
@@ -116,7 +116,7 @@
             ]
           },
           "label": "Derivado",
-          "source": "Characters/Rumble/Spells/RumbleHeatSystemAbility/RumbleHeatSystem.mSpellCalculations.OverheatAS (16.23.8406595+branch.releases-16-23.content.release)",
+          "source": "Characters/Rumble/Spells/RumbleHeatSystemAbility/RumbleHeatSystem.mSpellCalculations.OverheatAS (16.23.8418428+branch.releases-16-23.content.release)",
           "stat": "attack_speed_bonus",
           "mode": "flat",
           "input_name": "rumble_overheat",
@@ -164,7 +164,7 @@
                 ]
               },
               "label": "Derivado",
-              "source": "Characters/Rumble/Spells/RumbleFlameThrowerAbility/RumbleFlameThrower.mSpellCalculations.FlatDamage (16.23.8406595+branch.releases-16-23.content.release)",
+              "source": "Characters/Rumble/Spells/RumbleFlameThrowerAbility/RumbleFlameThrower.mSpellCalculations.FlatDamage (16.23.8418428+branch.releases-16-23.content.release)",
               "damage_type_source": "spell_rumbleflamethrower_tooltip <magicDamage>"
             },
             {
@@ -191,7 +191,7 @@
                 ]
               },
               "label": "Derivado",
-              "source": "Characters/Rumble/Spells/RumbleFlameThrowerAbility/RumbleFlameThrower · DataValues.HealthDamage × vida máxima del objetivo (16.23.8406595+branch.releases-16-23.content.release)",
+              "source": "Characters/Rumble/Spells/RumbleFlameThrowerAbility/RumbleFlameThrower · DataValues.HealthDamage × vida máxima del objetivo (16.23.8418428+branch.releases-16-23.content.release)",
               "damage_type_source": "spell_rumbleflamethrower_tooltip <magicDamage>"
             }
           ]
@@ -241,7 +241,7 @@
                 ]
               },
               "label": "Derivado",
-              "source": "Characters/Rumble/Spells/RumbleFlameThrowerAbility/RumbleFlameThrower.mSpellCalculations.EmpoweredDamage (16.23.8406595+branch.releases-16-23.content.release)",
+              "source": "Characters/Rumble/Spells/RumbleFlameThrowerAbility/RumbleFlameThrower.mSpellCalculations.EmpoweredDamage (16.23.8418428+branch.releases-16-23.content.release)",
               "damage_type_source": "spell_rumbleflamethrower_tooltip <magicDamage>"
             },
             {
@@ -268,7 +268,7 @@
                 ]
               },
               "label": "Derivado",
-              "source": "Characters/Rumble/Spells/RumbleFlameThrowerAbility/RumbleFlameThrower · mSpellCalculations.EmpoweredHealth × vida máxima del objetivo (16.23.8406595+branch.releases-16-23.content.release)",
+              "source": "Characters/Rumble/Spells/RumbleFlameThrowerAbility/RumbleFlameThrower · mSpellCalculations.EmpoweredHealth × vida máxima del objetivo (16.23.8418428+branch.releases-16-23.content.release)",
               "damage_type_source": "spell_rumbleflamethrower_tooltip <magicDamage>"
             }
           ]
@@ -286,6 +286,79 @@
       "passive_stats": [],
       "not_modelled": [
         "Escudo (TotalShield / EmpoweredShield) y velocidad de movimiento (EmpoweredMS)"
+      ],
+      "active_effects": [
+        {
+          "id": "w_totalshield",
+          "name": "W (escudo)",
+          "kind": "shield",
+          "formula": {
+            "op": "add",
+            "operands": [
+              {
+                "op": "by_rank",
+                "values": [
+                  25,
+                  55,
+                  85,
+                  115,
+                  145
+                ]
+              },
+              {
+                "op": "mul",
+                "operands": [
+                  {
+                    "op": "constant",
+                    "value": 0.3
+                  },
+                  {
+                    "op": "stat",
+                    "stat": "ability_power",
+                    "scope": "total"
+                  }
+                ]
+              },
+              {
+                "op": "mul",
+                "operands": [
+                  {
+                    "op": "constant",
+                    "value": 0.04
+                  },
+                  {
+                    "op": "stat",
+                    "stat": "health",
+                    "scope": "total"
+                  }
+                ]
+              }
+            ]
+          },
+          "label": "Derivado",
+          "source": "Characters/Rumble/Spells/RumbleShieldAbility/RumbleShield.mSpellCalculations.TotalShield (16.23.8418428+branch.releases-16-23.content.release)",
+          "duration_seconds": 1.5
+        },
+        {
+          "id": "w_movespeed",
+          "name": "W (VM)",
+          "kind": "stat_bonus",
+          "formula": {
+            "op": "by_rank",
+            "values": [
+              0.1,
+              0.15,
+              0.2,
+              0.25,
+              0.3
+            ]
+          },
+          "label": "Derivado",
+          "source": "Characters/Rumble/Spells/RumbleShieldAbility/RumbleShield.DataValues.MoveSpeed (16.23.8418428+branch.releases-16-23.content.release)",
+          "stat": "move_speed",
+          "mode": "percent_ms",
+          "duration_seconds": 1
+        }
       ]
     },
     "E": {
@@ -328,7 +401,7 @@
                 ]
               },
               "label": "Derivado",
-              "source": "Characters/Rumble/Spells/RumbleGrenadeAbility/RumbleGrenade.mSpellCalculations.TotalDamage (16.23.8406595+branch.releases-16-23.content.release)",
+              "source": "Characters/Rumble/Spells/RumbleGrenadeAbility/RumbleGrenade.mSpellCalculations.TotalDamage (16.23.8418428+branch.releases-16-23.content.release)",
               "damage_type_source": "spell_rumblegrenade_tooltip <magicDamage>"
             }
           ]
@@ -378,7 +451,7 @@
                 ]
               },
               "label": "Derivado",
-              "source": "Characters/Rumble/Spells/RumbleGrenadeAbility/RumbleGrenade.mSpellCalculations.EmpDamage (16.23.8406595+branch.releases-16-23.content.release)",
+              "source": "Characters/Rumble/Spells/RumbleGrenadeAbility/RumbleGrenade.mSpellCalculations.EmpDamage (16.23.8418428+branch.releases-16-23.content.release)",
               "damage_type_source": "spell_rumblegrenade_tooltip <magicDamage>"
             }
           ]
@@ -427,7 +500,7 @@
                 ]
               },
               "label": "Derivado",
-              "source": "Characters/Rumble/Spells/RumbleCarpetBombAbility/RumbleCarpetBomb.mSpellCalculations.DamagePerSecond (16.23.8406595+branch.releases-16-23.content.release)",
+              "source": "Characters/Rumble/Spells/RumbleCarpetBombAbility/RumbleCarpetBomb.mSpellCalculations.DamagePerSecond (16.23.8418428+branch.releases-16-23.content.release)",
               "damage_type_source": "spell_rumblecarpetbomb_tooltip <magicDamage>"
             }
           ]

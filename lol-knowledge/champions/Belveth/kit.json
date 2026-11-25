@@ -3,7 +3,7 @@
   "champion": "Belveth",
   "label": "Derivado",
   "game_version": "16.23",
-  "content_version": "16.23.8406595+branch.releases-16-23.content.release",
+  "content_version": "16.23.8418428+branch.releases-16-23.content.release",
   "verified_against": {
     "content_version": "16.23.8406595+branch.releases-16-23.content.release",
     "bin_sha256": "98b93c599e8f8a9e12687f7e64a7ad8e02dae4700e69fcbfcdf8a2ed3aafd363",
@@ -49,7 +49,7 @@
             ]
           },
           "label": "Derivado",
-          "source": "Characters/Belveth/Spells/BelvethPassiveAbility/BelvethPassive.mSpellCalculations.AttackSpeedPerStack (16.23.8406595+branch.releases-16-23.content.release)",
+          "source": "Characters/Belveth/Spells/BelvethPassiveAbility/BelvethPassive.mSpellCalculations.AttackSpeedPerStack (16.23.8418428+branch.releases-16-23.content.release)",
           "stat": "attack_speed_bonus",
           "mode": "flat",
           "input_name": "lavender_stacks",
@@ -97,7 +97,7 @@
                 ]
               },
               "label": "Derivado",
-              "source": "Characters/Belveth/Spells/BelvethQAbility/BelvethQ.mSpellCalculations.BaseDamage (16.23.8406595+branch.releases-16-23.content.release)",
+              "source": "Characters/Belveth/Spells/BelvethQAbility/BelvethQ.mSpellCalculations.BaseDamage (16.23.8418428+branch.releases-16-23.content.release)",
               "damage_type_source": "spell_belvethq_tooltip <physicalDamage>"
             }
           ]
@@ -148,7 +148,7 @@
                 ]
               },
               "label": "Derivado",
-              "source": "Characters/Belveth/Spells/BelvethWAbility/BelvethW.mSpellCalculations.Damage (16.23.8406595+branch.releases-16-23.content.release)",
+              "source": "Characters/Belveth/Spells/BelvethWAbility/BelvethW.mSpellCalculations.Damage (16.23.8418428+branch.releases-16-23.content.release)",
               "damage_type_source": "spell_belvethw_tooltip <magicDamage>"
             }
           ]
@@ -199,7 +199,7 @@
                 ]
               },
               "label": "Derivado",
-              "source": "Characters/Belveth/Spells/BelvethEAbility/BelvethE.mSpellCalculations.DamagePerStrike (16.23.8406595+branch.releases-16-23.content.release)",
+              "source": "Characters/Belveth/Spells/BelvethEAbility/BelvethE.mSpellCalculations.DamagePerStrike (16.23.8418428+branch.releases-16-23.content.release)",
               "damage_type_source": "spell_belvethe_tooltip <physicalDamage>"
             }
           ]
@@ -249,7 +249,7 @@
                 ]
               },
               "label": "Derivado",
-              "source": "Characters/Belveth/Spells/BelvethEAbility/BelvethE.mSpellCalculations.MaxDamagePerStrikeTooltip (16.23.8406595+branch.releases-16-23.content.release)",
+              "source": "Characters/Belveth/Spells/BelvethEAbility/BelvethE.mSpellCalculations.MaxDamagePerStrikeTooltip (16.23.8418428+branch.releases-16-23.content.release)",
               "damage_type_source": "spell_belvethe_tooltip <physicalDamage>"
             }
           ]
@@ -258,6 +258,47 @@
       "passive_stats": [],
       "not_modelled": [
         "Número de cortes escalado con VA, reducción de daño durante canalización y robo de vida adicional (TotalLifesteal)"
+      ],
+      "active_effects": [
+        {
+          "id": "royal_maelstrom_dr",
+          "name": "Vorágine real (DR)",
+          "kind": "damage_taken_modifier",
+          "formula": {
+            "op": "by_rank",
+            "values": [
+              20,
+              30,
+              40,
+              50,
+              60
+            ]
+          },
+          "label": "Derivado",
+          "source": "Characters/Belveth/Spells/BelvethEAbility/BelvethE.DataValues.DRPercent (16.23.8418428+branch.releases-16-23.content.release)",
+          "mode": "percent",
+          "duration_seconds": 1.5
+        },
+        {
+          "id": "royal_maelstrom_lifesteal",
+          "name": "Vorágine real (robo de vida)",
+          "kind": "stat_bonus",
+          "formula": {
+            "op": "by_rank",
+            "values": [
+              20,
+              25,
+              30,
+              35,
+              40
+            ]
+          },
+          "label": "Derivado",
+          "source": "Characters/Belveth/Spells/BelvethEAbility/BelvethE.DataValues.BonusLifeSteal (16.23.8418428+branch.releases-16-23.content.release)",
+          "stat": "life_steal",
+          "mode": "flat",
+          "duration_seconds": 1.5
+        }
       ]
     },
     "R": {
@@ -298,7 +339,7 @@
                 ]
               },
               "label": "Derivado",
-              "source": "Characters/Belveth/Spells/BelvethRAbility/BelvethR.mSpellCalculations.FinalOnHitDamage (16.23.8406595+branch.releases-16-23.content.release)",
+              "source": "Characters/Belveth/Spells/BelvethRAbility/BelvethR.mSpellCalculations.FinalOnHitDamage (16.23.8418428+branch.releases-16-23.content.release)",
               "damage_type_source": "spell_belvethr_tooltip <trueDamage>"
             }
           ]
@@ -337,7 +378,7 @@
                 ]
               },
               "label": "Derivado",
-              "source": "Characters/Belveth/Spells/BelvethRAbility/BelvethR.mSpellCalculations.TotalExplosionDamage (16.23.8406595+branch.releases-16-23.content.release)",
+              "source": "Characters/Belveth/Spells/BelvethRAbility/BelvethR.mSpellCalculations.TotalExplosionDamage (16.23.8418428+branch.releases-16-23.content.release)",
               "damage_type_source": "spell_belvethr_tooltip <trueDamage>"
             },
             {
@@ -364,7 +405,7 @@
                 ]
               },
               "label": "Derivado",
-              "source": "Characters/Belveth/Spells/BelvethRAbility/BelvethR · DataValues.MissingHealthDamage × vida faltante del objetivo (16.23.8406595+branch.releases-16-23.content.release)",
+              "source": "Characters/Belveth/Spells/BelvethRAbility/BelvethR · DataValues.MissingHealthDamage × vida faltante del objetivo (16.23.8418428+branch.releases-16-23.content.release)",
               "damage_type_source": "spell_belvethr_tooltip <trueDamage>"
             }
           ]
@@ -373,6 +414,77 @@
       "passive_stats": [],
       "not_modelled": [
         "Acumulación infinita de la pasiva de R contra el mismo objetivo, vida máxima/alcance/VA en forma verdadera (MaxHealthOnDevour) e invocación de rémoras"
+      ],
+      "active_effects": [
+        {
+          "id": "endless_banquet_hp",
+          "name": "Banquete sin fin (vida máxima)",
+          "kind": "stat_bonus",
+          "formula": {
+            "op": "add",
+            "operands": [
+              {
+                "op": "by_rank",
+                "values": [
+                  100,
+                  250,
+                  400
+                ]
+              },
+              {
+                "op": "mul",
+                "operands": [
+                  {
+                    "op": "constant",
+                    "value": 1.5
+                  },
+                  {
+                    "op": "stat",
+                    "stat": "attack_damage",
+                    "scope": "bonus"
+                  }
+                ]
+              },
+              {
+                "op": "mul",
+                "operands": [
+                  {
+                    "op": "constant",
+                    "value": 1.5
+                  },
+                  {
+                    "op": "stat",
+                    "stat": "ability_power",
+                    "scope": "total"
+                  }
+                ]
+              }
+            ]
+          },
+          "label": "Derivado",
+          "source": "Characters/Belveth/Spells/BelvethRAbility/BelvethR.mSpellCalculations.MaxHealthOnDevour (16.23.8418428+branch.releases-16-23.content.release)",
+          "stat": "health",
+          "mode": "flat",
+          "duration_seconds": 45
+        },
+        {
+          "id": "endless_banquet_as",
+          "name": "Banquete sin fin (VA)",
+          "kind": "stat_bonus",
+          "formula": {
+            "op": "by_rank",
+            "values": [
+              6,
+              13,
+              20
+            ]
+          },
+          "label": "Derivado",
+          "source": "Characters/Belveth/Spells/BelvethRAbility/BelvethR.DataValues.TotalASMod (16.23.8418428+branch.releases-16-23.content.release)",
+          "stat": "attack_speed_bonus",
+          "mode": "flat",
+          "duration_seconds": 45
+        }
       ]
     }
   }

@@ -81,6 +81,19 @@
       ],
       "not_modelled": [
         "Velocidad de movimiento al dañar enemigos marcados y activación de Vigilancia"
+      ],
+      "active_effects": [
+        {
+          "id": "ardent_blaze_ms",
+          "name": "Resplandor ardiente (VM plana)",
+          "kind": "stat_bonus",
+          "stat": "move_speed",
+          "mode": "flat",
+          "data_value": "MoveSpeedAmount",
+          "duration_seconds": {
+            "data_value": "BuffDuration"
+          }
+        }
       ]
     },
     "E": {

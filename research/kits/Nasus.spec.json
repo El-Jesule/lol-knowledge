@@ -120,6 +120,41 @@
       ],
       "not_modelled": [
         "Vida máxima temporal (BonusHealth), armadura/RM adicionales, tope de 240 DPS (MaxDamageCap) y 50 % menos enfriamiento en Q"
+      ],
+      "active_effects": [
+        {
+          "id": "fury_of_the_sands_hp",
+          "name": "Furia de las arenas (vida máxima)",
+          "kind": "stat_bonus",
+          "stat": "health",
+          "mode": "flat",
+          "data_value": "BonusHealth",
+          "duration_seconds": {
+            "data_value": "Duration"
+          }
+        },
+        {
+          "id": "fury_of_the_sands_armor",
+          "name": "Furia de las arenas (armadura)",
+          "kind": "stat_bonus",
+          "stat": "armor",
+          "mode": "flat",
+          "data_value": "InitialResistGain",
+          "duration_seconds": {
+            "data_value": "Duration"
+          }
+        },
+        {
+          "id": "fury_of_the_sands_mr",
+          "name": "Furia de las arenas (RM)",
+          "kind": "stat_bonus",
+          "stat": "magic_resist",
+          "mode": "flat",
+          "data_value": "InitialResistGain",
+          "duration_seconds": {
+            "data_value": "Duration"
+          }
+        }
       ]
     }
   }

@@ -3,7 +3,7 @@
   "champion": "Galio",
   "label": "Derivado",
   "game_version": "16.23",
-  "content_version": "16.23.8406595+branch.releases-16-23.content.release",
+  "content_version": "16.23.8418428+branch.releases-16-23.content.release",
   "verified_against": {
     "content_version": "16.23.8406595+branch.releases-16-23.content.release",
     "bin_sha256": "c4f0ce2b51f9db97cf3b92d5b3cb7db407d58df683ee22ff826962c961f97002",
@@ -75,7 +75,7 @@
                 ]
               },
               "label": "Derivado",
-              "source": "Characters/Galio/Spells/GalioPassiveAbility/GalioPassive.mSpellCalculations.TotalDamage (16.23.8406595+branch.releases-16-23.content.release)",
+              "source": "Characters/Galio/Spells/GalioPassiveAbility/GalioPassive.mSpellCalculations.TotalDamage (16.23.8418428+branch.releases-16-23.content.release)",
               "damage_type_source": "spell_galiopassive_tooltip <magicDamage>"
             }
           ]
@@ -129,7 +129,7 @@
             ]
           },
           "label": "Derivado",
-          "source": "Characters/Galio/Spells/GalioPassiveAbility/GalioPassive · Porción adicional sobre el básico de TotalDamage (15..115 + 40% PH + 60% RM adicional) (16.23.8406595+branch.releases-16-23.content.release)",
+          "source": "Characters/Galio/Spells/GalioPassiveAbility/GalioPassive · Porción adicional sobre el básico de TotalDamage (15..115 + 40% PH + 60% RM adicional) (16.23.8418428+branch.releases-16-23.content.release)",
           "trigger": "on_attack",
           "damage_type": "magic",
           "cooldown_seconds": 5
@@ -176,7 +176,7 @@
                 ]
               },
               "label": "Derivado",
-              "source": "Characters/Galio/Spells/GalioQAbility/GalioQ.mSpellCalculations.QMissileDamage (16.23.8406595+branch.releases-16-23.content.release)",
+              "source": "Characters/Galio/Spells/GalioQAbility/GalioQ.mSpellCalculations.QMissileDamage (16.23.8418428+branch.releases-16-23.content.release)",
               "damage_type_source": "spell_galioq_tooltip <magicDamage>"
             }
           ]
@@ -217,7 +217,7 @@
                 ]
               },
               "label": "Derivado",
-              "source": "Characters/Galio/Spells/GalioQAbility/GalioQ.mSpellCalculations.QMissileDamage (16.23.8406595+branch.releases-16-23.content.release)",
+              "source": "Characters/Galio/Spells/GalioQAbility/GalioQ.mSpellCalculations.QMissileDamage (16.23.8418428+branch.releases-16-23.content.release)",
               "damage_type_source": "spell_galioq_tooltip <magicDamage>"
             },
             {
@@ -252,7 +252,7 @@
                 ]
               },
               "label": "Derivado",
-              "source": "Characters/Galio/Spells/GalioQAbility/GalioQ.mSpellCalculations.QMissileDamage (16.23.8406595+branch.releases-16-23.content.release)",
+              "source": "Characters/Galio/Spells/GalioQAbility/GalioQ.mSpellCalculations.QMissileDamage (16.23.8418428+branch.releases-16-23.content.release)",
               "damage_type_source": "spell_galioq_tooltip <magicDamage>"
             }
           ]
@@ -311,7 +311,7 @@
                 ]
               },
               "label": "Derivado",
-              "source": "Characters/Galio/Spells/GalioQAbility/GalioQ · (PercentSuperQDamageTT %) × vida máxima del objetivo (16.23.8406595+branch.releases-16-23.content.release)",
+              "source": "Characters/Galio/Spells/GalioQAbility/GalioQ · (PercentSuperQDamageTT %) × vida máxima del objetivo (16.23.8418428+branch.releases-16-23.content.release)",
               "damage_type_source": "spell_galioq_tooltip <magicDamage>"
             }
           ]
@@ -362,7 +362,7 @@
                 ]
               },
               "label": "Derivado",
-              "source": "Characters/Galio/Spells/GalioWAbility/GalioW.mSpellCalculations.MinTotalDamage (16.23.8406595+branch.releases-16-23.content.release)",
+              "source": "Characters/Galio/Spells/GalioWAbility/GalioW.mSpellCalculations.MinTotalDamage (16.23.8418428+branch.releases-16-23.content.release)",
               "damage_type_source": "spell_galiow_tooltip <magicDamage>"
             }
           ]
@@ -412,7 +412,7 @@
                 ]
               },
               "label": "Derivado",
-              "source": "Characters/Galio/Spells/GalioWAbility/GalioW.mSpellCalculations.MaxTotalDamage (16.23.8406595+branch.releases-16-23.content.release)",
+              "source": "Characters/Galio/Spells/GalioWAbility/GalioW.mSpellCalculations.MaxTotalDamage (16.23.8418428+branch.releases-16-23.content.release)",
               "damage_type_source": "spell_galiow_tooltip <magicDamage>"
             }
           ]
@@ -421,6 +421,197 @@
       "passive_stats": [],
       "not_modelled": [
         "Escudo mágico pasivo (TotalPassiveShield), reducción de daño durante carga y provocación"
+      ],
+      "active_effects": [
+        {
+          "id": "shield_of_durand_magic_dr",
+          "name": "Escudo de Durand (DR mágico)",
+          "kind": "damage_taken_modifier",
+          "formula": {
+            "op": "mul",
+            "operands": [
+              {
+                "op": "add",
+                "operands": [
+                  {
+                    "op": "by_rank",
+                    "values": [
+                      0.25,
+                      0.3,
+                      0.35,
+                      0.4,
+                      0.45
+                    ]
+                  },
+                  {
+                    "op": "mul",
+                    "operands": [
+                      {
+                        "op": "constant",
+                        "value": 0.0004
+                      },
+                      {
+                        "op": "stat",
+                        "stat": "ability_power",
+                        "scope": "total"
+                      }
+                    ]
+                  },
+                  {
+                    "op": "mul",
+                    "operands": [
+                      {
+                        "op": "constant",
+                        "value": 0.0008
+                      },
+                      {
+                        "op": "stat",
+                        "stat": "magic_resist",
+                        "scope": "bonus"
+                      }
+                    ]
+                  },
+                  {
+                    "op": "mul",
+                    "operands": [
+                      {
+                        "op": "constant",
+                        "value": 0.0001
+                      },
+                      {
+                        "op": "stat",
+                        "stat": "health",
+                        "scope": "bonus"
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "op": "constant",
+                "value": 100
+              }
+            ]
+          },
+          "label": "Derivado",
+          "source": "Characters/Galio/Spells/GalioWAbility/GalioW.mSpellCalculations.MagicDamageReduction (16.23.8418428+branch.releases-16-23.content.release)",
+          "mode": "percent",
+          "damage_type": "magic",
+          "duration_seconds": 2
+        },
+        {
+          "id": "shield_of_durand_physical_dr",
+          "name": "Escudo de Durand (DR físico)",
+          "kind": "damage_taken_modifier",
+          "formula": {
+            "op": "mul",
+            "operands": [
+              {
+                "op": "mul",
+                "operands": [
+                  {
+                    "op": "add",
+                    "operands": [
+                      {
+                        "op": "by_rank",
+                        "values": [
+                          0.25,
+                          0.3,
+                          0.35,
+                          0.4,
+                          0.45
+                        ]
+                      },
+                      {
+                        "op": "mul",
+                        "operands": [
+                          {
+                            "op": "constant",
+                            "value": 0.0004
+                          },
+                          {
+                            "op": "stat",
+                            "stat": "ability_power",
+                            "scope": "total"
+                          }
+                        ]
+                      },
+                      {
+                        "op": "mul",
+                        "operands": [
+                          {
+                            "op": "constant",
+                            "value": 0.0008
+                          },
+                          {
+                            "op": "stat",
+                            "stat": "magic_resist",
+                            "scope": "bonus"
+                          }
+                        ]
+                      },
+                      {
+                        "op": "mul",
+                        "operands": [
+                          {
+                            "op": "constant",
+                            "value": 0.0001
+                          },
+                          {
+                            "op": "stat",
+                            "stat": "health",
+                            "scope": "bonus"
+                          }
+                        ]
+                      }
+                    ]
+                  },
+                  {
+                    "op": "constant",
+                    "value": 0.5
+                  }
+                ]
+              },
+              {
+                "op": "constant",
+                "value": 100
+              }
+            ]
+          },
+          "label": "Derivado",
+          "source": "Characters/Galio/Spells/GalioWAbility/GalioW.mSpellCalculations.PhysicalDamageReduction (16.23.8418428+branch.releases-16-23.content.release)",
+          "mode": "percent",
+          "damage_type": "physical",
+          "duration_seconds": 2
+        },
+        {
+          "id": "shield_of_durand_passive_shield",
+          "name": "Escudo de Durand (escudo mágico pasivo)",
+          "kind": "shield",
+          "formula": {
+            "op": "mul",
+            "operands": [
+              {
+                "op": "by_rank",
+                "values": [
+                  0.08,
+                  0.11,
+                  0.14,
+                  0.17,
+                  0.2
+                ]
+              },
+              {
+                "op": "stat",
+                "stat": "health",
+                "scope": "total"
+              }
+            ]
+          },
+          "label": "Derivado",
+          "source": "Characters/Galio/Spells/GalioWAbility/GalioW.mSpellCalculations.TotalPassiveShield (16.23.8418428+branch.releases-16-23.content.release)",
+          "shield_type": "magic"
+        }
       ]
     },
     "E": {
@@ -463,7 +654,7 @@
                 ]
               },
               "label": "Derivado",
-              "source": "Characters/Galio/Spells/GalioEAbility/GalioE.mSpellCalculations.TotalDamage (16.23.8406595+branch.releases-16-23.content.release)",
+              "source": "Characters/Galio/Spells/GalioEAbility/GalioE.mSpellCalculations.TotalDamage (16.23.8418428+branch.releases-16-23.content.release)",
               "damage_type_source": "spell_galioe_tooltip <magicDamage>"
             }
           ]
@@ -513,7 +704,7 @@
                 ]
               },
               "label": "Derivado",
-              "source": "Characters/Galio/Spells/GalioEAbility/GalioE.mSpellCalculations.PVEDamage (16.23.8406595+branch.releases-16-23.content.release)",
+              "source": "Characters/Galio/Spells/GalioEAbility/GalioE.mSpellCalculations.PVEDamage (16.23.8418428+branch.releases-16-23.content.release)",
               "damage_type_source": "spell_galioe_tooltip <magicDamage>"
             }
           ]
@@ -576,7 +767,7 @@
                 ]
               },
               "label": "Derivado",
-              "source": "Characters/Galio/Spells/GalioRAbility/GalioR.mSpellCalculations.TotalDamage (16.23.8406595+branch.releases-16-23.content.release)",
+              "source": "Characters/Galio/Spells/GalioRAbility/GalioR.mSpellCalculations.TotalDamage (16.23.8418428+branch.releases-16-23.content.release)",
               "damage_type_source": "spell_galior_tooltip <magicDamage>"
             }
           ]

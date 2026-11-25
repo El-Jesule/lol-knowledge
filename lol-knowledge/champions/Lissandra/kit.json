@@ -3,7 +3,7 @@
   "champion": "Lissandra",
   "label": "Derivado",
   "game_version": "16.23",
-  "content_version": "16.23.8406595+branch.releases-16-23.content.release",
+  "content_version": "16.23.8418428+branch.releases-16-23.content.release",
   "verified_against": {
     "content_version": "16.23.8406595+branch.releases-16-23.content.release",
     "bin_sha256": "4e5601ee80e934f1520e745761fa3b17a946eccf82d86ff992f1e47424d4671e",
@@ -65,7 +65,7 @@
                 ]
               },
               "label": "Derivado",
-              "source": "Characters/Lissandra/Spells/LissandraPassiveAbility/LissandraPassive.mSpellCalculations.TotalDamage (16.23.8406595+branch.releases-16-23.content.release)",
+              "source": "Characters/Lissandra/Spells/LissandraPassiveAbility/LissandraPassive.mSpellCalculations.TotalDamage (16.23.8418428+branch.releases-16-23.content.release)",
               "damage_type_source": "spell_lissandrapassive_tooltip <magicDamage>"
             }
           ]
@@ -116,7 +116,7 @@
                 ]
               },
               "label": "Derivado",
-              "source": "Characters/Lissandra/Spells/LissandraQAbility/LissandraQ.mSpellCalculations.TotalDamage (16.23.8406595+branch.releases-16-23.content.release)",
+              "source": "Characters/Lissandra/Spells/LissandraQAbility/LissandraQ.mSpellCalculations.TotalDamage (16.23.8418428+branch.releases-16-23.content.release)",
               "damage_type_source": "spell_lissandraq_tooltip <magicDamage>"
             }
           ]
@@ -167,7 +167,7 @@
                 ]
               },
               "label": "Derivado",
-              "source": "Characters/Lissandra/Spells/LissandraWAbility/LissandraW.mSpellCalculations.TotalDamage (16.23.8406595+branch.releases-16-23.content.release)",
+              "source": "Characters/Lissandra/Spells/LissandraWAbility/LissandraW.mSpellCalculations.TotalDamage (16.23.8418428+branch.releases-16-23.content.release)",
               "damage_type_source": "spell_lissandraw_tooltip <magicDamage>"
             }
           ]
@@ -218,7 +218,7 @@
                 ]
               },
               "label": "Derivado",
-              "source": "Characters/Lissandra/Spells/LissandraEAbility/LissandraE.mSpellCalculations.TotalDamage (16.23.8406595+branch.releases-16-23.content.release)",
+              "source": "Characters/Lissandra/Spells/LissandraEAbility/LissandraE.mSpellCalculations.TotalDamage (16.23.8418428+branch.releases-16-23.content.release)",
               "damage_type_source": "spell_lissandrae_tooltip <magicDamage>"
             }
           ]
@@ -267,7 +267,7 @@
                 ]
               },
               "label": "Derivado",
-              "source": "Characters/Lissandra/Spells/LissandraRAbility/LissandraR.mSpellCalculations.CalculatedDamage (16.23.8406595+branch.releases-16-23.content.release)",
+              "source": "Characters/Lissandra/Spells/LissandraRAbility/LissandraR.mSpellCalculations.CalculatedDamage (16.23.8418428+branch.releases-16-23.content.release)",
               "damage_type_source": "spell_lissandrar_tooltip <magicDamage>"
             }
           ]
@@ -276,6 +276,42 @@
       "passive_stats": [],
       "not_modelled": [
         "Aturdimiento a enemigos, estasis y curación sobre sí misma (HealAmount)"
+      ],
+      "active_effects": [
+        {
+          "id": "r_healamount",
+          "name": "R (curación)",
+          "kind": "heal",
+          "formula": {
+            "op": "add",
+            "operands": [
+              {
+                "op": "by_rank",
+                "values": [
+                  100,
+                  150,
+                  200
+                ]
+              },
+              {
+                "op": "mul",
+                "operands": [
+                  {
+                    "op": "constant",
+                    "value": 0.55
+                  },
+                  {
+                    "op": "stat",
+                    "stat": "ability_power",
+                    "scope": "total"
+                  }
+                ]
+              }
+            ]
+          },
+          "label": "Derivado",
+          "source": "Characters/Lissandra/Spells/LissandraRAbility/LissandraR.mSpellCalculations.HealAmount (16.23.8418428+branch.releases-16-23.content.release)"
+        }
       ]
     }
   }

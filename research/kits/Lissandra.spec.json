@@ -97,6 +97,14 @@
       ],
       "not_modelled": [
         "Aturdimiento a enemigos, estasis y curación sobre sí misma (HealAmount)"
+      ],
+      "active_effects": [
+        {
+          "id": "r_healamount",
+          "name": "R (curación)",
+          "kind": "heal",
+          "calculation": "HealAmount"
+        }
       ]
     }
   }

@@ -115,6 +115,19 @@
       "tooltip": "spell_vayner_tooltip",
       "not_modelled": [
         "DA adicional temporal (BonusAttackDamage), velocidad de movimiento e invisibilidad en Q"
+      ],
+      "active_effects": [
+        {
+          "id": "final_hour_ad",
+          "name": "Hora final (AD)",
+          "kind": "stat_bonus",
+          "stat": "attack_damage",
+          "mode": "flat",
+          "data_value": "BonusAttackDamage",
+          "duration_seconds": {
+            "data_value": "BaseDuration"
+          }
+        }
       ]
     }
   }

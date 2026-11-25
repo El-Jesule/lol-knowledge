@@ -133,6 +133,17 @@
       ],
       "not_modelled": [
         "Escudo al golpear enemigos (WShield), reducción de CD/cast por VA y mínimo contra súbditos"
+      ],
+      "active_effects": [
+        {
+          "id": "w_wshield",
+          "name": "W (escudo)",
+          "kind": "shield",
+          "calculation": "WShield",
+          "duration_seconds": {
+            "data_value": "ShieldDuration"
+          }
+        }
       ]
     },
     "E": {
@@ -140,6 +151,17 @@
       "tooltip": "spell_yonee_tooltip",
       "not_modelled": [
         "Forma espiritual durante 5 s, velocidad de movimiento creciente y repetición del 25..35 % del daño posmitigación como daño verdadero al regresar"
+      ],
+      "active_effects": [
+        {
+          "id": "e_startingms",
+          "name": "E (VM)",
+          "kind": "stat_bonus",
+          "stat": "move_speed",
+          "mode": "percent_ms",
+          "duration_seconds": 5.0,
+          "data_value": "StartingMS"
+        }
       ]
     },
     "R": {

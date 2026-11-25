@@ -3,7 +3,7 @@
   "champion": "RekSai",
   "label": "Derivado",
   "game_version": "16.23",
-  "content_version": "16.23.8406595+branch.releases-16-23.content.release",
+  "content_version": "16.23.8418428+branch.releases-16-23.content.release",
   "verified_against": {
     "content_version": "16.23.8406595+branch.releases-16-23.content.release",
     "bin_sha256": "8074d42e73acd5fd73a47a38ee9dfac8b1a4f24387891e48dd6134c9603de150",
@@ -41,7 +41,7 @@
             ]
           },
           "label": "Derivado",
-          "source": "Characters/RekSai/Spells/RekSaiPassiveAbility/RekSaiPassive.mSpellCalculations.HealAmount (16.23.8406595+branch.releases-16-23.content.release)",
+          "source": "Characters/RekSai/Spells/RekSaiPassiveAbility/RekSaiPassive.mSpellCalculations.HealAmount (16.23.8418428+branch.releases-16-23.content.release)",
           "trigger": "on_ability_cast",
           "cooldown_seconds": 8
         }
@@ -78,7 +78,7 @@
                 ]
               },
               "label": "Derivado",
-              "source": "Characters/RekSai/Spells/RekSaiQAbility/RekSaiQ.mSpellCalculations.TotalDamageTooltip (16.23.8406595+branch.releases-16-23.content.release)",
+              "source": "Characters/RekSai/Spells/RekSaiQAbility/RekSaiQ.mSpellCalculations.TotalDamageTooltip (16.23.8418428+branch.releases-16-23.content.release)",
               "damage_type_source": "spell_reksaiq_tooltip <physicalDamage>"
             }
           ]
@@ -133,7 +133,7 @@
                 ]
               },
               "label": "Derivado",
-              "source": "Characters/RekSai/Spells/RekSaiQAbility/RekSaiQ.mSpellCalculations.BurrowDamageTooltip (16.23.8406595+branch.releases-16-23.content.release)",
+              "source": "Characters/RekSai/Spells/RekSaiQAbility/RekSaiQ.mSpellCalculations.BurrowDamageTooltip (16.23.8418428+branch.releases-16-23.content.release)",
               "damage_type_source": "spell_reksaiqburrowed_tooltip <magicDamage>"
             }
           ]
@@ -142,6 +142,22 @@
       "passive_stats": [],
       "not_modelled": [
         "Velocidad de ataque del 35 % en 3 ataques y bajo tierra: Rastreadora (BurrowDamageTooltip en tooltip separado)"
+      ],
+      "active_effects": [
+        {
+          "id": "q_attackspeed",
+          "name": "Q (VA)",
+          "kind": "stat_bonus",
+          "formula": {
+            "op": "constant",
+            "value": 35
+          },
+          "label": "Derivado",
+          "source": "Characters/RekSai/Spells/RekSaiQAbility/RekSaiQ.DataValues.AttackSpeed (16.23.8418428+branch.releases-16-23.content.release)",
+          "stat": "attack_speed_bonus",
+          "mode": "flat",
+          "duration_seconds": 3
+        }
       ]
     },
     "W": {
@@ -184,7 +200,7 @@
                 ]
               },
               "label": "Derivado",
-              "source": "Characters/RekSai/Spells/RekSaiWAbility/RekSaiW.mSpellCalculations.UnburrowDamage (16.23.8406595+branch.releases-16-23.content.release)",
+              "source": "Characters/RekSai/Spells/RekSaiWAbility/RekSaiW.mSpellCalculations.UnburrowDamage (16.23.8418428+branch.releases-16-23.content.release)",
               "damage_type_source": "spell_reksaiwburrowed_tooltip <magicDamage>"
             }
           ]
@@ -235,7 +251,7 @@
                 ]
               },
               "label": "Derivado",
-              "source": "Characters/RekSai/Spells/RekSaiEAbility/RekSaiE.mSpellCalculations.BaseDamageCalculation (16.23.8406595+branch.releases-16-23.content.release)",
+              "source": "Characters/RekSai/Spells/RekSaiEAbility/RekSaiE.mSpellCalculations.BaseDamageCalculation (16.23.8418428+branch.releases-16-23.content.release)",
               "damage_type_source": "spell_reksaie_tooltip <physicalDamage>"
             }
           ]
@@ -285,7 +301,7 @@
                 ]
               },
               "label": "Derivado",
-              "source": "Characters/RekSai/Spells/RekSaiEAbility/RekSaiE.mSpellCalculations.EmpoweredDamageCalculation (16.23.8406595+branch.releases-16-23.content.release)",
+              "source": "Characters/RekSai/Spells/RekSaiEAbility/RekSaiE.mSpellCalculations.EmpoweredDamageCalculation (16.23.8418428+branch.releases-16-23.content.release)",
               "damage_type_source": "spell_reksaie_tooltip <trueDamage>"
             }
           ]
@@ -334,7 +350,7 @@
                 ]
               },
               "label": "Derivado",
-              "source": "Characters/RekSai/Spells/RekSaiRAbility/RekSaiR.mSpellCalculations.RBaseDamageCalc (16.23.8406595+branch.releases-16-23.content.release)",
+              "source": "Characters/RekSai/Spells/RekSaiRAbility/RekSaiR.mSpellCalculations.RBaseDamageCalc (16.23.8418428+branch.releases-16-23.content.release)",
               "damage_type_source": "spell_reksair_tooltip <physicalDamage>"
             },
             {
@@ -363,7 +379,7 @@
                 ]
               },
               "label": "Derivado",
-              "source": "Characters/RekSai/Spells/RekSaiRAbility/RekSaiR · DataValues.PercentHealthDamage % × vida máxima del objetivo (16.23.8406595+branch.releases-16-23.content.release)",
+              "source": "Characters/RekSai/Spells/RekSaiRAbility/RekSaiR · DataValues.PercentHealthDamage % × vida máxima del objetivo (16.23.8418428+branch.releases-16-23.content.release)",
               "damage_type_source": "spell_reksair_tooltip <physicalDamage>"
             }
           ]

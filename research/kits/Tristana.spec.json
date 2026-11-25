@@ -20,6 +20,20 @@
       "tooltip": "spell_tristanaq_tooltip",
       "not_modelled": [
         "Velocidad de ataque activa durante 7 s (AttackSpeedMod)"
+      ],
+      "active_effects": [
+        {
+          "id": "rapid_fire_as",
+          "name": "Tiro rápido (VA)",
+          "kind": "stat_bonus",
+          "stat": "attack_speed_bonus",
+          "mode": "flat",
+          "data_value": "AttackSpeedMod",
+          "scale": 100,
+          "duration_seconds": {
+            "data_value": "BuffDuration"
+          }
+        }
       ]
     },
     "W": {

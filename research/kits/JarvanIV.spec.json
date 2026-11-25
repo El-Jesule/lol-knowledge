@@ -93,6 +93,15 @@
       "tooltip": "spell_jarvanivgoldenaegis_tooltip",
       "not_modelled": [
         "Ralentización en área y escudo escalado por campeones golpeados (TotalShield, BonusShield)"
+      ],
+      "active_effects": [
+        {
+          "id": "golden_aegis_shield",
+          "name": "Égida dorada (escudo base)",
+          "kind": "shield",
+          "calculation": "TotalShield",
+          "duration_seconds": 4.0
+        }
       ]
     },
     "E": {
@@ -117,6 +126,18 @@
               "calculation": "TotalDamage"
             }
           ]
+        }
+      ],
+      "active_effects": [
+        {
+          "id": "demacian_standard_as",
+          "name": "Estandarte demaciano (aura VA)",
+          "kind": "stat_bonus",
+          "stat": "attack_speed_bonus",
+          "mode": "flat",
+          "data_value": "BaseAuraAS",
+          "scale": 100,
+          "duration_seconds": 8.0
         }
       ]
     },

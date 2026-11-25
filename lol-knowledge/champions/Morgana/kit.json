@@ -3,7 +3,7 @@
   "champion": "Morgana",
   "label": "Derivado",
   "game_version": "16.23",
-  "content_version": "16.23.8406595+branch.releases-16-23.content.release",
+  "content_version": "16.23.8418428+branch.releases-16-23.content.release",
   "verified_against": {
     "content_version": "16.23.8406595+branch.releases-16-23.content.release",
     "bin_sha256": "7b0aefc6e23ed9d5966184593aedd55bd2831c48840622ec96146ba69b3a7ecc",
@@ -30,7 +30,7 @@
             "value": 18
           },
           "label": "Derivado",
-          "source": "Characters/Morgana/Spells/MorganaPassiveAbility/MorganaPassive.DataValues.HealPercent (16.23.8406595+branch.releases-16-23.content.release)",
+          "source": "Characters/Morgana/Spells/MorganaPassiveAbility/MorganaPassive.DataValues.HealPercent (16.23.8418428+branch.releases-16-23.content.release)",
           "stat": "omnivamp",
           "mode": "flat",
           "input_name": "morgana_soul_siphon",
@@ -78,7 +78,7 @@
                 ]
               },
               "label": "Derivado",
-              "source": "Characters/Morgana/Spells/MorganaQAbility/MorganaQ.mSpellCalculations.TotalDamage (16.23.8406595+branch.releases-16-23.content.release)",
+              "source": "Characters/Morgana/Spells/MorganaQAbility/MorganaQ.mSpellCalculations.TotalDamage (16.23.8418428+branch.releases-16-23.content.release)",
               "damage_type_source": "spell_morganaq_tooltip <magicDamage>"
             }
           ]
@@ -129,7 +129,7 @@
                 ]
               },
               "label": "Derivado",
-              "source": "Characters/Morgana/Spells/MorganaWAbility/MorganaW.mSpellCalculations.TotalMinDamage (16.23.8406595+branch.releases-16-23.content.release)",
+              "source": "Characters/Morgana/Spells/MorganaWAbility/MorganaW.mSpellCalculations.TotalMinDamage (16.23.8418428+branch.releases-16-23.content.release)",
               "damage_type_source": "spell_morganaw_tooltip <magicDamage>"
             }
           ]
@@ -188,7 +188,7 @@
                 ]
               },
               "label": "Derivado",
-              "source": "Characters/Morgana/Spells/MorganaWAbility/MorganaW.mSpellCalculations.TotalMaxDamage (16.23.8406595+branch.releases-16-23.content.release)",
+              "source": "Characters/Morgana/Spells/MorganaWAbility/MorganaW.mSpellCalculations.TotalMaxDamage (16.23.8418428+branch.releases-16-23.content.release)",
               "damage_type_source": "spell_morganaw_tooltip <magicDamage>"
             }
           ]
@@ -206,6 +206,46 @@
       "passive_stats": [],
       "not_modelled": [
         "Escudo mágico e inmunidad a control de adversario (TotalShieldStrength)"
+      ],
+      "active_effects": [
+        {
+          "id": "black_shield",
+          "name": "Escudo negro (escudo mágico)",
+          "kind": "shield",
+          "formula": {
+            "op": "add",
+            "operands": [
+              {
+                "op": "by_rank",
+                "values": [
+                  100,
+                  155,
+                  210,
+                  265,
+                  320
+                ]
+              },
+              {
+                "op": "mul",
+                "operands": [
+                  {
+                    "op": "constant",
+                    "value": 0.7
+                  },
+                  {
+                    "op": "stat",
+                    "stat": "ability_power",
+                    "scope": "total"
+                  }
+                ]
+              }
+            ]
+          },
+          "label": "Derivado",
+          "source": "Characters/Morgana/Spells/MorganaEAbility/MorganaE.mSpellCalculations.TotalShieldStrength (16.23.8418428+branch.releases-16-23.content.release)",
+          "shield_type": "magic",
+          "duration_seconds": 5
+        }
       ]
     },
     "R": {
@@ -246,7 +286,7 @@
                 ]
               },
               "label": "Derivado",
-              "source": "Characters/Morgana/Spells/MorganaRAbility/MorganaR.mSpellCalculations.TotalDamage (16.23.8406595+branch.releases-16-23.content.release)",
+              "source": "Characters/Morgana/Spells/MorganaRAbility/MorganaR.mSpellCalculations.TotalDamage (16.23.8418428+branch.releases-16-23.content.release)",
               "damage_type_source": "spell_morganar_tooltip <magicDamage>"
             }
           ]
@@ -285,7 +325,7 @@
                 ]
               },
               "label": "Derivado",
-              "source": "Characters/Morgana/Spells/MorganaRAbility/MorganaR.mSpellCalculations.TotalDamage (16.23.8406595+branch.releases-16-23.content.release)",
+              "source": "Characters/Morgana/Spells/MorganaRAbility/MorganaR.mSpellCalculations.TotalDamage (16.23.8418428+branch.releases-16-23.content.release)",
               "damage_type_source": "spell_morganar_tooltip <magicDamage>"
             },
             {
@@ -318,7 +358,7 @@
                 ]
               },
               "label": "Derivado",
-              "source": "Characters/Morgana/Spells/MorganaRAbility/MorganaR.mSpellCalculations.TotalDamage (16.23.8406595+branch.releases-16-23.content.release)",
+              "source": "Characters/Morgana/Spells/MorganaRAbility/MorganaR.mSpellCalculations.TotalDamage (16.23.8418428+branch.releases-16-23.content.release)",
               "damage_type_source": "spell_morganar_tooltip <magicDamage>"
             }
           ]
@@ -327,6 +367,26 @@
       "passive_stats": [],
       "not_modelled": [
         "Ralentización y aturdimiento al completar la atadura"
+      ],
+      "active_effects": [
+        {
+          "id": "r_hastepercent",
+          "name": "R (VM)",
+          "kind": "stat_bonus",
+          "formula": {
+            "op": "by_rank",
+            "values": [
+              0.2,
+              0.4,
+              0.6
+            ]
+          },
+          "label": "Derivado",
+          "source": "Characters/Morgana/Spells/MorganaRAbility/MorganaR.DataValues.HastePercent (16.23.8418428+branch.releases-16-23.content.release)",
+          "stat": "move_speed",
+          "mode": "percent_ms",
+          "duration_seconds": 3
+        }
       ]
     }
   }

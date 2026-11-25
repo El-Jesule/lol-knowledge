@@ -3,7 +3,7 @@
   "champion": "Yunara",
   "label": "Derivado",
   "game_version": "16.23",
-  "content_version": "16.23.8406595+branch.releases-16-23.content.release",
+  "content_version": "16.23.8418428+branch.releases-16-23.content.release",
   "verified_against": {
     "content_version": "16.23.8406595+branch.releases-16-23.content.release",
     "bin_sha256": "7c38b86bc38a56bb0d031acfa4c1aa98be423401807ce0197629eef5ffd7807a",
@@ -46,7 +46,7 @@
                 ]
               },
               "label": "Derivado",
-              "source": "Characters/Yunara/Spells/YunaraPassiveAbility/YunaraPassive.mSpellCalculations.Calc_Damage_Amp (16.23.8406595+branch.releases-16-23.content.release)",
+              "source": "Characters/Yunara/Spells/YunaraPassiveAbility/YunaraPassive.mSpellCalculations.Calc_Damage_Amp (16.23.8418428+branch.releases-16-23.content.release)",
               "damage_type_source": "spell_yunarap_tooltip <magicDamage>"
             }
           ]
@@ -97,7 +97,7 @@
                 ]
               },
               "label": "Derivado",
-              "source": "Characters/Yunara/Spells/YunaraQAbility/YunaraQ.mSpellCalculations.Calc_Passive_Damage (16.23.8406595+branch.releases-16-23.content.release)",
+              "source": "Characters/Yunara/Spells/YunaraQAbility/YunaraQ.mSpellCalculations.Calc_Passive_Damage (16.23.8418428+branch.releases-16-23.content.release)",
               "damage_type_source": "spell_yunaraq_tooltip <magicDamage>"
             }
           ]
@@ -138,7 +138,7 @@
                 ]
               },
               "label": "Derivado",
-              "source": "Characters/Yunara/Spells/YunaraQAbility/YunaraQ.mSpellCalculations.Calc_Damage (16.23.8406595+branch.releases-16-23.content.release)",
+              "source": "Characters/Yunara/Spells/YunaraQAbility/YunaraQ.mSpellCalculations.Calc_Damage (16.23.8418428+branch.releases-16-23.content.release)",
               "damage_type_source": "spell_yunaraq_tooltip <magicDamage>"
             }
           ]
@@ -164,7 +164,7 @@
                 ]
               },
               "label": "Derivado",
-              "source": "Characters/Yunara/Spells/YunaraQAbility/YunaraQ.mSpellCalculations.Calc_Damage_Spread (16.23.8406595+branch.releases-16-23.content.release)",
+              "source": "Characters/Yunara/Spells/YunaraQAbility/YunaraQ.mSpellCalculations.Calc_Damage_Spread (16.23.8418428+branch.releases-16-23.content.release)",
               "damage_type_source": "spell_yunaraq_tooltip <physicalDamage>"
             }
           ]
@@ -173,6 +173,28 @@
       "passive_stats": [],
       "not_modelled": [
         "Velocidad de ataque activa (Calc_Attack_Speed), ejecución de súbditos y acumulación de 8 cargas de Desatar"
+      ],
+      "active_effects": [
+        {
+          "id": "q_calc_attack_speed",
+          "name": "Q (VA)",
+          "kind": "stat_bonus",
+          "formula": {
+            "op": "by_rank",
+            "values": [
+              20,
+              30,
+              40,
+              50,
+              60
+            ]
+          },
+          "label": "Derivado",
+          "source": "Characters/Yunara/Spells/YunaraQAbility/YunaraQ.mSpellCalculations.Calc_Attack_Speed (16.23.8418428+branch.releases-16-23.content.release)",
+          "stat": "attack_speed_bonus",
+          "mode": "flat",
+          "duration_seconds": 6
+        }
       ]
     },
     "W": {
@@ -229,7 +251,7 @@
                 ]
               },
               "label": "Derivado",
-              "source": "Characters/Yunara/Spells/YunaraWAbility/YunaraW.mSpellCalculations.Calc_Damage_Initial (16.23.8406595+branch.releases-16-23.content.release)",
+              "source": "Characters/Yunara/Spells/YunaraWAbility/YunaraW.mSpellCalculations.Calc_Damage_Initial (16.23.8418428+branch.releases-16-23.content.release)",
               "damage_type_source": "spell_yunaraw_tooltip <magicDamage>"
             }
           ]
@@ -293,7 +315,7 @@
                 ]
               },
               "label": "Derivado",
-              "source": "Characters/Yunara/Spells/YunaraWAbility/YunaraW.mSpellCalculations.Calc_Damage_Per_Second (16.23.8406595+branch.releases-16-23.content.release)",
+              "source": "Characters/Yunara/Spells/YunaraWAbility/YunaraW.mSpellCalculations.Calc_Damage_Per_Second (16.23.8418428+branch.releases-16-23.content.release)",
               "damage_type_source": "spell_yunaraw_tooltip <magicDamage>"
             }
           ]
@@ -311,6 +333,28 @@
       "passive_stats": [],
       "not_modelled": [
         "Velocidad de movimiento (Calc_Move_Speed / Calc_Move_Speed_Enhanced) y deslizamiento en Trascendencia"
+      ],
+      "active_effects": [
+        {
+          "id": "e_calc_move_speed",
+          "name": "E (VM)",
+          "kind": "stat_bonus",
+          "formula": {
+            "op": "by_rank",
+            "values": [
+              0.3,
+              0.35,
+              0.4,
+              0.45,
+              0.5
+            ]
+          },
+          "label": "Derivado",
+          "source": "Characters/Yunara/Spells/YunaraEAbility/YunaraE.mSpellCalculations.Calc_Move_Speed (16.23.8418428+branch.releases-16-23.content.release)",
+          "stat": "move_speed",
+          "mode": "percent_ms",
+          "duration_seconds": 1.5
+        }
       ]
     },
     "R": {
@@ -365,7 +409,7 @@
                 ]
               },
               "label": "Derivado",
-              "source": "Characters/Yunara/Spells/YunaraRAbility/YunaraR.mSpellCalculations.Calc_RW_Damage (16.23.8406595+branch.releases-16-23.content.release)",
+              "source": "Characters/Yunara/Spells/YunaraRAbility/YunaraR.mSpellCalculations.Calc_RW_Damage (16.23.8418428+branch.releases-16-23.content.release)",
               "damage_type_source": "spell_yunaraw_tooltip <magicDamage>"
             }
           ]

@@ -64,6 +64,28 @@
       ],
       "not_modelled": [
         "Escudo (ShieldBlockTotal) y velocidad de movimiento (MoveSpeedCalc)"
+      ],
+      "active_effects": [
+        {
+          "id": "molten_shield",
+          "name": "Escudo fundido (escudo)",
+          "kind": "shield",
+          "calculation": "ShieldBlockTotal",
+          "duration_seconds": {
+            "data_value": "ShieldDuration"
+          }
+        },
+        {
+          "id": "molten_shield_ms",
+          "name": "Escudo fundido (VM %)",
+          "kind": "stat_bonus",
+          "stat": "move_speed",
+          "mode": "percent_ms",
+          "calculation": "MoveSpeedCalc",
+          "duration_seconds": {
+            "data_value": "MovementSpeedDuration"
+          }
+        }
       ]
     },
     "R": {

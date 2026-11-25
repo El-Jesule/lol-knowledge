@@ -3,7 +3,7 @@
   "champion": "Karma",
   "label": "Derivado",
   "game_version": "16.23",
-  "content_version": "16.23.8406595+branch.releases-16-23.content.release",
+  "content_version": "16.23.8418428+branch.releases-16-23.content.release",
   "verified_against": {
     "content_version": "16.23.8406595+branch.releases-16-23.content.release",
     "bin_sha256": "6f9cedf5ce00a2373c35cbda097a0bcc21dcf8ad5b86ae9f6d978ddf55f59968",
@@ -61,7 +61,7 @@
                 ]
               },
               "label": "Derivado",
-              "source": "Characters/Karma/Spells/KarmaQAbility/KarmaQ.mSpellCalculations.TotalDamage (16.23.8406595+branch.releases-16-23.content.release)",
+              "source": "Characters/Karma/Spells/KarmaQAbility/KarmaQ.mSpellCalculations.TotalDamage (16.23.8418428+branch.releases-16-23.content.release)",
               "damage_type_source": "spell_karmaq_tooltip_0 <magicDamage>"
             }
           ]
@@ -112,7 +112,7 @@
                 ]
               },
               "label": "Derivado",
-              "source": "Characters/Karma/Spells/KarmaSpiritBindAbility/KarmaSpiritBind.mSpellCalculations.InitialDamage (16.23.8406595+branch.releases-16-23.content.release)",
+              "source": "Characters/Karma/Spells/KarmaSpiritBindAbility/KarmaSpiritBind.mSpellCalculations.InitialDamage (16.23.8418428+branch.releases-16-23.content.release)",
               "damage_type_source": "spell_karmaw_tooltip_0 <magicDamage>"
             }
           ]
@@ -130,6 +130,59 @@
       "passive_stats": [],
       "not_modelled": [
         "Escudo (TotalShield), velocidad de movimiento y escudo en área con Mantra (R: REBonusShield)"
+      ],
+      "active_effects": [
+        {
+          "id": "inspire_shield",
+          "name": "Inspiración (escudo)",
+          "kind": "shield",
+          "formula": {
+            "op": "add",
+            "operands": [
+              {
+                "op": "by_rank",
+                "values": [
+                  80,
+                  130,
+                  180,
+                  230,
+                  280
+                ]
+              },
+              {
+                "op": "mul",
+                "operands": [
+                  {
+                    "op": "constant",
+                    "value": 0.6
+                  },
+                  {
+                    "op": "stat",
+                    "stat": "ability_power",
+                    "scope": "total"
+                  }
+                ]
+              }
+            ]
+          },
+          "label": "Derivado",
+          "source": "Characters/Karma/Spells/KarmaSolKimShieldAbility/KarmaSolKimShield.mSpellCalculations.TotalShield (16.23.8418428+branch.releases-16-23.content.release)",
+          "duration_seconds": 2.5
+        },
+        {
+          "id": "inspire_ms",
+          "name": "Inspiración (VM %)",
+          "kind": "stat_bonus",
+          "formula": {
+            "op": "constant",
+            "value": 0.4
+          },
+          "label": "Derivado",
+          "source": "Characters/Karma/Spells/KarmaSolKimShieldAbility/KarmaSolKimShield.DataValues.MoveSpeed (16.23.8418428+branch.releases-16-23.content.release)",
+          "stat": "move_speed",
+          "mode": "percent_ms",
+          "duration_seconds": 2
+        }
       ]
     },
     "R": {
@@ -171,7 +224,7 @@
                 ]
               },
               "label": "Derivado",
-              "source": "Characters/Karma/Spells/KarmaMantraAbility/KarmaMantra.mSpellCalculations.RQImpactDamage (16.23.8406595+branch.releases-16-23.content.release)",
+              "source": "Characters/Karma/Spells/KarmaMantraAbility/KarmaMantra.mSpellCalculations.RQImpactDamage (16.23.8418428+branch.releases-16-23.content.release)",
               "damage_type_source": "spell_karmamantra_tooltip <magicDamage>"
             }
           ]
@@ -211,7 +264,7 @@
                 ]
               },
               "label": "Derivado",
-              "source": "Characters/Karma/Spells/KarmaMantraAbility/KarmaMantra.mSpellCalculations.RQFieldDamage (16.23.8406595+branch.releases-16-23.content.release)",
+              "source": "Characters/Karma/Spells/KarmaMantraAbility/KarmaMantra.mSpellCalculations.RQFieldDamage (16.23.8418428+branch.releases-16-23.content.release)",
               "damage_type_source": "spell_karmamantra_tooltip <magicDamage>"
             }
           ]
@@ -220,6 +273,98 @@
       "passive_stats": [],
       "not_modelled": [
         "Curación de R+W (RWHealAmount) y escudo adicional en área de R+E (REBonusShield, REBonusShieldArea)"
+      ],
+      "active_effects": [
+        {
+          "id": "mantra_defiance_shield",
+          "name": "Mantra: Desafío (escudo extra)",
+          "kind": "shield",
+          "formula": {
+            "op": "add",
+            "operands": [
+              {
+                "op": "by_rank",
+                "values": [
+                  45,
+                  85,
+                  125,
+                  165
+                ]
+              },
+              {
+                "op": "mul",
+                "operands": [
+                  {
+                    "op": "constant",
+                    "value": 0.45
+                  },
+                  {
+                    "op": "stat",
+                    "stat": "ability_power",
+                    "scope": "total"
+                  }
+                ]
+              }
+            ]
+          },
+          "label": "Derivado",
+          "source": "Characters/Karma/Spells/KarmaMantraAbility/KarmaMantra.mSpellCalculations.REBonusShield (16.23.8418428+branch.releases-16-23.content.release)",
+          "duration_seconds": 2.5
+        },
+        {
+          "id": "mantra_renewal_heal",
+          "name": "Mantra: Renovación (curación por pulso)",
+          "kind": "heal",
+          "formula": {
+            "op": "mul",
+            "operands": [
+              {
+                "op": "add",
+                "operands": [
+                  {
+                    "op": "constant",
+                    "value": 17
+                  },
+                  {
+                    "op": "mul",
+                    "operands": [
+                      {
+                        "op": "constant",
+                        "value": 0.01
+                      },
+                      {
+                        "op": "stat",
+                        "stat": "ability_power",
+                        "scope": "total"
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "op": "constant",
+                "value": 0.01
+              },
+              {
+                "op": "mul",
+                "operands": [
+                  {
+                    "op": "stat",
+                    "stat": "health",
+                    "scope": "max"
+                  },
+                  {
+                    "op": "stat",
+                    "stat": "health",
+                    "scope": "missing_fraction"
+                  }
+                ]
+              }
+            ]
+          },
+          "label": "Derivado",
+          "source": "Characters/Karma/Spells/KarmaMantraAbility/KarmaMantra · mSpellCalculations.RWHealAmount% of missing health (1 tick) (16.23.8418428+branch.releases-16-23.content.release)"
+        }
       ]
     }
   }

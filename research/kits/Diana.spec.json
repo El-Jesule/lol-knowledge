@@ -93,6 +93,17 @@
       ],
       "not_modelled": [
         "Escudo inicial y renovación al detonar las tres esferas (ShieldValue)"
+      ],
+      "active_effects": [
+        {
+          "id": "w_shieldvalue",
+          "name": "W (escudo)",
+          "kind": "shield",
+          "calculation": "ShieldValue",
+          "duration_seconds": {
+            "data_value": "ShieldDuration"
+          }
+        }
       ]
     },
     "E": {

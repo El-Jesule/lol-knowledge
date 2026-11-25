@@ -73,6 +73,30 @@
       "tooltip": "spell_braumw_tooltip",
       "not_modelled": [
         "Salto hacia aliado y bonificación temporal de armadura/RM (GrantedAllyArmor/MR, GrantedBraumArmor/MR)"
+      ],
+      "active_effects": [
+        {
+          "id": "stand_behind_me_armor",
+          "name": "Detrás de mí (armadura)",
+          "kind": "stat_bonus",
+          "stat": "armor",
+          "mode": "flat",
+          "calculation": "GrantedBraumArmor",
+          "duration_seconds": {
+            "data_value": "Duration"
+          }
+        },
+        {
+          "id": "stand_behind_me_mr",
+          "name": "Detrás de mí (RM)",
+          "kind": "stat_bonus",
+          "stat": "magic_resist",
+          "mode": "flat",
+          "calculation": "GrantedBraumMR",
+          "duration_seconds": {
+            "data_value": "Duration"
+          }
+        }
       ]
     },
     "E": {
@@ -80,6 +104,31 @@
       "tooltip": "spell_braume_tooltip",
       "not_modelled": [
         "Intercepción de proyectiles, anulación del primero, reducción de daño y velocidad de movimiento"
+      ],
+      "active_effects": [
+        {
+          "id": "unbreakable_dr",
+          "name": "Inquebrantable (DR frontal)",
+          "kind": "damage_taken_modifier",
+          "mode": "percent",
+          "data_value": "ShieldFacingDRAmount",
+          "duration_seconds": {
+            "data_value": "ShieldHoldDuration"
+          },
+          "condition": "facing_shield_subsequent_hits"
+        },
+        {
+          "id": "unbreakable_ms",
+          "name": "Inquebrantable (VM %)",
+          "kind": "stat_bonus",
+          "stat": "move_speed",
+          "mode": "percent_ms",
+          "data_value": "MoveSpeedPercent",
+          "scale": 0.01,
+          "duration_seconds": {
+            "data_value": "ShieldHoldDuration"
+          }
+        }
       ]
     },
     "R": {

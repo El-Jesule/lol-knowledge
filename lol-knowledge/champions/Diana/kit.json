@@ -3,7 +3,7 @@
   "champion": "Diana",
   "label": "Derivado",
   "game_version": "16.23",
-  "content_version": "16.23.8406595+branch.releases-16-23.content.release",
+  "content_version": "16.23.8418428+branch.releases-16-23.content.release",
   "verified_against": {
     "content_version": "16.23.8406595+branch.releases-16-23.content.release",
     "bin_sha256": "7da0740c3be54b1fa805f0d4ed554981eb2cc3c6ae3fb0f8e86aaaeb31513044",
@@ -65,7 +65,7 @@
                 ]
               },
               "label": "Derivado",
-              "source": "Characters/Diana/Spells/DianaPassiveAbility/DianaPassive.mSpellCalculations.CleaveDamage (16.23.8406595+branch.releases-16-23.content.release)",
+              "source": "Characters/Diana/Spells/DianaPassiveAbility/DianaPassive.mSpellCalculations.CleaveDamage (16.23.8418428+branch.releases-16-23.content.release)",
               "damage_type_source": "spell_dianapassive_tooltip <magicDamage>"
             }
           ]
@@ -86,7 +86,7 @@
             "max": 35
           },
           "label": "Derivado",
-          "source": "Characters/Diana/Spells/DianaPassiveAbility/DianaPassive.mSpellCalculations.BonusAS (16.23.8406595+branch.releases-16-23.content.release)",
+          "source": "Characters/Diana/Spells/DianaPassiveAbility/DianaPassive.mSpellCalculations.BonusAS (16.23.8418428+branch.releases-16-23.content.release)",
           "stat": "attack_speed_bonus",
           "mode": "flat",
           "condition": "pasiva permanente de Hoja lunargenta"
@@ -138,7 +138,7 @@
             ]
           },
           "label": "Derivado",
-          "source": "Characters/Diana/Spells/DianaPassiveAbility/DianaPassive.mSpellCalculations.CleaveDamage (16.23.8406595+branch.releases-16-23.content.release)",
+          "source": "Characters/Diana/Spells/DianaPassiveAbility/DianaPassive.mSpellCalculations.CleaveDamage (16.23.8418428+branch.releases-16-23.content.release)",
           "trigger": "every_n_attacks",
           "damage_type": "magic",
           "every": 3
@@ -185,7 +185,7 @@
                 ]
               },
               "label": "Derivado",
-              "source": "Characters/Diana/Spells/DianaQAbility/DianaQ.mSpellCalculations.TotalDamage (16.23.8406595+branch.releases-16-23.content.release)",
+              "source": "Characters/Diana/Spells/DianaQAbility/DianaQ.mSpellCalculations.TotalDamage (16.23.8418428+branch.releases-16-23.content.release)",
               "damage_type_source": "spell_dianaq_tooltip <magicDamage>"
             }
           ]
@@ -236,7 +236,7 @@
                 ]
               },
               "label": "Derivado",
-              "source": "Characters/Diana/Spells/DianaOrbsAbility/DianaOrbs.mSpellCalculations.TotalDamage (16.23.8406595+branch.releases-16-23.content.release)",
+              "source": "Characters/Diana/Spells/DianaOrbsAbility/DianaOrbs.mSpellCalculations.TotalDamage (16.23.8418428+branch.releases-16-23.content.release)",
               "damage_type_source": "spell_dianaorbs_tooltip <magicDamage>"
             }
           ]
@@ -286,7 +286,7 @@
                 ]
               },
               "label": "Derivado",
-              "source": "Characters/Diana/Spells/DianaOrbsAbility/DianaOrbs.mSpellCalculations.TotalMaxDamage (16.23.8406595+branch.releases-16-23.content.release)",
+              "source": "Characters/Diana/Spells/DianaOrbsAbility/DianaOrbs.mSpellCalculations.TotalMaxDamage (16.23.8418428+branch.releases-16-23.content.release)",
               "damage_type_source": "spell_dianaorbs_tooltip <magicDamage>"
             }
           ]
@@ -295,6 +295,59 @@
       "passive_stats": [],
       "not_modelled": [
         "Escudo inicial y renovación al detonar las tres esferas (ShieldValue)"
+      ],
+      "active_effects": [
+        {
+          "id": "w_shieldvalue",
+          "name": "W (escudo)",
+          "kind": "shield",
+          "formula": {
+            "op": "add",
+            "operands": [
+              {
+                "op": "by_rank",
+                "values": [
+                  45,
+                  60,
+                  75,
+                  90,
+                  105
+                ]
+              },
+              {
+                "op": "mul",
+                "operands": [
+                  {
+                    "op": "constant",
+                    "value": 0.3
+                  },
+                  {
+                    "op": "stat",
+                    "stat": "ability_power",
+                    "scope": "total"
+                  }
+                ]
+              },
+              {
+                "op": "mul",
+                "operands": [
+                  {
+                    "op": "constant",
+                    "value": 0.14
+                  },
+                  {
+                    "op": "stat",
+                    "stat": "health",
+                    "scope": "bonus"
+                  }
+                ]
+              }
+            ]
+          },
+          "label": "Derivado",
+          "source": "Characters/Diana/Spells/DianaOrbsAbility/DianaOrbs.mSpellCalculations.ShieldValue (16.23.8418428+branch.releases-16-23.content.release)",
+          "duration_seconds": 5
+        }
       ]
     },
     "E": {
@@ -337,7 +390,7 @@
                 ]
               },
               "label": "Derivado",
-              "source": "Characters/Diana/Spells/DianaTeleportAbility/DianaTeleport.mSpellCalculations.TotalDamage (16.23.8406595+branch.releases-16-23.content.release)",
+              "source": "Characters/Diana/Spells/DianaTeleportAbility/DianaTeleport.mSpellCalculations.TotalDamage (16.23.8418428+branch.releases-16-23.content.release)",
               "damage_type_source": "spell_dianateleport_tooltip <magicDamage>"
             }
           ]
@@ -386,7 +439,7 @@
                 ]
               },
               "label": "Derivado",
-              "source": "Characters/Diana/Spells/DianaRAbility/DianaR.mSpellCalculations.RExplosionDamage (16.23.8406595+branch.releases-16-23.content.release)",
+              "source": "Characters/Diana/Spells/DianaRAbility/DianaR.mSpellCalculations.RExplosionDamage (16.23.8418428+branch.releases-16-23.content.release)",
               "damage_type_source": "spell_dianar_tooltip <magicDamage>"
             }
           ]
@@ -425,7 +478,7 @@
                 ]
               },
               "label": "Derivado",
-              "source": "Characters/Diana/Spells/DianaRAbility/DianaR.mSpellCalculations.RMultihitAmplification (16.23.8406595+branch.releases-16-23.content.release)",
+              "source": "Characters/Diana/Spells/DianaRAbility/DianaR.mSpellCalculations.RMultihitAmplification (16.23.8418428+branch.releases-16-23.content.release)",
               "damage_type_source": "spell_dianar_tooltip <magicDamage>"
             }
           ]
@@ -473,7 +526,7 @@
                 ]
               },
               "label": "Derivado",
-              "source": "Characters/Diana/Spells/DianaRAbility/DianaR.mSpellCalculations.MaxDamage (16.23.8406595+branch.releases-16-23.content.release)",
+              "source": "Characters/Diana/Spells/DianaRAbility/DianaR.mSpellCalculations.MaxDamage (16.23.8418428+branch.releases-16-23.content.release)",
               "damage_type_source": "spell_dianar_tooltip <magicDamage>"
             }
           ]

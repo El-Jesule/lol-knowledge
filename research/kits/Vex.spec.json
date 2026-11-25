@@ -58,6 +58,17 @@
       ],
       "not_modelled": [
         "Escudo (ShieldCalc)"
+      ],
+      "active_effects": [
+        {
+          "id": "w_shieldcalc",
+          "name": "W (escudo)",
+          "kind": "shield",
+          "calculation": "ShieldCalc",
+          "duration_seconds": {
+            "data_value": "ShieldDuration"
+          }
+        }
       ]
     },
     "E": {

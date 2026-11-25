@@ -83,6 +83,35 @@ PASSIVE_SHIELD_TYPES = frozenset({"normal", "physical", "magic"})
 PASSIVE_DR_MODES = frozenset({"flat", "percent"})
 PASSIVE_RESOURCES = frozenset({"mana", "energy"})
 PASSIVE_TARGET_KINDS = frozenset({"champion", "non_structure"})
+ACTIVE_EFFECT_KINDS = frozenset({"shield", "heal", "damage_taken_modifier", "stat_bonus"})
+
+
+@dataclass(frozen=True)
+class ActiveEffectSpec:
+    """Declarative non-damage active effect triggered when casting Q/W/E/R."""
+
+    id: str
+    name: str
+    kind: str  # "shield", "heal", "damage_taken_modifier", "stat_bonus"
+    formula: Mapping[str, Any]
+    label: Label
+    source: str
+    case_ids: tuple[str, ...] = ()
+    duration_seconds: Fraction | None = None
+    duration_formula: Mapping[str, Any] | None = None
+    stat: str | None = None
+    mode: str = "flat"  # "flat"/"percent"/"percent_ms" for stat_bonus; "percent"/"flat" for DR
+    shield_type: str = "normal"
+    damage_type: DamageType | None = None
+    damage_reduction_cap: Fraction | None = None
+    over_duration: bool = False
+    uses_hsp: bool = True
+    condition: str = ""
+
+    def applies_to_case(self, case_id: str | None) -> bool:
+        if not self.case_ids:
+            return True
+        return case_id in self.case_ids
 
 
 @dataclass(frozen=True)
@@ -195,6 +224,7 @@ class AbilitySpec:
     recast_interval: Fraction | None = None
     cost: CostSpec | None = None
     passive_effects: tuple[PassiveEffectSpec, ...] = ()
+    active_effects: tuple[ActiveEffectSpec, ...] = ()
 
     def case(self, case_id: str) -> CaseSpec:
         for case in self.cases:
@@ -485,6 +515,8 @@ def _passive_effects(
                 except ValueError as exc:
                     raise KitError(f"{entry_ctx}: unknown damage_type") from exc
             dr_cap = _optional_positive_fraction(entry, "damage_reduction_cap", entry_ctx)
+            if dr_cap is not None and dr_cap > 1:
+                raise KitError(f"{entry_ctx}: damage_reduction_cap must be <= 1")
             cooldown = _optional_positive_fraction(entry, "cooldown_seconds", entry_ctx)
         elif kind == "resource_restore":
             trigger = _text(entry, "trigger", entry_ctx)
@@ -530,6 +562,108 @@ def _passive_effects(
                 resource=resource,
                 target_kind=target_kind,
                 input_name=raw_input,
+                condition=condition,
+            )
+        )
+    return tuple(effects)
+
+
+def _active_effects(
+    record: Mapping[str, Any], max_rank: int, valid_case_ids: set[str], context: str
+) -> tuple[ActiveEffectSpec, ...]:
+    effects: list[ActiveEffectSpec] = []
+    seen_ids: set[str] = set()
+    for index, entry in enumerate(_list(record, "active_effects", context)):
+        entry_ctx = f"{context}.active_effects[{index}]"
+        if not isinstance(entry, Mapping):
+            raise KitError(f"{entry_ctx}: must be an object")
+        effect_id = _text(entry, "id", entry_ctx)
+        if CASE_ID.fullmatch(effect_id) is None:
+            raise KitError(f"{entry_ctx}: id must be lowercase snake_case")
+        if effect_id in seen_ids:
+            raise KitError(f"{entry_ctx}: duplicate active effect id {effect_id!r}")
+        seen_ids.add(effect_id)
+        name = _text(entry, "name", entry_ctx)
+        kind = _text(entry, "kind", entry_ctx)
+        if kind not in ACTIVE_EFFECT_KINDS:
+            raise KitError(f"{entry_ctx}: kind must be one of {sorted(ACTIVE_EFFECT_KINDS)}")
+        formula = _formula(entry, max_rank, entry_ctx)
+        label = _label(entry, entry_ctx)
+        source = _text(entry, "source", entry_ctx)
+        raw_cases = _list(entry, "case_ids", entry_ctx)
+        case_ids: list[str] = []
+        for cid in raw_cases:
+            if not isinstance(cid, str) or cid not in valid_case_ids:
+                raise KitError(f"{entry_ctx}: unknown case_id {cid!r}")
+            case_ids.append(cid)
+        duration = _optional_positive_fraction(entry, "duration_seconds", entry_ctx)
+        duration_formula: Mapping[str, Any] | None = None
+        if entry.get("duration_formula") is not None:
+            duration_formula = _formula(
+                {"formula": entry["duration_formula"]}, max_rank, f"{entry_ctx}.duration_formula"
+            )
+        condition = entry.get("condition", "")
+        if not isinstance(condition, str):
+            raise KitError(f"{entry_ctx}: condition must be a string")
+        over_duration = entry.get("over_duration", False)
+        if not isinstance(over_duration, bool):
+            raise KitError(f"{entry_ctx}: over_duration must be a boolean")
+        uses_hsp = entry.get("uses_hsp", True)
+        if not isinstance(uses_hsp, bool):
+            raise KitError(f"{entry_ctx}: uses_hsp must be a boolean")
+
+        stat_id: str | None = None
+        mode = "flat"
+        shield_type = "normal"
+        damage_type: DamageType | None = None
+        dr_cap: Fraction | None = None
+
+        if kind == "stat_bonus":
+            stat_id = _text(entry, "stat", entry_ctx)
+            definition = STATS.get(stat_id)
+            if definition is None or not definition.resolvable:
+                raise KitError(f"{entry_ctx}: {stat_id!r} is not a resolvable stat")
+            mode = str(entry.get("mode", "flat"))
+            if mode not in PASSIVE_STAT_MODES:
+                raise KitError(f"{entry_ctx}: mode must be one of {sorted(PASSIVE_STAT_MODES)}")
+        elif kind == "shield":
+            shield_type = str(entry.get("shield_type", "normal"))
+            if shield_type not in PASSIVE_SHIELD_TYPES:
+                raise KitError(
+                    f"{entry_ctx}: shield_type must be one of {sorted(PASSIVE_SHIELD_TYPES)}"
+                )
+        elif kind == "damage_taken_modifier":
+            mode = str(entry.get("mode", "percent"))
+            if mode not in PASSIVE_DR_MODES:
+                raise KitError(f"{entry_ctx}: mode must be one of {sorted(PASSIVE_DR_MODES)}")
+            raw_dt = entry.get("damage_type")
+            if raw_dt is not None:
+                try:
+                    damage_type = DamageType(raw_dt)
+                except ValueError as exc:
+                    raise KitError(f"{entry_ctx}: unknown damage_type") from exc
+            dr_cap = _optional_positive_fraction(entry, "damage_reduction_cap", entry_ctx)
+            if dr_cap is not None and dr_cap > 1:
+                raise KitError(f"{entry_ctx}: damage_reduction_cap must be <= 1")
+
+        effects.append(
+            ActiveEffectSpec(
+                id=effect_id,
+                name=name,
+                kind=kind,
+                formula=formula,
+                label=label,
+                source=source,
+                case_ids=tuple(case_ids),
+                duration_seconds=duration,
+                duration_formula=duration_formula,
+                stat=stat_id,
+                mode=mode,
+                shield_type=shield_type,
+                damage_type=damage_type,
+                damage_reduction_cap=dr_cap,
+                over_duration=over_duration,
+                uses_hsp=uses_hsp,
                 condition=condition,
             )
         )
@@ -654,6 +788,7 @@ def _ability(slot: str, record: Any) -> AbilitySpec:
         None if interval is None else Fraction(str(interval)),
         _cost(record, max_rank, context),
         _passive_effects(record, max_rank, context),
+        _active_effects(record, max_rank, {case.id for case in cases}, context),
     )
 
 

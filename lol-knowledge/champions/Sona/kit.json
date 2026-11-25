@@ -3,7 +3,7 @@
   "champion": "Sona",
   "label": "Derivado",
   "game_version": "16.23",
-  "content_version": "16.23.8406595+branch.releases-16-23.content.release",
+  "content_version": "16.23.8418428+branch.releases-16-23.content.release",
   "verified_against": {
     "content_version": "16.23.8406595+branch.releases-16-23.content.release",
     "bin_sha256": "fac3cd68b312d5421a772129d6b4a6f0459388804f0fb43dd894bf2458659679",
@@ -65,7 +65,7 @@
                 ]
               },
               "label": "Derivado",
-              "source": "Characters/Sona/Spells/SonaPassiveAbility/SonaPassive.mSpellCalculations.PowerChordDamage (16.23.8406595+branch.releases-16-23.content.release)",
+              "source": "Characters/Sona/Spells/SonaPassiveAbility/SonaPassive.mSpellCalculations.PowerChordDamage (16.23.8418428+branch.releases-16-23.content.release)",
               "damage_type_source": "spell_sonapassive_tooltip <magicDamage>"
             }
           ]
@@ -85,7 +85,7 @@
             "value": 0.5
           },
           "label": "Derivado",
-          "source": "Characters/Sona/Spells/SonaPassiveAbility/SonaPassive.DataValues.AccelerandoAHPerStack (16.23.8406595+branch.releases-16-23.content.release)",
+          "source": "Characters/Sona/Spells/SonaPassiveAbility/SonaPassive.DataValues.AccelerandoAHPerStack (16.23.8418428+branch.releases-16-23.content.release)",
           "stat": "ability_haste",
           "mode": "flat",
           "input_name": "accelerando_stacks",
@@ -134,7 +134,7 @@
                 ]
               },
               "label": "Derivado",
-              "source": "Characters/Sona/Spells/SonaQAbility/SonaQ.mSpellCalculations.TotalDamage (16.23.8406595+branch.releases-16-23.content.release)",
+              "source": "Characters/Sona/Spells/SonaQAbility/SonaQ.mSpellCalculations.TotalDamage (16.23.8418428+branch.releases-16-23.content.release)",
               "damage_type_source": "spell_sonaq_tooltip <magicDamage>"
             }
           ],
@@ -177,7 +177,7 @@
                 ]
               },
               "label": "Derivado",
-              "source": "Characters/Sona/Spells/SonaQAbility/SonaQ.mSpellCalculations.TotalOnHitDamage (16.23.8406595+branch.releases-16-23.content.release)",
+              "source": "Characters/Sona/Spells/SonaQAbility/SonaQ.mSpellCalculations.TotalOnHitDamage (16.23.8418428+branch.releases-16-23.content.release)",
               "damage_type_source": "spell_sonaq_tooltip <magicDamage>"
             }
           ],
@@ -233,7 +233,7 @@
                 ]
               },
               "label": "Derivado",
-              "source": "Characters/Sona/Spells/SonaQAbility/SonaQ.mSpellCalculations.TotalStaccatoDamage (16.23.8406595+branch.releases-16-23.content.release)",
+              "source": "Characters/Sona/Spells/SonaQAbility/SonaQ.mSpellCalculations.TotalStaccatoDamage (16.23.8418428+branch.releases-16-23.content.release)",
               "damage_type_source": "spell_sonaq_tooltip <magicDamage>"
             }
           ],
@@ -253,6 +253,81 @@
       "passive_stats": [],
       "not_modelled": [
         "Curación (TotalHeal), escudo en aura (TotalShield) y reducción de daño de Diminuendo"
+      ],
+      "active_effects": [
+        {
+          "id": "aria_of_perseverance_heal",
+          "name": "Aria de la perseverancia (curación)",
+          "kind": "heal",
+          "formula": {
+            "op": "add",
+            "operands": [
+              {
+                "op": "by_rank",
+                "values": [
+                  30,
+                  45,
+                  60,
+                  75,
+                  90
+                ]
+              },
+              {
+                "op": "mul",
+                "operands": [
+                  {
+                    "op": "constant",
+                    "value": 0.3
+                  },
+                  {
+                    "op": "stat",
+                    "stat": "ability_power",
+                    "scope": "total"
+                  }
+                ]
+              }
+            ]
+          },
+          "label": "Derivado",
+          "source": "Characters/Sona/Spells/SonaWAbility/SonaW.mSpellCalculations.TotalHeal (16.23.8418428+branch.releases-16-23.content.release)"
+        },
+        {
+          "id": "aria_of_perseverance_shield",
+          "name": "Aria de la perseverancia (escudo)",
+          "kind": "shield",
+          "formula": {
+            "op": "add",
+            "operands": [
+              {
+                "op": "by_rank",
+                "values": [
+                  25,
+                  45,
+                  65,
+                  85,
+                  105
+                ]
+              },
+              {
+                "op": "mul",
+                "operands": [
+                  {
+                    "op": "constant",
+                    "value": 0.25
+                  },
+                  {
+                    "op": "stat",
+                    "stat": "ability_power",
+                    "scope": "total"
+                  }
+                ]
+              }
+            ]
+          },
+          "label": "Derivado",
+          "source": "Characters/Sona/Spells/SonaWAbility/SonaW.mSpellCalculations.TotalShield (16.23.8418428+branch.releases-16-23.content.release)",
+          "duration_seconds": 1.5
+        }
       ]
     },
     "E": {
@@ -262,6 +337,41 @@
       "passive_stats": [],
       "not_modelled": [
         "Velocidad de movimiento propia/aliada (TotalSelfMovementSpeed, TotalAllyMovementSpeed) y ralentización Tempo"
+      ],
+      "active_effects": [
+        {
+          "id": "e_totalselfmovementspeed",
+          "name": "E (VM)",
+          "kind": "stat_bonus",
+          "formula": {
+            "op": "add",
+            "operands": [
+              {
+                "op": "constant",
+                "value": 0.2
+              },
+              {
+                "op": "mul",
+                "operands": [
+                  {
+                    "op": "constant",
+                    "value": 0.0002
+                  },
+                  {
+                    "op": "stat",
+                    "stat": "ability_power",
+                    "scope": "total"
+                  }
+                ]
+              }
+            ]
+          },
+          "label": "Derivado",
+          "source": "Characters/Sona/Spells/SonaEAbility/SonaE.mSpellCalculations.TotalSelfMovementSpeed (16.23.8418428+branch.releases-16-23.content.release)",
+          "stat": "move_speed",
+          "mode": "percent_ms",
+          "duration_seconds": 3
+        }
       ]
     },
     "R": {
@@ -302,7 +412,7 @@
                 ]
               },
               "label": "Derivado",
-              "source": "Characters/Sona/Spells/SonaRAbility/SonaR.mSpellCalculations.TotalDamage (16.23.8406595+branch.releases-16-23.content.release)",
+              "source": "Characters/Sona/Spells/SonaRAbility/SonaR.mSpellCalculations.TotalDamage (16.23.8418428+branch.releases-16-23.content.release)",
               "damage_type_source": "spell_sonar_tooltip <magicDamage>"
             }
           ],

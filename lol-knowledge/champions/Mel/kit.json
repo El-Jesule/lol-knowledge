@@ -3,7 +3,7 @@
   "champion": "Mel",
   "label": "Derivado",
   "game_version": "16.23",
-  "content_version": "16.23.8406595+branch.releases-16-23.content.release",
+  "content_version": "16.23.8418428+branch.releases-16-23.content.release",
   "verified_against": {
     "content_version": "16.23.8406595+branch.releases-16-23.content.release",
     "bin_sha256": "1074d59d2ece8a0aeea4ea7cb0a01c1c5e00bf42e5e39bed57e8ad0569024d20",
@@ -47,7 +47,7 @@
                 ]
               },
               "label": "Derivado",
-              "source": "Characters/Mel/Spells/MelPassiveAbility/MelPassive.mSpellCalculations.PassiveBonusMissileDamage (16.23.8406595+branch.releases-16-23.content.release)",
+              "source": "Characters/Mel/Spells/MelPassiveAbility/MelPassive.mSpellCalculations.PassiveBonusMissileDamage (16.23.8418428+branch.releases-16-23.content.release)",
               "damage_type_source": "spell_melpassive_tooltip <magicDamage>"
             }
           ]
@@ -87,7 +87,7 @@
             ]
           },
           "label": "Derivado",
-          "source": "Characters/Mel/Spells/MelPassiveAbility/MelPassive.mSpellCalculations.PassiveBonusMissileDamage (16.23.8406595+branch.releases-16-23.content.release)",
+          "source": "Characters/Mel/Spells/MelPassiveAbility/MelPassive.mSpellCalculations.PassiveBonusMissileDamage (16.23.8418428+branch.releases-16-23.content.release)",
           "trigger": "after_ability",
           "damage_type": "magic",
           "consume_all_stacks": true,
@@ -131,7 +131,7 @@
                 ]
               },
               "label": "Derivado",
-              "source": "Characters/Mel/Spells/MelQAbility/MelQ.mSpellCalculations.InitialDamage (16.23.8406595+branch.releases-16-23.content.release)",
+              "source": "Characters/Mel/Spells/MelQAbility/MelQ.mSpellCalculations.InitialDamage (16.23.8418428+branch.releases-16-23.content.release)",
               "damage_type_source": "spell_melq_tooltip <magicDamage>"
             }
           ]
@@ -172,7 +172,7 @@
                 ]
               },
               "label": "Derivado",
-              "source": "Characters/Mel/Spells/MelQAbility/MelQ.mSpellCalculations.SubsequentDamage (16.23.8406595+branch.releases-16-23.content.release)",
+              "source": "Characters/Mel/Spells/MelQAbility/MelQ.mSpellCalculations.SubsequentDamage (16.23.8418428+branch.releases-16-23.content.release)",
               "damage_type_source": "spell_melq_tooltip <magicDamage>"
             }
           ]
@@ -279,7 +279,7 @@
                 ]
               },
               "label": "Derivado",
-              "source": "Characters/Mel/Spells/MelQAbility/MelQ.mSpellCalculations.TotalDamageTT (16.23.8406595+branch.releases-16-23.content.release)",
+              "source": "Characters/Mel/Spells/MelQAbility/MelQ.mSpellCalculations.TotalDamageTT (16.23.8418428+branch.releases-16-23.content.release)",
               "damage_type_source": "spell_melq_tooltip <magicDamage>"
             }
           ]
@@ -330,7 +330,7 @@
                 ]
               },
               "label": "Derivado",
-              "source": "Characters/Mel/Spells/MelWAbility/MelW.mSpellCalculations.InitialDamage (16.23.8406595+branch.releases-16-23.content.release)",
+              "source": "Characters/Mel/Spells/MelWAbility/MelW.mSpellCalculations.InitialDamage (16.23.8418428+branch.releases-16-23.content.release)",
               "damage_type_source": "spell_melw_tooltip <magicDamage>"
             }
           ]
@@ -371,7 +371,7 @@
                 ]
               },
               "label": "Derivado",
-              "source": "Characters/Mel/Spells/MelWAbility/MelW.mSpellCalculations.SubsequentDamage (16.23.8406595+branch.releases-16-23.content.release)",
+              "source": "Characters/Mel/Spells/MelWAbility/MelW.mSpellCalculations.SubsequentDamage (16.23.8418428+branch.releases-16-23.content.release)",
               "damage_type_source": "spell_melw_tooltip <magicDamage>"
             }
           ]
@@ -380,6 +380,79 @@
       "passive_stats": [],
       "not_modelled": [
         "Escudo (TotalShield), velocidad de movimiento (TotalMS) y reflejo de proyectiles enemigos"
+      ],
+      "active_effects": [
+        {
+          "id": "w_totalshield",
+          "name": "W (escudo)",
+          "kind": "shield",
+          "formula": {
+            "op": "add",
+            "operands": [
+              {
+                "op": "by_rank",
+                "values": [
+                  50,
+                  90,
+                  130,
+                  170,
+                  210
+                ]
+              },
+              {
+                "op": "mul",
+                "operands": [
+                  {
+                    "op": "constant",
+                    "value": 0.5
+                  },
+                  {
+                    "op": "stat",
+                    "stat": "ability_power",
+                    "scope": "total"
+                  }
+                ]
+              }
+            ]
+          },
+          "label": "Derivado",
+          "source": "Characters/Mel/Spells/MelWAbility/MelW.mSpellCalculations.TotalShield (16.23.8418428+branch.releases-16-23.content.release)",
+          "duration_seconds": 0.75
+        },
+        {
+          "id": "w_totalms",
+          "name": "W (VM)",
+          "kind": "stat_bonus",
+          "formula": {
+            "op": "add",
+            "operands": [
+              {
+                "op": "linear_by_level",
+                "min": 0.1,
+                "max": 0.3
+              },
+              {
+                "op": "mul",
+                "operands": [
+                  {
+                    "op": "constant",
+                    "value": 0.0004
+                  },
+                  {
+                    "op": "stat",
+                    "stat": "ability_power",
+                    "scope": "total"
+                  }
+                ]
+              }
+            ]
+          },
+          "label": "Derivado",
+          "source": "Characters/Mel/Spells/MelWAbility/MelW.mSpellCalculations.TotalMS (16.23.8418428+branch.releases-16-23.content.release)",
+          "stat": "move_speed",
+          "mode": "percent_ms",
+          "duration_seconds": 2
+        }
       ]
     },
     "E": {
@@ -422,7 +495,7 @@
                 ]
               },
               "label": "Derivado",
-              "source": "Characters/Mel/Spells/MelEAbility/MelE.mSpellCalculations.Damage (16.23.8406595+branch.releases-16-23.content.release)",
+              "source": "Characters/Mel/Spells/MelEAbility/MelE.mSpellCalculations.Damage (16.23.8418428+branch.releases-16-23.content.release)",
               "damage_type_source": "spell_mele_tooltip <magicDamage>"
             }
           ]
@@ -463,7 +536,7 @@
                 ]
               },
               "label": "Derivado",
-              "source": "Characters/Mel/Spells/MelEAbility/MelE.mSpellCalculations.AreaDamagePerSecond (16.23.8406595+branch.releases-16-23.content.release)",
+              "source": "Characters/Mel/Spells/MelEAbility/MelE.mSpellCalculations.AreaDamagePerSecond (16.23.8418428+branch.releases-16-23.content.release)",
               "damage_type_source": "spell_mele_tooltip <magicDamage>"
             }
           ]
@@ -512,7 +585,7 @@
                 ]
               },
               "label": "Derivado",
-              "source": "Characters/Mel/Spells/MelRAbility/MelR.mSpellCalculations.UltFlatDamage (16.23.8406595+branch.releases-16-23.content.release)",
+              "source": "Characters/Mel/Spells/MelRAbility/MelR.mSpellCalculations.UltFlatDamage (16.23.8418428+branch.releases-16-23.content.release)",
               "damage_type_source": "spell_melr_tooltip <magicDamage>"
             }
           ]
@@ -551,7 +624,7 @@
                 ]
               },
               "label": "Derivado",
-              "source": "Characters/Mel/Spells/MelRAbility/MelR.mSpellCalculations.UltStackDamage (16.23.8406595+branch.releases-16-23.content.release)",
+              "source": "Characters/Mel/Spells/MelRAbility/MelR.mSpellCalculations.UltStackDamage (16.23.8418428+branch.releases-16-23.content.release)",
               "damage_type_source": "spell_melr_tooltip <magicDamage>"
             }
           ]
@@ -590,7 +663,7 @@
                 ]
               },
               "label": "Derivado",
-              "source": "Characters/Mel/Spells/MelRAbility/MelR.mSpellCalculations.PassiveFlatDamage (16.23.8406595+branch.releases-16-23.content.release)",
+              "source": "Characters/Mel/Spells/MelRAbility/MelR.mSpellCalculations.PassiveFlatDamage (16.23.8418428+branch.releases-16-23.content.release)",
               "damage_type_source": "spell_melr_tooltip <magicDamage>"
             }
           ]
@@ -629,7 +702,7 @@
                 ]
               },
               "label": "Derivado",
-              "source": "Characters/Mel/Spells/MelRAbility/MelR.mSpellCalculations.PassiveStackDamage (16.23.8406595+branch.releases-16-23.content.release)",
+              "source": "Characters/Mel/Spells/MelRAbility/MelR.mSpellCalculations.PassiveStackDamage (16.23.8418428+branch.releases-16-23.content.release)",
               "damage_type_source": "spell_melr_tooltip <magicDamage>"
             }
           ]

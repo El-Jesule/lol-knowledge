@@ -3,7 +3,7 @@
   "champion": "Twitch",
   "label": "Derivado",
   "game_version": "16.23",
-  "content_version": "16.23.8406595+branch.releases-16-23.content.release",
+  "content_version": "16.23.8418428+branch.releases-16-23.content.release",
   "verified_against": {
     "content_version": "16.23.8406595+branch.releases-16-23.content.release",
     "bin_sha256": "d89344e639b19fd1a9beeb444ba4706f609889d608a076d03f74155cee66ad85",
@@ -65,7 +65,7 @@
                 ]
               },
               "label": "Derivado",
-              "source": "Characters/Twitch/Spells/TwitchDeadlyVenomMarkerAbility/TwitchDeadlyVenomMarker.mSpellCalculations.DamagePerSecond (16.23.8406595+branch.releases-16-23.content.release)",
+              "source": "Characters/Twitch/Spells/TwitchDeadlyVenomMarkerAbility/TwitchDeadlyVenomMarker.mSpellCalculations.DamagePerSecond (16.23.8418428+branch.releases-16-23.content.release)",
               "damage_type_source": "spell_twitchdeadlyvenommarker_tooltip <trueDamage>"
             }
           ]
@@ -132,7 +132,7 @@
             ]
           },
           "label": "Derivado",
-          "source": "Characters/Twitch/Spells/TwitchDeadlyVenomMarkerAbility/TwitchDeadlyVenomMarker.mSpellCalculations.DamagePerSecond (16.23.8406595+branch.releases-16-23.content.release)",
+          "source": "Characters/Twitch/Spells/TwitchDeadlyVenomMarkerAbility/TwitchDeadlyVenomMarker.mSpellCalculations.DamagePerSecond (16.23.8418428+branch.releases-16-23.content.release)",
           "trigger": "on_hit",
           "damage_type": "true"
         }
@@ -145,6 +145,51 @@
       "passive_stats": [],
       "not_modelled": [
         "Camuflaje, velocidad de movimiento, velocidad de ataque al salir y reinicio por bajas"
+      ],
+      "active_effects": [
+        {
+          "id": "ambush_as",
+          "name": "Emboscada (VA al salir de camuflaje)",
+          "kind": "stat_bonus",
+          "formula": {
+            "op": "by_rank",
+            "values": [
+              40,
+              45,
+              50,
+              55,
+              60
+            ]
+          },
+          "label": "Derivado",
+          "source": "Characters/Twitch/Spells/TwitchHideInShadowsAbility/TwitchHideInShadows.DataValues.AttackSpeedMod (16.23.8418428+branch.releases-16-23.content.release)",
+          "stat": "attack_speed_bonus",
+          "mode": "flat",
+          "duration_seconds": 6
+        },
+        {
+          "id": "ambush_ms",
+          "name": "Emboscada (VM %)",
+          "kind": "stat_bonus",
+          "formula": {
+            "op": "constant",
+            "value": 0.1
+          },
+          "label": "Derivado",
+          "source": "Characters/Twitch/Spells/TwitchHideInShadowsAbility/TwitchHideInShadows.DataValues.MoveSpeedMod (16.23.8418428+branch.releases-16-23.content.release)",
+          "stat": "move_speed",
+          "mode": "percent_ms",
+          "duration_formula": {
+            "op": "by_rank",
+            "values": [
+              10,
+              11,
+              12,
+              13,
+              14
+            ]
+          }
+        }
       ]
     },
     "W": {
@@ -177,7 +222,7 @@
                 ]
               },
               "label": "Derivado",
-              "source": "Characters/Twitch/Spells/TwitchExpungeAbility/TwitchExpunge · DataValues.BaseDamage (16.23.8406595+branch.releases-16-23.content.release)",
+              "source": "Characters/Twitch/Spells/TwitchExpungeAbility/TwitchExpunge · DataValues.BaseDamage (16.23.8418428+branch.releases-16-23.content.release)",
               "damage_type_source": "spell_twitchexpunge_tooltip <physicalDamage>"
             }
           ]
@@ -218,7 +263,7 @@
                 ]
               },
               "label": "Derivado",
-              "source": "Characters/Twitch/Spells/TwitchExpungeAbility/TwitchExpunge.mSpellCalculations.PhysicalDamagePerStack (16.23.8406595+branch.releases-16-23.content.release)",
+              "source": "Characters/Twitch/Spells/TwitchExpungeAbility/TwitchExpunge.mSpellCalculations.PhysicalDamagePerStack (16.23.8418428+branch.releases-16-23.content.release)",
               "damage_type_source": "spell_twitchexpunge_tooltip <physicalDamage>"
             },
             {
@@ -238,7 +283,7 @@
                 ]
               },
               "label": "Derivado",
-              "source": "Characters/Twitch/Spells/TwitchExpungeAbility/TwitchExpunge.mSpellCalculations.MagicDamagePerStack (16.23.8406595+branch.releases-16-23.content.release)",
+              "source": "Characters/Twitch/Spells/TwitchExpungeAbility/TwitchExpunge.mSpellCalculations.MagicDamagePerStack (16.23.8418428+branch.releases-16-23.content.release)",
               "damage_type_source": "spell_twitchexpunge_tooltip <magicDamage>"
             }
           ]
@@ -307,7 +352,7 @@
                 ]
               },
               "label": "Derivado",
-              "source": "Characters/Twitch/Spells/TwitchExpungeAbility/TwitchExpunge.mSpellCalculations.MaxPhysicalDamage (16.23.8406595+branch.releases-16-23.content.release)",
+              "source": "Characters/Twitch/Spells/TwitchExpungeAbility/TwitchExpunge.mSpellCalculations.MaxPhysicalDamage (16.23.8418428+branch.releases-16-23.content.release)",
               "damage_type_source": "spell_twitchexpunge_tooltip <physicalDamage>"
             },
             {
@@ -336,7 +381,7 @@
                 ]
               },
               "label": "Derivado",
-              "source": "Characters/Twitch/Spells/TwitchExpungeAbility/TwitchExpunge.mSpellCalculations.MaxMagicDamage (16.23.8406595+branch.releases-16-23.content.release)",
+              "source": "Characters/Twitch/Spells/TwitchExpungeAbility/TwitchExpunge.mSpellCalculations.MaxMagicDamage (16.23.8418428+branch.releases-16-23.content.release)",
               "damage_type_source": "spell_twitchexpunge_tooltip <magicDamage>"
             }
           ]
@@ -352,6 +397,26 @@
       "passive_stats": [],
       "not_modelled": [
         "Alcance adicional (+300), DA adicional temporal y flechas perforantes con caída de daño"
+      ],
+      "active_effects": [
+        {
+          "id": "spray_and_pray_ad",
+          "name": "Lluvia de proyectiles (AD)",
+          "kind": "stat_bonus",
+          "formula": {
+            "op": "by_rank",
+            "values": [
+              30,
+              45,
+              60
+            ]
+          },
+          "label": "Derivado",
+          "source": "Characters/Twitch/Spells/TwitchFullAutomaticAbility/TwitchFullAutomatic.DataValues.BonusAD (16.23.8418428+branch.releases-16-23.content.release)",
+          "stat": "attack_damage",
+          "mode": "flat",
+          "duration_seconds": 6
+        }
       ]
     }
   }

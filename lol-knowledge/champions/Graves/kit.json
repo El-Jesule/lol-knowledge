@@ -3,7 +3,7 @@
   "champion": "Graves",
   "label": "Derivado",
   "game_version": "16.23",
-  "content_version": "16.23.8406595+branch.releases-16-23.content.release",
+  "content_version": "16.23.8418428+branch.releases-16-23.content.release",
   "verified_against": {
     "content_version": "16.23.8406595+branch.releases-16-23.content.release",
     "bin_sha256": "91d98b836e0fe117a1511153b7edab244fae68803928630c984f11ac6fa62a9e",
@@ -56,7 +56,7 @@
                 ]
               },
               "label": "Derivado",
-              "source": "Characters/Graves/Spells/GravesPassiveAbility/GravesPassive.mSpellCalculations.SingleBulletDamage (16.23.8406595+branch.releases-16-23.content.release)",
+              "source": "Characters/Graves/Spells/GravesPassiveAbility/GravesPassive.mSpellCalculations.SingleBulletDamage (16.23.8418428+branch.releases-16-23.content.release)",
               "damage_type_source": "spell_gravespassive_tooltip <physicalDamage>"
             }
           ]
@@ -157,7 +157,7 @@
                 ]
               },
               "label": "Derivado",
-              "source": "Characters/Graves/Spells/GravesPassiveAbility/GravesPassive · mSpellCalculations.SingleBulletDamage + 3 × mSpellCalculations.MultiBulletDamage (16.23.8406595+branch.releases-16-23.content.release)",
+              "source": "Characters/Graves/Spells/GravesPassiveAbility/GravesPassive · mSpellCalculations.SingleBulletDamage + 3 × mSpellCalculations.MultiBulletDamage (16.23.8418428+branch.releases-16-23.content.release)",
               "damage_type_source": "spell_gravespassive_tooltip <physicalDamage>"
             }
           ]
@@ -313,7 +313,7 @@
                 ]
               },
               "label": "Derivado",
-              "source": "Characters/Graves/Spells/GravesPassiveAbility/GravesPassive · (SingleBulletDamage + 5 × MultiBulletDamage) × (1 + CritDamageMult) (16.23.8406595+branch.releases-16-23.content.release)",
+              "source": "Characters/Graves/Spells/GravesPassiveAbility/GravesPassive · (SingleBulletDamage + 5 × MultiBulletDamage) × (1 + CritDamageMult) (16.23.8418428+branch.releases-16-23.content.release)",
               "damage_type_source": "spell_gravespassive_tooltip <physicalDamage>"
             }
           ]
@@ -364,7 +364,7 @@
                 ]
               },
               "label": "Derivado",
-              "source": "Characters/Graves/Spells/GravesQLineSpellAbility/GravesQLineSpell.mSpellCalculations.TotalDamage (16.23.8406595+branch.releases-16-23.content.release)",
+              "source": "Characters/Graves/Spells/GravesQLineSpellAbility/GravesQLineSpell.mSpellCalculations.TotalDamage (16.23.8418428+branch.releases-16-23.content.release)",
               "damage_type_source": "spell_gravesqlinespell_tooltip <physicalDamage>"
             }
           ]
@@ -411,7 +411,7 @@
                 ]
               },
               "label": "Derivado",
-              "source": "Characters/Graves/Spells/GravesQLineSpellAbility/GravesQLineSpell.mSpellCalculations.TotalDetonationDamage (16.23.8406595+branch.releases-16-23.content.release)",
+              "source": "Characters/Graves/Spells/GravesQLineSpellAbility/GravesQLineSpell.mSpellCalculations.TotalDetonationDamage (16.23.8418428+branch.releases-16-23.content.release)",
               "damage_type_source": "spell_gravesqlinespell_tooltip <physicalDamage>"
             }
           ]
@@ -462,7 +462,7 @@
                 ]
               },
               "label": "Derivado",
-              "source": "Characters/Graves/Spells/GravesSmokeGrenadeAbility/GravesSmokeGrenade.mSpellCalculations.ImpactDamage (16.23.8406595+branch.releases-16-23.content.release)",
+              "source": "Characters/Graves/Spells/GravesSmokeGrenadeAbility/GravesSmokeGrenade.mSpellCalculations.ImpactDamage (16.23.8418428+branch.releases-16-23.content.release)",
               "damage_type_source": "spell_gravessmokegrenade_tooltip <magicDamage>"
             }
           ]
@@ -480,6 +480,48 @@
       "passive_stats": [],
       "not_modelled": [
         "Recarga de 1 cartucho y cargas acumulables de Valor (armadura y RM: MRGrant)"
+      ],
+      "active_effects": [
+        {
+          "id": "e_armorperstack",
+          "name": "E (armadura)",
+          "kind": "stat_bonus",
+          "formula": {
+            "op": "by_rank",
+            "values": [
+              7,
+              10,
+              13,
+              16,
+              19
+            ]
+          },
+          "label": "Derivado",
+          "source": "Characters/Graves/Spells/GravesMoveAbility/GravesMove.DataValues.ArmorPerStack (16.23.8418428+branch.releases-16-23.content.release)",
+          "stat": "armor",
+          "mode": "flat",
+          "duration_seconds": 4
+        },
+        {
+          "id": "e_mrgrant",
+          "name": "E (RM)",
+          "kind": "stat_bonus",
+          "formula": {
+            "op": "by_rank",
+            "values": [
+              7,
+              10,
+              13,
+              16,
+              19
+            ]
+          },
+          "label": "Derivado",
+          "source": "Characters/Graves/Spells/GravesMoveAbility/GravesMove.mSpellCalculations.MRGrant (16.23.8418428+branch.releases-16-23.content.release)",
+          "stat": "magic_resist",
+          "mode": "flat",
+          "duration_seconds": 4
+        }
       ]
     },
     "R": {
@@ -520,7 +562,7 @@
                 ]
               },
               "label": "Derivado",
-              "source": "Characters/Graves/Spells/GravesChargeShotAbility/GravesChargeShot.mSpellCalculations.Damage (16.23.8406595+branch.releases-16-23.content.release)",
+              "source": "Characters/Graves/Spells/GravesChargeShotAbility/GravesChargeShot.mSpellCalculations.Damage (16.23.8418428+branch.releases-16-23.content.release)",
               "damage_type_source": "spell_graveschargeshot_tooltip <physicalDamage>"
             }
           ]
@@ -559,7 +601,7 @@
                 ]
               },
               "label": "Derivado",
-              "source": "Characters/Graves/Spells/GravesChargeShotAbility/GravesChargeShot.mSpellCalculations.FalloffDamage (16.23.8406595+branch.releases-16-23.content.release)",
+              "source": "Characters/Graves/Spells/GravesChargeShotAbility/GravesChargeShot.mSpellCalculations.FalloffDamage (16.23.8418428+branch.releases-16-23.content.release)",
               "damage_type_source": "spell_graveschargeshot_tooltip <physicalDamage>"
             }
           ]

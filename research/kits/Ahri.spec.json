@@ -26,7 +26,9 @@
           "kind": "heal",
           "trigger": "on_minion_monster_kill",
           "calculation": "MinionHeal",
-          "stacks_required": {"data_value": "MaxStacks"},
+          "stacks_required": {
+            "data_value": "MaxStacks"
+          },
           "input_name": "essence_fragments",
           "source_note": "wiki Template:Data_Ahri/Essence_Theft rev 4038191"
         }
@@ -40,9 +42,40 @@
       "tooltip": "spell_ahriorbofdeception_tooltip",
       "aoe": true,
       "cases": [
-        {"id": "out", "name": "Ida: daño mágico", "parts": [{"calculation": "TotalDamage", "damage_type": "magic"}]},
-        {"id": "back", "name": "Vuelta: daño verdadero", "parts": [{"calculation": "TotalDamage", "damage_type": "true"}]},
-        {"id": "both", "name": "Ida y vuelta sobre el mismo objetivo", "parts": [{"calculation": "TotalDamage", "damage_type": "magic"}, {"calculation": "TotalDamage", "damage_type": "true"}]}
+        {
+          "id": "out",
+          "name": "Ida: daño mágico",
+          "parts": [
+            {
+              "calculation": "TotalDamage",
+              "damage_type": "magic"
+            }
+          ]
+        },
+        {
+          "id": "back",
+          "name": "Vuelta: daño verdadero",
+          "parts": [
+            {
+              "calculation": "TotalDamage",
+              "damage_type": "true"
+            }
+          ]
+        },
+        {
+          "id": "both",
+          "name": "Ida y vuelta sobre el mismo objetivo",
+          "parts": [
+            {
+              "calculation": "TotalDamage",
+              "damage_type": "magic"
+            },
+            {
+              "calculation": "TotalDamage",
+              "damage_type": "true"
+            }
+          ]
+        }
       ],
       "not_modelled": [
         "Que el objetivo reciba la ida y la vuelta depende de la posición: el caso «both» lo supone"
@@ -53,12 +86,49 @@
       "tooltip": "spell_ahrifoxfire_tooltip",
       "aoe": false,
       "cases": [
-        {"id": "one", "name": "Un fuego", "max_targets": 3, "parts": [{"calculation": "SingleFireDamage"}]},
-        {"id": "all", "name": "Los tres fuegos en el mismo objetivo", "max_targets": 1, "parts": [{"calculation": "SingleFireDamage"}, {"calculation": "MultiFireDamage"}, {"calculation": "MultiFireDamage"}]}
+        {
+          "id": "one",
+          "name": "Un fuego",
+          "max_targets": 3,
+          "parts": [
+            {
+              "calculation": "SingleFireDamage"
+            }
+          ]
+        },
+        {
+          "id": "all",
+          "name": "Los tres fuegos en el mismo objetivo",
+          "max_targets": 1,
+          "parts": [
+            {
+              "calculation": "SingleFireDamage"
+            },
+            {
+              "calculation": "MultiFireDamage"
+            },
+            {
+              "calculation": "MultiFireDamage"
+            }
+          ]
+        }
       ],
       "not_modelled": [
         "Velocidad de movimiento (MovementSpeed, 40 % que decae en 2 s)",
         "Daño doble a súbditos por debajo del 20 % de vida (MinionBonusDamageMultiplier, MinionBonusDamageThreshold)"
+      ],
+      "active_effects": [
+        {
+          "id": "w_movementspeed",
+          "name": "W (VM)",
+          "kind": "stat_bonus",
+          "stat": "move_speed",
+          "mode": "percent_ms",
+          "data_value": "MovementSpeed",
+          "duration_seconds": {
+            "data_value": "MovementSpeedDuration"
+          }
+        }
       ]
     },
     "E": {
@@ -67,7 +137,15 @@
       "aoe": false,
       "max_targets": 1,
       "cases": [
-        {"id": "hit", "name": "Beso", "parts": [{"calculation": "TotalDamage"}]}
+        {
+          "id": "hit",
+          "name": "Beso",
+          "parts": [
+            {
+              "calculation": "TotalDamage"
+            }
+          ]
+        }
       ],
       "not_modelled": [
         "Hechizo (CharmDuration) y ralentización (SlowPercent)"
@@ -77,14 +155,37 @@
       "name": "Impulso espiritual",
       "tooltip": "spell_ahritumble_tooltip",
       "aoe": true,
-      "max_targets": {"data_value": "RMaxTargetsPerCast"},
+      "max_targets": {
+        "data_value": "RMaxTargetsPerCast"
+      },
       "cases": [
-        {"id": "dash", "name": "Impulso: un rayo al objetivo", "parts": [{"calculation": "RCalculatedDamage"}]},
-        {"id": "recast", "name": "Reactivación: un rayo al objetivo", "recast": true, "parts": [{"calculation": "RCalculatedDamage"}]}
+        {
+          "id": "dash",
+          "name": "Impulso: un rayo al objetivo",
+          "parts": [
+            {
+              "calculation": "RCalculatedDamage"
+            }
+          ]
+        },
+        {
+          "id": "recast",
+          "name": "Reactivación: un rayo al objetivo",
+          "recast": true,
+          "parts": [
+            {
+              "calculation": "RCalculatedDamage"
+            }
+          ]
+        }
       ],
-      "recast_window_seconds": {"data_value": "RRecastWindow"},
+      "recast_window_seconds": {
+        "data_value": "RRecastWindow"
+      },
       "max_recasts": 2,
-      "recast_interval_seconds": {"data_value": "RDashCooldown"},
+      "recast_interval_seconds": {
+        "data_value": "RDashCooldown"
+      },
       "not_modelled": [
         "Reactivaciones extra y ampliación de 10 s de la ventana al derribar campeones (Robo de esencias, RResetCasts, PDurationExtension)"
       ]

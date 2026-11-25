@@ -43,6 +43,32 @@
       "tooltip": "spell_twitchhideinshadows_tooltip",
       "not_modelled": [
         "Camuflaje, velocidad de movimiento, velocidad de ataque al salir y reinicio por bajas"
+      ],
+      "active_effects": [
+        {
+          "id": "ambush_as",
+          "name": "Emboscada (VA al salir de camuflaje)",
+          "kind": "stat_bonus",
+          "stat": "attack_speed_bonus",
+          "mode": "flat",
+          "data_value": "AttackSpeedMod",
+          "scale": 100,
+          "duration_seconds": {
+            "data_value": "AttackSpeedDuration"
+          }
+        },
+        {
+          "id": "ambush_ms",
+          "name": "Emboscada (VM %)",
+          "kind": "stat_bonus",
+          "stat": "move_speed",
+          "mode": "percent_ms",
+          "data_value": "MoveSpeedMod",
+          "scale": 0.01,
+          "duration_seconds": {
+            "data_value": "StealthDuration"
+          }
+        }
       ]
     },
     "W": {
@@ -103,6 +129,19 @@
       "tooltip": "spell_twitchfullautomatic_tooltip",
       "not_modelled": [
         "Alcance adicional (+300), DA adicional temporal y flechas perforantes con caída de daño"
+      ],
+      "active_effects": [
+        {
+          "id": "spray_and_pray_ad",
+          "name": "Lluvia de proyectiles (AD)",
+          "kind": "stat_bonus",
+          "stat": "attack_damage",
+          "mode": "flat",
+          "data_value": "BonusAD",
+          "duration_seconds": {
+            "data_value": "Duration"
+          }
+        }
       ]
     }
   }

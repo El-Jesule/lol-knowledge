@@ -68,6 +68,25 @@
       "tooltip": "spell_kaylew_tooltip",
       "not_modelled": [
         "Curación (TotalHeal) y velocidad de movimiento (TotalHaste)"
+      ],
+      "active_effects": [
+        {
+          "id": "w_totalheal",
+          "name": "W (curación)",
+          "kind": "heal",
+          "calculation": "TotalHeal"
+        },
+        {
+          "id": "w_totalhaste",
+          "name": "W (VM)",
+          "kind": "stat_bonus",
+          "stat": "move_speed",
+          "mode": "percent_ms",
+          "calculation": "TotalHaste",
+          "duration_seconds": {
+            "data_value": "HasteDuration"
+          }
+        }
       ]
     },
     "E": {

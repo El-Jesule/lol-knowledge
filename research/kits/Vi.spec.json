@@ -92,6 +92,19 @@
       ],
       "not_modelled": [
         "Reducción del 20 % de armadura, velocidad de ataque (AttackSpeed) y tope de 300 a monstruos"
+      ],
+      "active_effects": [
+        {
+          "id": "w_attackspeed",
+          "name": "W (VA)",
+          "kind": "stat_bonus",
+          "stat": "attack_speed_bonus",
+          "mode": "flat",
+          "data_value": "AttackSpeed",
+          "duration_seconds": {
+            "data_value": "MarkerBuffDuration"
+          }
+        }
       ]
     },
     "E": {

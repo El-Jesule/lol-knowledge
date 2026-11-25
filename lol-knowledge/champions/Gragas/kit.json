@@ -3,7 +3,7 @@
   "champion": "Gragas",
   "label": "Derivado",
   "game_version": "16.23",
-  "content_version": "16.23.8406595+branch.releases-16-23.content.release",
+  "content_version": "16.23.8418428+branch.releases-16-23.content.release",
   "verified_against": {
     "content_version": "16.23.8406595+branch.releases-16-23.content.release",
     "bin_sha256": "041a82e18e3f15f4e812886c44ffc032931855022193034d830b973c84a97252",
@@ -40,7 +40,7 @@
             ]
           },
           "label": "Derivado",
-          "source": "Characters/Gragas/Spells/GragasPassiveAbility/GragasPassive.mSpellCalculations.HealAmount (16.23.8406595+branch.releases-16-23.content.release)",
+          "source": "Characters/Gragas/Spells/GragasPassiveAbility/GragasPassive.mSpellCalculations.HealAmount (16.23.8418428+branch.releases-16-23.content.release)",
           "trigger": "on_ability_cast",
           "cooldown_formula": {
             "op": "by_level",
@@ -108,7 +108,7 @@
                 ]
               },
               "label": "Derivado",
-              "source": "Characters/Gragas/Spells/GragasQAbility/GragasQ.mSpellCalculations.MinDamage (16.23.8406595+branch.releases-16-23.content.release)",
+              "source": "Characters/Gragas/Spells/GragasQAbility/GragasQ.mSpellCalculations.MinDamage (16.23.8418428+branch.releases-16-23.content.release)",
               "damage_type_source": "spell_gragasq_tooltip <magicDamage>"
             }
           ]
@@ -158,7 +158,7 @@
                 ]
               },
               "label": "Derivado",
-              "source": "Characters/Gragas/Spells/GragasQAbility/GragasQ.mSpellCalculations.MaxDamage (16.23.8406595+branch.releases-16-23.content.release)",
+              "source": "Characters/Gragas/Spells/GragasQAbility/GragasQ.mSpellCalculations.MaxDamage (16.23.8418428+branch.releases-16-23.content.release)",
               "damage_type_source": "spell_gragasq_tooltip <magicDamage>"
             }
           ]
@@ -209,7 +209,7 @@
                 ]
               },
               "label": "Derivado",
-              "source": "Characters/Gragas/Spells/GragasWAbility/GragasW.mSpellCalculations.TotalDamage (16.23.8406595+branch.releases-16-23.content.release)",
+              "source": "Characters/Gragas/Spells/GragasWAbility/GragasW.mSpellCalculations.TotalDamage (16.23.8418428+branch.releases-16-23.content.release)",
               "damage_type_source": "spell_gragasw_tooltip <magicDamage>"
             },
             {
@@ -234,7 +234,7 @@
                 ]
               },
               "label": "Derivado",
-              "source": "Characters/Gragas/Spells/GragasWAbility/GragasW · DataValues.MaxHPPercentDamage % × vida máxima del objetivo (16.23.8406595+branch.releases-16-23.content.release)",
+              "source": "Characters/Gragas/Spells/GragasWAbility/GragasW · DataValues.MaxHPPercentDamage % × vida máxima del objetivo (16.23.8418428+branch.releases-16-23.content.release)",
               "damage_type_source": "spell_gragasw_tooltip <magicDamage>"
             }
           ]
@@ -243,6 +243,46 @@
       "passive_stats": [],
       "not_modelled": [
         "Reducción de daño recibido (DamageReduction) y ataque básico aparte"
+      ],
+      "active_effects": [
+        {
+          "id": "drunken_rage_dr",
+          "name": "Furia ebria (DR)",
+          "kind": "damage_taken_modifier",
+          "formula": {
+            "op": "add",
+            "operands": [
+              {
+                "op": "by_rank",
+                "values": [
+                  10,
+                  14,
+                  18,
+                  22,
+                  26
+                ]
+              },
+              {
+                "op": "mul",
+                "operands": [
+                  {
+                    "op": "constant",
+                    "value": 0.04
+                  },
+                  {
+                    "op": "stat",
+                    "stat": "ability_power",
+                    "scope": "total"
+                  }
+                ]
+              }
+            ]
+          },
+          "label": "Derivado",
+          "source": "Characters/Gragas/Spells/GragasWAbility/GragasW.mSpellCalculations.DamageReduction (16.23.8418428+branch.releases-16-23.content.release)",
+          "mode": "percent",
+          "duration_seconds": 2.5
+        }
       ]
     },
     "E": {
@@ -285,7 +325,7 @@
                 ]
               },
               "label": "Derivado",
-              "source": "Characters/Gragas/Spells/GragasEAbility/GragasE.mSpellCalculations.TotalDamage (16.23.8406595+branch.releases-16-23.content.release)",
+              "source": "Characters/Gragas/Spells/GragasEAbility/GragasE.mSpellCalculations.TotalDamage (16.23.8418428+branch.releases-16-23.content.release)",
               "damage_type_source": "spell_gragase_tooltip <magicDamage>"
             }
           ]
@@ -334,7 +374,7 @@
                 ]
               },
               "label": "Derivado",
-              "source": "Characters/Gragas/Spells/GragasRAbility/GragasR.mSpellCalculations.DamageDone (16.23.8406595+branch.releases-16-23.content.release)",
+              "source": "Characters/Gragas/Spells/GragasRAbility/GragasR.mSpellCalculations.DamageDone (16.23.8418428+branch.releases-16-23.content.release)",
               "damage_type_source": "spell_gragasr_tooltip <magicDamage>"
             }
           ]

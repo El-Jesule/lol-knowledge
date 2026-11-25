@@ -3,7 +3,7 @@
   "champion": "Sion",
   "label": "Derivado",
   "game_version": "16.23",
-  "content_version": "16.23.8406595+branch.releases-16-23.content.release",
+  "content_version": "16.23.8418428+branch.releases-16-23.content.release",
   "verified_against": {
     "content_version": "16.23.8406595+branch.releases-16-23.content.release",
     "bin_sha256": "3919d03ca2fc621db1bcfecdc8878ad0cac61091a3324885099ff2184a87ffd9",
@@ -38,7 +38,7 @@
                 ]
               },
               "label": "Derivado",
-              "source": "Characters/Sion/Spells/SionPassiveAbility/SionPassive · DataValues.PercentMaxHP × vida máxima del objetivo (16.23.8406595+branch.releases-16-23.content.release)",
+              "source": "Characters/Sion/Spells/SionPassiveAbility/SionPassive · DataValues.PercentMaxHP × vida máxima del objetivo (16.23.8418428+branch.releases-16-23.content.release)",
               "damage_type_source": "spell_sionpassive_tooltip <physicalDamage>"
             }
           ]
@@ -58,7 +58,7 @@
             "value": 4
           },
           "label": "Derivado",
-          "source": "Characters/Sion/Spells/SionWAbility/SionW.DataValues.HPPerKill (16.23.8406595+branch.releases-16-23.content.release)",
+          "source": "Characters/Sion/Spells/SionWAbility/SionW.DataValues.HPPerKill (16.23.8418428+branch.releases-16-23.content.release)",
           "stat": "health",
           "mode": "flat",
           "input_name": "soul_furnace_small_kills",
@@ -73,7 +73,7 @@
             "value": 15
           },
           "label": "Derivado",
-          "source": "Characters/Sion/Spells/SionWAbility/SionW.DataValues.HPPerChampKill (16.23.8406595+branch.releases-16-23.content.release)",
+          "source": "Characters/Sion/Spells/SionWAbility/SionW.DataValues.HPPerChampKill (16.23.8418428+branch.releases-16-23.content.release)",
           "stat": "health",
           "mode": "flat",
           "input_name": "soul_furnace_large_kills",
@@ -127,7 +127,7 @@
                 ]
               },
               "label": "Derivado",
-              "source": "Characters/Sion/Spells/SionQAbility/SionQ.mSpellCalculations.MinDamageTotal (16.23.8406595+branch.releases-16-23.content.release)",
+              "source": "Characters/Sion/Spells/SionQAbility/SionQ.mSpellCalculations.MinDamageTotal (16.23.8418428+branch.releases-16-23.content.release)",
               "damage_type_source": "spell_sionq_tooltip <physicalDamage>"
             }
           ]
@@ -174,7 +174,7 @@
                 ]
               },
               "label": "Derivado",
-              "source": "Characters/Sion/Spells/SionQAbility/SionQ.mSpellCalculations.MaxDamageTotal (16.23.8406595+branch.releases-16-23.content.release)",
+              "source": "Characters/Sion/Spells/SionQAbility/SionQ.mSpellCalculations.MaxDamageTotal (16.23.8418428+branch.releases-16-23.content.release)",
               "damage_type_source": "spell_sionq_tooltip <physicalDamage>"
             }
           ]
@@ -225,7 +225,7 @@
                 ]
               },
               "label": "Derivado",
-              "source": "Characters/Sion/Spells/SionWAbility/SionW.mSpellCalculations.TotalDamage (16.23.8406595+branch.releases-16-23.content.release)",
+              "source": "Characters/Sion/Spells/SionWAbility/SionW.mSpellCalculations.TotalDamage (16.23.8418428+branch.releases-16-23.content.release)",
               "damage_type_source": "spell_sionw_tooltip <magicDamage>"
             },
             {
@@ -250,7 +250,7 @@
                 ]
               },
               "label": "Derivado",
-              "source": "Characters/Sion/Spells/SionWAbility/SionW · DataValues.MaxHPDamageRatio % × vida máxima del objetivo (16.23.8406595+branch.releases-16-23.content.release)",
+              "source": "Characters/Sion/Spells/SionWAbility/SionW · DataValues.MaxHPDamageRatio % × vida máxima del objetivo (16.23.8418428+branch.releases-16-23.content.release)",
               "damage_type_source": "spell_sionw_tooltip <magicDamage>"
             }
           ]
@@ -259,6 +259,65 @@
       "passive_stats": [],
       "not_modelled": [
         "Escudo activo (TotalShield); la vida máxima permanente por asesinatos se modela con --input soul_furnace_small_kills y --input soul_furnace_large_kills"
+      ],
+      "active_effects": [
+        {
+          "id": "w_totalshield",
+          "name": "W (escudo)",
+          "kind": "shield",
+          "formula": {
+            "op": "add",
+            "operands": [
+              {
+                "op": "by_rank",
+                "values": [
+                  60,
+                  75,
+                  90,
+                  105,
+                  120
+                ]
+              },
+              {
+                "op": "mul",
+                "operands": [
+                  {
+                    "op": "constant",
+                    "value": 0.4
+                  },
+                  {
+                    "op": "stat",
+                    "stat": "ability_power",
+                    "scope": "total"
+                  }
+                ]
+              },
+              {
+                "op": "mul",
+                "operands": [
+                  {
+                    "op": "by_rank",
+                    "values": [
+                      0.08,
+                      0.1,
+                      0.12,
+                      0.14,
+                      0.16
+                    ]
+                  },
+                  {
+                    "op": "stat",
+                    "stat": "health",
+                    "scope": "total"
+                  }
+                ]
+              }
+            ]
+          },
+          "label": "Derivado",
+          "source": "Characters/Sion/Spells/SionWAbility/SionW.mSpellCalculations.TotalShield (16.23.8418428+branch.releases-16-23.content.release)",
+          "duration_seconds": 6
+        }
       ]
     },
     "E": {
@@ -301,7 +360,7 @@
                 ]
               },
               "label": "Derivado",
-              "source": "Characters/Sion/Spells/SionEAbility/SionE.mSpellCalculations.TotalDamage (16.23.8406595+branch.releases-16-23.content.release)",
+              "source": "Characters/Sion/Spells/SionEAbility/SionE.mSpellCalculations.TotalDamage (16.23.8418428+branch.releases-16-23.content.release)",
               "damage_type_source": "spell_sione_tooltip <magicDamage>"
             }
           ]
@@ -350,7 +409,7 @@
                 ]
               },
               "label": "Derivado",
-              "source": "Characters/Sion/Spells/SionRAbility/SionR.mSpellCalculations.MinDamageTotal (16.23.8406595+branch.releases-16-23.content.release)",
+              "source": "Characters/Sion/Spells/SionRAbility/SionR.mSpellCalculations.MinDamageTotal (16.23.8418428+branch.releases-16-23.content.release)",
               "damage_type_source": "spell_sionr_tooltip <physicalDamage>"
             }
           ]
@@ -389,7 +448,7 @@
                 ]
               },
               "label": "Derivado",
-              "source": "Characters/Sion/Spells/SionRAbility/SionR.mSpellCalculations.MaxDamageTotal (16.23.8406595+branch.releases-16-23.content.release)",
+              "source": "Characters/Sion/Spells/SionRAbility/SionR.mSpellCalculations.MaxDamageTotal (16.23.8418428+branch.releases-16-23.content.release)",
               "damage_type_source": "spell_sionr_tooltip <physicalDamage>"
             }
           ]

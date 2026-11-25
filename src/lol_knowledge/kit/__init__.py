@@ -2,10 +2,12 @@
 
 from .evaluate import DamagePart, ability_damage, passive_contributions, sheet_stats
 from .model import (
+    ACTIVE_EFFECT_KINDS,
     COST_RESOURCES,
     PASSIVE_EFFECT_KINDS,
     SCHEMA,
     AbilitySpec,
+    ActiveEffectSpec,
     CaseSpec,
     CostSpec,
     DamagePartSpec,
@@ -18,10 +20,12 @@ from .model import (
 )
 
 __all__ = [
+    "ACTIVE_EFFECT_KINDS",
     "COST_RESOURCES",
     "PASSIVE_EFFECT_KINDS",
     "SCHEMA",
     "AbilitySpec",
+    "ActiveEffectSpec",
     "CaseSpec",
     "CostSpec",
     "DamagePart",

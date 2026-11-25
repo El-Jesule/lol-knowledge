@@ -122,6 +122,20 @@
       ],
       "not_modelled": [
         "Velocidad de ataque temporal y reinicio de enfriamiento por derribo"
+      ],
+      "active_effects": [
+        {
+          "id": "e_bonusattackspeed",
+          "name": "E (VA)",
+          "kind": "stat_bonus",
+          "stat": "attack_speed_bonus",
+          "mode": "flat",
+          "scale": 100,
+          "data_value": "BonusAttackSpeed",
+          "duration_seconds": {
+            "data_value": "AttackSpeedDuration"
+          }
+        }
       ]
     },
     "R": {

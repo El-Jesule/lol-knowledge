@@ -3,7 +3,7 @@
   "champion": "Maokai",
   "label": "Derivado",
   "game_version": "16.23",
-  "content_version": "16.23.8406595+branch.releases-16-23.content.release",
+  "content_version": "16.23.8418428+branch.releases-16-23.content.release",
   "verified_against": {
     "content_version": "16.23.8406595+branch.releases-16-23.content.release",
     "bin_sha256": "b6d9a1f03f96018c40a3f3d4da2345983ebbe3e15c1c0d934a1bc4dd62e46b8d",
@@ -59,7 +59,7 @@
             ]
           },
           "label": "Derivado",
-          "source": "Characters/Maokai/Spells/MaokaiPassiveAbility/MaokaiPassive.mSpellCalculations.PassiveHealingTotal (16.23.8406595+branch.releases-16-23.content.release)",
+          "source": "Characters/Maokai/Spells/MaokaiPassiveAbility/MaokaiPassive.mSpellCalculations.PassiveHealingTotal (16.23.8418428+branch.releases-16-23.content.release)",
           "trigger": "on_hit",
           "cooldown_formula": {
             "op": "linear_by_level",
@@ -109,7 +109,7 @@
                 ]
               },
               "label": "Derivado",
-              "source": "Characters/Maokai/Spells/MaokaiQAbility/MaokaiQ.mSpellCalculations.TotalDamage (16.23.8406595+branch.releases-16-23.content.release)",
+              "source": "Characters/Maokai/Spells/MaokaiQAbility/MaokaiQ.mSpellCalculations.TotalDamage (16.23.8418428+branch.releases-16-23.content.release)",
               "damage_type_source": "spell_maokaiq_tooltip <magicDamage>"
             },
             {
@@ -136,7 +136,7 @@
                 ]
               },
               "label": "Derivado",
-              "source": "Characters/Maokai/Spells/MaokaiQAbility/MaokaiQ · DataValues.BasePercentHealth × vida máxima del objetivo (16.23.8406595+branch.releases-16-23.content.release)",
+              "source": "Characters/Maokai/Spells/MaokaiQAbility/MaokaiQ · DataValues.BasePercentHealth × vida máxima del objetivo (16.23.8418428+branch.releases-16-23.content.release)",
               "damage_type_source": "spell_maokaiq_tooltip <magicDamage>"
             }
           ]
@@ -187,7 +187,7 @@
                 ]
               },
               "label": "Derivado",
-              "source": "Characters/Maokai/Spells/MaokaiWAbility/MaokaiW.mSpellCalculations.TotalDamage (16.23.8406595+branch.releases-16-23.content.release)",
+              "source": "Characters/Maokai/Spells/MaokaiWAbility/MaokaiW.mSpellCalculations.TotalDamage (16.23.8418428+branch.releases-16-23.content.release)",
               "damage_type_source": "spell_maokaiw_tooltip <magicDamage>"
             }
           ]
@@ -252,7 +252,7 @@
                 ]
               },
               "label": "Derivado",
-              "source": "Characters/Maokai/Spells/MaokaiEAbility/MaokaiE.mSpellCalculations.TotalDamage (16.23.8406595+branch.releases-16-23.content.release)",
+              "source": "Characters/Maokai/Spells/MaokaiEAbility/MaokaiE.mSpellCalculations.TotalDamage (16.23.8418428+branch.releases-16-23.content.release)",
               "damage_type_source": "spell_maokaie_tooltip <magicDamage>"
             }
           ]
@@ -307,7 +307,7 @@
                 ]
               },
               "label": "Derivado",
-              "source": "Characters/Maokai/Spells/MaokaiEAbility/MaokaiE.mSpellCalculations.TotalEmpoweredDamage (16.23.8406595+branch.releases-16-23.content.release)",
+              "source": "Characters/Maokai/Spells/MaokaiEAbility/MaokaiE.mSpellCalculations.TotalEmpoweredDamage (16.23.8418428+branch.releases-16-23.content.release)",
               "damage_type_source": "spell_maokaie_tooltip <magicDamage>"
             }
           ]
@@ -356,7 +356,7 @@
                 ]
               },
               "label": "Derivado",
-              "source": "Characters/Maokai/Spells/MaokaiRAbility/MaokaiR.mSpellCalculations.TotalDamage (16.23.8406595+branch.releases-16-23.content.release)",
+              "source": "Characters/Maokai/Spells/MaokaiRAbility/MaokaiR.mSpellCalculations.TotalDamage (16.23.8418428+branch.releases-16-23.content.release)",
               "damage_type_source": "spell_maokair_tooltip <magicDamage>"
             }
           ]
@@ -365,6 +365,26 @@
       "passive_stats": [],
       "not_modelled": [
         "Inmovilización escalada por distancia y velocidad de movimiento al golpear campeones"
+      ],
+      "active_effects": [
+        {
+          "id": "r_movehaste",
+          "name": "R (VM)",
+          "kind": "stat_bonus",
+          "formula": {
+            "op": "by_rank",
+            "values": [
+              0.4,
+              0.5,
+              0.6
+            ]
+          },
+          "label": "Derivado",
+          "source": "Characters/Maokai/Spells/MaokaiRAbility/MaokaiR.DataValues.MoveHaste (16.23.8418428+branch.releases-16-23.content.release)",
+          "stat": "move_speed",
+          "mode": "percent_ms",
+          "duration_seconds": 0.75
+        }
       ]
     }
   }

@@ -125,6 +125,29 @@
       },
       "not_modelled": [
         "Curación por segundo (HealingCalc) y ralentización de Alma ígnea"
+      ],
+      "active_effects": [
+        {
+          "id": "demonic_ascension_hot",
+          "name": "Ascensión demoníaca (drenaje 5 s base)",
+          "kind": "heal",
+          "formula": {
+            "op": "mul",
+            "operands": [
+              {
+                "op": "calculation",
+                "name": "HealingCalc"
+              },
+              {
+                "op": "constant",
+                "value": 5
+              }
+            ]
+          },
+          "source_note": "mSpellCalculations.HealingCalc * 5 s base Demon Power duration (1 champion)",
+          "duration_seconds": 5.0,
+          "over_duration": true
+        }
       ]
     }
   }

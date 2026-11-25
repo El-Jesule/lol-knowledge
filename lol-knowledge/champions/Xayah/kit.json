@@ -3,7 +3,7 @@
   "champion": "Xayah",
   "label": "Derivado",
   "game_version": "16.23",
-  "content_version": "16.23.8406595+branch.releases-16-23.content.release",
+  "content_version": "16.23.8418428+branch.releases-16-23.content.release",
   "verified_against": {
     "content_version": "16.23.8406595+branch.releases-16-23.content.release",
     "bin_sha256": "44d7eb54ed7993cc4f262c462842376c4f737d84d6e84a547ca11c0cac72dfcf",
@@ -61,7 +61,7 @@
                 ]
               },
               "label": "Derivado",
-              "source": "Characters/Xayah/Spells/XayahQAbility/XayahQ.mSpellCalculations.TotalDamage (16.23.8406595+branch.releases-16-23.content.release)",
+              "source": "Characters/Xayah/Spells/XayahQAbility/XayahQ.mSpellCalculations.TotalDamage (16.23.8418428+branch.releases-16-23.content.release)",
               "damage_type_source": "spell_xayahq_tooltip <physicalDamage>"
             }
           ]
@@ -102,7 +102,7 @@
                 ]
               },
               "label": "Derivado",
-              "source": "Characters/Xayah/Spells/XayahQAbility/XayahQ.mSpellCalculations.TotalDamage (16.23.8406595+branch.releases-16-23.content.release)",
+              "source": "Characters/Xayah/Spells/XayahQAbility/XayahQ.mSpellCalculations.TotalDamage (16.23.8418428+branch.releases-16-23.content.release)",
               "damage_type_source": "spell_xayahq_tooltip <physicalDamage>"
             },
             {
@@ -137,7 +137,7 @@
                 ]
               },
               "label": "Derivado",
-              "source": "Characters/Xayah/Spells/XayahQAbility/XayahQ.mSpellCalculations.TotalDamage (16.23.8406595+branch.releases-16-23.content.release)",
+              "source": "Characters/Xayah/Spells/XayahQAbility/XayahQ.mSpellCalculations.TotalDamage (16.23.8418428+branch.releases-16-23.content.release)",
               "damage_type_source": "spell_xayahq_tooltip <physicalDamage>"
             }
           ]
@@ -187,7 +187,7 @@
                 ]
               },
               "label": "Derivado",
-              "source": "Characters/Xayah/Spells/XayahQAbility/XayahQ.mSpellCalculations.MultiHitDamage (16.23.8406595+branch.releases-16-23.content.release)",
+              "source": "Characters/Xayah/Spells/XayahQAbility/XayahQ.mSpellCalculations.MultiHitDamage (16.23.8418428+branch.releases-16-23.content.release)",
               "damage_type_source": "spell_xayahq_tooltip <physicalDamage>"
             }
           ]
@@ -203,6 +203,42 @@
       "passive_stats": [],
       "not_modelled": [
         "Velocidad de ataque, cuchilla secundaria del 20 % y velocidad de movimiento"
+      ],
+      "active_effects": [
+        {
+          "id": "deadly_plumage_as",
+          "name": "Plumaje mortífero (VA)",
+          "kind": "stat_bonus",
+          "formula": {
+            "op": "by_rank",
+            "values": [
+              35,
+              40,
+              45,
+              50,
+              55
+            ]
+          },
+          "label": "Derivado",
+          "source": "Characters/Xayah/Spells/XayahWAbility/XayahW.DataValues.WAttackSpeedAmount (16.23.8418428+branch.releases-16-23.content.release)",
+          "stat": "attack_speed_bonus",
+          "mode": "flat",
+          "duration_seconds": 4
+        },
+        {
+          "id": "deadly_plumage_ms",
+          "name": "Plumaje mortífero (VM % al golpear)",
+          "kind": "stat_bonus",
+          "formula": {
+            "op": "constant",
+            "value": 0.3
+          },
+          "label": "Derivado",
+          "source": "Characters/Xayah/Spells/XayahWAbility/XayahW.DataValues.WMoveSpeedAmount (16.23.8418428+branch.releases-16-23.content.release)",
+          "stat": "move_speed",
+          "mode": "percent_ms",
+          "duration_seconds": 1.5
+        }
       ]
     },
     "E": {
@@ -245,7 +281,7 @@
                 ]
               },
               "label": "Derivado",
-              "source": "Characters/Xayah/Spells/XayahEAbility/XayahE.mSpellCalculations.FeatherDamage (16.23.8406595+branch.releases-16-23.content.release)",
+              "source": "Characters/Xayah/Spells/XayahEAbility/XayahE.mSpellCalculations.FeatherDamage (16.23.8418428+branch.releases-16-23.content.release)",
               "damage_type_source": "spell_xayahe_tooltip <physicalDamage>"
             }
           ]
@@ -294,7 +330,7 @@
                 ]
               },
               "label": "Derivado",
-              "source": "Characters/Xayah/Spells/XayahRAbility/XayahR.mSpellCalculations.Damage (16.23.8406595+branch.releases-16-23.content.release)",
+              "source": "Characters/Xayah/Spells/XayahRAbility/XayahR.mSpellCalculations.Damage (16.23.8418428+branch.releases-16-23.content.release)",
               "damage_type_source": "spell_xayahr_tooltip <physicalDamage>"
             }
           ]

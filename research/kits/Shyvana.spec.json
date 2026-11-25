@@ -132,6 +132,28 @@
       ],
       "not_modelled": [
         "Velocidad de movimiento (MoveSpeed), escudo (Calc_Shield) y curación (Calc_Missing_Health_Heal)"
+      ],
+      "active_effects": [
+        {
+          "id": "burnout_shield",
+          "name": "Quemado (escudo base)",
+          "kind": "shield",
+          "calculation": "Calc_Shield",
+          "duration_seconds": {
+            "data_value": "Duration"
+          }
+        },
+        {
+          "id": "burnout_ms",
+          "name": "Quemado (VM %)",
+          "kind": "stat_bonus",
+          "stat": "move_speed",
+          "mode": "percent_ms",
+          "calculation": "MoveSpeed",
+          "duration_seconds": {
+            "data_value": "Duration"
+          }
+        }
       ]
     },
     "E": {

@@ -74,6 +74,17 @@
       ],
       "not_modelled": [
         "Escudo (ShieldCalc) y daño en área alrededor del objetivo"
+      ],
+      "active_effects": [
+        {
+          "id": "w_shieldcalc",
+          "name": "W (escudo)",
+          "kind": "shield",
+          "calculation": "ShieldCalc",
+          "duration_seconds": {
+            "data_value": "ShieldDuration"
+          }
+        }
       ]
     },
     "E": {

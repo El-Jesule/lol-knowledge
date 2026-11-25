@@ -3,7 +3,7 @@
   "champion": "MasterYi",
   "label": "Derivado",
   "game_version": "16.23",
-  "content_version": "16.23.8406595+branch.releases-16-23.content.release",
+  "content_version": "16.23.8418428+branch.releases-16-23.content.release",
   "verified_against": {
     "content_version": "16.23.8406595+branch.releases-16-23.content.release",
     "bin_sha256": "648253b4c2c55983c397834584c924498a4530269777b092c3bdb10f72e264d6",
@@ -37,7 +37,7 @@
                 ]
               },
               "label": "Derivado",
-              "source": "Characters/MasterYi/Spells/MasterYiPassiveAbility/MasterYiPassive.mSpellCalculations.TotalDamage (16.23.8406595+branch.releases-16-23.content.release)",
+              "source": "Characters/MasterYi/Spells/MasterYiPassiveAbility/MasterYiPassive.mSpellCalculations.TotalDamage (16.23.8418428+branch.releases-16-23.content.release)",
               "damage_type_source": "passive_masteryipassive_tooltip <physicalDamage>"
             }
           ]
@@ -67,7 +67,7 @@
             ]
           },
           "label": "Derivado",
-          "source": "Characters/MasterYi/Spells/MasterYiPassiveAbility/MasterYiPassive.mSpellCalculations.TotalDamage (16.23.8406595+branch.releases-16-23.content.release)",
+          "source": "Characters/MasterYi/Spells/MasterYiPassiveAbility/MasterYiPassive.mSpellCalculations.TotalDamage (16.23.8418428+branch.releases-16-23.content.release)",
           "trigger": "every_n_attacks",
           "damage_type": "physical",
           "every": 4
@@ -114,7 +114,7 @@
                 ]
               },
               "label": "Derivado",
-              "source": "Characters/MasterYi/Spells/AlphaStrikeAbility/AlphaStrike.mSpellCalculations.TotalDamage (16.23.8406595+branch.releases-16-23.content.release)",
+              "source": "Characters/MasterYi/Spells/AlphaStrikeAbility/AlphaStrike.mSpellCalculations.TotalDamage (16.23.8418428+branch.releases-16-23.content.release)",
               "damage_type_source": "spell_alphastrike_tooltip <physicalDamage>"
             }
           ]
@@ -155,7 +155,7 @@
                 ]
               },
               "label": "Derivado",
-              "source": "Characters/MasterYi/Spells/AlphaStrikeAbility/AlphaStrike.mSpellCalculations.SubesquentDamage (16.23.8406595+branch.releases-16-23.content.release)",
+              "source": "Characters/MasterYi/Spells/AlphaStrikeAbility/AlphaStrike.mSpellCalculations.SubesquentDamage (16.23.8418428+branch.releases-16-23.content.release)",
               "damage_type_source": "spell_alphastrike_tooltip <physicalDamage>"
             }
           ]
@@ -232,7 +232,7 @@
                 ]
               },
               "label": "Derivado",
-              "source": "Characters/MasterYi/Spells/AlphaStrikeAbility/AlphaStrike.mSpellCalculations.SingleTotalDamage (16.23.8406595+branch.releases-16-23.content.release)",
+              "source": "Characters/MasterYi/Spells/AlphaStrikeAbility/AlphaStrike.mSpellCalculations.SingleTotalDamage (16.23.8418428+branch.releases-16-23.content.release)",
               "damage_type_source": "spell_alphastrike_tooltip <physicalDamage>"
             }
           ]
@@ -309,7 +309,7 @@
                 ]
               },
               "label": "Derivado",
-              "source": "Characters/MasterYi/Spells/AlphaStrikeAbility/AlphaStrike.mSpellCalculations.SingleCritTotalDamage (16.23.8406595+branch.releases-16-23.content.release)",
+              "source": "Characters/MasterYi/Spells/AlphaStrikeAbility/AlphaStrike.mSpellCalculations.SingleCritTotalDamage (16.23.8418428+branch.releases-16-23.content.release)",
               "damage_type_source": "spell_alphastrike_tooltipextendedbelowline <physicalDamage>"
             }
           ]
@@ -327,6 +327,65 @@
       "passive_stats": [],
       "not_modelled": [
         "Canalización de curación (TotalHeal) y reducción de daño (InitialDR)"
+      ],
+      "active_effects": [
+        {
+          "id": "meditate_dr",
+          "name": "Meditar (DR sostenida)",
+          "kind": "damage_taken_modifier",
+          "formula": {
+            "op": "by_rank",
+            "values": [
+              45,
+              47.5,
+              50,
+              52.5,
+              55
+            ]
+          },
+          "label": "Derivado",
+          "source": "Characters/MasterYi/Spells/MeditateAbility/Meditate.DataValues.DamageReduction (16.23.8418428+branch.releases-16-23.content.release)",
+          "mode": "percent",
+          "duration_seconds": 4
+        },
+        {
+          "id": "meditate_heal",
+          "name": "Meditar (curación canalizada)",
+          "kind": "heal",
+          "formula": {
+            "op": "add",
+            "operands": [
+              {
+                "op": "by_rank",
+                "values": [
+                  120,
+                  200,
+                  280,
+                  360,
+                  440
+                ]
+              },
+              {
+                "op": "mul",
+                "operands": [
+                  {
+                    "op": "constant",
+                    "value": 1
+                  },
+                  {
+                    "op": "stat",
+                    "stat": "ability_power",
+                    "scope": "total"
+                  }
+                ]
+              }
+            ]
+          },
+          "label": "Derivado",
+          "source": "Characters/MasterYi/Spells/MeditateAbility/Meditate.mSpellCalculations.TotalHeal (16.23.8418428+branch.releases-16-23.content.release)",
+          "over_duration": true,
+          "duration_seconds": 4
+        }
       ]
     },
     "E": {
@@ -369,7 +428,7 @@
                 ]
               },
               "label": "Derivado",
-              "source": "Characters/MasterYi/Spells/WujuStyleAbility/WujuStyle.mSpellCalculations.TotalDamage (16.23.8406595+branch.releases-16-23.content.release)",
+              "source": "Characters/MasterYi/Spells/WujuStyleAbility/WujuStyle.mSpellCalculations.TotalDamage (16.23.8418428+branch.releases-16-23.content.release)",
               "damage_type_source": "spell_wujustyle_tooltip <trueDamage>"
             }
           ]
@@ -387,6 +446,44 @@
       "passive_stats": [],
       "not_modelled": [
         "Inmunidad a ralentizaciones, velocidad de movimiento/ataque, reducción de enfriamientos por bajas y extensión de duración"
+      ],
+      "active_effects": [
+        {
+          "id": "highlander_as",
+          "name": "Imparable (VA)",
+          "kind": "stat_bonus",
+          "formula": {
+            "op": "by_rank",
+            "values": [
+              25,
+              45,
+              65
+            ]
+          },
+          "label": "Derivado",
+          "source": "Characters/MasterYi/Spells/HighlanderAbility/Highlander.DataValues.RASBonus (16.23.8418428+branch.releases-16-23.content.release)",
+          "stat": "attack_speed_bonus",
+          "mode": "flat",
+          "duration_seconds": 7
+        },
+        {
+          "id": "highlander_ms",
+          "name": "Imparable (VM %)",
+          "kind": "stat_bonus",
+          "formula": {
+            "op": "by_rank",
+            "values": [
+              0.4,
+              0.5,
+              0.6
+            ]
+          },
+          "label": "Derivado",
+          "source": "Characters/MasterYi/Spells/HighlanderAbility/Highlander.DataValues.RMSBonus (16.23.8418428+branch.releases-16-23.content.release)",
+          "stat": "move_speed",
+          "mode": "percent_ms",
+          "duration_seconds": 7
+        }
       ]
     }
   }

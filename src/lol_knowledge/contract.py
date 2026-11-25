@@ -468,6 +468,9 @@ def _handle_lookup(params: Mapping[str, Any], root: Path) -> dict[str, Any]:
                         }
                         for c in ab.cases
                     ],
+                    "active_effects": [
+                        {"id": ae.id, "name": ae.name, "kind": ae.kind} for ae in ab.active_effects
+                    ],
                     "not_modelled": list(ab.not_modelled),
                 }
             kit_summary = {
@@ -958,6 +961,8 @@ def _handle_survive(params: Mapping[str, Any], root: Path) -> dict[str, Any]:
             }
     rune_data = load_runes(root) if runes else None
     summoner_data = load_summoner_spells(root) if summoners else None
+    defender_casts = _str_list(params, "defender_casts")
+    defender_ranks = _parse_ranks_dict(params)
     outcome = evaluate_defense(
         sheet,
         hits,
@@ -972,6 +977,8 @@ def _handle_survive(params: Mapping[str, Any], root: Path) -> dict[str, Any]:
         kit=kit,
         summoners=summoners,
         summoner_data=summoner_data,
+        defender_casts=defender_casts,
+        defender_ranks=defender_ranks,
     )
     payload = defense_to_dict(outcome, sheet)
     return {
@@ -1094,6 +1101,7 @@ def _handle_optimize(params: Mapping[str, Any], root: Path) -> dict[str, Any]:
         shards=shards,
         rune_data=rune_data,
         summoners=summoners,
+        defender_casts=_str_list(params, "defender_casts"),
     )
     payload = optimize_to_dict(outcome)
     return {

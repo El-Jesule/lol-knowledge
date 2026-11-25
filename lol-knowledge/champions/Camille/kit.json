@@ -3,7 +3,7 @@
   "champion": "Camille",
   "label": "Derivado",
   "game_version": "16.23",
-  "content_version": "16.23.8406595+branch.releases-16-23.content.release",
+  "content_version": "16.23.8418428+branch.releases-16-23.content.release",
   "verified_against": {
     "content_version": "16.23.8406595+branch.releases-16-23.content.release",
     "bin_sha256": "f713dc24191acd9c7e9af2b9e8a8e65458fd30859c1e2c8a7b033b1fb0a319e5",
@@ -59,7 +59,7 @@
             ]
           },
           "label": "Derivado",
-          "source": "Characters/Camille/Spells/CamillePassiveAbility/CamillePassive.mSpellCalculations.ShieldAmount (16.23.8406595+branch.releases-16-23.content.release)",
+          "source": "Characters/Camille/Spells/CamillePassiveAbility/CamillePassive.mSpellCalculations.ShieldAmount (16.23.8418428+branch.releases-16-23.content.release)",
           "trigger": "on_champion_attack",
           "duration_seconds": 2,
           "cooldown_formula": {
@@ -119,7 +119,7 @@
                 ]
               },
               "label": "Derivado",
-              "source": "Characters/Camille/Spells/CamilleQAbility/CamilleQ.mSpellCalculations.BonusDamage (16.23.8406595+branch.releases-16-23.content.release)",
+              "source": "Characters/Camille/Spells/CamilleQAbility/CamilleQ.mSpellCalculations.BonusDamage (16.23.8418428+branch.releases-16-23.content.release)",
               "damage_type_source": "spell_camilleq_tooltip <physicalDamage>"
             }
           ]
@@ -151,7 +151,7 @@
                 ]
               },
               "label": "Derivado",
-              "source": "Characters/Camille/Spells/CamilleQAbility/CamilleQ.mSpellCalculations.BonusDamage (16.23.8406595+branch.releases-16-23.content.release)",
+              "source": "Characters/Camille/Spells/CamilleQAbility/CamilleQ.mSpellCalculations.BonusDamage (16.23.8418428+branch.releases-16-23.content.release)",
               "damage_type_source": "spell_camilleq_tooltip <physicalDamage>"
             }
           ],
@@ -193,7 +193,7 @@
                 ]
               },
               "label": "Derivado",
-              "source": "Characters/Camille/Spells/CamilleQAbility/CamilleQ.mSpellCalculations.EmpoweredBonusDamage (16.23.8406595+branch.releases-16-23.content.release)",
+              "source": "Characters/Camille/Spells/CamilleQAbility/CamilleQ.mSpellCalculations.EmpoweredBonusDamage (16.23.8418428+branch.releases-16-23.content.release)",
               "damage_type_source": "spell_camilleq_tooltip <physicalDamage>"
             }
           ],
@@ -204,6 +204,28 @@
       "not_modelled": [
         "Conversión progresiva a daño verdadero tras 1,5 s (DamageConversionPercentage, 40 %–100 % según nivel)",
         "Velocidad de movimiento (MSBonus) y daño del propio ataque básico"
+      ],
+      "active_effects": [
+        {
+          "id": "q_msbonus",
+          "name": "Q (VM)",
+          "kind": "stat_bonus",
+          "formula": {
+            "op": "by_rank",
+            "values": [
+              0.25,
+              0.3,
+              0.35,
+              0.4,
+              0.45
+            ]
+          },
+          "label": "Derivado",
+          "source": "Characters/Camille/Spells/CamilleQAbility/CamilleQ.DataValues.MSBonus (16.23.8418428+branch.releases-16-23.content.release)",
+          "stat": "move_speed",
+          "mode": "percent_ms",
+          "duration_seconds": 1
+        }
       ],
       "recast_window_seconds": 3.5
     },
@@ -247,7 +269,7 @@
                 ]
               },
               "label": "Derivado",
-              "source": "Characters/Camille/Spells/CamilleWAbility/CamilleW.mSpellCalculations.BaseDamageTotal (16.23.8406595+branch.releases-16-23.content.release)",
+              "source": "Characters/Camille/Spells/CamilleWAbility/CamilleW.mSpellCalculations.BaseDamageTotal (16.23.8418428+branch.releases-16-23.content.release)",
               "damage_type_source": "spell_camillew_tooltip <physicalDamage>"
             }
           ]
@@ -288,7 +310,7 @@
                 ]
               },
               "label": "Derivado",
-              "source": "Characters/Camille/Spells/CamilleWAbility/CamilleW.mSpellCalculations.BaseDamageTotal (16.23.8406595+branch.releases-16-23.content.release)",
+              "source": "Characters/Camille/Spells/CamilleWAbility/CamilleW.mSpellCalculations.BaseDamageTotal (16.23.8418428+branch.releases-16-23.content.release)",
               "damage_type_source": "spell_camillew_tooltip <physicalDamage>"
             },
             {
@@ -334,7 +356,7 @@
                 ]
               },
               "label": "Derivado",
-              "source": "Characters/Camille/Spells/CamilleWAbility/CamilleW · OuterEdgeTooltip × vida máxima del objetivo (16.23.8406595+branch.releases-16-23.content.release)",
+              "source": "Characters/Camille/Spells/CamilleWAbility/CamilleW · OuterEdgeTooltip × vida máxima del objetivo (16.23.8418428+branch.releases-16-23.content.release)",
               "damage_type_source": "spell_camillew_tooltip <physicalDamage>"
             }
           ]
@@ -385,7 +407,7 @@
                 ]
               },
               "label": "Derivado",
-              "source": "Characters/Camille/Spells/CamilleEAbility/CamilleE.mSpellCalculations.TotalDamage (16.23.8406595+branch.releases-16-23.content.release)",
+              "source": "Characters/Camille/Spells/CamilleEAbility/CamilleE.mSpellCalculations.TotalDamage (16.23.8418428+branch.releases-16-23.content.release)",
               "damage_type_source": "spell_camillee_tooltip <physicalDamage>"
             }
           ]
@@ -394,6 +416,28 @@
       "passive_stats": [],
       "not_modelled": [
         "Desplazamiento en muro, aturdimiento y velocidad de ataque (ASBuff)"
+      ],
+      "active_effects": [
+        {
+          "id": "e_asbuff",
+          "name": "E (VA)",
+          "kind": "stat_bonus",
+          "formula": {
+            "op": "by_rank",
+            "values": [
+              40,
+              45,
+              50,
+              55,
+              60
+            ]
+          },
+          "label": "Derivado",
+          "source": "Characters/Camille/Spells/CamilleEAbility/CamilleE.DataValues.ASBuff (16.23.8418428+branch.releases-16-23.content.release)",
+          "stat": "attack_speed_bonus",
+          "mode": "flat",
+          "duration_seconds": 5
+        }
       ]
     },
     "R": {
@@ -430,7 +474,7 @@
                 ]
               },
               "label": "Derivado",
-              "source": "Characters/Camille/Spells/CamilleRAbility/CamilleR · DataValues.RPercentCurrentHPDamage % × vida actual del objetivo (16.23.8406595+branch.releases-16-23.content.release)",
+              "source": "Characters/Camille/Spells/CamilleRAbility/CamilleR · DataValues.RPercentCurrentHPDamage % × vida actual del objetivo (16.23.8418428+branch.releases-16-23.content.release)",
               "damage_type_source": "spell_camiller_tooltip <magicDamage>"
             }
           ]

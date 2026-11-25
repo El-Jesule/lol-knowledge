@@ -3,7 +3,7 @@
   "champion": "Vex",
   "label": "Derivado",
   "game_version": "16.23",
-  "content_version": "16.23.8406595+branch.releases-16-23.content.release",
+  "content_version": "16.23.8418428+branch.releases-16-23.content.release",
   "verified_against": {
     "content_version": "16.23.8406595+branch.releases-16-23.content.release",
     "bin_sha256": "6b60807ce10414dc8bd779b8622d24a3a005fd5e45b896e3d75579562f6eb5da",
@@ -47,7 +47,7 @@
                 ]
               },
               "label": "Derivado",
-              "source": "Characters/Vex/Spells/VexPAbility/VexP.mSpellCalculations.GloomProcCalc (16.23.8406595+branch.releases-16-23.content.release)",
+              "source": "Characters/Vex/Spells/VexPAbility/VexP.mSpellCalculations.GloomProcCalc (16.23.8418428+branch.releases-16-23.content.release)",
               "damage_type_source": "spell_vexp_tooltip <magicDamage>"
             }
           ]
@@ -98,7 +98,7 @@
                 ]
               },
               "label": "Derivado",
-              "source": "Characters/Vex/Spells/VexQAbility/VexQ.mSpellCalculations.QDamageCalc (16.23.8406595+branch.releases-16-23.content.release)",
+              "source": "Characters/Vex/Spells/VexQAbility/VexQ.mSpellCalculations.QDamageCalc (16.23.8418428+branch.releases-16-23.content.release)",
               "damage_type_source": "spell_vexq_tooltip <magicDamage>"
             }
           ]
@@ -147,7 +147,7 @@
                 ]
               },
               "label": "Derivado",
-              "source": "Characters/Vex/Spells/VexWAbility/VexW.mSpellCalculations.WDamageCalc (16.23.8406595+branch.releases-16-23.content.release)",
+              "source": "Characters/Vex/Spells/VexWAbility/VexW.mSpellCalculations.WDamageCalc (16.23.8418428+branch.releases-16-23.content.release)",
               "damage_type_source": "spell_vexw_tooltip <magicDamage>"
             }
           ]
@@ -156,6 +156,45 @@
       "passive_stats": [],
       "not_modelled": [
         "Escudo (ShieldCalc)"
+      ],
+      "active_effects": [
+        {
+          "id": "w_shieldcalc",
+          "name": "W (escudo)",
+          "kind": "shield",
+          "formula": {
+            "op": "add",
+            "operands": [
+              {
+                "op": "by_rank",
+                "values": [
+                  50,
+                  75,
+                  100,
+                  125,
+                  150
+                ]
+              },
+              {
+                "op": "mul",
+                "operands": [
+                  {
+                    "op": "constant",
+                    "value": 0.75
+                  },
+                  {
+                    "op": "stat",
+                    "stat": "ability_power",
+                    "scope": "total"
+                  }
+                ]
+              }
+            ]
+          },
+          "label": "Derivado",
+          "source": "Characters/Vex/Spells/VexWAbility/VexW.mSpellCalculations.ShieldCalc (16.23.8418428+branch.releases-16-23.content.release)",
+          "duration_seconds": 2.5
+        }
       ]
     },
     "E": {
@@ -204,7 +243,7 @@
                 ]
               },
               "label": "Derivado",
-              "source": "Characters/Vex/Spells/VexEAbility/VexE.mSpellCalculations.EDamageCalc (16.23.8406595+branch.releases-16-23.content.release)",
+              "source": "Characters/Vex/Spells/VexEAbility/VexE.mSpellCalculations.EDamageCalc (16.23.8418428+branch.releases-16-23.content.release)",
               "damage_type_source": "spell_vexe_tooltip <magicDamage>"
             }
           ]
@@ -253,7 +292,7 @@
                 ]
               },
               "label": "Derivado",
-              "source": "Characters/Vex/Spells/VexRAbility/VexR.mSpellCalculations.RDamageCalc (16.23.8406595+branch.releases-16-23.content.release)",
+              "source": "Characters/Vex/Spells/VexRAbility/VexR.mSpellCalculations.RDamageCalc (16.23.8418428+branch.releases-16-23.content.release)",
               "damage_type_source": "spell_vexr_tooltip <magicDamage>"
             }
           ]
@@ -292,7 +331,7 @@
                 ]
               },
               "label": "Derivado",
-              "source": "Characters/Vex/Spells/VexRAbility/VexR.mSpellCalculations.RecastDamageCalc (16.23.8406595+branch.releases-16-23.content.release)",
+              "source": "Characters/Vex/Spells/VexRAbility/VexR.mSpellCalculations.RecastDamageCalc (16.23.8418428+branch.releases-16-23.content.release)",
               "damage_type_source": "spell_vexr_tooltip <magicDamage>"
             }
           ],

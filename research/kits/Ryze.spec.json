@@ -32,6 +32,20 @@
             }
           ]
         }
+      ],
+      "active_effects": [
+        {
+          "id": "q_movementspeedamount",
+          "name": "Q (VM)",
+          "kind": "stat_bonus",
+          "stat": "move_speed",
+          "mode": "percent_ms",
+          "scale": 0.01,
+          "data_value": "MovementSpeedAmount",
+          "duration_seconds": {
+            "data_value": "MovementSpeedDuration"
+          }
+        }
       ]
     },
     "W": {

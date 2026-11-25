@@ -70,6 +70,31 @@
       "tooltip": "spell_missfortunew_tooltip",
       "not_modelled": [
         "Velocidad de movimiento pasiva fuera de combate, velocidad de ataque activa y reducción de enfriamiento con Cachete (LoveTapRefund)"
+      ],
+      "active_effects": [
+        {
+          "id": "strut_as",
+          "name": "Alarde (VA)",
+          "kind": "stat_bonus",
+          "stat": "attack_speed_bonus",
+          "mode": "flat",
+          "data_value": "ActiveAS",
+          "scale": 100,
+          "duration_seconds": {
+            "data_value": "ActiveDuration"
+          }
+        },
+        {
+          "id": "strut_ms",
+          "name": "Alarde (VM plana máxima)",
+          "kind": "stat_bonus",
+          "stat": "move_speed",
+          "mode": "flat",
+          "data_value": "PassiveMaxMS",
+          "duration_seconds": {
+            "data_value": "ActiveDuration"
+          }
+        }
       ]
     },
     "E": {

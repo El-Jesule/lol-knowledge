@@ -3,7 +3,7 @@
   "champion": "Sett",
   "label": "Derivado",
   "game_version": "16.23",
-  "content_version": "16.23.8406595+branch.releases-16-23.content.release",
+  "content_version": "16.23.8418428+branch.releases-16-23.content.release",
   "verified_against": {
     "content_version": "16.23.8406595+branch.releases-16-23.content.release",
     "bin_sha256": "908c58118107634a029cc1b386f004867e4421e40c78a381b867b1455b274850",
@@ -65,7 +65,7 @@
                 ]
               },
               "label": "Derivado",
-              "source": "Characters/Sett/Spells/SettPassiveAbility/SettPassive.mSpellCalculations.RightPunchBonus (16.23.8406595+branch.releases-16-23.content.release)",
+              "source": "Characters/Sett/Spells/SettPassiveAbility/SettPassive.mSpellCalculations.RightPunchBonus (16.23.8418428+branch.releases-16-23.content.release)",
               "damage_type_source": "spell_settpassive_tooltip <physicalDamage>"
             }
           ]
@@ -124,7 +124,7 @@
             ]
           },
           "label": "Derivado",
-          "source": "Characters/Sett/Spells/SettPassiveAbility/SettPassive.mSpellCalculations.RightPunchBonus (16.23.8406595+branch.releases-16-23.content.release)",
+          "source": "Characters/Sett/Spells/SettPassiveAbility/SettPassive.mSpellCalculations.RightPunchBonus (16.23.8418428+branch.releases-16-23.content.release)",
           "trigger": "every_n_attacks",
           "damage_type": "physical",
           "every": 2
@@ -197,7 +197,7 @@
                 ]
               },
               "label": "Derivado",
-              "source": "Characters/Sett/Spells/SettQAbility/SettQ · DataValues.BaseDamage + MaxHealthDamageCalc × vida máxima del objetivo (16.23.8406595+branch.releases-16-23.content.release)",
+              "source": "Characters/Sett/Spells/SettQAbility/SettQ · DataValues.BaseDamage + MaxHealthDamageCalc × vida máxima del objetivo (16.23.8418428+branch.releases-16-23.content.release)",
               "damage_type_source": "spell_settw_tooltip <physicalDamage>"
             }
           ]
@@ -207,6 +207,22 @@
       "not_modelled": [
         "Velocidad de movimiento hacia campeones y tope de 400 contra monstruos",
         "El daño de los dos ataques básicos potenciados: se suma aparte"
+      ],
+      "active_effects": [
+        {
+          "id": "q_msamount",
+          "name": "Q (VM)",
+          "kind": "stat_bonus",
+          "formula": {
+            "op": "constant",
+            "value": 0.3
+          },
+          "label": "Derivado",
+          "source": "Characters/Sett/Spells/SettQAbility/SettQ.DataValues.MSAmount (16.23.8418428+branch.releases-16-23.content.release)",
+          "stat": "move_speed",
+          "mode": "percent_ms",
+          "duration_seconds": 1.5
+        }
       ]
     },
     "W": {
@@ -230,7 +246,7 @@
                 ]
               },
               "label": "Derivado",
-              "source": "Characters/Sett/Spells/SettWAbility/SettW.mSpellCalculations.DamageCalc (16.23.8406595+branch.releases-16-23.content.release)",
+              "source": "Characters/Sett/Spells/SettWAbility/SettW.mSpellCalculations.DamageCalc (16.23.8418428+branch.releases-16-23.content.release)",
               "damage_type_source": "spell_sette_tooltip <trueDamage>"
             }
           ]
@@ -252,7 +268,7 @@
                 ]
               },
               "label": "Derivado",
-              "source": "Characters/Sett/Spells/SettWAbility/SettW.mSpellCalculations.DamageCalc (16.23.8406595+branch.releases-16-23.content.release)",
+              "source": "Characters/Sett/Spells/SettWAbility/SettW.mSpellCalculations.DamageCalc (16.23.8418428+branch.releases-16-23.content.release)",
               "damage_type_source": "spell_sette_tooltip <trueDamage>"
             },
             {
@@ -300,7 +316,7 @@
                 ]
               },
               "label": "Derivado",
-              "source": "Characters/Sett/Spells/SettWAbility/SettW · MaxGrit × DamageConversion (coraje máximo = 50 % vida máxima) (16.23.8406595+branch.releases-16-23.content.release)",
+              "source": "Characters/Sett/Spells/SettWAbility/SettW · MaxGrit × DamageConversion (coraje máximo = 50 % vida máxima) (16.23.8418428+branch.releases-16-23.content.release)",
               "damage_type_source": "spell_sette_tooltip <trueDamage>"
             }
           ]
@@ -352,7 +368,7 @@
                 ]
               },
               "label": "Derivado",
-              "source": "Characters/Sett/Spells/SettEAbility/SettE.mSpellCalculations.DamageCalc (16.23.8406595+branch.releases-16-23.content.release)",
+              "source": "Characters/Sett/Spells/SettEAbility/SettE.mSpellCalculations.DamageCalc (16.23.8418428+branch.releases-16-23.content.release)",
               "damage_type_source": "spell_settq_tooltip <physicalDamage>"
             }
           ]
@@ -401,7 +417,7 @@
                 ]
               },
               "label": "Derivado",
-              "source": "Characters/Sett/Spells/SettRAbility/SettR.mSpellCalculations.DamageCalc (16.23.8406595+branch.releases-16-23.content.release)",
+              "source": "Characters/Sett/Spells/SettRAbility/SettR.mSpellCalculations.DamageCalc (16.23.8418428+branch.releases-16-23.content.release)",
               "damage_type_source": "spell_settr_tooltip <physicalDamage>"
             }
           ]

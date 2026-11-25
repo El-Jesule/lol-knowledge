@@ -52,6 +52,19 @@
       ],
       "not_modelled": [
         "Velocidad de ataque de los siguientes golpes (ASBonus, EmpoweredQAS) y escalado de crítico"
+      ],
+      "active_effects": [
+        {
+          "id": "q_asbonus",
+          "name": "Q (VA)",
+          "kind": "stat_bonus",
+          "stat": "attack_speed_bonus",
+          "mode": "flat",
+          "data_value": "ASBonus",
+          "duration_seconds": {
+            "data_value": "ASDuration"
+          }
+        }
       ]
     },
     "W": {
@@ -124,6 +137,20 @@
       ],
       "not_modelled": [
         "Camuflaje, velocidad de movimiento, visión verdadera y reducción de armadura del objetivo"
+      ],
+      "active_effects": [
+        {
+          "id": "r_stealthms",
+          "name": "R (VM)",
+          "kind": "stat_bonus",
+          "stat": "move_speed",
+          "mode": "percent_ms",
+          "scale": 0.01,
+          "data_value": "StealthMS",
+          "duration_seconds": {
+            "data_value": "StealthDuration"
+          }
+        }
       ]
     }
   }

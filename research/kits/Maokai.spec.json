@@ -124,6 +124,19 @@
       ],
       "not_modelled": [
         "Inmovilización escalada por distancia y velocidad de movimiento al golpear campeones"
+      ],
+      "active_effects": [
+        {
+          "id": "r_movehaste",
+          "name": "R (VM)",
+          "kind": "stat_bonus",
+          "stat": "move_speed",
+          "mode": "percent_ms",
+          "data_value": "MoveHaste",
+          "duration_seconds": {
+            "data_value": "MinRootDuration"
+          }
+        }
       ]
     }
   }

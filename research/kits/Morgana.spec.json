@@ -77,6 +77,18 @@
       "tooltip": "spell_morganae_tooltip",
       "not_modelled": [
         "Escudo mágico e inmunidad a control de adversario (TotalShieldStrength)"
+      ],
+      "active_effects": [
+        {
+          "id": "black_shield",
+          "name": "Escudo negro (escudo mágico)",
+          "kind": "shield",
+          "shield_type": "magic",
+          "calculation": "TotalShieldStrength",
+          "duration_seconds": {
+            "data_value": "ShieldDuration"
+          }
+        }
       ]
     },
     "R": {
@@ -107,6 +119,20 @@
       ],
       "not_modelled": [
         "Ralentización y aturdimiento al completar la atadura"
+      ],
+      "active_effects": [
+        {
+          "id": "r_hastepercent",
+          "name": "R (VM)",
+          "kind": "stat_bonus",
+          "stat": "move_speed",
+          "mode": "percent_ms",
+          "scale": 0.01,
+          "data_value": "HastePercent",
+          "duration_seconds": {
+            "data_value": "ChainDuration"
+          }
+        }
       ]
     }
   }

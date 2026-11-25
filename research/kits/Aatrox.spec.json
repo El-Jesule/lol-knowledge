@@ -150,6 +150,31 @@
       "tooltip": "spell_aatroxr_tooltip",
       "not_modelled": [
         "Bonificación porcentual de DA total, amplificación de curación, velocidad de movimiento y extensión por bajas"
+      ],
+      "active_effects": [
+        {
+          "id": "world_ender_ad",
+          "name": "El Aniquilador de Mundos (AD %)",
+          "kind": "stat_bonus",
+          "stat": "attack_damage",
+          "mode": "percent",
+          "data_value": "RTotalADAmp",
+          "scale": 100,
+          "duration_seconds": {
+            "data_value": "RDuration"
+          }
+        },
+        {
+          "id": "world_ender_ms",
+          "name": "El Aniquilador de Mundos (VM %)",
+          "kind": "stat_bonus",
+          "stat": "move_speed",
+          "mode": "percent_ms",
+          "data_value": "RMovementSpeedBonus",
+          "duration_seconds": {
+            "data_value": "RDuration"
+          }
+        }
       ]
     }
   }

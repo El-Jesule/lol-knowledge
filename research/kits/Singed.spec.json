@@ -100,6 +100,52 @@
       "tooltip": "spell_insanitypotion_tooltip",
       "not_modelled": [
         "Bonificación temporal de PH, armadura, RM, velocidad de movimiento, regeneración y Heridas graves en Q"
+      ],
+      "active_effects": [
+        {
+          "id": "insanity_potion_ap",
+          "name": "Poción de demencia (AP)",
+          "kind": "stat_bonus",
+          "stat": "ability_power",
+          "mode": "flat",
+          "data_value": "StatAmount",
+          "duration_seconds": {
+            "data_value": "Duration"
+          }
+        },
+        {
+          "id": "insanity_potion_armor",
+          "name": "Poción de demencia (armadura)",
+          "kind": "stat_bonus",
+          "stat": "armor",
+          "mode": "flat",
+          "data_value": "StatAmount",
+          "duration_seconds": {
+            "data_value": "Duration"
+          }
+        },
+        {
+          "id": "insanity_potion_mr",
+          "name": "Poción de demencia (RM)",
+          "kind": "stat_bonus",
+          "stat": "magic_resist",
+          "mode": "flat",
+          "data_value": "StatAmount",
+          "duration_seconds": {
+            "data_value": "Duration"
+          }
+        },
+        {
+          "id": "insanity_potion_ms",
+          "name": "Poción de demencia (VM plana)",
+          "kind": "stat_bonus",
+          "stat": "move_speed",
+          "mode": "flat",
+          "data_value": "StatAmount",
+          "duration_seconds": {
+            "data_value": "Duration"
+          }
+        }
       ]
     }
   }

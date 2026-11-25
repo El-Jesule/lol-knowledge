@@ -3,7 +3,7 @@
   "champion": "Gangplank",
   "label": "Derivado",
   "game_version": "16.23",
-  "content_version": "16.23.8406595+branch.releases-16-23.content.release",
+  "content_version": "16.23.8418428+branch.releases-16-23.content.release",
   "verified_against": {
     "content_version": "16.23.8406595+branch.releases-16-23.content.release",
     "bin_sha256": "7e5c02bf0c8ea7a803bd83f4e3c829c3092c63d90f32ca10fc31e233e0b93f7b",
@@ -47,7 +47,7 @@
                 ]
               },
               "label": "Derivado",
-              "source": "Characters/Gangplank/Spells/GangplankPassiveAbility/GangplankPassive.mSpellCalculations.TotalDamage (16.23.8406595+branch.releases-16-23.content.release)",
+              "source": "Characters/Gangplank/Spells/GangplankPassiveAbility/GangplankPassive.mSpellCalculations.TotalDamage (16.23.8418428+branch.releases-16-23.content.release)",
               "damage_type_source": "spell_gangplankpassive_tooltip <trueDamage>"
             }
           ]
@@ -87,7 +87,7 @@
             ]
           },
           "label": "Derivado",
-          "source": "Characters/Gangplank/Spells/GangplankPassiveAbility/GangplankPassive.mSpellCalculations.TotalDamage (16.23.8406595+branch.releases-16-23.content.release)",
+          "source": "Characters/Gangplank/Spells/GangplankPassiveAbility/GangplankPassive.mSpellCalculations.TotalDamage (16.23.8418428+branch.releases-16-23.content.release)",
           "trigger": "on_attack",
           "damage_type": "true",
           "cooldown_seconds": 15
@@ -134,7 +134,7 @@
                 ]
               },
               "label": "Derivado",
-              "source": "Characters/Gangplank/Spells/GangplankQWrapperAbility/GangplankQWrapper.mSpellCalculations.ShotDamage (16.23.8406595+branch.releases-16-23.content.release)",
+              "source": "Characters/Gangplank/Spells/GangplankQWrapperAbility/GangplankQWrapper.mSpellCalculations.ShotDamage (16.23.8418428+branch.releases-16-23.content.release)",
               "damage_type_source": "spell_gangplankqwrapper_tooltip_1 <physicalDamage>"
             }
           ]
@@ -230,7 +230,7 @@
                 ]
               },
               "label": "Derivado",
-              "source": "Characters/Gangplank/Spells/GangplankQWrapperAbility/GangplankQWrapper.mSpellCalculations.ShotCrit (16.23.8406595+branch.releases-16-23.content.release)",
+              "source": "Characters/Gangplank/Spells/GangplankQWrapperAbility/GangplankQWrapper.mSpellCalculations.ShotCrit (16.23.8418428+branch.releases-16-23.content.release)",
               "damage_type_source": "spell_gangplankqwrapper_tooltipextendedbelowline <physicalDamage>"
             }
           ]
@@ -248,6 +248,77 @@
       "passive_stats": [],
       "not_modelled": [
         "Limpieza de control de masas y curación (BaseHealth + % vida faltante)"
+      ],
+      "active_effects": [
+        {
+          "id": "remove_scurvy_heal",
+          "name": "Eliminar escorbuto (curación)",
+          "kind": "heal",
+          "formula": {
+            "op": "add",
+            "operands": [
+              {
+                "op": "add",
+                "operands": [
+                  {
+                    "op": "by_rank",
+                    "values": [
+                      45,
+                      70,
+                      95,
+                      120,
+                      145
+                    ]
+                  },
+                  {
+                    "op": "mul",
+                    "operands": [
+                      {
+                        "op": "constant",
+                        "value": 0.9
+                      },
+                      {
+                        "op": "stat",
+                        "stat": "ability_power",
+                        "scope": "total"
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "op": "mul",
+                "operands": [
+                  {
+                    "op": "constant",
+                    "value": 13
+                  },
+                  {
+                    "op": "constant",
+                    "value": 0.01
+                  },
+                  {
+                    "op": "mul",
+                    "operands": [
+                      {
+                        "op": "stat",
+                        "stat": "health",
+                        "scope": "max"
+                      },
+                      {
+                        "op": "stat",
+                        "stat": "health",
+                        "scope": "missing_fraction"
+                      }
+                    ]
+                  }
+                ]
+              }
+            ]
+          },
+          "label": "Derivado",
+          "source": "Characters/Gangplank/Spells/GangplankWAbility/GangplankW · mSpellCalculations.BaseHealth + DataValues.PercentHeal% missing HP (16.23.8418428+branch.releases-16-23.content.release)"
+        }
       ]
     },
     "E": {
@@ -297,7 +368,7 @@
                 ]
               },
               "label": "Derivado",
-              "source": "Characters/Gangplank/Spells/GangplankRAbility/GangplankR.mSpellCalculations.OneWaveDamage (16.23.8406595+branch.releases-16-23.content.release)",
+              "source": "Characters/Gangplank/Spells/GangplankRAbility/GangplankR.mSpellCalculations.OneWaveDamage (16.23.8418428+branch.releases-16-23.content.release)",
               "damage_type_source": "spell_gangplankr_tooltip <magicDamage>"
             }
           ]
@@ -336,7 +407,7 @@
                 ]
               },
               "label": "Derivado",
-              "source": "Characters/Gangplank/Spells/GangplankRAbility/GangplankR.mSpellCalculations.DeathsDaughterDamage (16.23.8406595+branch.releases-16-23.content.release)",
+              "source": "Characters/Gangplank/Spells/GangplankRAbility/GangplankR.mSpellCalculations.DeathsDaughterDamage (16.23.8418428+branch.releases-16-23.content.release)",
               "damage_type_source": "spell_gangplankr_tooltip <trueDamage>"
             }
           ]
@@ -345,6 +416,22 @@
       "passive_stats": [],
       "not_modelled": [
         "Mejoras con Serpientes de plata (Fuego a discreción, Subir la moral), ralentización y total combinado"
+      ],
+      "active_effects": [
+        {
+          "id": "r_raisemoralehaste",
+          "name": "R (VM)",
+          "kind": "stat_bonus",
+          "formula": {
+            "op": "constant",
+            "value": 0.4
+          },
+          "label": "Derivado",
+          "source": "Characters/Gangplank/Spells/GangplankRAbility/GangplankR.DataValues.RaiseMoraleHaste (16.23.8418428+branch.releases-16-23.content.release)",
+          "stat": "move_speed",
+          "mode": "percent_ms",
+          "duration_seconds": 8
+        }
       ]
     }
   }

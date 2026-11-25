@@ -59,6 +59,17 @@
       "tooltip": "spell_threshw_tooltip",
       "not_modelled": [
         "Farol de desplazamiento aliado y escudo (TotalShield)"
+      ],
+      "active_effects": [
+        {
+          "id": "w_totalshield",
+          "name": "W (escudo)",
+          "kind": "shield",
+          "calculation": "TotalShield",
+          "duration_seconds": {
+            "data_value": "ShieldDuration"
+          }
+        }
       ]
     },
     "E": {

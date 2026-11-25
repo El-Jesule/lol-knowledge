@@ -3,7 +3,7 @@
   "champion": "Nasus",
   "label": "Derivado",
   "game_version": "16.23",
-  "content_version": "16.23.8406595+branch.releases-16-23.content.release",
+  "content_version": "16.23.8418428+branch.releases-16-23.content.release",
   "verified_against": {
     "content_version": "16.23.8406595+branch.releases-16-23.content.release",
     "bin_sha256": "2b4d3184d0c81ee65d6c45a7e28b7d2db72f83806e01b9b8eca1d840784f6224",
@@ -47,7 +47,7 @@
             ]
           },
           "label": "Derivado",
-          "source": "Characters/Nasus/Spells/NasusPassiveAbility/NasusPassive.mSpellCalculations.LifestealTooltip (16.23.8406595+branch.releases-16-23.content.release)",
+          "source": "Characters/Nasus/Spells/NasusPassiveAbility/NasusPassive.mSpellCalculations.LifestealTooltip (16.23.8418428+branch.releases-16-23.content.release)",
           "stat": "life_steal",
           "mode": "flat",
           "condition": "Robo de vida permanente escalado a niveles 1, 7 y 13 (10/15/20 %)"
@@ -108,7 +108,7 @@
                 ]
               },
               "label": "Derivado",
-              "source": "Characters/Nasus/Spells/NasusQAbility/NasusQ.mSpellCalculations.TotalDamage (16.23.8406595+branch.releases-16-23.content.release)",
+              "source": "Characters/Nasus/Spells/NasusQAbility/NasusQ.mSpellCalculations.TotalDamage (16.23.8418428+branch.releases-16-23.content.release)",
               "damage_type_source": "spell_nasusq_tooltip <physicalDamage>"
             }
           ]
@@ -196,7 +196,7 @@
                 ]
               },
               "label": "Derivado",
-              "source": "Characters/Nasus/Spells/NasusQAbility/NasusQ.mSpellCalculations.CritDamage (16.23.8406595+branch.releases-16-23.content.release)",
+              "source": "Characters/Nasus/Spells/NasusQAbility/NasusQ.mSpellCalculations.CritDamage (16.23.8418428+branch.releases-16-23.content.release)",
               "damage_type_source": "spell_nasusq_tooltipextendedbelowline <physicalDamage>"
             }
           ]
@@ -256,7 +256,7 @@
                 ]
               },
               "label": "Derivado",
-              "source": "Characters/Nasus/Spells/NasusEAbility/NasusE.mSpellCalculations.InitialDamage (16.23.8406595+branch.releases-16-23.content.release)",
+              "source": "Characters/Nasus/Spells/NasusEAbility/NasusE.mSpellCalculations.InitialDamage (16.23.8418428+branch.releases-16-23.content.release)",
               "damage_type_source": "spell_nasuse_tooltip <magicDamage>"
             }
           ]
@@ -297,7 +297,7 @@
                 ]
               },
               "label": "Derivado",
-              "source": "Characters/Nasus/Spells/NasusEAbility/NasusE.mSpellCalculations.TotalDotDamage (16.23.8406595+branch.releases-16-23.content.release)",
+              "source": "Characters/Nasus/Spells/NasusEAbility/NasusE.mSpellCalculations.TotalDotDamage (16.23.8418428+branch.releases-16-23.content.release)",
               "damage_type_source": "spell_nasuse_tooltip <magicDamage>"
             }
           ]
@@ -357,7 +357,7 @@
                 ]
               },
               "label": "Derivado",
-              "source": "Characters/Nasus/Spells/NasusRAbility/NasusR · mSpellCalculations.DamageCalc × vida máxima del objetivo (16.23.8406595+branch.releases-16-23.content.release)",
+              "source": "Characters/Nasus/Spells/NasusRAbility/NasusR · mSpellCalculations.DamageCalc × vida máxima del objetivo (16.23.8418428+branch.releases-16-23.content.release)",
               "damage_type_source": "spell_nasusr_tooltip <magicDamage>"
             }
           ]
@@ -366,6 +366,62 @@
       "passive_stats": [],
       "not_modelled": [
         "Vida máxima temporal (BonusHealth), armadura/RM adicionales, tope de 240 DPS (MaxDamageCap) y 50 % menos enfriamiento en Q"
+      ],
+      "active_effects": [
+        {
+          "id": "fury_of_the_sands_hp",
+          "name": "Furia de las arenas (vida máxima)",
+          "kind": "stat_bonus",
+          "formula": {
+            "op": "by_rank",
+            "values": [
+              300,
+              450,
+              600
+            ]
+          },
+          "label": "Derivado",
+          "source": "Characters/Nasus/Spells/NasusRAbility/NasusR.DataValues.BonusHealth (16.23.8418428+branch.releases-16-23.content.release)",
+          "stat": "health",
+          "mode": "flat",
+          "duration_seconds": 15
+        },
+        {
+          "id": "fury_of_the_sands_armor",
+          "name": "Furia de las arenas (armadura)",
+          "kind": "stat_bonus",
+          "formula": {
+            "op": "by_rank",
+            "values": [
+              40,
+              55,
+              70
+            ]
+          },
+          "label": "Derivado",
+          "source": "Characters/Nasus/Spells/NasusRAbility/NasusR.DataValues.InitialResistGain (16.23.8418428+branch.releases-16-23.content.release)",
+          "stat": "armor",
+          "mode": "flat",
+          "duration_seconds": 15
+        },
+        {
+          "id": "fury_of_the_sands_mr",
+          "name": "Furia de las arenas (RM)",
+          "kind": "stat_bonus",
+          "formula": {
+            "op": "by_rank",
+            "values": [
+              40,
+              55,
+              70
+            ]
+          },
+          "label": "Derivado",
+          "source": "Characters/Nasus/Spells/NasusRAbility/NasusR.DataValues.InitialResistGain (16.23.8418428+branch.releases-16-23.content.release)",
+          "stat": "magic_resist",
+          "mode": "flat",
+          "duration_seconds": 15
+        }
       ]
     }
   }

@@ -3,7 +3,7 @@
   "champion": "Lux",
   "label": "Derivado",
   "game_version": "16.23",
-  "content_version": "16.23.8406595+branch.releases-16-23.content.release",
+  "content_version": "16.23.8418428+branch.releases-16-23.content.release",
   "verified_against": {
     "content_version": "16.23.8406595+branch.releases-16-23.content.release",
     "bin_sha256": "dee4e794af8329d2bf8187ec035de05d6cf207f7aa7f10fcbe49fe6e09d6e9c8",
@@ -65,7 +65,7 @@
                 ]
               },
               "label": "Derivado",
-              "source": "Characters/Lux/Spells/LuxIlluminationPassiveAbility/LuxIlluminationPassive.mSpellCalculations.TotalDamage (16.23.8406595+branch.releases-16-23.content.release)",
+              "source": "Characters/Lux/Spells/LuxIlluminationPassiveAbility/LuxIlluminationPassive.mSpellCalculations.TotalDamage (16.23.8418428+branch.releases-16-23.content.release)",
               "damage_type_source": "buff_luxp_tooltip <magicDamage>"
             }
           ],
@@ -123,7 +123,7 @@
             ]
           },
           "label": "Derivado",
-          "source": "Characters/Lux/Spells/LuxIlluminationPassiveAbility/LuxIlluminationPassive.mSpellCalculations.TotalDamage (16.23.8406595+branch.releases-16-23.content.release)",
+          "source": "Characters/Lux/Spells/LuxIlluminationPassiveAbility/LuxIlluminationPassive.mSpellCalculations.TotalDamage (16.23.8418428+branch.releases-16-23.content.release)",
           "trigger": "after_ability",
           "damage_type": "magic",
           "duration_seconds": 6
@@ -170,7 +170,7 @@
                 ]
               },
               "label": "Derivado",
-              "source": "Characters/Lux/Spells/LuxLightBindingAbility/LuxLightBinding.mSpellCalculations.TotalDamageTT (16.23.8406595+branch.releases-16-23.content.release)",
+              "source": "Characters/Lux/Spells/LuxLightBindingAbility/LuxLightBinding.mSpellCalculations.TotalDamageTT (16.23.8418428+branch.releases-16-23.content.release)",
               "damage_type_source": "spell_luxq_tooltip <magicDamage>"
             }
           ],
@@ -190,6 +190,45 @@
       "passive_stats": [],
       "not_modelled": [
         "Escudo de ida y vuelta (TotalShieldTT)"
+      ],
+      "active_effects": [
+        {
+          "id": "prismatic_barrier_shield",
+          "name": "Barrera prismática (escudo por pasada)",
+          "kind": "shield",
+          "formula": {
+            "op": "add",
+            "operands": [
+              {
+                "op": "by_rank",
+                "values": [
+                  40,
+                  55,
+                  70,
+                  85,
+                  100
+                ]
+              },
+              {
+                "op": "mul",
+                "operands": [
+                  {
+                    "op": "constant",
+                    "value": 0.4
+                  },
+                  {
+                    "op": "stat",
+                    "stat": "ability_power",
+                    "scope": "total"
+                  }
+                ]
+              }
+            ]
+          },
+          "label": "Derivado",
+          "source": "Characters/Lux/Spells/LuxPrismaticWaveAbility/LuxPrismaticWave.mSpellCalculations.TotalShieldTT (16.23.8418428+branch.releases-16-23.content.release)",
+          "duration_seconds": 2.5
+        }
       ]
     },
     "E": {
@@ -232,7 +271,7 @@
                 ]
               },
               "label": "Derivado",
-              "source": "Characters/Lux/Spells/LuxLightStrikeKugelAbility/LuxLightStrikeKugel.mSpellCalculations.TotalDamageTT (16.23.8406595+branch.releases-16-23.content.release)",
+              "source": "Characters/Lux/Spells/LuxLightStrikeKugelAbility/LuxLightStrikeKugel.mSpellCalculations.TotalDamageTT (16.23.8418428+branch.releases-16-23.content.release)",
               "damage_type_source": "spell_luxe_tooltip <magicDamage>"
             }
           ],
@@ -282,7 +321,7 @@
                 ]
               },
               "label": "Derivado",
-              "source": "Characters/Lux/Spells/LuxRAbility/LuxR.mSpellCalculations.TotalDamage (16.23.8406595+branch.releases-16-23.content.release)",
+              "source": "Characters/Lux/Spells/LuxRAbility/LuxR.mSpellCalculations.TotalDamage (16.23.8418428+branch.releases-16-23.content.release)",
               "damage_type_source": "spell_luxr_tooltip <magicDamage>"
             }
           ],
