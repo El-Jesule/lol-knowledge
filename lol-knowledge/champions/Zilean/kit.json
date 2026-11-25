@@ -70,6 +70,25 @@
       "passive_stats": [],
       "not_modelled": [
         "Aturdimiento en área al encadenar dos bombas sobre la misma unidad"
+      ],
+      "cc_effects": [
+        {
+          "id": "q_stun",
+          "name": "Bomba de relojería (aturdimiento)",
+          "kind": "stun",
+          "duration_formula": {
+            "op": "by_rank",
+            "values": [
+              1.1,
+              1.2,
+              1.3,
+              1.4,
+              1.5
+            ]
+          },
+          "label": "Derivado",
+          "source": "Characters/Zilean/Spells/ZileanQAbility/ZileanQ.DataValues.StunDuration (16.23.8418428+branch.releases-16-23.content.release)"
+        }
       ]
     },
     "W": {

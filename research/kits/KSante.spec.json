@@ -110,6 +110,17 @@
       ],
       "not_modelled": [
         "Ralentización, atracción en Q3 y reducción de enfriamiento/tiempo de lanzamiento por resistencias"
+      ],
+      "cc_effects": [
+        {
+          "id": "q_recast_stun",
+          "name": "Golpes de ntofo (aturdimiento)",
+          "kind": "stun",
+          "data_value": "StunDuration",
+          "case_ids": [
+            "recast"
+          ]
+        }
       ]
     },
     "W": {
@@ -166,6 +177,14 @@
           "duration_seconds": {
             "data_value": "MaxDuration"
           }
+        }
+      ],
+      "cc_effects": [
+        {
+          "id": "w_stun",
+          "name": "Pionero (aturdimiento)",
+          "kind": "stun",
+          "data_value": "MinKnockbackDuration"
         }
       ]
     },

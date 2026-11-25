@@ -96,12 +96,73 @@ ACTIVE_EFFECT_KINDS = frozenset(
         "spell_shield",
         "block_first_hit",
         "invulnerable",
+        "cleanse",
+        "cc_immune",
     }
 )
 ACTIVE_INVULN_MODES = frozenset({"invulnerable", "undying"})
 _FORMULA_OPTIONAL_ACTIVE_KINDS = frozenset(
-    {"dodge_attacks", "spell_shield", "block_first_hit", "invulnerable"}
+    {"dodge_attacks", "spell_shield", "block_first_hit", "invulnerable", "cleanse", "cc_immune"}
 )
+CC_KINDS = frozenset(
+    {
+        "stun",
+        "airborne",
+        "suppression",
+        "silence",
+        "charm",
+        "fear",
+        "taunt",
+        "blind",
+        "polymorph",
+        "sleep",
+        "berserk",
+        "root",
+    }
+)
+CC_TENACITY_IMMUNE = frozenset({"airborne", "suppression"})
+CC_CLEANSE_IMMUNE = frozenset({"airborne", "suppression"})
+CC_QSS_IMMUNE = frozenset({"airborne"})
+CC_BLOCKS_ATTACKS = frozenset(
+    {"stun", "airborne", "suppression", "charm", "fear", "polymorph", "sleep"}
+)
+CC_BLOCKS_ABILITIES = frozenset(
+    {
+        "stun",
+        "airborne",
+        "suppression",
+        "charm",
+        "fear",
+        "taunt",
+        "polymorph",
+        "sleep",
+        "silence",
+        "berserk",
+    }
+)
+CC_BLINDS_ATTACKS = frozenset({"blind"})
+
+
+@dataclass(frozen=True)
+class CCEffectSpec:
+    """Declarative crowd-control effect applied by casting Q/W/E/R."""
+
+    id: str
+    name: str
+    kind: str
+    duration_formula: Mapping[str, Any]
+    label: Label
+    source: str
+    case_ids: tuple[str, ...] = ()
+    tenacity_applies: bool = True
+    cleansable_by_cleanse: bool = True
+    cleansable_by_qss: bool = True
+    condition: str = ""
+
+    def applies_to_case(self, case_id: str | None) -> bool:
+        if not self.case_ids:
+            return True
+        return case_id in self.case_ids
 
 
 @dataclass(frozen=True)
@@ -248,6 +309,7 @@ class AbilitySpec:
     cost: CostSpec | None = None
     passive_effects: tuple[PassiveEffectSpec, ...] = ()
     active_effects: tuple[ActiveEffectSpec, ...] = ()
+    cc_effects: tuple[CCEffectSpec, ...] = ()
 
     def case(self, case_id: str) -> CaseSpec:
         for case in self.cases:
@@ -732,6 +794,76 @@ def _active_effects(
     return tuple(effects)
 
 
+def _cc_effects(
+    record: Mapping[str, Any], max_rank: int, valid_cases: set[str], context: str
+) -> tuple[CCEffectSpec, ...]:
+    raw_list = record.get("cc_effects")
+    if raw_list is None:
+        return ()
+    if not isinstance(raw_list, list):
+        raise KitError(f"{context}: cc_effects must be a list")
+    effects: list[CCEffectSpec] = []
+    seen: set[str] = set()
+    for index, entry in enumerate(raw_list):
+        ectx = f"{context}.cc_effects[{index}]"
+        if not isinstance(entry, Mapping):
+            raise KitError(f"{ectx}: must be an object")
+        eid = _text(entry, "id", ectx)
+        if CASE_ID.fullmatch(eid) is None:
+            raise KitError(f"{ectx}: id must be lowercase snake_case")
+        if eid in seen:
+            raise KitError(f"{ectx}: duplicate cc_effect id {eid!r}")
+        seen.add(eid)
+        kind = _text(entry, "kind", ectx)
+        if kind not in CC_KINDS:
+            raise KitError(f"{ectx}: unknown kind {kind!r} (known: {sorted(CC_KINDS)})")
+        dur_formula = entry.get("duration_formula")
+        issues = formula_issues(dur_formula, ops=ABILITY_OPS)
+        if issues:
+            raise KitError(f"{ectx}: invalid duration_formula: {'; '.join(issues)}")
+        for length in _rank_lists(dur_formula):
+            if length != max_rank:
+                raise KitError(
+                    f"{ectx}: duration_formula by_rank has {length} values, "
+                    f"the ability has {max_rank}"
+                )
+        raw_cases = entry.get("case_ids")
+        case_ids: tuple[str, ...] = ()
+        if raw_cases is not None:
+            if not isinstance(raw_cases, list) or not all(isinstance(c, str) for c in raw_cases):
+                raise KitError(f"{ectx}: case_ids must be a list of case id strings")
+            unknown_c = [c for c in raw_cases if c not in valid_cases]
+            if unknown_c:
+                raise KitError(f"{ectx}: unknown case_ids {unknown_c}")
+            case_ids = tuple(raw_cases)
+        tenacity_applies = entry.get("tenacity_applies", kind not in CC_TENACITY_IMMUNE)
+        if not isinstance(tenacity_applies, bool):
+            raise KitError(f"{ectx}: tenacity_applies must be true or false")
+        cleansable_cleanse = entry.get("cleansable_by_cleanse", kind not in CC_CLEANSE_IMMUNE)
+        if not isinstance(cleansable_cleanse, bool):
+            raise KitError(f"{ectx}: cleansable_by_cleanse must be true or false")
+        cleansable_qss = entry.get("cleansable_by_qss", kind not in CC_QSS_IMMUNE)
+        if not isinstance(cleansable_qss, bool):
+            raise KitError(f"{ectx}: cleansable_by_qss must be true or false")
+        condition = str(entry.get("condition", ""))
+        effects.append(
+            CCEffectSpec(
+                id=eid,
+                name=_text(entry, "name", ectx),
+                kind=kind,
+                duration_formula=dur_formula,
+                label=_label(entry, ectx),
+                source=_text(entry, "source", ectx),
+                case_ids=case_ids,
+                tenacity_applies=tenacity_applies,
+                cleansable_by_cleanse=cleansable_cleanse,
+                cleansable_by_qss=cleansable_qss,
+                condition=condition,
+            )
+        )
+    return tuple(effects)
+
+
 def _ability(slot: str, record: Any) -> AbilitySpec:
     context = f"kit.{slot}"
     if not isinstance(record, Mapping):
@@ -851,6 +983,7 @@ def _ability(slot: str, record: Any) -> AbilitySpec:
         _cost(record, max_rank, context),
         _passive_effects(record, max_rank, context),
         _active_effects(record, max_rank, {case.id for case in cases}, context),
+        _cc_effects(record, max_rank, {case.id for case in cases}, context),
     )
 
 

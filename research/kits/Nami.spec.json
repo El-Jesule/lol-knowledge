@@ -43,6 +43,14 @@
       ],
       "not_modelled": [
         "Aturdimiento (StunDuration)"
+      ],
+      "cc_effects": [
+        {
+          "id": "q_stun",
+          "name": "Prisión de agua (aturdimiento)",
+          "kind": "stun",
+          "data_value": "StunDuration"
+        }
       ]
     },
     "W": {
@@ -120,6 +128,14 @@
       ],
       "not_modelled": [
         "Lanzamiento por los aires, ralentización y velocidad a aliados"
+      ],
+      "cc_effects": [
+        {
+          "id": "r_airborne",
+          "name": "Maremoto (lanzamiento por los aires)",
+          "kind": "airborne",
+          "data_value": "KnockupDuration"
+        }
       ]
     }
   }

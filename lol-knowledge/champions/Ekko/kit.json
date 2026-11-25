@@ -403,6 +403,19 @@
           "condition": "entered_chronosphere",
           "duration_seconds": 2.0
         }
+      ],
+      "cc_effects": [
+        {
+          "id": "w_stun",
+          "name": "Convergencia paralela (aturdimiento)",
+          "kind": "stun",
+          "duration_formula": {
+            "op": "constant",
+            "value": 2.25
+          },
+          "label": "Derivado",
+          "source": "Characters/Ekko/Spells/EkkoWAbility/EkkoW.DataValues.StunDuration (16.23.8418428+branch.releases-16-23.content.release)"
+        }
       ]
     },
     "E": {

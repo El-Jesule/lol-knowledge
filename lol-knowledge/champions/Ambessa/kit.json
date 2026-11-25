@@ -567,6 +567,30 @@
       ],
       "not_modelled": [
         "Omnisucción pasiva de habilidades (Calc_Omnivamp usa stat no corroborado en bin), supresión e imparabilidad"
+      ],
+      "cc_effects": [
+        {
+          "id": "r_suppression",
+          "name": "Ajusticiar (supresión)",
+          "kind": "suppression",
+          "duration_formula": {
+            "op": "constant",
+            "value": 0.75
+          },
+          "label": "Derivado",
+          "source": "Characters/Ambessa/Spells/AmbessaRAbility/AmbessaR.DataValues.Suppress_Duration (16.23.8418428+branch.releases-16-23.content.release)"
+        },
+        {
+          "id": "r_stun",
+          "name": "Ajusticiar (aturdimiento)",
+          "kind": "stun",
+          "duration_formula": {
+            "op": "constant",
+            "value": 0.4
+          },
+          "label": "Derivado",
+          "source": "Characters/Ambessa/Spells/AmbessaRAbility/AmbessaR.DataValues.Stun_Duration (16.23.8418428+branch.releases-16-23.content.release)"
+        }
       ]
     }
   }

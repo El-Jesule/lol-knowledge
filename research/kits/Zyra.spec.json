@@ -68,6 +68,14 @@
       ],
       "not_modelled": [
         "Inmovilización (RootDuration) e invocación de Azotavides"
+      ],
+      "cc_effects": [
+        {
+          "id": "e_root",
+          "name": "Raíces atenazadoras (enraizamiento)",
+          "kind": "root",
+          "data_value": "RootDuration"
+        }
       ]
     },
     "R": {
@@ -86,6 +94,14 @@
       ],
       "not_modelled": [
         "Lanzamiento por los aires tras 2 s y enfurecimiento de plantas"
+      ],
+      "cc_effects": [
+        {
+          "id": "r_airborne",
+          "name": "Tuercespinas (lanzamiento por los aires)",
+          "kind": "airborne",
+          "data_value": "KnockupDuration"
+        }
       ]
     }
   }

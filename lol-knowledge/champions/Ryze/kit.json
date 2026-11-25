@@ -171,6 +171,19 @@
       "passive_stats": [],
       "not_modelled": [
         "Ralentización del 50 % (o inmovilización al consumir Flujo)"
+      ],
+      "cc_effects": [
+        {
+          "id": "w_root",
+          "name": "Prisión rúnica (enraizamiento)",
+          "kind": "root",
+          "duration_formula": {
+            "op": "constant",
+            "value": 1.5
+          },
+          "label": "Derivado",
+          "source": "Characters/Ryze/Spells/RyzeWAbility/RyzeW.DataValues.CCDuration (16.23.8418428+branch.releases-16-23.content.release)"
+        }
       ]
     },
     "E": {

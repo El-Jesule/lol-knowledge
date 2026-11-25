@@ -183,6 +183,22 @@
       "passive_stats": [],
       "not_modelled": [
         "Ralentización y lanzamiento por los aires tras 1 s de carga"
+      ],
+      "cc_effects": [
+        {
+          "id": "q_max_stun",
+          "name": "Impacto aniquilador (aturdimiento)",
+          "kind": "stun",
+          "duration_formula": {
+            "op": "constant",
+            "value": 1.25
+          },
+          "label": "Derivado",
+          "source": "Characters/Sion/Spells/SionQAbility/SionQ.DataValues.BaseStunTime (16.23.8418428+branch.releases-16-23.content.release)",
+          "case_ids": [
+            "max"
+          ]
+        }
       ]
     },
     "W": {
@@ -457,6 +473,19 @@
       "passive_stats": [],
       "not_modelled": [
         "Imparabilidad y aturdimiento escalado con distancia"
+      ],
+      "cc_effects": [
+        {
+          "id": "r_stun",
+          "name": "Embestida imparable (aturdimiento)",
+          "kind": "stun",
+          "duration_formula": {
+            "op": "constant",
+            "value": 0.75
+          },
+          "label": "Derivado",
+          "source": "Characters/Sion/Spells/SionRAbility/SionR.DataValues.MinStunDuration (16.23.8418428+branch.releases-16-23.content.release)"
+        }
       ]
     }
   }

@@ -3,7 +3,7 @@
   "champion": "Elise",
   "label": "Derivado",
   "game_version": "16.23",
-  "content_version": "16.23.8406595+branch.releases-16-23.content.release",
+  "content_version": "16.23.8418428+branch.releases-16-23.content.release",
   "verified_against": {
     "content_version": "16.23.8406595+branch.releases-16-23.content.release",
     "bin_sha256": "0b5d75f12f867a8ace14a88e73bfe097ca56cc22254939008709f4e1e015a390",
@@ -85,7 +85,7 @@
                 ]
               },
               "label": "Derivado",
-              "source": "Characters/Elise/Spells/EliseHumanQAbility/EliseHumanQ · DataValues.BaseDamage + mSpellCalculations.HumanPercentHealth % × vida actual del objetivo (16.23.8406595+branch.releases-16-23.content.release)",
+              "source": "Characters/Elise/Spells/EliseHumanQAbility/EliseHumanQ · DataValues.BaseDamage + mSpellCalculations.HumanPercentHealth % × vida actual del objetivo (16.23.8418428+branch.releases-16-23.content.release)",
               "damage_type_source": "spell_elisehumanq_tooltip <magicDamage>"
             }
           ]
@@ -136,7 +136,7 @@
                 ]
               },
               "label": "Derivado",
-              "source": "Characters/Elise/Spells/EliseHumanWAbility/EliseHumanW.mSpellCalculations.TotalDamage (16.23.8406595+branch.releases-16-23.content.release)",
+              "source": "Characters/Elise/Spells/EliseHumanWAbility/EliseHumanW.mSpellCalculations.TotalDamage (16.23.8418428+branch.releases-16-23.content.release)",
               "damage_type_source": "spell_elisehumanw_tooltip <magicDamage>"
             }
           ]
@@ -154,6 +154,25 @@
       "passive_stats": [],
       "not_modelled": [
         "Forma humana: aturdimiento (TotalStunDuration); forma de araña: Rápel inalcanzable y amplificación de daño/curación"
+      ],
+      "cc_effects": [
+        {
+          "id": "e_stun",
+          "name": "Maraña / Rápel (aturdimiento)",
+          "kind": "stun",
+          "duration_formula": {
+            "op": "by_rank",
+            "values": [
+              1.6,
+              1.8,
+              2,
+              2.2,
+              2.4
+            ]
+          },
+          "label": "Derivado",
+          "source": "Characters/Elise/Spells/EliseHumanEAbility/EliseHumanE.DataValues.BaseStunDuration (16.23.8418428+branch.releases-16-23.content.release)"
+        }
       ]
     },
     "R": {
@@ -195,7 +214,7 @@
                 ]
               },
               "label": "Derivado",
-              "source": "Characters/Elise/Spells/EliseRAbility/EliseR.mSpellCalculations.PassiveTotalDamage (16.23.8406595+branch.releases-16-23.content.release)",
+              "source": "Characters/Elise/Spells/EliseRAbility/EliseR.mSpellCalculations.PassiveTotalDamage (16.23.8418428+branch.releases-16-23.content.release)",
               "damage_type_source": "spell_elisepassive_tooltip <magicDamage>"
             }
           ]
@@ -235,7 +254,7 @@
                 ]
               },
               "label": "Derivado",
-              "source": "Characters/Elise/Spells/EliseRAbility/EliseR.mSpellCalculations.SpiderlingTotalDamage (16.23.8406595+branch.releases-16-23.content.release)",
+              "source": "Characters/Elise/Spells/EliseRAbility/EliseR.mSpellCalculations.SpiderlingTotalDamage (16.23.8418428+branch.releases-16-23.content.release)",
               "damage_type_source": "spell_eliser_jade_tooltip <physicalDamage>"
             }
           ]

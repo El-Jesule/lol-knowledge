@@ -103,6 +103,15 @@
             "data_value": "HealingWindow"
           },
           "input_name": "recent_damage_taken"
+        },
+        {
+          "id": "ferocious_battle_roar_cleanse",
+          "name": "Rugido de batalla potenciado (purga de CC)",
+          "kind": "cleanse",
+          "case_ids": [
+            "empowered"
+          ],
+          "source_note": "Purga efectos de control de masas al lanzar W potenciada"
         }
       ]
     },
@@ -131,6 +140,17 @@
       ],
       "not_modelled": [
         "Ralentización, revelación e inmovilización en Ferocidad máxima"
+      ],
+      "cc_effects": [
+        {
+          "id": "e_empowered_root",
+          "name": "Golpe bola (enraizamiento)",
+          "kind": "root",
+          "data_value": "CCDuration",
+          "case_ids": [
+            "empowered"
+          ]
+        }
       ]
     },
     "R": {

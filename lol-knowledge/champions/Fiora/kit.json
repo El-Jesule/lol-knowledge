@@ -259,6 +259,18 @@
           "source": "Characters/Fiora/Spells/FioraWAbility/FioraW · DataValues.ParryDuration parry invulnerability (16.23.8418428+branch.releases-16-23.content.release)",
           "mode": "invulnerable",
           "duration_seconds": 0.75
+        },
+        {
+          "id": "riposte_cc_immune",
+          "name": "Réplica (inmunidad a CC)",
+          "kind": "cc_immune",
+          "formula": {
+            "op": "constant",
+            "value": 1
+          },
+          "label": "Derivado",
+          "source": "Characters/Fiora/Spells/FioraWAbility/FioraW · DataValues.ParryDuration parry CC immunity (16.23.8418428+branch.releases-16-23.content.release)",
+          "duration_seconds": 0.75
         }
       ]
     },

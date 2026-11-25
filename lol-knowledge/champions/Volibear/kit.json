@@ -288,6 +288,19 @@
           "mode": "percent_ms",
           "duration_seconds": 4
         }
+      ],
+      "cc_effects": [
+        {
+          "id": "q_stun",
+          "name": "Impacto atronador (aturdimiento)",
+          "kind": "stun",
+          "duration_formula": {
+            "op": "constant",
+            "value": 1
+          },
+          "label": "Derivado",
+          "source": "Characters/Volibear/Spells/VolibearQAbility/VolibearQ.DataValues.StunDuration (16.23.8418428+branch.releases-16-23.content.release)"
+        }
       ]
     },
     "W": {

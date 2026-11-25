@@ -115,6 +115,25 @@
       "passive_stats": [],
       "not_modelled": [
         "Ceguera (BlindDuration)"
+      ],
+      "cc_effects": [
+        {
+          "id": "q_blind",
+          "name": "Dardo cegador (ceguera)",
+          "kind": "blind",
+          "duration_formula": {
+            "op": "by_rank",
+            "values": [
+              2,
+              2.25,
+              2.5,
+              2.75,
+              3
+            ]
+          },
+          "label": "Derivado",
+          "source": "Characters/Teemo/Spells/TeemoQAbility/TeemoQ.DataValues.BlindDuration (16.23.8418428+branch.releases-16-23.content.release)"
+        }
       ]
     },
     "W": {

@@ -323,6 +323,20 @@
           "source": "Characters/Rengar/Spells/RengarWAbility/RengarW.DataValues.DamagePercentageHealed (16.23.8418428+branch.releases-16-23.content.release)",
           "input_name": "recent_damage_taken",
           "window_seconds": 1.5
+        },
+        {
+          "id": "ferocious_battle_roar_cleanse",
+          "name": "Rugido de batalla potenciado (purga de CC)",
+          "kind": "cleanse",
+          "formula": {
+            "op": "constant",
+            "value": 1
+          },
+          "label": "Derivado",
+          "source": "Characters/Rengar/Spells/RengarWAbility/RengarW · Purga efectos de control de masas al lanzar W potenciada (16.23.8418428+branch.releases-16-23.content.release)",
+          "case_ids": [
+            "empowered"
+          ]
         }
       ]
     },
@@ -429,6 +443,22 @@
       "passive_stats": [],
       "not_modelled": [
         "Ralentización, revelación e inmovilización en Ferocidad máxima"
+      ],
+      "cc_effects": [
+        {
+          "id": "e_empowered_root",
+          "name": "Golpe bola (enraizamiento)",
+          "kind": "root",
+          "duration_formula": {
+            "op": "constant",
+            "value": 1.75
+          },
+          "label": "Derivado",
+          "source": "Characters/Rengar/Spells/RengarEAbility/RengarE.DataValues.CCDuration (16.23.8418428+branch.releases-16-23.content.release)",
+          "case_ids": [
+            "empowered"
+          ]
+        }
       ]
     },
     "R": {

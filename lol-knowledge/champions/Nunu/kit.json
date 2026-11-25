@@ -327,6 +327,19 @@
       "passive_stats": [],
       "not_modelled": [
         "Lanzamiento por los aires y aturdimiento escalado (MaximumStunDuration)"
+      ],
+      "cc_effects": [
+        {
+          "id": "w_airborne",
+          "name": "¡La bola más grande de la historia! (lanzamiento por los aires)",
+          "kind": "airborne",
+          "duration_formula": {
+            "op": "constant",
+            "value": 0.5
+          },
+          "label": "Derivado",
+          "source": "Characters/Nunu/Spells/NunuWAbility/NunuW.DataValues.BaseKnockupDuration (16.23.8418428+branch.releases-16-23.content.release)"
+        }
       ]
     },
     "E": {

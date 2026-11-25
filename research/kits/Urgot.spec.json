@@ -145,6 +145,14 @@
             "data_value": "EShieldDuration"
           }
         }
+      ],
+      "cc_effects": [
+        {
+          "id": "e_stun",
+          "name": "Desdén (aturdimiento)",
+          "kind": "stun",
+          "data_value": "StunDuration"
+        }
       ]
     },
     "R": {
@@ -163,6 +171,14 @@
       ],
       "not_modelled": [
         "Ralentización por vida faltante, reactivación de ejecución bajo 25 % de vida y miedo en área"
+      ],
+      "cc_effects": [
+        {
+          "id": "r_fear",
+          "name": "Miedo más allá de la muerte (miedo)",
+          "kind": "fear",
+          "data_value": "RFearDuration"
+        }
       ]
     }
   }

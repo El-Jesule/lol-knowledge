@@ -74,6 +74,14 @@
       ],
       "not_modelled": [
         "Terror (FearDuration), suelo mínimo de daño y tope contra monstruos"
+      ],
+      "cc_effects": [
+        {
+          "id": "q_fear",
+          "name": "Terror (miedo)",
+          "kind": "fear",
+          "data_value": "FearDuration"
+        }
       ]
     },
     "W": {
@@ -154,6 +162,14 @@
       ],
       "not_modelled": [
         "Ralentización y silencio en el centro"
+      ],
+      "cc_effects": [
+        {
+          "id": "e_silence",
+          "name": "Segar (silencio)",
+          "kind": "silence",
+          "data_value": "SilenceDuration"
+        }
       ]
     },
     "R": {

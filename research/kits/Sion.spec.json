@@ -93,6 +93,17 @@
       ],
       "not_modelled": [
         "Ralentización y lanzamiento por los aires tras 1 s de carga"
+      ],
+      "cc_effects": [
+        {
+          "id": "q_max_stun",
+          "name": "Impacto aniquilador (aturdimiento)",
+          "kind": "stun",
+          "data_value": "BaseStunTime",
+          "case_ids": [
+            "max"
+          ]
+        }
       ]
     },
     "W": {
@@ -191,6 +202,14 @@
       ],
       "not_modelled": [
         "Imparabilidad y aturdimiento escalado con distancia"
+      ],
+      "cc_effects": [
+        {
+          "id": "r_stun",
+          "name": "Embestida imparable (aturdimiento)",
+          "kind": "stun",
+          "data_value": "MinStunDuration"
+        }
       ]
     }
   }

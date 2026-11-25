@@ -83,6 +83,14 @@
       ],
       "not_modelled": [
         "Lanzamiento por los aires"
+      ],
+      "cc_effects": [
+        {
+          "id": "q_airborne",
+          "name": "Asalto ártico (lanzamiento por los aires)",
+          "kind": "airborne",
+          "data_value": "KnockupDurationTOOLTIPONLY"
+        }
       ]
     },
     "W": {
@@ -140,6 +148,14 @@
       ],
       "not_modelled": [
         "Acumulación de 4 cargas con ataques cuerpo a cuerpo aliados y aturdimiento"
+      ],
+      "cc_effects": [
+        {
+          "id": "e_stun",
+          "name": "Congelación permanente (aturdimiento)",
+          "kind": "stun",
+          "data_value": "CCDuration"
+        }
       ]
     },
     "R": {
@@ -167,6 +183,26 @@
       ],
       "not_modelled": [
         "Aturdimiento, revelación y tormenta de hielo posterior"
+      ],
+      "cc_effects": [
+        {
+          "id": "r_close_stun",
+          "name": "Prisión glacial (aturdimiento)",
+          "kind": "stun",
+          "data_value": "BaseStunDuration",
+          "case_ids": [
+            "close"
+          ]
+        },
+        {
+          "id": "r_far_stun",
+          "name": "Prisión glacial (aturdimiento)",
+          "kind": "stun",
+          "data_value": "EmpoweredStunDuration",
+          "case_ids": [
+            "far"
+          ]
+        }
       ]
     }
   }

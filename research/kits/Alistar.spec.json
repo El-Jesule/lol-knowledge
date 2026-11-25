@@ -40,6 +40,14 @@
       ],
       "not_modelled": [
         "Lanzamiento por los aires (KnockupDuration)"
+      ],
+      "cc_effects": [
+        {
+          "id": "q_airborne",
+          "name": "Pulverización (lanzamiento por los aires)",
+          "kind": "airborne",
+          "data_value": "KnockupDuration"
+        }
       ]
     },
     "W": {
@@ -85,6 +93,14 @@
       ],
       "not_modelled": [
         "Aturdimiento del ataque potenciado"
+      ],
+      "cc_effects": [
+        {
+          "id": "e_stun",
+          "name": "Pisotear (aturdimiento)",
+          "kind": "stun",
+          "data_value": "StunDuration"
+        }
       ]
     },
     "R": {
@@ -103,6 +119,12 @@
           "duration_seconds": {
             "data_value": "RDuration"
           }
+        },
+        {
+          "id": "unbreakable_will_cleanse",
+          "name": "Voluntad inquebrantable (purga de CC)",
+          "kind": "cleanse",
+          "source_note": "Purga inmediata de efectos de control de masas al lanzar R"
         }
       ]
     }

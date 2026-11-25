@@ -178,6 +178,14 @@
       ],
       "not_modelled": [
         "Ralentización, aturdimiento bilateral y bonificación contra monstruos"
+      ],
+      "cc_effects": [
+        {
+          "id": "e_stun",
+          "name": "Rompecaras (aturdimiento)",
+          "kind": "stun",
+          "data_value": "StunDuration"
+        }
       ]
     },
     "R": {
@@ -197,6 +205,14 @@
       "not_modelled": [
         "Daño adicional según la vida adicional del campeón agarrado (MaxHealthDamage × vida adicional del objetivo)",
         "Supresión y ralentización"
+      ],
+      "cc_effects": [
+        {
+          "id": "r_suppression",
+          "name": "El gran espectáculo (supresión)",
+          "kind": "suppression",
+          "data_value": "GrabDuration"
+        }
       ]
     }
   }

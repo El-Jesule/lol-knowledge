@@ -104,6 +104,14 @@
       ],
       "not_modelled": [
         "Provocación a campeones y monstruos (Duration)"
+      ],
+      "cc_effects": [
+        {
+          "id": "e_taunt",
+          "name": "Provocación frenética (provocación)",
+          "kind": "taunt",
+          "data_value": "Duration"
+        }
       ]
     },
     "R": {
@@ -122,6 +130,14 @@
       ],
       "not_modelled": [
         "Réplicas posteriores, ralentización y daño extra combinado con Bola de poder"
+      ],
+      "cc_effects": [
+        {
+          "id": "r_airborne",
+          "name": "Golpe veloz (lanzamiento por los aires)",
+          "kind": "airborne",
+          "data_value": "KnockupDuration"
+        }
       ]
     }
   }

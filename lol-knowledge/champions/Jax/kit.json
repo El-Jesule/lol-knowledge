@@ -345,6 +345,19 @@
           "source": "Characters/Jax/Spells/JaxEAbility/JaxE · DataValues.DodgeDuration attack dodge (16.23.8418428+branch.releases-16-23.content.release)",
           "duration_seconds": 2
         }
+      ],
+      "cc_effects": [
+        {
+          "id": "e_stun",
+          "name": "Contraataque (aturdimiento)",
+          "kind": "stun",
+          "duration_formula": {
+            "op": "constant",
+            "value": 1
+          },
+          "label": "Derivado",
+          "source": "Characters/Jax/Spells/JaxEAbility/JaxE.DataValues.StunDuration (16.23.8418428+branch.releases-16-23.content.release)"
+        }
       ]
     },
     "R": {

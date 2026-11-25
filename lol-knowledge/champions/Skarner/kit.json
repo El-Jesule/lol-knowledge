@@ -387,6 +387,19 @@
       "passive_stats": [],
       "not_modelled": [
         "Arrastre a través de terreno y aturdimiento contra muro"
+      ],
+      "cc_effects": [
+        {
+          "id": "e_stun",
+          "name": "Hostilidad ixtalí (aturdimiento)",
+          "kind": "stun",
+          "duration_formula": {
+            "op": "constant",
+            "value": 1.1
+          },
+          "label": "Derivado",
+          "source": "Characters/Skarner/Spells/SkarnerEAbility/SkarnerE.DataValues.StunDuration (16.23.8418428+branch.releases-16-23.content.release)"
+        }
       ]
     },
     "R": {
@@ -451,6 +464,19 @@
           "stat": "move_speed",
           "mode": "percent_ms",
           "duration_seconds": 1.5
+        }
+      ],
+      "cc_effects": [
+        {
+          "id": "r_suppression",
+          "name": "Empalar (supresión)",
+          "kind": "suppression",
+          "duration_formula": {
+            "op": "constant",
+            "value": 1.5
+          },
+          "label": "Derivado",
+          "source": "Characters/Skarner/Spells/SkarnerRAbility/SkarnerR.DataValues.Duration (16.23.8418428+branch.releases-16-23.content.release)"
         }
       ]
     }

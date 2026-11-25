@@ -157,6 +157,25 @@
       "passive_stats": [],
       "not_modelled": [
         "Lanzamiento por los aires, ralentización y reinicio del enfriamiento direccional de Q"
+      ],
+      "cc_effects": [
+        {
+          "id": "w_airborne",
+          "name": "Arriba y abajo (lanzamiento por los aires)",
+          "kind": "airborne",
+          "duration_formula": {
+            "op": "by_rank",
+            "values": [
+              0.6,
+              0.7,
+              0.8,
+              0.9,
+              1
+            ]
+          },
+          "label": "Derivado",
+          "source": "Characters/Belveth/Spells/BelvethWAbility/BelvethW.DataValues.Duration (16.23.8418428+branch.releases-16-23.content.release)"
+        }
       ]
     },
     "E": {

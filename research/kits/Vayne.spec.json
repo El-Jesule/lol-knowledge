@@ -108,6 +108,17 @@
       ],
       "not_modelled": [
         "Empuje y aturdimiento contra terreno (StunDuration)"
+      ],
+      "cc_effects": [
+        {
+          "id": "e_wall_stun_stun",
+          "name": "Condena (aturdimiento)",
+          "kind": "stun",
+          "data_value": "StunDuration",
+          "case_ids": [
+            "wall_stun"
+          ]
+        }
       ]
     },
     "R": {

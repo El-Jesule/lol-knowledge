@@ -3,7 +3,7 @@
   "champion": "Shaco",
   "label": "Derivado",
   "game_version": "16.23",
-  "content_version": "16.23.8406595+branch.releases-16-23.content.release",
+  "content_version": "16.23.8418428+branch.releases-16-23.content.release",
   "verified_against": {
     "content_version": "16.23.8406595+branch.releases-16-23.content.release",
     "bin_sha256": "3ed5a5ffe1637c90ee1340e24976b768495fec7a6ac205f568a8a127d8d4a7d3",
@@ -47,7 +47,7 @@
                 ]
               },
               "label": "Derivado",
-              "source": "Characters/Shaco/Spells/ShacoPassiveAbility/ShacoPassive.mSpellCalculations.BasicAttackDamage (16.23.8406595+branch.releases-16-23.content.release)",
+              "source": "Characters/Shaco/Spells/ShacoPassiveAbility/ShacoPassive.mSpellCalculations.BasicAttackDamage (16.23.8418428+branch.releases-16-23.content.release)",
               "damage_type_source": "spell_shacopassive_tooltip <physicalDamage>"
             }
           ]
@@ -83,7 +83,7 @@
                 ]
               },
               "label": "Derivado",
-              "source": "Characters/Shaco/Spells/ShacoPassiveAbility/ShacoPassive.mSpellCalculations.ShivDamage (16.23.8406595+branch.releases-16-23.content.release)",
+              "source": "Characters/Shaco/Spells/ShacoPassiveAbility/ShacoPassive.mSpellCalculations.ShivDamage (16.23.8418428+branch.releases-16-23.content.release)",
               "damage_type_source": "spell_shacopassive_tooltip <magicDamage>"
             }
           ]
@@ -128,7 +128,7 @@
                 ]
               },
               "label": "Derivado",
-              "source": "Characters/Shaco/Spells/ShacoPassiveAbility/ShacoPassive.mSpellCalculations.ShivDamageExecute (16.23.8406595+branch.releases-16-23.content.release)",
+              "source": "Characters/Shaco/Spells/ShacoPassiveAbility/ShacoPassive.mSpellCalculations.ShivDamageExecute (16.23.8418428+branch.releases-16-23.content.release)",
               "damage_type_source": "spell_shacopassive_tooltip <magicDamage>"
             }
           ]
@@ -179,7 +179,7 @@
                 ]
               },
               "label": "Derivado",
-              "source": "Characters/Shaco/Spells/DeceiveAbility/Deceive.mSpellCalculations.TotalDamage (16.23.8406595+branch.releases-16-23.content.release)",
+              "source": "Characters/Shaco/Spells/DeceiveAbility/Deceive.mSpellCalculations.TotalDamage (16.23.8418428+branch.releases-16-23.content.release)",
               "damage_type_source": "spell_shacoq_tooltip <physicalDamage>"
             }
           ]
@@ -230,7 +230,7 @@
                 ]
               },
               "label": "Derivado",
-              "source": "Characters/Shaco/Spells/JackInTheBoxAbility/JackInTheBox.mSpellCalculations.STDamage (16.23.8406595+branch.releases-16-23.content.release)",
+              "source": "Characters/Shaco/Spells/JackInTheBoxAbility/JackInTheBox.mSpellCalculations.STDamage (16.23.8418428+branch.releases-16-23.content.release)",
               "damage_type_source": "spell_jackinthebox_tooltip <magicDamage>"
             }
           ]
@@ -271,7 +271,7 @@
                 ]
               },
               "label": "Derivado",
-              "source": "Characters/Shaco/Spells/JackInTheBoxAbility/JackInTheBox.mSpellCalculations.AoEDamage (16.23.8406595+branch.releases-16-23.content.release)",
+              "source": "Characters/Shaco/Spells/JackInTheBoxAbility/JackInTheBox.mSpellCalculations.AoEDamage (16.23.8418428+branch.releases-16-23.content.release)",
               "damage_type_source": "spell_jackinthebox_tooltip <magicDamage>"
             }
           ]
@@ -280,6 +280,25 @@
       "passive_stats": [],
       "not_modelled": [
         "Miedo en área, daño adicional a monstruos (MonsterBonusDamage) y duración de trampa (TrapDuration)"
+      ],
+      "cc_effects": [
+        {
+          "id": "w_fear",
+          "name": "Caja sorpresa (miedo)",
+          "kind": "fear",
+          "duration_formula": {
+            "op": "by_rank",
+            "values": [
+              0.5,
+              0.75,
+              1,
+              1.25,
+              1.5
+            ]
+          },
+          "label": "Derivado",
+          "source": "Characters/Shaco/Spells/JackInTheBoxAbility/JackInTheBox.DataValues.FearDuration (16.23.8418428+branch.releases-16-23.content.release)"
+        }
       ]
     },
     "E": {
@@ -336,7 +355,7 @@
                 ]
               },
               "label": "Derivado",
-              "source": "Characters/Shaco/Spells/TwoShivPoisonAbility/TwoShivPoison.mSpellCalculations.TotalDamage (16.23.8406595+branch.releases-16-23.content.release)",
+              "source": "Characters/Shaco/Spells/TwoShivPoisonAbility/TwoShivPoison.mSpellCalculations.TotalDamage (16.23.8418428+branch.releases-16-23.content.release)",
               "damage_type_source": "spell_twoshivpoison_tooltip <magicDamage>"
             }
           ]
@@ -400,7 +419,7 @@
                 ]
               },
               "label": "Derivado",
-              "source": "Characters/Shaco/Spells/TwoShivPoisonAbility/TwoShivPoison.mSpellCalculations.TotalExecuteDamage (16.23.8406595+branch.releases-16-23.content.release)",
+              "source": "Characters/Shaco/Spells/TwoShivPoisonAbility/TwoShivPoison.mSpellCalculations.TotalExecuteDamage (16.23.8418428+branch.releases-16-23.content.release)",
               "damage_type_source": "spell_twoshivpoison_tooltip <magicDamage>"
             }
           ]
@@ -449,7 +468,7 @@
                 ]
               },
               "label": "Derivado",
-              "source": "Characters/Shaco/Spells/HallucinateFullAbility/HallucinateFull.mSpellCalculations.ExplosionTotalDamage (16.23.8406595+branch.releases-16-23.content.release)",
+              "source": "Characters/Shaco/Spells/HallucinateFullAbility/HallucinateFull.mSpellCalculations.ExplosionTotalDamage (16.23.8418428+branch.releases-16-23.content.release)",
               "damage_type_source": "spell_hallucinatefull_tooltip <magicDamage>"
             }
           ]
@@ -488,7 +507,7 @@
                 ]
               },
               "label": "Derivado",
-              "source": "Characters/Shaco/Spells/HallucinateFullAbility/HallucinateFull.mSpellCalculations.STDamage (16.23.8406595+branch.releases-16-23.content.release)",
+              "source": "Characters/Shaco/Spells/HallucinateFullAbility/HallucinateFull.mSpellCalculations.STDamage (16.23.8418428+branch.releases-16-23.content.release)",
               "damage_type_source": "spell_hallucinatefull_tooltip <magicDamage>"
             }
           ]
@@ -527,7 +546,7 @@
                 ]
               },
               "label": "Derivado",
-              "source": "Characters/Shaco/Spells/HallucinateFullAbility/HallucinateFull.mSpellCalculations.AoEDamage (16.23.8406595+branch.releases-16-23.content.release)",
+              "source": "Characters/Shaco/Spells/HallucinateFullAbility/HallucinateFull.mSpellCalculations.AoEDamage (16.23.8418428+branch.releases-16-23.content.release)",
               "damage_type_source": "spell_hallucinatefull_tooltip <magicDamage>"
             }
           ]
@@ -536,6 +555,19 @@
       "passive_stats": [],
       "not_modelled": [
         "Ataques del clon (60 % del daño) y miedo de las 3 mini-cajas"
+      ],
+      "cc_effects": [
+        {
+          "id": "r_fear",
+          "name": "Alucinación (miedo)",
+          "kind": "fear",
+          "duration_formula": {
+            "op": "constant",
+            "value": 1
+          },
+          "label": "Derivado",
+          "source": "Characters/Shaco/Spells/HallucinateFullAbility/HallucinateFull.DataValues.BoxFearDuration (16.23.8418428+branch.releases-16-23.content.release)"
+        }
       ]
     }
   }

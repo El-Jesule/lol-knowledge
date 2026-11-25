@@ -3,7 +3,7 @@
   "champion": "Brand",
   "label": "Derivado",
   "game_version": "16.23",
-  "content_version": "16.23.8406595+branch.releases-16-23.content.release",
+  "content_version": "16.23.8418428+branch.releases-16-23.content.release",
   "verified_against": {
     "content_version": "16.23.8406595+branch.releases-16-23.content.release",
     "bin_sha256": "89c562d8aebf2dc9e2288441e813b046484261df2cb86b0bd8d412193aa1c751",
@@ -42,7 +42,7 @@
                 ]
               },
               "label": "Derivado",
-              "source": "Characters/Brand/Spells/BrandPassiveAbility/BrandPassive · DataValues.PercentHealthDamage % × vida máxima del objetivo (16.23.8406595+branch.releases-16-23.content.release)",
+              "source": "Characters/Brand/Spells/BrandPassiveAbility/BrandPassive · DataValues.PercentHealthDamage % × vida máxima del objetivo (16.23.8418428+branch.releases-16-23.content.release)",
               "damage_type_source": "spell_brandpassive_tooltip <magicDamage>"
             }
           ]
@@ -93,7 +93,7 @@
                 ]
               },
               "label": "Derivado",
-              "source": "Characters/Brand/Spells/BrandPassiveAbility/BrandPassive · (ExplosionDamage %) × vida máxima del objetivo (16.23.8406595+branch.releases-16-23.content.release)",
+              "source": "Characters/Brand/Spells/BrandPassiveAbility/BrandPassive · (ExplosionDamage %) × vida máxima del objetivo (16.23.8418428+branch.releases-16-23.content.release)",
               "damage_type_source": "spell_brandpassive_tooltip <magicDamage>"
             }
           ]
@@ -128,7 +128,7 @@
             ]
           },
           "label": "Derivado",
-          "source": "Characters/Brand/Spells/BrandPassiveAbility/BrandPassive · PercentHealthDamage % × vida máxima del objetivo (16.23.8406595+branch.releases-16-23.content.release)",
+          "source": "Characters/Brand/Spells/BrandPassiveAbility/BrandPassive · PercentHealthDamage % × vida máxima del objetivo (16.23.8418428+branch.releases-16-23.content.release)",
           "trigger": "on_ability_hit",
           "damage_type": "magic"
         },
@@ -176,7 +176,7 @@
             ]
           },
           "label": "Derivado",
-          "source": "Characters/Brand/Spells/BrandPassiveAbility/BrandPassive · ExplosionDamage % × vida máxima del objetivo (16.23.8406595+branch.releases-16-23.content.release)",
+          "source": "Characters/Brand/Spells/BrandPassiveAbility/BrandPassive · ExplosionDamage % × vida máxima del objetivo (16.23.8418428+branch.releases-16-23.content.release)",
           "trigger": "every_n_ability_hits",
           "damage_type": "magic",
           "every": 3
@@ -209,7 +209,7 @@
             ]
           },
           "label": "Derivado",
-          "source": "Characters/Brand/Spells/BrandPassiveAbility/BrandPassive.mSpellCalculations.ManaRestore (16.23.8406595+branch.releases-16-23.content.release)",
+          "source": "Characters/Brand/Spells/BrandPassiveAbility/BrandPassive.mSpellCalculations.ManaRestore (16.23.8418428+branch.releases-16-23.content.release)",
           "trigger": "on_any_kill",
           "resource": "mana"
         }
@@ -255,7 +255,7 @@
                 ]
               },
               "label": "Derivado",
-              "source": "Characters/Brand/Spells/BrandQAbility/BrandQ.mSpellCalculations.TotalDamage (16.23.8406595+branch.releases-16-23.content.release)",
+              "source": "Characters/Brand/Spells/BrandQAbility/BrandQ.mSpellCalculations.TotalDamage (16.23.8418428+branch.releases-16-23.content.release)",
               "damage_type_source": "spell_brandq_tooltip <magicDamage>"
             }
           ]
@@ -264,6 +264,19 @@
       "passive_stats": [],
       "not_modelled": [
         "Aturdimiento si el objetivo está en llamas"
+      ],
+      "cc_effects": [
+        {
+          "id": "q_stun",
+          "name": "Abrasar (aturdimiento)",
+          "kind": "stun",
+          "duration_formula": {
+            "op": "constant",
+            "value": 1.75
+          },
+          "label": "Derivado",
+          "source": "Characters/Brand/Spells/BrandQAbility/BrandQ.DataValues.StunDuration (16.23.8418428+branch.releases-16-23.content.release)"
+        }
       ]
     },
     "W": {
@@ -306,7 +319,7 @@
                 ]
               },
               "label": "Derivado",
-              "source": "Characters/Brand/Spells/BrandWAbility/BrandW.mSpellCalculations.TotalDamage (16.23.8406595+branch.releases-16-23.content.release)",
+              "source": "Characters/Brand/Spells/BrandWAbility/BrandW.mSpellCalculations.TotalDamage (16.23.8418428+branch.releases-16-23.content.release)",
               "damage_type_source": "spell_brandw_tooltip <magicDamage>"
             }
           ]
@@ -356,7 +369,7 @@
                 ]
               },
               "label": "Derivado",
-              "source": "Characters/Brand/Spells/BrandWAbility/BrandW.mSpellCalculations.EmpoweredDamage (16.23.8406595+branch.releases-16-23.content.release)",
+              "source": "Characters/Brand/Spells/BrandWAbility/BrandW.mSpellCalculations.EmpoweredDamage (16.23.8418428+branch.releases-16-23.content.release)",
               "damage_type_source": "spell_brandw_tooltip <magicDamage>"
             }
           ]
@@ -405,7 +418,7 @@
                 ]
               },
               "label": "Derivado",
-              "source": "Characters/Brand/Spells/BrandEAbility/BrandE.mSpellCalculations.EDamageCalc (16.23.8406595+branch.releases-16-23.content.release)",
+              "source": "Characters/Brand/Spells/BrandEAbility/BrandE.mSpellCalculations.EDamageCalc (16.23.8418428+branch.releases-16-23.content.release)",
               "damage_type_source": "spell_brande_tooltip <magicDamage>"
             }
           ]
@@ -454,7 +467,7 @@
                 ]
               },
               "label": "Derivado",
-              "source": "Characters/Brand/Spells/BrandRAbility/BrandR.mSpellCalculations.TotalDamage (16.23.8406595+branch.releases-16-23.content.release)",
+              "source": "Characters/Brand/Spells/BrandRAbility/BrandR.mSpellCalculations.TotalDamage (16.23.8418428+branch.releases-16-23.content.release)",
               "damage_type_source": "spell_brandr_tooltip <magicDamage>"
             }
           ]

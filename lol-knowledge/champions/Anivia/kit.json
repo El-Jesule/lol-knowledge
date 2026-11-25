@@ -3,7 +3,7 @@
   "champion": "Anivia",
   "label": "Derivado",
   "game_version": "16.23",
-  "content_version": "16.23.8406595+branch.releases-16-23.content.release",
+  "content_version": "16.23.8418428+branch.releases-16-23.content.release",
   "verified_against": {
     "content_version": "16.23.8406595+branch.releases-16-23.content.release",
     "bin_sha256": "9609c2278929602fe0da1173147380c5e9419d4b03ee5d9f5a4364e413a93457",
@@ -49,7 +49,7 @@
             ]
           },
           "label": "Derivado",
-          "source": "Characters/Anivia/Spells/RebirthMarkerAbility/RebirthMarker.mSpellCalculations.BonusResists (16.23.8406595+branch.releases-16-23.content.release)",
+          "source": "Characters/Anivia/Spells/RebirthMarkerAbility/RebirthMarker.mSpellCalculations.BonusResists (16.23.8418428+branch.releases-16-23.content.release)",
           "stat": "armor",
           "mode": "flat",
           "input_name": "anivia_egg",
@@ -83,7 +83,7 @@
             ]
           },
           "label": "Derivado",
-          "source": "Characters/Anivia/Spells/RebirthMarkerAbility/RebirthMarker.mSpellCalculations.BonusResists (16.23.8406595+branch.releases-16-23.content.release)",
+          "source": "Characters/Anivia/Spells/RebirthMarkerAbility/RebirthMarker.mSpellCalculations.BonusResists (16.23.8418428+branch.releases-16-23.content.release)",
           "stat": "magic_resist",
           "mode": "flat",
           "input_name": "anivia_egg",
@@ -131,7 +131,7 @@
                 ]
               },
               "label": "Derivado",
-              "source": "Characters/Anivia/Spells/FlashFrostAbility/FlashFrost.mSpellCalculations.TotalPassthroughDamage (16.23.8406595+branch.releases-16-23.content.release)",
+              "source": "Characters/Anivia/Spells/FlashFrostAbility/FlashFrost.mSpellCalculations.TotalPassthroughDamage (16.23.8418428+branch.releases-16-23.content.release)",
               "damage_type_source": "spell_flashfrost_tooltip <magicDamage>"
             }
           ]
@@ -172,7 +172,7 @@
                 ]
               },
               "label": "Derivado",
-              "source": "Characters/Anivia/Spells/FlashFrostAbility/FlashFrost.mSpellCalculations.TotalExplosionDamage (16.23.8406595+branch.releases-16-23.content.release)",
+              "source": "Characters/Anivia/Spells/FlashFrostAbility/FlashFrost.mSpellCalculations.TotalExplosionDamage (16.23.8418428+branch.releases-16-23.content.release)",
               "damage_type_source": "spell_flashfrost_tooltip <magicDamage>"
             }
           ]
@@ -213,7 +213,7 @@
                 ]
               },
               "label": "Derivado",
-              "source": "Characters/Anivia/Spells/FlashFrostAbility/FlashFrost.mSpellCalculations.TotalPassthroughDamage (16.23.8406595+branch.releases-16-23.content.release)",
+              "source": "Characters/Anivia/Spells/FlashFrostAbility/FlashFrost.mSpellCalculations.TotalPassthroughDamage (16.23.8418428+branch.releases-16-23.content.release)",
               "damage_type_source": "spell_flashfrost_tooltip <magicDamage>"
             },
             {
@@ -248,7 +248,7 @@
                 ]
               },
               "label": "Derivado",
-              "source": "Characters/Anivia/Spells/FlashFrostAbility/FlashFrost.mSpellCalculations.TotalExplosionDamage (16.23.8406595+branch.releases-16-23.content.release)",
+              "source": "Characters/Anivia/Spells/FlashFrostAbility/FlashFrost.mSpellCalculations.TotalExplosionDamage (16.23.8418428+branch.releases-16-23.content.release)",
               "damage_type_source": "spell_flashfrost_tooltip <magicDamage>"
             }
           ]
@@ -257,6 +257,25 @@
       "passive_stats": [],
       "not_modelled": [
         "Ralentización, estado Enfriado y aturdimiento"
+      ],
+      "cc_effects": [
+        {
+          "id": "q_stun",
+          "name": "Destello helado (aturdimiento)",
+          "kind": "stun",
+          "duration_formula": {
+            "op": "by_rank",
+            "values": [
+              1.1,
+              1.2,
+              1.3,
+              1.4,
+              1.5
+            ]
+          },
+          "label": "Derivado",
+          "source": "Characters/Anivia/Spells/FlashFrostAbility/FlashFrost.DataValues.StunDuration (16.23.8418428+branch.releases-16-23.content.release)"
+        }
       ]
     },
     "W": {
@@ -308,7 +327,7 @@
                 ]
               },
               "label": "Derivado",
-              "source": "Characters/Anivia/Spells/FrostbiteAbility/Frostbite.mSpellCalculations.TotalDamage (16.23.8406595+branch.releases-16-23.content.release)",
+              "source": "Characters/Anivia/Spells/FrostbiteAbility/Frostbite.mSpellCalculations.TotalDamage (16.23.8418428+branch.releases-16-23.content.release)",
               "damage_type_source": "spell_frostbite_tooltip <magicDamage>"
             }
           ]
@@ -358,7 +377,7 @@
                 ]
               },
               "label": "Derivado",
-              "source": "Characters/Anivia/Spells/FrostbiteAbility/Frostbite.mSpellCalculations.EmpoweredDamage (16.23.8406595+branch.releases-16-23.content.release)",
+              "source": "Characters/Anivia/Spells/FrostbiteAbility/Frostbite.mSpellCalculations.EmpoweredDamage (16.23.8418428+branch.releases-16-23.content.release)",
               "damage_type_source": "spell_frostbite_tooltip <magicDamage>"
             }
           ]
@@ -405,7 +424,7 @@
                 ]
               },
               "label": "Derivado",
-              "source": "Characters/Anivia/Spells/GlacialStormAbility/GlacialStorm.mSpellCalculations.TotalDamagePerSecond (16.23.8406595+branch.releases-16-23.content.release)",
+              "source": "Characters/Anivia/Spells/GlacialStormAbility/GlacialStorm.mSpellCalculations.TotalDamagePerSecond (16.23.8418428+branch.releases-16-23.content.release)",
               "damage_type_source": "spell_glacialstorm_tooltip <magicDamage>"
             }
           ]
@@ -453,7 +472,7 @@
                 ]
               },
               "label": "Derivado",
-              "source": "Characters/Anivia/Spells/GlacialStormAbility/GlacialStorm.mSpellCalculations.EmpoweredDamagePerSecondTooltipOnly (16.23.8406595+branch.releases-16-23.content.release)",
+              "source": "Characters/Anivia/Spells/GlacialStormAbility/GlacialStorm.mSpellCalculations.EmpoweredDamagePerSecondTooltipOnly (16.23.8418428+branch.releases-16-23.content.release)",
               "damage_type_source": "spell_glacialstorm_tooltip <magicDamage>"
             }
           ]

@@ -142,6 +142,25 @@
       "passive_stats": [],
       "not_modelled": [
         "Terror (FearDuration), suelo mínimo de daño y tope contra monstruos"
+      ],
+      "cc_effects": [
+        {
+          "id": "q_fear",
+          "name": "Terror (miedo)",
+          "kind": "fear",
+          "duration_formula": {
+            "op": "by_rank",
+            "values": [
+              1.2,
+              1.4,
+              1.6,
+              1.8,
+              2
+            ]
+          },
+          "label": "Derivado",
+          "source": "Characters/Fiddlesticks/Spells/FiddleSticksQAbility/FiddleSticksQ.DataValues.FearDuration (16.23.8418428+branch.releases-16-23.content.release)"
+        }
       ]
     },
     "W": {
@@ -306,6 +325,19 @@
       "passive_stats": [],
       "not_modelled": [
         "Ralentización y silencio en el centro"
+      ],
+      "cc_effects": [
+        {
+          "id": "e_silence",
+          "name": "Segar (silencio)",
+          "kind": "silence",
+          "duration_formula": {
+            "op": "constant",
+            "value": 1.25
+          },
+          "label": "Derivado",
+          "source": "Characters/Fiddlesticks/Spells/FiddleSticksEAbility/FiddleSticksE.DataValues.SilenceDuration (16.23.8418428+branch.releases-16-23.content.release)"
+        }
       ]
     },
     "R": {

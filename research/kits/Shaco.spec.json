@@ -88,6 +88,14 @@
       ],
       "not_modelled": [
         "Miedo en área, daño adicional a monstruos (MonsterBonusDamage) y duración de trampa (TrapDuration)"
+      ],
+      "cc_effects": [
+        {
+          "id": "w_fear",
+          "name": "Caja sorpresa (miedo)",
+          "kind": "fear",
+          "data_value": "FearDuration"
+        }
       ]
     },
     "E": {
@@ -151,6 +159,14 @@
       ],
       "not_modelled": [
         "Ataques del clon (60 % del daño) y miedo de las 3 mini-cajas"
+      ],
+      "cc_effects": [
+        {
+          "id": "r_fear",
+          "name": "Alucinación (miedo)",
+          "kind": "fear",
+          "data_value": "BoxFearDuration"
+        }
       ]
     }
   }

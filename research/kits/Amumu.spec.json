@@ -31,6 +31,14 @@
       ],
       "not_modelled": [
         "Aturdimiento (StunDuration) y sistema de 2 cargas"
+      ],
+      "cc_effects": [
+        {
+          "id": "q_stun",
+          "name": "Lanzamiento de vendas (aturdimiento)",
+          "kind": "stun",
+          "data_value": "StunDuration"
+        }
       ]
     },
     "W": {
@@ -115,6 +123,14 @@
       ],
       "not_modelled": [
         "Aturdimiento (RDuration) y aplicación de Maldición"
+      ],
+      "cc_effects": [
+        {
+          "id": "r_stun",
+          "name": "Maldición de la momia triste (aturdimiento)",
+          "kind": "stun",
+          "data_value": "RDuration"
+        }
       ]
     }
   }

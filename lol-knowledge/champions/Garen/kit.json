@@ -129,6 +129,19 @@
             ]
           }
         }
+      ],
+      "cc_effects": [
+        {
+          "id": "q_silence",
+          "name": "Golpe decisivo (silencio)",
+          "kind": "silence",
+          "duration_formula": {
+            "op": "constant",
+            "value": 1.5
+          },
+          "label": "Derivado",
+          "source": "Characters/Garen/Spells/GarenQAbility/GarenQ.DataValues.SilenceDuration (16.23.8418428+branch.releases-16-23.content.release)"
+        }
       ]
     },
     "W": {

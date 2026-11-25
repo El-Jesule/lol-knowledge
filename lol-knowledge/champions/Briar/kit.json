@@ -228,6 +228,19 @@
       "passive_stats": [],
       "not_modelled": [
         "Coste porcentual de vida actual, aturdimiento de 0,85 s y reducción de armadura/RM (ShredPercent)"
+      ],
+      "cc_effects": [
+        {
+          "id": "q_stun",
+          "name": "A la yugular (aturdimiento)",
+          "kind": "stun",
+          "duration_formula": {
+            "op": "constant",
+            "value": 0.85
+          },
+          "label": "Derivado",
+          "source": "Characters/Briar/Spells/BriarQAbility/BriarQ.DataValues.StunDuration (16.23.8418428+branch.releases-16-23.content.release)"
+        }
       ]
     },
     "W": {
@@ -611,6 +624,22 @@
           "over_duration": true,
           "duration_seconds": 1.0
         }
+      ],
+      "cc_effects": [
+        {
+          "id": "e_wall_hit_stun",
+          "name": "Alarido escalofriante (aturdimiento)",
+          "kind": "stun",
+          "duration_formula": {
+            "op": "constant",
+            "value": 1.5
+          },
+          "label": "Derivado",
+          "source": "Characters/Briar/Spells/BriarEAbility/BriarE.DataValues.WallStunDuration (16.23.8418428+branch.releases-16-23.content.release)",
+          "case_ids": [
+            "wall_hit"
+          ]
+        }
       ]
     },
     "R": {
@@ -741,6 +770,19 @@
           "source": "Characters/Briar/Spells/BriarRAbility/BriarR.DataValues.ExtraMoveSpeedPercent (16.23.8418428+branch.releases-16-23.content.release)",
           "stat": "move_speed",
           "mode": "percent_ms"
+        }
+      ],
+      "cc_effects": [
+        {
+          "id": "r_fear",
+          "name": "Final sangriento (miedo)",
+          "kind": "fear",
+          "duration_formula": {
+            "op": "constant",
+            "value": 1.5
+          },
+          "label": "Derivado",
+          "source": "Characters/Briar/Spells/BriarRAbility/BriarR.DataValues.FearDuration (16.23.8418428+branch.releases-16-23.content.release)"
         }
       ]
     }

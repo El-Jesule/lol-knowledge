@@ -207,6 +207,22 @@
       "not_modelled": [
         "Ralentización, atracción en Q3 y reducción de enfriamiento/tiempo de lanzamiento por resistencias"
       ],
+      "cc_effects": [
+        {
+          "id": "q_recast_stun",
+          "name": "Golpes de ntofo (aturdimiento)",
+          "kind": "stun",
+          "duration_formula": {
+            "op": "constant",
+            "value": 1
+          },
+          "label": "Derivado",
+          "source": "Characters/KSante/Spells/KSanteQAbility/KSanteQ.DataValues.StunDuration (16.23.8418428+branch.releases-16-23.content.release)",
+          "case_ids": [
+            "recast"
+          ]
+        }
+      ],
       "recast_window_seconds": 6
     },
     "W": {
@@ -306,6 +322,19 @@
           "source": "Characters/KSante/Spells/KSanteWAbility/KSanteW.DataValues.DamageReduction (16.23.8418428+branch.releases-16-23.content.release)",
           "mode": "percent",
           "duration_seconds": 1
+        }
+      ],
+      "cc_effects": [
+        {
+          "id": "w_stun",
+          "name": "Pionero (aturdimiento)",
+          "kind": "stun",
+          "duration_formula": {
+            "op": "constant",
+            "value": 0.5
+          },
+          "label": "Derivado",
+          "source": "Characters/KSante/Spells/KSanteWAbility/KSanteW.DataValues.MinKnockbackDuration (16.23.8418428+branch.releases-16-23.content.release)"
         }
       ]
     },

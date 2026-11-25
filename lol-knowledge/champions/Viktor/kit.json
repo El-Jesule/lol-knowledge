@@ -272,6 +272,19 @@
       "passive_stats": [],
       "not_modelled": [
         "Ralentización y aturdimiento en área"
+      ],
+      "cc_effects": [
+        {
+          "id": "w_stun",
+          "name": "Campo gravitatorio (aturdimiento)",
+          "kind": "stun",
+          "duration_formula": {
+            "op": "constant",
+            "value": 1.5
+          },
+          "label": "Derivado",
+          "source": "Characters/Viktor/Spells/ViktorWAbility/ViktorW.DataValues.StunDuration (16.23.8418428+branch.releases-16-23.content.release)"
+        }
       ]
     },
     "E": {

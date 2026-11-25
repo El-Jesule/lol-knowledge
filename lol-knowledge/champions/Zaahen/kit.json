@@ -179,6 +179,22 @@
           ]
         }
       ],
+      "cc_effects": [
+        {
+          "id": "q_recast_airborne",
+          "name": "La guja de los Oscuros (lanzamiento por los aires)",
+          "kind": "airborne",
+          "duration_formula": {
+            "op": "constant",
+            "value": 0.75
+          },
+          "label": "Derivado",
+          "source": "Characters/Zaahen/Spells/ZaahenQAbility/ZaahenQ.DataValues.KnockUpDuration (16.20.8248524+branch.releases-16-20.content.release)",
+          "case_ids": [
+            "recast"
+          ]
+        }
+      ],
       "recast_window_seconds": 4
     },
     "W": {

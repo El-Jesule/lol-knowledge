@@ -121,6 +121,25 @@
       "passive_stats": [],
       "not_modelled": [
         "Inmovilización tras 2 s, visión verdadera y curación de Mantra (R: RWHealAmount)"
+      ],
+      "cc_effects": [
+        {
+          "id": "w_root",
+          "name": "Resolución concentrada (enraizamiento)",
+          "kind": "root",
+          "duration_formula": {
+            "op": "by_rank",
+            "values": [
+              1.6,
+              1.7,
+              1.8,
+              1.9,
+              2
+            ]
+          },
+          "label": "Derivado",
+          "source": "Characters/Karma/Spells/KarmaSpiritBindAbility/KarmaSpiritBind.DataValues.RootDuration (16.23.8418428+branch.releases-16-23.content.release)"
+        }
       ]
     },
     "E": {

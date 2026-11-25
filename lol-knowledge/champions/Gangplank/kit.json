@@ -318,6 +318,17 @@
           },
           "label": "Derivado",
           "source": "Characters/Gangplank/Spells/GangplankWAbility/GangplankW · mSpellCalculations.BaseHealth + DataValues.PercentHeal% missing HP (16.23.8418428+branch.releases-16-23.content.release)"
+        },
+        {
+          "id": "remove_scurvy_cleanse",
+          "name": "Eliminar escorbuto (purga de CC)",
+          "kind": "cleanse",
+          "formula": {
+            "op": "constant",
+            "value": 1
+          },
+          "label": "Derivado",
+          "source": "Characters/Gangplank/Spells/GangplankWAbility/GangplankW · Purga inmediata de efectos de control de masas al lanzar W (16.23.8418428+branch.releases-16-23.content.release)"
         }
       ]
     },

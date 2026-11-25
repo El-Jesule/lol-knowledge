@@ -3,7 +3,7 @@
   "champion": "Amumu",
   "label": "Derivado",
   "game_version": "16.23",
-  "content_version": "16.23.8406595+branch.releases-16-23.content.release",
+  "content_version": "16.23.8418428+branch.releases-16-23.content.release",
   "verified_against": {
     "content_version": "16.23.8406595+branch.releases-16-23.content.release",
     "bin_sha256": "56031f03c570d35b7c472251acfcd794ae2a2bd6d2ab32195fe99f19b656e49b",
@@ -61,7 +61,7 @@
                 ]
               },
               "label": "Derivado",
-              "source": "Characters/Amumu/Spells/BandageTossAbility/BandageToss.mSpellCalculations.TotalDamage (16.23.8406595+branch.releases-16-23.content.release)",
+              "source": "Characters/Amumu/Spells/BandageTossAbility/BandageToss.mSpellCalculations.TotalDamage (16.23.8418428+branch.releases-16-23.content.release)",
               "damage_type_source": "spell_bandagetoss_tooltip <magicDamage>"
             }
           ]
@@ -70,6 +70,19 @@
       "passive_stats": [],
       "not_modelled": [
         "Aturdimiento (StunDuration) y sistema de 2 cargas"
+      ],
+      "cc_effects": [
+        {
+          "id": "q_stun",
+          "name": "Lanzamiento de vendas (aturdimiento)",
+          "kind": "stun",
+          "duration_formula": {
+            "op": "constant",
+            "value": 1
+          },
+          "label": "Derivado",
+          "source": "Characters/Amumu/Spells/BandageTossAbility/BandageToss.DataValues.StunDuration (16.23.8418428+branch.releases-16-23.content.release)"
+        }
       ]
     },
     "W": {
@@ -136,7 +149,7 @@
                 ]
               },
               "label": "Derivado",
-              "source": "Characters/Amumu/Spells/AuraofDespairAbility/AuraofDespair · BaseDamage + (TotalHealthDamage %) × vida máxima del objetivo (16.23.8406595+branch.releases-16-23.content.release)",
+              "source": "Characters/Amumu/Spells/AuraofDespairAbility/AuraofDespair · BaseDamage + (TotalHealthDamage %) × vida máxima del objetivo (16.23.8418428+branch.releases-16-23.content.release)",
               "damage_type_source": "spell_auraofdespair_tooltip <magicDamage>"
             }
           ]
@@ -187,7 +200,7 @@
                 ]
               },
               "label": "Derivado",
-              "source": "Characters/Amumu/Spells/TantrumAbility/Tantrum.mSpellCalculations.TantrumDamage (16.23.8406595+branch.releases-16-23.content.release)",
+              "source": "Characters/Amumu/Spells/TantrumAbility/Tantrum.mSpellCalculations.TantrumDamage (16.23.8418428+branch.releases-16-23.content.release)",
               "damage_type_source": "spell_tantrum_tooltip <magicDamage>"
             }
           ]
@@ -236,7 +249,7 @@
                 ]
               },
               "label": "Derivado",
-              "source": "Characters/Amumu/Spells/CurseoftheSadMummyAbility/CurseoftheSadMummy.mSpellCalculations.RCalculatedDamage (16.23.8406595+branch.releases-16-23.content.release)",
+              "source": "Characters/Amumu/Spells/CurseoftheSadMummyAbility/CurseoftheSadMummy.mSpellCalculations.RCalculatedDamage (16.23.8418428+branch.releases-16-23.content.release)",
               "damage_type_source": "spell_curseofthesadmummy_tooltip <magicDamage>"
             }
           ]
@@ -245,6 +258,19 @@
       "passive_stats": [],
       "not_modelled": [
         "Aturdimiento (RDuration) y aplicación de Maldición"
+      ],
+      "cc_effects": [
+        {
+          "id": "r_stun",
+          "name": "Maldición de la momia triste (aturdimiento)",
+          "kind": "stun",
+          "duration_formula": {
+            "op": "constant",
+            "value": 1.5
+          },
+          "label": "Derivado",
+          "source": "Characters/Amumu/Spells/CurseoftheSadMummyAbility/CurseoftheSadMummy.DataValues.RDuration (16.23.8418428+branch.releases-16-23.content.release)"
+        }
       ]
     }
   }

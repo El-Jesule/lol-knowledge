@@ -99,6 +99,14 @@
       ],
       "not_modelled": [
         "Lanzamiento por los aires (CCDuration)"
+      ],
+      "cc_effects": [
+        {
+          "id": "e_airborne",
+          "name": "Puño de poder (lanzamiento por los aires)",
+          "kind": "airborne",
+          "data_value": "CCDuration"
+        }
       ]
     },
     "R": {
@@ -126,6 +134,14 @@
       ],
       "not_modelled": [
         "Destrucción de escudos y silencio de 0,75 s en la activación"
+      ],
+      "cc_effects": [
+        {
+          "id": "r_silence",
+          "name": "Campo estático (silencio)",
+          "kind": "silence",
+          "data_value": "SilenceDuration"
+        }
       ]
     }
   }

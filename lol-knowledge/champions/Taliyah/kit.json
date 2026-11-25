@@ -3,7 +3,7 @@
   "champion": "Taliyah",
   "label": "Derivado",
   "game_version": "16.23",
-  "content_version": "16.23.8406595+branch.releases-16-23.content.release",
+  "content_version": "16.23.8418428+branch.releases-16-23.content.release",
   "verified_against": {
     "content_version": "16.23.8406595+branch.releases-16-23.content.release",
     "bin_sha256": "8f126f20980448fa67ee668c6b546a1d98e8edb20f494d1d7439cad821d36e1a",
@@ -49,7 +49,7 @@
             ]
           },
           "label": "Derivado",
-          "source": "Characters/Taliyah/Spells/TaliyahPassiveAbility/TaliyahPassive.mSpellCalculations.TotalMS (16.23.8406595+branch.releases-16-23.content.release)",
+          "source": "Characters/Taliyah/Spells/TaliyahPassiveAbility/TaliyahPassive.mSpellCalculations.TotalMS (16.23.8418428+branch.releases-16-23.content.release)",
           "stat": "move_speed",
           "mode": "percent_ms",
           "input_name": "taliyah_rock_surfing",
@@ -97,7 +97,7 @@
                 ]
               },
               "label": "Derivado",
-              "source": "Characters/Taliyah/Spells/TaliyahQAbility/TaliyahQ.mSpellCalculations.RockDamage (16.23.8406595+branch.releases-16-23.content.release)",
+              "source": "Characters/Taliyah/Spells/TaliyahQAbility/TaliyahQ.mSpellCalculations.RockDamage (16.23.8418428+branch.releases-16-23.content.release)",
               "damage_type_source": "spell_taliyahq_tooltip <magicDamage>"
             }
           ]
@@ -147,7 +147,7 @@
                 ]
               },
               "label": "Derivado",
-              "source": "Characters/Taliyah/Spells/TaliyahQAbility/TaliyahQ.mSpellCalculations.BigRockDamage (16.23.8406595+branch.releases-16-23.content.release)",
+              "source": "Characters/Taliyah/Spells/TaliyahQAbility/TaliyahQ.mSpellCalculations.BigRockDamage (16.23.8418428+branch.releases-16-23.content.release)",
               "damage_type_source": "spell_taliyahq_tooltip <magicDamage>"
             }
           ]
@@ -207,7 +207,7 @@
                 ]
               },
               "label": "Derivado",
-              "source": "Characters/Taliyah/Spells/TaliyahEAbility/TaliyahE.mSpellCalculations.ScatterDamage (16.23.8406595+branch.releases-16-23.content.release)",
+              "source": "Characters/Taliyah/Spells/TaliyahEAbility/TaliyahE.mSpellCalculations.ScatterDamage (16.23.8418428+branch.releases-16-23.content.release)",
               "damage_type_source": "spell_taliyahe_tooltip <magicDamage>"
             }
           ]
@@ -248,7 +248,7 @@
                 ]
               },
               "label": "Derivado",
-              "source": "Characters/Taliyah/Spells/TaliyahEAbility/TaliyahE.mSpellCalculations.DetonationDamage (16.23.8406595+branch.releases-16-23.content.release)",
+              "source": "Characters/Taliyah/Spells/TaliyahEAbility/TaliyahE.mSpellCalculations.DetonationDamage (16.23.8418428+branch.releases-16-23.content.release)",
               "damage_type_source": "spell_taliyahe_tooltip <magicDamage>"
             }
           ]
@@ -257,6 +257,19 @@
       "passive_stats": [],
       "not_modelled": [
         "Aturdimiento al desplazarse, ralentización y daño máximo de 4 detonaciones (MaxDetonationDamageTooltip)"
+      ],
+      "cc_effects": [
+        {
+          "id": "e_stun",
+          "name": "Tierra comprometida (aturdimiento)",
+          "kind": "stun",
+          "duration_formula": {
+            "op": "constant",
+            "value": 0.75
+          },
+          "label": "Derivado",
+          "source": "Characters/Taliyah/Spells/TaliyahEAbility/TaliyahE.DataValues.StunDuration (16.23.8418428+branch.releases-16-23.content.release)"
+        }
       ]
     },
     "R": {

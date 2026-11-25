@@ -94,6 +94,14 @@
           },
           "source_note": "DataValues.BaseHeal + DataValues.PercentHealthHealing * missing HP"
         }
+      ],
+      "cc_effects": [
+        {
+          "id": "q_stun",
+          "name": "Lengüetazo (aturdimiento)",
+          "kind": "stun",
+          "data_value": "StunDuration"
+        }
       ]
     },
     "W": {
@@ -112,6 +120,14 @@
       ],
       "not_modelled": [
         "Lanzamiento por los aires y devolución de enfriamiento/maná al golpear campeones"
+      ],
+      "cc_effects": [
+        {
+          "id": "w_airborne",
+          "name": "Inmersión abisal (lanzamiento por los aires)",
+          "kind": "airborne",
+          "data_value": "KnockUpDuration"
+        }
       ]
     },
     "E": {

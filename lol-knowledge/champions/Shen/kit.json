@@ -325,6 +325,19 @@
       "passive_stats": [],
       "not_modelled": [
         "Provocación de 1,5 s y recuperación pasiva de energía (EnergyRefund)"
+      ],
+      "cc_effects": [
+        {
+          "id": "e_taunt",
+          "name": "Movimiento de sombra (provocación)",
+          "kind": "taunt",
+          "duration_formula": {
+            "op": "constant",
+            "value": 1.5
+          },
+          "label": "Derivado",
+          "source": "Characters/Shen/Spells/ShenEAbility/ShenE.DataValues.CCDuration (16.23.8418428+branch.releases-16-23.content.release)"
+        }
       ]
     },
     "R": {

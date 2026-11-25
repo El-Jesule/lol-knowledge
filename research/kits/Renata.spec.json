@@ -111,6 +111,14 @@
       ],
       "not_modelled": [
         "Inmovilización de 1 s, lanzamiento direccional y aturdimiento por colisión"
+      ],
+      "cc_effects": [
+        {
+          "id": "q_root",
+          "name": "Apretón de manos (enraizamiento)",
+          "kind": "root",
+          "data_value": "RootDuration"
+        }
       ]
     },
     "W": {
@@ -179,6 +187,14 @@
       "tooltip": "spell_renatar_tooltip",
       "not_modelled": [
         "Estado Frenesí (los enemigos se atacan entre sí con +100 % velocidad de ataque)"
+      ],
+      "cc_effects": [
+        {
+          "id": "r_berserk",
+          "name": "Adquisición hostil (furia)",
+          "kind": "berserk",
+          "data_value": "BerserkDuration"
+        }
       ]
     }
   }

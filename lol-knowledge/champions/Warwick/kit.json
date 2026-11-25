@@ -307,6 +307,19 @@
           "mode": "percent",
           "duration_seconds": 2.75
         }
+      ],
+      "cc_effects": [
+        {
+          "id": "e_fear",
+          "name": "Aullido primigenio (miedo)",
+          "kind": "fear",
+          "duration_formula": {
+            "op": "constant",
+            "value": 1
+          },
+          "label": "Derivado",
+          "source": "Characters/Warwick/Spells/WarwickEAbility/WarwickE.DataValues.FearDuration (16.23.8418428+branch.releases-16-23.content.release)"
+        }
       ]
     },
     "R": {
@@ -356,6 +369,19 @@
       "passive_stats": [],
       "not_modelled": [
         "Supresión de 1,5 s, aplicación de 3 efectos al impactar y curación del 100 % del daño infligido"
+      ],
+      "cc_effects": [
+        {
+          "id": "r_suppression",
+          "name": "Presión infinita (supresión)",
+          "kind": "suppression",
+          "duration_formula": {
+            "op": "constant",
+            "value": 1.5
+          },
+          "label": "Derivado",
+          "source": "Characters/Warwick/Spells/WarwickRAbility/WarwickR.DataValues.RDuration (16.23.8418428+branch.releases-16-23.content.release)"
+        }
       ]
     }
   }

@@ -53,6 +53,14 @@
       ],
       "not_modelled": [
         "Destrucción de escudos y aturdimiento (StunDuration)"
+      ],
+      "cc_effects": [
+        {
+          "id": "q_stun",
+          "name": "Golpe demoledor (aturdimiento)",
+          "kind": "stun",
+          "data_value": "StunDuration"
+        }
       ]
     },
     "W": {
@@ -80,6 +88,14 @@
               "calculation": "FlipDamage"
             }
           ]
+        }
+      ],
+      "cc_effects": [
+        {
+          "id": "w_airborne",
+          "name": "Ferromancia - Caída / Montura (lanzamiento por los aires)",
+          "kind": "airborne",
+          "data_value": "CrashDownKnockupDuration"
         }
       ]
     },

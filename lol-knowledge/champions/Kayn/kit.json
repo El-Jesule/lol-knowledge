@@ -3,7 +3,7 @@
   "champion": "Kayn",
   "label": "Derivado",
   "game_version": "16.23",
-  "content_version": "16.23.8406595+branch.releases-16-23.content.release",
+  "content_version": "16.23.8418428+branch.releases-16-23.content.release",
   "verified_against": {
     "content_version": "16.23.8406595+branch.releases-16-23.content.release",
     "bin_sha256": "6350dcbdf8f19e6854eb931cb44648bdab6ba37806a045071932ab72029d7024",
@@ -61,7 +61,7 @@
                 ]
               },
               "label": "Derivado",
-              "source": "Characters/Kayn/Spells/KaynQAbility/KaynQ.mSpellCalculations.TotalDamage (16.23.8406595+branch.releases-16-23.content.release)",
+              "source": "Characters/Kayn/Spells/KaynQAbility/KaynQ.mSpellCalculations.TotalDamage (16.23.8418428+branch.releases-16-23.content.release)",
               "damage_type_source": "game_spell_kayn_q_main_0 <physicalDamage>"
             }
           ]
@@ -87,7 +87,7 @@
                 ]
               },
               "label": "Derivado",
-              "source": "Characters/Kayn/Spells/KaynQAbility/KaynQ.mSpellCalculations.DarkinFlatDamage (16.23.8406595+branch.releases-16-23.content.release)",
+              "source": "Characters/Kayn/Spells/KaynQAbility/KaynQ.mSpellCalculations.DarkinFlatDamage (16.23.8418428+branch.releases-16-23.content.release)",
               "damage_type_source": "game_spell_kayn_q_main_0 <physicalDamage>"
             },
             {
@@ -131,7 +131,7 @@
                 ]
               },
               "label": "Derivado",
-              "source": "Characters/Kayn/Spells/KaynQAbility/KaynQ · mSpellCalculations.DarkinPercentDamage % × vida máxima del objetivo (16.23.8406595+branch.releases-16-23.content.release)",
+              "source": "Characters/Kayn/Spells/KaynQAbility/KaynQ · mSpellCalculations.DarkinPercentDamage % × vida máxima del objetivo (16.23.8418428+branch.releases-16-23.content.release)",
               "damage_type_source": "game_spell_kayn_q_main_0 <physicalDamage>"
             }
           ]
@@ -182,7 +182,7 @@
                 ]
               },
               "label": "Derivado",
-              "source": "Characters/Kayn/Spells/KaynWAbility/KaynW.mSpellCalculations.TotalDamage (16.23.8406595+branch.releases-16-23.content.release)",
+              "source": "Characters/Kayn/Spells/KaynWAbility/KaynW.mSpellCalculations.TotalDamage (16.23.8418428+branch.releases-16-23.content.release)",
               "damage_type_source": "game_spell_kayn_w_maintext_0 <physicalDamage>"
             }
           ]
@@ -191,6 +191,19 @@
       "passive_stats": [],
       "not_modelled": [
         "Ralentización del 90 %, sombra móvil en Asesino y lanzamiento por los aires en Verdugo"
+      ],
+      "cc_effects": [
+        {
+          "id": "w_airborne",
+          "name": "Golpe de hoja (lanzamiento por los aires)",
+          "kind": "airborne",
+          "duration_formula": {
+            "op": "constant",
+            "value": 1
+          },
+          "label": "Derivado",
+          "source": "Characters/Kayn/Spells/KaynWAbility/KaynW.mEffectAmount.Effect2Amount (16.23.8418428+branch.releases-16-23.content.release)"
+        }
       ]
     },
     "E": {
@@ -240,7 +253,7 @@
                 ]
               },
               "label": "Derivado",
-              "source": "Characters/Kayn/Spells/KaynRAbility/KaynR.mSpellCalculations.Damage (16.23.8406595+branch.releases-16-23.content.release)",
+              "source": "Characters/Kayn/Spells/KaynRAbility/KaynR.mSpellCalculations.Damage (16.23.8418428+branch.releases-16-23.content.release)",
               "damage_type_source": "spell_kayn_r_main_0 <physicalDamage>"
             }
           ]
@@ -286,7 +299,7 @@
                 ]
               },
               "label": "Derivado",
-              "source": "Characters/Kayn/Spells/KaynRAbility/KaynR · mSpellCalculations.SlayerDamage × vida máxima del objetivo (16.23.8406595+branch.releases-16-23.content.release)",
+              "source": "Characters/Kayn/Spells/KaynRAbility/KaynR · mSpellCalculations.SlayerDamage × vida máxima del objetivo (16.23.8418428+branch.releases-16-23.content.release)",
               "damage_type_source": "spell_kayn_r_main_0 <physicalDamage>"
             }
           ]

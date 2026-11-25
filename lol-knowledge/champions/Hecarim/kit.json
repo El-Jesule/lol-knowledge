@@ -340,6 +340,19 @@
       "passive_stats": [],
       "not_modelled": [
         "Imparabilidad y miedo de 0,75-1,5 s según distancia"
+      ],
+      "cc_effects": [
+        {
+          "id": "r_fear",
+          "name": "Envite de sombras (miedo)",
+          "kind": "fear",
+          "duration_formula": {
+            "op": "constant",
+            "value": 0.75
+          },
+          "label": "Derivado",
+          "source": "Characters/Hecarim/Spells/HecarimUltAbility/HecarimUlt.DataValues.FearDurationMin (16.23.8418428+branch.releases-16-23.content.release)"
+        }
       ]
     }
   }

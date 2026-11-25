@@ -3,7 +3,7 @@
   "champion": "Yasuo",
   "label": "Derivado",
   "game_version": "16.23",
-  "content_version": "16.23.8406595+branch.releases-16-23.content.release",
+  "content_version": "16.23.8418428+branch.releases-16-23.content.release",
   "verified_against": {
     "content_version": "16.23.8406595+branch.releases-16-23.content.release",
     "bin_sha256": "c7f04ae7aacfbb20052209e520356424ab3ec98bcf80cf15c63beff6b500f66b",
@@ -49,7 +49,7 @@
             ]
           },
           "label": "Derivado",
-          "source": "Characters/Yasuo/Spells/YasuoPassiveAbility/YasuoPassive.mSpellCalculations.ShieldValue (16.23.8406595+branch.releases-16-23.content.release)",
+          "source": "Characters/Yasuo/Spells/YasuoPassiveAbility/YasuoPassive.mSpellCalculations.ShieldValue (16.23.8418428+branch.releases-16-23.content.release)",
           "trigger": "on_taking_damage",
           "duration_seconds": 1
         }
@@ -95,7 +95,7 @@
                 ]
               },
               "label": "Derivado",
-              "source": "Characters/Yasuo/Spells/YasuoQ1WrapperAbility/YasuoQ1Wrapper.mSpellCalculations.TotalDamage (16.23.8406595+branch.releases-16-23.content.release)",
+              "source": "Characters/Yasuo/Spells/YasuoQ1WrapperAbility/YasuoQ1Wrapper.mSpellCalculations.TotalDamage (16.23.8418428+branch.releases-16-23.content.release)",
               "damage_type_source": "spell_yasuoq1wrapper_tooltip <physicalDamage>"
             }
           ]
@@ -155,7 +155,7 @@
                 ]
               },
               "label": "Derivado",
-              "source": "Characters/Yasuo/Spells/YasuoQ1WrapperAbility/YasuoQ1Wrapper.mSpellCalculations.TotalDamageCrit (16.23.8406595+branch.releases-16-23.content.release)",
+              "source": "Characters/Yasuo/Spells/YasuoQ1WrapperAbility/YasuoQ1Wrapper.mSpellCalculations.TotalDamageCrit (16.23.8418428+branch.releases-16-23.content.release)",
               "damage_type_source": "spell_yasuoq1wrapper_tooltipextendedbelowline <physicalDamage>"
             }
           ]
@@ -229,7 +229,7 @@
                 ]
               },
               "label": "Derivado",
-              "source": "Characters/Yasuo/Spells/YasuoEAbility/YasuoE.mSpellCalculations.TotalDamage (16.23.8406595+branch.releases-16-23.content.release)",
+              "source": "Characters/Yasuo/Spells/YasuoEAbility/YasuoE.mSpellCalculations.TotalDamage (16.23.8418428+branch.releases-16-23.content.release)",
               "damage_type_source": "spell_yasuoe_tooltip <magicDamage>"
             }
           ]
@@ -293,7 +293,7 @@
                 ]
               },
               "label": "Derivado",
-              "source": "Characters/Yasuo/Spells/YasuoEAbility/YasuoE.mSpellCalculations.BonusDamagePerStack (16.23.8406595+branch.releases-16-23.content.release)",
+              "source": "Characters/Yasuo/Spells/YasuoEAbility/YasuoE.mSpellCalculations.BonusDamagePerStack (16.23.8418428+branch.releases-16-23.content.release)",
               "damage_type_source": "spell_yasuoe_tooltip <magicDamage>"
             }
           ]
@@ -342,7 +342,7 @@
                 ]
               },
               "label": "Derivado",
-              "source": "Characters/Yasuo/Spells/YasuoRAbility/YasuoR.mSpellCalculations.Damage (16.23.8406595+branch.releases-16-23.content.release)",
+              "source": "Characters/Yasuo/Spells/YasuoRAbility/YasuoR.mSpellCalculations.Damage (16.23.8418428+branch.releases-16-23.content.release)",
               "damage_type_source": "spell_yasuor_tooltip <physicalDamage>"
             }
           ]
@@ -351,6 +351,19 @@
       "passive_stats": [],
       "not_modelled": [
         "Extensión de suspensión aérea, recarga completa de Flujo y 60 % de penetración de armadura adicional en críticos durante 15 s (RPercentArmorPen)"
+      ],
+      "cc_effects": [
+        {
+          "id": "r_airborne",
+          "name": "Último aliento (lanzamiento por los aires)",
+          "kind": "airborne",
+          "duration_formula": {
+            "op": "constant",
+            "value": 1
+          },
+          "label": "Derivado",
+          "source": "Characters/Yasuo/Spells/YasuoRAbility/YasuoR.DataValues.RKnockupDuration (16.23.8418428+branch.releases-16-23.content.release)"
+        }
       ]
     }
   }

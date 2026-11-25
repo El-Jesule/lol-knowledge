@@ -138,6 +138,14 @@
             "data_value": "DRDuration"
           }
         }
+      ],
+      "cc_effects": [
+        {
+          "id": "e_fear",
+          "name": "Aullido primigenio (miedo)",
+          "kind": "fear",
+          "data_value": "FearDuration"
+        }
       ]
     },
     "R": {
@@ -156,6 +164,14 @@
       ],
       "not_modelled": [
         "Supresión de 1,5 s, aplicación de 3 efectos al impactar y curación del 100 % del daño infligido"
+      ],
+      "cc_effects": [
+        {
+          "id": "r_suppression",
+          "name": "Presión infinita (supresión)",
+          "kind": "suppression",
+          "data_value": "RDuration"
+        }
       ]
     }
   }

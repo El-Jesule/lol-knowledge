@@ -515,6 +515,19 @@
       "passive_stats": [],
       "not_modelled": [
         "Atracción y derribo"
+      ],
+      "cc_effects": [
+        {
+          "id": "r_airborne",
+          "name": "Orden: onda de choque (lanzamiento por los aires)",
+          "kind": "airborne",
+          "duration_formula": {
+            "op": "constant",
+            "value": 0.75
+          },
+          "label": "Derivado",
+          "source": "Characters/Orianna/Spells/OrianaDetonateCommandAbility/OrianaDetonateCommand.DataValues.StunDuration (16.23.8418428+branch.releases-16-23.content.release)"
+        }
       ]
     }
   }

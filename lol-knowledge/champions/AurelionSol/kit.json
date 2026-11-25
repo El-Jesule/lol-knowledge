@@ -3,7 +3,7 @@
   "champion": "AurelionSol",
   "label": "Derivado",
   "game_version": "16.23",
-  "content_version": "16.23.8406595+branch.releases-16-23.content.release",
+  "content_version": "16.23.8418428+branch.releases-16-23.content.release",
   "verified_against": {
     "content_version": "16.23.8406595+branch.releases-16-23.content.release",
     "bin_sha256": "67a656b0d262bfd4232fb869c701b6c3b9ce59539e736fb5675511d39479703a",
@@ -61,7 +61,7 @@
                 ]
               },
               "label": "Derivado",
-              "source": "Characters/AurelionSol/Spells/AurelionSolQAbility/AurelionSolQ.mSpellCalculations.DamagePerSecond (16.23.8406595+branch.releases-16-23.content.release)",
+              "source": "Characters/AurelionSol/Spells/AurelionSolQAbility/AurelionSolQ.mSpellCalculations.DamagePerSecond (16.23.8418428+branch.releases-16-23.content.release)",
               "damage_type_source": "spell_aurelionsolq_tooltip <magicDamage>"
             }
           ]
@@ -132,7 +132,7 @@
                 ]
               },
               "label": "Derivado",
-              "source": "Characters/AurelionSol/Spells/AurelionSolQAbility/AurelionSolQ · mSpellCalculations.BurstDamage + mSpellCalculations.BurstBonusTrueDamageToChamps × vida máxima del objetivo (--input stardust_stacks) (16.23.8406595+branch.releases-16-23.content.release)",
+              "source": "Characters/AurelionSol/Spells/AurelionSolQAbility/AurelionSolQ · mSpellCalculations.BurstDamage + mSpellCalculations.BurstBonusTrueDamageToChamps × vida máxima del objetivo (--input stardust_stacks) (16.23.8418428+branch.releases-16-23.content.release)",
               "damage_type_source": "spell_aurelionsolq_tooltip <magicDamage>"
             }
           ]
@@ -198,7 +198,7 @@
                 ]
               },
               "label": "Derivado",
-              "source": "Characters/AurelionSol/Spells/AurelionSolEAbility/AurelionSolE.mSpellCalculations.DamagePerSecond (16.23.8406595+branch.releases-16-23.content.release)",
+              "source": "Characters/AurelionSol/Spells/AurelionSolEAbility/AurelionSolE.mSpellCalculations.DamagePerSecond (16.23.8418428+branch.releases-16-23.content.release)",
               "damage_type_source": "spell_aurelionsole_tooltip <magicDamage>"
             }
           ]
@@ -247,7 +247,7 @@
                 ]
               },
               "label": "Derivado",
-              "source": "Characters/AurelionSol/Spells/AurelionSolRAbility/AurelionSolR.mSpellCalculations.MaxDamageTooltip (16.23.8406595+branch.releases-16-23.content.release)",
+              "source": "Characters/AurelionSol/Spells/AurelionSolRAbility/AurelionSolR.mSpellCalculations.MaxDamageTooltip (16.23.8418428+branch.releases-16-23.content.release)",
               "damage_type_source": "spell_aurelionsolr_tooltip <magicDamage>"
             }
           ]
@@ -295,7 +295,7 @@
                 ]
               },
               "label": "Derivado",
-              "source": "Characters/AurelionSol/Spells/AurelionSolRAbility/AurelionSolR.mSpellCalculations.R2Damage (16.23.8406595+branch.releases-16-23.content.release)",
+              "source": "Characters/AurelionSol/Spells/AurelionSolRAbility/AurelionSolR.mSpellCalculations.R2Damage (16.23.8418428+branch.releases-16-23.content.release)",
               "damage_type_source": "spell_aurelionsolr_tooltip <magicDamage>"
             }
           ]
@@ -343,7 +343,7 @@
                 ]
               },
               "label": "Derivado",
-              "source": "Characters/AurelionSol/Spells/AurelionSolRAbility/AurelionSolR.mSpellCalculations.ShockwaveDamage (16.23.8406595+branch.releases-16-23.content.release)",
+              "source": "Characters/AurelionSol/Spells/AurelionSolRAbility/AurelionSolR.mSpellCalculations.ShockwaveDamage (16.23.8418428+branch.releases-16-23.content.release)",
               "damage_type_source": "spell_aurelionsolr_tooltip <magicDamage>"
             }
           ]
@@ -352,6 +352,36 @@
       "passive_stats": [],
       "not_modelled": [
         "Aturdimiento, lanzamiento por los aires y ralentización"
+      ],
+      "cc_effects": [
+        {
+          "id": "r_falling_star_stun",
+          "name": "Estrella fugaz / Ocaso celeste (aturdimiento)",
+          "kind": "stun",
+          "duration_formula": {
+            "op": "constant",
+            "value": 1
+          },
+          "label": "Derivado",
+          "source": "Characters/AurelionSol/Spells/AurelionSolRAbility/AurelionSolR.DataValues.StunDuration (16.23.8418428+branch.releases-16-23.content.release)",
+          "case_ids": [
+            "falling_star"
+          ]
+        },
+        {
+          "id": "r_skies_descend_airborne",
+          "name": "Estrella fugaz / Ocaso celeste (lanzamiento por los aires)",
+          "kind": "airborne",
+          "duration_formula": {
+            "op": "constant",
+            "value": 1
+          },
+          "label": "Derivado",
+          "source": "Characters/AurelionSol/Spells/AurelionSolRAbility/AurelionSolR.DataValues.StunDuration (16.23.8418428+branch.releases-16-23.content.release)",
+          "case_ids": [
+            "skies_descend"
+          ]
+        }
       ]
     }
   }
