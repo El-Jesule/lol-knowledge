@@ -11,7 +11,7 @@ RESULT_LABEL = "Calculado"
 
 
 def _build_dict(build: BuildResult) -> dict[str, Any]:
-    return {
+    out: dict[str, Any] = {
         "items": list(build.items),
         "item_names": list(build.item_names),
         "total_gold": build.total_gold,
@@ -22,6 +22,11 @@ def _build_dict(build: BuildResult) -> dict[str, Any]:
         "metrics": dict(build.metrics),
         "notes": list(build.notes),
     }
+    if build.ornn_upgraded_item is not None:
+        out["ornn_upgraded_item"] = build.ornn_upgraded_item
+    if build.elixir is not None:
+        out["elixir"] = build.elixir
+    return out
 
 
 def _format_build(rank: int, build: BuildResult, objective: str) -> list[str]:
@@ -51,9 +56,15 @@ def _format_build(rank: int, build: BuildResult, objective: str) -> list[str]:
             score_str = f"{str(w).upper()} (A {rem_a:.1f} vs B {rem_b:.1f} HP at {dur:.2f} s)"
     else:
         score_str = format_number(build.score)
+    extra_tags = []
+    if build.ornn_upgraded_item is not None:
+        extra_tags.append(f"ornn={build.ornn_upgraded_item}")
+    if build.elixir is not None:
+        extra_tags.append(f"elixir={build.elixir}")
+    tag_str = f" | {', '.join(extra_tags)}" if extra_tags else ""
     lines = [
         f"  #{rank} [{build.label.value}] {objective}={score_str} | "
-        f"gold={build.total_gold} | items: {item_desc}"
+        f"gold={build.total_gold}{tag_str} | items: {item_desc}"
     ]
     if build.notes:
         lines.append(f"      notes: {'; '.join(build.notes[:3])}")
@@ -93,6 +104,30 @@ def format_text(outcome: OptimizeOutcome) -> str:
                 lines.extend(_format_build(idx, b, outcome.objective))
         else:
             lines.append("  (none)")
+    if outcome.purchase_curve:
+        lines.append("purchase curve (OPT-04):")
+        for step in outcome.purchase_curve:
+            lines.append(
+                f"  step {step.order}: +{step.item_id} {step.item_name} ({step.item_gold} g, "
+                f"cum {step.cumulative_gold} g) -> {outcome.objective}={format_number(step.score)} "
+                f"(+{format_number(step.delta_score)}, "
+                f"{format_number(step.score_per_1000g)}/1000g) "
+                f"[{step.label.value}]"
+            )
+    if outcome.gold_checkpoints:
+        lines.append("gold checkpoints (OPT-04):")
+        for cp in outcome.gold_checkpoints:
+            if cp.build is None:
+                lines.append(f"  {cp.gold_budget} g: (no legal build within budget)")
+            else:
+                cp_items = ", ".join(
+                    f"{i} {n}" for i, n in zip(cp.build.items, cp.build.item_names, strict=True)
+                )
+                lines.append(
+                    f"  {cp.gold_budget} g: [{cp.build.label.value}] "
+                    f"{outcome.objective}={format_number(cp.build.score)} | "
+                    f"gold={cp.build.total_gold} | items: {cp_items}"
+                )
     for note in outcome.notes:
         lines.append(f"note: {note}")
     lines.append(f"label: {RESULT_LABEL} (weakest verified input: {outcome.label.value})")
@@ -121,6 +156,10 @@ def to_dict(outcome: OptimizeOutcome) -> dict[str, Any]:
             "beam_width": cfg.beam_width,
             "pool_limit": cfg.pool_limit,
             "damage_mix_physical": float(cfg.damage_mix_physical),
+            "elixir": cfg.elixir,
+            "ornn_upgrade": cfg.ornn_upgrade,
+            "purchase_curve": cfg.purchase_curve,
+            "gold_checkpoints": list(cfg.gold_checkpoints),
         },
         "search_stats": {
             "candidate_pool_size": st.candidate_pool_size,
@@ -135,5 +174,29 @@ def to_dict(outcome: OptimizeOutcome) -> dict[str, Any]:
         "verified_builds": [_build_dict(b) for b in outcome.verified_builds],
         "pending_builds": [_build_dict(b) for b in outcome.pending_builds],
         "all_builds": [_build_dict(b) for b in outcome.all_builds],
+        "purchase_curve": [
+            {
+                "order": s.order,
+                "item_id": s.item_id,
+                "item_name": s.item_name,
+                "item_gold": s.item_gold,
+                "cumulative_gold": s.cumulative_gold,
+                "items_so_far": list(s.items_so_far),
+                "score": float(s.score),
+                "delta_score": float(s.delta_score),
+                "score_per_1000g": float(s.score_per_1000g),
+                "label": s.label.value,
+                "metrics": dict(s.metrics),
+            }
+            for s in outcome.purchase_curve
+        ],
+        "gold_checkpoints": [
+            {
+                "gold_budget": cp.gold_budget,
+                "build": None if cp.build is None else _build_dict(cp.build),
+            }
+            for cp in outcome.gold_checkpoints
+        ],
+        "auto_steps": list(outcome.auto_steps),
         "notes": list(outcome.notes),
     }

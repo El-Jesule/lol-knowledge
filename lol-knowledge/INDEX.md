@@ -43,16 +43,17 @@
 | Calcular desde 0 las acumulaciones temporales de combate (Guinsoo, El final, Liandry, Disfraz encantado) | [Acumulaciones en combate](mechanics/combat-stacks.md) |
 | Calcular efectos según la vida del objetivo (Kraken, Llamasombría, Recaudadora) | [Vida del objetivo](mechanics/target-health.md) |
 | Calcular quemaduras y aumentos por tiempo en combate (Liandry, Antorcha…) | [Quemaduras](mechanics/burns.md) |
-| Dar tiempos a una rotación (ataques, enfriamientos, esperas) | [Línea de tiempo](mechanics/timeline.md) |
+| Dar tiempos a una rotación (ataques, enfriamientos, esperas, informes por ventana `--window`) | [Línea de tiempo](mechanics/timeline.md) |
 | Repartir las quemaduras en el tiempo y aplicar efectos con duración (Tonada sanguina, Malignidad, Ciclovoltaica, Fuego negro) | [Línea de tiempo](mechanics/timeline.md), reglas 7 y 8 |
-| Ráfaga de Yun Tal, caducidad de las acumulaciones (Kraken, Rompecascos) y ventana de 10 s de Hoja encantada | [Línea de tiempo](mechanics/timeline.md), reglas 9 a 11 |
+| Ráfaga de Yun Tal, caducidad de las acumulaciones (Kraken, Rompecascos, Impacto fantasma Guinsoo→Kraken) y ventana de 10 s de Hoja encantada | [Línea de tiempo](mechanics/timeline.md), reglas 9 a 11 |
+| Aplicar elixires de la Grieta (`2138`/`2139`/`2140`) o una mejora de obra maestra de Ornn (`--elixir`, `--ornn-item`, `--ornn-upgrade`) | [Motor v1.0](../odd/tasks/engine-v1.md) y [uso](../README.md) |
 | Ver las estadísticas base y por nivel extraídas del cliente | [champion-records.json](derived/champion-records.json) |
 | Ver los valores, cálculos y textos de los efectos de los objetos, del cliente | [item-effects.json](derived/item-effects.json) |
 | Ver el catálogo curado de objetos | [catalog.json](objects/catalog.json) |
 | Ver las runas, sus valores y si una página es legal; aplicar los fragmentos | [Runas y fragmentos](mechanics/runes.md) y [runes.json](derived/runes.json) |
 | Calcular hechizos de invocador (Prender, Barrera, Curar, Extenuación, Aplastar, Fantasmal, Limpiar, Destello, Teleportar) | [Hechizos de invocador](mechanics/summoner-spells.md) y [summoner-spells.json](derived/summoner-spells.json) |
 | Saber si unos objetos pueden ir juntos (únicos, botas, grupos exclusivos, huecos) | [Legalidad de la build](mechanics/build-legality.md) y [item-groups.json](derived/item-groups.json) |
-| Optimizar una build legal por daño, DPS, vida efectiva, supervivencia, curación o duelo 1v1 | `python -m lol_knowledge optimize` y [Optimizador de builds](../odd/tasks/build-optimizer.md) |
+| Optimizar una build legal por daño, DPS, vida efectiva, supervivencia, curación o duelo 1v1 (con curva de compra `--purchase-curve`, puntos de control de oro `--gold-checkpoints`, rotación automática y mejora de Ornn) | `python -m lol_knowledge optimize`, [Optimizador de builds](../odd/tasks/build-optimizer.md) y [Motor v1.0](../odd/tasks/engine-v1.md) |
 | Conectar una IA mediante contrato JSON o servidor MCP local | [Capa de IA y servidor MCP](ai-layer.md) y `python -m lol_knowledge mcp` |
 | Ver la evidencia de las mecánicas de objetos | [Informe de mecánicas](../research/reports/object-mechanics-2026-10-20.md) |
 | Continuar la investigación de datos de Zaahen | [Documento de continuidad](../research/zaahen-research-handoff.md) |
@@ -71,7 +72,7 @@
 
 **Simulador de duelo 1v1 determinista con bloqueos por control de masas** ([Simulador de duelo 1v1](mechanics/duel.md), [`duel-simulator.md`](../odd/tasks/duel-simulator.md)): motor acoplado sobre reloj exacto `Fraction` reutilizando `rotation.py` y `defense.py` sin doble conteo, con `112/173` campeones (`148` habilidades, `154` `cc_effects` declarativos compilados desde el cliente `16.23`), tenacidad con suelo de `0,3 s`, purgas (*Limpiar*, QSS, `Alistar R`, `Gangplank W`, `Olaf R`, `Rengar W.empowered`, `Milio R`), inmunidades (`Olaf R`, `Fiora W`, `Morgana E`) e interceptación por escudo de hechizos; modos `scripted_then_attack`, `strict_scripted` y `priority_loop`, desempates `simultaneous` (invariante de simetría), `a_first` y `b_first`, expuesto en CLI (`duel`), contrato JSON (`operation: "duel"`), servidor MCP (`lol_duel`) y optimizador (`--objective duel`).
 
-El modelo de objetos cubre los **218 objetos comprables de la Grieta** con revisión completa (**218/218 en `effect_review: complete`**, `0` pendientes): **174 entradas curadas** en `catalog.json` (`catalog_version: 28`; `166` objetos con `234` efectos documentados: `185` `evaluable`, `1` `partially_evaluable` y `48` `excluded` de utilidad pura no combativa, más las `4` transformaciones de Lágrima `3040`, `3042`, `3121` y `2530` y `52` objetos solo de estadísticas). Las cifras que Data Dragon no publica se registran con fuente citada: la wiki (`secondary`) o los datos del cliente 16.23 (`derived`, `corroborated` si coinciden). Los límites están en [Modelo de objetos](objects/README.md).
+El modelo de objetos cubre los **218 objetos comprables de la Grieta** con revisión completa (**218/218 en `effect_review: complete`**, `0` pendientes): **174 entradas curadas** en `catalog.json` (`catalog_version: 28`; `166` objetos con `234` efectos documentados: `185` `evaluable`, `1` `partially_evaluable` y `48` `excluded` de utilidad pura no combativa, más las `4` transformaciones de Lágrima `3040`, `3042`, `3121` y `2530` y `52` objetos solo de estadísticas), los **3 elixires de la Grieta** (`2138` Hierro, `2139` Brujería, `2140` Cólera) y la **mejora de obra maestra de Ornn** (`OrnnP.DataValues` `16.23`, `1000 g` en estadísticas exactas sobre un único objeto completado no-botas; [`engine-v1.md`](../odd/tasks/engine-v1.md)). Las cifras que Data Dragon no publica se registran con fuente citada: la wiki (`secondary`) o los datos del cliente 16.23 (`derived`, `corroborated` si coinciden). Los límites están en [Modelo de objetos](objects/README.md).
 
 ## Aviso de fuentes
 
