@@ -39,6 +39,6 @@ duración del control = duración × (1 − tenacidad)
 
 ## Fuera de alcance
 
-- **Reducción de duraciones:** la rotación no modela el tiempo ni los controles, así que la tenacidad no cambia ningún cálculo de daño.
+- **Reducción de duraciones en `rotation`:** la rotación unidireccional no modela controles recibidos; la reducción efectiva con suelo de `0,3 s` (y exención de *airborne* y *suppression*) sí se aplica en el simulador de duelo 1v1 ([duel.md](duel.md)).
 - **Resistencia a ralentizaciones:** es otra estadística (el fragmento de T1 da ambas); no está modelada.
-- Tenacidad condicional o temporal de objetos (Calibrador de Sterak, Final del ingenio), elixires, runas y habilidades.
+- Tenacidad condicional o temporal de objetos (Calibrador de Sterak, Final del ingenio), elixires y habilidades fuera de *Limpiar* (`SummonerBoost`).

@@ -4,7 +4,7 @@
 - **Etiqueta del motor:** `Calculado` sobre entradas `Oficial` / `Derivado` (propaga la etiqueta más débil; las partes no modeladas se declaran explícitamente)
 - **Código:** [`src/lol_knowledge/duel.py`](../../src/lol_knowledge/duel.py), [`src/lol_knowledge/duel_report.py`](../../src/lol_knowledge/duel_report.py), [`src/lol_knowledge/rotation.py`](../../src/lol_knowledge/rotation.py) y [`src/lol_knowledge/defense.py`](../../src/lol_knowledge/defense.py)
 - **Fecha de consulta / actualización:** 2026-11-25
-- **Limitación:** el simulador modela combate 1v1 cuerpo a cuerpo o a distancia sobre una línea de tiempo determinista de eventos discretos (`Fraction` exacto). **No** modela posicionamiento espacial, kiting, colisiones/fallo de *skillshots*, tiempos de animación de lanzamiento ni bloqueos de control de masas (*stun*/*silence*/*suppress*).
+- **Limitación:** el simulador modela combate 1v1 cuerpo a cuerpo o a distancia sobre una línea de tiempo determinista de eventos discretos (`Fraction` exacto), incluyendo bloqueos por control de masas (`cc_effects`), tenacidad, purgas e inmunidades. **No** modela posicionamiento espacial, kiting, colisiones/fallo de *skillshots*, interrupción de canalizaciones ni tiempos de animación de lanzamiento.
 
 ## 1. Arquitectura acoplada sin doble conteo (`Calculado`)
 
@@ -21,6 +21,21 @@ Reglas de acoplamiento exacto:
 - *Extenuación* (`SummonerExhaust`) reduce en 35 % el daño no verdadero del rival durante 3 s; *Limpiar* (`SummonerBoost`) elimina la *Extenuación* activa.
 - *Malla de espinas* (`3075`) devuelve daño mágico real a la `DefenseSession` del atacante y le aplica 3 s de *Heridas graves* antes de resolver su robo de vida.
 - Durante los 4 s de estasis de *Ángel de la guarda* (`3026`), el campeón no puede ejecutar acciones y los impactos entrantes infligen `0` de daño hasta su resurrección.
+
+## 1b. Control de masas (`cc_effects`), tenacidad y purgas (`Derivado` + `Calculado`)
+
+- **Cobertura (`Derivado`, cliente `16.23`):** `112/173` campeones (`148` habilidades, `154` efectos de control de masas declarativos en `kit.json`: `58` *stun*, `38` *airborne*, `25` *root*, `10` *fear*, `6` *silence*, `5` *suppression*, `4` *charm*, `3` *taunt*, `2` *sleep*, `1` *polymorph*, `1` *berserk*, `1` *blind*) más `8` efectos activos de purga/inmunidad a CC (`Alistar R`, `Fiora W`, `Gangplank W`, `Milio R`, `Morgana E`, `Olaf R` purga + inmunidad, `Rengar W.empowered`).
+- **Bloqueos en reloj discreto:**
+  - *Hard CC* (`stun`, `airborne`, `suppression`, `charm`, `fear`, `polymorph`, `sleep`): retrasa tanto ataques básicos como habilidades hasta que termina la ventana.
+  - `silence` y `taunt` / `berserk`: retrasan el lanzamiento de habilidades (`Q/W/E/R`), permitiendo continuar con ataques básicos.
+  - `blind` (`Teemo Q`): los ataques básicos durante la ventana fallan (`0` daño y `0` robo de vida), mientras que las habilidades siguen impactando.
+  - `root`: se registra con tenacidad/purga; no bloquea ataques ni hechizos sin desplazamiento en 1v1 sin movimiento 2D.
+- **Tenacidad ([tenacity.md](tenacity.md)):** reduce la duración de todos los controles salvo `airborne` y `suppression`, aplicando el suelo mínimo de `0,3 s` (`min(base, max(0,3, base × (1 − tenacidad)))`). *Limpiar* (`SummonerBoost`) aporta `75 %` de tenacidad adicional multiplicativa durante `3 s`.
+- **Purgas, inmunidad y escudo de hechizos:**
+  - *Limpiar* (`SummonerBoost`) purga controles limpiables (no `airborne` ni `suppression`).
+  - Purgas de nivel QSS (*Fajín de mercurio* `3140` / *Cimitarra* `3139` / *Amanecer de plata* `6035`, `Alistar R`, `Gangplank W`, `Olaf R`, `Rengar W.empowered`) purgan también `suppression`.
+  - Inmunidades (`Olaf R`, `Fiora W`, `Morgana E` mientras conserve escudo mágico) y escudos de hechizos (`Sivir E`, `Nocturne W`, incluso frente a hechizos de CC puro sin daño como `Lulu W`) bloquean el CC entrante.
+  - La runa *Inquebrantable* (`8242`) activa su bonificación de armadura/RM automáticamente durante el CC y los `2 s` posteriores.
 
 ## 2. Modos de acción (`--mode`)
 
