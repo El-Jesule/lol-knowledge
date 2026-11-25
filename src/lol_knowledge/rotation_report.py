@@ -2,6 +2,7 @@
 
 from __future__ import annotations
 
+from collections.abc import Sequence
 from fractions import Fraction
 from typing import Any
 
@@ -130,7 +131,12 @@ def _resource_event_dict(event: ResourceEvent) -> dict[str, Any]:
 
 
 def format_text(
-    outcome: RotationOutcome, sheet: StatSheet, target: Target, crit_base: CritBase | None
+    outcome: RotationOutcome,
+    sheet: StatSheet,
+    target: Target,
+    crit_base: CritBase | None,
+    *,
+    windows: Sequence[Fraction] = (),
 ) -> str:
     items = ", ".join(f"{item.id} {item.name}" for item in sheet.items) or "none"
     target_items = ", ".join(item.id for item in target.items)
@@ -281,6 +287,13 @@ def format_text(
         )
         if outcome.damage_per_second is not None:
             lines.append(f"damage per second: {format_number(outcome.damage_per_second)}")
+        for sec in windows:
+            win = outcome.window(sec)
+            lines.append(
+                f"window 0..{format_number(win.seconds)} s: total {format_number(win.total)}, "
+                f"DPS {format_number(win.damage_per_second)}, steps {win.steps_count}, "
+                f"remaining health {format_number(win.remaining_health)} [{win.label.value}]"
+            )
     if outcome.lethal_step is not None:
         lines.append(f"lethal at step {outcome.lethal_step}")
     for note in outcome.notes:
@@ -323,7 +336,12 @@ def _part_dict(part: Part) -> dict[str, Any]:
 
 
 def to_dict(
-    outcome: RotationOutcome, sheet: StatSheet, target: Target, crit_base: CritBase | None
+    outcome: RotationOutcome,
+    sheet: StatSheet,
+    target: Target,
+    crit_base: CritBase | None,
+    *,
+    windows: Sequence[Fraction] = (),
 ) -> dict[str, Any]:
     return {
         "label": RESULT_LABEL,
@@ -470,5 +488,22 @@ def to_dict(
         "healing": float(outcome.healing),
         "exact_healing": str(outcome.healing),
         "healing_label": outcome.healing_label.value,
+        "windows": [
+            {
+                "seconds": float(win.seconds),
+                "steps_count": win.steps_count,
+                "total": float(win.total),
+                "exact_total": str(win.total),
+                "primary_total": float(win.primary_total),
+                "secondary_total": float(win.secondary_total),
+                "damage_per_second": float(win.damage_per_second),
+                "healing": float(win.healing),
+                "remaining_health": float(win.remaining_health),
+                "label": win.label.value,
+            }
+            for win in (outcome.window(sec) for sec in windows)
+        ]
+        if (windows and outcome.timeline is not None)
+        else [],
         "not_applied": list(outcome.notes),
     }

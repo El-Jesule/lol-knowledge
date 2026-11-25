@@ -410,6 +410,21 @@ class Timeline:
 
 
 @dataclass(frozen=True)
+class TimelineWindow:
+    """Cumulative damage and DPS within ``[0, seconds]`` of a timeline rotation (MEC-21)."""
+
+    seconds: Fraction
+    steps_count: int
+    total: Fraction
+    primary_total: Fraction
+    secondary_total: Fraction
+    damage_per_second: Fraction
+    healing: Fraction
+    remaining_health: Fraction
+    label: Label
+
+
+@dataclass(frozen=True)
 class RotationOutcome:
     steps: tuple[StepOutcome, ...]
     max_health: Fraction
@@ -485,6 +500,53 @@ class RotationOutcome:
             if step.health_after == 0:
                 return step.index
         return None
+
+    def window(self, seconds: Fraction) -> TimelineWindow:
+        """Summarize cumulative damage, DPS and healing in ``[0, seconds]`` (MEC-21)."""
+        if self.timeline is None:
+            raise RotationError("window reports require --timeline")
+        if seconds <= 0:
+            raise RotationError("window duration must be positive")
+        total = Fraction(0)
+        primary = Fraction(0)
+        secondary = Fraction(0)
+        healing = Fraction(0)
+        steps_count = 0
+        rem_hp = self.start_health
+        labels: list[Label] = []
+        prev_t = Fraction(0)
+        for step in self.steps:
+            t = step.time if step.time is not None else Fraction(0)
+            if t <= seconds:
+                total += step.total
+                primary += step.primary_total
+                secondary += step.secondary_total
+                healing += step.healing
+                rem_hp = step.health_after
+                labels.append(step.label)
+                if step.step.text != "burns" and step.step.wait is None:
+                    steps_count += 1
+                prev_t = t
+            elif step.step.text == "burns" and t > prev_t and seconds > prev_t:
+                frac = (seconds - prev_t) / (t - prev_t)
+                total += step.total * frac
+                primary += step.primary_total * frac
+                secondary += step.secondary_total * frac
+                healing += step.healing * frac
+                rem_hp = max(Fraction(0), rem_hp - step.health_damage * frac)
+                labels.append(step.label)
+                break
+        return TimelineWindow(
+            seconds=seconds,
+            steps_count=steps_count,
+            total=total,
+            primary_total=primary,
+            secondary_total=secondary,
+            damage_per_second=total / seconds,
+            healing=healing,
+            remaining_health=rem_hp,
+            label=weakest(labels) if labels else self.label,
+        )
 
 
 @dataclass(frozen=True)
@@ -3021,6 +3083,23 @@ class _Rotation:
                 parts += self._on_hit(
                     self.on_hit, step, target_stats, f" - again by {effect.title}", label
                 )
+                # OBJ-05: Guinsoo (3124) Phantom Hit grants +1 Kraken Slayer (6672) stack.
+                if effect.item == "3124":
+                    for k_eff in self.counted:
+                        if k_eff.item != "6672":
+                            continue
+                        counters[k_eff.title] += 1
+                        if clock is not None:
+                            self.last_counted[k_eff.title] = clock
+                        if counters[k_eff.title] >= (k_eff.every or 3):
+                            counters[k_eff.title] = 0
+                            parts += self._on_hit(
+                                [k_eff],
+                                step,
+                                target_stats,
+                                f" - Phantom Hit stack from {effect.title}",
+                                Label.DERIVED,
+                            )
             else:
                 parts += self._on_hit([effect], step, target_stats)
         return parts
