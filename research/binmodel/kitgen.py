@@ -564,6 +564,58 @@ def _compile_passive_effect(
     return compiled
 
 
+def _compile_active_effect(
+    ability: _Ability | None,
+    effect_spec: Mapping[str, Any],
+    content_version: Any,
+    context: str,
+) -> dict[str, Any]:
+    effect_ctx = f"{context}.active_effects[{effect_spec.get('id')}]"
+    formula, source = _compile_formula_ref(ability, effect_spec, content_version, effect_ctx)
+    compiled: dict[str, Any] = {
+        "id": str(effect_spec["id"]),
+        "name": str(effect_spec["name"]),
+        "kind": str(effect_spec["kind"]),
+        "formula": formula,
+        "label": str(effect_spec.get("label", "Derivado")),
+        "source": source,
+    }
+    for key in (
+        "stat",
+        "mode",
+        "shield_type",
+        "damage_type",
+        "case_ids",
+        "over_duration",
+        "uses_hsp",
+        "condition",
+    ):
+        if key in effect_spec:
+            compiled[key] = effect_spec[key]
+    if "damage_reduction_cap" in effect_spec:
+        compiled["damage_reduction_cap"] = _setting(
+            ability, effect_spec["damage_reduction_cap"], f"{effect_ctx}.damage_reduction_cap"
+        )
+    if "duration_seconds" in effect_spec:
+        raw_dur = effect_spec["duration_seconds"]
+        if isinstance(raw_dur, Mapping) and "data_value" in raw_dur:
+            if ability is None:
+                raise KitGenError(f"{effect_ctx}.duration_seconds: no bin data")
+            dur_formula = ability.data_value(str(raw_dur["data_value"]))
+            if dur_formula.get("op") == "constant":
+                compiled["duration_seconds"] = dur_formula["value"]
+            else:
+                compiled["duration_formula"] = dur_formula
+        else:
+            compiled["duration_seconds"] = _setting(
+                ability, raw_dur, f"{effect_ctx}.duration_seconds"
+            )
+    elif "duration_formula" in effect_spec:
+        dur_raw = effect_spec["duration_formula"]
+        compiled["duration_formula"] = ability.custom(dur_raw) if ability is not None else dur_raw
+    return compiled
+
+
 def compile_kit(
     extract: Mapping[str, Any], tooltips: Mapping[str, Any], spec: Mapping[str, Any]
 ) -> dict[str, Any]:
@@ -700,6 +752,16 @@ def compile_kit(
                     context,
                 )
                 for effect_spec in entry["passive_effects"]
+            ]
+        if entry.get("active_effects"):
+            abilities[slot]["active_effects"] = [
+                _compile_active_effect(
+                    by_slot.get(effect_spec["ability"]) if "ability" in effect_spec else ability,
+                    effect_spec,
+                    content_version,
+                    context,
+                )
+                for effect_spec in entry["active_effects"]
             ]
         for key in ("recast_window_seconds", "max_recasts", "recast_interval_seconds"):
             if key in entry:

@@ -562,8 +562,12 @@ def _added(sheet: StatSheet, stat_id: str, contribution: Contribution) -> StatSh
     speed = definition.id == "attack_speed_bonus"
     if definition.id in _FEEDING_STATS:
         raise StatsError(f"{definition.id}: feeds other stats; it takes no temporary bonus")
-    if definition.unit is Unit.FRACTION and not 0 <= contribution.value <= 1:
-        raise StatsError(f"{definition.id}: {contribution.value} is not a fraction 0..1")
+    if definition.unit is Unit.FRACTION:
+        if speed:
+            if contribution.value < 0:
+                raise StatsError(f"{definition.id}: {contribution.value} must be non-negative")
+        elif not 0 <= contribution.value <= 1:
+            raise StatsError(f"{definition.id}: {contribution.value} is not a fraction 0..1")
     value = sheet[definition.id]
     values = dict(sheet.values)
     values[definition.id] = replace(value, contributions=(*value.contributions, contribution))

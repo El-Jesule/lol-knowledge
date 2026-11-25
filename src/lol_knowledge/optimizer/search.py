@@ -327,6 +327,7 @@ class _BuildEvaluator:
         constraints: OptimizeConstraints,
         summoners: Sequence[str] = (),
         summoner_data: SummonerSpellData | None = None,
+        defender_casts: Sequence[str] = (),
     ) -> None:
         self.objective = objective
         self.champion = champion
@@ -352,6 +353,7 @@ class _BuildEvaluator:
         self.rune_data = rune_data
         self.summoners = tuple(summoners)
         self.summoner_data = summoner_data
+        self.defender_casts = tuple(defender_casts)
         self.summoner_specs: tuple[SummonerSpellSpec, ...] = ()
         if self.summoners:
             if summoner_data is None:
@@ -654,6 +656,8 @@ class _BuildEvaluator:
                     kit=self.kit,
                     summoners=self.summoners,
                     summoner_data=self.summoner_data,
+                    defender_casts=self.defender_casts,
+                    defender_ranks=self.ranks,
                 )
             except StatsError, RotationError, KitError:
                 return None
@@ -902,6 +906,7 @@ def optimize_build(
     rune_data: RuneData | None = None,
     summoners: Sequence[str] = (),
     summoner_data: SummonerSpellData | None = None,
+    defender_casts: Sequence[str] = (),
 ) -> OptimizeOutcome:
     """Search legal builds for ``champion`` optimizing ``objective`` under ``constraints``."""
     t0 = time.perf_counter()
@@ -970,6 +975,7 @@ def optimize_build(
         constraints=cfg,
         summoners=summoners,
         summoner_data=summoner_data,
+        defender_casts=defender_casts,
     )
 
     total_pruned_illegal = 0
