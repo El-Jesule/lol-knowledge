@@ -116,6 +116,19 @@
       "tooltip": "spell_taricr_tooltip",
       "not_modelled": [
         "Invulnerabilidad en área de 2,5 s tras 2,5 s de retardo"
+      ],
+      "active_effects": [
+        {
+          "id": "cosmic_radiance_invuln",
+          "name": "Resplandor cósmico (invulnerabilidad)",
+          "kind": "invulnerable",
+          "mode": "invulnerable",
+          "duration_seconds": {
+            "data_value": "InvulnDuration"
+          },
+          "condition": "after_2.5s_delay",
+          "source_note": "DataValues.InvulnDuration invulnerability"
+        }
       ]
     }
   }

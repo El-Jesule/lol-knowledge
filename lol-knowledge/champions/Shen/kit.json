@@ -260,6 +260,20 @@
       "passive_stats": [],
       "not_modelled": [
         "Zona de esquiva de ataques básicos durante 1,75 s"
+      ],
+      "active_effects": [
+        {
+          "id": "spirits_refuge_dodge",
+          "name": "Refugio espiritual (bloqueo de ataques básicos)",
+          "kind": "dodge_attacks",
+          "formula": {
+            "op": "constant",
+            "value": 1
+          },
+          "label": "Derivado",
+          "source": "Characters/Shen/Spells/ShenWAbility/ShenW · DataValues.ZoneDuration attack block zone (16.23.8418428+branch.releases-16-23.content.release)",
+          "duration_seconds": 1.75
+        }
       ]
     },
     "E": {

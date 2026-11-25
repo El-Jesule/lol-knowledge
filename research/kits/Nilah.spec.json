@@ -88,6 +88,15 @@
           "duration_seconds": {
             "data_value": "BaseDuration"
           }
+        },
+        {
+          "id": "jubilant_veil_dodge",
+          "name": "Velo jubiloso (esquiva de ataques básicos)",
+          "kind": "dodge_attacks",
+          "duration_seconds": {
+            "data_value": "BaseDuration"
+          },
+          "source_note": "DataValues.BaseDuration attack dodge"
         }
       ]
     },
@@ -134,6 +143,15 @@
       ],
       "not_modelled": [
         "Curación propia y aliada por daño infligido (ChampHealingPercent) y escudo por exceso de curación"
+      ],
+      "active_effects": [
+        {
+          "id": "apotheosis_heal",
+          "name": "Apoteosis (curación % daño infligido)",
+          "kind": "damage_dealt_heal",
+          "calculation": "ChampHealingPercent",
+          "scale": 100
+        }
       ]
     }
   }

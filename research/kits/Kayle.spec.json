@@ -162,6 +162,18 @@
       ],
       "not_modelled": [
         "Invulnerabilidad del objetivo aliado (InvulnDuration)"
+      ],
+      "active_effects": [
+        {
+          "id": "divine_judgment_invuln",
+          "name": "Juicio divino (invulnerabilidad)",
+          "kind": "invulnerable",
+          "mode": "invulnerable",
+          "duration_seconds": {
+            "data_value": "InvulnDuration"
+          },
+          "source_note": "DataValues.InvulnDuration invulnerability"
+        }
       ]
     }
   }

@@ -141,6 +141,25 @@
       "not_modelled": [
         "Daño físico en los bordes exteriores",
         "Acumulación dinámica de coraje por daño recibido y escudo (ShieldConversion)"
+      ],
+      "active_effects": [
+        {
+          "id": "haymaker_shield",
+          "name": "Tragaperras (escudo de Coraje)",
+          "kind": "recent_damage_shield",
+          "data_value": "DamageStored",
+          "scale": 100,
+          "window_seconds": {
+            "data_value": "AdrenalineStorageWindow"
+          },
+          "max_formula": {
+            "calculation": "MaxGrit"
+          },
+          "duration_seconds": {
+            "data_value": "ShieldMaxDuration"
+          },
+          "input_name": "grit"
+        }
       ]
     },
     "E": {

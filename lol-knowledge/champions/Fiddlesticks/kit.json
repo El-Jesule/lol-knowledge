@@ -3,7 +3,7 @@
   "champion": "Fiddlesticks",
   "label": "Derivado",
   "game_version": "16.23",
-  "content_version": "16.23.8406595+branch.releases-16-23.content.release",
+  "content_version": "16.23.8418428+branch.releases-16-23.content.release",
   "verified_against": {
     "content_version": "16.23.8406595+branch.releases-16-23.content.release",
     "bin_sha256": "11d87daed7b109cec29357b24e341ae0d3c584344c08508c49eb2ef56687cc04",
@@ -72,7 +72,7 @@
                 ]
               },
               "label": "Derivado",
-              "source": "Characters/Fiddlesticks/Spells/FiddleSticksQAbility/FiddleSticksQ · TotalPercentHealthDamage × vida actual del objetivo (16.23.8406595+branch.releases-16-23.content.release)",
+              "source": "Characters/Fiddlesticks/Spells/FiddleSticksQAbility/FiddleSticksQ · TotalPercentHealthDamage × vida actual del objetivo (16.23.8418428+branch.releases-16-23.content.release)",
               "damage_type_source": "spell_fiddlesticksq_tooltip <magicDamage>"
             }
           ]
@@ -133,7 +133,7 @@
                 ]
               },
               "label": "Derivado",
-              "source": "Characters/Fiddlesticks/Spells/FiddleSticksQAbility/FiddleSticksQ · TotalPercentHealthDamageFeared × vida actual del objetivo (16.23.8406595+branch.releases-16-23.content.release)",
+              "source": "Characters/Fiddlesticks/Spells/FiddleSticksQAbility/FiddleSticksQ · TotalPercentHealthDamageFeared × vida actual del objetivo (16.23.8418428+branch.releases-16-23.content.release)",
               "damage_type_source": "spell_fiddlesticksq_tooltip <magicDamage>"
             }
           ]
@@ -184,7 +184,7 @@
                 ]
               },
               "label": "Derivado",
-              "source": "Characters/Fiddlesticks/Spells/FiddleSticksWAbility/FiddleSticksW.mSpellCalculations.DrainDamageCalc (16.23.8406595+branch.releases-16-23.content.release)",
+              "source": "Characters/Fiddlesticks/Spells/FiddleSticksWAbility/FiddleSticksW.mSpellCalculations.DrainDamageCalc (16.23.8418428+branch.releases-16-23.content.release)",
               "damage_type_source": "spell_fiddlesticksw_tooltip <magicDamage>"
             }
           ]
@@ -227,7 +227,7 @@
                 ]
               },
               "label": "Derivado",
-              "source": "Characters/Fiddlesticks/Spells/FiddleSticksWAbility/FiddleSticksW · DataValues.PercentForTooltip % × vida que falta del objetivo (16.23.8406595+branch.releases-16-23.content.release)",
+              "source": "Characters/Fiddlesticks/Spells/FiddleSticksWAbility/FiddleSticksW · DataValues.PercentForTooltip % × vida que falta del objetivo (16.23.8418428+branch.releases-16-23.content.release)",
               "damage_type_source": "spell_fiddlesticksw_tooltip <magicDamage>"
             }
           ]
@@ -236,6 +236,25 @@
       "passive_stats": [],
       "not_modelled": [
         "Curación porcentual del daño infligido y devolución del 60 % de enfriamiento al terminar"
+      ],
+      "active_effects": [
+        {
+          "id": "bountiful_harvest_heal",
+          "name": "Cosecha abundante (curación % daño infligido)",
+          "kind": "damage_dealt_heal",
+          "formula": {
+            "op": "by_rank",
+            "values": [
+              25,
+              32.5,
+              40,
+              47.5,
+              55
+            ]
+          },
+          "label": "Derivado",
+          "source": "Characters/Fiddlesticks/Spells/FiddleSticksWAbility/FiddleSticksW.DataValues.VampPercentage (16.23.8418428+branch.releases-16-23.content.release)"
+        }
       ]
     },
     "E": {
@@ -278,7 +297,7 @@
                 ]
               },
               "label": "Derivado",
-              "source": "Characters/Fiddlesticks/Spells/FiddleSticksEAbility/FiddleSticksE.mSpellCalculations.Damage (16.23.8406595+branch.releases-16-23.content.release)",
+              "source": "Characters/Fiddlesticks/Spells/FiddleSticksEAbility/FiddleSticksE.mSpellCalculations.Damage (16.23.8418428+branch.releases-16-23.content.release)",
               "damage_type_source": "spell_fiddlestickse_tooltip <magicDamage>"
             }
           ]
@@ -336,7 +355,7 @@
                 ]
               },
               "label": "Derivado",
-              "source": "Characters/Fiddlesticks/Spells/FiddleSticksRAbility/FiddleSticksR.mSpellCalculations.TotalDamage (16.23.8406595+branch.releases-16-23.content.release)",
+              "source": "Characters/Fiddlesticks/Spells/FiddleSticksRAbility/FiddleSticksR.mSpellCalculations.TotalDamage (16.23.8418428+branch.releases-16-23.content.release)",
               "damage_type_source": "spell_fiddlesticksr_tooltip <magicDamage>"
             }
           ]

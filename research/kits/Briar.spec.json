@@ -143,6 +143,25 @@
           "duration_seconds": {
             "data_value": "BerserkDuration"
           }
+        },
+        {
+          "id": "snack_attack_damage_heal",
+          "name": "Mordisco (curación % daño infligido)",
+          "kind": "damage_dealt_heal",
+          "data_value": "AttackHealPercent",
+          "scale": 100,
+          "case_ids": [
+            "snack_attack"
+          ]
+        },
+        {
+          "id": "snack_attack_hp_heal",
+          "name": "Mordisco (curación % vida máxima)",
+          "kind": "heal",
+          "calculation": "AttackMaxHPHeal",
+          "case_ids": [
+            "snack_attack"
+          ]
         }
       ]
     },

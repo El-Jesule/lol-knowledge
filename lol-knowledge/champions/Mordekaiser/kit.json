@@ -360,10 +360,31 @@
       ],
       "active_effects": [
         {
-          "id": "indestructible_max_shield",
-          "name": "Indestructible (escudo máximo)",
-          "kind": "shield",
+          "id": "indestructible_shield",
+          "name": "Indestructible (escudo con mínimo 5% y máximo 30% vida máx.)",
+          "kind": "recent_damage_shield",
           "formula": {
+            "op": "constant",
+            "value": 7.5
+          },
+          "label": "Derivado",
+          "source": "Characters/Mordekaiser/Spells/MordekaiserWAbility/MordekaiserW.DataValues.DamageTakenConversion (16.23.8418428+branch.releases-16-23.content.release)",
+          "input_name": "recent_damage_taken",
+          "min_formula": {
+            "op": "mul",
+            "operands": [
+              {
+                "op": "constant",
+                "value": 0.05
+              },
+              {
+                "op": "stat",
+                "stat": "health",
+                "scope": "total"
+              }
+            ]
+          },
+          "max_formula": {
             "op": "mul",
             "operands": [
               {
@@ -377,9 +398,6 @@
               }
             ]
           },
-          "label": "Derivado",
-          "source": "Characters/Mordekaiser/Spells/MordekaiserWAbility/MordekaiserW.mSpellCalculations.MaxHealthTooltip (16.23.8418428+branch.releases-16-23.content.release)",
-          "condition": "full_stored_shield",
           "duration_seconds": 5
         }
       ]

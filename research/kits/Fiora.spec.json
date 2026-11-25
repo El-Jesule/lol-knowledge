@@ -114,6 +114,18 @@
       ],
       "not_modelled": [
         "Inmunidad durante 0,75 s, ralentización de velocidad de movimiento/ataque y aturdimiento al bloquear CC"
+      ],
+      "active_effects": [
+        {
+          "id": "riposte_invuln",
+          "name": "Réplica (bloqueo total de daño)",
+          "kind": "invulnerable",
+          "mode": "invulnerable",
+          "duration_seconds": {
+            "data_value": "ParryDuration"
+          },
+          "source_note": "DataValues.ParryDuration parry invulnerability"
+        }
       ]
     },
     "E": {

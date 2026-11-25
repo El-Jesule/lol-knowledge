@@ -73,6 +73,18 @@
       "tooltip": "spell_undyingrage_tooltip",
       "not_modelled": [
         "Inmortalidad durante 5 s y ganancia instantánea de Furia"
+      ],
+      "active_effects": [
+        {
+          "id": "undying_rage",
+          "name": "Furia inmortal (inmortalidad con suelo de vida)",
+          "kind": "invulnerable",
+          "mode": "undying",
+          "data_value": "TryndRMinHealth",
+          "duration_seconds": {
+            "data_value": "TryndRDuration"
+          }
+        }
       ]
     }
   }

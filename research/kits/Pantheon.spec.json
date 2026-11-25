@@ -188,6 +188,17 @@
             "data_value": "SpeedDuration"
           },
           "condition": "mortal_will_empowered"
+        },
+        {
+          "id": "aegis_assault_invuln",
+          "name": "Asalto de égida (invulnerabilidad frontal)",
+          "kind": "invulnerable",
+          "mode": "invulnerable",
+          "duration_seconds": {
+            "data_value": "ShieldDuration"
+          },
+          "condition": "frontal_non_turret_damage",
+          "source_note": "DataValues.ShieldDuration frontal invulnerability"
         }
       ]
     },

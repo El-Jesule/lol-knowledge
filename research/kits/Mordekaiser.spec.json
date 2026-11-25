@@ -120,14 +120,21 @@
       ],
       "active_effects": [
         {
-          "id": "indestructible_max_shield",
-          "name": "Indestructible (escudo máximo)",
-          "kind": "shield",
-          "calculation": "MaxHealthTooltip",
+          "id": "indestructible_shield",
+          "name": "Indestructible (escudo con mínimo 5% y máximo 30% vida máx.)",
+          "kind": "recent_damage_shield",
+          "data_value": "DamageTakenConversion",
+          "scale": 100,
+          "min_formula": {
+            "calculation": "MinHealthTooltip"
+          },
+          "max_formula": {
+            "calculation": "MaxHealthTooltip"
+          },
           "duration_seconds": {
             "data_value": "Duration"
           },
-          "condition": "full_stored_shield"
+          "input_name": "recent_damage_taken"
         }
       ]
     },

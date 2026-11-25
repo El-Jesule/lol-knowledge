@@ -125,6 +125,17 @@
       "tooltip": "spell_shenw_tooltip",
       "not_modelled": [
         "Zona de esquiva de ataques básicos durante 1,75 s"
+      ],
+      "active_effects": [
+        {
+          "id": "spirits_refuge_dodge",
+          "name": "Refugio espiritual (bloqueo de ataques básicos)",
+          "kind": "dodge_attacks",
+          "duration_seconds": {
+            "data_value": "ZoneDuration"
+          },
+          "source_note": "DataValues.ZoneDuration attack block zone"
+        }
       ]
     },
     "E": {

@@ -245,6 +245,21 @@
       "passive_stats": [],
       "not_modelled": [
         "Inmunidad durante 0,75 s, ralentización de velocidad de movimiento/ataque y aturdimiento al bloquear CC"
+      ],
+      "active_effects": [
+        {
+          "id": "riposte_invuln",
+          "name": "Réplica (bloqueo total de daño)",
+          "kind": "invulnerable",
+          "formula": {
+            "op": "constant",
+            "value": 1
+          },
+          "label": "Derivado",
+          "source": "Characters/Fiora/Spells/FioraWAbility/FioraW · DataValues.ParryDuration parry invulnerability (16.23.8418428+branch.releases-16-23.content.release)",
+          "mode": "invulnerable",
+          "duration_seconds": 0.75
+        }
       ]
     },
     "E": {

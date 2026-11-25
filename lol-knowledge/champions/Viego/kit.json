@@ -242,6 +242,22 @@
       "passive_stats": [],
       "not_modelled": [
         "Escalado con probabilidad de crítico (HealthCritDamage) y curación del segundo golpe"
+      ],
+      "active_effects": [
+        {
+          "id": "blade_of_the_ruined_king_heal",
+          "name": "Hoja del Rey Arruinado (curación doble golpe)",
+          "kind": "damage_dealt_heal",
+          "formula": {
+            "op": "constant",
+            "value": 150
+          },
+          "label": "Derivado",
+          "source": "Characters/Viego/Spells/ViegoQAbility/ViegoQ.DataValues.HealModVsChamps (16.23.8418428+branch.releases-16-23.content.release)",
+          "case_ids": [
+            "double_strike"
+          ]
+        }
       ]
     },
     "W": {

@@ -162,6 +162,17 @@
           "stat": "magic_resist",
           "mode": "flat",
           "duration_seconds": 4
+        },
+        {
+          "id": "spirit_of_dread_heal",
+          "name": "Espíritu de pavor (curación % daño infligido)",
+          "kind": "damage_dealt_heal",
+          "formula": {
+            "op": "constant",
+            "value": 25
+          },
+          "label": "Derivado",
+          "source": "Characters/Hecarim/Spells/HecarimWAbility/HecarimW.mSpellCalculations.LeechAmount (16.23.8418428+branch.releases-16-23.content.release)"
         }
       ]
     },

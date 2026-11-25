@@ -309,6 +309,21 @@
       "passive_stats": [],
       "not_modelled": [
         "Curación del 50 % del daño reciente, limpieza de CC en Ferocidad y daño extra a monstruos"
+      ],
+      "active_effects": [
+        {
+          "id": "battle_roar_heal",
+          "name": "Rugido de batalla (curación 50% daño reciente)",
+          "kind": "recent_damage_heal",
+          "formula": {
+            "op": "constant",
+            "value": 50
+          },
+          "label": "Derivado",
+          "source": "Characters/Rengar/Spells/RengarWAbility/RengarW.DataValues.DamagePercentageHealed (16.23.8418428+branch.releases-16-23.content.release)",
+          "input_name": "recent_damage_taken",
+          "window_seconds": 1.5
+        }
       ]
     },
     "E": {

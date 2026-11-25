@@ -284,6 +284,22 @@
       "passive_stats": [],
       "not_modelled": [
         "Invulnerabilidad en área de 2,5 s tras 2,5 s de retardo"
+      ],
+      "active_effects": [
+        {
+          "id": "cosmic_radiance_invuln",
+          "name": "Resplandor cósmico (invulnerabilidad)",
+          "kind": "invulnerable",
+          "formula": {
+            "op": "constant",
+            "value": 1
+          },
+          "label": "Derivado",
+          "source": "Characters/Taric/Spells/TaricRAbility/TaricR · DataValues.InvulnDuration invulnerability (16.23.8418428+branch.releases-16-23.content.release)",
+          "mode": "invulnerable",
+          "condition": "after_2.5s_delay",
+          "duration_seconds": 2.5
+        }
       ]
     }
   }
