@@ -3316,6 +3316,8 @@ class _Rotation:
                 "spell_shield",
                 "block_first_hit",
                 "invulnerable",
+                "cleanse",
+                "cc_immune",
             }:
                 continue
             if (
@@ -3494,7 +3496,14 @@ class _Rotation:
             elif eff.kind == "damage_taken_modifier":
                 dur_txt = f" for {format_number(dur)} s" if dur is not None else ""
                 self.notes.append(f"{src}: defensive damage reduction{dur_txt} (use survive)")
-            elif eff.kind in {"dodge_attacks", "spell_shield", "block_first_hit", "invulnerable"}:
+            elif eff.kind in {
+                "dodge_attacks",
+                "spell_shield",
+                "block_first_hit",
+                "invulnerable",
+                "cleanse",
+                "cc_immune",
+            }:
                 dur_txt = f" for {format_number(dur)} s" if dur is not None else ""
                 self.notes.append(f"{src}: defensive {eff.kind}{dur_txt} (use survive)")
         return heals, shields

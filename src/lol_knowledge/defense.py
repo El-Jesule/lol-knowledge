@@ -22,7 +22,15 @@ from typing import Any
 from .damage import DamageType, format_number, mitigate
 from .errors import RotationError, StatsError
 from .formula import ABILITY_OPS, FormulaError, evaluate_formula
-from .kit import ActiveEffectSpec, Kit, sheet_stats
+from .kit import (
+    CC_BLINDS_ATTACKS,
+    CC_BLOCKS_ABILITIES,
+    CC_BLOCKS_ATTACKS,
+    ActiveEffectSpec,
+    CCEffectSpec,
+    Kit,
+    sheet_stats,
+)
 from .passives import _effect_cooldown, passive_defense_specs
 from .rotation import RotationOutcome
 from .runes import Rune, RuneData, int_input, linear_by_level, rune_value, scale_item_cooldown
@@ -310,6 +318,19 @@ class _StaggerBleed:
     label: Label
 
 
+@dataclass
+class _CCLock:
+    kind: str
+    end: Fraction
+    source: str
+    cleansable_by_cleanse: bool
+    cleansable_by_qss: bool
+    label: Label
+
+
+TENACITY_MIN_DURATION = Fraction(3, 10)  # 0.3 s minimum floor (tenacity.md)
+
+
 @dataclass(frozen=True)
 class DefenseState:
     """Live snapshot of a defender's vital state during coupled duel simulation."""
@@ -321,6 +342,10 @@ class DefenseState:
     stasis_until: Fraction | None
     grievous_active: bool
     step_count: int
+    attacks_locked_until: Fraction | None = None
+    abilities_locked_until: Fraction | None = None
+    suppressed_until: Fraction | None = None
+    blinded_until: Fraction | None = None
 
 
 @dataclass
@@ -349,6 +374,8 @@ class DefenseSession:
     apply_health_cost: Callable[[Fraction], Fraction]
     set_grievous_until: Callable[[Fraction], None]
     set_shield_reaver: Callable[[Fraction, Fraction], None]
+    apply_cc: Callable[..., tuple[Fraction, list[HealEvent], list[Label], list[str]]]
+    cleanse_cc: Callable[..., list[str]]
     next_event_time: Callable[[Fraction, Fraction], Fraction | None]
     flush_tail: Callable[[], None]
     outcome: Callable[[str], DefenseOutcome]
@@ -969,6 +996,11 @@ class _DefenseSimulator:
         fon_active_until: dict[str, Fraction] = {}
 
         stagger_noted_no_timeline = False
+        cc_locks: list[_CCLock] = []
+        cc_immune_windows: list[tuple[Fraction | None, bool, str, Label]] = []
+        cleanse_tenacity_until: Fraction | None = None
+        cleanse_tenacity_val = Fraction(0)
+        unflinching_cc_until: Fraction | None = None
 
         def effective_resists(at: Fraction) -> tuple[Fraction, Fraction, list[Label], list[str]]:
             cur_armor = self.armor
@@ -979,7 +1011,10 @@ class _DefenseSimulator:
             res_notes: list[str] = []
 
             # 8242 Unflinching (+10 Armor/MR while CC'd / 2 s after)
-            if self.unflinching_rune is not None and self.defender_impaired:
+            live_impaired = self.defender_impaired or (
+                unflinching_cc_until is not None and at < unflinching_cc_until
+            )
+            if self.unflinching_rune is not None and live_impaired:
                 u_val = rune_value(self.unflinching_rune, "ResistMax")
                 cur_armor += u_val
                 cur_mr += u_val
@@ -1530,6 +1565,24 @@ class _DefenseSimulator:
                 return
             if eff.kind == "block_first_hit":
                 active_first_hit_blocks.append([end_t, False, src, eff.label])
+                return
+            if eff.kind == "cleanse":
+                qss_level = self.sheet.champion.id != "Milio"
+                cleared = cleanse_cc(qss=qss_level, at=at)
+                labels_out.append(eff.label)
+                if cleared:
+                    notes_out.append(f"{src}: cleansed {', '.join(cleared)}")
+                else:
+                    notes_out.append(f"{src}: cleansed active CC")
+                return
+            if eff.kind == "cc_immune":
+                requires_magic_sh = self.sheet.champion.id == "Morgana" and slot == "E"
+                cc_immune_windows.append((end_t, requires_magic_sh, src, eff.label))
+                labels_out.append(eff.label)
+                notes_out.append(
+                    f"{src}: CC immune"
+                    + (f" for {format_number(dur)} s" if dur is not None else "")
+                )
                 return
             val, eff_lbl = self._eval_active(
                 eff, rank, current_health=health, current_max_health=current_max_health
@@ -3285,6 +3338,10 @@ class _DefenseSimulator:
                         )
 
         def snapshot_state() -> DefenseState:
+            atk_locks = [c.end for c in cc_locks if c.kind in CC_BLOCKS_ATTACKS and c.end > clock]
+            ab_locks = [c.end for c in cc_locks if c.kind in CC_BLOCKS_ABILITIES and c.end > clock]
+            sup_locks = [c.end for c in cc_locks if c.kind == "suppression" and c.end > clock]
+            bld_locks = [c.end for c in cc_locks if c.kind in CC_BLINDS_ATTACKS and c.end > clock]
             return DefenseState(
                 health=health,
                 max_health=current_max_health,
@@ -3296,6 +3353,10 @@ class _DefenseSimulator:
                     or (dynamic_grievous_until is not None and clock < dynamic_grievous_until)
                 ),
                 step_count=len(steps),
+                attacks_locked_until=max(atk_locks) if atk_locks else None,
+                abilities_locked_until=max(ab_locks) if ab_locks else None,
+                suppressed_until=max(sup_locks) if sup_locks else None,
+                blinded_until=max(bld_locks) if bld_locks else None,
             )
 
         def target_snapshot(at: Fraction) -> Target:
@@ -3626,10 +3687,17 @@ class _DefenseSimulator:
                 )
                 labels_out.append(h_lbl)
             elif sp.id == "SummonerBoost":
+                nonlocal cleanse_tenacity_until, cleanse_tenacity_val
                 ten, dur_c = cleanse_tenacity(sp)
+                cleared = cleanse_cc(qss=False, at=clock)
+                cleanse_tenacity_val = max(cleanse_tenacity_val, ten)
+                new_ten_end = clock + dur_c
+                if cleanse_tenacity_until is None or new_ten_end > cleanse_tenacity_until:
+                    cleanse_tenacity_until = new_ten_end
+                cleared_txt = f" ({', '.join(cleared)})" if cleared else ""
                 notes_out.append(
-                    f"{title}: cleansed debuffs + {format_number(ten * 100)}% tenacity for "
-                    f"{format_number(dur_c)} s"
+                    f"{title}: cleansed debuffs{cleared_txt} + {format_number(ten * 100)}% "
+                    f"tenacity for {format_number(dur_c)} s"
                 )
                 labels_out.append(self.summoner_label)
             return granted_out, heals_out, labels_out, notes_out
@@ -3735,10 +3803,155 @@ class _DefenseSimulator:
                 if dynamic_sr_until is None or until > dynamic_sr_until:
                     dynamic_sr_until = until
 
+        def cleanse_cc(*, qss: bool = False, at: Fraction) -> list[str]:
+            nonlocal cc_locks
+            cleared: list[str] = []
+            kept: list[_CCLock] = []
+            for lock in cc_locks:
+                if lock.end <= at:
+                    continue
+                can_clear = lock.cleansable_by_qss if qss else lock.cleansable_by_cleanse
+                if can_clear:
+                    cleared.append(lock.kind)
+                else:
+                    kept.append(lock)
+            cc_locks = kept
+            return cleared
+
+        def apply_cc(
+            cc: CCEffectSpec,
+            base_duration: Fraction,
+            at: Fraction,
+            *,
+            blocked_by_spell_shield: bool = False,
+        ) -> tuple[Fraction, list[HealEvent], list[Label], list[str]]:
+            nonlocal health, clock, unflinching_cc_until, active_instant_heals
+            if health <= 0 or base_duration <= 0:
+                return Fraction(0), [], [], []
+            clock = max(clock, at)
+            if self.timeline and ga_stasis_until is not None and clock < ga_stasis_until:
+                return Fraction(0), [], [Label.OFFICIAL], ["CC ignored during 4 s GA stasis"]
+            if blocked_by_spell_shield:
+                return Fraction(0), [], [cc.label], [f"{cc.name}: blocked by spell shield"]
+            # Intercept zero-damage pure-CC spells with an unconsumed spell shield
+            for ss_entry in active_spell_shields:
+                ss_end, ss_used, ss_src, ss_lbl, ss_slot = ss_entry
+                if not ss_used and (ss_end is None or clock <= ss_end):
+                    ss_entry[1] = True
+                    spell_shield_blocked_slots.add(ss_slot)
+                    ss_heals: list[HealEvent] = []
+                    ss_labels: list[Label] = [ss_lbl]
+                    # Fire spell_blocked instant heal (e.g. Sivir E) immediately
+                    if active_instant_heals:
+                        remaining_heals: list[tuple[str, str, ActiveEffectSpec, int]] = []
+                        for h_slot, h_src, h_eff, h_rank in active_instant_heals:
+                            if h_slot == ss_slot and h_eff.condition == "spell_blocked":
+                                raw_h, h_lbl = self._eval_active(
+                                    h_eff,
+                                    h_rank,
+                                    current_health=health,
+                                    current_max_health=current_max_health,
+                                )
+                                if raw_h > 0 and health < current_max_health:
+                                    rev_amp = self._revitalize_amp(health)
+                                    h_amt = (
+                                        scale_healing(
+                                            raw_h,
+                                            hsp=self.hsp if h_eff.uses_hsp else Fraction(0),
+                                            revitalize_amp=rev_amp
+                                            if h_eff.uses_hsp
+                                            else Fraction(0),
+                                            grievous=self.grievous,
+                                            uses_hsp=h_eff.uses_hsp,
+                                        )
+                                        * self.self_heal_amp
+                                    )
+                                    gained = min(
+                                        h_amt, max(Fraction(0), current_max_health - health)
+                                    )
+                                    health += gained
+                                    ev_lbl = weakest([h_lbl, *self.self_amp_labels])
+                                    ss_heals.append(
+                                        HealEvent(
+                                            h_src,
+                                            raw_h,
+                                            gained,
+                                            h_eff.uses_hsp,
+                                            self.grievous > 0,
+                                            ev_lbl,
+                                            ("spell shield heal",),
+                                        )
+                                    )
+                                    ss_labels.append(ev_lbl)
+                            else:
+                                remaining_heals.append((h_slot, h_src, h_eff, h_rank))
+                        active_instant_heals = remaining_heals
+                    return (
+                        Fraction(0),
+                        ss_heals,
+                        ss_labels,
+                        [f"{ss_src} blocked {cc.name} ({cc.kind})"],
+                    )
+            # Check active CC immunity (Olaf R, Fiora W Parry, Morgana E Black Shield)
+            for imm_end, req_magic_sh, imm_src, imm_lbl in cc_immune_windows:
+                if imm_end is not None and clock >= imm_end:
+                    continue
+                if req_magic_sh and not any(
+                    sh.shield_type == "magic" and sh.remaining > 0 for sh in shields
+                ):
+                    continue
+                return Fraction(0), [], [imm_lbl], [f"{imm_src} blocked {cc.name} ({cc.kind})"]
+
+            eff_dur = base_duration
+            out_labels: list[Label] = [cc.label]
+            out_notes: list[str] = []
+            if cc.tenacity_applies:
+                base_ten = min(Fraction(1), max(Fraction(0), self.sheet["tenacity"].total()))
+                if cleanse_tenacity_until is not None and clock < cleanse_tenacity_until:
+                    eff_ten = 1 - (1 - base_ten) * (1 - cleanse_tenacity_val)
+                    out_labels.append(self.summoner_label)
+                else:
+                    eff_ten = base_ten
+                if eff_ten > 0:
+                    reduced = base_duration * (1 - eff_ten)
+                    eff_dur = min(base_duration, max(TENACITY_MIN_DURATION, reduced))
+                    if base_ten > 0:
+                        out_labels.append(self.sheet["tenacity"].label)
+                    out_notes.append(
+                        f"{cc.name} ({cc.kind}): {format_number(eff_dur)} s "
+                        f"(base {format_number(base_duration)} s reduced by "
+                        f"{format_number(eff_ten * 100)}% tenacity)"
+                    )
+                else:
+                    out_notes.append(f"{cc.name} ({cc.kind}): {format_number(eff_dur)} s")
+            else:
+                out_notes.append(
+                    f"{cc.name} ({cc.kind}): {format_number(eff_dur)} s (tenacity immune)"
+                )
+
+            end_at = clock + eff_dur
+            cc_locks.append(
+                _CCLock(
+                    cc.kind,
+                    end_at,
+                    cc.name,
+                    cc.cleansable_by_cleanse,
+                    cc.cleansable_by_qss,
+                    weakest(out_labels),
+                )
+            )
+            new_unf = end_at + 2
+            if unflinching_cc_until is None or new_unf > unflinching_cc_until:
+                unflinching_cc_until = new_unf
+            return eff_dur, [], out_labels, out_notes
+
         def next_event_time(after: Fraction, limit: Fraction) -> Fraction | None:
             candidates: list[Fraction] = []
             if ga_stasis_until is not None and after < ga_stasis_until <= limit:
                 candidates.append(ga_stasis_until)
+            for lock in cc_locks:
+                if after < lock.end <= limit:
+                    candidates.append(lock.end)
             for end_t, _ in active_hp_buffs:
                 if after < end_t <= limit:
                     candidates.append(end_t)
@@ -3793,6 +4006,8 @@ class _DefenseSimulator:
             apply_health_cost=apply_health_cost,
             set_grievous_until=set_grievous_until,
             set_shield_reaver=set_shield_reaver,
+            apply_cc=apply_cc,
+            cleanse_cc=cleanse_cc,
             next_event_time=next_event_time,
             flush_tail=flush_tail,
             outcome=outcome,

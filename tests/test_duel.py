@@ -12,8 +12,8 @@ from lol_knowledge.cli import main
 from lol_knowledge.contract import execute_request
 from lol_knowledge.duel import DuelFighterSpec, evaluate_duel
 from lol_knowledge.duel_report import format_text, to_dict
-from lol_knowledge.errors import RotationError
-from lol_knowledge.kit import load_kit, passive_contributions
+from lol_knowledge.errors import KitError, RotationError
+from lol_knowledge.kit import load_kit, parse_kit, passive_contributions
 from lol_knowledge.mcp_server import MCPServer
 from lol_knowledge.optimizer import OptimizeConstraints, optimize_build
 from lol_knowledge.rotation import parse_steps
@@ -510,3 +510,233 @@ def test_optimizer_objective_duel_api_cli_and_contract(env, capsys) -> None:
     assert c_resp["ok"] is True
     assert c_resp["result"]["objective"] == "duel"
     assert c_resp["result"]["all_builds"]
+
+
+def test_cc_stun_lock_and_tenacity_reduction(env) -> None:
+    # Pantheon W stuns 1.0 s: plain victim acts at 1.0 s; Mercs (3111, 30% tenacity) acts at 0.7 s
+    panth = _make_fighter(env, "Pantheon", 11, ranks={"W": 5}, steps="W.leap")
+    victim_plain = _make_fighter(env, "Garen", 11, ranks={"Q": 5}, steps="wait:0.1, Q")
+    victim_mercs = _make_fighter(
+        env, "Garen", 11, items=["3111"], ranks={"Q": 5}, steps="wait:0.1, Q"
+    )
+
+    out_plain = evaluate_duel(panth, victim_plain, mode="strict_scripted")
+    out_mercs = evaluate_duel(panth, victim_mercs, mode="strict_scripted")
+
+    b_q_plain = [ev.time for ev in out_plain.events if ev.actor == "B" and ev.action == "Q"]
+    b_q_mercs = [ev.time for ev in out_mercs.events if ev.actor == "B" and ev.action == "Q"]
+    assert b_q_plain == [Fraction(1)]
+    assert b_q_mercs == [Fraction(7, 10)]
+
+
+def test_cc_airborne_and_suppression_immune_to_tenacity(env) -> None:
+    # Malphite R (1.5 s airborne) and Malzahar R (2.5 s suppression) ignore Mercury's Treads (3111)
+    malph = _make_fighter(env, "Malphite", 11, ranks={"R": 2}, steps="R")
+    malz = _make_fighter(env, "Malzahar", 11, ranks={"R": 2}, steps="R.beam")
+    victim_mercs = _make_fighter(
+        env, "Garen", 11, items=["3111"], ranks={"Q": 5}, steps="wait:0.1, Q"
+    )
+
+    out_air = evaluate_duel(malph, victim_mercs, mode="strict_scripted")
+    out_sup = evaluate_duel(malz, victim_mercs, mode="strict_scripted")
+
+    t_air = [ev.time for ev in out_air.events if ev.actor == "B" and ev.action == "Q"]
+    t_sup = [ev.time for ev in out_sup.events if ev.actor == "B" and ev.action == "Q"]
+    assert t_air == [Fraction(3, 2)]
+    assert t_sup == [Fraction(5, 2)]
+
+
+def test_cc_silence_blocks_abilities_but_allows_basic_attacks(env) -> None:
+    # Garen Q silences for 1.5 s: in priority_loop, Jax attacks during silence and casts W at 1.5 s
+    garen = _make_fighter(env, "Garen", 11, ranks={"Q": 5}, steps="Q")
+    jax = _make_fighter(env, "Jax", 11, ranks={"W": 5}, steps="wait:0.1", priority_slots=("W",))
+    out = evaluate_duel(garen, jax, mode="priority_loop", max_duration=Fraction(3))
+    b_attacks_during_silence = [
+        ev.time
+        for ev in out.events
+        if ev.actor == "B" and ev.action == "attack" and Fraction(0) < ev.time < Fraction(3, 2)
+    ]
+    b_w_times = [ev.time for ev in out.events if ev.actor == "B" and ev.action == "W"]
+    assert b_attacks_during_silence  # basic attacks continue while silenced
+    assert b_w_times and b_w_times[0] >= Fraction(3, 2)  # abilities wait until silence ends
+
+
+def test_cc_blind_makes_basic_attacks_miss_while_abilities_hit(env) -> None:
+    # Teemo Q blinds for 3.0 s at rank 5: Garen's attack misses (0 dmg), while Garen Q/E still hit
+    teemo = _make_fighter(env, "Teemo", 11, ranks={"Q": 5}, steps="Q")
+    garen = _make_fighter(env, "Garen", 11, ranks={"Q": 5}, steps="wait:0.5, attack, Q")
+    out = evaluate_duel(teemo, garen, mode="strict_scripted")
+    atk_ev = [ev for ev in out.events if ev.actor == "B" and ev.action == "attack"]
+    q_ev = [ev for ev in out.events if ev.actor == "B" and ev.action == "Q"]
+    assert len(atk_ev) == 1 and atk_ev[0].damage_dealt == 0
+    assert len(q_ev) == 1 and q_ev[0].damage_dealt > 0
+
+
+def test_cc_taunt_blocks_abilities_allows_attacks(env) -> None:
+    shen = _make_fighter(env, "Shen", 11, ranks={"E": 5}, steps="E")
+    jax = _make_fighter(env, "Jax", 11, ranks={"W": 5}, steps="wait:0.2, attack, W")
+    out = evaluate_duel(shen, jax, mode="strict_scripted")
+    atk_t = [ev.time for ev in out.events if ev.actor == "B" and ev.action == "attack"]
+    w_t = [ev.time for ev in out.events if ev.actor == "B" and ev.action == "W"]
+    assert atk_t == [Fraction(1, 5)]  # attack allowed during taunt
+    assert w_t == [Fraction(3, 2)]  # ability blocked until 1.5 s taunt ends
+
+
+def test_cc_lulu_polymorph_and_sivir_spell_shield_intercept(env) -> None:
+    # Lulu W (zero-damage 2.0 s polymorph) locks normal victim, but Sivir E blocks it and heals
+    lulu = _make_fighter(env, "Lulu", 11, ranks={"W": 5}, steps="W")
+    victim = _make_fighter(env, "Garen", 11, ranks={"Q": 5}, steps="wait:0.1, Q")
+    out_locked = evaluate_duel(lulu, victim, mode="strict_scripted")
+    assert [ev.time for ev in out_locked.events if ev.actor == "B" and ev.action == "Q"] == [
+        Fraction(2)
+    ]
+
+    sivir = _make_fighter(
+        env,
+        "Sivir",
+        11,
+        ranks={"Q": 5, "E": 5},
+        steps="E, wait:0.1, Q.pass",
+        start_health=Fraction(800),
+    )
+    out_blocked = evaluate_duel(lulu, sivir, mode="strict_scripted")
+    assert out_blocked.fighter_b.healing_done > 0
+    q_times = [ev.time for ev in out_blocked.events if ev.actor == "B" and ev.action == "Q.pass"]
+    assert q_times == [Fraction(1, 10)]
+
+
+def test_cc_cleanse_vs_stun_and_suppression_and_tenacity_floor(env) -> None:
+    # SummonerBoost clears Pantheon W stun immediately and reduces follow-up stun to 0.3 s floor
+    panth = _make_fighter(env, "Pantheon", 11, ranks={"W": 5}, steps="W.leap")
+    cleanser = _make_fighter(
+        env,
+        "Garen",
+        11,
+        ranks={"Q": 5},
+        summoners=("SummonerBoost",),
+        steps="wait:0.1, summoner:cleanse, Q",
+    )
+    out_cl = evaluate_duel(panth, cleanser, mode="strict_scripted")
+    q_cl = [ev.time for ev in out_cl.events if ev.actor == "B" and ev.action == "Q"]
+    assert q_cl == [Fraction(1, 10)]
+
+    # SummonerBoost CANNOT cleanse Malzahar R suppression (2.5 s)
+    malz = _make_fighter(env, "Malzahar", 11, ranks={"R": 2}, steps="R.beam")
+    out_sup = evaluate_duel(malz, cleanser, mode="strict_scripted")
+    q_sup = [ev.time for ev in out_sup.events if ev.actor == "B" and ev.action == "Q"]
+    assert q_sup == [Fraction(5, 2)]
+
+    # 75% Cleanse tenacity reduces a 1.0 s stun to max(0.3, 0.25) = 0.3 s minimum floor
+    panth_late = _make_fighter(env, "Pantheon", 11, ranks={"W": 5}, steps="wait:0.2, W.leap")
+    pre_cleanser = _make_fighter(
+        env,
+        "Garen",
+        11,
+        ranks={"Q": 5},
+        summoners=("SummonerBoost",),
+        steps="summoner:cleanse, wait:0.3, Q",
+    )
+    out_floor = evaluate_duel(panth_late, pre_cleanser, mode="strict_scripted")
+    q_floor = [ev.time for ev in out_floor.events if ev.actor == "B" and ev.action == "Q"]
+    assert q_floor == [Fraction(1, 2)]  # 0.2 s stun start + 0.3 s floor = 0.5 s
+
+
+def test_cc_champion_cleanses_and_immunities(env) -> None:
+    # Gangplank W cleanses Malzahar R suppression immediately
+    malz = _make_fighter(env, "Malzahar", 11, ranks={"R": 2}, steps="R.beam")
+    gp = _make_fighter(env, "Gangplank", 11, ranks={"Q": 5, "W": 5}, steps="wait:0.2, W, Q.shot")
+    out_gp = evaluate_duel(malz, gp, mode="strict_scripted")
+    assert [ev.time for ev in out_gp.events if ev.actor == "B" and ev.action == "Q.shot"] == [
+        Fraction(1, 5)
+    ]
+
+    # Olaf R grants 3.0 s CC immunity, completely blocking Pantheon W stun
+    panth = _make_fighter(env, "Pantheon", 11, ranks={"W": 5}, steps="wait:0.2, W.leap")
+    olaf = _make_fighter(env, "Olaf", 11, ranks={"E": 5, "R": 2}, steps="R, wait:0.3, E")
+    out_olaf = evaluate_duel(panth, olaf, mode="strict_scripted")
+    assert [ev.time for ev in out_olaf.events if ev.actor == "B" and ev.action == "E"] == [
+        Fraction(3, 10)
+    ]
+
+    # Fiora W (0.75 s Parry) blocks Pantheon W stun
+    fiora = _make_fighter(env, "Fiora", 11, ranks={"Q": 5, "W": 5}, steps="W, wait:0.3, Q")
+    out_fiora = evaluate_duel(panth, fiora, mode="strict_scripted")
+    assert [ev.time for ev in out_fiora.events if ev.actor == "B" and ev.action == "Q"] == [
+        Fraction(3, 10)
+    ]
+
+
+def test_cc_case_scoped_renekton_tf_and_vayne(env) -> None:
+    victim = _make_fighter(env, "Garen", 11, ranks={"Q": 5}, steps="wait:0.1, Q")
+
+    # Renekton W.basic stuns 0.75 s vs W.empowered stuns 1.5 s
+    ren_base = _make_fighter(env, "Renekton", 11, ranks={"W": 5}, steps="W.basic")
+    ren_emp = _make_fighter(env, "Renekton", 11, ranks={"W": 5}, steps="W.empowered")
+    out_rb = evaluate_duel(ren_base, victim, mode="strict_scripted")
+    out_re = evaluate_duel(ren_emp, victim, mode="strict_scripted")
+    assert [ev.time for ev in out_rb.events if ev.actor == "B" and ev.action == "Q"] == [
+        Fraction(3, 4)
+    ]
+    assert [ev.time for ev in out_re.events if ev.actor == "B" and ev.action == "Q"] == [
+        Fraction(3, 2)
+    ]
+
+    # Twisted Fate W.gold_card stuns 2.0 s (rank 5); W.blue_card does NOT stun
+    tf_gold = _make_fighter(env, "TwistedFate", 11, ranks={"W": 5}, steps="W.gold_card")
+    tf_blue = _make_fighter(env, "TwistedFate", 11, ranks={"W": 5}, steps="W.blue_card")
+    out_gold = evaluate_duel(tf_gold, victim, mode="strict_scripted")
+    out_blue = evaluate_duel(tf_blue, victim, mode="strict_scripted")
+    assert [ev.time for ev in out_gold.events if ev.actor == "B" and ev.action == "Q"] == [
+        Fraction(2)
+    ]
+    assert [ev.time for ev in out_blue.events if ev.actor == "B" and ev.action == "Q"] == [
+        Fraction(1, 10)
+    ]
+
+    # Vayne E.wall_stun stuns 1.5 s; Vayne E.hit does NOT stun
+    vayne_wall = _make_fighter(env, "Vayne", 11, ranks={"E": 5}, steps="E.wall_stun")
+    vayne_hit = _make_fighter(env, "Vayne", 11, ranks={"E": 5}, steps="E.hit")
+    out_vw = evaluate_duel(vayne_wall, victim, mode="strict_scripted")
+    out_vh = evaluate_duel(vayne_hit, victim, mode="strict_scripted")
+    assert [ev.time for ev in out_vw.events if ev.actor == "B" and ev.action == "Q"] == [
+        Fraction(3, 2)
+    ]
+    assert [ev.time for ev in out_vh.events if ev.actor == "B" and ev.action == "Q"] == [
+        Fraction(1, 10)
+    ]
+
+
+def test_cc_effects_kit_schema_validation() -> None:
+    base_doc = {
+        "schema": "lol-champion-kit/1",
+        "champion": "Test",
+        "label": "Derivado",
+        "game_version": "16.23",
+        "content_version": "16.23.test",
+        "abilities": {
+            "Q": {
+                "name": "Strike",
+                "max_rank": 5,
+                "cases": [],
+                "passive_stats": [],
+                "not_modelled": [],
+                "cc_effects": [
+                    {
+                        "id": "q_stun",
+                        "name": "Strike (aturdimiento)",
+                        "kind": "not_a_cc",
+                        "duration_formula": {"op": "constant", "value": 1.0},
+                        "label": "Derivado",
+                        "source": "test",
+                    }
+                ],
+            }
+        },
+    }
+    with pytest.raises(KitError, match="unknown kind"):
+        parse_kit(base_doc)
+
+    base_doc["abilities"]["Q"]["cc_effects"][0]["kind"] = "stun"
+    base_doc["abilities"]["Q"]["cc_effects"][0]["case_ids"] = ["missing_case"]
+    with pytest.raises(KitError, match="unknown case_ids"):
+        parse_kit(base_doc)
