@@ -740,3 +740,189 @@ def test_cc_effects_kit_schema_validation() -> None:
     base_doc["abilities"]["Q"]["cc_effects"][0]["case_ids"] = ["missing_case"]
     with pytest.raises(KitError, match="unknown case_ids"):
         parse_kit(base_doc)
+
+
+def test_pure_cc_abilities_in_duel_and_priority_loop(env) -> None:
+    """FIX-01: pure-CC abilities (Veigar E, Elise E, Viktor W, Renata R) work in duel."""
+    veigar = _make_fighter(env, "Veigar", 11, ranks={"Q": 5, "W": 3, "E": 2, "R": 2}, steps="E, Q")
+    victim = _make_fighter(env, "Garen", 11, ranks={"Q": 5}, steps="wait:0.1, Q")
+    out = evaluate_duel(veigar, victim, mode="strict_scripted")
+    # Veigar E at rank 2 stuns for 1.75 s -> Garen Q waits until 1.75 s
+    b_q = [ev.time for ev in out.events if ev.actor == "B" and ev.action == "Q"]
+    assert b_q == [Fraction(7, 4)]
+
+    # priority_loop includes pure-CC slots (e.g. Elise E, Viktor W, Renata R)
+    elise = _make_fighter(
+        env, "Elise", 11, ranks={"E": 5}, steps="", priority_slots=("E",), holder_range="ranged"
+    )
+    out_prio = evaluate_duel(elise, victim, mode="priority_loop", max_duration=Fraction(4))
+    assert any(ev.actor == "A" and ev.action == "E" for ev in out_prio.events)
+    b_q_prio = [ev.time for ev in out_prio.events if ev.actor == "B" and ev.action == "Q"]
+    assert b_q_prio == [Fraction(12, 5)]  # Elise E rank 5 stun = 2.4 s
+
+    for champ, slot, expected_delay in (
+        ("Viktor", "W", Fraction(3, 2)),
+        ("Renata", "R", Fraction(7, 4)),
+    ):
+        caster = _make_fighter(env, champ, 11, ranks={slot: 2}, steps=slot, priority_slots=(slot,))
+        res = evaluate_duel(caster, victim, mode="strict_scripted")
+        assert any(ev.actor == "A" and ev.action == slot for ev in res.events)
+        assert [ev.time for ev in res.events if ev.actor == "B" and ev.action == "Q"] == [
+            expected_delay
+        ]
+
+
+def test_readme_darius_vs_garen_duel_across_cli_contract_and_mcp(capsys) -> None:
+    """Verify the README Darius vs Garen duel passes across CLI, Contract JSON, and MCP."""
+    rc = main(
+        [
+            "duel",
+            "--a-champion",
+            "Darius",
+            "--a-level",
+            "11",
+            "--a-item",
+            "3078",
+            "--a-range",
+            "melee",
+            "--a-learned",
+            "Q=5",
+            "--a-learned",
+            "W=1",
+            "--a-learned",
+            "E=3",
+            "--a-learned",
+            "R=2",
+            "--a-steps",
+            "attack, W, Q.blade, R.base",
+            "--b-champion",
+            "Garen",
+            "--b-level",
+            "11",
+            "--b-item",
+            "3078",
+            "--b-range",
+            "melee",
+            "--b-learned",
+            "Q=5",
+            "--b-learned",
+            "W=1",
+            "--b-learned",
+            "E=3",
+            "--b-learned",
+            "R=2",
+            "--b-steps",
+            "Q, E.tick, R",
+            "--json",
+            "--root",
+            str(ROOT),
+        ]
+    )
+    assert rc == 0
+    cli_duel = json.loads(capsys.readouterr().out)
+    assert cli_duel["winner"] == "A"
+
+    duel_params = {
+        "fighter_a": {
+            "champion": "Darius",
+            "level": 11,
+            "items": ["3078"],
+            "range": "melee",
+            "learned": {"Q": 5, "W": 1, "E": 3, "R": 2},
+            "steps": "attack, W, Q.blade, R.base",
+        },
+        "fighter_b": {
+            "champion": "Garen",
+            "level": 11,
+            "items": ["3078"],
+            "range": "melee",
+            "learned": {"Q": 5, "W": 1, "E": 3, "R": 2},
+            "steps": "Q, E.tick, R",
+        },
+    }
+    c_resp = execute_request(
+        {"schema": "lol-knowledge-contract/1", "operation": "duel", "params": duel_params},
+        ROOT,
+    )
+    assert c_resp["ok"] is True
+    assert c_resp["result"]["winner"] == "A"
+    assert c_resp["result"]["duration"] == cli_duel["duration"]
+
+    server = MCPServer(ROOT)
+    mcp_reply = server.handle_message(
+        {
+            "jsonrpc": "2.0",
+            "id": 99,
+            "method": "tools/call",
+            "params": {"name": "lol_duel", "arguments": duel_params},
+        }
+    )
+    assert mcp_reply is not None
+    mcp_res = mcp_reply["result"]
+    assert mcp_res["isError"] is False
+    assert mcp_res["structuredContent"]["result"]["winner"] == "A"
+    assert mcp_res["structuredContent"]["result"]["duration"] == cli_duel["duration"]
+
+    # Pure-CC ability (Veigar E) across CLI, Contract JSON, and MCP (FIX-01)
+    rc_cc = main(
+        [
+            "duel",
+            "--a-champion",
+            "Veigar",
+            "--a-level",
+            "11",
+            "--a-learned",
+            "Q=5",
+            "--a-learned",
+            "E=2",
+            "--a-steps",
+            "E, Q",
+            "--b-champion",
+            "Garen",
+            "--b-level",
+            "11",
+            "--b-learned",
+            "Q=5",
+            "--b-steps",
+            "wait:0.1, Q",
+            "--mode",
+            "strict_scripted",
+            "--json",
+            "--root",
+            str(ROOT),
+        ]
+    )
+    assert rc_cc == 0
+    cli_cc = json.loads(capsys.readouterr().out)
+    veigar_params = {
+        "fighter_a": {
+            "champion": "Veigar",
+            "level": 11,
+            "learned": {"Q": 5, "E": 2},
+            "steps": "E, Q",
+        },
+        "fighter_b": {
+            "champion": "Garen",
+            "level": 11,
+            "learned": {"Q": 5},
+            "steps": "wait:0.1, Q",
+        },
+        "mode": "strict_scripted",
+    }
+    c_cc = execute_request(
+        {"schema": "lol-knowledge-contract/1", "operation": "duel", "params": veigar_params},
+        ROOT,
+    )
+    assert c_cc["ok"] is True
+    assert c_cc["result"]["duration"] == cli_cc["duration"]
+    mcp_cc = server.handle_message(
+        {
+            "jsonrpc": "2.0",
+            "id": 100,
+            "method": "tools/call",
+            "params": {"name": "lol_duel", "arguments": veigar_params},
+        }
+    )
+    assert mcp_cc is not None
+    assert mcp_cc["result"]["isError"] is False
+    assert mcp_cc["result"]["structuredContent"]["result"]["duration"] == cli_cc["duration"]

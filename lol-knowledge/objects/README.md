@@ -18,7 +18,7 @@ Este documento explica el esquema, las decisiones, lo que está modelado y lo qu
 
 Resuelve: representar de forma versionada y verificable la identidad, las estadísticas y los efectos de un objeto, distinguiendo lo que Data Dragon publica de forma estructurada, lo que solo aparece en prosa y lo que no se sabe.
 
-Las rotaciones con sus efectos evaluables se calculan con `python -m lol_knowledge rotation` (ver el README del repositorio). Con `--timeline` sigue el tiempo (velocidad de ataque, enfriamientos, duraciones). No resuelve todavía: buscar builds, modelar todos los objetos, tiempos de lanzamiento ni interpretar efectos que dependen de estado del juego no publicado. Tampoco convierte una fuente secundaria en oficial: cada cifra externa conserva su cita y su nivel de confianza.
+Las rotaciones con sus efectos evaluables se calculan con `python -m lol_knowledge rotation` (ver el README del repositorio). Con `--timeline` sigue el tiempo (velocidad de ataque, enfriamientos, duraciones). El motor también cubre supervivencia inversa (`survive`), duelos 1v1 (`duel`) y búsqueda determinista de builds legales (`optimize`). Siguen fuera de alcance tiempos de lanzamiento, animaciones y efectos que dependen de estado del juego no publicado. Tampoco convierte una fuente secundaria en oficial: cada cifra externa conserva su cita y su nivel de confianza.
 
 ## 2. Ejecutar
 
@@ -245,40 +245,22 @@ El evaluador, compartido con los kits de campeón en [`src/lol_knowledge/formula
 10. **Sujeto de la estadística.** `subject` desambigua `bonus_health` del objetivo frente a `bonus_armor` del portador. Sin `subject` se conserva la convención anterior.
 11. **Rango del portador.** `ChampionState.attack_range` es obligatorio. Un efecto que depende de melee/ranged falla si falta; no se asume un valor.
 
-## 5. Objetos con efectos curados (42)
+## 5. Cobertura actual del catálogo (`catalog_version: 28`)
 
-| Id | Objeto | Demuestra |
-|---|---|---|
-| `data:item:1036` | Espada larga | Estadística plana derivada; objeto sin efectos. |
-| `data:item:1031` | Chaleco de cadenas | Armadura plana; componente de receta. |
-| `data:item:3020` | Botas de hechicero | Penetración mágica **plana** solo en prosa. |
-| `data:item:3067` | Gema avivadora | Aceleración de habilidades solo en prosa. |
-| `data:item:3134` | Daga dentada | Letalidad solo en prosa; receta con dos Espadas largas. |
-| `data:item:3135` | Bastón del Vacío | Penetración mágica porcentual. |
-| `data:item:3089` | Sombrero mortal de Rabadon | Modificador porcentual de AP total (`evaluable`). |
-| `data:item:3031` | Filo infinito | Crítico derivado + daño crítico adicional en prosa. |
-| `data:item:3153` | Hoja del rey arruinado | Daño `on-hit` 9 %/6 % de vida actual con cap 100; slow con 3 acumulaciones, ventana 6 s y enfriamiento 15 s. |
-| `data:item:3036` | Recuerdos de lord Dominik | Penetración de armadura + rampa 1 %/100 de vida adicional con tope 15 % (`evaluable`). |
-| `data:item:3047` | Botas blindadas | Reducción de daño entrante con condición (`evaluable`). |
-| `data:item:3143` | Presagio de Randuin | −30 % de daño crítico + slow de área 70 %/2 s con enfriamiento 90 s. |
-| `data:item:3157` | Reloj de arena de Zhonya | Estasis 2,5 s y enfriamiento de activa 120 s (`evaluable`). |
-| `data:item:3075` | Malla de espinas | Reflejo 20 + 10 % de armadura adicional + heridas graves 40 %/3 s (`evaluable`). |
-| `data:item:6617` | Renovación de piedra lunar | Curación y escudo porcentuales de un efecto disparador (`evaluable`). |
-| `data:item:3111` | Botas de mercurio | Tenacidad (30 %) solo en prosa; resistencia mágica y velocidad de movimiento derivadas. |
-| `data:item:3032` | Flechas de los Yun Tal | Cero confirmado de crítico; crítico por acumulaciones hasta 25 % con el escenario `max_stacks`; Ráfaga con la línea de tiempo (versión 16). |
-| `data:item:1043` | Arco curvo | Daño físico al impactar de la descripción (15). |
-| `data:item:3091` | Final del ingenio | Daño mágico al impactar que Data Dragon omite (45, cliente, `derived`). |
-| `data:item:3115` | Diente de Nashor | Daño mágico al impactar 15 + 15 % de AP (cliente, `derived`). |
-| `data:item:3124` | Hoja de furia de Guinsoo | Daño mágico al impactar (30); velocidad de ataque por acumulaciones desde 0 (8 % cada una, hasta 4); impactos fantasma con las acumulaciones al máximo. |
-| `data:item:3057`, `3078`, `3100`, `3508`, `6662`, `2510`, `3877` | Brillo, Fuerza de trinidad, Perdición del liche, Segador de esencia, Guantelete de hielo, Amanecer y anochecer, Tonada sanguina | Hoja encantada con las cifras del cliente ([regla](../mechanics/spellblade.md)); sus efectos secundarios, declarados y sin aplicar salvo la repetición al impactar de Amanecer y anochecer. |
-| `data:item:6672`, `3094`, `3087`, `6699`, `3181` | Verdugo de krakens, Cañón de fuego rápido, Puñal de Statikk, Espada ciclovoltaica, Rompecascos | Cada N ataques y Vigor ([regla](../mechanics/attack-counters.md)). |
-| `data:item:4645`, `6676` | Llamasombría, Recaudadora | Umbral de vida del objetivo y ejecución ([regla](../mechanics/target-health.md)). |
-| `data:item:6653`, `2503`, `2508`, `3118`, `3050`, `3147` | Tormento de Liandry, Antorcha de fuego negro, Cenizas predestinadas, Malignidad, Convergencia de Zeke, Disfraz encantado | Quemaduras y amplificadores por tiempo en combate ([regla](../mechanics/burns.md)). |
-| `data:item:3302` | El final | Daño mágico al impactar 30 + 10 % de DA adicional + 10 % de AP (cliente, `derived`); acumulaciones de Yuxtaposición desde 0 (versión 17). |
+La tabla original de la fase inicial cubría 42 objetos curados; desde `catalog_version: 24`–`28` (**`OBJ-01` al `100 %`**, bloque 1 completo y transformaciones de Lágrima), el catálogo revisa los **218 objetos comprables de la Grieta del Invocador** (`218/218` con `effect_review: complete`, `0` en `pending`):
 
-Cobertura de efectos: **42 objetos curados**; los otros 176 objetos comprables de la Grieta solo tienen estadísticas, y 132 de ellos tienen efectos en la descripción sin modelar (`pending`). No se afirma nada sobre las variantes de otros modos. Las fuentes secundarias de las cifras nuevas están en [`research/reports/object-mechanics-2026-10-20.md`](../../research/reports/object-mechanics-2026-10-20.md).
+| Grupo | Cobertura en `catalog.json` (`catalog_version: 28`) |
+|---|---|
+| Entradas curadas en `catalog.json` | **174 entradas curadas** (`166` objetos con `234` efectos documentados: `185` `evaluable`, `1` `partially_evaluable` y `48` `excluded` explícitos de utilidad pura no combativa), más las `4` transformaciones de Lágrima (`data:item:3040`, `data:item:3042`, `data:item:3121`, `data:item:2530`) en `transforms.py` y `52` objetos solo de estadísticas. |
+| Estadísticas base y derivadas | `data:item:1036`, `data:item:1031`, `data:item:3020` (penetración mágica plana), `data:item:3067` (aceleración), `data:item:3134` (letalidad), `data:item:3135`, `data:item:3111` (tenacidad), etc. |
+| Amplificadores y pasivas `always` / `max_stacks` | `data:item:3089` Sombrero mortal de Rabadon (`+30 %` PH total), `data:item:3032` Flechas de los Yun Tal (`max_stacks` + Ráfaga), `data:item:3118`, `data:item:6621`, `data:item:2501`, `data:item:3008`/`3168`, `data:item:1082`/`3041`, `data:item:6697`, `data:item:6657`/`3803`. |
+| Al impactar, contadores, Hoja encantada y Vigor | `data:item:3153`, `data:item:1043`, `data:item:3091`, `data:item:3115`, `data:item:3124` (Guinsoo + Impacto fantasma), `data:item:3302` (El final), `data:item:3057`/`3078`/`3100`/`3508`/`6662`/`2510`/`3877`, `data:item:6672`/`3094`/`3087`/`6699`/`3181`. |
+| Quemaduras, ejecutores y pasivas directas de combate | `data:item:6653`, `data:item:2503`, `data:item:2508`, `data:item:3118`, `data:item:3050`, `data:item:3147`, `data:item:4645`, `data:item:6676`, `data:item:6610`, `data:item:2502`, `data:item:3084`, `data:item:3742`, `data:item:2512`, `data:item:2523`, `data:item:4628`, `data:item:6695`, `data:item:3072`, `data:item:2517`, `data:item:2520`. |
+| Defensivos, escudos, reactivos y activas `item:<id>` | `data:item:3047`, `data:item:3143`, `data:item:3157`, `data:item:3075`, `data:item:3053` (Sterak), `data:item:2504`, `data:item:2525`, `data:item:3102`/`3814`/`4632`, `data:item:3026`, `data:item:1054`, `data:item:3083`, `data:item:6333`, `data:item:3869`, `data:item:6617`, `data:item:3504`/`6616`/`6620`/`4005`/`3870`/`3876`/`3109`/`3137`/`2524`, consumibles `2138`/`2139`/`2140`/`2003`/`2031` y `14` activas invocables. |
 
-## 6. Efectos realmente modelados
+## 6. Muestras de efectos realmente modelados (`catalog_version: 28`)
+
+Resumen representativo de los mecánicos clave del catálogo (el inventario completo de los `234` efectos vive en [`catalog.json`](catalog.json)):
 
 | Objeto | Efecto | Estado | Qué falta |
 |---|---|---|---|
@@ -320,13 +302,18 @@ Dentro de la muestra:
 - El radio exacto de Humildad (Randuin) no se modela.
 - El orden de aplicación de penetraciones, mitigaciones, escudos y modificadores es responsabilidad del motor; el catálogo expone fórmulas y condiciones, no el pipeline.
 
-Fuera de la muestra: **no se modela ningún otro objeto**. Categorías deliberadamente fuera de alcance en esta fase: consumibles, centinelas y trinkets, generación de oro, efectos de muerte, acumulaciones permanentes, revives, auras, escudos con ratios, transformaciones, efectos de modo (Arena, URF) y cualquier pasivo cuya fórmula no esté publicada. Compañero de Luden (`data:item:6655`), Eclipse (`data:item:6692`) y Calibrador de Sterak (`data:item:3053`) se evaluaron en la fase de 2026-10-20 y se dejaron fuera por falta de una fórmula completa y verificable; no se declaran cubiertos. Sus cifras ya están en [`item-effects.json`](../derived/item-effects.json) (cliente 16.22, `Derivado`); lo que falta ahora es capacidad del motor, detallada en el punto OBJ-02 de la [hoja de ruta](../../odd/roadmap.md). Verdugo de krakens (`data:item:6672`) también se descartó entonces, pero está curado desde la fase de contadores de ataques ([regla](../mechanics/attack-counters.md)).
+La cobertura de **218/218 objetos comprables de la Grieta** está revisada (`effect_review: complete`, `0` pendientes). Permanecen como `excluded` explícitos los **48 efectos puramente utilitarios o fuera del alcance 1v1** (centinelas y trinkets, visión, generación de oro, interacciones exclusivas de aliados/posmuerte y efectos de movilidad sin impacto numérico directo), y quedan documentados en `partially_evaluable` o en notas sus matices parciales:
+- La persistencia de acumulaciones de BotRK entre objetivos distintos no está publicada; se marca como no verificada.
+- Los modificadores por modo (ARAM/Arena) están documentados pero no modelados.
+- La interacción de la aceleración de objetos con los activos de Zhonya y Randuin sí se aplica en el motor con `item_haste` (`scale_item_cooldown`), aunque el radio espacial exacto de Humildad (Randuin) no se modela.
+- El orden de aplicación de penetraciones, mitigaciones, escudos y modificadores es responsabilidad del motor; el catálogo expone fórmulas y condiciones, no el pipeline.
+- *Calibrador de Sterak* (`data:item:3053`), *Eclipse* (`data:item:6692`) y *Compañero de Luden* (`data:item:6655`) están integrados en el catálogo y el motor (el decaimiento gradual del escudo de Sterak se documenta en nota como pendiente).
 
 Data Dragon además renderiza placeholders que parecen números reales. Ejemplo: la descripción de `data:item:3076` (Chaleco de zarzas) contiene «0 de daño mágico», pero ese `0` es un placeholder de una cantidad no publicada. Por eso el modelo **no** parsea números de la prosa de forma automática: exige una cita y un valor declarado por el curador, y trata `0` como cero real solo si el árbol dice `constant: 0`.
 
 ## 8. Interfaz del motor de daño
 
-El contrato está en [`interface.py`](../../src/lol_knowledge/objects/interface.py). El contrato no implementa daño, búsqueda de builds ni simulación temporal; el daño y el tiempo los calculan `damage/` y `rotation.py`.
+El contrato está en [`interface.py`](../../src/lol_knowledge/objects/interface.py). El contrato no implementa daño, búsqueda de builds ni simulación temporal; el daño y el tiempo los calculan `damage/`, `rotation/` y `defense/`.
 
 ### 8.1 Entradas de una evaluación de daño explosivo
 
@@ -407,10 +394,10 @@ assert not validate_request(request)
 
 ## 10. Límites declarados
 
-- Los efectos curados cubren 42 objetos (64 efectos), elegidos por mecánica y no por frecuencia de compra; los demás siguen `pending`. Las estadísticas sí cubren los 218 objetos comprables de la Grieta.
+- Los **218 objetos comprables de la Grieta** tienen revisión completa (`effect_review: complete`, `0` pendientes); los 48 efectos de utilidad no combativa permanecen explícitamente como `excluded`, y `185` efectos son `evaluable` (`1` `partially_evaluable`).
 - Data Dragon no publica modos de juego; `availability.modes` es desconocido.
-- Data Dragon no publica el enfriamiento de los activos. Cuando se conoce por una fuente citada, se registra con su confianza (Zhonya y Randuin: wiki y cliente, `corroborated`); si no, se marca desconocido.
+- Data Dragon no publica el enfriamiento de los activos. Cuando se conoce por una fuente citada, se registra con su confianza; si no, se marca desconocido.
 - Los ratios y curvas que solo aparecen como «un porcentaje» o «hasta» se resuelven únicamente si existe una fuente citada y verificable; en caso contrario quedan desconocidos. No se interpolan extremos sin evidencia.
 - La evidencia secundaria no es oficial de Riot. La coincidencia de estadísticas/oro con Data Dragon corrobora el estado de balance, no la exactitud de cada cifra.
 - El modelo no sustituye al extractor de campeones: los objetos describen efectos; el daño de habilidades sigue viniendo de `research/binmodel`.
-- La conexión con el motor existe: `rotation` aplica los efectos evaluables, con el orden de mitigaciones de [`damage-mitigation.md`](../mechanics/damage-mitigation.md) y, con `--timeline`, el tiempo ([`timeline.md`](../mechanics/timeline.md)). Faltan escudos, curaciones de efectos, auras, activas y lo listado en el §7.
+- La conexión con el motor cubre `stats/`, `rotation/` (mitigaciones, línea de tiempo, ventanas, activas, quemaduras, curaciones, escudos), `defense/` (supervivencia inversa y escudos reactivos), `duel.py` y `optimize/`.

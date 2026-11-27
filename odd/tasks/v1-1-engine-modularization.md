@@ -1,7 +1,7 @@
 # Fase `v1.1` — Modularización Arquitectónica e Higiene Post-v1.0 (`QA-03`, `FIX-01`, `DOC-08`)
 
 - **Versión objetivo:** `1.1.0`
-- **Estado:** Planificada — pendiente de implementación
+- **Estado:** Completada (`2026-11-27`)
 - **Prerrequisitos:** `v1.0.0` (`dev` en `bc431d0` o posterior)
 - **Rama sugerida:** `refactor/v1-1-modularize-engines`
 - **Hoja de ruta:** [`../roadmap-v2.md`](../roadmap-v2.md) (`QA-03`, `FIX-01`, `DOC-08`)
@@ -80,7 +80,11 @@ Descomponer `defense.py` en submódulos cohesivos de `< 1.100` líneas cada uno:
 .\.venv\Scripts\python.exe research\tools\benchmark_engine.py
 ```
 
-- [ ] Ningún archivo bajo `src/lol_knowledge/rotation/` ni `src/lol_knowledge/defense/` supera las `1.500` líneas.
-- [ ] `100 %` de los tests existentes y `test_performance_equivalence.py` pasan con `0` discrepancias en `Fraction`, etiquetas, notas y rankings.
-- [ ] El duelo `Darius vs Garen` con `E` del `README.md` pasa en CLI, Contrato JSON y MCP (`FIX-01`).
-- [ ] Integrado en `integration`, validado con la suite completa y promovido con `--ff-only` a `dev` (sin `push`).
+- [x] Ningún archivo bajo `src/lol_knowledge/rotation/` ni `src/lol_knowledge/defense/` supera las `1.500` líneas:
+  - `rotation/`: `__init__.py` (`71`), `models.py` (`436`), `timeline.py` (`673`), `runner.py` (`706`), `effects.py` (`972`), `session.py` (`1.066`), `combat_steps.py` (`1.203`).
+  - `defense/`: `__init__.py` (`27`), `models.py` (`294`), `cc_negations.py` (`1.049`), `session.py` (`1.271`), `shields_heals.py` (`1.335`).
+- [x] `100 %` de los tests existentes y `test_performance_equivalence.py` pasan con `0` discrepancias en `Fraction`, etiquetas, notas y rankings.
+- [x] El duelo `Darius vs Garen` actualizado de `README.md` y las habilidades de CC puro (`Elise E`, `Renata R`, `Veigar E`, `Viktor W`) pasan en CLI, Contrato JSON y MCP (`FIX-01`). Nota de verificación (`AGENTS.md` §2.1): `Darius E` (*Atrapar*) en `lol-knowledge/champions/Darius/kit.json` no declara `cc_effects` porque el `.bin` del cliente (`DariusAxeGrabCone`) no publica duración numérica de levantamiento/atracción; se mantiene `not_modelled` sin inventar cifras, y se actualizó el ejemplo de `README.md` con casos válidos (`attack, W, Q.blade, R.base` vs `Q, E.tick, R`).
+- [x] `loadout.py` unifica el ensamblaje de `StatSheet` entre `cli.py` y `contract.py`, `DOC-08` actualizado en `lol-knowledge/objects/README.md` y `lol-knowledge/mechanics/passives.md`, y `__version__ = "1.1.0"`.
+- [x] Línea base de rendimiento registrada (`research/tools/benchmark_engine.py`, pre-`v1.2`): `stats_vladimir` `135.509 ms` frío / `0.609 ms` caliente; `rotation_timeline_window` `330.033 ms` / `30.746 ms`; `survive_timeline` `130.550 ms` / `3.108 ms`; `duel_1v1` `332.003 ms` / `86.440 ms`; `optimize_rotation_damage` `2737.753 ms` (`13.6888 ms/state`, 200 estados); `optimize_effective_health` `355.454 ms` (`1.6084 ms/state`, 221 estados); `optimize_duel` `13711.402 ms` (`108.8207 ms/state`, 126 estados).
+- [x] Integrado en `integration`, validado con la suite completa y promovido con `--ff-only` a `dev` (sin `push`).

@@ -63,5 +63,5 @@ La curación de cada parte es su daño final (tras la resistencia y los modifica
 ## Implementación (`Calculado`)
 
 - `src/lol_knowledge/stats/registry.py` declara `life_steal` y `omnivamp` como fracciones aditivas con esta regla. La hoja de estadísticas suma sus aportes: el robo de vida viene de `PercentLifeStealMod` de Data Dragon; el omnivampirismo solo puede declararse en el [catálogo de objetos](../objects/catalog.json) con la cita de la descripción (`kind: percent`), porque Data Dragon no lo trae en `stats`. Desde 2026-11-16 lo declaran los objetos cuya descripción lo trae, por ejemplo la Espada de Doran (2,5 %), con el [archivo generado](../objects/catalog-stats.json).
-- `src/lol_knowledge/rotation.py` calcula `Healing` por parte; `StepOutcome` y `RotationOutcome` la suman y marcan el golpe letal excesivo. `rotation_report.py` la muestra en texto y JSON.
+- `src/lol_knowledge/rotation/` calcula `Healing` por parte; `StepOutcome` y `RotationOutcome` la suman y marcan el golpe letal excesivo. `rotation_report.py` la muestra en texto y JSON.
 - Pruebas: `tests/test_stats_vamp.py`, `tests/test_objects_validator.py` y `tests/test_rotation_healing.py`.

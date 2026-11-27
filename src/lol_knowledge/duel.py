@@ -183,7 +183,7 @@ def _parse_priority_slots(
         if slot in seen or slot not in spec.ranks or slot not in spec.kit.abilities:
             continue
         ability = spec.kit.abilities[slot]
-        if not ability.cases and not ability.active_effects:
+        if not ability.cases and not ability.active_effects and not ability.cc_effects:
             continue
         rank = spec.ranks[slot]
         if not 1 <= rank <= ability.max_rank:

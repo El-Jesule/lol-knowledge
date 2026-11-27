@@ -37,8 +37,8 @@ from .errors import (
     StatsError,
 )
 from .kit import load_kit, passive_contributions
+from .loadout import assemble_stat_sheet, check_item_legality, resolve_crit_base
 from .mcp_server import MCPServer
-from .objects.legality import ITEM_GROUPS_PATH, check_build, load_item_groups
 from .optimizer import (
     OBJECTIVES,
     OptimizeConstraints,
@@ -46,36 +46,23 @@ from .optimizer import (
 )
 from .optimizer import format_text as format_optimize_text
 from .optimizer import to_dict as optimize_to_dict
-from .passives import sheet_passive_effects
 from .rotation import CritBase, evaluate_rotation, parse_steps
 from .rotation_report import format_text as format_rotation_text
 from .rotation_report import to_dict as rotation_to_dict
-from .runes import (
-    adaptive_stat,
-    check_page,
-    combat_rune_notes,
-    load_runes,
-    minor_rune_effects,
-    needs_adaptive_stat,
-    shard_contributions,
-)
+from .runes import load_runes
 from .scenario import evaluate_ability, target_from_sheet, target_from_values
 from .scenario_report import format_text as format_ability_text
 from .scenario_report import to_dict as ability_to_dict
 from .snapshot import build_snapshot
+from .stats import format_text as format_stats_text
 from .stats import (
-    Label,
-    build_stat_sheet,
     load_champion,
     load_issues,
     load_items,
     load_records,
 )
-from .stats import format_text as format_stats_text
 from .stats import to_dict as stats_to_dict
-from .stats.sheet import MANA_RESOURCE
-from .summoners import load_summoner_spells, resolve_loadout, summoner_sheet_effects
-from .upgrades import elixir_contributions, ornn_upgrade_contributions
+from .summoners import load_summoner_spells
 from .validate import validate_project
 
 DEFAULT_DATA_DIR = "data"
@@ -335,27 +322,11 @@ def _add_build_option(command: argparse.ArgumentParser) -> None:
 
 def _check_build(root: Path, item_ids: list[str], champion, *, allow: bool, who: str) -> None:
     """Refuse items one inventory cannot hold, unless ``allow``; notes go to stderr."""
-    if not item_ids:
-        return
-    data = load_item_groups(root)
-    if data is None:
-        print(
-            f"note: {who} build legality not checked: {ITEM_GROUPS_PATH.as_posix()} is missing",
-            file=sys.stderr,
-        )
-        return
-    report = check_build(item_ids, data, patch=champion.patch, champion=champion.id)
-    for note in report.notes:
-        print(f"note: {who} build: {note}", file=sys.stderr)
-    if report.legal:
-        return
-    problems = "; ".join(violation.message for violation in report.violations)
-    if not allow:
-        raise StatsError(
-            f"{who} build is not legal [{report.label}]: {problems} "
-            "(--allow-illegal-build calculates it anyway)"
-        )
-    print(f"warning: {who} build is not legal [{report.label}]: {problems}", file=sys.stderr)
+    notes, warnings = check_item_legality(root, item_ids, champion, allow_illegal=allow, who=who)
+    for note in notes:
+        print(f"note: {note}", file=sys.stderr)
+    for warning in warnings:
+        print(f"warning: {warning}", file=sys.stderr)
 
 
 def _rune_ids(values: list[str], option: str) -> list[int]:
@@ -386,139 +357,30 @@ def _build_sheet_with_runes(
     ornn_item: str | None = None,
 ):
     """Build a StatSheet for either attacker or target, with passive, runes and summoners."""
-    passive = sheet_passive_effects(
-        kit, level, inputs, include_stacking=combat_context != "rotation"
-    )
-    uses_mana = champion.resource == MANA_RESOURCE.get(champion.locale)
-    elx_fx = elixir_contributions(elixir, level=level, uses_mana=uses_mana)
-    groups_for_ornn = load_item_groups(root) if (ornn_item and items) else None
-    ornn_fx = ornn_upgrade_contributions(ornn_item, items, level=level, item_groups=groups_for_ornn)
-    s_flats: tuple = ()
-    s_percents: tuple = ()
-    s_notes: tuple = ()
-    if summoners:
-        s_data = load_summoner_spells(root)
-        if s_data is None:
-            raise StatsError(
-                "lol-knowledge/derived/summoner-spells.json is missing; summoner spells unavailable"
-            )
-        resolved_s, s_violations = resolve_loadout(summoners, s_data, allow_illegal=allow_illegal)
-        for v in s_violations:
-            print(f"warning: {v}", file=sys.stderr)
-        s_rune_data = load_runes(root) if runes else None
-        s_fx = summoner_sheet_effects(
-            resolved_s,
-            s_data,
-            level=level,
-            patch=champion.patch,
-            inputs=inputs,
-            items=items,
-            runes=runes,
-            rune_data=s_rune_data,
-        )
-        s_flats, s_percents, s_notes = s_fx.flats, s_fx.percents, s_fx.notes
-    base_extras = (*extras, *passive.flats, *s_flats, *elx_fx.flats, *ornn_fx.flats)
-    base_percents = (*passive.percents, *s_percents, *elx_fx.percents)
-    base_notes = (*passive.notes, *s_notes, *elx_fx.notes, *ornn_fx.notes)
-    if not runes and not shards:
-        return build_stat_sheet(
-            champion,
-            level,
-            items,
-            issues,
-            assumptions,
-            derived,
-            base_extras,
-            base_percents,
-            extra_amplifiers=passive.amplifiers,
-            extra_notes=base_notes,
-            inputs=inputs,
-        )
-    data = load_runes(root)
-    if data is None:
-        raise StatsError("lol-knowledge/derived/runes.json is missing; runes cannot be used")
-    report = check_page(runes, shards, data, patch=champion.patch)
-    if report.label is Label.PENDING:
-        print(
-            f"note: runes are from client {data.game_version}, the snapshot is {champion.patch}",
-            file=sys.stderr,
-        )
-    if not report.legal:
-        problems = "; ".join(report.violations)
-        if not allow_illegal:
-            raise StatsError(
-                f"rune page is not legal [{report.label}]: {problems} "
-                "(--allow-illegal-build calculates it anyway)"
-            )
-        print(f"warning: rune page is not legal [{report.label}]: {problems}", file=sys.stderr)
-    adaptive, label, note = None, Label.DERIVED, ""
-    if needs_adaptive_stat(runes, shards, data):
-        before = build_stat_sheet(
-            champion, level, items, issues, assumptions, derived, extras, inputs=inputs
-        )
-        bonus_ad = sum(
-            (
-                part.value
-                for part in before["attack_damage"].contributions
-                if part.scope == "bonus" and not part.adaptive
-            ),
-            start=Fraction(0),
-        )
-        power = sum(
-            (part.value for part in before["ability_power"].contributions if not part.adaptive),
-            Fraction(0),
-        )
-        weight = derived.value(champion.id, "adaptiveforceapweight") if derived else None
-        adaptive, label, note = adaptive_stat(bonus_ad, power, weight)
-    flats, percents = shard_contributions(
-        shards,
-        data,
-        level=level,
-        patch=champion.patch,
-        adaptive=adaptive,
-        adaptive_label=label,
-        adaptive_note=note,
-    )
-    if not items:
-        has_boots: bool | None = False
-    else:
-        groups = load_item_groups(root)
-        has_boots = None if groups is None else groups.has_boots([item.id for item in items])
-    uses_mana = champion.resource == MANA_RESOURCE.get(champion.locale)
-    rune_effects = minor_rune_effects(
-        runes,
-        data,
-        level=level,
-        patch=champion.patch,
-        items=items,
-        uses_mana=uses_mana,
-        has_boots=has_boots,
-        inputs=inputs,
-        adaptive=adaptive,
-        adaptive_label=label,
-        adaptive_note=note,
-    )
-    extra_notes = [*base_notes, *rune_effects.notes]
-    pending = list(rune_effects.pending)
-    if combat_context == "stats":
-        extra_notes += combat_rune_notes(rune_effects.combat_runes, data, in_ability=False)
-    elif combat_context == "ability":
-        pending += combat_rune_notes(rune_effects.combat_runes, data, in_ability=True)
-    return build_stat_sheet(
+    res = assemble_stat_sheet(
+        root,
         champion,
         level,
         items,
+        runes,
+        shards,
         issues,
         assumptions,
         derived,
-        (*base_extras, *flats, *rune_effects.flats),
-        (*percents, *base_percents, *rune_effects.percents),
-        pending,
-        extra_amplifiers=(*passive.amplifiers, *rune_effects.amplifiers),
-        extra_notes=extra_notes,
-        move_speed_bonus_amp=rune_effects.move_speed_bonus_amp,
+        extras=extras,
         inputs=inputs,
+        combat_context=combat_context,
+        kit=kit,
+        allow_illegal=allow_illegal,
+        summoners=summoners,
+        elixir=elixir,
+        ornn_item=ornn_item,
     )
+    for note in res.notes:
+        print(f"note: {note}", file=sys.stderr)
+    for warning in res.warnings:
+        print(f"warning: {warning}", file=sys.stderr)
+    return res.sheet
 
 
 def _build_sheet(
@@ -1213,15 +1075,7 @@ def _run_ability(args: argparse.Namespace) -> int:
 
 
 def _crit_base(champion_id: str, patch: str, derived) -> CritBase | None:
-    value = derived.value(champion_id, "critdamagemultiplier") if derived else None
-    if value is None:
-        return None
-    label = Label.DERIVED if derived.matches_patch(patch) else Label.PENDING
-    return CritBase(
-        value,
-        label,
-        f"{derived.path} {champion_id}.critdamagemultiplier ({derived.content_version})",
-    )
+    return resolve_crit_base(champion_id, patch, derived)
 
 
 def _run_rotation(args: argparse.Namespace) -> int:

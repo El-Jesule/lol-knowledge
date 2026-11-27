@@ -3,7 +3,7 @@
 - **Ámbito:** reserva de recursos del campeón (maná, energía, vida y recursos secundarios), costes de las habilidades (Q, W, E y R), regeneración pasiva en línea de tiempo y restauraciones por objetos y runas. Lo usan `python -m lol_knowledge stats` (`metrics.resource`, `metrics.ability_costs`) y `python -m lol_knowledge rotation`.
 - **Parche de referencia:** Data Dragon `16.23.1` y cliente `16.23` (`16.23.8399929+branch.releases-16-23.content.release`).
 - **Fecha de consulta:** 2026-11-20
-- **Código:** [`src/lol_knowledge/resources.py`](../../src/lol_knowledge/resources.py), [`src/lol_knowledge/stats/metrics.py`](../../src/lol_knowledge/stats/metrics.py), [`src/lol_knowledge/kit/model.py`](../../src/lol_knowledge/kit/model.py) y [`src/lol_knowledge/rotation.py`](../../src/lol_knowledge/rotation.py).
+- **Código:** [`src/lol_knowledge/resources.py`](../../src/lol_knowledge/resources.py), [`src/lol_knowledge/stats/metrics.py`](../../src/lol_knowledge/stats/metrics.py), [`src/lol_knowledge/kit/model.py`](../../src/lol_knowledge/kit/model.py) y [`src/lol_knowledge/rotation/`](../../src/lol_knowledge/rotation/).
 
 ## Fuentes
 

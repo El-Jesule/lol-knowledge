@@ -4,7 +4,7 @@
 - **Parche de referencia:** Data Dragon `16.23.1` y cliente `16.23` (`16.23.8406595+branch.releases-16-23.content.release`).
 - **Fecha de consulta:** 2026-11-25
 - **Especificaciones y kits:** `research/kits/<Id>.spec.json` y `lol-knowledge/champions/<Id>/kit.json`
-- **Código:** [`src/lol_knowledge/kit/model.py`](../../src/lol_knowledge/kit/model.py), [`research/binmodel/kitgen.py`](../../research/binmodel/kitgen.py), [`src/lol_knowledge/rotation.py`](../../src/lol_knowledge/rotation.py), [`src/lol_knowledge/defense.py`](../../src/lol_knowledge/defense.py), [`src/lol_knowledge/optimizer/search.py`](../../src/lol_knowledge/optimizer/search.py)
+- **Código:** [`src/lol_knowledge/kit/model.py`](../../src/lol_knowledge/kit/model.py), [`research/binmodel/kitgen.py`](../../research/binmodel/kitgen.py), [`src/lol_knowledge/rotation/`](../../src/lol_knowledge/rotation/), [`src/lol_knowledge/defense/`](../../src/lol_knowledge/defense/), [`src/lol_knowledge/optimizer/search.py`](../../src/lol_knowledge/optimizer/search.py)
 
 ## Fuentes
 
