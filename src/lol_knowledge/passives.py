@@ -15,7 +15,7 @@ from typing import Any
 from .damage import DamageType, format_number
 from .errors import RotationError, StatsError
 from .formula import ABILITY_OPS, FormulaError, evaluate_formula
-from .kit import Kit, PassiveEffectSpec, sheet_stats
+from .kit import Kit, PassiveEffectSpec
 from .runes import int_input
 from .scenario import Target
 from .stats import (
@@ -387,6 +387,8 @@ class PassiveCombat:
         stats: Mapping[str, Fraction] | None = None,
     ) -> tuple[list[PassiveStatBonus], list[PassiveStatAmplifier]]:
         """Flat bonuses and total-stat amplifiers currently in force from passives."""
+        if not self._stacking:
+            return [], []
         flats: list[PassiveStatBonus] = []
         amplifiers: list[PassiveStatAmplifier] = []
         stat_env = stats or {}
@@ -460,17 +462,11 @@ class PassiveCombat:
         target_max_health: Fraction | None = None,
     ) -> list[PassiveProc]:
         """Fire damage procs for this step and advance stacking passive counters."""
+        if not self._procs and not self._stacking:
+            return []
         procs: list[PassiveProc] = []
-        stats, origin = sheet_stats(sheet)
-        target_env: dict[str, Fraction] = {}
-        if target_max_health is not None:
-            target_env["max_health"] = target_max_health
-        if target_health_before is not None:
-            target_env["current_health"] = target_health_before
-        if target_max_health and target_health_before is not None:
-            target_env["missing_fraction_health"] = (
-                max(Fraction(0), target_max_health - target_health_before) / target_max_health
-            )
+        stats_pair: tuple[dict[str, Fraction], dict[str, tuple[str, Label]]] | None = None
+        target_env: dict[str, Fraction] | None = None
 
         for effect in self._procs:
             triggered = False
@@ -552,6 +548,19 @@ class PassiveCombat:
             if not triggered or not self._can_fire(effect, clock, sheet.level):
                 continue
             self._mark_fired(effect, clock, sheet.level)
+            if stats_pair is None:
+                stats_pair = sheet.cached_sheet_stats()
+                target_env = {}
+                if target_max_health is not None:
+                    target_env["max_health"] = target_max_health
+                if target_health_before is not None:
+                    target_env["current_health"] = target_health_before
+                if target_max_health and target_health_before is not None:
+                    target_env["missing_fraction_health"] = (
+                        max(Fraction(0), target_max_health - target_health_before)
+                        / target_max_health
+                    )
+            stats, origin = stats_pair
             try:
                 res = evaluate_formula(
                     effect.formula,
@@ -613,6 +622,10 @@ class PassiveCombat:
 
         return procs
 
+    def _target_max_health_env(self) -> dict[str, Fraction]:
+        max_hp = self.target.stats.get("max_health")
+        return {"max_health": max_hp} if max_hp is not None else {}
+
     def on_step_heals(
         self,
         slot: str | None,
@@ -624,11 +637,9 @@ class PassiveCombat:
         """Direct heal events triggered by the champion's passive on this step."""
         if not self._heals:
             return []
-        stats, origin = sheet_stats(sheet)
-        target_env: dict[str, Fraction] = {}
-        if self.target.stats.get("max_health") is not None:
-            target_env["max_health"] = self.target.stats["max_health"]
         heals: list[HealEvent] = []
+        stats_pair: tuple[dict[str, Fraction], dict[str, tuple[str, Label]]] | None = None
+        target_env: dict[str, Fraction] | None = None
 
         for effect in self._heals:
             triggered = False
@@ -683,6 +694,10 @@ class PassiveCombat:
             if not triggered or not self._can_fire(effect, clock, sheet.level):
                 continue
             self._mark_fired(effect, clock, sheet.level)
+            if stats_pair is None:
+                stats_pair = sheet.cached_sheet_stats()
+                target_env = self._target_max_health_env()
+            stats, origin = stats_pair
             try:
                 res = evaluate_formula(
                     effect.formula,
@@ -721,11 +736,9 @@ class PassiveCombat:
         """Self-shield events triggered by the champion's passive on this step."""
         if not self._shields:
             return []
-        stats, origin = sheet_stats(sheet)
-        target_env: dict[str, Fraction] = {}
-        if self.target.stats.get("max_health") is not None:
-            target_env["max_health"] = self.target.stats["max_health"]
         shields: list[ShieldEvent] = []
+        stats_pair: tuple[dict[str, Fraction], dict[str, tuple[str, Label]]] | None = None
+        target_env: dict[str, Fraction] | None = None
         for effect in self._shields:
             triggered = False
             notes: list[str] = []
@@ -750,6 +763,10 @@ class PassiveCombat:
             if not triggered or not self._can_fire(effect, clock, sheet.level):
                 continue
             self._mark_fired(effect, clock, sheet.level)
+            if stats_pair is None:
+                stats_pair = sheet.cached_sheet_stats()
+                target_env = self._target_max_health_env()
+            stats, origin = stats_pair
             try:
                 res = evaluate_formula(
                     effect.formula,
@@ -789,11 +806,9 @@ class PassiveCombat:
         """Mana or energy restored by the champion's passive on this step."""
         if not self._resources:
             return []
-        stats, origin = sheet_stats(sheet)
-        target_env: dict[str, Fraction] = {}
-        if self.target.stats.get("max_health") is not None:
-            target_env["max_health"] = self.target.stats["max_health"]
         restores: list[PassiveResourceRestore] = []
+        stats_pair: tuple[dict[str, Fraction], dict[str, tuple[str, Label]]] | None = None
+        target_env: dict[str, Fraction] | None = None
         for effect in self._resources:
             assert effect.resource is not None
             triggered = False
@@ -831,6 +846,10 @@ class PassiveCombat:
             if not triggered or not self._can_fire(effect, clock, sheet.level):
                 continue
             self._mark_fired(effect, clock, sheet.level)
+            if stats_pair is None:
+                stats_pair = sheet.cached_sheet_stats()
+                target_env = self._target_max_health_env()
+            stats, origin = stats_pair
             try:
                 res = evaluate_formula(
                     effect.formula,

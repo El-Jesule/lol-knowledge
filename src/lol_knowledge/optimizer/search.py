@@ -21,7 +21,6 @@ from ..duel import (
 )
 from ..errors import KitError, RotationError, StatsError
 from ..kit import Kit
-from ..objects import load_model
 from ..objects.legality import INVENTORY_SLOTS, ItemGroups, check_build, load_item_groups
 from ..passives import sheet_passive_effects
 from ..rotation import ACTIVE_COMBAT_KINDS, DAMAGE_KINDS, CritBase, Step, evaluate_rotation
@@ -44,11 +43,10 @@ from ..stats import (
     StatSheet,
     build_stat_sheet,
     effective_health,
-    items_from_model,
     weakest,
 )
 from ..stats.issues import DataIssue
-from ..stats.sheet import MANA_RESOURCE
+from ..stats.sheet import MANA_RESOURCE, sheet_effect_reason
 from ..summoners import (
     SummonerSpellData,
     SummonerSpellSpec,
@@ -60,6 +58,7 @@ from ..upgrades import (
     UpgradeEffect,
     eligible_ornn_items,
     elixir_contributions,
+    ornn_eligible_stats,
     ornn_upgrade_contributions,
 )
 from .models import (
@@ -82,6 +81,27 @@ from .models import (
 COMPLETED_MIN_GOLD = 800
 # Synergy items kept in the pruned pool even when their standalone 1-item delta is modest.
 SYNERGY_ITEMS = frozenset({"3089", "3031", "3135", "3036", "3033", "3137", "3124", "3085"})
+_ADAPTIVE_CROSS_CHAMPIONS = frozenset(
+    {"Zeri", "Yasuo", "Yone", "Hecarim", "Jhin", "Vladimir", "Pyke", "Rammus"}
+)
+_ADAPTIVE_SPECIAL_ITEMS = frozenset(
+    {
+        "3041",
+        "1082",
+        "6657",
+        "2501",
+        "2139",
+        "2140",
+        "3003",
+        "3004",
+        "3119",
+        "3040",
+        "3042",
+        "3121",
+        "2530",
+    }
+)
+_ADAPTIVE_TOUCHED_STATS = frozenset({"attack_damage", "ability_power", "adaptive_force"})
 
 
 def default_champion_rotation(kit: Kit, ranks: Mapping[str, int]) -> tuple[Step, ...]:
@@ -220,11 +240,12 @@ def load_candidate_pool(
     champion_id: str,
 ) -> dict[str, CandidateItem]:
     """Load all 218 catalog items once and pre-index gold, tier, groups and legality."""
-    model, _ = load_model(root)
+    from ..cache import DEFAULT_CACHE
+
+    model = DEFAULT_CACHE.object_model_data(root)
+    _, item_map = DEFAULT_CACHE.items_index(root)
     objects = model.get("objects") or []
-    all_ids = [str(obj["id"]) for obj in objects]
-    item_map = {item.id: item for item in items_from_model(model, all_ids)}
-    catalog_ids = set(all_ids)
+    catalog_ids = {str(obj["id"]) for obj in objects}
     pool: dict[str, CandidateItem] = {}
     for obj in objects:
         item_id = str(obj["id"])
@@ -446,6 +467,18 @@ class _BuildEvaluator:
         self.elixir_fx = elixir_contributions(
             constraints.elixir, level=level, uses_mana=self.uses_mana
         )
+        adaptive_ids = set(_ADAPTIVE_SPECIAL_ITEMS)
+        for item_id, cand in pool.items():
+            if item_id in adaptive_ids:
+                continue
+            if any(
+                sheet_effect_reason(effect) is not None
+                and comp.get("stat") in _ADAPTIVE_TOUCHED_STATS
+                for effect in cand.item.effects
+                for comp in (effect.get("components") or ())
+            ):
+                adaptive_ids.add(item_id)
+        self._adaptive_effect_item_ids: frozenset[str] = frozenset(adaptive_ids)
         self.cache: dict[tuple[str, ...], BuildResult | None] = {}
         self.evaluations = 0
 
@@ -491,28 +524,64 @@ class _BuildEvaluator:
         assert self.rune_data is not None
         adaptive, a_label, a_note = None, Label.DERIVED, ""
         if self.needs_adaptive:
-            before = build_stat_sheet(
-                self.champion,
-                self.level,
-                items,
-                self.issues,
-                self.assumptions,
-                self.derived,
-                base_extras,
-                inputs=self.inputs,
-            )
-            bonus_ad = sum(
-                (
-                    p.value
-                    for p in before["attack_damage"].contributions
-                    if p.scope == "bonus" and not p.adaptive
-                ),
-                start=Fraction(0),
-            )
-            power = sum(
-                (p.value for p in before["ability_power"].contributions if not p.adaptive),
-                start=Fraction(0),
-            )
+            if self.champion.id not in _ADAPTIVE_CROSS_CHAMPIONS and not any(
+                it.id in self._adaptive_effect_item_ids for it in items
+            ):
+                bonus_ad = sum(
+                    (
+                        st.value
+                        for it in items
+                        for st in it.stats
+                        if st.stat == "attack_damage" and st.kind == "flat"
+                    ),
+                    start=Fraction(0),
+                ) + sum(
+                    (
+                        c.value
+                        for stat_id, c in base_extras
+                        if stat_id == "attack_damage" and c.scope == "bonus" and not c.adaptive
+                    ),
+                    start=Fraction(0),
+                )
+                power = sum(
+                    (
+                        st.value
+                        for it in items
+                        for st in it.stats
+                        if st.stat == "ability_power" and st.kind == "flat"
+                    ),
+                    start=Fraction(0),
+                ) + sum(
+                    (
+                        c.value
+                        for stat_id, c in base_extras
+                        if stat_id == "ability_power" and not c.adaptive
+                    ),
+                    start=Fraction(0),
+                )
+            else:
+                before = build_stat_sheet(
+                    self.champion,
+                    self.level,
+                    items,
+                    self.issues,
+                    self.assumptions,
+                    self.derived,
+                    base_extras,
+                    inputs=self.inputs,
+                )
+                bonus_ad = sum(
+                    (
+                        p.value
+                        for p in before["attack_damage"].contributions
+                        if p.scope == "bonus" and not p.adaptive
+                    ),
+                    start=Fraction(0),
+                )
+                power = sum(
+                    (p.value for p in before["ability_power"].contributions if not p.adaptive),
+                    start=Fraction(0),
+                )
             adaptive, a_label, a_note = adaptive_stat(bonus_ad, power, self.ap_weight)
         flats, percents = shard_contributions(
             self.shards,
@@ -574,7 +643,12 @@ class _BuildEvaluator:
             )
             if eligible_u:
                 best_up: BuildResult | None = None
+                seen_ornn_sigs: set[frozenset[str]] = set()
                 for u_item in eligible_u:
+                    sig = frozenset(ornn_eligible_stats(u_item))
+                    if sig in seen_ornn_sigs:
+                        continue
+                    seen_ornn_sigs.add(sig)
                     o_fx = ornn_upgrade_contributions(
                         u_item.id,
                         items,

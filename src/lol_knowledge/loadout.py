@@ -142,6 +142,7 @@ def assemble_stat_sheet(
     s_flats: tuple[Any, ...] = ()
     s_percents: tuple[Any, ...] = ()
     s_notes: tuple[str, ...] = ()
+    cached_rune_data = None
     if summoners:
         s_data = load_summoner_spells(root)
         if s_data is None:
@@ -157,7 +158,7 @@ def assemble_stat_sheet(
         except StatsError as exc:
             raise LoadoutError("illegal_build", str(exc)) from exc
         warnings.extend(str(v) for v in s_violations)
-        s_rune_data = load_runes(root) if runes else None
+        cached_rune_data = load_runes(root) if runes else None
         s_fx = summoner_sheet_effects(
             resolved_s,
             s_data,
@@ -166,7 +167,7 @@ def assemble_stat_sheet(
             inputs=inputs,
             items=items,
             runes=runes,
-            rune_data=s_rune_data,
+            rune_data=cached_rune_data,
         )
         s_flats, s_percents, s_notes = s_fx.flats, s_fx.percents, s_fx.notes
 
@@ -189,7 +190,7 @@ def assemble_stat_sheet(
         )
         return LoadoutResult(sheet, tuple(notes), tuple(warnings))
 
-    rune_data = load_runes(root)
+    rune_data = cached_rune_data if cached_rune_data is not None else load_runes(root)
     if rune_data is None:
         raise LoadoutError(
             "invalid_input",

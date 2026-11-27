@@ -17,6 +17,7 @@ from pathlib import Path
 from typing import Any, TextIO
 
 from . import __version__
+from .cache import DEFAULT_CACHE
 from .contract import CONTRACT_SCHEMA, execute_request
 
 LOGGER = logging.getLogger(__name__)
@@ -484,6 +485,7 @@ class MCPServer:
 
     def __init__(self, root: Path) -> None:
         self.root = root
+        self.cache = DEFAULT_CACHE
 
     def handle_message(self, message: Mapping[str, Any]) -> dict[str, Any] | None:
         if not isinstance(message, Mapping) or message.get("jsonrpc") != "2.0":
@@ -620,11 +622,11 @@ class MCPServer:
         for resource in RESOURCES:
             if resource["uri"] == uri:
                 path = self.root / resource["rel_path"]
-                if not path.is_file():
+                text = self.cache.resource_text(path)
+                if text is None:
                     return _rpc_error(
                         msg_id, -32002, f"Resource file missing: {resource['rel_path']}"
                     )
-                text = path.read_text(encoding="utf-8")
                 return _rpc_result(
                     msg_id,
                     {

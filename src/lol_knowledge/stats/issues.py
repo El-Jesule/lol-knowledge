@@ -8,6 +8,7 @@ from dataclasses import dataclass
 from pathlib import Path
 from typing import Any
 
+from ..cache import DEFAULT_CACHE
 from ..errors import StatsError
 
 ISSUES_PATH = Path("lol-knowledge") / "data-issues.json"
@@ -93,7 +94,7 @@ def parse_issues(document: Any) -> tuple[DataIssue, ...]:
     return tuple(issues)
 
 
-def load_issues(root: Path) -> tuple[DataIssue, ...]:
+def _load_issues_uncached(root: Path) -> tuple[DataIssue, ...]:
     path = root / ISSUES_PATH
     try:
         document = json.loads(path.read_text(encoding="utf-8"))
@@ -102,3 +103,7 @@ def load_issues(root: Path) -> tuple[DataIssue, ...]:
     except (UnicodeDecodeError, json.JSONDecodeError) as exc:
         raise StatsError(f"{ISSUES_PATH.as_posix()} is not valid UTF-8 JSON: {exc}") from exc
     return parse_issues(document)
+
+
+def load_issues(root: Path) -> tuple[DataIssue, ...]:
+    return DEFAULT_CACHE.issues(root, lambda: _load_issues_uncached(root))

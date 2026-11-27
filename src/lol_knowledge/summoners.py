@@ -17,6 +17,7 @@ from fractions import Fraction
 from pathlib import Path
 from typing import Any
 
+from .cache import DEFAULT_CACHE
 from .errors import StatsError
 from .runes import RuneData
 from .stats.data import ItemData
@@ -163,8 +164,7 @@ def summoner_problems(document: Any, *, patch: str | None = None) -> list[str]:
     return problems
 
 
-def load_summoner_spells(root: Path) -> SummonerSpellData | None:
-    """Load ``lol-knowledge/derived/summoner-spells.json``, or ``None`` if absent."""
+def _load_summoner_spells_uncached(root: Path) -> SummonerSpellData | None:
     path = root / SUMMONERS_PATH
     if not path.is_file():
         return None
@@ -202,6 +202,11 @@ def load_summoner_spells(root: Path) -> SummonerSpellData | None:
         spells=spells,
         _lookup=lookup,
     )
+
+
+def load_summoner_spells(root: Path) -> SummonerSpellData | None:
+    """Load ``lol-knowledge/derived/summoner-spells.json``, or ``None`` if absent."""
+    return DEFAULT_CACHE.summoner_spells(root, lambda: _load_summoner_spells_uncached(root))
 
 
 def resolve_loadout(

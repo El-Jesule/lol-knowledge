@@ -16,6 +16,7 @@ from fractions import Fraction
 from pathlib import Path
 from typing import Any
 
+from ..cache import DEFAULT_CACHE
 from ..errors import StatsError
 
 RECORDS_PATH = Path("lol-knowledge") / "derived" / "champion-records.json"
@@ -98,8 +99,7 @@ def parse_records(document: Any, path: str = RECORDS_PATH.as_posix()) -> Derived
     return DerivedRecords(path, content_version, game_version, champions)
 
 
-def load_records(root: Path) -> DerivedRecords | None:
-    """Load the derived records, or ``None`` when the project has none."""
+def _load_records_uncached(root: Path) -> DerivedRecords | None:
     path = root / RECORDS_PATH
     if not path.is_file():
         return None
@@ -108,3 +108,8 @@ def load_records(root: Path) -> DerivedRecords | None:
     except (UnicodeDecodeError, json.JSONDecodeError) as exc:
         raise StatsError(f"{RECORDS_PATH.as_posix()} is not valid UTF-8 JSON: {exc}") from exc
     return parse_records(document)
+
+
+def load_records(root: Path) -> DerivedRecords | None:
+    """Load the derived records, or ``None`` when the project has none."""
+    return DEFAULT_CACHE.records(root, lambda: _load_records_uncached(root))

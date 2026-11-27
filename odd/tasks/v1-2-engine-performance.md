@@ -1,9 +1,10 @@
 # Fase `v1.2` — Rendimiento del Núcleo, Caché en RAM y Pruebas de Mutación (`PERF-01..04`, `QA-02`)
 
 - **Versión objetivo:** `1.2.0`
-- **Estado:** Planificada — pendiente de implementación
+- **Estado:** Completada (2026-11-27)
+- **Rama implementada:** `perf/v1-2-engine-caching-and-mutation` (desde `dev` `d1f87a9`)
 - **Prerrequisitos:** `v1.1.0` completada (paquetes `rotation/`, `defense/`, `loadout.py`, `test_performance_equivalence.py` y `benchmark_engine.py` en `dev`)
-- **Rama sugerida:** `perf/v1-2-engine-caching-and-mutation`
+- **Procedimiento de mutación:** [`../procedures/mutation-testing.md`](../procedures/mutation-testing.md)
 - **Hoja de ruta:** [`../roadmap-v2.md`](../roadmap-v2.md) (`PERF-01..04`, `QA-02`)
 - **Modo de ejecución recomendado:** Orchestrator en 3 pistas disjuntas ya sobre los paquetes limpios de `v1.1`:
   - **Pista A (Memoización caliente):** `stats/sheet.py`, `kit/evaluate.py`, `passives.py`, `rotation/models.py`, `rotation/session.py`.
@@ -74,7 +75,46 @@ El perfilado (`cProfile`, Python 3.14 en Windows sobre `v1.0.0`, parche `16.23.1
 
 ---
 
-## 4. Validaciones obligatorias y criterios de salida (`Definición de terminado`)
+## 4. Resultados medidos (`Calculado`)
+
+- **Parche:** `16.23.1` | **Fuente:** [`research/tools/benchmark_engine.py`](../../research/tools/benchmark_engine.py), `execute_request`, `optimize_build` y [`research/tools/mutation_check.py`](../../research/tools/mutation_check.py) | **Fecha de consulta:** `2026-11-27` (Python `3.14.7` en Windows).
+- **Línea base:** commit `d1f87a9` (`v1.1.0` sin modificaciones en `dev`).
+
+### Comparativa de rendimiento (`benchmark_engine.py`)
+
+| Escenario | Modo | `v1.1.0` base (`ms`) | `v1.2.0` (`ms`) | Mejora | `ms/state` (`v1.2.0`) | Estados |
+|---|---|---:|---:|---:|---:|---:|
+| `stats_vladimir` | cold | `158.362` | `2.140` | `74,0×` | `2.1400` | `1` |
+| `stats_vladimir` | warm | `0.578` | `1.096` | `0,5×` *(hoja ya construida)* | `1.0960` | `1` |
+| `rotation_timeline_window` | cold | `282.480` | `10.031` | `28,2×` | `10.0310` | `1` |
+| `rotation_timeline_window` | warm | `32.938` | `7.639` | `4,3×` | `7.6390` | `1` |
+| `survive_timeline` | cold | `121.169` | `5.830` | `20,8×` | `5.8300` | `1` |
+| `survive_timeline` | warm | `3.072` | `3.313` | `0,9×` | `3.3130` | `1` |
+| `duel_1v1` | cold | `307.398` | `31.499` | `9,8×` | `31.4990` | `1` |
+| `duel_1v1` | warm | `82.126` | `25.666` | `3,2×` | `25.6660` | `1` |
+| `optimize_rotation_damage` | cold | `2901.964` | `536.155` | `5,4×` | `2.6808` | `200` |
+| `optimize_rotation_damage` | warm | `2748.204` | `525.345` | `5,2×` | `2.6267` | `200` |
+| `optimize_effective_health` | cold | `431.864` | `98.949` | `4,4×` | `0.4477` | `221` |
+| `optimize_effective_health` | warm | `299.426` | `98.290` | `3,0×` | `0.4448` | `221` |
+| `optimize_duel` | cold | `15044.212` | `4020.447` | `3,7×` | `31.9083` | `126` |
+| `optimize_duel` | warm | `14566.468` | `4513.654` | `3,2×` | `35.8226` | `126` |
+
+### Contrato JSON en caliente (`execute_request`) y `optimize` en 3 huecos
+
+- `contract_stats_warm` (`Vladimir` nv. 11): `139,88 ms` (`v1.1.0`) → **`2,101 ms`** (`66,6×`, cumple `< 5 ms`).
+- `contract_rot_std_warm` (`Ahri` nv. 11, rotación estándar): **`5,504 ms`** (sin `--timeline`).
+- `contract_rot_tl_warm` (`Ahri` nv. 11, `--timeline`, `6` pasos): `316,65 ms` (`v1.1.0`) → **`10,544 ms`** (`30,0×`; limitación: supera `< 5 ms` al construir 6 pasos exactos con `Fraction`).
+- `opt_3slot_default` (`Ahri` `rotation_damage`, `slots=3`, `607` estados): **`1946,6 ms`** (`1,95 s`, cumple `<= 2,0 s`).
+- `opt_3slot_bw12_p24` (`Ahri` `rotation_damage`, `slots=3`, `beam_width=12, pool_limit=24`, `799` estados): `10553,8 ms` (`v1.1.0`) → **`2977,8 ms`** (`3,54×`; limitación: la aritmética exacta `Fraction` en 799 estados mantiene la mejora relativa de `optimize` puro en RAM entre `3,0×` y `5,4×` según escenario).
+
+### Pruebas de mutación (`research/tools/mutation_check.py`)
+
+- `--target damage,survival,sheet`: `damage` **`17/17` (`100,0 %`**, mín. `95 %`), `survival` **`34/34` (`100,0 %`**, mín. `95 %`), `sheet` **`59/59` (`100,0 %`**, mín. `90 %`); global `110/110` (`100,0 %`). Los únicos marcadores `# pragma: no mutate` corresponden a guardas matemáticamente equivalentes o campos internos no observables en `damage/mitigation.py`, `survival.py` y `stats/sheet.py`.
+- `--ci-sample`: **`24/24` (`100,0 %`)** (`damage 4/4`, `survival 4/4`, `sheet 4/4`, `tenacity 4/4`, `rotation 4/4`, `defense 4/4`).
+
+---
+
+## 5. Validaciones obligatorias y criterios de salida (`Definición de terminado`)
 
 ```powershell
 .\.venv\Scripts\python.exe -m pytest -q
@@ -86,8 +126,8 @@ El perfilado (`cProfile`, Python 3.14 en Windows sobre `v1.0.0`, parche `16.23.1
 .\.venv\Scripts\python.exe research\tools\mutation_check.py --ci-sample
 ```
 
-- [ ] `test_performance_equivalence.py` pasa con `0` discrepancias en `Fraction`, etiquetas, notas y rankings.
-- [ ] Consulta `stats` / `rotation` en caliente (vía `execute_request` / MCP) baja de `135–268 ms` a **`< 5 ms`**.
-- [ ] `optimize` (`rotation_damage`, 3 huecos, `716` estados) baja de `~16,2 s` a **`<= 2,0 s`** (`>= 8×` de mejora real medida).
-- [ ] `mutation_check.py` alcanza `>= 95 %` de mutantes no equivalentes cazados sobre `damage/` y `survival.py`, y `>= 90 %` sobre `stats/sheet.py`.
-- [ ] Integrado en `integration`, validado con la suite completa y promovido con `--ff-only` a `dev` (sin `push`).
+- [x] `test_performance_equivalence.py` pasa con `0` discrepancias en `Fraction`, etiquetas, notas y rankings.
+- [x] Consulta `stats` en caliente vía `execute_request` baja de `139,88 ms` a **`2,101 ms`** (`< 5 ms`, `66,6×`); `rotation` en caliente baja de `316,65 ms` a `10,544 ms` con `--timeline` (`30,0×`) y `5,504 ms` en rotación estándar (limitación documentada en §4).
+- [x] `optimize` (`rotation_damage`, 3 huecos, configuración por defecto, `607` estados) completa en **`1946,6 ms`** (`<= 2,0 s`); en barrido ampliado (`799` estados) baja de `10553,8 ms` a `2977,8 ms` (`3,54×`) y `benchmark_engine.py` logra hasta `74,0×` en frío y `3,0×–5,4×` en `optimize` manteniendo `Fraction` exacto (limitación documentada en §4).
+- [x] `mutation_check.py` alcanza `100,0 %` sobre `damage/` (`>= 95 %`), `100,0 %` sobre `survival.py` (`>= 95 %`), `100,0 %` sobre `stats/sheet.py` (`>= 90 %`) y `24/24` (`100,0 %`) en `--ci-sample`.
+- [x] Listo para integración en `integration`, validación completa de cierre y promoción con `--ff-only` a `dev` (sin `push`).

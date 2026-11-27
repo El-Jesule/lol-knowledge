@@ -5,10 +5,10 @@ from __future__ import annotations
 import math
 from collections.abc import Mapping, Sequence
 from fractions import Fraction
+from typing import Any
 
 from ..damage import DamageType, format_number
 from ..errors import RotationError
-from ..kit import sheet_stats
 from ..runes import scale_item_cooldown
 from ..stats import (
     Label,
@@ -94,9 +94,9 @@ class _TimelineMixin:
 
         Also the stacks gained per attack (combat-stacks.md), with or without the timeline.
         """
-        sheet = self.base_sheet
         self.now = at
         self.active_dealt, self.shred = [], {}
+        ops: list[tuple[Any, ...]] = []
         for effect in self.stacked:
             count = self.stacks.get(_key(effect), 0)
             if not count or self._expired(effect, at):
@@ -108,13 +108,15 @@ class _TimelineMixin:
             if effect.alternation is not None:
                 labels.append(Label.PENDING)
                 note += "; light and dark hits alternate from a light one (not verified)"
-            sheet = with_bonus(
-                sheet,
-                stat_id,
-                effect_amount(stat_id, per_stack * count),
-                f"{effect.title} ({effect.name})",
-                weakest(labels),
-                note,
+            ops.append(
+                (
+                    "b",
+                    stat_id,
+                    effect_amount(stat_id, per_stack * count),
+                    f"{effect.title} ({effect.name})",
+                    weakest(labels),
+                    note,
+                )
             )
         for window in self.windows.values():
             if window.end <= at:
@@ -128,82 +130,85 @@ class _TimelineMixin:
                 label = weakest(window.labels)
                 stat_id = str(component.get("stat"))
                 if component.get("mode") == "flat":
-                    amount = effect_amount(stat_id, window.value)
-                    sheet = with_bonus(sheet, stat_id, amount, source, label)
+                    ops.append(
+                        ("b", stat_id, effect_amount(stat_id, window.value), source, label, "")
+                    )
                 elif stat_id == "move_speed":
-                    sheet = with_percent_bonus(sheet, stat_id, window.value / 100, source, label)
+                    ops.append(("p", stat_id, window.value / 100, source, label, ""))
                 else:
-                    sheet = with_amplifier(sheet, stat_id, window.value, source, label)
+                    ops.append(("a", stat_id, window.value, source, label))
             else:
                 damage_type = RESISTANCE_STATS[str(component.get("stat"))]
                 self.shred.setdefault(damage_type, []).append(window)
         for bonus in self.rune_combat.active_stat_bonuses(at, self.base_sheet):
-            if bonus.percent:
-                sheet = with_percent_bonus(
-                    sheet, bonus.stat_id, bonus.amount, bonus.source, bonus.label, bonus.note
+            kind = "p" if bonus.percent else "b"
+            ops.append((kind, bonus.stat_id, bonus.amount, bonus.source, bonus.label, bonus.note))
+        if self.passive_combat._stacking:
+            p_flats, p_amps = self.passive_combat.active_stat_modifiers(
+                at, self.base_sheet.level, stats=self.base_stats
+            )
+            for p_bonus in p_flats:
+                kind = "p" if p_bonus.percent else "b"
+                ops.append(
+                    (
+                        kind,
+                        p_bonus.stat_id,
+                        p_bonus.amount,
+                        p_bonus.source,
+                        p_bonus.label,
+                        p_bonus.note,
+                    )
                 )
-            else:
-                sheet = with_bonus(
-                    sheet, bonus.stat_id, bonus.amount, bonus.source, bonus.label, bonus.note
-                )
-        base_stats, _ = sheet_stats(self.base_sheet)
-        p_flats, p_amps = self.passive_combat.active_stat_modifiers(
-            at, self.base_sheet.level, stats=base_stats
-        )
-        for p_bonus in p_flats:
-            if p_bonus.percent:
-                sheet = with_percent_bonus(
-                    sheet,
-                    p_bonus.stat_id,
-                    p_bonus.amount,
-                    p_bonus.source,
-                    p_bonus.label,
-                    p_bonus.note,
-                )
-            else:
-                sheet = with_bonus(
-                    sheet,
-                    p_bonus.stat_id,
-                    p_bonus.amount,
-                    p_bonus.source,
-                    p_bonus.label,
-                    p_bonus.note,
-                )
-        for p_amp in p_amps:
-            sheet = with_amplifier(sheet, p_amp.stat_id, p_amp.percent, p_amp.source, p_amp.label)
+            for p_amp in p_amps:
+                ops.append(("a", p_amp.stat_id, p_amp.percent, p_amp.source, p_amp.label))
         ic_as = self.item_combat.dynamic_bonus_as(at)
         if ic_as:
-            sheet = with_bonus(
-                sheet, "attack_speed", ic_as, "item_combat dynamic attack speed", Label.DERIVED
+            ops.append(
+                ("b", "attack_speed", ic_as, "item_combat dynamic attack speed", Label.DERIVED, "")
             )
         ic_ap = self.item_combat.dynamic_bonus_ap(at)
         if ic_ap:
-            sheet = with_bonus(
-                sheet, "ability_power", ic_ap, "6616 rapids (+40 AP)", Label.OFFICIAL
-            )
+            ops.append(("b", "ability_power", ic_ap, "6616 rapids (+40 AP)", Label.OFFICIAL, ""))
         ic_ah = self.item_combat.dynamic_bonus_ah(at)
         if ic_ah:
-            sheet = with_bonus(
-                sheet, "ability_haste", ic_ah, "6616 rapids (+15 AH)", Label.OFFICIAL
-            )
+            ops.append(("b", "ability_haste", ic_ah, "6616 rapids (+15 AH)", Label.OFFICIAL, ""))
         ic_ms = self.item_combat.dynamic_bonus_flat_ms(at)
         if ic_ms:
-            sheet = with_bonus(sheet, "move_speed", ic_ms, "2524 fanfare (+20 MS)", Label.DERIVED)
+            ops.append(("b", "move_speed", ic_ms, "2524 fanfare (+20 MS)", Label.DERIVED, ""))
         for end_t, ms_pct, ms_src, ms_lbl in self._summoner_ms_buffs:
             if end_t is None or at < end_t:
-                sheet = with_percent_bonus(sheet, "move_speed", ms_pct, ms_src, ms_lbl)
+                ops.append(("p", "move_speed", ms_pct, ms_src, ms_lbl, ""))
         for end_t, stat_id, mode, amount, src, lbl in self._ability_stat_buffs.values():
             if end_t is not None and at >= end_t:
                 continue
             if mode == "percent_ms":
-                sheet = with_percent_bonus(sheet, stat_id, amount, src, lbl)
+                ops.append(("p", stat_id, amount, src, lbl, ""))
             elif mode == "percent":
-                sheet = with_amplifier(sheet, stat_id, amount, src, lbl)
+                ops.append(("a", stat_id, amount, src, lbl))
             else:
-                sheet = with_bonus(sheet, stat_id, effect_amount(stat_id, amount), src, lbl)
-        if sheet is not self.sheet:
-            self.sheet = sheet
-            self.stats, self.origin = sheet_stats(sheet)
+                ops.append(("b", stat_id, effect_amount(stat_id, amount), src, lbl, ""))
+
+        if not ops:
+            self._last_moment_ops = None
+            if self.sheet is not self.base_sheet:
+                self.sheet = self.base_sheet
+                self.stats, self.origin = self.base_stats, self.base_origin
+            return
+        ops_key = tuple(ops)
+        if ops_key == self._last_moment_ops:
+            return
+        sheet = self.base_sheet
+        for op in ops_key:
+            kind = op[0]
+            if kind == "b":
+                sheet = with_bonus(sheet, op[1], op[2], op[3], op[4], op[5])
+            elif kind == "p":
+                sheet = with_percent_bonus(sheet, op[1], op[2], op[3], op[4], op[5])
+            else:
+                sheet = with_amplifier(sheet, op[1], op[2], op[3], op[4])
+        self._last_moment_ops = ops_key
+        self.sheet = sheet
+        self.stats, self.origin = sheet.cached_sheet_stats()
 
     def _open(
         self,

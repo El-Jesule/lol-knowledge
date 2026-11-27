@@ -9,7 +9,7 @@ from typing import Any
 from ..damage import DamageType, format_number
 from ..errors import RotationError, StatsError
 from ..item_combat import ALLY_HEAL_SHIELD_ACTIVES, ItemCombat
-from ..kit import Kit, sheet_stats
+from ..kit import Kit
 from ..passives import PassiveCombat
 from ..resources import ResourceEvent, ResourceTracker, StepResourceCost, resolve_ability_cost
 from ..rune_combat import RuneCombat
@@ -95,7 +95,9 @@ class _Rotation(_EffectsMixin, _TimelineMixin, _CombatStepsMixin, _RunnerMixin):
         self.attacker_exhausted = Fraction(str(inputs.get("exhausted", 0))) > 0
         self.timeline = self._timeline() if timeline else None
         self.crit_base, self.holder_range, self.inputs = crit_base, holder_range, inputs
-        self.stats, self.origin = sheet_stats(sheet)
+        self.base_stats, self.base_origin = sheet.cached_sheet_stats()
+        self.stats, self.origin = self.base_stats, self.base_origin
+        self._last_moment_ops: tuple[tuple[Any, ...], ...] | None = None
         self.life_steal, self.omnivamp = sheet["life_steal"], sheet["omnivamp"]
         self.hsp = sheet["heal_and_shield_power"]
         try:

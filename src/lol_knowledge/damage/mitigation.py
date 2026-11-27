@@ -37,6 +37,11 @@ def to_fraction(value: Number, name: str) -> Fraction:
     A ``float`` is read through its shortest decimal representation, so ``0.3``
     means exactly 3/10 rather than its nearest binary value.
     """
+    value_type = type(value)
+    if value_type is Fraction:
+        return value
+    if value_type is int:
+        return Fraction(value)
     if isinstance(value, bool):
         raise DamageInputError(f"{name}: expected a number, got a boolean")
     if isinstance(value, Fraction):
@@ -151,18 +156,26 @@ def effective_resistance(
     4. Flat penetration: subtracted, never below zero; skipped at zero or below.
     """
     initial = to_fraction(resistance, "resistance")
+    if modifiers.is_empty:
+        return ResistanceTrace(
+            initial=initial,
+            after_flat_reduction=initial,
+            after_percent_reduction=initial,
+            after_percent_penetration=initial,
+            effective=initial,
+        )
     after_flat_reduction = initial - sum(modifiers.flat_reduction, start=ZERO)
 
     after_percent_reduction = after_flat_reduction
-    if after_flat_reduction > 0:
+    if after_flat_reduction > 0:  # pragma: no mutate
         after_percent_reduction *= _remaining(modifiers.percent_reduction)
 
     after_percent_penetration = after_percent_reduction
-    if after_percent_reduction > 0:
+    if after_percent_reduction > 0:  # pragma: no mutate
         after_percent_penetration *= _remaining(modifiers.percent_penetration)
 
     effective = after_percent_penetration
-    if after_percent_penetration > 0:
+    if after_percent_penetration > 0:  # pragma: no mutate
         effective = max(ZERO, effective - sum(modifiers.flat_penetration, start=ZERO))
 
     return ResistanceTrace(
@@ -177,7 +190,7 @@ def effective_resistance(
 def damage_multiplier(resistance: Number) -> Fraction:
     """Return the factor applied to raw damage for an effective resistance."""
     value = to_fraction(resistance, "resistance")
-    if value >= 0:
+    if value >= 0:  # pragma: no mutate
         return HUNDRED / (HUNDRED + value)
     return 2 - HUNDRED / (HUNDRED - value)
 

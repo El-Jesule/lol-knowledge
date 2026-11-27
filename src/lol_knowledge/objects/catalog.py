@@ -2,7 +2,6 @@
 
 from __future__ import annotations
 
-import copy
 import html
 import json
 import math
@@ -118,7 +117,7 @@ def merge_generated(
                 "effects": [],
             }
         else:
-            entry = copy.deepcopy(dict(base))
+            entry = dict(base)
         zeros = {
             (str(zero.get("id")), str(zero.get("kind"))): str(zero.get("reason"))
             for zero in entry.get("confirmed_zero_stats") or []
@@ -131,7 +130,7 @@ def merge_generated(
         if generated_entry.get("unmodelled_stats"):
             entry["unmodelled_stats"] = list(generated_entry["unmodelled_stats"])
         objects.append(entry)
-    objects += [copy.deepcopy(dict(entry)) for entry in curated.values()]
+    objects += [dict(entry) for entry in curated.values()]
     merged = dict(catalog)
     merged["objects"] = objects
     return merged
@@ -269,7 +268,7 @@ def derived_effect_status(effect: Mapping[str, Any]) -> str:
 
 
 def _build_effect(effect: Mapping[str, Any]) -> dict[str, Any]:
-    built = copy.deepcopy(dict(effect))
+    built = dict(effect)
     built["derived_status"] = derived_effect_status(effect)
     return built
 
@@ -374,20 +373,27 @@ def dump_model(model: Mapping[str, Any]) -> str:
     return json.dumps(model, ensure_ascii=False, indent=2, sort_keys=True) + "\n"
 
 
-def load_model(root: Path) -> tuple[dict[str, Any], str]:
-    """Load, validate and build the model. Returns ``(model, serialized)``."""
+def load_model_data(root: Path, *, validate: bool = False) -> dict[str, Any]:
+    """Load and build the model. Validates the catalog only when ``validate`` is true."""
     from .generate import load_generated
-    from .validate import validate_catalog_document
 
     snapshot = load_snapshot(root)
     catalog = merge_generated(load_catalog(root), load_generated(root))
-    report = validate_catalog_document(catalog, snapshot)
-    if report.violations:
-        raise ObjectModelError(
-            "the object catalog is invalid:\n"
-            + "\n".join(f"{item.path}: {item.message}" for item in report.violations)
-        )
-    model = build_model(catalog, snapshot)
+    if validate:
+        from .validate import validate_catalog_document
+
+        report = validate_catalog_document(catalog, snapshot)
+        if report.violations:
+            raise ObjectModelError(
+                "the object catalog is invalid:\n"
+                + "\n".join(f"{item.path}: {item.message}" for item in report.violations)
+            )
+    return build_model(catalog, snapshot)
+
+
+def load_model(root: Path) -> tuple[dict[str, Any], str]:
+    """Load, validate and build the model. Returns ``(model, serialized)``."""
+    model = load_model_data(root, validate=True)
     return model, dump_model(model)
 
 

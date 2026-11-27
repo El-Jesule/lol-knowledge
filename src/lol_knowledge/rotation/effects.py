@@ -10,7 +10,7 @@ from typing import Any
 
 from ..damage import DamageType, format_number, mitigate
 from ..errors import RotationError
-from ..formula import FormulaError, evaluate_formula
+from ..formula import OBJECT_OPS, CompiledFormula, FormulaError, compile_formula, evaluate_formula
 from ..item_combat import SPECIALIZED_ITEM_EFFECTS
 from ..kit import Kit
 from ..resources import ResourceEvent
@@ -68,6 +68,9 @@ class _Effect:
     # Active empowers the next basic attack (Titanic Hydra) and optionally resets attack timer.
     empowers_next_attack: bool = False
     resets_attack_timer: bool = False
+    _compiled_formula: CompiledFormula | None = field(
+        default=None, init=False, repr=False, compare=False
+    )
 
     @property
     def title(self) -> str:
@@ -104,6 +107,12 @@ def _could_apply(effect: Mapping[str, Any], target_kind: str | None) -> bool:
     )
 
 
+_ROTATION_EFFECTS_CACHE: dict[
+    tuple[int, str, str | None], tuple[ItemData, tuple[_Effect, ...], tuple[str, ...], bool]
+] = {}
+_ROTATION_EFFECTS_CACHE_MAX = 2048
+
+
 def _effects(
     items: Sequence[ItemData], owner: str, target_kind: str | None = None
 ) -> tuple[list[_Effect], list[str], bool]:
@@ -123,73 +132,93 @@ def _effects(
                 f"{owner} item {item.id} is listed twice; unique effects of copies are not modelled"
             )
         seen.add(item.id)
-        if item.effect_review != "complete":
-            notes.append(
-                f"{owner} {item.id}: effect review {item.effect_review}; "
-                "effects missing from the catalog are not applied"
-            )
-            weakened = True
-        for effect in item.effects:
-            reason = sheet_effect_reason(effect)
-            if reason is not None:
-                notes.append(
-                    f"{owner} {item.id} {effect.get('id')}: applied by the stat sheet ({reason})"
+        cache_key = (id(item), owner, target_kind)
+        cached = _ROTATION_EFFECTS_CACHE.get(cache_key)
+        if cached is not None and cached[0] is item:
+            _, effs_t, notes_t, w_flag = cached
+        else:
+            item_effs: list[_Effect] = []
+            item_notes: list[str] = []
+            item_weakened = False
+            if item.effect_review != "complete":
+                item_notes.append(
+                    f"{owner} {item.id}: effect review {item.effect_review}; "
+                    "effects missing from the catalog are not applied"
                 )
-                continue
-            status = effect.get("model_status")
-            if (item.id, str(effect.get("id"))) in SPECIALIZED_ITEM_EFFECTS and (
-                status == "evaluable"
-            ):
-                continue
-            components = effect.get("components") or ()
-            if status != "evaluable":
-                notes.append(f"{owner} {item.id} {effect.get('id')}: {status}, not applied")
-                weakened |= _could_apply(effect, target_kind) and any(
-                    c.get("kind") in DAMAGE_KINDS for c in components
-                )
-                continue
-            label = EVIDENCE_LABEL.get(str(effect.get("evidence_confidence")), Label.DERIVED)
-            for component in components:
-                effects.append(
-                    _Effect(
-                        item.id,
-                        str(effect.get("id")),
-                        str(effect.get("name", "")),
-                        label,
-                        str((effect.get("trigger") or {}).get("event")),
-                        tuple(
-                            str(entry.get("kind"))
-                            for entry in [
-                                *(effect.get("conditions") or ()),
-                                *(component.get("conditions") or ()),
-                            ]
-                        ),
-                        component,
-                        tuple(effect.get("limits") or ()),
-                        _every(effect),
-                        {
-                            str(entry.get("kind")): entry["value"]
-                            for entry in [
-                                *(effect.get("conditions") or ()),
-                                *(component.get("conditions") or ()),
-                            ]
-                            if "value" in entry
-                        },
-                        effect.get("scenario"),
-                        _seconds_of(component.get("duration_seconds")) or _duration(effect),
-                        (component.get("target") or effect.get("target") or {}).get("kind"),
-                        _seconds_of(effect.get("cooldown_seconds")),
-                        _refund(effect),
-                        _window(effect),
-                        _max_stacks(effect),
-                        _alternation(effect),
-                        _combo_required(effect),
-                        str(effect.get("kind", "passive")),
-                        _seconds_of(effect.get("ranged_duration_seconds")),
-                        bool(effect.get("empowers_next_attack", False)),
-                        bool(effect.get("resets_attack_timer", False)),
+                item_weakened = True
+            for effect in item.effects:
+                reason = sheet_effect_reason(effect)
+                if reason is not None:
+                    item_notes.append(
+                        f"{owner} {item.id} {effect.get('id')}: "
+                        f"applied by the stat sheet ({reason})"
                     )
-                )
+                    continue
+                status = effect.get("model_status")
+                if (item.id, str(effect.get("id"))) in SPECIALIZED_ITEM_EFFECTS and (
+                    status == "evaluable"
+                ):
+                    continue
+                components = effect.get("components") or ()
+                if status != "evaluable":
+                    item_notes.append(
+                        f"{owner} {item.id} {effect.get('id')}: {status}, not applied"
+                    )
+                    item_weakened |= _could_apply(effect, target_kind) and any(
+                        c.get("kind") in DAMAGE_KINDS for c in components
+                    )
+                    continue
+                label = EVIDENCE_LABEL.get(str(effect.get("evidence_confidence")), Label.DERIVED)
+                for component in components:
+                    item_effs.append(
+                        _Effect(
+                            item.id,
+                            str(effect.get("id")),
+                            str(effect.get("name", "")),
+                            label,
+                            str((effect.get("trigger") or {}).get("event")),
+                            tuple(
+                                str(entry.get("kind"))
+                                for entry in [
+                                    *(effect.get("conditions") or ()),
+                                    *(component.get("conditions") or ()),
+                                ]
+                            ),
+                            component,
+                            tuple(effect.get("limits") or ()),
+                            _every(effect),
+                            {
+                                str(entry.get("kind")): entry["value"]
+                                for entry in [
+                                    *(effect.get("conditions") or ()),
+                                    *(component.get("conditions") or ()),
+                                ]
+                                if "value" in entry
+                            },
+                            effect.get("scenario"),
+                            _seconds_of(component.get("duration_seconds")) or _duration(effect),
+                            (component.get("target") or effect.get("target") or {}).get("kind"),
+                            _seconds_of(effect.get("cooldown_seconds")),
+                            _refund(effect),
+                            _window(effect),
+                            _max_stacks(effect),
+                            _alternation(effect),
+                            _combo_required(effect),
+                            str(effect.get("kind", "passive")),
+                            _seconds_of(effect.get("ranged_duration_seconds")),
+                            bool(effect.get("empowers_next_attack", False)),
+                            bool(effect.get("resets_attack_timer", False)),
+                        )
+                    )
+            effs_t = tuple(item_effs)
+            notes_t = tuple(item_notes)
+            w_flag = item_weakened
+            if len(_ROTATION_EFFECTS_CACHE) >= _ROTATION_EFFECTS_CACHE_MAX:
+                _ROTATION_EFFECTS_CACHE.pop(next(iter(_ROTATION_EFFECTS_CACHE)))
+            _ROTATION_EFFECTS_CACHE[cache_key] = (item, effs_t, notes_t, w_flag)
+        effects.extend(effs_t)
+        notes.extend(notes_t)
+        weakened |= w_flag
     return effects, notes, weakened
 
 
@@ -253,15 +282,24 @@ def _formula_references_stat(formula: Any, stat_name: str) -> bool:
 def _kit_uses_move_speed(kit: Kit | None) -> bool:
     if kit is None:
         return False
+    cached = kit._uses_move_speed
+    if cached is not None:
+        return cached
+    uses = False
     for ability in kit.abilities.values():
         for case in ability.cases:
             if any(_formula_references_stat(part.formula, "move_speed") for part in case.parts):
-                return True
+                uses = True
+                break
+        if uses:
+            break
         if any(
             _formula_references_stat(pe.formula, "move_speed") for pe in ability.passive_effects
         ):
-            return True
-    return False
+            uses = True
+            break
+    object.__setattr__(kit, "_uses_move_speed", uses)
+    return uses
 
 
 def _key(effect: _Effect) -> str:
@@ -730,8 +768,12 @@ class _EffectsMixin:
     ) -> tuple[Fraction, list[Label]]:
         """The effect's formula and the labels of the attacker stats it reads."""
         try:
+            compiled = effect._compiled_formula
+            if compiled is None:
+                compiled = compile_formula(effect.component.get("formula"), ops=OBJECT_OPS)
+                object.__setattr__(effect, "_compiled_formula", compiled)
             result = evaluate_formula(
-                effect.component.get("formula"),
+                compiled,
                 self.stats,
                 holder_range=self.holder_range,
                 level=self.sheet.level,
@@ -936,7 +978,10 @@ class _EffectsMixin:
             aoe=aoe,
             hits_primary=hits_primary,
         )
-        return replace(part, healing=self._healing(part, life_steal_tag))
+        healing = self._healing(part, life_steal_tag)
+        if healing is not NO_HEALING:
+            object.__setattr__(part, "healing", healing)
+        return part
 
     def _healing(self, part: Part, tag: Mapping[str, Any] | None) -> Healing:
         """Life steal and omnivamp healing of ``part`` (life-steal-and-omnivamp.md)."""

@@ -178,19 +178,107 @@ class StatValue:
     definition: StatDef
     contributions: tuple[Contribution, ...] = ()
     blocked: str | None = None
+    _status: str = field(init=False, repr=False, compare=False)
+    _uncapped_val: Fraction | None = field(init=False, repr=False, compare=False)
+    _total_val: Fraction | None = field(init=False, repr=False, compare=False)
+    _base_val: Fraction = field(init=False, repr=False, compare=False)
+    _bonus_val: Fraction = field(init=False, repr=False, compare=False)
+    _soft_capped: bool = field(init=False, repr=False, compare=False)
+    _capped: bool = field(init=False, repr=False, compare=False)
+    _label: Label = field(init=False, repr=False, compare=False)
+
+    def __post_init__(self) -> None:
+        status = (
+            "blocked" if self.blocked else ("resolved" if self.definition.resolvable else "pending")
+        )
+        contribs = self.contributions
+        if status == "resolved":
+            if not contribs:
+                uncapped: Fraction | None = Fraction(0)
+                total_val: Fraction | None = (
+                    Fraction(0)
+                    if self.definition.soft_cap is None
+                    else self.definition.soft_cap(Fraction(0))
+                )
+                base_val = Fraction(0)
+                bonus_val = Fraction(0)
+                capped = False
+                soft_capped = total_val != 0
+                label = Label.DERIVED if soft_capped else Label.OFFICIAL
+            elif (
+                len(contribs) == 1  # pragma: no mutate
+                and self.definition.stacking is Stacking.ADDITIVE
+                and self.definition.cap is None
+                and self.definition.soft_cap is None
+            ):
+                c0 = contribs[0]
+                uncapped = c0.value
+                total_val = uncapped
+                base_val = uncapped if c0.scope == "base" else Fraction(0)
+                bonus_val = uncapped if c0.scope == "bonus" else Fraction(0)
+                capped = False
+                soft_capped = False
+                label = c0.label
+            else:
+                if self.definition.stacking is Stacking.MULTIPLICATIVE:
+                    uncapped = 1 - math.prod(
+                        (1 - item.value for item in contribs), start=Fraction(1)
+                    )
+                    base_val = Fraction(0)  # pragma: no mutate
+                    bonus_val = Fraction(0)  # pragma: no mutate
+                    labels = [item.label for item in contribs]
+                else:
+                    uncapped = Fraction(0)
+                    base_val = Fraction(0)
+                    bonus_val = Fraction(0)
+                    labels = []
+                    for item in contribs:
+                        val = item.value
+                        uncapped += val
+                        if item.scope == "base":
+                            base_val += val
+                        elif item.scope == "bonus":
+                            bonus_val += val
+                        labels.append(item.label)
+                cap = self.definition.cap
+                capped = cap is not None and uncapped > cap
+                capped_val = min(uncapped, cap) if capped else uncapped
+                soft_cap = self.definition.soft_cap
+                if soft_cap is None:
+                    total_val = capped_val
+                    soft_capped = False
+                else:
+                    total_val = soft_cap(capped_val)
+                    soft_capped = (
+                        (total_val != uncapped) if not capped else (soft_cap(uncapped) != uncapped)
+                    )
+                if soft_capped:
+                    labels.append(Label.DERIVED)  # the soft cap rule comes from secondary sources
+                label = weakest(labels)
+        else:
+            uncapped = None
+            total_val = None
+            base_val = Fraction(0)  # pragma: no mutate
+            bonus_val = Fraction(0)  # pragma: no mutate
+            soft_capped = False
+            capped = False
+            label = weakest(item.label for item in contribs)
+        object.__setattr__(self, "_status", status)
+        object.__setattr__(self, "_uncapped_val", uncapped)
+        object.__setattr__(self, "_total_val", total_val)
+        object.__setattr__(self, "_base_val", base_val)
+        object.__setattr__(self, "_bonus_val", bonus_val)
+        object.__setattr__(self, "_soft_capped", soft_capped)
+        object.__setattr__(self, "_capped", capped)
+        object.__setattr__(self, "_label", label)
 
     @property
     def status(self) -> str:
-        if self.blocked:
-            return "blocked"
-        return "resolved" if self.definition.resolvable else "pending"
+        return self._status
 
     @property
     def label(self) -> Label:
-        labels = [item.label for item in self.contributions]
-        if self.soft_capped:
-            labels.append(Label.DERIVED)  # the soft cap rule comes from secondary sources
-        return weakest(labels)
+        return self._label
 
     def _check(self) -> None:
         if self.blocked:
@@ -200,18 +288,13 @@ class StatValue:
 
     def _uncapped(self) -> Fraction:
         self._check()
-        values = [item.value for item in self.contributions]
-        if self.definition.stacking is Stacking.MULTIPLICATIVE:
-            return 1 - math.prod((1 - value for value in values), start=Fraction(1))
-        return sum(values, start=Fraction(0))
+        assert self._uncapped_val is not None
+        return self._uncapped_val
 
     def total(self) -> Fraction:
-        total = self._uncapped()
-        cap = self.definition.cap
-        if cap is not None:
-            total = min(total, cap)
-        soft_cap = self.definition.soft_cap
-        return total if soft_cap is None else soft_cap(total)
+        self._check()
+        assert self._total_val is not None
+        return self._total_val
 
     def raw(self) -> Fraction:
         """The total before any cap or soft cap."""
@@ -220,23 +303,22 @@ class StatValue:
     @property
     def soft_capped(self) -> bool:
         """Whether a soft cap changed the total."""
-        soft_cap = self.definition.soft_cap
-        if soft_cap is None or self.status != "resolved":
-            return False
-        total = self._uncapped()
-        return soft_cap(total) != total
+        return self._soft_capped
 
     @property
     def capped(self) -> bool:
         """Whether the contributions add up to more than the statistic's cap."""
-        cap = self.definition.cap
-        return cap is not None and self.status == "resolved" and self._uncapped() > cap
+        return self._capped
 
     def scoped(self, scope: str) -> Fraction:
         """Total of one scope (``base`` or ``bonus``) for additive statistics."""
         self._check()
         if self.definition.stacking is not Stacking.ADDITIVE:
             raise StatsError(f"{self.definition.id}: scopes only apply to additive stats")
+        if scope == "base":
+            return self._base_val
+        if scope == "bonus":
+            return self._bonus_val
         return sum(
             (item.value for item in self.contributions if item.scope == scope), start=Fraction(0)
         )
@@ -245,6 +327,15 @@ class StatValue:
         """Each contribution separately, for engines that stack sources themselves."""
         self._check()
         return tuple(item.value for item in self.contributions if item.value)
+
+
+_EMPTY_STAT_VALUES: dict[str, StatValue] = {
+    stat_id: StatValue(definition, (), None) for stat_id, definition in STATS.items()
+}
+_BELVETH_AS_DEF = replace(STATS["attack_speed"], cap=None)
+_ZERI_AS_DEF = replace(STATS["attack_speed"], cap=ZERI_ATTACK_SPEED_CAP)
+_BASE_SHEET_CACHE: dict[tuple[int, int], tuple[Any, ...]] = {}
+_BASE_SHEET_CACHE_MAX = 512
 
 
 @dataclass(frozen=True)
@@ -288,12 +379,62 @@ class StatSheet:
     ap_weight: Fraction | None = None
     holder_range: str | None = None
     amplifiers: tuple[StatAmplifier, ...] = ()
+    _sheet_stats_cache: tuple[dict[str, Fraction], dict[str, tuple[str, Label]]] | None = field(
+        default=None, init=False, repr=False, compare=False
+    )
+    _pen_cache: dict[Any, Any] = field(default_factory=dict, init=False, repr=False, compare=False)
 
     def __getitem__(self, stat_id: str) -> StatValue:
         try:
             return self.values[stat_id]
         except KeyError as exc:
             raise StatsError(f"unknown stat {stat_id!r}") from exc
+
+    def cached_sheet_stats(
+        self,
+    ) -> tuple[dict[str, Fraction], dict[str, tuple[str, Label]]]:
+        """Formula stat keys available from this sheet and their backing ``(stat_id, label)``.
+
+        Blocked and pending stats are absent, so a formula that needs one fails
+        instead of reading a guess.
+        """
+        if self._sheet_stats_cache is not None:
+            return self._sheet_stats_cache
+        values: dict[str, Fraction] = {}
+        origin: dict[str, tuple[str, Label]] = {}
+        zero = Fraction(0)
+        for stat_id, value in self.values.items():
+            if value._status != "resolved":
+                continue
+            if not value.contributions and value.definition.soft_cap is None:
+                orig = (stat_id, Label.OFFICIAL)
+                values[stat_id] = zero
+                origin[stat_id] = orig
+                if value.definition.stacking is Stacking.ADDITIVE:
+                    values[f"base_{stat_id}"] = zero
+                    values[f"bonus_{stat_id}"] = zero
+                    origin[f"base_{stat_id}"] = orig
+                    origin[f"bonus_{stat_id}"] = orig
+                continue
+            total_val = value._total_val
+            assert total_val is not None
+            lbl = value._label
+            orig = (stat_id, lbl)
+            values[stat_id] = total_val
+            origin[stat_id] = orig
+            if value.definition.stacking is Stacking.ADDITIVE:
+                base_val = value._base_val
+                values[f"base_{stat_id}"] = base_val
+                origin[f"base_{stat_id}"] = orig
+                if value.definition.soft_cap is not None:
+                    # Effective bonus after soft caps (e.g. Janna Tailwind/Zephyr, Hecarim Warpath).
+                    values[f"bonus_{stat_id}"] = max(zero, total_val - base_val)
+                else:
+                    values[f"bonus_{stat_id}"] = value._bonus_val
+                origin[f"bonus_{stat_id}"] = orig
+        result = (values, origin)
+        object.__setattr__(self, "_sheet_stats_cache", result)
+        return result
 
 
 def _ungrouped_tenacity(extra: Contribution) -> Contribution:
@@ -494,6 +635,29 @@ def effect_amount(stat_id: str, value: Fraction) -> Fraction:
     return value / 100 if _receiver(stat_id).unit is Unit.FRACTION else value
 
 
+def _with_sheet_values(
+    sheet: StatSheet,
+    values: dict[str, StatValue],
+    move_speed_percents: tuple[Contribution, ...] | None = None,
+) -> StatSheet:
+    return StatSheet(
+        sheet.champion,
+        sheet.level,
+        sheet.items,
+        sheet.assumptions,
+        values,
+        sheet.notes,
+        sheet.attack_speed_ratio,
+        sheet.pending_effects,
+        sheet.move_speed_percents if move_speed_percents is None else move_speed_percents,
+        sheet.move_speed_bonus_amp,
+        sheet.post_ms_effects,
+        sheet.ap_weight,
+        sheet.holder_range,
+        sheet.amplifiers,
+    )
+
+
 def _recompute_move_speed(
     sheet: StatSheet,
     *,
@@ -515,7 +679,8 @@ def _recompute_move_speed(
         sheet.move_speed_bonus_amp,
     )
     values = dict(sheet.values)
-    ms_value = replace(sheet["move_speed"], contributions=tuple(resolved_ms))
+    old_ms = sheet["move_speed"]
+    ms_value = StatValue(old_ms.definition, tuple(resolved_ms), old_ms.blocked)
     values["move_speed"] = ms_value
 
     if sheet.champion.id == "Hecarim" or sheet.post_ms_effects:
@@ -551,8 +716,9 @@ def _recompute_move_speed(
             for amp in amps:
                 contrib_map[stat_id].append(_amplified(amp, ref))
         for stat_id, items_list in contrib_map.items():
-            values[stat_id] = replace(values[stat_id], contributions=tuple(items_list))
-    return replace(sheet, values=values, move_speed_percents=tuple(raw_percents))
+            old_val = values[stat_id]
+            values[stat_id] = StatValue(old_val.definition, tuple(items_list), old_val.blocked)
+    return _with_sheet_values(sheet, values, move_speed_percents=tuple(raw_percents))
 
 
 def _added(sheet: StatSheet, stat_id: str, contribution: Contribution) -> StatSheet:
@@ -570,10 +736,11 @@ def _added(sheet: StatSheet, stat_id: str, contribution: Contribution) -> StatSh
             raise StatsError(f"{definition.id}: {contribution.value} is not a fraction 0..1")
     value = sheet[definition.id]
     values = dict(sheet.values)
-    values[definition.id] = replace(value, contributions=(*value.contributions, contribution))
+    new_val = StatValue(value.definition, (*value.contributions, contribution), value.blocked)
+    values[definition.id] = new_val
     if speed:
-        values["attack_speed"] = _rescaled(sheet, values[definition.id].contributions)
-    return replace(sheet, values=values)
+        values["attack_speed"] = _rescaled(sheet, new_val.contributions)
+    return _with_sheet_values(sheet, values)
 
 
 def _rescaled(sheet: StatSheet, bonus: Sequence[Contribution]) -> StatValue:
@@ -585,7 +752,9 @@ def _rescaled(sheet: StatSheet, bonus: Sequence[Contribution]) -> StatValue:
     if isinstance(scaled, str):
         raise StatsError(f"attack_speed: {scaled}")
     kept = tuple(item for item in current.contributions if not item.scaled)
-    return replace(current, contributions=kept if scaled is None else (*kept, scaled))
+    return StatValue(
+        current.definition, kept if scaled is None else (*kept, scaled), current.blocked
+    )
 
 
 def with_bonus(
@@ -1284,9 +1453,19 @@ def build_stat_sheet(
     holds the level growth and every item or extra declared as attack speed;
     the ratio comes from the derived records (see attack-speed.md).
     """
+
+    def _stat_def(stat_id: str) -> StatDef:
+        if stat_id == "attack_speed":
+            if champion.id == "Belveth":
+                return _BELVETH_AS_DEF
+            if champion.id == "Zeri":
+                return _ZERI_AS_DEF
+        return STATS[stat_id]
+
     check_level(level)
     applicable = [issue for issue in issues if issue.applies_to(champion.id, champion.patch)]
-    assumed = _parse_assumptions(assumptions or {}, applicable)
+    applicable_tuple = tuple(applicable)
+    assumed = _parse_assumptions(assumptions, applicable) if assumptions else {}
     issue_by_field = {issue.field: issue for issue in applicable}
     for item in items:
         if item.game_version != champion.patch:
@@ -1294,88 +1473,154 @@ def build_stat_sheet(
                 f"item {item.id} is from {item.game_version}, the champion from {champion.patch}"
             )
 
-    contributions: dict[str, list[Contribution]] = {stat_id: [] for stat_id in STATS}
     percents: dict[str, list[Contribution]] = {}
     amplifiers: list[StatAmplifier] = []
-    blocked: dict[str, str] = {}
     notes: list[str] = []
     extra_pending: list[str] = list(pending_effects)
     items = _resolve_tear_transforms(items, inputs, notes)
-    mana_resource = MANA_RESOURCE.get(champion.locale)
-    if mana_resource is None:
-        raise StatsError(f"snapshot locale {champion.locale!r} has no known name for mana")
-    uses_mana = champion.resource == mana_resource
 
-    multiplier = growth_multiplier(level)
-    for stat_id, base_field, growth_field in CHAMPION_FIELDS:
-        if stat_id in MANA_STATS and not uses_mana:
-            blocked[stat_id] = (
-                f"the champion's resource is {champion.resource!r}; only mana is modelled"
-            )
-            continue
-        if base_field not in champion.stats:
-            raise StatsError(f"{champion.id}: stats.{base_field} is missing")
-        contributions[stat_id].append(
-            Contribution(
-                champion.stats[base_field], "base", _source(champion, base_field), Label.OFFICIAL
-            )
-        )
-        if growth_field is None or level == 1:
-            continue
-        if growth_field not in champion.stats:
-            raise StatsError(f"{champion.id}: stats.{growth_field} is missing")
-        issue = issue_by_field.get(growth_field)
-        derived_value = derived.value(champion.id, growth_field) if derived else None
-        note = f"growth to level {level}"
-        if issue is not None and growth_field in assumed:
-            growth = assumed[growth_field]
-            source = f"assumption {growth_field}={growth} ({issue.id})"
-            label = Label.PENDING
-        elif issue is not None and derived is not None and derived_value is not None:
-            growth = derived_value
-            source = f"{derived.path} {champion.id}.{growth_field} ({derived.content_version})"
-            if derived.matches_patch(champion.patch):
-                label = Label.DERIVED
-            else:
-                label = Label.PENDING
-                note += (
-                    f"; client {derived.game_version} record used with snapshot {champion.patch}"
-                )
-        elif issue is not None:
-            blocked[stat_id] = (
-                f"{issue.id}: {issue.summary} No derived record for {champion.id}; "
-                f"use --assume {growth_field}=<value> (see {issue.documentation})"
-            )
-            continue
-        else:
-            growth = champion.stats[growth_field]
-            source = _source(champion, growth_field)
-            label = Label.DERIVED if growth else Label.OFFICIAL
-        contributions[stat_id].append(
-            Contribution(growth * multiplier, "base", source, label, note)
-        )
-    if level > 1:
-        if champion.id == "Jhin":
-            if ATTACK_SPEED_GROWTH not in champion.stats:
-                raise StatsError(f"{champion.id}: stats.{ATTACK_SPEED_GROWTH} is missing")
-            contributions["attack_speed"].append(
-                Contribution(
-                    champion.stats["attackspeed"] * JHIN_FIXED_AS_GROWTH * multiplier,
-                    "base",
-                    f"{ATTACK_SPEED_RULES} (Jhin passive)",
-                    Label.DERIVED,
-                    f"Whisper fixed attack speed growth to level {level}",
-                )
-            )
-        else:
-            contributions["attack_speed_bonus"].append(
-                _attack_speed_growth(champion, level, multiplier)
-            )
-    crit_base = _crit_chance_base(champion)
-    if isinstance(crit_base, str):
-        blocked["crit_chance"] = crit_base
+    base_cache_key = (id(champion), level)
+    base_cache_entry = _BASE_SHEET_CACHE.get(base_cache_key) if not assumed else None
+    if (
+        base_cache_entry is not None
+        and base_cache_entry[0] is champion
+        and base_cache_entry[1] is derived
+        and base_cache_entry[2] == applicable_tuple
+    ):
+        (
+            _,
+            _,
+            _,
+            base_contribs,
+            base_blocked,
+            ratio,
+            ap_weight,
+            uses_mana,
+            champ_range,
+            base_stat_values,
+        ) = base_cache_entry
+        contributions: dict[str, list[Contribution]] = {
+            sid: list(cs) for sid, cs in base_contribs.items()
+        }
+        blocked: dict[str, str] = dict(base_blocked)
     else:
-        contributions["crit_chance"].append(crit_base)
+        mana_resource = MANA_RESOURCE.get(champion.locale)
+        if mana_resource is None:
+            raise StatsError(f"snapshot locale {champion.locale!r} has no known name for mana")
+        uses_mana = champion.resource == mana_resource
+        contributions = {stat_id: [] for stat_id in STATS}
+        blocked = {}
+
+        multiplier = growth_multiplier(level)
+        for stat_id, base_field, growth_field in CHAMPION_FIELDS:
+            if stat_id in MANA_STATS and not uses_mana:
+                blocked[stat_id] = (
+                    f"the champion's resource is {champion.resource!r}; only mana is modelled"
+                )
+                continue
+            if base_field not in champion.stats:
+                raise StatsError(f"{champion.id}: stats.{base_field} is missing")
+            contributions[stat_id].append(
+                Contribution(
+                    champion.stats[base_field],
+                    "base",
+                    _source(champion, base_field),
+                    Label.OFFICIAL,
+                )
+            )
+            if growth_field is None or level == 1:
+                continue
+            if growth_field not in champion.stats:
+                raise StatsError(f"{champion.id}: stats.{growth_field} is missing")
+            issue = issue_by_field.get(growth_field)
+            derived_value = derived.value(champion.id, growth_field) if derived else None
+            note = f"growth to level {level}"
+            if issue is not None and growth_field in assumed:
+                growth = assumed[growth_field]
+                source = f"assumption {growth_field}={growth} ({issue.id})"
+                label = Label.PENDING
+            elif issue is not None and derived is not None and derived_value is not None:
+                growth = derived_value
+                source = f"{derived.path} {champion.id}.{growth_field} ({derived.content_version})"
+                if derived.matches_patch(champion.patch):
+                    label = Label.DERIVED
+                else:
+                    label = Label.PENDING
+                    note += (
+                        f"; client {derived.game_version} record used with snapshot "
+                        f"{champion.patch}"
+                    )
+            elif issue is not None:
+                blocked[stat_id] = (
+                    f"{issue.id}: {issue.summary} No derived record for {champion.id}; "
+                    f"use --assume {growth_field}=<value> (see {issue.documentation})"
+                )
+                continue
+            else:
+                growth = champion.stats[growth_field]
+                source = _source(champion, growth_field)
+                label = Label.DERIVED if growth else Label.OFFICIAL
+            contributions[stat_id].append(
+                Contribution(growth * multiplier, "base", source, label, note)
+            )
+        if level > 1:
+            if champion.id == "Jhin":
+                if ATTACK_SPEED_GROWTH not in champion.stats:
+                    raise StatsError(f"{champion.id}: stats.{ATTACK_SPEED_GROWTH} is missing")
+                contributions["attack_speed"].append(
+                    Contribution(
+                        champion.stats["attackspeed"] * JHIN_FIXED_AS_GROWTH * multiplier,
+                        "base",
+                        f"{ATTACK_SPEED_RULES} (Jhin passive)",
+                        Label.DERIVED,
+                        f"Whisper fixed attack speed growth to level {level}",
+                    )
+                )
+            else:
+                contributions["attack_speed_bonus"].append(
+                    _attack_speed_growth(champion, level, multiplier)
+                )
+        crit_base = _crit_chance_base(champion)
+        if isinstance(crit_base, str):
+            blocked["crit_chance"] = crit_base
+        else:
+            contributions["crit_chance"].append(crit_base)
+
+        ratio = _attack_speed_ratio(champion, derived)
+        ap_weight = derived.value(champion.id, "adaptiveforceapweight") if derived else None
+        atk_range = champion.stats.get("attackrange")
+        champ_range = None if atk_range is None else ("melee" if atk_range < 300 else "ranged")
+
+        base_contribs = {sid: tuple(cs) for sid, cs in contributions.items()}
+        base_blocked = dict(blocked)
+        base_stat_values: dict[str, StatValue] = {}
+        for stat_id in STATS:
+            c_tup = base_contribs[stat_id]
+            blk = base_blocked.get(stat_id)
+            if (
+                not c_tup
+                and blk is None
+                and stat_id in _EMPTY_STAT_VALUES
+                and not (stat_id == "attack_speed" and champion.id in {"Belveth", "Zeri"})
+            ):
+                base_stat_values[stat_id] = _EMPTY_STAT_VALUES[stat_id]
+            else:
+                base_stat_values[stat_id] = StatValue(_stat_def(stat_id), c_tup, blk)
+        if not assumed:
+            if len(_BASE_SHEET_CACHE) >= _BASE_SHEET_CACHE_MAX:
+                _BASE_SHEET_CACHE.pop(next(iter(_BASE_SHEET_CACHE)))
+            _BASE_SHEET_CACHE[base_cache_key] = (
+                champion,
+                derived,
+                applicable_tuple,
+                base_contribs,
+                base_blocked,
+                ratio,
+                ap_weight,
+                uses_mana,
+                champ_range,
+                base_stat_values,
+            )
 
     for item in items:
         for entry in item.stats:
@@ -1428,9 +1673,6 @@ def build_stat_sheet(
             )
         amplifiers.append(replace(extra_amp, stat=definition.id))
 
-    atk_range = champion.stats.get("attackrange")
-    champ_range = None if atk_range is None else ("melee" if atk_range < 300 else "ranged")
-
     _apply_item_input_and_consumable_stats(
         items,
         level,
@@ -1444,51 +1686,55 @@ def build_stat_sheet(
         extra_pending,
     )
 
-    # Build the resolved stat environment after flat item stats and extras so
-    # stat-from-stat conversion passives (Sterak, Overlord's, Riftmaker, Tear items, Dawncore)
-    # can read base_*, bonus_* and total stats before amplifiers (Rabadon) run.
-    stat_env: dict[str, Fraction] = {}
-    label_env: dict[str, Label] = {}
-    for stat_id, items_list in contributions.items():
-        if stat_id in blocked:
-            if stat_id == "mana" and champion.resource != MANA_RESOURCE.get(champion.locale):
-                stat_env["mana"] = Fraction(0)
-                stat_env["base_mana"] = Fraction(0)
-                stat_env["bonus_mana"] = Fraction(0)
-                label_env["mana"] = Label.OFFICIAL
-                label_env["base_mana"] = Label.OFFICIAL
-                label_env["bonus_mana"] = Label.OFFICIAL
-            continue
-        base_items = [c for c in items_list if c.scope == "base"]
-        bonus_items = [c for c in items_list if c.scope == "bonus"]
-        stat_env[stat_id] = sum((c.value for c in items_list), start=Fraction(0))
-        label_env[stat_id] = weakest(c.label for c in items_list)
-        if base_items:
-            stat_env[f"base_{stat_id}"] = sum((c.value for c in base_items), start=Fraction(0))
-            label_env[f"base_{stat_id}"] = weakest(c.label for c in base_items)
-        else:
-            stat_env[f"base_{stat_id}"] = Fraction(0)
-            label_env[f"base_{stat_id}"] = Label.OFFICIAL
-        stat_env[f"bonus_{stat_id}"] = sum((c.value for c in bonus_items), start=Fraction(0))
-        label_env[f"bonus_{stat_id}"] = weakest(c.label for c in bonus_items)
-
-    mr_percents = percents.get("mana_regen", ())
-    stat_env["bonus_mana_regen_percent"] = (
-        sum((c.value for c in mr_percents), start=Fraction(0)) * 100
+    has_sheet_effects = any(
+        sheet_effect_reason(effect) is not None for item in items for effect in item.effects
     )
-    label_env["bonus_mana_regen_percent"] = (
-        weakest(c.label for c in mr_percents) if mr_percents else Label.OFFICIAL
-    )
-
     post_ms_effects: list[PostMsEffect] = []
-    for item in items:
-        effect_stats, item_amplifiers, item_post_ms = _sheet_effects(
-            item, level, stat_env, label_env, blocked, holder_range=champ_range
+    if has_sheet_effects:
+        # Build the resolved stat environment after flat item stats and extras so
+        # stat-from-stat conversion passives (Sterak, Overlord's, Riftmaker, Tear items, Dawncore)
+        # can read base_*, bonus_* and total stats before amplifiers (Rabadon) run.
+        stat_env: dict[str, Fraction] = {}
+        label_env: dict[str, Label] = {}
+        for stat_id, items_list in contributions.items():
+            if stat_id in blocked:
+                if stat_id == "mana" and champion.resource != MANA_RESOURCE.get(champion.locale):
+                    stat_env["mana"] = Fraction(0)
+                    stat_env["base_mana"] = Fraction(0)
+                    stat_env["bonus_mana"] = Fraction(0)
+                    label_env["mana"] = Label.OFFICIAL
+                    label_env["base_mana"] = Label.OFFICIAL
+                    label_env["bonus_mana"] = Label.OFFICIAL
+                continue
+            base_items = [c for c in items_list if c.scope == "base"]
+            bonus_items = [c for c in items_list if c.scope == "bonus"]
+            stat_env[stat_id] = sum((c.value for c in items_list), start=Fraction(0))
+            label_env[stat_id] = weakest(c.label for c in items_list)
+            if base_items:
+                stat_env[f"base_{stat_id}"] = sum((c.value for c in base_items), start=Fraction(0))
+                label_env[f"base_{stat_id}"] = weakest(c.label for c in base_items)
+            else:
+                stat_env[f"base_{stat_id}"] = Fraction(0)
+                label_env[f"base_{stat_id}"] = Label.OFFICIAL
+            stat_env[f"bonus_{stat_id}"] = sum((c.value for c in bonus_items), start=Fraction(0))
+            label_env[f"bonus_{stat_id}"] = weakest(c.label for c in bonus_items)
+
+        mr_percents = percents.get("mana_regen", ())
+        stat_env["bonus_mana_regen_percent"] = (
+            sum((c.value for c in mr_percents), start=Fraction(0)) * 100
         )
-        for stat_id, contribution in effect_stats:
-            contributions[stat_id].append(contribution)
-        amplifiers += item_amplifiers
-        post_ms_effects += item_post_ms
+        label_env["bonus_mana_regen_percent"] = (
+            weakest(c.label for c in mr_percents) if mr_percents else Label.OFFICIAL
+        )
+
+        for item in items:
+            effect_stats, item_amplifiers, item_post_ms = _sheet_effects(
+                item, level, stat_env, label_env, blocked, holder_range=champ_range
+            )
+            for stat_id, contribution in effect_stats:
+                contributions[stat_id].append(contribution)
+            amplifiers += item_amplifiers
+            post_ms_effects += item_post_ms
 
     # Move speed: apply Cassiopeia/Celerity amps and additive % before soft-cap conversions.
     raw_ms_percents = tuple(percents.pop("move_speed", ()))
@@ -1507,7 +1753,6 @@ def build_stat_sheet(
             _percent_amount(STATS[stat_id], percent, reference) for percent in pending
         ]
 
-    ratio = _attack_speed_ratio(champion, derived)
     scaled = _scaled_attack_speed(champion, contributions["attack_speed_bonus"], ratio)
     if isinstance(scaled, str):
         blocked["attack_speed"] = scaled
@@ -1543,10 +1788,16 @@ def build_stat_sheet(
         else:
             _crit_chance_passive(champion, contributions)
 
-    ap_weight = derived.value(champion.id, "adaptiveforceapweight") if derived else None
-    ms_value = StatValue(
-        STATS["move_speed"], tuple(contributions["move_speed"]), blocked.get("move_speed")
-    )
+    ms_contribs = contributions["move_speed"]
+    ms_blk = blocked.get("move_speed")
+    if (
+        ms_blk == base_blocked.get("move_speed")
+        and len(ms_contribs) == len(base_contribs["move_speed"])
+        and all(a is b for a, b in zip(ms_contribs, base_contribs["move_speed"], strict=True))
+    ):
+        ms_value = base_stat_values["move_speed"]
+    else:
+        ms_value = StatValue(STATS["move_speed"], tuple(ms_contribs), ms_blk)
     _apply_ms_conversions(
         champion.id,
         level,
@@ -1770,19 +2021,27 @@ def build_stat_sheet(
     notes += list(extra_notes)
     notes += list(extra_pending)
 
-    def _stat_def(stat_id: str) -> StatDef:
-        definition = STATS[stat_id]
-        if stat_id == "attack_speed":
-            if champion.id == "Belveth":
-                return replace(definition, cap=None)
-            if champion.id == "Zeri":
-                return replace(definition, cap=ZERI_ATTACK_SPEED_CAP)
-        return definition
-
-    values = {
-        stat_id: StatValue(_stat_def(stat_id), tuple(contributions[stat_id]), blocked.get(stat_id))
-        for stat_id in STATS
-    }
+    values: dict[str, StatValue] = {}
+    for stat_id in STATS:
+        contribs = contributions[stat_id]
+        blk = blocked.get(stat_id)
+        base_c = base_contribs.get(stat_id, ())
+        if (
+            stat_id in base_stat_values
+            and blk == base_blocked.get(stat_id)
+            and len(contribs) == len(base_c)
+            and all(a is b for a, b in zip(contribs, base_c, strict=True))
+        ):
+            values[stat_id] = base_stat_values[stat_id]
+        elif (
+            not contribs
+            and blk is None
+            and stat_id in _EMPTY_STAT_VALUES
+            and not (stat_id == "attack_speed" and champion.id in {"Belveth", "Zeri"})
+        ):
+            values[stat_id] = _EMPTY_STAT_VALUES[stat_id]
+        else:
+            values[stat_id] = StatValue(_stat_def(stat_id), tuple(contribs), blk)
     return StatSheet(
         champion,
         level,

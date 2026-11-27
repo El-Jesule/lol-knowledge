@@ -234,7 +234,7 @@ def _stat_key(stat: str, scope: str) -> str:
     return f"{scope}_{stat}"
 
 
-@dataclass(frozen=True)
+@dataclass(frozen=True, slots=True)
 class _Context:
     stats: Mapping[str, Any]
     target_stats: Mapping[str, Any] | None
@@ -244,74 +244,251 @@ class _Context:
     inputs: Mapping[str, Any]
 
 
-def _read_stat(formula: Mapping[str, Any], ctx: _Context) -> tuple[Fraction, str]:
-    key = _stat_key(str(formula["stat"]), str(formula["scope"]))
-    source = ctx.stats
-    label = key
-    if ctx.target_stats is not None and formula.get("subject") == "target":
+class CompiledFormula:
+    """Pre-validated and compiled formula tree ready for repeated evaluation."""
+
+    __slots__ = ("node", "ops")
+
+    def __init__(self, node: Any, ops: frozenset[str]) -> None:
+        self.node = node
+        self.ops = ops
+
+
+class _ConstNode:
+    __slots__ = ("value",)
+
+    def __init__(self, value: Fraction) -> None:
+        self.value = value
+
+
+class _StatNode:
+    __slots__ = ("key", "target_label", "is_target", "raw")
+
+    def __init__(self, key: str, target_label: str, is_target: bool, raw: Any) -> None:
+        self.key = key
+        self.target_label = target_label
+        self.is_target = is_target
+        self.raw = raw
+
+
+class _PercentOfNode:
+    __slots__ = ("key", "target_label", "is_target", "factor", "raw")
+
+    def __init__(
+        self, key: str, target_label: str, is_target: bool, factor: Fraction, raw: Any
+    ) -> None:
+        self.key = key
+        self.target_label = target_label
+        self.is_target = is_target
+        self.factor = factor
+        self.raw = raw
+
+
+class _ByRankNode:
+    __slots__ = ("values", "raw")
+
+    def __init__(self, values: tuple[Fraction, ...], raw: Any) -> None:
+        self.values = values
+        self.raw = raw
+
+
+class _ByLevelNode:
+    __slots__ = ("values", "raw")
+
+    def __init__(self, values: tuple[Fraction, ...], raw: Any) -> None:
+        self.values = values
+        self.raw = raw
+
+
+class _LinearByLevelNode:
+    __slots__ = ("low", "step", "raw")
+
+    def __init__(self, low: Fraction, step: Fraction, raw: Any) -> None:
+        self.low = low
+        self.step = step
+        self.raw = raw
+
+
+class _InputNode:
+    __slots__ = ("name", "dep", "has_default", "default_val", "raw")
+
+    def __init__(
+        self,
+        name: str,
+        dep: str,
+        has_default: bool,
+        default_val: Fraction | None,
+        raw: Any,
+    ) -> None:
+        self.name = name
+        self.dep = dep
+        self.has_default = has_default
+        self.default_val = default_val
+        self.raw = raw
+
+
+class _AggNode:
+    __slots__ = ("op", "children")
+
+    def __init__(self, op: str, children: tuple[Any, ...]) -> None:
+        self.op = op
+        self.children = children
+
+
+class _ByRangeNode:
+    __slots__ = ("melee", "ranged", "raw")
+
+    def __init__(self, melee: Any, ranged: Any, raw: Any) -> None:
+        self.melee = melee
+        self.ranged = ranged
+        self.raw = raw
+
+
+class _ErrorNode:
+    __slots__ = ("message", "code", "raw")
+
+    def __init__(self, message: str, code: str, raw: Any) -> None:
+        self.message = message
+        self.code = code
+        self.raw = raw
+
+
+def _freeze_formula(node: Any) -> Any:
+    """Return a hashable structural key for a formula tree without type collisions."""
+    node_type = type(node)
+    if node_type is dict:
+        return tuple(sorted((k, _freeze_formula(v)) for k, v in node.items()))
+    if node_type is list or node_type is tuple:
+        return tuple(_freeze_formula(item) for item in node)
+    if node_type in (str, int, float, Fraction, bool, type(None)):
+        return (node_type, node)
+    if isinstance(node, Mapping):
+        return tuple(sorted((k, _freeze_formula(v)) for k, v in node.items()))
+    if isinstance(node, Sequence) and not isinstance(node, (str, bytes, bytearray)):
+        return tuple(_freeze_formula(item) for item in node)
+    return (node_type, node)
+
+
+def _compile_node(formula: Mapping[str, Any]) -> Any:
+    operation = formula["op"]
+    if operation == "constant":
+        return _ConstNode(_exact(formula["value"]))
+    if operation == "stat":
+        key = _stat_key(str(formula["stat"]), str(formula["scope"]))
+        return _StatNode(key, f"target:{key}", formula.get("subject") == "target", formula)
+    if operation == "percent_of":
+        key = _stat_key(str(formula["stat"]), str(formula["scope"]))
+        factor = _exact(formula["percent"]) / 100
+        return _PercentOfNode(
+            key, f"target:{key}", formula.get("subject") == "target", factor, formula
+        )
+    if operation == "by_rank":
+        return _ByRankNode(tuple(_exact(v) for v in formula["values"]), formula)
+    if operation == "by_level":
+        return _ByLevelNode(tuple(_exact(v) for v in formula["values"]), formula)
+    if operation == "linear_by_level":
+        low = _exact(formula["min"])
+        step = (_exact(formula["max"]) - low) / 17
+        return _LinearByLevelNode(low, step, formula)
+    if operation == "input":
+        name = str(formula["name"])
+        has_default = "default" in formula
+        default_val = _exact(formula["default"]) if has_default else None
+        return _InputNode(name, f"input:{name}", has_default, default_val, formula)
+    if operation in {"add", "mul", "min"}:
+        children = tuple(_compile_node(operand) for operand in formula["operands"])
+        return _AggNode(operation, children)
+    if operation == "by_holder_range":
+        return _ByRangeNode(
+            _compile_node(formula["melee"]),
+            _compile_node(formula["ranged"]),
+            formula,
+        )
+    if operation == "unknown":
+        return _ErrorNode(str(formula.get("reason") or "unknown input"), "unknown_input", formula)
+    if operation == "unsupported":
+        return _ErrorNode(
+            str(formula.get("reason") or "unsupported mechanic"),
+            "unsupported_formula",
+            formula,
+        )
+    raise FormulaError(
+        f"unsupported formula op {operation!r}", code="unsupported_operation", node=formula
+    )
+
+
+_COMPILED_CACHE_MAXSIZE = 8192
+_COMPILED_CACHE: dict[tuple[Any, frozenset[str]], Any] = {}
+
+
+def _get_compiled(formula: Any, ops: frozenset[str]) -> Any:
+    try:
+        key = (_freeze_formula(formula), ops)
+        compiled = _COMPILED_CACHE.get(key)
+    except TypeError:
+        issues = formula_issues(formula, ops=ops)
+        if issues:
+            raise FormulaError("; ".join(issues), code="malformed_formula", node=formula) from None
+        return _compile_node(formula)
+    if compiled is not None:
+        return compiled
+    issues = formula_issues(formula, ops=ops)
+    if issues:
+        raise FormulaError("; ".join(issues), code="malformed_formula", node=formula)
+    compiled = _compile_node(formula)
+    if len(_COMPILED_CACHE) >= _COMPILED_CACHE_MAXSIZE:
+        _COMPILED_CACHE.pop(next(iter(_COMPILED_CACHE)))
+    _COMPILED_CACHE[key] = compiled
+    return compiled
+
+
+def _read_stat_compiled(node: _StatNode | _PercentOfNode, ctx: _Context) -> tuple[Fraction, str]:
+    if ctx.target_stats is not None and node.is_target:
         source = ctx.target_stats
-        label = f"target:{key}"
-    value = source.get(key)
+        label = node.target_label
+    else:
+        source = ctx.stats
+        label = node.key
+    value = source.get(node.key)
+    if type(value) is Fraction:
+        return value, label
     if not _is_number(value):
-        raise FormulaError(f"missing stat {label!r}", code="missing_stat", node=formula)
+        raise FormulaError(f"missing stat {label!r}", code="missing_stat", node=node.raw)
     return _exact(value), label
 
 
-def _pick(values: Sequence[Any], index: int | None, what: str, formula: Any) -> Fraction:
+def _pick_compiled(
+    values: tuple[Fraction, ...], index: int | None, what: str, raw: Any
+) -> Fraction:
     if index is None:
-        raise FormulaError(
-            f"formula needs an explicit {what}", code=f"missing_{what}", node=formula
-        )
+        raise FormulaError(f"formula needs an explicit {what}", code=f"missing_{what}", node=raw)
     if isinstance(index, bool) or not isinstance(index, int) or not 1 <= index <= len(values):
         raise FormulaError(
             f"{what} {index!r} is outside 1..{len(values)}",
             code=f"{what}_out_of_range",
-            node=formula,
+            node=raw,
         )
-    return _exact(values[index - 1])
+    return values[index - 1]
 
 
-def _evaluate(formula: Any, ctx: _Context, depth: int) -> tuple[Fraction, list[str]]:
-    if depth > MAX_FORMULA_DEPTH:
-        raise FormulaError(
-            f"formula is deeper than {MAX_FORMULA_DEPTH} levels",
-            code="depth_exceeded",
-            node=formula,
-        )
-    if not isinstance(formula, Mapping):
-        raise FormulaError("formula must be an object", code="malformed_formula", node=formula)
-    operation = formula.get("op")
-    if operation == "constant":
-        value = formula.get("value")
-        if not _is_number(value):
-            raise FormulaError(
-                "constant formula has no finite value", code="malformed_formula", node=formula
-            )
-        return _exact(value), []
-    if operation == "stat":
-        if not isinstance(formula.get("stat"), str) or not isinstance(formula.get("scope"), str):
-            raise FormulaError("stat formula is incomplete", code="malformed_formula", node=formula)
-        value, label = _read_stat(formula, ctx)
+def _eval_compiled(node: Any, ctx: _Context) -> tuple[Fraction, list[str]]:
+    ntype = type(node)
+    if ntype is _ConstNode:
+        return node.value, []
+    if ntype is _StatNode:
+        value, label = _read_stat_compiled(node, ctx)
         return value, [label]
-    if operation == "percent_of":
-        problems = _stat_issues(formula)
-        percent = formula.get("percent")
-        if problems or not _is_number(percent):
-            raise FormulaError(
-                "; ".join(problems) or "percent_of needs a finite percent",
-                code="malformed_formula",
-                node=formula,
-            )
-        value, label = _read_stat(formula, ctx)
-        return value * _exact(percent) / 100, [label]
-    if operation == "by_rank":
-        return _pick(formula["values"], ctx.rank, "rank", formula), ["rank"]
-    if operation == "by_level":
-        return _pick(formula["values"], ctx.level, "level", formula), ["level"]
-    if operation == "linear_by_level":
+    if ntype is _PercentOfNode:
+        value, label = _read_stat_compiled(node, ctx)
+        return value * node.factor, [label]
+    if ntype is _ByRankNode:
+        return _pick_compiled(node.values, ctx.rank, "rank", node.raw), ["rank"]
+    if ntype is _ByLevelNode:
+        return _pick_compiled(node.values, ctx.level, "level", node.raw), ["level"]
+    if ntype is _LinearByLevelNode:
         if ctx.level is None:
             raise FormulaError(
-                "formula needs an explicit level", code="missing_level", node=formula
+                "formula needs an explicit level", code="missing_level", node=node.raw
             )
         if (
             isinstance(ctx.level, bool)
@@ -321,64 +498,60 @@ def _evaluate(formula: Any, ctx: _Context, depth: int) -> tuple[Fraction, list[s
             raise FormulaError(
                 f"level {ctx.level!r} is outside 1..18",
                 code="level_out_of_range",
-                node=formula,
+                node=node.raw,
             )
-        low, high = _exact(formula["min"]), _exact(formula["max"])
-        return low + (high - low) * Fraction(ctx.level - 1, 17), ["level"]
-    if operation == "input":
-        name = formula.get("name")
-        value = ctx.inputs.get(name)
-        if value is None and "default" in formula:
-            value = formula.get("default")
+        return node.low + node.step * (ctx.level - 1), ["level"]
+    if ntype is _InputNode:
+        value = ctx.inputs.get(node.name)
+        if value is None:
+            if node.has_default:
+                assert node.default_val is not None
+                return node.default_val, [node.dep]
+            raise FormulaError(f"missing input {node.name!r}", code="missing_input", node=node.raw)
+        if type(value) is Fraction:
+            return value, [node.dep]
         if not _is_number(value):
-            raise FormulaError(f"missing input {name!r}", code="missing_input", node=formula)
-        return _exact(value), [f"input:{name}"]
-    if operation in {"add", "mul", "min"}:
-        operands = formula.get("operands")
-        if not isinstance(operands, Sequence) or isinstance(operands, (str, bytes)) or not operands:
-            raise FormulaError(
-                f"{operation} formula needs operands", code="malformed_formula", node=formula
-            )
+            raise FormulaError(f"missing input {node.name!r}", code="missing_input", node=node.raw)
+        return _exact(value), [node.dep]
+    if ntype is _AggNode:
         dependencies: list[str] = []
         values: list[Fraction] = []
-        for operand in operands:
-            value, child = _evaluate(operand, ctx, depth + 1)
+        for child_node in node.children:
+            value, child = _eval_compiled(child_node, ctx)
             values.append(value)
-            dependencies.extend(item for item in child if item not in dependencies)
-        if operation == "add":
+            for item in child:
+                if item not in dependencies:
+                    dependencies.append(item)
+        if node.op == "add":
             return sum(values, start=Fraction(0)), dependencies
-        if operation == "min":
+        if node.op == "min":
             return min(values), dependencies
         return math.prod(values, start=Fraction(1)), dependencies
-    if operation == "by_holder_range":
-        if ctx.holder_range not in {"melee", "ranged"}:
+    if ntype is _ByRangeNode:
+        if ctx.holder_range == "melee":
+            branch = node.melee
+        elif ctx.holder_range == "ranged":
+            branch = node.ranged
+        else:
             raise FormulaError(
                 "by_holder_range needs an explicit melee or ranged holder",
                 code="missing_holder_range",
-                node=formula,
+                node=node.raw,
             )
-        branch = formula.get(ctx.holder_range)
-        if not isinstance(branch, Mapping):
-            raise FormulaError(
-                f"by_holder_range has no {ctx.holder_range!r} branch",
-                code="malformed_formula",
-                node=formula,
-            )
-        value, child = _evaluate(branch, ctx, depth + 1)
-        return value, ["holder_range", *[item for item in child if item != "holder_range"]]
-    if operation == "unknown":
-        raise FormulaError(
-            str(formula.get("reason") or "unknown input"), code="unknown_input", node=formula
-        )
-    if operation == "unsupported":
-        raise FormulaError(
-            str(formula.get("reason") or "unsupported mechanic"),
-            code="unsupported_formula",
-            node=formula,
-        )
+        value, child = _eval_compiled(branch, ctx)
+        return value, ["holder_range", *(item for item in child if item != "holder_range")]
+    if ntype is _ErrorNode:
+        raise FormulaError(node.message, code=node.code, node=node.raw)
     raise FormulaError(
-        f"unsupported formula op {operation!r}", code="unsupported_operation", node=formula
+        f"unsupported compiled node {ntype!r}", code="unsupported_operation", node=node
     )
+
+
+def compile_formula(formula: Any, *, ops: frozenset[str] = OBJECT_OPS) -> CompiledFormula:
+    """Validate and compile ``formula`` once for repeated evaluation under ``ops``."""
+    if type(formula) is CompiledFormula and formula.ops == ops:
+        return formula
+    return CompiledFormula(_get_compiled(formula, ops), ops)
 
 
 def evaluate_formula(
@@ -397,9 +570,11 @@ def evaluate_formula(
     With ``target_stats``, stats whose ``subject`` is ``target`` are read from
     it; without it every stat is read from ``stats`` (item model behaviour).
     """
-    issues = formula_issues(formula, ops=ops)
-    if issues:
-        raise FormulaError("; ".join(issues), code="malformed_formula", node=formula)
+    compiled = (
+        formula.node
+        if (type(formula) is CompiledFormula and formula.ops == ops)
+        else _get_compiled(formula, ops)
+    )
     ctx = _Context(stats, target_stats, holder_range, rank, level, inputs or {})
-    value, dependencies = _evaluate(formula, ctx, 0)
+    value, dependencies = _eval_compiled(compiled, ctx)
     return FormulaResult(value=float(value), dependencies=tuple(dependencies), exact=value)

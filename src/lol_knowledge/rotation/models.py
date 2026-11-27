@@ -4,7 +4,7 @@ from __future__ import annotations
 
 import re
 from collections.abc import Callable, Sequence
-from dataclasses import dataclass
+from dataclasses import dataclass, field
 from fractions import Fraction
 
 from ..damage import DamageResult, DamageType
@@ -197,42 +197,64 @@ class Part:
     aoe: bool | None = None
     hits_primary: bool = True
     flat_reduction: Fraction = Fraction(0)
+    _dealt_factor: Fraction = field(init=False, repr=False, compare=False)
+    _taken_factor: Fraction = field(init=False, repr=False, compare=False)
+    _primary_damage: Fraction = field(init=False, repr=False, compare=False)
+    _secondary_damage: Fraction = field(init=False, repr=False, compare=False)
+    _damage: Fraction = field(init=False, repr=False, compare=False)
+
+    def __post_init__(self) -> None:
+        if not self.dealt:
+            dealt_factor = Fraction(1)
+        else:
+            dealt_factor = 1 + sum((percent for _, percent in self.dealt), start=Fraction(0)) / 100
+        if not self.taken:
+            taken_factor = Fraction(1)
+        else:
+            taken_factor = Fraction(1)
+            for _, percent in self.taken:
+                taken_factor *= 1 + percent / 100
+        unit = self.mitigation.damage * dealt_factor * taken_factor
+        primary_damage = (
+            max(Fraction(0), unit - self.flat_reduction) if self.hits_primary else Fraction(0)
+        )
+        if self.targets_hit == 1 and self.hits_primary:
+            secondary_damage = Fraction(0)
+        elif not self.hits_primary:
+            secondary_damage = unit * self.targets_hit * self.secondary_damage_ratio
+        else:
+            secondary_damage = unit * (self.targets_hit - 1) * self.secondary_damage_ratio
+        damage = primary_damage + secondary_damage
+        object.__setattr__(self, "_dealt_factor", dealt_factor)
+        object.__setattr__(self, "_taken_factor", taken_factor)
+        object.__setattr__(self, "_primary_damage", primary_damage)
+        object.__setattr__(self, "_secondary_damage", secondary_damage)
+        object.__setattr__(self, "_damage", damage)
 
     @property
     def dealt_factor(self) -> Fraction:
         """Damage-dealt modifiers add up (V26.09) before multiplying."""
-        return 1 + sum((percent for _, percent in self.dealt), start=Fraction(0)) / 100
+        return self._dealt_factor
 
     @property
     def taken_factor(self) -> Fraction:
         """Damage-taken modifiers multiply with each other."""
-        factor = Fraction(1)
-        for _, percent in self.taken:
-            factor *= 1 + percent / 100
-        return factor
+        return self._taken_factor
 
     @property
     def primary_damage(self) -> Fraction:
         """Post-mitigation and post-modifier damage dealt to the primary target."""
-        if not self.hits_primary:
-            return Fraction(0)
-        return max(
-            Fraction(0),
-            self.mitigation.damage * self.dealt_factor * self.taken_factor - self.flat_reduction,
-        )
+        return self._primary_damage
 
     @property
     def secondary_damage(self) -> Fraction:
         """Total post-mitigation and post-modifier damage dealt to secondary targets."""
-        unit = self.mitigation.damage * self.dealt_factor * self.taken_factor
-        if not self.hits_primary:
-            return unit * self.targets_hit * self.secondary_damage_ratio
-        return unit * (self.targets_hit - 1) * self.secondary_damage_ratio
+        return self._secondary_damage
 
     @property
     def damage(self) -> Fraction:
         """Total damage dealt by this part across all targets hit."""
-        return self.primary_damage + self.secondary_damage
+        return self._damage
 
 
 @dataclass(frozen=True)

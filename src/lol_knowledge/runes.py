@@ -21,6 +21,7 @@ from fractions import Fraction
 from pathlib import Path
 from typing import Any
 
+from .cache import DEFAULT_CACHE
 from .damage import format_number
 from .errors import StatsError
 from .stats import ItemData, Label, StatAmplifier, weakest
@@ -437,8 +438,7 @@ def parse_runes(document: Any, path: str = RUNES_PATH.as_posix()) -> RuneData:
     )
 
 
-def load_runes(root: Path) -> RuneData | None:
-    """The published rune data, or ``None`` when the project has none."""
+def _load_runes_uncached(root: Path) -> RuneData | None:
     path = root / RUNES_PATH
     if not path.is_file():
         return None
@@ -447,6 +447,11 @@ def load_runes(root: Path) -> RuneData | None:
     except (UnicodeDecodeError, json.JSONDecodeError) as exc:
         raise StatsError(f"{RUNES_PATH.as_posix()}: unreadable: {exc}") from exc
     return parse_runes(document)
+
+
+def load_runes(root: Path) -> RuneData | None:
+    """The published rune data, or ``None`` when the project has none."""
+    return DEFAULT_CACHE.runes(root, lambda: _load_runes_uncached(root))
 
 
 def _tree_part(data: RuneData, runes: Sequence[int], violations: list[str]) -> tuple[int, int]:
