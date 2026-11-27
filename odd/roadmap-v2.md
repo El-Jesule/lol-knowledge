@@ -19,8 +19,8 @@ El desarrollo posterior a la `v1.0.0` se divide en dos etapas con responsabilida
 
 ```mermaid
 flowchart LR
-    V10["v1.0.0 (Actual)"] --> V11["v1.1 Rendimiento y Caché"]
-    V11 --> V12["v1.2 Modularización y Mutación"]
+    V10["v1.0.0 (Actual)"] --> V11["v1.1 Modularización e Higiene"]
+    V11 --> V12["v1.2 Rendimiento, Caché y Mutación"]
     V12 --> V13["v1.3 Fidelidad de Combate y Crítico"]
     V13 --> V14["v1.4 Optimizador Inteligente y Pareto"]
     V14 --> V15["v1.5 Cobertura Plantel, Mascotas y Mapa"]
@@ -37,7 +37,7 @@ Continuando la numeración de [`roadmap.md`](roadmap.md) §11 (`DEC-01` a `DEC-0
 - **`DEC-06` (Aprobada el 2026-11-26 — Optimizador multiobjetivo e identidad en `v1.4`):**
   1. Ante objetivos temáticos o secundarios (ej. *«Zeri ADC full velocidad de movimiento»*), `optimize` utilizará **Frontera de Pareto (`Opción A`)**, descartando toda build matemáticamente dominada y devolviendo los escalones óptimos entre rendimiento de rol y objetivo secundario.
   2. El motor **deducirá automáticamente la identidad de combate del campeón** a partir de su `kit.json` y estadísticas del cliente (permitiendo sobreescritura explícita mediante `--profile`).
-  3. Se ejecutará **primero la optimización de velocidad (`v1.1`)** antes de ampliar la búsqueda del optimizador (`v1.4`).
+  3. Se ejecutará primero la **modularización estructural (`v1.1`)** y la **optimización de velocidad y pruebas de mutación (`v1.2`)** antes de ampliar las reglas de combate (`v1.3`) y la búsqueda multiobjetivo del optimizador (`v1.4`), habilitando trabajo en paralelo limpio desde el inicio.
 - **`DEC-07` (Aprobada el 2026-11-27 para `v2.0` — Builds estándar y conector de Selección de Campeones):**
   1. Se revisa `DEC-05` **exclusivamente a partir de `v2.0`** para admitir una capa separada de **Builds y Runas Estándar por `(campeón, rol)`**, etiquetada explícitamente como `Base recomendada` (nunca mezclada ni confundida con `Oficial`, `Derivado` o `Calculado`).
   2. **Prohibición estricta de scraping contrario a ToS ([`AGENTS.md`](../AGENTS.md) §10):** no se hará scraping con bots sobre `u.gg` ni portales con bloqueo anti-bot. Las fuentes autorizadas para poblar `standard-builds.json` en `v2.0` son: (a) los conjuntos recomendados por rol incluidos en los `.wad` del propio cliente de Riot (generados por Riot con telemetría real de cada parche), (b) agregación propia vía Riot API oficial (`match-v5`) si el usuario aporta clave de desarrollador aprobada, o (c) respaldo precalculado por el propio optimizador `v1.6`.
@@ -51,8 +51,8 @@ Cada fase cuenta con su especificación detallada para agentes en `odd/tasks/`:
 
 | Versión | Nombre de la fase | Documento de especificación | IDs de backlog cubiertos | Meta cuantitativa de cierre |
 |---|---|---|---|---|
-| **`v1.1.0`** | Rendimiento del Núcleo, Caché en RAM e Higiene | [`tasks/v1-1-engine-performance.md`](tasks/v1-1-engine-performance.md) | `PERF-01..04`, `FIX-01` (`Darius E`), `DOC-08` | `100 %` equivalencia `Fraction`; `>= 8×` mejora en `optimize`; MCP en caliente `< 5 ms` |
-| **`v1.2.0`** | Modularización de Motores y Pruebas de Mutación | [`tasks/v1-2-engine-modularization.md`](tasks/v1-2-engine-modularization.md) | `QA-03`, `QA-02` | Ningún módulo de motor `> 1.500` líneas; `0` mutantes vivos en núcleo aritmético |
+| **`v1.1.0`** | Modularización de Motores e Higiene Post-v1.0 | [`tasks/v1-1-engine-modularization.md`](tasks/v1-1-engine-modularization.md) | `QA-03`, `FIX-01` (`Darius E`), `DOC-08` | Ningún módulo de motor `> 1.500` líneas; `100 %` equivalencia `Fraction` y `loadout.py` unificado |
+| **`v1.2.0`** | Rendimiento del Núcleo, Caché en RAM y Mutación | [`tasks/v1-2-engine-performance.md`](tasks/v1-2-engine-performance.md) | `PERF-01..04`, `QA-02` | `>= 8×` mejora en `optimize`; MCP en caliente `< 5 ms`; `>= 90–95 %` mutantes cazados |
 | **`v1.3.0`** | Fidelidad de Combate: Crítico Esperado, `On-Hit` y Duelos | [`tasks/v1-3-combat-fidelity.md`](tasks/v1-3-combat-fidelity.md) | `MEC-10`, `MEC-11`, `MEC-18` (canalizaciones), `MEC-22`, `MEC-24`, `MEC-25`, `MEC-29`, `OBJ-02` (Sterak), `OBJ-03`, `OBJ-04`, `OBJ-07`, `OBJ-09` | `crit_mode="expected"` exacto; `Zeri Q` y 16+ kits con `on_hit`/`can_crit`; *Zhonya* e interrupción de canalizaciones en `duel` |
 | **`v1.4.0`** | Optimizador Inteligente: Identidad Automática y Pareto | [`tasks/v1-4-smart-optimizer.md`](tasks/v1-4-smart-optimizer.md) | `DEC-06`, `OPT-06` (identidad), `OPT-07` (`min_stats`), `OPT-08` (Pareto), `OPT-09` (subpool por familias) | `0` builds dominadas en Pareto; deducción determinista de perfil en los `173` kits |
 | **`v1.5.0`** | Cobertura Total de Plantel (`AoE`, Senna, Mascotas) y Mapa | [`tasks/v1-5-roster-and-map-context.md`](tasks/v1-5-roster-and-map-context.md) | `DAT-03`, `DAT-04` (Senna), `MEC-17` (`173/173` AoE), `MEC-32` (dragones/Barón), `CH-Z-02..04`, `CH-A-02`, mascotas DPS | `173/173` campeones desbloqueados a nv. 1–18; `100 %` de casos con semántica `aoe` revisada |
@@ -65,7 +65,7 @@ Cada fase cuenta con su especificación detallada para agentes en `odd/tasks/`:
 
 Todo punto que permanecía `[ ]` en [`roadmap.md`](roadmap.md) queda asignado o acotado explícitamente:
 
-- **Calidad y Operativa:** `QA-01` → `v1.6`; `QA-02` y `QA-03` → `v1.2`; `OP-05` → `v1.6`.
+- **Calidad y Operativa:** `QA-01` → `v1.6`; `QA-03` → `v1.1`; `QA-02` → `v1.2`; `OP-05` → `v1.6`.
 - **Datos:** `DAT-03` y `DAT-04` → `v1.5`; `DAT-05` (parser multi-locale) y `DAT-07`/`DAT-08` (tipos residuales de WAD/CDragon) quedan como mantenimiento opcional `P3` en `research/` sin bloquear `v1.x` ni `v2.0` (documentados en `v1.6`).
 - **Mecánicas:** `MEC-10`, `MEC-11`, `MEC-18` (interrupción de canalizaciones), `MEC-22`, `MEC-24`, `MEC-25`, `MEC-29` → `v1.3`; `MEC-17` y `MEC-32` → `v1.5`; `MEC-12`, `MEC-14`, `MEC-15`, `MEC-16`, `MEC-19`, `MEC-20` → medidos y cerrados en `v1.6`. Mecánicas espaciales 2D (`MEC-27` ralentizaciones con movimiento, proyectiles) se mantienen fuera del motor temporal discreto salvo su impacto en activadores (`target_impaired`) y auditoría de CC en `v2.0`.
 - **Objetos y Campeones:** `OBJ-02` (decaimiento Sterak), `OBJ-03`, `OBJ-04`, `OBJ-07`, `OBJ-09` → `v1.3`; `OBJ-10`/`OBJ-11` → verificados en `v1.6`; `CH-Z-02..04` y `CH-A-02` → `v1.5`.
@@ -82,8 +82,8 @@ Cada fase **debe** seguir íntegramente [`AGENTS.md`](../AGENTS.md):
    - **Solo el agente coordinador (Orchestrator)** ejecuta operaciones de Git (`checkout`, `commit`, `merge --no-ff` en `integration`, `merge --ff-only` en `dev`). Ningún subagente trabajador cambia de rama por su cuenta.
    - **Partición estricta de archivos:** dos subagentes en paralelo **nunca** deben editar el mismo archivo en el mismo turno.
    - **Estrategia recomendada por fase:**
-     - **`v1.1`:** **Secuencial (1 agente o cadena serie)**. Toca núcleos acoplados antes de modularizar (`sheet.py`, `rotation.py`, `catalog.py`, `search.py`).
-     - **`v1.2`:** **Orchestrator en 2 pistas tras definir interfaces**: Pista A refactoriza `src/lol_knowledge/rotation/`, Pista B refactoriza `src/lol_knowledge/defense/`, Pista C escribe `research/tools/mutation_check.py`.
+     - **`v1.1`:** **Orchestrator en 2 pistas disjuntas** tras fijar el arnés de equivalencia y las fachadas `__init__.py`: Pista A divide `src/lol_knowledge/rotation/` (+ `FIX-01`), Pista B divide `src/lol_knowledge/defense/` (+ `DOC-08`), seguidas de la extracción única de `loadout.py`.
+     - **`v1.2`:** **Orchestrator en 3 pistas disjuntas** ya sobre archivos pequeños: Pista A (`stats/sheet.py`, `kit/evaluate.py`, `passives.py`, `rotation/models.py`, `rotation/session.py`), Pista B (`objects/catalog.py`, `cache.py`, `contract.py`, `mcp_server.py`), Pista C (`formula/core.py`, `optimizer/search.py`, `research/tools/mutation_check.py`).
      - **`v1.3`:** **Orchestrator en 2 etapas**: Etapa 1 (secuencial) añade soporte en motor (`crit_mode`, `applies_on_hit`, `Zhonya`, canalizaciones); Etapa 2 (paralela por lotes de campeones) actualiza los `research/kits/<Id>.spec.json` y `tests/`.
      - **`v1.4`:** **Orchestrator moderado (2 pistas)**: Pista A (`optimizer/identity.py` + tests de perfil), Pista B (`optimizer/pareto.py` + `min_stats` + subpool), seguidas de integración en CLI/Contrato/MCP.
      - **`v1.5`:** **Ideal para Orchestrator masivo por lotes**: los 157 specs de campeones (`MEC-17` + mascotas) se dividen en 4–6 subagentes por rangos alfabéticos sin colisión de archivos, mientras otro subagente implementa `MEC-32` (buffs de mapa) y `DAT-04` (Senna).
