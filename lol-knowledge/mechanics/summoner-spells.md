@@ -4,7 +4,7 @@
 - **Parche de referencia:** Data Dragon `16.23.1` y cliente `16.23` (`16.23.8406595+branch.releases-16-23.content.release`).
 - **Fecha de consulta:** 2026-11-22
 - **Datos derivados:** [`lol-knowledge/derived/summoner-spells.json`](../derived/summoner-spells.json)
-- **Código:** [`src/lol_knowledge/summoners.py`](../../src/lol_knowledge/summoners.py), [`src/lol_knowledge/rotation.py`](../../src/lol_knowledge/rotation.py), [`src/lol_knowledge/defense.py`](../../src/lol_knowledge/defense.py), [`research/binmodel/summoners.py`](../../research/binmodel/summoners.py)
+- **Código:** [`src/lol_knowledge/summoners.py`](../../src/lol_knowledge/summoners.py), [`src/lol_knowledge/rotation/`](../../src/lol_knowledge/rotation/), [`src/lol_knowledge/defense/`](../../src/lol_knowledge/defense/), [`research/binmodel/summoners.py`](../../research/binmodel/summoners.py)
 
 ## Fuentes
 

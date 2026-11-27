@@ -2,7 +2,7 @@
 
 Base de conocimiento verificable de League of Legends: datos oficiales de Riot (Data Dragon), análisis con fuente declarada y una CLI en Python que ingesta, valida y calcula de forma reproducible.
 
-Estado actual: **Motor v1.0 (`1.0.0`, parche `16.23.1`)**. Existen la ingesta, el validador de integridad, **los 173 campeones del plantel con kit calculable** (`lol-knowledge/champions/<Id>/kit.json`, 100 % de `CH-01`), **134/173 pasivas automatizadas**, **135/173 campeones con habilidades defensivas, curaciones, purgas/inmunidades y esteroides activos (`309` efectos)**, **112/173 campeones con bloqueos por control de masas (`154` `cc_effects`)**, **218/218 objetos comprables de la Grieta** con revisión completa (`effect_review: complete`), **62/62 runas y 9/9 fragmentos**, **9/9 hechizos de invocador**, los **3 elixires de la Grieta** y la **mejora de obra maestra de Ornn** (`OrnnP.DataValues` `16.23`). El motor expone `stats`, `ability`, `rotation` (con `--timeline` y ventanas `--window`), `survive`, `duel` (simulador 1v1 acoplado determinista con CC, tenacidad, purgas y estasis), `optimize` (búsqueda determinista con `--purchase-curve`, `--gold-checkpoints`, rotación automática y `--ornn-upgrade`), contrato JSON `lol-knowledge-contract/1` (`contract`) y servidor MCP local sobre `stdio` (`mcp`).
+Estado actual: **Motor v1.1 (`1.1.0`, parche `16.23.1`)**. Existen la ingesta, el validador de integridad, **los 173 campeones del plantel con kit calculable** (`lol-knowledge/champions/<Id>/kit.json`, 100 % de `CH-01`), **134/173 pasivas automatizadas**, **135/173 campeones con habilidades defensivas, curaciones, purgas/inmunidades y esteroides activos (`309` efectos)**, **112/173 campeones con bloqueos por control de masas (`154` `cc_effects`)**, **218/218 objetos comprables de la Grieta** con revisión completa (`effect_review: complete`), **62/62 runas y 9/9 fragmentos**, **9/9 hechizos de invocador**, los **3 elixires de la Grieta** y la **mejora de obra maestra de Ornn** (`OrnnP.DataValues` `16.23`). El motor expone `stats`, `ability`, `rotation` (con `--timeline` y ventanas `--window`), `survive`, `duel` (simulador 1v1 acoplado determinista con CC, tenacidad, purgas y estasis), `optimize` (búsqueda determinista con `--purchase-curve`, `--gold-checkpoints`, rotación automática y `--ornn-upgrade`), contrato JSON `lol-knowledge-contract/1` (`contract`) y servidor MCP local sobre `stdio` (`mcp`).
 
 ## Requisitos
 
@@ -37,7 +37,7 @@ El flujo de GitHub Actions ([`.github/workflows/ci.yml`](.github/workflows/ci.ym
 |---|---|
 | `lol-knowledge/` | Base de conocimiento: índices, campeones, objetos, reglas (`mechanics/`) y datos derivados del cliente (`derived/`) |
 | `data/current/` | Snapshot oficial generado desde Data Dragon (no editar a mano) |
-| `src/lol_knowledge/` | CLI, hoja de estadísticas (`stats/`), kits (`kit/`), fórmulas (`formula/`), daño (`damage/`), objetos (`objects/`), rotaciones (`rotation.py`), supervivencia (`defense.py`), duelo 1v1 (`duel.py`), elixires/Ornn (`upgrades.py`), optimizador (`optimizer/`), contrato JSON (`contract.py`) y servidor MCP (`mcp_server.py`) |
+| `src/lol_knowledge/` | CLI, ensamblaje de escenario (`loadout.py`), hoja de estadísticas (`stats/`), kits (`kit/`), fórmulas (`formula/`), daño (`damage/`), objetos (`objects/`), rotaciones (`rotation/`), supervivencia (`defense/`), duelo 1v1 (`duel.py`), elixires/Ornn (`upgrades.py`), optimizador (`optimizer/`), contrato JSON (`contract.py`) y servidor MCP (`mcp_server.py`) |
 | `research/` | Extractor de cálculos, auditoría y prototipos aislados |
 | `tests/` | Pruebas sin acceso a red |
 | `odd/tasks/` | Documentos de tarea por fase |
@@ -228,15 +228,15 @@ Códigos de salida: `0` cálculo hecho, `2` petición inválida, dato ausente o 
 
 ## Simulador de duelo 1v1 (`duel`)
 
-`duel` ejecuta un combate 1v1 acoplado y determinista sobre reloj exacto `Fraction`, reutilizando `rotation.py` y `defense.py` sin doble conteo ([regla](lol-knowledge/mechanics/duel.md)). Modela ataques, habilidades ofensivas y defensivas (`135/173` campeones), bloqueos por control de masas (`112/173` campeones, `154` `cc_effects`), tenacidad con suelo de `0,3 s` (`airborne`/`suppression` inmunes), purgas (*Limpiar*, QSS, campeones), inmunidades a CC, escudo de hechizos, hechizos de invocador, quemaduras, reflejo de *Malla de espinas* y estasis de *Ángel de la guarda*.
+`duel` ejecuta un combate 1v1 acoplado y determinista sobre reloj exacto `Fraction`, reutilizando `rotation/` y `defense/` sin doble conteo ([regla](lol-knowledge/mechanics/duel.md)). Modela ataques, habilidades ofensivas y defensivas (`135/173` campeones), bloqueos por control de masas (`112/173` campeones, `154` `cc_effects`), tenacidad con suelo de `0,3 s` (`airborne`/`suppression` inmunes), purgas (*Limpiar*, QSS, campeones), inmunidades a CC, escudo de hechizos, hechizos de invocador, quemaduras, reflejo de *Malla de espinas* y estasis de *Ángel de la guarda*. También permite lanzar habilidades de CC puro sin daño ni `active_effects` (p. ej. `Veigar E`, `Elise E`, `Viktor W`, `Renata R`).
 
 ```powershell
 # Duelo 1v1 Darius vs Garen a nivel 11
 .\.venv\Scripts\python.exe -m lol_knowledge duel `
   --a-champion Darius --a-level 11 --a-item 3078 --a-range melee `
-  --a-learned Q=5 --a-learned W=1 --a-learned E=3 --a-learned R=2 --a-steps "E, attack, W, Q.blade, R" `
+  --a-learned Q=5 --a-learned W=1 --a-learned E=3 --a-learned R=2 --a-steps "attack, W, Q.blade, R.base" `
   --b-champion Garen --b-level 11 --b-item 3078 --b-range melee `
-  --b-learned Q=5 --b-learned W=1 --b-learned E=3 --b-learned R=2 --b-steps "Q, E, R"
+  --b-learned Q=5 --b-learned W=1 --b-learned E=3 --b-learned R=2 --b-steps "Q, E.tick, R"
 ```
 
 ## Optimizador de builds (`optimize`)

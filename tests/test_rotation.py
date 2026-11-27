@@ -624,3 +624,99 @@ def test_multi_target_rotation_secondary_damage_ratio_and_cli(capsys):
     assert payload["secondary_total"] == 250.0
     assert payload["total"] == 455.0
     assert payload["remaining_health"] == 795.0
+
+
+def test_pure_cc_ability_cast_cost_cooldown_spellblade_and_after_ability() -> None:
+    """FIX-01: pure-CC abilities without cases/active_effects can be cast in rotations."""
+    from lol_knowledge.kit import parse_kit
+
+    veigar_kit = load_kit(ROOT, "Veigar")
+    assert veigar_kit is not None
+    veigar_sheet = sheet("Veigar", level=11, items=("3057",), ranks={})
+    target = manual(armor=50, mr=40, health=2000)
+
+    out = evaluate_rotation(
+        veigar_kit,
+        veigar_sheet,
+        {"Q": 5, "W": 3, "E": 2, "R": 2},
+        target,
+        parse_steps("E, attack"),
+        CRIT,
+        holder_range="ranged",
+        timeline=True,
+    )
+    assert out.steps[0].name.startswith("E ")
+    assert out.steps[0].resource_cost is not None
+    assert out.steps[0].resource_cost.amount > 0
+    assert "with Spellblade" in out.steps[1].name
+
+    with pytest.raises(RotationError, match="on cooldown"):
+        evaluate_rotation(
+            veigar_kit,
+            veigar_sheet,
+            {"Q": 5, "W": 3, "E": 2, "R": 2},
+            target,
+            parse_steps("E, E"),
+            CRIT,
+            holder_range="ranged",
+            timeline=True,
+        )
+
+    # Synthetic kit with pure-CC ability + after_ability passive proc
+    syn_kit = parse_kit(
+        {
+            "schema": "lol-champion-kit/1",
+            "champion": "Veigar",
+            "label": "Derivado",
+            "game_version": "16.23",
+            "content_version": "16.23.test",
+            "abilities": {
+                "P": {
+                    "name": "TestPassive",
+                    "max_rank": 1,
+                    "cases": [],
+                    "passive_stats": [],
+                    "not_modelled": [],
+                    "passive_effects": [
+                        {
+                            "id": "after_cc_proc",
+                            "name": "Empowered Strike",
+                            "kind": "damage_proc",
+                            "trigger": "after_ability",
+                            "damage_type": "magic",
+                            "formula": {"op": "constant", "value": 50},
+                            "label": "Derivado",
+                            "source": "test",
+                        }
+                    ],
+                },
+                "E": {
+                    "name": "Event Horizon",
+                    "max_rank": 5,
+                    "cases": [],
+                    "passive_stats": [],
+                    "not_modelled": [],
+                    "cc_effects": [
+                        {
+                            "id": "e_stun",
+                            "name": "Event Horizon (stun)",
+                            "kind": "stun",
+                            "duration_formula": {"op": "constant", "value": 1.5},
+                            "label": "Derivado",
+                            "source": "test",
+                        }
+                    ],
+                },
+            },
+        }
+    )
+    syn_out = evaluate_rotation(
+        syn_kit,
+        veigar_sheet,
+        {"E": 1},
+        target,
+        parse_steps("E, attack"),
+        CRIT,
+        holder_range="ranged",
+    )
+    assert any("Empowered Strike" in p.source for p in syn_out.steps[1].parts)

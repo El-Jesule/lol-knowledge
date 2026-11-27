@@ -3,7 +3,7 @@
 - **Ámbito:** estadística de poder de curaciones y escudos (`heal_and_shield_power`), absorción de escudos del objetivo, escudos y curaciones directas generadas por el atacante (objetos y runas), seguimiento de la vida del atacante, reducción por Heridas graves (`grievous_wounds`), reducción plana de daño (`MEC-08`) y simulación inversa de supervivencia (`MEC-09`). Lo usan `stats`, `ability`, `rotation` y `survive`.
 - **Parche de referencia:** cliente 16.23 y Data Dragon 16.23.1.
 - **Fecha de consulta:** 2026-11-20
-- **Código:** [`src/lol_knowledge/survival.py`](../../src/lol_knowledge/survival.py), [`src/lol_knowledge/defense.py`](../../src/lol_knowledge/defense.py), [`src/lol_knowledge/defense_report.py`](../../src/lol_knowledge/defense_report.py), [`src/lol_knowledge/stats/registry.py`](../../src/lol_knowledge/stats/registry.py), [`src/lol_knowledge/rotation.py`](../../src/lol_knowledge/rotation.py), [`src/lol_knowledge/rune_combat.py`](../../src/lol_knowledge/rune_combat.py) y [`src/lol_knowledge/rune_keystones.py`](../../src/lol_knowledge/rune_keystones.py).
+- **Código:** [`src/lol_knowledge/survival.py`](../../src/lol_knowledge/survival.py), [`src/lol_knowledge/defense/`](../../src/lol_knowledge/defense/), [`src/lol_knowledge/defense_report.py`](../../src/lol_knowledge/defense_report.py), [`src/lol_knowledge/stats/registry.py`](../../src/lol_knowledge/stats/registry.py), [`src/lol_knowledge/rotation/`](../../src/lol_knowledge/rotation/), [`src/lol_knowledge/rune_combat.py`](../../src/lol_knowledge/rune_combat.py) y [`src/lol_knowledge/rune_keystones.py`](../../src/lol_knowledge/rune_keystones.py).
 
 ## Fuentes
 
@@ -57,7 +57,7 @@
 - **Reflejo reactivo:** `3075` Malla de espinas informa el daño mágico en bruto reflejado (`20 + 10 %` armadura adicional) por cada ataque básico recibido.
 - **Métricas de salida:** daño total recibido, reducción plana total, escudos otorgados/absorbidos, curación defensiva, vida restante, supervivencia (`survived`), paso letal, **tiempo hasta morir** (`time_to_die`) y **daño recibido por segundo** (`damage_taken_per_second`) con `--timeline`.
 
-## Pasivas defensivas de objetos en `defense.py` / `survive` (`Derivado`, cliente `16.23`, `catalog_version: 28`)
+## Pasivas defensivas de objetos en `defense/` / `survive` (`Derivado`, cliente `16.23`, `catalog_version: 28`)
 - **Malla del guardián (`data:item:3082`, *Como una roca*):** reducción plana posmitigación de `15` contra ataques básicos (`attack`/`crit`), limitada al `20 %` del daño posmitigación del ataque.
 - **Jak'Sho el Proteico (`data:item:6665`, *Resiliencia del Vacío*, `Oficial`):** en `--timeline`, tras `5 s` de combate desde el primer golpe recibido, aumenta la armadura y la resistencia mágica adicionales en un `30 %` para el resto del combate (incluyendo la RM adicional activa de Fuerza de la naturaleza si coexisten).
 - **Fuerza de la naturaleza (`data:item:4401`, *Entereza*):** tras recibir `8` instancias de daño mágico (ventana/duración de `7 s` en `--timeline`), otorga `+70` de resistencia mágica adicional renovable al recibir daño mágico.

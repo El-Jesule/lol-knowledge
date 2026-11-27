@@ -733,7 +733,7 @@ class _CombatStepsMixin:
         if not ability.cases:
             if step.case is not None:
                 raise RotationError(f"step {step.text}: {step.slot} has no damage cases")
-            if not ability.active_effects:
+            if not ability.active_effects and not ability.cc_effects:
                 raise RotationError(
                     f"step {step.text}: {step.slot} has no modelled damage cases or active effects"
                 )

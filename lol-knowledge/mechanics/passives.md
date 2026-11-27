@@ -3,7 +3,7 @@
 - **Ámbito:** evaluación declarativa de las pasivas de campeón (`abilities.P.passive_effects` en `kit.json`) sobre la hoja de estadísticas (`stats`, `ability`), en combate (`rotation`, `rotation --timeline`) y en supervivencia inversa (`survive`), además de conversiones globales de hoja (`sheet.py`) y la automatización de borradores de kit (`CH-02`).
 - **Parche de referencia:** Data Dragon `16.23.1` y cliente `16.23` (`16.23.8406595+branch.releases-16-23.content.release`).
 - **Fecha de consulta:** 2026-11-22
-- **Código:** [`src/lol_knowledge/passives.py`](../../src/lol_knowledge/passives.py), [`src/lol_knowledge/stats/sheet.py`](../../src/lol_knowledge/stats/sheet.py), [`src/lol_knowledge/defense.py`](../../src/lol_knowledge/defense.py), [`src/lol_knowledge/kit/model.py`](../../src/lol_knowledge/kit/model.py), [`src/lol_knowledge/rotation.py`](../../src/lol_knowledge/rotation.py), [`research/binmodel/specdraft.py`](../../research/binmodel/specdraft.py) y [`research/binmodel/kitgen.py`](../../research/binmodel/kitgen.py).
+- **Código:** [`src/lol_knowledge/passives.py`](../../src/lol_knowledge/passives.py), [`src/lol_knowledge/stats/sheet.py`](../../src/lol_knowledge/stats/sheet.py), [`src/lol_knowledge/defense/`](../../src/lol_knowledge/defense/), [`src/lol_knowledge/kit/model.py`](../../src/lol_knowledge/kit/model.py), [`src/lol_knowledge/rotation/`](../../src/lol_knowledge/rotation/), [`research/binmodel/specdraft.py`](../../research/binmodel/specdraft.py) y [`research/binmodel/kitgen.py`](../../research/binmodel/kitgen.py).
 
 ## Fuentes
 
@@ -82,5 +82,5 @@ El generador [`research/binmodel/specdraft.py`](../../research/binmodel/specdraf
 ## Fuera de alcance / limitaciones
 
 - La resurrección de Zaahen (`CH-Z-02`) y la extensión de la R de Ahri (`CH-A-02`).
-- Pasivas que alteran reglas globales de estadísticas aún pendientes en `CH-04` (tope/ratio de velocidad de ataque de Bel'Veth/Graves/Jhin/Sion/Zeri, críticos de Ashe, velocidad de movimiento de Cassiopeia).
+- Las pasivas de conversión global (`CH-04`: Bel'Veth, Zeri, Jhin, Sion, Graves, Ashe, Cassiopeia, Yasuo, Yone, Hecarim, Vladimir, Pyke, Ryze, Ornn y Rammus) ya están implementadas en [`sheet.py`](../../src/lol_knowledge/stats/sheet.py) y [`rotation/`](../../src/lol_knowledge/rotation/).
 - Decaimiento escalonado de acumulaciones (en `--timeline` las acumulaciones caducan al cumplirse `duration_seconds` sin golpes).
