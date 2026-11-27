@@ -4,6 +4,17 @@ Base de conocimiento verificable de League of Legends: datos oficiales de Riot (
 
 Estado actual: **Motor v1.1 (`1.1.0`, parche `16.23.1`)**. Existen la ingesta, el validador de integridad, **los 173 campeones del plantel con kit calculable** (`lol-knowledge/champions/<Id>/kit.json`, 100 % de `CH-01`), **134/173 pasivas automatizadas**, **135/173 campeones con habilidades defensivas, curaciones, purgas/inmunidades y esteroides activos (`309` efectos)**, **112/173 campeones con bloqueos por control de masas (`154` `cc_effects`)**, **218/218 objetos comprables de la Grieta** con revisión completa (`effect_review: complete`), **62/62 runas y 9/9 fragmentos**, **9/9 hechizos de invocador**, los **3 elixires de la Grieta** y la **mejora de obra maestra de Ornn** (`OrnnP.DataValues` `16.23`). El motor expone `stats`, `ability`, `rotation` (con `--timeline` y ventanas `--window`), `survive`, `duel` (simulador 1v1 acoplado determinista con CC, tenacidad, purgas y estasis), `optimize` (búsqueda determinista con `--purchase-curve`, `--gold-checkpoints`, rotación automática y `--ornn-upgrade`), contrato JSON `lol-knowledge-contract/1` (`contract`) y servidor MCP local sobre `stdio` (`mcp`).
 
+## Novedades de la v1.1 respecto a la v1.0
+
+La versión **v1.1 (`1.1.0`)** cierra la fase de modularización arquitectónica e higiene post-`v1.0` ([`odd/tasks/v1-1-engine-modularization.md`](odd/tasks/v1-1-engine-modularization.md)), manteniendo **equivalencia exacta** (`Fraction`, etiquetas, notas y rankings) con la `v1.0`:
+
+- **Modularización del motor de rotaciones (`QA-03`):** el monolito `src/lol_knowledge/rotation.py` (`5.202` líneas) pasa a ser el paquete [`src/lol_knowledge/rotation/`](src/lol_knowledge/rotation/) (`models.py`, `effects.py`, `timeline.py`, `combat_steps.py`, `runner.py`, `session.py` y `__init__.py`), con todos los módulos por debajo de `1.203` líneas y compatibilidad total de la API pública.
+- **Modularización del motor defensivo (`QA-03`):** el monolito `src/lol_knowledge/defense.py` (`4.095` líneas) pasa a ser el paquete [`src/lol_knowledge/defense/`](src/lol_knowledge/defense/) (`models.py`, `cc_negations.py`, `shields_heals.py`, `session.py` y `__init__.py`), con todos los módulos por debajo de `1.335` líneas y compatibilidad total de la API pública.
+- **Ensamblaje unificado de escenarios ([`src/lol_knowledge/loadout.py`](src/lol_knowledge/loadout.py)):** extrae en un único módulo la construcción validada de `StatSheet` (objetos, legalidad, pasivas de hoja, runas/fragmentos, hechizos de invocador, elixir y mejora de Ornn) compartida por [`cli.py`](src/lol_knowledge/cli.py) y [`contract.py`](src/lol_knowledge/contract.py), evitando divergencias entre CLI, contrato JSON y MCP.
+- **Habilidades de control de masas puro (`FIX-01`):** `rotation` y `duel` (incluido el bucle de prioridad) permiten lanzar habilidades aprendidas con `cc_effects` aunque no tengan `cases` de daño ni `active_effects` (como `Elise E`, `Renata R`, `Veigar E` y `Viktor W`), descontando coste oficial, aplicando enfriamiento en `--timeline`, cargando *Hoja encantada*, disparando pasivas `after_ability` y aplicando el bloqueo de CC en `duel`.
+- **Arnés de equivalencia y línea base de rendimiento:** se incorporan [`tests/test_performance_equivalence.py`](tests/test_performance_equivalence.py) (instantáneas doradas exactas para proteger futuras optimizaciones) y [`research/tools/benchmark_engine.py`](research/tools/benchmark_engine.py) (medición `wall_ms`, `states` y `ms/state` en frío y caliente).
+- **Higiene documental y hoja de ruta (`DOC-08`):** actualización de [`lol-knowledge/objects/README.md`](lol-knowledge/objects/README.md) (`catalog_version: 28`, 218 objetos), [`lol-knowledge/mechanics/passives.md`](lol-knowledge/mechanics/passives.md) (`CH-04`), enlaces internos hacia `rotation/` y `defense/`, y planificación `v1.1`–`v2.0` en [`odd/roadmap-v2.md`](odd/roadmap-v2.md).
+
 ## Requisitos
 
 - Python 3.14
@@ -315,4 +326,4 @@ Condiciones de uso y cuestiones pendientes: [`research/evidence/usage-conditions
 
 Las reglas de ramas, commits, pruebas y etiquetado de fuentes están en [`AGENTS.md`](AGENTS.md).
 
-Lo que falta para terminar el proyecto, con prioridades y el orden propuesto, está en [`odd/roadmap.md`](odd/roadmap.md).
+La hoja de ruta de `v1.1` a `v2.0` está en [`odd/roadmap-v2.md`](odd/roadmap-v2.md) (histórico hasta `v1.0` en [`odd/roadmap.md`](odd/roadmap.md)).
