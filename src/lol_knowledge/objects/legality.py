@@ -21,6 +21,7 @@ from dataclasses import dataclass
 from pathlib import Path
 from typing import Any
 
+from ..cache import DEFAULT_CACHE
 from ..errors import StatsError
 from ..stats.labels import Label
 from .transforms import TEAR_TRANSFORM_TO_BASE
@@ -225,8 +226,7 @@ def parse_item_groups(document: Any, path: str = ITEM_GROUPS_PATH.as_posix()) ->
     return ItemGroups(path, document["content_version"], document["game_version"], groups, items)
 
 
-def load_item_groups(root: Path) -> ItemGroups | None:
-    """The published item groups, or ``None`` when the file is absent."""
+def _load_item_groups_uncached(root: Path) -> ItemGroups | None:
     path = root / ITEM_GROUPS_PATH
     if not path.is_file():
         return None
@@ -235,6 +235,11 @@ def load_item_groups(root: Path) -> ItemGroups | None:
     except (UnicodeDecodeError, json.JSONDecodeError) as exc:
         raise StatsError(f"{ITEM_GROUPS_PATH.as_posix()}: unreadable: {exc}") from exc
     return parse_item_groups(document)
+
+
+def load_item_groups(root: Path) -> ItemGroups | None:
+    """The published item groups, or ``None`` when the file is absent."""
+    return DEFAULT_CACHE.item_groups(root, lambda: _load_item_groups_uncached(root))
 
 
 def _slots(item_id: str, count: int, limits: ItemLimits, notes: list[str]) -> int:

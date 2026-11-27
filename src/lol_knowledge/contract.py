@@ -13,6 +13,7 @@ from fractions import Fraction
 from pathlib import Path
 from typing import Any
 
+from .cache import DEFAULT_CACHE
 from .damage import to_fraction
 from .defense import evaluate_defense, hits_from_rotation, parse_incoming
 from .defense_report import to_dict as defense_to_dict
@@ -28,7 +29,6 @@ from .duel_report import to_dict as duel_to_dict
 from .errors import DamageInputError, KitError, RotationError, StatsError
 from .kit import load_kit, passive_contributions
 from .loadout import LoadoutError, assemble_stat_sheet, resolve_crit_base
-from .objects import load_model
 from .optimizer import OptimizeConstraints, optimize_build
 from .optimizer import to_dict as optimize_to_dict
 from .rotation import CritBase, evaluate_rotation, parse_steps
@@ -45,6 +45,7 @@ from .stats import (
     weakest,
 )
 from .stats import to_dict as stats_to_dict
+from .stats.data import _manifest
 from .summoners import load_summoner_spells
 
 CONTRACT_SCHEMA = "lol-knowledge-contract/1"
@@ -316,8 +317,6 @@ def _handle_lookup(params: Mapping[str, Any], root: Path) -> dict[str, Any]:
     entity = _require_str(params, "entity").lower()
     query = str(params.get("query", "")).strip().lower()
     limit = _optional_int(params, "limit", 20) or 20
-    model, _ = load_model(root)
-    patch = str(model.get("game_version", ""))
 
     if entity == "champion":
         name = _require_str(params, "champion")
@@ -383,6 +382,8 @@ def _handle_lookup(params: Mapping[str, Any], root: Path) -> dict[str, Any]:
         }
 
     if entity == "items":
+        model = DEFAULT_CACHE.object_model_data(root)
+        patch = str(model.get("game_version", ""))
         only_complete = bool(params.get("only_complete", False))
         matches = []
         for obj in model.get("objects") or ():
@@ -418,6 +419,7 @@ def _handle_lookup(params: Mapping[str, Any], root: Path) -> dict[str, Any]:
         }
 
     if entity == "runes":
+        patch, _ = _manifest(root)
         rune_data = load_runes(root)
         if rune_data is None:
             raise ContractInputError("not_found", "lol-knowledge/derived/runes.json is missing")
@@ -460,6 +462,7 @@ def _handle_lookup(params: Mapping[str, Any], root: Path) -> dict[str, Any]:
         }
 
     if entity == "summoners":
+        patch, _ = _manifest(root)
         summ_data = load_summoner_spells(root)
         if summ_data is None:
             raise ContractInputError(

@@ -9,6 +9,7 @@ from .catalog import (
     dump_model,
     load_catalog,
     load_model,
+    load_model_data,
     load_snapshot,
 )
 from .formula import (
@@ -63,6 +64,7 @@ __all__ = [
     "formula_stat_requirements",
     "load_catalog",
     "load_model",
+    "load_model_data",
     "load_snapshot",
     "required_stat_sheet",
     "validate_catalog_document",

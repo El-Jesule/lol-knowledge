@@ -14,10 +14,11 @@ from fractions import Fraction
 from pathlib import Path
 from typing import Any
 
+from ..cache import DEFAULT_CACHE
 from ..damage import to_fraction
 from ..ddragon import validate_champion_id
 from ..errors import DamageInputError, PayloadError, StatsError
-from ..objects import ObjectModelError, load_model
+from ..objects import ObjectModelError
 from ..objects.transforms import TRANSFORMED_TEAR_SPECS
 from .labels import Label
 
@@ -162,7 +163,7 @@ def champion_from_document(document: Mapping[str, Any], *, patch: str, locale: s
     )
 
 
-def _manifest(root: Path) -> tuple[str, str]:
+def _load_manifest(root: Path) -> tuple[str, str]:
     manifest = _read_json(root / CURRENT / "manifest.json")
     patch = manifest.get("patch") if isinstance(manifest, Mapping) else None
     locale = manifest.get("locale") if isinstance(manifest, Mapping) else None
@@ -171,27 +172,49 @@ def _manifest(root: Path) -> tuple[str, str]:
     return patch, locale
 
 
+def _manifest(root: Path) -> tuple[str, str]:
+    return DEFAULT_CACHE.manifest(root, lambda: _load_manifest(root))
+
+
+def _load_champion_index(root: Path) -> dict[str, str]:
+    index = _read_json(root / CURRENT / "champion-index.json")
+    if not isinstance(index, Sequence) or isinstance(index, (str, bytes)):
+        raise StatsError("data/current/champion-index.json must be a list")
+    mapping: dict[str, str] = {}
+    for entry in index:
+        if not isinstance(entry, Mapping):
+            continue
+        champion_id = entry.get("id")
+        if not isinstance(champion_id, str):
+            continue
+        try:
+            validated = validate_champion_id(champion_id)
+        except PayloadError as exc:
+            raise StatsError(str(exc)) from exc
+        mapping.setdefault(champion_id.lower(), validated)
+    return mapping
+
+
 def resolve_champion_id(root: Path, name: str) -> str:
     """Find a champion id in the snapshot index (case-insensitive); never build paths from input."""
-    index = _read_json(root / CURRENT / "champion-index.json")
-    if not isinstance(index, Sequence):
-        raise StatsError("data/current/champion-index.json must be a list")
-    ids = [entry.get("id") for entry in index if isinstance(entry, Mapping)]
-    wanted = name.strip().lower()
-    for champion_id in ids:
-        if isinstance(champion_id, str) and champion_id.lower() == wanted:
-            try:
-                return validate_champion_id(champion_id)
-            except PayloadError as exc:
-                raise StatsError(str(exc)) from exc
-    raise StatsError(f"champion {name!r} is not in the snapshot")
+    index = DEFAULT_CACHE.champion_index(root, lambda: _load_champion_index(root))
+    champion_id = index.get(name.strip().lower())
+    if champion_id is None:
+        raise StatsError(f"champion {name!r} is not in the snapshot")
+    return champion_id
+
+
+def _load_champion_by_id(root: Path, champion_id: str) -> ChampionData:
+    patch, locale = _manifest(root)
+    document = _read_json(root / CURRENT / "champions" / f"{champion_id}.json")
+    return champion_from_document(document, patch=patch, locale=locale)
 
 
 def load_champion(root: Path, name: str) -> ChampionData:
     champion_id = resolve_champion_id(root, name)
-    patch, locale = _manifest(root)
-    document = _read_json(root / CURRENT / "champions" / f"{champion_id}.json")
-    return champion_from_document(document, patch=patch, locale=locale)
+    return DEFAULT_CACHE.champion(
+        root, champion_id, lambda: _load_champion_by_id(root, champion_id)
+    )
 
 
 def transformed_tear_item(item_id: str, game_version: str) -> ItemData | None:
@@ -220,6 +243,62 @@ def transformed_tear_item(item_id: str, game_version: str) -> ItemData | None:
     )
 
 
+def _item_from_object(obj: Mapping[str, Any], game_version: str) -> ItemData:
+    item_id = str(obj["id"])
+    stats = []
+    for entry in obj.get("stats") or []:
+        source = (entry.get("source") or {}).get("kind")
+        if source not in OFFICIAL_ITEM_SOURCES:
+            raise StatsError(f"item {item_id}: unsupported stat source {source!r}")
+        if entry.get("value") is None:
+            # Unknown in the source: a pending zero keeps the gap visible.
+            stats.append(
+                ItemStat(
+                    stat=str(entry.get("id")),
+                    kind=str(entry.get("kind")),
+                    value=Fraction(0),
+                    source=source,
+                    label=Label.PENDING,
+                    note=f"value unknown: {entry.get('reason')}",
+                )
+            )
+            continue
+        conversion = entry.get("unit_conversion")
+        notes = [f"unit converted: {conversion}"] if conversion else []
+        if entry.get("note"):
+            notes.append(str(entry["note"]))
+        stats.append(
+            ItemStat(
+                stat=str(entry.get("id")),
+                kind=str(entry.get("kind")),
+                value=_number(entry.get("value"), f"item {item_id}.{entry.get('id')}"),
+                source=source,
+                label=Label.DERIVED if conversion else Label.OFFICIAL,
+                note="; ".join(notes),
+            )
+        )
+    return ItemData(
+        item_id,
+        str(obj.get("name", "")),
+        str(game_version),
+        tuple(stats),
+        tuple(obj.get("effects") or ()),
+        str(obj.get("effect_review")),
+        tuple(
+            str(entry.get("reason", "")) for entry in obj.get("unmodelled_description_stats") or ()
+        ),
+    )
+
+
+def _all_items_from_model(model: Mapping[str, Any]) -> tuple[str, dict[str, ItemData]]:
+    """Build ``(game_version, item_map)`` for every curated object in ``model``."""
+    game_version = str(model.get("game_version"))
+    items = {
+        str(obj["id"]): _item_from_object(obj, game_version) for obj in model.get("objects") or []
+    }
+    return game_version, items
+
+
 def items_from_model(model: Mapping[str, Any], item_ids: Sequence[str]) -> tuple[ItemData, ...]:
     """Select curated items from the object model; uncurated ids are rejected."""
     game_version = str(model.get("game_version"))
@@ -236,52 +315,7 @@ def items_from_model(model: Mapping[str, Any], item_ids: Sequence[str]) -> tuple
                 f"item {item_id!r} is not in the object catalog (purchasable Summoner's Rift "
                 "items and curated objects); mode variants are not modelled"
             )
-        stats = []
-        for entry in obj.get("stats") or []:
-            source = (entry.get("source") or {}).get("kind")
-            if source not in OFFICIAL_ITEM_SOURCES:
-                raise StatsError(f"item {item_id}: unsupported stat source {source!r}")
-            if entry.get("value") is None:
-                # Unknown in the source: a pending zero keeps the gap visible.
-                stats.append(
-                    ItemStat(
-                        stat=str(entry.get("id")),
-                        kind=str(entry.get("kind")),
-                        value=Fraction(0),
-                        source=source,
-                        label=Label.PENDING,
-                        note=f"value unknown: {entry.get('reason')}",
-                    )
-                )
-                continue
-            conversion = entry.get("unit_conversion")
-            notes = [f"unit converted: {conversion}"] if conversion else []
-            if entry.get("note"):
-                notes.append(str(entry["note"]))
-            stats.append(
-                ItemStat(
-                    stat=str(entry.get("id")),
-                    kind=str(entry.get("kind")),
-                    value=_number(entry.get("value"), f"item {item_id}.{entry.get('id')}"),
-                    source=source,
-                    label=Label.DERIVED if conversion else Label.OFFICIAL,
-                    note="; ".join(notes),
-                )
-            )
-        selected.append(
-            ItemData(
-                str(obj["id"]),
-                str(obj.get("name", "")),
-                str(game_version),
-                tuple(stats),
-                tuple(obj.get("effects") or ()),
-                str(obj.get("effect_review")),
-                tuple(
-                    str(entry.get("reason", ""))
-                    for entry in obj.get("unmodelled_description_stats") or ()
-                ),
-            )
-        )
+        selected.append(_item_from_object(obj, game_version))
     return tuple(selected)
 
 
@@ -289,7 +323,22 @@ def load_items(root: Path, item_ids: Sequence[str]) -> tuple[ItemData, ...]:
     if not item_ids:
         return ()
     try:
-        model, _ = load_model(root)
+        game_version, item_map = DEFAULT_CACHE.items_index(root, _all_items_from_model)
     except ObjectModelError as exc:
         raise StatsError(f"object model: {exc}") from exc
-    return items_from_model(model, item_ids)
+    selected: list[ItemData] = []
+    for item_id in item_ids:
+        key = str(item_id)
+        item = item_map.get(key)
+        if item is not None:
+            selected.append(item)
+            continue
+        transformed = transformed_tear_item(key, game_version)
+        if transformed is not None:
+            selected.append(transformed)
+            continue
+        raise StatsError(
+            f"item {item_id!r} is not in the object catalog (purchasable Summoner's Rift "
+            "items and curated objects); mode variants are not modelled"
+        )
+    return tuple(selected)
