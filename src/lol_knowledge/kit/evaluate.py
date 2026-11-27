@@ -9,9 +9,8 @@ from typing import Any
 
 from ..damage import DamageType
 from ..errors import KitError
-from ..formula import ABILITY_OPS, FormulaError, evaluate_formula
+from ..formula import ABILITY_OPS, FormulaError, compile_formula, evaluate_formula
 from ..stats.labels import Label, weakest
-from ..stats.registry import Stacking
 from ..stats.sheet import Contribution, StatSheet
 from .model import AbilitySpec, Kit
 
@@ -42,23 +41,8 @@ def sheet_stats(sheet: StatSheet) -> tuple[dict[str, Fraction], dict[str, tuple[
     Blocked and pending stats are absent, so a formula that needs one fails
     instead of reading a guess.
     """
-    values: dict[str, Fraction] = {}
-    origin: dict[str, tuple[str, Label]] = {}
-    for stat_id, value in sheet.values.items():
-        if value.status != "resolved":
-            continue
-        values[stat_id] = value.total()
-        origin[stat_id] = (stat_id, value.label)
-        if value.definition.stacking is Stacking.ADDITIVE:
-            for scope in ("base", "bonus"):
-                key = f"{scope}_{stat_id}"
-                if scope == "bonus" and value.definition.soft_cap is not None:
-                    # Effective bonus after soft caps (e.g. Janna Tailwind/Zephyr, Hecarim Warpath).
-                    values[key] = max(Fraction(0), value.total() - value.scoped("base"))
-                else:
-                    values[key] = value.scoped(scope)
-                origin[key] = (stat_id, value.label)
-    return values, origin
+    values, origin = sheet.cached_sheet_stats()
+    return dict(values), dict(origin)
 
 
 def _why_missing(sheet: StatSheet, key: str) -> str:
@@ -92,13 +76,17 @@ def ability_damage(
     cases = (ability.case(case),) if case is not None else ability.cases
     if not cases:
         raise KitError(f"{ability.slot}: the kit models no damage for this ability")
-    stats, origin = sheet_stats(sheet)
+    stats, origin = sheet.cached_sheet_stats()
     parts: list[DamagePart] = []
     for item in cases:
         for index, part in enumerate(item.parts):
             try:
+                compiled = part._compiled_formula
+                if compiled is None:
+                    compiled = compile_formula(part.formula, ops=ABILITY_OPS)
+                    object.__setattr__(part, "_compiled_formula", compiled)
                 result = evaluate_formula(
-                    part.formula,
+                    compiled,
                     stats,
                     rank=rank,
                     level=sheet.level,
@@ -139,7 +127,11 @@ def passive_contributions(
         rank = _rank(ability, raw_rank)
         for index, entry in enumerate(ability.passive_stats):
             try:
-                value = evaluate_formula(entry.formula, {}, rank=rank, ops=ABILITY_OPS).exact
+                compiled = entry._compiled_formula
+                if compiled is None:
+                    compiled = compile_formula(entry.formula, ops=ABILITY_OPS)
+                    object.__setattr__(entry, "_compiled_formula", compiled)
+                value = evaluate_formula(compiled, {}, rank=rank, ops=ABILITY_OPS).exact
             except FormulaError as exc:
                 raise KitError(f"{ability.slot}.passive_stats[{index}]: {exc}") from exc
             contributions.append(

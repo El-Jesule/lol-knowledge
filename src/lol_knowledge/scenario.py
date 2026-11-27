@@ -191,14 +191,22 @@ class AbilityOutcome:
     notes: tuple[str, ...] = ()
 
 
+_EMPTY_MODIFIERS = Modifiers()
+
+
 def penetration_modifiers(sheet: StatSheet, damage_type: DamageType) -> Modifiers:
     """The attacker's penetration against ``damage_type``; true damage has none."""
     if damage_type not in PENETRATION:
-        return Modifiers()
+        return _EMPTY_MODIFIERS
+    cached = sheet._pen_cache.get(damage_type)
+    if cached is not None:
+        return cached
     percent, flat = PENETRATION[damage_type]
-    return Modifiers(
+    mods = Modifiers(
         percent_penetration=sheet[percent].sources(), flat_penetration=sheet[flat].sources()
     )
+    sheet._pen_cache[damage_type] = mods
+    return mods
 
 
 def evaluate_ability(

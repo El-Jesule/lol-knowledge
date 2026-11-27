@@ -11,14 +11,15 @@ from __future__ import annotations
 import json
 import re
 from collections.abc import Mapping, Sequence
-from dataclasses import dataclass
+from dataclasses import dataclass, field
 from fractions import Fraction
 from pathlib import Path
 from typing import Any
 
+from ..cache import DEFAULT_CACHE
 from ..damage import DamageType
 from ..errors import KitError
-from ..formula import ABILITY_OPS, formula_issues
+from ..formula import ABILITY_OPS, CompiledFormula, formula_issues
 from ..stats.labels import Label
 from ..stats.registry import STATS
 
@@ -254,6 +255,9 @@ class DamagePartSpec:
     label: Label
     source: str
     damage_type_source: str
+    _compiled_formula: CompiledFormula | None = field(
+        default=None, init=False, repr=False, compare=False
+    )
 
 
 @dataclass(frozen=True)
@@ -291,6 +295,9 @@ class PassiveStatSpec:
     label: Label
     source: str
     condition: str
+    _compiled_formula: CompiledFormula | None = field(
+        default=None, init=False, repr=False, compare=False
+    )
 
 
 @dataclass(frozen=True)
@@ -326,6 +333,7 @@ class Kit:
     game_version: str
     content_version: str
     abilities: Mapping[str, AbilitySpec]
+    _uses_move_speed: bool | None = field(default=None, init=False, repr=False, compare=False)
 
     def ability(self, slot: str) -> AbilitySpec:
         try:
@@ -1017,11 +1025,7 @@ def kit_path(root: Path, champion_id: str) -> Path:
     return root / "lol-knowledge" / "champions" / champion_id / KIT_FILENAME
 
 
-def load_kit(root: Path, champion_id: str) -> Kit | None:
-    """Load a champion's kit, or ``None`` when the champion has none.
-
-    ``champion_id`` must already be a validated snapshot id.
-    """
+def _load_kit_uncached(root: Path, champion_id: str) -> Kit | None:
     path = kit_path(root, champion_id)
     if not path.is_file():
         return None
@@ -1033,3 +1037,11 @@ def load_kit(root: Path, champion_id: str) -> Kit | None:
     if kit.champion != champion_id:
         raise KitError(f"{path.as_posix()} is for {kit.champion!r}, not {champion_id!r}")
     return kit
+
+
+def load_kit(root: Path, champion_id: str) -> Kit | None:
+    """Load a champion's kit, or ``None`` when the champion has none.
+
+    ``champion_id`` must already be a validated snapshot id.
+    """
+    return DEFAULT_CACHE.kit(root, champion_id, lambda: _load_kit_uncached(root, champion_id))
