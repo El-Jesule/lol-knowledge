@@ -27,27 +27,17 @@ from .duel import (
 from .duel_report import to_dict as duel_to_dict
 from .errors import DamageInputError, KitError, RotationError, StatsError
 from .kit import load_kit, passive_contributions
+from .loadout import LoadoutError, assemble_stat_sheet, resolve_crit_base
 from .objects import load_model
-from .objects.legality import check_build, load_item_groups
 from .optimizer import OptimizeConstraints, optimize_build
 from .optimizer import to_dict as optimize_to_dict
-from .passives import sheet_passive_effects
 from .rotation import CritBase, evaluate_rotation, parse_steps
 from .rotation_report import to_dict as rotation_to_dict
-from .runes import (
-    adaptive_stat,
-    check_page,
-    combat_rune_notes,
-    load_runes,
-    minor_rune_effects,
-    needs_adaptive_stat,
-    shard_contributions,
-)
+from .runes import load_runes
 from .scenario import evaluate_ability, target_from_sheet, target_from_values
 from .scenario_report import to_dict as ability_to_dict
 from .stats import (
     Label,
-    build_stat_sheet,
     load_champion,
     load_issues,
     load_items,
@@ -55,9 +45,7 @@ from .stats import (
     weakest,
 )
 from .stats import to_dict as stats_to_dict
-from .stats.sheet import MANA_RESOURCE
-from .summoners import load_summoner_spells, resolve_loadout, summoner_sheet_effects
-from .upgrades import elixir_contributions, ornn_upgrade_contributions
+from .summoners import load_summoner_spells
 
 CONTRACT_SCHEMA = "lol-knowledge-contract/1"
 OPERATIONS = frozenset({"lookup", "stats", "ability", "rotation", "survive", "duel", "optimize"})
@@ -208,152 +196,32 @@ def _build_sheet_for_contract(
     ornn_item: str | None = None,
 ) -> tuple[Any, list[str]]:
     """Build a StatSheet with legality, passive, rune and summoner checks."""
-    warnings: list[str] = []
     items = load_items(root, item_ids)
-    groups = load_item_groups(root) if (item_ids or ornn_item) else None
-    if item_ids and groups is not None:
-        rep = check_build(item_ids, groups, patch=champion.patch, champion=champion.id)
-        warnings.extend(rep.notes)
-        if not rep.legal and not allow_illegal:
-            problems = "; ".join(v.message for v in rep.violations)
-            raise ContractInputError("illegal_build", f"build is not legal: {problems}")
-        if not rep.legal:
-            warnings.extend(f"illegal build allowed: {v.message}" for v in rep.violations)
-
-    passive = sheet_passive_effects(
-        kit, level, inputs, include_stacking=combat_context != "rotation"
-    )
-    uses_mana_top = champion.resource == MANA_RESOURCE.get(champion.locale)
-    elx_fx = elixir_contributions(elixir, level=level, uses_mana=uses_mana_top)
-    ornn_fx = ornn_upgrade_contributions(ornn_item, items, level=level, item_groups=groups)
-    s_flats: tuple = ()
-    s_percents: tuple = ()
-    s_notes: tuple = ()
-    if summoners:
-        s_data = load_summoner_spells(root)
-        if s_data is None:
-            raise ContractInputError(
-                "not_found", "lol-knowledge/derived/summoner-spells.json is missing"
-            )
-        try:
-            resolved_s, s_violations = resolve_loadout(
-                summoners, s_data, allow_illegal=allow_illegal
-            )
-        except StatsError as exc:
-            raise ContractInputError("illegal_build", str(exc)) from exc
-        warnings.extend(f"illegal summoner loadout allowed: {v}" for v in s_violations)
-        s_rune_data = load_runes(root) if runes else None
-        s_fx = summoner_sheet_effects(
-            resolved_s,
-            s_data,
-            level=level,
-            patch=champion.patch,
-            inputs=inputs,
-            items=items,
-            runes=runes,
-            rune_data=s_rune_data,
-        )
-        s_flats, s_percents, s_notes = s_fx.flats, s_fx.percents, s_fx.notes
-    base_extras = (*extra_contributions, *passive.flats, *s_flats, *elx_fx.flats, *ornn_fx.flats)
-    base_percents = (*passive.percents, *s_percents, *elx_fx.percents)
-    base_notes = (*passive.notes, *s_notes, *elx_fx.notes, *ornn_fx.notes)
-    if not runes and not shards:
-        return (
-            build_stat_sheet(
-                champion,
-                level,
-                items,
-                issues,
-                assumptions,
-                derived,
-                base_extras,
-                base_percents,
-                extra_amplifiers=passive.amplifiers,
-                extra_notes=base_notes,
-                inputs=inputs,
-            ),
-            warnings,
-        )
-
-    rune_data = load_runes(root)
-    if rune_data is None:
-        raise ContractInputError("invalid_input", "lol-knowledge/derived/runes.json is missing")
-    r_report = check_page(runes, shards, rune_data, patch=champion.patch)
-    if not r_report.legal and not allow_illegal:
-        raise ContractInputError(
-            "illegal_build", "rune page is not legal: " + "; ".join(r_report.violations)
-        )
-    adaptive, a_label, a_note = None, Label.DERIVED, ""
-    if needs_adaptive_stat(runes, shards, rune_data):
-        before = build_stat_sheet(
+    try:
+        res = assemble_stat_sheet(
+            root,
             champion,
             level,
             items,
+            runes,
+            shards,
             issues,
             assumptions,
             derived,
-            extra_contributions,
+            extras=extra_contributions,
             inputs=inputs,
+            combat_context=combat_context,
+            kit=kit,
+            allow_illegal=allow_illegal,
+            summoners=summoners,
+            elixir=elixir,
+            ornn_item=ornn_item,
+            check_items_legality=bool(item_ids),
+            who="build",
         )
-        bonus_ad = sum(
-            (
-                p.value
-                for p in before["attack_damage"].contributions
-                if p.scope == "bonus" and not p.adaptive
-            ),
-            start=Fraction(0),
-        )
-        power = sum(
-            (p.value for p in before["ability_power"].contributions if not p.adaptive),
-            Fraction(0),
-        )
-        weight = derived.value(champion.id, "adaptiveforceapweight") if derived else None
-        adaptive, a_label, a_note = adaptive_stat(bonus_ad, power, weight)
-    flats, percents = shard_contributions(
-        shards,
-        rune_data,
-        level=level,
-        patch=champion.patch,
-        adaptive=adaptive,
-        adaptive_label=a_label,
-        adaptive_note=a_note,
-    )
-    groups = load_item_groups(root) if items else None
-    has_boots = False if not items else (None if groups is None else groups.has_boots(item_ids))
-    uses_mana = champion.resource == MANA_RESOURCE.get(champion.locale)
-    rune_fx = minor_rune_effects(
-        runes,
-        rune_data,
-        level=level,
-        patch=champion.patch,
-        items=items,
-        uses_mana=uses_mana,
-        has_boots=has_boots,
-        inputs=inputs,
-        adaptive=adaptive,
-        adaptive_label=a_label,
-        adaptive_note=a_note,
-    )
-    extra_notes = [*base_notes, *rune_fx.notes]
-    pending = list(rune_fx.pending)
-    if combat_context != "rotation":
-        extra_notes.extend(combat_rune_notes(runes, rune_data))
-    sheet = build_stat_sheet(
-        champion,
-        level,
-        items,
-        issues,
-        assumptions,
-        derived,
-        (*base_extras, *flats, *rune_fx.flats),
-        (*percents, *base_percents, *rune_fx.percents),
-        tuple(pending),
-        extra_amplifiers=(*passive.amplifiers, *rune_fx.amplifiers),
-        extra_notes=tuple(extra_notes),
-        move_speed_bonus_amp=rune_fx.move_speed_bonus_amp,
-        inputs=inputs,
-    )
-    return sheet, warnings
+    except LoadoutError as exc:
+        raise ContractInputError(exc.code, str(exc)) from exc
+    return res.sheet, [*res.notes, *res.warnings]
 
 
 def _resolve_target(
@@ -428,15 +296,7 @@ def _resolve_target(
 
 
 def _crit_base(champion_id: str, patch: str, derived) -> CritBase | None:
-    value = derived.value(champion_id, "critdamagemultiplier") if derived else None
-    if value is None:
-        return None
-    label = Label.DERIVED if derived.matches_patch(patch) else Label.PENDING
-    return CritBase(
-        value,
-        label,
-        f"{derived.path} {champion_id}.critdamagemultiplier ({derived.content_version})",
-    )
+    return resolve_crit_base(champion_id, patch, derived)
 
 
 def _infer_holder_range(champion, explicit: str | None) -> tuple[str | None, list[str]]:
