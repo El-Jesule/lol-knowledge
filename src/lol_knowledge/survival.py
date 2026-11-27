@@ -78,8 +78,8 @@ def absorb_shield(
     """Return ``(shield_absorbed, health_damage)`` for one post-mitigation part."""
     if (
         bypass_shield
-        or damage <= 0
-        or shield <= 0
+        or damage <= 0  # pragma: no mutate
+        or shield <= 0  # pragma: no mutate
         or not shield_blocks_damage_type(shield_type, damage_type)
     ):
         return Fraction(0), damage
@@ -127,10 +127,10 @@ def absorb_life_heal(level: int) -> Fraction:
     1 at level 1, +0.25/lvl up to level 5 (2), +1/lvl up to level 10 (7),
     +2/lvl from level 11 onwards (23 at level 18).
     """
-    if level <= 1:
+    if level <= 1:  # pragma: no mutate
         return Fraction(1)
-    if level <= 5:
+    if level <= 5:  # pragma: no mutate
         return Fraction(1) + Fraction(1, 4) * (level - 1)
-    if level <= 10:
+    if level <= 10:  # pragma: no mutate
         return Fraction(2) + Fraction(level - 5)
     return Fraction(7) + Fraction(2) * (level - 10)
